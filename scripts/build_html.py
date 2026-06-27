@@ -328,6 +328,9 @@ def build_index():
       the lens of the decisions a <strong>Senior or Principal PM</strong> has to make.</p>
     <div class="index-meta"><span>7 modules</span><span>23 lessons</span>
       <span>PM-native</span><span>production-grade</span></div>
+    <div style="margin-top:22px"><a class="iw-btn primary" href="learn.html"
+      style="display:inline-block;text-decoration:none;padding:11px 20px;font-size:14.5px">
+      ◆ Open the whole curriculum in one page →</a></div>
   </div>
 
   <div class="pm-band">
