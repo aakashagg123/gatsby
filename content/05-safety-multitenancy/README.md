@@ -17,6 +17,9 @@ These build directly on [function calling](../02-reliable-outputs/function-calli
 (retrieval must be scoped). Safety is not a feature you add at the end — it's a property
 of how the whole [harness](../00-foundations/harness-engineering.md) is built.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [04 · Evals & Observability](../04-evals-observability/README.md) ·

@@ -181,7 +181,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
 .card li{margin:.2em 0}
 .card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
 .threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
   max-width:920px;margin:0 auto}
 .thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -194,18 +196,87 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .content{padding:32px 22px 70px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
 }
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink active" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><div class="sub"><a href="#prompt-vs-semantic-caching">Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management">KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode">Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention">Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation">Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats">Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a></div><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink active" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#prompt-vs-semantic-caching">Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management">KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode">Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention">Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation">Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats">Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 01</span>
     <h1>Inference Internals</h1>
     <p class="lede">What happens between your request and the tokens that come back.</p>
-    <div class="hero-meta">6 lessons · every lesson includes a
+    <div class="hero-meta">6 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>You can't make good latency, cost, and reliability decisions without knowing what
@@ -228,8 +299,27 @@ explain almost everything about LLM serving economics:</p>
 </ul>
 <p>Everything here feeds the cross-stack tradeoff reasoning in
 <a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Module 06</a>.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#prompt-vs-semantic-caching"><span>01.1</span>Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management"><span>01.2</span>KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode"><span>01.3</span>Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention"><span>01.4</span>Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation"><span>01.5</span>Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats"><span>01.6</span>Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#prompt-vs-semantic-caching"><span>01.1</span>Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management"><span>01.2</span>KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode"><span>01.3</span>Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention"><span>01.4</span>Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation"><span>01.5</span>Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats"><span>01.6</span>Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Latency &amp; cost playground — prefill vs. decode</h3></div><div class="iw-body"><div class="iw-controls">
+  <div class="iw-field"><label>Input tokens <span class="v" id="lc-inv"></span></label><input type="range" id="lc-in" min="0" max="32000" step="500" value="3000"></div>
+  <div class="iw-field"><label>Output tokens <span class="v" id="lc-outv"></span></label><input type="range" id="lc-out" min="0" max="4000" step="50" value="300"></div>
+  <div class="iw-field"><label>Cached prefix <span class="v" id="lc-cv"></span></label><input type="range" id="lc-cache" min="0" max="100" step="5" value="0"></div>
+</div>
+<div class="iw-btns">
+  <button class="iw-btn" data-p="rag">Long input · short answer</button>
+  <button class="iw-btn" data-p="chat">Chatbot reply</button>
+  <button class="iw-btn" data-p="agent">Cached agent step</button>
+</div>
+<div class="iw-out">
+  <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><strong>Latency</strong><span class="v" id="lc-total"></span></div>
+  <div class="iw-stack" id="lc-stack"><span id="lc-pre" style="background:#D97757"></span><span id="lc-dec" style="background:#5f8c79"></span></div>
+  <div class="iw-legend"><span><i style="background:#D97757"></i>Prefill (input) <span class="v" id="lc-prems"></span></span><span><i style="background:#5f8c79"></i>Decode (output) <span class="v" id="lc-decms"></span></span></div>
+  <div class="iw-metric" style="margin-top:14px"><span class="ml">Cost / request</span><span class="mv" id="lc-cost"></span></div>
+  <div class="iw-note" id="lc-note"></div>
+</div>
+<div class="iw-note">Illustrative model: ~60&nbsp;ms per 1k input tokens (prefill), 12&nbsp;ms per output token (decode), $3 / $15 per Mtok in/out, cached input at 10% price. Your real numbers vary by model &amp; hardware — the <em>shape</em> is the lesson.</div></div></section>
   <section class="lesson" id="prompt-vs-semantic-caching"><div class="lesson-head"><span class="lesson-num">01.1</span><h2>Prompt Caching vs. Semantic Caching</h2></div><h2>TL;DR</h2>
 <p>They share the word "caching" and almost nothing else. <strong>Prompt caching</strong> reuses the
 model's internal computation (the <a href="#kv-cache-management">KV cache</a>) for an
@@ -1071,5 +1161,99 @@ ideally including adversarial and format-strict cases, run at each candidate bit
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="02-reliable-outputs.html#structured-output">Structured output</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>PagedAttention / vLLM (UC Berkeley, 2023).</strong> By managing the
+<a href="#kv-cache-management">KV cache</a> in non-contiguous "pages" instead of one big
+reserved block, the PagedAttention paper reported up to <strong>~24× higher throughput</strong> than
+prior serving systems at the same latency. vLLM became a default open-source serving
+engine on the strength of it. 🎯 <em>PM takeaway:</em> the same GPU can serve far more traffic —
+your <strong>$/token and gross margin</strong> are an engineering choice, not a fixed input. See
+<a href="#batching-and-paged-attention">batching &amp; paged attention</a>.</p>
+<p><strong>Prompt caching goes mainstream (2024).</strong> Anthropic, OpenAI, and Google all shipped
+prefix/prompt caching that can cut the cost of the <em>cached</em> input by up to <strong>~90%</strong> and
+reduce time-to-first-token — but only when your prompt prefix is byte-stable. 🎯 <em>PM
+takeaway:</em> a stable system prompt is literally money; a per-request timestamp at the top
+of the prompt quietly throws that discount away. See
+<a href="#prompt-vs-semantic-caching">prompt vs. semantic caching</a>.</p>
+<p><strong>Speculative decoding in production.</strong> Techniques like Medusa and EAGLE, and provider
+features such as "predicted outputs," use a cheap draft to accelerate
+<a href="#prefill-vs-decode">decode</a> with <strong>no change to the output</strong> — often 1.5–3× faster
+token streaming. 🎯 <em>PM takeaway:</em> a latency win you can take <em>without</em> a quality-risk
+conversation. See <a href="#speculative-quantization-distillation">speculative decoding</a>.</p>
+<p><strong>4-bit models on one GPU (GPTQ / AWQ).</strong> Quantization is why large open models run on a
+single or even consumer GPU. But teams have repeatedly found 4-bit quality slipping on
+<em>math, code, and strict JSON</em> while summarization barely notices. 🎯 <em>PM takeaway:</em> "we
+quantized to save money" is a margin decision with a quality blast radius — gate it on
+evals. See <a href="#quantization-formats">quantization formats</a>.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></td>
+<td>One is lossless (KV reuse), one can serve wrong answers</td>
+<td>When to cache responses; SLA risk</td>
+</tr>
+<tr>
+<td><a href="#kv-cache-management">KV cache management</a></td>
+<td>KV memory — not FLOPs — caps concurrency</td>
+<td>Context limits; capacity &amp; pricing tiers</td>
+</tr>
+<tr>
+<td><a href="#prefill-vs-decode">Prefill vs. decode</a></td>
+<td>Two phases, two bottlenecks (compute vs. bandwidth)</td>
+<td>Which latency fix to fund</td>
+</tr>
+<tr>
+<td><a href="#batching-and-paged-attention">Batching &amp; paged attention</a></td>
+<td>Throughput vs. per-user latency dial</td>
+<td>Build-vs-buy; margin model</td>
+</tr>
+<tr>
+<td><a href="#speculative-quantization-distillation">Spec-decode / quant / distill</a></td>
+<td>Three speed/cost knobs, three risk profiles</td>
+<td>Cost roadmap; quality risk accepted</td>
+</tr>
+<tr>
+<td><a href="#quantization-formats">Quantization formats</a></td>
+<td>Format sets the ceiling; method gets you there</td>
+<td>Whether to approve a quantization change</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> <strong>two phases (prefill is compute-bound, decode is bandwidth-bound),
+one cache (KV), throughput from batching + paging, and compression from
+spec-decoding / quantization / distillation</strong> explain almost all LLM serving economics.
+Every latency, cost, and capacity number traces back to one of these.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"Is our latency problem time-to-first-token or tokens-per-second
+— and is our prompt prefix actually cacheable?"</em></p>
+</blockquote>
+<hr />
+<p>← Back to <a href="01-inference-internals.html">module index</a> · → Next module: <a href="02-reliable-outputs.html">02 · Reliable Outputs</a></p><a class="totop" href="#top">↑ back to top</a></section>
   <div class="pagenav"><a class="navcard prev" href="00-foundations.html"><span class="lbl">← Previous</span><span class="ttl">00 · Foundations</span></a><a class="navcard next" href="02-reliable-outputs.html"><span class="lbl">→ Next</span><span class="ttl">02 · Reliable Outputs &amp; Tool Use</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
-  </main></div></body></html>
+  </main></div><script>(function(){var root=document.getElementById('interactive');
+var $=function(id){return root.querySelector(id);};
+var inEl=$('#lc-in'),outEl=$('#lc-out'),cacheEl=$('#lc-cache');
+function calc(){var i=+inEl.value,o=+outEl.value,c=+cacheEl.value/100;
+var unc=i*(1-c);var prefill=unc/1000*60+ (i>0?40:0);var decode=o*12;var total=prefill+decode||1;
+var cost=unc/1e6*3 + (i*c)/1e6*0.3 + o/1e6*15;
+$('#lc-inv').textContent=i.toLocaleString();$('#lc-outv').textContent=o.toLocaleString();$('#lc-cv').textContent=(c*100)+'%';
+$('#lc-pre').style.width=(prefill/total*100)+'%';$('#lc-dec').style.width=(decode/total*100)+'%';
+$('#lc-total').textContent=(total/1000).toFixed(2)+' s';
+$('#lc-prems').textContent=Math.round(prefill)+' ms';$('#lc-decms').textContent=Math.round(decode)+' ms';
+$('#lc-cost').textContent='$'+cost.toFixed(4);
+var note;if(prefill>decode*1.4)note='<strong>Prefill-dominated.</strong> Your latency is mostly the input. Biggest wins: shorter/compressed context and <em>prompt caching</em> — try the cached slider.';
+else if(decode>prefill*1.4)note='<strong>Decode-dominated.</strong> Your latency is mostly generation. Biggest wins: speculative decoding, a smaller/quantized model, more bandwidth.';
+else note='<strong>Balanced.</strong> Both phases matter — measure TTFT and TPOT separately before optimizing.';
+$('#lc-note').innerHTML=note;}
+var presets={rag:[15000,25,0],chat:[700,800,0],agent:[12000,150,80]};
+root.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){var p=presets[b.dataset.p];inEl.value=p[0];outEl.value=p[1];cacheEl.value=p[2];root.querySelectorAll('[data-p]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');calc();};});
+[inEl,outEl,cacheEl].forEach(function(e){e.oninput=function(){root.querySelectorAll('[data-p]').forEach(function(x){x.classList.remove('active');});calc();};});
+calc();})();</script></body></html>

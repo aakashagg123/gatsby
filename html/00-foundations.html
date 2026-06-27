@@ -181,7 +181,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
 .card li{margin:.2em 0}
 .card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
 .threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
   max-width:920px;margin:0 auto}
 .thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -194,18 +196,87 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .content{padding:32px 22px 70px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
 }
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink active" href="00-foundations.html"><span class="num">00</span>Foundations</a><div class="sub"><a href="#harness-engineering">Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering">Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos">Shipping LLM Systems as Infrastructure, Not Demos</a></div><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink active" href="00-foundations.html"><span class="num">00</span>Foundations</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#harness-engineering">Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering">Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos">Shipping LLM Systems as Infrastructure, Not Demos</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 00</span>
     <h1>Foundations</h1>
     <p class="lede">The mindset shift from “writing prompts” to “engineering systems.”</p>
-    <div class="hero-meta">3 lessons · every lesson includes a
+    <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>The hardest part of AI engineering is not the model. It is everything <em>around</em> the
@@ -225,8 +296,17 @@ assumes:</p>
 <p>If you internalize only one idea from this whole repository, make it this: <strong>a
 production LLM feature is a distributed system with a stochastic component in the
 middle.</strong> Engineer it like one.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#harness-engineering"><span>00.1</span>Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering"><span>00.2</span>Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos"><span>00.3</span>Shipping LLM Systems as Infrastructure, Not Demos</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#harness-engineering"><span>00.1</span>Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering"><span>00.2</span>Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos"><span>00.3</span>Shipping LLM Systems as Infrastructure, Not Demos</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Harness vs. prompt — what catches a bad model call?</h3></div><div class="iw-body"><p class="iw-note" style="margin-top:0">The model is one fast, unreliable function call. Watch what the <strong>harness</strong> around it does when the model misbehaves — and what happens without it.</p>
+<div class="iw-btns">
+  <button class="iw-btn primary" id="hz-good">▶ Run a good call</button>
+  <button class="iw-btn" id="hz-bad">▶ Run a bad call (model returns garbage)</button>
+  <label class="iw-toggle" style="margin-left:6px"><input type="checkbox" id="hz-harness" checked> Harness enabled</label>
+</div>
+<div class="iw-stages" id="hz-stages"></div>
+<div class="iw-out"><div class="iw-verdict" id="hz-verdict">Ready.</div><div class="iw-note" id="hz-detail">Pick a scenario above.</div></div></div></section>
   <section class="lesson" id="harness-engineering"><div class="lesson-head"><span class="lesson-num">00.1</span><h2>Harness Engineering, Not Just Prompt Engineering</h2></div><h2>TL;DR</h2>
 <p>Prompt engineering optimizes the <em>string</em> you send the model. Harness engineering
 optimizes the <em>system</em> that sends it: retries, validators, tool wiring, budgets,
@@ -618,5 +698,71 @@ judged by their best case; infrastructure is judged by its worst case.</p>
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>Samsung's source-code leak (2023).</strong> Within weeks of allowing ChatGPT, Samsung
+engineers pasted confidential source code and internal meeting notes into it to debug
+and summarize — and that data left the company's control. Samsung restricted the tool.
+🎯 <em>PM takeaway:</em> what data is <em>allowed into the context</em> — and where it then goes — is a
+product and policy boundary you own. That's <a href="#harness-engineering">harness</a>, not
+prompting.</p>
+<p><strong>"Lost in the Middle" (Liu et al., 2023).</strong> A widely-cited study showed models reliably
+use information at the <em>beginning and end</em> of a long context but "lose" facts buried in
+the middle — even when the answer is right there. 🎯 <em>PM takeaway:</em> "just give the model
+more context" can <em>lower</em> quality. Placement and trimming are real work — see
+<a href="#context-engineering">context engineering</a>.</p>
+<p><strong>The POC graveyard.</strong> Industry surveys repeatedly find that the large majority of
+generative-AI proof-of-concepts never reach production. The demo works; the <em>operational</em>
+version — evals, guardrails, monitoring, cost control — is where projects stall. 🎯 <em>PM
+takeaway:</em> the demo-to-prod gap is mostly <a href="#infra-not-demos">harness and ops</a>. Budget
+for it explicitly, or you'll relaunch the same demo three times.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#harness-engineering">Harness engineering</a></td>
+<td>Reliability lives in the code <em>around</em> the model</td>
+<td>Where you spend eng cycles; what "AI quality" means</td>
+</tr>
+<tr>
+<td><a href="#context-engineering">Context engineering</a></td>
+<td>The context window is a budget, not a junk drawer</td>
+<td>Cost-per-call; data you make retrievable</td>
+</tr>
+<tr>
+<td><a href="#infra-not-demos">Infra, not demos</a></td>
+<td>Demos are judged best-case; infra is judged worst-case</td>
+<td>Launch-readiness; definition of done</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> a production LLM feature is <em>a distributed system with a stochastic
+component in the middle.</em> Engineer it like one. The model is one fast, unreliable,
+stateless function call; everything that makes it useful and safe — assembly, validation,
+budgets, fallbacks, observability — is yours to build.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"If the model returns garbage on a single call, what does the
+user actually see — and who would notice?"</em> If you can't answer it, your gap is in the
+foundations.</p>
+</blockquote>
+<hr />
+<p>← Back to <a href="00-foundations.html">module index</a> · → Next module: <a href="01-inference-internals.html">01 · Inference Internals</a></p><a class="totop" href="#top">↑ back to top</a></section>
   <div class="pagenav"><span></span><a class="navcard next" href="01-inference-internals.html"><span class="lbl">→ Next</span><span class="ttl">01 · Inference Internals</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
-  </main></div></body></html>
+  </main></div><script>(function(){var root=document.getElementById('interactive');
+var stagesEl=root.querySelector('#hz-stages'),verdict=root.querySelector('#hz-verdict'),detail=root.querySelector('#hz-detail'),harness=root.querySelector('#hz-harness');
+function render(st){stagesEl.innerHTML='';st.forEach(function(s,i){if(i){var a=document.createElement('span');a.className='iw-arrow';a.textContent='→';stagesEl.appendChild(a);}var d=document.createElement('span');d.className='iw-stage '+s.cls;d.textContent=s.label;stagesEl.appendChild(d);});}
+function run(bad){var on=harness.checked,st=[];
+if(on){st.push({label:'Assemble context',cls:'on'});st.push({label:'Model call',cls:bad?'kill':'on'});st.push({label:'Validate',cls:'on'});if(bad)st.push({label:'Repair loop',cls:'on'});st.push({label:'Tools (idempotent)',cls:'on'});st.push({label:'Budgets',cls:'on'});st.push({label:'Response',cls:'on'});
+if(bad){verdict.innerHTML='<span class="iw-good">✅ Caught &amp; repaired</span>';detail.textContent='The model returned malformed output — Validate flagged it, the bounded repair loop fixed it, and a clean, schema-valid result reached the user. Worst case, the fallback chain returns a typed error — never a crash.';}
+else{verdict.innerHTML='<span class="iw-good">✅ Valid response delivered</span>';detail.textContent='Every stage did its job. The same path is what protects you on the calls that go wrong.';}}
+else{st.push({label:'Assemble context',cls:'on'});st.push({label:'Model call',cls:bad?'kill':'on'});st.push({label:'Response',cls:bad?'kill':'on'});
+if(bad){verdict.innerHTML='<span class="iw-bad">💥 Broken output reaches the user</span>';detail.textContent='No validation, no repair, no fallback. The garbage flows straight through — the JSON fails to parse downstream and the workflow breaks. This is the demo that wowed on stage and pages you at 2am.';}
+else{verdict.innerHTML='<span class="iw-good">✅ Worked… this time</span>';detail.textContent='With no harness it is fine until the first bad call. Your reliability is just whatever the model happened to do.';}}
+render(st);}
+root.querySelector('#hz-good').onclick=function(){run(false);};root.querySelector('#hz-bad').onclick=function(){run(true);};harness.onchange=function(){run(false);};run(false);})();</script></body></html>

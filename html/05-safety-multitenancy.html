@@ -181,7 +181,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
 .card li{margin:.2em 0}
 .card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
 .threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
   max-width:920px;margin:0 auto}
 .thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -194,18 +196,87 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .content{padding:32px 22px 70px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
 }
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink active" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><div class="sub"><a href="#safety-engineering">Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation">Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a></div><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink active" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#safety-engineering">Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation">Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 05</span>
     <h1>Safety &amp; Multi-tenancy</h1>
     <p class="lede">Keeping tenants, users, and data from leaking into each other.</p>
-    <div class="hero-meta">2 lessons · every lesson includes a
+    <div class="hero-meta">2 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>LLM systems take in untrusted text and produce actions over privileged data — often for
@@ -224,8 +295,20 @@ behavior, and shared caches or context can leak one customer into another.</p>
 (shared computation must respect trust boundaries), and <a href="03-rag.html#rag-architecture">RAG</a>
 (retrieval must be scoped). Safety is not a feature you add at the end — it's a property
 of how the whole <a href="00-foundations.html#harness-engineering">harness</a> is built.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#safety-engineering"><span>05.1</span>Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation"><span>05.2</span>Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#safety-engineering"><span>05.1</span>Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation"><span>05.2</span>Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>The lethal trifecta — and cache safety</h3></div><div class="iw-body"><p class="iw-note" style="margin-top:0">An agent is exploitable for data <strong>exfiltration</strong> only when it has all three legs. Break any one and the whole attack class is defused.</p>
+<div class="iw-btns">
+ <label class="iw-toggle"><input type="checkbox" id="lt-a" checked> ① Reads untrusted content</label>
+ <label class="iw-toggle"><input type="checkbox" id="lt-b" checked> ② Can access private data</label>
+ <label class="iw-toggle"><input type="checkbox" id="lt-c" checked> ③ Can communicate externally</label>
+</div>
+<div class="iw-out"><div class="iw-verdict" id="lt-v"></div><div class="iw-note" id="lt-d"></div></div>
+<hr>
+<p class="iw-note" style="margin-top:0"><strong>Bonus — cache safety.</strong> A semantic cache keyed only on the query text leaks answers across tenants.</p>
+<label class="iw-toggle"><input type="checkbox" id="lt-k" checked> Cache key includes tenant&nbsp;+&nbsp;permission scope</label>
+<div class="iw-out" style="margin-top:10px"><div class="iw-verdict" id="lt-kv"></div></div></div></section>
   <section class="lesson" id="safety-engineering"><div class="lesson-head"><span class="lesson-num">05.1</span><h2>Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</h2></div><h2>TL;DR</h2>
 <p>An LLM mixes trusted instructions and untrusted data in the <em>same</em> channel — natural
 language — so any text it reads (a user message, a retrieved document, a tool result, a
@@ -531,5 +614,67 @@ savings.</p>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>The ChatGPT Redis bug (March 2023).</strong> A caching bug in an async library let some users
+briefly see <strong>other users' chat titles</strong> — and exposed limited payment-related info for a
+small number of subscribers. OpenAI took the service down to patch it. 🎯 <em>PM takeaway:</em>
+this is the textbook <a href="#multi-tenant-isolation">cross-user contamination</a> incident —
+shared/cached state that wasn't correctly scoped per user. It's the failure that ends B2B
+AI trust overnight.</p>
+<p><strong>Indirect prompt injection &amp; the "lethal trifecta."</strong> Research (Greshake et al., 2023)
+and Simon Willison's widely-cited framing showed that an assistant which (1) reads
+untrusted content, (2) can access private data, and (3) can communicate externally can be
+hijacked by a <strong>poisoned web page or email</strong> to exfiltrate data — with the user never
+typing anything malicious. 🎯 <em>PM takeaway:</em> audit every agent for the
+<a href="#safety-engineering">trifecta</a> and break at least one leg.</p>
+<p><strong>Samsung's data leak (2023).</strong> Confidential code pasted into a public model left the
+company's boundary. 🎯 <em>PM takeaway:</em> <a href="#safety-engineering">data-leakage prevention</a>
+starts with <em>what you let into the context and where it can go.</em></p>
+<p><strong>The $1 Tahoe and DPD's swearing bot (2023–24).</strong> Direct prompt injection / jailbreaks
+turned public-facing bots into liabilities. 🎯 <em>PM takeaway:</em> injection isn't theoretical;
+it's a launch blocker that <a href="04-evals-observability.html#evals">adversarial evals</a> must
+cover.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#safety-engineering">Safety engineering</a></td>
+<td>No prompt fully stops injection — enforce authority in <em>code</em></td>
+<td>Enterprise readiness; autonomy granted</td>
+</tr>
+<tr>
+<td><a href="#multi-tenant-isolation">Multi-tenant isolation</a></td>
+<td>Anything shared/cached must be scoped per tenant</td>
+<td>Isolation architecture; SOC 2 / contracts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> an LLM mixes trusted instructions and untrusted data in one channel,
+and often serves many tenants from shared infrastructure. So: <strong>treat all model output as
+untrusted, enforce permissions in tools on the real session (never on the model's
+beliefs), break the lethal trifecta, and scope every cache, index, and log by tenant.</strong>
+Security here is architectural, not a prompt you can write.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"If a poisoned document entered our knowledge base — or a cache
+key forgot the tenant id — what's the blast radius?"</em></p>
+</blockquote>
+<hr />
+<p>← Back to <a href="05-safety-multitenancy.html">module index</a> · → Next module: <a href="06-strategy-tradeoffs.html">06 · Strategy &amp; Tradeoffs</a></p><a class="totop" href="#top">↑ back to top</a></section>
   <div class="pagenav"><a class="navcard prev" href="04-evals-observability.html"><span class="lbl">← Previous</span><span class="ttl">04 · Evals &amp; Observability</span></a><a class="navcard next" href="06-strategy-tradeoffs.html"><span class="lbl">→ Next</span><span class="ttl">06 · Strategy &amp; Tradeoffs</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
-  </main></div></body></html>
+  </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
+var a=$('#lt-a'),b=$('#lt-b'),c=$('#lt-c'),k=$('#lt-k');
+var legs=[['① reads untrusted content','stop feeding it untrusted/retrieved content (or sandbox what it reads)'],['② accesses private data','remove its access to sensitive data for this path'],['③ can communicate externally','remove its outbound channel / egress, or require human approval to send']];
+function trifecta(){var on=[a.checked,b.checked,c.checked],n=on.filter(Boolean).length,v=$('#lt-v'),d=$('#lt-d');
+if(n===3){v.innerHTML='<span class="iw-bad">⚠ Data exfiltration possible</span>';d.innerHTML='All three legs present: a poisoned document or email can instruct the agent to read private data and send it out — the user never typed anything malicious. <strong>Break one leg below.</strong>';}
+else{var broken=[];on.forEach(function(o,i){if(!o)broken.push(legs[i][1]);});
+v.innerHTML='<span class="iw-good">✓ Contained</span>';d.innerHTML='With only '+n+' of 3 legs, the exfiltration path is broken. You’ve mitigated by: <em>'+broken.join('; ')+'</em>. This is why permission boundaries live in code, not the prompt.';}}
+function cache(){var v=$('#lt-kv');if(k.checked){v.innerHTML='<span class="iw-good">✓ Isolated</span> — identical questions from two tenants are different cache entries. No cross-tenant leak.';}
+else{v.innerHTML='<span class="iw-bad">⚠ Cross-tenant leak</span> — Tenant&nbsp;B asks a similar question and receives Tenant&nbsp;A’s cached answer (and data). The ChatGPT-style contamination incident.';}}
+[a,b,c].forEach(function(e){e.onchange=trifecta;});k.onchange=cache;trifecta();cache();})();</script></body></html>

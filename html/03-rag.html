@@ -181,7 +181,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
 .card li{margin:.2em 0}
 .card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
 .threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
   max-width:920px;margin:0 auto}
 .thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -194,18 +196,87 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .content{padding:32px 22px 70px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
 }
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink active" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><div class="sub"><a href="#rag-architecture">RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals">Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a></div><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink active" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#rag-architecture">RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals">Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 03</span>
     <h1>RAG &amp; Retrieval</h1>
     <p class="lede">Grounding models in your data — and proving they actually used it.</p>
-    <div class="hero-meta">2 lessons · every lesson includes a
+    <div class="hero-meta">2 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>Retrieval-Augmented Generation grounds a model in <em>your</em> data — docs, tickets, code,
@@ -222,8 +293,21 @@ it's a confident model reciting the wrong or stale passage.</p>
 retriever decides what occupies the window, and the generator can only be as good as
 what the retriever found. The two lessons here are a matched pair — build the pipeline,
 then prove it works.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#rag-architecture"><span>03.1</span>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals"><span>03.2</span>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#rag-architecture"><span>03.1</span>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals"><span>03.2</span>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Retrieval tradeoff — top-k and reranking</h3></div><div class="iw-body"><div class="iw-controls">
+ <div class="iw-field"><label>Retrieved (top-k) <span class="v" id="rg-kv"></span></label><input type="range" id="rg-k" min="1" max="50" step="1" value="8"></div>
+ <label class="iw-toggle" style="margin-bottom:7px"><input type="checkbox" id="rg-rr"> Add reranking (keep top 5)</label>
+</div>
+<div class="iw-grid" id="rg-grid"></div>
+<div class="iw-out">
+ <div class="iw-metric"><span class="ml">Recall@k</span><span class="iw-track"><span class="iw-fill" id="rg-rcf"></span></span><span class="mv" id="rg-rc"></span></div>
+ <div class="iw-metric"><span class="ml">Precision@k</span><span class="iw-track"><span class="iw-fill" id="rg-prf" style="background:#5f8c79"></span></span><span class="mv" id="rg-pr"></span></div>
+ <div class="iw-metric"><span class="ml">Context tokens</span><span class="mv" id="rg-tok"></span></div>
+ <div class="iw-note" id="rg-note"></div>
+</div>
+<div class="iw-legend"><span><i style="background:#D97757"></i>relevant</span><span><i style="background:#ded8c9"></i>noise</span><span><i style="background:#fff;outline:2px solid #1A1915"></i>kept after rerank</span></div></div></section>
   <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</h2></div><h2>TL;DR</h2>
 <p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong> decides
 what a retrievable unit <em>is</em>; <strong>embeddings</strong> decide how meaning is matched; <strong>hybrid
@@ -522,5 +606,77 @@ and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>Air Canada's invented refund policy (2024).</strong> The canonical grounding failure: the bot
+answered from "imagination" instead of the airline's actual, current policy — and a
+tribunal made the company honor the made-up version. 🎯 <em>PM takeaway:</em> the fix is
+architectural — answer <strong>only from retrieved, current sources, with citations</strong>, and say
+"I don't know" when the context is silent. See
+<a href="#rag-architecture">RAG architecture</a>.</p>
+<p><strong>Enterprise RAG with permissions (Glean, Notion AI, Sourcegraph).</strong> Production systems
+that search across a company's docs, tickets, and code live or die on three things this
+module covers: <strong>hybrid search</strong> (so exact identifiers and error codes are found),
+<strong>permission/ACL filtering</strong> (so retrieval never crosses a user's access — a
+<a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant boundary</a>), and
+<strong>freshness</strong> (so deleted or superseded docs stop being cited). 🎯 <em>PM takeaway:</em> retrieval
+quality and access scoping <em>are</em> the product.</p>
+<p><strong>Citations as a feature (Perplexity, Bing/Copilot).</strong> These products made
+inline source attribution a core trust signal. 🎯 <em>PM takeaway:</em> if you want users (or
+legal) to trust answers, you need <a href="#retrieval-evals">attribution and citation quality</a>
+you can measure — not just a confident paragraph.</p>
+<p><strong>"Lost in the middle," again.</strong> The same research that warns against over-stuffing
+context is why dumping your top-50 chunks <em>hurts</em>: the answer gets buried. 🎯 <em>PM takeaway:</em>
+<strong>reranking down to a few great chunks</strong> beats retrieving many mediocre ones — better
+answers <em>and</em> lower <a href="04-evals-observability.html#cost-attribution">token cost</a>.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rag-architecture">RAG architecture</a></td>
+<td>Quality is capped by the weakest pipeline stage</td>
+<td>Data to index; freshness SLA; citations</td>
+</tr>
+<tr>
+<td><a href="#retrieval-evals">Retrieval evals</a></td>
+<td>Measure retrieval <em>and</em> grounding separately</td>
+<td>The accuracy bar you can defend</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> most "the AI gave a wrong answer" bugs are <strong>retrieval</strong> bugs, not
+model bugs. Build the pipeline — chunk → embed → hybrid search → rerank → keep fresh — then
+<strong>prove it</strong> by measuring recall/precision (did we find it?) separately from
+grounding/attribution (did we use it faithfully?). The generator can only be as good as
+what retrieval surfaces.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"When an answer is wrong, did we fail to </em><em>retrieve</em><em> the right
+source, or fail to </em><em>ground</em><em> the answer in it?"</em> Different bug, different fix.</p>
+</blockquote>
+<hr />
+<p>← Back to <a href="03-rag.html">module index</a> · → Next module: <a href="04-evals-observability.html">04 · Evals &amp; Observability</a></p><a class="totop" href="#top">↑ back to top</a></section>
   <div class="pagenav"><a class="navcard prev" href="02-reliable-outputs.html"><span class="lbl">← Previous</span><span class="ttl">02 · Reliable Outputs &amp; Tool Use</span></a><a class="navcard next" href="04-evals-observability.html"><span class="lbl">→ Next</span><span class="ttl">04 · Evals &amp; Observability</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
-  </main></div></body></html>
+  </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
+var R=8,k=$('#rg-k'),rr=$('#rg-rr');
+function calc(){var K=+k.value,rerank=rr.checked;
+var found=Math.round(R*(1-Math.exp(-K/12)));if(found>K)found=K;
+var keep=rerank?Math.min(5,K):K;var keptRel=rerank?Math.min(keep,found):found;
+var recall=found/R;var precision=(rerank?keptRel/keep:found/K);var tokens=keep*250;
+$('#rg-kv').textContent=K;$('#rg-rc').textContent=Math.round(recall*100)+'%';$('#rg-pr').textContent=Math.round(precision*100)+'%';
+$('#rg-rcf').style.width=(recall*100)+'%';$('#rg-prf').style.width=(precision*100)+'%';
+$('#rg-tok').textContent=tokens.toLocaleString()+' tok';
+var grid=$('#rg-grid');grid.innerHTML='';var order=[];for(var i=0;i<K;i++)order.push(i<found);
+if(rerank)order.sort(function(a,b){return (b?1:0)-(a?1:0);});
+order.forEach(function(isRel,i){var c=document.createElement('span');c.className='iw-chunk'+(isRel?' rel':'');if(rerank&&i<keep)c.className+=' kept';grid.appendChild(c);});
+var note;if(rerank)note='<strong>Reranked.</strong> You still retrieved widely (recall held), but kept only the few best chunks — precision jumps, context shrinks, the generator is less distracted, and you pay fewer tokens.';
+else if(K<=4)note='<strong>Low k.</strong> Precision is high but you may miss relevant chunks — recall is the ceiling on the whole system.';
+else if(K>=18)note='<strong>High k, no rerank.</strong> Recall is near-max but precision craters — the answer is buried in noise and you pay for junk tokens. This is “lost in the middle.”';
+else note='<strong>Mid k.</strong> Reasonable — but turn on reranking to get high recall <em>and</em> high precision at once.';
+$('#rg-note').innerHTML=note;}
+k.oninput=calc;rr.onchange=calc;calc();})();</script></body></html>

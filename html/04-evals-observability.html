@@ -181,7 +181,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
 .card li{margin:.2em 0}
 .card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
 .threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
   max-width:920px;margin:0 auto}
 .thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -194,18 +196,87 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .content{padding:32px 22px 70px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
 }
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
 </style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink active" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><div class="sub"><a href="#evals">Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability">LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution">Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a></div><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink active" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#evals">Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability">LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution">Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 04</span>
     <h1>Evals &amp; Observability</h1>
     <p class="lede">You cannot operate what you cannot measure.</p>
-    <div class="hero-meta">3 lessons · every lesson includes a
+    <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>LLM systems fail <em>silently</em>: a wrong answer looks exactly like a right one, and quality
@@ -225,8 +296,22 @@ shipping" in <a href="02-reliable-outputs.html">reliable outputs</a>, every "mea
 retrieval" in <a href="03-rag.html">RAG</a>, and every quality claim about
 <a href="01-inference-internals.html#quantization-formats">quantization</a> ultimately routes
 through here.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#evals"><span>04.1</span>Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability"><span>04.2</span>LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution"><span>04.3</span>Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#evals"><span>04.1</span>Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability"><span>04.2</span>LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution"><span>04.3</span>Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Trace waterfall — one request, span by span</h3></div><div class="iw-body"><div class="iw-btns">
+ <button class="iw-btn active" data-s="healthy">Healthy</button>
+ <button class="iw-btn" data-s="slow">Slow retrieval</button>
+ <button class="iw-btn" data-s="repair">Repair loop</button>
+ <button class="iw-btn" data-s="timeout">Tool timeout</button>
+</div>
+<div id="tr-rows" style="margin:8px 0 4px"></div>
+<div class="iw-out" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+ <div><div style="font-size:12px;color:var(--mut)">Total latency</div><div class="mv" id="tr-lat"></div></div>
+ <div><div style="font-size:12px;color:var(--mut)">Total cost</div><div class="mv" id="tr-cost"></div></div>
+ <div><div style="font-size:12px;color:var(--mut)">Tokens in/out</div><div class="mv" id="tr-tok"></div></div>
+ <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--mut)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
+</div></div></section>
   <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</h2></div><h2>TL;DR</h2>
 <p>Evals are the test suite for a non-deterministic system. Because you can't assert exact
 equality, you build <strong>golden sets</strong> (curated inputs with known-good outputs), run them
@@ -676,5 +761,76 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>Klarna's AI assistant (2024).</strong> Klarna reported its OpenAI-powered assistant was
+handling <strong>~two-thirds of customer-service chats</strong> — work it equated to hundreds of
+full-time agents — within months. 🎯 <em>PM takeaway:</em> at that volume you <em>cannot</em> operate on
+vibes. <a href="#cost-attribution">Cost attribution</a> (what does each resolved chat cost?) and
+continuous <a href="#observability">quality monitoring</a> are what make a number like that safe
+rather than terrifying.</p>
+<p><strong>"Did the model change?" (the GPT-4 drift debates).</strong> Practitioners repeatedly reported
+that hosted models <em>behaved differently over time</em> on the same prompts, sparking public
+back-and-forth about silent regressions. 🎯 <em>PM takeaway:</em> you can't control the
+provider's weights — so you need <strong>your own</strong> <a href="#evals">regression evals</a>. Teams with a
+golden set find out from CI; teams without one find out from churn.</p>
+<p><strong>The LLM-observability category exists now.</strong> LangSmith, Langfuse, Arize Phoenix,
+Braintrust and others turned <a href="#observability">traces, spans, token/cost accounting, and eval runs</a>
+into a standard tooling layer. 🎯 <em>PM takeaway:</em> this is no longer exotic — "we have no
+tracing or evals" is now a visible maturity gap, not a defensible default.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#evals">Evals</a></td>
+<td>The eval set <em>is</em> the product spec for a stochastic system</td>
+<td>Release gates; how you compare models</td>
+</tr>
+<tr>
+<td><a href="#observability">Observability</a></td>
+<td>LLMs fail silently; you must instrument quality, not just errors</td>
+<td>Incident response; drift detection</td>
+</tr>
+<tr>
+<td><a href="#cost-attribution">Cost attribution</a></td>
+<td>Per-feature/tenant cost, not just the total bill</td>
+<td>Pricing, packaging, where to optimize</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> <strong>you cannot operate what you cannot measure.</strong> Evals tell you it's
+<em>correct</em> before you ship; observability tells you it's <em>working</em> while it runs; cost
+attribution tells you what it's <em>costing</em> and who's driving it. All three feed each
+other — production traces become new eval cases; incidents become adversarial tests.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"If quality dropped 10% tomorrow, would we find out from our
+dashboards — or from angry users three weeks later?"</em></p>
+</blockquote>
+<hr />
+<p>← Back to <a href="04-evals-observability.html">module index</a> · → Next module: <a href="05-safety-multitenancy.html">05 · Safety &amp; Multi-tenancy</a></p><a class="totop" href="#top">↑ back to top</a></section>
   <div class="pagenav"><a class="navcard prev" href="03-rag.html"><span class="lbl">← Previous</span><span class="ttl">03 · RAG &amp; Retrieval</span></a><a class="navcard next" href="05-safety-multitenancy.html"><span class="lbl">→ Next</span><span class="ttl">05 · Safety &amp; Multi-tenancy</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
-  </main></div></body></html>
+  </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
+var SC={
+healthy:{lat:1040,cost:0.0046,tok:'3,100 / 180',spans:[['retrieve',0,42,'8 chunks · vector+BM25',false],['rerank',42,18,'kept 3 of 8',false],['model.generate',60,900,'ttft 210ms · 180 out tok · $0.0042',false],['validate',960,4,'schema OK · 0 repairs',false],['tool.create_note',964,76,'idempotent · 200 OK',false]]},
+slow:{lat:1680,cost:0.0048,tok:'3,100 / 180',spans:[['retrieve',0,690,'cold index · 690ms (!)',true],['rerank',690,18,'kept 3 of 8',false],['model.generate',708,900,'ttft 210ms · 180 out tok',false],['validate',1608,4,'schema OK',false],['tool.create_note',1612,68,'200 OK',false]]},
+repair:{lat:1890,cost:0.0079,tok:'3,100 / 410',spans:[['retrieve',0,42,'8 chunks',false],['rerank',42,18,'kept 3',false],['model.generate',60,900,'180 tok · returned malformed JSON',true],['validate',960,5,'✗ missing field “priority”',true],['model.generate#2',965,840,'repair · 190 tok · valid',false],['validate#2',1805,4,'schema OK',false],['tool.create_note',1809,80,'200 OK',false]]},
+timeout:{lat:4120,cost:0.0050,tok:'3,100 / 180',spans:[['retrieve',0,42,'8 chunks',false],['rerank',42,18,'kept 3',false],['model.generate',60,900,'180 tok',false],['validate',960,4,'schema OK',false],['tool.create_note',964,3000,'⏱ timeout 3s → fallback',true]]}};
+function render(key){var s=SC[key],max=s.lat,rows=$('#tr-rows');rows.innerHTML='';
+s.spans.forEach(function(sp){var row=document.createElement('div');row.className='iw-span';
+var name=document.createElement('span');name.className='sn';name.textContent=sp[0];
+var wrap=document.createElement('span');wrap.className='iw-spanbar-wrap';
+var bar=document.createElement('span');bar.className='iw-spanbar';bar.style.left=(sp[1]/max*100)+'%';bar.style.width=Math.max(1.2,sp[2]/max*100)+'%';if(sp[4])bar.style.background='#b3402a';
+wrap.appendChild(bar);row.appendChild(name);row.appendChild(wrap);
+row.onclick=function(){rows.querySelectorAll('.iw-span').forEach(function(x){x.classList.remove('sel');});row.classList.add('sel');
+$('#tr-sel').innerHTML='<strong>'+sp[0]+'</strong> · '+sp[2]+' ms — '+sp[3];};
+rows.appendChild(row);});
+$('#tr-lat').textContent=(s.lat/1000).toFixed(2)+' s';$('#tr-cost').textContent='$'+s.cost.toFixed(4);$('#tr-tok').textContent=s.tok;
+$('#tr-sel').innerHTML='Click a span to inspect tokens, latency &amp; cost.';}
+root.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){root.querySelectorAll('[data-s]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');render(b.dataset.s);};});
+render('healthy');})();</script></body></html>

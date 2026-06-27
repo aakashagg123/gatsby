@@ -15,6 +15,9 @@ This module is where the rest of the curriculum converges: every earlier lesson 
 point in the tradeoff space these three describe. Read it last, then revisit the others
 with the tradeoffs in mind.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [05 · Safety & Multi-tenancy](../05-safety-multitenancy/README.md) ·

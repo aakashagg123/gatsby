@@ -18,6 +18,9 @@ retrieval" in [RAG](../03-rag/README.md), and every quality claim about
 [quantization](../01-inference-internals/quantization-formats.md) ultimately routes
 through here.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [03 · RAG & Retrieval](../03-rag/README.md) ·

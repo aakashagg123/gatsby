@@ -17,6 +17,9 @@ The throughline: **never trust model output as if it were a typed return value.*
 Treat it as untrusted input to be validated, bounded, and made safe to act on. This
 is the [harness](../00-foundations/harness-engineering.md) doing its job.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [01 · Inference Internals](../01-inference-internals/README.md) ·

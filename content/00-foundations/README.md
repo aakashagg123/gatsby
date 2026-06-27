@@ -19,6 +19,9 @@ If you internalize only one idea from this whole repository, make it this: **a
 production LLM feature is a distributed system with a stochastic component in the
 middle.** Engineer it like one.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 → Next module: [01 · Inference Internals](../01-inference-internals/README.md)

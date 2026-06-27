@@ -22,6 +22,9 @@ explain almost everything about LLM serving economics:
 Everything here feeds the cross-stack tradeoff reasoning in
 [Module 06](../06-strategy-tradeoffs/inference-stack-tradeoffs.md).
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [00 · Foundations](../00-foundations/README.md) ·

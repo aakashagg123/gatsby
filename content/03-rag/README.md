@@ -15,6 +15,9 @@ retriever decides what occupies the window, and the generator can only be as goo
 what the retriever found. The two lessons here are a matched pair — build the pipeline,
 then prove it works.
 
+
+**📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
+
 ---
 
 ← Previous: [02 · Reliable Outputs](../02-reliable-outputs/README.md) ·
