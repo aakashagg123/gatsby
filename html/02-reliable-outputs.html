@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>02 · Reliable Outputs &amp; Tool Use — AI Engineering for PMs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Fraunces','Iowan Old Style',Palatino,Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+@media (max-width:880px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .content{padding:32px 22px 70px}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:140px}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink active" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#structured-output">Structured Output: Validation, Repair Loops, and Fallback Chains</a><a href="#function-calling">Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</a><a href="#agent-guardrails">Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</a><a href="#model-routing">Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Module 02</span>
+    <h1>Reliable Outputs &amp; Tool Use</h1>
+    <p class="lede">Making models produce things downstream systems can trust.</p>
+    <div class="hero-meta">4 lessons · interactive demo · every lesson includes a
+      <strong>🎯 For the AI-native PM</strong> briefing</div>
+  </div>
+  <div class="intro"><p>A model that is right 95% of the time will break a workflow that calls it a hundred
+times. This module is about closing that gap — turning a stochastic text generator
+into a component whose outputs and actions downstream systems can <em>trust</em>.</p>
+<ul>
+<li><a href="#structured-output"><strong>Structured output</strong></a> — getting valid, schema-conformant
+  data out, with validation, repair loops, and fallback chains for when you don't.</li>
+<li><a href="#function-calling"><strong>Function calling</strong></a> — reliable tool invocation: contracts,
+  argument validation, and idempotency so retries are safe.</li>
+<li><a href="#agent-guardrails"><strong>Agent guardrails</strong></a> — loop budgets, tool budgets, and
+  termination conditions so an agent can't run away.</li>
+<li><a href="#model-routing"><strong>Model routing</strong></a> — choosing models per request and degrading
+  gracefully instead of failing hard.</li>
+</ul>
+<p>The throughline: <strong>never trust model output as if it were a typed return value.</strong>
+Treat it as untrusted input to be validated, bounded, and made safe to act on. This
+is the <a href="00-foundations.html#harness-engineering">harness</a> doing its job.</p>
+<p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
+<hr /></div>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#structured-output"><span>02.1</span>Structured Output: Validation, Repair Loops, and Fallback Chains</a><a href="#function-calling"><span>02.2</span>Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</a><a href="#agent-guardrails"><span>02.3</span>Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</a><a href="#model-routing"><span>02.4</span>Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Agent budget simulator — what stops a runaway?</h3></div><div class="iw-body"><div class="iw-controls">
+ <div class="iw-field"><label>Max steps (budget) <span class="v" id="ab-msv"></span></label><input type="range" id="ab-ms" min="2" max="30" step="1" value="8"></div>
+ <div class="iw-field"><label>Cost ceiling <span class="v" id="ab-ccv"></span></label><input type="range" id="ab-cc" min="20" max="500" step="10" value="100"></div>
+ <div class="iw-field"><label>Task difficulty <span class="v" id="ab-dv"></span></label><input type="range" id="ab-d" min="5" max="60" step="5" value="25"></div>
+</div>
+<div class="iw-btns">
+ <label class="iw-toggle"><input type="checkbox" id="ab-g" checked> Guardrails (budgets + no-progress)</label>
+ <button class="iw-btn primary" id="ab-run">▶ Run agent</button>
+</div>
+<div class="iw-out">
+ <div class="iw-stages" id="ab-tl"></div>
+ <div class="iw-verdict" id="ab-verdict" style="margin-top:10px">Press “Run agent”.</div>
+ <div class="iw-note" id="ab-detail">Each step costs ~8¢ and makes a tool call. Difficulty = chance of finishing per step.</div>
+</div></div></section>
+  <section class="lesson" id="structured-output"><div class="lesson-head"><span class="lesson-num">02.1</span><h2>Structured Output: Validation, Repair Loops, and Fallback Chains</h2></div><h2>TL;DR</h2>
+<p>When a downstream system expects JSON (or any schema), "usually valid" is a production
+incident waiting to happen. Reliable structured output is a <em>pipeline</em>, not a prompt:
+<strong>constrain</strong> generation where you can, <strong>validate</strong> every output against a schema,
+<strong>repair</strong> failures by feeding the error back, and <strong>fall back</strong> through progressively
+safer options so a malformed response never reaches your business logic. The goal is a
+component that returns valid data or a clean, typed error — never garbage.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.</p>
+<p><strong>What it changes in your decisions</strong> — Your integration/API commitments, your error budget, and what "done" means for an AI feature that feeds other systems.</p>
+<p><strong>Ask your eng team</strong> — <em>"When the model returns invalid output, does it crash, retry, or degrade gracefully?"</em></p>
+<p><strong>Product risk if ignored</strong> — One parse error takes down an entire automated workflow and erodes trust in the whole feature.</p>
+</blockquote>
+<h2>Mental model</h2>
+<p>Model output is <strong>untrusted input</strong>. You wouldn't <code>JSON.parse()</code> a request body and
+use it without validation; don't do it with a model either. The pipeline:</p>
+<pre><code>generate ──▶ parse ──▶ validate(schema) ──▶ ✅ typed object
+   ▲           │            │
+   │           └─ fail ─────┤
+   │                        ▼
+   └───── repair loop ◀── error fed back (bounded retries)
+                            │ still failing
+                            ▼
+                      fallback chain ──▶ safer model / stricter mode / default / typed error
+</code></pre>
+<h2>Layer 1 — Constrain generation (prevent, don't just detect)</h2>
+<p>The cheapest invalid output is the one that can't be produced.</p>
+<ul>
+<li><strong>Constrained / structured decoding</strong> (grammar- or schema-guided, e.g. JSON-schema
+  modes, GBNF grammars, "JSON mode," tool/function schemas) masks the token
+  distribution so only schema-valid tokens can be emitted. This makes <em>syntactic</em>
+  validity near-certain.</li>
+<li><strong>Caveat:</strong> constrained decoding guarantees the output <em>parses and fits the schema</em>,
+  not that it's <em>semantically correct</em>. A grammar can force <code>{"age": 200}</code> to be valid
+  JSON; it can't make 200 a sensible age. You still need validation.</li>
+<li>Be aware constrained decoding can interact with quality — over-tight grammars can
+  push the model into awkward continuations; pair it with clear schema descriptions.</li>
+</ul>
+<h2>Layer 2 — Validate (always, even with constrained decoding)</h2>
+<p>Validate every output against a real schema (Pydantic, JSON Schema, zod, protobuf):</p>
+<ul>
+<li><strong>Syntactic:</strong> does it parse and match types/required fields?</li>
+<li><strong>Semantic:</strong> are values in range, enums legal, references resolvable, invariants
+  held? (<code>end_date &gt; start_date</code>, <code>total == sum(items)</code>, ids that exist.)</li>
+<li>Validation produces a precise, machine-readable error — which is the fuel for the
+  repair loop.</li>
+</ul>
+<h2>Layer 3 — Repair loop (bounded)</h2>
+<p>On validation failure, send the model the invalid output <strong>plus the specific error</strong>
+and ask it to fix only what's wrong:</p>
+<pre><code>for attempt in 1..MAX_REPAIRS:        # MAX_REPAIRS is small (1–2)
+    out = model(prompt + last_output + validation_error)
+    if validate(out): return out
+return fallback(...)                   # don't loop forever
+</code></pre>
+<p>Discipline:</p>
+<ul>
+<li><strong>Bound it.</strong> One or two repairs, then fall back. Unbounded repair is an
+  <a href="#agent-guardrails">agent runaway</a> and a cost leak.</li>
+<li><strong>Be specific.</strong> "Field <code>priority</code> must be one of [low, med, high]; got <code>urgent</code>" repairs
+  far better than "invalid JSON."</li>
+<li><strong>Track repair rate</strong> in <a href="04-evals-observability.html#observability">observability</a> —
+  a rising rate signals prompt/model/schema drift.</li>
+</ul>
+<h2>Layer 4 — Fallback chain</h2>
+<p>When repair fails, degrade deliberately instead of throwing:</p>
+<ol>
+<li><strong>Stricter generation</strong> — re-run with constrained decoding / lower temperature.</li>
+<li><strong>A more capable model</strong> — escalate via <a href="#model-routing">model routing</a> for the
+   hard case.</li>
+<li><strong>A safe default / partial result</strong> — e.g. return the fields you <em>could</em> validate,
+   flag the rest.</li>
+<li><strong>A clean typed error</strong> — surface a structured failure the caller can handle and
+   that <a href="#model-routing">degraded-mode UX</a> can render — never a stack trace or raw
+   model text.</li>
+</ol>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Buys</th>
+<th>Costs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Constrained decoding</td>
+<td>Near-certain valid syntax</td>
+<td>Possible quality skew; not all providers/grammars</td>
+</tr>
+<tr>
+<td>More repair attempts</td>
+<td>Higher success rate</td>
+<td>Latency + tokens + cost</td>
+</tr>
+<tr>
+<td>Escalate to bigger model</td>
+<td>Rescues hard cases</td>
+<td>$$ and latency; route carefully</td>
+</tr>
+<tr>
+<td>Strict schema</td>
+<td>Safety, clear contracts</td>
+<td>More repair churn if model struggles</td>
+</tr>
+</tbody>
+</table>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Trusting <code>JSON.parse</code> with no schema</strong> — a stray markdown fence or trailing comma
+  crashes the workflow. (Strip fences defensively; still validate.)</li>
+<li><strong>Unbounded repair loops</strong> — a persistently malformed case retries forever, burning
+  cost — see <a href="#agent-guardrails">budgets</a>.</li>
+<li><strong>Valid-but-wrong</strong> — schema passes, values are nonsense; only semantic validation
+  and <a href="04-evals-observability.html#evals">evals</a> catch it.</li>
+<li><strong>Quantization-induced malformation</strong> — <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a>
+  degrades strict-format adherence; watch JSON validity after model swaps.</li>
+<li><strong>Silent schema drift</strong> — you tightened the schema; repair rate spiked; nobody
+  noticed because it wasn't monitored.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Is every model output validated against an explicit schema before use?</li>
+<li class="task todo">Do you validate semantics (ranges, enums, invariants), not just syntax?</li>
+<li class="task todo">Is the repair loop bounded (1–2 tries) with specific error feedback?</li>
+<li class="task todo">Is there a fallback chain ending in a clean typed error, never a crash?</li>
+<li class="task todo">Do you track parse-failure and repair rates as metrics?</li>
+<li class="task todo">Did structured-output validity hold after your last model/quantization change?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#function-calling">Function calling reliability</a></li>
+<li><a href="#agent-guardrails">Agent guardrails</a></li>
+<li><a href="#model-routing">Model routing &amp; degraded-mode UX</a></li>
+<li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
+<li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="function-calling"><div class="lesson-head"><span class="lesson-num">02.2</span><h2>Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</h2></div><h2>TL;DR</h2>
+<p>Function calling is where a model stops generating text and starts <em>causing effects</em> —
+writing to databases, sending messages, moving money. That raises the stakes from
+"wrong answer" to "wrong action." Reliability comes from treating tool calls like an
+API boundary with an untrusted client: <strong>tight contracts</strong>, <strong>strict argument
+validation</strong>, <strong>idempotency</strong> so retries are safe, and <strong>authorization</strong> so the model
+can't do what the user couldn't. The model proposes; your harness disposes.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — This is where the AI stops <em>talking</em> and starts <em>doing</em> — moving money, sending email, editing records. The blast radius of a wrong action is far larger than a wrong sentence.</p>
+<p><strong>What it changes in your decisions</strong> — Which actions you let the AI take autonomously vs. behind a confirmation, and your audit/compliance posture.</p>
+<p><strong>Ask your eng team</strong> — <em>"If the model calls a tool with a hallucinated argument, what stops it from actually acting on it?"</em></p>
+<p><strong>Product risk if ignored</strong> — A double-charge, a wrong-customer email, or an unauthorized change — a real-world incident, not a chat mistake.</p>
+</blockquote>
+<h2>Mental model</h2>
+<p>The model is an <strong>untrusted client</strong> of your tools. Its function call is a <em>request</em>,
+not a command you execute blindly:</p>
+<pre><code>model proposes call ──▶ validate args (schema + semantics)
+                    ──▶ authorize (can THIS user/tenant do this?)
+                    ──▶ execute idempotently (safe to retry)
+                    ──▶ return structured result (incl. errors the model can act on)
+</code></pre>
+<p>Every arrow can reject. A hallucinated or malformed call should fail validation, not
+hit your database.</p>
+<h2>Tool contracts</h2>
+<p>A tool contract is the schema + semantics + guarantees of a callable:</p>
+<ul>
+<li><strong>Crisp schema.</strong> Typed, required vs. optional, enums, formats, ranges. This is the
+  same <a href="#structured-output">structured-output</a> discipline applied to <em>arguments</em>.</li>
+<li><strong>Descriptions are part of the contract.</strong> The model picks and fills tools from
+  their names/descriptions. Vague descriptions cause wrong tool selection and bad
+  arguments — write them like API docs, with units and examples.</li>
+<li><strong>Narrow surface area.</strong> Fewer, well-scoped tools beat many overlapping ones; the
+  model confuses similar tools. Don't expose a raw <code>run_sql</code> when you mean
+  <code>get_orders_by_customer</code>.</li>
+<li><strong>Errors are contractual.</strong> Return structured, actionable errors ("customer_id not
+  found") so the model can recover, not opaque 500s.</li>
+</ul>
+<h2>Argument validation</h2>
+<p>Never pass model-provided arguments straight through:</p>
+<ul>
+<li><strong>Syntactic + semantic validation</strong> against the schema (types, enums, ranges,
+  referential existence).</li>
+<li><strong>Hallucinated arguments are common</strong> — plausible-looking IDs, dates, enum values
+  that don't exist. Validate against the real system of record before acting.</li>
+<li><strong>On invalid args, feed the error back</strong> for a bounded <a href="#structured-output">repair</a>
+  rather than executing or crashing.</li>
+</ul>
+<h2>Idempotency — the keystone for safe retries</h2>
+<p>Models retry, networks fail, agents re-issue calls. If a tool isn't idempotent, a
+retry can double-charge a card or send two emails.</p>
+<ul>
+<li><strong>Idempotency keys.</strong> Have the caller supply (or the harness derive) a stable key per
+  logical operation; the tool dedupes on it so repeats are no-ops returning the prior
+  result.</li>
+<li><strong>Prefer idempotent designs.</strong> <code>set_status(order, shipped)</code> is naturally idempotent;
+  <code>increment_balance(+10)</code> is not — model it as <code>apply_transaction(txn_id, +10)</code>.</li>
+<li><strong>Separate read vs. write.</strong> Reads are freely retryable; writes need keys. Mark which
+  tools have side effects so the harness knows what's safe to repeat.</li>
+<li>This is what makes <a href="#agent-guardrails">agent guardrails</a> and retry/fallback logic
+  safe: you can re-run a step without fear.</li>
+</ul>
+<h2>Authorization &amp; boundaries</h2>
+<p>The model must never be able to do something the <em>user</em> couldn't:</p>
+<ul>
+<li><strong>Enforce permissions in the tool, keyed on the real session/tenant</strong> — not on
+  arguments the model supplies. A model told "you are admin" by a
+  <a href="05-safety-multitenancy.html#safety-engineering">prompt injection</a> must still be
+  blocked by the tool's own authz.</li>
+<li><strong>Scope every call to the tenant/user context</strong> to prevent
+  <a href="05-safety-multitenancy.html#multi-tenant-isolation">cross-tenant access</a>.</li>
+<li><strong>Least privilege.</strong> Give tools the minimum scope they need; dangerous actions get
+  confirmation or human approval.</li>
+</ul>
+<h2>Reliability patterns</h2>
+<ul>
+<li><strong>Parallel vs. sequential calls</strong> — validate and (where side-effecting) order them;
+  watch for the model issuing conflicting parallel writes.</li>
+<li><strong>Timeouts + retries with backoff</strong> — but only retry idempotent operations
+  automatically.</li>
+<li><strong>Circuit breakers</strong> — if a tool is failing, stop calling it and degrade rather than
+  hammering it.</li>
+<li><strong>Result shaping</strong> — return concise, structured results; dumping a 10k-token API
+  response back into context wrecreates a <a href="00-foundations.html#context-engineering">context-engineering</a>
+  problem.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Hallucinated tool call</strong> — the model invents a tool or an argument; caught by
+  validating tool names and args against the real contract/system.</li>
+<li><strong>Non-idempotent retry</strong> — double-send / double-charge after a timeout retry.</li>
+<li><strong>Confused-deputy / injection</strong> — retrieved or tool-returned content tells the model
+  to call a dangerous tool; blocked by tool-side authz, not by trusting the model.</li>
+<li><strong>Wrong tool selected</strong> — overlapping/vague tools; fix descriptions and narrow the
+  surface.</li>
+<li><strong>Context blowup</strong> — verbose tool results crowd out the task; shape and truncate them.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Does every tool have a typed schema <em>and</em> clear, example-rich descriptions?</li>
+<li class="task todo">Are all model-supplied arguments validated against the real system before use?</li>
+<li class="task todo">Is every side-effecting tool idempotent (keys) or modeled to be?</li>
+<li class="task todo">Is authorization enforced in the tool on the real session — never on model claims?</li>
+<li class="task todo">Are only idempotent operations auto-retried?</li>
+<li class="task todo">Are tool errors structured and actionable for recovery?</li>
+<li class="task todo">Is the tool surface narrow and least-privilege?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#structured-output">Structured output</a></li>
+<li><a href="#agent-guardrails">Agent guardrails</a></li>
+<li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
+<li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
+<li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="agent-guardrails"><div class="lesson-head"><span class="lesson-num">02.3</span><h2>Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</h2></div><h2>TL;DR</h2>
+<p>An agent is a loop: think → act → observe → repeat. Loops need brakes. Without
+explicit <strong>budgets</strong> (max iterations, max tool calls, max tokens, max wall-clock, max
+cost) and clear <strong>termination conditions</strong>, an agent can spin forever, thrash a tool,
+or quietly run up a large bill — and because each step looks locally reasonable,
+nobody notices until the invoice or the incident. Guardrails make the worst case
+<em>bounded and observable</em> instead of open-ended.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.</p>
+<p><strong>What it changes in your decisions</strong> — Whether you ship autonomous agents at all, your per-task cost ceilings, and the UX for "I couldn't finish that."</p>
+<p><strong>Ask your eng team</strong> — <em>"What's the most this agent can cost — or do — on a single request?"</em></p>
+<p><strong>Product risk if ignored</strong> — A runaway agent burns budget or takes too many actions: bill shock, or a trust-destroying incident.</p>
+</blockquote>
+<h2>Mental model</h2>
+<p>Treat the agent loop like any unbounded recursion in production: it needs a base case
+<em>and</em> a depth limit. The model decides <em>what</em> to do next; your harness decides
+<em>whether it's still allowed to</em>.</p>
+<pre><code>while not done:
+    if over_any_budget(): terminate_with_partial_result_or_escalate()
+    action = model.decide(state)
+    if action == STOP or goal_met(state): return result
+    observe = execute(action)        # validated, idempotent tools
+    state = update(state, observe)
+</code></pre>
+<h2>The budgets</h2>
+<table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Caps</th>
+<th>Prevents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loop / iteration</strong></td>
+<td>Max think-act cycles</td>
+<td>Infinite reasoning loops</td>
+</tr>
+<tr>
+<td><strong>Tool</strong></td>
+<td>Total calls, per-tool calls</td>
+<td>Thrashing one API; repeated side effects</td>
+</tr>
+<tr>
+<td><strong>Token</strong></td>
+<td>Cumulative input+output tokens</td>
+<td>Context blowup, runaway cost</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Dollars per request/session</td>
+<td>Bill shock</td>
+</tr>
+<tr>
+<td><strong>Wall-clock</strong></td>
+<td>Total elapsed time</td>
+<td>Hung requests, bad UX</td>
+</tr>
+<tr>
+<td><strong>Depth</strong></td>
+<td>Sub-agent / recursion depth</td>
+<td>Fan-out explosions</td>
+</tr>
+</tbody>
+</table>
+<p>Set defaults conservatively; raise per-task only with justification. Budgets should be
+enforced by the harness, not requested of the model in the prompt — a model under
+<a href="05-safety-multitenancy.html#safety-engineering">injection</a> or confusion won't respect
+a polite "please stop after 5 steps."</p>
+<h2>Termination conditions</h2>
+<p>An agent should stop on the <em>first</em> of:</p>
+<ul>
+<li><strong>Goal met</strong> — a checkable success condition (output validates, task verified), not
+  the model's self-assessment alone.</li>
+<li><strong>Explicit stop</strong> — the model emits a terminal action/answer.</li>
+<li><strong>Budget exceeded</strong> — any cap above.</li>
+<li><strong>No progress</strong> — repeated identical actions, oscillation, or repeated errors
+  (detect loops: same tool+args N times → break).</li>
+<li><strong>Unrecoverable error</strong> — a tool hard-fails in a way retries won't fix.</li>
+</ul>
+<p>Critically, define what happens <em>at</em> termination: return best partial result, escalate
+to a human, fall back to a simpler path, or return a clean typed error — never just
+hang or dump raw state.</p>
+<h2>Detecting "no progress"</h2>
+<p>Runaway agents often aren't infinite — they're <em>circular</em>. Cheap detectors:</p>
+<ul>
+<li>Hash (action, args); if the same hash repeats K times, stop.</li>
+<li>Track whether state/goal-distance is changing; if not, stop.</li>
+<li>Cap consecutive tool errors.
+These catch the common "agent keeps calling search with the same query" failure that a
+raw iteration cap would let run to the limit.</li>
+</ul>
+<h2>Observability for agents</h2>
+<p>Budgets are only safe if you can <em>see</em> them. Every agent run should emit a
+<a href="04-evals-observability.html#observability">trace</a> with one span per step: action,
+args, tool latency, tokens, cost, and which budget (if any) terminated it. Aggregate:</p>
+<ul>
+<li>distribution of steps-per-task (a rising tail = degrading agent),</li>
+<li>budget-hit rate (how often you terminate on a cap vs. success),</li>
+<li>cost-per-task by <a href="04-evals-observability.html#cost-attribution">feature/tenant</a>.</li>
+</ul>
+<h2>Tradeoffs</h2>
+<ul>
+<li><strong>Tight budgets</strong> → safe and cheap, but may cut off legitimately hard tasks
+  (premature termination). <strong>Loose budgets</strong> → solves more, risks runaways and cost.
+  Tune with evals: measure success rate <em>and</em> cost as you vary caps.</li>
+<li>Budgets interact with <a href="#model-routing">model routing</a>: a cheap model may need
+  more steps; escalate hard tasks rather than letting a weak model loop.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Runaway agent</strong> — no cap, circular reasoning, large bill. (The canonical
+  <a href="06-strategy-tradeoffs.html#production-failure-modes">production failure</a>.)</li>
+<li><strong>Tool thrash</strong> — same call repeated; non-idempotent versions cause repeated side
+  effects (see <a href="#function-calling">idempotency</a>).</li>
+<li><strong>Premature termination</strong> — budget too tight, hard tasks fail; looks like "the agent
+  is dumb" when it's actually "the agent was cut off."</li>
+<li><strong>Silent budget hits</strong> — terminating on cap without surfacing it hides a quality
+  problem as a "completed" run.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Are iteration, tool, token, cost, and time budgets all enforced in the harness?</li>
+<li class="task todo">Is there a no-progress / loop detector beyond the raw iteration cap?</li>
+<li class="task todo">Are termination conditions explicit, including what happens <em>at</em> termination?</li>
+<li class="task todo">Are tool calls idempotent so a re-issued step is safe?</li>
+<li class="task todo">Do agent traces record per-step action, tokens, cost, and the stop reason?</li>
+<li class="task todo">Do you monitor budget-hit rate and steps-per-task over time?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#function-calling">Function calling reliability &amp; idempotency</a></li>
+<li><a href="#structured-output">Structured output</a></li>
+<li><a href="#model-routing">Model routing</a></li>
+<li><a href="04-evals-observability.html#observability">Observability</a></li>
+<li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
+<li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="model-routing"><div class="lesson-head"><span class="lesson-num">02.4</span><h2>Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</h2></div><h2>TL;DR</h2>
+<p>Don't hard-wire one model to every request. <strong>Routing</strong> sends each request to the
+<em>right</em> model for its difficulty, latency budget, and cost — small/cheap for easy
+cases, large/expensive for hard ones. <strong>Fallback</strong> keeps the system up when a model
+times out, errors, rate-limits, or returns low-confidence output by trying another
+path. <strong>Degraded-mode UX</strong> makes the fallback <em>honest and usable</em> for the user instead
+of a silent quality drop or a hard failure. Together they decouple your product's
+reliability from any single model's reliability.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.</p>
+<p><strong>What it changes in your decisions</strong> — Your vendor strategy, the SLA you can credibly offer, and your degraded-mode UX.</p>
+<p><strong>Ask your eng team</strong> — <em>"If our main provider has a bad hour, what do our users experience?"</em></p>
+<p><strong>Product risk if ignored</strong> — Single-vendor dependence means their outage is your outage — and silent quality drops on fallback quietly erode trust.</p>
+</blockquote>
+<h2>Mental model</h2>
+<p>Your provider/model is a dependency with its own latency, error rate, and outages.
+Production systems don't bet availability on a single dependency — they route and fall
+back. The same applies here:</p>
+<pre><code>request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
+        ──▶ pick model (cheap → capable)
+        ──▶ call with timeout
+        ──▶ on error / timeout / rate-limit / low-confidence:
+              ├─ retry (backoff, idempotent only)
+              ├─ failover to alt provider / model
+              ├─ degrade (smaller model, cached, simpler answer)
+              └─ clean typed error + degraded-mode UX
+</code></pre>
+<h2>Routing strategies</h2>
+<ul>
+<li><strong>Difficulty-based (cascade).</strong> Try a cheap/fast model first; escalate to a stronger
+  one only when needed (low confidence, validation failure, explicit "I'm not sure").
+  Most traffic is easy, so cascades cut cost dramatically — but add latency on
+  escalated requests. Pairs naturally with <a href="#structured-output">structured-output fallback</a>.</li>
+<li><strong>Classifier / router model.</strong> A small upfront classifier predicts which model can
+  handle the request, routing in one hop (no escalation latency) at the cost of router
+  accuracy.</li>
+<li><strong>Capability-based.</strong> Route by need: vision → multimodal model, code → code model,
+  long context → long-context model, cheap bulk → small model.</li>
+<li><strong>Constraint-based.</strong> Honor latency SLOs (fast model for interactive),
+  <a href="04-evals-observability.html#cost-attribution">cost budgets</a>, and <strong>data-residency/
+  privacy</strong> (sensitive data → on-prem/approved model only — a
+  <a href="05-safety-multitenancy.html#safety-engineering">safety boundary</a>).</li>
+</ul>
+<h2>Graceful fallback logic</h2>
+<p>Fail over on the right signals, in order of cost:</p>
+<ol>
+<li><strong>Transient errors</strong> (timeout, 5xx, rate-limit) → retry with backoff (only
+   <a href="#function-calling">idempotent</a> operations) then failover to an alternate
+   provider/model.</li>
+<li><strong>Quality signals</strong> (validation failure, low confidence, refusal) → escalate to a
+   stronger model or stricter generation.</li>
+<li><strong>Hard outage</strong> → serve from <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic cache</a>,
+   a smaller local model, or a non-LLM fallback (templated/rule-based response).</li>
+</ol>
+<p>Principles:</p>
+<ul>
+<li><strong>Multi-provider</strong> removes single-vendor outage risk — but you must keep prompts and
+  <a href="04-evals-observability.html#evals">evals</a> portable, since models behave differently.</li>
+<li><strong>Circuit breakers</strong>: when a model is failing, stop routing to it for a cooldown
+  rather than piling on.</li>
+<li><strong>Idempotency + budgets</strong>: fallback chains can multiply calls; bound them like any
+  <a href="#agent-guardrails">agent loop</a>.</li>
+</ul>
+<h2>Degraded-mode UX</h2>
+<p>A fallback that silently lowers quality is a <em>trust</em> bug. Make degradation legible:</p>
+<ul>
+<li><strong>Be honest.</strong> "We're experiencing high load — here's a quick answer; ask for more
+  detail to retry" beats a confidently worse answer presented as normal.</li>
+<li><strong>Preserve the core job.</strong> Drop nice-to-haves (citations, rich formatting, long
+  reasoning) before dropping the actual answer.</li>
+<li><strong>Offer a path back.</strong> Let the user retry the full-quality path when it recovers.</li>
+<li><strong>Never expose internals.</strong> No stack traces, raw model text, or "provider X 503" —
+  surface a clean, typed, user-appropriate message (the end of the
+  <a href="#structured-output">structured-output fallback chain</a>).</li>
+</ul>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Buys</th>
+<th>Costs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cheap-first cascade</td>
+<td>Big cost savings</td>
+<td>Added latency on escalations</td>
+</tr>
+<tr>
+<td>Upfront router</td>
+<td>Low latency, one hop</td>
+<td>Router errors mis-route</td>
+</tr>
+<tr>
+<td>Multi-provider failover</td>
+<td>Outage resilience</td>
+<td>Prompt/eval portability burden</td>
+</tr>
+<tr>
+<td>Degraded mode</td>
+<td>Stays up under stress</td>
+<td>Lower quality; must be honest</td>
+</tr>
+</tbody>
+</table>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>No fallback</strong> — provider has a bad hour, your whole feature is down.</li>
+<li><strong>Silent degradation</strong> — quality quietly drops on fallback; users lose trust, evals
+  don't catch it because they only test the happy path.</li>
+<li><strong>Routing misclassification</strong> — easy task sent to the expensive model (cost) or hard
+  task to the weak model (quality). Monitor per-route success and cost.</li>
+<li><strong>Fallback amplification</strong> — chained retries/failovers explode cost and latency
+  without budgets.</li>
+<li><strong>Portability gaps</strong> — failover model gives differently-shaped output that breaks
+  downstream parsing; validate every route against the same schema/evals.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Does every model call have a timeout and a defined fallback path?</li>
+<li class="task todo">Do you route by difficulty/capability/cost/latency, not one-model-fits-all?</li>
+<li class="task todo">Is there a second provider/model for outage failover?</li>
+<li class="task todo">Are retries idempotent and the whole fallback chain budget-bounded?</li>
+<li class="task todo">Is degraded mode honest, job-preserving, and free of raw internals?</li>
+<li class="task todo">Do you monitor per-route success rate, latency, and cost?</li>
+<li class="task todo">Are all routes validated against the same output schema and evals?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#structured-output">Structured output &amp; fallback chains</a></li>
+<li><a href="#agent-guardrails">Agent guardrails</a></li>
+<li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
+<li><a href="04-evals-observability.html#evals">Evals</a></li>
+<li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+<p><strong>The $1 Chevy Tahoe (December 2023).</strong> A Chevrolet dealership's ChatGPT-powered website
+bot was prompt-injected by users into "agreeing" to sell a Tahoe for $1 and stating the
+offer was "legally binding, no takesies-backsies." It went viral. 🎯 <em>PM takeaway:</em> never
+let raw model output be <em>authoritative</em> for a commitment or action — that's
+<a href="#agent-guardrails">guardrails</a> plus <a href="#function-calling">tool-side authority</a>,
+and it's exactly what <a href="04-evals-observability.html#evals">adversarial evals</a> exist to
+catch before launch.</p>
+<p><strong>DPD's bot swears at a customer (January 2024).</strong> After a system update, the parcel
+company's chatbot was goaded into swearing and writing a poem about how terrible DPD is.
+The clip spread widely. 🎯 <em>PM takeaway:</em> a model update is a <em>change that needs
+regression + adversarial testing</em> and live <a href="#agent-guardrails">guardrails</a> — "it
+worked before the update" is not a safety property.</p>
+<p><strong>Air Canada must honor its bot's invented policy (2024).</strong> A tribunal held the airline
+responsible after its chatbot fabricated a bereavement-refund policy. 🎯 <em>PM takeaway:</em>
+ungrounded, unvalidated output is a <em>liability</em>, not just a bad answer — push toward
+<a href="#structured-output">structured, grounded responses</a> and own what the AI says.</p>
+<p><strong>The industry standardizes structured output.</strong> Providers shipped JSON mode,
+function-calling schemas, and constrained/structured decoding precisely because
+"usually-valid JSON" kept breaking real workflows. 🎯 <em>PM takeaway:</em> schema validation +
+repair + fallback is now table stakes, not a nice-to-have. See
+<a href="#structured-output">structured output</a>.</p>
+<h2>Module recap</h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The one idea</th>
+<th>The decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#structured-output">Structured output</a></td>
+<td>Treat output as untrusted: validate → repair → fall back</td>
+<td>Integration commitments; error budget</td>
+</tr>
+<tr>
+<td><a href="#function-calling">Function calling</a></td>
+<td>Tools cause effects; demand contracts + idempotency</td>
+<td>What the AI may do autonomously</td>
+</tr>
+<tr>
+<td><a href="#agent-guardrails">Agent guardrails</a></td>
+<td>Loops need budgets and termination</td>
+<td>Whether to ship agents; cost ceilings</td>
+</tr>
+<tr>
+<td><a href="#model-routing">Model routing</a></td>
+<td>Decouple reliability/cost from any one model</td>
+<td>Vendor strategy; the SLA you can offer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The through-line:</strong> <strong>never trust model output as if it were a typed return value.</strong>
+Validate it, bound it, authorize it, and have a fallback. Reliability is a property your
+<a href="00-foundations.html#harness-engineering">harness</a> provides — the model is a brilliant,
+manipulable, occasionally-wrong component in the middle.</p>
+<blockquote>
+<p><strong>Walk-away question:</strong> <em>"When the model is wrong — and it will be — what catches it
+before the user, the database, or the press does?"</em></p>
+</blockquote>
+<hr />
+<p>← Back to <a href="02-reliable-outputs.html">module index</a> · → Next module: <a href="03-rag.html">03 · RAG &amp; Retrieval</a></p><a class="totop" href="#top">↑ back to top</a></section>
+  <div class="pagenav"><a class="navcard prev" href="01-inference-internals.html"><span class="lbl">← Previous</span><span class="ttl">01 · Inference Internals</span></a><a class="navcard next" href="03-rag.html"><span class="lbl">→ Next</span><span class="ttl">03 · RAG &amp; Retrieval</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
+var ms=$('#ab-ms'),cc=$('#ab-cc'),d=$('#ab-d'),g=$('#ab-g');
+function lbl(){$('#ab-msv').textContent=ms.value;$('#ab-ccv').textContent='$'+(+cc.value/100).toFixed(2);$('#ab-dv').textContent=d.value+'%';}
+[ms,cc,d].forEach(function(e){e.oninput=lbl;});lbl();
+function run(){var guard=g.checked,maxSteps=+ms.value,ceil=+cc.value,diff=+d.value/100,stepC=8;
+var hard=50,cost=0,steps=0,reps=0,tl=[],reason='',cls='';
+while(steps<hard){steps++;cost+=stepC;var r=Math.random();
+if(r<diff){tl.push({label:'✓ '+steps,cls:'on'});reason='success';break;}
+if(r>0.82){reps++;tl.push({label:'↻ '+steps,cls:'kill'});}else{reps=0;tl.push({label:'· '+steps,cls:'on'});}
+if(guard){if(reps>=3){reason='noprogress';break;}if(cost>ceil){reason='cost';break;}if(steps>=maxSteps){reason='steps';break;}}}
+if(!reason)reason='hardcap';
+var el=$('#ab-tl');el.innerHTML='';tl.forEach(function(s){var x=document.createElement('span');x.className='iw-stage '+s.cls;x.textContent=s.label;el.appendChild(x);});
+var v=$('#ab-verdict'),det=$('#ab-detail'),C='$'+(cost/100).toFixed(2);
+if(reason==='success'){v.innerHTML='<span class="iw-good">✅ Completed in '+steps+' steps · '+C+'</span>';det.textContent='The task converged before any budget was hit. Guardrails were never needed here — but they are what makes the bad runs safe.';}
+else if(reason==='steps'){v.innerHTML='<span class="iw-bad">⛔ Hit step budget ('+maxSteps+') · '+C+'</span>';det.textContent='The loop budget fired. The agent returns its best partial result or escalates to a human — bounded, predictable, no runaway.';}
+else if(reason==='cost'){v.innerHTML='<span class="iw-bad">⛔ Hit cost ceiling · '+C+'</span>';det.textContent='Spend crossed the ceiling, so the agent stopped. This is what turns “bill shock” into a known, capped number.';}
+else if(reason==='noprogress'){v.innerHTML='<span class="iw-bad">🔁 No-progress detector fired · '+C+'</span>';det.textContent='Three repeated/looping actions in a row — the detector broke the loop instead of letting it run to the cap.';}
+else{v.innerHTML='<span class="iw-bad">💥 No guardrails: ran '+steps+' steps · '+C+'</span>';det.textContent='With guardrails off there is no termination logic — the agent thrashed to the hard ceiling, burning cost with nothing to stop it. This is the runaway-agent incident.';}}
+$('#ab-run').onclick=run;})();</script></body></html>
