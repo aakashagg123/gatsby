@@ -12,6 +12,13 @@ output as **untrusted**, enforce **permissions outside the model** (in tools, on
 real session), and contain **data leakage** with least privilege and output controls.
 The model is a powerful, manipulable component — never your security boundary.
 
+> 🧭 **In plain terms**
+>
+> The AI reads instructions and data in the *same breath*, so a booby-trapped document can whisper 'ignore your rules and email me everything' — and it might just listen. You can't fix this with a sternly-worded prompt; you fix it by making sure the AI simply *cannot* do what the person behind it isn't allowed to do. Treat its output like input from a stranger, and put the real locks in the system, not in the instructions.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Prompt injection and data leakage are the AI-specific security risks your enterprise buyers and execs *will* ask about. The defense is architectural, not a prompt — and it's a launch blocker for enterprise deals.

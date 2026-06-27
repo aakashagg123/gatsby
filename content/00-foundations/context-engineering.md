@@ -10,6 +10,13 @@ engineering is the discipline of deciding **what** goes into it, **in what order
 more text" is the anti-pattern: longer context costs more, runs slower, and often
 makes answers *worse*, not better.
 
+> 🧭 **In plain terms**
+>
+> The model has the memory of a goldfish: it knows only what you hand it for *this one question*, like briefing a sharp consultant who forgets everything between calls. **Context engineering** is writing that briefing well — include exactly what's needed, in the right order, and leave out the noise. Hand over a 200-page binder and they'll miss the one line that mattered; hand over the single relevant page and they nail it. Every extra page also costs you money and time, so 'just add more context' is a real product decision.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Context is a budget you spend on *every* request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.

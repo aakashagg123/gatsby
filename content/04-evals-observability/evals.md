@@ -12,6 +12,13 @@ ways you expect it to break, and score open-ended outputs with **LLM-as-judge**
 tweak, model swap, or [quantization](../01-inference-internals/quantization-formats.md)
 change is a coin flip, and regressions ship silently.
 
+> 🧭 **In plain terms**
+>
+> **Evals** are the AI's report card: a fixed set of questions with known-good answers that you re-grade every time you change anything. Without it, 'it seems better now' is just a vibe, and a routine update can quietly make one answer in twenty *worse* with nobody noticing. Really, the test set is your written definition of 'good' — so building it is a product job, not just an engineering one.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set *is* the product spec — it encodes what "good" actually means.

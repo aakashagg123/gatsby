@@ -11,6 +11,13 @@ tokens. Per-model spend is what the provider invoices; per-*feature*/*tenant* sp
 what tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.
 
+> 🧭 **In plain terms**
+>
+> 'What does this AI feature cost?' isn't enough — you need cost *per feature, per customer, per task*, the way a business tracks margin per product line. A handful of power users can quietly destroy your profitability, and you can't price or optimize what you can only see as one big monthly bill. The total hides the story; the breakdown is where the decisions live.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — "What does this AI feature cost, and who's driving the spend?" is a core PM question. Per-tenant and per-feature cost is the foundation of pricing, packaging, and margin.

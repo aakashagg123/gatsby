@@ -11,6 +11,13 @@ per-use-case* — driven by explicit SLOs and budgets — instead of accepting w
 defaults give you. This lesson is the map that connects every other lesson in the
 repository to the axis it moves.
 
+> 🧭 **In plain terms**
+>
+> Fast, cheap, high-quality, reliable — pick your priorities, because you can't max all four at once, exactly like the old 'fast, good, cheap: choose two' triangle. Every improvement spends somewhere else. The PM's real job here is naming *which* one you're willing to trade for a given feature, instead of asking the team to deliver all four and wondering why the roadmap slips.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.

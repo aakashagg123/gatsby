@@ -11,6 +11,13 @@ the binding constraint on how many requests a GPU can serve concurrently. Managi
 it (sizing, reuse, eviction, fragmentation) is the core memory problem of LLM
 serving.
 
+> 🧭 **In plain terms**
+>
+> As the model writes an answer, it keeps a running scratchpad of everything it has read so far, so it doesn't start over on every word. That scratchpad sits in expensive, limited memory — and it's usually the real reason you can only serve so many users at once, or support conversations only so long. It's the hidden constraint behind 'why can't we just handle longer documents and more customers cheaply?'
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — This is the hidden constraint behind "why can't we just support longer context and more concurrent users cheaply." It sets your capacity ceiling and your unit economics.

@@ -12,6 +12,13 @@ on text, shared **context windows**, reused **[KV cache](../01-inference-interna
 and **retrieval indexes** without per-tenant scoping. Isolation must be enforced on
 every one of these paths, defaulting to "scoped to this tenant" everywhere.
 
+> 🧭 **In plain terms**
+>
+> When many customers share one system, the nightmare is Customer A seeing Customer B's data — usually through a shortcut, like a shared cache that forgot whose data it was holding. Every shortcut that reuses work has to remember 'whose is this?' or it leaks. There's no faster way to lose an enterprise deal, so this is a table-stakes guarantee, not a nice-to-have.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — One tenant's data appearing in another's results is *the* failure that ends B2B AI products. It's the table-stakes guarantee every enterprise buyer demands.

@@ -12,6 +12,13 @@ the prompt can't reliably get there. **Distillation** produces a smaller, cheape
 for a *narrow, high-volume* task. The expensive mistake is reaching for fine-tuning when
 you have a *knowledge* problem (use RAG) or a *prompt* problem (use ICL).
 
+> 🧭 **In plain terms**
+>
+> Four tools for four different problems — and teams routinely waste a quarter using the wrong one. Need *fresh facts*? Give it the open book (RAG). Need a *consistent style or skill*? Train it (fine-tune). Just need to *steer it today*? Tell it in the prompt. The classic, expensive mistake is 'let's train the model on our docs' when what you actually needed was the open book — cheaper, fresher, and able to cite its sources.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage *early* product decision you'll make.

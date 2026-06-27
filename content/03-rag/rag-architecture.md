@@ -11,6 +11,13 @@ the prompt; **freshness** keeps the index from lying. The generator can only ans
 from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
 retrieval bugs. Optimize retrieval first, generation second.
 
+> 🧭 **In plain terms**
+>
+> **RAG** is giving the AI an open-book exam instead of asking it to answer from memory: it looks up your actual documents before replying. The grade depends almost entirely on whether it found the right page — good filing, good search, and up-to-date files matter more than the model's raw IQ. That's why most 'the AI was wrong' moments are really 'it grabbed the wrong page,' and why fixing retrieval beats endlessly tweaking the prompt.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Most "the AI gave a wrong answer" bugs are actually *retrieval* bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.

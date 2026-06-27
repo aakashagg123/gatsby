@@ -125,11 +125,15 @@ def convert_lesson(md, cur_mod, single=False):
         md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"]
     )
     # PM callout: tag the blockquote that holds the PM briefing
-    body = re.sub(
-        r"<blockquote>(.*?For the AI-native PM.*?)</blockquote>",
-        r'<blockquote class="pm-callout">\1</blockquote>',
-        body, flags=re.DOTALL,
-    )
+    def tag_callout(html, marker, cls):
+        # match a single <blockquote>…</blockquote> that contains `marker`,
+        # without crossing into an adjacent blockquote
+        pat = (r"<blockquote>((?:(?!</blockquote>).)*?"
+               + re.escape(marker) + r".*?)</blockquote>")
+        return re.sub(pat, r'<blockquote class="%s">\1</blockquote>' % cls,
+                      html, flags=re.DOTALL)
+    body = tag_callout(body, "For the AI-native PM", "pm-callout")
+    body = tag_callout(body, "In plain terms", "plain-callout")
     # task-list checkboxes
     body = re.sub(r"<li>\[ \]\s*", '<li class="task todo">', body)
     body = re.sub(r"<li>\[x\]\s*", '<li class="task done">', body)
@@ -452,6 +456,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
   font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
+
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
 
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);

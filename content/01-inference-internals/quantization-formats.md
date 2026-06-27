@@ -13,6 +13,13 @@ usually near-lossless; 4-bit is viable *with a good method*; below that, quality
 typically collapses. Always confirm with [evals](../04-evals-observability/evals.md) —
 degradation is task-specific and invisible to the eye.
 
+> 🧭 **In plain terms**
+>
+> Compressing the model is like saving a photo at lower quality to shrink the file: often you honestly can't tell — until, past a point, faces go blocky. The 'blockiness' shows up worst on precise tasks (math, code, strict forms) and barely at all on easy ones. So 'we compressed it to save money' can be free *or* can quietly wreck your most valuable feature — the only way to know is to test before and after.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — "We quantized to save money" can be free — or it can wreck quality on exactly the hard tasks (math, code, strict JSON) your product depends on. It's a margin decision with a quality blast radius.

@@ -11,6 +11,13 @@ incident waiting to happen. Reliable structured output is a *pipeline*, not a pr
 safer options so a malformed response never reaches your business logic. The goal is a
 component that returns valid data or a clean, typed error — never garbage.
 
+> 🧭 **In plain terms**
+>
+> Often the AI is filling out a form for *another system* to read, and one stray character can jam the whole assembly line. So you check the form, ask the AI to fix any mistakes, and keep a backup plan if it still can't — instead of letting one bad form crash everything downstream. 'It usually fills it out right' is exactly how an automated workflow breaks at 2am.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.

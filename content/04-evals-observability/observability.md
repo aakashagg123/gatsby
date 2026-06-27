@@ -12,6 +12,13 @@ TTFT/TPOT), **errors**, **quality**, and **cost** on every step — plus **drift
 detection to catch the slow regressions that no deploy caused. If you can't replay
 exactly what happened on a bad request, you can't fix it.
 
+> 🧭 **In plain terms**
+>
+> AI fails *silently* — a wrong answer looks just as confident as a right one, so you can't sit back and wait for it to 'throw an error.' **Observability** is your dashboard and flight recorder: what was asked, what it cost, how long it took, and whether quality is drifting down over time. Without it, you find out about problems from churning customers instead of from your own tools.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.

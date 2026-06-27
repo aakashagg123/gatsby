@@ -12,6 +12,13 @@ or fragmented — which lets you fit more sequences and therefore batch more. To
 they turn the bandwidth-bound [decode](./prefill-vs-decode.md) phase into a
 high-throughput one.
 
+> 🧭 **In plain terms**
+>
+> Like a rideshare pooling passengers, the server handles many users' requests together to keep the very expensive hardware busy — that's what makes each answer cheap. Pack more riders in and the cost per answer drops, but any single rider might wait a little longer. This one dial quietly sets the profit margin on your AI feature, so it's a business lever, not just an engineering setting.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — This is the throughput-vs-latency dial for self-hosted inference, and it sets the *gross margin* on your AI features more than almost anything else.

@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -328,6 +337,12 @@ answer. <strong>Semantic caching</strong> returns a previously generated <em>res
 query is <em>similar</em> — it can skip the model entirely but risks returning a subtly
 wrong answer. One is a performance optimization; the other is a correctness gamble
 you must validate.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Caching means reusing work you already did so you don't pay for it twice. <strong>Prompt caching</strong> is your café remembering the prep for your regular order — same drink, just faster and cheaper, and <em>never wrong</em>. <strong>Semantic caching</strong> is the barista guessing today's order is 'close enough' to last time and handing you the old one — usually fine, occasionally the wrong drink. One is free speed; the other can quietly serve a stale or wrong answer, which is a trust (and sometimes privacy) problem, not just a performance tweak.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Caching is one of your biggest levers on cost and latency — but <em>semantic</em> caching can serve a wrong or stale answer, which is a trust and even a compliance problem, not just a performance tweak.</p>
@@ -471,6 +486,12 @@ already processed so attention doesn't recompute the whole sequence each step. T
 the binding constraint on how many requests a GPU can serve concurrently. Managing
 it (sizing, reuse, eviction, fragmentation) is the core memory problem of LLM
 serving.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>As the model writes an answer, it keeps a running scratchpad of everything it has read so far, so it doesn't start over on every word. That scratchpad sits in expensive, limited memory — and it's usually the real reason you can only serve so many users at once, or support conversations only so long. It's the hidden constraint behind 'why can't we just handle longer documents and more customers cheaply?'</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is the hidden constraint behind "why can't we just support longer context and more concurrent users cheaply." It sets your capacity ceiling and your unit economics.</p>
@@ -607,6 +628,12 @@ output tokens one at a time, each step reading the whole model and KV cache — 
 <strong>memory-bandwidth-bound</strong> and its cost scales with <em>output</em> length. They have
 different bottlenecks, so they are optimized with different techniques. Conflating
 them leads to optimizing the wrong thing.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Every answer has two parts: <em>reading</em> the question and <em>writing</em> the reply — like someone who skims a long email in a flash but then types the response one key at a time. 'It feels slow' has two completely different causes: slow to <em>start</em> answering versus slow to <em>finish</em> typing. Each has a different fix, so knowing which one you have stops you from funding the wrong speed-up.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "It feels slow" has two different causes — time-to-first-token vs. per-token speed — with different fixes. Knowing which one you have lets you fund the right latency work instead of guessing.</p>
@@ -726,6 +753,12 @@ in fixed-size, non-contiguous blocks (like OS virtual memory) so memory isn't wa
 or fragmented — which lets you fit more sequences and therefore batch more. Together
 they turn the bandwidth-bound <a href="#prefill-vs-decode">decode</a> phase into a
 high-throughput one.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Like a rideshare pooling passengers, the server handles many users' requests together to keep the very expensive hardware busy — that's what makes each answer cheap. Pack more riders in and the cost per answer drops, but any single rider might wait a little longer. This one dial quietly sets the profit margin on your AI feature, so it's a business lever, not just an engineering setting.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is the throughput-vs-latency dial for self-hosted inference, and it sets the <em>gross margin</em> on your AI features more than almost anything else.</p>
@@ -855,6 +888,12 @@ to use less memory/bandwidth — cheaper and faster, with a <em>bounded, measura
 quality risk. <strong>Distillation</strong> trains a genuinely smaller model — the biggest
 speed/cost win, but the largest and least reversible quality risk, plus real training
 cost. Pick by which resource you're short on and how much quality risk you can carry.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Three ways to make answers cheaper or faster, with different risks. (1) Let a fast junior draft while the senior just checks the work — pure speed, <em>same</em> quality. (2) Compress the model like a smaller MP3 — cheaper, with a slight quality risk. (3) Train a smaller specialist from the big model — cheapest, but only good at its one job. The first is nearly free; the other two trade away some quality you have to keep an eye on.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — These are the three knobs for "make it cheaper and faster," and each carries a <em>different</em> quality risk. Pick the wrong one and it shows up as a silent quality regression your users feel.</p>
@@ -998,6 +1037,12 @@ others) decides how cleverly you map full-precision weights into that budget. 8-
 usually near-lossless; 4-bit is viable <em>with a good method</em>; below that, quality
 typically collapses. Always confirm with <a href="04-evals-observability.html#evals">evals</a> —
 degradation is task-specific and invisible to the eye.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Compressing the model is like saving a photo at lower quality to shrink the file: often you honestly can't tell — until, past a point, faces go blocky. The 'blockiness' shows up worst on precise tasks (math, code, strict forms) and barely at all on easy ones. So 'we compressed it to save money' can be free <em>or</em> can quietly wreck your most valuable feature — the only way to know is to test before and after.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "We quantized to save money" can be free — or it can wreck quality on exactly the hard tasks (math, code, strict JSON) your product depends on. It's a margin decision with a quality blast radius.</p>

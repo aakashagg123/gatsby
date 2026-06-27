@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -322,6 +331,12 @@ are too large to memorize. <strong>Fine-tuning</strong> bakes in <em>behavior/fo
 the prompt can't reliably get there. <strong>Distillation</strong> produces a smaller, cheaper model
 for a <em>narrow, high-volume</em> task. The expensive mistake is reaching for fine-tuning when
 you have a <em>knowledge</em> problem (use RAG) or a <em>prompt</em> problem (use ICL).</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Four tools for four different problems — and teams routinely waste a quarter using the wrong one. Need <em>fresh facts</em>? Give it the open book (RAG). Need a <em>consistent style or skill</em>? Train it (fine-tune). Just need to <em>steer it today</em>? Tell it in the prompt. The classic, expensive mistake is 'let's train the model on our docs' when what you actually needed was the open book — cheaper, fresher, and able to cite its sources.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage <em>early</em> product decision you'll make.</p>
@@ -496,6 +511,12 @@ spending another. Mature AI engineering means making these tradeoffs <em>deliber
 per-use-case</em> — driven by explicit SLOs and budgets — instead of accepting whatever
 defaults give you. This lesson is the map that connects every other lesson in the
 repository to the axis it moves.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Fast, cheap, high-quality, reliable — pick your priorities, because you can't max all four at once, exactly like the old 'fast, good, cheap: choose two' triangle. Every improvement spends somewhere else. The PM's real job here is naming <em>which</em> one you're willing to trade for a given feature, instead of asking the team to deliver all four and wondering why the roadmap slips.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.</p>
@@ -680,6 +701,12 @@ degraded fallbacks). What they share is that they're <em>quiet</em>: the system 
 plausible-looking output while doing the wrong thing. This lesson is a field guide: each
 mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
 the integration test for everything else in the repository.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>These are the handful of ways AI features actually blow up in the wild: the AI invents an action, jams a form, cites stale info, loops forever, or quietly gets worse over time. What they share is that they're <em>quiet</em> — everything looks fine until it isn't. Knowing the list lets you install the seatbelts <em>before</em> the crash, which is the whole point of a pre-launch review.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap <em>before</em> the postmortem instead of after it.</p>

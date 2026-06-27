@@ -12,6 +12,13 @@ path. **Degraded-mode UX** makes the fallback *honest and usable* for the user i
 of a silent quality drop or a hard failure. Together they decouple your product's
 reliability from any single model's reliability.
 
+> 🧭 **In plain terms**
+>
+> Don't send every question to the same expensive expert. Send the easy ones to a fast, cheap helper, the hard ones to the specialist, and keep a backup for when your first choice is out sick. This keeps your product up when a vendor has an outage and keeps cost sane. And when you *do* fall back to something weaker, tell users honestly rather than quietly serving worse answers — silent downgrades erode trust.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.

@@ -12,6 +12,13 @@ query is *similar* — it can skip the model entirely but risks returning a subt
 wrong answer. One is a performance optimization; the other is a correctness gamble
 you must validate.
 
+> 🧭 **In plain terms**
+>
+> Caching means reusing work you already did so you don't pay for it twice. **Prompt caching** is your café remembering the prep for your regular order — same drink, just faster and cheaper, and *never wrong*. **Semantic caching** is the barista guessing today's order is 'close enough' to last time and handing you the old one — usually fine, occasionally the wrong drink. One is free speed; the other can quietly serve a stale or wrong answer, which is a trust (and sometimes privacy) problem, not just a performance tweak.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Caching is one of your biggest levers on cost and latency — but *semantic* caching can serve a wrong or stale answer, which is a trust and even a compliance problem, not just a performance tweak.

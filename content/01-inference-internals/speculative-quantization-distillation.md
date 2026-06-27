@@ -13,6 +13,13 @@ quality risk. **Distillation** trains a genuinely smaller model — the biggest
 speed/cost win, but the largest and least reversible quality risk, plus real training
 cost. Pick by which resource you're short on and how much quality risk you can carry.
 
+> 🧭 **In plain terms**
+>
+> Three ways to make answers cheaper or faster, with different risks. (1) Let a fast junior draft while the senior just checks the work — pure speed, *same* quality. (2) Compress the model like a smaller MP3 — cheaper, with a slight quality risk. (3) Train a smaller specialist from the big model — cheapest, but only good at its one job. The first is nearly free; the other two trade away some quality you have to keep an eye on.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — These are the three knobs for "make it cheaper and faster," and each carries a *different* quality risk. Pick the wrong one and it shows up as a silent quality regression your users feel.

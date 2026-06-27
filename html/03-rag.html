@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -315,6 +324,12 @@ search</strong> combines keyword and vector recall; <strong>reranking</strong> s
 the prompt; <strong>freshness</strong> keeps the index from lying. The generator can only answer
 from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
 retrieval bugs. Optimize retrieval first, generation second.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p><strong>RAG</strong> is giving the AI an open-book exam instead of asking it to answer from memory: it looks up your actual documents before replying. The grade depends almost entirely on whether it found the right page — good filing, good search, and up-to-date files matter more than the model's raw IQ. That's why most 'the AI was wrong' moments are really 'it grabbed the wrong page,' and why fixing retrieval beats endlessly tweaking the prompt.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI gave a wrong answer" bugs are actually <em>retrieval</em> bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.</p>
@@ -472,6 +487,12 @@ right thing?</em> and <em>did the model use it faithfully?</em> — and you must
 Retrieval is judged by <strong>recall</strong> and <strong>precision</strong>; generation-over-retrieval is
 judged by <strong>grounding</strong> (faithfulness), <strong>attribution</strong> (claims traced to sources),
 and <strong>citation quality</strong>. End-to-end answer quality alone hides which half is broken.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>If you're going to claim your AI is 'accurate' and 'sourced,' you need a way to <em>prove</em> it — grading both whether the open-book search found the right page, and whether the answer actually matches that page. Skip this and you're marketing accuracy you can't defend, and a confident made-up citation becomes a credibility — and potentially legal — problem.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — You can't claim "grounded" or "accurate" unless you measure grounding and attribution <em>separately</em>. This is what turns a marketing claim into a number you can defend to customers and legal.</p>

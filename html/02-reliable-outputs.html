@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -319,6 +328,12 @@ incident waiting to happen. Reliable structured output is a <em>pipeline</em>, n
 <strong>repair</strong> failures by feeding the error back, and <strong>fall back</strong> through progressively
 safer options so a malformed response never reaches your business logic. The goal is a
 component that returns valid data or a clean, typed error — never garbage.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Often the AI is filling out a form for <em>another system</em> to read, and one stray character can jam the whole assembly line. So you check the form, ask the AI to fix any mistakes, and keep a backup plan if it still can't — instead of letting one bad form crash everything downstream. 'It usually fills it out right' is exactly how an automated workflow breaks at 2am.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.</p>
@@ -457,6 +472,12 @@ writing to databases, sending messages, moving money. That raises the stakes fro
 API boundary with an untrusted client: <strong>tight contracts</strong>, <strong>strict argument
 validation</strong>, <strong>idempotency</strong> so retries are safe, and <strong>authorization</strong> so the model
 can't do what the user couldn't. The model proposes; your harness disposes.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>This is the moment the AI stops <em>talking</em> and starts <em>pressing buttons</em> — issuing refunds, sending emails, changing records. You'd never let a brand-new intern hit 'send payment' unsupervised, and the AI is that intern. Check what it's about to do, make sure pressing the button twice doesn't double-charge anyone, and never take its word for who's allowed to do what. A wrong sentence is embarrassing; a wrong <em>action</em> is an incident.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is where the AI stops <em>talking</em> and starts <em>doing</em> — moving money, sending email, editing records. The blast radius of a wrong action is far larger than a wrong sentence.</p>
@@ -571,6 +592,12 @@ cost) and clear <strong>termination conditions</strong>, an agent can spin forev
 or quietly run up a large bill — and because each step looks locally reasonable,
 nobody notices until the invoice or the incident. Guardrails make the worst case
 <em>bounded and observable</em> instead of open-ended.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>An 'agent' is the AI working a task in a loop — try, check, try again. Without a stopwatch and a spending limit it can spin forever or run up a bill, like a taxi meter you forgot to stop. <strong>Guardrails</strong> are the 'after N tries or $X, stop and hand off to a human' rules that make the worst case predictable. They're the difference between 'the agent occasionally costs $0.04' and 'the agent once cost us $12 and three duplicate emails.'</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.</p>
@@ -711,6 +738,12 @@ times out, errors, rate-limits, or returns low-confidence output by trying anoth
 path. <strong>Degraded-mode UX</strong> makes the fallback <em>honest and usable</em> for the user instead
 of a silent quality drop or a hard failure. Together they decouple your product's
 reliability from any single model's reliability.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Don't send every question to the same expensive expert. Send the easy ones to a fast, cheap helper, the hard ones to the specialist, and keep a backup for when your first choice is out sick. This keeps your product up when a vendor has an outage and keeps cost sane. And when you <em>do</em> fall back to something weaker, tell users honestly rather than quietly serving worse answers — silent downgrades erode trust.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.</p>

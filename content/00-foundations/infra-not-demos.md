@@ -10,6 +10,13 @@ p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
 judged by their best case; infrastructure is judged by its worst case.
 
+> 🧭 **In plain terms**
+>
+> A demo is a movie stunt done once with the cameras rolling. **Infrastructure** is that same stunt performed safely ten thousand times a day. They look identical on stage but are almost entirely different underneath — and the difference (safety checks, monitoring, cost control, fallbacks) is most of the timeline and most of what earns user trust. The work that makes a demo dazzle is not the work that makes a product dependable.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.

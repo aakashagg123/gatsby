@@ -12,6 +12,13 @@ output tokens one at a time, each step reading the whole model and KV cache — 
 different bottlenecks, so they are optimized with different techniques. Conflating
 them leads to optimizing the wrong thing.
 
+> 🧭 **In plain terms**
+>
+> Every answer has two parts: *reading* the question and *writing* the reply — like someone who skims a long email in a flash but then types the response one key at a time. 'It feels slow' has two completely different causes: slow to *start* answering versus slow to *finish* typing. Each has a different fix, so knowing which one you have stops you from funding the wrong speed-up.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — "It feels slow" has two different causes — time-to-first-token vs. per-token speed — with different fixes. Knowing which one you have lets you fund the right latency work instead of guessing.

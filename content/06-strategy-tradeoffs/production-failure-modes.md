@@ -12,6 +12,13 @@ plausible-looking output while doing the wrong thing. This lesson is a field gui
 mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
 the integration test for everything else in the repository.
 
+> 🧭 **In plain terms**
+>
+> These are the handful of ways AI features actually blow up in the wild: the AI invents an action, jams a form, cites stale info, loops forever, or quietly gets worse over time. What they share is that they're *quiet* — everything looks fine until it isn't. Knowing the list lets you install the seatbelts *before* the crash, which is the whole point of a pre-launch review.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap *before* the postmortem instead of after it.

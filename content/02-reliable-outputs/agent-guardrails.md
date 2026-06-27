@@ -11,6 +11,13 @@ or quietly run up a large bill — and because each step looks locally reasonabl
 nobody notices until the invoice or the incident. Guardrails make the worst case
 *bounded and observable* instead of open-ended.
 
+> 🧭 **In plain terms**
+>
+> An 'agent' is the AI working a task in a loop — try, check, try again. Without a stopwatch and a spending limit it can spin forever or run up a bill, like a taxi meter you forgot to stop. **Guardrails** are the 'after N tries or $X, stop and hand off to a human' rules that make the worst case predictable. They're the difference between 'the agent occasionally costs $0.04' and 'the agent once cost us $12 and three duplicate emails.'
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.

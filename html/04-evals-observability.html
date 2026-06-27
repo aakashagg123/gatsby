@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -320,6 +329,12 @@ ways you expect it to break, and score open-ended outputs with <strong>LLM-as-ju
 (calibrated against <strong>human evals</strong>). Without evals you're flying blind: every prompt
 tweak, model swap, or <a href="01-inference-internals.html#quantization-formats">quantization</a>
 change is a coin flip, and regressions ship silently.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p><strong>Evals</strong> are the AI's report card: a fixed set of questions with known-good answers that you re-grade every time you change anything. Without it, 'it seems better now' is just a vibe, and a routine update can quietly make one answer in twenty <em>worse</em> with nobody noticing. Really, the test set is your written definition of 'good' — so building it is a product job, not just an engineering one.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set <em>is</em> the product spec — it encodes what "good" actually means.</p>
@@ -476,6 +491,12 @@ end-to-end <strong>traces</strong> made of <strong>spans</strong>, with <strong>
 TTFT/TPOT), <strong>errors</strong>, <strong>quality</strong>, and <strong>cost</strong> on every step — plus <strong>drift</strong>
 detection to catch the slow regressions that no deploy caused. If you can't replay
 exactly what happened on a bad request, you can't fix it.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>AI fails <em>silently</em> — a wrong answer looks just as confident as a right one, so you can't sit back and wait for it to 'throw an error.' <strong>Observability</strong> is your dashboard and flight recorder: what was asked, what it cost, how long it took, and whether quality is drifting down over time. Without it, you find out about problems from churning customers instead of from your own tools.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.</p>
@@ -627,6 +648,12 @@ price an AI product you must attribute cost along the dimensions you make decisi
 tokens. Per-model spend is what the provider invoices; per-<em>feature</em>/<em>tenant</em> spend is
 what tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>'What does this AI feature cost?' isn't enough — you need cost <em>per feature, per customer, per task</em>, the way a business tracks margin per product line. A handful of power users can quietly destroy your profitability, and you can't price or optimize what you can only see as one big monthly bill. The total hides the story; the breakdown is where the decisions live.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "What does this AI feature cost, and who's driving the spend?" is a core PM question. Per-tenant and per-feature cost is the foundation of pricing, packaging, and margin.</p>

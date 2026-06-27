@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -313,6 +322,12 @@ optimizes the <em>system</em> that sends it: retries, validators, tool wiring, b
 fallbacks, caching, and observability. In production, the harness is where most of
 your reliability — and most of your bugs — actually live. A great prompt inside a
 naive harness is fragile; an average prompt inside a strong harness ships.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Picture the model as a brilliant but flaky contractor. The <strong>harness</strong> is the project manager, the checklist, the inspector who signs off the work, and the backup contractor on call. You'd never hand a customer a building on the contractor's word alone — and you shouldn't ship an AI feature on the model's raw output alone. What your users actually experience is mostly the <em>management system</em> around the model, not the model itself. So when reliability is the problem, the fix usually lives in that system, not in a cleverer prompt.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — The reliability your users feel comes from the system <em>around</em> the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item; the work that actually moves retention is harness work — validation, fallbacks, budgets, routing.</p>
@@ -449,6 +464,12 @@ engineering is the discipline of deciding <strong>what</strong> goes into it, <s
 <strong>in what form</strong>, and <strong>what gets left out</strong> — on every single call. "Just stuff in
 more text" is the anti-pattern: longer context costs more, runs slower, and often
 makes answers <em>worse</em>, not better.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>The model has the memory of a goldfish: it knows only what you hand it for <em>this one question</em>, like briefing a sharp consultant who forgets everything between calls. <strong>Context engineering</strong> is writing that briefing well — include exactly what's needed, in the right order, and leave out the noise. Hand over a 200-page binder and they'll miss the one line that mattered; hand over the single relevant page and they nail it. Every extra page also costs you money and time, so 'just add more context' is a real product decision.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Context is a budget you spend on <em>every</em> request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.</p>
@@ -573,6 +594,12 @@ correctly, observably, affordably, and safely — for every user, every tenant, 
 p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
 judged by their best case; infrastructure is judged by its worst case.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>A demo is a movie stunt done once with the cameras rolling. <strong>Infrastructure</strong> is that same stunt performed safely ten thousand times a day. They look identical on stage but are almost entirely different underneath — and the difference (safety checks, monitoring, cost control, fallbacks) is most of the timeline and most of what earns user trust. The work that makes a demo dazzle is not the work that makes a product dependable.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.</p>

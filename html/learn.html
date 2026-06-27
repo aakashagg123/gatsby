@@ -107,6 +107,15 @@ hr{border:none;border-top:1px solid var(--line);margin:2em 0}
 .pm-callout p{margin:.5em 0;font-size:15.5px}
 .pm-callout strong{color:var(--ink)}
 
+/* plain-terms callout (cooler tone, distinct from the coral PM callout) */
+.plain-callout{position:relative;background:linear-gradient(180deg,#EEF3F4,#EDF2F3);
+  border:1px solid #CFE0E2;border-left:4px solid #5f8c8a;border-radius:var(--radius);
+  padding:18px 22px 12px;margin:22px 0}
+.plain-callout > p:first-child{font-family:var(--sans);font-weight:600;color:#3f6a68;
+  font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin:0 0 .5em}
+.plain-callout p{margin:.5em 0;font-size:15.5px}
+.plain-callout strong{color:var(--ink)}
+
 /* generic blockquote */
 blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
   color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
@@ -312,6 +321,12 @@ optimizes the <em>system</em> that sends it: retries, validators, tool wiring, b
 fallbacks, caching, and observability. In production, the harness is where most of
 your reliability — and most of your bugs — actually live. A great prompt inside a
 naive harness is fragile; an average prompt inside a strong harness ships.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Picture the model as a brilliant but flaky contractor. The <strong>harness</strong> is the project manager, the checklist, the inspector who signs off the work, and the backup contractor on call. You'd never hand a customer a building on the contractor's word alone — and you shouldn't ship an AI feature on the model's raw output alone. What your users actually experience is mostly the <em>management system</em> around the model, not the model itself. So when reliability is the problem, the fix usually lives in that system, not in a cleverer prompt.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — The reliability your users feel comes from the system <em>around</em> the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item; the work that actually moves retention is harness work — validation, fallbacks, budgets, routing.</p>
@@ -448,6 +463,12 @@ engineering is the discipline of deciding <strong>what</strong> goes into it, <s
 <strong>in what form</strong>, and <strong>what gets left out</strong> — on every single call. "Just stuff in
 more text" is the anti-pattern: longer context costs more, runs slower, and often
 makes answers <em>worse</em>, not better.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>The model has the memory of a goldfish: it knows only what you hand it for <em>this one question</em>, like briefing a sharp consultant who forgets everything between calls. <strong>Context engineering</strong> is writing that briefing well — include exactly what's needed, in the right order, and leave out the noise. Hand over a 200-page binder and they'll miss the one line that mattered; hand over the single relevant page and they nail it. Every extra page also costs you money and time, so 'just add more context' is a real product decision.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Context is a budget you spend on <em>every</em> request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.</p>
@@ -572,6 +593,12 @@ correctly, observably, affordably, and safely — for every user, every tenant, 
 p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
 judged by their best case; infrastructure is judged by its worst case.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>A demo is a movie stunt done once with the cameras rolling. <strong>Infrastructure</strong> is that same stunt performed safely ten thousand times a day. They look identical on stage but are almost entirely different underneath — and the difference (safety checks, monitoring, cost control, fallbacks) is most of the timeline and most of what earns user trust. The work that makes a demo dazzle is not the work that makes a product dependable.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.</p>
@@ -796,6 +823,12 @@ answer. <strong>Semantic caching</strong> returns a previously generated <em>res
 query is <em>similar</em> — it can skip the model entirely but risks returning a subtly
 wrong answer. One is a performance optimization; the other is a correctness gamble
 you must validate.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Caching means reusing work you already did so you don't pay for it twice. <strong>Prompt caching</strong> is your café remembering the prep for your regular order — same drink, just faster and cheaper, and <em>never wrong</em>. <strong>Semantic caching</strong> is the barista guessing today's order is 'close enough' to last time and handing you the old one — usually fine, occasionally the wrong drink. One is free speed; the other can quietly serve a stale or wrong answer, which is a trust (and sometimes privacy) problem, not just a performance tweak.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Caching is one of your biggest levers on cost and latency — but <em>semantic</em> caching can serve a wrong or stale answer, which is a trust and even a compliance problem, not just a performance tweak.</p>
@@ -939,6 +972,12 @@ already processed so attention doesn't recompute the whole sequence each step. T
 the binding constraint on how many requests a GPU can serve concurrently. Managing
 it (sizing, reuse, eviction, fragmentation) is the core memory problem of LLM
 serving.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>As the model writes an answer, it keeps a running scratchpad of everything it has read so far, so it doesn't start over on every word. That scratchpad sits in expensive, limited memory — and it's usually the real reason you can only serve so many users at once, or support conversations only so long. It's the hidden constraint behind 'why can't we just handle longer documents and more customers cheaply?'</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is the hidden constraint behind "why can't we just support longer context and more concurrent users cheaply." It sets your capacity ceiling and your unit economics.</p>
@@ -1075,6 +1114,12 @@ output tokens one at a time, each step reading the whole model and KV cache — 
 <strong>memory-bandwidth-bound</strong> and its cost scales with <em>output</em> length. They have
 different bottlenecks, so they are optimized with different techniques. Conflating
 them leads to optimizing the wrong thing.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Every answer has two parts: <em>reading</em> the question and <em>writing</em> the reply — like someone who skims a long email in a flash but then types the response one key at a time. 'It feels slow' has two completely different causes: slow to <em>start</em> answering versus slow to <em>finish</em> typing. Each has a different fix, so knowing which one you have stops you from funding the wrong speed-up.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "It feels slow" has two different causes — time-to-first-token vs. per-token speed — with different fixes. Knowing which one you have lets you fund the right latency work instead of guessing.</p>
@@ -1194,6 +1239,12 @@ in fixed-size, non-contiguous blocks (like OS virtual memory) so memory isn't wa
 or fragmented — which lets you fit more sequences and therefore batch more. Together
 they turn the bandwidth-bound <a href="#prefill-vs-decode">decode</a> phase into a
 high-throughput one.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Like a rideshare pooling passengers, the server handles many users' requests together to keep the very expensive hardware busy — that's what makes each answer cheap. Pack more riders in and the cost per answer drops, but any single rider might wait a little longer. This one dial quietly sets the profit margin on your AI feature, so it's a business lever, not just an engineering setting.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is the throughput-vs-latency dial for self-hosted inference, and it sets the <em>gross margin</em> on your AI features more than almost anything else.</p>
@@ -1323,6 +1374,12 @@ to use less memory/bandwidth — cheaper and faster, with a <em>bounded, measura
 quality risk. <strong>Distillation</strong> trains a genuinely smaller model — the biggest
 speed/cost win, but the largest and least reversible quality risk, plus real training
 cost. Pick by which resource you're short on and how much quality risk you can carry.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Three ways to make answers cheaper or faster, with different risks. (1) Let a fast junior draft while the senior just checks the work — pure speed, <em>same</em> quality. (2) Compress the model like a smaller MP3 — cheaper, with a slight quality risk. (3) Train a smaller specialist from the big model — cheapest, but only good at its one job. The first is nearly free; the other two trade away some quality you have to keep an eye on.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — These are the three knobs for "make it cheaper and faster," and each carries a <em>different</em> quality risk. Pick the wrong one and it shows up as a silent quality regression your users feel.</p>
@@ -1466,6 +1523,12 @@ others) decides how cleverly you map full-precision weights into that budget. 8-
 usually near-lossless; 4-bit is viable <em>with a good method</em>; below that, quality
 typically collapses. Always confirm with <a href="#evals">evals</a> —
 degradation is task-specific and invisible to the eye.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Compressing the model is like saving a photo at lower quality to shrink the file: often you honestly can't tell — until, past a point, faces go blocky. The 'blockiness' shows up worst on precise tasks (math, code, strict forms) and barely at all on easy ones. So 'we compressed it to save money' can be free <em>or</em> can quietly wreck your most valuable feature — the only way to know is to test before and after.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "We quantized to save money" can be free — or it can wreck quality on exactly the hard tasks (math, code, strict JSON) your product depends on. It's a margin decision with a quality blast radius.</p>
@@ -1740,6 +1803,12 @@ incident waiting to happen. Reliable structured output is a <em>pipeline</em>, n
 <strong>repair</strong> failures by feeding the error back, and <strong>fall back</strong> through progressively
 safer options so a malformed response never reaches your business logic. The goal is a
 component that returns valid data or a clean, typed error — never garbage.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Often the AI is filling out a form for <em>another system</em> to read, and one stray character can jam the whole assembly line. So you check the form, ask the AI to fix any mistakes, and keep a backup plan if it still can't — instead of letting one bad form crash everything downstream. 'It usually fills it out right' is exactly how an automated workflow breaks at 2am.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.</p>
@@ -1878,6 +1947,12 @@ writing to databases, sending messages, moving money. That raises the stakes fro
 API boundary with an untrusted client: <strong>tight contracts</strong>, <strong>strict argument
 validation</strong>, <strong>idempotency</strong> so retries are safe, and <strong>authorization</strong> so the model
 can't do what the user couldn't. The model proposes; your harness disposes.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>This is the moment the AI stops <em>talking</em> and starts <em>pressing buttons</em> — issuing refunds, sending emails, changing records. You'd never let a brand-new intern hit 'send payment' unsupervised, and the AI is that intern. Check what it's about to do, make sure pressing the button twice doesn't double-charge anyone, and never take its word for who's allowed to do what. A wrong sentence is embarrassing; a wrong <em>action</em> is an incident.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is where the AI stops <em>talking</em> and starts <em>doing</em> — moving money, sending email, editing records. The blast radius of a wrong action is far larger than a wrong sentence.</p>
@@ -1992,6 +2067,12 @@ cost) and clear <strong>termination conditions</strong>, an agent can spin forev
 or quietly run up a large bill — and because each step looks locally reasonable,
 nobody notices until the invoice or the incident. Guardrails make the worst case
 <em>bounded and observable</em> instead of open-ended.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>An 'agent' is the AI working a task in a loop — try, check, try again. Without a stopwatch and a spending limit it can spin forever or run up a bill, like a taxi meter you forgot to stop. <strong>Guardrails</strong> are the 'after N tries or $X, stop and hand off to a human' rules that make the worst case predictable. They're the difference between 'the agent occasionally costs $0.04' and 'the agent once cost us $12 and three duplicate emails.'</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.</p>
@@ -2132,6 +2213,12 @@ times out, errors, rate-limits, or returns low-confidence output by trying anoth
 path. <strong>Degraded-mode UX</strong> makes the fallback <em>honest and usable</em> for the user instead
 of a silent quality drop or a hard failure. Together they decouple your product's
 reliability from any single model's reliability.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Don't send every question to the same expensive expert. Send the easy ones to a fast, cheap helper, the hard ones to the specialist, and keep a backup for when your first choice is out sick. This keeps your product up when a vendor has an outage and keeps cost sane. And when you <em>do</em> fall back to something weaker, tell users honestly rather than quietly serving worse answers — silent downgrades erode trust.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.</p>
@@ -2357,6 +2444,12 @@ search</strong> combines keyword and vector recall; <strong>reranking</strong> s
 the prompt; <strong>freshness</strong> keeps the index from lying. The generator can only answer
 from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
 retrieval bugs. Optimize retrieval first, generation second.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p><strong>RAG</strong> is giving the AI an open-book exam instead of asking it to answer from memory: it looks up your actual documents before replying. The grade depends almost entirely on whether it found the right page — good filing, good search, and up-to-date files matter more than the model's raw IQ. That's why most 'the AI was wrong' moments are really 'it grabbed the wrong page,' and why fixing retrieval beats endlessly tweaking the prompt.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI gave a wrong answer" bugs are actually <em>retrieval</em> bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.</p>
@@ -2514,6 +2607,12 @@ right thing?</em> and <em>did the model use it faithfully?</em> — and you must
 Retrieval is judged by <strong>recall</strong> and <strong>precision</strong>; generation-over-retrieval is
 judged by <strong>grounding</strong> (faithfulness), <strong>attribution</strong> (claims traced to sources),
 and <strong>citation quality</strong>. End-to-end answer quality alone hides which half is broken.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>If you're going to claim your AI is 'accurate' and 'sourced,' you need a way to <em>prove</em> it — grading both whether the open-book search found the right page, and whether the answer actually matches that page. Skip this and you're marketing accuracy you can't defend, and a confident made-up citation becomes a credibility — and potentially legal — problem.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — You can't claim "grounded" or "accurate" unless you measure grounding and attribution <em>separately</em>. This is what turns a marketing claim into a number you can defend to customers and legal.</p>
@@ -2739,6 +2838,12 @@ ways you expect it to break, and score open-ended outputs with <strong>LLM-as-ju
 (calibrated against <strong>human evals</strong>). Without evals you're flying blind: every prompt
 tweak, model swap, or <a href="#quantization-formats">quantization</a>
 change is a coin flip, and regressions ship silently.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p><strong>Evals</strong> are the AI's report card: a fixed set of questions with known-good answers that you re-grade every time you change anything. Without it, 'it seems better now' is just a vibe, and a routine update can quietly make one answer in twenty <em>worse</em> with nobody noticing. Really, the test set is your written definition of 'good' — so building it is a product job, not just an engineering one.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set <em>is</em> the product spec — it encodes what "good" actually means.</p>
@@ -2895,6 +3000,12 @@ end-to-end <strong>traces</strong> made of <strong>spans</strong>, with <strong>
 TTFT/TPOT), <strong>errors</strong>, <strong>quality</strong>, and <strong>cost</strong> on every step — plus <strong>drift</strong>
 detection to catch the slow regressions that no deploy caused. If you can't replay
 exactly what happened on a bad request, you can't fix it.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>AI fails <em>silently</em> — a wrong answer looks just as confident as a right one, so you can't sit back and wait for it to 'throw an error.' <strong>Observability</strong> is your dashboard and flight recorder: what was asked, what it cost, how long it took, and whether quality is drifting down over time. Without it, you find out about problems from churning customers instead of from your own tools.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.</p>
@@ -3046,6 +3157,12 @@ price an AI product you must attribute cost along the dimensions you make decisi
 tokens. Per-model spend is what the provider invoices; per-<em>feature</em>/<em>tenant</em> spend is
 what tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>'What does this AI feature cost?' isn't enough — you need cost <em>per feature, per customer, per task</em>, the way a business tracks margin per product line. A handful of power users can quietly destroy your profitability, and you can't price or optimize what you can only see as one big monthly bill. The total hides the story; the breakdown is where the decisions live.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — "What does this AI feature cost, and who's driving the spend?" is a core PM question. Per-tenant and per-feature cost is the foundation of pricing, packaging, and margin.</p>
@@ -3266,6 +3383,12 @@ no prompt that fully prevents it. Safety comes from architecture: treat all mode
 output as <strong>untrusted</strong>, enforce <strong>permissions outside the model</strong> (in tools, on the
 real session), and contain <strong>data leakage</strong> with least privilege and output controls.
 The model is a powerful, manipulable component — never your security boundary.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>The AI reads instructions and data in the <em>same breath</em>, so a booby-trapped document can whisper 'ignore your rules and email me everything' — and it might just listen. You can't fix this with a sternly-worded prompt; you fix it by making sure the AI simply <em>cannot</em> do what the person behind it isn't allowed to do. Treat its output like input from a stranger, and put the real locks in the system, not in the instructions.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Prompt injection and data leakage are the AI-specific security risks your enterprise buyers and execs <em>will</em> ask about. The defense is architectural, not a prompt — and it's a launch blocker for enterprise deals.</p>
@@ -3424,6 +3547,12 @@ systems add new leak paths that traditional multi-tenant apps don't have:
 on text, shared <strong>context windows</strong>, reused <strong><a href="#kv-cache-management">KV cache</a></strong>,
 and <strong>retrieval indexes</strong> without per-tenant scoping. Isolation must be enforced on
 every one of these paths, defaulting to "scoped to this tenant" everywhere.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>When many customers share one system, the nightmare is Customer A seeing Customer B's data — usually through a shortcut, like a shared cache that forgot whose data it was holding. Every shortcut that reuses work has to remember 'whose is this?' or it leaks. There's no faster way to lose an enterprise deal, so this is a table-stakes guarantee, not a nice-to-have.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — One tenant's data appearing in another's results is <em>the</em> failure that ends B2B AI products. It's the table-stakes guarantee every enterprise buyer demands.</p>
@@ -3654,6 +3783,12 @@ are too large to memorize. <strong>Fine-tuning</strong> bakes in <em>behavior/fo
 the prompt can't reliably get there. <strong>Distillation</strong> produces a smaller, cheaper model
 for a <em>narrow, high-volume</em> task. The expensive mistake is reaching for fine-tuning when
 you have a <em>knowledge</em> problem (use RAG) or a <em>prompt</em> problem (use ICL).</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Four tools for four different problems — and teams routinely waste a quarter using the wrong one. Need <em>fresh facts</em>? Give it the open book (RAG). Need a <em>consistent style or skill</em>? Train it (fine-tune). Just need to <em>steer it today</em>? Tell it in the prompt. The classic, expensive mistake is 'let's train the model on our docs' when what you actually needed was the open book — cheaper, fresher, and able to cite its sources.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage <em>early</em> product decision you'll make.</p>
@@ -3828,6 +3963,12 @@ spending another. Mature AI engineering means making these tradeoffs <em>deliber
 per-use-case</em> — driven by explicit SLOs and budgets — instead of accepting whatever
 defaults give you. This lesson is the map that connects every other lesson in the
 repository to the axis it moves.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>Fast, cheap, high-quality, reliable — pick your priorities, because you can't max all four at once, exactly like the old 'fast, good, cheap: choose two' triangle. Every improvement spends somewhere else. The PM's real job here is naming <em>which</em> one you're willing to trade for a given feature, instead of asking the team to deliver all four and wondering why the roadmap slips.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.</p>
@@ -4012,6 +4153,12 @@ degraded fallbacks). What they share is that they're <em>quiet</em>: the system 
 plausible-looking output while doing the wrong thing. This lesson is a field guide: each
 mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
 the integration test for everything else in the repository.</p>
+<blockquote class="plain-callout">
+<p>🧭 <strong>In plain terms</strong></p>
+<p>These are the handful of ways AI features actually blow up in the wild: the AI invents an action, jams a form, cites stale info, loops forever, or quietly gets worse over time. What they share is that they're <em>quiet</em> — everything looks fine until it isn't. Knowing the list lets you install the seatbelts <em>before</em> the crash, which is the whole point of a pre-launch review.</p>
+</blockquote>
+<!--sep-->
+
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap <em>before</em> the postmortem instead of after it.</p>

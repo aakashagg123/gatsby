@@ -10,6 +10,13 @@ fallbacks, caching, and observability. In production, the harness is where most 
 your reliability — and most of your bugs — actually live. A great prompt inside a
 naive harness is fragile; an average prompt inside a strong harness ships.
 
+> 🧭 **In plain terms**
+>
+> Picture the model as a brilliant but flaky contractor. The **harness** is the project manager, the checklist, the inspector who signs off the work, and the backup contractor on call. You'd never hand a customer a building on the contractor's word alone — and you shouldn't ship an AI feature on the model's raw output alone. What your users actually experience is mostly the *management system* around the model, not the model itself. So when reliability is the problem, the fix usually lives in that system, not in a cleverer prompt.
+
+
+<!--sep-->
+
 > 🎯 **For the AI-native PM**
 >
 > **Why it matters** — The reliability your users feel comes from the system *around* the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item; the work that actually moves retention is harness work — validation, fallbacks, budgets, routing.
