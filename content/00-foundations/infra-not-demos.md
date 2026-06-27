@@ -10,6 +10,17 @@ p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
 judged by their best case; infrastructure is judged by its worst case.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.
+>
+> **What it changes in your decisions** — Your launch-readiness criteria, your definition of done for AI features, and the expectations you set with execs.
+>
+> **Ask your eng team** — *"What would it take to operate this for a year without it surprising us?"*
+>
+> **Product risk if ignored** — Friday-demo, Monday-outage: you green-light a launch that was never operationally real.
+
+
 ## Mental model
 
 Ask of every LLM feature the same questions you'd ask of any production service:

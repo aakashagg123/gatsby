@@ -11,6 +11,17 @@ Retrieval is judged by **recall** and **precision**; generation-over-retrieval i
 judged by **grounding** (faithfulness), **attribution** (claims traced to sources),
 and **citation quality**. End-to-end answer quality alone hides which half is broken.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — You can't claim "grounded" or "accurate" unless you measure grounding and attribution *separately*. This is what turns a marketing claim into a number you can defend to customers and legal.
+>
+> **What it changes in your decisions** — The quality bar you commit to, how you report accuracy externally, and any citation guarantees.
+>
+> **Ask your eng team** — *"How do we measure that answers are actually supported by sources, instead of plausibly made up?"*
+>
+> **Product risk if ignored** — You market accuracy you can't substantiate; hallucinated citations become a credibility — and legal — problem.
+
+
 ## Why split the evaluation
 
 ```

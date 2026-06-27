@@ -12,6 +12,17 @@ TTFT/TPOT), **errors**, **quality**, and **cost** on every step — plus **drift
 detection to catch the slow regressions that no deploy caused. If you can't replay
 exactly what happened on a bad request, you can't fix it.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.
+>
+> **What it changes in your decisions** — What you instrument, your incident-response plan, and how you detect slow quality decay.
+>
+> **Ask your eng team** — *"Can we pull up exactly what happened on a specific bad request?"*
+>
+> **Product risk if ignored** — Quality drifts down for weeks with no alarm, you can't debug complaints, and you're flying blind.
+
+
 ## Mental model
 
 A single LLM request is a distributed transaction across many components (retrieval,

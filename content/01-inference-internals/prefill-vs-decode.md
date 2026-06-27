@@ -12,6 +12,17 @@ output tokens one at a time, each step reading the whole model and KV cache — 
 different bottlenecks, so they are optimized with different techniques. Conflating
 them leads to optimizing the wrong thing.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — "It feels slow" has two different causes — time-to-first-token vs. per-token speed — with different fixes. Knowing which one you have lets you fund the right latency work instead of guessing.
+>
+> **What it changes in your decisions** — Your latency SLOs, UX choices (streaming, skeleton states), and which optimization you pay for.
+>
+> **Ask your eng team** — *"Is our latency problem time-to-first-token, or tokens-per-second?"*
+>
+> **Product risk if ignored** — You fund the wrong latency fix and the number you promised the exec doesn't move.
+
+
 ## Mental model
 
 ```

@@ -13,6 +13,17 @@ quality risk. **Distillation** trains a genuinely smaller model — the biggest
 speed/cost win, but the largest and least reversible quality risk, plus real training
 cost. Pick by which resource you're short on and how much quality risk you can carry.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — These are the three knobs for "make it cheaper and faster," and each carries a *different* quality risk. Pick the wrong one and it shows up as a silent quality regression your users feel.
+>
+> **What it changes in your decisions** — Your cost-reduction roadmap, how much quality risk you'll accept, and the eval gates you require before rollout.
+>
+> **Ask your eng team** — *"Which of these are we using, and did quality hold on our eval set after we turned it on?"*
+>
+> **Product risk if ignored** — A cost-cutting change quietly degrades the experience and no one's eval catches it.
+
+
 ## The three techniques
 
 ### Speculative decoding — *free speed, same answer*

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>03 · RAG &amp; Retrieval — AI Engineering for PMs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Fraunces','Iowan Old Style',Palatino,Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+@media (max-width:880px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .content{padding:32px 22px 70px}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+}
+</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink active" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><div class="sub"><a href="#rag-architecture">RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals">Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a></div><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Module 03</span>
+    <h1>RAG &amp; Retrieval</h1>
+    <p class="lede">Grounding models in your data — and proving they actually used it.</p>
+    <div class="hero-meta">2 lessons · every lesson includes a
+      <strong>🎯 For the AI-native PM</strong> briefing</div>
+  </div>
+  <div class="intro"><p>Retrieval-Augmented Generation grounds a model in <em>your</em> data — docs, tickets, code,
+records the model never saw in training and that change every day. Done well, it's how
+you get current, attributable, domain-specific answers without retraining. Done badly,
+it's a confident model reciting the wrong or stale passage.</p>
+<ul>
+<li><a href="#rag-architecture"><strong>RAG architecture</strong></a> — the pipeline: chunking, embeddings,
+  hybrid search, reranking, and freshness. Where quality is won or lost.</li>
+<li><a href="#retrieval-evals"><strong>Retrieval evals</strong></a> — measuring it: recall, precision,
+  grounding, attribution, and citation quality. You cannot tune what you don't measure.</li>
+</ul>
+<p>RAG is applied <a href="00-foundations.html#context-engineering">context engineering</a>: the
+retriever decides what occupies the window, and the generator can only be as good as
+what the retriever found. The two lessons here are a matched pair — build the pipeline,
+then prove it works.</p>
+<hr /></div>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#rag-architecture"><span>03.1</span>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals"><span>03.2</span>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a></nav>
+  <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</h2></div><h2>TL;DR</h2>
+<p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong> decides
+what a retrievable unit <em>is</em>; <strong>embeddings</strong> decide how meaning is matched; <strong>hybrid
+search</strong> combines keyword and vector recall; <strong>reranking</strong> sharpens precision before
+the prompt; <strong>freshness</strong> keeps the index from lying. The generator can only answer
+from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
+retrieval bugs. Optimize retrieval first, generation second.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Most "the AI gave a wrong answer" bugs are actually <em>retrieval</em> bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.</p>
+<p><strong>What it changes in your decisions</strong> — What data you invest in indexing, your freshness SLAs, and whether you can promise citations.</p>
+<p><strong>Ask your eng team</strong> — <em>"When an answer is wrong, is it because we never retrieved the right source in the first place?"</em></p>
+<p><strong>Product risk if ignored</strong> — You blame the model and tune prompts for months while the real defect — retrieval — goes unfixed.</p>
+</blockquote>
+<h2>The pipeline</h2>
+<pre><code>INDEX TIME:   documents ──▶ chunk ──▶ embed ──▶ vector store (+ keyword index)
+                                  └──▶ keep fresh (re-index on change)
+
+QUERY TIME:   query ──▶ (rewrite) ──▶ hybrid search (dense + lexical)
+                    ──▶ rerank top-N ──▶ trim to budget ──▶ context + cite ──▶ generate
+</code></pre>
+<p>This is <a href="00-foundations.html#context-engineering">context engineering</a> in motion:
+retrieval is <em>how the right information gets into the window</em>.</p>
+<h2>Chunking — define the retrievable unit</h2>
+<ul>
+<li><strong>Why it matters:</strong> too big → chunks dilute relevance and waste tokens; too small →
+  you lose the context needed to answer. Chunk size is a recall/precision dial.</li>
+<li><strong>Strategies:</strong> fixed-size with <strong>overlap</strong> (simple, robust); <strong>structure-aware</strong>
+  (split on headings/sections/functions — usually better because it respects meaning);
+  <strong>semantic chunking</strong> (split where topic shifts).</li>
+<li><strong>Carry metadata</strong> on every chunk: source id, title, section, timestamp, tenant,
+  permissions. Metadata powers <a href="#retrieval-evals">citations</a>, <a href="#freshness">freshness</a>,
+  and <a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant filtering</a>.</li>
+<li><strong>Tabular/structured data</strong> often shouldn't be free-text chunked at all — consider
+  text-to-SQL or structured retrieval instead.</li>
+</ul>
+<h2>Embeddings — how meaning is matched</h2>
+<ul>
+<li>Embeddings map text to vectors so semantic nearness = vector nearness. Choice of
+  model sets your semantic ceiling.</li>
+<li><strong>Match query and document embeddings</strong> (same model/space). <strong>Domain fit matters</strong> —
+  a general embedder may miss jargon, code, or multilingual content; sometimes a
+  domain-tuned embedder is the highest-leverage change.</li>
+<li><strong>Asymmetric search:</strong> short queries vs. long passages benefit from models trained
+  for that (query/passage encoders).</li>
+<li><strong>Cost/latency:</strong> embedding dimension and model size trade retrieval quality against
+  storage and query speed. Re-embedding the whole corpus on a model change is a real
+  migration cost — version your embeddings.</li>
+</ul>
+<h2>Hybrid search — recall from two angles</h2>
+<p>Dense (vector) search captures <em>meaning</em> but can miss exact terms (IDs, error codes,
+rare names, acronyms). Lexical search (BM25/keyword) nails exact matches but misses
+paraphrase. <strong>Hybrid</strong> runs both and fuses results (e.g. Reciprocal Rank Fusion or
+weighted scores).</p>
+<ul>
+<li>Hybrid almost always beats either alone, especially for technical/enterprise corpora
+  full of exact identifiers.</li>
+<li>Add <strong>metadata filters</strong> (tenant, date, doc type, ACL) as hard constraints <em>before</em>
+  ranking — both for relevance and for <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation/security</a>.</li>
+</ul>
+<h2>Reranking — precision before the prompt</h2>
+<p>First-stage retrieval optimizes recall (cast a wide net, top-50). A <strong>cross-encoder
+reranker</strong> then scores each (query, chunk) pair jointly for true relevance and keeps
+the top few.</p>
+<ul>
+<li><strong>Why:</strong> cheaply pull many candidates, then spend a precise model on a short list.
+  This is usually the single biggest precision win in a RAG system.</li>
+<li><strong>Effect on the generator:</strong> fewer, better chunks reduce distraction and
+  <a href="00-foundations.html#context-engineering">lost-in-the-middle</a> failures, and cut
+  <a href="01-inference-internals.html#prefill-vs-decode">prefill cost</a>.</li>
+<li><strong>Cost:</strong> an extra model call and latency — but on a small candidate set, and it
+  often lets you <em>shrink</em> the context you send, paying for itself.</li>
+</ul>
+<h2>Freshness — keep the index honest</h2>
+<p>A retrieval index is a cache of your data and goes stale the moment the source changes.</p>
+<ul>
+<li><strong>Incremental indexing / CDC:</strong> re-embed and upsert on create/update/delete; don't
+  full-rebuild nightly if data changes continuously.</li>
+<li><strong>Deletions and tombstones:</strong> removed source docs must leave the index, or you'll
+  cite deleted/retracted content.</li>
+<li><strong>Recency signals:</strong> timestamp chunks and let ranking prefer recent versions; expire
+  or down-weight stale ones.</li>
+<li>Freshness failures mirror <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>:
+  a confident answer from outdated data.</li>
+</ul>
+<h2>Generation &amp; attribution</h2>
+<ul>
+<li>Pass reranked, trimmed chunks <strong>with source tags</strong> and instruct the model to answer
+  <em>from the context</em> and <strong>cite</strong> sources — enabling <a href="#retrieval-evals">grounding and citation evals</a>.</li>
+<li>Handle "<strong>not in the context</strong>" explicitly: the model should say it doesn't know
+  rather than fill the gap from parametric memory (a hallucination guard).</li>
+</ul>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Dial toward recall</th>
+<th>Dial toward precision/cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chunk size</td>
+<td>Smaller, more overlap</td>
+<td>Larger, structure-aware</td>
+</tr>
+<tr>
+<td>Retrieval k</td>
+<td>Higher k</td>
+<td>Lower k + reranking</td>
+</tr>
+<tr>
+<td>Search type</td>
+<td>Hybrid + loose filters</td>
+<td>Tight filters</td>
+</tr>
+<tr>
+<td>Reranking</td>
+<td>(skip for speed)</td>
+<td>Add for precision</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>Frequent re-index</td>
+<td>Cheaper, staler index</td>
+</tr>
+</tbody>
+</table>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Right answer never retrieved</strong> — chunking/embedding/recall problem; no prompt fixes
+  it. Measure <a href="#retrieval-evals">retrieval recall</a>.</li>
+<li><strong>Answer buried in noise</strong> — too many chunks, no reranking; distraction degrades the
+  answer.</li>
+<li><strong>Stale/deleted content cited</strong> — freshness/deletion gap.</li>
+<li><strong>Exact-match misses</strong> — dense-only search can't find an error code; add lexical.</li>
+<li><strong>Cross-tenant leakage</strong> — missing ACL/tenant filter returns another customer's docs
+  (see <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation</a>).</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Is chunking structure-aware with rich metadata (source, time, tenant, ACL)?</li>
+<li class="task todo">Do query and document embeddings share a model/space, fit to your domain?</li>
+<li class="task todo">Is search hybrid (dense + lexical) with metadata pre-filters?</li>
+<li class="task todo">Is there a reranking stage feeding a small, trimmed context?</li>
+<li class="task todo">Is the index updated incrementally, with deletions honored?</li>
+<li class="task todo">Does the prompt enforce cite-from-context and "say I don't know"?</li>
+<li class="task todo">Do you measure retrieval quality separately from answer quality?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#retrieval-evals">Retrieval evals</a></li>
+<li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
+<li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
+<li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
+<li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</h2></div><h2>TL;DR</h2>
+<p>A <a href="#rag-architecture">RAG system</a> has two failure surfaces — <em>did we retrieve the
+right thing?</em> and <em>did the model use it faithfully?</em> — and you must measure them
+<strong>separately</strong>, or you'll tune the prompt to fix a retrieval bug (or vice versa).
+Retrieval is judged by <strong>recall</strong> and <strong>precision</strong>; generation-over-retrieval is
+judged by <strong>grounding</strong> (faithfulness), <strong>attribution</strong> (claims traced to sources),
+and <strong>citation quality</strong>. End-to-end answer quality alone hides which half is broken.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — You can't claim "grounded" or "accurate" unless you measure grounding and attribution <em>separately</em>. This is what turns a marketing claim into a number you can defend to customers and legal.</p>
+<p><strong>What it changes in your decisions</strong> — The quality bar you commit to, how you report accuracy externally, and any citation guarantees.</p>
+<p><strong>Ask your eng team</strong> — <em>"How do we measure that answers are actually supported by sources, instead of plausibly made up?"</em></p>
+<p><strong>Product risk if ignored</strong> — You market accuracy you can't substantiate; hallucinated citations become a credibility — and legal — problem.</p>
+</blockquote>
+<h2>Why split the evaluation</h2>
+<pre><code>query ──▶ [ retriever ] ──chunks──▶ [ generator ] ──▶ answer
+            measure here:                measure here:
+            recall, precision            grounding, attribution, citations
+</code></pre>
+<p>If end-to-end accuracy is low, the split tells you where to invest: better
+chunking/embeddings/reranking vs. better prompting/grounding constraints. Without it,
+you're guessing. This mirrors the general <a href="04-evals-observability.html#evals">evals</a>
+discipline applied to retrieval.</p>
+<h2>Retrieval metrics</h2>
+<p>You need labeled data: queries paired with the document(s)/chunk(s) that <em>should</em> be
+retrieved (a <a href="04-evals-observability.html#evals">golden set</a> for retrieval).</p>
+<ul>
+<li><strong>Recall@k</strong> — of all relevant chunks, how many appear in the top <em>k</em>? This is the
+  ceiling on the whole system: <strong>if the right chunk isn't retrieved, no prompt can fix
+  the answer.</strong> Usually the first metric to optimize.</li>
+<li><strong>Precision@k</strong> — of the top <em>k</em> retrieved, how many are actually relevant? Low
+  precision means the <a href="00-foundations.html#context-engineering">context</a> is noisy and
+  the generator gets distracted (and you pay for junk tokens).</li>
+<li><strong>MRR / nDCG</strong> — rank-aware metrics: is the relevant chunk near the <em>top</em>, not just
+  present? Important because of <a href="00-foundations.html#context-engineering">lost-in-the-middle</a>
+  and because <a href="#rag-architecture">reranking</a> is judged on ordering.</li>
+<li><strong>Context recall vs. context precision</strong> — recall = did we get enough to answer;
+  precision = how much of what we got was needed. The classic recall/precision tension.</li>
+</ul>
+<p>Use these to tune chunk size, k, hybrid weighting, and reranking directly — each metric
+points at a specific stage.</p>
+<h2>Generation-over-retrieval metrics</h2>
+<p>Even with perfect retrieval, the model can ignore or misuse the context.</p>
+<ul>
+<li><strong>Grounding / faithfulness</strong> — is every claim in the answer <em>supported by the
+  retrieved context</em>, not invented from parametric memory? Low grounding = hallucination
+  despite good retrieval. Measure by checking each answer claim against the provided
+  chunks (often via <a href="04-evals-observability.html#evals">LLM-as-judge</a> or NLI/entailment
+  scoring).</li>
+<li><strong>Attribution</strong> — can each claim be <em>traced to the specific source</em> that supports it?
+  Stronger than grounding: not just "supported somewhere" but "supported <em>by this
+  citation</em>."</li>
+<li><strong>Citation quality</strong> — are the citations (a) <strong>present</strong> where claims need them,
+  (b) <strong>correct</strong> (the cited source actually supports the claim, not a hallucinated or
+  mismatched reference), and (c) <strong>complete</strong> (no unsupported claims left uncited)?</li>
+<li><strong>Answer relevance / completeness</strong> — does the answer actually address the question,
+  using the retrieved material?</li>
+</ul>
+<p>A useful framing (the "RAG triad"): <strong>context relevance</strong> (retrieval), <strong>groundedness</strong>
+(answer ⊆ context), and <strong>answer relevance</strong> (answer ⊆ question). All three must hold.</p>
+<h2>How to actually run these</h2>
+<ol>
+<li><strong>Build a retrieval golden set</strong> — representative queries with labeled relevant
+   chunks. Include hard cases: exact-identifier lookups, paraphrases, multi-hop,
+   "answer not in corpus."</li>
+<li><strong>Score retrieval offline</strong> (recall@k, precision@k, nDCG) on every index/chunking/
+   embedding/reranker change — cheap, deterministic, fast to iterate.</li>
+<li><strong>Score grounding/attribution</strong> with an <a href="04-evals-observability.html#evals">LLM judge</a>
+   against a rubric, spot-validated by humans; calibrate the judge before trusting it.</li>
+<li><strong>Track freshness explicitly</strong> — include time-sensitive queries whose correct answer
+   changes, to catch <a href="#rag-architecture">stale-index</a> regressions.</li>
+<li><strong>Gate changes in CI</strong> so a chunking tweak that quietly drops recall can't ship.</li>
+</ol>
+<h2>Tradeoffs &amp; what each metric pushes</h2>
+<table>
+<thead>
+<tr>
+<th>If this is low…</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recall@k</td>
+<td>Chunking/embedding/recall</td>
+<td>Hybrid search, better embedder, more overlap</td>
+</tr>
+<tr>
+<td>Precision@k</td>
+<td>Too many/loose results</td>
+<td>Reranking, tighter filters, lower k</td>
+</tr>
+<tr>
+<td>nDCG/MRR</td>
+<td>Bad ordering</td>
+<td>Reranking</td>
+</tr>
+<tr>
+<td>Grounding</td>
+<td>Model ignoring context</td>
+<td>Cite-from-context prompt, "say I don't know"</td>
+</tr>
+<tr>
+<td>Attribution/citations</td>
+<td>Weak provenance</td>
+<td>Tag chunks with source ids; enforce citation</td>
+</tr>
+</tbody>
+</table>
+<p>Don't chase recall to 100% — beyond "enough," extra chunks hurt precision, grounding,
+and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Grading only end-to-end</strong> — you can't tell whether retrieval or generation is the
+  problem, so you fix the wrong one.</li>
+<li><strong>Hallucinated citations</strong> — answer cites a source that doesn't support the claim;
+  reads authoritative, is wrong. Citation-correctness eval catches it.</li>
+<li><strong>Recall regressions hidden by the LLM</strong> — a strong model papers over weak retrieval
+  using parametric knowledge, inflating accuracy while grounding silently drops.</li>
+<li><strong>Stale golden set</strong> — labels drift from the live corpus; refresh them.</li>
+<li><strong>Untrusted judge</strong> — an uncalibrated LLM judge for grounding gives false confidence.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do you measure retrieval (recall/precision/nDCG) <em>separately</em> from answers?</li>
+<li class="task todo">Is there a labeled retrieval golden set, including "answer not in corpus"?</li>
+<li class="task todo">Do you score grounding and attribution, not just answer correctness?</li>
+<li class="task todo">Are citations checked for presence, correctness, and completeness?</li>
+<li class="task todo">Is your LLM grounding-judge calibrated against human labels?</li>
+<li class="task todo">Do retrieval evals gate index/chunking/embedding/reranker changes in CI?</li>
+<li class="task todo">Do time-sensitive queries guard against freshness regressions?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="#rag-architecture">RAG architecture</a></li>
+<li><a href="04-evals-observability.html#evals">Evals</a></li>
+<li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
+<li><a href="04-evals-observability.html#observability">Observability</a></li>
+<li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section>
+  <div class="pagenav"><a class="navcard prev" href="02-reliable-outputs.html"><span class="lbl">← Previous</span><span class="ttl">02 · Reliable Outputs &amp; Tool Use</span></a><a class="navcard next" href="04-evals-observability.html"><span class="lbl">→ Next</span><span class="ttl">04 · Evals &amp; Observability</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  </main></div></body></html>

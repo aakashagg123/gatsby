@@ -11,6 +11,17 @@ or quietly run up a large bill — and because each step looks locally reasonabl
 nobody notices until the invoice or the incident. Guardrails make the worst case
 *bounded and observable* instead of open-ended.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.
+>
+> **What it changes in your decisions** — Whether you ship autonomous agents at all, your per-task cost ceilings, and the UX for "I couldn't finish that."
+>
+> **Ask your eng team** — *"What's the most this agent can cost — or do — on a single request?"*
+>
+> **Product risk if ignored** — A runaway agent burns budget or takes too many actions: bill shock, or a trust-destroying incident.
+
+
 ## Mental model
 
 Treat the agent loop like any unbounded recursion in production: it needs a base case

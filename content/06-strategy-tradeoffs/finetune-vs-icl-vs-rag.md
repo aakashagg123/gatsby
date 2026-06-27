@@ -12,6 +12,17 @@ the prompt can't reliably get there. **Distillation** produces a smaller, cheape
 for a *narrow, high-volume* task. The expensive mistake is reaching for fine-tuning when
 you have a *knowledge* problem (use RAG) or a *prompt* problem (use ICL).
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage *early* product decision you'll make.
+>
+> **What it changes in your decisions** — Your build approach and timeline, your data investment, and whether fine-tuning is even the right project.
+>
+> **Ask your eng team** — *"Is this a knowledge problem (use RAG) or a behavior problem (maybe fine-tune)?"*
+>
+> **Product risk if ignored** — A quarter spent fine-tuning a model that's already stale, when RAG would have been cheaper, fresher, and citeable.
+
+
 ## The key distinction: knowledge vs. behavior
 
 ```

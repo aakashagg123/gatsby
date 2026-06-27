@@ -11,6 +11,17 @@ the prompt; **freshness** keeps the index from lying. The generator can only ans
 from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
 retrieval bugs. Optimize retrieval first, generation second.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Most "the AI gave a wrong answer" bugs are actually *retrieval* bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.
+>
+> **What it changes in your decisions** — What data you invest in indexing, your freshness SLAs, and whether you can promise citations.
+>
+> **Ask your eng team** — *"When an answer is wrong, is it because we never retrieved the right source in the first place?"*
+>
+> **Product risk if ignored** — You blame the model and tune prompts for months while the real defect — retrieval — goes unfixed.
+
+
 ## The pipeline
 
 ```

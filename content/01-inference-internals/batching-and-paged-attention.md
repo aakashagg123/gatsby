@@ -12,6 +12,17 @@ or fragmented — which lets you fit more sequences and therefore batch more. To
 they turn the bandwidth-bound [decode](./prefill-vs-decode.md) phase into a
 high-throughput one.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — This is the throughput-vs-latency dial for self-hosted inference, and it sets the *gross margin* on your AI features more than almost anything else.
+>
+> **What it changes in your decisions** — Build-vs-buy for inference, your margin model, and the latency-vs-cost point you choose to operate at.
+>
+> **Ask your eng team** — *"What's our cost per token at our latency target, and how much does relaxing latency a little save us?"*
+>
+> **Product risk if ignored** — The margins assumed in your business case never materialize because the serving stack was never tuned.
+
+
 ## The problem they solve
 
 Decode is **memory-bandwidth-bound**: each step streams the whole model through the

@@ -11,6 +11,17 @@ per-use-case* — driven by explicit SLOs and budgets — instead of accepting w
 defaults give you. This lesson is the map that connects every other lesson in the
 repository to the axis it moves.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.
+>
+> **What it changes in your decisions** — Your SLOs per use case, what you choose to optimize vs. protect, and how you set realistic targets.
+>
+> **Ask your eng team** — *"Which of latency / quality / cost / reliability are we choosing to trade here, and in exchange for what?"*
+>
+> **Product risk if ignored** — "Make it faster, cheaper, and better" with no target — so the team can't tell when they're done or when they've gone too far.
+
+
 ## The four axes
 
 - **Latency** — TTFT and TPOT ([prefill vs. decode](../01-inference-internals/prefill-vs-decode.md)),

@@ -12,6 +12,17 @@ path. **Degraded-mode UX** makes the fallback *honest and usable* for the user i
 of a silent quality drop or a hard failure. Together they decouple your product's
 reliability from any single model's reliability.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.
+>
+> **What it changes in your decisions** — Your vendor strategy, the SLA you can credibly offer, and your degraded-mode UX.
+>
+> **Ask your eng team** — *"If our main provider has a bad hour, what do our users experience?"*
+>
+> **Product risk if ignored** — Single-vendor dependence means their outage is your outage — and silent quality drops on fallback quietly erode trust.
+
+
 ## Mental model
 
 Your provider/model is a dependency with its own latency, error rate, and outages.

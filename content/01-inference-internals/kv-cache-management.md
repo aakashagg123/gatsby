@@ -11,6 +11,17 @@ the binding constraint on how many requests a GPU can serve concurrently. Managi
 it (sizing, reuse, eviction, fragmentation) is the core memory problem of LLM
 serving.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — This is the hidden constraint behind "why can't we just support longer context and more concurrent users cheaply." It sets your capacity ceiling and your unit economics.
+>
+> **What it changes in your decisions** — The context-length limits you expose in the product, your scaling plan, and your pricing tiers.
+>
+> **Ask your eng team** — *"What does doubling our max context length do to our cost and our capacity?"*
+>
+> **Product risk if ignored** — You promise long-context or high-concurrency features that quietly blow up cost or fall over at scale.
+
+
 ## Mental model
 
 Attention at step *t* needs the keys and values of all tokens `0..t-1`. Recomputing

@@ -12,6 +12,17 @@ on text, shared **context windows**, reused **[KV cache](../01-inference-interna
 and **retrieval indexes** without per-tenant scoping. Isolation must be enforced on
 every one of these paths, defaulting to "scoped to this tenant" everywhere.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — One tenant's data appearing in another's results is *the* failure that ends B2B AI products. It's the table-stakes guarantee every enterprise buyer demands.
+>
+> **What it changes in your decisions** — Your enterprise/security commitments, your isolation architecture, and what goes into SOC 2 and contracts.
+>
+> **Ask your eng team** — *"Are our caches and our retrieval scoped per tenant, or could one customer ever see another's data?"*
+>
+> **Product risk if ignored** — A cross-tenant leak — the single most damaging, deal-ending incident in multi-tenant AI.
+
+
 ## Mental model
 
 Every place where computation or data is **shared or reused** across requests is a

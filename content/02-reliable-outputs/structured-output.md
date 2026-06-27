@@ -11,6 +11,17 @@ incident waiting to happen. Reliable structured output is a *pipeline*, not a pr
 safer options so a malformed response never reaches your business logic. The goal is a
 component that returns valid data or a clean, typed error — never garbage.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.
+>
+> **What it changes in your decisions** — Your integration/API commitments, your error budget, and what "done" means for an AI feature that feeds other systems.
+>
+> **Ask your eng team** — *"When the model returns invalid output, does it crash, retry, or degrade gracefully?"*
+>
+> **Product risk if ignored** — One parse error takes down an entire automated workflow and erodes trust in the whole feature.
+
+
 ## Mental model
 
 Model output is **untrusted input**. You wouldn't `JSON.parse()` a request body and

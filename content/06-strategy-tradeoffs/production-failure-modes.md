@@ -12,6 +12,17 @@ plausible-looking output while doing the wrong thing. This lesson is a field gui
 mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
 the integration test for everything else in the repository.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap *before* the postmortem instead of after it.
+>
+> **What it changes in your decisions** — Your pre-launch risk review, what you choose to monitor, and what goes in the runbook.
+>
+> **Ask your eng team** — *"Which of these five failure modes can happen to us today, and what's our detection for each?"*
+>
+> **Product risk if ignored** — You learn the catalog the expensive way — one outage at a time.
+
+
 ## Why LLM failures are different
 
 In a normal service, failures throw: exceptions, 500s, timeouts. LLM failures often

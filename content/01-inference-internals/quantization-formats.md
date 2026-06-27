@@ -13,6 +13,17 @@ usually near-lossless; 4-bit is viable *with a good method*; below that, quality
 typically collapses. Always confirm with [evals](../04-evals-observability/evals.md) —
 degradation is task-specific and invisible to the eye.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — "We quantized to save money" can be free — or it can wreck quality on exactly the hard tasks (math, code, strict JSON) your product depends on. It's a margin decision with a quality blast radius.
+>
+> **What it changes in your decisions** — Whether to approve a quantization change, and which high-value task types to guard with evals.
+>
+> **Ask your eng team** — *"At what bit-width did our evals start to slip, and on which task types?"*
+>
+> **Product risk if ignored** — You bank the savings and inherit a subtle quality cliff on your highest-value workflows.
+
+
 ## What "quantize" actually means
 
 A full-precision weight is FP16/BF16 (16 bits). Quantization maps ranges of those

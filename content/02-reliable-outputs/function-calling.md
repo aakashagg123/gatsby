@@ -11,6 +11,17 @@ API boundary with an untrusted client: **tight contracts**, **strict argument
 validation**, **idempotency** so retries are safe, and **authorization** so the model
 can't do what the user couldn't. The model proposes; your harness disposes.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — This is where the AI stops *talking* and starts *doing* — moving money, sending email, editing records. The blast radius of a wrong action is far larger than a wrong sentence.
+>
+> **What it changes in your decisions** — Which actions you let the AI take autonomously vs. behind a confirmation, and your audit/compliance posture.
+>
+> **Ask your eng team** — *"If the model calls a tool with a hallucinated argument, what stops it from actually acting on it?"*
+>
+> **Product risk if ignored** — A double-charge, a wrong-customer email, or an unauthorized change — a real-world incident, not a chat mistake.
+
+
 ## Mental model
 
 The model is an **untrusted client** of your tools. Its function call is a *request*,

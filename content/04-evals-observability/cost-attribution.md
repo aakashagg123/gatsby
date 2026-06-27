@@ -11,6 +11,17 @@ tokens. Per-model spend is what the provider invoices; per-*feature*/*tenant* sp
 what tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — "What does this AI feature cost, and who's driving the spend?" is a core PM question. Per-tenant and per-feature cost is the foundation of pricing, packaging, and margin.
+>
+> **What it changes in your decisions** — Pricing and plan limits, which tenants are unprofitable, and where optimization actually pays off.
+>
+> **Ask your eng team** — *"Can we see cost per feature and per tenant — not just the total bill?"*
+>
+> **Product risk if ignored** — You price blind, a few power users quietly destroy margin, and you can't tell which feature to fix.
+
+
 ## Mental model
 
 Tokens are the currency, and every token is generated *for a reason* — a feature

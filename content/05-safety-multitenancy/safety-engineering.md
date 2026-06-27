@@ -12,6 +12,17 @@ output as **untrusted**, enforce **permissions outside the model** (in tools, on
 real session), and contain **data leakage** with least privilege and output controls.
 The model is a powerful, manipulable component — never your security boundary.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Prompt injection and data leakage are the AI-specific security risks your enterprise buyers and execs *will* ask about. The defense is architectural, not a prompt — and it's a launch blocker for enterprise deals.
+>
+> **What it changes in your decisions** — Enterprise readiness, how much autonomy you grant the AI, and the scope of your security review.
+>
+> **Ask your eng team** — *"If a malicious document enters our knowledge base, can it make the AI leak data or take an action?"*
+>
+> **Product risk if ignored** — An indirect injection exfiltrates customer data — a breach, a headline, and a collapse in trust.
+
+
 ## The core problem: no instruction/data separation
 
 In a normal program, code and input are different channels. In an LLM, the system

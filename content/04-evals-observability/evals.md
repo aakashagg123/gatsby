@@ -12,6 +12,17 @@ ways you expect it to break, and score open-ended outputs with **LLM-as-judge**
 tweak, model swap, or [quantization](../01-inference-internals/quantization-formats.md)
 change is a coin flip, and regressions ship silently.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set *is* the product spec — it encodes what "good" actually means.
+>
+> **What it changes in your decisions** — Your release gates, how you compare model options, and how you prove improvement to stakeholders.
+>
+> **Ask your eng team** — *"What's our regression eval, and does it run before every model or prompt change ships?"*
+>
+> **Product risk if ignored** — A model update silently regresses 5% of cases and you hear about it from users, not from CI.
+
+
 ## Mental model
 
 Traditional tests assert `f(x) == expected`. LLM outputs are variable and open-ended,

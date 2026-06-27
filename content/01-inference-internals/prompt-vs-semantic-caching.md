@@ -12,6 +12,17 @@ query is *similar* — it can skip the model entirely but risks returning a subt
 wrong answer. One is a performance optimization; the other is a correctness gamble
 you must validate.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Caching is one of your biggest levers on cost and latency — but *semantic* caching can serve a wrong or stale answer, which is a trust and even a compliance problem, not just a performance tweak.
+>
+> **What it changes in your decisions** — Cost targets, whether to enable semantic caching for a given feature, and the SLAs you can stand behind.
+>
+> **Ask your eng team** — *"Are we caching responses across users, and how do we know we're not serving the wrong one?"*
+>
+> **Product risk if ignored** — A loosely-tuned cache serves one user's answer to another — a privacy incident dressed up as an optimization.
+
+
 ## The two are not the same layer
 
 ```

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>06 · Strategy &amp; Tradeoffs — AI Engineering for PMs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Fraunces','Iowan Old Style',Palatino,Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-go{margin-top:auto;padding-top:14px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+@media (max-width:880px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .content{padding:32px 22px 70px}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+}
+</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink active" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><div class="sub"><a href="#finetune-vs-icl-vs-rag">Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</a><a href="#inference-stack-tradeoffs">Latency, Quality, Cost, and Reliability Across the Full Inference Stack</a><a href="#production-failure-modes">Production Failure Modes &amp; How to Engineer Around Them</a></div></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Module 06</span>
+    <h1>Strategy &amp; Tradeoffs</h1>
+    <p class="lede">Picking the right tool, and naming the cost of every choice.</p>
+    <div class="hero-meta">3 lessons · every lesson includes a
+      <strong>🎯 For the AI-native PM</strong> briefing</div>
+  </div>
+  <div class="intro"><p>The final module steps back from individual techniques to the judgment that ties them
+together: choosing the right approach, naming the cost of every choice, and recognizing
+how production systems actually break.</p>
+<ul>
+<li><a href="#finetune-vs-icl-vs-rag"><strong>Fine-tuning vs. in-context learning vs. RAG vs. distillation</strong></a>
+  — four ways to make a model do your task, and when each is the <em>wrong</em> tool.</li>
+<li><a href="#inference-stack-tradeoffs"><strong>Latency, quality, cost &amp; reliability across the inference stack</strong></a>
+  — the four-way tension every decision sits inside, top to bottom of the stack.</li>
+<li><a href="#production-failure-modes"><strong>Production failure modes</strong></a> — the recurring ways LLM
+  systems fail in the wild, mapped back to the lessons that prevent them.</li>
+</ul>
+<p>This module is where the rest of the curriculum converges: every earlier lesson is a
+point in the tradeoff space these three describe. Read it last, then revisit the others
+with the tradeoffs in mind.</p>
+<hr /></div>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#finetune-vs-icl-vs-rag"><span>06.1</span>Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</a><a href="#inference-stack-tradeoffs"><span>06.2</span>Latency, Quality, Cost, and Reliability Across the Full Inference Stack</a><a href="#production-failure-modes"><span>06.3</span>Production Failure Modes &amp; How to Engineer Around Them</a></nav>
+  <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</h2></div><h2>TL;DR</h2>
+<p>These four are not competitors; they solve <em>different problems</em>. <strong>In-context learning
+(ICL)</strong> shapes behavior via the prompt — zero infra, instant iteration, but pays tokens
+every call. <strong>RAG</strong> injects <em>knowledge</em> at query time — best for facts that change or
+are too large to memorize. <strong>Fine-tuning</strong> bakes in <em>behavior/format/style</em> — best when
+the prompt can't reliably get there. <strong>Distillation</strong> produces a smaller, cheaper model
+for a <em>narrow, high-volume</em> task. The expensive mistake is reaching for fine-tuning when
+you have a <em>knowledge</em> problem (use RAG) or a <em>prompt</em> problem (use ICL).</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage <em>early</em> product decision you'll make.</p>
+<p><strong>What it changes in your decisions</strong> — Your build approach and timeline, your data investment, and whether fine-tuning is even the right project.</p>
+<p><strong>Ask your eng team</strong> — <em>"Is this a knowledge problem (use RAG) or a behavior problem (maybe fine-tune)?"</em></p>
+<p><strong>Product risk if ignored</strong> — A quarter spent fine-tuning a model that's already stale, when RAG would have been cheaper, fresher, and citeable.</p>
+</blockquote>
+<h2>The key distinction: knowledge vs. behavior</h2>
+<pre><code>Need the model to KNOW something it doesn't?      → RAG (or ICL for small/static facts)
+Need the model to BEHAVE a certain way reliably?  → Fine-tuning (or ICL if prompt suffices)
+Need a cheaper/faster model for ONE narrow task?  → Distillation
+Just need to steer it, fast, with no infra?       → In-context learning
+</code></pre>
+<p>Most "should we fine-tune?" questions dissolve once you ask: <em>is this a knowledge gap or
+a behavior gap?</em> Fine-tuning teaches behavior, not facts — it's a poor and stale way to
+store knowledge that RAG handles live.</p>
+<h2>The four approaches</h2>
+<h3>In-context learning (ICL)</h3>
+<p>Instructions + few-shot examples in the <a href="00-foundations.html#context-engineering">context</a>;
+no weight changes.</p>
+<ul>
+<li><strong>Best for:</strong> fast iteration, prototypes, tasks a capable model can do when <em>shown how</em>,
+  low/medium volume.</li>
+<li><strong>Costs:</strong> every example is paid for on <em>every</em> call (tokens, latency,
+  <a href="01-inference-internals.html#prefill-vs-decode">prefill</a>); limited by context window;
+  can't teach truly novel behavior.</li>
+<li><strong>Wrong when:</strong> the prompt is huge and repeated at scale (fine-tune or distill to amortize),
+  or you need knowledge that changes (RAG).</li>
+</ul>
+<h3>RAG</h3>
+<p>Retrieve relevant data at query time and ground the answer in it
+(<a href="03-rag.html#rag-architecture">RAG architecture</a>).</p>
+<ul>
+<li><strong>Best for:</strong> large, changing, or proprietary knowledge; needing
+  <a href="03-rag.html#retrieval-evals">citations/attribution</a>; <a href="03-rag.html#rag-architecture">freshness</a>;
+  reducing hallucination on facts.</li>
+<li><strong>Costs:</strong> a whole pipeline to build and operate (chunking, embeddings, indexing,
+  reranking, freshness); retrieval quality caps answer quality; per-call latency + token cost.</li>
+<li><strong>Wrong when:</strong> the problem is <em>behavior/format/tone</em> (retrieval won't fix it), or the
+  knowledge is tiny and static (just put it in the prompt).</li>
+</ul>
+<h3>Fine-tuning</h3>
+<p>Update weights (often parameter-efficient, e.g. LoRA) on task examples.</p>
+<ul>
+<li><strong>Best for:</strong> consistent format/style/behavior the prompt can't reliably get; encoding
+  a domain <em>skill</em>; shortening prompts (move few-shots into weights → cheaper inference);
+  a narrow task done at high volume.</li>
+<li><strong>Costs:</strong> data curation + training pipeline; <strong>re-training on drift</strong>; risks
+  (catastrophic forgetting, overfitting); a model artifact to version, evaluate, and
+  serve; slow iteration vs. editing a prompt.</li>
+<li><strong>Wrong when:</strong> you need <em>fresh facts</em> (it's frozen at training time → RAG), you have
+  little data, or a prompt change would have sufficed. Fine-tuning to "add knowledge" is
+  the classic anti-pattern: stale, expensive, and unattributable.</li>
+</ul>
+<h3>Distillation</h3>
+<p>Train a small <strong>student</strong> to mimic a large <strong>teacher</strong>
+(<a href="01-inference-internals.html#speculative-quantization-distillation">details</a>).</p>
+<ul>
+<li><strong>Best for:</strong> a proven, narrow, <em>high-volume</em> task where a big model works but is too
+  slow/expensive; squeezing steady-state cost and latency.</li>
+<li><strong>Costs:</strong> teacher-generated data + training; lower quality ceiling; loses generality
+  (brittle off-distribution); a pipeline to maintain.</li>
+<li><strong>Wrong when:</strong> the task is broad/evolving, volume is low (not worth it), or you haven't
+  yet nailed the task with a big model (distill <em>after</em> it works).</li>
+</ul>
+<h2>Decision guide</h2>
+<ol>
+<li><strong>Start with ICL.</strong> Cheapest to try; often enough. Establish <a href="04-evals-observability.html#evals">evals</a> here.</li>
+<li><strong>Knowledge gap?</strong> → <strong>RAG</strong>. Facts that are large, proprietary, or changing; need citations.</li>
+<li><strong>Behavior gap the prompt can't close (after honest prompt effort)?</strong> → <strong>Fine-tune</strong>.
+   Format/style/skill consistency; also to shrink expensive long prompts at scale.</li>
+<li><strong>Proven narrow task, high volume, cost/latency-bound?</strong> → <strong>Distill</strong> (then optionally
+   <a href="01-inference-internals.html#quantization-formats">quantize</a> the student).</li>
+<li><strong>They compose.</strong> The mature stack is often: a (possibly fine-tuned or distilled) model,
+   <strong>with RAG</strong> for knowledge, <strong>plus ICL</strong> for per-request steering — chosen per
+   subproblem, not globally.</li>
+</ol>
+<h2>Comparison</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ICL</th>
+<th>RAG</th>
+<th>Fine-tuning</th>
+<th>Distillation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Changes</td>
+<td>Prompt</td>
+<td>Retrieved context</td>
+<td>Weights</td>
+<td>New small model</td>
+</tr>
+<tr>
+<td>Solves</td>
+<td>Steering</td>
+<td>Knowledge</td>
+<td>Behavior/format</td>
+<td>Cost/latency at scale</td>
+</tr>
+<tr>
+<td>Fresh facts</td>
+<td>Limited</td>
+<td><strong>Yes</strong></td>
+<td>No (frozen)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Iteration speed</td>
+<td>Instant</td>
+<td>Fast</td>
+<td>Slow</td>
+<td>Slow</td>
+</tr>
+<tr>
+<td>Up-front cost</td>
+<td>~None</td>
+<td>Pipeline</td>
+<td>Training</td>
+<td>Training</td>
+</tr>
+<tr>
+<td>Per-call cost</td>
+<td>High (tokens)</td>
+<td>Medium</td>
+<td>Low(er)</td>
+<td><strong>Lowest</strong></td>
+</tr>
+<tr>
+<td>Main risk</td>
+<td>Token bloat</td>
+<td>Retrieval quality</td>
+<td>Drift/overfit/stale</td>
+<td>Narrowness</td>
+</tr>
+</tbody>
+</table>
+<h2>Failure modes (using the wrong tool)</h2>
+<ul>
+<li><strong>Fine-tuning for knowledge</strong> → stale, expensive, no citations; should have been RAG.</li>
+<li><strong>RAG for a behavior problem</strong> → retrieval is perfect, output still wrong format;
+  needed prompting or fine-tuning.</li>
+<li><strong>Premature fine-tuning/distillation</strong> → committed to an artifact before the task was
+  even solved with a big model and good evals.</li>
+<li><strong>ICL at scale</strong> → a 6k-token prompt repeated millions of times; should have amortized
+  into weights (<a href="04-evals-observability.html#cost-attribution">cost attribution</a> reveals it).</li>
+<li><strong>No evals first</strong> → you can't tell whether the new approach actually helped.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Have you classified the problem as knowledge vs. behavior vs. cost?</li>
+<li class="task todo">Did you exhaust ICL (and honest prompt iteration) before training anything?</li>
+<li class="task todo">Is fresh/changing knowledge handled by RAG, not baked into weights?</li>
+<li class="task todo">Do you have evals to prove the chosen approach beats the baseline?</li>
+<li class="task todo">For fine-tune/distill: do you have a plan for drift and re-training?</li>
+<li class="task todo">Are you composing approaches per subproblem rather than picking one globally?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
+<li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
+<li><a href="01-inference-internals.html#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
+<li><a href="04-evals-observability.html#evals">Evals</a></li>
+<li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, Quality, Cost, and Reliability Across the Full Inference Stack</h2></div><h2>TL;DR</h2>
+<p>Almost every decision in an LLM system is a move in a four-way tradeoff between
+<strong>latency</strong>, <strong>quality</strong>, <strong>cost</strong>, and <strong>reliability</strong>. You rarely improve one without
+spending another. Mature AI engineering means making these tradeoffs <em>deliberately and
+per-use-case</em> — driven by explicit SLOs and budgets — instead of accepting whatever
+defaults give you. This lesson is the map that connects every other lesson in the
+repository to the axis it moves.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.</p>
+<p><strong>What it changes in your decisions</strong> — Your SLOs per use case, what you choose to optimize vs. protect, and how you set realistic targets.</p>
+<p><strong>Ask your eng team</strong> — <em>"Which of latency / quality / cost / reliability are we choosing to trade here, and in exchange for what?"</em></p>
+<p><strong>Product risk if ignored</strong> — "Make it faster, cheaper, and better" with no target — so the team can't tell when they're done or when they've gone too far.</p>
+</blockquote>
+<h2>The four axes</h2>
+<ul>
+<li><strong>Latency</strong> — TTFT and TPOT (<a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>),
+  end-to-end including retrieval/tools; judged at p95/p99, not the mean.</li>
+<li><strong>Quality</strong> — correctness, grounding, format validity, helpfulness; measured by
+  <a href="04-evals-observability.html#evals">evals</a>, not vibes.</li>
+<li><strong>Cost</strong> — $/request and per-unit economics, attributed by
+  <a href="04-evals-observability.html#cost-attribution">feature/tenant</a>.</li>
+<li><strong>Reliability</strong> — availability, graceful degradation, consistency, isolation; the
+  worst-case behavior, not the average.</li>
+</ul>
+<p>You cannot maximize all four. The job is to hit your <em>required</em> level on each and
+optimize the rest.</p>
+<h2>Same lever, different axis — the whole stack</h2>
+<p>Each technique elsewhere in this repo is a trade among the four:</p>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Helps</th>
+<th>Spends</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bigger model</td>
+<td>Quality</td>
+<td>Cost, latency</td>
+<td><a href="02-reliable-outputs.html#model-routing">Routing</a></td>
+</tr>
+<tr>
+<td>Smaller/cheaper model</td>
+<td>Cost, latency</td>
+<td>Quality</td>
+<td><a href="02-reliable-outputs.html#model-routing">Routing</a></td>
+</tr>
+<tr>
+<td>Quantization (INT4…)</td>
+<td>Cost, latency, memory</td>
+<td>Some quality</td>
+<td><a href="01-inference-internals.html#quantization-formats">Quantization</a></td>
+</tr>
+<tr>
+<td>Distillation</td>
+<td>Cost, latency</td>
+<td>Quality, generality</td>
+<td><a href="01-inference-internals.html#speculative-quantization-distillation">Distillation</a></td>
+</tr>
+<tr>
+<td>Speculative decoding</td>
+<td>Latency</td>
+<td>A little cost/memory; quality neutral</td>
+<td><a href="01-inference-internals.html#speculative-quantization-distillation">Spec decoding</a></td>
+</tr>
+<tr>
+<td>Bigger batches</td>
+<td>Cost (throughput)</td>
+<td>Per-user latency</td>
+<td><a href="01-inference-internals.html#batching-and-paged-attention">Batching</a></td>
+</tr>
+<tr>
+<td>Prompt caching</td>
+<td>Cost, latency</td>
+<td>~Nothing (lossless)</td>
+<td><a href="01-inference-internals.html#prompt-vs-semantic-caching">Caching</a></td>
+</tr>
+<tr>
+<td>Semantic caching</td>
+<td>Cost, latency</td>
+<td>Quality risk (staleness/wrong hits)</td>
+<td><a href="01-inference-internals.html#prompt-vs-semantic-caching">Caching</a></td>
+</tr>
+<tr>
+<td>More retrieved context</td>
+<td>Quality (recall)</td>
+<td>Cost, latency, distraction</td>
+<td><a href="03-rag.html#rag-architecture">RAG</a></td>
+</tr>
+<tr>
+<td>Reranking</td>
+<td>Quality (precision)</td>
+<td>A little latency/cost</td>
+<td><a href="03-rag.html#rag-architecture">RAG</a></td>
+</tr>
+<tr>
+<td>Repair loops / retries</td>
+<td>Reliability, quality</td>
+<td>Latency, cost</td>
+<td><a href="02-reliable-outputs.html#structured-output">Structured output</a></td>
+</tr>
+<tr>
+<td>Fallback / multi-provider</td>
+<td>Reliability</td>
+<td>Cost, complexity</td>
+<td><a href="02-reliable-outputs.html#model-routing">Routing</a></td>
+</tr>
+<tr>
+<td>Tight agent budgets</td>
+<td>Cost, reliability</td>
+<td>Quality on hard tasks</td>
+<td><a href="02-reliable-outputs.html#agent-guardrails">Guardrails</a></td>
+</tr>
+<tr>
+<td>Tenant-scoped caches</td>
+<td>Reliability (isolation)</td>
+<td>Cost (lower hit rate)</td>
+<td><a href="05-safety-multitenancy.html#multi-tenant-isolation">Isolation</a></td>
+</tr>
+</tbody>
+</table>
+<p>Read this table as the unifying thread: there is no globally "best" configuration, only
+the best one <em>for a given SLO</em>.</p>
+<h2>The classic tensions</h2>
+<ul>
+<li><strong>Latency ↔ Quality</strong> — a bigger model or more retrieval/reasoning is better but
+  slower. Cascades and routing let you spend latency only on hard requests.</li>
+<li><strong>Cost ↔ Quality</strong> — cheaper/smaller/quantized cuts cost and may cut quality; keep it
+  <em>within</em> a quality floor enforced by evals.</li>
+<li><strong>Latency ↔ Cost (throughput)</strong> — batching lowers $/token but raises per-user TPOT;
+  pick the operating point from your SLO.</li>
+<li><strong>Reliability ↔ Cost/Latency</strong> — retries, fallbacks, multi-provider, and isolation all
+  add cost/latency to buy resilience.</li>
+<li><strong>Quality ↔ Reliability</strong> — the most capable single model may be less <em>available</em> than
+  a routed multi-provider setup that's slightly weaker but never down.</li>
+</ul>
+<h2>How to make the tradeoff deliberately</h2>
+<ol>
+<li><strong>Set SLOs/budgets per use case.</strong> Interactive chat ≠ overnight batch job ≠
+   safety-critical workflow. Define required latency, quality floor, cost ceiling, and
+   availability <em>separately</em> for each.</li>
+<li><strong>Measure all four.</strong> <a href="04-evals-observability.html#observability">Observability</a> for
+   latency/cost/reliability, <a href="04-evals-observability.html#evals">evals</a> for quality. You
+   can't trade what you don't measure.</li>
+<li><strong>Optimize the slack, protect the floor.</strong> Improve the unconstrained axes without
+   breaching the required level on the others — e.g. cut cost via quantization <em>only if</em>
+   evals stay above the quality floor.</li>
+<li><strong>Differentiate by request.</strong> <a href="02-reliable-outputs.html#model-routing">Route</a> easy
+   traffic cheap/fast, hard traffic capable; don't pay worst-case cost for the average
+   request.</li>
+<li><strong>Revisit continuously.</strong> Models, prices, and traffic change; today's optimal point
+   drifts — re-evaluate as part of operations.</li>
+</ol>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Optimizing one axis blindly</strong> — cost-cutting that quietly tanks quality, or a
+  latency push that wrecks reliability.</li>
+<li><strong>One config for all requests</strong> — paying premium cost/latency on easy cases or starving
+  hard ones.</li>
+<li><strong>No SLOs</strong> — "make it faster/cheaper/better" with no target means you can't tell when
+  you're done or when you've gone too far.</li>
+<li><strong>Mean-driven decisions</strong> — tuning to averages while p99 latency and worst-case
+  reliability — the things users actually feel — degrade.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do you have explicit latency, quality, cost, and reliability targets per use case?</li>
+<li class="task todo">Do you measure all four (evals + observability), at the tail, not just the mean?</li>
+<li class="task todo">Does each optimization protect the floor on the axes it isn't improving?</li>
+<li class="task todo">Do you route/differentiate by request difficulty instead of one global config?</li>
+<li class="task todo">Do you re-evaluate the operating point as models, prices, and traffic change?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
+<li><a href="02-reliable-outputs.html#model-routing">Model routing</a></li>
+<li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
+<li><a href="04-evals-observability.html#evals">Evals</a></li>
+<li><a href="#production-failure-modes">Production failure modes</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production Failure Modes &amp; How to Engineer Around Them</h2></div><h2>TL;DR</h2>
+<p>LLM systems fail in a recognizable handful of ways: <strong>hallucinated tool calls</strong>,
+<strong>malformed JSON</strong>, <strong>stale retrieval</strong>, <strong>runaway agents</strong>, and <strong>silent eval
+regressions</strong> — plus their cousins (cost spikes, cross-tenant leaks, prompt injection,
+degraded fallbacks). What they share is that they're <em>quiet</em>: the system keeps returning
+plausible-looking output while doing the wrong thing. This lesson is a field guide: each
+mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
+the integration test for everything else in the repository.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI-native PM</strong></p>
+<p><strong>Why it matters</strong> — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap <em>before</em> the postmortem instead of after it.</p>
+<p><strong>What it changes in your decisions</strong> — Your pre-launch risk review, what you choose to monitor, and what goes in the runbook.</p>
+<p><strong>Ask your eng team</strong> — <em>"Which of these five failure modes can happen to us today, and what's our detection for each?"</em></p>
+<p><strong>Product risk if ignored</strong> — You learn the catalog the expensive way — one outage at a time.</p>
+</blockquote>
+<h2>Why LLM failures are different</h2>
+<p>In a normal service, failures throw: exceptions, 500s, timeouts. LLM failures often
+<strong>succeed loudly and are wrong quietly</strong> — a hallucination reads like a fact, a malformed
+plan parses far enough to act, a stale answer looks current. So the engineering response
+isn't just error handling; it's <strong>validation, bounding, grounding, and measurement</strong> that
+make silent failures <em>visible and contained</em>.</p>
+<h2>The catalog</h2>
+<h3>1. Hallucinated tool calls</h3>
+<ul>
+<li><strong>What:</strong> the model invents a tool, a parameter, or a plausible-but-fake argument
+  (a non-existent id, an invalid enum), then "acts."</li>
+<li><strong>Why:</strong> model output is treated as a trusted command; arguments aren't checked against
+  the real system.</li>
+<li><strong>Detect:</strong> tool-name/arg validation failures; downstream "not found" errors;
+  <a href="04-evals-observability.html#observability">traces</a> of rejected calls.</li>
+<li><strong>Engineer around it:</strong> strict <a href="02-reliable-outputs.html#function-calling">tool contracts + argument validation</a>;
+  validate args against the system of record; structured, actionable tool errors;
+  <a href="02-reliable-outputs.html#function-calling">idempotency</a> so a bad-then-retried call is safe.</li>
+</ul>
+<h3>2. Malformed JSON / structured output</h3>
+<ul>
+<li><strong>What:</strong> output doesn't parse or violates the schema; a markdown fence, a trailing
+  comma, a missing field takes down a workflow.</li>
+<li><strong>Why:</strong> trusting raw generation; no validation; sometimes worsened by
+  <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a> hurting
+  format adherence.</li>
+<li><strong>Detect:</strong> parse/validation failure rate; repair rate trend.</li>
+<li><strong>Engineer around it:</strong> <a href="02-reliable-outputs.html#structured-output">constrained decoding + schema validation + bounded repair +
+  fallback chain</a>; never <code>JSON.parse</code> without
+  a schema; track validity after model/quantization changes.</li>
+</ul>
+<h3>3. Stale retrieval</h3>
+<ul>
+<li><strong>What:</strong> RAG cites outdated, deleted, or superseded content — confidently wrong on
+  facts that <em>changed</em>.</li>
+<li><strong>Why:</strong> the index is a cache that drifted from the source; deletions not propagated;
+  no recency signals. (Same shape as <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>.)</li>
+<li><strong>Detect:</strong> <a href="03-rag.html#retrieval-evals">freshness evals</a> with time-sensitive queries;
+  recall/grounding trends; user "that's out of date" signals.</li>
+<li><strong>Engineer around it:</strong> incremental indexing + deletion handling + recency ranking
+  (<a href="03-rag.html#rag-architecture">RAG freshness</a>); cache TTLs/invalidation; "say I don't
+  know" when context is absent.</li>
+</ul>
+<h3>4. Runaway agents</h3>
+<ul>
+<li><strong>What:</strong> an agent loops, thrashes a tool, or fans out — burning time and money, often
+  <em>circularly</em> rather than infinitely.</li>
+<li><strong>Why:</strong> no budgets, no termination/no-progress detection; non-idempotent tools amplify
+  the damage.</li>
+<li><strong>Detect:</strong> budget-hit rate, steps-per-task distribution, <a href="04-evals-observability.html#cost-attribution">cost</a>
+  spikes by feature/tenant, repeated identical actions.</li>
+<li><strong>Engineer around it:</strong> <a href="02-reliable-outputs.html#agent-guardrails">loop/tool/token/cost/time budgets + termination + no-progress
+  detection</a>; idempotent tools; per-tenant
+  cost alerts.</li>
+</ul>
+<h3>5. Silent eval regressions</h3>
+<ul>
+<li><strong>What:</strong> quality drops with <em>no code change</em> — a provider model update, a prompt tweak
+  with side effects, <a href="04-evals-observability.html#observability">drift</a> in data/inputs —
+  and nobody notices for weeks.</li>
+<li><strong>Why:</strong> no regression gate; reliance on "it looked fine"; aggregate metrics hiding a
+  category cliff.</li>
+<li><strong>Detect:</strong> <a href="04-evals-observability.html#evals">regression evals in CI</a>; scheduled
+  re-runs; per-stratum deltas; online quality proxies + drift monitors.</li>
+<li><strong>Engineer around it:</strong> golden sets gating every change; stratified reporting;
+  production sampling feeding back into evals.</li>
+</ul>
+<h2>The cousins (don't forget these)</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Detect</th>
+<th>Harden with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cost spike</strong></td>
+<td>per-feature/tenant cost alerts</td>
+<td><a href="04-evals-observability.html#cost-attribution">Cost attribution</a>, budgets</td>
+</tr>
+<tr>
+<td><strong>Cross-tenant leak</strong></td>
+<td>adversarial isolation tests</td>
+<td><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></td>
+</tr>
+<tr>
+<td><strong>Prompt injection / exfiltration</strong></td>
+<td>injection evals, egress monitoring</td>
+<td><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></td>
+</tr>
+<tr>
+<td><strong>Provider outage</strong></td>
+<td>error-rate alerts</td>
+<td><a href="02-reliable-outputs.html#model-routing">Routing &amp; fallback</a></td>
+</tr>
+<tr>
+<td><strong>Silent degraded mode</strong></td>
+<td>route/quality monitoring</td>
+<td>Honest <a href="02-reliable-outputs.html#model-routing">degraded-mode UX</a></td>
+</tr>
+<tr>
+<td><strong>Latency tail blowup</strong></td>
+<td>p99 TTFT/TPOT, KV/preemption metrics</td>
+<td><a href="01-inference-internals.html#kv-cache-management">Batching/KV</a></td>
+</tr>
+<tr>
+<td><strong>Cache-busting prefix</strong></td>
+<td>cache-hit-rate metric</td>
+<td><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt caching</a></td>
+</tr>
+</tbody>
+</table>
+<h2>The common cure</h2>
+<p>Every mode above is defeated by the same four habits — the thesis of this whole
+repository:</p>
+<ol>
+<li><strong>Treat model output as untrusted</strong> → validate, bound, authorize.</li>
+<li><strong>Put brakes on everything</strong> → budgets, timeouts, fallbacks.</li>
+<li><strong>Ground and isolate</strong> → cite from context; scope by tenant.</li>
+<li><strong>Measure relentlessly</strong> → <a href="04-evals-observability.html#evals">evals</a> before shipping,
+   <a href="04-evals-observability.html#observability">observability</a> while running, and feed
+   incidents back into both.</li>
+</ol>
+<p>This is the difference between <a href="00-foundations.html#infra-not-demos">a demo and infrastructure</a>.</p>
+<h2>Practitioner checklist (pre-launch failure review)</h2>
+<ul>
+<li class="task todo">Are tool calls validated so a hallucinated call can't act?</li>
+<li class="task todo">Is every structured output schema-validated with bounded repair + fallback?</li>
+<li class="task todo">Is the retrieval index fresh, with deletions handled and time-sensitive evals?</li>
+<li class="task todo">Does every agent have enforced budgets and no-progress termination?</li>
+<li class="task todo">Do regression evals gate changes, with scheduled re-runs and drift monitoring?</li>
+<li class="task todo">Are cost, isolation, injection, outage, and latency-tail risks each covered?</li>
+<li class="task todo">Does every incident become a new permanent eval case?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="00-foundations.html#harness-engineering">Harness engineering</a></li>
+<li><a href="00-foundations.html#infra-not-demos">Shipping as infrastructure, not demos</a></li>
+<li><a href="02-reliable-outputs.html#structured-output">Structured output</a></li>
+<li><a href="02-reliable-outputs.html#function-calling">Function calling</a></li>
+<li><a href="02-reliable-outputs.html#agent-guardrails">Agent guardrails</a></li>
+<li><a href="04-evals-observability.html#evals">Evals</a> · <a href="04-evals-observability.html#observability">Observability</a></li>
+<li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
+</ul><a class="totop" href="#top">↑ back to top</a></section>
+  <div class="pagenav"><a class="navcard prev" href="05-safety-multitenancy.html"><span class="lbl">← Previous</span><span class="ttl">05 · Safety &amp; Multi-tenancy</span></a><span></span></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  </main></div></body></html>

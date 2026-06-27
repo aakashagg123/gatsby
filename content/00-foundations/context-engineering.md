@@ -10,6 +10,17 @@ engineering is the discipline of deciding **what** goes into it, **in what order
 more text" is the anti-pattern: longer context costs more, runs slower, and often
 makes answers *worse*, not better.
 
+> 🎯 **For the AI-native PM**
+>
+> **Why it matters** — Context is a budget you spend on *every* request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.
+>
+> **What it changes in your decisions** — What data you invest in making retrievable, how you scope memory/personalization features, and your cost-per-interaction.
+>
+> **Ask your eng team** — *"What's actually in the context window on a typical request, and what does each part cost us?"*
+>
+> **Product risk if ignored** — Prompt creep quietly triples unit cost and *lowers* quality — invisible until the invoice or the churn shows up.
+
+
 ## Mental model
 
 Treat the context window like a working set in a memory hierarchy, not a junk
