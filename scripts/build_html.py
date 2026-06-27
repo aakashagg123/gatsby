@@ -71,6 +71,30 @@ def rewrite_links_in_md(md, cur_mod):
         return f"[{text}]({rewrite_target(target, cur_mod)})"
     return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", repl, md)
 
+def rewrite_target_single(target, cur_mod):
+    """Rewrite a link target to an in-page anchor for the one-file bundle."""
+    if target.startswith(("http://", "https://", "mailto:", "#")):
+        return target
+    base = target.split("#")[0]
+    resolved = os.path.normpath(os.path.join("content", cur_mod, base)).replace("\\", "/")
+    if resolved in ("README.md", "SUMMARY.md", "GLOSSARY.md"):
+        return "#top"
+    m = re.match(r"content/(\d\d-[\w-]+)/(.+)$", resolved)
+    if m:
+        mod, fname = m.group(1), m.group(2)
+        if fname == "README.md":
+            return f"#mod-{mod}"
+        if fname == "recap.md":
+            return f"#recap-{mod}"
+        lesson = fname[:-3] if fname.endswith(".md") else fname
+        return f"#{lesson}"
+    return target
+
+def rewrite_links_single(md, cur_mod):
+    def repl(m):
+        return f"[{m.group(1)}]({rewrite_target_single(m.group(2).strip(), cur_mod)})"
+    return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", repl, md)
+
 _MARKER = re.compile(r"^([-*+]\s+|\d+\.\s+)")
 def ensure_blank_before_lists(md):
     """CommonMark lets a bullet list interrupt a paragraph; python-markdown does
@@ -89,11 +113,11 @@ def ensure_blank_before_lists(md):
     return "\n".join(out)
 
 # ---- markdown -> styled html fragment -----------------------------------------
-def convert_lesson(md, cur_mod):
+def convert_lesson(md, cur_mod, single=False):
     # strip the "*Part of [..](./README.md)*" breadcrumb line (redundant in HTML)
     lines = [l for l in md.split("\n") if not l.strip().startswith("*Part of ")]
     md = "\n".join(lines)
-    md = rewrite_links_in_md(md, cur_mod)
+    md = (rewrite_links_single if single else rewrite_links_in_md)(md, cur_mod)
     # drop the leading H1 (lesson title is rendered by the section header)
     md = re.sub(r"\A\s*#\s+.*\n", "", md, count=1)
     md = ensure_blank_before_lists(md)
@@ -822,12 +846,108 @@ recompute();})();''',
 },
 }
 
+# ---- build the single-file bundle (one HTML, fully offline) -------------------
+def build_single():
+    nav = "".join(f'<a href="#mod-{s}">{num}</a>' for (s, num, *_ ) in MODULES)
+    side = ['<a class="modlink" href="#top"><span class="num">★</span>Home</a>']
+    blocks = []
+    for idx, (slug, num, title, desc, lessons) in enumerate(MODULES):
+        folder = os.path.join(CONTENT, slug)
+        side.append(f'<a class="modlink" href="#mod-{slug}"><span class="num">{num}</span>{htmllib.escape(title)}</a>')
+        with open(os.path.join(folder, "README.md")) as f:
+            readme = f.read()
+        readme = "\n".join(l for l in readme.split("\n")
+                           if not l.strip().startswith(("←", "→ Next", "↩")))
+        readme = re.sub(r"\A\s*#\s+.*\n", "", readme, count=1)
+        intro = markdown.markdown(ensure_blank_before_lists(rewrite_links_single(readme, slug)),
+                                  extensions=["tables", "fenced_code", "sane_lists"])
+        # interactive (scoped container id so the 7 widgets don't collide)
+        iw = INTERACTIVES.get(slug)
+        iw_html, iw_js = "", ""
+        if iw:
+            cid = "iw-" + slug
+            iw_html = (f'<section class="interactive" id="{cid}"><div class="iw-head">'
+                       f'<span class="tag">Interactive</span><h3>{htmllib.escape(iw["title"])}</h3></div>'
+                       f'<div class="iw-body">{iw["html"]}</div></section>')
+            iw_js = iw["js"].replace("document.getElementById('interactive')",
+                                     "document.getElementById('%s')" % cid)
+            BUNDLE_JS.append(iw_js)
+        # lessons
+        toc = "".join(f'<a href="#{lid}"><span>{num}.{i}</span>'
+                      f'{htmllib.escape(lesson_title(open(os.path.join(folder, lid+".md")).read()))}</a>'
+                      for i, lid in enumerate(lessons, 1))
+        secs = []
+        for i, lid in enumerate(lessons, 1):
+            with open(os.path.join(folder, f"{lid}.md")) as f:
+                lmd = f.read()
+            secs.append(f'<section class="lesson" id="{lid}"><div class="lesson-head">'
+                        f'<span class="lesson-num">{num}.{i}</span><h2>{htmllib.escape(lesson_title(lmd))}</h2></div>'
+                        f'{convert_lesson(lmd, slug, single=True)}'
+                        f'<a class="totop" href="#top">↑ back to top</a></section>')
+        recap_html = ""
+        rp = os.path.join(folder, "recap.md")
+        if os.path.exists(rp):
+            recap_html = (f'<section class="recap" id="recap-{slug}"><div class="recap-head">'
+                          f'<span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div>'
+                          f'{convert_lesson(open(rp).read(), slug, single=True)}'
+                          f'<a class="totop" href="#top">↑ back to top</a></section>')
+        blocks.append(
+            f'<section class="modblock" id="mod-{slug}"><div class="hero">'
+            f'<span class="chip">Module {num}</span><h1>{htmllib.escape(title)}</h1>'
+            f'<p class="lede">{htmllib.escape(desc)}</p>'
+            f'<div class="hero-meta">{len(lessons)} lessons · interactive demo · every lesson includes a '
+            f'<strong>🎯 For the AI-native PM</strong> briefing</div></div>'
+            f'<div class="intro">{intro}</div>'
+            f'<nav class="toc"><div class="toc-h">In this module</div>{toc}</nav>'
+            f'{iw_html}{"".join(secs)}{recap_html}</section>')
+
+    cards = "".join(
+        f'<a class="card" href="#mod-{s}"><span class="card-num">{num}</span>'
+        f'<h3>{htmllib.escape(t)}</h3><p>{htmllib.escape(d)}</p>'
+        f'<span class="card-iw">◆ interactive demo + recap</span>'
+        f'<span class="card-go">Jump to module →</span></a>'
+        for (s, num, t, d, _l) in MODULES)
+
+    page = head("AI Engineering — Learn (single-file edition)")
+    page += (f'<header class="topbar"><a class="brand" href="#top">{SPARK}'
+             f'<span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>'
+             f'<nav class="topnav">{nav}</nav></header>')
+    page += '<div class="layout"><aside class="sidebar"><div class="sticky">' + "".join(side) + '</div></aside>'
+    page += f'''<main class="content" id="top">
+  <div class="index-hero" style="text-align:left;padding-top:6px">
+    <span class="chip">Single-file edition · open anywhere, offline</span>
+    <h1 style="font-size:46px">AI Engineering,<br/><em>from scratch to production.</em></h1>
+    <p class="lede">The whole curriculum — 7 modules, 23 lessons, 7 interactive demos, and per-module
+      recaps with real-world examples — in one self-contained page for
+      <strong>Senior &amp; Principal PMs</strong> going AI-native.</p>
+  </div>
+  <div class="pm-band"><span class="pm-ic">🎯</span><div><strong>Built for the AI-native PM.</strong>
+    Every lesson pairs the real mechanics with a briefing: why it matters, what it changes in your
+    decisions, the question to ask your eng team, and the product risk if you ignore it.</div></div>
+  <h2 class="sec" style="text-align:left">Jump to a module</h2>
+  <div class="cards">{cards}</div>
+  {''.join(blocks)}
+  <footer class="foot">Educational content. Use it, fork it, teach from it. ·
+    Inspired by the topic list at <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></footer>
+  </main></div>'''
+    spy = ('(function(){var links=[].slice.call(document.querySelectorAll(".sidebar .modlink"));'
+           'var ids=links.map(function(a){return a.getAttribute("href").slice(1);});'
+           'function spy(){var y=window.scrollY+120,cur=0;ids.forEach(function(id,i){var el=document.getElementById(id);'
+           'if(el&&el.offsetTop<=y)cur=i;});links.forEach(function(a,i){a.classList.toggle("active",i===cur);});}'
+           'window.addEventListener("scroll",spy);spy();})();')
+    page += "<script>" + "\n".join(BUNDLE_JS) + "\n" + spy + "</script></body></html>"
+    with open(os.path.join(OUT, "learn.html"), "w") as f:
+        f.write(page)
+
+BUNDLE_JS = []
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for i in range(len(MODULES)):
         build_module(i)
     build_index()
-    print(f"Built {len(MODULES)} module pages + index.html into {OUT}/")
+    build_single()
+    print(f"Built {len(MODULES)} module pages + index.html + learn.html into {OUT}/")
 
 if __name__ == "__main__":
     main()
