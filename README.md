@@ -216,5 +216,5 @@ The learning material lives entirely in [`content/`](./content/) as plain markdo
 
 <div align="center">
 <br/>
-<sub>Educational content. Use it, fork it, teach from it. · Inspired by the topic list at <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub>
+<sub>Educational content. Use it, fork it, teach from it.</sub>
 </div>
