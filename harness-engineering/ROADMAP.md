@@ -142,17 +142,17 @@ flowchart TB
 | 05 | [Sandboxing: containers, namespaces, seccomp](./phases/07-shell-and-sandbox-execution/05-sandboxing/docs/en.md) ✅ | Use | Python | harness module |
 | 06 | [Network policies & egress control](./phases/07-shell-and-sandbox-execution/06-egress-control/docs/en.md) ✅ | Use | — | hook |
 
-## Phase 8 — Permissions & Safety Gating `6 lessons` ⬚
+## Phase 8 — Permissions & Safety Gating `6 lessons` ✅
 *The line between "agent" and "incident" is the permission layer.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Permission modes (ask / allow / deny) | Build | Python | harness module |
-| 02 | Allowlists, denylists & pattern matching | Build | Python | harness module |
-| 03 | Pre/post tool-use hooks | Build | Python | hook |
-| 04 | Human-in-the-loop approval flows | Build | Python | harness module |
-| 05 | Least privilege & capability scoping | Build | Python | harness module |
-| 06 | Use It: settings.json & the hooks system | Use | — | settings |
+| 01 | [Permission modes (ask / allow / deny)](./phases/08-permissions-and-safety-gating/01-permission-modes/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Allowlists, denylists & pattern matching](./phases/08-permissions-and-safety-gating/02-allow-deny/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Pre/post tool-use hooks](./phases/08-permissions-and-safety-gating/03-hooks/docs/en.md) ✅ | Build | Python | hook |
+| 04 | [Human-in-the-loop approval flows](./phases/08-permissions-and-safety-gating/04-approvals/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Least privilege & capability scoping](./phases/08-permissions-and-safety-gating/05-least-privilege/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Use It: settings.json & the hooks system](./phases/08-permissions-and-safety-gating/06-settings-json/docs/en.md) ✅ | Use | — | settings |
 
 ## Phase 9 — Memory & Persistence `5 lessons` ⬚
 *Statelessness is the model's problem; memory is the harness's job.*
