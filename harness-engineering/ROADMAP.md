@@ -117,18 +117,18 @@ flowchart TB
 | 05 | [Few-shot & in-context examples that scale](./phases/05-prompt-instruction-architecture/05-few-shot/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Prompt versioning & A/B in the harness](./phases/05-prompt-instruction-architecture/06-prompt-versioning/docs/en.md) ✅ | Build | Python | harness module |
 
-## Phase 6 — File & Code Operations `7 lessons` ⬚
+## Phase 6 — File & Code Operations `7 lessons` ✅
 *Read, search, and edit a codebase the way a coding agent does.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | A read tool with line numbers & ranges | Build | Python | harness module |
-| 02 | Exact-string edit & why diffs beat rewrites | Build | Python | harness module |
-| 03 | Write & overwrite safety | Build | Python | harness module |
-| 04 | Glob & file discovery | Build | Python | harness module |
-| 05 | Grep / ripgrep-style content search | Build | Python | harness module |
-| 06 | Applying & validating patches | Build | Python | harness module |
-| 07 | Use It: tree-sitter for structural edits | Use | Python | harness module |
+| 01 | [A read tool with line numbers & ranges](./phases/06-file-and-code-operations/01-read-tool/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Exact-string edit & why diffs beat rewrites](./phases/06-file-and-code-operations/02-edit-tool/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Write & overwrite safety](./phases/06-file-and-code-operations/03-write-safety/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Glob & file discovery](./phases/06-file-and-code-operations/04-glob/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Grep / ripgrep-style content search](./phases/06-file-and-code-operations/05-grep/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Applying & validating patches](./phases/06-file-and-code-operations/06-patches/docs/en.md) ✅ | Build | Python | harness module |
+| 07 | [Use It: tree-sitter for structural edits](./phases/06-file-and-code-operations/07-tree-sitter/docs/en.md) ✅ | Use | Python | harness module |
 
 ## Phase 7 — Shell & Sandbox Execution `6 lessons` ⬚
 *Let the agent run commands without letting it run wild.*
