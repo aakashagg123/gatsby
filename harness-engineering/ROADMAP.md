@@ -105,17 +105,17 @@ flowchart TB
 | 06 | [Context windows in the wild (cache-aware layout)](./phases/04-context-engineering/06-cache-aware-layout/docs/en.md) ✅ | Use | Python | harness module |
 | 07 | [Measuring context rot](./phases/04-context-engineering/07-measuring-context-rot/docs/en.md) ✅ | Build | Python | eval |
 
-## Phase 5 — Prompt & Instruction Architecture `6 lessons` ⬚
+## Phase 5 — Prompt & Instruction Architecture `6 lessons` ✅
 *System prompts, steering files, and output styles — the harness's voice.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Anatomy of a system prompt | Build | — | prompt |
-| 02 | Memory files (CLAUDE.md / project instructions) | Build | — | skill |
-| 03 | Steering: tone, refusals, and guardrail text | Build | — | prompt |
-| 04 | Output styles & response contracts | Build | Python | harness module |
-| 05 | Few-shot & in-context examples that scale | Build | Python | prompt |
-| 06 | Prompt versioning & A/B in the harness | Build | Python | harness module |
+| 01 | [Anatomy of a system prompt](./phases/05-prompt-instruction-architecture/01-system-prompt-anatomy/docs/en.md) ✅ | Build | — | prompt |
+| 02 | [Memory files (CLAUDE.md / AGENTS.md)](./phases/05-prompt-instruction-architecture/02-memory-files/docs/en.md) ✅ | Build | — | skill |
+| 03 | [Steering: tone, refusals, and guardrail text](./phases/05-prompt-instruction-architecture/03-steering/docs/en.md) ✅ | Build | — | prompt |
+| 04 | [Output styles & response contracts](./phases/05-prompt-instruction-architecture/04-output-contracts/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Few-shot & in-context examples that scale](./phases/05-prompt-instruction-architecture/05-few-shot/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Prompt versioning & A/B in the harness](./phases/05-prompt-instruction-architecture/06-prompt-versioning/docs/en.md) ✅ | Build | Python | harness module |
 
 ## Phase 6 — File & Code Operations `7 lessons` ⬚
 *Read, search, and edit a codebase the way a coding agent does.*
