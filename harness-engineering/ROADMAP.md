@@ -51,19 +51,19 @@ flowchart TB
 | 04 | [A REPL you can talk to](./phases/00-setup-and-tooling/04-repl/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Reading the docs like an engineer](./phases/00-setup-and-tooling/05-reading-docs/docs/en.md) ✅ | Build | — | skill |
 
-## Phase 1 — LLM I/O Foundations `8 lessons` ⬚
+## Phase 1 — LLM I/O Foundations `8 lessons` ✅
 *The model is a fast, stateless, non-deterministic function. Learn its interface.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Messages, roles & turns | Build | Python | harness module |
-| 02 | Tokens & the context window (count them yourself) | Build | Python | harness module |
-| 03 | Sampling: temperature, top-p, determinism | Build | Python | prompt |
-| 04 | Streaming responses token-by-token | Build | Python, TS | harness module |
-| 05 | Stop reasons & max tokens | Build | Python | harness module |
-| 06 | System vs. user vs. assistant — who controls what | Build | Python | prompt |
-| 07 | Structured output without tools (JSON + repair) | Build | Python | harness module |
-| 08 | Prompt caching: what's cacheable and why | Use | Python | harness module |
+| 01 | [Messages, roles & turns](./phases/01-llm-io-foundations/01-messages-roles-turns/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Tokens & the context window](./phases/01-llm-io-foundations/02-tokens-and-context-window/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Sampling: temperature, top-p, determinism](./phases/01-llm-io-foundations/03-sampling/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Streaming responses token-by-token](./phases/01-llm-io-foundations/04-streaming/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Stop reasons & max tokens](./phases/01-llm-io-foundations/05-stop-reasons/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [System vs. user vs. assistant — who controls what](./phases/01-llm-io-foundations/06-roles-precedence/docs/en.md) ✅ | Build | — | prompt |
+| 07 | [Structured output without tools (JSON + repair)](./phases/01-llm-io-foundations/07-structured-output/docs/en.md) ✅ | Build | Python | harness module |
+| 08 | [Prompt caching: what's cacheable and why](./phases/01-llm-io-foundations/08-prompt-caching/docs/en.md) ✅ | Use | Python | harness module |
 
 ## Phase 2 — The Agent Loop `7 lessons` ✅
 *The ~120 lines at the heart of every coding agent.*
