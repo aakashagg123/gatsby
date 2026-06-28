@@ -7,6 +7,15 @@ build it.
 
 ---
 
+## 0. Audience assumption — you use Claude Code or Codex
+
+Every lesson assumes the reader works inside an agentic coding tool — **Claude Code** or
+**Codex**. You build each harness component from scratch to understand it, then the
+**Use It** beat maps that component to how Claude Code / Codex already do it
+(`CLAUDE.md` / `AGENTS.md` memory, `settings.json` hooks, skills, subagents, MCP servers,
+permission modes). The artifacts each lesson ships are installable into those tools. When
+a lesson says "in a real harness," it means Claude Code or Codex.
+
 ## 1. The thesis: *Build It, then Use It*
 
 Every capability is learned twice:

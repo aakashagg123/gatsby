@@ -17,6 +17,13 @@ time — then use the real SDKs.** Every lesson ships a reusable artifact.
 > permissions, subagents, and evals. Here you build each piece yourself, then run the
 > same thing through the real framework, so the abstraction is transparent.
 
+## Audience
+
+This track assumes you work inside **Claude Code or Codex**. You build each piece of a
+harness yourself to understand it, then every **Use It** maps it to how those tools do it
+(memory files, hooks, skills, subagents, MCP, permissions), and every shipped artifact is
+installable into them.
+
 ## How it works
 
 Each lesson runs the same six beats: **Motto → Problem → Concept → Build It → Use It →

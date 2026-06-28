@@ -92,18 +92,18 @@ flowchart TB
 | 07 | [Use It: SDK tool definitions & parallel tool use](./phases/03-tool-engineering/07-sdk-parallel-tools/docs/en.md) ✅ | Use | Python | agent |
 | 08 | [A tool registry & discovery layer](./phases/03-tool-engineering/08-tool-registry/docs/en.md) ✅ | Build | Python | harness module |
 
-## Phase 4 — Context Engineering `7 lessons` ⬚
+## Phase 4 — Context Engineering `7 lessons` ✅
 *What the model "knows" is whatever your harness put in the window.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Context budgeting & token accounting | Build | Python | harness module |
-| 02 | Message assembly & ordering | Build | Python | harness module |
-| 03 | Truncation strategies that don't break tool calls | Build | Python | harness module |
-| 04 | Compaction & summarization across turns | Build | Python | harness module |
-| 05 | Injecting files & retrieved context safely | Build | Python | harness module |
-| 06 | Context windows in the wild (cache-aware layout) | Use | Python | harness module |
-| 07 | Measuring context rot | Build | Python | eval |
+| 01 | [Context budgeting & token accounting](./phases/04-context-engineering/01-context-budgeting/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Message assembly & ordering](./phases/04-context-engineering/02-message-assembly/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Truncation strategies that don't break tool calls](./phases/04-context-engineering/03-truncation/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Compaction & summarization across turns](./phases/04-context-engineering/04-compaction/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Injecting files & retrieved context safely](./phases/04-context-engineering/05-injecting-context/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Context windows in the wild (cache-aware layout)](./phases/04-context-engineering/06-cache-aware-layout/docs/en.md) ✅ | Use | Python | harness module |
+| 07 | [Measuring context rot](./phases/04-context-engineering/07-measuring-context-rot/docs/en.md) ✅ | Build | Python | eval |
 
 ## Phase 5 — Prompt & Instruction Architecture `6 lessons` ⬚
 *System prompts, steering files, and output styles — the harness's voice.*
