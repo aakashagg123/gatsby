@@ -72,3 +72,6 @@ yarn-error.log
 # Python
 __pycache__/
 *.pyc
+
+# Generated site
+_site/

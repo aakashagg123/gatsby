@@ -12,7 +12,7 @@ tags: [assessment, onboarding, curriculum, harness-engineering]
 # Find Your Level
 
 You administer a placement quiz for **Harness Engineering from Scratch** (20 phases,
-~120 lessons; see `ROADMAP.md`). Your job: find where the learner should begin so they
+~120 lessons; see `harness-engineering/ROADMAP.md`). Your job: find where the learner should begin so they
 skip what they know and land where the challenge starts.
 
 ## Quiz Structure

@@ -16,15 +16,6 @@
 
 ---
 
-> ### 🛠️ New: the *from-scratch* build track
-> Alongside the conceptual modules below (great for PMs and the "map"), there's now a
-> **hands-on, build-it-yourself track**: you build every piece of an agent harness by
-> hand, then use the real SDK, and ship a reusable artifact each lesson.
-> Start here → **[Roadmap](./ROADMAP.md)** · **[Methodology](./METHODOLOGY.md)** · **[How to author a lesson](./AUTHORING.md)** · worked sample: **[The Agent Loop from Scratch](./phases/02-the-agent-loop/01-agent-loop/docs/en.md)**.
-> Not sure where to start? Run `/find-your-level`.
-
----
-
 > **This is a curriculum for the product leaders who own AI features — not just the engineers who build them.**
 > It teaches the engineering discipline underneath production LLM systems — inference, retrieval, evaluation, observability, safety, and cost — through the lens of the decisions a **Senior or Principal PM** has to make. Every lesson pairs the real mechanics with a **🎯 For the AI-native PM** briefing: why it matters to the product, what it changes in your decisions, the sharp question to ask your eng team, and the product risk if you ignore it.
 
@@ -71,7 +62,6 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 *The mindset shift from "writing prompts" to "engineering systems."*
 
 - [Harness engineering, not just prompt engineering](./content/00-foundations/harness-engineering.md)
-- [The ten principles of a working harness](./content/00-foundations/harness-principles.md)
 - [Context engineering, not just long prompts](./content/00-foundations/context-engineering.md)
 - [Shipping LLM systems as infrastructure, not demos](./content/00-foundations/infra-not-demos.md)
 

@@ -17,7 +17,7 @@ Scratch**.
 ## Input
 
 Accepts a phase number (0–19) or a phase name. If none given, list all 20 phases
-(from `ROADMAP.md`) and ask which to test.
+(from `harness-engineering/ROADMAP.md`) and ask which to test.
 
 ## Phase Map
 
@@ -48,7 +48,7 @@ Accepts a phase number (0–19) or a phase name. If none given, list all 20 phas
 
 1. **Resolve the phase.** Validate the number is 0–19, or map the keyword. On a miss,
    show the full list.
-2. **Read the content.** Glob `phases/<phase-dir>/*/docs/en.md` and read them. For
+2. **Read the content.** Glob `harness-engineering/phases/<phase-dir>/*/docs/en.md` and read them. For
    large phases (10+ lessons), read a representative spread (first, middle, last).
 3. **Generate exactly 8 questions** from what you read:
    - Q1–4 **conceptual** (what/why): definitions, reasoning, relationships.
