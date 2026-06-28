@@ -47,9 +47,15 @@ VIEWER = """<!doctype html>
   details{{background:#f3f2ec;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:.6em 0}}
   summary{{cursor:pointer;font-weight:500}}
   hr{{border:none;border-top:1px solid var(--line);margin:2em 0}}
+  .lessonnav{{max-width:820px;margin:0 auto 60px;padding:18px 20px 0;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:12px;font-size:.92rem}}
+  .lessonnav a{{text-decoration:none;max-width:46%}}
+  .lessonnav .nx{{text-align:right;margin-left:auto}}
+  .lessonnav .lbl{{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}}
 </style></head><body>
 <div class="top"><a href="{root}index.html">← All courses</a><a href="{harness_root}index.html">Harness Engineering</a></div>
 <main id="content">Loading…</main>
+{nav}
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -120,6 +126,47 @@ def rel_to_harness_root(md_path):
     return "../" * depth
 
 
+def is_lesson(md_path):
+    return md_path.replace(os.sep, "/").endswith("/docs/en.md") and "/phases/" in md_path.replace(os.sep, "/")
+
+
+def lesson_order(dst_harness):
+    """Ordered list of lesson en.md paths: by phase dir, then lesson dir."""
+    lessons = []
+    phases_dir = os.path.join(dst_harness, "phases")
+    for phase in sorted(os.listdir(phases_dir)):
+        pdir = os.path.join(phases_dir, phase)
+        if not os.path.isdir(pdir):
+            continue
+        for lesson in sorted(os.listdir(pdir)):
+            en = os.path.join(pdir, lesson, "docs", "en.md")
+            if os.path.exists(en):
+                lessons.append(en)
+    return lessons
+
+
+def _title_of(md_path):
+    with open(md_path) as f:
+        return f.readline().lstrip("# ").strip()
+
+
+def nav_html(md_path, prev_md, next_md):
+    """Prev / Up-to-phase / Next nav for a lesson page, links relative to its html."""
+    here = md_path[:-3] + ".html"
+    parts = []
+    if prev_md:
+        rel = os.path.relpath(prev_md[:-3] + ".html", os.path.dirname(here))
+        parts.append(f'<a class="pv" href="{rel}"><span class="lbl">← Previous</span>{_title_of(prev_md)}</a>')
+    # Up to the phase README
+    up = os.path.relpath(os.path.join(os.path.dirname(md_path), "..", "..", "README.html"),
+                         os.path.dirname(here))
+    parts.append(f'<a class="up" href="{up}"><span class="lbl">Phase</span>Overview</a>')
+    if next_md:
+        rel = os.path.relpath(next_md[:-3] + ".html", os.path.dirname(here))
+        parts.append(f'<a class="nx" href="{rel}"><span class="lbl">Next →</span>{_title_of(next_md)}</a>')
+    return '<nav class="lessonnav">' + "".join(parts) + "</nav>"
+
+
 def main():
     if os.path.exists(SITE):
         shutil.rmtree(SITE)
@@ -132,8 +179,14 @@ def main():
     dst_harness = os.path.join(SITE, "harness")
     shutil.copytree(HARNESS_SRC, dst_harness)
 
-    # 3. Render a viewer next to every markdown file, then drop the .md is kept
-    #    (so .py/.json/.md sources stay browsable; viewers are the .html).
+    # 3. Lesson ordering for prev/next navigation.
+    lessons = lesson_order(dst_harness)
+    prev_next = {}
+    for i, md in enumerate(lessons):
+        prev_next[md] = (lessons[i - 1] if i > 0 else None,
+                         lessons[i + 1] if i < len(lessons) - 1 else None)
+
+    # 4. Render a viewer next to every markdown file (sources stay browsable).
     pages = 0
     for dp, _, files in os.walk(dst_harness):
         for fn in files:
@@ -147,12 +200,17 @@ def main():
             root = rel_to_harness_root(md_path)            # up to _site/
             html_path = md_path[:-3] + ".html"
             md_url = "./" + fn
+            nav = ""
+            if is_lesson(md_path):
+                p, n = prev_next.get(md_path, (None, None))
+                nav = nav_html(md_path, p, n)
             with open(html_path, "w") as f:
                 f.write(VIEWER.format(
                     title=title,
                     md=md_url,
                     root="../" + root if root else "../",   # _site/ root
                     harness_root=root or "./",
+                    nav=nav,
                 ))
             pages += 1
 

@@ -78,19 +78,19 @@ flowchart TB
 | 06 | [Error recovery inside the loop](./phases/02-the-agent-loop/06-error-recovery/docs/en.md) ✅ | Build | Python | harness module |
 | 07 | [A streaming agent loop](./phases/02-the-agent-loop/07-streaming-loop/docs/en.md) ✅ | Build | Python | agent |
 
-## Phase 3 — Tool Engineering `8 lessons` ⬚
+## Phase 3 — Tool Engineering `8 lessons` ✅
 *Tools are the agent's hands. Define, dispatch, validate, and trust them.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Tool schemas & dispatch by hand | Build | Python | harness module |
-| 02 | Argument validation & JSON-schema enforcement | Build | Python | harness module |
-| 03 | Tool results, errors & the feedback channel | Build | Python | harness module |
-| 04 | Idempotency & side-effecting tools | Build | Python | harness module |
-| 05 | Tool budgets & rate limits | Build | Python | hook |
-| 06 | Writing tool descriptions the model obeys | Build | — | prompt |
-| 07 | Use It: SDK tool definitions & parallel tool use | Use | Python, TS | agent |
-| 08 | A tool registry & discovery layer | Build | Python | harness module |
+| 01 | [Tool schemas & dispatch by hand](./phases/03-tool-engineering/01-schemas-and-dispatch/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Argument validation & JSON-schema enforcement](./phases/03-tool-engineering/02-argument-validation/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Tool results, errors & the feedback channel](./phases/03-tool-engineering/03-results-and-errors/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Idempotency & side-effecting tools](./phases/03-tool-engineering/04-idempotency/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Tool budgets & rate limits](./phases/03-tool-engineering/05-tool-budgets/docs/en.md) ✅ | Build | Python | hook |
+| 06 | [Writing tool descriptions the model obeys](./phases/03-tool-engineering/06-tool-descriptions/docs/en.md) ✅ | Build | — | prompt |
+| 07 | [Use It: SDK tool definitions & parallel tool use](./phases/03-tool-engineering/07-sdk-parallel-tools/docs/en.md) ✅ | Use | Python | agent |
+| 08 | [A tool registry & discovery layer](./phases/03-tool-engineering/08-tool-registry/docs/en.md) ✅ | Build | Python | harness module |
 
 ## Phase 4 — Context Engineering `7 lessons` ⬚
 *What the model "knows" is whatever your harness put in the window.*
