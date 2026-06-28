@@ -35,13 +35,16 @@ jobs:
           python -m pip install --quiet markdown pygments
           python scripts/build_html.py
 
-      - name: Make the site root land on index.html
-        run: cp html/index.html html/404.html || true
+      - name: Place content under /html/ path
+        run: |
+          mkdir -p _site/html
+          cp -r html/. _site/html/
+          cp _site/html/index.html _site/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./html
+          path: ./_site
 
   deploy:
     needs: build
