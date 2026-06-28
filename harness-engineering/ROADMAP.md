@@ -130,17 +130,17 @@ flowchart TB
 | 06 | [Applying & validating patches](./phases/06-file-and-code-operations/06-patches/docs/en.md) ✅ | Build | Python | harness module |
 | 07 | [Use It: tree-sitter for structural edits](./phases/06-file-and-code-operations/07-tree-sitter/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 7 — Shell & Sandbox Execution `6 lessons` ⬚
+## Phase 7 — Shell & Sandbox Execution `6 lessons` ✅
 *Let the agent run commands without letting it run wild.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | A bash tool: capture stdout, stderr, exit code | Build | Python | harness module |
-| 02 | Timeouts & killing runaway processes | Build | Python | harness module |
-| 03 | Background tasks & long-running commands | Build | Python | harness module |
-| 04 | Working-directory & shell-state pitfalls | Build | Python | harness module |
-| 05 | Sandboxing: containers, namespaces, seccomp | Use | Python | harness module |
-| 06 | Network policies & egress control | Use | — | hook |
+| 01 | [A bash tool: capture stdout, stderr, exit code](./phases/07-shell-and-sandbox-execution/01-bash-tool/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Timeouts & killing runaway processes](./phases/07-shell-and-sandbox-execution/02-timeouts/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Background tasks & long-running commands](./phases/07-shell-and-sandbox-execution/03-background-tasks/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Working-directory & shell-state pitfalls](./phases/07-shell-and-sandbox-execution/04-cwd-and-state/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Sandboxing: containers, namespaces, seccomp](./phases/07-shell-and-sandbox-execution/05-sandboxing/docs/en.md) ✅ | Use | Python | harness module |
+| 06 | [Network policies & egress control](./phases/07-shell-and-sandbox-execution/06-egress-control/docs/en.md) ✅ | Use | — | hook |
 
 ## Phase 8 — Permissions & Safety Gating `6 lessons` ⬚
 *The line between "agent" and "incident" is the permission layer.*
