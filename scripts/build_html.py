@@ -319,9 +319,7 @@ def build_index():
   <h2 class="sec">Threads — follow one concern across the whole stack</h2>
   <div class="threads">{thread_html}</div>
 
-  <footer class="foot">Educational content. Use it, fork it, teach from it. ·
-    Inspired by the topic list at
-    <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></footer>
+  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main></body></html>"""
     with open(os.path.join(OUT, "index.html"), "w") as f:
         f.write(page)

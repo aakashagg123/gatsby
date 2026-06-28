@@ -1,8 +1,7 @@
 # Authoring a Lesson
 
 Every lesson in *Harness Engineering from Scratch* has the **same shape**, so readers
-never re-learn the navigation and the build script can parse it. This mirrors
-[AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch).
+never re-learn the navigation and the build script can parse it.
 
 ## Folder structure
 
@@ -45,7 +44,7 @@ a prompt · skill · hook · harness module · eval · MCP server · settings.
 3–5 questions (see Quiz format). End with one **challenge** exercise.
 ```
 
-## Diagrams — lead with a picture (AIEFS does this everywhere)
+## Diagrams — lead with a picture
 
 Use **Mermaid** for flows/architecture and **tables** for comparisons. At minimum,
 the Concept beat should open with a diagram. Keep the same theme block so they render
@@ -63,7 +62,7 @@ flowchart LR
 ````
 
 For polished figures, drop SVGs in `site/assets/figures/` and reference them
-(`FIG_0NN`), exactly as AIEFS does. ASCII diagrams are acceptable inside code blocks
+(`FIG_0NN`). ASCII diagrams are acceptable inside code blocks
 when a mental model is simpler shown as text.
 
 ## Quiz format (Check Yourself)

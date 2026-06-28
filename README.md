@@ -18,10 +18,8 @@
 
 > ### 🛠️ New: the *from-scratch* build track
 > Alongside the conceptual modules below (great for PMs and the "map"), there's now a
-> **hands-on, build-it-yourself track** modeled on
-> [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch):
-> you build every piece of an agent harness by hand, then use the real SDK, and ship a
-> reusable artifact each lesson.
+> **hands-on, build-it-yourself track**: you build every piece of an agent harness by
+> hand, then use the real SDK, and ship a reusable artifact each lesson.
 > Start here → **[Roadmap](./ROADMAP.md)** · **[Methodology](./METHODOLOGY.md)** · **[How to author a lesson](./AUTHORING.md)** · worked sample: **[The Agent Loop from Scratch](./phases/02-the-agent-loop/01-agent-loop/docs/en.md)**.
 > Not sure where to start? Run `/find-your-level`.
 
@@ -73,6 +71,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 *The mindset shift from "writing prompts" to "engineering systems."*
 
 - [Harness engineering, not just prompt engineering](./content/00-foundations/harness-engineering.md)
+- [The ten principles of a working harness](./content/00-foundations/harness-principles.md)
 - [Context engineering, not just long prompts](./content/00-foundations/context-engineering.md)
 - [Shipping LLM systems as infrastructure, not demos](./content/00-foundations/infra-not-demos.md)
 
@@ -227,5 +226,5 @@ The learning material lives entirely in [`content/`](./content/) as plain markdo
 
 <div align="center">
 <br/>
-<sub>Educational content. Use it, fork it, teach from it. · Inspired by the topic list at <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub>
+<sub>Educational content. Use it, fork it, teach from it.</sub>
 </div>

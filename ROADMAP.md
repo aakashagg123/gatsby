@@ -3,9 +3,6 @@
 > Build a production coding agent (a "harness" like Claude Code) **by hand**, one piece
 > at a time — then use the real SDKs and frameworks. Every lesson ships a reusable
 > artifact: a prompt, a skill, a hook, a harness module, an eval, or an MCP server.
->
-> Modeled on the framework of
-> [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch).
 
 **Status:** `✅` done · `🚧` in progress · `⬚` planned
 
@@ -68,12 +65,12 @@ flowchart TB
 | 07 | Structured output without tools (JSON + repair) | Build | Python | harness module |
 | 08 | Prompt caching: what's cacheable and why | Use | Python | harness module |
 
-## Phase 2 — The Agent Loop `7 lessons` ⬚
+## Phase 2 — The Agent Loop `7 lessons` 🚧
 *The ~120 lines at the heart of every coding agent.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | The agent loop from scratch | Build | Python | agent |
+| 01 | [The agent loop from scratch](./phases/02-the-agent-loop/01-agent-loop/docs/en.md) ✅ | Build | Python | agent |
 | 02 | Tool-call parsing & the act step | Build | Python | harness module |
 | 03 | Termination: stop conditions & max steps | Build | Python | harness module |
 | 04 | Turn history & conversation state | Build | Python | harness module |
@@ -168,17 +165,17 @@ flowchart TB
 | 04 | Compaction across sessions | Build | Python | harness module |
 | 05 | Use It: a memory MCP server | Use | Python | mcp |
 
-## Phase 10 — Subagents & Orchestration `6 lessons` ⬚
-*One agent spawns many. Delegate, fan out, aggregate.*
+## Phase 10 — Subagents & Orchestration `6 lessons` 🚧
+*One agent spawns many. Coordinate them with contracts, budgets, and waves.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Spawning a subagent | Build | Python | agent |
-| 02 | Delegation & task contracts | Build | Python | harness module |
-| 03 | Parallel fan-out & result aggregation | Build | Python | harness module |
-| 04 | Context isolation between agents | Build | Python | harness module |
+| 01 | [Sprint contracts & budgeted waves](./phases/10-subagents-and-orchestration/01-sprint-contract-and-waves/docs/en.md) ✅ | Build | Python | module, prompt, settings |
+| 02 | Bounded roles & context allowlists | Build | Python | harness module |
+| 03 | Worktree isolation & the dependency graph | Build | Python | harness module |
+| 04 | Checkpoints & resumable runs | Build | Python | harness module |
 | 05 | Supervisor / worker patterns | Build | Python | agent |
-| 06 | Use It: the Agent SDK & subagent types | Use | Python, TS | agent |
+| 06 | Use It: the agent-team pipeline (Agent SDK + subagent types) | Use | Python, TS | agent |
 
 ## Phase 11 — Planning & Task Management `5 lessons` ⬚
 *Decompose, plan, track — so long tasks don't drift.*
