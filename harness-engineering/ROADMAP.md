@@ -40,16 +40,16 @@ flowchart TB
 
 ---
 
-## Phase 0 — Setup & Tooling `5 lessons` ⬚
+## Phase 0 — Setup & Tooling `5 lessons` ✅
 *Get a model talking to your terminal with nothing but the standard library.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Dev environment & the Anthropic SDK | Build | Python, TS | setup script |
-| 02 | Your first raw model call (HTTP, no SDK) | Build | Python | prompt |
-| 03 | API keys, secrets & env hygiene | Build | Python | hook |
-| 04 | A REPL you can talk to | Build | Python | harness module |
-| 05 | Reading the docs like an engineer | Build | — | skill |
+| 01 | [Dev environment & the SDK](./phases/00-setup-and-tooling/01-dev-environment/docs/en.md) ✅ | Build | Python | setup script |
+| 02 | [Your first raw model call (HTTP, no SDK)](./phases/00-setup-and-tooling/02-first-raw-call/docs/en.md) ✅ | Build | Python | prompt |
+| 03 | [API keys, secrets & env hygiene](./phases/00-setup-and-tooling/03-secrets-and-env/docs/en.md) ✅ | Build | Python | hook |
+| 04 | [A REPL you can talk to](./phases/00-setup-and-tooling/04-repl/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Reading the docs like an engineer](./phases/00-setup-and-tooling/05-reading-docs/docs/en.md) ✅ | Build | — | skill |
 
 ## Phase 1 — LLM I/O Foundations `8 lessons` ⬚
 *The model is a fast, stateless, non-deterministic function. Learn its interface.*
