@@ -223,17 +223,17 @@ flowchart TB
 | 05 | [Degraded-mode UX](./phases/14-reliability-engineering/05-degraded-mode/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: production failure-mode playbook](./phases/14-reliability-engineering/06-failure-playbook/docs/en.md) ✅ | Use | — | prompt |
 
-## Phase 15 — Evals & Testing the Harness `6 lessons` ⬚
+## Phase 15 — Evals & Testing the Harness `6 lessons` ✅
 *You cannot improve a harness you cannot measure.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Golden tasks & fixtures | Build | Python | eval |
-| 02 | Trajectory evals (did it take the right steps?) | Build | Python | eval |
-| 03 | LLM-as-judge | Build | Python | eval |
-| 04 | Regression gates in CI | Build | Python | eval |
-| 05 | Adversarial & red-team cases | Build | Python | eval |
-| 06 | Use It: an eval harness you run on every change | Use | Python | eval |
+| 01 | [Golden tasks & fixtures](./phases/15-evals-and-testing-the-harness/01-golden-tasks/docs/en.md) ✅ | Build | Python | eval |
+| 02 | [Trajectory evals (did it take the right steps?)](./phases/15-evals-and-testing-the-harness/02-trajectory-evals/docs/en.md) ✅ | Build | Python | eval |
+| 03 | [LLM-as-judge](./phases/15-evals-and-testing-the-harness/03-llm-as-judge/docs/en.md) ✅ | Build | Python | eval |
+| 04 | [Regression gates in CI](./phases/15-evals-and-testing-the-harness/04-regression-gates/docs/en.md) ✅ | Build | Python | eval |
+| 05 | [Adversarial & red-team cases](./phases/15-evals-and-testing-the-harness/05-adversarial/docs/en.md) ✅ | Build | Python | eval |
+| 06 | [Use It: an eval harness you run on every change](./phases/15-evals-and-testing-the-harness/06-eval-harness/docs/en.md) ✅ | Use | Python | eval |
 
 ## Phase 16 — Observability & Cost `5 lessons` ⬚
 *Traces, tokens, latency, dollars — per call, per session, per tenant.*
