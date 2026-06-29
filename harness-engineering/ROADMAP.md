@@ -188,17 +188,17 @@ flowchart TB
 | 04 | [Progress tracking & self-correction](./phases/11-planning-and-task-management/04-progress-tracking/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Use It: plan mode in a real harness](./phases/11-planning-and-task-management/05-plan-mode-in-practice/docs/en.md) ✅ | Use | — | skill |
 
-## Phase 12 — MCP & Extensibility `6 lessons` ⬚
+## Phase 12 — MCP & Extensibility `6 lessons` ✅
 *Make the harness pluggable. Build the protocol, then a server.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | The MCP wire protocol from scratch | Build | Python | mcp |
-| 02 | An MCP server: tools, resources, prompts | Build | Python | mcp |
-| 03 | An MCP client & tool discovery | Build | Python | harness module |
-| 04 | Skills (`SKILL.md`) & progressive disclosure | Build | — | skill |
-| 05 | Plugins & deferred tool loading | Build | Python | harness module |
-| 06 | Use It: the official MCP SDK | Use | Python, TS | mcp |
+| 01 | [The MCP wire protocol from scratch](./phases/12-mcp-and-extensibility/01-wire-protocol/docs/en.md) ✅ | Build | Python | mcp |
+| 02 | [An MCP server: tools, resources, prompts](./phases/12-mcp-and-extensibility/02-mcp-server/docs/en.md) ✅ | Build | Python | mcp |
+| 03 | [An MCP client & tool discovery](./phases/12-mcp-and-extensibility/03-mcp-client/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Skills (`SKILL.md`) & progressive disclosure](./phases/12-mcp-and-extensibility/04-skills/docs/en.md) ✅ | Build | — | skill |
+| 05 | [Plugins & deferred tool loading](./phases/12-mcp-and-extensibility/05-plugins/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Use It: the official MCP SDK](./phases/12-mcp-and-extensibility/06-official-sdk/docs/en.md) ✅ | Use | Python | mcp |
 
 ## Phase 13 — Retrieval & Codebase Understanding `5 lessons` ⬚
 *Help the agent find the right 200 lines in a million-line repo.*
