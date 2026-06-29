@@ -177,16 +177,16 @@ flowchart TB
 | 05 | [Supervisor / worker patterns](./phases/10-subagents-and-orchestration/05-supervisor-worker/docs/en.md) ✅ | Build | Python | agent |
 | 06 | [Use It: the agent-team pipeline](./phases/10-subagents-and-orchestration/06-agent-team-pipeline/docs/en.md) ✅ | Use | Python, TS | skill |
 
-## Phase 11 — Planning & Task Management `5 lessons` ⬚
+## Phase 11 — Planning & Task Management `5 lessons` ✅
 *Decompose, plan, track — so long tasks don't drift.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | A todo/task data model | Build | Python | harness module |
-| 02 | Plan mode: propose before you act | Build | Python | harness module |
-| 03 | Task decomposition prompts | Build | — | prompt |
-| 04 | Progress tracking & self-correction | Build | Python | harness module |
-| 05 | Use It: plan mode in a real harness | Use | — | skill |
+| 01 | [A todo/task data model](./phases/11-planning-and-task-management/01-todo-model/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Plan mode: propose before you act](./phases/11-planning-and-task-management/02-plan-mode/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Task decomposition prompts](./phases/11-planning-and-task-management/03-decomposition/docs/en.md) ✅ | Build | — | prompt |
+| 04 | [Progress tracking & self-correction](./phases/11-planning-and-task-management/04-progress-tracking/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Use It: plan mode in a real harness](./phases/11-planning-and-task-management/05-plan-mode-in-practice/docs/en.md) ✅ | Use | — | skill |
 
 ## Phase 12 — MCP & Extensibility `6 lessons` ⬚
 *Make the harness pluggable. Build the protocol, then a server.*
