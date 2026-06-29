@@ -154,16 +154,16 @@ flowchart TB
 | 05 | [Least privilege & capability scoping](./phases/08-permissions-and-safety-gating/05-least-privilege/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: settings.json & the hooks system](./phases/08-permissions-and-safety-gating/06-settings-json/docs/en.md) ✅ | Use | — | settings |
 
-## Phase 9 — Memory & Persistence `5 lessons` ⬚
+## Phase 9 — Memory & Persistence `5 lessons` ✅
 *Statelessness is the model's problem; memory is the harness's job.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Session state & the scratchpad | Build | Python | harness module |
-| 02 | Persisting & resuming conversations | Build | Python | harness module |
-| 03 | Long-term memory & retrieval | Build | Python | harness module |
-| 04 | Compaction across sessions | Build | Python | harness module |
-| 05 | Use It: a memory MCP server | Use | Python | mcp |
+| 01 | [Session state & the scratchpad](./phases/09-memory-and-persistence/01-scratchpad/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Persisting & resuming conversations](./phases/09-memory-and-persistence/02-persist-resume/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Long-term memory & retrieval](./phases/09-memory-and-persistence/03-long-term-memory/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Compaction across sessions](./phases/09-memory-and-persistence/04-cross-session-compaction/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Use It: a memory MCP server](./phases/09-memory-and-persistence/05-memory-mcp/docs/en.md) ✅ | Use | Python | mcp |
 
 ## Phase 10 — Subagents & Orchestration `6 lessons` ✅
 *One agent spawns many. Coordinate them with contracts, budgets, and waves.*
