@@ -211,17 +211,17 @@ flowchart TB
 | 04 | [Chunking code without breaking it](./phases/13-retrieval-and-codebase-understanding/04-chunking/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Use It: a retrieval tool the agent calls](./phases/13-retrieval-and-codebase-understanding/05-retrieval-tool/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 14 — Reliability Engineering `6 lessons` ⬚
+## Phase 14 — Reliability Engineering `6 lessons` ✅
 *Make a stochastic system dependable enough to ship.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Retries, backoff & jitter | Build | Python | harness module |
-| 02 | Validation & repair loops | Build | Python | harness module |
-| 03 | Fallback chains & model routing | Build | Python | harness module |
-| 04 | Loop, tool & token budgets | Build | Python | harness module |
-| 05 | Degraded-mode UX | Build | Python | harness module |
-| 06 | Use It: production failure-mode playbook | Use | — | prompt |
+| 01 | [Retries, backoff & jitter](./phases/14-reliability-engineering/01-retries/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Validation & repair loops](./phases/14-reliability-engineering/02-repair-loops/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Fallback chains & model routing](./phases/14-reliability-engineering/03-fallback-routing/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Loop, tool & token budgets](./phases/14-reliability-engineering/04-budgets/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Degraded-mode UX](./phases/14-reliability-engineering/05-degraded-mode/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Use It: production failure-mode playbook](./phases/14-reliability-engineering/06-failure-playbook/docs/en.md) ✅ | Use | — | prompt |
 
 ## Phase 15 — Evals & Testing the Harness `6 lessons` ⬚
 *You cannot improve a harness you cannot measure.*
