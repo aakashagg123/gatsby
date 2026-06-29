@@ -246,17 +246,17 @@ flowchart TB
 | 04 | [Drift detection](./phases/16-observability-and-cost/04-drift/docs/en.md) ✅ | Build | Python | eval |
 | 05 | [Use It: OpenTelemetry for agents](./phases/16-observability-and-cost/05-opentelemetry/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 17 — Security & Alignment `6 lessons` ⬚
+## Phase 17 — Security & Alignment `6 lessons` ✅
 *The agent reads untrusted data. Assume it's hostile.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Prompt injection from tool results & files | Build | Python | eval |
-| 02 | Treating model output as data, never control flow | Build | Python | harness module |
-| 03 | Data exfiltration & egress guards | Build | Python | hook |
-| 04 | Secret redaction in context & logs | Build | Python | harness module |
-| 05 | Multi-tenant isolation & cache contamination | Build | Python | harness module |
-| 06 | Use It: a security-review skill | Use | — | skill |
+| 01 | [Prompt injection from tool results & files](./phases/17-security-and-alignment/01-prompt-injection/docs/en.md) ✅ | Build | Python | eval |
+| 02 | [Treating model output as data, never control flow](./phases/17-security-and-alignment/02-output-as-data/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Data exfiltration & egress guards](./phases/17-security-and-alignment/03-exfiltration/docs/en.md) ✅ | Build | Python | hook |
+| 04 | [Secret redaction in context & logs](./phases/17-security-and-alignment/04-secret-redaction/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Multi-tenant isolation & cache contamination](./phases/17-security-and-alignment/05-multitenancy/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Use It: a security-review skill](./phases/17-security-and-alignment/06-security-review/docs/en.md) ✅ | Use | — | skill |
 
 ## Phase 18 — Production & Deployment `6 lessons` ⬚
 *Ship the harness to real users and real repos.*
