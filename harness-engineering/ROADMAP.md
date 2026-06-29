@@ -200,16 +200,16 @@ flowchart TB
 | 05 | [Plugins & deferred tool loading](./phases/12-mcp-and-extensibility/05-plugins/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: the official MCP SDK](./phases/12-mcp-and-extensibility/06-official-sdk/docs/en.md) ✅ | Use | Python | mcp |
 
-## Phase 13 — Retrieval & Codebase Understanding `5 lessons` ⬚
+## Phase 13 — Retrieval & Codebase Understanding `5 lessons` ✅
 *Help the agent find the right 200 lines in a million-line repo.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Lexical search & repo maps | Build | Python | harness module |
-| 02 | Embeddings & semantic code search | Build | Python | harness module |
-| 03 | Hybrid search & reranking | Build | Python | harness module |
-| 04 | Chunking code without breaking it | Build | Python | harness module |
-| 05 | Use It: a retrieval tool the agent calls | Use | Python | harness module |
+| 01 | [Lexical search & repo maps](./phases/13-retrieval-and-codebase-understanding/01-repo-maps/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Embeddings & semantic code search](./phases/13-retrieval-and-codebase-understanding/02-embeddings/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Hybrid search & reranking](./phases/13-retrieval-and-codebase-understanding/03-hybrid-search/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Chunking code without breaking it](./phases/13-retrieval-and-codebase-understanding/04-chunking/docs/en.md) ✅ | Build | Python | harness module |
+| 05 | [Use It: a retrieval tool the agent calls](./phases/13-retrieval-and-codebase-understanding/05-retrieval-tool/docs/en.md) ✅ | Use | Python | harness module |
 
 ## Phase 14 — Reliability Engineering `6 lessons` ⬚
 *Make a stochastic system dependable enough to ship.*
