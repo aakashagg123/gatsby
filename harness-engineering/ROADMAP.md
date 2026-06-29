@@ -235,16 +235,16 @@ flowchart TB
 | 05 | [Adversarial & red-team cases](./phases/15-evals-and-testing-the-harness/05-adversarial/docs/en.md) ✅ | Build | Python | eval |
 | 06 | [Use It: an eval harness you run on every change](./phases/15-evals-and-testing-the-harness/06-eval-harness/docs/en.md) ✅ | Use | Python | eval |
 
-## Phase 16 — Observability & Cost `5 lessons` ⬚
+## Phase 16 — Observability & Cost `5 lessons` ✅
 *Traces, tokens, latency, dollars — per call, per session, per tenant.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Tracing & spans for an agent | Build | Python | harness module |
-| 02 | Token & cost accounting | Build | Python | harness module |
-| 03 | Latency: prefill vs. decode, TTFT | Build | Python | harness module |
-| 04 | Drift detection | Build | Python | eval |
-| 05 | Use It: OpenTelemetry for agents | Use | Python | harness module |
+| 01 | [Tracing & spans for an agent](./phases/16-observability-and-cost/01-tracing/docs/en.md) ✅ | Build | Python | harness module |
+| 02 | [Token & cost accounting](./phases/16-observability-and-cost/02-cost-accounting/docs/en.md) ✅ | Build | Python | harness module |
+| 03 | [Latency: prefill vs. decode, TTFT](./phases/16-observability-and-cost/03-latency/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Drift detection](./phases/16-observability-and-cost/04-drift/docs/en.md) ✅ | Build | Python | eval |
+| 05 | [Use It: OpenTelemetry for agents](./phases/16-observability-and-cost/05-opentelemetry/docs/en.md) ✅ | Use | Python | harness module |
 
 ## Phase 17 — Security & Alignment `6 lessons` ⬚
 *The agent reads untrusted data. Assume it's hostile.*
