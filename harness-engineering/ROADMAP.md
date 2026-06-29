@@ -258,17 +258,17 @@ flowchart TB
 | 05 | [Multi-tenant isolation & cache contamination](./phases/17-security-and-alignment/05-multitenancy/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: a security-review skill](./phases/17-security-and-alignment/06-security-review/docs/en.md) ✅ | Use | — | skill |
 
-## Phase 18 — Production & Deployment `6 lessons` ⬚
+## Phase 18 — Production & Deployment `6 lessons` ✅
 *Ship the harness to real users and real repos.*
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Remote / sandboxed execution environments | Use | — | harness module |
-| 02 | GitHub integration & CI triggers | Build | Python | mcp |
-| 03 | Webhooks & event-driven agents | Build | Python | harness module |
-| 04 | Config, settings & feature flags | Build | Python | settings |
-| 05 | Rollout, canary & kill switches | Build | Python | harness module |
-| 06 | Use It: deploy the capstone agent | Use | — | harness module |
+| 01 | [Remote / sandboxed execution environments](./phases/18-production-and-deployment/01-remote-execution/docs/en.md) ✅ | Use | — | settings |
+| 02 | [GitHub integration & CI triggers](./phases/18-production-and-deployment/02-github-ci/docs/en.md) ✅ | Build | — | settings |
+| 03 | [Webhooks & event-driven agents](./phases/18-production-and-deployment/03-webhooks/docs/en.md) ✅ | Build | Python | harness module |
+| 04 | [Config, settings & feature flags](./phases/18-production-and-deployment/04-config-flags/docs/en.md) ✅ | Build | Python | settings |
+| 05 | [Rollout, canary & kill switches](./phases/18-production-and-deployment/05-rollout/docs/en.md) ✅ | Build | Python | harness module |
+| 06 | [Use It: deploy the capstone agent](./phases/18-production-and-deployment/06-deploy/docs/en.md) ✅ | Use | — | harness module |
 
 ## Phase 19 — Capstone: Build Your Own Coding Agent `4 lessons` ⬚
 *Assemble every phase into one working harness.*
