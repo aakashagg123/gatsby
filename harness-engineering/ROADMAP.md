@@ -4,7 +4,7 @@
 > at a time — then use the real SDKs and frameworks. Every lesson ships a reusable
 > artifact: a prompt, a skill, a hook, a harness module, an eval, or an MCP server.
 
-**Status:** `✅` done · `🚧` in progress · `⬚` planned
+**Status:** `✅` done · `🚧` in progress · `⬚` planned — **all 20 phases complete ✅**
 
 The phases stack. **The model-as-a-function is the floor; a full coding agent is the
 roof.** Skip ahead if you know a lower layer, but don't skip and then wonder why the
@@ -270,15 +270,15 @@ flowchart TB
 | 05 | [Rollout, canary & kill switches](./phases/18-production-and-deployment/05-rollout/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: deploy the capstone agent](./phases/18-production-and-deployment/06-deploy/docs/en.md) ✅ | Use | — | harness module |
 
-## Phase 19 — Capstone: Build Your Own Coding Agent `4 lessons` ⬚
+## Phase 19 — Capstone: Build Your Own Coding Agent `4 lessons` ✅
 *Assemble every phase into one working harness.*
 
 | # | Project | Combines | Lang | Ships |
 |---|---------|----------|------|-------|
-| 01 | Minimal coding agent (loop + tools + files) | P2,3,6,7 | Python | agent |
-| 02 | Add context, memory & permissions | P4,8,9 | Python | agent |
-| 03 | Add subagents, MCP & retrieval | P10,12,13 | Python | agent |
-| 04 | Add evals, observability & ship it | P15,16,18 | Python | agent |
+| 01 | [Minimal coding agent (loop + tools + files)](./phases/19-capstone-coding-agent/01-minimal-agent/docs/en.md) ✅ | P2,3,6,7 | Python | agent |
+| 02 | [Add context, memory & permissions](./phases/19-capstone-coding-agent/02-context-memory-permissions/docs/en.md) ✅ | P4,8,9 | Python | agent |
+| 03 | [Add subagents, MCP & retrieval](./phases/19-capstone-coding-agent/03-subagents-mcp-retrieval/docs/en.md) ✅ | P10,12,13 | Python | agent |
+| 04 | [Add evals, observability & ship it](./phases/19-capstone-coding-agent/04-evals-observability-ship/docs/en.md) ✅ | P14,15,16,18 | Python | agent |
 
 ---
 
