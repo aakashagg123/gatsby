@@ -39,8 +39,17 @@ MODULES = [
     ("06-strategy-tradeoffs", "06", "Strategy & Tradeoffs",
      "Picking the right tool, and naming the cost of every choice.",
      ["finetune-vs-icl-vs-rag", "inference-stack-tradeoffs", "production-failure-modes"]),
+    ("07-first-principles-polymath", "07", "First Principles & the Polymath Mind",
+     "Reasoning from fundamentals — and building range across every discipline.",
+     ["what-is-first-principles", "the-method", "mental-models-latticework",
+      "becoming-a-polymath", "learning-how-to-learn", "traps-and-limits"]),
 ]
 SLUG_TO_PAGE = {m[0]: f"{m[0]}.html" for m in MODULES}
+
+# Per-module label for the lesson briefing callout. Defaults to the PM lens; the
+# first-principles module addresses a general builder audience.
+DEFAULT_CALLOUT = "For the AI-native PM"
+CALLOUT_LABEL = {"07-first-principles-polymath": "For the builder"}
 
 # ---- link rewriting -----------------------------------------------------------
 def rewrite_target(target, cur_mod):
@@ -100,9 +109,10 @@ def convert_lesson(md, cur_mod):
     body = markdown.markdown(
         md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"]
     )
-    # PM callout: tag the blockquote that holds the PM briefing
+    # Briefing callout: tag the blockquote that holds the lesson briefing. Matches
+    # both the default PM lens and the general "For the builder" lens.
     body = re.sub(
-        r"<blockquote>(.*?For the AI-native PM.*?)</blockquote>",
+        r"<blockquote>(.*?For the (?:AI-native PM|builder).*?)</blockquote>",
         r'<blockquote class="pm-callout">\1</blockquote>',
         body, flags=re.DOTALL,
     )
@@ -254,8 +264,8 @@ def build_module(idx):
     <span class="chip">Module {num}</span>
     <h1>{htmllib.escape(title)}</h1>
     <p class="lede">{htmllib.escape(desc)}</p>
-    <div class="hero-meta">{len(lessons)} lessons · interactive demo · every lesson includes a
-      <strong>🎯 For the AI-native PM</strong> briefing</div>
+    <div class="hero-meta">{len(lessons)} lessons{' · interactive demo' if iw_html else ''} · every lesson includes a
+      <strong>🎯 {CALLOUT_LABEL.get(slug, DEFAULT_CALLOUT)}</strong> briefing</div>
   </div>
   <div class="intro">{intro_html}</div>
   <nav class="toc"><div class="toc-h">In this module</div>{toc_rows}</nav>
@@ -302,7 +312,7 @@ def build_index():
     <p class="lede">The engineering discipline underneath production LLM systems —
       inference, retrieval, evaluation, observability, safety, and cost — taught through
       the lens of the decisions a <strong>Senior or Principal PM</strong> has to make.</p>
-    <div class="index-meta"><span>7 modules</span><span>23 lessons</span>
+    <div class="index-meta"><span>8 modules</span><span>29 lessons</span>
       <span>PM-native</span><span>production-grade</span></div>
   </div>
 

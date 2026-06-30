@@ -50,6 +50,15 @@ sideways to what it connects with. You can read top-to-bottom, or follow the
 22. [Latency, quality, cost & reliability across the inference stack](./content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
 23. [Production failure modes & how to engineer around them](./content/06-strategy-tradeoffs/production-failure-modes.md)
 
+## Module 07 — [First Principles & the Polymath Mind](./content/07-first-principles-polymath/README.md)
+
+24. [What first-principles thinking actually is](./content/07-first-principles-polymath/what-is-first-principles.md)
+25. [The method: deconstruct, challenge, reconstruct](./content/07-first-principles-polymath/the-method.md)
+26. [A latticework of mental models](./content/07-first-principles-polymath/mental-models-latticework.md)
+27. [Becoming a polymath: range, depth & transfer](./content/07-first-principles-polymath/becoming-a-polymath.md)
+28. [Learning how to learn](./content/07-first-principles-polymath/learning-how-to-learn.md)
+29. [Traps & limits: when not to reason from scratch](./content/07-first-principles-polymath/traps-and-limits.md)
+
 ---
 
 ## Threads (cross-module reading paths)
