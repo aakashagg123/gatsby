@@ -33,10 +33,11 @@ VIEWER = """<!doctype html>
     --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--code-bg:#1c1b18;--soft:#f2f0e9;
   }}
   *{{box-sizing:border-box}}
-  html{{-webkit-text-size-adjust:100%}}
+  html{{-webkit-text-size-adjust:100%;text-size-adjust:100%}}
   body{{margin:0;background:var(--bg);color:var(--ink);
     font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em}}
+    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em;overflow-x:hidden}}
+  img,svg{{max-width:100%;height:auto}}
   .top{{position:sticky;top:0;z-index:10;background:rgba(250,249,245,.85);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:20px;font-size:.9rem}}
   .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
@@ -81,6 +82,25 @@ VIEWER = """<!doctype html>
   .lessonnav .nx{{text-align:right}}
   .lessonnav .lbl{{display:block;color:var(--muted);font-size:.72rem;font-weight:600;
     text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}}
+  /* phone-first: high readability on iPhone-class widths */
+  @media (max-width:600px){{
+    body{{font-size:16.5px;line-height:1.72}}
+    .top{{padding:12px 16px;gap:14px;font-size:.86rem}}
+    main{{padding:28px 18px 48px}}
+    h1{{font-size:1.85rem;line-height:1.18}}
+    h2{{font-size:1.32rem;margin-top:1.8em}}
+    h3{{font-size:1.12rem}}
+    pre{{padding:14px 14px;font-size:.82em;border-radius:10px}}
+    code{{word-break:break-word}}
+    /* wide tables scroll instead of breaking the page */
+    main table{{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+      white-space:nowrap;font-size:.86em}}
+    blockquote{{margin:1.1em 0;padding:.5em 1em}}
+    .lessonnav{{flex-direction:column;gap:10px;margin:4px auto 48px;padding:20px 18px}}
+    .lessonnav a{{width:100%}}
+    .lessonnav .up{{order:3}}
+    .lessonnav .nx{{text-align:left}}
+  }}
 </style></head><body>
 <div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{harness_root}index.html">Harness Engineering</a></div>
 <main id="content">Loading…</main>
@@ -121,16 +141,23 @@ LANDING = """<!doctype html>
     --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--soft:#f2f0e9;
   }
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0;background:var(--bg);color:var(--ink);
     font-family:Inter,system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em}
+    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em;overflow-x:hidden}
   .wrap{max-width:920px;margin:0 auto;padding:104px 24px 80px}
   .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.08em;
     text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
   h1{font-size:3.1rem;line-height:1.08;letter-spacing:-0.03em;font-weight:600;margin:0 0 .25em;max-width:14ch}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
   .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px}
-  @media(max-width:680px){.cards{grid-template-columns:1fr}h1{font-size:2.4rem}}
+  @media(max-width:680px){
+    .wrap{padding:64px 18px 64px}
+    .cards{grid-template-columns:1fr;gap:16px;margin-top:36px}
+    h1{font-size:2.2rem}
+    p.sub{font-size:1.08rem}
+    a.card{padding:24px;border-radius:16px}
+  }
   a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);
     border:1px solid var(--line);border-radius:18px;padding:30px;
     transition:border-color .15s,transform .15s,box-shadow .15s}
