@@ -5,8 +5,8 @@
 **Build a production coding agent (a "harness" like Claude Code) by hand, one piece at a
 time — then use the real SDKs.** Every lesson ships a reusable artifact.
 
-![Phases](https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=1f1e1d)
-![Track](https://img.shields.io/badge/track-build%20it%20%2F%20use%20it-3553ff?style=flat-square&labelColor=1f1e1d)
+![Phases](https://img.shields.io/badge/phases-20-d97757?style=flat-square&labelColor=181818)
+![Track](https://img.shields.io/badge/track-build%20it%20%2F%20use%20it-d97757?style=flat-square&labelColor=181818)
 
 **[🗺️ Roadmap](./ROADMAP.md)** · **[🧭 Methodology](./METHODOLOGY.md)** · **[✍️ Authoring](./AUTHORING.md)** · **[📐 Ten Principles](./foundations/harness-principles.md)**
 
