@@ -25,41 +25,73 @@ VIEWER = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} · Harness Engineering</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{{--ink:#1f1e1d;--bg:#fafaf5;--accent:#3553ff;--muted:#6b6a64;--line:#e7e6df;}}
+  :root{{
+    --bg:#faf9f5;--surface:#ffffff;--ink:#181818;--muted:#6c6a60;
+    --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--code-bg:#1c1b18;--soft:#f2f0e9;
+  }}
   *{{box-sizing:border-box}}
-  body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif}}
-  .top{{position:sticky;top:0;background:rgba(250,250,245,.92);backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);padding:12px 20px;font-weight:600}}
-  .top a{{color:var(--accent);text-decoration:none;margin-right:16px}}
-  main{{max-width:820px;margin:0 auto;padding:32px 20px 80px}}
-  h1,h2,h3{{line-height:1.25}} h1{{font-size:2rem}} h2{{margin-top:2em;border-bottom:1px solid var(--line);padding-bottom:.3em}}
-  a{{color:var(--accent)}}
-  code{{font-family:'JetBrains Mono',monospace;background:#eeede6;padding:.1em .35em;border-radius:4px;font-size:.9em}}
-  pre{{background:#1f1e1d;color:#f3f2ec;padding:16px;border-radius:8px;overflow:auto}}
-  pre code{{background:none;color:inherit;padding:0}}
-  pre.mermaid{{background:#fff;border:1px solid var(--line);text-align:center}}
-  table{{border-collapse:collapse;width:100%;margin:1em 0;font-size:.94em}}
-  th,td{{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}}
-  th{{background:#f0efe8}}
-  blockquote{{border-left:3px solid var(--accent);margin:1em 0;padding:.3em 1em;color:var(--muted);background:#f3f2ec}}
-  details{{background:#f3f2ec;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:.6em 0}}
-  summary{{cursor:pointer;font-weight:500}}
-  hr{{border:none;border-top:1px solid var(--line);margin:2em 0}}
-  .lessonnav{{max-width:820px;margin:0 auto 60px;padding:18px 20px 0;border-top:1px solid var(--line);
-    display:flex;justify-content:space-between;gap:12px;font-size:.92rem}}
-  .lessonnav a{{text-decoration:none;max-width:46%}}
-  .lessonnav .nx{{text-align:right;margin-left:auto}}
-  .lessonnav .lbl{{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}}
+  html{{-webkit-text-size-adjust:100%}}
+  body{{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em}}
+  .top{{position:sticky;top:0;z-index:10;background:rgba(250,249,245,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:20px;font-size:.9rem}}
+  .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
+  .top a:hover{{color:var(--accent-deep)}}
+  .top .brand{{color:var(--accent-deep);font-weight:600}}
+  main{{max-width:760px;margin:0 auto;padding:48px 24px 64px}}
+  h1,h2,h3,h4{{line-height:1.2;letter-spacing:-0.02em;font-weight:600}}
+  h1{{font-size:2.4rem;margin:0 0 .6em}}
+  h2{{font-size:1.55rem;margin-top:2.2em;padding-bottom:.35em;border-bottom:1px solid var(--line)}}
+  h3{{font-size:1.2rem;margin-top:1.8em}}
+  a{{color:var(--accent-deep);text-decoration:none;text-underline-offset:3px}}
+  a:hover{{text-decoration:underline}}
+  p,li{{letter-spacing:-0.003em}}
+  code{{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--soft);
+    padding:.12em .4em;border-radius:5px;font-size:.86em}}
+  pre{{background:var(--code-bg);color:#f1efe8;padding:18px 20px;border-radius:12px;overflow:auto;
+    font-size:.86em;line-height:1.6}}
+  pre code{{background:none;color:inherit;padding:0;font-size:1em}}
+  pre.mermaid{{background:var(--surface);color:var(--ink);border:1px solid var(--line);
+    padding:22px;text-align:center}}
+  table{{border-collapse:collapse;width:100%;margin:1.4em 0;font-size:.92em}}
+  th,td{{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}}
+  th{{background:var(--soft);font-weight:600}}
+  tr:nth-child(even) td{{background:rgba(242,240,233,.4)}}
+  blockquote{{border-left:3px solid var(--accent);margin:1.4em 0;padding:.5em 1.2em;
+    color:var(--muted);background:var(--soft);border-radius:0 8px 8px 0}}
+  blockquote p{{margin:.3em 0}}
+  details{{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:12px 18px;margin:.8em 0}}
+  details[open]{{box-shadow:0 1px 3px rgba(0,0,0,.04)}}
+  summary{{cursor:pointer;font-weight:600;color:var(--accent-deep)}}
+  hr{{border:none;border-top:1px solid var(--line);margin:2.4em 0}}
+  ::selection{{background:rgba(217,119,87,.22)}}
+  .lessonnav{{max-width:760px;margin:8px auto 64px;padding:24px;
+    display:flex;gap:14px;flex-wrap:wrap}}
+  .lessonnav a{{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;font-size:.92rem;font-weight:500;color:var(--ink);
+    transition:border-color .15s,transform .15s,box-shadow .15s}}
+  .lessonnav a:hover{{border-color:var(--accent);transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(217,119,87,.1);text-decoration:none}}
+  .lessonnav .up{{flex:0 0 auto;text-align:center}}
+  .lessonnav .nx{{text-align:right}}
+  .lessonnav .lbl{{display:block;color:var(--muted);font-size:.72rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}}
 </style></head><body>
-<div class="top"><a href="{root}index.html">← All courses</a><a href="{harness_root}index.html">Harness Engineering</a></div>
+<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{harness_root}index.html">Harness Engineering</a></div>
 <main id="content">Loading…</main>
 {nav}
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({{startOnLoad:false, theme:'neutral'}});
+mermaid.initialize({{startOnLoad:false, theme:'base', themeVariables:{{
+  primaryColor:'#f2f0e9', primaryTextColor:'#181818', primaryBorderColor:'#d97757',
+  lineColor:'#bd5d3a', fontFamily:'Inter, system-ui, sans-serif', fontSize:'15px'
+}}}});
 const md = await (await fetch('{md}')).text();
 // protect mermaid fences so marked doesn't treat them as code
 const blocks=[]; const stripped = md.replace(/```mermaid\\n([\\s\\S]*?)```/g,(m,c)=>{{
@@ -80,26 +112,40 @@ LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Engineering Learning Modules</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#1f1e1d;--bg:#fafaf5;--accent:#3553ff;--muted:#6b6a64;--line:#e7e6df;}
-  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Inter,system-ui,sans-serif}
-  .wrap{max-width:880px;margin:0 auto;padding:80px 24px}
-  h1{font-family:Fraunces,serif;font-size:2.6rem;margin:0 0 .2em}
-  p.sub{color:var(--muted);font-size:1.15rem;margin-top:0}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
-  @media(max-width:680px){.cards{grid-template-columns:1fr}}
-  a.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
-    border-radius:14px;padding:26px;transition:.15s}
-  a.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 24px rgba(53,83,255,.08)}
-  a.card h2{margin:.1em 0 .3em;font-size:1.35rem}
-  a.card .tag{display:inline-block;font-size:.78rem;color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-  a.card p{color:var(--muted);margin:.4em 0 0}
-  footer{color:var(--muted);font-size:.85rem;margin-top:60px}
+  :root{
+    --bg:#faf9f5;--surface:#ffffff;--ink:#181818;--muted:#6c6a60;
+    --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--soft:#f2f0e9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em}
+  .wrap{max-width:920px;margin:0 auto;padding:104px 24px 80px}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
+  h1{font-size:3.1rem;line-height:1.08;letter-spacing:-0.03em;font-weight:600;margin:0 0 .25em;max-width:14ch}
+  p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}h1{font-size:2.4rem}}
+  a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);
+    border:1px solid var(--line);border-radius:18px;padding:30px;
+    transition:border-color .15s,transform .15s,box-shadow .15s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 32px rgba(217,119,87,.12)}
+  a.card .tag{display:inline-block;font-size:.74rem;color:var(--accent-deep);font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase}
+  a.card h2{margin:.5em 0 .35em;font-size:1.45rem;font-weight:600;letter-spacing:-0.02em}
+  a.card p{color:var(--muted);margin:0;font-size:.98rem;line-height:1.6}
+  footer{color:var(--muted);font-size:.85rem;margin-top:64px;border-top:1px solid var(--line);padding-top:24px}
+  ::selection{background:rgba(217,119,87,.22)}
 </style></head><body>
 <div class="wrap">
+  <span class="eyebrow">From Scratch</span>
   <h1>Engineering Learning Modules</h1>
-  <p class="sub">Two separate, hands-on curricula.</p>
+  <p class="sub">Two separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
