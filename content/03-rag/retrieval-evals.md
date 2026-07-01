@@ -1,4 +1,4 @@
-# Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality
+# Retrieval evals: recall, precision, grounding, attribution, and citation quality
 
 *Part of [03 · RAG & Retrieval](./README.md)*
 

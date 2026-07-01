@@ -1,4 +1,4 @@
-# Learning Path
+# Learning path
 
 This is the recommended order. Each lesson links forward to what builds on it and
 sideways to what it connects with. You can read top-to-bottom, or follow the
@@ -12,7 +12,7 @@ sideways to what it connects with. You can read top-to-bottom, or follow the
 2. [Context engineering, not just long prompts](./content/00-foundations/context-engineering.md)
 3. [Shipping LLM systems as infrastructure, not demos](./content/00-foundations/infra-not-demos.md)
 
-## Module 01 — [Inference Internals](./content/01-inference-internals/README.md)
+## Module 01 — [Inference internals](./content/01-inference-internals/README.md)
 
 4. [Prompt caching vs. semantic caching](./content/01-inference-internals/prompt-vs-semantic-caching.md)
 5. [KV cache management: eviction, reuse, memory pressure](./content/01-inference-internals/kv-cache-management.md)
@@ -21,43 +21,34 @@ sideways to what it connects with. You can read top-to-bottom, or follow the
 8. [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md)
 9. [Quantization formats: INT8, INT4, FP8, AWQ, GPTQ](./content/01-inference-internals/quantization-formats.md)
 
-## Module 02 — [Reliable Outputs & Tool Use](./content/02-reliable-outputs/README.md)
+## Module 02 — [Reliable outputs & tool use](./content/02-reliable-outputs/README.md)
 
 10. [Structured output: validation, repair loops, fallback chains](./content/02-reliable-outputs/structured-output.md)
 11. [Function calling reliability, tool contracts, idempotency](./content/02-reliable-outputs/function-calling.md)
 12. [Agent guardrails: loop budgets, tool budgets, termination](./content/02-reliable-outputs/agent-guardrails.md)
 13. [Model routing, fallback logic, degraded-mode UX](./content/02-reliable-outputs/model-routing.md)
 
-## Module 03 — [RAG & Retrieval](./content/03-rag/README.md)
+## Module 03 — [RAG & retrieval](./content/03-rag/README.md)
 
 14. [RAG architecture: chunking, embeddings, hybrid search, reranking, freshness](./content/03-rag/rag-architecture.md)
 15. [Retrieval evals: recall, precision, grounding, attribution, citations](./content/03-rag/retrieval-evals.md)
 
-## Module 04 — [Evals & Observability](./content/04-evals-observability/README.md)
+## Module 04 — [Evals & observability](./content/04-evals-observability/README.md)
 
 16. [Evals: golden sets, regression, adversarial, LLM-as-judge, human](./content/04-evals-observability/evals.md)
 17. [LLM observability: traces, spans, tokens, latency, errors, drift](./content/04-evals-observability/observability.md)
 18. [Cost attribution per feature, workflow, tenant, journey](./content/04-evals-observability/cost-attribution.md)
 
-## Module 05 — [Safety & Multi-tenancy](./content/05-safety-multitenancy/README.md)
+## Module 05 — [Safety & multi-tenancy](./content/05-safety-multitenancy/README.md)
 
 19. [Safety engineering: prompt injection, data leakage, permission boundaries](./content/05-safety-multitenancy/safety-engineering.md)
 20. [Multi-tenant isolation & cache contamination prevention](./content/05-safety-multitenancy/multi-tenant-isolation.md)
 
-## Module 06 — [Strategy & Tradeoffs](./content/06-strategy-tradeoffs/README.md)
+## Module 06 — [Strategy & tradeoffs](./content/06-strategy-tradeoffs/README.md)
 
 21. [Fine-tuning vs. in-context learning vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md)
 22. [Latency, quality, cost & reliability across the inference stack](./content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
 23. [Production failure modes & how to engineer around them](./content/06-strategy-tradeoffs/production-failure-modes.md)
-
-## Module 07 — [First Principles & the Polymath Mind](./content/07-first-principles-polymath/README.md)
-
-24. [What first-principles thinking actually is](./content/07-first-principles-polymath/what-is-first-principles.md)
-25. [The method: deconstruct, challenge, reconstruct](./content/07-first-principles-polymath/the-method.md)
-26. [A latticework of mental models](./content/07-first-principles-polymath/mental-models-latticework.md)
-27. [Becoming a polymath: range, depth & transfer](./content/07-first-principles-polymath/becoming-a-polymath.md)
-28. [Learning how to learn](./content/07-first-principles-polymath/learning-how-to-learn.md)
-29. [Traps & limits: when not to reason from scratch](./content/07-first-principles-polymath/traps-and-limits.md)
 
 ---
 

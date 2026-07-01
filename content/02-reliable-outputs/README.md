@@ -1,4 +1,4 @@
-# Module 02 · Reliable Outputs & Tool Use
+# Module 02 · Reliable outputs & tool use
 
 A model that is right 95% of the time will break a workflow that calls it a hundred
 times. This module is about closing that gap — turning a stochastic text generator

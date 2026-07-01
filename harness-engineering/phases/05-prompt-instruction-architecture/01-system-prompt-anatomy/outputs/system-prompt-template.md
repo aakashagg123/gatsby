@@ -6,7 +6,7 @@ phase: 5
 lesson: 1
 ---
 
-# System Prompt Template
+# System prompt template
 
 Fill each section. Keep it stable (it's the cached prefix) and lean.
 

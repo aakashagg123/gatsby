@@ -1,4 +1,4 @@
-# Compaction Across Sessions
+# Compaction across sessions
 
 > **Motto** — Distill finished sessions into durable lessons — keep the insight, drop the transcript.
 

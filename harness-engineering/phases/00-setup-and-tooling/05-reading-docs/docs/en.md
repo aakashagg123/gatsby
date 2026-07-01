@@ -1,4 +1,4 @@
-# Reading the Docs Like an Engineer
+# Reading the docs like an engineer
 
 > **Motto** — The model knows a lot; the docs know what's true *today*.
 

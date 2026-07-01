@@ -6,7 +6,7 @@ phase: 14
 lesson: 6
 ---
 
-# Harness Failure-Mode Playbook
+# Harness failure-mode playbook
 
 Symptom → structural fix (a mechanism, not a longer prompt). Use as a pre-launch checklist
 and an incident guide.

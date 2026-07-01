@@ -1,4 +1,4 @@
-# Phase 16 — Observability & Cost
+# Phase 16 — Observability & cost
 
 > Traces, tokens, latency, dollars — per call, per session, per tenant. You can't operate
 > what you can't see.

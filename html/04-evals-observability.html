@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>04 · Evals &amp; Observability — AI Engineering for PMs</title>
+<title>04 · Evals &amp; observability — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink active" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#evals">Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability">LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution">Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink active" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#evals">Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</a><a href="#observability">LLM observability: traces, spans, tokens, latency, errors, and drift</a><a href="#cost-attribution">Cost attribution per feature, workflow, tenant, and user journey — not just per model</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 04</span>
-    <h1>Evals &amp; Observability</h1>
+    <h1>Evals &amp; observability</h1>
     <p class="lede">You cannot operate what you cannot measure.</p>
     <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -335,7 +335,7 @@ retrieval" in <a href="03-rag.html">RAG</a>, and every quality claim about
 through here.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#evals"><span>04.1</span>Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</a><a href="#observability"><span>04.2</span>LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</a><a href="#cost-attribution"><span>04.3</span>Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#evals"><span>04.1</span>Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</a><a href="#observability"><span>04.2</span>LLM observability: traces, spans, tokens, latency, errors, and drift</a><a href="#cost-attribution"><span>04.3</span>Cost attribution per feature, workflow, tenant, and user journey — not just per model</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Trace waterfall — one request, span by span</h3></div><div class="iw-body"><div class="iw-btns">
  <button class="iw-btn active" data-s="healthy">Healthy</button>
  <button class="iw-btn" data-s="slow">Slow retrieval</button>
@@ -349,7 +349,7 @@ through here.</p>
  <div><div style="font-size:12px;color:var(--mut)">Tokens in/out</div><div class="mv" id="tr-tok"></div></div>
  <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--mut)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
 </div></div></section>
-  <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</h2></div><h2>TL;DR</h2>
 <p>Evals are the test suite for a non-deterministic system. Because you can't assert exact
 equality, you build <strong>golden sets</strong> (curated inputs with known-good outputs), run them
 as <strong>regression tests</strong> in CI to block quality drops, add <strong>adversarial tests</strong> for the
@@ -505,7 +505,7 @@ style). Powerful but it has failure modes you must control:</p>
 <li><a href="02-reliable-outputs.html#structured-output">Structured output</a></li>
 <li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="observability"><div class="lesson-head"><span class="lesson-num">04.2</span><h2>LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="observability"><div class="lesson-head"><span class="lesson-num">04.2</span><h2>LLM observability: traces, spans, tokens, latency, errors, and drift</h2></div><h2>TL;DR</h2>
 <p><a href="#evals">Evals</a> tell you if the system is correct <em>before</em> you ship; observability
 tells you what it's doing <em>in production</em>. LLM observability is a first-class
 discipline because these systems fail silently and non-deterministically: you need
@@ -657,7 +657,7 @@ sample + all errors, and judge-score a representative slice.</p>
 <li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="02-reliable-outputs.html#agent-guardrails">Agent guardrails</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="cost-attribution"><div class="lesson-head"><span class="lesson-num">04.3</span><h2>Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="cost-attribution"><div class="lesson-head"><span class="lesson-num">04.3</span><h2>Cost attribution per feature, workflow, tenant, and user journey — not just per model</h2></div><h2>TL;DR</h2>
 <p>"Our LLM bill is $80k/month" is not an actionable number. To optimize, control, and
 price an AI product you must attribute cost along the dimensions you make decisions on:
 <strong>which feature, which workflow, which tenant, which user journey</strong> is spending the
@@ -851,7 +851,7 @@ dashboards — or from angry users three weeks later?"</em></p>
 </blockquote>
 <hr />
 <p>← Back to <a href="04-evals-observability.html">module index</a> · → Next module: <a href="05-safety-multitenancy.html">05 · Safety &amp; Multi-tenancy</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="03-rag.html"><span class="lbl">← Previous</span><span class="ttl">03 · RAG &amp; Retrieval</span></a><a class="navcard next" href="05-safety-multitenancy.html"><span class="lbl">→ Next</span><span class="ttl">05 · Safety &amp; Multi-tenancy</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="03-rag.html"><span class="lbl">← Previous</span><span class="ttl">03 · RAG &amp; retrieval</span></a><a class="navcard next" href="05-safety-multitenancy.html"><span class="lbl">→ Next</span><span class="ttl">05 · Safety &amp; multi-tenancy</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var SC={
 healthy:{lat:1040,cost:0.0046,tok:'3,100 / 180',spans:[['retrieve',0,42,'8 chunks · vector+BM25',false],['rerank',42,18,'kept 3 of 8',false],['model.generate',60,900,'ttft 210ms · 180 out tok · $0.0042',false],['validate',960,4,'schema OK · 0 repairs',false],['tool.create_note',964,76,'idempotent · 200 OK',false]]},

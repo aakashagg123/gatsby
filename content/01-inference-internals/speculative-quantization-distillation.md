@@ -1,4 +1,4 @@
-# Speculative Decoding vs. Quantization vs. Distillation
+# Speculative decoding vs. quantization vs. distillation
 
 *Part of [01 · Inference Internals](./README.md)*
 

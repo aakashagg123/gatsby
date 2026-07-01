@@ -1,4 +1,4 @@
-# Production Failure Modes & How to Engineer Around Them
+# Production failure modes & how to engineer around them
 
 *Part of [06 · Strategy & Tradeoffs](./README.md)*
 

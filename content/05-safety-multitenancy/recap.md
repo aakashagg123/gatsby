@@ -1,4 +1,4 @@
-# Safety & Multi-tenancy — Recap & Real-World Examples
+# Safety & multi-tenancy — recap & real-world examples
 
 *Part of [05 · Safety & Multi-tenancy](./README.md)*
 

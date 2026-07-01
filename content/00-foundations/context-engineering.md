@@ -1,4 +1,4 @@
-# Context Engineering, Not Just Long Prompts
+# Context engineering, not just long prompts
 
 *Part of [00 · Foundations](./README.md)*
 

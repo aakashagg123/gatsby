@@ -1,4 +1,4 @@
-# Use It: A Retrieval Tool the Agent Calls
+# Use it: a retrieval tool the agent calls
 
 > **Motto** — Wrap chunk → embed → hybrid-search into one `search_code` tool the agent invokes.
 

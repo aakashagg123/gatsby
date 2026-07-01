@@ -1,4 +1,4 @@
-# Use It: The Official MCP SDK
+# Use it: the official MCP SDK
 
 > **Motto** — You built the protocol; now let the SDK handle the framing and transport.
 

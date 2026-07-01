@@ -1,4 +1,4 @@
-# Memory Files (CLAUDE.md / AGENTS.md)
+# Memory files (CLAUDE.md / AGENTS.md)
 
 > **Motto** — A memory file is a short, stable table of contents — not an encyclopedia.
 

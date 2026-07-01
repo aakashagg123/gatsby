@@ -1,4 +1,4 @@
-# Few-Shot & In-Context Examples That Scale
+# Few-shot & in-context examples that scale
 
 > **Motto** — A couple of well-chosen examples teach format and edge cases better than paragraphs of rules.
 

@@ -1,4 +1,4 @@
-# Context Windows in the Wild (Cache-Aware Layout)
+# Context windows in the wild (cache-aware layout)
 
 > **Motto** — Lay the window out so the expensive, stable part is computed once and reused.
 

@@ -1,4 +1,4 @@
-# Trajectory Evals (Did It Take the Right Steps?)
+# Trajectory evals (did it take the right steps?)
 
 > **Motto** — For an agent, *how* it got the answer matters as much as the answer.
 

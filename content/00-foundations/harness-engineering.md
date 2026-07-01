@@ -1,4 +1,4 @@
-# Harness Engineering, Not Just Prompt Engineering
+# Harness engineering, not just prompt engineering
 
 *Part of [00 · Foundations](./README.md)*
 

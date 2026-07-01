@@ -1,4 +1,4 @@
-# Phase 14 — Reliability Engineering
+# Phase 14 — Reliability engineering
 
 > Make a stochastic system dependable enough to ship — retries, repair, fallbacks, budgets,
 > and degraded modes.

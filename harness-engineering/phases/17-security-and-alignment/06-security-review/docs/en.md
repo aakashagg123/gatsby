@@ -1,4 +1,4 @@
-# Use It: A Security-Review Skill
+# Use it: a security-review skill
 
 > **Motto** — Make the agent review its own diff for the exact threats this phase taught.
 

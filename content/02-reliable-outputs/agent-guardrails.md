@@ -1,4 +1,4 @@
-# Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions
+# Agent guardrails: loop budgets, tool budgets, and termination conditions
 
 *Part of [02 · Reliable Outputs & Tool Use](./README.md)*
 

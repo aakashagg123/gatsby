@@ -1,4 +1,4 @@
-# The Method: Deconstruct, Challenge, Reconstruct
+# The method: deconstruct, challenge, reconstruct
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

@@ -1,4 +1,4 @@
-# Compaction & Summarization Across Turns
+# Compaction & summarization across turns
 
 > **Motto** — When history won't fit, replace it with a summary that preserves the facts that matter.
 

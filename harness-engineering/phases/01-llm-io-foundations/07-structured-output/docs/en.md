@@ -1,4 +1,4 @@
-# Structured Output Without Tools (JSON + Repair)
+# Structured output without tools (JSON + repair)
 
 > **Motto** — Ask for JSON, but never trust that you got valid JSON — extract, validate, repair.
 

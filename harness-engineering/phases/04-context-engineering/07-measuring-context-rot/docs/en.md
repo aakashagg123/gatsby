@@ -1,4 +1,4 @@
-# Measuring Context Rot
+# Measuring context rot
 
 > **Motto** — If you can't measure how a full window degrades answers, you're tuning blind.
 

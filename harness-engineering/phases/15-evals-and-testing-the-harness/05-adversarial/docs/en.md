@@ -1,4 +1,4 @@
-# Adversarial & Red-Team Cases
+# Adversarial & red-team cases
 
 > **Motto** — Test the attacks, not just the happy path — a harness is only as safe as its worst input.
 

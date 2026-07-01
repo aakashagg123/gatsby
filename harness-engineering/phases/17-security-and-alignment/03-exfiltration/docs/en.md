@@ -1,4 +1,4 @@
-# Data Exfiltration & Egress Guards
+# Data exfiltration & egress guards
 
 > **Motto** — The payoff of most attacks is sending your data out — block the exit.
 

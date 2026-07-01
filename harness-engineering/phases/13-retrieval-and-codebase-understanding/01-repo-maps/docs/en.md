@@ -1,4 +1,4 @@
-# Lexical Search & Repo Maps
+# Lexical search & repo maps
 
 > **Motto** — Give the agent a map of the repo's symbols before it goes hunting line by line.
 

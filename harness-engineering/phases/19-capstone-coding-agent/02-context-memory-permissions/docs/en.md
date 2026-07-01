@@ -1,4 +1,4 @@
-# Add Context, Memory & Permissions
+# Add context, memory & permissions
 
 > **Motto** — A safe agent that remembers: gate every action, manage the window, keep a scratchpad.
 

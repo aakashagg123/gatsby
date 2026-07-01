@@ -1,4 +1,4 @@
-# Add Subagents, MCP & Retrieval
+# Add subagents, MCP & retrieval
 
 > **Motto** — Scale the agent out: delegate to subagents, plug in MCP servers, find code by meaning.
 

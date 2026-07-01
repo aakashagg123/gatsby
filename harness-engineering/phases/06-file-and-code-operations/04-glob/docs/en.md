@@ -1,4 +1,4 @@
-# Glob & File Discovery
+# Glob & file discovery
 
 > **Motto** — Before it can read the right file, the agent has to find it.
 

@@ -1,4 +1,4 @@
-# Write & Overwrite Safety
+# Write & overwrite safety
 
 > **Motto** — Writing a file is destructive — gate it so the agent never clobbers what it hasn't seen.
 

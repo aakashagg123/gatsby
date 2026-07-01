@@ -1,6 +1,6 @@
 <div align="center">
 
-# Harness Engineering — from scratch
+# Harness engineering — from scratch
 
 **Build a production coding agent (a "harness" like Claude Code) by hand, one piece at a
 time — then use the real SDKs.** Every lesson ships a reusable artifact.

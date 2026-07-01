@@ -1,4 +1,4 @@
-# Continuous Batching & Paged Attention
+# Continuous batching & paged attention
 
 *Part of [01 · Inference Internals](./README.md)*
 

@@ -1,4 +1,4 @@
-# An MCP Client & Tool Discovery
+# An MCP client & tool discovery
 
 > **Motto** — The client connects, discovers the server's tools, and exposes them to the model.
 

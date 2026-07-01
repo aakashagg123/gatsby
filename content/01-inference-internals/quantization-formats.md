@@ -1,4 +1,4 @@
-# Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts
+# Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts
 
 *Part of [01 · Inference Internals](./README.md)*
 

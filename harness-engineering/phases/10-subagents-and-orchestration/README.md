@@ -1,4 +1,4 @@
-# Phase 10 — Subagents & Orchestration
+# Phase 10 — Subagents & orchestration
 
 > One agent spawns many. Coordinate them with contracts, budgets, and waves — the model
 > from [The Ten Principles of a Working Harness](../../foundations/harness-principles.md).

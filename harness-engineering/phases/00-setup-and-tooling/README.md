@@ -1,4 +1,4 @@
-# Phase 00 — Setup & Tooling
+# Phase 00 — Setup & tooling
 
 > Get a model talking to your terminal with nothing but the standard library.
 

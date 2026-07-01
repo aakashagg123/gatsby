@@ -1,4 +1,4 @@
-# Prompt Versioning & A/B in the Harness
+# Prompt versioning & A/B in the harness
 
 > **Motto** — Prompts are code: version them, and prove a change is better before you ship it.
 

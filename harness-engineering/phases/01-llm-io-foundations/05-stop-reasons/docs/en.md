@@ -1,4 +1,4 @@
-# Stop Reasons & Max Tokens
+# Stop reasons & max tokens
 
 > **Motto** — Why the model stopped tells the harness what to do next.
 

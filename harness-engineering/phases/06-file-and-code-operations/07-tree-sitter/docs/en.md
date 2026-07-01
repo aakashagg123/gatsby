@@ -1,4 +1,4 @@
-# Use It: Tree-sitter for Structural Edits
+# Use it: tree-sitter for structural edits
 
 > **Motto** — Some edits are about *structure*, not strings — parse the code to target them.
 

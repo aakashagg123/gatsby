@@ -1,4 +1,4 @@
-# Plugins & Deferred Tool Loading
+# Plugins & deferred tool loading
 
 > **Motto** — Load a tool's full definition only when it's about to be used — names up front, schemas on demand.
 

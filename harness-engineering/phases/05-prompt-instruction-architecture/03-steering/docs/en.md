@@ -1,4 +1,4 @@
-# Steering: Tone, Refusals & Guardrail Text
+# Steering: tone, refusals & guardrail text
 
 > **Motto** — Steering is the prompt text that shapes *how* the agent responds and *when* it declines.
 

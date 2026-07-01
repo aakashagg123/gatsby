@@ -1,4 +1,4 @@
-# Latency: Prefill vs. Decode, TTFT
+# Latency: prefill vs. decode, TTFT
 
 > **Motto** — Latency has two halves: time to the first token, then time per token after.
 

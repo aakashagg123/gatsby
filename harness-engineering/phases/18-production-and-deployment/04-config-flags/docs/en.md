@@ -1,4 +1,4 @@
-# Config, Settings & Feature Flags
+# Config, settings & feature flags
 
 > **Motto** — Change behavior with config, not a redeploy — and roll features without shipping code.
 

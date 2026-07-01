@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>01 · Inference Internals — AI Engineering for PMs</title>
+<title>01 · Inference internals — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink active" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#prompt-vs-semantic-caching">Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management">KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode">Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention">Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation">Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats">Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink active" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#prompt-vs-semantic-caching">Prompt caching vs. semantic caching</a><a href="#kv-cache-management">KV cache management: eviction, reuse, and memory pressure at scale</a><a href="#prefill-vs-decode">Prefill vs. decode latency</a><a href="#batching-and-paged-attention">Continuous batching &amp; paged attention</a><a href="#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a><a href="#quantization-formats">Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 01</span>
-    <h1>Inference Internals</h1>
+    <h1>Inference internals</h1>
     <p class="lede">What happens between your request and the tokens that come back.</p>
     <div class="hero-meta">6 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -338,7 +338,7 @@ explain almost everything about LLM serving economics:</p>
 <a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Module 06</a>.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#prompt-vs-semantic-caching"><span>01.1</span>Prompt Caching vs. Semantic Caching</a><a href="#kv-cache-management"><span>01.2</span>KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</a><a href="#prefill-vs-decode"><span>01.3</span>Prefill vs. Decode Latency</a><a href="#batching-and-paged-attention"><span>01.4</span>Continuous Batching &amp; Paged Attention</a><a href="#speculative-quantization-distillation"><span>01.5</span>Speculative Decoding vs. Quantization vs. Distillation</a><a href="#quantization-formats"><span>01.6</span>Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#prompt-vs-semantic-caching"><span>01.1</span>Prompt caching vs. semantic caching</a><a href="#kv-cache-management"><span>01.2</span>KV cache management: eviction, reuse, and memory pressure at scale</a><a href="#prefill-vs-decode"><span>01.3</span>Prefill vs. decode latency</a><a href="#batching-and-paged-attention"><span>01.4</span>Continuous batching &amp; paged attention</a><a href="#speculative-quantization-distillation"><span>01.5</span>Speculative decoding vs. quantization vs. distillation</a><a href="#quantization-formats"><span>01.6</span>Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Latency &amp; cost playground — prefill vs. decode</h3></div><div class="iw-body"><div class="iw-controls">
   <div class="iw-field"><label>Input tokens <span class="v" id="lc-inv"></span></label><input type="range" id="lc-in" min="0" max="32000" step="500" value="3000"></div>
   <div class="iw-field"><label>Output tokens <span class="v" id="lc-outv"></span></label><input type="range" id="lc-out" min="0" max="4000" step="50" value="300"></div>
@@ -357,7 +357,7 @@ explain almost everything about LLM serving economics:</p>
   <div class="iw-note" id="lc-note"></div>
 </div>
 <div class="iw-note">Illustrative model: ~60&nbsp;ms per 1k input tokens (prefill), 12&nbsp;ms per output token (decode), $3 / $15 per Mtok in/out, cached input at 10% price. Your real numbers vary by model &amp; hardware — the <em>shape</em> is the lesson.</div></div></section>
-  <section class="lesson" id="prompt-vs-semantic-caching"><div class="lesson-head"><span class="lesson-num">01.1</span><h2>Prompt Caching vs. Semantic Caching</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="prompt-vs-semantic-caching"><div class="lesson-head"><span class="lesson-num">01.1</span><h2>Prompt caching vs. semantic caching</h2></div><h2>TL;DR</h2>
 <p>They share the word "caching" and almost nothing else. <strong>Prompt caching</strong> reuses the
 model's internal computation (the <a href="#kv-cache-management">KV cache</a>) for an
 <em>exact</em> shared prefix — it is lossless and changes only cost/latency, never the
@@ -501,7 +501,7 @@ support queries).</p>
 <li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation &amp; cache safety</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="kv-cache-management"><div class="lesson-head"><span class="lesson-num">01.2</span><h2>KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="kv-cache-management"><div class="lesson-head"><span class="lesson-num">01.2</span><h2>KV cache management: eviction, reuse, and memory pressure at scale</h2></div><h2>TL;DR</h2>
 <p>During generation, the model caches the key and value tensors of every token it has
 already processed so attention doesn't recompute the whole sequence each step. This
 <strong>KV cache</strong> is what makes <a href="#prefill-vs-decode">decode</a> fast — and it is usually
@@ -636,7 +636,7 @@ really a <strong>throughput and cost</strong> optimization. This is the mechanis
 <li><a href="#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="#quantization-formats">Quantization formats</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation &amp; cache safety</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="prefill-vs-decode"><div class="lesson-head"><span class="lesson-num">01.3</span><h2>Prefill vs. Decode Latency</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="prefill-vs-decode"><div class="lesson-head"><span class="lesson-num">01.3</span><h2>Prefill vs. decode latency</h2></div><h2>TL;DR</h2>
 <p>Generation has two phases with opposite hardware profiles. <strong>Prefill</strong> processes the
 entire prompt in parallel to build the <a href="#kv-cache-management">KV cache</a> — it is
 <strong>compute-bound</strong> and its cost scales with <em>input</em> length. <strong>Decode</strong> then emits
@@ -755,7 +755,7 @@ them leads to optimizing the wrong thing.</p>
 <li><a href="#batching-and-paged-attention">Continuous batching &amp; paged attention</a></li>
 <li><a href="#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="batching-and-paged-attention"><div class="lesson-head"><span class="lesson-num">01.4</span><h2>Continuous Batching &amp; Paged Attention</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="batching-and-paged-attention"><div class="lesson-head"><span class="lesson-num">01.4</span><h2>Continuous batching &amp; paged attention</h2></div><h2>TL;DR</h2>
 <p>Two innovations made modern LLM serving economical. <strong>Continuous batching</strong> keeps the
 GPU full by adding and removing requests at the <em>token</em> level instead of waiting for
 a whole batch to finish. <strong>Paged attention</strong> manages the <a href="#kv-cache-management">KV cache</a>
@@ -883,7 +883,7 @@ raise tail latency for individual requests. The right operating point is an
 <li><a href="#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="speculative-quantization-distillation"><div class="lesson-head"><span class="lesson-num">01.5</span><h2>Speculative Decoding vs. Quantization vs. Distillation</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="speculative-quantization-distillation"><div class="lesson-head"><span class="lesson-num">01.5</span><h2>Speculative decoding vs. quantization vs. distillation</h2></div><h2>TL;DR</h2>
 <p>Three ways to make inference faster or cheaper, with very different risk profiles.
 <strong>Speculative decoding</strong> speeds up <a href="#prefill-vs-decode">decode</a> with <em>zero quality
 change</em> (the output distribution is provably preserved) but needs extra memory and
@@ -1026,7 +1026,7 @@ quantized. They attack different resources, so stacking compounds the wins.</p>
 <li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="quantization-formats"><div class="lesson-head"><span class="lesson-num">01.6</span><h2>Quantization Formats: INT8, INT4, FP8, AWQ, GPTQ — and When It Hurts</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="quantization-formats"><div class="lesson-head"><span class="lesson-num">01.6</span><h2>Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts</h2></div><h2>TL;DR</h2>
 <p>Quantization stores numbers in fewer bits to shrink the model's memory footprint and
 move less data per <a href="#prefill-vs-decode">decode</a> step — buying lower cost, more
 <a href="#kv-cache-management">KV/batch headroom</a>, and often lower latency. The format
@@ -1274,7 +1274,7 @@ Every latency, cost, and capacity number traces back to one of these.</p>
 </blockquote>
 <hr />
 <p>← Back to <a href="01-inference-internals.html">module index</a> · → Next module: <a href="02-reliable-outputs.html">02 · Reliable Outputs</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="00-foundations.html"><span class="lbl">← Previous</span><span class="ttl">00 · Foundations</span></a><a class="navcard next" href="02-reliable-outputs.html"><span class="lbl">→ Next</span><span class="ttl">02 · Reliable Outputs &amp; Tool Use</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="00-foundations.html"><span class="lbl">← Previous</span><span class="ttl">00 · Foundations</span></a><a class="navcard next" href="02-reliable-outputs.html"><span class="lbl">→ Next</span><span class="ttl">02 · Reliable outputs &amp; tool use</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');
 var $=function(id){return root.querySelector(id);};
 var inEl=$('#lc-in'),outEl=$('#lc-out'),cacheEl=$('#lc-cache');

@@ -1,4 +1,4 @@
-# Phase 07 — Shell & Sandbox Execution
+# Phase 07 — Shell & sandbox execution
 
 > Let the agent run commands without letting it run wild — capture, bound, background, and
 > sandbox the Bash tool behind Claude Code / Codex.

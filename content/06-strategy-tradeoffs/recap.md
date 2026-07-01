@@ -1,4 +1,4 @@
-# Strategy & Tradeoffs — Recap & Real-World Examples
+# Strategy & tradeoffs — recap & real-world examples
 
 *Part of [06 · Strategy & Tradeoffs](./README.md)*
 

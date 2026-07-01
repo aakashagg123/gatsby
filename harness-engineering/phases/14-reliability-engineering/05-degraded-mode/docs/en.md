@@ -1,4 +1,4 @@
-# Degraded-Mode UX
+# Degraded-mode UX
 
 > **Motto** — When the agent can't do the whole job, do part of it well and say what's missing.
 

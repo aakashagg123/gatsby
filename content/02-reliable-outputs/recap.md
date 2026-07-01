@@ -1,4 +1,4 @@
-# Reliable Outputs & Tool Use — Recap & Real-World Examples
+# Reliable outputs & tool use — recap & real-world examples
 
 *Part of [02 · Reliable Outputs & Tool Use](./README.md)*
 

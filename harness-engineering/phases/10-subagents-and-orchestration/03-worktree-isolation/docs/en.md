@@ -1,4 +1,4 @@
-# Worktree Isolation & the Dependency Graph
+# Worktree isolation & the dependency graph
 
 > **Motto** — Disjoint files per wave, derived from the dependency graph — no shared writes.
 

@@ -1,4 +1,4 @@
-# Network Policies & Egress Control
+# Network policies & egress control
 
 > **Motto** — Decide what the agent may reach before it runs, not after it exfiltrates.
 

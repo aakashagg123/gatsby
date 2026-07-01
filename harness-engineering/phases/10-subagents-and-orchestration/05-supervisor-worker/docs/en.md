@@ -1,4 +1,4 @@
-# Supervisor / Worker Patterns
+# Supervisor / worker patterns
 
 > **Motto** — A supervisor decomposes and delegates; workers execute in isolation and report back.
 

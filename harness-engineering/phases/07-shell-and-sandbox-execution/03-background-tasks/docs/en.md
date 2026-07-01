@@ -1,4 +1,4 @@
-# Background Tasks & Long-Running Commands
+# Background tasks & long-running commands
 
 > **Motto** — A dev server doesn't block the agent — start it, get a handle, keep working.
 

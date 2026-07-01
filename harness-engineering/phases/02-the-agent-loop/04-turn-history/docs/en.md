@@ -1,4 +1,4 @@
-# Turn History & Conversation State
+# Turn history & conversation state
 
 > **Motto** — History is the only memory the model has — so own it deliberately.
 

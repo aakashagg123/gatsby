@@ -1,4 +1,4 @@
-# Phase 19 — Capstone: Build Your Own Coding Agent
+# Phase 19 — Capstone: build your own coding agent
 
 > Assemble every phase into one working harness — a coding agent you understand top to bottom
 > because you built each piece.

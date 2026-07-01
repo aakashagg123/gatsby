@@ -1,4 +1,4 @@
-# Inference Internals — Recap & Real-World Examples
+# Inference internals — recap & real-world examples
 
 *Part of [01 · Inference Internals](./README.md)*
 

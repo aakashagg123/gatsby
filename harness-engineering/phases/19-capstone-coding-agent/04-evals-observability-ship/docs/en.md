@@ -1,4 +1,4 @@
-# Add Evals, Observability & Ship It
+# Add evals, observability & ship it
 
 > **Motto** — Make it measurable, observable, and deployable — then it's a real product, not a demo.
 

@@ -1,4 +1,4 @@
-# Minimal Coding Agent (Loop + Tools + Files)
+# Minimal coding agent (loop + tools + files)
 
 > **Motto** — The smallest real coding agent: a loop that reads, edits, and runs code.
 

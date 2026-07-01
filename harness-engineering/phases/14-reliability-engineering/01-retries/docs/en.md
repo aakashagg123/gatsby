@@ -1,4 +1,4 @@
-# Retries, Backoff & Jitter
+# Retries, backoff & jitter
 
 > **Motto** — Transient failures deserve a retry — with growing, jittered delays so you don't stampede.
 

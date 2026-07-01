@@ -1,4 +1,4 @@
-# Remote / Sandboxed Execution Environments
+# Remote / sandboxed execution environments
 
 > **Motto** — Run the agent in a fresh, isolated, ephemeral box — not on your laptop with your keys.
 

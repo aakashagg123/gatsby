@@ -1,4 +1,4 @@
-# Evals & Observability — Recap & Real-World Examples
+# Evals & observability — recap & real-world examples
 
 *Part of [04 · Evals & Observability](./README.md)*
 

@@ -1,4 +1,4 @@
-# Anatomy of a System Prompt
+# Anatomy of a system prompt
 
 > **Motto** — The system prompt is the agent's constitution: role, rules, tools, and output contract.
 

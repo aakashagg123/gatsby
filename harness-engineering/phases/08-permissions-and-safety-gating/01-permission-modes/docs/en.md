@@ -1,4 +1,4 @@
-# Permission Modes (ask / allow / deny)
+# Permission modes (ask / allow / deny)
 
 > **Motto** — Every tool call passes through a gate that says allow, ask, or deny.
 

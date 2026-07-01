@@ -1,4 +1,4 @@
-# Task Decomposition Prompts
+# Task decomposition prompts
 
 > **Motto** — A good plan is small, ordered, verifiable steps — prompt the model to produce exactly that.
 

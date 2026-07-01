@@ -1,4 +1,4 @@
-# Module 07 · First Principles & the Polymath Mind
+# First principles & the polymath mind
 
 Most of what you "know" you actually borrowed — a convention, a best practice, a way
 things have always been done. That's efficient, until the borrowed answer is wrong for

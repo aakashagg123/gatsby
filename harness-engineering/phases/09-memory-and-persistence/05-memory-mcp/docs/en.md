@@ -1,4 +1,4 @@
-# Use It: A Memory MCP Server
+# Use it: a memory MCP server
 
 > **Motto** — Expose memory as an MCP server and any agent — Claude Code or Codex — can use it.
 

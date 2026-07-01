@@ -1,4 +1,4 @@
-# Latency, Quality, Cost, and Reliability Across the Full Inference Stack
+# Latency, quality, cost, and reliability across the full inference stack
 
 *Part of [06 · Strategy & Tradeoffs](./README.md)*
 

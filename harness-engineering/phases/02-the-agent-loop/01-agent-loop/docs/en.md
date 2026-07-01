@@ -1,4 +1,4 @@
-# The Agent Loop from Scratch
+# The agent loop from scratch
 
 > **Motto** — An agent is a `while` loop that lets a stateless model take actions until it's done.
 

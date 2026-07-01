@@ -1,4 +1,4 @@
-# Phase 18 — Production & Deployment
+# Phase 18 — Production & deployment
 
 > Ship the harness to real users and real repos — remote execution, CI, webhooks, config,
 > and safe rollout.

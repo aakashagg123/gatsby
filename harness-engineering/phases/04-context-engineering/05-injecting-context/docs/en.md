@@ -1,4 +1,4 @@
-# Injecting Files & Retrieved Context Safely
+# Injecting files & retrieved context safely
 
 > **Motto** — Inject the right slice, label it as data, and cite where it came from.
 

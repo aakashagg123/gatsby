@@ -1,4 +1,4 @@
-# Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention
+# Multi-tenant isolation, cache safety, and cross-user context contamination prevention
 
 *Part of [05 · Safety & Multi-tenancy](./README.md)*
 

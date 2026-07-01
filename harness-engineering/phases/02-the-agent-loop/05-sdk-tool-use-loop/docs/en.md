@@ -1,4 +1,4 @@
-# Use It: The Agent Loop on the Real SDK
+# Use it: the agent loop on the real SDK
 
 > **Motto** — Same loop, same invariants — the only new thing is the wire format.
 

@@ -1,4 +1,4 @@
-# Phase 15 — Evals & Testing the Harness
+# Phase 15 — Evals & testing the harness
 
 > You cannot improve a harness you cannot measure — golden tasks, trajectory evals,
 > LLM-as-judge, regression gates, and adversarial cases.

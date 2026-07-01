@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>03 · RAG &amp; Retrieval — AI Engineering for PMs</title>
+<title>03 · RAG &amp; retrieval — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink active" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#rag-architecture">RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals">Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink active" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#rag-architecture">RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</a><a href="#retrieval-evals">Retrieval evals: recall, precision, grounding, attribution, and citation quality</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 03</span>
-    <h1>RAG &amp; Retrieval</h1>
+    <h1>RAG &amp; retrieval</h1>
     <p class="lede">Grounding models in your data — and proving they actually used it.</p>
     <div class="hero-meta">2 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -332,7 +332,7 @@ what the retriever found. The two lessons here are a matched pair — build the 
 then prove it works.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#rag-architecture"><span>03.1</span>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</a><a href="#retrieval-evals"><span>03.2</span>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#rag-architecture"><span>03.1</span>RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</a><a href="#retrieval-evals"><span>03.2</span>Retrieval evals: recall, precision, grounding, attribution, and citation quality</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Retrieval tradeoff — top-k and reranking</h3></div><div class="iw-body"><div class="iw-controls">
  <div class="iw-field"><label>Retrieved (top-k) <span class="v" id="rg-kv"></span></label><input type="range" id="rg-k" min="1" max="50" step="1" value="8"></div>
  <label class="iw-toggle" style="margin-bottom:7px"><input type="checkbox" id="rg-rr"> Add reranking (keep top 5)</label>
@@ -345,7 +345,7 @@ then prove it works.</p>
  <div class="iw-note" id="rg-note"></div>
 </div>
 <div class="iw-legend"><span><i style="background:#D97757"></i>relevant</span><span><i style="background:#ded8c9"></i>noise</span><span><i style="background:#fff;outline:2px solid #1A1915"></i>kept after rerank</span></div></div></section>
-  <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</h2></div><h2>TL;DR</h2>
 <p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong> decides
 what a retrievable unit <em>is</em>; <strong>embeddings</strong> decide how meaning is matched; <strong>hybrid
 search</strong> combines keyword and vector recall; <strong>reranking</strong> sharpens precision before
@@ -502,7 +502,7 @@ the top few.</p>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval Evals: Recall, Precision, Grounding, Attribution, and Citation Quality</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval evals: recall, precision, grounding, attribution, and citation quality</h2></div><h2>TL;DR</h2>
 <p>A <a href="#rag-architecture">RAG system</a> has two failure surfaces — <em>did we retrieve the
 right thing?</em> and <em>did the model use it faithfully?</em> — and you must measure them
 <strong>separately</strong>, or you'll tune the prompt to fix a retrieval bug (or vice versa).
@@ -698,7 +698,7 @@ source, or fail to </em><em>ground</em><em> the answer in it?"</em> Different bu
 </blockquote>
 <hr />
 <p>← Back to <a href="03-rag.html">module index</a> · → Next module: <a href="04-evals-observability.html">04 · Evals &amp; Observability</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="02-reliable-outputs.html"><span class="lbl">← Previous</span><span class="ttl">02 · Reliable Outputs &amp; Tool Use</span></a><a class="navcard next" href="04-evals-observability.html"><span class="lbl">→ Next</span><span class="ttl">04 · Evals &amp; Observability</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="02-reliable-outputs.html"><span class="lbl">← Previous</span><span class="ttl">02 · Reliable outputs &amp; tool use</span></a><a class="navcard next" href="04-evals-observability.html"><span class="lbl">→ Next</span><span class="ttl">04 · Evals &amp; observability</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var R=8,k=$('#rg-k'),rr=$('#rg-rr');
 function calc(){var K=+k.value,rerank=rr.checked;

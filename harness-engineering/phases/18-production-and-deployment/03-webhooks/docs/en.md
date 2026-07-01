@@ -1,4 +1,4 @@
-# Webhooks & Event-Driven Agents
+# Webhooks & event-driven agents
 
 > **Motto** — Let events wake the agent — a comment, a CI failure, a push — and route each to a handler.
 

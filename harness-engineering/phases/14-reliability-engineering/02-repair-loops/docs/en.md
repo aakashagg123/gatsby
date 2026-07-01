@@ -1,4 +1,4 @@
-# Validation & Repair Loops
+# Validation & repair loops
 
 > **Motto** — When output fails validation, hand the model the error and let it fix itself — within a budget.
 

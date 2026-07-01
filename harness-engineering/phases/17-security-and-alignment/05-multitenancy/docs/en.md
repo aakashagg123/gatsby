@@ -1,4 +1,4 @@
-# Multi-Tenant Isolation & Cache Contamination
+# Multi-tenant isolation & cache contamination
 
 > **Motto** — Never let one tenant's data — or cache entry — leak into another's session.
 

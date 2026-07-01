@@ -10,7 +10,7 @@ phase: 11
 lesson: 5
 ---
 
-# Plan and Build
+# Plan and build
 
 Run any non-trivial task through: decompose → approve → execute (verified) → re-plan on
 stall. Do not start editing before the plan is approved.

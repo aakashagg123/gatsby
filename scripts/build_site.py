@@ -2,7 +2,7 @@
 """Assemble the combined GitHub Pages site with two separate landings.
 
   _site/
-  ├── index.html        top landing → AI Engineering | Harness Engineering
+  ├── index.html        top landing → AI engineering | Harness engineering
   ├── ai/               the AI engineering module (pre-rendered html/ editions)
   └── harness/          the harness engineering track (markdown rendered client-side)
 
@@ -18,12 +18,13 @@ import shutil
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "_site")
 HTML = os.path.join(ROOT, "html")                       # AI engineering editions
+FP_HTML = os.path.join(ROOT, "first-principles-html")   # first principles editions
 HARNESS_SRC = os.path.join(ROOT, "harness-engineering")
 
 VIEWER = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} · Harness Engineering</title>
+<title>{title} · Harness engineering</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -102,7 +103,7 @@ VIEWER = """<!doctype html>
     .lessonnav .nx{{text-align:left}}
   }}
 </style></head><body>
-<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{harness_root}index.html">Harness Engineering</a></div>
+<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{harness_root}index.html">Harness engineering</a></div>
 <main id="content">Loading…</main>
 {nav}
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -131,7 +132,7 @@ await mermaid.run({{querySelector:'pre.mermaid'}});
 LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Engineering Learning Modules</title>
+<title>Engineering learning modules</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -150,7 +151,7 @@ LANDING = """<!doctype html>
     text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
   h1{font-size:3.1rem;line-height:1.08;letter-spacing:-0.03em;font-weight:600;margin:0 0 .25em;max-width:14ch}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:22px;margin-top:52px}
   @media(max-width:680px){
     .wrap{padding:64px 18px 64px}
     .cards{grid-template-columns:1fr;gap:16px;margin-top:36px}
@@ -170,21 +171,27 @@ LANDING = """<!doctype html>
   ::selection{background:rgba(217,119,87,.22)}
 </style></head><body>
 <div class="wrap">
-  <span class="eyebrow">From Scratch</span>
-  <h1>Engineering Learning Modules</h1>
-  <p class="sub">Two separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <span class="eyebrow">From scratch</span>
+  <h1>Engineering learning modules</h1>
+  <p class="sub">Three separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
-      <h2>AI Engineering →</h2>
+      <h2>AI engineering →</h2>
       <p>The engineering discipline under production LLM systems — inference, retrieval,
       evals, observability, safety, cost. Designed reading editions.</p>
     </a>
     <a class="card" href="harness/index.html">
       <span class="tag">Module</span>
-      <h2>Harness Engineering →</h2>
+      <h2>Harness engineering →</h2>
       <p>Build a coding agent's harness from scratch — loop, tools, context, memory,
-      subagents — then use the real SDK. Build It / Use It, ships an artifact each lesson.</p>
+      subagents — then use the real SDK. Build it / use it, ships an artifact each lesson.</p>
+    </a>
+    <a class="card" href="first-principles/index.html">
+      <span class="tag">Module</span>
+      <h2>First principles →</h2>
+      <p>Reason from fundamentals and build range across disciplines — the method,
+      a latticework of mental models, becoming a polymath, and learning how to learn.</p>
     </a>
   </div>
   <footer>Educational content. Use it, fork it, teach from it.</footer>
@@ -247,6 +254,10 @@ def main():
 
     # 1. AI engineering module: copy the pre-rendered editions.
     shutil.copytree(HTML, os.path.join(SITE, "ai"))
+
+    # 1b. First principles module: copy its pre-rendered pages.
+    if os.path.isdir(FP_HTML):
+        shutil.copytree(FP_HTML, os.path.join(SITE, "first-principles"))
 
     # 2. Harness engineering: copy the whole tree (md + code + outputs).
     dst_harness = os.path.join(SITE, "harness")

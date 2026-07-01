@@ -1,4 +1,4 @@
-# Chunking Code Without Breaking It
+# Chunking code without breaking it
 
 > **Motto** — Split code on structure, not on line counts — a chunk should be a whole function.
 

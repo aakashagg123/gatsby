@@ -1,4 +1,4 @@
-# The Ten Principles of a Working Harness
+# The ten principles of a working harness
 
 *Harness Engineering · Foundations. See the [Roadmap](../ROADMAP.md).*
 

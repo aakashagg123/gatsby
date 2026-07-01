@@ -1,4 +1,4 @@
-# Use It: The Agent-Team Pipeline
+# Use it: the agent-team pipeline
 
 > **Motto** — Wire the contract, roles, dependency graph, checkpoints, and review into one skill.
 

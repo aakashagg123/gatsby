@@ -1,4 +1,4 @@
-# Treating Model Output as Data, Never Control Flow
+# Treating model output as data, never control flow
 
 > **Motto** — The model proposes; the harness disposes — model text is a request, not a command.
 

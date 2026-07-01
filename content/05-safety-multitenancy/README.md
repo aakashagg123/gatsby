@@ -1,4 +1,4 @@
-# Module 05 · Safety & Multi-tenancy
+# Module 05 · Safety & multi-tenancy
 
 LLM systems take in untrusted text and produce actions over privileged data — often for
 many customers sharing the same infrastructure. That combination creates failure modes

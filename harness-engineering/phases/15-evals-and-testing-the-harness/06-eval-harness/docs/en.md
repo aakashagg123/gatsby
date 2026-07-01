@@ -1,4 +1,4 @@
-# Use It: An Eval Harness You Run on Every Change
+# Use it: an eval harness you run on every change
 
 > **Motto** — One command runs golden, trajectory, judge, and adversarial evals and gates the result.
 

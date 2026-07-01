@@ -1,4 +1,4 @@
-# Writing Tool Descriptions the Model Obeys
+# Writing tool descriptions the model obeys
 
 > **Motto** — The description is the model's only manual — write it for the model, not for humans.
 

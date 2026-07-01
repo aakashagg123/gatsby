@@ -1,4 +1,4 @@
-# Production Failure-Mode Playbook
+# Production failure-mode playbook
 
 > **Motto** — Name the ways agents break in production, and the structural fix for each.
 

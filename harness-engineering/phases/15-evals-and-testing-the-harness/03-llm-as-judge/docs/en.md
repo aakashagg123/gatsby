@@ -1,4 +1,4 @@
-# LLM-as-Judge
+# LLM-as-judge
 
 > **Motto** — When there's no exact answer to match, have a model score the output against a rubric.
 

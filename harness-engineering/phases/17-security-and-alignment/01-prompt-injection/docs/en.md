@@ -1,4 +1,4 @@
-# Prompt Injection from Tool Results & Files
+# Prompt injection from tool results & files
 
 > **Motto** — Any text the agent reads can try to give it orders — the file is the attacker.
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>05 · Safety &amp; Multi-tenancy — AI Engineering for PMs</title>
+<title>05 · Safety &amp; multi-tenancy — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink active" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#safety-engineering">Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation">Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink active" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#safety-engineering">Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</a><a href="#multi-tenant-isolation">Multi-tenant isolation, cache safety, and cross-user context contamination prevention</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 05</span>
-    <h1>Safety &amp; Multi-tenancy</h1>
+    <h1>Safety &amp; multi-tenancy</h1>
     <p class="lede">Keeping tenants, users, and data from leaking into each other.</p>
     <div class="hero-meta">2 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -334,7 +334,7 @@ behavior, and shared caches or context can leak one customer into another.</p>
 of how the whole <a href="00-foundations.html#harness-engineering">harness</a> is built.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#safety-engineering"><span>05.1</span>Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</a><a href="#multi-tenant-isolation"><span>05.2</span>Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#safety-engineering"><span>05.1</span>Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</a><a href="#multi-tenant-isolation"><span>05.2</span>Multi-tenant isolation, cache safety, and cross-user context contamination prevention</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>The lethal trifecta — and cache safety</h3></div><div class="iw-body"><p class="iw-note" style="margin-top:0">An agent is exploitable for data <strong>exfiltration</strong> only when it has all three legs. Break any one and the whole attack class is defused.</p>
 <div class="iw-btns">
  <label class="iw-toggle"><input type="checkbox" id="lt-a" checked> ① Reads untrusted content</label>
@@ -346,7 +346,7 @@ of how the whole <a href="00-foundations.html#harness-engineering">harness</a> i
 <p class="iw-note" style="margin-top:0"><strong>Bonus — cache safety.</strong> A semantic cache keyed only on the query text leaks answers across tenants.</p>
 <label class="iw-toggle"><input type="checkbox" id="lt-k" checked> Cache key includes tenant&nbsp;+&nbsp;permission scope</label>
 <div class="iw-out" style="margin-top:10px"><div class="iw-verdict" id="lt-kv"></div></div></div></section>
-  <section class="lesson" id="safety-engineering"><div class="lesson-head"><span class="lesson-num">05.1</span><h2>Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="safety-engineering"><div class="lesson-head"><span class="lesson-num">05.1</span><h2>Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</h2></div><h2>TL;DR</h2>
 <p>An LLM mixes trusted instructions and untrusted data in the <em>same</em> channel — natural
 language — so any text it reads (a user message, a retrieved document, a tool result, a
 web page) can try to <em>become</em> an instruction. That's <strong>prompt injection</strong>, and there is
@@ -504,7 +504,7 @@ CI, not as one-off manual checks.</p>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="04-evals-observability.html#evals">Evals (adversarial tests)</a></li>
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="multi-tenant-isolation"><div class="lesson-head"><span class="lesson-num">05.2</span><h2>Multi-Tenant Isolation, Cache Safety, and Cross-User Context Contamination Prevention</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="multi-tenant-isolation"><div class="lesson-head"><span class="lesson-num">05.2</span><h2>Multi-tenant isolation, cache safety, and cross-user context contamination prevention</h2></div><h2>TL;DR</h2>
 <p>When many customers (tenants) and users share the same LLM infrastructure, the failure
 that ends companies is <strong>one tenant's data appearing in another's results</strong>. LLM
 systems add new leak paths that traditional multi-tenant apps don't have:
@@ -704,7 +704,7 @@ key forgot the tenant id — what's the blast radius?"</em></p>
 </blockquote>
 <hr />
 <p>← Back to <a href="05-safety-multitenancy.html">module index</a> · → Next module: <a href="06-strategy-tradeoffs.html">06 · Strategy &amp; Tradeoffs</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="04-evals-observability.html"><span class="lbl">← Previous</span><span class="ttl">04 · Evals &amp; Observability</span></a><a class="navcard next" href="06-strategy-tradeoffs.html"><span class="lbl">→ Next</span><span class="ttl">06 · Strategy &amp; Tradeoffs</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="04-evals-observability.html"><span class="lbl">← Previous</span><span class="ttl">04 · Evals &amp; observability</span></a><a class="navcard next" href="06-strategy-tradeoffs.html"><span class="lbl">→ Next</span><span class="ttl">06 · Strategy &amp; tradeoffs</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var a=$('#lt-a'),b=$('#lt-b'),c=$('#lt-c'),k=$('#lt-k');
 var legs=[['① reads untrusted content','stop feeding it untrusted/retrieved content (or sandbox what it reads)'],['② accesses private data','remove its access to sensitive data for this path'],['③ can communicate externally','remove its outbound channel / egress, or require human approval to send']];

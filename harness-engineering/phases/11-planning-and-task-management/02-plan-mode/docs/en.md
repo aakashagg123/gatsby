@@ -1,4 +1,4 @@
-# Plan Mode: Propose Before You Act
+# Plan mode: propose before you act
 
 > **Motto** — For risky or ambiguous work, the agent proposes a plan and waits — read-only until you say go.
 

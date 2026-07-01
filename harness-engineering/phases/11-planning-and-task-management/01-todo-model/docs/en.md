@@ -1,4 +1,4 @@
-# A Todo/Task Data Model
+# A Todo/Task data model
 
 > **Motto** — A long task is a list of small ones with status — give the agent that list.
 

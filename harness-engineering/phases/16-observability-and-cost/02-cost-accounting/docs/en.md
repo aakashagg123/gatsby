@@ -1,4 +1,4 @@
-# Token & Cost Accounting
+# Token & cost accounting
 
 > **Motto** — Every call has a price — attribute it per session, feature, and tenant.
 

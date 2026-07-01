@@ -1,4 +1,4 @@
-# Phase 03 — Tool Engineering
+# Phase 03 — Tool engineering
 
 > Tools are the agent's hands. Define them, dispatch them, validate them, and make them
 > safe to call twice.

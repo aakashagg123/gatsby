@@ -1,4 +1,4 @@
-# Secret Redaction in Context & Logs
+# Secret redaction in context & logs
 
 > **Motto** — A secret the model never sees can't be leaked — and a secret never logged can't escape later.
 

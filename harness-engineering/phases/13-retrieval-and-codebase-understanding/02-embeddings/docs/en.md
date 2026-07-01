@@ -1,4 +1,4 @@
-# Embeddings & Semantic Code Search
+# Embeddings & semantic code search
 
 > **Motto** — Lexical search finds the same words; semantic search finds the same meaning.
 

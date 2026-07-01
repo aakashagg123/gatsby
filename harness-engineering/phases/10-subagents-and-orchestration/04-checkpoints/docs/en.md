@@ -1,4 +1,4 @@
-# Checkpoints & Resumable Runs
+# Checkpoints & resumable runs
 
 > **Motto** — Resume from the last checkpoint, never from zero.
 

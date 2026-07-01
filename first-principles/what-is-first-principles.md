@@ -1,4 +1,4 @@
-# What First-Principles Thinking Actually Is
+# What first-principles thinking actually is
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

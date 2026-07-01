@@ -1,4 +1,4 @@
-# Tracing & Spans for an Agent
+# Tracing & spans for an agent
 
 > **Motto** — A trace is the agent's flight recorder: nested spans for every call, timed and tagged.
 

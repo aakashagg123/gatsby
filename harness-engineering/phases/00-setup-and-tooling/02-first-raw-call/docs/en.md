@@ -1,4 +1,4 @@
-# Your First Raw Model Call (HTTP, No SDK)
+# Your first raw model call (HTTP, no SDK)
 
 > **Motto** — The SDK is a convenience; underneath, a model call is one HTTPS POST.
 

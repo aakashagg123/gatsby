@@ -1,4 +1,4 @@
-# An MCP Server: Tools, Resources, Prompts
+# An MCP server: tools, resources, prompts
 
 > **Motto** — An MCP server exposes three things: tools to call, resources to read, prompts to reuse.
 

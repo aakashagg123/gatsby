@@ -1,4 +1,4 @@
-# Tokens & the Context Window
+# Tokens & the context window
 
 > **Motto** — You pay per token and you run out of context in tokens — so count them yourself.
 

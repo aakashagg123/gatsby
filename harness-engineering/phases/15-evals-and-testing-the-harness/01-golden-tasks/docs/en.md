@@ -1,4 +1,4 @@
-# Golden Tasks & Fixtures
+# Golden tasks & fixtures
 
 > **Motto** — A golden set is your harness's test suite: fixed inputs, known-good outputs, a score.
 

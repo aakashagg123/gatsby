@@ -11,7 +11,7 @@ phase: 0
 lesson: 5
 ---
 
-# Check the Docs First
+# Check the docs first
 
 When a question depends on facts that change over time (model ids, parameters, limits,
 pricing, deprecations), do not answer from memory.

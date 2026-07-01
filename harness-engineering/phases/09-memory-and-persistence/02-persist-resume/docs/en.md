@@ -1,4 +1,4 @@
-# Persisting & Resuming Conversations
+# Persisting & resuming conversations
 
 > **Motto** — A session you can save is a session you can resume — don't lose work to a closed terminal.
 

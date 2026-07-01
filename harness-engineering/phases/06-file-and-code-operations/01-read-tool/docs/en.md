@@ -1,4 +1,4 @@
-# A Read Tool with Line Numbers & Ranges
+# A read tool with line numbers & ranges
 
 > **Motto** — The agent edits what it can cite — so reads return numbered lines and bounded ranges.
 
