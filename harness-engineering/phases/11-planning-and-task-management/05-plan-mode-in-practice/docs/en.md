@@ -1,4 +1,4 @@
-# Use It: Plan Mode in a Real Harness
+# Use it: plan mode in a real harness
 
 > **Motto** — Wire decomposition, plan mode, the todo list, and progress tracking into one workflow.
 

@@ -1,4 +1,4 @@
-# Use It: SDK Tool Definitions & Parallel Tool Use
+# Use it: SDK tool definitions & parallel tool use
 
 > **Motto** — One model turn can request several tools at once — run them, return all results.
 

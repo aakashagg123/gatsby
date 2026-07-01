@@ -1,4 +1,4 @@
-# Tool Results, Errors & the Feedback Channel
+# Tool results, errors & the feedback channel
 
 > **Motto** — A tool result is a message back to the model — shape it so the model can use it.
 

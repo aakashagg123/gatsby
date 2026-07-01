@@ -1,4 +1,4 @@
-# Working-Directory & Shell-State Pitfalls
+# Working-directory & shell-state pitfalls
 
 > **Motto** — Each command runs in a fresh shell — `cd` doesn't persist unless the harness makes it.
 

@@ -1,4 +1,4 @@
-# Foundations — Recap & Real-World Examples
+# Foundations — recap & real-world examples
 
 *Part of [00 · Foundations](./README.md)*
 

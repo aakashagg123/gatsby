@@ -1,4 +1,4 @@
-# Error Recovery Inside the Loop
+# Error recovery inside the loop
 
 > **Motto** — Errors are messages to the model, not exceptions to the user.
 

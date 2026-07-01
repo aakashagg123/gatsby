@@ -1,4 +1,4 @@
-# A Tool Registry & Discovery Layer
+# A tool registry & discovery layer
 
 > **Motto** — As tools multiply, the harness needs a registry it can list, filter, and expose.
 

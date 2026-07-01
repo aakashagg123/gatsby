@@ -1,4 +1,4 @@
-# Phase 04 — Context Engineering
+# Phase 04 — Context engineering
 
 > What the model "knows" on any call is whatever your harness put in the window. Own that
 > deliberately: budget it, order it, trim it, compact it, and measure it.

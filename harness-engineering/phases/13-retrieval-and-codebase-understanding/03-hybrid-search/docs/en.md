@@ -1,4 +1,4 @@
-# Hybrid Search & Reranking
+# Hybrid search & reranking
 
 > **Motto** — Combine lexical and semantic hits, then rerank — each catches what the other misses.
 

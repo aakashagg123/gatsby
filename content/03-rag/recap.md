@@ -1,4 +1,4 @@
-# RAG & Retrieval — Recap & Real-World Examples
+# RAG & retrieval — recap & real-world examples
 
 *Part of [03 · RAG & Retrieval](./README.md)*
 

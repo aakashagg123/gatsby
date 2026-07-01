@@ -1,4 +1,4 @@
-# Phase 02 — The Agent Loop
+# Phase 02 — The agent loop
 
 > The ~120 lines at the heart of every coding agent. Build the loop by hand, then run
 > the same thing through the Anthropic SDK.

@@ -4,13 +4,13 @@
 
 <br/>
 
-![Modules](https://img.shields.io/badge/modules-8-D97757?style=flat-square&labelColor=1f1e1d)
-![Lessons](https://img.shields.io/badge/lessons-29-D97757?style=flat-square&labelColor=1f1e1d)
+![Modules](https://img.shields.io/badge/modules-7-D97757?style=flat-square&labelColor=1f1e1d)
+![Lessons](https://img.shields.io/badge/lessons-23-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-532%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
 
-**[📚 Learning Path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML Editions](./html/index.html)** · **[🧭 Jump to Modules](#-curriculum-map)**
+**[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)**
 
 </div>
 
@@ -68,7 +68,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 <td width="50%" valign="top">
 
-### [`01` · Inference Internals](./content/01-inference-internals/README.md)
+### [`01` · Inference internals](./content/01-inference-internals/README.md)
 *What happens between your request and the tokens that come back.*
 
 - [Prompt caching vs. semantic caching](./content/01-inference-internals/prompt-vs-semantic-caching.md)
@@ -83,7 +83,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 <tr>
 <td width="50%" valign="top">
 
-### [`02` · Reliable Outputs & Tool Use](./content/02-reliable-outputs/README.md)
+### [`02` · Reliable outputs & tool use](./content/02-reliable-outputs/README.md)
 *Making models produce things downstream systems can trust.*
 
 - [Structured output: validation, repair, fallback](./content/02-reliable-outputs/structured-output.md)
@@ -94,7 +94,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 <td width="50%" valign="top">
 
-### [`03` · RAG & Retrieval](./content/03-rag/README.md)
+### [`03` · RAG & retrieval](./content/03-rag/README.md)
 *Grounding models in your data — and proving they used it.*
 
 - [RAG architecture: chunking → reranking → freshness](./content/03-rag/rag-architecture.md)
@@ -105,7 +105,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 <tr>
 <td width="50%" valign="top">
 
-### [`04` · Evals & Observability](./content/04-evals-observability/README.md)
+### [`04` · Evals & observability](./content/04-evals-observability/README.md)
 *You cannot operate what you cannot measure.*
 
 - [Evals: golden sets, adversarial, LLM-as-judge](./content/04-evals-observability/evals.md)
@@ -115,7 +115,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 <td width="50%" valign="top">
 
-### [`05` · Safety & Multi-tenancy](./content/05-safety-multitenancy/README.md)
+### [`05` · Safety & multi-tenancy](./content/05-safety-multitenancy/README.md)
 *Keeping tenants, users, and data out of each other.*
 
 - [Safety: injection, leakage, permission boundaries](./content/05-safety-multitenancy/safety-engineering.md)
@@ -126,7 +126,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 <tr>
 <td width="50%" valign="top">
 
-### [`06` · Strategy & Tradeoffs](./content/06-strategy-tradeoffs/README.md)
+### [`06` · Strategy & tradeoffs](./content/06-strategy-tradeoffs/README.md)
 *Picking the right tool, and naming the cost of every choice.*
 
 - [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md)
@@ -136,30 +136,13 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 <td width="50%" valign="top">
 
-### [`07` · First Principles & the Polymath Mind](./content/07-first-principles-polymath/README.md)
-*Reasoning from fundamentals — and building range across every discipline.*
-
-- [What first-principles thinking actually is](./content/07-first-principles-polymath/what-is-first-principles.md)
-- [The method: deconstruct, challenge, reconstruct](./content/07-first-principles-polymath/the-method.md)
-- [A latticework of mental models](./content/07-first-principles-polymath/mental-models-latticework.md)
-- [Becoming a polymath: range, depth & transfer](./content/07-first-principles-polymath/becoming-a-polymath.md)
-- [Learning how to learn](./content/07-first-principles-polymath/learning-how-to-learn.md)
-- [Traps & limits: when not to reason from scratch](./content/07-first-principles-polymath/traps-and-limits.md)
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🎨 [HTML Editions](./html/index.html)
+### 🎨 [HTML editions](./html/index.html)
 *The same curriculum, in a designed reading experience.*
 
 - One comprehensive page **per module**, styled in a warm, Anthropic-inspired UX.
 - Open `html/index.html` locally, or host the folder.
 - Built from the markdown — always in sync.
 
-</td>
-<td width="50%" valign="top">
 </td>
 </tr>
 </table>

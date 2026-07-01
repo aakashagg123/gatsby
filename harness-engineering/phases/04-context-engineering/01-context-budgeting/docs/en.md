@@ -1,4 +1,4 @@
-# Context Budgeting & Token Accounting
+# Context budgeting & token accounting
 
 > **Motto** — Treat the context window as a budget you allocate, not a bucket you fill.
 

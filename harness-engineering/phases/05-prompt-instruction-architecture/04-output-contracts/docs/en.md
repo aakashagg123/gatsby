@@ -1,4 +1,4 @@
-# Output Styles & Response Contracts
+# Output styles & response contracts
 
 > **Motto** — State the output contract, then verify the output meets it — don't just hope.
 

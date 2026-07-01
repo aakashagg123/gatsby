@@ -1,4 +1,4 @@
-# GitHub Integration & CI Triggers
+# GitHub integration & CI triggers
 
 > **Motto** — Wire the agent and its evals into the same CI that guards your code.
 

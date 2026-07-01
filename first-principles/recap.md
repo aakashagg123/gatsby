@@ -1,4 +1,4 @@
-# First Principles & the Polymath Mind — Recap & Real-World Examples
+# First principles & the polymath mind — recap & real-world examples
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

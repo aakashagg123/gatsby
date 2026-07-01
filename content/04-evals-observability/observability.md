@@ -1,4 +1,4 @@
-# LLM Observability: Traces, Spans, Tokens, Latency, Errors, and Drift
+# LLM observability: traces, spans, tokens, latency, errors, and drift
 
 *Part of [04 · Evals & Observability](./README.md)*
 

@@ -1,4 +1,4 @@
-# Phase 01 — LLM I/O Foundations
+# Phase 01 — LLM I/O foundations
 
 > The model is a fast, stateless, non-deterministic function. Learn its interface cold,
 > then everything above it is composition.

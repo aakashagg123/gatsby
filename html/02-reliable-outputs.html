@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>02 · Reliable Outputs &amp; Tool Use — AI Engineering for PMs</title>
+<title>02 · Reliable outputs &amp; tool use — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink active" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#structured-output">Structured Output: Validation, Repair Loops, and Fallback Chains</a><a href="#function-calling">Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</a><a href="#agent-guardrails">Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</a><a href="#model-routing">Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink active" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#structured-output">Structured output: validation, repair loops, and fallback chains</a><a href="#function-calling">Function calling reliability, tool contracts, argument validation, and idempotency</a><a href="#agent-guardrails">Agent guardrails: loop budgets, tool budgets, and termination conditions</a><a href="#model-routing">Model routing, graceful fallback logic, and degraded-mode UX</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 02</span>
-    <h1>Reliable Outputs &amp; Tool Use</h1>
+    <h1>Reliable outputs &amp; tool use</h1>
     <p class="lede">Making models produce things downstream systems can trust.</p>
     <div class="hero-meta">4 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -334,7 +334,7 @@ Treat it as untrusted input to be validated, bounded, and made safe to act on. T
 is the <a href="00-foundations.html#harness-engineering">harness</a> doing its job.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#structured-output"><span>02.1</span>Structured Output: Validation, Repair Loops, and Fallback Chains</a><a href="#function-calling"><span>02.2</span>Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</a><a href="#agent-guardrails"><span>02.3</span>Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</a><a href="#model-routing"><span>02.4</span>Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#structured-output"><span>02.1</span>Structured output: validation, repair loops, and fallback chains</a><a href="#function-calling"><span>02.2</span>Function calling reliability, tool contracts, argument validation, and idempotency</a><a href="#agent-guardrails"><span>02.3</span>Agent guardrails: loop budgets, tool budgets, and termination conditions</a><a href="#model-routing"><span>02.4</span>Model routing, graceful fallback logic, and degraded-mode UX</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Agent budget simulator — what stops a runaway?</h3></div><div class="iw-body"><div class="iw-controls">
  <div class="iw-field"><label>Max steps (budget) <span class="v" id="ab-msv"></span></label><input type="range" id="ab-ms" min="2" max="30" step="1" value="8"></div>
  <div class="iw-field"><label>Cost ceiling <span class="v" id="ab-ccv"></span></label><input type="range" id="ab-cc" min="20" max="500" step="10" value="100"></div>
@@ -349,7 +349,7 @@ is the <a href="00-foundations.html#harness-engineering">harness</a> doing its j
  <div class="iw-verdict" id="ab-verdict" style="margin-top:10px">Press “Run agent”.</div>
  <div class="iw-note" id="ab-detail">Each step costs ~8¢ and makes a tool call. Difficulty = chance of finishing per step.</div>
 </div></div></section>
-  <section class="lesson" id="structured-output"><div class="lesson-head"><span class="lesson-num">02.1</span><h2>Structured Output: Validation, Repair Loops, and Fallback Chains</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="structured-output"><div class="lesson-head"><span class="lesson-num">02.1</span><h2>Structured output: validation, repair loops, and fallback chains</h2></div><h2>TL;DR</h2>
 <p>When a downstream system expects JSON (or any schema), "usually valid" is a production
 incident waiting to happen. Reliable structured output is a <em>pipeline</em>, not a prompt:
 <strong>constrain</strong> generation where you can, <strong>validate</strong> every output against a schema,
@@ -487,7 +487,7 @@ return fallback(...)                   # don't loop forever
 <li><a href="#model-routing">Model routing &amp; degraded-mode UX</a></li>
 <li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="function-calling"><div class="lesson-head"><span class="lesson-num">02.2</span><h2>Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="function-calling"><div class="lesson-head"><span class="lesson-num">02.2</span><h2>Function calling reliability, tool contracts, argument validation, and idempotency</h2></div><h2>TL;DR</h2>
 <p>Function calling is where a model stops generating text and starts <em>causing effects</em> —
 writing to databases, sending messages, moving money. That raises the stakes from
 "wrong answer" to "wrong action." Reliability comes from treating tool calls like an
@@ -601,7 +601,7 @@ retry can double-charge a card or send two emails.</p>
 <li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="agent-guardrails"><div class="lesson-head"><span class="lesson-num">02.3</span><h2>Agent Guardrails: Loop Budgets, Tool Budgets, and Termination Conditions</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="agent-guardrails"><div class="lesson-head"><span class="lesson-num">02.3</span><h2>Agent guardrails: loop budgets, tool budgets, and termination conditions</h2></div><h2>TL;DR</h2>
 <p>An agent is a loop: think → act → observe → repeat. Loops need brakes. Without
 explicit <strong>budgets</strong> (max iterations, max tool calls, max tokens, max wall-clock, max
 cost) and clear <strong>termination conditions</strong>, an agent can spin forever, thrash a tool,
@@ -740,7 +740,7 @@ args, tool latency, tokens, cost, and which budget (if any) terminated it. Aggre
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="model-routing"><div class="lesson-head"><span class="lesson-num">02.4</span><h2>Model Routing, Graceful Fallback Logic, and Degraded-Mode UX</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="model-routing"><div class="lesson-head"><span class="lesson-num">02.4</span><h2>Model routing, graceful fallback logic, and degraded-mode UX</h2></div><h2>TL;DR</h2>
 <p>Don't hard-wire one model to every request. <strong>Routing</strong> sends each request to the
 <em>right</em> model for its difficulty, latency budget, and cost — small/cheap for easy
 cases, large/expensive for hard ones. <strong>Fallback</strong> keeps the system up when a model
@@ -942,7 +942,7 @@ before the user, the database, or the press does?"</em></p>
 </blockquote>
 <hr />
 <p>← Back to <a href="02-reliable-outputs.html">module index</a> · → Next module: <a href="03-rag.html">03 · RAG &amp; Retrieval</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="01-inference-internals.html"><span class="lbl">← Previous</span><span class="ttl">01 · Inference Internals</span></a><a class="navcard next" href="03-rag.html"><span class="lbl">→ Next</span><span class="ttl">03 · RAG &amp; Retrieval</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="01-inference-internals.html"><span class="lbl">← Previous</span><span class="ttl">01 · Inference internals</span></a><a class="navcard next" href="03-rag.html"><span class="lbl">→ Next</span><span class="ttl">03 · RAG &amp; retrieval</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var ms=$('#ab-ms'),cc=$('#ab-cc'),d=$('#ab-d'),g=$('#ab-g');
 function lbl(){$('#ab-msv').textContent=ms.value;$('#ab-ccv').textContent='$'+(+cc.value/100).toFixed(2);$('#ab-dv').textContent=d.value+'%';}

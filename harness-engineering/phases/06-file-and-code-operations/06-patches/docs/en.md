@@ -1,4 +1,4 @@
-# Applying & Validating Patches
+# Applying & validating patches
 
 > **Motto** — A patch is a reviewable unit of change — apply it atomically or not at all.
 

@@ -1,4 +1,4 @@
-# A Latticework of Mental Models
+# A latticework of mental models
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

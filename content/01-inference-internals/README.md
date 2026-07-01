@@ -1,4 +1,4 @@
-# Module 01 · Inference Internals
+# Module 01 · Inference internals
 
 You can't make good latency, cost, and reliability decisions without knowing what
 actually happens when a model serves a request. This module opens the box.

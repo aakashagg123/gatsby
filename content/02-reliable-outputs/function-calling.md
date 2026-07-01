@@ -1,4 +1,4 @@
-# Function Calling Reliability, Tool Contracts, Argument Validation, and Idempotency
+# Function calling reliability, tool contracts, argument validation, and idempotency
 
 *Part of [02 · Reliable Outputs & Tool Use](./README.md)*
 

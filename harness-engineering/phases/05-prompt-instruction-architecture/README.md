@@ -1,4 +1,4 @@
-# Phase 05 — Prompt & Instruction Architecture
+# Phase 05 — Prompt & instruction architecture
 
 > The harness's voice: system prompts, memory files, steering, and output contracts —
 > the durable instructions that shape every turn.

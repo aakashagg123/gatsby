@@ -1,4 +1,4 @@
-# Tool-Call Parsing & the Act Step
+# Tool-call parsing & the act step
 
 > **Motto** — The act step turns the model's *words* about an action into a *typed, validated call*.
 

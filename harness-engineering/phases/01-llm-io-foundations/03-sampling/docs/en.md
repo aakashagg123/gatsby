@@ -1,4 +1,4 @@
-# Sampling: Temperature, Top-p, Determinism
+# Sampling: temperature, top-p, determinism
 
 > **Motto** — The model outputs a distribution; sampling decides which token you actually get.
 

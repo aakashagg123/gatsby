@@ -6,7 +6,7 @@ phase: 18
 lesson: 1
 ---
 
-# Remote Execution Environment
+# Remote execution environment
 
 | Property | Setting |
 |---|---|

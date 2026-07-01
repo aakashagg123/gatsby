@@ -1,4 +1,4 @@
-# Becoming a Polymath
+# Becoming a polymath
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

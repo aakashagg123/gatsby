@@ -1,4 +1,4 @@
-# Sprint Contracts & Budgeted Waves
+# Sprint contracts & budgeted waves
 
 > **Motto** — Lock the contract, declare the budget, dispatch a wave, then stop and let a human decide.
 

@@ -1,4 +1,4 @@
-# Prefill vs. Decode Latency
+# Prefill vs. decode latency
 
 *Part of [01 · Inference Internals](./README.md)*
 

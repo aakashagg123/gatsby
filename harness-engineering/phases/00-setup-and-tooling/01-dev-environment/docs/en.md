@@ -1,4 +1,4 @@
-# Dev Environment & the SDK
+# Dev environment & the SDK
 
 > **Motto** — Before you build a harness, make a clean room to build it in.
 

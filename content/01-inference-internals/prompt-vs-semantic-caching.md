@@ -1,4 +1,4 @@
-# Prompt Caching vs. Semantic Caching
+# Prompt caching vs. semantic caching
 
 *Part of [01 · Inference Internals](./README.md)*
 

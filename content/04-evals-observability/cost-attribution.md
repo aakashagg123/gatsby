@@ -1,4 +1,4 @@
-# Cost Attribution per Feature, Workflow, Tenant, and User Journey — Not Just per Model
+# Cost attribution per feature, workflow, tenant, and user journey — not just per model
 
 *Part of [04 · Evals & Observability](./README.md)*
 

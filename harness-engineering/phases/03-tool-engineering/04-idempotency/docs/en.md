@@ -1,4 +1,4 @@
-# Idempotency & Side-Effecting Tools
+# Idempotency & side-effecting tools
 
 > **Motto** — The loop may retry; a side-effecting tool must not act twice.
 

@@ -10,7 +10,7 @@ phase: 17
 lesson: 6
 ---
 
-# Harness Security Review
+# Harness security review
 
 Review the diff for the following threats. Report each finding with severity
 (critical/high/low), the location, and a concrete fix. Advise "do not merge" on any

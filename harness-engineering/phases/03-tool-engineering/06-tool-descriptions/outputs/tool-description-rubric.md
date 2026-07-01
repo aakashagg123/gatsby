@@ -6,7 +6,7 @@ phase: 3
 lesson: 6
 ---
 
-# Tool Description Rubric
+# Tool description rubric
 
 Every tool description should answer four questions, in this order:
 

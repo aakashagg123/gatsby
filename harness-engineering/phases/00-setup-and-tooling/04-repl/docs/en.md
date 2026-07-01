@@ -1,4 +1,4 @@
-# A REPL You Can Talk To
+# A REPL you can talk to
 
 > **Motto** — A read-eval-print loop over a model is the smallest useful harness.
 

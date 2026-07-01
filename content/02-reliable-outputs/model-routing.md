@@ -1,4 +1,4 @@
-# Model Routing, Graceful Fallback Logic, and Degraded-Mode UX
+# Model routing, graceful fallback logic, and degraded-mode UX
 
 *Part of [02 · Reliable Outputs & Tool Use](./README.md)*
 

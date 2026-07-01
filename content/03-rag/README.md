@@ -1,4 +1,4 @@
-# Module 03 · RAG & Retrieval
+# Module 03 · RAG & retrieval
 
 Retrieval-Augmented Generation grounds a model in *your* data — docs, tickets, code,
 records the model never saw in training and that change every day. Done well, it's how

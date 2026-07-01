@@ -1,4 +1,4 @@
-# Rollout, Canary & Kill Switches
+# Rollout, canary & kill switches
 
 > **Motto** — Ship to a few, watch, then ship to all — and keep a switch to turn it off instantly.
 

@@ -19,37 +19,28 @@ MODULES = [
     ("00-foundations", "00", "Foundations",
      "The mindset shift from “writing prompts” to “engineering systems.”",
      ["harness-engineering", "context-engineering", "infra-not-demos"]),
-    ("01-inference-internals", "01", "Inference Internals",
+    ("01-inference-internals", "01", "Inference internals",
      "What happens between your request and the tokens that come back.",
      ["prompt-vs-semantic-caching", "kv-cache-management", "prefill-vs-decode",
       "batching-and-paged-attention", "speculative-quantization-distillation",
       "quantization-formats"]),
-    ("02-reliable-outputs", "02", "Reliable Outputs & Tool Use",
+    ("02-reliable-outputs", "02", "Reliable outputs & tool use",
      "Making models produce things downstream systems can trust.",
      ["structured-output", "function-calling", "agent-guardrails", "model-routing"]),
-    ("03-rag", "03", "RAG & Retrieval",
+    ("03-rag", "03", "RAG & retrieval",
      "Grounding models in your data — and proving they actually used it.",
      ["rag-architecture", "retrieval-evals"]),
-    ("04-evals-observability", "04", "Evals & Observability",
+    ("04-evals-observability", "04", "Evals & observability",
      "You cannot operate what you cannot measure.",
      ["evals", "observability", "cost-attribution"]),
-    ("05-safety-multitenancy", "05", "Safety & Multi-tenancy",
+    ("05-safety-multitenancy", "05", "Safety & multi-tenancy",
      "Keeping tenants, users, and data from leaking into each other.",
      ["safety-engineering", "multi-tenant-isolation"]),
-    ("06-strategy-tradeoffs", "06", "Strategy & Tradeoffs",
+    ("06-strategy-tradeoffs", "06", "Strategy & tradeoffs",
      "Picking the right tool, and naming the cost of every choice.",
      ["finetune-vs-icl-vs-rag", "inference-stack-tradeoffs", "production-failure-modes"]),
-    ("07-first-principles-polymath", "07", "First Principles & the Polymath Mind",
-     "Reasoning from fundamentals — and building range across every discipline.",
-     ["what-is-first-principles", "the-method", "mental-models-latticework",
-      "becoming-a-polymath", "learning-how-to-learn", "traps-and-limits"]),
 ]
 SLUG_TO_PAGE = {m[0]: f"{m[0]}.html" for m in MODULES}
-
-# Per-module label for the lesson briefing callout. Defaults to the PM lens; the
-# first-principles module addresses a general builder audience.
-DEFAULT_CALLOUT = "For the AI-native PM"
-CALLOUT_LABEL = {"07-first-principles-polymath": "For the builder"}
 
 # ---- link rewriting -----------------------------------------------------------
 def rewrite_target(target, cur_mod):
@@ -109,10 +100,9 @@ def convert_lesson(md, cur_mod):
     body = markdown.markdown(
         md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"]
     )
-    # Briefing callout: tag the blockquote that holds the lesson briefing. Matches
-    # both the default PM lens and the general "For the builder" lens.
+    # PM callout: tag the blockquote that holds the PM briefing
     body = re.sub(
-        r"<blockquote>(.*?For the (?:AI-native PM|builder).*?)</blockquote>",
+        r"<blockquote>(.*?For the AI-native PM.*?)</blockquote>",
         r'<blockquote class="pm-callout">\1</blockquote>',
         body, flags=re.DOTALL,
     )
@@ -148,7 +138,7 @@ def topbar():
         f'<a href="{SLUG_TO_PAGE[s]}">{num}</a>' for (s, num, *_ ) in MODULES
     )
     return f"""<header class="topbar">
-  <a class="brand" href="index.html">{SPARK}<span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
+  <a class="brand" href="index.html">{SPARK}<span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav">{links}</nav>
 </header>"""
 
@@ -180,7 +170,7 @@ def footer(prev_mod, next_mod):
                 f'<span class="ttl">{num} · {htmllib.escape(title)}</span></a>')
     return (f'<div class="pagenav">{card(prev_mod,"prev")}{card(next_mod,"next")}</div>'
             '<footer class="foot">Educational content · part of the '
-            '<a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>')
+            '<a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>')
 
 # ---- build one module page ----------------------------------------------------
 def build_module(idx):
@@ -255,7 +245,7 @@ def build_module(idx):
     if recap_html:
         toc_rows += '<a href="#recap"><span>📌</span>Recap &amp; real-world examples</a>'
 
-    page = head(f"{num} · {title} — AI Engineering for PMs")
+    page = head(f"{num} · {title} — AI engineering for PMs")
     page += topbar()
     page += '<div class="layout">'
     page += sidebar(slug, nav_items)
@@ -264,8 +254,8 @@ def build_module(idx):
     <span class="chip">Module {num}</span>
     <h1>{htmllib.escape(title)}</h1>
     <p class="lede">{htmllib.escape(desc)}</p>
-    <div class="hero-meta">{len(lessons)} lessons{' · interactive demo' if iw_html else ''} · every lesson includes a
-      <strong>🎯 {CALLOUT_LABEL.get(slug, DEFAULT_CALLOUT)}</strong> briefing</div>
+    <div class="hero-meta">{len(lessons)} lessons · interactive demo · every lesson includes a
+      <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro">{intro_html}</div>
   <nav class="toc"><div class="toc-h">In this module</div>{toc_rows}</nav>
@@ -303,16 +293,16 @@ def build_index():
         for t, d in threads
     )
 
-    page = head("AI Engineering — A Curriculum for AI-native PMs")
+    page = head("AI engineering — a curriculum for AI-native PMs")
     page += topbar()
     page += f"""<main class="content index" id="top">
   <div class="index-hero">
     <span class="chip">A linked curriculum</span>
-    <h1>AI Engineering,<br/><em>from scratch to production.</em></h1>
+    <h1>AI engineering,<br/><em>from scratch to production.</em></h1>
     <p class="lede">The engineering discipline underneath production LLM systems —
       inference, retrieval, evaluation, observability, safety, and cost — taught through
       the lens of the decisions a <strong>Senior or Principal PM</strong> has to make.</p>
-    <div class="index-meta"><span>8 modules</span><span>29 lessons</span>
+    <div class="index-meta"><span>7 modules</span><span>23 lessons</span>
       <span>PM-native</span><span>production-grade</span></div>
   </div>
 

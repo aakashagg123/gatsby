@@ -1,4 +1,4 @@
-# Allowlists, Denylists & Pattern Matching
+# Allowlists, denylists & pattern matching
 
 > **Motto** — Deny wins over allow, and the most specific rule wins — make precedence explicit.
 

@@ -1,4 +1,4 @@
-# Streaming Responses Token-by-Token
+# Streaming responses token-by-token
 
 > **Motto** — Streaming is just parsing a sequence of server-sent events into a growing message.
 

@@ -6,7 +6,7 @@ phase: 5
 lesson: 3
 ---
 
-# Steering Snippets
+# Steering snippets
 
 Paste the lines you want into the system prompt or memory file. Steering is advisory —
 back safety-critical limits with a hook (Phase 8).

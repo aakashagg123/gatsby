@@ -1,4 +1,4 @@
-# Exact-String Edit & Why Diffs Beat Rewrites
+# Exact-string edit & why diffs beat rewrites
 
 > **Motto** — Edit by replacing a unique exact string, not by regenerating the whole file.
 

@@ -1,4 +1,4 @@
-# Human-in-the-Loop Approval Flows
+# Human-in-the-loop approval flows
 
 > **Motto** — For the actions that matter, the human is a required step — not an afterthought.
 

@@ -1,4 +1,4 @@
-# Phase 06 — File & Code Operations
+# Phase 06 — File & code operations
 
 > Read, search, and edit a codebase the way a coding agent does — the tools behind Claude
 > Code / Codex's Read, Edit, Write, Glob, and Grep.

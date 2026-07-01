@@ -1,4 +1,4 @@
-# Timeouts & Killing Runaway Processes
+# Timeouts & killing runaway processes
 
 > **Motto** — Every command gets a deadline; a hung process must die, not block the agent forever.
 

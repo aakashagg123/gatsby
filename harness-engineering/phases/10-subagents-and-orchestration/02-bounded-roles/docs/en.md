@@ -1,4 +1,4 @@
-# Bounded Roles & Context Allowlists
+# Bounded roles & context allowlists
 
 > **Motto** — Each agent reads only its allowlist; everything else is off-limits by construction.
 

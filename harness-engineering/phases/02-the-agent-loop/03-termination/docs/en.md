@@ -1,4 +1,4 @@
-# Termination: Stop Conditions & Max Steps
+# Termination: stop conditions & max steps
 
 > **Motto** — An agent without a stop condition is a fork bomb with opinions.
 

@@ -1,4 +1,4 @@
-# Argument Validation & JSON-Schema Enforcement
+# Argument validation & JSON-schema enforcement
 
 > **Motto** — The model proposes arguments; the harness proves they're valid before running anything.
 

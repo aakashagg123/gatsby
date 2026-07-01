@@ -1,4 +1,4 @@
-# Messages, Roles & Turns
+# Messages, roles & turns
 
 > **Motto** — A conversation is a typed list of role-tagged messages — nothing more, nothing less.
 

@@ -1,4 +1,4 @@
-# Message Assembly & Ordering
+# Message assembly & ordering
 
 > **Motto** — Assemble context in a fixed order: stable first, volatile last.
 

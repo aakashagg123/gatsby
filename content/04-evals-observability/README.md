@@ -1,4 +1,4 @@
-# Module 04 · Evals & Observability
+# Module 04 · Evals & observability
 
 LLM systems fail *silently*: a wrong answer looks exactly like a right one, and quality
 can regress with no code change at all (a model update, a data shift, an aging index).

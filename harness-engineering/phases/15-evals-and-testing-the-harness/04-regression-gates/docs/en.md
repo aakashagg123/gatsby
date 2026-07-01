@@ -1,4 +1,4 @@
-# Regression Gates in CI
+# Regression gates in CI
 
 > **Motto** — Block the change that drops the score — run the evals before it merges.
 

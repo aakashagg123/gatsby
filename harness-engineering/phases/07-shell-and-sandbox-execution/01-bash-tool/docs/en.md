@@ -1,4 +1,4 @@
-# A Bash Tool: Capture stdout, stderr, Exit Code
+# A bash tool: capture stdout, stderr, exit code
 
 > **Motto** — Running a command means capturing all three of its outputs: stdout, stderr, and exit code.
 

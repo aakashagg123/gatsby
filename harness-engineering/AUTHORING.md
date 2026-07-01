@@ -1,4 +1,4 @@
-# Authoring a Lesson
+# Authoring a lesson
 
 Every lesson in *Harness Engineering from Scratch* has the **same shape**, so readers
 never re-learn the navigation and the build script can parse it.

@@ -6,7 +6,7 @@ phase: 1
 lesson: 6
 ---
 
-# Role Placement Policy
+# Role placement policy
 
 Apply when constructing any model request.
 

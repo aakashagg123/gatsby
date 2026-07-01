@@ -1,4 +1,4 @@
-# Harness Engineering from Scratch — Roadmap
+# Harness engineering from scratch — roadmap
 
 > Build a production coding agent (a "harness" like Claude Code) **by hand**, one piece
 > at a time — then use the real SDKs and frameworks. Every lesson ships a reusable
@@ -40,7 +40,7 @@ flowchart TB
 
 ---
 
-## Phase 0 — Setup & Tooling `5 lessons` ✅
+## Phase 0 — Setup & tooling `5 lessons` ✅
 *Get a model talking to your terminal with nothing but the standard library.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -51,7 +51,7 @@ flowchart TB
 | 04 | [A REPL you can talk to](./phases/00-setup-and-tooling/04-repl/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Reading the docs like an engineer](./phases/00-setup-and-tooling/05-reading-docs/docs/en.md) ✅ | Build | — | skill |
 
-## Phase 1 — LLM I/O Foundations `8 lessons` ✅
+## Phase 1 — LLM I/O foundations `8 lessons` ✅
 *The model is a fast, stateless, non-deterministic function. Learn its interface.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -65,7 +65,7 @@ flowchart TB
 | 07 | [Structured output without tools (JSON + repair)](./phases/01-llm-io-foundations/07-structured-output/docs/en.md) ✅ | Build | Python | harness module |
 | 08 | [Prompt caching: what's cacheable and why](./phases/01-llm-io-foundations/08-prompt-caching/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 2 — The Agent Loop `7 lessons` ✅
+## Phase 2 — The agent loop `7 lessons` ✅
 *The ~120 lines at the heart of every coding agent.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -78,7 +78,7 @@ flowchart TB
 | 06 | [Error recovery inside the loop](./phases/02-the-agent-loop/06-error-recovery/docs/en.md) ✅ | Build | Python | harness module |
 | 07 | [A streaming agent loop](./phases/02-the-agent-loop/07-streaming-loop/docs/en.md) ✅ | Build | Python | agent |
 
-## Phase 3 — Tool Engineering `8 lessons` ✅
+## Phase 3 — Tool engineering `8 lessons` ✅
 *Tools are the agent's hands. Define, dispatch, validate, and trust them.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -92,7 +92,7 @@ flowchart TB
 | 07 | [Use It: SDK tool definitions & parallel tool use](./phases/03-tool-engineering/07-sdk-parallel-tools/docs/en.md) ✅ | Use | Python | agent |
 | 08 | [A tool registry & discovery layer](./phases/03-tool-engineering/08-tool-registry/docs/en.md) ✅ | Build | Python | harness module |
 
-## Phase 4 — Context Engineering `7 lessons` ✅
+## Phase 4 — Context engineering `7 lessons` ✅
 *What the model "knows" is whatever your harness put in the window.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -105,7 +105,7 @@ flowchart TB
 | 06 | [Context windows in the wild (cache-aware layout)](./phases/04-context-engineering/06-cache-aware-layout/docs/en.md) ✅ | Use | Python | harness module |
 | 07 | [Measuring context rot](./phases/04-context-engineering/07-measuring-context-rot/docs/en.md) ✅ | Build | Python | eval |
 
-## Phase 5 — Prompt & Instruction Architecture `6 lessons` ✅
+## Phase 5 — Prompt & instruction architecture `6 lessons` ✅
 *System prompts, steering files, and output styles — the harness's voice.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -117,7 +117,7 @@ flowchart TB
 | 05 | [Few-shot & in-context examples that scale](./phases/05-prompt-instruction-architecture/05-few-shot/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Prompt versioning & A/B in the harness](./phases/05-prompt-instruction-architecture/06-prompt-versioning/docs/en.md) ✅ | Build | Python | harness module |
 
-## Phase 6 — File & Code Operations `7 lessons` ✅
+## Phase 6 — File & code operations `7 lessons` ✅
 *Read, search, and edit a codebase the way a coding agent does.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -130,7 +130,7 @@ flowchart TB
 | 06 | [Applying & validating patches](./phases/06-file-and-code-operations/06-patches/docs/en.md) ✅ | Build | Python | harness module |
 | 07 | [Use It: tree-sitter for structural edits](./phases/06-file-and-code-operations/07-tree-sitter/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 7 — Shell & Sandbox Execution `6 lessons` ✅
+## Phase 7 — Shell & sandbox execution `6 lessons` ✅
 *Let the agent run commands without letting it run wild.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -142,7 +142,7 @@ flowchart TB
 | 05 | [Sandboxing: containers, namespaces, seccomp](./phases/07-shell-and-sandbox-execution/05-sandboxing/docs/en.md) ✅ | Use | Python | harness module |
 | 06 | [Network policies & egress control](./phases/07-shell-and-sandbox-execution/06-egress-control/docs/en.md) ✅ | Use | — | hook |
 
-## Phase 8 — Permissions & Safety Gating `6 lessons` ✅
+## Phase 8 — Permissions & safety gating `6 lessons` ✅
 *The line between "agent" and "incident" is the permission layer.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -154,7 +154,7 @@ flowchart TB
 | 05 | [Least privilege & capability scoping](./phases/08-permissions-and-safety-gating/05-least-privilege/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: settings.json & the hooks system](./phases/08-permissions-and-safety-gating/06-settings-json/docs/en.md) ✅ | Use | — | settings |
 
-## Phase 9 — Memory & Persistence `5 lessons` ✅
+## Phase 9 — Memory & persistence `5 lessons` ✅
 *Statelessness is the model's problem; memory is the harness's job.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -165,7 +165,7 @@ flowchart TB
 | 04 | [Compaction across sessions](./phases/09-memory-and-persistence/04-cross-session-compaction/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Use It: a memory MCP server](./phases/09-memory-and-persistence/05-memory-mcp/docs/en.md) ✅ | Use | Python | mcp |
 
-## Phase 10 — Subagents & Orchestration `6 lessons` ✅
+## Phase 10 — Subagents & orchestration `6 lessons` ✅
 *One agent spawns many. Coordinate them with contracts, budgets, and waves.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -177,7 +177,7 @@ flowchart TB
 | 05 | [Supervisor / worker patterns](./phases/10-subagents-and-orchestration/05-supervisor-worker/docs/en.md) ✅ | Build | Python | agent |
 | 06 | [Use It: the agent-team pipeline](./phases/10-subagents-and-orchestration/06-agent-team-pipeline/docs/en.md) ✅ | Use | Python, TS | skill |
 
-## Phase 11 — Planning & Task Management `5 lessons` ✅
+## Phase 11 — Planning & task management `5 lessons` ✅
 *Decompose, plan, track — so long tasks don't drift.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -188,7 +188,7 @@ flowchart TB
 | 04 | [Progress tracking & self-correction](./phases/11-planning-and-task-management/04-progress-tracking/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Use It: plan mode in a real harness](./phases/11-planning-and-task-management/05-plan-mode-in-practice/docs/en.md) ✅ | Use | — | skill |
 
-## Phase 12 — MCP & Extensibility `6 lessons` ✅
+## Phase 12 — MCP & extensibility `6 lessons` ✅
 *Make the harness pluggable. Build the protocol, then a server.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -200,7 +200,7 @@ flowchart TB
 | 05 | [Plugins & deferred tool loading](./phases/12-mcp-and-extensibility/05-plugins/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: the official MCP SDK](./phases/12-mcp-and-extensibility/06-official-sdk/docs/en.md) ✅ | Use | Python | mcp |
 
-## Phase 13 — Retrieval & Codebase Understanding `5 lessons` ✅
+## Phase 13 — Retrieval & codebase understanding `5 lessons` ✅
 *Help the agent find the right 200 lines in a million-line repo.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -211,7 +211,7 @@ flowchart TB
 | 04 | [Chunking code without breaking it](./phases/13-retrieval-and-codebase-understanding/04-chunking/docs/en.md) ✅ | Build | Python | harness module |
 | 05 | [Use It: a retrieval tool the agent calls](./phases/13-retrieval-and-codebase-understanding/05-retrieval-tool/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 14 — Reliability Engineering `6 lessons` ✅
+## Phase 14 — Reliability engineering `6 lessons` ✅
 *Make a stochastic system dependable enough to ship.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -223,7 +223,7 @@ flowchart TB
 | 05 | [Degraded-mode UX](./phases/14-reliability-engineering/05-degraded-mode/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: production failure-mode playbook](./phases/14-reliability-engineering/06-failure-playbook/docs/en.md) ✅ | Use | — | prompt |
 
-## Phase 15 — Evals & Testing the Harness `6 lessons` ✅
+## Phase 15 — Evals & testing the harness `6 lessons` ✅
 *You cannot improve a harness you cannot measure.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -235,7 +235,7 @@ flowchart TB
 | 05 | [Adversarial & red-team cases](./phases/15-evals-and-testing-the-harness/05-adversarial/docs/en.md) ✅ | Build | Python | eval |
 | 06 | [Use It: an eval harness you run on every change](./phases/15-evals-and-testing-the-harness/06-eval-harness/docs/en.md) ✅ | Use | Python | eval |
 
-## Phase 16 — Observability & Cost `5 lessons` ✅
+## Phase 16 — Observability & cost `5 lessons` ✅
 *Traces, tokens, latency, dollars — per call, per session, per tenant.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -246,7 +246,7 @@ flowchart TB
 | 04 | [Drift detection](./phases/16-observability-and-cost/04-drift/docs/en.md) ✅ | Build | Python | eval |
 | 05 | [Use It: OpenTelemetry for agents](./phases/16-observability-and-cost/05-opentelemetry/docs/en.md) ✅ | Use | Python | harness module |
 
-## Phase 17 — Security & Alignment `6 lessons` ✅
+## Phase 17 — Security & alignment `6 lessons` ✅
 *The agent reads untrusted data. Assume it's hostile.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -258,7 +258,7 @@ flowchart TB
 | 05 | [Multi-tenant isolation & cache contamination](./phases/17-security-and-alignment/05-multitenancy/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: a security-review skill](./phases/17-security-and-alignment/06-security-review/docs/en.md) ✅ | Use | — | skill |
 
-## Phase 18 — Production & Deployment `6 lessons` ✅
+## Phase 18 — Production & deployment `6 lessons` ✅
 *Ship the harness to real users and real repos.*
 
 | # | Lesson | Type | Lang | Ships |
@@ -270,7 +270,7 @@ flowchart TB
 | 05 | [Rollout, canary & kill switches](./phases/18-production-and-deployment/05-rollout/docs/en.md) ✅ | Build | Python | harness module |
 | 06 | [Use It: deploy the capstone agent](./phases/18-production-and-deployment/06-deploy/docs/en.md) ✅ | Use | — | harness module |
 
-## Phase 19 — Capstone: Build Your Own Coding Agent `4 lessons` ✅
+## Phase 19 — Capstone: build your own coding agent `4 lessons` ✅
 *Assemble every phase into one working harness.*
 
 | # | Project | Combines | Lang | Ships |

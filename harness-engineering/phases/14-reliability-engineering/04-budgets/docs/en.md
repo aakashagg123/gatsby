@@ -1,4 +1,4 @@
-# Loop, Tool & Token Budgets
+# Loop, tool & token budgets
 
 > **Motto** — Put a hard ceiling on steps, tools, tokens, and dollars per request — always.
 

@@ -1,4 +1,4 @@
-# Progress Tracking & Self-Correction
+# Progress tracking & self-correction
 
 > **Motto** — Watch the plan execute; when a step stalls or fails, re-plan instead of grinding.
 

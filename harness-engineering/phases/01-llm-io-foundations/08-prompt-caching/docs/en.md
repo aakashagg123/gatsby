@@ -1,4 +1,4 @@
-# Prompt Caching: What's Cacheable and Why
+# Prompt caching: what's cacheable and why
 
 > **Motto** — Put the stable bytes first and mark them cacheable; the model re-reads them for almost free.
 

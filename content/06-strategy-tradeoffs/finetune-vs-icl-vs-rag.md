@@ -1,4 +1,4 @@
-# Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool
+# Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool
 
 *Part of [06 · Strategy & Tradeoffs](./README.md)*
 

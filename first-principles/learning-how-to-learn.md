@@ -1,4 +1,4 @@
-# Learning How to Learn
+# Learning how to learn
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

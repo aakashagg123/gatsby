@@ -1,4 +1,4 @@
-# Pre/Post Tool-Use Hooks
+# Pre/Post tool-use hooks
 
 > **Motto** — Hooks let deterministic code run before and after every tool call — no prompt required.
 

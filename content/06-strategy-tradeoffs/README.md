@@ -1,4 +1,4 @@
-# Module 06 · Strategy & Tradeoffs
+# Module 06 · Strategy & tradeoffs
 
 The final module steps back from individual techniques to the judgment that ties them
 together: choosing the right approach, naming the cost of every choice, and recognizing

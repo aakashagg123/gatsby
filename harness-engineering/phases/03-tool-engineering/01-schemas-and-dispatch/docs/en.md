@@ -1,4 +1,4 @@
-# Tool Schemas & Dispatch by Hand
+# Tool schemas & dispatch by hand
 
 > **Motto** — A tool is a function plus a schema that teaches the model how to call it.
 

@@ -1,4 +1,4 @@
-# Use It: OpenTelemetry for Agents
+# Use it: OpenTelemetry for agents
 
 > **Motto** — Emit your spans in a standard format and any observability backend can read them.
 

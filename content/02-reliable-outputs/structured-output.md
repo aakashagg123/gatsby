@@ -1,4 +1,4 @@
-# Structured Output: Validation, Repair Loops, and Fallback Chains
+# Structured output: validation, repair loops, and fallback chains
 
 *Part of [02 · Reliable Outputs & Tool Use](./README.md)*
 

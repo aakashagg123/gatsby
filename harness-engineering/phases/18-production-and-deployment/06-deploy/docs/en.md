@@ -1,4 +1,4 @@
-# Use It: Deploy the Capstone Agent
+# Use it: deploy the capstone agent
 
 > **Motto** — Put it all together: a triggered, sandboxed, gated, observable, reversible deployment.
 

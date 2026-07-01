@@ -1,4 +1,4 @@
-# Session State & the Scratchpad
+# Session state & the scratchpad
 
 > **Motto** — Give the agent a place to write down what it must not forget mid-task.
 

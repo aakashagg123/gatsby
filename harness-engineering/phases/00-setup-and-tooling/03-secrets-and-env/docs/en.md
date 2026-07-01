@@ -1,4 +1,4 @@
-# API Keys, Secrets & Env Hygiene
+# API keys, secrets & env hygiene
 
 > **Motto** — A secret in code is a secret already leaked.
 

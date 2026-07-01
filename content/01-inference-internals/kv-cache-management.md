@@ -1,4 +1,4 @@
-# KV Cache Management: Eviction, Reuse, and Memory Pressure at Scale
+# KV cache management: eviction, reuse, and memory pressure at scale
 
 *Part of [01 · Inference Internals](./README.md)*
 

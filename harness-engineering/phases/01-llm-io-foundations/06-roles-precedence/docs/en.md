@@ -1,4 +1,4 @@
-# System vs. User vs. Assistant — Who Controls What
+# System vs. user vs. assistant — who controls what
 
 > **Motto** — Put durable rules in system, the task in user, and never let either pretend to be the other.
 

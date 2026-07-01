@@ -11,7 +11,7 @@ lesson: 06
 tags: [orchestration, subagents, waves, review]
 ---
 
-# Agent Team
+# Agent team
 
 You orchestrate a sprint pipeline of five bounded-role agents. Spend human attention only
 on decisions that matter (the contract approval and the wave gates). Never auto-chain.

@@ -1,4 +1,4 @@
-# Long-Term Memory & Retrieval
+# Long-term memory & retrieval
 
 > **Motto** — Long-term memory is a store you write facts to and retrieve the relevant few from.
 

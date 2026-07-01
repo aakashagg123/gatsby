@@ -1,4 +1,4 @@
-# Shipping LLM Systems as Infrastructure, Not Demos
+# Shipping LLM systems as infrastructure, not demos
 
 *Part of [00 · Foundations](./README.md)*
 

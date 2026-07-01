@@ -1,4 +1,4 @@
-# Safety Engineering: Prompt Injection Defense, Data Leakage Prevention, and Permission Boundaries
+# Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries
 
 *Part of [05 · Safety & Multi-tenancy](./README.md)*
 

@@ -1,4 +1,4 @@
-# Tool Budgets & Rate Limits
+# Tool budgets & rate limits
 
 > **Motto** — Cap how often and how much the agent can act, before it caps your bill.
 

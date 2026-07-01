@@ -10,7 +10,7 @@ phase: 12
 lesson: 4
 ---
 
-# <Skill Name>
+# <Skill name>
 
 One sentence on what this skill does and when to use it.
 

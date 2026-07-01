@@ -1,4 +1,4 @@
-# Phase 11 — Planning & Task Management
+# Phase 11 — Planning & task management
 
 > Decompose, plan, track — so long tasks don't drift. The model behind Claude Code's
 > todo list and plan mode (and Codex's plans).

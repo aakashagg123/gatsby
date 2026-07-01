@@ -1,4 +1,4 @@
-# A Streaming Agent Loop
+# A streaming agent loop
 
 > **Motto** — Stream tokens so the human sees thinking, not a spinner.
 

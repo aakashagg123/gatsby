@@ -1,4 +1,4 @@
-# Traps & Limits
+# Traps & limits
 
 *Part of [07 · First Principles & the Polymath Mind](./README.md)*
 

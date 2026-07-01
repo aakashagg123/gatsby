@@ -1,4 +1,4 @@
-# Skills (SKILL.md) & Progressive Disclosure
+# Skills (SKILL.md) & progressive disclosure
 
 > **Motto** — A skill is a named capability the agent loads only when it's relevant.
 

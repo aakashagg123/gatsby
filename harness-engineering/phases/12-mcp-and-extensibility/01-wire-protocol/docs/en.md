@@ -1,4 +1,4 @@
-# The MCP Wire Protocol from Scratch
+# The MCP wire protocol from scratch
 
 > **Motto** — MCP is JSON-RPC: a request with a method and params, a response with a result.
 

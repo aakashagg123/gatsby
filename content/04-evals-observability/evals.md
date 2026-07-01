@@ -1,4 +1,4 @@
-# Evals: Golden Sets, Regression Tests, Adversarial Tests, LLM-as-Judge, and Human Evals
+# Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals
 
 *Part of [04 · Evals & Observability](./README.md)*
 

@@ -1,4 +1,4 @@
-# Fallback Chains & Model Routing
+# Fallback chains & model routing
 
 > **Motto** — When the first choice fails or is overkill, route to the next — by health and by fit.
 

@@ -1,4 +1,4 @@
-# Sandboxing: Containers, Namespaces, Seccomp
+# Sandboxing: containers, namespaces, seccomp
 
 > **Motto** — Give the agent a room it can't escape, not the keys to the whole house.
 

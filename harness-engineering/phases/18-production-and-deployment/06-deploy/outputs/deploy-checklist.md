@@ -6,7 +6,7 @@ phase: 18
 lesson: 6
 ---
 
-# Agent Deployment Checklist
+# Agent deployment checklist
 
 Run before pointing real traffic / real repos at the agent. Each item → its lesson.
 

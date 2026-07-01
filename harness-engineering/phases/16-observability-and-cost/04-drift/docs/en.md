@@ -1,4 +1,4 @@
-# Drift Detection
+# Drift detection
 
 > **Motto** — Quality erodes silently — watch the metric over time and alert when it slips.
 

@@ -1,4 +1,4 @@
-# Truncation That Doesn't Break Tool Calls
+# Truncation that doesn't break tool calls
 
 > **Motto** — Trim oldest-first, but never split a tool_use from its tool_result.
 

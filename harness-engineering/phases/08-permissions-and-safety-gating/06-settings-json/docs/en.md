@@ -1,4 +1,4 @@
-# Use It: settings.json & the Hooks System
+# Use it: settings.json & the hooks system
 
 > **Motto** — Everything you built this phase is configuration — declare it in settings.json.
 

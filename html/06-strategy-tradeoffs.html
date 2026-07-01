@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>06 · Strategy &amp; Tradeoffs — AI Engineering for PMs</title>
+<title>06 · Strategy &amp; tradeoffs — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,12 +306,12 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink active" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#finetune-vs-icl-vs-rag">Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</a><a href="#inference-stack-tradeoffs">Latency, Quality, Cost, and Reliability Across the Full Inference Stack</a><a href="#production-failure-modes">Production Failure Modes &amp; How to Engineer Around Them</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="00-foundations.html"><span class="num">00</span>Foundations</a><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink active" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#finetune-vs-icl-vs-rag">Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</a><a href="#inference-stack-tradeoffs">Latency, quality, cost, and reliability across the full inference stack</a><a href="#production-failure-modes">Production failure modes &amp; how to engineer around them</a><a href="#recap">Recap &amp; examples</a></div></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 06</span>
-    <h1>Strategy &amp; Tradeoffs</h1>
+    <h1>Strategy &amp; tradeoffs</h1>
     <p class="lede">Picking the right tool, and naming the cost of every choice.</p>
     <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
@@ -332,7 +332,7 @@ point in the tradeoff space these three describe. Read it last, then revisit the
 with the tradeoffs in mind.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#finetune-vs-icl-vs-rag"><span>06.1</span>Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</a><a href="#inference-stack-tradeoffs"><span>06.2</span>Latency, Quality, Cost, and Reliability Across the Full Inference Stack</a><a href="#production-failure-modes"><span>06.3</span>Production Failure Modes &amp; How to Engineer Around Them</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#finetune-vs-icl-vs-rag"><span>06.1</span>Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</a><a href="#inference-stack-tradeoffs"><span>06.2</span>Latency, quality, cost, and reliability across the full inference stack</a><a href="#production-failure-modes"><span>06.3</span>Production failure modes &amp; how to engineer around them</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Four-axis tradeoff explorer</h3></div><div class="iw-body"><p class="iw-note" style="margin-top:0">Toggle levers and watch the four axes move. <strong>Higher is better on every bar</strong> — notice you can never push them all up at once.</p>
 <div class="iw-btns" id="fx-levers">
  <button class="iw-btn" data-l="bigger">Bigger model</button>
@@ -351,7 +351,7 @@ with the tradeoffs in mind.</p>
  <div class="iw-metric"><span class="ml">🛡 Reliability</span><span class="iw-track"><span class="iw-fill" id="fx-rel" style="background:#6b86b3"></span></span><span class="mv" id="fx-relv"></span></div>
  <div class="iw-note" id="fx-note">Baseline. Toggle one or more levers above.</div>
 </div></div></section>
-  <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. In-Context Learning vs. RAG vs. Distillation — and When Each Is the Wrong Tool</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</h2></div><h2>TL;DR</h2>
 <p>These four are not competitors; they solve <em>different problems</em>. <strong>In-context learning
 (ICL)</strong> shapes behavior via the prompt — zero infra, instant iteration, but pays tokens
 every call. <strong>RAG</strong> injects <em>knowledge</em> at query time — best for facts that change or
@@ -526,7 +526,7 @@ no weight changes.</p>
 <li><a href="01-inference-internals.html#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, Quality, Cost, and Reliability Across the Full Inference Stack</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, quality, cost, and reliability across the full inference stack</h2></div><h2>TL;DR</h2>
 <p>Almost every decision in an LLM system is a move in a four-way tradeoff between
 <strong>latency</strong>, <strong>quality</strong>, <strong>cost</strong>, and <strong>reliability</strong>. You rarely improve one without
 spending another. Mature AI engineering means making these tradeoffs <em>deliberately and
@@ -709,7 +709,7 @@ the best one <em>for a given SLO</em>.</p>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production Failure Modes &amp; How to Engineer Around Them</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production failure modes &amp; how to engineer around them</h2></div><h2>TL;DR</h2>
 <p>LLM systems fail in a recognizable handful of ways: <strong>hallucinated tool calls</strong>,
 <strong>malformed JSON</strong>, <strong>stale retrieval</strong>, <strong>runaway agents</strong>, and <strong>silent eval
 regressions</strong> — plus their cousins (cost spikes, cross-tenant leaks, prompt injection,
@@ -927,7 +927,7 @@ behavior, or cost problem?"</em> Answer both and most of the roadmap writes itse
 </blockquote>
 <hr />
 <p>← Back to <a href="06-strategy-tradeoffs.html">module index</a> · ↩ Back to the <a href="index.html">curriculum map</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><a class="navcard prev" href="05-safety-multitenancy.html"><span class="lbl">← Previous</span><span class="ttl">05 · Safety &amp; Multi-tenancy</span></a><a class="navcard next" href="07-first-principles-polymath.html"><span class="lbl">→ Next</span><span class="ttl">07 · First Principles &amp; the Polymath Mind</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><a class="navcard prev" href="05-safety-multitenancy.html"><span class="lbl">← Previous</span><span class="ttl">05 · Safety &amp; multi-tenancy</span></a><span></span></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var D={bigger:{speed:-18,quality:22,cost:-20,rel:4},smaller:{speed:18,quality:-18,cost:22,rel:2},quant:{speed:12,quality:-8,cost:18,rel:0},spec:{speed:20,quality:0,cost:-4,rel:0},batch:{speed:-10,quality:0,cost:18,rel:-2},cache:{speed:14,quality:0,cost:16,rel:2},rerank:{speed:-6,quality:16,cost:-6,rel:2},fallback:{speed:-4,quality:-2,cost:-8,rel:22}};
 var active={};

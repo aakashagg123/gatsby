@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>00 · Foundations — AI Engineering for PMs</title>
+<title>00 · Foundations — AI engineering for PMs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,9 +306,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;Engineering</span><em>for AI-native PMs</em></a>
-  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a><a href="07-first-principles-polymath.html">07</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink active" href="00-foundations.html"><span class="num">00</span>Foundations</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#harness-engineering">Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering">Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos">Shipping LLM Systems as Infrastructure, Not Demos</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference Internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable Outputs &amp; Tool Use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; Retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; Observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; Multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; Tradeoffs</a><a class="modlink" href="07-first-principles-polymath.html"><span class="num">07</span>First Principles &amp; the Polymath Mind</a></div></aside><main class="content" id="top">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  <nav class="topnav"><a href="00-foundations.html">00</a><a href="01-inference-internals.html">01</a><a href="02-reliable-outputs.html">02</a><a href="03-rag.html">03</a><a href="04-evals-observability.html">04</a><a href="05-safety-multitenancy.html">05</a><a href="06-strategy-tradeoffs.html">06</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink active" href="00-foundations.html"><span class="num">00</span>Foundations</a><div class="sub"><a href="#interactive">◆ Interactive demo</a><a href="#harness-engineering">Harness engineering, not just prompt engineering</a><a href="#context-engineering">Context engineering, not just long prompts</a><a href="#infra-not-demos">Shipping LLM systems as infrastructure, not demos</a><a href="#recap">Recap &amp; examples</a></div><a class="modlink" href="01-inference-internals.html"><span class="num">01</span>Inference internals</a><a class="modlink" href="02-reliable-outputs.html"><span class="num">02</span>Reliable outputs &amp; tool use</a><a class="modlink" href="03-rag.html"><span class="num">03</span>RAG &amp; retrieval</a><a class="modlink" href="04-evals-observability.html"><span class="num">04</span>Evals &amp; observability</a><a class="modlink" href="05-safety-multitenancy.html"><span class="num">05</span>Safety &amp; multi-tenancy</a><a class="modlink" href="06-strategy-tradeoffs.html"><span class="num">06</span>Strategy &amp; tradeoffs</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Module 00</span>
     <h1>Foundations</h1>
@@ -335,7 +335,7 @@ production LLM feature is a distributed system with a stochastic component in th
 middle.</strong> Engineer it like one.</p>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
-  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#harness-engineering"><span>00.1</span>Harness Engineering, Not Just Prompt Engineering</a><a href="#context-engineering"><span>00.2</span>Context Engineering, Not Just Long Prompts</a><a href="#infra-not-demos"><span>00.3</span>Shipping LLM Systems as Infrastructure, Not Demos</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
+  <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#harness-engineering"><span>00.1</span>Harness engineering, not just prompt engineering</a><a href="#context-engineering"><span>00.2</span>Context engineering, not just long prompts</a><a href="#infra-not-demos"><span>00.3</span>Shipping LLM systems as infrastructure, not demos</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>
   <section class="interactive" id="interactive"><div class="iw-head"><span class="tag">Interactive</span><h3>Harness vs. prompt — what catches a bad model call?</h3></div><div class="iw-body"><p class="iw-note" style="margin-top:0">The model is one fast, unreliable function call. Watch what the <strong>harness</strong> around it does when the model misbehaves — and what happens without it.</p>
 <div class="iw-btns">
   <button class="iw-btn primary" id="hz-good">▶ Run a good call</button>
@@ -344,7 +344,7 @@ middle.</strong> Engineer it like one.</p>
 </div>
 <div class="iw-stages" id="hz-stages"></div>
 <div class="iw-out"><div class="iw-verdict" id="hz-verdict">Ready.</div><div class="iw-note" id="hz-detail">Pick a scenario above.</div></div></div></section>
-  <section class="lesson" id="harness-engineering"><div class="lesson-head"><span class="lesson-num">00.1</span><h2>Harness Engineering, Not Just Prompt Engineering</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="harness-engineering"><div class="lesson-head"><span class="lesson-num">00.1</span><h2>Harness engineering, not just prompt engineering</h2></div><h2>TL;DR</h2>
 <p>Prompt engineering optimizes the <em>string</em> you send the model. Harness engineering
 optimizes the <em>system</em> that sends it: retries, validators, tool wiring, budgets,
 fallbacks, caching, and observability. In production, the harness is where most of
@@ -480,7 +480,7 @@ the prompt.</p>
 <li><a href="#infra-not-demos">Shipping LLM systems as infrastructure, not demos</a></li>
 <li><a href="02-reliable-outputs.html#agent-guardrails">Agent guardrails</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="context-engineering"><div class="lesson-head"><span class="lesson-num">00.2</span><h2>Context Engineering, Not Just Long Prompts</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="context-engineering"><div class="lesson-head"><span class="lesson-num">00.2</span><h2>Context engineering, not just long prompts</h2></div><h2>TL;DR</h2>
 <p>The context window is a scarce, expensive, and <em>quality-sensitive</em> resource. Context
 engineering is the discipline of deciding <strong>what</strong> goes into it, <strong>in what order</strong>,
 <strong>in what form</strong>, and <strong>what gets left out</strong> — on every single call. "Just stuff in
@@ -604,7 +604,7 @@ the art of spending your token budget where it moves the answer.</p>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt caching vs. semantic caching</a></li>
 <li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="infra-not-demos"><div class="lesson-head"><span class="lesson-num">00.3</span><h2>Shipping LLM Systems as Infrastructure, Not Demos</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="infra-not-demos"><div class="lesson-head"><span class="lesson-num">00.3</span><h2>Shipping LLM systems as infrastructure, not demos</h2></div><h2>TL;DR</h2>
 <p>A demo proves the model <em>can</em> do the task once. Infrastructure makes it do the task
 correctly, observably, affordably, and safely — for every user, every tenant, at
 p99, indefinitely. The gap between the two is almost entirely engineering:
@@ -790,7 +790,7 @@ foundations.</p>
 </blockquote>
 <hr />
 <p>← Back to <a href="00-foundations.html">module index</a> · → Next module: <a href="01-inference-internals.html">01 · Inference Internals</a></p><a class="totop" href="#top">↑ back to top</a></section>
-  <div class="pagenav"><span></span><a class="navcard next" href="01-inference-internals.html"><span class="lbl">→ Next</span><span class="ttl">01 · Inference Internals</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI Engineering</a> curriculum for AI-native PMs.</footer>
+  <div class="pagenav"><span></span><a class="navcard next" href="01-inference-internals.html"><span class="lbl">→ Next</span><span class="ttl">01 · Inference internals</span></a></div><footer class="foot">Educational content · part of the <a href="index.html">AI engineering</a> curriculum for AI-native PMs.</footer>
   </main></div><script>(function(){var root=document.getElementById('interactive');
 var stagesEl=root.querySelector('#hz-stages'),verdict=root.querySelector('#hz-verdict'),detail=root.querySelector('#hz-detail'),harness=root.querySelector('#hz-harness');
 function render(st){stagesEl.innerHTML='';st.forEach(function(s,i){if(i){var a=document.createElement('span');a.className='iw-arrow';a.textContent='→';stagesEl.appendChild(a);}var d=document.createElement('span');d.className='iw-stage '+s.cls;d.textContent=s.label;stagesEl.appendChild(d);});}

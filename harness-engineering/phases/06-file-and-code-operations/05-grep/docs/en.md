@@ -1,4 +1,4 @@
-# Grep / Ripgrep-Style Content Search
+# Grep / ripgrep-style content search
 
 > **Motto** — Find the right 20 lines in a million by searching content, not by reading everything.
 

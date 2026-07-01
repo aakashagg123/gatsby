@@ -1,4 +1,4 @@
-# Least Privilege & Capability Scoping
+# Least privilege & capability scoping
 
 > **Motto** — Give each agent the smallest set of tools its job needs — nothing more.
 

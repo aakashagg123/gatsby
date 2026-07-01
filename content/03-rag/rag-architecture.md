@@ -1,4 +1,4 @@
-# RAG Architecture: Chunking, Embeddings, Hybrid Search, Reranking, and Freshness
+# RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness
 
 *Part of [03 · RAG & Retrieval](./README.md)*
 
