@@ -4,8 +4,8 @@
 
 <br/>
 
-![Modules](https://img.shields.io/badge/modules-7-D97757?style=flat-square&labelColor=1f1e1d)
-![Lessons](https://img.shields.io/badge/lessons-23-D97757?style=flat-square&labelColor=1f1e1d)
+![Modules](https://img.shields.io/badge/modules-8-D97757?style=flat-square&labelColor=1f1e1d)
+![Lessons](https://img.shields.io/badge/lessons-29-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-532%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
@@ -136,6 +136,21 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 <td width="50%" valign="top">
 
+### [`07` · First Principles & the Polymath Mind](./content/07-first-principles-polymath/README.md)
+*Reasoning from fundamentals — and building range across every discipline.*
+
+- [What first-principles thinking actually is](./content/07-first-principles-polymath/what-is-first-principles.md)
+- [The method: deconstruct, challenge, reconstruct](./content/07-first-principles-polymath/the-method.md)
+- [A latticework of mental models](./content/07-first-principles-polymath/mental-models-latticework.md)
+- [Becoming a polymath: range, depth & transfer](./content/07-first-principles-polymath/becoming-a-polymath.md)
+- [Learning how to learn](./content/07-first-principles-polymath/learning-how-to-learn.md)
+- [Traps & limits: when not to reason from scratch](./content/07-first-principles-polymath/traps-and-limits.md)
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
 ### 🎨 [HTML Editions](./html/index.html)
 *The same curriculum, in a designed reading experience.*
 
@@ -143,6 +158,8 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 - Open `html/index.html` locally, or host the folder.
 - Built from the markdown — always in sync.
 
+</td>
+<td width="50%" valign="top">
 </td>
 </tr>
 </table>
