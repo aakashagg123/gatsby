@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>First principles &amp; the polymath mind</title>
+<title>Cognitive empathy: anticipating unvoiced needs — Product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,50 +306,122 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>First principles</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>First principles &amp; the polymath mind</h1>
-    <p class="lede">Reasoning from fundamentals — and building range across every discipline.</p>
-    <div class="index-meta"><span>6 lessons</span><span>+ recap</span><span>first-principles</span><span>polymath</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink active" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 02</span>
+    <h1>Cognitive empathy: anticipating unvoiced needs</h1>
   </div>
-  <div class="intro"><p>Most of what you "know" you actually borrowed — a convention, a best practice, a way
-things have always been done. That's efficient, until the borrowed answer is wrong for
-your situation and you can't tell, because you never traced it back to anything solid.
-This module is about the two habits that fix that: <strong>reasoning from fundamentals</strong> instead
-of by analogy, and <strong>building enough range</strong> that you have more than one discipline's
-fundamentals to reason from.</p>
-<p>The first half is a method. First-principles thinking has a bad reputation as a genius
-party trick; it's actually a boring, repeatable procedure — deconstruct a problem to
-things that must be true, challenge every assumption you find, and rebuild. The second
-half is a posture: the <strong>polymath</strong> isn't someone with a freakish IQ, but someone who has
-deliberately collected the foundational models of several fields and learned to move ideas
-between them.</p>
+  <h2>TL;DR</h2>
+<p>Cognitive empathy is understanding how users <em>think, decide, and experience</em> your product —
+distinct from emotional empathy (feeling their pain). It lets you predict what a user will
+need or do next because you can simulate their perspective. Three tools build it:
+<strong>metacognition</strong> (examining your own thinking and biases), <strong>intellectual flexibility</strong>
+(changing your mind as evidence arrives), and <strong>simulation</strong> (mentally or literally walking
+the user's journey). Together they fight the <em>curse of knowledge</em> — the expert's blindness
+to what a novice sees.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — With an AI product you're deep in the model's capabilities and jargon;
+the curse of knowledge is acute. You know the prompt that works — the user has no idea what
+to type, what the model can do, or why it just refused them.</p>
+<p><strong>What it changes in your decisions</strong> — You design for the user's <em>actual</em> mental model of a
+chat box or a suggestion, not your expert one, and you build the affordances (examples,
+hints, graceful failure) that a first-timer needs.</p>
+<p><strong>Ask yourself</strong> — <em>"What does a user who has never seen our model assume it can do — and
+where will that assumption break?"</em></p>
+<p><strong>Risk if ignored</strong> — A powerful model that only power users can operate, because the team
+mistook its own fluency for the user's.</p>
+</blockquote>
+<h2>Metacognition — thinking about thinking</h2>
+<p>Metacognition is stepping back to examine your <em>own</em> decision process. For a PM it's the
+guard against knee-jerk assumptions and the <strong>curse of knowledge</strong> — where an expert forgets
+what it's like to be a novice. A payments PM steeped in fintech jargon assumes an
+onboarding step is "obvious"; a first-timer finds it baffling. Metacognitive awareness
+turns that assumption into a testable question — <em>run a quick test with a first-timer</em> rather
+than trusting expert intuition.</p>
+<p>It also catches <strong>overconfidence</strong>: teams grow sure of a solution after months on it, though
+people routinely overestimate their accuracy. Two techniques:</p>
 <ul>
-<li><a href="what-is-first-principles.html"><strong>What first-principles thinking actually is</strong></a> —
-  reasoning from fundamentals vs. reasoning by analogy, and why the difference decides
-  whether you can ever beat the consensus.</li>
-<li><a href="the-method.html"><strong>The method: deconstruct, challenge, reconstruct</strong></a> — a repeatable
-  procedure with concrete tools: Socratic questioning, the 5 Whys, and Fermi estimation.</li>
-<li><a href="mental-models-latticework.html"><strong>A latticework of mental models</strong></a> — why a handful of
-  big ideas from many disciplines beats one field's toolkit, and a starter set to carry.</li>
-<li><a href="becoming-a-polymath.html"><strong>Becoming a polymath</strong></a> — range vs. depth, T- and
-  comb-shaped expertise, and how transfer between fields actually happens.</li>
-<li><a href="learning-how-to-learn.html"><strong>Learning how to learn</strong></a> — deliberate practice, the
-  Feynman technique, retrieval practice, and spacing — the engine that makes breadth
-  affordable.</li>
-<li><a href="traps-and-limits.html"><strong>Traps &amp; limits</strong></a> — biases that masquerade as reasoning, when
-  analogy beats first principles, and how to avoid reinventing solved problems.</li>
+<li><strong>Ask "what would prove me wrong?"</strong> — the falsification habit, run on your most confident
+  belief.</li>
+<li><strong>Pre-mortems</strong> — imagine it's a year out and the product failed; list the plausible
+  reasons. This surfaces hidden risks <em>before</em> they cost you.</li>
 </ul>
-<p>The two halves reinforce each other: first-principles thinking is the <em>method</em>, and a
-broad latticework of models is the <em>raw material</em> the method works on. A method with no
-material reasons in a vacuum; material with no method just collects trivia.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a> — how first-principles
-reasoning showed up in real breakthroughs and real failures, plus the key takeaways.</p>
-<hr /></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-first-principles.html"><span class="card-num">01</span><h3>What first-principles thinking actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-method.html"><span class="card-num">02</span><h3>The method: deconstruct, challenge, reconstruct</h3><span class="card-go">Read lesson →</span></a><a class="card" href="mental-models-latticework.html"><span class="card-num">03</span><h3>A latticework of mental models</h3><span class="card-go">Read lesson →</span></a><a class="card" href="becoming-a-polymath.html"><span class="card-num">04</span><h3>Becoming a polymath</h3><span class="card-go">Read lesson →</span></a><a class="card" href="learning-how-to-learn.html"><span class="card-num">05</span><h3>Learning how to learn</h3><span class="card-go">Read lesson →</span></a><a class="card" href="traps-and-limits.html"><span class="card-num">06</span><h3>Traps &amp; limits</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+<p>In meetings, metacognition can be literal: pause and say <em>"let's break down how we're
+arriving at this conclusion,"</em> making the implicit logic explicit and examinable.</p>
+<h2>Intellectual flexibility — changing your mind</h2>
+<p>Cognitive empathy needs <strong>flexibility</strong>: adapting your thinking as new data arrives, and
+holding perspectives other than your own. In fast-moving domains, rigidity is obsolescence.
+Flexibility is being able to say <em>"I was wrong"</em> or <em>"the market changed, so our approach
+should too"</em> without ego.</p>
+<p>Cultivate it deliberately:</p>
+<ul>
+<li><strong>Seek diverse perspectives</strong> — sit with customer support to hear raw frustration, shadow a
+  sales call for enterprise concerns. These pop your product-building bubble.</li>
+<li><strong>Challenge your own assumptions</strong> — <em>"we've always targeted young users; could this serve
+  seniors, and what would that take?"</em></li>
+<li><strong>Build psychological safety</strong> — reward people for surfacing inconvenient truths; assign a
+  devil's advocate.</li>
+<li><strong>Beware the sunk-cost fallacy</strong> — months invested in a feature is not a reason to keep
+  investing if it isn't working. Kodak invented the digital camera and clung to film; rigid
+  thinking, not lack of evidence, sank it.</li>
+</ul>
+<h2>Simulation — walking in the user's shoes</h2>
+<p>To anticipate needs, <strong>simulate</strong> the user: <em>"if I were a [target user] trying to do [X] in
+[context], what would I feel or do next?"</em> Mental simulation surfaces gaps before they hit
+production. Ways to do it:</p>
+<ul>
+<li><strong>User-journey mapping</strong> — diagram each step toward a goal and, at each one, imagine the
+  user's question or emotion. Mapping a first food-delivery order reveals that after
+  ordering the user wonders <em>"what happens now?"</em> — so you need clear confirmation and
+  tracking to pre-empt anxiety.</li>
+<li><strong>Role-playing / living the day</strong> — take rides as driver <em>and</em> passenger; build something
+  with your own API as an external dev would. Real simulation builds empathy data misses.</li>
+<li><strong>Dogfooding + usability testing</strong> — use your own product; watch real users and narrate
+  their thoughts (<em>"she's hesitating here — confused by the wording"</em>).</li>
+<li><strong>Perspective switching</strong> — for multi-sided products, step through as each user type. A
+  growth feature for buyers may add friction for sellers — a trade-off you can only see by
+  switching seats.</li>
+</ul>
+<p>Some PMs write mini-narratives — <em>"Jane opens the app to do X, expects Y, sees Z, gets
+frustrated"</em> — because vividly imagining a task engages circuits close to actually doing it.</p>
+<h2>Actionable steps</h2>
+<ul>
+<li><strong>Daily perspective-taking</strong> — spend a few minutes imagining one user interaction; jot the
+  pain point; verify it with real users or data.</li>
+<li><strong>Metacognitive check-ins</strong> — at kickoff, design review, and pre-launch, list assumptions
+  and how you might be wrong.</li>
+<li><strong>Maintain empathy maps</strong> — what the persona says, thinks, does, feels at each stage;
+  update as research arrives.</li>
+<li><strong>Train flexibility</strong> — deliberately seek contrarian data; assign someone to argue the
+  opposite of the prevailing view.</li>
+<li><strong>Immerse in the user's environment</strong> — visit the clinic, work a support shift; concrete
+  detail feeds intuition analytics can't.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Curse of knowledge</strong> — designing for your own expert mental model, not the novice's.</li>
+<li><strong>Confirmation over falsification</strong> — gathering evidence you're right instead of hunting for
+  what would prove you wrong.</li>
+<li><strong>Ego-driven rigidity</strong> — defending a months-old decision against new evidence (sunk cost).</li>
+<li><strong>Empathy by assertion</strong> — claiming to "know the user" without simulation or observation.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Have I named my key assumptions about the user — and how each could be wrong?</li>
+<li class="task todo">Did I run "what would prove me wrong?" on my most confident belief?</li>
+<li class="task todo">Have I actually <em>simulated</em> the journey (mapped, role-played, or watched a real user),
+      not just imagined it once?</li>
+<li class="task todo">For a multi-sided product, did I step through every user type?</li>
+<li class="task todo">Am I treating a months-old decision as revisable when evidence shifts?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
+<li><a href="creativity.html">Creativity</a></li>
+<li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="motivation-and-behaviour.html"><span class="lbl">← Previous</span><span class="ttl">Motivation theory: friction, satisfaction, and nudges</span></a><a class="navcard next" href="creativity.html"><span class="lbl">→ Next</span><span class="ttl">Creativity: from strategic thinking to creative execution</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div></body></html>

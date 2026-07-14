@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>First principles &amp; the polymath mind</title>
+<title>Domain expertise: turning knowledge into intuition — Product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,50 +306,125 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>First principles</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>First principles &amp; the polymath mind</h1>
-    <p class="lede">Reasoning from fundamentals — and building range across every discipline.</p>
-    <div class="index-meta"><span>6 lessons</span><span>+ recap</span><span>first-principles</span><span>polymath</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink active" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 05</span>
+    <h1>Domain expertise: turning knowledge into intuition</h1>
   </div>
-  <div class="intro"><p>Most of what you "know" you actually borrowed — a convention, a best practice, a way
-things have always been done. That's efficient, until the borrowed answer is wrong for
-your situation and you can't tell, because you never traced it back to anything solid.
-This module is about the two habits that fix that: <strong>reasoning from fundamentals</strong> instead
-of by analogy, and <strong>building enough range</strong> that you have more than one discipline's
-fundamentals to reason from.</p>
-<p>The first half is a method. First-principles thinking has a bad reputation as a genius
-party trick; it's actually a boring, repeatable procedure — deconstruct a problem to
-things that must be true, challenge every assumption you find, and rebuild. The second
-half is a posture: the <strong>polymath</strong> isn't someone with a freakish IQ, but someone who has
-deliberately collected the foundational models of several fields and learned to move ideas
-between them.</p>
+  <h2>TL;DR</h2>
+<p>PM fundamentals transfer across industries, but <strong>domain expertise</strong> — deep knowledge of the
+specific world your product lives in — is what upgrades guessing into <em>knowing</em>. It acts as
+a filter on decisions: you can tell must-haves from nice-to-haves, anticipate what will hit
+resistance, and move faster because you recognize patterns. Build it deliberately
+(immersive learning, asking "dumb" questions, hands-on experience, a network of experts),
+but don't get <strong>trapped</strong> by it — experts drift into "I am the user" and stop validating.
+The best domain experts pair deep knowledge with an outsider's willingness to ask <em>"why is
+it done this way at all?"</em></p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — AI has two domains at once: the <em>user's</em> industry and the <em>AI</em> domain
+itself (what models do well, where they hallucinate, what evaluation and safety require).
+Thin knowledge in either produces confident, wrong product bets.</p>
+<p><strong>What it changes in your decisions</strong> — You learn enough of the model's failure surface to
+know which features are safe to ship and which need a human in the loop — and enough of the
+user's world to know where a wrong answer is merely annoying versus genuinely harmful.</p>
+<p><strong>Ask yourself</strong> — <em>"In this domain, what does a confidently-wrong model output actually cost
+the user — and do I know that cost well enough to set the quality bar?"</em></p>
+<p><strong>Risk if ignored</strong> — Shipping an AI feature that's impressive in the demo and dangerous in
+the real workflow, because nobody understood the domain stakes.</p>
+</blockquote>
+<h2>Why domain knowledge strengthens intuition</h2>
+<p>Picture a healthcare-software PM. With thin domain knowledge you build an EMR around generic
+UX and obvious needs (notes, scheduling). With deep expertise you know the intricacies:
+HIPAA compliance, that doctors have <em>seconds</em> to enter data between patients, common billing
+issues, the politics of adopting new tools. That knowledge becomes a <strong>filter</strong>: you intuit
+must-haves vs. nice-to-haves, foresee what will meet resistance, and prioritize what truly
+adds value in context.</p>
+<p>Experts decide faster because they <strong>recognize patterns</strong> and recall lessons from similar
+situations. A fintech PM who knows payments cold will quickly reject a "cool" feature whose
+compliance approval would take a year — and find a creative path that meets the need without
+the red tape, where a novice would charge in and hit the wall.</p>
+<p>Domain knowledge also builds <strong>credibility</strong>: speaking your users' and stakeholders' language
+makes you a more persuasive communicator and a more trusted decision-maker — sales and
+marketing back your calls when they see you truly understand the market.</p>
+<p><strong>But it must complement, not replace, the rest.</strong> Marty Cagan's warning: experts get
+entrenched, assume they <em>are</em> the user, and overlook new perspectives. Domain expertise is a
+turbocharger for product sense — used wisely, it lets you skip the basics and focus on the
+subtleties outsiders miss — but only if you keep validating.</p>
+<h2>Building it (without getting trapped)</h2>
+<p>Entering a new domain, be systematic:</p>
 <ul>
-<li><a href="what-is-first-principles.html"><strong>What first-principles thinking actually is</strong></a> —
-  reasoning from fundamentals vs. reasoning by analogy, and why the difference decides
-  whether you can ever beat the consensus.</li>
-<li><a href="the-method.html"><strong>The method: deconstruct, challenge, reconstruct</strong></a> — a repeatable
-  procedure with concrete tools: Socratic questioning, the 5 Whys, and Fermi estimation.</li>
-<li><a href="mental-models-latticework.html"><strong>A latticework of mental models</strong></a> — why a handful of
-  big ideas from many disciplines beats one field's toolkit, and a starter set to carry.</li>
-<li><a href="becoming-a-polymath.html"><strong>Becoming a polymath</strong></a> — range vs. depth, T- and
-  comb-shaped expertise, and how transfer between fields actually happens.</li>
-<li><a href="learning-how-to-learn.html"><strong>Learning how to learn</strong></a> — deliberate practice, the
-  Feynman technique, retrieval practice, and spacing — the engine that makes breadth
-  affordable.</li>
-<li><a href="traps-and-limits.html"><strong>Traps &amp; limits</strong></a> — biases that masquerade as reasoning, when
-  analogy beats first principles, and how to avoid reinventing solved problems.</li>
+<li><strong>Immersive learning</strong> — in the first months, consume everything: industry reports, blogs,
+  webinars, thought leaders. Cagan suggests ~1–3 months of aggressive learning to chart
+  strategy confidently in a new domain. Treat it like an onboarding project with goals ("by
+  day 60, I'll have talked to 5 domain experts and read 3 seminal reports").</li>
+<li><strong>Ask "dumb" questions (AMA-style)</strong> — flip <em>Ask Me Anything</em>: have experts explain things to
+  you. Not grasping how ACH differs from wire transfers? Ask a fintech ops manager. Humility
+  and curiosity win respect; it's far better to ask early than to decide wrong out of
+  ignorance.</li>
+<li><strong>Hands-on experience</strong> — live the domain: observe hospital staff using the software; sell
+  something on your own e-commerce platform; build a small project with your own API.
+  Knowledge is procedural and contextual, not just vocabulary.</li>
+<li><strong>Leverage team and users</strong> — part of expertise is knowing <em>where to get answers fast</em>. Build
+  a network of go-to people (the veteran engineer, the candid customer) and pull in
+  specialists (legal, compliance, ops) early.</li>
 </ul>
-<p>The two halves reinforce each other: first-principles thinking is the <em>method</em>, and a
-broad latticework of models is the <em>raw material</em> the method works on. A method with no
-material reasons in a vacuum; material with no method just collects trivia.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a> — how first-principles
-reasoning showed up in real breakthroughs and real failures, plus the key takeaways.</p>
-<hr /></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-first-principles.html"><span class="card-num">01</span><h3>What first-principles thinking actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-method.html"><span class="card-num">02</span><h3>The method: deconstruct, challenge, reconstruct</h3><span class="card-go">Read lesson →</span></a><a class="card" href="mental-models-latticework.html"><span class="card-num">03</span><h3>A latticework of mental models</h3><span class="card-go">Read lesson →</span></a><a class="card" href="becoming-a-polymath.html"><span class="card-num">04</span><h3>Becoming a polymath</h3><span class="card-go">Read lesson →</span></a><a class="card" href="learning-how-to-learn.html"><span class="card-num">05</span><h3>Learning how to learn</h3><span class="card-go">Read lesson →</span></a><a class="card" href="traps-and-limits.html"><span class="card-num">06</span><h3>Traps &amp; limits</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+<p><strong>Balance with fresh perspective.</strong> A newcomer's <em>"why is it done this way at all?"</em> sometimes
+becomes a breakthrough, precisely because they don't accept "that's just how it is." As you
+gain expertise, preserve that outsider curiosity: rotate people across domains, keep
+validating with real users, and don't let expertise curdle into arrogance — <em>"constantly
+revisit assumptions about the domain and customers,"</em> because new regulations, behaviours,
+and competitors will surprise you.</p>
+<h2>Tackling AMAs — expertise on display</h2>
+<p>An <strong>AMA</strong> (Ask Me Anything) is a stress test for domain mastery. Imagine leading a crypto
+product when a customer asks, <em>"with the new crypto tax rules, how does this wallet help me
+report transactions?"</em> Deep expertise lets you explain the rule change and point to the
+specific (or planned) tax-reporting features — even citing conversations with tax experts.
+A teammate's forward-looking <em>"will DeFi threaten our approach?"</em> draws on your strategic
+view of how you differ and coexist.</p>
+<p>Preparing for an AMA is itself a learning exercise — it forces you to anticipate what
+knowledgeable people will ask, refreshing your understanding. Comfortably fielding tough
+Q&amp;A signals to executives that you're on top of the domain and to your team that they can
+trust your guidance. And when you <em>can't</em> answer, knowing where to find it — or having an
+informed hypothesis — is itself the mark of expertise.</p>
+<h2>Actionable steps</h2>
+<ul>
+<li><strong>Make a 90-day learning plan</strong> — key topics, experts to meet, resources to read; track it
+  like onboarding.</li>
+<li><strong>Join domain communities</strong> — forums, Slack groups, meetups; absorb practitioners'
+  real-world nuances.</li>
+<li><strong>Run expert/user panels</strong> — invite experienced users or specialists to Q&amp;A with the team.</li>
+<li><strong>Document domain knowledge</strong> — a living wiki of terms, regulations, and common workflows;
+  writing it reinforces your learning and onboards others.</li>
+<li><strong>Test your expertise</strong> — write the 5 hardest questions someone could ask about your
+  product/domain and answer them; the gaps are your study list.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>The expert's trap</strong> — "I am the user," so you stop validating and miss new perspectives.</li>
+<li><strong>Vocabulary without context</strong> — knowing the terms but not the procedures and stakes.</li>
+<li><strong>Arrogance over curiosity</strong> — treating the domain as solved when regulations and behaviours
+  keep moving.</li>
+<li><strong>Analysis paralysis in a new domain</strong> — endless learning with no decisions; set a
+  time-box.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do I know this domain's real constraints (regulatory, workflow, political), not just its
+      surface needs?</li>
+<li class="task todo">Have I asked the "dumb" questions instead of deciding around my ignorance?</li>
+<li class="task todo">Have I experienced the domain hands-on, not only read about it?</li>
+<li class="task todo">Am I still validating with real users rather than assuming I <em>am</em> the user?</li>
+<li class="task todo">Could I field an AMA on my product/domain — and do I know where to find what I can't
+      answer?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="communication.html">Communication</a></li>
+<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
+<li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="communication.html"><span class="lbl">← Previous</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a><a class="navcard next" href="product-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Product sense for AI products</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div></body></html>
