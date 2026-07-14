@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Assemble the combined GitHub Pages site with two separate landings.
+"""Assemble the combined GitHub Pages site with separate top-level tracks.
 
   _site/
-  ├── index.html        top landing → AI engineering | Harness engineering
-  ├── ai/               the AI engineering module (pre-rendered html/ editions)
-  └── harness/          the harness engineering track (markdown rendered client-side)
+  ├── index.html         top landing → AI engineering | Harness engineering |
+  │                                    First principles | Product sense
+  ├── ai/                the AI engineering module (pre-rendered html/ editions)
+  ├── first-principles/  the first principles module (pre-rendered)
+  ├── product-sense/     the product sense module (pre-rendered)
+  └── harness/           the harness engineering track (markdown rendered client-side)
 
 The harness track is rendered at runtime with marked + mermaid (so GFM tables and
 Mermaid diagrams render). This build step is pure stdlib — copy files and write a
@@ -19,6 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "_site")
 HTML = os.path.join(ROOT, "html")                       # AI engineering editions
 FP_HTML = os.path.join(ROOT, "first-principles-html")   # first principles editions
+PS_HTML = os.path.join(ROOT, "product-sense-html")      # product sense editions
 HARNESS_SRC = os.path.join(ROOT, "harness-engineering")
 
 VIEWER = """<!doctype html>
@@ -173,7 +177,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Three separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Four separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -192,6 +196,12 @@ LANDING = """<!doctype html>
       <h2>First principles →</h2>
       <p>Reason from fundamentals and build range across disciplines — the method,
       a latticework of mental models, becoming a polymath, and learning how to learn.</p>
+    </a>
+    <a class="card" href="product-sense/index.html">
+      <span class="tag">Module</span>
+      <h2>Product sense →</h2>
+      <p>The instinct for what makes a product succeed, for APMs & PMs moving into AI PM —
+      motivation, empathy, creativity, communication, domain expertise, and product sense for AI.</p>
     </a>
   </div>
   <footer>Educational content. Use it, fork it, teach from it.</footer>
@@ -258,6 +268,10 @@ def main():
     # 1b. First principles module: copy its pre-rendered pages.
     if os.path.isdir(FP_HTML):
         shutil.copytree(FP_HTML, os.path.join(SITE, "first-principles"))
+
+    # 1c. Product sense module: copy its pre-rendered pages.
+    if os.path.isdir(PS_HTML):
+        shutil.copytree(PS_HTML, os.path.join(SITE, "product-sense"))
 
     # 2. Harness engineering: copy the whole tree (md + code + outputs).
     dst_harness = os.path.join(SITE, "harness")

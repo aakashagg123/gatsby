@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>First principles &amp; the polymath mind</title>
+<title>Motivation theory: friction, satisfaction, and nudges — Product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,50 +306,146 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 </style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>First principles</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>First principles &amp; the polymath mind</h1>
-    <p class="lede">Reasoning from fundamentals — and building range across every discipline.</p>
-    <div class="index-meta"><span>6 lessons</span><span>+ recap</span><span>first-principles</span><span>polymath</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 01</span>
+    <h1>Motivation theory: friction, satisfaction, and nudges</h1>
   </div>
-  <div class="intro"><p>Most of what you "know" you actually borrowed — a convention, a best practice, a way
-things have always been done. That's efficient, until the borrowed answer is wrong for
-your situation and you can't tell, because you never traced it back to anything solid.
-This module is about the two habits that fix that: <strong>reasoning from fundamentals</strong> instead
-of by analogy, and <strong>building enough range</strong> that you have more than one discipline's
-fundamentals to reason from.</p>
-<p>The first half is a method. First-principles thinking has a bad reputation as a genius
-party trick; it's actually a boring, repeatable procedure — deconstruct a problem to
-things that must be true, challenge every assumption you find, and rebuild. The second
-half is a posture: the <strong>polymath</strong> isn't someone with a freakish IQ, but someone who has
-deliberately collected the foundational models of several fields and learned to move ideas
-between them.</p>
+  <h2>TL;DR</h2>
+<p>Users act when <strong>motivation is high and friction is low</strong> — the Fogg behaviour model puts
+it as <em>Behaviour = Motivation × Ability × Trigger</em>. Product sense starts with reading that
+equation in your own product: hunt down needless friction, make the core action
+<strong>rewarding</strong> so satisfaction feeds motivation (the Hook model's Trigger → Action → Reward
+→ Investment loop), and use <strong>ethical nudges</strong> — defaults, reminders, social proof — to make
+the beneficial path the path of least resistance. The discipline is <em>conscious</em> friction:
+add it only where it creates value, remove it everywhere else.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — AI features fail less often because the model is dumb and more often
+because users never build the habit: the magic moment is buried behind friction, or the
+first output disappoints and they never return. The behaviour equation is how you find
+that gap.</p>
+<p><strong>What it changes in your decisions</strong> — You measure and remove steps between "user arrives"
+and "user feels the model's value," and you design the <em>reward</em> after the first successful
+prompt as deliberately as the model itself.</p>
+<p><strong>Ask yourself</strong> — <em>"What is the friction between a new user and their first genuinely
+useful model output — and how fast does that first win arrive?"</em></p>
+<p><strong>Risk if ignored</strong> — A technically impressive model with great demos and terrible
+retention, because nobody engineered the motivation-and-friction path around it.</p>
+</blockquote>
+<h2>The behaviour equation</h2>
+<p>The <strong>Fogg behaviour model</strong> — <em>B = M × A × T</em> — says a behaviour happens only when
+motivation, ability (ease), and a trigger converge. As a multiplication, if any term is
+near zero, the behaviour doesn't happen. The practical corollary: <strong>if you want to
+encourage an activity, make it easy.</strong> High friction — complex steps, confusing UI — stifles
+even a motivated user; reducing friction lets existing motivation convert into action.</p>
+<p>Picture a fintech signup. The motivation is there (the user <em>wants</em> the savings account),
+but a 10-field form with poor guidance means many abandon — friction overrides motivation.
+A 2-field signup or a federated login lets that motivation translate into action. So map
+the journey, <strong>measure drop-off at each step</strong>, and prioritize the steps where users
+struggle.</p>
+<p><strong>But not all friction is bad.</strong> A little friction can ensure quality or commitment — an
+email verification yields a higher-quality user base; a confirmation step prevents costly
+mistakes. The principle is <strong>conscious friction</strong>: add it only when it adds value
+(security, thoughtfulness, safety) and eliminate it when it doesn't.</p>
+<h2>Satisfaction and habit</h2>
+<p><strong>Satisfaction</strong> is the fulfilment a user gets from your product — and it's what turns a
+one-time user into a returning one, because a satisfying experience <em>increases</em> intrinsic
+motivation to come back. Satisfaction and motivation are a loop, not two separate things.</p>
+<p>Nir Eyal's <strong>Hook model</strong> shows how that loop hardens into a habit:</p>
+<pre><code>   ┌─────────▶ TRIGGER ──▶ ACTION ──▶ REWARD ──▶ INVESTMENT ──┐
+   │            (cue)      (do it)   (payoff)   (put in effort) │
+   └──────────────────────  habit forms  ─────────────────────┘
+</code></pre>
+<p>The <strong>reward</strong> phase is where satisfaction lands — a sense of accomplishment, useful
+information, delight. That burst reinforces the behaviour; then the <strong>investment</strong> phase
+(the user adds data, preferences, effort) raises commitment and loads the next trigger. So
+ask: <em>what is actually rewarding about our core action?</em> Make sure each critical action is
+followed by clear value or positive feedback — a friendly confirmation, a progress bar, a
+checkmark. A satisfied user tolerates minor friction; a frustrated one drops off at the
+first hurdle.</p>
+<h2>Nudges — influence without coercion</h2>
+<p><strong>Nudges</strong> are subtle design cues that steer behaviour <em>without restricting choice</em> (Thaler
+&amp; Sunstein). Common techniques:</p>
+<table>
+<thead>
+<tr>
+<th>Nudge</th>
+<th>How it works</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Defaults</strong></td>
+<td>People stick with the pre-selected option</td>
+<td>Sensible option pre-checked</td>
+</tr>
+<tr>
+<td><strong>Prompts &amp; reminders</strong></td>
+<td>External trigger when motivation is likely</td>
+<td>"It's been a week since your last workout"</td>
+</tr>
+<tr>
+<td><strong>Social proof</strong></td>
+<td>Herd behaviour builds trust</td>
+<td>"Join 5,000+ peers using this"</td>
+</tr>
+<tr>
+<td><strong>Gamification</strong></td>
+<td>Streaks, points, badges boost motivation</td>
+<td>Progress streaks</td>
+</tr>
+<tr>
+<td><strong>Framing &amp; personalization</strong></td>
+<td>Highlight the benefit; tailor the choice</td>
+<td>"Recommended for you"</td>
+</tr>
+</tbody>
+</table>
+<p>The rule is <strong>ethics first</strong>: the goal is to help users reach <em>their</em> goals with less
+friction, not to manipulate them toward <em>your</em> metrics. Always ask, <em>"is this nudge helping
+the user, or just helping us?"</em> Ethical nudges build trust; dark patterns destroy it.
+LinkedIn's profile-completeness bar is the canonical good nudge — it shows progress and
+rewards a "100% complete" state that genuinely benefits the user.</p>
+<h2>Actionable steps</h2>
 <ul>
-<li><a href="what-is-first-principles.html"><strong>What first-principles thinking actually is</strong></a> —
-  reasoning from fundamentals vs. reasoning by analogy, and why the difference decides
-  whether you can ever beat the consensus.</li>
-<li><a href="the-method.html"><strong>The method: deconstruct, challenge, reconstruct</strong></a> — a repeatable
-  procedure with concrete tools: Socratic questioning, the 5 Whys, and Fermi estimation.</li>
-<li><a href="mental-models-latticework.html"><strong>A latticework of mental models</strong></a> — why a handful of
-  big ideas from many disciplines beats one field's toolkit, and a starter set to carry.</li>
-<li><a href="becoming-a-polymath.html"><strong>Becoming a polymath</strong></a> — range vs. depth, T- and
-  comb-shaped expertise, and how transfer between fields actually happens.</li>
-<li><a href="learning-how-to-learn.html"><strong>Learning how to learn</strong></a> — deliberate practice, the
-  Feynman technique, retrieval practice, and spacing — the engine that makes breadth
-  affordable.</li>
-<li><a href="traps-and-limits.html"><strong>Traps &amp; limits</strong></a> — biases that masquerade as reasoning, when
-  analogy beats first principles, and how to avoid reinventing solved problems.</li>
+<li><strong>Identify friction hotspots</strong> — map the journey, find drop-off, simplify (fewer fields,
+  tooltips, cleaner navigation).</li>
+<li><strong>Engineer quick wins</strong> — make new users hit the core value within the first minutes.</li>
+<li><strong>Add one ethical nudge</strong> where users hesitate — a friendly default, a timely reminder,
+  social proof — and watch both usage <em>and</em> sentiment.</li>
+<li><strong>Measure satisfaction</strong> at key touchpoints (NPS, CSAT); where it's low, look for
+  friction; where it's high, amplify the moment.</li>
+<li><strong>Run a behavioural-design audit</strong> on new features: does the copy and flow reduce needless
+  friction and reward the right action?</li>
 </ul>
-<p>The two halves reinforce each other: first-principles thinking is the <em>method</em>, and a
-broad latticework of models is the <em>raw material</em> the method works on. A method with no
-material reasons in a vacuum; material with no method just collects trivia.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a> — how first-principles
-reasoning showed up in real breakthroughs and real failures, plus the key takeaways.</p>
-<hr /></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-first-principles.html"><span class="card-num">01</span><h3>What first-principles thinking actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-method.html"><span class="card-num">02</span><h3>The method: deconstruct, challenge, reconstruct</h3><span class="card-go">Read lesson →</span></a><a class="card" href="mental-models-latticework.html"><span class="card-num">03</span><h3>A latticework of mental models</h3><span class="card-go">Read lesson →</span></a><a class="card" href="becoming-a-polymath.html"><span class="card-num">04</span><h3>Becoming a polymath</h3><span class="card-go">Read lesson →</span></a><a class="card" href="learning-how-to-learn.html"><span class="card-num">05</span><h3>Learning how to learn</h3><span class="card-go">Read lesson →</span></a><a class="card" href="traps-and-limits.html"><span class="card-num">06</span><h3>Traps &amp; limits</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Friction you never measured</strong> — the drop-off is in a step you assumed was fine; instrument
+  it before you defend it.</li>
+<li><strong>Action without reward</strong> — users complete the core action and feel nothing, so no habit
+  forms.</li>
+<li><strong>Manipulative nudges</strong> — short-term metric wins that erode trust (the dark-pattern trap).</li>
+<li><strong>Frictionless where friction was protecting quality</strong> — removing a confirmation that
+  prevented costly errors.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Have I mapped the journey and <em>measured</em> drop-off at each step, not guessed it?</li>
+<li class="task todo">Does a new user reach a genuine "win" within the first few minutes?</li>
+<li class="task todo">Is each critical action followed by a clear reward or positive feedback?</li>
+<li class="task todo">Is every nudge in the product defensibly in the <em>user's</em> interest?</li>
+<li class="task todo">Have I removed friction that serves no purpose — and kept the friction that protects
+      quality or safety?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
+<li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
+<li><a href="communication.html">Communication</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="cognitive-empathy.html"><span class="lbl">→ Next</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div></body></html>

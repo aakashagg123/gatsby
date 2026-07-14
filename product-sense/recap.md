@@ -1,0 +1,68 @@
+# Product sense — recap & real-world examples
+
+*Part of [Product sense for the AI PM](./README.md)*
+
+## Real-world examples & war stories
+
+**Slack's behavioural segmentation.** Rather than "team communication for everyone," Slack
+targeted engineering teams already chatting in IRC — a segment defined by *behaviour*, not
+demographics — and won a beachhead that then expanded. 🎯 *Takeaway:* the sharp
+[strategic-thinking](./creativity.md) move is segmenting by what people already *do*, which
+is exactly the instinct an AI PM needs to find the job a model reliably nails.
+
+**Amazon's Kindle vision and the PRFAQ.** *"Every book ever printed, in any language, all
+available in under 60 seconds"* is a vision that made thousands of decisions for the team;
+the PRFAQ format forced every proposal to start from the customer. 🎯 *Takeaway:* strong
+[communication artifacts](./communication.md) turn product sense into alignment — and for an
+AI feature drowning in uncertainty, an explicit "what it is / isn't / how we'll know it
+worked" is worth more than any demo.
+
+**LinkedIn's profile-completeness bar.** A progress nudge that shows how far you've come and
+rewards a "100%" state that genuinely benefits the user — an [ethical nudge](./motivation-and-behaviour.md),
+not a dark pattern. 🎯 *Takeaway:* the line between a helpful nudge and a manipulative one is
+"whose goal does it serve?" — a line AI products cross easily when optimizing engagement
+metrics against user interest.
+
+**Kodak and the digital camera.** Kodak *invented* the digital camera and clung to film
+anyway — a failure of [intellectual flexibility](./cognitive-empathy.md) and the sunk-cost
+fallacy, not a lack of evidence. 🎯 *Takeaway:* the incumbent's trap is emotional attachment
+to a winning bet; in a field moving as fast as AI, the willingness to say "the ground
+shifted, so we should too" is a survival skill.
+
+**Air Canada's chatbot invented a refund policy (2024).** A support bot confidently stated a
+refund policy that didn't exist, and a tribunal made the airline honor it. 🎯 *Takeaway:* the
+canonical [product-sense-for-AI](./product-sense-for-ai.md) failure — a confidently-wrong
+output with no grounding, no "I don't know," and full authority in the UX. The fix was
+architectural (answer only from real policy, with citations), which is a *product* decision
+before it's an engineering one.
+
+**The "expert's trap" in domain-heavy products.** Marty Cagan's warning that experts assume
+they *are* the user shows up everywhere from EMRs to developer tools. 🎯 *Takeaway:*
+[domain expertise](./domain-expertise.md) is a turbocharger only if paired with the outsider
+question "why is it done this way at all?" — the same humility that keeps an AI PM validating
+instead of trusting the model's (or their own) confidence.
+
+## Module recap
+
+| Lesson | The one idea | The decision it drives |
+| --- | --- | --- |
+| [Motivation theory](./motivation-and-behaviour.md) | Behaviour = motivation × ability × trigger | Where to cut friction and how to reward the core action |
+| [Cognitive empathy](./cognitive-empathy.md) | Simulate the user; doubt your own certainty | Which assumptions to test before you build |
+| [Creativity](./creativity.md) | Strategy picks the battle; execution wins it | What to focus on — and what to say no to |
+| [Communication](./communication.md) | Product sense you can't convey can't move a team | How to earn buy-in and keep everyone aligned |
+| [Domain expertise](./domain-expertise.md) | Knowledge turns guessing into knowing | Which features truly matter in this world |
+| [Product sense for AI](./product-sense-for-ai.md) | The material is probabilistic | Where a model beats a deterministic feature — and how to stay trustworthy |
+
+**The through-line:** product sense is not one talent but five habits that compound —
+reading behaviour, simulating the user, choosing a focused strategy, communicating it, and
+grounding it in domain reality. For the AI PM, a sixth habit sits on top: knowing that the
+model is a new kind of material — powerful, probabilistic, and confidently wrong — and that
+the *product* is the trustworthy system you build around it, not the model itself.
+
+> **Walk-away question:** *"For the job in front of me, what does the user actually want to
+> achieve — and if I'm reaching for a model, does it genuinely serve that job better than a
+> simpler, more predictable solution?"*
+
+---
+
+← Back to [module overview](./README.md)
