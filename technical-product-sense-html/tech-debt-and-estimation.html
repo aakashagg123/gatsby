@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Product sense for AI products — Product sense</title>
+<title>Tech debt &amp; estimation — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,165 +306,110 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink active" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
-    <h1>Product sense for AI products</h1>
+    <h1>Tech debt &amp; estimation</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
+<p><strong>Technical debt</strong> is the accumulated cost of past shortcuts — code and architecture that made
+sense (or didn't) at the time and now slow every future change. It's not "bad engineering";
+some debt is a deliberate, smart trade to ship faster, as long as you pay it down. <strong>Estimates</strong>
+are the other half of this literacy: they're probabilistic ranges, not promises, and knowing
+<em>why</em> something is a "small" or "large" is what lets you sequence work and negotiate scope. The
+PM's job isn't to write the code or the estimate — it's to make the debt and the trade-offs
+<strong>visible</strong> and to prioritize them honestly.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
-<p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
-feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
-can't be trusted, measured, or afforded at scale.</p>
+<p><strong>Why it matters</strong> — AI features accrue a distinctive debt: prompt spaghetti, no evals,
+untracked model versions, a data pipeline held together with tape. This debt is invisible
+until quality silently regresses and nobody can tell why.</p>
+<p><strong>What it changes in your decisions</strong> — You budget for the unglamorous foundations — evals,
+observability, data quality — as first-class roadmap items, because in AI they <em>are</em> the
+product's reliability.</p>
+<p><strong>Ask yourself</strong> — <em>"What's the shortcut we're taking to ship this, and when do we pay it
+back — or is it debt we can never afford?"</em></p>
+<p><strong>Risk if ignored</strong> — A feature that ships fast, then can't be improved because every change
+fights the mess underneath it.</p>
 </blockquote>
-<h2>Taste becomes evals</h2>
-<p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
-distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
-product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
-<strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
-continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
-<p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
-moved upstream into the model's outputs. (The engineering of this — golden sets,
-LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-<a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
-<p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
-tell. Product sense for AI is largely <strong>trust design</strong>:</p>
+<h2>Prioritizing: effort vs. impact</h2>
+<p>Most technical work — features <em>and</em> debt paydown — sorts onto one map. Making it explicit is
+half the battle:</p>
+<pre class="mermaid">quadrantChart
+  title Effort vs. impact
+  x-axis Low effort --&gt; High effort
+  y-axis Low impact --&gt; High impact
+  quadrant-1 Big bets
+  quadrant-2 Quick wins
+  quadrant-3 Minor / fill-ins
+  quadrant-4 Time sinks
+  &quot;Fix flaky checkout&quot;: [0.25, 0.9]
+  &quot;Re-platform billing&quot;: [0.9, 0.85]
+  &quot;Add evals to AI feature&quot;: [0.35, 0.8]
+  &quot;Rename a label&quot;: [0.15, 0.2]
+  &quot;Custom reporting engine&quot;: [0.85, 0.35]</pre>
+<p><strong>Quick wins</strong> (low effort, high impact) go first; <strong>big bets</strong> (high effort, high impact) get
+planned deliberately; <strong>time sinks</strong> (high effort, low impact) get questioned hard. Debt
+paydown items <em>belong on this map alongside features</em> — that's how you avoid the trap where
+debt never wins against the next shiny thing.</p>
+<h2>Understanding technical debt</h2>
 <ul>
-<li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
-  check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
-<li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
-<li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
-  has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
-  easy correction, and "undo" are core, not polish.</li>
+<li><strong>Deliberate debt</strong> — a conscious "we'll do it the quick way now and fix it later" to hit a
+  deadline. Legitimate — <em>if</em> the "later" is real and scheduled.</li>
+<li><strong>Accidental debt</strong> — mess that accrues from changing requirements and rushed decisions.</li>
+<li><strong>The interest</strong> — debt charges <em>interest</em>: every feature built on shaky foundations takes
+  longer and breaks more. Left unpaid, teams reach the point where simple changes take weeks.</li>
 </ul>
-<p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
-who trusts a wrong answer, and the one who's been burned once and now distrusts every
-answer.</p>
-<h2>Latency and cost are UX</h2>
-<p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
-they're <strong>product</strong> concerns, because they trade directly against quality:</p>
-<table>
-<thead>
-<tr>
-<th>Lever</th>
-<th>Buys you</th>
-<th>Costs you</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bigger / stronger model</td>
-<td>Quality</td>
-<td>Latency, $</td>
-</tr>
-<tr>
-<td>Smaller / quantized model</td>
-<td>Speed, $</td>
-<td>Some quality</td>
-</tr>
-<tr>
-<td>Streaming the response</td>
-<td><em>Perceived</em> speed</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Caching</td>
-<td>Speed, $</td>
-<td>Staleness risk</td>
-</tr>
-</tbody>
-</table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
-mechanics of these trade-offs are the AI Engineering track's
-<a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
-<a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
-that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
-<p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
-the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
-reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
-<p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
-isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
-valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
-delights and a deterministic system for the 80% that must be correct.</p>
-<h2>Feedback is a flywheel you design</h2>
-<p>AI products get better with use — but only if you build the loop. Every correction,
-thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
-becomes literal: user effort improves the product's data, which improves outputs, which
-earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
-it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<h2>Keep a human in the loop where it counts</h2>
-<p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
-merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
-checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
-<strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
-sense.</p>
-<h2>Actionable steps</h2>
+<p>The PM's role is to keep debt <strong>visible and prioritized</strong> — translate "the code is a mess" into
+"this is why the last three features slipped, and here's what paying it down buys us."</p>
+<h2>Reading an estimate</h2>
+<p>An estimate is a <strong>probability distribution</strong>, not a date. When an engineer says "about two
+weeks," hear "probably two, could be one, could be four." Useful instincts:</p>
 <ul>
-<li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
-<li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
-<li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
-  not all three.</li>
-<li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
-<li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
-  where appropriate, the product.</li>
-<li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
-  wrong is costly.</li>
+<li><strong>Ask what makes it big or small.</strong> The <em>why</em> — "we've done this before" vs. "we've never
+  touched that system" — is more informative than the number.</li>
+<li><strong>Uncertainty is data.</strong> A wide range ("2–6 weeks") is telling you there's unknown risk;
+  the fix is often a spike (a short timeboxed investigation) to shrink the range, not to
+  demand a tighter guess.</li>
+<li><strong>Beware the 90% done trap.</strong> The last 10% (edge cases, error handling, polish) routinely
+  takes as long as the first 90%. "Almost done" is the most dangerous status.</li>
+<li><strong>Complexity compounds.</strong> Two features that each touch the same system aren't additive;
+  integration is where estimates blow up.</li>
 </ul>
+<p>You're not there to squeeze the number down — you're there to <em>understand</em> it, so you can
+sequence work, cut scope intelligently, and set expectations you can keep.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
-  afforded at scale.</li>
-<li><strong>Confident hallucination in the UX</strong> — every output presented with equal authority, wrong
-  ones included.</li>
-<li><strong>AI where deterministic wins</strong> — using a probabilistic model for a job that needed to be
-  exactly right.</li>
-<li><strong>No feedback loop</strong> — a product that never improves because the signal was never captured.</li>
-<li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
-  in production.</li>
+<li><strong>Invisible debt</strong> — debt that never makes the roadmap, so it compounds until the team
+  grinds to a halt.</li>
+<li><strong>Treating estimates as promises</strong> — committing externally to the optimistic end of a range.</li>
+<li><strong>Debt always loses</strong> — features always beating paydown, because the cost of debt was never
+  made concrete.</li>
+<li><strong>No AI foundations</strong> — shipping model features with no evals or observability, then being
+  unable to diagnose quality regressions.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
-<li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
-<li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
-<li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
-<li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
-<li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
+<li class="task todo">Is the debt we're taking on deliberate and scheduled for paydown — or silent?</li>
+<li class="task todo">Are debt-paydown items on the <em>same</em> priority map as features?</li>
+<li class="task todo">Do I understand <em>why</em> an estimate is what it is, not just the number?</li>
+<li class="task todo">Have I treated wide estimates as a signal to investigate, not to squeeze?</li>
+<li class="task todo">For AI work, are evals and observability funded as first-class, not "later"?</li>
 </ul>
 <h2>Related lessons</h2>
 <ul>
-<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
-<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
-<li><a href="creativity.html">Creativity</a></li>
-<li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="recap.html">Recap &amp; real-world examples</a></li>
+<li><a href="how-systems-are-built.html">How systems are built</a></li>
+<li><a href="reliability-and-failure.html">Reliability &amp; failure</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  <div class="pagenav"><a class="navcard prev" href="reliability-and-failure.html"><span class="lbl">← Previous</span><span class="ttl">Reliability &amp; failure</span></a><a class="navcard next" href="technical-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Technical sense for AI systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

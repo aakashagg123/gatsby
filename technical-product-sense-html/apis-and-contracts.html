@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Product sense for AI products — Product sense</title>
+<title>APIs &amp; contracts — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,165 +306,113 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink active" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 06</span>
-    <h1>Product sense for AI products</h1>
+    <span class="chip">Lesson 02</span>
+    <h1>APIs &amp; contracts</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
+<p>An <strong>API</strong> is the contract by which one piece of software talks to another — your app to your
+server, your server to a payment provider, your product to a model. The contract defines the
+<em>request</em> (what you send), the <em>response</em> (what you get), and the promises around it:
+<strong>idempotency</strong> (safe to retry), <strong>versioning</strong> (changes don't break callers), and error
+behaviour. PMs don't design the wire format, but the contract <em>is</em> the product surface for
+anything integrated — and getting it wrong is expensive to undo, because other people build
+on it.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
-<p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
-feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
-can't be trusted, measured, or afforded at scale.</p>
+<p><strong>Why it matters</strong> — Model providers are APIs, and your AI feature's reliability is
+governed by their contract: rate limits, timeouts, streaming, token limits, and what
+happens on a 429 or 500. Your own AI feature is <em>also</em> an API others may call.</p>
+<p><strong>What it changes in your decisions</strong> — You treat "what happens when the model API is slow,
+rate-limited, or errors?" as a first-class requirement, and you design idempotency so a
+retried request doesn't charge the user twice or fire an action twice.</p>
+<p><strong>Ask yourself</strong> — <em>"If this call fails or is retried, what does the contract guarantee — and
+is it safe?"</em></p>
+<p><strong>Risk if ignored</strong> — Duplicate charges, double-sent messages, or a feature that falls over
+the first time an upstream API returns an error you didn't plan for.</p>
 </blockquote>
-<h2>Taste becomes evals</h2>
-<p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
-distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
-product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
-<strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
-continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
-<p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
-moved upstream into the model's outputs. (The engineering of this — golden sets,
-LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-<a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
-<p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
-tell. Product sense for AI is largely <strong>trust design</strong>:</p>
+<h2>A request, end to end</h2>
+<p>The clearest way to see an API is to follow one call between components:</p>
+<pre class="mermaid">sequenceDiagram
+  participant C as Client
+  participant A as API layer
+  participant S as Service
+  participant D as Database
+  C-&gt;&gt;A: POST /orders  (Idempotency-Key: abc)
+  A-&gt;&gt;A: authenticate + validate
+  A-&gt;&gt;S: create order
+  S-&gt;&gt;D: INSERT order
+  D--&gt;&gt;S: ok
+  S--&gt;&gt;A: order created
+  A--&gt;&gt;C: 201 Created  {order_id}
+  Note over C,A: A retry with the same key returns the same order — no duplicate</pre>
+<p>Each arrow is a promise. The client promises a well-formed request with auth; the API
+promises to validate, do the work, and return a <strong>status code</strong> (2xx success, 4xx "you
+messed up," 5xx "we messed up") plus a body.</p>
+<h2>The parts of the contract</h2>
 <ul>
-<li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
-  check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
-<li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
-<li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
-  has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
-  easy correction, and "undo" are core, not polish.</li>
+<li><strong>Endpoint &amp; method</strong> — <em>what</em> you're doing: <code>GET</code> (read), <code>POST</code> (create), <code>PUT</code>/<code>PATCH</code>
+  (update), <code>DELETE</code>. Reads should be safe; writes change state.</li>
+<li><strong>Request shape</strong> — the parameters and body the caller must send, and which are required.</li>
+<li><strong>Response shape</strong> — the fields returned, and their types. Downstream code depends on these
+  <em>exactly</em>; removing or renaming a field breaks callers.</li>
+<li><strong>Status &amp; errors</strong> — success codes <em>and</em> the error codes, with enough detail for the caller
+  to react (retry? show the user? give up?).</li>
+<li><strong>Auth &amp; rate limits</strong> — who may call, how often. Exceed the limit and you get throttled
+  (429) — a real constraint on a feature's throughput.</li>
 </ul>
-<p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
-who trusts a wrong answer, and the one who's been burned once and now distrusts every
-answer.</p>
-<h2>Latency and cost are UX</h2>
-<p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
-they're <strong>product</strong> concerns, because they trade directly against quality:</p>
-<table>
-<thead>
-<tr>
-<th>Lever</th>
-<th>Buys you</th>
-<th>Costs you</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bigger / stronger model</td>
-<td>Quality</td>
-<td>Latency, $</td>
-</tr>
-<tr>
-<td>Smaller / quantized model</td>
-<td>Speed, $</td>
-<td>Some quality</td>
-</tr>
-<tr>
-<td>Streaming the response</td>
-<td><em>Perceived</em> speed</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Caching</td>
-<td>Speed, $</td>
-<td>Staleness risk</td>
-</tr>
-</tbody>
-</table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
-mechanics of these trade-offs are the AI Engineering track's
-<a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
-<a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
-that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
-<p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
-the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
-reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
-<p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
-isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
-valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
-delights and a deterministic system for the 80% that must be correct.</p>
-<h2>Feedback is a flywheel you design</h2>
-<p>AI products get better with use — but only if you build the loop. Every correction,
-thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
-becomes literal: user effort improves the product's data, which improves outputs, which
-earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
-it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<h2>Keep a human in the loop where it counts</h2>
-<p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
-merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
-checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
-<strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
-sense.</p>
-<h2>Actionable steps</h2>
-<ul>
-<li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
-<li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
-<li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
-  not all three.</li>
-<li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
-<li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
-  where appropriate, the product.</li>
-<li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
-  wrong is costly.</li>
-</ul>
+<h2>Idempotency — the retry-safety promise</h2>
+<p>Networks fail mid-request, so clients <strong>retry</strong>. If a retried "create payment" runs twice,
+the user is charged twice. <strong>Idempotency</strong> means <em>doing the same operation twice has the same
+effect as doing it once</em> — usually via an idempotency key the server remembers. Reads are
+naturally idempotent; the danger is writes. Whenever a duplicate would be harmful (payments,
+messages, actions), the contract must be idempotent. This is one of the highest-leverage
+technical questions a PM can ask.</p>
+<h2>Versioning — changing without breaking</h2>
+<p>Once others call your API, you can't freely change it — a rename breaks their code. Teams
+handle change with <strong>versioning</strong> (<code>/v1/</code>, <code>/v2/</code>) and by only making <strong>backward-compatible</strong>
+changes to a live version (add optional fields; never remove or repurpose existing ones).
+The product consequence: <strong>API changes are slow and deliberate</strong>, because every caller is a
+dependency. Design the contract as if you'll live with it for years — because you will.</p>
+<h2>Webhooks — the API that calls you</h2>
+<p>Sometimes you need to know when something happens elsewhere (a payment cleared, a job
+finished). Polling ("is it done yet?") is wasteful; a <strong>webhook</strong> flips it — the other system
+<code>POST</code>s to <em>your</em> endpoint when the event occurs. Webhooks power most integrations, and they
+bring their own contract concerns: they can arrive out of order, more than once (idempotency
+again), or not at all (so you still need a reconciliation fallback).</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
-  afforded at scale.</li>
-<li><strong>Confident hallucination in the UX</strong> — every output presented with equal authority, wrong
-  ones included.</li>
-<li><strong>AI where deterministic wins</strong> — using a probabilistic model for a job that needed to be
-  exactly right.</li>
-<li><strong>No feedback loop</strong> — a product that never improves because the signal was never captured.</li>
-<li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
-  in production.</li>
+<li><strong>No retry plan</strong> — the feature assumes every call succeeds; the first upstream 500 takes it
+  down.</li>
+<li><strong>Non-idempotent writes</strong> — retries create duplicate charges, orders, or messages.</li>
+<li><strong>Breaking changes</strong> — removing or renaming a response field and silently breaking every
+  caller.</li>
+<li><strong>Ignoring rate limits</strong> — designing a feature that needs more calls than the upstream API
+  allows.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
-<li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
-<li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
-<li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
-<li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
-<li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
+<li class="task todo">For each integrated call, do I know the success <em>and</em> error behaviours?</li>
+<li class="task todo">Are state-changing operations idempotent where a duplicate would harm the user?</li>
+<li class="task todo">Is the change I'm asking for backward-compatible, or does it need a new version?</li>
+<li class="task todo">Do I know the rate limits and timeouts of any upstream API my feature depends on?</li>
+<li class="task todo">For event-driven flows, do webhooks have an idempotency and reconciliation plan?</li>
 </ul>
 <h2>Related lessons</h2>
 <ul>
-<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
-<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
-<li><a href="creativity.html">Creativity</a></li>
-<li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="recap.html">Recap &amp; real-world examples</a></li>
+<li><a href="how-systems-are-built.html">How systems are built</a></li>
+<li><a href="reliability-and-failure.html">Reliability &amp; failure</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  <div class="pagenav"><a class="navcard prev" href="how-systems-are-built.html"><span class="lbl">← Previous</span><span class="ttl">How systems are built</span></a><a class="navcard next" href="data-and-the-data-model.html"><span class="lbl">→ Next</span><span class="ttl">Data &amp; the data model</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

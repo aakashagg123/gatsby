@@ -23,6 +23,7 @@ SITE = os.path.join(ROOT, "_site")
 HTML = os.path.join(ROOT, "html")                       # AI engineering editions
 FP_HTML = os.path.join(ROOT, "first-principles-html")   # first principles editions
 PS_HTML = os.path.join(ROOT, "product-sense-html")      # product sense editions
+TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical product sense
 HARNESS_SRC = os.path.join(ROOT, "harness-engineering")
 
 VIEWER = """<!doctype html>
@@ -177,7 +178,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Four separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Five separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -202,6 +203,12 @@ LANDING = """<!doctype html>
       <h2>Product sense →</h2>
       <p>The instinct for what makes a product succeed, for APMs & PMs moving into AI PM —
       motivation, empathy, creativity, communication, domain expertise, and product sense for AI.</p>
+    </a>
+    <a class="card" href="technical-product-sense/index.html">
+      <span class="tag">Module</span>
+      <h2>Technical product sense →</h2>
+      <p>Read systems like an engineer — architecture, APIs, data, latency, reliability,
+      and tech debt — with a diagram in every lesson. For APMs & PMs moving into AI PM.</p>
     </a>
   </div>
   <footer>Educational content. Use it, fork it, teach from it.</footer>
@@ -272,6 +279,10 @@ def main():
     # 1c. Product sense module: copy its pre-rendered pages.
     if os.path.isdir(PS_HTML):
         shutil.copytree(PS_HTML, os.path.join(SITE, "product-sense"))
+
+    # 1d. Technical product sense module: copy its pre-rendered pages.
+    if os.path.isdir(TPS_HTML):
+        shutil.copytree(TPS_HTML, os.path.join(SITE, "technical-product-sense"))
 
     # 2. Harness engineering: copy the whole tree (md + code + outputs).
     dst_harness = os.path.join(SITE, "harness")

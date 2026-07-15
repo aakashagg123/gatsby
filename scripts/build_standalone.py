@@ -28,6 +28,26 @@ import markdown
 
 import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is guarded)
 
+# ---- mermaid (rendered client-side, matching the harness track) ---------------
+MERMAID_CSS = (
+    "pre.mermaid{background:var(--panel);border:1px solid var(--line);"
+    "border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}"
+)
+MERMAID_SCRIPT = """<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script>"""
+
+def _inject_mermaid(page):
+    """Add the mermaid runtime before </body> on pages that contain a diagram."""
+    if 'class="mermaid"' in page:
+        return page.replace("</body>", MERMAID_SCRIPT + "</body>")
+    return page
+
 # ---- link rewriting -----------------------------------------------------------
 # Source links are written relative to a lesson's folder. Map them into the standalone
 # track, and cross-link into the AI engineering track (which lives at ../ai/ in the
@@ -69,12 +89,22 @@ def convert(md, callout):
     md = "\n".join(l for l in md.split("\n")
                    if not l.strip().startswith(("←", "→ Next", "↩")))
     md = bh.ensure_blank_before_lists(md)
+    # stash ```mermaid fences so markdown doesn't render them as plain code
+    mermaids = []
+    def _stash(m):
+        mermaids.append(m.group(1))
+        return f"\n\nMERMAIDBLOCK{len(mermaids)-1}ENDBLOCK\n\n"
+    md = re.sub(r"```mermaid[ \t]*\n(.*?)```", _stash, md, flags=re.DOTALL)
     body = markdown.markdown(
         md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"])
     body = re.sub(rf"<blockquote>(.*?{re.escape(callout)}.*?)</blockquote>",
                   r'<blockquote class="pm-callout">\1</blockquote>', body, flags=re.DOTALL)
     body = re.sub(r"<li>\[ \]\s*", '<li class="task todo">', body)
     body = re.sub(r"<li>\[x\]\s*", '<li class="task done">', body)
+    for i, code in enumerate(mermaids):
+        token = f"MERMAIDBLOCK{i}ENDBLOCK"
+        pre = f'<pre class="mermaid">{htmllib.escape(code.rstrip())}</pre>'
+        body = body.replace(f"<p>{token}</p>", pre).replace(token, pre)
     return body
 
 # ---- page chrome --------------------------------------------------------------
@@ -88,7 +118,7 @@ def _head(title):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>{bh.CSS}</style>
+<style>{bh.CSS}{MERMAID_CSS}</style>
 </head>
 <body>"""
 
@@ -176,7 +206,7 @@ def build_track(cfg):
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main></body></html>"""
     with open(os.path.join(out, "index.html"), "w") as f:
-        f.write(page)
+        f.write(_inject_mermaid(page))
 
     # --- one page per lesson + recap ---
     pages = [(slug, os.path.join(src, f"{slug}.md"), i)
@@ -203,6 +233,6 @@ def build_track(cfg):
   {_footer(prev, nxt)}
   </main></div></body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:
-            f.write(page)
+            f.write(_inject_mermaid(page))
 
     print(f"Built {len(lessons)} lesson pages + recap + index.html into {out}/")

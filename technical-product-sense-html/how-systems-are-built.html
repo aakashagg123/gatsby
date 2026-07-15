@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Product sense for AI products — Product sense</title>
+<title>How systems are built — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,165 +306,115 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 06</span>
-    <h1>Product sense for AI products</h1>
+    <span class="chip">Lesson 01</span>
+    <h1>How systems are built</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
+<p>Almost every product is a <strong>client</strong> talking to a <strong>server</strong>, and the server is rarely one
+thing — it's a chain: a CDN and load balancer at the edge, an API layer, one or more
+<strong>services</strong> holding business logic, and behind them <strong>datastores</strong>, <strong>caches</strong>, and
+<strong>queues</strong> for work that shouldn't block the user. Understanding this path — and where your
+feature's work actually happens — is the foundation of every other technical judgment: what's
+cheap, what's slow, what can fail, and what a change will really cost.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
-<p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
-feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
-can't be trusted, measured, or afforded at scale.</p>
+<p><strong>Why it matters</strong> — An AI feature adds new, heavy boxes to this diagram: a retrieval
+store, a model endpoint (often a third party), maybe a vector database. Each is a new
+latency source, cost center, and failure point. You can't reason about any of them without
+the base picture.</p>
+<p><strong>What it changes in your decisions</strong> — You ask <em>where</em> the model call sits in the request
+path, whether it blocks the user, and what happens to the rest of the system when it's slow
+or down — before committing to the feature.</p>
+<p><strong>Ask yourself</strong> — <em>"When a user triggers this feature, what boxes does the request pass
+through, and which one is doing the expensive work?"</em></p>
+<p><strong>Risk if ignored</strong> — Promising a feature whose architecture makes it slow, costly, or
+fragile in ways you only discover after engineering starts.</p>
 </blockquote>
-<h2>Taste becomes evals</h2>
-<p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
-distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
-product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
-<strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
-continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
-<p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
-moved upstream into the model's outputs. (The engineering of this — golden sets,
-LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-<a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
-<p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
-tell. Product sense for AI is largely <strong>trust design</strong>:</p>
+<h2>The path of a request</h2>
+<p>When a user does something, a request travels through layers — each with a job, a cost, and a
+failure mode:</p>
+<pre class="mermaid">flowchart LR
+  U[&quot;User / client&quot;] --&gt; CDN[&quot;CDN / edge&quot;]
+  CDN --&gt; LB[&quot;Load balancer&quot;]
+  LB --&gt; API[&quot;API layer&quot;]
+  API --&gt; S1[&quot;Service A&lt;br/&gt;(business logic)&quot;]
+  API --&gt; S2[&quot;Service B&quot;]
+  S1 --&gt; DB[(&quot;Database&quot;)]
+  S1 --&gt; C[(&quot;Cache&quot;)]
+  S1 --&gt; Q[&quot;Queue&quot;]
+  Q --&gt; W[&quot;Worker&lt;br/&gt;(async jobs)&quot;]
+  W --&gt; DB</pre>
 <ul>
-<li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
-  check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
-<li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
-<li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
-  has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
-  easy correction, and "undo" are core, not polish.</li>
+<li><strong>Client</strong> — the browser or app. Anything done here is free for your servers but limited by
+  the user's device and network.</li>
+<li><strong>CDN / edge</strong> — serves static assets and cached responses close to the user; the cheapest,
+  fastest layer. If something can be cached at the edge, it should be.</li>
+<li><strong>Load balancer</strong> — spreads traffic across many identical server instances. This is <em>how</em>
+  systems handle more users: run more copies behind the balancer.</li>
+<li><strong>API layer</strong> — the front door to your logic; authenticates, validates, routes.</li>
+<li><strong>Services</strong> — where business logic lives. Big systems split into multiple services
+  (sometimes "microservices") so teams and scaling concerns stay independent.</li>
+<li><strong>Database</strong> — the source of truth, on disk. Reliable but comparatively slow; the usual
+  bottleneck.</li>
+<li><strong>Cache</strong> — a fast, in-memory copy of hot data (e.g. Redis). Turns a slow DB read into a
+  fast one — at the cost of possible <strong>staleness</strong>.</li>
+<li><strong>Queue + worker</strong> — for work that shouldn't make the user wait (sending email, generating a
+  report, calling a slow model). The request returns immediately; a worker does the job
+  <strong>asynchronously</strong>.</li>
 </ul>
-<p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
-who trusts a wrong answer, and the one who's been burned once and now distrusts every
-answer.</p>
-<h2>Latency and cost are UX</h2>
-<p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
-they're <strong>product</strong> concerns, because they trade directly against quality:</p>
-<table>
-<thead>
-<tr>
-<th>Lever</th>
-<th>Buys you</th>
-<th>Costs you</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bigger / stronger model</td>
-<td>Quality</td>
-<td>Latency, $</td>
-</tr>
-<tr>
-<td>Smaller / quantized model</td>
-<td>Speed, $</td>
-<td>Some quality</td>
-</tr>
-<tr>
-<td>Streaming the response</td>
-<td><em>Perceived</em> speed</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Caching</td>
-<td>Speed, $</td>
-<td>Staleness risk</td>
-</tr>
-</tbody>
-</table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
-mechanics of these trade-offs are the AI Engineering track's
-<a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
-<a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
-that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
-<p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
-the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
-reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
-<p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
-isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
-valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
-delights and a deterministic system for the 80% that must be correct.</p>
-<h2>Feedback is a flywheel you design</h2>
-<p>AI products get better with use — but only if you build the loop. Every correction,
-thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
-becomes literal: user effort improves the product's data, which improves outputs, which
-earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
-it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<h2>Keep a human in the loop where it counts</h2>
-<p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
-merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
-checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
-<strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
-sense.</p>
-<h2>Actionable steps</h2>
+<h2>Synchronous vs. asynchronous — the key product lever</h2>
+<p>The single most useful distinction here: does the user <strong>wait</strong> for this work, or not?</p>
 <ul>
-<li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
-<li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
-<li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
-  not all three.</li>
-<li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
-<li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
-  where appropriate, the product.</li>
-<li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
-  wrong is costly.</li>
+<li><strong>Synchronous</strong> (in the request path) — the user stares at a spinner until it's done. Keep
+  this fast; every box adds to their wait.</li>
+<li><strong>Asynchronous</strong> (via a queue) — the request returns "got it, working on it," and the result
+  arrives later (a notification, a status that flips to "ready"). This is how you make heavy
+  work feel instant — at the cost of designing for "it's not done yet."</li>
 </ul>
+<p>Choosing sync vs. async <em>is</em> a product decision: it shapes the UX (spinner vs. "we'll email
+you"), the perceived speed, and the system's resilience.</p>
+<h2>Monolith vs. services</h2>
+<p>Early products are often a <strong>monolith</strong> — one codebase, one deploy. Simple and fast to build.
+As teams and load grow, systems split into <strong>services</strong> so parts can scale and ship
+independently. Neither is "right"; the trade-off is <strong>simplicity vs. independence</strong>. As a PM,
+you don't pick the architecture, but knowing which one you're in explains why some changes
+are a one-line tweak and others touch five teams.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
-  afforded at scale.</li>
-<li><strong>Confident hallucination in the UX</strong> — every output presented with equal authority, wrong
-  ones included.</li>
-<li><strong>AI where deterministic wins</strong> — using a probabilistic model for a job that needed to be
-  exactly right.</li>
-<li><strong>No feedback loop</strong> — a product that never improves because the signal was never captured.</li>
-<li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
-  in production.</li>
+<li><strong>Assuming one box</strong> — treating "the backend" as a single thing, so you can't reason about
+  where slowness or failure comes from.</li>
+<li><strong>Everything synchronous</strong> — forcing heavy work into the request path, so the UX is a long
+  spinner that times out.</li>
+<li><strong>Cache-as-truth</strong> — forgetting the cache can be stale, and promising data is "live" when
+  it isn't.</li>
+<li><strong>Ignoring the async tax</strong> — choosing async without designing the "pending / ready / failed"
+  states the UX now needs.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
-<li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
-<li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
-<li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
-<li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
-<li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
+<li class="task todo">Can I draw the boxes a request for my feature passes through?</li>
+<li class="task todo">Do I know which box does the expensive work?</li>
+<li class="task todo">Is the heavy work synchronous (user waits) or asynchronous (queued) — and is that the
+      right UX?</li>
+<li class="task todo">Where is data read from — the database (fresh, slower) or a cache (fast, maybe stale)?</li>
+<li class="task todo">Do I know whether I'm changing a monolith or a service others depend on?</li>
 </ul>
 <h2>Related lessons</h2>
 <ul>
-<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
-<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
-<li><a href="creativity.html">Creativity</a></li>
-<li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="recap.html">Recap &amp; real-world examples</a></li>
+<li><a href="apis-and-contracts.html">APIs &amp; contracts</a></li>
+<li><a href="latency-scale-performance.html">Latency, scale &amp; performance</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="apis-and-contracts.html"><span class="lbl">→ Next</span><span class="ttl">APIs &amp; contracts</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>
