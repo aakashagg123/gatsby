@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Metrics &amp; experimentation — Technical product management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,canvas{max-width:100%;height:auto}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+/* tablet: collapse to a single column */
+@media (max-width:880px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .content{min-width:0;padding:32px 22px 70px}
+  .sidebar{display:none}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:160px}
+}
+
+/* phone-first: high readability on iPhone-class widths */
+@media (max-width:560px){
+  body{font-size:17px;line-height:1.7}
+  .topbar{padding:12px 16px;gap:12px}
+  .brand span{font-size:15px}
+  .brand em{display:none}
+  .content{padding:24px 16px 64px}
+  .index{padding:36px 16px 64px}
+  .chip{font-size:11px}
+  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
+  .hero .lede,.hero-meta{font-size:15px}
+  .hero-meta{line-height:1.6}
+  .index-hero h1{font-size:30px;line-height:1.12}
+  .index-hero .lede{font-size:16.5px}
+  .lesson{padding:34px 0 8px;margin-top:22px}
+  .lesson-head{gap:10px}
+  .lesson h2{font-size:22px;line-height:1.22}
+  .lesson h3{font-size:18.5px}
+  .lesson p,.lesson li{font-size:16.5px}
+  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
+  pre code{font-size:12.8px}
+  code{font-size:12.8px;word-break:break-word}
+  /* wide tables scroll instead of breaking the page */
+  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    white-space:nowrap;font-size:13.5px}
+  .cards,.threads{grid-template-columns:1fr}
+  .pagenav{flex-direction:column;gap:12px}
+  .navcard{flex:1 1 auto}
+  .navcard.next{text-align:left;align-items:flex-start}
+  .pm-band,.recap{padding:18px 18px}
+  .recap{margin-top:30px}
+  /* comfortable tap targets */
+  a,.iw-btn,summary{touch-action:manipulation}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product management</span><em>a standalone module</em></a>
+  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink active" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="tpm-for-ai-products.html">8 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 06</span>
+    <h1>Metrics &amp; experimentation</h1>
+  </div>
+  <h2>TL;DR</h2>
+<p>If you can't measure it, you shipped an opinion. The measurement stack has three layers:
+a <strong>metric tree</strong> connecting one north-star outcome to the input metrics teams can
+actually move; <strong>instrumentation</strong> written into the spec so the events exist when you
+need them; and <strong>experiments</strong> (A/B tests) that separate "the metric moved because of us"
+from "the metric moved." Experiments keep you honest, but they're not free and not
+always right: they need enough traffic, an up-front hypothesis, guardrail metrics, and
+the discipline not to peek and stop at the first flattering result. Where you can't
+test, you can still reason — with before/after comparisons, holdouts, and humility.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — An AI feature's interesting failures return HTTP 200. Latency and
+error dashboards stay green while answer quality quietly degrades — so the standard
+metric stack, which assumes correctness is binary and crashes are visible, misses the
+thing that matters most.</p>
+<p><strong>What it changes in your decisions</strong> — You add a <strong>quality layer</strong> to the tree:
+eval scores as the offline metric, thumbs-up rate / edit rate / retry-and-rephrase rate
+as online proxies — and you instrument the <em>feedback capture</em> (accepted the suggestion?
+edited it? abandoned?) as a launch-blocking requirement, because that stream is also
+your future eval data.</p>
+<p><strong>Ask yourself</strong> — <em>"If answer quality dropped 15% tomorrow, which number on which
+dashboard would move, and how long until a human noticed?"</em></p>
+<p><strong>Risk if ignored</strong> — Quality drifts for weeks behind green dashboards, and the first
+detector is a customer thread going viral.</p>
+</blockquote>
+<h2>The metric tree</h2>
+<p>A north-star metric alone is a scoreboard, not a strategy — no team can directly move
+"weekly active teams." The tree makes it actionable:</p>
+<pre class="mermaid">flowchart TB
+  NS[&quot;North star&lt;br/&gt;e.g. weekly active teams&quot;] --&gt; A[&quot;Acquisition&lt;br/&gt;signups / week&quot;]
+  NS --&gt; E[&quot;Engagement&lt;br/&gt;actions per team / week&quot;]
+  NS --&gt; R[&quot;Retention&lt;br/&gt;4-week team retention&quot;]
+  A --&gt; A1[&quot;Activation rate&lt;br/&gt;(reached first value)&quot;]
+  E --&gt; E1[&quot;Feature adoption&lt;br/&gt;(% teams using core flow)&quot;]
+  E --&gt; E2[&quot;AI answer acceptance rate&quot;]
+  R --&gt; R1[&quot;Resurrection &amp; churn drivers&quot;]
+  G[&quot;Guardrails (must not regress):&lt;br/&gt;p95 latency · cost per request ·&lt;br/&gt;support tickets · trust/safety flags&quot;]
+  G -.-&gt; NS</pre>
+<ul>
+<li><strong>North star</strong> — one number that proxies delivered value (not revenue — revenue lags
+  value) . Everything in the tree must have a plausible causal path to it.</li>
+<li><strong>Input metrics</strong> — the branches teams can actually own and move this quarter. A good
+  input metric is sensitive (responds in days, not quarters) and causally connected
+  (moving it plausibly moves the parent).</li>
+<li><strong>Guardrails</strong> — the "do no harm" set: latency, cost, support load, trust. Every
+  experiment and launch is judged on its target metric <em>and</em> on leaving guardrails intact.</li>
+<li><strong>Leading vs. lagging</strong> — retention is lagging (you learn you failed months later);
+  activation is leading. Manage with leading indicators, report with lagging ones.</li>
+</ul>
+<p>Beware <strong>Goodhart's law</strong>: any metric made a target gets gamed, usually innocently.
+"Answers delivered" as a target produces more answers, not better ones. Pair every
+target metric with a quality counterweight.</p>
+<h2>Instrumentation is a requirement, not a favour</h2>
+<p>The events you'll need to answer "did it work?" must be in the spec —
+<a href="specs-prds-and-rfcs.html">the PRD</a> — before build, because retrofitting analytics after
+launch means weeks of blindness followed by data you only half trust. The PM's
+instrumentation pass: for each success metric, <em>which event, with which properties,
+fired from where, proves it?</em> If you can't name the event, you can't have the metric.
+Then check the funnel: every step a user takes toward value should emit something, or
+your drop-off analysis will have holes exactly where the mystery is.</p>
+<h2>Experiments without self-deception</h2>
+<p>An A/B test randomly splits users, shows each group a variant, and compares. The
+mechanics are a solved problem; the discipline isn't:</p>
+<ul>
+<li><strong>Hypothesis first, in writing</strong> — "we believe moving X will lift Y by ~Z% because…"
+  Written <em>before</em> launch, because post-hoc, any result can be narrated into a win.</li>
+<li><strong>Power before launch</strong> — small effects need surprising amounts of traffic. If the
+  calculator says eight months to significance, the honest answer is "this isn't
+  A/B-testable here" — not "we'll run it two weeks and squint."</li>
+<li><strong>No peeking</strong> — checking daily and stopping at the first p &lt; 0.05 is how teams ship
+  noise. Fix the duration up front (or use sequential methods designed for early looks).</li>
+<li><strong>Judge the guardrails too</strong> — a win on the target that degrades latency or support
+  volume isn't a win; it's a trade you should make consciously or not at all.</li>
+<li><strong>Segments lie enthusiastically</strong> — slice a neutral result twenty ways and one slice
+  will "win" by chance. Segment analyses generate hypotheses for the <em>next</em> test; they
+  don't rescue this one.</li>
+</ul>
+<p>When you can't test — traffic too small, change too structural, effect too slow — use
+the humbler tools: pre/post with the seasonality caveat stated out loud, a long-running
+<strong>holdout</strong> (5% who don't get the new experience for a quarter), or staged
+rollout-as-natural-experiment (<a href="launches-rollouts-and-migrations.html">next lesson</a>).
+Weaker evidence honestly labelled beats strong claims from weak designs.</p>
+<h2>The AI quality layer</h2>
+<p>For model-powered features, wire <em>offline</em> and <em>online</em> measurement together:</p>
+<ul>
+<li><strong>Offline: eval scores</strong> — the graded example set from your
+  <a href="specs-prds-and-rfcs.html">spec</a>, run against every prompt/model/retrieval change
+  <em>before</em> it ships. This is your regression suite for quality.</li>
+<li><strong>Online: behavioural proxies</strong> — users rarely click thumbs-down; they silently
+  <em>edit</em> the draft, <em>retry</em> the question rephrased, or <em>abandon</em> the flow. Edit distance,
+  retry rate, and acceptance rate are your truest online quality signals — instrument
+  them from day one.</li>
+<li><strong>The loop</strong> — online failures (edited outputs, rephrased retries) flow back into the
+  eval set, so the offline suite keeps resembling reality. That loop is the
+  <a href="tpm-for-ai-products.html">data flywheel</a>, and it's the capstone's subject.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Vanity dashboards</strong> — big cumulative numbers ("10M answers served!") that only go
+  up and inform nothing. If no decision changes when the number changes, it's decoration.</li>
+<li><strong>Metric monotheism</strong> — optimizing the target with no guardrails until support volume
+  or trust pays the bill.</li>
+<li><strong>Peeking and p-hacking</strong> — early stops, post-hoc hypotheses, twenty segment slices.
+  The result is a culture that "wins" every test and moves no annual number.</li>
+<li><strong>Instrumentation as cleanup</strong> — analytics scheduled after launch, so the team debates
+  opinions during the weeks that matter most.</li>
+<li><strong>Green-dashboard blindness</strong> (AI-specific) — infrastructure metrics healthy, no
+  quality signal wired, drift discovered by customers.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Can I draw my product's metric tree — north star, the 3–5 inputs, the guardrails —
+      from memory?</li>
+<li class="task todo">Does the current PRD name the exact events that will prove or disprove success?</li>
+<li class="task todo">Is there a written hypothesis and a fixed duration for the currently running test?</li>
+<li class="task todo">For AI features: do I have an offline eval score <em>and</em> an online behavioural proxy,
+      and do failures flow back into the eval set?</li>
+<li class="task todo">Which metric on my dashboard would I delete tomorrow for informing no decisions?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
+<li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
+<li><a href="tpm-for-ai-products.html">Technical product management for AI</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="working-with-engineering.html"><span class="lbl">← Previous</span><span class="ttl">Working with engineering</span></a><a class="navcard next" href="launches-rollouts-and-migrations.html"><span class="lbl">→ Next</span><span class="ttl">Launches, rollouts &amp; migrations</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

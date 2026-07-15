@@ -74,6 +74,12 @@ def rewrite_target(target):
             return f"../ai/{mod}.html{anchor}"
         lesson = fname[:-3] if fname.endswith(".md") else fname
         return f"../ai/{mod}.html#{lesson}"
+    # cross-link into a sibling standalone track: ../track-name/lesson.md
+    m = re.match(r"\.\./([\w-]+)/([\w-]+)\.md$", target)
+    if m:
+        track, fname = m.group(1), m.group(2)
+        page = "index" if fname == "README" else fname
+        return f"../{track}/{page}.html{anchor}"
     return target + anchor
 
 def rewrite_links(md):
