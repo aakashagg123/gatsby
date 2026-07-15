@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Product sense for AI products — Product sense</title>
+<title>Technical product sense for the AI PM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,165 +306,45 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
-  <div class="hero">
-    <span class="chip">Lesson 06</span>
-    <h1>Product sense for AI products</h1>
+</header><main class="content index" id="top">
+  <div class="index-hero">
+    <span class="chip">A standalone module</span>
+    <h1>Technical product sense for the AI PM</h1>
+    <p class="lede">Reading systems like an engineer — architecture, data, latency, and failure — so you can build with them, not just around them.</p>
+    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>for APMs &amp; PMs</span><span>diagrams included</span></div>
   </div>
-  <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
-<p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
-feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
-can't be trusted, measured, or afforded at scale.</p>
-</blockquote>
-<h2>Taste becomes evals</h2>
-<p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
-distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
-product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
-<strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
-continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
-<p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
-moved upstream into the model's outputs. (The engineering of this — golden sets,
-LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-<a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
-<p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
-tell. Product sense for AI is largely <strong>trust design</strong>:</p>
+  <div class="intro"><p>Product sense tells you <em>what</em> to build. <strong>Technical product sense</strong> tells you what it will
+take to build it — and what the system will and won't let you do. It's the ability to read
+an architecture, reason about data, latency, and failure, and hold a credible conversation
+with engineers about trade-offs. You don't need to write the code; you need to understand
+the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
+<p>For APMs and PMs moving into <strong>AI product management</strong>, this is non-optional. An AI feature
+is a distributed system with a probabilistic component bolted into it — latency, cost,
+failure, and data flow are now <em>product</em> decisions, not back-end details. This module
+builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
+you can redraw on a whiteboard.</p>
 <ul>
-<li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
-  check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
-<li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
-<li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
-  has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
-  easy correction, and "undo" are core, not polish.</li>
+<li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
+  the path a request actually travels.</li>
+<li><a href="apis-and-contracts.html"><strong>APIs &amp; contracts</strong></a> — how components talk: requests,
+  idempotency, versioning, and webhooks.</li>
+<li><a href="data-and-the-data-model.html"><strong>Data &amp; the data model</strong></a> — entities, relationships, and
+  why "where does this data live?" is a product question.</li>
+<li><a href="latency-scale-performance.html"><strong>Latency, scale &amp; performance</strong></a> — where time goes,
+  caching, and what "it doesn't scale" really means.</li>
+<li><a href="reliability-and-failure.html"><strong>Reliability &amp; failure</strong></a> — retries, timeouts, graceful
+  degradation, and designing for the request that goes wrong.</li>
+<li><a href="tech-debt-and-estimation.html"><strong>Tech debt &amp; estimation</strong></a> — reading an estimate, pricing
+  trade-offs, and working with engineers on debt.</li>
+<li><a href="technical-sense-for-ai.html"><strong>Technical sense for AI systems</strong></a> — the capstone: the
+  anatomy of an AI feature, evals and observability, and cost/latency as UX.</li>
 </ul>
-<p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
-who trusts a wrong answer, and the one who's been burned once and now distrusts every
-answer.</p>
-<h2>Latency and cost are UX</h2>
-<p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
-they're <strong>product</strong> concerns, because they trade directly against quality:</p>
-<table>
-<thead>
-<tr>
-<th>Lever</th>
-<th>Buys you</th>
-<th>Costs you</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bigger / stronger model</td>
-<td>Quality</td>
-<td>Latency, $</td>
-</tr>
-<tr>
-<td>Smaller / quantized model</td>
-<td>Speed, $</td>
-<td>Some quality</td>
-</tr>
-<tr>
-<td>Streaming the response</td>
-<td><em>Perceived</em> speed</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Caching</td>
-<td>Speed, $</td>
-<td>Staleness risk</td>
-</tr>
-</tbody>
-</table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
-mechanics of these trade-offs are the AI Engineering track's
-<a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
-<a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
-that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
-<p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
-the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
-reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
-<p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
-isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
-valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
-delights and a deterministic system for the 80% that must be correct.</p>
-<h2>Feedback is a flywheel you design</h2>
-<p>AI products get better with use — but only if you build the loop. Every correction,
-thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
-becomes literal: user effort improves the product's data, which improves outputs, which
-earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
-it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<h2>Keep a human in the loop where it counts</h2>
-<p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
-merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
-checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
-<strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
-sense.</p>
-<h2>Actionable steps</h2>
-<ul>
-<li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
-<li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
-<li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
-  not all three.</li>
-<li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
-<li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
-  where appropriate, the product.</li>
-<li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
-  wrong is costly.</li>
-</ul>
-<h2>Failure modes</h2>
-<ul>
-<li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
-  afforded at scale.</li>
-<li><strong>Confident hallucination in the UX</strong> — every output presented with equal authority, wrong
-  ones included.</li>
-<li><strong>AI where deterministic wins</strong> — using a probabilistic model for a job that needed to be
-  exactly right.</li>
-<li><strong>No feedback loop</strong> — a product that never improves because the signal was never captured.</li>
-<li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
-  in production.</li>
-</ul>
-<h2>Practitioner checklist</h2>
-<ul>
-<li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
-<li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
-<li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
-<li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
-<li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
-</ul>
-<h2>Related lessons</h2>
-<ul>
-<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
-<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
-<li><a href="creativity.html">Creativity</a></li>
-<li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="recap.html">Recap &amp; real-world examples</a></li>
-</ul>
-  <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — why it matters when the
+system has a model in it — and a diagram to make it concrete.</p>
+<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
+  <h2 class="sec">The lessons</h2>
+  <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">07</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
+  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
+  </main></body></html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Product sense for AI products — Product sense</title>
+<title>Reliability &amp; failure — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,165 +306,107 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="creativity.html">3 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">4 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">5 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">6 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink active" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 06</span>
-    <h1>Product sense for AI products</h1>
+    <span class="chip">Lesson 05</span>
+    <h1>Reliability &amp; failure</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
+<p>In a distributed system, <strong>things fail all the time</strong> — networks drop, services time out,
+dependencies go down. Reliability isn't the absence of failure; it's designing so that
+failure is <em>contained and graceful</em>. The core tools: <strong>retries</strong> (with backoff) for transient
+errors, <strong>timeouts</strong> so a slow dependency doesn't hang everything, <strong>fallbacks</strong> and
+<strong>graceful degradation</strong> so a partial answer beats an error, and <strong>circuit breakers</strong> so one
+sick service doesn't drag down the rest. The product decision is: <em>when this fails, what does
+the user see?</em></p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
-<p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
-feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
-can't be trusted, measured, or afforded at scale.</p>
+<p><strong>Why it matters</strong> — Model APIs fail in ways classic services don't: they rate-limit,
+time out under load, and occasionally return confidently wrong output — a "failure" that
+returns HTTP 200. Your reliability design has to cover <em>bad answers</em>, not just <em>no answers</em>.</p>
+<p><strong>What it changes in your decisions</strong> — You design the degraded path explicitly: what the
+feature does when the model is slow, throttled, down, or wrong — a cached answer, a smaller
+model, a non-AI fallback, or an honest "try again."</p>
+<p><strong>Ask yourself</strong> — <em>"When the model is unavailable or returns garbage, what does the user
+experience — and is it acceptable?"</em></p>
+<p><strong>Risk if ignored</strong> — A feature that white-screens (or worse, shows a confident wrong answer)
+the first time its model dependency has a bad day.</p>
 </blockquote>
-<h2>Taste becomes evals</h2>
-<p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
-distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
-product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
-<strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
-continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
-<p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
-moved upstream into the model's outputs. (The engineering of this — golden sets,
-LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-<a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
-<p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
-tell. Product sense for AI is largely <strong>trust design</strong>:</p>
+<h2>The lifecycle of a request that goes wrong</h2>
+<p>Reliability is really a state machine — the paths a request can take when things don't go
+perfectly:</p>
+<pre class="mermaid">stateDiagram-v2
+  [*] --&gt; Request
+  Request --&gt; Success: ok
+  Request --&gt; Retry: transient error
+  Retry --&gt; Success: ok on retry
+  Retry --&gt; Fallback: retries exhausted
+  Request --&gt; Timeout: too slow
+  Timeout --&gt; Fallback
+  Fallback --&gt; Degraded: cached / partial / simpler result
+  Success --&gt; [*]
+  Degraded --&gt; [*]</pre>
+<p>The design goal is that <strong>every path ends somewhere acceptable</strong> — never a hang, never an
+unhandled crash. The difference between a robust product and a fragile one is whether these
+non-happy paths were designed or just... happened.</p>
+<h2>The core tools</h2>
 <ul>
-<li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
-  check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
-<li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
-<li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
-  has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
-  easy correction, and "undo" are core, not polish.</li>
+<li><strong>Retries with backoff</strong> — many failures are transient (a blip, a momentary overload).
+  Retrying often works — but retry <em>immediately and forever</em> and you amplify an outage into a
+  stampede. Use <strong>exponential backoff</strong> (wait longer each time) and a retry limit. And retries
+  are only safe if the operation is <a href="apis-and-contracts.html">idempotent</a>.</li>
+<li><strong>Timeouts</strong> — never wait forever. A timeout converts "hung indefinitely" into "failed
+  quickly," so you can fall back. Every external call needs one.</li>
+<li><strong>Fallbacks &amp; graceful degradation</strong> — when the best answer isn't available, return a
+  <em>good-enough</em> one: a cached result, a simpler computation, a default. A search box that
+  falls back to keyword results when the smart ranker is down still works.</li>
+<li><strong>Circuit breakers</strong> — if a dependency is clearly down, stop hammering it: "trip the breaker"
+  and fail fast (straight to the fallback) until it recovers. This stops one failure from
+  cascading across the system.</li>
 </ul>
-<p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
-who trusts a wrong answer, and the one who's been burned once and now distrusts every
-answer.</p>
-<h2>Latency and cost are UX</h2>
-<p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
-they're <strong>product</strong> concerns, because they trade directly against quality:</p>
-<table>
-<thead>
-<tr>
-<th>Lever</th>
-<th>Buys you</th>
-<th>Costs you</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bigger / stronger model</td>
-<td>Quality</td>
-<td>Latency, $</td>
-</tr>
-<tr>
-<td>Smaller / quantized model</td>
-<td>Speed, $</td>
-<td>Some quality</td>
-</tr>
-<tr>
-<td>Streaming the response</td>
-<td><em>Perceived</em> speed</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Caching</td>
-<td>Speed, $</td>
-<td>Staleness risk</td>
-</tr>
-</tbody>
-</table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
-mechanics of these trade-offs are the AI Engineering track's
-<a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
-<a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
-that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
-<p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
-the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
-reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
-<p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
-isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
-valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
-delights and a deterministic system for the 80% that must be correct.</p>
-<h2>Feedback is a flywheel you design</h2>
-<p>AI products get better with use — but only if you build the loop. Every correction,
-thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
-becomes literal: user effort improves the product's data, which improves outputs, which
-earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
-it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<h2>Keep a human in the loop where it counts</h2>
-<p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
-merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
-checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
-<strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
-sense.</p>
-<h2>Actionable steps</h2>
+<h2>SLAs, SLOs, and the cost of nines</h2>
+<p>Reliability is measured in <strong>uptime</strong> — the "nines." 99.9% ("three nines") is ~8.7 hours of
+downtime a year; 99.99% is ~52 minutes. Each extra nine costs disproportionately more
+engineering. So reliability is a <strong>product trade-off</strong>, not an absolute: a payments flow may
+need four nines; a "related articles" widget can fail silently and nobody's hurt. Match the
+target to what a failure actually costs the user.</p>
 <ul>
-<li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
-<li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
-<li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
-  not all three.</li>
-<li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
-<li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
-  where appropriate, the product.</li>
-<li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
-  wrong is costly.</li>
+<li><strong>SLA</strong> — the promise you make to customers (often contractual).</li>
+<li><strong>SLO</strong> — the internal target you engineer toward (usually stricter than the SLA).</li>
 </ul>
+<p>Deciding <em>which</em> parts of your product need high reliability — and which can degrade quietly —
+is one of the clearest expressions of technical product sense.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
-  afforded at scale.</li>
-<li><strong>Confident hallucination in the UX</strong> — every output presented with equal authority, wrong
-  ones included.</li>
-<li><strong>AI where deterministic wins</strong> — using a probabilistic model for a job that needed to be
-  exactly right.</li>
-<li><strong>No feedback loop</strong> — a product that never improves because the signal was never captured.</li>
-<li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
-  in production.</li>
+<li><strong>No degraded path</strong> — the feature only has "works" and "white screen"; the first outage is
+  visible to every user.</li>
+<li><strong>Retry storms</strong> — naive retries with no backoff turn a small blip into a full outage.</li>
+<li><strong>Timeout-less calls</strong> — one slow dependency hangs the whole request.</li>
+<li><strong>Uniform reliability</strong> — spending four-nines effort on a widget that could fail silently,
+  while the checkout has no fallback.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
-<li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
-<li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
-<li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
-<li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
-<li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
+<li class="task todo">For this feature, have I defined what the user sees on failure — not just on success?</li>
+<li class="task todo">Do external calls have timeouts, bounded retries with backoff, and a fallback?</li>
+<li class="task todo">Are retried operations idempotent?</li>
+<li class="task todo">Is there a graceful-degradation path (cache, simpler result, non-AI fallback)?</li>
+<li class="task todo">Does this feature's reliability target match the <em>cost</em> of it failing — no more, no less?</li>
 </ul>
 <h2>Related lessons</h2>
 <ul>
-<li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
-<li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
-<li><a href="creativity.html">Creativity</a></li>
-<li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="recap.html">Recap &amp; real-world examples</a></li>
+<li><a href="apis-and-contracts.html">APIs &amp; contracts</a></li>
+<li><a href="latency-scale-performance.html">Latency, scale &amp; performance</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  <div class="pagenav"><a class="navcard prev" href="latency-scale-performance.html"><span class="lbl">← Previous</span><span class="ttl">Latency, scale &amp; performance</span></a><a class="navcard next" href="tech-debt-and-estimation.html"><span class="lbl">→ Next</span><span class="ttl">Tech debt &amp; estimation</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>
