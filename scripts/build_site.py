@@ -25,6 +25,7 @@ FP_HTML = os.path.join(ROOT, "first-principles-html")   # first principles editi
 PS_HTML = os.path.join(ROOT, "product-sense-html")      # product sense editions
 TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical product sense
 TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical product management
+AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
 HARNESS_SRC = os.path.join(ROOT, "harness-engineering")
 
 VIEWER = """<!doctype html>
@@ -179,7 +180,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Six separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Seven separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -216,6 +217,12 @@ LANDING = """<!doctype html>
       <h2>Technical product management →</h2>
       <p>The operating discipline of shipping — the role, specs, prioritization, execution,
       metrics, and releases — with a diagram in every lesson. For APMs & PMs moving into AI PM.</p>
+    </a>
+    <a class="card" href="agentic-ai/index.html">
+      <span class="tag">Module</span>
+      <h2>Agentic AI →</h2>
+      <p>What agents actually are — the loop, tools, memory, planning — plus reliability,
+      security, and economics. Opens with a knowledge graph; a diagram in every lesson.</p>
     </a>
   </div>
   <footer>Educational content. Use it, fork it, teach from it.</footer>
@@ -294,6 +301,10 @@ def main():
     # 1e. Technical product management module: copy its pre-rendered pages.
     if os.path.isdir(TPM_HTML):
         shutil.copytree(TPM_HTML, os.path.join(SITE, "technical-product-management"))
+
+    # 1f. Agentic AI module: copy its pre-rendered pages.
+    if os.path.isdir(AAI_HTML):
+        shutil.copytree(AAI_HTML, os.path.join(SITE, "agentic-ai"))
 
     # 2. Harness engineering: copy the whole tree (md + code + outputs).
     dst_harness = os.path.join(SITE, "harness")
