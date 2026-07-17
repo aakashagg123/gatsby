@@ -436,6 +436,13 @@ no weight changes.</p>
    <strong>with RAG</strong> for knowledge, <strong>plus ICL</strong> for per-request steering — chosen per
    subproblem, not globally.</li>
 </ol>
+<p>The same triad shows up <em>inside agents</em>, where Google's <em>Agents</em> whitepaper calls it
+<strong>targeted learning</strong> — teaching a model when and how to use its tools: <strong>in-context
+learning</strong> (tools and few-shot examples in the prompt, ReAct-style), <strong>retrieval-based
+in-context learning</strong> (dynamically populating the prompt with the most relevant examples
+from an external store — RAG applied to <em>behavior</em>, not just facts), and <strong>fine-tuning</strong>
+on a corpus of tool-use examples before inference. Different problem, identical decision
+structure: start in the prompt, retrieve when it must scale, train when it must be innate.</p>
 <h2>Comparison</h2>
 <table>
 <thead>

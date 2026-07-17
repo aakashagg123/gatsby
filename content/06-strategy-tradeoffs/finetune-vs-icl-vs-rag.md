@@ -94,6 +94,14 @@ Train a small **student** to mimic a large **teacher**
    **with RAG** for knowledge, **plus ICL** for per-request steering — chosen per
    subproblem, not globally.
 
+The same triad shows up *inside agents*, where Google's *Agents* whitepaper calls it
+**targeted learning** — teaching a model when and how to use its tools: **in-context
+learning** (tools and few-shot examples in the prompt, ReAct-style), **retrieval-based
+in-context learning** (dynamically populating the prompt with the most relevant examples
+from an external store — RAG applied to *behavior*, not just facts), and **fine-tuning**
+on a corpus of tool-use examples before inference. Different problem, identical decision
+structure: start in the prompt, retrieve when it must scale, train when it must be innate.
+
 ## Comparison
 
 | | ICL | RAG | Fine-tuning | Distillation |

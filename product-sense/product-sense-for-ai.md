@@ -92,6 +92,20 @@ isn't "we have AI," it's *"we found the job where this model is genuinely reliab
 valuable, for a user who cares."* Often the best AI product uses the model for the 20% that
 delights and a deterministic system for the 80% that must be correct.
 
+## AI-enabled vs. AI-native
+
+A distinction that sharpens scoping conversations: an **AI-enabled** product bolts a
+model onto an existing product — the photo editor that grows an "AI-enhance" button. An
+**AI-native** product is built around the model — the generative image platform where,
+without the model, there is no product. The test is one question: *turn the model off —
+what's left?* Both are legitimate; the product-sense failure is building one while
+pricing, roadmapping, or pitching the other. AI-enabled work is feature work: the
+existing product's quality bar, margins, and UX conventions still govern. AI-native work
+changes the question you start from — not *"how can AI enhance this feature?"* but
+*"if intelligence were the core material, how would we solve this problem from
+scratch?"* — and it makes the eval, the failure UX, and the cost curve the product,
+not accessories to it.
+
 ## Feedback is a flywheel you design
 
 AI products get better with use — but only if you build the loop. Every correction,
@@ -99,6 +113,14 @@ thumbs-down, and edit is signal. The [Hook model's investment phase](./motivatio
 becomes literal: user effort improves the product's data, which improves outputs, which
 earns more use. Product sense here is deciding **what feedback to capture, how to make giving
 it feel worthwhile, and how to close the loop** without violating trust or privacy.
+
+One caution from systems thinking: a flywheel is a *reinforcing* feedback loop, and
+reinforcing loops amplify whatever is in them — engagement, but also bias (a model that
+under-serves a group gets less engagement from that group, which further shrinks their
+share of the training signal) and filter bubbles. Design the **balancing loops**
+alongside the flywheel: monitoring for skew, ethical checks on what the loop optimizes,
+and a metric of success that rewards long-term user value rather than whatever spins
+fastest.
 
 ## Keep a human in the loop where it counts
 

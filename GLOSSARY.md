@@ -5,6 +5,11 @@ lesson where it is developed in depth.
 
 ---
 
+**AI-native (vs. AI-enabled)** — An AI-enabled product bolts a model onto an
+existing product; an AI-native product is built around the model, such that
+without it there is no product. The test: turn the model off — what's left? See
+[Product sense for AI products](./product-sense/product-sense-for-ai.md).
+
 **AWQ (Activation-aware Weight Quantization)** — A 4-bit weight quantization
 method that protects the small fraction of weights tied to high-magnitude
 activations, preserving quality better than naive rounding. See
@@ -20,6 +25,11 @@ batch at the token level instead of waiting for a whole batch to finish. See
 **Context engineering** — Deliberately deciding what information occupies the
 model's limited context window, in what order, and in what form. See
 [Context engineering](./content/00-foundations/context-engineering.md).
+
+**Data store** — Agent-platform term for a corpus provided in its original form
+(PDFs, docs, databases, websites), vector-indexed so an agent can query it at
+runtime — the standard implementation of RAG in agent stacks. See
+[Context & memory](./agentic-ai/context-and-memory.md).
 
 **Decode** — The autoregressive phase of generation that produces output tokens
 one at a time; memory-bandwidth bound. See
@@ -78,6 +88,11 @@ attention avoid recomputing the whole sequence each step. See
 take before it must stop or escalate. See
 [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
 
+**Leverage point** — A place in a system where a small, well-placed intervention
+produces outsized change — e.g. changing a model's metric of success rather than
+tuning its hyperparameters. See
+[A latticework of mental models](./first-principles/mental-models-latticework.md).
+
 **Paged attention** — Managing the KV cache in fixed-size non-contiguous blocks
 (like OS virtual memory) to eliminate fragmentation. See
 [Continuous batching & paged attention](./content/01-inference-internals/batching-and-paged-attention.md).
@@ -93,6 +108,10 @@ prefix across requests. See
 **Prompt injection** — Adversarial instructions smuggled into model input
 (directly or via retrieved/tool content) to override intended behavior. See
 [Safety engineering](./content/05-safety-multitenancy/safety-engineering.md).
+
+**ReAct** — A reasoning framework interleaving thought, action, and observation —
+the default shape of an agent loop, taught to a model with a few in-context
+examples. See [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
 
 **Reranking** — A second-stage model that re-scores retrieved candidates for
 relevance before they enter the prompt. See [RAG architecture](./content/03-rag/rag-architecture.md).
@@ -114,6 +133,11 @@ a tool execution). See [Observability](./content/04-evals-observability/observab
 
 **Tool budget** — A cap on how many (or which) tool calls an agent may make. See
 [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
+
+**Tree-of-Thoughts** — A reasoning technique that explores multiple reasoning
+branches with backtracking — deliberate search instead of a single
+chain-of-thought. See
+[Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
 
 **Trace** — The end-to-end record of one request as it flows through every span of
 your pipeline. See [Observability](./content/04-evals-observability/observability.md).

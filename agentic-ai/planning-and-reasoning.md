@@ -74,6 +74,17 @@ flowchart TB
   integrate. Buys focus and parallelism; costs coordination — subtasks done brilliantly
   can still integrate into nonsense unless something owns the whole.
 
+The patterns have a short research lineage worth knowing, because vendors still name
+frameworks after it: **chain-of-thought** (prompt the model to reason step-by-step
+before answering) came first; **self-consistency** improved it by sampling several
+chains and taking the majority answer; **Tree-of-Thoughts** generalized it to exploring
+multiple reasoning branches with backtracking — deliberate search instead of one linear
+chain. **ReAct** grafted chain-of-thought onto action: thought → act → observe, taught
+to the model with a few in-context examples. Reasoning models internalized most of this
+lineage — you now buy it as "thinking" rather than prompt it by hand — but the names
+survive in framework docs, and the underlying moves survive in every agent transcript
+you'll read.
+
 These compose: a serious coding agent plans, executes each step ReAct-style, reflects
 against tests, and decomposes big work. Frameworks mostly package these patterns with
 plumbing — evaluate them on the plumbing, because the patterns themselves are a page of

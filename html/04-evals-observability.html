@@ -758,6 +758,12 @@ aggregation over instrumented spans, not a separate system.</p>
   rate as a cost metric.</li>
 <li><strong>Context discipline:</strong> target the bloated prompts attribution exposes
   (<a href="00-foundations.html#context-engineering">context engineering</a>).</li>
+<li><strong>Compression &amp; summarization:</strong> prompt-compression tools (LLMLingua-class, up to
+  ~20× on long prompts with little quality loss) and summarizing multi-turn
+  conversation history shrink exactly the token lines attribution flags first.</li>
+<li><strong>Serving efficiency:</strong> for self-hosted models, the runtime itself is a lever —
+  optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
+  per-token price without touching the product.</li>
 <li><strong>Pricing &amp; packaging:</strong> set plan limits and prices from real unit economics, not
   guesses.</li>
 </ul>

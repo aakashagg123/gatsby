@@ -67,6 +67,30 @@ from this shape, and they explain most of agent behaviour:
   wander off-task. Real agents carry step limits, cost caps, time-outs, and an explicit
   "stuck → ask a human" path. The exits are product decisions, not plumbing.
 
+## The canonical anatomy: model, tools, orchestration
+
+Google's 2024 *Agents* whitepaper — the closest thing the industry has to a shared
+reference — names the three components inside every serious implementation of the loop,
+and the vocabulary is worth adopting because your engineering team already uses it:
+
+- **The model** — the language model (one or several, general-purpose or fine-tuned)
+  acting as the centralized decision-maker: the "decide" box of the loop, running a
+  reasoning framework like ReAct or chain-of-thought
+  ([planning & reasoning](./planning-and-reasoning.md)).
+- **The tools** — the bridge between the model's internal capabilities and the outside
+  world ([tools & function calling](./tools-and-function-calling.md)); without them the
+  model can only describe actions, never take them.
+- **The orchestration layer** — the cyclical process governing how the agent takes in
+  information, reasons, and uses that reasoning to pick its next action until it reaches
+  the goal or a stopping point. That's the loop above — plus your budgets and exits.
+
+The same paper's model-vs-agent contrast is a useful smell test, compressed: a model's
+knowledge ends at its training data, an agent extends it live through tools; a model does
+one inference per query with no session state, an agent manages multi-turn history in the
+orchestration layer; a model has no native tool use or logic layer, an agent has both
+built in. If a proposal calls something an "agent" but has no tools, no session
+management, and no loop — it's a model call wearing a costume.
+
 ## The autonomy spectrum
 
 "Agent or not" is the wrong question; *how much agency* is the right one:
