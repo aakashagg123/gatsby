@@ -18,6 +18,8 @@ Run:  python3 scripts/build_site.py
 import os
 import shutil
 
+import build_graph
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "_site")
 HTML = os.path.join(ROOT, "html")                       # AI engineering editions
@@ -224,10 +226,56 @@ LANDING = """<!doctype html>
       <p>What agents actually are — the loop, tools, memory, planning — plus reliability,
       security, and economics. Opens with a knowledge graph; a diagram in every lesson.</p>
     </a>
+    <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
+      <span class="tag">Explore</span>
+      <h2>Knowledge graph →</h2>
+      <p>Every page across all seven modules as one interactive map — __NODES__ pages,
+      __LINKS__ cross-references. Search it, filter by track, click any node to jump in.</p>
+    </a>
   </div>
   <footer>Educational content. Use it, fork it, teach from it.</footer>
 </div></body></html>
 """
+
+
+GRAPH_BTN = (
+    '<a href="{href}" title="Open the knowledge graph" aria-label="Open the knowledge graph" '
+    'style="position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;'
+    'justify-content:center;width:44px;height:44px;border-radius:50%;background:#ffffff;'
+    'border:1px solid #e8e6dd;box-shadow:0 4px 16px rgba(26,25,21,.10);color:#bd5d3a">'
+    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
+    'stroke-width="1.6"><circle cx="5" cy="5" r="2.4"/><circle cx="15" cy="7" r="2.4"/>'
+    '<circle cx="9" cy="15" r="2.4"/><path d="M7.2 6l5.5.7M6 7.2l2.2 5.6M13.8 9l-3.4 4.2"/>'
+    '</svg></a>'
+)
+
+
+def inject_graph_buttons(site, focus_map):
+    """Add a floating 'open the knowledge graph' button to every content page."""
+    injected = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            rel = os.path.relpath(path, site).replace(os.sep, "/")
+            if rel in ("index.html", "graph/index.html"):
+                continue
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            pos = text.rfind("</body>")
+            if pos == -1 or 'aria-label="Open the knowledge graph"' in text:
+                continue
+            href = os.path.relpath("graph/index.html", os.path.dirname(rel) or ".")
+            href = href.replace(os.sep, "/")
+            key = focus_map.get(rel)
+            if key:
+                href += "?focus=" + key.replace("/", "%2F")
+            btn = GRAPH_BTN.format(href=href)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text[:pos] + btn + text[pos:])
+            injected += 1
+    return injected
 
 
 def rel_to_harness_root(md_path):
@@ -350,11 +398,25 @@ def main():
     if os.path.exists(readme_html):
         shutil.copyfile(readme_html, os.path.join(dst_harness, "index.html"))
 
-    # 5. Top landing.
-    with open(os.path.join(SITE, "index.html"), "w") as f:
-        f.write(LANDING)
+    # 5. Knowledge graph: extract nodes/edges from the markdown sources and
+    # write the interactive graph page (Quartz-style).
+    data = build_graph.graph_data()
+    build_graph.write_graph_page(SITE, data)
+    n_links = sum(1 for e in data["edges"] if e[3] == "link")
 
-    print(f"built _site/ — ai module + harness ({pages} pages) + landing")
+    # 6. Top landing (with live graph counts).
+    landing = LANDING.replace("__NODES__", str(len(data["nodes"]))) \
+                     .replace("__LINKS__", str(n_links))
+    with open(os.path.join(SITE, "index.html"), "w") as f:
+        f.write(landing)
+
+    # 7. Every content page gets a floating button into the graph, focused on
+    # that page's own node.
+    injected = inject_graph_buttons(SITE, build_graph.page_focus_map(data))
+
+    print(f"built _site/ — ai module + harness ({pages} pages) + landing + "
+          f"graph ({len(data['nodes'])} nodes, {n_links} links, "
+          f"{injected} pages linked)")
 
 
 if __name__ == "__main__":
