@@ -88,6 +88,12 @@ Attribution is the input; control is the point:
   rate as a cost metric.
 - **Context discipline:** target the bloated prompts attribution exposes
   ([context engineering](../00-foundations/context-engineering.md)).
+- **Compression & summarization:** prompt-compression tools (LLMLingua-class, up to
+  ~20× on long prompts with little quality loss) and summarizing multi-turn
+  conversation history shrink exactly the token lines attribution flags first.
+- **Serving efficiency:** for self-hosted models, the runtime itself is a lever —
+  optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
+  per-token price without touching the product.
 - **Pricing & packaging:** set plan limits and prices from real unit economics, not
   guesses.
 

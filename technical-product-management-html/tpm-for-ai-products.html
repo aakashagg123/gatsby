@@ -410,6 +410,31 @@ right to learn from it</em> (privacy policy, enterprise contracts, regional law 
 viability question from lesson 2 that quietly determines whether your flywheel is legal).
 A competitor with the same model and a faster flywheel wins in a year. That asymmetry —
 not model choice — is usually the real AI strategy question.</p>
+<h2>The long game: models age, debt compounds</h2>
+<p>Three roadmap truths that only bite in the product's second year, so budget for them in
+its first:</p>
+<ul>
+<li><strong>Models degrade on your watch.</strong> Data drifts, user behaviour shifts in response to
+  the product itself, and the provider ships new versions underneath you. Continuous
+  re-evaluation and periodic retraining (or re-prompting, or re-pinning) is a permanent
+  line item — <em>sustainable model evolution</em>, not one-off maintenance.</li>
+<li><strong>Ethical debt compounds like tech debt.</strong> Bias audits, explainability, privacy
+  reviews, and fairness checks deferred at launch don't get cheaper — they get baked
+  into training data, product behaviour, and user expectations, and the eventual fix
+  costs a rewrite plus trust. Schedule this work with the same discipline as
+  <a href="prioritization-and-roadmaps.html">tech-debt paydown</a>, before an incident schedules
+  it for you.</li>
+<li><strong>Platforms outlast features.</strong> The investments with compounding returns are rarely
+  the visible features — they're the eval infrastructure, data pipelines, and feedback
+  instrumentation every future feature rides on. When the roadmap fight comes, the
+  flywheel's plumbing is usually the highest-leverage thing on the list.</li>
+</ul>
+<p>A closing practical note: <strong>use these tools in your own workflow</strong>. The PMs with the
+best model intuition use models daily — generating mock-up variations for design
+discussions, clustering and prioritizing bug reports, critiquing a UX flow, drafting the
+first pass of a PRD or stakeholder mail. It's the cheapest training available in where
+models shine and where they quietly fail — and that intuition is exactly what the
+eval bar and scoping decisions above run on.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Demo-driven development</strong> — the team iterates until the demo impresses, ships, and
