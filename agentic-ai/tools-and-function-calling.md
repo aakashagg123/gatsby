@@ -57,6 +57,21 @@ The two arrows worth staring at: the model only ever *requests* a call, and the 
 prompts, rate limits, spend caps, logging — attaches at that harness step. A model with
 tools is exactly as dangerous as the harness lets it be.
 
+One taxonomy worth knowing, because platform docs and eng teams use it (it's from
+Google's *Agents* whitepaper): tools split by **where the call executes**.
+**Extensions** run agent-side — the agent's runtime calls the API directly, useful for
+pre-built integrations and multi-hop chains where the next call depends on the last
+result. **Function calling** runs client-side — the model only *outputs* the function
+name and arguments, and your application executes (or refuses) the call, exactly as in
+the diagram above. **Data stores** are the retrieval path — documents vector-indexed so
+the agent can query them at runtime ([context & memory](./context-and-memory.md)). The
+whitepaper's three canonical reasons to keep execution client-side are the reasons this
+lesson defaults to it: security and auth restrictions that mean the agent shouldn't hold
+API credentials; timing and order-of-operations constraints (batch jobs,
+human-in-the-loop review before anything fires); and APIs that simply aren't reachable
+from the agent's infrastructure. Choosing agent-side execution is choosing convenience
+over a control point — make that trade knowingly.
+
 What counts as a tool spans a wide range: retrieval and web search; code execution (the
 universal power tool — a Python sandbox turns "things the model can describe" into
 "things the model can do"); file and document operations; business APIs (CRM, calendar,

@@ -113,6 +113,33 @@ viability question from lesson 2 that quietly determines whether your flywheel i
 A competitor with the same model and a faster flywheel wins in a year. That asymmetry —
 not model choice — is usually the real AI strategy question.
 
+## The long game: models age, debt compounds
+
+Three roadmap truths that only bite in the product's second year, so budget for them in
+its first:
+
+- **Models degrade on your watch.** Data drifts, user behaviour shifts in response to
+  the product itself, and the provider ships new versions underneath you. Continuous
+  re-evaluation and periodic retraining (or re-prompting, or re-pinning) is a permanent
+  line item — *sustainable model evolution*, not one-off maintenance.
+- **Ethical debt compounds like tech debt.** Bias audits, explainability, privacy
+  reviews, and fairness checks deferred at launch don't get cheaper — they get baked
+  into training data, product behaviour, and user expectations, and the eventual fix
+  costs a rewrite plus trust. Schedule this work with the same discipline as
+  [tech-debt paydown](./prioritization-and-roadmaps.md), before an incident schedules
+  it for you.
+- **Platforms outlast features.** The investments with compounding returns are rarely
+  the visible features — they're the eval infrastructure, data pipelines, and feedback
+  instrumentation every future feature rides on. When the roadmap fight comes, the
+  flywheel's plumbing is usually the highest-leverage thing on the list.
+
+A closing practical note: **use these tools in your own workflow**. The PMs with the
+best model intuition use models daily — generating mock-up variations for design
+discussions, clustering and prioritizing bug reports, critiquing a UX flow, drafting the
+first pass of a PRD or stakeholder mail. It's the cheapest training available in where
+models shine and where they quietly fail — and that intuition is exactly what the
+eval bar and scoping decisions above run on.
+
 ## Failure modes
 
 - **Demo-driven development** — the team iterates until the demo impresses, ships, and

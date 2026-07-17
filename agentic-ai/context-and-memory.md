@@ -63,7 +63,10 @@ flowchart TB
 - **Retrieval** — instead of pre-loading everything, fetch what *this step* needs:
   classic RAG over embeddings, but increasingly also **agentic search** — the agent
   using search/grep/file tools to find things the way a person would, which composes
-  better with the loop than one-shot retrieval.
+  better with the loop than one-shot retrieval. (Agent platforms call the ingested,
+  vector-indexed corpora **data stores** — documents provided in their original form,
+  embedded, and queryable at runtime; it's the standard implementation of RAG in
+  agent stacks.)
 - **Notes & scratchpads** — agents doing long tasks write plans and progress to files
   and reread them, exactly like a human with a notebook. This is the simplest, most
   robust long-task memory: it survives compaction, it's inspectable, and it's debuggable.

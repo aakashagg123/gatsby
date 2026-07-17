@@ -115,6 +115,13 @@ A decision rule that survives contact with vendors:
 3. **Stop when coordination cost shows up** — in the token bill, the latency, or the
    debugging sessions that now span four transcripts.
 
+The industry name for the mature end of step 2 is **agent chaining**, or a **"mixture
+of agent experts"** — specialized agents, each strong in one domain or task, composed
+into one system. It's a real pattern (it's how serious coding and research agents are
+built today), but note what makes it work in practice: the specialists earn their place
+by owning *different tools, permissions, or context* — not by having a different
+adjective in their prompt.
+
 ## Failure modes
 
 - **Org-chart architecture** — agents mirroring your team structure instead of the

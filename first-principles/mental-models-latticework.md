@@ -62,6 +62,8 @@ A high-leverage starter set, by origin discipline:
 | **Second-order effects** | "And then what?" — the consequences of the consequences | Systems thinking |
 | **Compounding** | Small, repeated effects grow non-linearly over time | Math / finance |
 | **Feedback loops** | Outputs loop back as inputs; some stabilize, some explode | Control theory / biology |
+| **Leverage points** | A few places in a system where a small shift moves everything; most effort is spent pushing where it can't matter | Systems thinking (Meadows) |
+| **Emergence** | Wholes have properties none of their parts have — trust, fairness, traffic jams; you can't fix them one component at a time | Systems thinking / biology |
 | **Margin of safety** | Build in slack so you survive the case you didn't predict | Engineering |
 | **Incentives** | "Show me the incentive and I'll show you the outcome" | Economics / psychology |
 | **Map ≠ territory** | The model is not the reality; all models leave things out | Semantics (Korzybski) |
