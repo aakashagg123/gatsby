@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the site-wide knowledge graph (Quartz / kuber.studio-style).
+"""Build the site-wide knowledge graph (digital-garden style).
 
 Scans the markdown sources of every track, extracts pages (nodes) and the
 cross-links between them (edges), and writes an interactive force-directed
