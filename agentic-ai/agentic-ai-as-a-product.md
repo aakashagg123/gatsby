@@ -95,6 +95,39 @@ per resolved ticket, per completed job — is the direction agent pricing is dri
 because it prices what the customer actually buys. It also transfers reliability risk
 to *you*: price outcomes only when your completion rate is boringly stable.
 
+## Service-as-a-Software: selling the work itself
+
+The strategy frame around these economics comes from platform thinking (Sangeet Paul
+Choudary's Enterprise AI playbook). Work is a bundle of tasks; software long ago ate the
+rote ones, but two kinds of human glue held every workflow together — **knowledge work**
+(the decisions) and **managerial work** (the goal-seeking). LLMs absorb the first,
+agents the second — which is why this wave doesn't stop at features. The cycle runs:
+a service-dominant workflow gets **unbundled** into tasks, tasks get **componentized**
+into software (an API call away), and then get **rebundled** — into the old workflow,
+or into entirely new ones. The agent is the natural locus of that rebundling, the role
+managers used to play.
+
+Three product consequences:
+
+- **You're selling the work, not the software.** "Service-as-a-Software" means
+  delivering the outcome — the resolved ticket, the qualified lead, the completed
+  booking — which erases the classic enterprise adoption tax (onboarding, retraining,
+  change management: there's no software for the customer to learn). The go-to-market
+  follows services, not SaaS: sell the story to the top, land a tightly-scoped proof of
+  *outcome*, capture the first workflow, expand to adjacent ones.
+- **Point-solution outcome pricing races to the bottom.** The more quantifiable a unit
+  outcome, the more crowded its market gets. Durable positions come from capturing
+  *more of the workflow* and bundling: a player controlling a larger workflow can
+  cross-subsidize the commoditized component and still win the account. When eyeing an
+  adjacent workflow, ask the question that decides the endgame: *if someone else
+  captured it, would they integrate into us — or we into them?*
+- **The honest metric is human-reviews-per-task, trending down.** The trap Choudary
+  names is becoming an "overfunded BPO": hype plus funding plus humans quietly doing
+  the work behind the AI (ScaleFactor shipped books done by accountants; Amazon's Just
+  Walk Out ran ~700 human reviews per 1,000 sales against a target of 20–50). If the
+  service isn't *progressively* absorbed into software, there is no software business —
+  track absorption, not annualized run rate.
+
 ## Agent UX: designing for trust
 
 Users don't experience your architecture; they experience a colleague they can't see

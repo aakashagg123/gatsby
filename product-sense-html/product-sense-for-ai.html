@@ -413,6 +413,13 @@ reliable frontier and keeping it away from jobs where its failure is costly and 
 isn't "we have AI," it's <em>"we found the job where this model is genuinely reliable and
 valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
 delights and a deterministic system for the 80% that must be correct.</p>
+<p>For enterprise products, plot the job on two axes: <strong>task complexity</strong> and the buyer's
+<strong>tolerance to task failure</strong>. Most visible AI wins live where failure is cheap (a blog
+outline that misses is deleted); enterprise value lives where failure is expensive (a
+diagnosis, a payment) — and the way in is not to wait for a perfect model but to take
+jobs of modest complexity in low-tolerance domains and <em>wrap service checks around
+them</em>: verification steps, human gates, escalation paths. The frontier then shifts
+outward with the model — but the scoping discipline is what got you in the room.</p>
 <h2>AI-enabled vs. AI-native</h2>
 <p>A distinction that sharpens scoping conversations: an <strong>AI-enabled</strong> product bolts a
 model onto an existing product — the photo editor that grows an "AI-enhance" button. An

@@ -365,6 +365,7 @@ module hangs off this picture:</p>
   end
   subgraph PROD[&quot;WHY IT&#x27;S A BUSINESS — lesson 8&quot;]
     ECON[&quot;Unit economics&lt;br/&gt;cost · latency · pricing&quot;]
+    WFC[&quot;Workflow capture&lt;br/&gt;service-as-a-software,&lt;br/&gt;outcomes not seats&quot;]
     UX[&quot;Agent UX &amp; user trust&quot;]
     VP[&quot;Viable product&quot;]
   end
@@ -389,6 +390,8 @@ module hangs off this picture:</p>
   HITL --&gt;|&quot;approves risky acts&quot;| SBX
   LOOP --&gt; ECON
   ECON --&gt; VP
+  ECON --&gt;|&quot;prices&quot;| WFC
+  WFC --&gt;|&quot;moat: rebundling &amp;&lt;br/&gt;cross-subsidy&quot;| VP
   UX --&gt; VP
   EVAL --&gt; UX</pre>
 <p>Read it in three passes. <strong>The spine:</strong> knowledge flows into the model, the model drives

@@ -55,6 +55,7 @@ flowchart TB
   end
   subgraph PROD["WHY IT'S A BUSINESS — lesson 8"]
     ECON["Unit economics<br/>cost · latency · pricing"]
+    WFC["Workflow capture<br/>service-as-a-software,<br/>outcomes not seats"]
     UX["Agent UX & user trust"]
     VP["Viable product"]
   end
@@ -79,6 +80,8 @@ flowchart TB
   HITL -->|"approves risky acts"| SBX
   LOOP --> ECON
   ECON --> VP
+  ECON -->|"prices"| WFC
+  WFC -->|"moat: rebundling &<br/>cross-subsidy"| VP
   UX --> VP
   EVAL --> UX
 ```
