@@ -1,6 +1,6 @@
 # First principles & the polymath mind — recap & real-world examples
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## Real-world examples & war stories
 
@@ -72,4 +72,4 @@ reasons in a vacuum; material with no method is trivia; either one without judgm
 
 ---
 
-← Back to [module index](./README.md) · ↩ Back to [the curriculum](../../SUMMARY.md)
+← Back to [module index](./README.md) · ↩ Back to [the curriculum](../SUMMARY.md)

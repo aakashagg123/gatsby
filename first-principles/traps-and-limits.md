@@ -1,6 +1,6 @@
 # Traps & limits
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## TL;DR
 
@@ -10,7 +10,7 @@ arrogance of **reinventing solved problems**, **analysis paralysis** from decomp
 didn't need decomposing, and **false analogies** that import the wrong field's answer. The
 mature skill isn't "always reason from first principles" — it's knowing *when analogy wins*,
 respecting accumulated expertise, and treating the choice of method as itself a
-[tradeoff](../06-strategy-tradeoffs/README.md). Use this lesson as the safety rail on the
+[tradeoff](../content/06-strategy-tradeoffs/README.md). Use this lesson as the safety rail on the
 other five.
 
 > 🎯 **For the builder**
@@ -66,7 +66,7 @@ This is the precise counterweight to first-principles enthusiasm. Re-deriving cr
 or a safety regulation, or a database's isolation guarantees from scratch usually produces
 something worse, slowly, because the convention already encodes failures you haven't
 imagined yet — exactly the
-[production failure modes](../06-strategy-tradeoffs/production-failure-modes.md) others paid
+[production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md) others paid
 to learn. The rule: **you've earned the right to override a convention only once you can
 articulate why it exists.**
 
@@ -104,7 +104,7 @@ loyalty. A rough decision aid:
 | Speed matters more than optimality | A non-obvious, better answer would pay for the effort |
 
 Notice the symmetry with the rest of the curriculum: just as
-[Module 06](../06-strategy-tradeoffs/README.md) insists every technical choice names its
+[Module 06](../content/06-strategy-tradeoffs/README.md) insists every technical choice names its
 cost, *how you reason* is itself a choice with a cost. Defaulting to first principles
 everywhere is as naïve as never using it.
 
@@ -135,4 +135,4 @@ everywhere is as naïve as never using it.
 - [What first-principles thinking actually is](./what-is-first-principles.md)
 - [The method: deconstruct, challenge, reconstruct](./the-method.md)
 - [Becoming a polymath](./becoming-a-polymath.md)
-- [Strategy & tradeoffs](../06-strategy-tradeoffs/README.md)
+- [Strategy & tradeoffs](../content/06-strategy-tradeoffs/README.md)

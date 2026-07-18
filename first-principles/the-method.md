@@ -1,6 +1,6 @@
 # The method: deconstruct, challenge, reconstruct
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## TL;DR
 
@@ -108,7 +108,7 @@ The deploy failed.                         → why?
 Patch at the top (retry the deploy) and it recurs forever. Fix at the root (add the column
 without a row-rewrite) and the class of failure disappears. "Five" is a guideline, not a
 ritual — stop when you hit something fundamental, which connects directly to
-[production failure modes](../06-strategy-tradeoffs/production-failure-modes.md).
+[production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md).
 
 ## Tool 3 · Fermi estimation — rebuild the number from scratch
 
@@ -169,4 +169,4 @@ lesson.
 - [What first-principles thinking actually is](./what-is-first-principles.md)
 - [A latticework of mental models](./mental-models-latticework.md)
 - [Traps & limits](./traps-and-limits.md)
-- [Production failure modes](../06-strategy-tradeoffs/production-failure-modes.md)
+- [Production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md)

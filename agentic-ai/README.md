@@ -116,6 +116,6 @@ irreversible, and economics decides whether any of it is a business.
 Each lesson pairs the concept with a **🎯 For the AI PM** briefing — the decision it
 should change and the question it should make you ask — and a diagram to make it
 concrete. Builders who want to go deeper than concepts can construct this machinery hands-on
-in the [Harness engineering track](../harness/index.html).
+in the [Harness engineering track](../harness-engineering/README.md).
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).
