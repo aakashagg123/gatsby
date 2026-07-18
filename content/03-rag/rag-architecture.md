@@ -42,6 +42,10 @@ retrieval is *how the right information gets into the window*.
 - **Strategies:** fixed-size with **overlap** (simple, robust); **structure-aware**
   (split on headings/sections/functions — usually better because it respects meaning);
   **semantic chunking** (split where topic shifts).
+- **Match chunk size to task shape:** fixed-output tasks (extract a field, answer a
+  pointed question) tolerate **large chunks** — the model finds the needle; expansive-
+  output tasks (summarize, synthesize across sources) want **smaller chunks** so
+  retrieval can compose coverage from many places instead of drowning in a few.
 - **Carry metadata** on every chunk: source id, title, section, timestamp, tenant,
   permissions. Metadata powers [citations](./retrieval-evals.md), [freshness](#freshness),
   and [tenant filtering](../05-safety-multitenancy/multi-tenant-isolation.md).

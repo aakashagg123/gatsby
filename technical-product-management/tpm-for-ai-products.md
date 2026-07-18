@@ -69,6 +69,12 @@ co-owns it, because it encodes *product judgment*:
 - **Maintenance** — a static suite rots as users find new ways to use (and break) the
   feature. Feed production failures back in monthly; retire cases that stop
   discriminating. Treat suite freshness like test coverage: a number someone owns.
+- **The ritual** — a standing PM + eng session reading raw production traces together:
+  label failures free-form, cluster them into a failure taxonomy, and only then decide
+  which modes deserve automated evaluators. The PM reads *traces*, not dashboards —
+  and a PM–eng disagreement over whether an output passes is a requirements discovery,
+  not annotation noise. Budget accordingly: eval construction and error analysis are a
+  first-class share of the feature's development budget, not a tax on it.
 
 Once the suite exists, hard conversations get easy. "Can we ship?" is a score. "Did the
 new model help?" is a diff. "Which of these two prompts is better?" takes an afternoon,

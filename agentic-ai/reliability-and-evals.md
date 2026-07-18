@@ -90,6 +90,16 @@ times and report pass rates with spread — a single green run proves little.
 frozen APIs); an eval that flakes because the test environment changed teaches teams to
 ignore evals.
 
+And the multi-turn debugging discipline, since agent failures rarely live where they
+surface: annotate the **first upstream failing step**, not the visibly wrong final
+answer — twenty downstream turns of confusion usually trace to one bad retrieval or
+tool result. In multi-agent systems, log traces *per agent* but stitch them into one
+session view, or every incident becomes four transcripts and no story. For sessions
+with human handoffs, evaluate the agent's work *up to the handoff* (and whether it
+escalated at the right moment) rather than blaming it for what happened after. Above
+all: before building elaborate multi-step evaluators, try **simplifying the workflow**
+— a step that's hard to evaluate is often a step that shouldn't exist.
+
 ## Observability: every run replayable
 
 The non-negotiable: **full traces** — every model call, every tool call and result,

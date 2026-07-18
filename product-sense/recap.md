@@ -42,6 +42,28 @@ they *are* the user shows up everywhere from EMRs to developer tools. 🎯 *Take
 question "why is it done this way at all?" — the same humility that keeps an AI PM validating
 instead of trusting the model's (or their own) confidence.
 
+## Field notes from working PMs
+
+Three durable heuristics from PM-interview collections (Carl Shan's *Product Manager
+Handbook* interviews with PMs at Google, Twitter, Facebook, Yammer):
+
+**"What is the user's goal — and how hard does this product make it?"** (Jason Shah,
+Yammer). The two-question quality model that needs no dashboard: book a good place fast,
+get a car fast, find the answer fast. 🎯 *Takeaway:* before any metric review, walk the
+product as a user with a goal and count the friction — it's [motivation theory](./motivation-and-behaviour.md)
+compressed into a gut check.
+
+**High-quality products do one thing exceptionally well** (Avichal Garg, Facebook).
+Spread across many domains, you're replaceable; exceptional at one, you're a category.
+🎯 *Takeaway:* the same [focused-strategy](./creativity.md) discipline, stated as a
+quality bar — and doubly true for AI products, where the reliable frontier is narrow.
+
+**Product sense is built by dissection** (Garg again). Extreme attention to detail —
+dissect what makes something good and what makes something not good — is how
+pattern-matching intuition is trained. 🎯 *Takeaway:* pairs with the
+[talk-to-your-users](./cognitive-empathy.md) mechanism: exposure supplies the patterns,
+deliberate dissection compresses them into taste.
+
 ## Module recap
 
 | Lesson | The one idea | The decision it drives |

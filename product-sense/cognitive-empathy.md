@@ -88,6 +88,29 @@ production. Ways to do it:
 Some PMs write mini-narratives — *"Jane opens the app to do X, expects Y, sees Z, gets
 frustrated"* — because vividly imagining a task engages circuits close to actually doing it.
 
+## Many tactics, one strategy: talk to your users
+
+A working PM's version of everything above, from Twitter's Paul Rosania: there are many
+tactics for staying in tune with users, "but only one strategy: talk to your users."
+Three of his observations are worth keeping:
+
+- **Mediated research has a failure mode.** A dedicated research team is a luxury — and
+  a danger, because consuming results second-hand trains you to think of users as
+  *cohorts and percentages* instead of humans. Quantitative data is critical; so is
+  regularly watching one real person use your product.
+- **The problems you witness are realer than the ones you're told.** Watching people do
+  the simplest things — like repeatedly mistyping a password and concluding the *product*
+  is broken — surfaces legitimate user problems that no survey would ever report,
+  because the user doesn't know that's what happened.
+- **This is where intuition actually comes from.** At first the patterns you spot are
+  small ("people struggle with passwords"). Over time they generalize into heuristics
+  ("web forms can never be too simple"), the heuristics connect, and eventually you
+  predict user feedback before you hear it. Product sense isn't innate perception — it's
+  compressed exposure: patterns → heuristics → generalization, built by repetition.
+
+That last point is the practical answer to "can product sense be learned?" — yes, at
+the rate you accumulate direct user contact, and no faster.
+
 ## Actionable steps
 
 - **Daily perspective-taking** — spend a few minutes imagining one user interaction; jot the

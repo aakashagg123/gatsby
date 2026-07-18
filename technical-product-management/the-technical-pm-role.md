@@ -92,6 +92,17 @@ A useful mental model: the PM is the team's **API to the rest of the company**. 
 come to you in business language; you translate them into a prioritized, unambiguous
 contract; the team's work flows back out through you as narrative the company understands.
 
+## The buck stops with you
+
+One responsibility doesn't delegate: you are the **arbiter of completeness**. You were
+hired to notice incomplete work — your own and everyone else's — because nobody
+downstream necessarily knows the right questions to ask. The tell is familiar: you hit
+send on an answer already knowing the follow-up question you didn't address, and it
+arrives ten minutes later. As a one-off it's laziness; as a habit it's how A− products
+ship — you know in your heart it's an A−, nobody else calls it, and it launches as
+exactly that. Guard against it structurally: before anything leaves your hands, ask
+what question the recipient will ask next, and answer it in the same artifact.
+
 ## A week in the role
 
 Not a schedule — a portfolio. Strong technical PMs spend roughly:

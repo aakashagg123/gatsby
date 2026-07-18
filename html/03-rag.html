@@ -375,6 +375,10 @@ retrieval is <em>how the right information gets into the window</em>.</p>
 <li><strong>Strategies:</strong> fixed-size with <strong>overlap</strong> (simple, robust); <strong>structure-aware</strong>
   (split on headings/sections/functions — usually better because it respects meaning);
   <strong>semantic chunking</strong> (split where topic shifts).</li>
+<li><strong>Match chunk size to task shape:</strong> fixed-output tasks (extract a field, answer a
+  pointed question) tolerate <strong>large chunks</strong> — the model finds the needle; expansive-
+  output tasks (summarize, synthesize across sources) want <strong>smaller chunks</strong> so
+  retrieval can compose coverage from many places instead of drowning in a few.</li>
 <li><strong>Carry metadata</strong> on every chunk: source id, title, section, timestamp, tenant,
   permissions. Metadata powers <a href="#retrieval-evals">citations</a>, <a href="#freshness">freshness</a>,
   and <a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant filtering</a>.</li>
@@ -525,6 +529,11 @@ and <strong>citation quality</strong>. End-to-end answer quality alone hides whi
 chunking/embeddings/reranking vs. better prompting/grounding constraints. Without it,
 you're guessing. This mirrors the general <a href="04-evals-observability.html#evals">evals</a>
 discipline applied to retrieval.</p>
+<p>(Every long-context model release re-raises "is RAG dead?" The answer stays no — as
+long as knowledge is larger than the window, changes faster than retraining, or is
+permissioned per user, retrieval is how freshness, access control, and cost control
+happen. What the question <em>should</em> prompt is exactly this lesson: measure your
+retrieval separately, so you know what it's contributing.)</p>
 <h2>Retrieval metrics</h2>
 <p>You need labeled data: queries paired with the document(s)/chunk(s) that <em>should</em> be
 retrieved (a <a href="04-evals-observability.html#evals">golden set</a> for retrieval).</p>

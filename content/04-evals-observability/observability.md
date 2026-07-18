@@ -98,6 +98,25 @@ Detect by tracking these distributions over time and alerting on shifts — and 
   observed failures become [adversarial tests](./evals.md). Observability and evals are
   a cycle, not two silos.
 
+## Guardrails vs. evaluators
+
+Two production roles that get conflated because both "check outputs":
+
+- **Guardrails** run **inline**, per request, and can *block* — the output is checked
+  (PII, policy, format, obvious hallucination signals) before the user sees it. They
+  must be fast and cheap enough to sit on the critical path, and they fail closed for
+  the worst categories.
+- **Evaluators** run **offline** — in CI to gate changes, and over sampled production
+  traffic to measure quality trends. They can be slow, expensive, and thorough, because
+  no user is waiting.
+
+The distinction disciplines your architecture: an evaluator too slow or too expensive
+to run on every request is not a guardrail, and a guardrail lightweight enough for the
+hot path is usually too crude to be your quality measurement. Using an evaluator to
+auto-*correct* outputs in production (grade, then regenerate on failure) is possible
+but pays latency and cost per retry — reserve it for high-stakes surfaces, and log
+every correction as an eval case.
+
 ## Tradeoffs
 
 | Capture more… | Buys | Costs |

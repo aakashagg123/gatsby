@@ -37,7 +37,9 @@ product taste has to become **measurable**. The AI PM defines what "good" means 
 **eval**: a graded set of representative and adversarial cases the product must pass, run
 continuously so quality doesn't silently regress. Your product sense — knowing what a great
 output *feels* like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.
+optimize a number that doesn't map to value. And it's exercised trace by trace: reading real
+outputs and calling pass or fail, not reviewing an aggregate score someone else defined —
+the dashboard tells you *that* quality moved, the traces tell you *what good means here*.
 
 This is the same instinct as [measuring satisfaction](./motivation-and-behaviour.md), just
 moved upstream into the model's outputs. (The engineering of this — golden sets,

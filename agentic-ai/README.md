@@ -27,6 +27,7 @@ flowchart TB
     LLM <--> LOOP
   end
   subgraph KNOW["WHAT IT KNOWS — lesson 3"]
+    CENG["Context engineering<br/>curation, compaction, offloading"]
     CTX["Context window<br/>(working memory)"]
     RET["Retrieval / RAG"]
     MEM["Persistent memory<br/>(files, notes, profiles)"]
@@ -45,7 +46,10 @@ flowchart TB
     PROTO["Agent protocols<br/>(MCP, A2A)"]
   end
   subgraph TRUST["WHY IT'S TRUSTED — lessons 6–7"]
+    TRC["Traces<br/>(per-step record of every run)"]
+    ERR["Error analysis<br/>open coding → failure taxonomy"]
     EVAL["Evals & observability"]
+    GUARD["Guardrails<br/>(inline output checks)"]
     SEC["Security<br/>(prompt injection, least privilege)"]
     HITL["Human in the loop"]
   end
@@ -55,6 +59,7 @@ flowchart TB
     VP["Viable product"]
   end
   CTX --> LLM
+  CENG --> CTX
   RET --> CTX
   MEM --> CTX
   LOOP --> TOOLS
@@ -65,7 +70,11 @@ flowchart TB
   REFL --> LOOP
   LOOP --> MAS
   MAS --> PROTO
-  EVAL -->|"gates changes to"| LOOP
+  LOOP -->|"every run leaves"| TRC
+  TRC --> ERR
+  ERR -->|"failure modes become evaluators"| EVAL
+  EVAL -->|"gates changes to (offline)"| LOOP
+  GUARD -->|"blocks bad outputs (inline)"| LOOP
   SEC -->|"bounds"| TOOLS
   HITL -->|"approves risky acts"| SBX
   LOOP --> ECON
@@ -77,9 +86,10 @@ flowchart TB
 Read it in three passes. **The spine:** knowledge flows into the model, the model drives
 the loop, the loop acts through tools, and tool results flow back as new knowledge — that
 cycle *is* the agent. **The amplifiers:** planning and reflection make each cycle
-smarter; multi-agent patterns run many cycles at once. **The disciplines:** evals gate
-every change, security bounds every tool, a human approves the irreversible, and
-economics decides whether any of it is a business.
+smarter; multi-agent patterns run many cycles at once. **The disciplines:** every cycle
+leaves a trace, error analysis turns traces into evaluators, guardrails police the loop
+inline while evals gate it offline, security bounds every tool, a human approves the
+irreversible, and economics decides whether any of it is a business.
 
 ## The lessons
 
