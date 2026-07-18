@@ -389,6 +389,15 @@ times and report pass rates with spread — a single green run proves little.
 <strong>Environment drift:</strong> agent evals need stable sandboxed environments (seeded data,
 frozen APIs); an eval that flakes because the test environment changed teaches teams to
 ignore evals.</p>
+<p>And the multi-turn debugging discipline, since agent failures rarely live where they
+surface: annotate the <strong>first upstream failing step</strong>, not the visibly wrong final
+answer — twenty downstream turns of confusion usually trace to one bad retrieval or
+tool result. In multi-agent systems, log traces <em>per agent</em> but stitch them into one
+session view, or every incident becomes four transcripts and no story. For sessions
+with human handoffs, evaluate the agent's work <em>up to the handoff</em> (and whether it
+escalated at the right moment) rather than blaming it for what happened after. Above
+all: before building elaborate multi-step evaluators, try <strong>simplifying the workflow</strong>
+— a step that's hard to evaluate is often a step that shouldn't exist.</p>
 <h2>Observability: every run replayable</h2>
 <p>The non-negotiable: <strong>full traces</strong> — every model call, every tool call and result,
 every decision point, linked per run. Traces are how you debug ("why did it delete

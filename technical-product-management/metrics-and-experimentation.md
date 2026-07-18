@@ -80,7 +80,12 @@ An A/B test randomly splits users, shows each group a variant, and compares. The
 mechanics are a solved problem; the discipline isn't:
 
 - **Hypothesis first, in writing** — "we believe moving X will lift Y by ~Z% because…"
-  Written *before* launch, because post-hoc, any result can be narrated into a win.
+  Written *before* launch, because post-hoc, any result can be narrated into a win. A
+  useful companion question: *"if this were wildly successful, what would that look
+  like?"* — answered up front, it sets the bar a result has to clear. And name whether
+  the change is an **experiment** (a bet that might die) or an **incremental
+  improvement** (a step that should compound); they're judged by different standards,
+  and confusing them narrates failures into learnings and learnings into failures.
 - **Power before launch** — small effects need surprising amounts of traffic. If the
   calculator says eight months to significance, the honest answer is "this isn't
   A/B-testable here" — not "we'll run it two weeks and squint."

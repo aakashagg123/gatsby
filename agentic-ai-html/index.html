@@ -337,6 +337,7 @@ module hangs off this picture:</p>
     LLM &lt;--&gt; LOOP
   end
   subgraph KNOW[&quot;WHAT IT KNOWS — lesson 3&quot;]
+    CENG[&quot;Context engineering&lt;br/&gt;curation, compaction, offloading&quot;]
     CTX[&quot;Context window&lt;br/&gt;(working memory)&quot;]
     RET[&quot;Retrieval / RAG&quot;]
     MEM[&quot;Persistent memory&lt;br/&gt;(files, notes, profiles)&quot;]
@@ -355,7 +356,10 @@ module hangs off this picture:</p>
     PROTO[&quot;Agent protocols&lt;br/&gt;(MCP, A2A)&quot;]
   end
   subgraph TRUST[&quot;WHY IT&#x27;S TRUSTED — lessons 6–7&quot;]
+    TRC[&quot;Traces&lt;br/&gt;(per-step record of every run)&quot;]
+    ERR[&quot;Error analysis&lt;br/&gt;open coding → failure taxonomy&quot;]
     EVAL[&quot;Evals &amp; observability&quot;]
+    GUARD[&quot;Guardrails&lt;br/&gt;(inline output checks)&quot;]
     SEC[&quot;Security&lt;br/&gt;(prompt injection, least privilege)&quot;]
     HITL[&quot;Human in the loop&quot;]
   end
@@ -365,6 +369,7 @@ module hangs off this picture:</p>
     VP[&quot;Viable product&quot;]
   end
   CTX --&gt; LLM
+  CENG --&gt; CTX
   RET --&gt; CTX
   MEM --&gt; CTX
   LOOP --&gt; TOOLS
@@ -375,7 +380,11 @@ module hangs off this picture:</p>
   REFL --&gt; LOOP
   LOOP --&gt; MAS
   MAS --&gt; PROTO
-  EVAL --&gt;|&quot;gates changes to&quot;| LOOP
+  LOOP --&gt;|&quot;every run leaves&quot;| TRC
+  TRC --&gt; ERR
+  ERR --&gt;|&quot;failure modes become evaluators&quot;| EVAL
+  EVAL --&gt;|&quot;gates changes to (offline)&quot;| LOOP
+  GUARD --&gt;|&quot;blocks bad outputs (inline)&quot;| LOOP
   SEC --&gt;|&quot;bounds&quot;| TOOLS
   HITL --&gt;|&quot;approves risky acts&quot;| SBX
   LOOP --&gt; ECON
@@ -385,9 +394,10 @@ module hangs off this picture:</p>
 <p>Read it in three passes. <strong>The spine:</strong> knowledge flows into the model, the model drives
 the loop, the loop acts through tools, and tool results flow back as new knowledge — that
 cycle <em>is</em> the agent. <strong>The amplifiers:</strong> planning and reflection make each cycle
-smarter; multi-agent patterns run many cycles at once. <strong>The disciplines:</strong> evals gate
-every change, security bounds every tool, a human approves the irreversible, and
-economics decides whether any of it is a business.</p>
+smarter; multi-agent patterns run many cycles at once. <strong>The disciplines:</strong> every cycle
+leaves a trace, error analysis turns traces into evaluators, guardrails police the loop
+inline while evals gate it offline, security bounds every tool, a human approves the
+irreversible, and economics decides whether any of it is a business.</p>
 <h2>The lessons</h2>
 <ul>
 <li><a href="what-is-an-agent.html"><strong>What is an agent?</strong></a> — the loop, the autonomy spectrum from

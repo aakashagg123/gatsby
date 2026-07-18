@@ -505,6 +505,28 @@ context engineering optimizes three things at once:</p>
 <li><strong>Signal-to-noise</strong> — is it <em>crowded out</em> by irrelevant tokens?</li>
 <li><strong>Position &amp; format</strong> — is it placed and shaped so the model actually uses it?</li>
 </ol>
+<h2>From data-first to context-first</h2>
+<p>Two era-framings from the PM side of this discipline are worth internalizing. First:
+the data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
+<strong>context-first</strong> one — the question is no longer <em>"what data do we have?"</em> but <em>"what
+context does this decision need to be meaningful?"</em> Data is inert until it's framed;
+the same model with the same data behaves entirely differently depending on what makes
+it into the window, in what form.</p>
+<p>Second: <strong>prompt engineering alone is stagecraft, not architecture.</strong> Clever wording
+dazzles in a demo and fails as a system, for three structural reasons:</p>
+<ul>
+<li><strong>Fragility</strong> — a prompt tuned for "how do I request a refund?" falters on "can I
+  get my money back if I cancel mid-cycle?"; one phrasing shift collapses the trick.</li>
+<li><strong>No memory</strong> — prompts operate in isolation; without engineered context the system
+  contradicts itself across sessions (the assistant that recommends the SMB market on
+  Monday and enterprise-only on Tuesday, because nothing carried the strategy forward).</li>
+<li><strong>Operational debt</strong> — every new use case demands fresh tinkering, until the team
+  maintains a library of brittle bespoke prompts instead of one adaptive system.</li>
+</ul>
+<p>The enterprise bar is higher than any single output: the context pipeline has to carry
+what the user is <em>entitled to</em>, what policy dictates, and when to escalate — CRM data,
+legal guardrails, strategic goals — assembled systematically per request. That
+pipeline is this lesson's subject; the prompt is just its last mile.</p>
 <h2>Why more tokens is not more quality</h2>
 <ul>
 <li><strong>Distraction.</strong> Irrelevant retrieved chunks pull attention away from the answer.

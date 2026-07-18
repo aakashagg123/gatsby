@@ -34,6 +34,31 @@ context engineering optimizes three things at once:
 2. **Signal-to-noise** — is it *crowded out* by irrelevant tokens?
 3. **Position & format** — is it placed and shaped so the model actually uses it?
 
+## From data-first to context-first
+
+Two era-framings from the PM side of this discipline are worth internalizing. First:
+the data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
+**context-first** one — the question is no longer *"what data do we have?"* but *"what
+context does this decision need to be meaningful?"* Data is inert until it's framed;
+the same model with the same data behaves entirely differently depending on what makes
+it into the window, in what form.
+
+Second: **prompt engineering alone is stagecraft, not architecture.** Clever wording
+dazzles in a demo and fails as a system, for three structural reasons:
+
+- **Fragility** — a prompt tuned for "how do I request a refund?" falters on "can I
+  get my money back if I cancel mid-cycle?"; one phrasing shift collapses the trick.
+- **No memory** — prompts operate in isolation; without engineered context the system
+  contradicts itself across sessions (the assistant that recommends the SMB market on
+  Monday and enterprise-only on Tuesday, because nothing carried the strategy forward).
+- **Operational debt** — every new use case demands fresh tinkering, until the team
+  maintains a library of brittle bespoke prompts instead of one adaptive system.
+
+The enterprise bar is higher than any single output: the context pipeline has to carry
+what the user is *entitled to*, what policy dictates, and when to escalate — CRM data,
+legal guardrails, strategic goals — assembled systematically per request. That
+pipeline is this lesson's subject; the prompt is just its last mile.
+
 ## Why more tokens is not more quality
 
 - **Distraction.** Irrelevant retrieved chunks pull attention away from the answer.

@@ -34,6 +34,27 @@ so you shift from exact-match to **graded quality over a representative distribu
 
 Evals turn "it feels better" into a number you can gate on.
 
+## Error analysis — look at your traces first
+
+Before choosing metrics or building graders, practice **error analysis** — the
+discipline (borrowed from qualitative research) that turns raw production behaviour
+into an eval suite that measures *your* failures, not generic ones:
+
+1. **Create a dataset** — pull real traces: random samples plus anything flagged by
+   users, cheap screens, or your own suspicion.
+2. **Open coding** — read traces one by one and label failures free-form, in your own
+   words ("ignored the date constraint," "cited the wrong doc"). No taxonomy yet.
+3. **Axial coding** — cluster those labels into a failure taxonomy: the five or ten
+   recurring modes that actually matter.
+4. **Iterate** — build automated evaluators for the *recurring, high-impact* modes only,
+   then re-run the analysis on fresh production traces regularly; the taxonomy rots as
+   users find new ways to use (and break) the product.
+
+This is also the minimum viable eval setup: a spreadsheet of traces, pass/fail labels,
+and notes beats a metrics dashboard you haven't validated. Most teams over-invest in
+scoring infrastructure and under-invest in the hours of reading traces that tell you
+what's worth scoring.
+
 ## Golden sets — the backbone
 
 A golden set is a curated, **version-controlled** collection of inputs paired with
@@ -97,6 +118,24 @@ The anchor everything else calibrates to.
   blind/randomized presentation to avoid bias.
 - Expensive and slow, so spend it where it matters most and let calibrated judges scale
   the rest.
+
+## Grading choices that keep evals honest
+
+- **Binary beats Likert.** Prefer pass/fail judgments over 1–5 scales: forced decisions
+  are more consistent across annotators, trivially aggregable, and map directly to a
+  launch bar. A 3.7 average hides exactly the disagreement a pass/fail split exposes.
+- **Skip generic similarity metrics.** BERTScore, ROUGE, and off-the-shelf "quality"
+  metric packs correlate poorly with what *your* users consider good; a custom evaluator
+  per failure mode (from your error analysis) is worth a dozen ready-made scores.
+- **Don't automate everything.** An evaluator per failure mode you've ever seen is
+  maintenance debt; automate the recurring, high-impact modes and keep the long tail in
+  periodic human review.
+- **Annotation is product judgment — keep it in-house.** Outsourced labelers apply
+  *their* judgment of good, not yours, and the learning (what's failing and why)
+  leaves with the vendor. PM and eng should label traces together — disagreements
+  between them are requirement discoveries, not noise. A minimal custom review
+  interface (render the trace intelligently, keyboard shortcuts, cluster/filter) pays
+  for itself in review throughput.
 
 ## How the layers fit
 

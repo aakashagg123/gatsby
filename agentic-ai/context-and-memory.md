@@ -99,6 +99,16 @@ reliably fails. The working techniques:
   system prompt, which survives compaction; don't rely on the user's turn-3 remark
   staying visible at turn 60.
 
+At enterprise scale this discipline is the difference between a toy and a product. A
+cleverly prompted assistant answers one question well; a product operates across a
+canvas of entitlements, policies, compliance frameworks, and strategy — and that
+context has to arrive through a *pipeline*, per request, not through whatever survived
+the conversation. The tell that the pipeline is missing: inconsistency across sessions,
+like the roadmap assistant that recommends entering the SMB market on Monday and
+enterprise-only on Tuesday because nothing carried the strategic context forward. When
+users report an agent as "unreliable," check what its window actually contained on each
+occasion before blaming the model.
+
 ## What "the agent remembers me" really means
 
 Product memory is three separate features wearing one name — scope them separately:

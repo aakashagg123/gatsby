@@ -342,7 +342,9 @@ product taste has to become <strong>measurable</strong>. The AI PM defines what 
 <strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
 continuously so quality doesn't silently regress. Your product sense — knowing what a great
 output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value.</p>
+optimize a number that doesn't map to value. And it's exercised trace by trace: reading real
+outputs and calling pass or fail, not reviewing an aggregate score someone else defined —
+the dashboard tells you <em>that</em> quality moved, the traces tell you <em>what good means here</em>.</p>
 <p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
 moved upstream into the model's outputs. (The engineering of this — golden sets,
 LLM-as-judge, regression gates — is the subject of the AI Engineering track's

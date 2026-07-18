@@ -374,6 +374,25 @@ so you shift from exact-match to <strong>graded quality over a representative di
   (model or human), and track <em>aggregate</em> scores and <em>regressions</em>, not single outputs.</li>
 </ul>
 <p>Evals turn "it feels better" into a number you can gate on.</p>
+<h2>Error analysis — look at your traces first</h2>
+<p>Before choosing metrics or building graders, practice <strong>error analysis</strong> — the
+discipline (borrowed from qualitative research) that turns raw production behaviour
+into an eval suite that measures <em>your</em> failures, not generic ones:</p>
+<ol>
+<li><strong>Create a dataset</strong> — pull real traces: random samples plus anything flagged by
+   users, cheap screens, or your own suspicion.</li>
+<li><strong>Open coding</strong> — read traces one by one and label failures free-form, in your own
+   words ("ignored the date constraint," "cited the wrong doc"). No taxonomy yet.</li>
+<li><strong>Axial coding</strong> — cluster those labels into a failure taxonomy: the five or ten
+   recurring modes that actually matter.</li>
+<li><strong>Iterate</strong> — build automated evaluators for the <em>recurring, high-impact</em> modes only,
+   then re-run the analysis on fresh production traces regularly; the taxonomy rots as
+   users find new ways to use (and break) the product.</li>
+</ol>
+<p>This is also the minimum viable eval setup: a spreadsheet of traces, pass/fail labels,
+and notes beats a metrics dashboard you haven't validated. Most teams over-invest in
+scoring infrastructure and under-invest in the hours of reading traces that tell you
+what's worth scoring.</p>
 <h2>Golden sets — the backbone</h2>
 <p>A golden set is a curated, <strong>version-controlled</strong> collection of inputs paired with
 known-good outputs or acceptance criteria.</p>
@@ -437,6 +456,24 @@ style). Powerful but it has failure modes you must control:</p>
   blind/randomized presentation to avoid bias.</li>
 <li>Expensive and slow, so spend it where it matters most and let calibrated judges scale
   the rest.</li>
+</ul>
+<h2>Grading choices that keep evals honest</h2>
+<ul>
+<li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales: forced decisions
+  are more consistent across annotators, trivially aggregable, and map directly to a
+  launch bar. A 3.7 average hides exactly the disagreement a pass/fail split exposes.</li>
+<li><strong>Skip generic similarity metrics.</strong> BERTScore, ROUGE, and off-the-shelf "quality"
+  metric packs correlate poorly with what <em>your</em> users consider good; a custom evaluator
+  per failure mode (from your error analysis) is worth a dozen ready-made scores.</li>
+<li><strong>Don't automate everything.</strong> An evaluator per failure mode you've ever seen is
+  maintenance debt; automate the recurring, high-impact modes and keep the long tail in
+  periodic human review.</li>
+<li><strong>Annotation is product judgment — keep it in-house.</strong> Outsourced labelers apply
+  <em>their</em> judgment of good, not yours, and the learning (what's failing and why)
+  leaves with the vendor. PM and eng should label traces together — disagreements
+  between them are requirement discoveries, not noise. A minimal custom review
+  interface (render the trace intelligently, keyboard shortcuts, cluster/filter) pays
+  for itself in review throughput.</li>
 </ul>
 <h2>How the layers fit</h2>
 <pre><code>human evals ──calibrate──▶ LLM-as-judge ──scores──▶ golden set ──runs in──▶ regression CI gate
@@ -594,6 +631,23 @@ Detect by tracking these distributions over time and alerting on shifts — and 
   observed failures become <a href="#evals">adversarial tests</a>. Observability and evals are
   a cycle, not two silos.</li>
 </ul>
+<h2>Guardrails vs. evaluators</h2>
+<p>Two production roles that get conflated because both "check outputs":</p>
+<ul>
+<li><strong>Guardrails</strong> run <strong>inline</strong>, per request, and can <em>block</em> — the output is checked
+  (PII, policy, format, obvious hallucination signals) before the user sees it. They
+  must be fast and cheap enough to sit on the critical path, and they fail closed for
+  the worst categories.</li>
+<li><strong>Evaluators</strong> run <strong>offline</strong> — in CI to gate changes, and over sampled production
+  traffic to measure quality trends. They can be slow, expensive, and thorough, because
+  no user is waiting.</li>
+</ul>
+<p>The distinction disciplines your architecture: an evaluator too slow or too expensive
+to run on every request is not a guardrail, and a guardrail lightweight enough for the
+hot path is usually too crude to be your quality measurement. Using an evaluator to
+auto-<em>correct</em> outputs in production (grade, then regenerate on failure) is possible
+but pays latency and cost per retry — reserve it for high-stakes surfaces, and log
+every correction as an eval case.</p>
 <h2>Tradeoffs</h2>
 <table>
 <thead>

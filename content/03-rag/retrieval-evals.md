@@ -35,6 +35,12 @@ chunking/embeddings/reranking vs. better prompting/grounding constraints. Withou
 you're guessing. This mirrors the general [evals](../04-evals-observability/evals.md)
 discipline applied to retrieval.
 
+(Every long-context model release re-raises "is RAG dead?" The answer stays no — as
+long as knowledge is larger than the window, changes faster than retraining, or is
+permissioned per user, retrieval is how freshness, access control, and cost control
+happen. What the question *should* prompt is exactly this lesson: measure your
+retrieval separately, so you know what it's contributing.)
+
 ## Retrieval metrics
 
 You need labeled data: queries paired with the document(s)/chunk(s) that *should* be
