@@ -102,3 +102,4 @@ with a bad tail is a common, invisible failure.
 - [How systems are built](./how-systems-are-built.md)
 - [Reliability & failure](./reliability-and-failure.md)
 - [Technical sense for AI systems](./technical-sense-for-ai.md)
+- [Agentic AI: unit economics](../agentic-ai/agentic-ai-as-a-product.md) — latency and cost as the agent's business model

@@ -153,3 +153,4 @@ ask what the agent would *see* if it were wrong.
 - [What is an agent?](./what-is-an-agent.md)
 - [Reliability & evals](./reliability-and-evals.md)
 - [Multi-agent systems & protocols](./multi-agent-and-protocols.md)
+- [First principles: the method](../first-principles/the-method.md) — the human version of decompose, challenge, rebuild

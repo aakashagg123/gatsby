@@ -327,6 +327,19 @@ discovered, not designed), harder to launch (a model can regress silently), and 
 measure (the interesting failures don't throw errors). Every lesson here teaches the general
 practice first, then shows exactly what changes when there's a model in the build. <strong>Each
 lesson ships a diagram</strong> you can redraw on a whiteboard.</p>
+<h2>The knowledge graph</h2>
+<p>The craft is a loop that runs every quarter — with the role at the center and the AI
+capstone bending every station:</p>
+<pre class="mermaid">flowchart TB
+  ROLE[&quot;THE ROLE&lt;br/&gt;context · clarity · trust&lt;br/&gt;(the team&#x27;s API to the company)&quot;]
+  DISC[&quot;Discovery&lt;br/&gt;find the right bet&quot;] --&gt; SPEC[&quot;Specs, PRDs &amp; RFCs&lt;br/&gt;make it unambiguous&quot;]
+  SPEC --&gt; PRI[&quot;Prioritization &amp; roadmaps&lt;br/&gt;sequence the bets&quot;]
+  PRI --&gt; ENG[&quot;Working with engineering&lt;br/&gt;build without friction&quot;]
+  ENG --&gt; MET[&quot;Metrics &amp; experimentation&lt;br/&gt;did it work?&quot;]
+  MET --&gt; LAUNCH[&quot;Launches, rollouts &amp; migrations&lt;br/&gt;ship without breaking trust&quot;]
+  LAUNCH --&gt;|&quot;production teaches&quot;| DISC
+  ROLE -.-&gt; DISC &amp; SPEC &amp; PRI &amp; ENG &amp; MET &amp; LAUNCH
+  AI[&quot;THE AI CAPSTONE — eval-driven development:&lt;br/&gt;the eval suite is the spec, the gate, and the flywheel&quot;] -.-&gt;|&quot;bends every station&quot;| SPEC &amp; MET &amp; LAUNCH</pre>
 <ul>
 <li><a href="the-technical-pm-role.html"><strong>The technical PM role</strong></a> — what a technical PM actually
   owns, the PM ↔ TPM ↔ EM spectrum, and where your leverage comes from.</li>
@@ -352,4 +365,11 @@ when the product has a model in it — and a diagram to make it concrete.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="the-technical-pm-role.html"><span class="card-num">01</span><h3>The technical PM role</h3><span class="card-go">Read lesson →</span></a><a class="card" href="discovery-to-delivery.html"><span class="card-num">02</span><h3>Discovery to delivery</h3><span class="card-go">Read lesson →</span></a><a class="card" href="specs-prds-and-rfcs.html"><span class="card-num">03</span><h3>Specs, PRDs &amp; RFCs</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prioritization-and-roadmaps.html"><span class="card-num">04</span><h3>Prioritization &amp; roadmaps</h3><span class="card-go">Read lesson →</span></a><a class="card" href="working-with-engineering.html"><span class="card-num">05</span><h3>Working with engineering</h3><span class="card-go">Read lesson →</span></a><a class="card" href="metrics-and-experimentation.html"><span class="card-num">06</span><h3>Metrics &amp; experimentation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="launches-rollouts-and-migrations.html"><span class="card-num">07</span><h3>Launches, rollouts &amp; migrations</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tpm-for-ai-products.html"><span class="card-num">08</span><h3>Technical product management for AI</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+  </main><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

@@ -31,6 +31,18 @@ Range isn't dilettantism — it's a portfolio of fundamentals that
 
 ## The specialization trap — and why range is rising
 
+```mermaid
+flowchart LR
+  subgraph T["T-shaped"]
+    TB1["Broad base:<br/>many fields, working level"] --- TS1["One deep spike"]
+  end
+  subgraph COMB["Comb-shaped"]
+    CB1["Broad base"] --- CS1["Spike 1"] & CS2["Spike 2"] & CS3["Spike 3"]
+  end
+  T -->|"deliberate second (third…) spike"| COMB
+  COMB --> TR["Transfer: ideas move<br/>between spikes — the polymath edge"]
+```
+
 The 20th century bet everything on specialization, and for good reason: deep expertise
 drove the bulk of scientific and industrial progress. But specialization has a failure mode.
 In David Epstein's *Range*, the recurring finding is that in **"wicked" environments** —
@@ -145,3 +157,4 @@ one discipline's fundamentals to bottom out in.
 - [Learning how to learn](./learning-how-to-learn.md)
 - [Traps & limits](./traps-and-limits.md)
 - [What first-principles thinking actually is](./what-is-first-principles.md)
+- [Product sense: domain expertise](../product-sense/domain-expertise.md) — one spike of the comb, built deliberately

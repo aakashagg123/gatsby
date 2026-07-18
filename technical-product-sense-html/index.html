@@ -325,6 +325,20 @@ is a distributed system with a probabilistic component bolted into it — latenc
 failure, and data flow are now <em>product</em> decisions, not back-end details. This module
 builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
 you can redraw on a whiteboard.</p>
+<h2>The knowledge graph</h2>
+<p>A system is a request path, the contracts and data it moves through, and the forces that
+degrade it — with the AI capstone bolting a probabilistic component into the middle:</p>
+<pre class="mermaid">flowchart TB
+  REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
+  REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
+  subgraph FORCES[&quot;THE FORCES THAT DEGRADE IT&quot;]
+    LAT[&quot;Latency &amp; scale&quot;]
+    REL[&quot;Reliability &amp; failure&quot;]
+    DEBT[&quot;Tech debt &amp; estimation&quot;]
+  end
+  REQ --- FORCES
+  API &amp; DATA &amp; FORCES --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;a model in the request path:&lt;br/&gt;cost &amp; latency as UX, evals,&lt;br/&gt;observability, tenant boundaries&quot;]
+  AI --&gt; CONV[&quot;Credible technical conversations&lt;br/&gt;and better product calls&quot;]</pre>
 <ul>
 <li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
   the path a request actually travels.</li>
@@ -347,4 +361,11 @@ system has a model in it — and a diagram to make it concrete.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">07</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+  </main><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

@@ -31,6 +31,14 @@ strategic guardrails.
 
 ## Strategic thinking
 
+```mermaid
+flowchart TB
+  ST["STRATEGY — where to play<br/>positioning · segmentation · differentiation"] --> GR["Focused guardrails:<br/>what we will and won't do"]
+  GR --> CE["EXECUTION — novel solutions inside the rails<br/>brainstorms · sprints · SCAMPER · analogy"]
+  CE --> BETS["Focused creative bets"]
+  CE -.->|"discoveries reshape the strategy"| ST
+```
+
 Strategic creativity means cleverly defining *who* the product is for, *what* unique value
 it offers, and *how* it wins.
 
@@ -122,3 +130,4 @@ Not every idea will be good — the point is to generate range, then filter agai
 - [Cognitive empathy](./cognitive-empathy.md)
 - [Communication](./communication.md)
 - [Domain expertise](./domain-expertise.md)
+- [First principles: the method](../first-principles/the-method.md) — deconstruction as the sharpest ideation technique

@@ -389,6 +389,13 @@ confident nonsense. The guard is the same one <a href="becoming-a-polymath.html"
 on — match on structure, and always carry each model's <strong>failure conditions</strong>
 (<a href="mental-models-latticework.html">map ≠ territory</a>).</p>
 <h2>Knowing which tool the moment deserves</h2>
+<pre class="mermaid">flowchart TB
+  Q[&quot;Decision in front of you&quot;] --&gt; S{&quot;Stakes high enough to&lt;br/&gt;repay slow reasoning?&quot;}
+  S --&gt;|&quot;no&quot;| AN[&quot;Use analogy / convention&lt;br/&gt;(fast, usually right)&quot;]
+  S --&gt;|&quot;yes&quot;| C{&quot;Reason to suspect the&lt;br/&gt;consensus answer is wrong&lt;br/&gt;or doesn&#x27;t fit your case?&quot;}
+  C --&gt;|&quot;no&quot;| AN2[&quot;Borrow the solved solution —&lt;br/&gt;respect accumulated expertise&quot;]
+  C --&gt;|&quot;yes&quot;| FP[&quot;First principles:&lt;br/&gt;deconstruct · challenge · reconstruct&quot;]
+  FP --&gt; G[&quot;Guard the exits:&lt;br/&gt;bias check · time-box ·&lt;br/&gt;&#x27;has someone solved this?&#x27;&quot;]</pre>
 <p>The meta-skill of this whole module is <strong>method selection</strong> — and it's a tradeoff, not a
 loyalty. A rough decision aid:</p>
 <table>
@@ -455,4 +462,11 @@ everywhere is as naïve as never using it.</p>
 <li><a href="../content/06-strategy-tradeoffs/README.md">Strategy &amp; tradeoffs</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="learning-how-to-learn.html"><span class="lbl">← Previous</span><span class="ttl">Learning how to learn</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

@@ -346,10 +346,35 @@ between them.</p>
 <p>The two halves reinforce each other: first-principles thinking is the <em>method</em>, and a
 broad latticework of models is the <em>raw material</em> the method works on. A method with no
 material reasons in a vacuum; material with no method just collects trivia.</p>
+<h2>The knowledge graph</h2>
+<pre class="mermaid">flowchart TB
+  subgraph METHOD[&quot;THE METHOD&quot;]
+    LOOP[&quot;Deconstruct → Challenge → Reconstruct&quot;]
+    WHEN[&quot;When to use it —&lt;br/&gt;vs. reasoning by analogy&quot;]
+  end
+  subgraph MATERIAL[&quot;THE MATERIAL&quot;]
+    LAT[&quot;Latticework of mental models&lt;br/&gt;(many disciplines)&quot;]
+    POLY[&quot;Polymath range&lt;br/&gt;(T → comb-shaped)&quot;]
+    LEARN[&quot;Learning engine&lt;br/&gt;retrieval · spacing · Feynman&quot;]
+  end
+  LEARN --&gt; LAT
+  LEARN --&gt; POLY
+  POLY --&gt;|&quot;supplies models&quot;| LAT
+  LAT --&gt;|&quot;names the components&quot;| LOOP
+  WHEN --&gt; LOOP
+  TRAPS[&quot;Traps &amp; limits&lt;br/&gt;(the safety rail)&quot;] -.-&gt;|&quot;bounds&quot;| LOOP
+  LOOP --&gt; OUT[&quot;Decisions traced to bedrock —&lt;br/&gt;and the occasional consensus-beating move&quot;]</pre>
 <p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a> — how first-principles
 reasoning showed up in real breakthroughs and real failures, plus the key takeaways.</p>
 <hr /></div>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-first-principles.html"><span class="card-num">01</span><h3>What first-principles thinking actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-method.html"><span class="card-num">02</span><h3>The method: deconstruct, challenge, reconstruct</h3><span class="card-go">Read lesson →</span></a><a class="card" href="mental-models-latticework.html"><span class="card-num">03</span><h3>A latticework of mental models</h3><span class="card-go">Read lesson →</span></a><a class="card" href="becoming-a-polymath.html"><span class="card-num">04</span><h3>Becoming a polymath</h3><span class="card-go">Read lesson →</span></a><a class="card" href="learning-how-to-learn.html"><span class="card-num">05</span><h3>Learning how to learn</h3><span class="card-go">Read lesson →</span></a><a class="card" href="traps-and-limits.html"><span class="card-num">06</span><h3>Traps &amp; limits</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+  </main><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

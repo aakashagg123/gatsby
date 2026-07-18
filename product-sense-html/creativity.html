@@ -336,6 +336,11 @@ our product the one users choose?"</em></p>
 a segment that cares.</p>
 </blockquote>
 <h2>Strategic thinking</h2>
+<pre class="mermaid">flowchart TB
+  ST[&quot;STRATEGY — where to play&lt;br/&gt;positioning · segmentation · differentiation&quot;] --&gt; GR[&quot;Focused guardrails:&lt;br/&gt;what we will and won&#x27;t do&quot;]
+  GR --&gt; CE[&quot;EXECUTION — novel solutions inside the rails&lt;br/&gt;brainstorms · sprints · SCAMPER · analogy&quot;]
+  CE --&gt; BETS[&quot;Focused creative bets&quot;]
+  CE -.-&gt;|&quot;discoveries reshape the strategy&quot;| ST</pre>
 <p>Strategic creativity means cleverly defining <em>who</em> the product is for, <em>what</em> unique value
 it offers, and <em>how</em> it wins.</p>
 <ul>
@@ -443,6 +448,14 @@ each lens seeds ideas no silo reaches alone.</p>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="communication.html">Communication</a></li>
 <li><a href="domain-expertise.html">Domain expertise</a></li>
+<li><a href="../first-principles/the-method.html">First principles: the method</a> — deconstruction as the sharpest ideation technique</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="cognitive-empathy.html"><span class="lbl">← Previous</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a><a class="navcard next" href="communication.html"><span class="lbl">→ Next</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

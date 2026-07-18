@@ -335,14 +335,13 @@ inherit and never re-check?"</em></p>
 flourish people attach to whatever they already wanted to do.</p>
 </blockquote>
 <h2>The loop</h2>
-<pre><code>        ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-   ─────▶  DECONSTRUCT  ─────▶   CHALLENGE   ─────▶ RECONSTRUCT   ─────▶ answer
-        │  break into  │     │  test each   │     │  rebuild from│
-        │  claims      │     │  assumption  │     │  what's true │
-        └──────────────┘     └──────────────┘     └──────────────┘
-                                     │                    │
-                                     └────── iterate ◀────┘
-</code></pre>
+<pre class="mermaid">flowchart LR
+  D[&quot;1 · DECONSTRUCT&lt;br/&gt;split into component claims&quot;] --&gt; C[&quot;2 · CHALLENGE&lt;br/&gt;test each claim:&lt;br/&gt;bedrock or inherited?&quot;]
+  C --&gt; R[&quot;3 · RECONSTRUCT&lt;br/&gt;rebuild from bedrock only&quot;]
+  R -.-&gt;|&quot;new constraints surface&quot;| D
+  SQ[&quot;Socratic questioning&quot;] --&gt; C
+  W5[&quot;The 5 Whys&quot;] --&gt; C
+  FE[&quot;Fermi estimation&quot;] --&gt; R</pre>
 <p>It is a <em>loop</em>, not a line: reconstruction usually exposes a claim you mislabeled, sending
 you back to challenge it again.</p>
 <h3>1 · Deconstruct — break the problem into claims</h3>
@@ -477,6 +476,14 @@ lesson.</p>
 <li><a href="mental-models-latticework.html">A latticework of mental models</a></li>
 <li><a href="traps-and-limits.html">Traps &amp; limits</a></li>
 <li><a href="../content/06-strategy-tradeoffs/production-failure-modes.md">Production failure modes</a></li>
+<li><a href="../agentic-ai/planning-and-reasoning.html">Agentic AI: planning &amp; reasoning</a> — the same decompose-and-verify moves, run by a model</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-is-first-principles.html"><span class="lbl">← Previous</span><span class="ttl">What first-principles thinking actually is</span></a><a class="navcard next" href="mental-models-latticework.html"><span class="lbl">→ Next</span><span class="ttl">A latticework of mental models</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

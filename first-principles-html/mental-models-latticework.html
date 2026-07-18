@@ -336,6 +336,13 @@ problem, and what did it learn?"</em></p>
 ago — and you misread situations your single toolkit has no name for.</p>
 </blockquote>
 <h2>Why one discipline isn't enough</h2>
+<pre class="mermaid">flowchart TB
+  P[&quot;New problem:&lt;br/&gt;&#x27;our growth stalled&#x27;&quot;]
+  P --&gt; M1[&quot;Feedback loops&lt;br/&gt;(biology / control theory)&quot;]
+  P --&gt; M2[&quot;Bottlenecks&lt;br/&gt;(operations)&quot;]
+  P --&gt; M3[&quot;Incentives&lt;br/&gt;(economics)&quot;]
+  P --&gt; M4[&quot;Second-order effects&lt;br/&gt;(systems thinking)&quot;]
+  M1 &amp; M2 &amp; M3 &amp; M4 --&gt; DX[&quot;Rich decomposition —&lt;br/&gt;each model checks the others&#x27; blind spots&quot;]</pre>
 <p>Munger's framing, from his talk <em>The Psychology of Human Misjudgment</em> and many since:</p>
 <blockquote>
 <p>"You've got to have models in your head, and you've got to array your experience — both
@@ -509,4 +516,11 @@ Same problem, far richer decomposition — and that's exactly what the
 <li><a href="../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md">Strategy &amp; tradeoffs</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="the-method.html"><span class="lbl">← Previous</span><span class="ttl">The method: deconstruct, challenge, reconstruct</span></a><a class="navcard next" href="becoming-a-polymath.html"><span class="lbl">→ Next</span><span class="ttl">Becoming a polymath</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

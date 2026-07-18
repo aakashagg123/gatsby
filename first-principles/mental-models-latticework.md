@@ -31,6 +31,16 @@ never seen, because some field you borrowed from has already met its cousin.
 
 ## Why one discipline isn't enough
 
+```mermaid
+flowchart TB
+  P["New problem:<br/>'our growth stalled'"]
+  P --> M1["Feedback loops<br/>(biology / control theory)"]
+  P --> M2["Bottlenecks<br/>(operations)"]
+  P --> M3["Incentives<br/>(economics)"]
+  P --> M4["Second-order effects<br/>(systems thinking)"]
+  M1 & M2 & M3 & M4 --> DX["Rich decomposition —<br/>each model checks the others' blind spots"]
+```
+
 Munger's framing, from his talk *The Psychology of Human Misjudgment* and many since:
 
 > "You've got to have models in your head, and you've got to array your experience — both

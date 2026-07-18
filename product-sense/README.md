@@ -12,6 +12,22 @@ This module adapts a playbook for mid-career PMs into a hands-on course, organiz
 the five areas that compound into strong product sense — then adds a sixth lesson that
 ports all of it into the specifics of building AI products.
 
+## The knowledge graph
+
+Five habits feed one judgment, and the judgment gets stress-tested by a new material:
+
+```mermaid
+flowchart TB
+  MOT["Motivation & behaviour<br/>B = M × A × T"] --> PJ["PRODUCT JUDGMENT<br/>what to build, for whom, why"]
+  EMP["Cognitive empathy<br/>simulate, then verify"] --> PJ
+  CRE["Creativity<br/>strategy guards execution"] --> PJ
+  COM["Communication<br/>judgment that can move a team"] --> PJ
+  DOM["Domain expertise<br/>the filter on decisions"] --> PJ
+  EMP <-->|"talk to users —<br/>patterns → heuristics"| DOM
+  PJ --> AI["THE AI CAPSTONE<br/>probabilistic material:<br/>taste → evals · trust design ·<br/>latency & cost as UX · scoping the jagged frontier"]
+  AI --> OUT["A trustworthy system<br/>around the model"]
+```
+
 - [**Motivation theory**](./motivation-and-behaviour.md) — the behaviour equation, friction,
   satisfaction, and ethical nudges: how to design experiences that move users to act.
 - [**Cognitive empathy**](./cognitive-empathy.md) — metacognition, intellectual flexibility,

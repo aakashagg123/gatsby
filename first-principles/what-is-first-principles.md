@@ -31,6 +31,15 @@ Analogy is fast and usually right; first principles is slow and occasionally
 
 ## Two ways to reason
 
+```mermaid
+flowchart TB
+  P["Problem"] --> A["Reason by ANALOGY<br/>copy what exists, tweak"]
+  P --> FP["Reason from FIRST PRINCIPLES<br/>deconstruct to bedrock truths"]
+  A --> A1["Fast, cheap, usually right"] --> A2["Ceiling: the consensus answer"]
+  FP --> F1["Slow, costly, often wrong"] --> F2["Ceiling: none —<br/>occasionally revolutionary"]
+  A2 -.->|"when the consensus is wrong"| FP
+```
+
 Almost all everyday reasoning is **reasoning by analogy**: this new thing is *like* that
 known thing, so treat it the same way. It's a brilliant shortcut. You don't re-derive how
 a door works at every doorway; you pattern-match "door → handle → push/pull." Civilization

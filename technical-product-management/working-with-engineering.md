@@ -135,3 +135,4 @@ The compounding, unglamorous behaviours that make engineers *want* your product 
 - [The technical PM role](./the-technical-pm-role.md)
 - [Specs, PRDs & RFCs](./specs-prds-and-rfcs.md)
 - [Launches, rollouts & migrations](./launches-rollouts-and-migrations.md)
+- [Technical product sense: tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md) — reading the estimates you negotiate

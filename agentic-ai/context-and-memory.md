@@ -150,3 +150,4 @@ Product memory is three separate features wearing one name — scope them separa
 - [Tools & function calling](./tools-and-function-calling.md)
 - [Multi-agent systems & protocols](./multi-agent-and-protocols.md)
 - [Reliability & evals](./reliability-and-evals.md)
+- [Foundations: context engineering](../content/00-foundations/context-engineering.md) — the same discipline at the prompt level

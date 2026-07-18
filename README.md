@@ -193,6 +193,14 @@ The modules are ordered, but the real value is in the cross-links. Pull any thre
 - **🎯 Quality** — [Context engineering](./content/00-foundations/context-engineering.md) → [RAG architecture](./content/03-rag/rag-architecture.md) → [Retrieval evals](./content/03-rag/retrieval-evals.md) → [Evals](./content/04-evals-observability/evals.md)
 - **🧰 Which tool?** — [Fine-tune vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md) → [RAG architecture](./content/03-rag/rag-architecture.md) → [Model routing](./content/02-reliable-outputs/model-routing.md)
 
+And five threads that cross track boundaries — the same concern, followed from craft to stack:
+
+- **🧪 Evals, end to end** — [Taste becomes evals](./product-sense/product-sense-for-ai.md) → [Eval-driven development](./technical-product-management/tpm-for-ai-products.md) → [Trajectory evals for agents](./agentic-ai/reliability-and-evals.md) → [The eval stack](./content/04-evals-observability/evals.md)
+- **🧠 Context, end to end** — [Context engineering](./content/00-foundations/context-engineering.md) → [Context & memory in agents](./agentic-ai/context-and-memory.md) → [Technical sense for AI systems](./technical-product-sense/technical-sense-for-ai.md)
+- **💸 Cost, end to end** — [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md) → [Agent unit economics](./agentic-ai/agentic-ai-as-a-product.md) → [Cost attribution](./content/04-evals-observability/cost-attribution.md) → [Stack tradeoffs](./content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
+- **🤝 Trust, end to end** — [Trust under non-determinism](./product-sense/product-sense-for-ai.md) → [Agent UX](./agentic-ai/agentic-ai-as-a-product.md) → [Safety & governance](./agentic-ai/safety-security-and-governance.md) → [Safety engineering](./content/05-safety-multitenancy/safety-engineering.md)
+- **🔍 Reasoning, end to end** — [First-principles method](./first-principles/the-method.md) → [Mental models](./first-principles/mental-models-latticework.md) → [Planning & reasoning in agents](./agentic-ai/planning-and-reasoning.md)
+
 <br/>
 
 ## 🚀 Where to start

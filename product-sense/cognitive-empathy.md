@@ -30,6 +30,15 @@ to what a novice sees.
 
 ## Metacognition — thinking about thinking
 
+```mermaid
+flowchart LR
+  SIM["Simulate the user<br/>'if I were them, doing X…'"] --> ASM["Surface your assumptions<br/>(metacognitive check)"]
+  ASM --> VER["Verify with reality:<br/>watch users, talk to them, data"]
+  VER -->|"model wrong — update it"| FLEX["Intellectual flexibility:<br/>change your mind"]
+  FLEX --> SIM
+  VER -->|"model held"| SHIP["Act on it — build, cut, fix"]
+```
+
 Metacognition is stepping back to examine your *own* decision process. For a PM it's the
 guard against knee-jerk assumptions and the **curse of knowledge** — where an expert forgets
 what it's like to be a novice. A payments PM steeped in fintech jargon assumes an
@@ -146,3 +155,4 @@ the rate you accumulate direct user contact, and no faster.
 - [Motivation theory](./motivation-and-behaviour.md)
 - [Creativity](./creativity.md)
 - [Product sense for AI products](./product-sense-for-ai.md)
+- [TPM: eval-driven development](../technical-product-management/tpm-for-ai-products.md) — where trace-reading turns empathy into a ritual

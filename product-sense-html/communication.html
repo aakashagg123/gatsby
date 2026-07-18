@@ -335,6 +335,14 @@ for, what it won't do, and how we'll know it worked?"</em></p>
 impressive demo, discovering the gap only at launch.</p>
 </blockquote>
 <h2>Crafting product artifacts</h2>
+<pre class="mermaid">flowchart LR
+  PS[&quot;Your product sense&lt;br/&gt;(the thinking)&quot;] --&gt; ART[&quot;Artifacts&lt;br/&gt;vision · strategy · proposal&quot;]
+  ART --&gt; STK[&quot;Stakeholders&quot;]
+  E[&quot;Empathy&lt;br/&gt;(their goals &amp; fears)&quot;] --&gt; STK
+  D[&quot;Data &amp; evidence&quot;] --&gt; STK
+  N[&quot;Narrative / story&quot;] --&gt; STK
+  STK --&gt; BUY[&quot;Buy-in &amp; alignment&quot;]
+  BUY --&gt;|&quot;chief repetition officer:&lt;br/&gt;say the &#x27;why&#x27; again&quot;| STK</pre>
 <p>Artifacts are the tangible communications a PM produces — they capture product sense in words
 and become the team's reference.</p>
 <ul>
@@ -429,6 +437,14 @@ it conversational — the best signal comes when a candidate thinks out loud.</p
 <li><a href="creativity.html">Creativity</a></li>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="domain-expertise.html">Domain expertise</a></li>
+<li><a href="../technical-product-management/specs-prds-and-rfcs.html">TPM: specs, PRDs &amp; RFCs</a> — the artifacts, professionalized</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="creativity.html"><span class="lbl">← Previous</span><span class="ttl">Creativity: from strategic thinking to creative execution</span></a><a class="navcard next" href="domain-expertise.html"><span class="lbl">→ Next</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

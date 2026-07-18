@@ -14,6 +14,24 @@ measure (the interesting failures don't throw errors). Every lesson here teaches
 practice first, then shows exactly what changes when there's a model in the build. **Each
 lesson ships a diagram** you can redraw on a whiteboard.
 
+## The knowledge graph
+
+The craft is a loop that runs every quarter — with the role at the center and the AI
+capstone bending every station:
+
+```mermaid
+flowchart TB
+  ROLE["THE ROLE<br/>context · clarity · trust<br/>(the team's API to the company)"]
+  DISC["Discovery<br/>find the right bet"] --> SPEC["Specs, PRDs & RFCs<br/>make it unambiguous"]
+  SPEC --> PRI["Prioritization & roadmaps<br/>sequence the bets"]
+  PRI --> ENG["Working with engineering<br/>build without friction"]
+  ENG --> MET["Metrics & experimentation<br/>did it work?"]
+  MET --> LAUNCH["Launches, rollouts & migrations<br/>ship without breaking trust"]
+  LAUNCH -->|"production teaches"| DISC
+  ROLE -.-> DISC & SPEC & PRI & ENG & MET & LAUNCH
+  AI["THE AI CAPSTONE — eval-driven development:<br/>the eval suite is the spec, the gate, and the flywheel"] -.->|"bends every station"| SPEC & MET & LAUNCH
+```
+
 - [**The technical PM role**](./the-technical-pm-role.md) — what a technical PM actually
   owns, the PM ↔ TPM ↔ EM spectrum, and where your leverage comes from.
 - [**Discovery to delivery**](./discovery-to-delivery.md) — the product development

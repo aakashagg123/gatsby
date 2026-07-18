@@ -325,6 +325,17 @@ and why.</p>
 <p>This module adapts a playbook for mid-career PMs into a hands-on course, organized around
 the five areas that compound into strong product sense — then adds a sixth lesson that
 ports all of it into the specifics of building AI products.</p>
+<h2>The knowledge graph</h2>
+<p>Five habits feed one judgment, and the judgment gets stress-tested by a new material:</p>
+<pre class="mermaid">flowchart TB
+  MOT[&quot;Motivation &amp; behaviour&lt;br/&gt;B = M × A × T&quot;] --&gt; PJ[&quot;PRODUCT JUDGMENT&lt;br/&gt;what to build, for whom, why&quot;]
+  EMP[&quot;Cognitive empathy&lt;br/&gt;simulate, then verify&quot;] --&gt; PJ
+  CRE[&quot;Creativity&lt;br/&gt;strategy guards execution&quot;] --&gt; PJ
+  COM[&quot;Communication&lt;br/&gt;judgment that can move a team&quot;] --&gt; PJ
+  DOM[&quot;Domain expertise&lt;br/&gt;the filter on decisions&quot;] --&gt; PJ
+  EMP &lt;--&gt;|&quot;talk to users —&lt;br/&gt;patterns → heuristics&quot;| DOM
+  PJ --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;probabilistic material:&lt;br/&gt;taste → evals · trust design ·&lt;br/&gt;latency &amp; cost as UX · scoping the jagged frontier&quot;]
+  AI --&gt; OUT[&quot;A trustworthy system&lt;br/&gt;around the model&quot;]</pre>
 <ul>
 <li><a href="motivation-and-behaviour.html"><strong>Motivation theory</strong></a> — the behaviour equation, friction,
   satisfaction, and ethical nudges: how to design experiences that move users to act.</li>
@@ -347,4 +358,11 @@ up in real products, plus the key takeaways.</p></div>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="motivation-and-behaviour.html"><span class="card-num">01</span><h3>Motivation theory: friction, satisfaction, and nudges</h3><span class="card-go">Read lesson →</span></a><a class="card" href="cognitive-empathy.html"><span class="card-num">02</span><h3>Cognitive empathy: anticipating unvoiced needs</h3><span class="card-go">Read lesson →</span></a><a class="card" href="creativity.html"><span class="card-num">03</span><h3>Creativity: from strategic thinking to creative execution</h3><span class="card-go">Read lesson →</span></a><a class="card" href="communication.html"><span class="card-num">04</span><h3>Communication: artifacts, influence, and interviews</h3><span class="card-go">Read lesson →</span></a><a class="card" href="domain-expertise.html"><span class="card-num">05</span><h3>Domain expertise: turning knowledge into intuition</h3><span class="card-go">Read lesson →</span></a><a class="card" href="product-sense-for-ai.html"><span class="card-num">06</span><h3>Product sense for AI products</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main></body></html>
+  </main><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

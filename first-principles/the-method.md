@@ -30,14 +30,14 @@ answer but a *map of which constraints are real*.
 
 ## The loop
 
-```
-        ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-   ─────▶  DECONSTRUCT  ─────▶   CHALLENGE   ─────▶ RECONSTRUCT   ─────▶ answer
-        │  break into  │     │  test each   │     │  rebuild from│
-        │  claims      │     │  assumption  │     │  what's true │
-        └──────────────┘     └──────────────┘     └──────────────┘
-                                     │                    │
-                                     └────── iterate ◀────┘
+```mermaid
+flowchart LR
+  D["1 · DECONSTRUCT<br/>split into component claims"] --> C["2 · CHALLENGE<br/>test each claim:<br/>bedrock or inherited?"]
+  C --> R["3 · RECONSTRUCT<br/>rebuild from bedrock only"]
+  R -.->|"new constraints surface"| D
+  SQ["Socratic questioning"] --> C
+  W5["The 5 Whys"] --> C
+  FE["Fermi estimation"] --> R
 ```
 
 It is a *loop*, not a line: reconstruction usually exposes a claim you mislabeled, sending
@@ -170,3 +170,4 @@ lesson.
 - [A latticework of mental models](./mental-models-latticework.md)
 - [Traps & limits](./traps-and-limits.md)
 - [Production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md)
+- [Agentic AI: planning & reasoning](../agentic-ai/planning-and-reasoning.md) — the same decompose-and-verify moves, run by a model

@@ -31,6 +31,16 @@ it done this way at all?"*
 
 ## Why domain knowledge strengthens intuition
 
+```mermaid
+flowchart LR
+  IN["Ideas, requests,<br/>signals, feature asks"] --> F["DOMAIN FILTER<br/>patterns · constraints ·<br/>regulations · workflows"]
+  F --> MH["Must-haves<br/>(recognized fast)"]
+  F --> NH["Nice-to-haves & noise<br/>(rejected fast)"]
+  F -.->|"the trap: 'I am the user'"| TRAP["Expert blindness"]
+  OQ["Outsider question:<br/>'why is it done this way at all?'"] --> F
+  TRAP -->|"antidote: keep validating"| OQ
+```
+
 Picture a healthcare-software PM. With thin domain knowledge you build an EMR around generic
 UX and obvious needs (notes, scheduling). With deep expertise you know the intricacies:
 HIPAA compliance, that doctors have *seconds* to enter data between patients, common billing

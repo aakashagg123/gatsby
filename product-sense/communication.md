@@ -30,6 +30,17 @@ clarity is king, and you are the "chief repetition officer" for the product's wh
 
 ## Crafting product artifacts
 
+```mermaid
+flowchart LR
+  PS["Your product sense<br/>(the thinking)"] --> ART["Artifacts<br/>vision · strategy · proposal"]
+  ART --> STK["Stakeholders"]
+  E["Empathy<br/>(their goals & fears)"] --> STK
+  D["Data & evidence"] --> STK
+  N["Narrative / story"] --> STK
+  STK --> BUY["Buy-in & alignment"]
+  BUY -->|"chief repetition officer:<br/>say the 'why' again"| STK
+```
+
 Artifacts are the tangible communications a PM produces — they capture product sense in words
 and become the team's reference.
 
@@ -130,3 +141,4 @@ it conversational — the best signal comes when a candidate thinks out loud.
 - [Creativity](./creativity.md)
 - [Cognitive empathy](./cognitive-empathy.md)
 - [Domain expertise](./domain-expertise.md)
+- [TPM: specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md) — the artifacts, professionalized

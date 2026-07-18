@@ -33,6 +33,17 @@ the metabolic engine for both the [latticework](./mental-models-latticework.md) 
 
 ## The core illusion: fluency ≠ mastery
 
+```mermaid
+flowchart TB
+  RE["Re-reading & highlighting<br/>(feels productive)"] -->|"fluency illusion"| FORGET["Fast forgetting"]
+  RP["Retrieval practice<br/>(test yourself)"] --> DUR["Durable memory"]
+  SP["Spacing<br/>(expanding intervals)"] --> DUR
+  IL["Interleaving<br/>(mix topics)"] --> DUR
+  FT["Feynman technique<br/>(explain it simply)"] -->|"exposes the gap"| RP
+  DP["Deliberate practice<br/>(edge of ability + feedback)"] --> DUR
+  DUR --> LAT["A latticework you can<br/>actually deploy"]
+```
+
 The central trap in learning is the **fluency illusion**: when material is in front of you
 and feels easy, your brain reads "easy to process" as "I know this." You don't. Recognition
 is not recall. Re-reading a chapter until it feels smooth builds *familiarity* with the
