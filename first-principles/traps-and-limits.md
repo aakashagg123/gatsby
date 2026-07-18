@@ -92,6 +92,16 @@ on — match on structure, and always carry each model's **failure conditions**
 
 ## Knowing which tool the moment deserves
 
+```mermaid
+flowchart TB
+  Q["Decision in front of you"] --> S{"Stakes high enough to<br/>repay slow reasoning?"}
+  S -->|"no"| AN["Use analogy / convention<br/>(fast, usually right)"]
+  S -->|"yes"| C{"Reason to suspect the<br/>consensus answer is wrong<br/>or doesn't fit your case?"}
+  C -->|"no"| AN2["Borrow the solved solution —<br/>respect accumulated expertise"]
+  C -->|"yes"| FP["First principles:<br/>deconstruct · challenge · reconstruct"]
+  FP --> G["Guard the exits:<br/>bias check · time-box ·<br/>'has someone solved this?'"]
+```
+
 The meta-skill of this whole module is **method selection** — and it's a tradeoff, not a
 loyalty. A rough decision aid:
 

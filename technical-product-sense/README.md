@@ -12,6 +12,25 @@ failure, and data flow are now *product* decisions, not back-end details. This m
 builds the mental models, one system concept at a time, and **each lesson ships a diagram**
 you can redraw on a whiteboard.
 
+## The knowledge graph
+
+A system is a request path, the contracts and data it moves through, and the forces that
+degrade it — with the AI capstone bolting a probabilistic component into the middle:
+
+```mermaid
+flowchart TB
+  REQ["THE REQUEST PATH<br/>client → edge → services → data<br/>(how systems are built)"] --> API["APIs & contracts<br/>how components talk"]
+  REQ --> DATA["Data & the data model<br/>where truth lives"]
+  subgraph FORCES["THE FORCES THAT DEGRADE IT"]
+    LAT["Latency & scale"]
+    REL["Reliability & failure"]
+    DEBT["Tech debt & estimation"]
+  end
+  REQ --- FORCES
+  API & DATA & FORCES --> AI["THE AI CAPSTONE<br/>a model in the request path:<br/>cost & latency as UX, evals,<br/>observability, tenant boundaries"]
+  AI --> CONV["Credible technical conversations<br/>and better product calls"]
+```
+
 - [**How systems are built**](./how-systems-are-built.md) — clients, servers, services, and
   the path a request actually travels.
 - [**APIs & contracts**](./apis-and-contracts.md) — how components talk: requests,

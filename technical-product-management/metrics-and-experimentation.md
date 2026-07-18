@@ -146,3 +146,4 @@ For model-powered features, wire *offline* and *online* measurement together:
 - [Specs, PRDs & RFCs](./specs-prds-and-rfcs.md)
 - [Launches, rollouts & migrations](./launches-rollouts-and-migrations.md)
 - [Technical product management for AI](./tpm-for-ai-products.md)
+- [Product sense: motivation & behaviour](../product-sense/motivation-and-behaviour.md) — the behaviour your metrics are trying to move

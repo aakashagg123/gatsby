@@ -33,9 +33,31 @@ The two halves reinforce each other: first-principles thinking is the *method*, 
 broad latticework of models is the *raw material* the method works on. A method with no
 material reasons in a vacuum; material with no method just collects trivia.
 
+## The knowledge graph
+
+```mermaid
+flowchart TB
+  subgraph METHOD["THE METHOD"]
+    LOOP["Deconstruct → Challenge → Reconstruct"]
+    WHEN["When to use it —<br/>vs. reasoning by analogy"]
+  end
+  subgraph MATERIAL["THE MATERIAL"]
+    LAT["Latticework of mental models<br/>(many disciplines)"]
+    POLY["Polymath range<br/>(T → comb-shaped)"]
+    LEARN["Learning engine<br/>retrieval · spacing · Feynman"]
+  end
+  LEARN --> LAT
+  LEARN --> POLY
+  POLY -->|"supplies models"| LAT
+  LAT -->|"names the components"| LOOP
+  WHEN --> LOOP
+  TRAPS["Traps & limits<br/>(the safety rail)"] -.->|"bounds"| LOOP
+  LOOP --> OUT["Decisions traced to bedrock —<br/>and the occasional consensus-beating move"]
+```
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — how first-principles
 reasoning showed up in real breakthroughs and real failures, plus the key takeaways.
 
 ---
 
-← Previous: [06 · Strategy & Tradeoffs](../content/06-strategy-tradeoffs/README.md)
+↩ Back to [the curriculum](../SUMMARY.md) · [All tracks](../README.md)

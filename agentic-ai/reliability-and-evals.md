@@ -140,3 +140,4 @@ have, and it arrives before churn does).
 - [Planning & reasoning](./planning-and-reasoning.md)
 - [Safety, security & governance](./safety-security-and-governance.md)
 - [Agentic AI as a product](./agentic-ai-as-a-product.md)
+- [Evals & observability](../content/04-evals-observability/evals.md) — the general eval stack under the agent-specific layer

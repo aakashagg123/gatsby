@@ -31,6 +31,24 @@ value — and where a boring deterministic feature wins.
 
 ## Taste becomes evals
 
+```mermaid
+flowchart LR
+  subgraph OLD["Deterministic product"]
+    O1["Look at it —<br/>you can see 'right'"]
+    O2["Latency & cost:<br/>engineering's problem"]
+    O3["Capability: smooth —<br/>hard things are hard"]
+  end
+  subgraph AI["Model-powered product"]
+    N1["'Right' is a distribution —<br/>taste becomes EVALS"]
+    N2["Latency & cost<br/>are UX"]
+    N3["Capability is JAGGED —<br/>scoping is the skill"]
+  end
+  O1 --> N1
+  O2 --> N2
+  O3 --> N3
+  N1 & N2 & N3 --> TR["Trust is engineered,<br/>and feedback is a designed flywheel"]
+```
+
 With a normal feature you can look at it and know if it's right. With a model, "right" is a
 distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
 product taste has to become **measurable**. The AI PM defines what "good" means as an

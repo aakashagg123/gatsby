@@ -102,3 +102,4 @@ is one of the clearest expressions of technical product sense.
 - [APIs & contracts](./apis-and-contracts.md)
 - [Latency, scale & performance](./latency-scale-performance.md)
 - [Technical sense for AI systems](./technical-sense-for-ai.md)
+- [Agentic AI: reliability & evals](../agentic-ai/reliability-and-evals.md) — the same discipline when the component is a model in a loop

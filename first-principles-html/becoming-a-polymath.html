@@ -336,6 +336,15 @@ or wider into a field that would connect to it?"</em></p>
 in isolation, optimizing a corner while the value moves to the seams between corners.</p>
 </blockquote>
 <h2>The specialization trap — and why range is rising</h2>
+<pre class="mermaid">flowchart LR
+  subgraph T[&quot;T-shaped&quot;]
+    TB1[&quot;Broad base:&lt;br/&gt;many fields, working level&quot;] --- TS1[&quot;One deep spike&quot;]
+  end
+  subgraph COMB[&quot;Comb-shaped&quot;]
+    CB1[&quot;Broad base&quot;] --- CS1[&quot;Spike 1&quot;] &amp; CS2[&quot;Spike 2&quot;] &amp; CS3[&quot;Spike 3&quot;]
+  end
+  T --&gt;|&quot;deliberate second (third…) spike&quot;| COMB
+  COMB --&gt; TR[&quot;Transfer: ideas move&lt;br/&gt;between spikes — the polymath edge&quot;]</pre>
 <p>The 20th century bet everything on specialization, and for good reason: deep expertise
 drove the bulk of scientific and industrial progress. But specialization has a failure mode.
 In David Epstein's <em>Range</em>, the recurring finding is that in <strong>"wicked" environments</strong> —
@@ -470,6 +479,14 @@ one discipline's fundamentals to bottom out in.</p>
 <li><a href="learning-how-to-learn.html">Learning how to learn</a></li>
 <li><a href="traps-and-limits.html">Traps &amp; limits</a></li>
 <li><a href="what-is-first-principles.html">What first-principles thinking actually is</a></li>
+<li><a href="../product-sense/domain-expertise.html">Product sense: domain expertise</a> — one spike of the comb, built deliberately</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="mental-models-latticework.html"><span class="lbl">← Previous</span><span class="ttl">A latticework of mental models</span></a><a class="navcard next" href="learning-how-to-learn.html"><span class="lbl">→ Next</span><span class="ttl">Learning how to learn</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

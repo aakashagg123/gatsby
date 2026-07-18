@@ -336,6 +336,15 @@ useful model output — and how fast does that first win arrive?"</em></p>
 retention, because nobody engineered the motivation-and-friction path around it.</p>
 </blockquote>
 <h2>The behaviour equation</h2>
+<pre class="mermaid">flowchart LR
+  M[&quot;Motivation&lt;br/&gt;(does the user want it?)&quot;] --&gt; B{&quot;Behaviour happens&lt;br/&gt;M × A × T&quot;}
+  A[&quot;Ability&lt;br/&gt;(how easy is it?)&quot;] --&gt; B
+  T[&quot;Trigger&lt;br/&gt;(what prompts it now?)&quot;] --&gt; B
+  B --&gt; ACT[&quot;Action&quot;]
+  ACT --&gt; RW[&quot;Variable reward&quot;]
+  RW --&gt; INV[&quot;Investment&lt;br/&gt;(user effort stored in product)&quot;]
+  INV --&gt;|&quot;loads the next trigger&quot;| T
+  RW --&gt;|&quot;satisfaction feeds&quot;| M</pre>
 <p>The <strong>Fogg behaviour model</strong> — <em>B = M × A × T</em> — says a behaviour happens only when
 motivation, ability (ease), and a trigger converge. As a multiplication, if any term is
 near zero, the behaviour doesn't happen. The practical corollary: <strong>if you want to
@@ -448,4 +457,11 @@ rewards a "100% complete" state that genuinely benefits the user.</p>
 <li><a href="communication.html">Communication</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="cognitive-empathy.html"><span class="lbl">→ Next</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

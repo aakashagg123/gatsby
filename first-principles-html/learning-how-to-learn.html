@@ -338,6 +338,14 @@ because you've seen it, and you discover at the worst moment that you can't actu
 retrieve or use it.</p>
 </blockquote>
 <h2>The core illusion: fluency ≠ mastery</h2>
+<pre class="mermaid">flowchart TB
+  RE[&quot;Re-reading &amp; highlighting&lt;br/&gt;(feels productive)&quot;] --&gt;|&quot;fluency illusion&quot;| FORGET[&quot;Fast forgetting&quot;]
+  RP[&quot;Retrieval practice&lt;br/&gt;(test yourself)&quot;] --&gt; DUR[&quot;Durable memory&quot;]
+  SP[&quot;Spacing&lt;br/&gt;(expanding intervals)&quot;] --&gt; DUR
+  IL[&quot;Interleaving&lt;br/&gt;(mix topics)&quot;] --&gt; DUR
+  FT[&quot;Feynman technique&lt;br/&gt;(explain it simply)&quot;] --&gt;|&quot;exposes the gap&quot;| RP
+  DP[&quot;Deliberate practice&lt;br/&gt;(edge of ability + feedback)&quot;] --&gt; DUR
+  DUR --&gt; LAT[&quot;A latticework you can&lt;br/&gt;actually deploy&quot;]</pre>
 <p>The central trap in learning is the <strong>fluency illusion</strong>: when material is in front of you
 and feels easy, your brain reads "easy to process" as "I know this." You don't. Recognition
 is not recall. Re-reading a chapter until it feels smooth builds <em>familiarity</em> with the
@@ -466,4 +474,11 @@ cheaper.</p>
 <li><a href="traps-and-limits.html">Traps &amp; limits</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="becoming-a-polymath.html"><span class="lbl">← Previous</span><span class="ttl">Becoming a polymath</span></a><a class="navcard next" href="traps-and-limits.html"><span class="lbl">→ Next</span><span class="ttl">Traps &amp; limits</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

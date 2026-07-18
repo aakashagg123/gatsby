@@ -335,6 +335,12 @@ where will that assumption break?"</em></p>
 mistook its own fluency for the user's.</p>
 </blockquote>
 <h2>Metacognition — thinking about thinking</h2>
+<pre class="mermaid">flowchart LR
+  SIM[&quot;Simulate the user&lt;br/&gt;&#x27;if I were them, doing X…&#x27;&quot;] --&gt; ASM[&quot;Surface your assumptions&lt;br/&gt;(metacognitive check)&quot;]
+  ASM --&gt; VER[&quot;Verify with reality:&lt;br/&gt;watch users, talk to them, data&quot;]
+  VER --&gt;|&quot;model wrong — update it&quot;| FLEX[&quot;Intellectual flexibility:&lt;br/&gt;change your mind&quot;]
+  FLEX --&gt; SIM
+  VER --&gt;|&quot;model held&quot;| SHIP[&quot;Act on it — build, cut, fix&quot;]</pre>
 <p>Metacognition is stepping back to examine your <em>own</em> decision process. For a PM it's the
 guard against knee-jerk assumptions and the <strong>curse of knowledge</strong> — where an expert forgets
 what it's like to be a novice. A payments PM steeped in fintech jargon assumes an
@@ -443,6 +449,14 @@ the rate you accumulate direct user contact, and no faster.</p>
 <li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
 <li><a href="creativity.html">Creativity</a></li>
 <li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
+<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM: eval-driven development</a> — where trace-reading turns empathy into a ritual</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="motivation-and-behaviour.html"><span class="lbl">← Previous</span><span class="ttl">Motivation theory: friction, satisfaction, and nudges</span></a><a class="navcard next" href="creativity.html"><span class="lbl">→ Next</span><span class="ttl">Creativity: from strategic thinking to creative execution</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

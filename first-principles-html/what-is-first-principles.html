@@ -336,6 +336,12 @@ re-derived?"</em></p>
 a slightly-worse copy of the conclusion you copied it from.</p>
 </blockquote>
 <h2>Two ways to reason</h2>
+<pre class="mermaid">flowchart TB
+  P[&quot;Problem&quot;] --&gt; A[&quot;Reason by ANALOGY&lt;br/&gt;copy what exists, tweak&quot;]
+  P --&gt; FP[&quot;Reason from FIRST PRINCIPLES&lt;br/&gt;deconstruct to bedrock truths&quot;]
+  A --&gt; A1[&quot;Fast, cheap, usually right&quot;] --&gt; A2[&quot;Ceiling: the consensus answer&quot;]
+  FP --&gt; F1[&quot;Slow, costly, often wrong&quot;] --&gt; F2[&quot;Ceiling: none —&lt;br/&gt;occasionally revolutionary&quot;]
+  A2 -.-&gt;|&quot;when the consensus is wrong&quot;| FP</pre>
 <p>Almost all everyday reasoning is <strong>reasoning by analogy</strong>: this new thing is <em>like</em> that
 known thing, so treat it the same way. It's a brilliant shortcut. You don't re-derive how
 a door works at every doorway; you pattern-match "door → handle → push/pull." Civilization
@@ -469,4 +475,11 @@ decompose</em> is a cost/benefit call, not a virtue.</p>
 <li><a href="../content/06-strategy-tradeoffs/README.md">Strategy &amp; tradeoffs</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="the-method.html"><span class="lbl">→ Next</span><span class="ttl">The method: deconstruct, challenge, reconstruct</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

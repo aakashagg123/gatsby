@@ -336,6 +336,21 @@ feature — and if it does, how will the product stay trustworthy when the model
 can't be trusted, measured, or afforded at scale.</p>
 </blockquote>
 <h2>Taste becomes evals</h2>
+<pre class="mermaid">flowchart LR
+  subgraph OLD[&quot;Deterministic product&quot;]
+    O1[&quot;Look at it —&lt;br/&gt;you can see &#x27;right&#x27;&quot;]
+    O2[&quot;Latency &amp; cost:&lt;br/&gt;engineering&#x27;s problem&quot;]
+    O3[&quot;Capability: smooth —&lt;br/&gt;hard things are hard&quot;]
+  end
+  subgraph AI[&quot;Model-powered product&quot;]
+    N1[&quot;&#x27;Right&#x27; is a distribution —&lt;br/&gt;taste becomes EVALS&quot;]
+    N2[&quot;Latency &amp; cost&lt;br/&gt;are UX&quot;]
+    N3[&quot;Capability is JAGGED —&lt;br/&gt;scoping is the skill&quot;]
+  end
+  O1 --&gt; N1
+  O2 --&gt; N2
+  O3 --&gt; N3
+  N1 &amp; N2 &amp; N3 --&gt; TR[&quot;Trust is engineered,&lt;br/&gt;and feedback is a designed flywheel&quot;]</pre>
 <p>With a normal feature you can look at it and know if it's right. With a model, "right" is a
 distribution — the same prompt can produce a great answer today and a poor one tomorrow. So
 product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
@@ -495,4 +510,11 @@ sense.</p>
 <li><a href="recap.html">Recap &amp; real-world examples</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div></body></html>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
+  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
+  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
+  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+await mermaid.run({querySelector:'pre.mermaid'});
+</script></body></html>

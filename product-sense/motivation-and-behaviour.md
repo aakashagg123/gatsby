@@ -31,6 +31,18 @@ add it only where it creates value, remove it everywhere else.
 
 ## The behaviour equation
 
+```mermaid
+flowchart LR
+  M["Motivation<br/>(does the user want it?)"] --> B{"Behaviour happens<br/>M × A × T"}
+  A["Ability<br/>(how easy is it?)"] --> B
+  T["Trigger<br/>(what prompts it now?)"] --> B
+  B --> ACT["Action"]
+  ACT --> RW["Variable reward"]
+  RW --> INV["Investment<br/>(user effort stored in product)"]
+  INV -->|"loads the next trigger"| T
+  RW -->|"satisfaction feeds"| M
+```
+
 The **Fogg behaviour model** — *B = M × A × T* — says a behaviour happens only when
 motivation, ability (ease), and a trigger converge. As a multiplication, if any term is
 near zero, the behaviour doesn't happen. The practical corollary: **if you want to
