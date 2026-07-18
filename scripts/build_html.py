@@ -9,6 +9,7 @@ import os
 import re
 import html as htmllib
 import markdown
+import reader_widget
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "content")
@@ -265,7 +266,7 @@ def build_module(idx):
   {footer(prev_mod, next_mod)}
   </main></div>{iw_js}</body></html>"""
     with open(os.path.join(OUT, SLUG_TO_PAGE[slug]), "w") as f:
-        f.write(page)
+        f.write(reader_widget.inject(page))
 
 # ---- build the landing index --------------------------------------------------
 def build_index():
@@ -322,7 +323,7 @@ def build_index():
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main></body></html>"""
     with open(os.path.join(OUT, "index.html"), "w") as f:
-        f.write(page)
+        f.write(reader_widget.inject(page))
 
 CSS = r"""
 :root{
