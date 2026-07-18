@@ -88,7 +88,7 @@ trained on the warehouse is working from slightly stale reality.
 Who is *allowed* to see each row is not an afterthought — it's part of the data model
 (tenant IDs, ACLs, sharing rules). For any feature that surfaces data — search, feeds, and
 especially AI retrieval — the permission relationships must be enforced at query time, or
-you leak data across users. This is the [multi-tenant boundary](../ai/05-safety-multitenancy.html#multi-tenant-isolation)
+you leak data across users. This is the [multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md)
 the AI Engineering track covers in depth.
 
 ## Failure modes

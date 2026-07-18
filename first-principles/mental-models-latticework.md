@@ -1,6 +1,6 @@
 # A latticework of mental models
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## TL;DR
 
@@ -88,7 +88,7 @@ First-order thinking stops at the immediate result; second-order thinking asks *
 what?"* You cut prices → sales rise (first order) → competitors cut deeper and the category
 commoditizes (second order). Almost every "obvious" decision that ages badly was a
 first-order decision in a second-order world. This is the conceptual cousin of the
-[tradeoff reasoning](../06-strategy-tradeoffs/inference-stack-tradeoffs.md) in Module 06:
+[tradeoff reasoning](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md) in Module 06:
 every choice has consequences you have to chase past the first one.
 
 ## How the lattice powers first principles
@@ -148,4 +148,4 @@ Same problem, far richer decomposition — and that's exactly what the
 - [The method: deconstruct, challenge, reconstruct](./the-method.md)
 - [Becoming a polymath](./becoming-a-polymath.md)
 - [Traps & limits](./traps-and-limits.md)
-- [Strategy & tradeoffs](../06-strategy-tradeoffs/inference-stack-tradeoffs.md)
+- [Strategy & tradeoffs](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)

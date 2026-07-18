@@ -38,4 +38,4 @@ reasoning showed up in real breakthroughs and real failures, plus the key takeaw
 
 ---
 
-← Previous: [06 · Strategy & Tradeoffs](../06-strategy-tradeoffs/README.md)
+← Previous: [06 · Strategy & Tradeoffs](../content/06-strategy-tradeoffs/README.md)

@@ -73,7 +73,7 @@ tools share one dispatch path.
 
 ## Ship It
 
-[`code/registry.py`](../08-tool-registry/code/registry.py) — a tool registry with
+[`code/registry.py`](../code/registry.py) — a tool registry with
 runtime registration, filtered schemas, dispatch, and role scoping.
 
 ## Check Yourself

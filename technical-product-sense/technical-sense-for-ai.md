@@ -52,9 +52,9 @@ flowchart LR
   requests before they reach the model.
 - **Retrieval** — fetch the right context (documents, data) so the model answers from *your*
   facts, not its memory. Quality here caps answer quality — see the AI Engineering track's
-  [RAG architecture](../ai/03-rag.html#rag-architecture).
+  [RAG architecture](../content/03-rag/rag-architecture.md).
 - **Prompt assembly** — combine instructions, context, and input within the model's token
-  limit. This is [context engineering](../ai/00-foundations.html#context-engineering).
+  limit. This is [context engineering](../content/00-foundations/context-engineering.md).
 - **Model call** — the probabilistic step: slow, per-token cost, non-deterministic.
 - **Validate / parse** — check the output is well-formed and safe; loop back to repair if not.
   Never trust raw model output downstream.
@@ -86,8 +86,8 @@ you measure it: an **eval** is a graded set of representative and adversarial ca
 must pass, run continuously so regressions surface before users find them. Pair it with
 **observability** — traces of each step's tokens, cost, latency, and errors — so when quality
 drops you can see *which box* caused it. Together these are the AI Engineering track's
-[evals](../ai/04-evals-observability.html#evals) and
-[observability](../ai/04-evals-observability.html#observability) lessons — and for an AI feature
+[evals](../content/04-evals-observability/evals.md) and
+[observability](../content/04-evals-observability/observability.md) lessons — and for an AI feature
 they *are* its reliability.
 
 ## Scope to the reliable frontier

@@ -1,6 +1,6 @@
 # Learning how to learn
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## TL;DR
 

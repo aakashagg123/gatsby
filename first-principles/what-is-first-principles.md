@@ -1,6 +1,6 @@
 # What first-principles thinking actually is
 
-*Part of [07 · First Principles & the Polymath Mind](./README.md)*
+*Part of [First Principles & the Polymath Mind](./README.md)*
 
 ## TL;DR
 
@@ -103,7 +103,7 @@ its own failure mode (the subject of [traps & limits](./traps-and-limits.md)):
   license to ignore hard-won expertise — confident reinvention of a worse wheel.
 
 The decision itself is a tradeoff, which is why this module sits next to
-[Module 06 · Strategy & Tradeoffs](../06-strategy-tradeoffs/README.md): *how much to
+[Module 06 · Strategy & Tradeoffs](../content/06-strategy-tradeoffs/README.md): *how much to
 decompose* is a cost/benefit call, not a virtue.
 
 ## Analogy vs. first principles, side by side
@@ -142,4 +142,4 @@ decompose* is a cost/benefit call, not a virtue.
 - [The method: deconstruct, challenge, reconstruct](./the-method.md)
 - [A latticework of mental models](./mental-models-latticework.md)
 - [Traps & limits](./traps-and-limits.md)
-- [Strategy & tradeoffs](../06-strategy-tradeoffs/README.md)
+- [Strategy & tradeoffs](../content/06-strategy-tradeoffs/README.md)

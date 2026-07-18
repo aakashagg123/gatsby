@@ -4,13 +4,13 @@
 
 <br/>
 
-![Modules](https://img.shields.io/badge/modules-7-D97757?style=flat-square&labelColor=1f1e1d)
-![Lessons](https://img.shields.io/badge/lessons-23-D97757?style=flat-square&labelColor=1f1e1d)
+![Tracks](https://img.shields.io/badge/tracks-7-D97757?style=flat-square&labelColor=1f1e1d)
+![Lessons](https://img.shields.io/badge/lessons-58%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
-![Cross-links](https://img.shields.io/badge/internal%20links-532%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
+![Cross-links](https://img.shields.io/badge/internal%20links-1832%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
 
-**[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)**
+**[🌐 Live site](https://aakashagg123.github.io/gatsby/)** · **[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)** · **[🧵 Craft tracks](#-beyond-ai-engineering--the-craft-tracks)**
 
 </div>
 
@@ -146,6 +146,24 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 </td>
 </tr>
 </table>
+
+<br/>
+
+## 🧭 Beyond AI Engineering — the craft tracks
+
+The AI Engineering modules above teach the *stack*. Six further tracks teach the *craft*
+around it — each a standalone folder of cross-linked lessons in the same house style
+(TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML
+edition on the [live site](https://aakashagg123.github.io/gatsby/).
+
+| Track | What it teaches | Start here |
+| :-- | :-- | :-- |
+| [**Agentic AI**](./agentic-ai/README.md) | What agents actually are — the loop, tools, memory, planning — and the reliability, security, and economics that turn demos into products. Opens with a knowledge graph. | [What is an agent?](./agentic-ai/what-is-an-agent.md) |
+| [**Harness engineering**](./harness-engineering/README.md) | Build a coding agent's harness from scratch — loop, tools, context, memory, evals — phase by phase, hands-on. | [Roadmap](./harness-engineering/ROADMAP.md) |
+| [**Product sense**](./product-sense/README.md) | The five habits under great product judgment — behaviour, empathy, strategy, communication, domain — and how they bend for AI products. | [Motivation & behaviour](./product-sense/motivation-and-behaviour.md) |
+| [**Technical product sense**](./technical-product-sense/README.md) | How systems are actually built — request paths, APIs, data, latency, reliability, tech debt — at the altitude a PM needs to lead technical conversations. | [How systems are built](./technical-product-sense/how-systems-are-built.md) |
+| [**Technical product management**](./technical-product-management/README.md) | The operating craft: discovery, specs, prioritization, working with engineering, metrics, launches — and the AI-products capstone. | [The technical PM role](./technical-product-management/the-technical-pm-role.md) |
+| [**First principles & the polymath mind**](./first-principles/README.md) | Reasoning from fundamentals instead of by analogy, and building the mental-model range to do it well. | [What first-principles thinking is](./first-principles/what-is-first-principles.md) |
 
 <br/>
 

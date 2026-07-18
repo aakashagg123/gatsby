@@ -84,3 +84,65 @@ Follow a single concern through the whole stack:
   [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md) →
   [RAG architecture](./content/03-rag/rag-architecture.md) →
   [Model routing](./content/02-reliable-outputs/model-routing.md)
+
+---
+
+# Part II — The craft tracks
+
+Standalone tracks in the same house style. Each is self-contained; the recommended
+order below moves from thinking skills to product craft to agents.
+
+## [First principles & the polymath mind](./first-principles/README.md)
+
+1. [What first-principles thinking actually is](./first-principles/what-is-first-principles.md)
+2. [The method: deconstruct, challenge, reconstruct](./first-principles/the-method.md)
+3. [A latticework of mental models](./first-principles/mental-models-latticework.md)
+4. [Becoming a polymath](./first-principles/becoming-a-polymath.md)
+5. [Learning how to learn](./first-principles/learning-how-to-learn.md)
+6. [Traps & limits](./first-principles/traps-and-limits.md) · [Recap](./first-principles/recap.md)
+
+## [Product sense](./product-sense/README.md)
+
+1. [Motivation & behaviour](./product-sense/motivation-and-behaviour.md)
+2. [Cognitive empathy](./product-sense/cognitive-empathy.md)
+3. [Creativity: strategy & execution](./product-sense/creativity.md)
+4. [Communication](./product-sense/communication.md)
+5. [Domain expertise](./product-sense/domain-expertise.md)
+6. [Product sense for AI products](./product-sense/product-sense-for-ai.md) · [Recap](./product-sense/recap.md)
+
+## [Technical product sense](./technical-product-sense/README.md)
+
+1. [How systems are built](./technical-product-sense/how-systems-are-built.md)
+2. [APIs & contracts](./technical-product-sense/apis-and-contracts.md)
+3. [Data & the data model](./technical-product-sense/data-and-the-data-model.md)
+4. [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md)
+5. [Reliability & failure](./technical-product-sense/reliability-and-failure.md)
+6. [Tech debt & estimation](./technical-product-sense/tech-debt-and-estimation.md)
+7. [Technical sense for AI systems](./technical-product-sense/technical-sense-for-ai.md) · [Recap](./technical-product-sense/recap.md)
+
+## [Technical product management](./technical-product-management/README.md)
+
+1. [The technical PM role](./technical-product-management/the-technical-pm-role.md)
+2. [Discovery to delivery](./technical-product-management/discovery-to-delivery.md)
+3. [Specs, PRDs & RFCs](./technical-product-management/specs-prds-and-rfcs.md)
+4. [Prioritization & roadmaps](./technical-product-management/prioritization-and-roadmaps.md)
+5. [Working with engineering](./technical-product-management/working-with-engineering.md)
+6. [Metrics & experimentation](./technical-product-management/metrics-and-experimentation.md)
+7. [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md)
+8. [TPM for AI products](./technical-product-management/tpm-for-ai-products.md) · [Recap](./technical-product-management/recap.md)
+
+## [Agentic AI](./agentic-ai/README.md)
+
+1. [What is an agent?](./agentic-ai/what-is-an-agent.md)
+2. [Tools & function calling](./agentic-ai/tools-and-function-calling.md)
+3. [Context & memory](./agentic-ai/context-and-memory.md)
+4. [Planning & reasoning](./agentic-ai/planning-and-reasoning.md)
+5. [Multi-agent systems & protocols](./agentic-ai/multi-agent-and-protocols.md)
+6. [Reliability & evals](./agentic-ai/reliability-and-evals.md)
+7. [Safety, security & governance](./agentic-ai/safety-security-and-governance.md)
+8. [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md) · [Recap](./agentic-ai/recap.md)
+
+## [Harness engineering](./harness-engineering/README.md)
+
+The hands-on build track: construct a coding agent's harness phase by phase. Start with
+the [roadmap](./harness-engineering/ROADMAP.md).

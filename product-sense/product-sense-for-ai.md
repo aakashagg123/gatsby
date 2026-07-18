@@ -44,7 +44,7 @@ the dashboard tells you *that* quality moved, the traces tell you *what good mea
 This is the same instinct as [measuring satisfaction](./motivation-and-behaviour.md), just
 moved upstream into the model's outputs. (The engineering of this — golden sets,
 LLM-as-judge, regression gates — is the subject of the AI Engineering track's
-[evals lesson](../04-evals-observability/evals.md).)
+[evals lesson](../content/04-evals-observability/evals.md).)
 
 ## Trust under non-determinism
 
@@ -78,7 +78,7 @@ they're **product** concerns, because they trade directly against quality:
 The product-sense call is *which axis this user's job actually cares about* — a coding
 assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
 mechanics of these trade-offs are the AI Engineering track's
-[stack-tradeoffs lesson](../06-strategy-tradeoffs/inference-stack-tradeoffs.md).) This is
+[stack-tradeoffs lesson](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md).) This is
 [motivation theory](./motivation-and-behaviour.md) again: a slow or costly path is friction
 that squanders the model's value.
 
