@@ -28,6 +28,7 @@ CFG = {
         "working-with-engineering",
         "metrics-and-experimentation",
         "launches-rollouts-and-migrations",
+        "incidents-and-postmortems",
         "tpm-for-ai-products",
     ],
 }

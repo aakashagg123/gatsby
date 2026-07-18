@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink active" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink active" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>APIs &amp; contracts</h1>
@@ -383,6 +383,23 @@ finished). Polling ("is it done yet?") is wasteful; a <strong>webhook</strong> f
 <code>POST</code>s to <em>your</em> endpoint when the event occurs. Webhooks power most integrations, and they
 bring their own contract concerns: they can arrive out of order, more than once (idempotency
 again), or not at all (so you still need a reconciliation fallback).</p>
+<h2>A worked pass: the double charge</h2>
+<p>The classic contract failure, end to end. A user taps "Pay," the request reaches the
+payment service, the charge succeeds — but the response is lost to a network blip. The
+app, seeing a timeout, retries. Without idempotency, the second request is a second
+charge: the user pays twice, support gets a furious ticket, and finance spends a week on
+refunds. With an <strong>idempotency key</strong> — the app sends a unique ID per payment attempt,
+and the server returns the <em>original</em> result for a repeated key — the retry is
+harmless. One header field is the difference between "resilient" and "refund queue."</p>
+<p>The PM's contract review fits in five questions: <em>What happens if this call is retried?</em>
+(idempotency) — <em>What does the caller see when it fails?</em> (error contract: is "card
+declined" distinguishable from "try again"?) — <em>Who else consumes this, and what breaks
+if we rename a field?</em> (versioning: additive changes are safe; renames and removals are
+breaking) — <em>How does the other side learn something happened?</em> (webhook vs. polling,
+and what happens when the webhook receiver is down) — <em>What are the rate limits, and
+what do we do when we hit them?</em> You don't need to design the wire format to ask all
+five — and every one of them is a user-visible product behaviour wearing an engineering
+costume.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>No retry plan</strong> — the feature assumes every call succeeds; the first upstream 500 takes it

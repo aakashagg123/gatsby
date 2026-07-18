@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink active" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink active" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Data &amp; the data model</h1>
@@ -386,6 +386,23 @@ trained on the warehouse is working from slightly stale reality.</p>
 especially AI retrieval — the permission relationships must be enforced at query time, or
 you leak data across users. This is the <a href="../content/05-safety-multitenancy/multi-tenant-isolation.md">multi-tenant boundary</a>
 the AI Engineering track covers in depth.</p>
+<h2>A worked pass: "show sellers their repeat customers"</h2>
+<p>A marketplace PM asks for a small feature: a "repeat customer" badge on seller
+dashboards. The data model says no. Orders reference a <em>session</em> for guest checkouts,
+not a durable customer identity; the same buyer appears as three unrelated rows. The
+"small feature" is actually: introduce a customer-identity entity, decide how to match
+guests (email? payment fingerprint? consent implications either way), backfill months
+of orders, and only then count repeats. Two sprints, one privacy review — because of a
+modeling decision made two years earlier when guest checkout shipped. The lesson: <em>a
+question the data model can't answer is a feature you can't ship without a migration</em>,
+and the time to hear that is at spec time, which is why "where does this data live and
+how is it shaped?" belongs in every kickoff.</p>
+<p>The sequel is the OLTP/OLAP version. The badge ships; a "top sellers by repeat rate"
+leaderboard follows; someone points the leaderboard query at the production database,
+and checkout latency spikes every hour on the hour. Analytical reads over millions of
+rows don't belong on the transactional store that's processing live orders — they
+belong in the warehouse, fed by a pipeline, a few minutes stale and happily so. Same
+data, two stores, two jobs.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>The data doesn't exist</strong> — a feature that needs a relationship nobody ever stored;

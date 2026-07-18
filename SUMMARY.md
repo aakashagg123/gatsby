@@ -105,10 +105,11 @@ order below moves from thinking skills to product craft to agents.
 
 1. [Motivation & behaviour](./product-sense/motivation-and-behaviour.md)
 2. [Cognitive empathy](./product-sense/cognitive-empathy.md)
-3. [Creativity: strategy & execution](./product-sense/creativity.md)
-4. [Communication](./product-sense/communication.md)
-5. [Domain expertise](./product-sense/domain-expertise.md)
-6. [Product sense for AI products](./product-sense/product-sense-for-ai.md) · [Recap](./product-sense/recap.md)
+3. [User research](./product-sense/user-research.md)
+4. [Creativity: strategy & execution](./product-sense/creativity.md)
+5. [Communication](./product-sense/communication.md)
+6. [Domain expertise](./product-sense/domain-expertise.md)
+7. [Product sense for AI products](./product-sense/product-sense-for-ai.md) · [Recap](./product-sense/recap.md)
 
 ## [Technical product sense](./technical-product-sense/README.md)
 
@@ -118,7 +119,9 @@ order below moves from thinking skills to product craft to agents.
 4. [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md)
 5. [Reliability & failure](./technical-product-sense/reliability-and-failure.md)
 6. [Tech debt & estimation](./technical-product-sense/tech-debt-and-estimation.md)
-7. [Technical sense for AI systems](./technical-product-sense/technical-sense-for-ai.md) · [Recap](./technical-product-sense/recap.md)
+7. [Security & privacy sense](./technical-product-sense/security-and-privacy.md)
+8. [The economics of infrastructure](./technical-product-sense/economics-of-infrastructure.md)
+9. [Technical sense for AI systems](./technical-product-sense/technical-sense-for-ai.md) · [Recap](./technical-product-sense/recap.md)
 
 ## [Technical product management](./technical-product-management/README.md)
 
@@ -129,7 +132,8 @@ order below moves from thinking skills to product craft to agents.
 5. [Working with engineering](./technical-product-management/working-with-engineering.md)
 6. [Metrics & experimentation](./technical-product-management/metrics-and-experimentation.md)
 7. [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md)
-8. [TPM for AI products](./technical-product-management/tpm-for-ai-products.md) · [Recap](./technical-product-management/recap.md)
+8. [Incidents & postmortems](./technical-product-management/incidents-and-postmortems.md)
+9. [TPM for AI products](./technical-product-management/tpm-for-ai-products.md) · [Recap](./technical-product-management/recap.md)
 
 ## [Agentic AI](./agentic-ai/README.md)
 

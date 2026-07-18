@@ -46,6 +46,9 @@ flowchart TB
   instrumentation as a requirement, and A/B testing without fooling yourself.
 - [**Launches, rollouts & migrations**](./launches-rollouts-and-migrations.md) — feature
   flags, progressive delivery, rollback plans, and retiring the old thing safely.
+- [**Incidents & postmortems**](./incidents-and-postmortems.md) — severity, incident
+  command, honest communication, blameless learning — and the AI extension (quality
+  incidents, kill switches).
 - [**Technical product management for AI**](./tpm-for-ai-products.md) — the capstone:
   eval-driven development, probabilistic acceptance criteria, model upgrades as migrations,
   and the data flywheel.

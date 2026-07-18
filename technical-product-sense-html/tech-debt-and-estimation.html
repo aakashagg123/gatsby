@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink active" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink active" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
     <h1>Tech debt &amp; estimation</h1>
@@ -380,6 +380,21 @@ weeks," hear "probably two, could be one, could be four." Useful instincts:</p>
 </ul>
 <p>You're not there to squeeze the number down — you're there to <em>understand</em> it, so you can
 sequence work, cut scope intelligently, and set expectations you can keep.</p>
+<h2>A worked pass: reading a "3 weeks for a form"</h2>
+<p>The estimate that sounds absurd until you decompose it. You ask for two extra fields on
+the signup form; engineering says three weeks. The wrong response is "it's a <em>form</em>."
+The right response is "walk me through it" — and the walk reveals: the fields need a
+schema migration on a 40-million-row table (which, on this database version, locks the
+table unless done in stages), a backfill for existing users, changes to three services
+that validate signup payloads, handling for old app versions that will keep submitting
+the old shape for months, and updates to the data-export pipeline a partner depends on.
+The form is two days; the <em>system the form touches</em> is three weeks.</p>
+<p>Now the negotiation is honest and specific instead of adversarial: do old app versions
+really need support, or can the fields be optional until the next forced upgrade? Does
+the partner export need the fields at launch, or in Q3? Can the backfill run lazily on
+next login instead of up front? Each question trades scope against time <em>knowingly</em> —
+and each is only askable because you asked what the three weeks was made of. That's
+what "reading an estimate" means: not challenging the number, decomposing it.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Invisible debt</strong> — debt that never makes the roadmap, so it compounds until the team
@@ -404,7 +419,7 @@ sequence work, cut scope intelligently, and set expectations you can keep.</p>
 <li><a href="reliability-and-failure.html">Reliability &amp; failure</a></li>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="reliability-and-failure.html"><span class="lbl">← Previous</span><span class="ttl">Reliability &amp; failure</span></a><a class="navcard next" href="technical-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Technical sense for AI systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  <div class="pagenav"><a class="navcard prev" href="reliability-and-failure.html"><span class="lbl">← Previous</span><span class="ttl">Reliability &amp; failure</span></a><a class="navcard next" href="security-and-privacy.html"><span class="lbl">→ Next</span><span class="ttl">Security &amp; privacy sense</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main></div><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{

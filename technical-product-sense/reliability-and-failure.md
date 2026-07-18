@@ -80,6 +80,24 @@ target to what a failure actually costs the user.
 Deciding *which* parts of your product need high reliability — and which can degrade quietly —
 is one of the clearest expressions of technical product sense.
 
+## A worked pass: the retry storm
+
+How a slowdown becomes an outage. Your payment provider degrades — responses go from
+300 ms to 8 seconds. Every service calling it starts timing out and, being helpful,
+*retries*. Traffic to the struggling provider triples. Your own request threads are now
+parked waiting on payments, so unrelated pages slow down; users, being human, refresh —
+another retry storm, one layer up. A 20-minute provider blip becomes a site-wide
+outage, caused not by the failure but by *your response to it*.
+
+The toolkit, applied in order: **timeouts** cap how long anything waits (8-second calls
+get cut at 2); **backoff with jitter** spaces retries out instead of synchronizing
+them; a **circuit breaker** notices the provider is sick and fails fast for a while
+instead of queueing more victims; and a **fallback** decides what the user sees —
+"payment is taking longer than usual, we'll email your receipt" beats a spinner beats
+an error page. The product decision hiding in the incident: which of those experiences
+did you *choose* in the spec, and which did users get by accident? Write the failure
+UX down before launch; the system will exercise it whether or not you designed it.
+
 ## Failure modes
 
 - **No degraded path** — the feature only has "works" and "white screen"; the first outage is

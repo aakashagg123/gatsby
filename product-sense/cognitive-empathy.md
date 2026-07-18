@@ -133,6 +133,14 @@ the rate you accumulate direct user contact, and no faster.
 - **Immerse in the user's environment** — visit the clinic, work a support shift; concrete
   detail feeds intuition analytics can't.
 
+> **📦 Mini-case — the password "bug."** Twitter PM Paul Rosania, volunteering at
+> computer-help sessions, watched users mistype their password repeatedly and conclude
+> *Twitter* was broken. No support ticket, survey, or dashboard would ever surface
+> that as a product problem — the users didn't know what happened, so they couldn't
+> report it. Only direct observation catches the problems users can't articulate;
+> that's the concrete case for simulation *plus* verification, never simulation
+> alone.
+
 ## Failure modes
 
 - **Curse of knowledge** — designing for your own expert mental model, not the novice's.

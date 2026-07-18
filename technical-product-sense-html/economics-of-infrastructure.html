@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Technical product sense for the AI PM</title>
+<title>The economics of infrastructure — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -308,64 +308,125 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Technical product sense for the AI PM</h1>
-    <p class="lede">Reading systems like an engineer — architecture, data, latency, and failure — so you can build with them, not just around them.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>for APMs &amp; PMs</span><span>diagrams included</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink active" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 08</span>
+    <h1>The economics of infrastructure</h1>
   </div>
-  <div class="intro"><p>Product sense tells you <em>what</em> to build. <strong>Technical product sense</strong> tells you what it will
-take to build it — and what the system will and won't let you do. It's the ability to read
-an architecture, reason about data, latency, and failure, and hold a credible conversation
-with engineers about trade-offs. You don't need to write the code; you need to understand
-the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
-<p>For APMs and PMs moving into <strong>AI product management</strong>, this is non-optional. An AI feature
-is a distributed system with a probabilistic component bolted into it — latency, cost,
-failure, and data flow are now <em>product</em> decisions, not back-end details. This module
-builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
-you can redraw on a whiteboard.</p>
-<h2>The knowledge graph</h2>
-<p>A system is a request path, the contracts and data it moves through, and the forces that
-degrade it — with the AI capstone bolting a probabilistic component into the middle:</p>
+  <h2>TL;DR</h2>
+<p>Every feature has a <strong>cost of goods sold</strong> hiding in the infrastructure: compute,
+storage, network egress, third-party APIs, and — for AI features — tokens. Most
+software costs are invisible at demo scale and decisive at real scale, because they
+grow with different curves: some are <strong>fixed</strong> (a base cluster), some scale <strong>per
+user</strong>, some <strong>per action</strong>, and a few scale <strong>worse than linearly</strong> (cross-region
+data, fan-out notifications, long-context model calls). The PM's job isn't to read
+the cloud bill — it's to know each feature's <strong>unit economics</strong>: what one incremental
+user or action costs, which line dominates, and which product decisions (retention
+windows, real-time vs. batch, quality tiers) are secretly cost decisions.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — AI moved infrastructure cost from rounding error to headline:
+a model call can cost a million times more than a database read, and cost now
+scales with <em>usage of your best feature</em>. Margins are a product decision for the
+first time in most PMs' careers.</p>
+<p><strong>What it changes in your decisions</strong> — You price and package with the cost curve
+in view, set budgets per feature and tenant, and treat "make it cheaper without
+making it worse" as a roadmap line with real engineering behind it.</p>
+<p><strong>Ask yourself</strong> — <em>"What does one more daily-active user cost me on this feature —
+and does our pricing recover it at p95 usage, not just at the average?"</em></p>
+<p><strong>Risk if ignored</strong> — The success disaster: adoption exceeds the plan, every new
+user deepens the loss, and the emergency isn't technical — it's a repricing you do
+in public.</p>
+</blockquote>
+<h2>Where the money goes</h2>
 <pre class="mermaid">flowchart TB
-  REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
-  REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
-  subgraph FORCES[&quot;THE FORCES THAT DEGRADE IT&quot;]
-    LAT[&quot;Latency &amp; scale&quot;]
-    REL[&quot;Reliability &amp; failure&quot;]
-    DEBT[&quot;Tech debt &amp; estimation&quot;]
-  end
-  REQ --- FORCES
-  API &amp; DATA &amp; FORCES --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;a model in the request path:&lt;br/&gt;cost &amp; latency as UX, evals,&lt;br/&gt;observability, tenant boundaries&quot;]
-  AI --&gt; CONV[&quot;Credible technical conversations&lt;br/&gt;and better product calls&quot;]</pre>
+  F[&quot;A feature in production&quot;] --&gt; C[&quot;Compute&lt;br/&gt;servers · containers ·&lt;br/&gt;autoscaling&quot;]
+  F --&gt; S[&quot;Storage&lt;br/&gt;databases · object storage ·&lt;br/&gt;backups &amp; retention&quot;]
+  F --&gt; N[&quot;Network&lt;br/&gt;egress · cross-region ·&lt;br/&gt;CDN&quot;]
+  F --&gt; T[&quot;Third parties&lt;br/&gt;APIs · per-seat tools ·&lt;br/&gt;model tokens&quot;]
+  C &amp; S &amp; N &amp; T --&gt; U[&quot;UNIT ECONOMICS&lt;br/&gt;cost per user · per action ·&lt;br/&gt;per tenant&quot;]
+  U --&gt; P[&quot;Pricing, packaging,&lt;br/&gt;and budget decisions&quot;]</pre>
+<p>The four families behave differently:</p>
 <ul>
-<li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
-  the path a request actually travels.</li>
-<li><a href="apis-and-contracts.html"><strong>APIs &amp; contracts</strong></a> — how components talk: requests,
-  idempotency, versioning, and webhooks.</li>
-<li><a href="data-and-the-data-model.html"><strong>Data &amp; the data model</strong></a> — entities, relationships, and
-  why "where does this data live?" is a product question.</li>
-<li><a href="latency-scale-performance.html"><strong>Latency, scale &amp; performance</strong></a> — where time goes,
-  caching, and what "it doesn't scale" really means.</li>
-<li><a href="reliability-and-failure.html"><strong>Reliability &amp; failure</strong></a> — retries, timeouts, graceful
-  degradation, and designing for the request that goes wrong.</li>
-<li><a href="tech-debt-and-estimation.html"><strong>Tech debt &amp; estimation</strong></a> — reading an estimate, pricing
-  trade-offs, and working with engineers on debt.</li>
-<li><a href="security-and-privacy.html"><strong>Security &amp; privacy sense</strong></a> — authn vs. authz, hostile
-  input, blast radius, and privacy as a product surface.</li>
-<li><a href="economics-of-infrastructure.html"><strong>The economics of infrastructure</strong></a> — where the money
-  goes, cost curves, and the unit-economics napkin every feature deserves.</li>
-<li><a href="technical-sense-for-ai.html"><strong>Technical sense for AI systems</strong></a> — the capstone: the
-  anatomy of an AI feature, evals and observability, and cost/latency as UX.</li>
+<li><strong>Compute</strong> scales with <em>work done</em> — requests, jobs, renders. Autoscaling makes it
+  elastic, which means efficient <em>and</em> means a traffic spike or a
+  <a href="reliability-and-failure.html">retry storm</a> is now a billing event.</li>
+<li><strong>Storage</strong> scales with <em>what you keep</em> — and grows monotonically unless someone
+  decides otherwise. Retention is a product decision wearing an infra costume:
+  "keep every version forever" and "keep 30 days" are different businesses.</li>
+<li><strong>Network</strong> is the sneaky one: moving data <em>out</em> of a cloud (egress) or between
+  regions costs real money. Features like "export everything" or "sync across
+  regions" carry costs invisible in the design review.</li>
+<li><strong>Third parties</strong> (payments, maps, messaging, models) price per action — the
+  easiest to attribute and the most likely to dominate an AI feature's bill.</li>
 </ul>
-<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — why it matters when the
-system has a model in it — and a diagram to make it concrete.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="security-and-privacy.html"><span class="card-num">07</span><h3>Security &amp; privacy sense</h3><span class="card-go">Read lesson →</span></a><a class="card" href="economics-of-infrastructure.html"><span class="card-num">08</span><h3>The economics of infrastructure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">09</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<h2>The curves matter more than the totals</h2>
+<p>Two features with the same bill today can be different businesses tomorrow. Classify
+each cost by its curve:</p>
+<ul>
+<li><strong>Fixed</strong> — the base cluster, the observability stack. Heavy at small scale,
+  amortizes away as you grow. Fine.</li>
+<li><strong>Linear per user/action</strong> — most compute and API costs. Sustainable <em>if</em> pricing
+  scales the same way; dangerous under flat-rate pricing with unbounded usage.</li>
+<li><strong>Super-linear</strong> — the ones that end up in postmortems: fan-out (every message
+  notifies N followers), cross-joins in analytics, and long-running AI sessions
+  where <a href="../agentic-ai/context-and-memory.html">context grows with conversation length</a>,
+  so cost per session grows faster than sessions. Find these at spec time by asking
+  <em>"what multiplies?"</em></li>
+</ul>
+<p>Two structural notes from the AI era: model prices per token have fallen steeply and
+repeatedly — so <a href="../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md">re-run yesterday's "too expensive" verdicts</a>
+on a schedule — and caching changes an AI feature's economics more than any other
+single lever (<a href="../content/01-inference-internals/prompt-vs-semantic-caching.md">prompt caching</a>
+can cut input cost by an order of magnitude when the prompt is engineered for reuse).</p>
+<h2>The napkin every feature deserves</h2>
+<p>Before a feature enters the roadmap, four lines:</p>
+<ol>
+<li><strong>Cost per action</strong> — the expensive path, priced at p95 (heavy users define your
+   bill, not the median).</li>
+<li><strong>Actions per user per month</strong> — from analogous features, honestly.</li>
+<li><strong>Revenue per user per month</strong> — what the plan actually recovers.</li>
+<li><strong>The dominant line</strong> — which cost family is 80% of the total, because that's the
+   only one worth optimizing.</li>
+</ol>
+<p>If the napkin says margin is negative at target adoption, that's not a veto — it's a
+design constraint: add a usage tier, batch the work, cache the common case, route easy
+cases to the <a href="../content/02-reliable-outputs/model-routing.md">cheap path</a>, or price
+the feature as the premium it actually is. The one unacceptable outcome is discovering
+the napkin's answer on the invoice.</p>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>The success disaster</strong> — flat pricing on linearly-scaling costs; growth arrives
+  and each new customer deepens the loss.</li>
+<li><strong>Average-cost pricing</strong> — margins computed at median usage while p95 users (your
+  most engaged!) are individually unprofitable.</li>
+<li><strong>The immortal archive</strong> — storage that only ever grows because no one owned a
+  retention decision; the bill compounds silently.</li>
+<li><strong>Invisible egress</strong> — a sync/export/multi-region feature designed without anyone
+  pricing data movement.</li>
+<li><strong>Optimizing the wrong line</strong> — weeks shaving compute while a third-party API is
+  80% of the bill (the twin of the
+  <a href="latency-scale-performance.html">latency-budget mistake</a>).</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">For my top three features: what does one incremental action cost, and which
+      cost family dominates?</li>
+<li class="task todo">Is any cost super-linear ("what multiplies?") — and is anything bounding it?</li>
+<li class="task todo">Does pricing recover cost at p95 usage, or only at the average?</li>
+<li class="task todo">Who owns retention for each data store this feature writes to?</li>
+<li class="task todo">For AI features: what's the cache-hit assumption in the cost model, and is it
+      measured or hoped?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="latency-scale-performance.html">Latency, scale &amp; performance</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
+<li><a href="../content/04-evals-observability/cost-attribution.md">Cost attribution</a></li>
+<li><a href="../agentic-ai/agentic-ai-as-a-product.html">Agentic AI as a product</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="security-and-privacy.html"><span class="lbl">← Previous</span><span class="ttl">Security &amp; privacy sense</span></a><a class="navcard next" href="technical-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Technical sense for AI systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
   primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',

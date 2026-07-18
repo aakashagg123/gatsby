@@ -113,6 +113,14 @@ rewards a "100% complete" state that genuinely benefits the user.
 - **Run a behavioural-design audit** on new features: does the copy and flow reduce needless
   friction and reward the right action?
 
+> **📦 Mini-case — Duolingo's streak.** The behaviour equation, productized: motivation
+> (don't lose the streak) is manufactured by the product itself, ability is a
+> one-minute lesson, and the trigger is a push notification timed to your usual
+> practice hour. Note the ethical line the design walks: streak freezes and repair
+> let users *recover* — the nudge pushes practice, not anxiety. When a habit feature
+> feels coercive, it's usually because it punishes lapses instead of rewarding
+> returns.
+
 ## Failure modes
 
 - **Friction you never measured** — the drop-off is in a step you assumed was fine; instrument

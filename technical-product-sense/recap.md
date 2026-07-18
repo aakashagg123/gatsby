@@ -57,3 +57,16 @@ well enough to build *with* it — and to earn the trust of the engineers who do
 ---
 
 ← Back to [module overview](./README.md)
+
+## Test yourself
+
+1. **"It's slow" and "it falls over under load" — why must you never conflate them?**
+   <details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) have different fixes — finding/caching the slow hop vs. horizontal scaling and shared-bottleneck relief. Fixing the wrong one wastes months. (<a href="./latency-scale-performance.md">Latency, scale & performance</a>)</details>
+2. **A payment call times out and the app retries. What property makes that safe, and how does it work?**
+   <details><summary>Answer</summary>Idempotency — the client sends a unique key per attempt and the server returns the original result for a repeated key, so a retry can't double-charge. (<a href="./apis-and-contracts.md">APIs & contracts</a>)</details>
+3. **Why is "where does this data live, and how is it shaped?" a product question?**
+   <details><summary>Answer</summary>The data model decides what features are possible without a migration — a question the model can't answer is a feature you can't ship. And analytical reads don't belong on the transactional store. (<a href="./data-and-the-data-model.md">Data & the data model</a>)</details>
+4. **Name the four tools that keep a dependency slowdown from becoming your outage.**
+   <details><summary>Answer</summary>Timeouts (cap the wait), retries with backoff and jitter (don't synchronize the storm), circuit breakers (fail fast while it's sick), and a designed fallback for what the user sees. (<a href="./reliability-and-failure.md">Reliability & failure</a>)</details>
+5. **What's the blast-radius question, and when do you ask it?**
+   <details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" — asked at design time for every component, credential, and data store, not after the incident. (<a href="./security-and-privacy.md">Security & privacy sense</a>)</details>

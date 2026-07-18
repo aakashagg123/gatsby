@@ -129,6 +129,14 @@ habit of moving ideas between them.** You will not match da Vinci. You don't nee
 need enough range that your [first-principles decompositions](./the-method.md) have more than
 one discipline's fundamentals to bottom out in.
 
+> **📦 Mini-case — Gutenberg's wine press.** Movable metal type existed; presses
+> existed — in *winemaking*. Gutenberg's contribution was the transfer: seeing that
+> the structure of pressing grapes (even pressure across a surface) solved the
+> problem of pressing inked type onto paper. The parts were lying in different
+> fields; the polymath move was carrying one across. Most "invention" has this shape,
+> which is why the second field you learn multiplies the first instead of merely
+> adding to it.
+
 ## Failure modes
 
 - **Breadth with no spike** — the dilettante: interesting at dinner, trusted with nothing.

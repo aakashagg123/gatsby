@@ -98,6 +98,26 @@ reliably and inside your cost/latency budget, and use a deterministic path (or a
 jobs where a wrong answer is costly. Often the best AI product uses the model for the delightful
 20% and boring, correct machinery for the 80% that must not fail.
 
+## A worked pass: the napkin for "AI answers support tickets"
+
+Before the roadmap, the arithmetic. Proposal: draft answers for inbound support
+tickets. Volume: 60,000 tickets/month. Per ticket, the context is the ticket thread
+plus retrieved help-center passages — call it 4,000 input tokens at p50, but check p95:
+long threads run 12,000, and cost scales with usage, so price the distribution, not
+the average. Output ~500 tokens. At list prices for a mid-tier model, that's roughly
+a few cents per ticket — say $2–4k/month before caching (the system prompt and
+help-center boilerplate are identical across tickets: prompt caching should cut real
+input cost hard — verify the hit rate, don't assume it).
+
+Against what baseline? If a drafted answer saves an agent 2 minutes at a loaded
+$40/hour, that's ~$1.33 saved per ticket used — but only for tickets where the draft is
+*accepted*. Now the number that rules them all: acceptance rate. At 70% acceptance the
+feature prints money; at 25% it's a cost line plus an annoyance. Which is why the first
+build artifact isn't the prompt — it's the eval: 100 real tickets, graded drafts, a
+pass bar agreed with the support lead. The napkin tells you whether to start; the eval
+tells you whether to ship. Neither requires writing a line of code, and both are the
+PM's job.
+
 ## Failure modes
 
 - **Model-shaped thinking** — treating "the model" as the product and ignoring the pipeline that

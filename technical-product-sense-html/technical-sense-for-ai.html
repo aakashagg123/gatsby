@@ -308,9 +308,9 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink active" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink active" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 07</span>
+    <span class="chip">Lesson 09</span>
     <h1>Technical sense for AI systems</h1>
   </div>
   <h2>TL;DR</h2>
@@ -396,6 +396,23 @@ highest-leverage technical-product decision is <strong>scoping</strong>: point t
 reliably and inside your cost/latency budget, and use a deterministic path (or a human) for the
 jobs where a wrong answer is costly. Often the best AI product uses the model for the delightful
 20% and boring, correct machinery for the 80% that must not fail.</p>
+<h2>A worked pass: the napkin for "AI answers support tickets"</h2>
+<p>Before the roadmap, the arithmetic. Proposal: draft answers for inbound support
+tickets. Volume: 60,000 tickets/month. Per ticket, the context is the ticket thread
+plus retrieved help-center passages — call it 4,000 input tokens at p50, but check p95:
+long threads run 12,000, and cost scales with usage, so price the distribution, not
+the average. Output ~500 tokens. At list prices for a mid-tier model, that's roughly
+a few cents per ticket — say $2–4k/month before caching (the system prompt and
+help-center boilerplate are identical across tickets: prompt caching should cut real
+input cost hard — verify the hit rate, don't assume it).</p>
+<p>Against what baseline? If a drafted answer saves an agent 2 minutes at a loaded
+$40/hour, that's ~$1.33 saved per ticket used — but only for tickets where the draft is
+<em>accepted</em>. Now the number that rules them all: acceptance rate. At 70% acceptance the
+feature prints money; at 25% it's a cost line plus an annoyance. Which is why the first
+build artifact isn't the prompt — it's the eval: 100 real tickets, graded drafts, a
+pass bar agreed with the support lead. The napkin tells you whether to start; the eval
+tells you whether to ship. Neither requires writing a line of code, and both are the
+PM's job.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Model-shaped thinking</strong> — treating "the model" as the product and ignoring the pipeline that
@@ -423,7 +440,7 @@ jobs where a wrong answer is costly. Often the best AI product uses the model fo
 <li><a href="tech-debt-and-estimation.html">Tech debt &amp; estimation</a></li>
 <li><a href="recap.html">Recap &amp; real-world examples</a></li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="tech-debt-and-estimation.html"><span class="lbl">← Previous</span><span class="ttl">Tech debt &amp; estimation</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  <div class="pagenav"><a class="navcard prev" href="economics-of-infrastructure.html"><span class="lbl">← Previous</span><span class="ttl">The economics of infrastructure</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main></div><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{

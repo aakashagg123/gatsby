@@ -89,6 +89,26 @@ finished). Polling ("is it done yet?") is wasteful; a **webhook** flips it — t
 bring their own contract concerns: they can arrive out of order, more than once (idempotency
 again), or not at all (so you still need a reconciliation fallback).
 
+## A worked pass: the double charge
+
+The classic contract failure, end to end. A user taps "Pay," the request reaches the
+payment service, the charge succeeds — but the response is lost to a network blip. The
+app, seeing a timeout, retries. Without idempotency, the second request is a second
+charge: the user pays twice, support gets a furious ticket, and finance spends a week on
+refunds. With an **idempotency key** — the app sends a unique ID per payment attempt,
+and the server returns the *original* result for a repeated key — the retry is
+harmless. One header field is the difference between "resilient" and "refund queue."
+
+The PM's contract review fits in five questions: *What happens if this call is retried?*
+(idempotency) — *What does the caller see when it fails?* (error contract: is "card
+declined" distinguishable from "try again"?) — *Who else consumes this, and what breaks
+if we rename a field?* (versioning: additive changes are safe; renames and removals are
+breaking) — *How does the other side learn something happened?* (webhook vs. polling,
+and what happens when the webhook receiver is down) — *What are the rate limits, and
+what do we do when we hit them?* You don't need to design the wire format to ask all
+five — and every one of them is a user-visible product behaviour wearing an engineering
+costume.
+
 ## Failure modes
 
 - **No retry plan** — the feature assumes every call succeeds; the first upstream 500 takes it

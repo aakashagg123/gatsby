@@ -120,6 +120,14 @@ it conversational — the best signal comes when a candidate thinks out loud.
 - **If hiring, design the loop** — a product-sense rubric and questions that let candidates
   show it.
 
+> **📦 Mini-case — the PRFAQ discipline.** Amazon's press-release-and-FAQ ritual forces
+> the communication *before* the build: if you can't write the customer-facing story
+> of the finished product in one page — what it is, who it's for, why they care — you
+> don't understand the product yet, and no amount of building will fix that. The
+> artifact is the thinking. A cheap version for any team: draft the launch
+> announcement at kickoff, and treat every sentence you can't yet write as an open
+> product question.
+
 ## Failure modes
 
 - **Jargon and length** — a doc only the author understands; busy stakeholders won't dig.

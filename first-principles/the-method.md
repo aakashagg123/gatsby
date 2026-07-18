@@ -142,6 +142,14 @@ lesson.
    recomputation, not hardware): cache incremental results, recompute only deltas. The "9
    hours" and the "bigger server" both evaporate — and neither was a real constraint.
 
+> **📦 Mini-case — the two-week onboarding.** A B2B team "knew" enterprise onboarding
+> takes two weeks — every competitor's does. Deconstructed: nine steps, each waiting on
+> the previous, two requiring human approval. Challenged: both approvals existed
+> because of one incident four years earlier, and seven steps had no data dependency
+> on each other. Reconstructed: parallel steps, approvals replaced by automated checks
+> with an escalation path — onboarding in a day. The two weeks was an artifact of
+> history, discoverable only by asking *which of these claims is actually load-bearing?*
+
 ## Failure modes
 
 - **Stopping at the first satisfying answer** — the loop ended when you got the conclusion

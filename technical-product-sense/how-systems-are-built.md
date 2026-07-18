@@ -85,6 +85,24 @@ independently. Neither is "right"; the trade-off is **simplicity vs. independenc
 you don't pick the architecture, but knowing which one you're in explains why some changes
 are a one-line tweak and others touch five teams.
 
+## A worked pass: "add PDF export"
+
+Watch the request path turn a one-line feature request into an architecture decision.
+"Users can export their report as a PDF" sounds like a button. Walk it: the click hits
+the API layer, the service has to gather a report's data (several database reads),
+render a PDF (CPU-heavy, 5–30 seconds for big reports), and return it. Held
+synchronously, that's a spinner the user stares at, a request that times out on the
+biggest accounts — precisely the customers who want export most — and a service tied up
+doing renders instead of serving traffic.
+
+So the shape changes: the click *enqueues* an export job and returns "we'll email you /
+it'll appear here" immediately; a worker renders the PDF, drops it in object storage,
+and notifies. Same feature, different promise to the user — and different work: now you
+need a jobs queue, a status surface ("preparing your export…"), retry behaviour for
+failed renders, and an expiry policy for stored files. None of that appeared in the
+one-line request; all of it was implied by *where the work sits on the path*. That's the
+skill this lesson builds — hearing "add a button" and seeing the queue behind it.
+
 ## Failure modes
 
 - **Assuming one box** — treating "the backend" as a single thing, so you can't reason about

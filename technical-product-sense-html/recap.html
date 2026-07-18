@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>Technical product sense — recap &amp; real-world examples</h1>
@@ -395,5 +395,34 @@ the slow hop, the failure paths — and if there's a model in it, is the product
 machinery around the model, not the model itself?"</em></p>
 </blockquote>
 <hr />
+<h2>Test yourself</h2>
+<ol>
+<li>
+<p><strong>"It's slow" and "it falls over under load" — why must you never conflate them?</strong>
+ <br />
+<details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) have different fixes — finding/caching the slow hop vs. horizontal scaling and shared-bottleneck relief. Fixing the wrong one wastes months. (<a href="./latency-scale-performance.md">Latency, scale & performance</a>)</details></p>
+</li>
+<li>
+<p><strong>A payment call times out and the app retries. What property makes that safe, and how does it work?</strong>
+ <br />
+<details><summary>Answer</summary>Idempotency — the client sends a unique key per attempt and the server returns the original result for a repeated key, so a retry can't double-charge. (<a href="./apis-and-contracts.md">APIs & contracts</a>)</details></p>
+</li>
+<li>
+<p><strong>Why is "where does this data live, and how is it shaped?" a product question?</strong>
+ <br />
+<details><summary>Answer</summary>The data model decides what features are possible without a migration — a question the model can't answer is a feature you can't ship. And analytical reads don't belong on the transactional store. (<a href="./data-and-the-data-model.md">Data & the data model</a>)</details></p>
+</li>
+<li>
+<p><strong>Name the four tools that keep a dependency slowdown from becoming your outage.</strong>
+ <br />
+<details><summary>Answer</summary>Timeouts (cap the wait), retries with backoff and jitter (don't synchronize the storm), circuit breakers (fail fast while it's sick), and a designed fallback for what the user sees. (<a href="./reliability-and-failure.md">Reliability & failure</a>)</details></p>
+</li>
+<li>
+<p><strong>What's the blast-radius question, and when do you ask it?</strong>
+ <br />
+<details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" — asked at design time for every component, credential, and data store, not after the incident. (<a href="./security-and-privacy.md">Security & privacy sense</a>)</details>
+</p>
+</li>
+</ol>
   <div class="pagenav"><a class="navcard prev" href="technical-sense-for-ai.html"><span class="lbl">← Previous</span><span class="ttl">Technical sense for AI systems</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main></div></body></html>
