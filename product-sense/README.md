@@ -32,6 +32,8 @@ flowchart TB
   satisfaction, and ethical nudges: how to design experiences that move users to act.
 - [**Cognitive empathy**](./cognitive-empathy.md) — metacognition, intellectual flexibility,
   and mental simulation: anticipating what users need before they say it.
+- [**User research**](./user-research.md) — the craft of finding out: matching method to
+  question, interviewing without leading, and researching trust in AI products.
 - [**Creativity**](./creativity.md) — from strategic thinking (positioning, segmentation,
   differentiation) to creative execution (mindset, rituals, ideation techniques).
 - [**Communication**](./communication.md) — artifacts (vision, strategy, proposals),

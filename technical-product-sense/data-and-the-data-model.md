@@ -91,6 +91,26 @@ especially AI retrieval — the permission relationships must be enforced at que
 you leak data across users. This is the [multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md)
 the AI Engineering track covers in depth.
 
+## A worked pass: "show sellers their repeat customers"
+
+A marketplace PM asks for a small feature: a "repeat customer" badge on seller
+dashboards. The data model says no. Orders reference a *session* for guest checkouts,
+not a durable customer identity; the same buyer appears as three unrelated rows. The
+"small feature" is actually: introduce a customer-identity entity, decide how to match
+guests (email? payment fingerprint? consent implications either way), backfill months
+of orders, and only then count repeats. Two sprints, one privacy review — because of a
+modeling decision made two years earlier when guest checkout shipped. The lesson: *a
+question the data model can't answer is a feature you can't ship without a migration*,
+and the time to hear that is at spec time, which is why "where does this data live and
+how is it shaped?" belongs in every kickoff.
+
+The sequel is the OLTP/OLAP version. The badge ships; a "top sellers by repeat rate"
+leaderboard follows; someone points the leaderboard query at the production database,
+and checkout latency spikes every hour on the hour. Analytical reads over millions of
+rows don't belong on the transactional store that's processing live orders — they
+belong in the warehouse, fed by a pipeline, a few minutes stale and happily so. Same
+data, two stores, two jobs.
+
 ## Failure modes
 
 - **The data doesn't exist** — a feature that needs a relationship nobody ever stored;

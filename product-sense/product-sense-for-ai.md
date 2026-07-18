@@ -172,6 +172,14 @@ sense.
 - **Match autonomy to stakes** — full automation where wrong is cheap; human-in-the-loop where
   wrong is costly.
 
+> **📦 Mini-case — Air Canada's chatbot.** The airline's support bot confidently
+> described a bereavement-refund policy that didn't exist; a tribunal made the company
+> honor it. Every theme of this lesson in one incident: an ungrounded model given full
+> authority in the UX (no citations, no "I don't know"), no eval that would have
+> caught policy hallucination, and a failure whose cost was legal and reputational,
+> not technical. The fix — answer only from real policy documents, with citations —
+> was a *product* decision available the whole time.
+
 ## Failure modes
 
 - **Demo-driven development** — a great first impression that can't be measured, trusted, or

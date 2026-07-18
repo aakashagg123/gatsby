@@ -133,6 +133,14 @@ after field *affordably* — that's the entire economic case for learning effici
 deliberate practice on real problems. Learn to learn, and everything else in this module gets
 cheaper.
 
+> **📦 Mini-case — the two study groups.** The repeated lab finding (Roediger &
+> Karpicke's testing-effect studies): students who *re-read* a passage four times
+> feel more confident and score worse a week later than students who read once and
+> were *tested* three times. Fluency and learning move in opposite directions —
+> re-reading maximizes the feeling, retrieval maximizes the retention. Every
+> technique in this lesson is that finding, generalized: if studying feels smooth,
+> it probably isn't working.
+
 ## Failure modes
 
 - **Mistaking familiarity for mastery** — the fluency illusion; the headline trap.

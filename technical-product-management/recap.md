@@ -67,3 +67,16 @@ craft in this module is what turns the demo into a business.
 ---
 
 ← Back to [module overview](./README.md)
+
+## Test yourself
+
+1. **What makes an estimate of "3 weeks for a form" credible, and what's the right response to it?**
+   <details><summary>Answer</summary>The system around the form (migrations, backfills, old clients, dependent pipelines). The right response is "walk me through it" — decompose the estimate, then trade scope knowingly. (<a href="../technical-product-sense/tech-debt-and-estimation.md">Tech debt & estimation</a>)</details>
+2. **During a SEV1, what comes first: root cause or rollback — and why?**
+   <details><summary>Answer</summary>Rollback (mitigation). Users are paying for every minute of diagnosis; understand it fully after service is restored. (<a href="./incidents-and-postmortems.md">Incidents & postmortems</a>)</details>
+3. **Why must the experiment hypothesis be written *before* launch?**
+   <details><summary>Answer</summary>Because post-hoc, any result can be narrated into a win. Pre-registration — including "if wildly successful, what would that look like?" — sets the bar the result has to clear. (<a href="./metrics-and-experimentation.md">Metrics & experimentation</a>)</details>
+4. **What are the three loops of eval-driven development?**
+   <details><summary>Answer</summary>Inner: build ↔ eval (every change scored). Release: eval → staged rollout → production. Outer: production behaviour reshapes the spec. The PM's leverage is keeping the arrows back into the eval suite alive. (<a href="./tpm-for-ai-products.md">TPM for AI products</a>)</details>
+5. **What turns a postmortem from ritual into learning?**
+   <details><summary>Answer</summary>Blamelessness (so it hears the truth) plus action items with owners and dates, tracked like features — and escalation when a repeat incident finds one unshipped. (<a href="./incidents-and-postmortems.md">Incidents & postmortems</a>)</details>

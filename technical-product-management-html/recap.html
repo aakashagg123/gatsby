@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="tpm-for-ai-products.html">8 · Technical product management for AI</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>Technical product management — recap &amp; real-world examples</h1>
@@ -408,5 +408,34 @@ it, the rollout that protects it, and the feedback that improves it — and whic
 would snap first?"</em></p>
 </blockquote>
 <hr />
+<h2>Test yourself</h2>
+<ol>
+<li>
+<p><strong>What makes an estimate of "3 weeks for a form" credible, and what's the right response to it?</strong>
+ <br />
+<details><summary>Answer</summary>The system around the form (migrations, backfills, old clients, dependent pipelines). The right response is "walk me through it" — decompose the estimate, then trade scope knowingly. (<a href="../technical-product-sense/tech-debt-and-estimation.md">Tech debt & estimation</a>)</details></p>
+</li>
+<li>
+<p><strong>During a SEV1, what comes first: root cause or rollback — and why?</strong>
+ <br />
+<details><summary>Answer</summary>Rollback (mitigation). Users are paying for every minute of diagnosis; understand it fully after service is restored. (<a href="./incidents-and-postmortems.md">Incidents & postmortems</a>)</details></p>
+</li>
+<li>
+<p><strong>Why must the experiment hypothesis be written <em>before</em> launch?</strong>
+ <br />
+<details><summary>Answer</summary>Because post-hoc, any result can be narrated into a win. Pre-registration — including "if wildly successful, what would that look like?" — sets the bar the result has to clear. (<a href="./metrics-and-experimentation.md">Metrics & experimentation</a>)</details></p>
+</li>
+<li>
+<p><strong>What are the three loops of eval-driven development?</strong>
+ <br />
+<details><summary>Answer</summary>Inner: build ↔ eval (every change scored). Release: eval → staged rollout → production. Outer: production behaviour reshapes the spec. The PM's leverage is keeping the arrows back into the eval suite alive. (<a href="./tpm-for-ai-products.md">TPM for AI products</a>)</details></p>
+</li>
+<li>
+<p><strong>What turns a postmortem from ritual into learning?</strong>
+ <br />
+<details><summary>Answer</summary>Blamelessness (so it hears the truth) plus action items with owners and dates, tracked like features — and escalation when a repeat incident finds one unshipped. (<a href="./incidents-and-postmortems.md">Incidents & postmortems</a>)</details>
+</p>
+</li>
+</ol>
   <div class="pagenav"><a class="navcard prev" href="tpm-for-ai-products.html"><span class="lbl">← Previous</span><span class="ttl">Technical product management for AI</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main></div></body></html>

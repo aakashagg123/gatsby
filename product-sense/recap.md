@@ -88,3 +88,18 @@ the *product* is the trustworthy system you build around it, not the model itsel
 ---
 
 ← Back to [module overview](./README.md)
+
+## Test yourself
+
+Five questions; answers fold out. If one stumps you, the link takes you back.
+
+1. **A feature has high motivation and a strong trigger but users still don't act. What's the first suspect, per the behaviour equation?**
+   <details><summary>Answer</summary>Ability — friction. B = M × A × T: if two factors are present, the third is the bottleneck. Hunt the needless steps before adding more motivation. (<a href="./motivation-and-behaviour.md">Motivation & behaviour</a>)</details>
+2. **Why does "would you use this?" produce worse data than "tell me about the last time you…"?**
+   <details><summary>Answer</summary>People are unreliable futurists but decent historians — statements about hypothetical behaviour barely predict real behaviour; accounts of past behaviour do. (<a href="./user-research.md">User research</a>)</details>
+3. **What's the one-question test for whether a nudge is ethical?**
+   <details><summary>Answer</summary>"Whose goal does it serve?" A nudge aligned with the user's own goal is help; one serving only the metric is a dark pattern. (<a href="./motivation-and-behaviour.md">Motivation & behaviour</a>)</details>
+4. **Your AI feature demos beautifully. What does "taste becomes evals" say you must do before trusting it?**
+   <details><summary>Answer</summary>Turn your judgment of "good" into a graded, representative eval set and run it continuously — read traces and call pass/fail yourself; a distribution can't be eyeballed from a demo. (<a href="./product-sense-for-ai.md">Product sense for AI</a>)</details>
+5. **When is deep domain expertise a liability, and what's the antidote?**
+   <details><summary>Answer</summary>When it becomes "I am the user" and validation stops. The antidote is pairing expertise with the outsider question — "why is it done this way at all?" — and continued user contact. (<a href="./domain-expertise.md">Domain expertise</a>)</details>

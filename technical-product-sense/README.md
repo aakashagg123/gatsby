@@ -43,6 +43,10 @@ flowchart TB
   degradation, and designing for the request that goes wrong.
 - [**Tech debt & estimation**](./tech-debt-and-estimation.md) — reading an estimate, pricing
   trade-offs, and working with engineers on debt.
+- [**Security & privacy sense**](./security-and-privacy.md) — authn vs. authz, hostile
+  input, blast radius, and privacy as a product surface.
+- [**The economics of infrastructure**](./economics-of-infrastructure.md) — where the money
+  goes, cost curves, and the unit-economics napkin every feature deserves.
 - [**Technical sense for AI systems**](./technical-sense-for-ai.md) — the capstone: the
   anatomy of an AI feature, evals and observability, and cost/latency as UX.
 

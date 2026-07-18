@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Technical product sense for the AI PM</title>
+<title>Incidents &amp; postmortems — Technical product management</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -306,66 +306,137 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Technical product sense for the AI PM</h1>
-    <p class="lede">Reading systems like an engineer — architecture, data, latency, and failure — so you can build with them, not just around them.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>for APMs &amp; PMs</span><span>diagrams included</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink active" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 08</span>
+    <h1>Incidents &amp; postmortems</h1>
   </div>
-  <div class="intro"><p>Product sense tells you <em>what</em> to build. <strong>Technical product sense</strong> tells you what it will
-take to build it — and what the system will and won't let you do. It's the ability to read
-an architecture, reason about data, latency, and failure, and hold a credible conversation
-with engineers about trade-offs. You don't need to write the code; you need to understand
-the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
-<p>For APMs and PMs moving into <strong>AI product management</strong>, this is non-optional. An AI feature
-is a distributed system with a probabilistic component bolted into it — latency, cost,
-failure, and data flow are now <em>product</em> decisions, not back-end details. This module
-builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
-you can redraw on a whiteboard.</p>
-<h2>The knowledge graph</h2>
-<p>A system is a request path, the contracts and data it moves through, and the forces that
-degrade it — with the AI capstone bolting a probabilistic component into the middle:</p>
-<pre class="mermaid">flowchart TB
-  REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
-  REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
-  subgraph FORCES[&quot;THE FORCES THAT DEGRADE IT&quot;]
-    LAT[&quot;Latency &amp; scale&quot;]
-    REL[&quot;Reliability &amp; failure&quot;]
-    DEBT[&quot;Tech debt &amp; estimation&quot;]
-  end
-  REQ --- FORCES
-  API &amp; DATA &amp; FORCES --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;a model in the request path:&lt;br/&gt;cost &amp; latency as UX, evals,&lt;br/&gt;observability, tenant boundaries&quot;]
-  AI --&gt; CONV[&quot;Credible technical conversations&lt;br/&gt;and better product calls&quot;]</pre>
+  <h2>TL;DR</h2>
+<p>Owning a product includes owning its worst hour. An <strong>incident</strong> is any unplanned event
+degrading what users depend on; the discipline around it has three phases with
+different tempos: <strong>respond</strong> (stop the bleeding — mitigation before diagnosis, one
+incident commander, users informed honestly), <strong>recover</strong> (restore service, then
+restore <em>trust</em>), and <strong>learn</strong> (a <strong>blameless postmortem</strong> that finds the systemic
+causes and converts them into funded fixes). The PM is rarely the one typing the fix —
+your incident-time job is user impact, communication, and decisions that trade
+recovery speed against risk; your postmortem-time job is making sure the lessons
+actually reach the roadmap.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — AI features fail differently: quality can degrade with no
+errors thrown, a model update can shift behaviour overnight, and "the bot said
+something horrifying" is an incident with a screenshot. Your incident definitions,
+detectors, and playbooks all need an AI-shaped extension.</p>
+<p><strong>What it changes in your decisions</strong> — You define <em>quality incidents</em> (eval-score
+drop, spike in user overrides) as pageable events, not just availability incidents;
+and every AI feature ships with a kill switch and a degraded mode you chose on
+purpose.</p>
+<p><strong>Ask yourself</strong> — <em>"If this feature started confidently misbehaving at 2 a.m., how
+would we know, who would decide to pull it, and what would users see instead?"</em></p>
+<p><strong>Risk if ignored</strong> — Slow, improvised responses that turn twenty-minute problems
+into front-page ones — and a team that repeats its incidents because nothing was
+ever truly learned.</p>
+</blockquote>
+<h2>The lifecycle</h2>
+<pre class="mermaid">flowchart LR
+  DET[&quot;DETECT&lt;br/&gt;alerts · user reports ·&lt;br/&gt;eval-score drop&quot;] --&gt; TRI[&quot;TRIAGE&lt;br/&gt;severity · impact ·&lt;br/&gt;incident commander&quot;]
+  TRI --&gt; MIT[&quot;MITIGATE&lt;br/&gt;rollback · kill switch ·&lt;br/&gt;degraded mode&quot;]
+  MIT --&gt; COMM[&quot;COMMUNICATE&lt;br/&gt;status page · support ·&lt;br/&gt;stakeholders&quot;]
+  COMM --&gt; RES[&quot;RESOLVE&lt;br/&gt;root fix · verify ·&lt;br/&gt;all-clear&quot;]
+  RES --&gt; PM[&quot;POSTMORTEM&lt;br/&gt;blameless · systemic ·&lt;br/&gt;5 Whys&quot;]
+  PM --&gt;|&quot;action items with owners&lt;br/&gt;enter the roadmap&quot;| DET</pre>
+<p>Severity drives everything: a <strong>SEV1</strong> (users broadly down, data at risk) gets a war
+room and executive updates; a <strong>SEV3</strong> (degraded corner case) gets a ticket. Agree on
+the ladder <em>before</em> you need it — arguing about severity during an incident is how
+minutes become hours. Two rules survive every framework: <strong>mitigate before you
+diagnose</strong> (rollback first, root-cause later — which is why
+<a href="launches-rollouts-and-migrations.html">rollback-ready releases</a> are an incident tool,
+not just a launch tool), and <strong>one incident commander</strong> — a single person directing,
+so ten helpful engineers don't make eleven uncoordinated changes.</p>
+<h2>The PM's job while it burns</h2>
+<p>Not the keyboard — the blast radius:</p>
 <ul>
-<li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
-  the path a request actually travels.</li>
-<li><a href="apis-and-contracts.html"><strong>APIs &amp; contracts</strong></a> — how components talk: requests,
-  idempotency, versioning, and webhooks.</li>
-<li><a href="data-and-the-data-model.html"><strong>Data &amp; the data model</strong></a> — entities, relationships, and
-  why "where does this data live?" is a product question.</li>
-<li><a href="latency-scale-performance.html"><strong>Latency, scale &amp; performance</strong></a> — where time goes,
-  caching, and what "it doesn't scale" really means.</li>
-<li><a href="reliability-and-failure.html"><strong>Reliability &amp; failure</strong></a> — retries, timeouts, graceful
-  degradation, and designing for the request that goes wrong.</li>
-<li><a href="tech-debt-and-estimation.html"><strong>Tech debt &amp; estimation</strong></a> — reading an estimate, pricing
-  trade-offs, and working with engineers on debt.</li>
-<li><a href="security-and-privacy.html"><strong>Security &amp; privacy sense</strong></a> — authn vs. authz, hostile
-  input, blast radius, and privacy as a product surface.</li>
-<li><a href="economics-of-infrastructure.html"><strong>The economics of infrastructure</strong></a> — where the money
-  goes, cost curves, and the unit-economics napkin every feature deserves.</li>
-<li><a href="technical-sense-for-ai.html"><strong>Technical sense for AI systems</strong></a> — the capstone: the
-  anatomy of an AI feature, evals and observability, and cost/latency as UX.</li>
+<li><strong>Size the user impact</strong> — who is affected, how badly, and is it getting worse?
+  Engineering knows what's broken; you know what it <em>means</em> — which customers, which
+  commitments, which revenue.</li>
+<li><strong>Own communication</strong> — honest, plain, and on a cadence: status page, support
+  macros, account teams for the big customers. "We know, we're on it, next update at
+  :30" beats silence and beats spin. Trust is lost less by the outage than by the
+  handling.</li>
+<li><strong>Make the product calls</strong> — degrade or disable? Ship the risky fast fix or the
+  safe slow one? Accept data loss for recovery speed? These are product decisions
+  that arrive dressed as technical ones; being in the room is the job.</li>
+<li><strong>Keep the timeline</strong> — someone should be logging what happened when; it's the raw
+  material of the postmortem and it's never reconstructible afterward.</li>
 </ul>
-<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — why it matters when the
-system has a model in it — and a diagram to make it concrete.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="security-and-privacy.html"><span class="card-num">07</span><h3>Security &amp; privacy sense</h3><span class="card-go">Read lesson →</span></a><a class="card" href="economics-of-infrastructure.html"><span class="card-num">08</span><h3>The economics of infrastructure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">09</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<h2>Blameless postmortems — learning as an artifact</h2>
+<p>The postmortem's premise: people acted reasonably on the information they had; the
+<em>system</em> let them down. Blamelessness isn't kindness — it's instrumentation: the
+moment a postmortem can hurt someone, it stops hearing the truth.</p>
+<p>The document is short and structured: impact (users, duration, cost) · timeline ·
+root causes — plural, found by <a href="../first-principles/the-method.html">asking why five times</a>
+past the trigger to the conditions (the deploy was the spark; the missing alert, the
+unbounded retry, and the single point of failure were the fuel) · what went <em>well</em> ·
+and <strong>action items with owners and dates</strong>. That last line is where postmortems go to
+die: track them like features, review them monthly, and treat a repeat incident with
+an unshipped action item as the process failure it is. The best input to
+<a href="prioritization-and-roadmaps.html">prioritizing reliability work</a> is a stack of
+postmortems all pointing at the same subsystem.</p>
+<h2>The AI extension</h2>
+<ul>
+<li><strong>Quality incidents are incidents.</strong> Define them: eval score below bar in
+  production sampling, override/rejection spike, a
+  <a href="../content/04-evals-observability/observability.md">guardrail</a> firing at 10× base
+  rate. Wire them to <a href="../content/04-evals-observability/observability.md">drift detection</a>
+  so degradation pages someone instead of accruing silently.</li>
+<li><strong>Every AI feature ships with a kill switch</strong> — and a <em>chosen</em> degraded mode:
+  fall back to the previous model version, to retrieval-only answers, or to the
+  human process. "Turn it off" should be a product decision made calmly in advance,
+  not invented at 2 a.m.</li>
+<li><strong>Model updates are change events.</strong> Provider ships a new version, behaviour
+  shifts, tickets spike: that's an incident class. The mitigation is the
+  <a href="tpm-for-ai-products.html">pin-and-diff discipline</a> — pinned versions, eval diffs
+  before adoption, staged ramps.</li>
+<li><strong>The screenshot incident</strong> — one appalling output going viral is a real severity
+  class with its own playbook: capture the trace, reproduce, guardrail the pattern,
+  and feed it to the <a href="tpm-for-ai-products.html">eval suite</a> so it can never ship
+  again unnoticed.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Diagnosis before mitigation</strong> — an hour of root-causing while the rollback
+  button waits; users pay for the team's curiosity.</li>
+<li><strong>The headless incident</strong> — no commander; parallel uncoordinated fixes, one of
+  which causes incident number two.</li>
+<li><strong>Blameful postmortems</strong> — the room optimizes for self-defense; the same incident
+  returns with a different name on it.</li>
+<li><strong>Action-item graveyard</strong> — lessons documented, never funded; the postmortem
+  becomes a ritual of description.</li>
+<li><strong>Availability-only monitoring</strong> — the AI feature is "up" while its quality is
+  quietly on fire; no error, no page, no idea.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Is there a severity ladder, and does everyone know who commands a SEV1?</li>
+<li class="task todo">For each critical feature: what's the rollback, and when was it last exercised?</li>
+<li class="task todo">Do users hear from us honestly and on a cadence during incidents — and is that
+      <em>someone's</em> named job?</li>
+<li class="task todo">Are postmortem action items tracked, owned, and reviewed — and do repeat
+      incidents trigger escalation?</li>
+<li class="task todo">For AI features: is a quality drop pageable, is there a kill switch, and is
+      the degraded mode a decision rather than an accident?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
+<li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
+<li><a href="tpm-for-ai-products.html">TPM for AI products</a></li>
+<li><a href="../technical-product-sense/reliability-and-failure.html">Reliability &amp; failure</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="launches-rollouts-and-migrations.html"><span class="lbl">← Previous</span><span class="ttl">Launches, rollouts &amp; migrations</span></a><a class="navcard next" href="tpm-for-ai-products.html"><span class="lbl">→ Next</span><span class="ttl">Technical product management for AI</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
   primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',

@@ -132,6 +132,15 @@ Same problem, far richer decomposition — and that's exactly what the
 - **Look for the same model across fields.** When you spot compounding in finance *and*
   bacteria *and* skill, you've actually learned it.
 
+> **📦 Mini-case — the churn diagnosis.** A subscription team spent two quarters
+> treating rising churn as a *pricing* problem (their home discipline). A lattice
+> pass reframed it in one meeting: *bottleneck* — churn concentrated in users who
+> never reached the aha moment; *incentive* — sales was paid on signups, not
+> activations, so it sold to poor-fit accounts; *second-order* — last year's
+> discount campaign had pulled in exactly those accounts. Three models, three fixes,
+> none of them a price change. One discipline saw one lever; the lattice saw the
+> system.
+
 ## Failure modes
 
 - **Man-with-a-hammer syndrome** — forcing every problem into your favorite model.

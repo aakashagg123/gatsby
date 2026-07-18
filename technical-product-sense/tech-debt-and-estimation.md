@@ -83,6 +83,24 @@ weeks," hear "probably two, could be one, could be four." Useful instincts:
 You're not there to squeeze the number down — you're there to *understand* it, so you can
 sequence work, cut scope intelligently, and set expectations you can keep.
 
+## A worked pass: reading a "3 weeks for a form"
+
+The estimate that sounds absurd until you decompose it. You ask for two extra fields on
+the signup form; engineering says three weeks. The wrong response is "it's a *form*."
+The right response is "walk me through it" — and the walk reveals: the fields need a
+schema migration on a 40-million-row table (which, on this database version, locks the
+table unless done in stages), a backfill for existing users, changes to three services
+that validate signup payloads, handling for old app versions that will keep submitting
+the old shape for months, and updates to the data-export pipeline a partner depends on.
+The form is two days; the *system the form touches* is three weeks.
+
+Now the negotiation is honest and specific instead of adversarial: do old app versions
+really need support, or can the fields be optional until the next forced upgrade? Does
+the partner export need the fields at launch, or in Q3? Can the backfill run lazily on
+next login instead of up front? Each question trades scope against time *knowingly* —
+and each is only askable because you asked what the three weeks was made of. That's
+what "reading an estimate" means: not challenging the number, decomposing it.
+
 ## Failure modes
 
 - **Invisible debt** — debt that never makes the roadmap, so it compounds until the team

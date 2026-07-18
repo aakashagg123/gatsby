@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink active" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink active" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 05</span>
     <h1>Reliability &amp; failure</h1>
@@ -378,6 +378,21 @@ target to what a failure actually costs the user.</p>
 </ul>
 <p>Deciding <em>which</em> parts of your product need high reliability — and which can degrade quietly —
 is one of the clearest expressions of technical product sense.</p>
+<h2>A worked pass: the retry storm</h2>
+<p>How a slowdown becomes an outage. Your payment provider degrades — responses go from
+300 ms to 8 seconds. Every service calling it starts timing out and, being helpful,
+<em>retries</em>. Traffic to the struggling provider triples. Your own request threads are now
+parked waiting on payments, so unrelated pages slow down; users, being human, refresh —
+another retry storm, one layer up. A 20-minute provider blip becomes a site-wide
+outage, caused not by the failure but by <em>your response to it</em>.</p>
+<p>The toolkit, applied in order: <strong>timeouts</strong> cap how long anything waits (8-second calls
+get cut at 2); <strong>backoff with jitter</strong> spaces retries out instead of synchronizing
+them; a <strong>circuit breaker</strong> notices the provider is sick and fails fast for a while
+instead of queueing more victims; and a <strong>fallback</strong> decides what the user sees —
+"payment is taking longer than usual, we'll email your receipt" beats a spinner beats
+an error page. The product decision hiding in the incident: which of those experiences
+did you <em>choose</em> in the spec, and which did users get by accident? Write the failure
+UX down before launch; the system will exercise it whether or not you designed it.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>No degraded path</strong> — the feature only has "works" and "white screen"; the first outage is

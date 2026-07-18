@@ -21,6 +21,7 @@ CFG = {
     "lessons": [
         "motivation-and-behaviour",
         "cognitive-empathy",
+        "user-research",
         "creativity",
         "communication",
         "domain-expertise",

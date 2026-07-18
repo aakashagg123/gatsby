@@ -115,6 +115,14 @@ informed hypothesis — is itself the mark of expertise.
 - **Test your expertise** — write the 5 hardest questions someone could ask about your
   product/domain and answer them; the gaps are your study list.
 
+> **📦 Mini-case — the EMR that doctors hate.** Electronic medical records were largely
+> designed with deep domain input — from billing and compliance experts. The result
+> optimizes claims perfectly and forces clinicians through fifteen clicks to record an
+> ordinary visit. Domain expertise *was* present; it was the wrong domain's, and
+> nobody asked the outsider question "why does a doctor's tool feel like an invoice?"
+> Expertise tells you how the world works; only user contact tells you whose version
+> of the world your product just encoded.
+
 ## Failure modes
 
 - **The expert's trap** — "I am the user," so you stop validating and miss new perspectives.

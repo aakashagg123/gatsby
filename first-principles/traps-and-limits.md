@@ -118,6 +118,15 @@ Notice the symmetry with the rest of the curriculum: just as
 cost, *how you reason* is itself a choice with a cost. Defaulting to first principles
 everywhere is as naïve as never using it.
 
+> **📦 Mini-case — reinventing the calendar.** A startup, reasoning "from first
+> principles," decided recurring billing dates were an inherited convention and built
+> a novel cycle-based scheme. Six months later they had re-derived, one support
+> ticket at a time, why billing anchors to calendar months: payroll timing, corporate
+> card cycles, accounting periods — bedrock constraints that lived in *other
+> people's* systems, invisible from inside the whiteboard session. First-principles
+> reasoning fails exactly here: when the "arbitrary convention" encodes constraints
+> you haven't met yet. Before overturning a convention, find out what it knows.
+
 ## Failure modes (of this module's own ideas)
 
 - **First-principles as identity** — reaching for decomposition reflexively to signal

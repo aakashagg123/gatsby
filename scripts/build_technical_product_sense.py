@@ -27,6 +27,8 @@ CFG = {
         "latency-scale-performance",
         "reliability-and-failure",
         "tech-debt-and-estimation",
+        "security-and-privacy",
+        "economics-of-infrastructure",
         "technical-sense-for-ai",
     ],
 }

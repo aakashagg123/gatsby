@@ -125,6 +125,14 @@ decompose* is a cost/benefit call, not a virtue.
 | **Typical result** | A safe variation on the norm | A possibly non-obvious answer |
 | **Failure mode** | Inherits hidden, wrong constraints | Reinvents a solved wheel, slowly |
 
+> **📦 Mini-case — the battery pack.** The famous version: electric-car batteries "cost
+> $600/kWh, always have." Deconstructed to the commodity prices of the raw materials —
+> nickel, cobalt, aluminum, steel — the floor was closer to $80/kWh; everything above
+> it was manufacturing convention, not physics. The consensus number was an *inherited*
+> constraint. Reasoning by analogy said "batteries are expensive"; reasoning from first
+> principles said "batteries are expensive *the way we currently make them*" — a
+> different claim with a different roadmap.
+
 ## Failure modes
 
 - **Analogy in disguise** — you *think* you decomposed, but you stopped at someone else's

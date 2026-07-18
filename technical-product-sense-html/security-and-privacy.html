@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Technical product sense for the AI PM</title>
+<title>Security &amp; privacy sense — Technical product sense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -308,64 +308,137 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Technical product sense for the AI PM</h1>
-    <p class="lede">Reading systems like an engineer — architecture, data, latency, and failure — so you can build with them, not just around them.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>for APMs &amp; PMs</span><span>diagrams included</span></div>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink active" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 07</span>
+    <h1>Security &amp; privacy sense</h1>
   </div>
-  <div class="intro"><p>Product sense tells you <em>what</em> to build. <strong>Technical product sense</strong> tells you what it will
-take to build it — and what the system will and won't let you do. It's the ability to read
-an architecture, reason about data, latency, and failure, and hold a credible conversation
-with engineers about trade-offs. You don't need to write the code; you need to understand
-the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
-<p>For APMs and PMs moving into <strong>AI product management</strong>, this is non-optional. An AI feature
-is a distributed system with a probabilistic component bolted into it — latency, cost,
-failure, and data flow are now <em>product</em> decisions, not back-end details. This module
-builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
-you can redraw on a whiteboard.</p>
-<h2>The knowledge graph</h2>
-<p>A system is a request path, the contracts and data it moves through, and the forces that
-degrade it — with the AI capstone bolting a probabilistic component into the middle:</p>
-<pre class="mermaid">flowchart TB
-  REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
-  REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
-  subgraph FORCES[&quot;THE FORCES THAT DEGRADE IT&quot;]
-    LAT[&quot;Latency &amp; scale&quot;]
-    REL[&quot;Reliability &amp; failure&quot;]
-    DEBT[&quot;Tech debt &amp; estimation&quot;]
-  end
-  REQ --- FORCES
-  API &amp; DATA &amp; FORCES --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;a model in the request path:&lt;br/&gt;cost &amp; latency as UX, evals,&lt;br/&gt;observability, tenant boundaries&quot;]
-  AI --&gt; CONV[&quot;Credible technical conversations&lt;br/&gt;and better product calls&quot;]</pre>
+  <h2>TL;DR</h2>
+<p>Security is not a feature and not a checklist at the end — it's a property of every
+decision you've already made: what data you collect, who can see it, how components
+authenticate to each other, and what an attacker gets if any one piece fails. The PM's
+share of it is concrete: know the difference between <strong>authentication</strong> (who are you)
+and <strong>authorization</strong> (what may you do), treat <strong>personal data as a liability you
+minimize</strong>, ask "who can see this?" about every new surface, and assume every input —
+form field, file upload, API call, prompt — is hostile until validated. Privacy is the
+product-shaped half of the same discipline: collecting less, explaining clearly, and
+making deletion real.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM</strong></p>
+<p><strong>Why it matters</strong> — AI features widen the attack surface in ways classic reviews
+miss: prompts are a new injection vector, model outputs are a new leakage channel,
+training and feedback data are a new privacy commitment, and a helpful agent with
+broad permissions is a phishable employee that works at machine speed.</p>
+<p><strong>What it changes in your decisions</strong> — Data minimization becomes a spec line ("the
+model sees the ticket text, not the account object"); permissioning becomes part of
+retrieval design; and "can we learn from user data?" becomes a question you answer
+with counsel <em>before</em> the flywheel depends on it.</p>
+<p><strong>Ask yourself</strong> — <em>"If this feature's inputs were written by an attacker, what's
+the worst the system would do — and would we notice?"</em></p>
+<p><strong>Risk if ignored</strong> — The incident that costs more than the feature ever earned: a
+tenant seeing another tenant's data, a support bot exfiltrating account details, or
+a "delete my data" request you can't actually honor.</p>
+</blockquote>
+<h2>The mental model: surfaces, boundaries, blast radius</h2>
+<pre class="mermaid">flowchart LR
+  U[&quot;Users (and attackers —&lt;br/&gt;same door)&quot;] --&gt; IN[&quot;Input surfaces&lt;br/&gt;forms · uploads · APIs · prompts&quot;]
+  IN --&gt; AUTHN[&quot;Authentication&lt;br/&gt;who are you?&quot;]
+  AUTHN --&gt; AUTHZ[&quot;Authorization&lt;br/&gt;what may YOU do?&quot;]
+  AUTHZ --&gt; SYS[&quot;Services &amp; data&quot;]
+  SYS --&gt; OUT[&quot;Output surfaces&lt;br/&gt;pages · exports · logs ·&lt;br/&gt;model responses&quot;]
+  SEC[&quot;Secrets &amp; keys&quot;] -.-&gt;|&quot;scoped, rotated,&lt;br/&gt;never in code&quot;| SYS
+  BR[&quot;Blast radius question:&lt;br/&gt;if THIS piece is compromised,&lt;br/&gt;what does the attacker get?&quot;] -.-&gt; IN &amp; AUTHZ &amp; SYS &amp; OUT</pre>
+<p>Three habits cover most of a PM's security surface:</p>
 <ul>
-<li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
-  the path a request actually travels.</li>
-<li><a href="apis-and-contracts.html"><strong>APIs &amp; contracts</strong></a> — how components talk: requests,
-  idempotency, versioning, and webhooks.</li>
-<li><a href="data-and-the-data-model.html"><strong>Data &amp; the data model</strong></a> — entities, relationships, and
-  why "where does this data live?" is a product question.</li>
-<li><a href="latency-scale-performance.html"><strong>Latency, scale &amp; performance</strong></a> — where time goes,
-  caching, and what "it doesn't scale" really means.</li>
-<li><a href="reliability-and-failure.html"><strong>Reliability &amp; failure</strong></a> — retries, timeouts, graceful
-  degradation, and designing for the request that goes wrong.</li>
-<li><a href="tech-debt-and-estimation.html"><strong>Tech debt &amp; estimation</strong></a> — reading an estimate, pricing
-  trade-offs, and working with engineers on debt.</li>
-<li><a href="security-and-privacy.html"><strong>Security &amp; privacy sense</strong></a> — authn vs. authz, hostile
-  input, blast radius, and privacy as a product surface.</li>
-<li><a href="economics-of-infrastructure.html"><strong>The economics of infrastructure</strong></a> — where the money
-  goes, cost curves, and the unit-economics napkin every feature deserves.</li>
-<li><a href="technical-sense-for-ai.html"><strong>Technical sense for AI systems</strong></a> — the capstone: the
-  anatomy of an AI feature, evals and observability, and cost/latency as UX.</li>
+<li><strong>Authentication ≠ authorization.</strong> Logging in says who you are; it says nothing
+  about what you may see. Most real-world data leaks in products are authorization
+  bugs — the classic is an ID in a URL that anyone can increment
+  (<code>/invoices/1041</code> → <code>/invoices/1042</code>) because someone checked <em>logged in</em> but not
+  <em>allowed</em>. Every spec that shows data should name <em>whose</em> data and <em>which roles</em> see
+  it; <a href="data-and-the-data-model.html">permissions are part of the data model</a>, not a
+  filter bolted on later.</li>
+<li><strong>All input is hostile.</strong> Form fields, file names, imported CSVs, webhook payloads,
+  and prompts are attacker-controlled text. Injection — sneaking instructions or code
+  into what the system treats as data — is decades old (SQL injection) and newly
+  relevant (prompt injection). The defense is always the same shape: validate,
+  constrain, and never let untrusted input carry authority.</li>
+<li><strong>Think in blast radius.</strong> Perfect prevention doesn't exist, so bound the damage:
+  least-privilege credentials (the reporting service can <em>read</em> orders, not delete
+  them), secrets in a vault rather than code, tenant isolation enforced at the data
+  layer, and audit logs so you can answer <em>what happened?</em> A useful review question
+  for any component: "if this one thing were compromised tonight, what does the
+  attacker hold tomorrow?"</li>
 </ul>
-<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — why it matters when the
-system has a model in it — and a diagram to make it concrete.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="security-and-privacy.html"><span class="card-num">07</span><h3>Security &amp; privacy sense</h3><span class="card-go">Read lesson →</span></a><a class="card" href="economics-of-infrastructure.html"><span class="card-num">08</span><h3>The economics of infrastructure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">09</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<h2>Privacy is a product surface</h2>
+<p>Security keeps attackers out; privacy is the promise you make to the users you let in.
+The PM owns more of it than any other discipline:</p>
+<ul>
+<li><strong>Minimize at the spec.</strong> The cheapest data to protect is data you never collected.
+  Every field in a form and every event in analytics is a liability with a purpose —
+  make the purpose explicit, and cut fields that don't have one.</li>
+<li><strong>Retention and deletion are features.</strong> "We delete your data" is an engineering
+  project (backups, warehouses, model-training sets, logs) that must be <em>designed</em>,
+  not assumed. If a deletion request today would miss three copies, you have a
+  roadmap item, not a policy.</li>
+<li><strong>Consent follows use, not collection.</strong> Data collected to process an order was not
+  thereby licensed to train a model or fuel a growth email. When the use changes, the
+  question re-opens — this is the legal-and-trust half of the
+  <a href="../technical-product-management/tpm-for-ai-products.html">data flywheel</a>.</li>
+<li><strong>Regulated categories change the game.</strong> Health, payments, minors, biometrics, and
+  location each carry regimes (HIPAA, PCI, GDPR/DPDP-class laws) with real teeth.
+  You don't need to be a lawyer; you need the reflex that says <em>this data class means
+  we call one</em>.</li>
+</ul>
+<h2>What changes with a model in the system</h2>
+<p>The AI-specific deltas, briefly — each expanded in the
+<a href="../content/05-safety-multitenancy/safety-engineering.md">safety engineering</a> and
+<a href="../agentic-ai/safety-security-and-governance.html">agent security</a> lessons:</p>
+<ul>
+<li><strong>Prompt injection</strong> — retrieved documents, user messages, and tool results can
+  carry instructions the model may follow. Anything that enters the context is an
+  input surface; treat "the model read a malicious email and obeyed it" as a threat
+  model, not a curiosity.</li>
+<li><strong>Output is a leakage channel</strong> — a model with over-broad retrieval can be <em>talked
+  into</em> revealing what the asking user shouldn't see. Retrieval must enforce the same
+  authorization as the UI (<a href="../content/05-safety-multitenancy/multi-tenant-isolation.md">tenant isolation</a>).</li>
+<li><strong>The agent is a phishable employee</strong> — an agent's tools are its permissions;
+  review the toolbox like an access grant, and gate irreversible actions on humans.</li>
+</ul>
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Authorization by obscurity</strong> — "nobody will guess that URL/ID." They will, with a
+  for-loop.</li>
+<li><strong>The checklist at the end</strong> — security review scheduled after the design is
+  frozen, when every finding is expensive.</li>
+<li><strong>Data hoarding</strong> — collecting everything "in case it's useful," then discovering
+  at breach (or deletion-request) time exactly how much you held.</li>
+<li><strong>One credential to rule them all</strong> — a service account with god-mode scopes shared
+  across features; one leak, total loss.</li>
+<li><strong>Privacy policy fiction</strong> — the policy promises deletion and purpose-limits the
+  systems don't implement; the gap is discovered by a regulator or a journalist.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">For every surface in my spec: who is authenticated, what are they <em>authorized</em>
+      to see, and which role sees what?</li>
+<li class="task todo">Can I name each personal-data field we collect and the purpose it serves — and
+      would deletion actually reach every copy?</li>
+<li class="task todo">What happens when each input surface receives hostile input — including the
+      prompt and retrieved context?</li>
+<li class="task todo">What's the blast radius if this feature's credentials leak — and are its scopes
+      the narrowest that work?</li>
+<li class="task todo">Has anything in this feature changed how we <em>use</em> existing data — and does
+      consent cover the new use?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="data-and-the-data-model.html">Data &amp; the data model</a></li>
+<li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
+<li><a href="../content/05-safety-multitenancy/safety-engineering.md">Safety engineering</a></li>
+<li><a href="../agentic-ai/safety-security-and-governance.html">Agent safety, security &amp; governance</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="tech-debt-and-estimation.html"><span class="lbl">← Previous</span><span class="ttl">Tech debt &amp; estimation</span></a><a class="navcard next" href="economics-of-infrastructure.html"><span class="lbl">→ Next</span><span class="ttl">The economics of infrastructure</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
   primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',

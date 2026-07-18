@@ -83,3 +83,16 @@ time.
 ---
 
 ← Back to [module overview](./README.md)
+
+## Test yourself
+
+1. **What's the first design question for any "let's build an agent" proposal?**
+   <details><summary>Answer</summary>How little autonomy can we get away with? If an expert can draw the flowchart, build the workflow and use the model inside the steps — cheaper, faster, more debuggable. (<a href="./what-is-an-agent.md">What is an agent?</a>)</details>
+2. **Why do agents get dumber and pricier on long tasks at the same time?**
+   <details><summary>Answer</summary>Context accumulates every step — it's paid for on every call (cost grows super-linearly with task length) while attention degrades as the window fills. Compaction, offloading, and sub-agent isolation are the counters. (<a href="./context-and-memory.md">Context & memory</a>)</details>
+3. **A run reaches the right answer via eleven wasted tool calls. Which eval catches it?**
+   <details><summary>Answer</summary>Trajectory evals — grading the path (tool choice, step count, no flailing), not just the outcome. Paths rot before outcomes do. (<a href="./reliability-and-evals.md">Reliability & evals</a>)</details>
+4. **Where do all agent safety controls actually attach, and why there?**
+   <details><summary>Answer</summary>At the harness's execution step — the model only ever *requests* a tool call; the harness executes and can refuse, which is where allowlists, approvals, budgets, and logging live. (<a href="./tools-and-function-calling.md">Tools & function calling</a>)</details>
+5. **What's the "supervised cost per task," and why is it the honest number?**
+   <details><summary>Answer</summary>Agent cost + (intervention rate × human time) + (failure rate × cost of a miss). An agent cheap per run but needing full review can cost more than the human baseline it replaced. (<a href="./agentic-ai-as-a-product.md">Agentic AI as a product</a>)</details>

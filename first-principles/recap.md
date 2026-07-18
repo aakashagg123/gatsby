@@ -73,3 +73,16 @@ reasons in a vacuum; material with no method is trivia; either one without judgm
 ---
 
 ← Back to [module index](./README.md) · ↩ Back to [the curriculum](../SUMMARY.md)
+
+## Test yourself
+
+1. **What's the difference between a bedrock claim and an inherited one?**
+   <details><summary>Answer</summary>Bedrock bottoms out in physics, math, observed fact, or a chosen goal; inherited claims were true for some other context and copied in unexamined. The Challenge step exists to sort the two. (<a href="./the-method.md">The method</a>)</details>
+2. **When does reasoning by analogy beat first principles?**
+   <details><summary>Answer</summary>When stakes are low, the domain is well-trodden, and the consensus answer encodes constraints you haven't personally met — most decisions, most days. First principles is for high-stakes moments when you suspect the consensus is wrong. (<a href="./traps-and-limits.md">Traps & limits</a>)</details>
+3. **Why does a latticework need models from *several* disciplines?**
+   <details><summary>Answer</summary>Each discipline has characteristic blind spots; models from different fields error-correct each other. Fifty models from one field share one set of blind spots. (<a href="./mental-models-latticework.md">The latticework</a>)</details>
+4. **What makes re-reading feel effective while being ineffective?**
+   <details><summary>Answer</summary>Fluency — recognizing material feels like knowing it. Retrieval (testing yourself) is effortful, feels worse, and produces far better retention. (<a href="./learning-how-to-learn.md">Learning how to learn</a>)</details>
+5. **What should you do before overturning a long-standing convention "from first principles"?**
+   <details><summary>Answer</summary>Find out what the convention knows — ask what constraints (often in other people's systems) it might encode, and check who has tried before. Chesterton's fence, operationalized. (<a href="./traps-and-limits.md">Traps & limits</a>)</details>

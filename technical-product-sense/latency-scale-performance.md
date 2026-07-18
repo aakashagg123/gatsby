@@ -79,6 +79,23 @@ is 4 seconds, one user in twenty has a terrible time — often your highest-valu
 with the most data. Always ask for **percentiles (p95, p99)**, not the mean. A good average
 with a bad tail is a common, invisible failure.
 
+## A worked pass: the search box that "feels slow"
+
+Users say search feels slow. The team proposes "optimize the search service." Budget it
+instead. Target: results within 500 ms of typing pause. Measured p95: 1,900 ms. Where
+does it go? Client debounce 300 ms · network 80 ms · API layer 20 ms · search service
+250 ms · **a permissions check that calls another service per result row: 1,100 ms** ·
+serialization 60 ms. The "slow search service" is a quarter of the budget; the
+dominant hop is a chatty authorization call nobody mentioned, doing 40 sequential
+lookups a batch call could do in one.
+
+Fix the biggest bar first: batch the permission lookups (1,100 → 90 ms), cache the
+user's permission set for the session, and drop the debounce to 150 ms since results
+are now cheap. New p95: ~600 ms, an afternoon of work — versus the proposed month of
+tuning the component that was never the problem. The discipline generalizes: *never
+accept "X is slow" without the hop-by-hop budget*, because intuition reliably points at
+the famous component while the milliseconds hide in the boring one.
+
 ## Failure modes
 
 - **Optimizing the wrong hop** — shaving milliseconds off a fast step while a slow one

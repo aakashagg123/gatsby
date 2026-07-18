@@ -308,7 +308,7 @@ pre.mermaid{background:var(--panel);border:1px solid var(--line);border-radius:v
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink active" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="technical-sense-for-ai.html">7 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink active" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Latency, scale &amp; performance</h1>
@@ -375,6 +375,20 @@ share. "It doesn't scale" almost always means "something shared is saturated."</
 is 4 seconds, one user in twenty has a terrible time — often your highest-value power users
 with the most data. Always ask for <strong>percentiles (p95, p99)</strong>, not the mean. A good average
 with a bad tail is a common, invisible failure.</p>
+<h2>A worked pass: the search box that "feels slow"</h2>
+<p>Users say search feels slow. The team proposes "optimize the search service." Budget it
+instead. Target: results within 500 ms of typing pause. Measured p95: 1,900 ms. Where
+does it go? Client debounce 300 ms · network 80 ms · API layer 20 ms · search service
+250 ms · <strong>a permissions check that calls another service per result row: 1,100 ms</strong> ·
+serialization 60 ms. The "slow search service" is a quarter of the budget; the
+dominant hop is a chatty authorization call nobody mentioned, doing 40 sequential
+lookups a batch call could do in one.</p>
+<p>Fix the biggest bar first: batch the permission lookups (1,100 → 90 ms), cache the
+user's permission set for the session, and drop the debounce to 150 ms since results
+are now cheap. New p95: ~600 ms, an afternoon of work — versus the proposed month of
+tuning the component that was never the problem. The discipline generalizes: <em>never
+accept "X is slow" without the hop-by-hop budget</em>, because intuition reliably points at
+the famous component while the milliseconds hide in the boring one.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Optimizing the wrong hop</strong> — shaving milliseconds off a fast step while a slow one

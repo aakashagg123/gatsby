@@ -108,6 +108,14 @@ Not every idea will be good — the point is to generate range, then filter agai
   features.
 - **Prototype bold ideas** fast — a tangible prototype rallies support that a doc can't.
 
+> **📦 Mini-case — Instagram says no.** Early Instagram was a cluttered check-in app
+> (Burbn) whose data showed users mostly shared photos. The strategic-creativity move
+> wasn't adding — it was *cutting*: rebuild around photo sharing only, with filters as
+> the differentiator, and explicitly decline everything else the app already did.
+> Focus was the creative act. The test for your own roadmap: can you name the last
+> good idea you shelved because it didn't strengthen a pillar? If not, you have a
+> backlog, not a strategy.
+
 ## Failure modes
 
 - **"Add AI" as strategy** — a capability with no segment, positioning, or differentiation
