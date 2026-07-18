@@ -94,6 +94,14 @@ isn't "we have AI," it's *"we found the job where this model is genuinely reliab
 valuable, for a user who cares."* Often the best AI product uses the model for the 20% that
 delights and a deterministic system for the 80% that must be correct.
 
+For enterprise products, plot the job on two axes: **task complexity** and the buyer's
+**tolerance to task failure**. Most visible AI wins live where failure is cheap (a blog
+outline that misses is deleted); enterprise value lives where failure is expensive (a
+diagnosis, a payment) — and the way in is not to wait for a perfect model but to take
+jobs of modest complexity in low-tolerance domains and *wrap service checks around
+them*: verification steps, human gates, escalation paths. The frontier then shifts
+outward with the model — but the scoping discipline is what got you in the room.
+
 ## AI-enabled vs. AI-native
 
 A distinction that sharpens scoping conversations: an **AI-enabled** product bolts a

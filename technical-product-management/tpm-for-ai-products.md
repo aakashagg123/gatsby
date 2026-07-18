@@ -119,6 +119,15 @@ viability question from lesson 2 that quietly determines whether your flywheel i
 A competitor with the same model and a faster flywheel wins in a year. That asymmetry —
 not model choice — is usually the real AI strategy question.
 
+The flywheel's strategic twin is **workflow capture**. The defensible position isn't the
+model or even a beloved feature — it's owning a *control point* in the customer's
+workflow: the step whose outputs downstream work consumes and whose inputs upstream
+work feeds. From a control point you expand horizontally (each captured workflow adds
+enterprise context that makes the next one easier to win), and a broader bundle lets
+you cross-subsidize any component a point-solution competitor tries to commoditize.
+When you evaluate an adjacent workflow, the deciding question is directional: *if
+another player captured it, would they integrate into us, or we into them?*
+
 ## The long game: models age, debt compounds
 
 Three roadmap truths that only bite in the product's second year, so budget for them in

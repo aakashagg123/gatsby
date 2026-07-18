@@ -88,7 +88,12 @@ the best one *for a given SLO*.
    traffic cheap/fast, hard traffic capable; don't pay worst-case cost for the average
    request.
 5. **Revisit continuously.** Models, prices, and traffic change; today's optimal point
-   drifts — re-evaluate as part of operations.
+   drifts — re-evaluate as part of operations. Four forces are falling or rising in
+   your favor *simultaneously*: training costs falling, per-token inference costs
+   falling, tokens-per-second rising, and usable context windows growing. That means
+   every "not economical" and "too slow" verdict has an expiry date — keep a list of
+   the features that just missed the bar, and re-run the numbers on a schedule, because
+   the dial-up era's "no" is often the broadband era's product.
 
 ## Failure modes
 
