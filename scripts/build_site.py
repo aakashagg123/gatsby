@@ -17,6 +17,7 @@ Run:  python3 scripts/build_site.py
 """
 import os
 import shutil
+import reader_widget
 
 import build_graph
 
@@ -384,13 +385,13 @@ def main():
                 p, n = prev_next.get(md_path, (None, None))
                 nav = nav_html(md_path, p, n)
             with open(html_path, "w") as f:
-                f.write(VIEWER.format(
+                f.write(reader_widget.inject(VIEWER.format(
                     title=title,
                     md=md_url,
                     root="../" + root if root else "../",   # _site/ root
                     harness_root=root or "./",
                     nav=nav,
-                ))
+                )))
             pages += 1
 
     # 4. Harness landing = viewer for README.md.

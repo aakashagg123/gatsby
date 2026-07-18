@@ -26,6 +26,7 @@ import re
 import html as htmllib
 import markdown
 
+import reader_widget
 import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is guarded)
 
 # ---- mermaid (rendered client-side, matching the harness track) ---------------
@@ -212,7 +213,7 @@ def build_track(cfg):
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main></body></html>"""
     with open(os.path.join(out, "index.html"), "w") as f:
-        f.write(_inject_mermaid(page))
+        f.write(reader_widget.inject(_inject_mermaid(page)))
 
     # --- one page per lesson + recap ---
     pages = [(slug, os.path.join(src, f"{slug}.md"), i)
@@ -239,6 +240,6 @@ def build_track(cfg):
   {_footer(prev, nxt)}
   </main></div></body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:
-            f.write(_inject_mermaid(page))
+            f.write(reader_widget.inject(_inject_mermaid(page)))
 
     print(f"Built {len(lessons)} lesson pages + recap + index.html into {out}/")
