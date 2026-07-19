@@ -93,6 +93,14 @@ because it inoculates you against a whole genre of hype:
   exist mainly on infographics. Some may mature; none is a dependency you should list
   today.
 
+One protocol family did arrive with real backing: **agentic commerce**. Google's
+**AP2** (Agent Payments Protocol) and OpenAI/Stripe's **ACP** (Agentic Commerce
+Protocol, powering Instant Checkout inside ChatGPT) both shipped in late 2025 —
+mandates, payment credentials, and merchant integration for agents that *buy things*.
+It's early, but note what it validates: the money layer is exactly the transaction-cost
+territory that [workflow capture](./agentic-ai-as-a-product.md) says agents absorb, so
+watch this family more closely than the alphabet soup above.
+
 The strategic read: tool-to-agent standardization (MCP) succeeded because the problem
 was concrete and the payoff immediate. Agent-to-agent standardization is harder — it
 needs identity, trust, payments, and liability answers, not just message formats — so

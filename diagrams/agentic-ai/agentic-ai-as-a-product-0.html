@@ -1,0 +1,67 @@
+<style>
+.qd-fig{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 30px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;max-width:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.qd-kicker{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#bd5d3a;
+  font-weight:700;margin-bottom:4px}
+.qd-title{font-size:19px;font-weight:650;margin-bottom:20px;letter-spacing:-.01em;color:#1f1e1d}
+.qd-outer{display:grid;grid-template-columns:26px 1fr;grid-template-rows:1fr 30px;gap:8px}
+.qd-y{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;
+  justify-content:space-between;font-size:11.5px;color:#8a8778;letter-spacing:.4px;padding:6px 0}
+.qd-y b{color:#1f1e1d;font-weight:600}
+.qd-x{grid-column:2;display:flex;justify-content:space-between;font-size:11.5px;
+  color:#8a8778;letter-spacing:.4px;padding:0 6px}
+.qd-x b{color:#1f1e1d;font-weight:600}
+.qd-plot{position:relative;height:430px;border-radius:12px;overflow:hidden;
+  border:1px solid #e4e0d5;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.qd-q{position:relative;padding:14px 16px}
+.qd-q .qd-l{font-size:11px;letter-spacing:.9px;text-transform:uppercase;font-weight:700;color:#a39f90}
+.qd-q2{background:#f7f5ee;border-right:1px dashed #ddd8c9;border-bottom:1px dashed #ddd8c9}
+.qd-q1{background:#f9f3ec;border-bottom:1px dashed #ddd8c9}
+.qd-q3{background:#f4f2ea;border-right:1px dashed #ddd8c9}
+.qd-q4{background:linear-gradient(135deg,#fbefe9,#f9e5d8)}
+.qd-q4 .qd-l{color:#bd5d3a}
+.qd-q4 .qd-l::after{content:" ✦"}
+.qd-q1 .qd-l,.qd-q2 .qd-l{position:absolute;top:12px}
+.qd-q3 .qd-l,.qd-q4 .qd-l{position:absolute;bottom:12px}
+.qd-q1 .qd-l,.qd-q4 .qd-l{right:16px;text-align:right}
+.qd-pt{position:absolute;transform:translate(-50%,50%);display:flex;flex-direction:column;
+  align-items:center;gap:5px;z-index:2}
+.qd-pt i{width:11px;height:11px;border-radius:50%;background:#bd5d3a;
+  border:2.5px solid #fff;box-shadow:0 1px 4px rgba(189,93,58,.45)}
+.qd-pt span{font-size:12.5px;font-weight:550;color:#3d3c37;background:rgba(253,252,249,.92);
+  border:1px solid rgba(228,224,213,.9);border-radius:20px;padding:2.5px 10px;white-space:nowrap;
+  box-shadow:0 1px 2px rgba(26,25,21,.05)}
+.qd-pt.qd-up{flex-direction:column-reverse}
+.qd-note{margin-top:14px;font-size:12.5px;color:#8a8778;line-height:1.5}
+.qd-note b{color:#bd5d3a;font-weight:650}
+@media (max-width:640px){
+  .qd-plot{height:360px}
+  .qd-pt span{font-size:10.5px;padding:2px 7px}
+  .qd-q .qd-l{font-size:9.5px}
+}
+</style>
+<div class="qd-fig">
+  <div class="qd-kicker">Where agents pay</div>
+  <div class="qd-title">Stakes vs. verifiability — picking the agent's lane</div>
+  <div class="qd-outer">
+    <div class="qd-y"><span>low stakes</span><b>high stakes</b></div>
+    <div class="qd-plot">
+      <div class="qd-q qd-q2"><span class="qd-l">Agent assists</span></div>
+      <div class="qd-q qd-q1"><span class="qd-l">Draft, human approves</span></div>
+      <div class="qd-q qd-q3"><span class="qd-l">Cautious automation</span></div>
+      <div class="qd-q qd-q4"><span class="qd-l">Full autonomy — the sweet spot</span></div>
+      <div class="qd-pt qd-up" style="left:35%;bottom:90%"><i></i><span>Contract commitments</span></div>
+      <div class="qd-pt" style="left:20%;bottom:65%"><i></i><span>Strategic analysis</span></div>
+      <div class="qd-pt" style="left:55%;bottom:70%"><i></i><span>Outbound customer emails</span></div>
+      <div class="qd-pt" style="left:60%;bottom:45%"><i></i><span>Support triage &amp; drafting</span></div>
+      <div class="qd-pt" style="left:45%;bottom:30%"><i></i><span>Research summarization</span></div>
+      <div class="qd-pt" style="left:85%;bottom:35%"><i></i><span>Code with strong tests</span></div>
+      <div class="qd-pt" style="left:80%;bottom:20%"><i></i><span>Data extraction &amp; entry</span></div>
+    </div>
+    <div class="qd-x"><span>hard to verify</span><b>easy to verify</b></div>
+  </div>
+  <div class="qd-note">Three forces pick the lane: <b>verifiability</b> decides how far autonomy
+  can compound, <b>stakes</b> decide where a human gate is non-negotiable, and volume (not shown)
+  decides whether the fixed costs ever pay back.</div>
+</div>

@@ -84,6 +84,26 @@ document.querySelectorAll('pre.mermaid svg').forEach(s=>{
 });
 </script>"""
 
+
+# ---- hand-built diagram overrides ---------------------------------------------
+# The markdown keeps its ```mermaid fences (so GitHub renders them), but if a
+# hand-crafted HTML figure exists at diagrams/<track>/<page-key>-<n>.html it
+# replaces the n-th mermaid block of that page in the HTML edition.
+def apply_diagram_overrides(body, src, key):
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ddir = os.path.join(root, "diagrams", os.path.basename(src))
+    if not os.path.isdir(ddir):
+        return body
+    idx = [-1]
+    def _repl(m):
+        idx[0] += 1
+        p = os.path.join(ddir, f"{key}-{idx[0]}.html")
+        if os.path.exists(p):
+            with open(p) as f:
+                return f.read()
+        return m.group(0)
+    return re.sub(r'<pre class="mermaid">.*?</pre>', _repl, body, flags=re.DOTALL)
+
 def _inject_mermaid(page):
     """Add the mermaid runtime before </body> on pages that contain a diagram."""
     if 'class="mermaid"' in page:
@@ -228,7 +248,7 @@ def build_track(cfg):
 
     # --- overview / landing (index.html) ---
     with open(os.path.join(src, "README.md")) as f:
-        intro_html = convert(f.read(), callout)
+        intro_html = apply_diagram_overrides(convert(f.read(), callout), src, "index")
     cards = []
     for i, (slug, t) in enumerate(lesson_titles, 1):
         cards.append(
@@ -265,7 +285,7 @@ def build_track(cfg):
         with open(path) as f:
             raw = f.read()
         t = bh.lesson_title(raw)
-        body = convert(raw, callout)
+        body = apply_diagram_overrides(convert(raw, callout), src, key)
         prev, nxt = prevnext(key)
         chip = f"Lesson {num:02d}" if num else "Recap"
         page = _head(f"{t} — {brand}")

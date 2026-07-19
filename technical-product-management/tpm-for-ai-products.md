@@ -148,6 +148,25 @@ its first:
   instrumentation every future feature rides on. When the roadmap fight comes, the
   flywheel's plumbing is usually the highest-leverage thing on the list.
 
+## Vibe coding: the prototype is the new spec
+
+The 2025 shift with the biggest day-to-day impact on the PM craft: AI coding tools
+(Claude Code, Cursor-class editors) made working software cheap enough that PMs build
+it themselves — "vibe coding," Karpathy's February 2025 coinage that ended the year as
+Collins' word of the year. Three changes follow for this lesson's operating loop:
+
+- **Discovery ships artifacts, not documents.** A working prototype in front of five
+  users beats a PRD in front of five stakeholders; increasingly the prototype *is* the
+  spec, with the written doc recording the decisions the prototype forced.
+- **The PM–eng contract compresses.** "Here's what I mean" becomes something engineers
+  can click, which kills a whole class of specification ambiguity — and creates a new
+  duty: be explicit that the prototype demonstrates *intent*, not architecture.
+- **The new failure mode is prototype-grade code in production.** Vibe-coded software
+  demos beautifully and hides its corners (no error handling, no tenancy, no evals).
+  The discipline is a hard line: prototypes are for learning, the eval-gated pipeline
+  above is for shipping — and a PM who ships the prototype because it "already works"
+  has volunteered for the incident review.
+
 A closing practical note: **use these tools in your own workflow**. The PMs with the
 best model intuition use models daily — generating mock-up variations for design
 discussions, clustering and prioritizing bug reports, critiquing a UX flow, drafting the

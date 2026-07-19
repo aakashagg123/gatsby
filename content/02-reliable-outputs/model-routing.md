@@ -56,6 +56,13 @@ request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
   privacy** (sensitive data → on-prem/approved model only — a
   [safety boundary](../05-safety-multitenancy/safety-engineering.md)).
 
+A market note that settles the "is routing worth it?" debate: in August 2025 the
+biggest product in the industry shipped it as the *default architecture* — GPT-5's
+headline design is a real-time router deciding per request whether a fast model or a
+deliberate reasoning model answers. When routing is how the frontier lab spends its
+own margin, treating it as an optional optimization in your stack is leaving the same
+economics on the table.
+
 ## Graceful fallback logic
 
 Fail over on the right signals, in order of cost:
