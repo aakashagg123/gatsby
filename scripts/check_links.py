@@ -52,6 +52,10 @@ def main():
             resolved = os.path.normpath(os.path.join(os.path.dirname(path), target))
             if not os.path.exists(resolved):
                 broken.append(f"{os.path.relpath(path, ROOT)} -> {target}")
+            elif os.path.isdir(resolved) and os.path.basename(path) not in ROOT_FILES:
+                # directory links render on GitHub's repo view but 404 on the
+                # deployed site (no index.html is generated for bare folders)
+                broken.append(f"{os.path.relpath(path, ROOT)} -> {target} (directory link; point at a file)")
     if broken:
         print(f"BROKEN LINKS ({len(broken)}):")
         for b in broken:

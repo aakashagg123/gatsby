@@ -2,7 +2,7 @@
 
 This document defines the pedagogical framework for the hands-on **Harness Engineering**
 build track: the lesson shape, the artifacts, and the way phases stack. The
-[`foundations/`](./foundations/) docs give the conceptual spine; the lessons make you
+[`foundations/`](./foundations/harness-principles.md) docs give the conceptual spine; the lessons make you
 build it.
 
 ---
@@ -95,7 +95,7 @@ The track is meant to be *run inside an agent* (Claude, Cursor, Codex), not just
 - No five-minute videos, no copy-paste deploys, no hand-holding.
 - Everything runs on your own laptop.
 - Python first, TypeScript where the harness ecosystem lives (Node).
-- The [`foundations/`](./foundations/) docs are the **Concept** reading each build lesson
+- The [`foundations/`](./foundations/harness-principles.md) docs are the **Concept** reading each build lesson
   links to — read the idea, then build it.
 - Default to the latest, most capable model in Use-It code (**Claude Opus 4.8**,
   `claude-opus-4-8`).
