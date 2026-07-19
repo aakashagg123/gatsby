@@ -30,17 +30,58 @@ import reader_widget
 import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is guarded)
 
 # ---- mermaid (rendered client-side, matching the harness track) ---------------
+# Diagrams render inside a soft card; the SVG scales down to the column when it is
+# close to fitting, and the card scrolls horizontally when the diagram is genuinely
+# wide — either way nothing ever bleeds outside the content column.
 MERMAID_CSS = (
-    "pre.mermaid{background:var(--panel);border:1px solid var(--line);"
-    "border-radius:var(--radius);padding:22px;text-align:center;overflow-x:auto;margin:22px 0}"
+    "pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);"
+    "border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;"
+    "text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}"
+    "pre.mermaid svg{max-width:100%;height:auto;display:inline-block}"
+    ".mm-hint{position:sticky;left:8px;display:block;width:max-content;"
+    "font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;"
+    "border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}"
 )
 MERMAID_SCRIPT = """<script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', themeVariables:{
-  primaryColor:'#FBEFE9', primaryTextColor:'#1A1915', primaryBorderColor:'#D97757',
-  lineColor:'#C2613F', secondaryColor:'#F4F2EA', tertiaryColor:'#FFFFFF',
-  fontFamily:'Inter, system-ui, sans-serif', fontSize:'14px'}});
+mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+  themeVariables:{
+    background:'#faf9f5',
+    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
+    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
+    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
+    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
+    edgeLabelBackground:'#faf9f5',
+    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
+    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
+    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
+    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
+    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
+    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
+    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
+    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
+    quadrantTitleFill:'#1f1e1d',
+    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
+    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+});
 await mermaid.run({querySelector:'pre.mermaid'});
+// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+document.querySelectorAll('pre.mermaid svg').forEach(s=>{
+  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+  const cw=s.parentElement.clientWidth||0;
+  if(cw&&w>cw*1.6){s.style.maxWidth='none';
+    const h=document.createElement('span');h.className='mm-hint';
+    h.textContent='\u27f7 scroll';s.parentElement.insertBefore(h,s);}
+});
 </script>"""
 
 def _inject_mermaid(page):

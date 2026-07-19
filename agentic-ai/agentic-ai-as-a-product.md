@@ -41,10 +41,10 @@ quadrantChart
     title Stakes vs. verifiability — picking the agent's lane
     x-axis Hard to verify --> Easy to verify
     y-axis Low stakes --> High stakes
-    quadrant-1 Agent drafts, human approves
-    quadrant-2 Human does it, agent assists
-    quadrant-3 Cautious automation, sampled review
-    quadrant-4 Full autonomy - the sweet spot
+    quadrant-1 Draft, human approves
+    quadrant-2 Agent assists
+    quadrant-3 Cautious automation
+    quadrant-4 Full autonomy - sweet spot
     "Code with strong tests": [0.85, 0.35]
     "Support triage & drafting": [0.6, 0.45]
     "Data extraction & entry": [0.8, 0.2]
