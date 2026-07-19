@@ -119,6 +119,17 @@ The anchor everything else calibrates to.
 - Expensive and slow, so spend it where it matters most and let calibrated judges scale
   the rest.
 
+A vocabulary note for eng conversations: public **agent benchmarks** became the
+industry's shared shorthand — **SWE-bench Verified** (real GitHub issues, resolved
+end-to-end), **GAIA** (general assistant tasks), **OSWorld** (computer use),
+**tau-bench** (tool-using customer-service agents), **Terminal-Bench** (command-line
+work). Know what each measures so "we're at X%" means something to you — and know the
+caveat: public benchmarks saturate and leak into training data, which is why serious
+teams treat them as market signals and run *private* evals (this lesson) as the real
+gate. On the observability side, **OpenTelemetry's GenAI semantic conventions** are
+standardizing trace formats, which means eval and observability tooling is becoming
+portable across vendors rather than a lock-in decision.
+
 ## Grading choices that keep evals honest
 
 - **Binary beats Likert.** Prefer pass/fail judgments over 1–5 scales: forced decisions

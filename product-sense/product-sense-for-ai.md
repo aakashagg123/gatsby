@@ -134,6 +134,28 @@ changes the question you start from — not *"how can AI enhance this feature?"*
 scratch?"* — and it makes the eval, the failure UX, and the cost curve the product,
 not accessories to it.
 
+## The patterns users now expect
+
+Product sense includes knowing the reference points users bring, and 2025 reset them.
+Four patterns became the standard candles every AI product gets compared against:
+
+- **Deep-research modes** — async, minutes-long jobs that return a *report*, not a
+  chat reply. They taught users that waiting is acceptable when the output is worth
+  it — and reset expectations for what "an answer" can be.
+- **Proactive AI** — briefings and suggestions that arrive *unprompted* (the
+  Pulse-style morning digest). The pattern's product sense is consent and restraint:
+  proactivity delights precisely until it presumes.
+- **Persistent memory as a headline feature** — "it remembers me" moved from silent
+  personalization to a marketed, user-visible, user-editable surface. Products that
+  remember silently now read as creepy; products that forget read as broken.
+- **Visible thinking** — showing reasoning progress ("searching… comparing…
+  reconsidering…") became a trust affordance. Users forgive latency they can watch;
+  they distrust magic that arrives instantly and wrong.
+
+None of these obligates you to build all four — but every user who's touched a 2025-era
+assistant now carries them as priors, and your product is scored against those priors
+whether you like it or not.
+
 ## Feedback is a flywheel you design
 
 AI products get better with use — but only if you build the loop. Every correction,

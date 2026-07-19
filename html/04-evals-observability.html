@@ -457,6 +457,16 @@ style). Powerful but it has failure modes you must control:</p>
 <li>Expensive and slow, so spend it where it matters most and let calibrated judges scale
   the rest.</li>
 </ul>
+<p>A vocabulary note for eng conversations: public <strong>agent benchmarks</strong> became the
+industry's shared shorthand — <strong>SWE-bench Verified</strong> (real GitHub issues, resolved
+end-to-end), <strong>GAIA</strong> (general assistant tasks), <strong>OSWorld</strong> (computer use),
+<strong>tau-bench</strong> (tool-using customer-service agents), <strong>Terminal-Bench</strong> (command-line
+work). Know what each measures so "we're at X%" means something to you — and know the
+caveat: public benchmarks saturate and leak into training data, which is why serious
+teams treat them as market signals and run <em>private</em> evals (this lesson) as the real
+gate. On the observability side, <strong>OpenTelemetry's GenAI semantic conventions</strong> are
+standardizing trace formats, which means eval and observability tooling is becoming
+portable across vendors rather than a lock-in decision.</p>
 <h2>Grading choices that keep evals honest</h2>
 <ul>
 <li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales: forced decisions

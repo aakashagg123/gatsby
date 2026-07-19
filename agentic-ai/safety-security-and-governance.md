@@ -46,6 +46,15 @@ output of another agent. Real-world demonstrations have exfiltrated inbox conten
 private documents through exactly this route — zero clicks from the victim, no systems
 "hacked," just words in the right place.
 
+This stopped being theoretical in 2025 and acquired CVE numbers. **EchoLeak**
+(CVE-2025-32711, June 2025) exfiltrated data through Microsoft 365 Copilot via a
+crafted email the victim never opened — the assistant read it, followed it, and leaked;
+zero clicks. The **GitHub MCP exploit** the same season used a malicious public-repo
+issue to walk an agent into leaking private-repo data through its own legitimate
+tooling. Neither attack "broke" anything: both simply placed words where an
+over-privileged agent would read them. When someone says injection is a lab curiosity,
+these are the two names to say back.
+
 ```mermaid
 flowchart TB
   ATK["Attacker plants instructions<br/>in content the agent will read<br/>(web page, email, doc, tool result)"] --> READ["Agent reads it<br/>as ordinary context"]

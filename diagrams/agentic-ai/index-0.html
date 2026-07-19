@@ -1,0 +1,113 @@
+<style>
+.kg-fig{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:26px 26px 22px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;max-width:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  text-align:left}
+.kg-cluster{background:#fff;border:1px solid #e4e0d5;border-radius:13px;padding:13px 14px 14px}
+.kg-cluster h4{margin:0 0 9px;font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;font-family:inherit}
+.kg-cluster h4 em{font-style:normal;color:#c5c1b2;font-weight:600;letter-spacing:.4px}
+.kg-pills{display:flex;flex-wrap:wrap;gap:6px}
+.kg-pill{font-size:12.5px;font-weight:550;background:#fbefe9;border:1px solid #efd8ca;
+  color:#4a2f22;border-radius:9px;padding:5px 10px;line-height:1.35}
+.kg-pill.kg-alt{background:#f4f2ea;border-color:#e0dccd;color:#45443c}
+.kg-pill small{display:block;font-size:10.5px;font-weight:450;color:#a2765d;margin-top:1px}
+.kg-pill.kg-alt small{color:#8a8778}
+.kg-core{background:linear-gradient(135deg,#fbefe9,#f9e2d3);border:1.5px solid #ecc4ae;
+  border-radius:13px;padding:14px 16px;position:relative}
+.kg-loop{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:8px}
+.kg-step{background:#fff;border:1px solid #ecc4ae;border-radius:20px;padding:6px 13px;
+  font-size:13px;font-weight:600;color:#7c3f24;box-shadow:0 1px 2px rgba(189,93,58,.10)}
+.kg-loop .kg-arr{color:#cf8a68;font-size:15px;font-weight:700}
+.kg-loopback{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;
+  font-size:11px;color:#b07a5c;letter-spacing:.3px}
+.kg-loopback .kg-line{flex:0 1 210px;border-top:1.5px dashed #dfb094;height:0}
+.kg-modelchip{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:#bd5d3a;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;border-radius:20px;padding:3px 12px;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(189,93,58,.35)}
+.kg-flow{display:flex;align-items:center;justify-content:center;gap:10px;margin:7px 0;flex-wrap:wrap}
+.kg-flow .kg-lbl{font-size:11px;color:#8a8778;letter-spacing:.3px;background:#f4f2ea;
+  border:1px solid #e6e2d4;border-radius:20px;padding:2px 11px}
+.kg-flow .kg-down{color:#c5aa90;font-size:14px}
+.kg-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:10px}
+.kg-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}
+.kg-pipe{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.kg-pipe .kg-arr{color:#b3ab97;font-weight:700;font-size:13px}
+.kg-tag{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  border-radius:6px;padding:2px 7px;margin-left:6px}
+.kg-tag.kg-off{background:#eef0e4;color:#5c6b3f;border:1px solid #dde2c8}
+.kg-tag.kg-inl{background:#fdeeee;color:#a5453c;border:1px solid #f2d3d0}
+@media (max-width:640px){
+  .kg-grid,.kg-grid2{grid-template-columns:1fr}
+  .kg-fig{padding:18px 14px 16px}
+}
+</style>
+<div class="kg-fig">
+  <div class="kg-cluster">
+    <h4>What it knows <em>· lesson 3</em></h4>
+    <div class="kg-pills">
+      <span class="kg-pill kg-alt">Context engineering<small>curation · compaction · offloading</small></span>
+      <span class="kg-pill kg-alt">Retrieval / RAG</span>
+      <span class="kg-pill kg-alt">Persistent memory<small>files · notes · profiles</small></span>
+      <span class="kg-pill">Context window<small>the working memory</small></span>
+    </div>
+  </div>
+  <div class="kg-flow"><span class="kg-down">▼</span><span class="kg-lbl">knowledge flows into the model</span><span class="kg-down">▼</span></div>
+  <div class="kg-core">
+    <span class="kg-modelchip">The core · language model + loop</span>
+    <div class="kg-loop">
+      <span class="kg-step">gather</span><span class="kg-arr">→</span>
+      <span class="kg-step">decide</span><span class="kg-arr">→</span>
+      <span class="kg-step">act</span><span class="kg-arr">→</span>
+      <span class="kg-step">observe</span>
+    </div>
+    <div class="kg-loopback"><span>⟲</span><span class="kg-line"></span><span>repeat until done — or a budget says stop</span></div>
+  </div>
+  <div class="kg-flow"><span class="kg-lbl">planning &amp; reflection steer each cycle</span>
+    <span class="kg-down">▼</span><span class="kg-lbl">tools act on the world · results feed back</span></div>
+  <div class="kg-grid">
+    <div class="kg-cluster">
+      <h4>How it acts <em>· lesson 2</em></h4>
+      <div class="kg-pills">
+        <span class="kg-pill">Tools &amp; function calling</span>
+        <span class="kg-pill kg-alt">Integrations &amp; MCP</span>
+        <span class="kg-pill kg-alt">Sandboxes &amp; permissions</span>
+      </div>
+    </div>
+    <div class="kg-cluster">
+      <h4>How it thinks <em>· lesson 4</em></h4>
+      <div class="kg-pills">
+        <span class="kg-pill">Planning &amp; decomposition</span>
+        <span class="kg-pill kg-alt">Reflection &amp; self-correction</span>
+      </div>
+    </div>
+  </div>
+  <div class="kg-flow"><span class="kg-lbl">many loops at once — orchestrators &amp; subagents (lesson 5)</span></div>
+  <div class="kg-grid2">
+    <div class="kg-cluster">
+      <h4>Why it's trusted <em>· lessons 6–7</em></h4>
+      <div class="kg-pipe" style="margin-bottom:7px">
+        <span class="kg-pill kg-alt">Traces</span><span class="kg-arr">→</span>
+        <span class="kg-pill kg-alt">Error analysis</span><span class="kg-arr">→</span>
+        <span class="kg-pill">Evals<span class="kg-tag kg-off">gates offline</span></span>
+      </div>
+      <div class="kg-pipe">
+        <span class="kg-pill">Guardrails<span class="kg-tag kg-inl">blocks inline</span></span>
+        <span class="kg-pill kg-alt">Security</span>
+        <span class="kg-pill kg-alt">Human in the loop</span>
+      </div>
+    </div>
+    <div class="kg-cluster">
+      <h4>Why it's a business <em>· lesson 8</em></h4>
+      <div class="kg-pipe" style="margin-bottom:7px">
+        <span class="kg-pill kg-alt">Unit economics</span><span class="kg-arr">→</span>
+        <span class="kg-pill kg-alt">Workflow capture<small>outcomes, not seats</small></span>
+      </div>
+      <div class="kg-pipe">
+        <span class="kg-pill kg-alt">Agent UX &amp; trust</span><span class="kg-arr">→</span>
+        <span class="kg-pill">Viable product</span>
+      </div>
+    </div>
+  </div>
+</div>

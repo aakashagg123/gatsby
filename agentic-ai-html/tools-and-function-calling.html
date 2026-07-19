@@ -372,6 +372,17 @@ API credentials; timing and order-of-operations constraints (batch jobs,
 human-in-the-loop review before anything fires); and APIs that simply aren't reachable
 from the agent's infrastructure. Choosing agent-side execution is choosing convenience
 over a control point — make that trade knowingly.</p>
+<p>Two late-2025 developments upgraded the mechanics. <strong>Code execution as tool-glue</strong>:
+instead of emitting one tool call per turn (each result round-tripping through the
+context), the model writes a short program that calls many MCP tools directly and
+returns only the final result — collapsing token cost and latency on multi-tool
+workflows, and making the code sandbox the orchestration surface. And <strong>Skills</strong>:
+packaged procedural knowledge (a folder with instructions, scripts, and resources the
+agent loads when relevant) as a third primitive alongside tools and prompts — tools
+give the agent <em>capabilities</em>, skills give it <em>know-how</em> about when and how to use
+them. Both matter to the PM the same way: the toolbox review now includes what code
+the agent can run and what procedures it has been handed, not just which APIs it can
+call.</p>
 <p>What counts as a tool spans a wide range: retrieval and web search; code execution (the
 universal power tool — a Python sandbox turns "things the model can describe" into
 "things the model can do"); file and document operations; business APIs (CRM, calendar,
