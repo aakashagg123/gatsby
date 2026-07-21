@@ -47,8 +47,9 @@ Ship It**, then a short self-quiz. See [`METHODOLOGY.md`](./METHODOLOGY.md).
 
 ## Status
 
-Phases **1 (BPMN & the Token Model)** and **2 (The Engine: State & Transactions)** are
-complete; the rest are scaffolded in the [Roadmap](./ROADMAP.md).
+Phases **1 (BPMN & the Token Model)**, **2 (The Engine: State & Transactions)** and
+**4 (Service Integration & Error Handling)** are complete; the rest are scaffolded in
+the [Roadmap](./ROADMAP.md).
 
 ## Run the code
 

@@ -60,19 +60,19 @@ under the lesson's `outputs/`.
 | 04 | Forms: form properties, form keys, external form apps ⬚ | Use | Python | client |
 | 05 | Task queries & the task inbox pattern ⬚ | Use | Python | client |
 
-## Phase 4 — Service integration & error handling `6 lessons` ⬚
+## Phase 4 — Service integration & error handling `6 lessons` ✅
 
 > The system side: service tasks, delegates, HTTP tasks, BPMN errors vs technical
 > errors, retries, and compensation.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Service tasks: delegates, expressions, delegate expressions ⬚ | Use | Java | module |
-| 02 | The HTTP task: calling REST APIs from a process ⬚ | Use | Python | process model |
-| 03 | BPMN errors vs technical errors: two failure planes ⬚ | Concept | — | cheat sheet |
-| 04 | Boundary events: catching errors on an activity ⬚ | Build | Python | module |
-| 05 | Retries & incident handling: what happens when a bureau call fails ⬚ | Use | Python | client |
-| 06 | Compensation: undoing completed work ⬚ | Concept | — | pattern guide |
+| 01 | [Service tasks: delegates, expressions, delegate expressions](./phases/04-service-integration-and-error-handling/01-service-tasks-and-delegates/docs/en.md) ✅ | Use | Java | module |
+| 02 | [The HTTP task: calling REST APIs from a process](./phases/04-service-integration-and-error-handling/02-http-task/docs/en.md) ✅ | Use | XML | process model |
+| 03 | [BPMN errors vs technical errors: two failure planes](./phases/04-service-integration-and-error-handling/03-bpmn-errors-vs-technical/docs/en.md) ✅ | Concept | — | cheat sheet |
+| 04 | [Boundary events: catching errors on an activity](./phases/04-service-integration-and-error-handling/04-boundary-events/docs/en.md) ✅ | Build | Python | module |
+| 05 | [Retries & incident handling: what happens when a bureau call fails](./phases/04-service-integration-and-error-handling/05-retries-and-incidents/docs/en.md) ✅ | Use | Python | client |
+| 06 | [Compensation: undoing completed work](./phases/04-service-integration-and-error-handling/06-compensation/docs/en.md) ✅ | Concept | — | pattern guide |
 
 ## Phase 5 — DMN: decisions as tables `4 lessons` ⬚
 
