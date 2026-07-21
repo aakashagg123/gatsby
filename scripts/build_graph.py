@@ -36,9 +36,16 @@ TRACKS = [
     ("technical-product-sense", "Technical product sense", "#1baf7a", "technical-product-sense"),
     ("technical-product-management", "Technical product management", "#eb6834", "technical-product-management"),
     ("agentic-ai", "Agentic AI", "#4a3aa7", "agentic-ai"),
+    ("flowable", "Flowable", "#a63d40", "flowable"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "technical-product-management", "agentic-ai"}
+# Phased tracks share the harness-engineering folder shape:
+# (track id, source dir, site prefix, track title)
+PHASED_TRACKS = [
+    ("harness", "harness-engineering", "harness", "Harness engineering"),
+    ("flowable", "flowable", "flowable", "Flowable"),
+]
 
 MD_LINK = re.compile(r"\]\(([^)\s]+?\.md)(?:#[^)]*)?\)")
 
@@ -102,33 +109,38 @@ def collect():
                 f"{track}/{fn[:-3]}.html", track, "lesson")
             edges.append((tkey, key, 1, "structure"))
 
-    # ---- Harness engineering ----
-    hz = os.path.join(ROOT, "harness-engineering")
-    add("harness-engineering/README.md", "Harness engineering",
-        "harness/index.html", "harness", "track")
-    fkey = "harness-engineering/foundations/harness-principles.md"
-    if os.path.exists(os.path.join(ROOT, fkey)):
-        add(fkey, _title_of(os.path.join(ROOT, fkey), "Harness principles"),
-            "harness/foundations/harness-principles.html", "harness", "module")
-        edges.append(("harness-engineering/README.md", fkey, 1, "structure"))
-    phases = os.path.join(hz, "phases")
-    for phase in sorted(os.listdir(phases)):
-        pdir = os.path.join(phases, phase)
-        if not os.path.isdir(pdir):
-            continue
-        pkey = f"harness-engineering/phases/{phase}/README.md"
-        ptitle = _title_of(os.path.join(pdir, "README.md"),
-                           phase.split("-", 1)[-1].replace("-", " ").title())
-        add(pkey, ptitle, f"harness/phases/{phase}/README.html", "harness", "module")
-        edges.append(("harness-engineering/README.md", pkey, 1, "structure"))
-        for lesson in sorted(os.listdir(pdir)):
-            en = os.path.join(pdir, lesson, "docs", "en.md")
-            if not os.path.exists(en):
+    # ---- Phased tracks (harness engineering, flowable) ----
+    for track, src, prefix, title in PHASED_TRACKS:
+        tdir = os.path.join(ROOT, src)
+        tkey = f"{src}/README.md"
+        add(tkey, title, f"{prefix}/index.html", track, "track")
+        fdir = os.path.join(tdir, "foundations")
+        if os.path.isdir(fdir):
+            for fn in sorted(os.listdir(fdir)):
+                if not fn.endswith(".md"):
+                    continue
+                fkey = f"{src}/foundations/{fn}"
+                add(fkey, _title_of(os.path.join(fdir, fn), fn[:-3].replace("-", " ")),
+                    f"{prefix}/foundations/{fn[:-3]}.html", track, "module")
+                edges.append((tkey, fkey, 1, "structure"))
+        phases = os.path.join(tdir, "phases")
+        for phase in sorted(os.listdir(phases)):
+            pdir = os.path.join(phases, phase)
+            if not os.path.isdir(pdir):
                 continue
-            key = f"harness-engineering/phases/{phase}/{lesson}/docs/en.md"
-            add(key, _title_of(en, lesson.split("-", 1)[-1].replace("-", " ")),
-                f"harness/phases/{phase}/{lesson}/docs/en.html", "harness", "lesson")
-            edges.append((pkey, key, 1, "structure"))
+            pkey = f"{src}/phases/{phase}/README.md"
+            ptitle = _title_of(os.path.join(pdir, "README.md"),
+                               phase.split("-", 1)[-1].replace("-", " ").title())
+            add(pkey, ptitle, f"{prefix}/phases/{phase}/README.html", track, "module")
+            edges.append((tkey, pkey, 1, "structure"))
+            for lesson in sorted(os.listdir(pdir)):
+                en = os.path.join(pdir, lesson, "docs", "en.md")
+                if not os.path.exists(en):
+                    continue
+                key = f"{src}/phases/{phase}/{lesson}/docs/en.md"
+                add(key, _title_of(en, lesson.split("-", 1)[-1].replace("-", " ")),
+                    f"{prefix}/phases/{phase}/{lesson}/docs/en.html", track, "lesson")
+                edges.append((pkey, key, 1, "structure"))
 
     # ---- Content cross-links ----
     link_counts = {}
