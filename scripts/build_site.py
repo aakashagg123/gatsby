@@ -29,12 +29,17 @@ PS_HTML = os.path.join(ROOT, "product-sense-html")      # product sense editions
 TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical product sense
 TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical product management
 AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
-HARNESS_SRC = os.path.join(ROOT, "harness-engineering")
+# Markdown tracks rendered client-side, all sharing the phases/ folder shape:
+# (source dir, site subdir, brand label shown in the viewer chrome)
+MD_TRACKS = [
+    ("harness-engineering", "harness", "Harness engineering"),
+    ("flowable", "flowable", "Flowable"),
+]
 
 VIEWER = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} · Harness engineering</title>
+<title>{title} · {brand}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -118,7 +123,7 @@ VIEWER = """<!doctype html>
     .lessonnav .nx{{text-align:left}}
   }}
 </style></head><body>
-<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{harness_root}index.html">Harness engineering</a></div>
+<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{track_root}index.html">{brand}</a></div>
 <main id="content">Loading…</main>
 {nav}
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -213,7 +218,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Seven separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Eight separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -226,6 +231,13 @@ LANDING = """<!doctype html>
       <h2>Harness engineering →</h2>
       <p>Build a coding agent's harness from scratch — loop, tools, context, memory,
       subagents — then use the real SDK. Build it / use it, ships an artifact each lesson.</p>
+    </a>
+    <a class="card" href="flowable/index.html">
+      <span class="tag">Module</span>
+      <h2>Flowable →</h2>
+      <p>Process automation from scratch — build a token engine, wait states, and a job
+      executor by hand, then run real BPMN on the Flowable engine. Concept-first for
+      PMs, with a build layer for engineers.</p>
     </a>
     <a class="card" href="first-principles/index.html">
       <span class="tag">Module</span>
@@ -260,7 +272,7 @@ LANDING = """<!doctype html>
     <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
       <span class="tag">Explore</span>
       <h2>Knowledge graph →</h2>
-      <p>Every page across all seven modules as one interactive map — __NODES__ pages,
+      <p>Every page across all eight modules as one interactive map — __NODES__ pages,
       __LINKS__ cross-references. Search it, filter by track, click any node to jump in.</p>
     </a>
   </div>
@@ -309,9 +321,9 @@ def inject_graph_buttons(site, focus_map):
     return injected
 
 
-def rel_to_harness_root(md_path):
-    """'../' * depth from a harness md file up to _site/harness/."""
-    rel = os.path.relpath(md_path, os.path.join(SITE, "harness"))
+def rel_to_track_root(md_path, site_key):
+    """'../' * depth from a track md file up to _site/<site_key>/."""
+    rel = os.path.relpath(md_path, os.path.join(SITE, site_key))
     depth = rel.count(os.sep)
     return "../" * depth
 
@@ -385,49 +397,52 @@ def main():
     if os.path.isdir(AAI_HTML):
         shutil.copytree(AAI_HTML, os.path.join(SITE, "agentic-ai"))
 
-    # 2. Harness engineering: copy the whole tree (md + code + outputs).
-    dst_harness = os.path.join(SITE, "harness")
-    shutil.copytree(HARNESS_SRC, dst_harness)
-
-    # 3. Lesson ordering for prev/next navigation.
-    lessons = lesson_order(dst_harness)
-    prev_next = {}
-    for i, md in enumerate(lessons):
-        prev_next[md] = (lessons[i - 1] if i > 0 else None,
-                         lessons[i + 1] if i < len(lessons) - 1 else None)
-
-    # 4. Render a viewer next to every markdown file (sources stay browsable).
+    # 2. Markdown tracks (harness engineering, flowable): copy each tree
+    # (md + code + outputs) and render a viewer next to every markdown file.
     pages = 0
-    for dp, _, files in os.walk(dst_harness):
-        for fn in files:
-            if not fn.endswith(".md"):
-                continue
-            md_path = os.path.join(dp, fn)
-            title = os.path.splitext(fn)[0]
-            with open(md_path) as f:
-                first = f.readline().lstrip("# ").strip()
-            title = first or title
-            root = rel_to_harness_root(md_path)            # up to _site/
-            html_path = md_path[:-3] + ".html"
-            md_url = "./" + fn
-            nav = ""
-            if is_lesson(md_path):
-                p, n = prev_next.get(md_path, (None, None))
-                nav = nav_html(md_path, p, n)
-            with open(html_path, "w") as f:
-                f.write(reader_widget.inject(VIEWER.format(
-                    title=title,
-                    md=md_url,
-                    root="../" + root if root else "../",   # _site/ root
-                    harness_root=root or "./",
-                    nav=nav,
-                )))
-            pages += 1
+    for src_dir, site_key, brand in MD_TRACKS:
+        dst_track = os.path.join(SITE, site_key)
+        shutil.copytree(os.path.join(ROOT, src_dir), dst_track)
 
-    # 4. Harness landing = viewer for README.md.
-    readme_html = os.path.join(dst_harness, "README.html")
-    if os.path.exists(readme_html):
-        shutil.copyfile(readme_html, os.path.join(dst_harness, "index.html"))
+        # 3. Lesson ordering for prev/next navigation.
+        lessons = lesson_order(dst_track)
+        prev_next = {}
+        for i, md in enumerate(lessons):
+            prev_next[md] = (lessons[i - 1] if i > 0 else None,
+                             lessons[i + 1] if i < len(lessons) - 1 else None)
+
+        # 4. Render a viewer next to every markdown file (sources stay browsable).
+        for dp, _, files in os.walk(dst_track):
+            for fn in files:
+                if not fn.endswith(".md"):
+                    continue
+                md_path = os.path.join(dp, fn)
+                title = os.path.splitext(fn)[0]
+                with open(md_path) as f:
+                    first = f.readline().lstrip("# ").strip()
+                title = first or title
+                root = rel_to_track_root(md_path, site_key)   # up to _site/
+                html_path = md_path[:-3] + ".html"
+                md_url = "./" + fn
+                nav = ""
+                if is_lesson(md_path):
+                    p, n = prev_next.get(md_path, (None, None))
+                    nav = nav_html(md_path, p, n)
+                with open(html_path, "w") as f:
+                    f.write(reader_widget.inject(VIEWER.format(
+                        title=title,
+                        brand=brand,
+                        md=md_url,
+                        root="../" + root if root else "../",   # _site/ root
+                        track_root=root or "./",
+                        nav=nav,
+                    )))
+                pages += 1
+
+        # Track landing = viewer for README.md.
+        readme_html = os.path.join(dst_track, "README.html")
+        if os.path.exists(readme_html):
+            shutil.copyfile(readme_html, os.path.join(dst_track, "index.html"))
 
     # 5. Knowledge graph: extract nodes/edges from the markdown sources and
     # write the interactive graph page (Quartz-style).
@@ -445,7 +460,7 @@ def main():
     # that page's own node.
     injected = inject_graph_buttons(SITE, build_graph.page_focus_map(data))
 
-    print(f"built _site/ — ai module + harness ({pages} pages) + landing + "
+    print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "
           f"graph ({len(data['nodes'])} nodes, {n_links} links, "
           f"{injected} pages linked)")
 

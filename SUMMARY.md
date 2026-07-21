@@ -150,3 +150,10 @@ order below moves from thinking skills to product craft to agents.
 
 The hands-on build track: construct a coding agent's harness phase by phase. Start with
 the [roadmap](./harness-engineering/ROADMAP.md).
+
+## [Flowable](./flowable/README.md)
+
+Process automation from scratch: build the execution model under Flowable's BPMN engine
+by hand — tokens, wait states, transactions, jobs — then run real processes on the real
+engine. Start with the [roadmap](./flowable/ROADMAP.md) and the
+[ten principles](./flowable/foundations/process-automation-principles.md).
