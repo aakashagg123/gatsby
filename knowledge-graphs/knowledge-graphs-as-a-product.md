@@ -158,3 +158,5 @@ failure rate crosses X") — is a strategy artifact worth as much as a build.
   the business case must fund.
 - [Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) —
   the portfolio discipline the sequencing loop plugs into.
+- [Product sense for AI products](../product-sense/product-sense-for-ai.md) — the judgment
+  for pricing and positioning what the company knows as a product.

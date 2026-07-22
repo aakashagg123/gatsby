@@ -180,3 +180,4 @@ formalize in [Phase 14 — Reliability Engineering](../../../../ROADMAP.md).
 - Next: `02-tool-call-parsing` and Phase 3 — [Tool Engineering](../../../../ROADMAP.md)
 - Concept: [Harness engineering, not just prompt engineering](../../../../foundations/harness-principles.md)
 - Concept: [Agent guardrails](../../../../ROADMAP.md)
+- Other tracks: [What is an agent?](../../../../../agentic-ai/what-is-an-agent.md) — the conceptual loop; [Job executor](../../../../../flowable/phases/02-the-engine-state-and-transactions/04-job-executor/docs/en.md) — the same drive-until-done loop in a process engine.

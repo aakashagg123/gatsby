@@ -113,6 +113,11 @@ standalone over REST, all three engines (BPMN/CMMN/DMN) in one platform, with a
 commercial layer (Flowable Work) above it. Phase 10 turns this principle into concrete
 decision guides.
 
+## Connects to other tracks
+
+- [The method: deconstruct, challenge, reconstruct](../../first-principles/the-method.md) — decomposing a process into tokens and wait states is first-principles thinking applied.
+- [Multi-agent systems & protocols](../../agentic-ai/multi-agent-and-protocols.md) — orchestration by a shared engine vs. by autonomous agents that coordinate.
+
 ---
 
 *Next: build principle 1 with your own hands —

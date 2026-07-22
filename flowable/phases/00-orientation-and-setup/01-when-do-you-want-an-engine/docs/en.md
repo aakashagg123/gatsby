@@ -98,3 +98,4 @@ can't steelman the alternative, you haven't finished the analysis.
 
 - Next: [The Flowable platform map](../../02-platform-map/docs/en.md)
 - The full comparison: [lesson 04](../../04-landscape/docs/en.md)
+- Other tracks: [Prioritization & roadmaps](../../../../../technical-product-management/prioritization-and-roadmaps.md) · [Creativity: strategy & execution](../../../../../product-sense/creativity.md) — the build-vs-buy judgment behind adopting an engine at all.

@@ -165,3 +165,4 @@ on time — you've just met every queue-tuning trade-off Phase 9 discusses.
 
 - Next: [Use It: the embedded engine in Spring Boot](../../05-embedded-engine-spring-boot/docs/en.md)
 - Previous: [Transactions & async](../../03-transactions-and-async/docs/en.md)
+- Other tracks: [Reliability & failure](../../../../../technical-product-sense/reliability-and-failure.md) · [Production failure modes](../../../../../content/06-strategy-tradeoffs/production-failure-modes.md) · [The agent loop from scratch](../../../../../harness-engineering/phases/02-the-agent-loop/01-agent-loop/docs/en.md) — the same durable execute-retry loop in other engines.

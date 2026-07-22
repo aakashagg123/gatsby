@@ -89,4 +89,5 @@ for relevance to the query, then sort by that score (forward ref to Phase 15).
 - Builds on: [Repo maps](../../01-repo-maps/docs/en.md), [Embeddings](../../02-embeddings/docs/en.md)
 - Next: [Chunking code without breaking it](../../04-chunking/docs/en.md)
 - Related: Phase 15 — LLM-as-judge
+- Other tracks: [RAG architecture](../../../../../content/03-rag/rag-architecture.md) · [Storage & querying](../../../../../knowledge-graphs/storage-and-querying.md) — the retrieval stack and the graph query layer this phase mirrors.
 - [Roadmap](../../../../ROADMAP.md)

@@ -99,4 +99,5 @@ tokens each must shed — the input to truncation (lesson 03) and compaction (le
 
 - Builds on: Phase 1 — [Tokens](../../../01-llm-io-foundations/02-tokens-and-context-window/docs/en.md)
 - Next: [Message assembly & ordering](../../02-message-assembly/docs/en.md)
+- Other tracks: [Context engineering](../../../../../content/00-foundations/context-engineering.md) · [Context & memory in agents](../../../../../agentic-ai/context-and-memory.md) — the same curation discipline at PM and agent altitude.
 - [Roadmap](../../../../ROADMAP.md)

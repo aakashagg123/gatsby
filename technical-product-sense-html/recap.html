@@ -400,27 +400,27 @@ machinery around the model, not the model itself?"</em></p>
 <li>
 <p><strong>"It's slow" and "it falls over under load" — why must you never conflate them?</strong>
  <br />
-<details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) have different fixes — finding/caching the slow hop vs. horizontal scaling and shared-bottleneck relief. Fixing the wrong one wastes months. (<a href="./latency-scale-performance.md">Latency, scale & performance</a>)</details></p>
+<details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) have different fixes — finding/caching the slow hop vs. horizontal scaling and shared-bottleneck relief. Fixing the wrong one wastes months. (<a href="latency-scale-performance.html">Latency, scale & performance</a>)</details></p>
 </li>
 <li>
 <p><strong>A payment call times out and the app retries. What property makes that safe, and how does it work?</strong>
  <br />
-<details><summary>Answer</summary>Idempotency — the client sends a unique key per attempt and the server returns the original result for a repeated key, so a retry can't double-charge. (<a href="./apis-and-contracts.md">APIs & contracts</a>)</details></p>
+<details><summary>Answer</summary>Idempotency — the client sends a unique key per attempt and the server returns the original result for a repeated key, so a retry can't double-charge. (<a href="apis-and-contracts.html">APIs & contracts</a>)</details></p>
 </li>
 <li>
 <p><strong>Why is "where does this data live, and how is it shaped?" a product question?</strong>
  <br />
-<details><summary>Answer</summary>The data model decides what features are possible without a migration — a question the model can't answer is a feature you can't ship. And analytical reads don't belong on the transactional store. (<a href="./data-and-the-data-model.md">Data & the data model</a>)</details></p>
+<details><summary>Answer</summary>The data model decides what features are possible without a migration — a question the model can't answer is a feature you can't ship. And analytical reads don't belong on the transactional store. (<a href="data-and-the-data-model.html">Data & the data model</a>)</details></p>
 </li>
 <li>
 <p><strong>Name the four tools that keep a dependency slowdown from becoming your outage.</strong>
  <br />
-<details><summary>Answer</summary>Timeouts (cap the wait), retries with backoff and jitter (don't synchronize the storm), circuit breakers (fail fast while it's sick), and a designed fallback for what the user sees. (<a href="./reliability-and-failure.md">Reliability & failure</a>)</details></p>
+<details><summary>Answer</summary>Timeouts (cap the wait), retries with backoff and jitter (don't synchronize the storm), circuit breakers (fail fast while it's sick), and a designed fallback for what the user sees. (<a href="reliability-and-failure.html">Reliability & failure</a>)</details></p>
 </li>
 <li>
 <p><strong>What's the blast-radius question, and when do you ask it?</strong>
  <br />
-<details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" — asked at design time for every component, credential, and data store, not after the incident. (<a href="./security-and-privacy.md">Security & privacy sense</a>)</details>
+<details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" — asked at design time for every component, credential, and data store, not after the incident. (<a href="security-and-privacy.html">Security & privacy sense</a>)</details>
 </p>
 </li>
 </ol>

@@ -93,4 +93,5 @@ then hit.
 - Builds on: [Tokens & the context window](../../02-tokens-and-context-window/docs/en.md)
 - Deepens in: Phase 4 — Context Engineering, Phase 16 — Observability & Cost
 - Phase complete → next: Phase 3 — [Tool Engineering](../../../../ROADMAP.md)
+- Other tracks: [Prompt vs. semantic caching](../../../../../content/01-inference-internals/prompt-vs-semantic-caching.md) · [KV cache management](../../../../../content/01-inference-internals/kv-cache-management.md) — the inference-side view of what you cache and why.
 - [Roadmap](../../../../ROADMAP.md)

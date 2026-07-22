@@ -137,6 +137,17 @@ def rewrite_target(target):
             return f"../ai/{mod}.html{anchor}"
         lesson = fname[:-3] if fname.endswith(".md") else fname
         return f"../ai/{mod}.html#{lesson}"
+    # cross-track link into a phased track (harness engineering, flowable),
+    # which deploys its whole tree: ../harness-engineering/phases/../en.md ->
+    # ../harness/phases/../en.html . Must run before the sibling-track rule below,
+    # whose [\w-] class would otherwise mis-catch ../harness-engineering/README.md.
+    m = re.match(r"\.\./(harness-engineering|flowable)/(.+)\.md$", target)
+    if m:
+        prefix = "harness" if m.group(1) == "harness-engineering" else "flowable"
+        rest = m.group(2)
+        if rest == "README":
+            return f"../{prefix}/index.html{anchor}"
+        return f"../{prefix}/{rest}.html{anchor}"
     # cross-link into a sibling standalone track: ../track-name/lesson.md
     m = re.match(r"\.\./([\w-]+)/([\w-]+)\.md$", target)
     if m:
@@ -146,8 +157,13 @@ def rewrite_target(target):
     return target + anchor
 
 def rewrite_links(md):
-    return re.sub(r"\[([^\]]+)\]\(([^)]+)\)",
-                  lambda m: f"[{m.group(1)}]({rewrite_target(m.group(2).strip())})", md)
+    md = re.sub(r"\[([^\]]+)\]\(([^)]+)\)",
+                lambda m: f"[{m.group(1)}]({rewrite_target(m.group(2).strip())})", md)
+    # raw inline HTML anchors (e.g. quiz answers) pass through the markdown
+    # renderer untouched — rewrite their .md hrefs to deployed URLs too.
+    md = re.sub(r'(<a\s+href=")([^"]+)(")',
+                lambda m: m.group(1) + rewrite_target(m.group(2).strip()) + m.group(3), md)
+    return md
 
 # ---- markdown -> html fragment ------------------------------------------------
 def convert(md, callout):

@@ -93,3 +93,4 @@ complexity is the bottleneck** (principle 09).
 - The [Roadmap](../ROADMAP.md) — where each principle becomes a phase.
 - Build it: [The agent loop from scratch](../phases/02-the-agent-loop/01-agent-loop/docs/en.md)
 - Build it: [Sprint contracts & budgeted waves](../phases/10-subagents-and-orchestration/01-sprint-contract-and-waves/docs/en.md)
+- Other tracks: [The method: deconstruct, challenge, reconstruct](../../first-principles/the-method.md) — reasoning an engine up from fundamentals.
