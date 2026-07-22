@@ -9,17 +9,17 @@ under the lesson's `outputs/`.
 
 ---
 
-## Phase 0 — Orientation & setup `4 lessons` ⬚
+## Phase 0 — Orientation & setup `4 lessons` ✅
 
 > What Flowable is, where it came from (the Activiti fork), where it sits in the
 > landscape, and getting a local engine running.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | What is a process engine, and when do you want one ⬚ | Concept | — | decision guide |
-| 02 | The Flowable platform map: BPMN, CMMN, DMN, event registry ⬚ | Concept | — | platform map |
-| 03 | Run Flowable locally: Docker, REST API, first ping ⬚ | Use | Python | client |
-| 04 | The landscape: Flowable vs Camunda 7/8 vs Temporal vs DIY ⬚ | Concept | — | comparison table |
+| 01 | [What is a process engine, and when do you want one](./phases/00-orientation-and-setup/01-when-do-you-want-an-engine/docs/en.md) ✅ | Concept | — | decision guide |
+| 02 | [The Flowable platform map: BPMN, CMMN, DMN, event registry](./phases/00-orientation-and-setup/02-platform-map/docs/en.md) ✅ | Concept | — | platform map |
+| 03 | [Run Flowable locally: Docker, REST API, first ping](./phases/00-orientation-and-setup/03-run-locally/docs/en.md) ✅ | Use | Python | client |
+| 04 | [The landscape: Flowable vs Camunda 7/8 vs Temporal vs DIY](./phases/00-orientation-and-setup/04-landscape/docs/en.md) ✅ | Concept | — | comparison table |
 
 ## Phase 1 — BPMN & the token model `5 lessons` ✅
 
@@ -86,17 +86,17 @@ under the lesson's `outputs/`.
 | 03 | [DMN XML & the decision task: wiring DMN into BPMN](./phases/05-dmn-decisions/03-dmn-xml-and-decision-task/docs/en.md) ✅ | Use | XML | decision table |
 | 04 | [Who owns the rules? Decision governance for product teams](./phases/05-dmn-decisions/04-decision-governance/docs/en.md) ✅ | Concept | — | decision guide |
 
-## Phase 6 — CMMN: case management `4 lessons` ⬚
+## Phase 6 — CMMN: case management `4 lessons` ✅
 
 > When work doesn't follow a fixed path: cases, stages, milestones, and sentries —
 > and the honest answer on when you actually need CMMN.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Processes vs cases: prescribed flow vs available work ⬚ | Concept | — | decision guide |
-| 02 | Plan items, stages, milestones, sentries ⬚ | Use | XML | case model |
-| 03 | Mixing BPMN and CMMN: process tasks inside cases ⬚ | Use | XML | case model |
-| 04 | When CMMN is overkill (most of the time) ⬚ | Concept | — | decision guide |
+| 01 | [Processes vs cases: prescribed flow vs available work](./phases/06-cmmn-case-management/01-processes-vs-cases/docs/en.md) ✅ | Concept | — | decision guide |
+| 02 | [Plan items, stages, milestones, sentries](./phases/06-cmmn-case-management/02-plan-items-and-sentries/docs/en.md) ✅ | Use | XML | case model |
+| 03 | [Mixing BPMN and CMMN: process tasks inside cases](./phases/06-cmmn-case-management/03-mixing-bpmn-and-cmmn/docs/en.md) ✅ | Use | XML | case model |
+| 04 | [When CMMN is overkill (most of the time)](./phases/06-cmmn-case-management/04-when-cmmn-is-overkill/docs/en.md) ✅ | Concept | — | decision guide |
 
 ## Phase 7 — Events, timers & messaging `5 lessons` ✅
 
@@ -136,18 +136,18 @@ under the lesson's `outputs/`.
 | 04 | [Metrics & health: what to alert on](./phases/09-operations-and-observability/04-metrics-and-health/docs/en.md) ✅ | Use | Python | dashboard spec |
 | 05 | [The database is the engine: sizing, indexes, cleanup jobs](./phases/09-operations-and-observability/05-database-runbook/docs/en.md) ✅ | Concept | — | runbook |
 
-## Phase 10 — Architecture & product decisions `5 lessons` ⬚
+## Phase 10 — Architecture & product decisions `5 lessons` ✅
 
 > The PM/architect capstone layer: embed vs standalone, multi-tenancy, build vs
 > buy, and the honest competitive landscape.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Embedded vs standalone vs Flowable Work: deployment topologies ⬚ | Concept | — | decision guide |
-| 02 | Multi-tenancy: shared engine, shared tables, or neither ⬚ | Concept | — | decision guide |
-| 03 | Where the process ends and the domain begins: anti-corruption ⬚ | Concept | — | pattern guide |
-| 04 | Build vs buy vs open source: the workflow TCO conversation ⬚ | Concept | — | decision guide |
-| 05 | Flowable open source vs Flowable Work vs Camunda 8 vs Temporal ⬚ | Concept | — | comparison table |
+| 01 | [Embedded vs standalone vs Flowable Work: deployment topologies](./phases/10-architecture-and-product-decisions/01-deployment-topologies/docs/en.md) ✅ | Concept | — | decision guide |
+| 02 | [Multi-tenancy: shared engine, shared tables, or neither](./phases/10-architecture-and-product-decisions/02-multi-tenancy/docs/en.md) ✅ | Concept | — | decision guide |
+| 03 | [Where the process ends and the domain begins: anti-corruption](./phases/10-architecture-and-product-decisions/03-process-domain-boundary/docs/en.md) ✅ | Concept | — | pattern guide |
+| 04 | [Build vs buy vs open source: the workflow TCO conversation](./phases/10-architecture-and-product-decisions/04-build-vs-buy/docs/en.md) ✅ | Concept | — | decision guide |
+| 05 | [Flowable open source vs Flowable Work vs Camunda 8 vs Temporal](./phases/10-architecture-and-product-decisions/05-competitive-landscape/docs/en.md) ✅ | Concept | — | comparison table |
 
 ## Phase 11 — Capstone: loan origination `4 lessons` ✅
 
