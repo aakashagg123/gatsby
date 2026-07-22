@@ -129,7 +129,8 @@ def rewrite_target(target):
     if m:
         return f"{m.group(1)}.html{anchor}"
     # cross-track link into the AI engineering modules: ../NN-name/file.md
-    m = re.match(r"\.\./(\d\d-[\w-]+)/(.+)$", target)
+    # (also accepts the on-disk form ../content/NN-name/file.md)
+    m = re.match(r"\.\./(?:content/)?(\d\d-[\w-]+)/(.+)$", target)
     if m:
         mod, fname = m.group(1), m.group(2)
         if fname == "README.md":

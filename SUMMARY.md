@@ -146,6 +146,17 @@ order below moves from thinking skills to product craft to agents.
 7. [Safety, security & governance](./agentic-ai/safety-security-and-governance.md)
 8. [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md) · [Recap](./agentic-ai/recap.md)
 
+## [Knowledge graphs](./knowledge-graphs/README.md)
+
+1. [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md)
+2. [Ontologies & data modeling](./knowledge-graphs/ontologies-and-data-modeling.md)
+3. [Building the graph](./knowledge-graphs/building-the-graph.md)
+4. [Storage & querying](./knowledge-graphs/storage-and-querying.md)
+5. [Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md)
+6. [Knowledge graphs & LLMs](./knowledge-graphs/knowledge-graphs-and-llms.md)
+7. [Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md)
+8. [Knowledge graphs as a product](./knowledge-graphs/knowledge-graphs-as-a-product.md) · [Recap](./knowledge-graphs/recap.md)
+
 ## [Harness engineering](./harness-engineering/README.md)
 
 The hands-on build track: construct a coding agent's harness phase by phase. Start with

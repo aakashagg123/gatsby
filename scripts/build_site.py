@@ -29,6 +29,7 @@ PS_HTML = os.path.join(ROOT, "product-sense-html")      # product sense editions
 TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical product sense
 TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical product management
 AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
+KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -218,7 +219,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Eight separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Nine separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -269,10 +270,16 @@ LANDING = """<!doctype html>
       <p>What agents actually are — the loop, tools, memory, planning — plus reliability,
       security, and economics. Opens with a knowledge graph; a diagram in every lesson.</p>
     </a>
+    <a class="card" href="knowledge-graphs/index.html">
+      <span class="tag">Module</span>
+      <h2>Knowledge graphs →</h2>
+      <p>Treat what the company knows as a product — entities and ontologies, the
+      construction pipeline, GraphRAG, governance, and the business case, in CPO language.</p>
+    </a>
     <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
       <span class="tag">Explore</span>
       <h2>Knowledge graph →</h2>
-      <p>Every page across all eight modules as one interactive map — __NODES__ pages,
+      <p>Every page across all nine modules as one interactive map — __NODES__ pages,
       __LINKS__ cross-references. Search it, filter by track, click any node to jump in.</p>
     </a>
   </div>
@@ -396,6 +403,10 @@ def main():
     # 1f. Agentic AI module: copy its pre-rendered pages.
     if os.path.isdir(AAI_HTML):
         shutil.copytree(AAI_HTML, os.path.join(SITE, "agentic-ai"))
+
+    # 1g. Knowledge graphs module: copy its pre-rendered pages.
+    if os.path.isdir(KG_HTML):
+        shutil.copytree(KG_HTML, os.path.join(SITE, "knowledge-graphs"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.
