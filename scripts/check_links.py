@@ -13,7 +13,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCAN_DIRS = [
-    "content", "agentic-ai", "first-principles", "product-sense",
+    "content", "agentic-ai", "first-principles", "knowledge-graphs", "product-sense",
     "technical-product-management", "technical-product-sense",
     "harness-engineering", "flowable",
 ]

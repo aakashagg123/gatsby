@@ -79,6 +79,11 @@ one at a time; memory-bandwidth bound. See
 models, or dependencies change underneath you. See
 [Observability](./content/04-evals-observability/observability.md).
 
+**Entity resolution** — Deciding when two records from different sources refer to the
+same real-world thing ("Acme Corp" vs. "ACME Inc.") and merging them under one identity —
+the hardest, costliest step in knowledge-graph construction. See
+[Building the graph](./knowledge-graphs/building-the-graph.md).
+
 **Error analysis** — Reading real traces, labeling failures free-form (open coding),
 clustering them into a taxonomy (axial coding), and iterating — the discipline that
 precedes metric-picking. See [Evals](./content/04-evals-observability/evals.md).
@@ -106,6 +111,11 @@ expected outputs, used as the backbone of regression testing. See
 **GPTQ** — A one-shot post-training quantization method using approximate
 second-order (Hessian) information to minimize layer-wise error. See
 [Quantization formats](./content/01-inference-internals/quantization-formats.md).
+
+**GraphRAG** — Retrieval-augmented generation that retrieves *structure* — entity
+subgraphs and pre-built community summaries — instead of (or alongside) text chunks,
+so multi-hop and corpus-global questions become answerable with citations. See
+[Knowledge graphs & LLMs](./knowledge-graphs/knowledge-graphs-and-llms.md).
 
 **Grounding** — Whether a model's output is actually supported by the retrieved
 context rather than its parametric memory. See
@@ -141,6 +151,11 @@ against that list. See
 tasks, unreliable at some easy ones — which makes scoping a core product skill. See
 [Product sense for AI](./product-sense/product-sense-for-ai.md).
 
+**Knowledge graph** — Knowledge stored as explicit entities and typed relationships
+("things, not strings"), queryable by traversal — a connective layer across systems of
+record that makes multi-hop questions answerable. See
+[What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md).
+
 **KV cache** — The stored key/value tensors for already-processed tokens that let
 attention avoid recomputing the whole sequence each step. See
 [KV cache management](./content/01-inference-internals/kv-cache-management.md).
@@ -149,6 +164,11 @@ attention avoid recomputing the whole sequence each step. See
 produces outsized change — e.g. changing a model's metric of success rather than
 tuning its hyperparameters. See
 [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**Link prediction** — Inferring edges that are missing or likely to form next in a graph
+(recommendations, "people you may know") — probabilistic output that must ship as
+suggestion, never as stored fact. See
+[Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md).
 
 **LLM-as-judge** — Using a model to score or compare outputs against a rubric. See
 [Evals](./content/04-evals-observability/evals.md).
@@ -160,6 +180,11 @@ take before it must stop or escalate. See
 **MCP (Model Context Protocol)** — The adopted standard for plugging tools and data
 sources into agents — one server, any MCP-capable client. See
 [Tools & function calling](./agentic-ai/tools-and-function-calling.md).
+
+**Ontology** — A knowledge graph's data model: the agreed entity types, allowed
+relationship types, and constraints — a product contract that fixes what the graph can
+ever answer and who must agree on vocabulary. See
+[Ontologies & data modeling](./knowledge-graphs/ontologies-and-data-modeling.md).
 
 **Open coding** — Labeling observed failures in your own words, without a predefined
 taxonomy — the first step of error analysis. See
@@ -184,6 +209,16 @@ prefix across requests. See
 **Prompt injection** — Adversarial instructions smuggled into model input
 (directly or via retrieved/tool content) to override intended behavior. See
 [Safety engineering](./content/05-safety-multitenancy/safety-engineering.md).
+
+**Property graph** — The pragmatic knowledge-graph data model: nodes and edges carrying
+property bags, queried in Cypher/GQL — versus RDF triple stores (SPARQL), the
+standards-based alternative. See
+[Storage & querying](./knowledge-graphs/storage-and-querying.md).
+
+**Provenance** — The passport every graph fact carries: source, extraction method,
+timestamp, confidence, reviewer — what makes answers citable, audits passable, and
+erasure requests executable. See
+[Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md).
 
 **ReAct** — A reasoning framework interleaving thought, action, and observation —
 the default shape of an agent loop, taught to a model with a few in-context
@@ -238,6 +273,11 @@ flailing — not just its final answer; paths rot before outcomes do. See
 branches with backtracking — deliberate search instead of a single
 chain-of-thought. See
 [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
+
+**Triple** — The atomic fact format of a knowledge graph: subject → relationship →
+object ("Supplia *supplies* Widget X"); facts that share entities snap together into a
+traversable web. See
+[What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md).
 
 **Workflow capture** — Owning an entire workflow end-to-end (not a tool within it), the
 enterprise-AI strategy that erases adoption friction and compounds via rebundling. See

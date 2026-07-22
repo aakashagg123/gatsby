@@ -36,10 +36,11 @@ TRACKS = [
     ("technical-product-sense", "Technical product sense", "#1baf7a", "technical-product-sense"),
     ("technical-product-management", "Technical product management", "#eb6834", "technical-product-management"),
     ("agentic-ai", "Agentic AI", "#4a3aa7", "agentic-ai"),
+    ("knowledge-graphs", "Knowledge graphs", "#00879e", "knowledge-graphs"),
     ("flowable", "Flowable", "#a63d40", "flowable"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
-               "technical-product-management", "agentic-ai"}
+               "technical-product-management", "agentic-ai", "knowledge-graphs"}
 # Phased tracks share the harness-engineering folder shape:
 # (track id, source dir, site prefix, track title)
 PHASED_TRACKS = [
