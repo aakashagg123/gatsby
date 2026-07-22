@@ -111,30 +111,30 @@ under the lesson's `outputs/`.
 | 04 | [The event registry: Kafka in, process out](./phases/07-events-timers-and-messaging/04-event-registry/docs/en.md) ✅ | Use | Python | client |
 | 05 | [Event subprocesses & interrupting vs non-interrupting starts](./phases/07-events-timers-and-messaging/05-event-subprocesses/docs/en.md) ✅ | Use | XML | process model |
 
-## Phase 8 — Versioning & migration `4 lessons` ⬚
+## Phase 8 — Versioning & migration `4 lessons` ✅
 
 > Long-running instances outlive their definitions. Version tags, running-instance
 > migration, and deployment strategy.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Definition versions: what a redeploy actually does ⬚ | Use | Python | client |
-| 02 | Instance migration: moving live tokens to a new version ⬚ | Use | Python | client |
-| 03 | Blue-green for processes: strategies that survive audits ⬚ | Concept | — | pattern guide |
-| 04 | Backward-compatible model changes: a checklist ⬚ | Concept | — | checklist |
+| 01 | [Definition versions: what a redeploy actually does](./phases/08-versioning-and-migration/01-definition-versions/docs/en.md) ✅ | Use | Python | client |
+| 02 | [Instance migration: moving live tokens to a new version](./phases/08-versioning-and-migration/02-instance-migration/docs/en.md) ✅ | Use | Python | client |
+| 03 | [Blue-green for processes: strategies that survive audits](./phases/08-versioning-and-migration/03-blue-green-for-processes/docs/en.md) ✅ | Concept | — | pattern guide |
+| 04 | [Backward-compatible model changes: a checklist](./phases/08-versioning-and-migration/04-compatibility-checklist/docs/en.md) ✅ | Concept | — | checklist |
 
-## Phase 9 — Operations & observability `5 lessons` ⬚
+## Phase 9 — Operations & observability `5 lessons` ✅
 
 > Running it for real: history levels, the database, async executor tuning,
 > metrics, and the admin surface.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | The history tables: audit trail vs runtime state ⬚ | Concept | — | cheat sheet |
-| 02 | History levels & data growth: the retention decision ⬚ | Concept | — | decision guide |
-| 03 | Async executor tuning: threads, acquisition, lock times ⬚ | Use | Java | settings |
-| 04 | Metrics & health: what to alert on ⬚ | Use | Python | dashboard spec |
-| 05 | The database is the engine: sizing, indexes, cleanup jobs ⬚ | Concept | — | runbook |
+| 01 | [The history tables: audit trail vs runtime state](./phases/09-operations-and-observability/01-history-tables/docs/en.md) ✅ | Concept | — | cheat sheet |
+| 02 | [History levels & data growth: the retention decision](./phases/09-operations-and-observability/02-history-levels/docs/en.md) ✅ | Concept | — | decision guide |
+| 03 | [Async executor tuning: threads, acquisition, lock times](./phases/09-operations-and-observability/03-executor-tuning/docs/en.md) ✅ | Use | Java | settings |
+| 04 | [Metrics & health: what to alert on](./phases/09-operations-and-observability/04-metrics-and-health/docs/en.md) ✅ | Use | Python | dashboard spec |
+| 05 | [The database is the engine: sizing, indexes, cleanup jobs](./phases/09-operations-and-observability/05-database-runbook/docs/en.md) ✅ | Concept | — | runbook |
 
 ## Phase 10 — Architecture & product decisions `5 lessons` ⬚
 

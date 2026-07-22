@@ -47,10 +47,12 @@ Ship It**, then a short self-quiz. See [`METHODOLOGY.md`](./METHODOLOGY.md).
 
 ## Status
 
-Phases **1–5, 7 and the 11 capstone** are complete — BPMN & the token model, the
+Phases **1–5, 7–9 and the 11 capstone** are complete — BPMN & the token model, the
 engine's state & transactions, user tasks & identity, service integration & error
-handling, DMN decisions, events & timers, and the end-to-end loan-origination build.
-Remaining (0, 6, 8, 9, 10) are scaffolded in the [Roadmap](./ROADMAP.md).
+handling, DMN decisions, events & timers, versioning & migration, operations &
+observability, and the end-to-end loan-origination build. Remaining (0, 6, 10 — the
+orientation and architecture concept phases) are scaffolded in the
+[Roadmap](./ROADMAP.md).
 
 ## Run the code
 

@@ -5,10 +5,10 @@
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Definition versions: what a redeploy actually does ⬚ | Use | Python | client |
-| 02 | Instance migration: moving live tokens to a new version ⬚ | Use | Python | client |
-| 03 | Blue-green for processes: strategies that survive audits ⬚ | Concept | — | pattern guide |
-| 04 | Backward-compatible model changes: a checklist ⬚ | Concept | — | checklist |
+| 01 | [Definition versions: what a redeploy actually does](./01-definition-versions/docs/en.md) ✅ | Use | Python | client |
+| 02 | [Instance migration: moving live tokens to a new version](./02-instance-migration/docs/en.md) ✅ | Use | Python | client |
+| 03 | [Blue-green for processes: strategies that survive audits](./03-blue-green-for-processes/docs/en.md) ✅ | Concept | — | pattern guide |
+| 04 | [Backward-compatible model changes: a checklist](./04-compatibility-checklist/docs/en.md) ✅ | Concept | — | checklist |
 
 Concept reading:
 [Principle 9 — instances outlive their definitions](../../foundations/process-automation-principles.md).
