@@ -74,17 +74,17 @@ under the lesson's `outputs/`.
 | 05 | [Retries & incident handling: what happens when a bureau call fails](./phases/04-service-integration-and-error-handling/05-retries-and-incidents/docs/en.md) ✅ | Use | Python | client |
 | 06 | [Compensation: undoing completed work](./phases/04-service-integration-and-error-handling/06-compensation/docs/en.md) ✅ | Concept | — | pattern guide |
 
-## Phase 5 — DMN: decisions as tables `4 lessons` ⬚
+## Phase 5 — DMN: decisions as tables `4 lessons` ✅
 
 > Externalise business rules into decision tables the business can read — and change
 > without a deploy.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | A decision engine in 80 lines: rules, inputs, outputs ⬚ | Build | Python | module |
-| 02 | Hit policies: FIRST, UNIQUE, COLLECT and why they matter ⬚ | Build | Python | module |
-| 03 | DMN XML & the decision task: wiring DMN into BPMN ⬚ | Use | XML | decision table |
-| 04 | Who owns the rules? Decision governance for product teams ⬚ | Concept | — | decision guide |
+| 01 | [A decision engine in 80 lines: rules, inputs, outputs](./phases/05-dmn-decisions/01-decision-engine-from-scratch/docs/en.md) ✅ | Build | Python | module |
+| 02 | [Hit policies: FIRST, UNIQUE, COLLECT and why they matter](./phases/05-dmn-decisions/02-hit-policies/docs/en.md) ✅ | Build | Python | module |
+| 03 | [DMN XML & the decision task: wiring DMN into BPMN](./phases/05-dmn-decisions/03-dmn-xml-and-decision-task/docs/en.md) ✅ | Use | XML | decision table |
+| 04 | [Who owns the rules? Decision governance for product teams](./phases/05-dmn-decisions/04-decision-governance/docs/en.md) ✅ | Concept | — | decision guide |
 
 ## Phase 6 — CMMN: case management `4 lessons` ⬚
 

@@ -5,10 +5,10 @@
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | A decision engine in 80 lines: rules, inputs, outputs ⬚ | Build | Python | module |
-| 02 | Hit policies: FIRST, UNIQUE, COLLECT and why they matter ⬚ | Build | Python | module |
-| 03 | DMN XML & the decision task: wiring DMN into BPMN ⬚ | Use | XML | decision table |
-| 04 | Who owns the rules? Decision governance for product teams ⬚ | Concept | — | decision guide |
+| 01 | [A decision engine in 80 lines: rules, inputs, outputs](./01-decision-engine-from-scratch/docs/en.md) ✅ | Build | Python | module |
+| 02 | [Hit policies: FIRST, UNIQUE, COLLECT and why they matter](./02-hit-policies/docs/en.md) ✅ | Build | Python | module |
+| 03 | [DMN XML & the decision task: wiring DMN into BPMN](./03-dmn-xml-and-decision-task/docs/en.md) ✅ | Use | XML | decision table |
+| 04 | [Who owns the rules? Decision governance for product teams](./04-decision-governance/docs/en.md) ✅ | Concept | — | decision guide |
 
 Concept reading:
 [Principle 7 — decisions are not processes](../../foundations/process-automation-principles.md).
