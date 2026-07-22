@@ -47,18 +47,18 @@ under the lesson's `outputs/`.
 | 04 | [The job executor: timers, retries, async work](./phases/02-the-engine-state-and-transactions/04-job-executor/docs/en.md) ✅ | Build | Python | module |
 | 05 | [Use It: the embedded engine in Spring Boot](./phases/02-the-engine-state-and-transactions/05-embedded-engine-spring-boot/docs/en.md) ✅ | Use | Java | starter |
 
-## Phase 3 — User tasks, identity & forms `5 lessons` ⬚
+## Phase 3 — User tasks, identity & forms `5 lessons` ✅
 
 > The human side: task lifecycle, assignment strategies, candidate groups,
 > delegation, and forms.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | The task lifecycle: created → assigned → completed ⬚ | Build | Python | module |
-| 02 | Assignment: assignee, candidate users, candidate groups ⬚ | Use | Python | client |
-| 03 | Identity management: users, groups, and external IdPs ⬚ | Concept | — | decision guide |
-| 04 | Forms: form properties, form keys, external form apps ⬚ | Use | Python | client |
-| 05 | Task queries & the task inbox pattern ⬚ | Use | Python | client |
+| 01 | [The task lifecycle: created → assigned → completed](./phases/03-user-tasks-identity-and-forms/01-task-lifecycle/docs/en.md) ✅ | Build | Python | module |
+| 02 | [Assignment: assignee, candidate users, candidate groups](./phases/03-user-tasks-identity-and-forms/02-assignment/docs/en.md) ✅ | Use | Python | client |
+| 03 | [Identity management: users, groups, and external IdPs](./phases/03-user-tasks-identity-and-forms/03-identity-management/docs/en.md) ✅ | Concept | — | decision guide |
+| 04 | [Forms: form properties, form keys, external form apps](./phases/03-user-tasks-identity-and-forms/04-forms/docs/en.md) ✅ | Use | Python | client |
+| 05 | [Task queries & the task inbox pattern](./phases/03-user-tasks-identity-and-forms/05-task-queries-and-inbox/docs/en.md) ✅ | Use | Python | client |
 
 ## Phase 4 — Service integration & error handling `6 lessons` ✅
 
@@ -98,18 +98,18 @@ under the lesson's `outputs/`.
 | 03 | Mixing BPMN and CMMN: process tasks inside cases ⬚ | Use | XML | case model |
 | 04 | When CMMN is overkill (most of the time) ⬚ | Concept | — | decision guide |
 
-## Phase 7 — Events, timers & messaging `5 lessons` ⬚
+## Phase 7 — Events, timers & messaging `5 lessons` ✅
 
 > Time and the outside world: timer events, signals, messages, and the event
 > registry (Kafka, JMS, RabbitMQ).
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
-| 01 | Timer events: ISO-8601 durations, cycles, due dates ⬚ | Build | Python | module |
-| 02 | Message events: correlating the outside world to an instance ⬚ | Build | Python | module |
-| 03 | Signals vs messages: broadcast vs point-to-point ⬚ | Concept | — | cheat sheet |
-| 04 | The event registry: Kafka in, process out ⬚ | Use | Python | client |
-| 05 | Event subprocesses & interrupting vs non-interrupting starts ⬚ | Use | XML | process model |
+| 01 | [Timer events: ISO-8601 durations, cycles, due dates](./phases/07-events-timers-and-messaging/01-timer-events/docs/en.md) ✅ | Build | Python | module |
+| 02 | [Message events: correlating the outside world to an instance](./phases/07-events-timers-and-messaging/02-message-events/docs/en.md) ✅ | Build | Python | module |
+| 03 | [Signals vs messages: broadcast vs point-to-point](./phases/07-events-timers-and-messaging/03-signals-vs-messages/docs/en.md) ✅ | Concept | — | cheat sheet |
+| 04 | [The event registry: Kafka in, process out](./phases/07-events-timers-and-messaging/04-event-registry/docs/en.md) ✅ | Use | Python | client |
+| 05 | [Event subprocesses & interrupting vs non-interrupting starts](./phases/07-events-timers-and-messaging/05-event-subprocesses/docs/en.md) ✅ | Use | XML | process model |
 
 ## Phase 8 — Versioning & migration `4 lessons` ⬚
 
@@ -149,14 +149,14 @@ under the lesson's `outputs/`.
 | 04 | Build vs buy vs open source: the workflow TCO conversation ⬚ | Concept | — | decision guide |
 | 05 | Flowable open source vs Flowable Work vs Camunda 8 vs Temporal ⬚ | Concept | — | comparison table |
 
-## Phase 11 — Capstone: loan origination `4 lessons` ⬚
+## Phase 11 — Capstone: loan origination `4 lessons` ✅
 
 > One end-to-end build: BPMN flow + DMN credit decision + user-task review + bureau
 > service calls + offer-expiry timers + error handling, driven over REST.
 
 | # | Project | Combines | Lang | Ships |
 |---|---------|----------|------|-------|
-| 01 | The process model: application → decision → offer → disbursal ⬚ | 1, 4, 7 | XML | process model |
-| 02 | The credit decision table ⬚ | 5 | XML | decision table |
-| 03 | The driver: a REST client that runs a full application ⬚ | 2, 3, 4 | Python | client |
-| 04 | Failure drill: bureau down, offer expired, manual override ⬚ | 4, 7, 9 | Python | runbook |
+| 01 | [The process model: application → decision → offer → disbursal](./phases/11-capstone-loan-origination/01-process-model/docs/en.md) ✅ | 1, 4, 7 | XML | process model |
+| 02 | [The credit decision table](./phases/11-capstone-loan-origination/02-credit-decision-table/docs/en.md) ✅ | 5 | XML | decision table |
+| 03 | [The driver: a REST client that runs a full application](./phases/11-capstone-loan-origination/03-the-driver/docs/en.md) ✅ | 2, 3, 4 | Python | client |
+| 04 | [Failure drill: bureau down, offer expired, manual override](./phases/11-capstone-loan-origination/04-failure-drill/docs/en.md) ✅ | 4, 7, 9 | Python | runbook |
