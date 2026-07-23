@@ -168,3 +168,5 @@ Same problem, far richer decomposition — and that's exactly what the
 - [Becoming a polymath](./becoming-a-polymath.md)
 - [Traps & limits](./traps-and-limits.md)
 - [Strategy & tradeoffs](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
+- [How systems are built](../technical-product-sense/how-systems-are-built.md) — an engineer's model of the machine, one more lattice to borrow from.
+- [Ontologies & data modeling](../knowledge-graphs/ontologies-and-data-modeling.md) — turning a fuzzy domain into crisp entities is model-building in practice.

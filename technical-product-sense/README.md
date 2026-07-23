@@ -53,4 +53,11 @@ flowchart TB
 Each lesson pairs the concept with a **🎯 For the AI PM** briefing — why it matters when the
 system has a model in it — and a diagram to make it concrete.
 
+## Connects to other tracks
+
+- [Latency / quality / cost / reliability tradeoffs](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md) — the same tradeoffs when the system has a model in it.
+- [Reliability engineering](../harness-engineering/phases/14-reliability-engineering/README.md) — timeouts, retries, and budgets built by hand.
+- [The job executor (Flowable)](../flowable/phases/02-the-engine-state-and-transactions/04-job-executor/docs/en.md) — durable async execution in a real engine.
+- [Technical product management](../technical-product-management/README.md) — turning system understanding into delivery.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).

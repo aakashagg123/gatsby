@@ -117,3 +117,4 @@ you can't name the owner, you've learned why it's still in code.
 - Phase README: [DMN: decisions as tables](../../README.md)
 - Version pinning for in-flight work: Phase 8 (see [`ROADMAP.md`](../../../../ROADMAP.md))
 - History retention for audit: Phase 9 (see [`ROADMAP.md`](../../../../ROADMAP.md))
+- Other tracks: [Governance, quality & trust](../../../../../knowledge-graphs/governance-quality-and-trust.md) — governing decisions-as-data is the same trust problem as governing a knowledge graph.

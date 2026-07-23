@@ -147,3 +147,4 @@ informed hypothesis — is itself the mark of expertise.
 - [Communication](./communication.md)
 - [Cognitive empathy](./cognitive-empathy.md)
 - [Product sense for AI products](./product-sense-for-ai.md)
+- [How systems are built](../technical-product-sense/how-systems-are-built.md) — domain fluency for the technical layer your product runs on.

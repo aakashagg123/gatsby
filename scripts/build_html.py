@@ -50,8 +50,9 @@ def rewrite_target(target, cur_mod):
         return target
     if target.startswith("#"):
         return target
-    base_anchor = target.split("#")[0]
-    resolved = os.path.normpath(os.path.join("content", cur_mod, base_anchor))
+    base, _, frag = target.partition("#")
+    anchor = ("#" + frag) if frag else ""
+    resolved = os.path.normpath(os.path.join("content", cur_mod, base))
     resolved = resolved.replace("\\", "/")
     if resolved in ("README.md", "SUMMARY.md", "GLOSSARY.md"):
         return "index.html"
@@ -64,6 +65,23 @@ def rewrite_target(target, cur_mod):
         if mod == cur_mod:
             return f"#{lesson}"
         return f"{SLUG_TO_PAGE.get(mod, 'index.html')}#{lesson}"
+    # cross-track link into a sibling track. AI editions live at _site/ai/, so a
+    # single ../ climbs to the site root where the other tracks sit. Flat tracks
+    # flatten to one page per lesson; phased tracks (harness, flowable) keep their tree.
+    FLAT = ("agentic-ai", "first-principles", "product-sense",
+            "technical-product-sense", "technical-product-management", "knowledge-graphs")
+    PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
+    top, _, rest = resolved.partition("/")
+    if rest.endswith(".md"):
+        rest = rest[:-3]
+        if top in FLAT:
+            leaf = rest.rsplit("/", 1)[-1]
+            page = "index" if leaf == "README" else leaf
+            return f"../{top}/{page}.html{anchor}"
+        if top in PHASED:
+            if rest == "README":
+                return f"../{PHASED[top]}/index.html{anchor}"
+            return f"../{PHASED[top]}/{rest}.html{anchor}"
     return target  # leave anything unexpected alone
 
 def rewrite_links_in_md(md, cur_mod):

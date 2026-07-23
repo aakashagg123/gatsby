@@ -180,3 +180,4 @@ the compounding law couldn't cash.
 - [Reliability & evals](./reliability-and-evals.md)
 - [Safety, security & governance](./safety-security-and-governance.md)
 - [Technical product management for AI](../technical-product-management/tpm-for-ai-products.md)
+- [Product sense for AI products](../product-sense/product-sense-for-ai.md) — the taste and trust judgment that agent UX under non-determinism demands.

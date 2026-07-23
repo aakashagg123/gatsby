@@ -354,9 +354,9 @@ unobservable, and unaffordable in production.</p>
   requests before they reach the model.</li>
 <li><strong>Retrieval</strong> — fetch the right context (documents, data) so the model answers from <em>your</em>
   facts, not its memory. Quality here caps answer quality — see the AI Engineering track's
-  <a href="../content/03-rag/rag-architecture.md">RAG architecture</a>.</li>
+  <a href="../ai/03-rag.html#rag-architecture">RAG architecture</a>.</li>
 <li><strong>Prompt assembly</strong> — combine instructions, context, and input within the model's token
-  limit. This is <a href="../content/00-foundations/context-engineering.md">context engineering</a>.</li>
+  limit. This is <a href="../ai/00-foundations.html#context-engineering">context engineering</a>.</li>
 <li><strong>Model call</strong> — the probabilistic step: slow, per-token cost, non-deterministic.</li>
 <li><strong>Validate / parse</strong> — check the output is well-formed and safe; loop back to repair if not.
   Never trust raw model output downstream.</li>
@@ -387,8 +387,8 @@ you measure it: an <strong>eval</strong> is a graded set of representative and a
 must pass, run continuously so regressions surface before users find them. Pair it with
 <strong>observability</strong> — traces of each step's tokens, cost, latency, and errors — so when quality
 drops you can see <em>which box</em> caused it. Together these are the AI Engineering track's
-<a href="../content/04-evals-observability/evals.md">evals</a> and
-<a href="../content/04-evals-observability/observability.md">observability</a> lessons — and for an AI feature
+<a href="../ai/04-evals-observability.html#evals">evals</a> and
+<a href="../ai/04-evals-observability.html#observability">observability</a> lessons — and for an AI feature
 they <em>are</em> its reliability.</p>
 <h2>Scope to the reliable frontier</h2>
 <p>Model capability is <strong>jagged</strong> — brilliant at some tasks, unreliable at adjacent ones. The

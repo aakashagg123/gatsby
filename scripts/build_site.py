@@ -161,10 +161,15 @@ const blocks=[]; const stripped = md.replace(/```mermaid\\n([\\s\\S]*?)```/g,(m,
 let html = marked.parse(stripped);
 html = html.replace(/__MERMAID_(\\d+)__/g,(m,i)=>blocks[+i]);
 const el = document.getElementById('content'); el.innerHTML = html;
-// rewrite intra-site .md links to their .html viewers
+// rewrite intra-site .md links to their .html viewers. AI-engineering lessons
+// deploy under ai/<module>.html#<lesson> (not content/), so remap those first.
 el.querySelectorAll('a[href]').forEach(a=>{{
-  const h=a.getAttribute('href');
-  if(h && !/^https?:|^#/.test(h)) a.setAttribute('href', h.replace(/\\.md(#|$)/,'.html$1'));
+  let h=a.getAttribute('href');
+  if(!h || /^https?:|^#/.test(h)) return;
+  h = h.replace(/(^|\\/)content\\/(\\d\\d-[\\w-]+)\\/README\\.md/,'$1ai/$2.html')
+       .replace(/(^|\\/)content\\/(\\d\\d-[\\w-]+)\\/([\\w-]+)\\.md/,'$1ai/$2.html#$3')
+       .replace(/\\.md(#|$)/,'.html$1');
+  a.setAttribute('href', h);
 }});
 await mermaid.run({{querySelector:'pre.mermaid'}});
 document.querySelectorAll('pre.mermaid svg').forEach(s=>{{

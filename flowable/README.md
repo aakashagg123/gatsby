@@ -66,4 +66,16 @@ docker run -p 8080:8080 flowable/flowable-rest
 # REST API at http://localhost:8080/flowable-rest/service, default user rest-admin/test
 ```
 
+## Connects to other tracks
+
+A process engine is infrastructure; these tracks frame the same decisions and failure modes.
+
+- [Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) — the build-vs-buy judgment behind "do you even want an engine?" (Phase 0).
+- [Reliability & failure](../technical-product-sense/reliability-and-failure.md) — the frame for wait states, transactions, and the job executor (Phase 2).
+- [Function calling, tool contracts, idempotency](../content/02-reliable-outputs/function-calling.md) — the same idempotency and retry discipline as service tasks and boundary events (Phase 4).
+- [Governance, quality & trust](../knowledge-graphs/governance-quality-and-trust.md) — decisions-as-data governance mirrors DMN decision governance (Phase 5).
+- [Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) — the operating discipline behind process versioning & migration (Phase 8).
+- [Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md) — orchestration by a shared engine vs. by autonomous agents.
+- [The method: deconstruct, challenge, reconstruct](../first-principles/the-method.md) — decomposing a workflow into tokens is first-principles thinking applied.
+
 <div align="center"><sub>Educational content. Use it, fork it, teach from it.</sub></div>

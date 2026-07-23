@@ -55,6 +55,13 @@ flowchart TB
   LOOP --> OUT["Decisions traced to bedrock —<br/>and the occasional consensus-beating move"]
 ```
 
+## Connects to other tracks
+
+- [How systems are built](../technical-product-sense/how-systems-are-built.md) — an engineer's model of the machine, a lattice to borrow from.
+- [Ontologies & data modeling](../knowledge-graphs/ontologies-and-data-modeling.md) — turning a fuzzy domain into crisp entities.
+- [The Ten Principles of a Working Harness](../harness-engineering/foundations/harness-principles.md) — reasoning an engine up from fundamentals.
+- [Process automation principles (Flowable)](../flowable/foundations/process-automation-principles.md) — decomposing a workflow into tokens and wait states.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — how first-principles
 reasoning showed up in real breakthroughs and real failures, plus the key takeaways.
 

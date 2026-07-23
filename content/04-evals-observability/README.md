@@ -19,6 +19,13 @@ retrieval" in [RAG](../03-rag/README.md), and every quality claim about
 through here.
 
 
+## Connects to other tracks
+
+- [Reliability & evals for agents](../../agentic-ai/reliability-and-evals.md) — trajectory evals on top of this stack.
+- [Evals & testing the harness](../../harness-engineering/phases/15-evals-and-testing-the-harness/README.md) — building the eval harness by hand.
+- [TPM for AI products](../../technical-product-management/tpm-for-ai-products.md) — eval-driven development as an operating discipline.
+- [Product sense for AI products](../../product-sense/product-sense-for-ai.md) — where product taste becomes an eval set.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 
 ---
