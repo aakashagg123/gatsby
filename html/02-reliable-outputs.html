@@ -332,6 +332,12 @@ into a component whose outputs and actions downstream systems can <em>trust</em>
 <p>The throughline: <strong>never trust model output as if it were a typed return value.</strong>
 Treat it as untrusted input to be validated, bounded, and made safe to act on. This
 is the <a href="00-foundations.html#harness-engineering">harness</a> doing its job.</p>
+<h2>Connects to other tracks</h2>
+<ul>
+<li><a href="../agentic-ai/tools-and-function-calling.html">Tools &amp; function calling</a> — the agent's view of the same tool contracts.</li>
+<li><a href="../harness/phases/03-tool-engineering/README.html">Tool engineering in the harness</a> — building reliable tools by hand.</li>
+<li><a href="../flowable/phases/04-service-integration-and-error-handling/README.html">Service integration &amp; error handling (Flowable)</a> — the same idempotency and retry discipline in a process engine.</li>
+</ul>
 <p><strong>📌 Close out the module:</strong> <a href="#recap">Recap &amp; real-world examples</a> — war stories from production plus the key takeaways.</p>
 <hr /></div>
   <nav class="toc"><div class="toc-h">In this module</div><a href="#interactive"><span>◆</span>Interactive demo</a><a href="#structured-output"><span>02.1</span>Structured output: validation, repair loops, and fallback chains</a><a href="#function-calling"><span>02.2</span>Function calling reliability, tool contracts, argument validation, and idempotency</a><a href="#agent-guardrails"><span>02.3</span>Agent guardrails: loop budgets, tool budgets, and termination conditions</a><a href="#model-routing"><span>02.4</span>Model routing, graceful fallback logic, and degraded-mode UX</a><a href="#recap"><span>📌</span>Recap &amp; real-world examples</a></nav>

@@ -118,4 +118,11 @@ should change and the question it should make you ask — and a diagram to make 
 concrete. Builders who want to go deeper than concepts can construct this machinery hands-on
 in the [Harness engineering track](../harness-engineering/README.md).
 
+## Connects to other tracks
+
+- [Tools & function calling reliability](../content/02-reliable-outputs/function-calling.md) — the contract layer under the agent's tool calls.
+- [Knowledge graphs & LLMs](../knowledge-graphs/knowledge-graphs-and-llms.md) — GraphRAG as durable agent memory.
+- [Flowable](../flowable/README.md) — orchestration by a shared engine vs. by autonomous agents.
+- [Product sense for AI products](../product-sense/product-sense-for-ai.md) — the taste and trust judgment agent UX demands.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).

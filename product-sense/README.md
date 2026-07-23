@@ -47,5 +47,12 @@ flowchart TB
 Each lesson pairs the craft with a **🎯 For the AI PM** briefing — why it matters when your
 product is powered by a model, and the sharper question it should make you ask.
 
+## Connects to other tracks
+
+- [Technical product sense](../technical-product-sense/README.md) — the systems half of product judgment.
+- [Technical product management](../technical-product-management/README.md) — turning sense into a shipped product.
+- [Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md) — where taste meets non-determinism.
+- [First principles & the polymath mind](../first-principles/README.md) — the reasoning range under strong judgment.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — how these ideas show
 up in real products, plus the key takeaways.

@@ -56,4 +56,11 @@ flowchart TB
 Each lesson pairs the craft with a **🎯 For the AI PM** briefing — how the practice bends
 when the product has a model in it — and a diagram to make it concrete.
 
+## Connects to other tracks
+
+- [Product sense](../product-sense/README.md) — the judgment that decides what's worth shipping.
+- [Technical product sense](../technical-product-sense/README.md) — reading the system you're shipping on.
+- [Evals: golden sets, adversarial, LLM-as-judge](../content/04-evals-observability/evals.md) — the measurement layer under eval-driven development.
+- [Versioning & migration (Flowable)](../flowable/phases/08-versioning-and-migration/README.md) — model upgrades as migrations, made concrete.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).

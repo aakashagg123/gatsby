@@ -97,4 +97,11 @@ directly to [RAG & retrieval](../content/03-rag/README.md) and the
 [Agentic AI track](../agentic-ai/README.md); the data-modeling instincts build on
 [Data & the data model](../technical-product-sense/data-and-the-data-model.md).
 
+## Connects to other tracks
+
+- [Evals & observability](../content/04-evals-observability/evals.md) — grounding and citation checks are eval problems.
+- [Retrieval & codebase understanding](../harness-engineering/phases/13-retrieval-and-codebase-understanding/README.md) — the same retrieval machinery at repo scale.
+- [Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) — sequencing a graph program as a product bet.
+- [The method: deconstruct, challenge, reconstruct](../first-principles/the-method.md) — modeling a domain into entities is first-principles work.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).

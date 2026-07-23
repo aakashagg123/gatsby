@@ -18,6 +18,12 @@ These build directly on [function calling](../02-reliable-outputs/function-calli
 of how the whole [harness](../00-foundations/harness-engineering.md) is built.
 
 
+## Connects to other tracks
+
+- [Safety, security & governance for agents](../../agentic-ai/safety-security-and-governance.md) — the agent-layer view of injection and permissions.
+- [Security & alignment in the harness](../../harness-engineering/phases/17-security-and-alignment/README.md) — tenant isolation and gating, built by hand.
+- [Security & privacy sense](../../technical-product-sense/security-and-privacy.md) — the "what does the attacker hold tomorrow?" frame.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 
 ---

@@ -20,6 +20,12 @@ production LLM feature is a distributed system with a stochastic component in th
 middle.** Engineer it like one.
 
 
+## Connects to other tracks
+
+- [Context & memory in agents](../../agentic-ai/context-and-memory.md) — the same curation discipline inside the loop.
+- [Context engineering in the harness](../../harness-engineering/phases/04-context-engineering/README.md) — budgeting and assembling context by hand.
+- [Technical sense for AI systems](../../technical-product-sense/technical-sense-for-ai.md) — the PM-altitude view of the same stack.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 
 ---

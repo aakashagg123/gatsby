@@ -16,6 +16,12 @@ point in the tradeoff space these three describe. Read it last, then revisit the
 with the tradeoffs in mind.
 
 
+## Connects to other tracks
+
+- [Latency, scale & performance](../../technical-product-sense/latency-scale-performance.md) — the same tradeoffs framed for a PM.
+- [Do you even want an engine? (Flowable)](../../flowable/phases/00-orientation-and-setup/01-when-do-you-want-an-engine/docs/en.md) — build-vs-buy reasoning applied to infrastructure.
+- [A latticework of mental models](../../first-principles/mental-models-latticework.md) — the reasoning range behind naming every cost.
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 
 ---
