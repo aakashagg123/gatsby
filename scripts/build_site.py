@@ -339,7 +339,8 @@ def inject_glossary(site):
     with open(os.path.join(assets, "glossary.css"), "w", encoding="utf-8") as f:
         f.write(glossary_widget.CSS)
     with open(os.path.join(assets, "glossary.js"), "w", encoding="utf-8") as f:
-        f.write(glossary_widget.js_file(build_glossary.site_entries()))
+        f.write(glossary_widget.js_file(build_glossary.site_entries(),
+                                        build_glossary.site_keyterms()))
     injected = 0
     for dp, _, files in os.walk(site):
         for fn in files:
@@ -356,7 +357,7 @@ def inject_glossary(site):
                 continue
             root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
             root = "" if root == "." else root + "/"
-            tags = glossary_widget.head_tags(root)
+            tags = glossary_widget.head_tags(root, rel)
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text[:pos] + tags + text[pos:])
             injected += 1

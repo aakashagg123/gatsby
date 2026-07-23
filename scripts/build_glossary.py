@@ -98,6 +98,22 @@ def site_entries():
     return out
 
 
+def site_keyterms():
+    """Map each home page URL (no anchor) -> its must-know term slugs.
+
+    A term is must-know for the lesson it homes to (its `see`), which is the
+    operational form of 'argument-critical' from GLOSSARY_FRAMEWORK.md. The
+    widget renders these as a per-lesson 'Key terms' box.
+    """
+    tbyk = {e["k"]: e["t"] for e in GLOSSARY}
+    out = {}
+    for e in GLOSSARY:
+        _, md = e["see"]
+        url = deployed_url(md).split("#")[0]
+        out.setdefault(url, set()).add(e["k"])
+    return {url: sorted(keys, key=lambda k: tbyk[k].lower()) for url, keys in out.items()}
+
+
 HEADER = """# Glossary
 
 Plain-language definitions for the jargon used across the curriculum — written to be
@@ -106,7 +122,11 @@ concrete example, and a link to the lesson where it's developed in depth.
 
 On the [live site](https://aakashagg123.github.io/gatsby/), these terms are **clickable
 inside every lesson**: the first time a term appears on a page, click it to open a
-sidebar with this same explanation, its use-cases, and related terms.
+sidebar with this same explanation, its use-cases, and related terms. Each lesson also
+shows a **Key terms** box of the terms it develops.
+
+Which words get an entry — and why — is defined by the rubric in
+[`GLOSSARY_FRAMEWORK.md`](./GLOSSARY_FRAMEWORK.md).
 
 > This file is generated from `scripts/glossary_data.py`. Edit the data there and run
 > `python3 scripts/build_glossary.py` — don't hand-edit below this line.

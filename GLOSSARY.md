@@ -6,7 +6,11 @@ concrete example, and a link to the lesson where it's developed in depth.
 
 On the [live site](https://aakashagg123.github.io/gatsby/), these terms are **clickable
 inside every lesson**: the first time a term appears on a page, click it to open a
-sidebar with this same explanation, its use-cases, and related terms.
+sidebar with this same explanation, its use-cases, and related terms. Each lesson also
+shows a **Key terms** box of the terms it develops.
+
+Which words get an entry — and why — is defined by the rubric in
+[`GLOSSARY_FRAMEWORK.md`](./GLOSSARY_FRAMEWORK.md).
 
 > This file is generated from `scripts/glossary_data.py`. Edit the data there and run
 > `python3 scripts/build_glossary.py` — don't hand-edit below this line.
@@ -485,6 +489,16 @@ sidebar with this same explanation, its use-cases, and related terms.
 
 *See:* [Observability](./content/04-evals-observability/observability.md).
 
+**Hallucination** — When a model states something false with full confidence — fluent, plausible, and simply not true.
+
+*In plain terms.* A language model predicts likely-sounding text; it has no built-in sense of what's true. A hallucination is the result: a confident, well-formed answer that's wrong or invented — a fake citation, a nonexistent policy, a made-up number. It's not a bug to be fully patched but a property to be managed, mainly by grounding answers in real sources.
+
+*For example.* Asked for your refund policy, the model invents a plausible '30-day window' that your company never had — stated as confidently as a true fact.
+
+*Where it shows up:* Setting a quality/trust bar for AI answers; Justifying grounding, citations, and guardrails; Deciding where a confident wrong answer is unacceptable.
+
+*See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
+
 **Harness** — The code, control flow, retries, validators, tools, and budgets that surround the model call.
 
 *In plain terms.* A model on its own just turns text into text. The harness is everything you build around that one call so it behaves like a product: the retries when it fails, the validation of what it returned, the tools it can use, the budgets that stop it running away. The model is the engine; the harness is the rest of the car.
@@ -544,6 +558,16 @@ sidebar with this same explanation, its use-cases, and related terms.
 *Where it shows up:* Prototyping a task before investing in fine-tuning; Deciding what belongs in the prompt vs. the weights; Trading prompt cost vs. training cost.
 
 *See:* [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md).
+
+**Inference** — Running a trained model to get an output — the per-request work (and cost) every time your product calls the model.
+
+*In plain terms.* Training is teaching the model once, up front; inference is *using* it — every time a user request hits the model, that's an inference. It's where your ongoing compute cost and latency live, which is why so much engineering (caching, batching, quantization) targets making inference cheaper and faster.
+
+*For example.* A user asks your assistant a question; serving that one answer is one inference, costing some tokens of compute and some milliseconds of latency.
+
+*Where it shows up:* Understanding where AI running-costs come from; Separating one-time training cost from per-request cost; Reasoning about latency and scale.
+
+*See:* [Inference internals](./content/01-inference-internals/README.md).
 
 **INT4 / INT8** — 4-bit and 8-bit integer quantization of a model's weights (and sometimes activations).
 

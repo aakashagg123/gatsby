@@ -56,6 +56,15 @@ CSS = (
     "text-decoration:none;border-bottom:1px solid transparent}"
     "#gl-panel .gl-see:hover{border-bottom-color:#bd5d3a}"
     "@media (max-width:520px){#gl-panel{width:100%;max-width:100%;border-left:none;padding:26px 20px 40px}}"
+    # per-lesson "Key terms" box (must-know tier)
+    "#gl-keybox{margin:0 0 26px;padding:14px 16px;background:#f6f4ed;border:1px solid #e7e3d8;border-radius:12px}"
+    "#gl-keybox .gl-keylab{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;"
+    "color:#9a9788;margin-bottom:9px}"
+    "#gl-keybox .gl-keychips{display:flex;flex-wrap:wrap;gap:7px}"
+    "#gl-keybox .gl-keyterm{font:inherit;font-size:.82rem;color:#3d3c37;background:#fff;border:1px solid #e4e0d5;"
+    "border-radius:20px;padding:4px 11px;cursor:pointer;line-height:1.3}"
+    "#gl-keybox .gl-keyterm:hover{border-color:#d97757;color:#bd5d3a;background:#fbefe9}"
+    "@media (max-width:600px){#gl-keybox{padding:12px 14px}}"
     "@media print{.gloss-term{text-decoration:none}#gl-panel,#gl-scrim{display:none}}"
 )
 
@@ -180,12 +189,33 @@ JS_LOGIC = r"""
     if(lastFocus && lastFocus.focus){ try{ lastFocus.focus(); }catch(e){} }
   }
 
+  function keyBox(){
+    var km = G.keyterms || {};
+    var list = km[window.__glossPage || ''];
+    if(!list || !list.length) return;
+    var main = document.querySelector('main');
+    if(!main || document.getElementById('gl-keybox')) return;
+    if(main.textContent.replace(/Loading/,'').trim().length < 40) return;  // not yet rendered
+    var chips = list.filter(function(k){ return entries[k]; }).map(function(k){
+      return '<button class="gl-keyterm" data-gk="'+k+'">'+escapeHtml(entries[k].t)+'</button>'; }).join('');
+    if(!chips) return;
+    var box = document.createElement('aside');
+    box.id = 'gl-keybox';
+    box.setAttribute('aria-label', 'Key terms');
+    box.innerHTML = '<div class="gl-keylab">Key terms</div><div class="gl-keychips">'+chips+'</div>';
+    var hero = main.querySelector('.hero, .index-hero'), h1 = main.querySelector('h1');
+    if(hero && hero.parentNode === main) hero.insertAdjacentElement('afterend', box);
+    else if(h1) h1.insertAdjacentElement('afterend', box);
+    else main.insertBefore(box, main.firstChild);
+  }
+
   function start(){
     var main = document.querySelector('main') || document.body;
     walk(main);
     build();
+    keyBox();
     document.addEventListener('click', function(e){
-      var b = e.target.closest && e.target.closest('.gloss-term');
+      var b = e.target.closest && e.target.closest('.gloss-term, .gl-keyterm');
       if(b){ e.preventDefault(); open(b.getAttribute('data-gk')); }
     });
     // Harness & Flowable tracks render their markdown into <main> AFTER load
@@ -194,7 +224,7 @@ JS_LOGIC = r"""
     // mermaid's internal SVG changes. The `used` set keeps first-occurrence
     // correct and makes re-walks idempotent.
     if(window.MutationObserver){
-      var mo = new MutationObserver(function(){ walk(main); });
+      var mo = new MutationObserver(function(){ walk(main); keyBox(); });
       mo.observe(main, {childList:true});
     }
   }
@@ -204,18 +234,22 @@ JS_LOGIC = r"""
 """
 
 
-def js_file(entries: dict) -> str:
-    """The full glossary.js: inlined data + behaviour."""
-    data = json.dumps({"entries": entries}, ensure_ascii=False, separators=(",", ":"))
+def js_file(entries: dict, keyterms: dict) -> str:
+    """The full glossary.js: inlined data (terms + must-know map) + behaviour."""
+    data = json.dumps({"entries": entries, "keyterms": keyterms},
+                      ensure_ascii=False, separators=(",", ":"))
     return "window.CCR_GLOSSARY=" + data + ";\n" + JS_LOGIC
 
 
-def head_tags(root: str) -> str:
+def head_tags(root: str, page: str) -> str:
     """Per-page tags injected before </body>. `root` is the relative path to the
-    site root (e.g. '../'), so assets and lesson links resolve at any depth."""
+    site root (e.g. '../') so assets/lesson links resolve at any depth; `page` is
+    the site-relative path of this page (e.g. 'ai/03-rag.html') so the widget can
+    look up this lesson's Key terms."""
     r = root or ""
     return (
         '<link rel="stylesheet" href="' + r + 'assets/glossary.css">'
-        '<script>window.__glossRoot=' + json.dumps(r) + '</script>'
+        '<script>window.__glossRoot=' + json.dumps(r)
+        + ';window.__glossPage=' + json.dumps(page) + '</script>'
         '<script defer src="' + r + 'assets/glossary.js"></script>'
     )
