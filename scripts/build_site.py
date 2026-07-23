@@ -20,6 +20,8 @@ import shutil
 import reader_widget
 
 import build_graph
+import build_glossary
+import glossary_widget
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "_site")
@@ -328,6 +330,39 @@ def inject_graph_buttons(site, focus_map):
     return injected
 
 
+def inject_glossary(site):
+    """Ship the glossary widget assets and reference them from every content
+    page, with a per-page relative root so assets and lesson links resolve at
+    any depth. Mirrors inject_graph_buttons (skips the two landing pages)."""
+    assets = os.path.join(site, "assets")
+    os.makedirs(assets, exist_ok=True)
+    with open(os.path.join(assets, "glossary.css"), "w", encoding="utf-8") as f:
+        f.write(glossary_widget.CSS)
+    with open(os.path.join(assets, "glossary.js"), "w", encoding="utf-8") as f:
+        f.write(glossary_widget.js_file(build_glossary.site_entries()))
+    injected = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            rel = os.path.relpath(path, site).replace(os.sep, "/")
+            if rel in ("index.html", "graph/index.html"):
+                continue
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            pos = text.rfind("</body>")
+            if pos == -1 or "window.__glossRoot" in text:
+                continue
+            root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
+            root = "" if root == "." else root + "/"
+            tags = glossary_widget.head_tags(root)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text[:pos] + tags + text[pos:])
+            injected += 1
+    return injected
+
+
 def rel_to_track_root(md_path, site_key):
     """'../' * depth from a track md file up to _site/<site_key>/."""
     rel = os.path.relpath(md_path, os.path.join(SITE, site_key))
@@ -471,9 +506,13 @@ def main():
     # that page's own node.
     injected = inject_graph_buttons(SITE, build_graph.page_focus_map(data))
 
+    # 8. Clickable glossary terms + explainer sidebar on every content page.
+    gloss = inject_glossary(SITE)
+
     print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "
           f"graph ({len(data['nodes'])} nodes, {n_links} links, "
-          f"{injected} pages linked)")
+          f"{injected} pages linked) + glossary "
+          f"({len(build_glossary.site_entries())} terms, {gloss} pages)")
 
 
 if __name__ == "__main__":
