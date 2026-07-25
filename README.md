@@ -238,7 +238,7 @@ And five threads that cross track boundaries — the same concern, followed from
 The learning material lives entirely in [`content/`](./content/) as plain markdown — no build step required to read it.
 
 - **HTML editions** are generated into [`html/`](./html/) from the markdown by [`scripts/build_html.py`](./scripts/build_html.py), so they never drift from the source. Regenerate with `python3 scripts/build_html.py`.
-- The repository also retains its original [Gatsby](https://www.gatsbyjs.org/) scaffold, so the content can later be rendered as a full site.
+- The **combined site** is assembled by [`scripts/build_site.py`](./scripts/build_site.py) — pure Python standard library, no Node or npm — and published to GitHub Pages by [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) on every push to `master`.
 
 </details>
 
