@@ -7,10 +7,10 @@
 ![Tracks](https://img.shields.io/badge/tracks-9-D97757?style=flat-square&labelColor=1f1e1d)
 ![Lessons](https://img.shields.io/badge/lessons-70%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
-![Cross-links](https://img.shields.io/badge/internal%20links-2552%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
+![Cross-links](https://img.shields.io/badge/internal%20links-2692%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
 
-**[🌐 Live site](https://aakashagg123.github.io/gatsby/)** · **[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)** · **[🧵 Craft tracks](#-beyond-ai-engineering--the-craft-tracks)**
+**[🌐 Live site](https://aakashagg123.github.io/gatsby/)** · **[🕸️ Knowledge graph](https://aakashagg123.github.io/gatsby/graph/)** · **[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)** · **[🧵 Craft tracks](#-beyond-ai-engineering--the-craft-tracks)**
 
 </div>
 
