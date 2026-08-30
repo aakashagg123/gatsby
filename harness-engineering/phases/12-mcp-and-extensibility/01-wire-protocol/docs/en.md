@@ -6,11 +6,11 @@
 
 ## The Problem
 
-MCP (the Model Context Protocol) is how Claude Code / Codex connect to external tool
-servers. Before using an SDK, understand the wire: it's **JSON-RPC 2.0** — each message is a
-small JSON object with an `id`, a `method`, and `params`; the reply echoes the `id` with a
-`result` or `error`. Once you've framed and dispatched a few messages by hand, the SDK is
-just ergonomics.
+MCP (the Model Context Protocol) is how Claude Code and Codex connect to external tool
+servers. Before you use an SDK, understand the wire format. MCP runs on **JSON-RPC 2.0**.
+Each message is a small JSON object with an `id`, a `method`, and `params`. The reply echoes
+the `id` back with a `result` or an `error`. Once you frame and dispatch a few messages by
+hand, the SDK is just ergonomics.
 
 ## The Concept
 
@@ -63,14 +63,14 @@ print(d.handle(request(1, "ping")))          # {"jsonrpc":"2.0","id":1,"result":
 print(d.handle(request(2, "nope")))          # error -32601
 ```
 
-That's the whole protocol core: frame a request, dispatch by method name, frame a result or
-a structured error (with JSON-RPC error codes).
+That's the whole protocol core: frame a request, dispatch by method name, then frame a result
+or a structured error with a JSON-RPC error code.
 
 ## Use It
 
-Real MCP runs this JSON-RPC over a transport — **stdio** (a subprocess) or **HTTP/SSE**.
-Claude Code / Codex speak exactly this to every MCP server you add. You'll use the SDK
-(lesson 06) so you never hand-write framing, but when a server misbehaves, you can read the
+Real MCP runs this JSON-RPC over a transport: **stdio** (a subprocess) or **HTTP/SSE**.
+Claude Code and Codex speak exactly this to every MCP server you add. You'll use the SDK
+(lesson 06), so you never hand-write framing. But when a server misbehaves, you can read the
 JSON-RPC traffic and know what `tools/call` should look like.
 
 ## Ship It

@@ -4,22 +4,22 @@
 
 ## Real-world examples & war stories
 
-**Klarna's AI assistant (2024).** Klarna reported its OpenAI-powered assistant was
-handling **~two-thirds of customer-service chats** — work it equated to hundreds of
-full-time agents — within months. 🎯 *PM takeaway:* at that volume you *cannot* operate on
-vibes. [Cost attribution](./cost-attribution.md) (what does each resolved chat cost?) and
-continuous [quality monitoring](./observability.md) are what make a number like that safe
-rather than terrifying.
+**Klarna's AI assistant (2024).** Klarna reported its OpenAI-powered assistant handled
+**~two-thirds of customer-service chats** within months — work it equated to hundreds of
+full-time agents. 🎯 *PM takeaway:* at that volume you cannot operate on vibes.
+[Cost attribution](./cost-attribution.md) (what does each resolved chat cost?) and
+continuous [quality monitoring](./observability.md) make a number like that safe rather
+than terrifying.
 
 **"Did the model change?" (the GPT-4 drift debates).** Practitioners repeatedly reported
-that hosted models *behaved differently over time* on the same prompts, sparking public
-back-and-forth about silent regressions. 🎯 *PM takeaway:* you can't control the
-provider's weights — so you need **your own** [regression evals](./evals.md). Teams with a
-golden set find out from CI; teams without one find out from churn.
+that hosted models *behaved differently over time* on the same prompts. This sparked
+public debate about silent regressions. 🎯 *PM takeaway:* you can't control the
+provider's weights, so you need **your own** [regression evals](./evals.md). Teams with a
+golden set find out from CI. Teams without one find out from churn.
 
 **The LLM-observability category exists now.** LangSmith, Langfuse, Arize Phoenix,
-Braintrust and others turned [traces, spans, token/cost accounting, and eval runs](./observability.md)
-into a standard tooling layer. 🎯 *PM takeaway:* this is no longer exotic — "we have no
+Braintrust, and others turned [traces, spans, token/cost accounting, and eval runs](./observability.md)
+into a standard tooling layer. 🎯 *PM takeaway:* this is no longer exotic. "We have no
 tracing or evals" is now a visible maturity gap, not a defensible default.
 
 ## Module recap

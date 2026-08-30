@@ -6,11 +6,11 @@
 
 ## The Problem
 
-A coding agent's window fills fast: system prompt, tool schemas, project files
-(`CLAUDE.md`/`AGENTS.md`), conversation history, tool results. Left unmanaged it overflows
-and the harness either errors or truncates blindly — dropping exactly the file the model
-needed. You need an explicit budget: how many tokens each *category* may consume, checked
-before every call.
+A coding agent's window fills fast with system prompt, tool schemas, project files
+(`CLAUDE.md`/`AGENTS.md`), conversation history, and tool results. Left unmanaged, it
+overflows. The harness then errors, or truncates blindly and drops exactly the file the
+model needed. You need an explicit budget: set how many tokens each *category* may
+consume, and check it before every call.
 
 ## The Concept
 
@@ -23,9 +23,9 @@ flowchart TB
   W --> E["reserve for output (max_tokens)"]
 ```
 
-Allocate the window across categories with a reserve for output. When a category exceeds
-its slice, that category gets trimmed/compacted (later lessons) — not whatever happens to
-be oldest.
+Allocate the window across categories, and reserve tokens for output. When a category
+exceeds its slice, trim or compact that category (later lessons) instead of whatever data
+happens to be oldest.
 
 ## Build It
 
@@ -62,11 +62,11 @@ actionable signal pointing at what to trim.
 
 ## Use It
 
-In **Claude Code / Codex** you don't set these numbers directly, but the same budgeting
-governs what the agent loads: a lean `CLAUDE.md`/`AGENTS.md` (project memory), on-demand
+In **Claude Code / Codex** you don't set these numbers directly. But the same budgeting
+governs what the agent loads: a lean `CLAUDE.md`/`AGENTS.md` for project memory, on-demand
 file reads instead of dumping the repo, and automatic history compaction when the window
-fills. This lesson is the model behind those behaviors — and why a bloated memory file
-crowds out the files the agent actually needs.
+fills. This lesson explains the model behind those behaviors, and why a bloated memory
+file crowds out the files the agent actually needs.
 
 ## Ship It
 

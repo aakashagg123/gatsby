@@ -7,9 +7,9 @@
 ## The Problem
 
 "Allow `git` but deny `git push`." "Allow reads anywhere but deny writing to `/etc`." Rules
-overlap and conflict, and if precedence is fuzzy you get surprises — an allow rule silently
-permitting something a deny rule meant to block. You need pattern-based allow/deny lists
-with a clear, documented precedence: **deny always wins**, and specificity breaks ties.
+overlap and conflict. If precedence is fuzzy, you get surprises — an allow rule silently
+permits something a deny rule meant to block. You need pattern-based allow/deny lists with
+a clear, documented precedence: **deny always wins**, and specificity breaks ties.
 
 ## The Concept
 
@@ -52,14 +52,15 @@ print(pol.decide("write:/etc/hosts"))      # deny
 print(pol.decide("write:/tmp/x"))          # ask (no match)
 ```
 
-Deny-wins is the safe default: an allow rule can never accidentally re-permit something a
+Deny-wins is the safe default. An allow rule can never accidentally re-permit something a
 deny rule blocked.
 
 ## Use It
 
 This is how Claude Code's `permissions.allow` / `permissions.deny` in `settings.json` work
-(e.g. `Bash(git push:*)` in deny), and Codex's command rules. You write broad allows for
-safe families and narrow denies for the dangerous specifics — confident that deny wins.
+(e.g. `Bash(git push:*)` in deny), and how Codex's command rules work. Write broad allows
+for safe families and narrow denies for the dangerous specifics. Deny wins, so the narrow
+denies stay safe.
 
 ## Ship It
 
@@ -86,8 +87,8 @@ deny-wins precedence.
 
 <details><summary>Answer</summary>B — fall through to the configured default.</details>
 
-**Challenge.** Add specificity tie-breaking among *allow* rules (longer/more-specific
-pattern wins) and show a case where it matters.
+**Challenge.** Add specificity tie-breaking among *allow* rules, so the longer, more
+specific pattern wins. Show a case where it matters.
 
 ## Related
 

@@ -6,9 +6,9 @@
 
 ## The Problem
 
-An agent that runs every tool call unchecked is a liability; one that asks before *every*
-call is unusable. The resolution is **modes**: a per-call decision — allow automatically,
-ask the human, or deny outright — driven by rules, so routine reads run free while
+An agent that runs every tool call unchecked is a liability. An agent that asks before
+*every* call is unusable. The fix is **modes**: a per-call decision to allow automatically,
+ask the human, or deny outright. Rules drive the decision, so routine reads run free while
 destructive actions stop for confirmation. This gate is the single most important safety
 component in the harness.
 
@@ -22,8 +22,8 @@ flowchart LR
   G --> D["deny → refuse"]
 ```
 
-A default mode plus rules: e.g. default-ask, with reads allowlisted to allow and dangerous
-patterns denylisted to deny.
+The gate uses a default mode plus rules. For example: default to ask, allowlist reads to
+allow, and denylist dangerous patterns to deny.
 
 ## Build It
 
@@ -62,14 +62,14 @@ print(gate.decide("bash", {"cmd": "rm -rf /"}))      # deny
 print(gate.decide("write", {}))                      # ask (default)
 ```
 
-The gate centralizes the allow/ask/deny decision so it's consistent and auditable, instead
-of scattered `if` checks.
+The gate centralizes the allow/ask/deny decision. This keeps the decision consistent and
+auditable, instead of scattering `if` checks through the code.
 
 ## Use It
 
 This is Claude Code's **permission modes** (default, acceptEdits, plan, and the
-`--dangerously-skip-permissions` escape hatch) and Codex's approval settings: reads and
-edits can be auto-approved while shell or network actions prompt. You tune the rules so the
+`--dangerously-skip-permissions` escape hatch) and Codex's approval settings. Reads and
+edits can be auto-approved, while shell or network actions prompt. Tune the rules so the
 agent flows on safe work and stops on risky work — never the reverse.
 
 ## Ship It
@@ -97,8 +97,8 @@ allow/ask/deny permission gate.
 
 <details><summary>Answer</summary>B — conservative default, widen deliberately.</details>
 
-**Challenge.** Add a `plan` mode that denies all *mutating* tools (write/edit/bash) while
-allowing reads — the read-only "propose first" mode from Phase 11.
+**Challenge.** Add a `plan` mode that denies all *mutating* tools (write/edit/bash) but
+allows reads. This is the read-only "propose first" mode from Phase 11.
 
 ## Related
 

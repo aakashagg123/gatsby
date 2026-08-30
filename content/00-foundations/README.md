@@ -1,8 +1,8 @@
 # Module 00 · Foundations
 
 The hardest part of AI engineering is not the model. It is everything *around* the
-model: the control flow, the context you feed it, the validation you wrap it in,
-and the operational discipline that turns a clever demo into a system people can
+model: the control flow, the context you feed it, and the validation you wrap it
+in. Operational discipline is what turns a clever demo into a system people can
 depend on.
 
 This module establishes the three mindset shifts that the rest of the curriculum

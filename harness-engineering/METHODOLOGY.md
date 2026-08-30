@@ -2,18 +2,18 @@
 
 This document defines the pedagogical framework for the hands-on **Harness Engineering**
 build track: the lesson shape, the artifacts, and the way phases stack. The
-[`foundations/`](./foundations/harness-principles.md) docs give the conceptual spine; the lessons make you
-build it.
+[`foundations/`](./foundations/harness-principles.md) docs give the conceptual spine.
+The lessons make you build it.
 
 ---
 
 ## 0. Audience assumption — you use Claude Code or Codex
 
 Every lesson assumes the reader works inside an agentic coding tool — **Claude Code** or
-**Codex**. You build each harness component from scratch to understand it, then the
-**Use It** beat maps that component to how Claude Code / Codex already do it
-(`CLAUDE.md` / `AGENTS.md` memory, `settings.json` hooks, skills, subagents, MCP servers,
-permission modes). The artifacts each lesson ships are installable into those tools. When
+**Codex**. You build each harness component from scratch to understand it. The
+**Use It** beat then maps that component to how Claude Code / Codex already do it —
+`CLAUDE.md` / `AGENTS.md` memory, `settings.json` hooks, skills, subagents, MCP servers,
+permission modes. The artifacts each lesson ships install directly into those tools. When
 a lesson says "in a real harness," it means Claude Code or Codex.
 
 ## 1. The thesis: *Build It, then Use It*
@@ -61,7 +61,7 @@ Phases are arranged so **lower layers are prerequisites for higher ones**: LLM I
 agent loop → tools → context → memory → subagents → MCP → reliability → evals →
 security → production → **capstone**.
 
-The model-as-a-function is the floor; a working coding agent is the roof. Skip ahead if
+The model-as-a-function is the floor. A working coding agent is the roof. Skip ahead if
 you know a lower layer, but don't skip and then wonder why the top is breaking.
 
 ## 5. Same folder shape, everywhere
@@ -83,8 +83,8 @@ strict format (see [`AUTHORING.md`](./AUTHORING.md)).
 
 - **Diagrams** lead the Concept beat — Mermaid for flows/architecture, tables for
   comparisons, ASCII for simple mental models.
-- **Quizzes** make it stick: each lesson ends with self-test questions (answers in
-  collapsed blocks), and two skills automate placement and review —
+- **Quizzes** make it stick. Each lesson ends with self-test questions, with answers in
+  collapsed blocks. Two skills automate placement and review —
   [`/find-your-level`](../.claude/skills/find-your-level/SKILL.md) and
   [`/check-understanding <phase>`](../.claude/skills/check-understanding/SKILL.md).
 

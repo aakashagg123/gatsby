@@ -9,7 +9,7 @@
 Some rules must be *guaranteed*, not merely requested of the model: "never edit `.env`",
 "run the linter after every write", "redact secrets from output". You can't trust a prompt
 for these (Phase 0 lesson 03). **Hooks** are the mechanism: deterministic scripts the harness
-runs *around* each tool call — a PreToolUse hook can block or modify a call; a PostToolUse
+runs *around* each tool call. A PreToolUse hook can block or modify a call. A PostToolUse
 hook can react to the result.
 
 ## The Concept
@@ -23,8 +23,8 @@ flowchart LR
   POST --> R["result (maybe augmented)"]
 ```
 
-Pre-hooks gate and rewrite inputs; post-hooks observe and augment outputs (e.g. inject lint
-violations into context).
+Pre-hooks gate and rewrite inputs. Post-hooks observe and augment outputs — for example,
+injecting lint violations into context.
 
 ## Build It
 
@@ -59,8 +59,9 @@ print(hr.call("write", {"path": ".env"}, execute=lambda t, a: "wrote"))   # bloc
 print(hr.call("write", {"path": "app.py"}, execute=lambda t, a: "wrote")) # wrote [lint: ok]
 ```
 
-Pre-hooks are your enforcement layer (block `.env`); post-hooks are your reaction layer
-(run the linter, inject its output) — both deterministic, both prompt-free.
+Pre-hooks are your enforcement layer — they block `.env`. Post-hooks are your reaction
+layer — they run the linter and inject its output. Both are deterministic. Neither needs
+a prompt.
 
 ## Use It
 

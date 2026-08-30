@@ -20,9 +20,9 @@ time — then use the real SDKs.** Every lesson ships a reusable artifact.
 ## Audience
 
 This track assumes you work inside **Claude Code or Codex**. You build each piece of a
-harness yourself to understand it, then every **Use It** maps it to how those tools do it
-(memory files, hooks, skills, subagents, MCP, permissions), and every shipped artifact is
-installable into them.
+harness yourself to understand it. Every **Use It** section then maps that piece to how
+those tools do it — memory files, hooks, skills, subagents, MCP, permissions. Every
+shipped artifact installs directly into them.
 
 ## How it works
 
@@ -41,7 +41,7 @@ use the production SDK. See [`METHODOLOGY.md`](./METHODOLOGY.md).
 
 ## Status
 
-Phases **2 (The Agent Loop)** and **10 (Subagents & Orchestration)** are complete; the
+Phases **2 (The Agent Loop)** and **10 (Subagents & Orchestration)** are complete. The
 rest are scaffolded in the [Roadmap](./ROADMAP.md). Quiz yourself per phase with
 `/check-understanding <phase>`.
 
@@ -53,7 +53,7 @@ python3 harness-engineering/phases/02-the-agent-loop/01-agent-loop/code/agent_lo
 
 ## Connects to other tracks
 
-You build the harness here; these tracks frame the same problems from other altitudes.
+You build the harness here. These tracks frame the same problems from other altitudes.
 
 - [What is an agent?](../agentic-ai/what-is-an-agent.md) — the conceptual view of the loop you build by hand in Phase 2.
 - [Context engineering](../content/00-foundations/context-engineering.md) — the discipline behind Phases 4 & 9 (context and memory).

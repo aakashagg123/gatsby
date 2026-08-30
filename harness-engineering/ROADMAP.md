@@ -6,7 +6,7 @@
 
 **Status:** `✅` done · `🚧` in progress · `⬚` planned — **all 20 phases complete ✅**
 
-The phases stack. **The model-as-a-function is the floor; a full coding agent is the
+The phases stack. **The model-as-a-function is the floor. A full coding agent is the
 roof.** Skip ahead if you know a lower layer, but don't skip and then wonder why the
 top is breaking.
 

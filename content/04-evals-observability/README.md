@@ -1,22 +1,21 @@
 # Module 04 · Evals & observability
 
-LLM systems fail *silently*: a wrong answer looks exactly like a right one, and quality
-can regress with no code change at all (a model update, a data shift, an aging index).
-The only defense is measurement — before you ship (evals) and while you run
-(observability) — plus knowing what it all costs.
+LLM systems fail *silently*. A wrong answer looks exactly like a right one, and quality
+can regress with no code change at all — a model update, a data shift, an aging index.
+The only defense is measurement: evals before you ship, observability while you run,
+and clear knowledge of what it all costs.
 
 - [**Evals**](./evals.md) — golden sets, regression tests, adversarial tests,
-  LLM-as-judge, and human evals. How you know it's *correct*.
+  LLM-as-judge, and human evals. How you know an output is *correct*.
 - [**Observability**](./observability.md) — traces, spans, tokens, latency, errors, and
-  drift. How you know it's *working* in production.
+  drift. How you know the system is *working* in production.
 - [**Cost attribution**](./cost-attribution.md) — per feature, workflow, tenant, and
   journey. How you know what it's *costing* and who's paying.
 
-This module is the backbone the rest of the curriculum leans on: every "validate before
-shipping" in [reliable outputs](../02-reliable-outputs/README.md), every "measure
-retrieval" in [RAG](../03-rag/README.md), and every quality claim about
-[quantization](../01-inference-internals/quantization-formats.md) ultimately routes
-through here.
+This module is the backbone the rest of the curriculum leans on. Every "validate before
+shipping" step in [reliable outputs](../02-reliable-outputs/README.md), every "measure
+retrieval" step in [RAG](../03-rag/README.md), and every quality claim about
+[quantization](../01-inference-internals/quantization-formats.md) routes through here.
 
 
 ## Connects to other tracks

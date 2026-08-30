@@ -6,22 +6,22 @@
 
 **Samsung's source-code leak (2023).** Within weeks of allowing ChatGPT, Samsung
 engineers pasted confidential source code and internal meeting notes into it to debug
-and summarize — and that data left the company's control. Samsung restricted the tool.
-🎯 *PM takeaway:* what data is *allowed into the context* — and where it then goes — is a
-product and policy boundary you own. That's [harness](./harness-engineering.md), not
-prompting.
+and summarize. That data left the company's control, so Samsung restricted the tool.
+🎯 *PM takeaway:* you own the product and policy boundary for what data is *allowed into
+the context* — and where it goes after that. That's [harness](./harness-engineering.md),
+not prompting.
 
-**"Lost in the Middle" (Liu et al., 2023).** A widely-cited study showed models reliably
-use information at the *beginning and end* of a long context but "lose" facts buried in
-the middle — even when the answer is right there. 🎯 *PM takeaway:* "just give the model
-more context" can *lower* quality. Placement and trimming are real work — see
-[context engineering](./context-engineering.md).
+**"Lost in the Middle" (Liu et al., 2023).** A widely-cited study showed that models
+reliably use information at the *beginning and end* of a long context. They "lose" facts
+buried in the middle, even when the answer is right there. 🎯 *PM takeaway:* giving the
+model more context can *lower* quality, not raise it. Placement and trimming are real
+work — see [context engineering](./context-engineering.md).
 
-**The POC graveyard.** Industry surveys repeatedly find that the large majority of
-generative-AI proof-of-concepts never reach production. The demo works; the *operational*
-version — evals, guardrails, monitoring, cost control — is where projects stall. 🎯 *PM
-takeaway:* the demo-to-prod gap is mostly [harness and ops](./infra-not-demos.md). Budget
-for it explicitly, or you'll relaunch the same demo three times.
+**The POC graveyard.** Industry surveys repeatedly find that most generative-AI
+proof-of-concepts never reach production. The demo works. The *operational* version —
+evals, guardrails, monitoring, cost control — is where projects stall. 🎯 *PM takeaway:*
+the demo-to-prod gap is mostly [harness and ops](./infra-not-demos.md) work. Budget for
+it explicitly, or you'll relaunch the same demo three times.
 
 ## Module recap
 

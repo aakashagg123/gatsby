@@ -6,11 +6,12 @@
 
 ## The Problem
 
-When an agent run goes wrong — slow, expensive, wrong answer — you need to see *what
-happened*: which steps ran, how long each took, what each model/tool call did. Without
-**tracing** you're debugging blind. A trace records a tree of **spans** (the loop, each
-model call, each tool call), each with a start/end time and attributes (tokens, tool name),
-so you can reconstruct and diagnose any run.
+An agent run can go wrong in three ways: it runs slow, it costs too much, or it gives a
+wrong answer. When that happens, you need to see *what happened* — which steps ran, how
+long each took, and what each model or tool call did. Without **tracing** you're debugging
+blind. A trace records a tree of **spans** (the loop, each model call, each tool call).
+Each span carries a start/end time and attributes (tokens, tool name), so you can
+reconstruct and diagnose any run.
 
 ## The Concept
 
@@ -21,8 +22,8 @@ flowchart TB
   S2 --> S3["span: bash (exit, ms)"]
 ```
 
-Spans nest (a tool span inside the run span), each carrying timing + attributes — the same
-model as distributed tracing, applied to an agent loop.
+Spans nest — a tool span sits inside the run span, and each span carries its own timing and
+attributes. It's the same model as distributed tracing, applied to an agent loop.
 
 ## Build It
 
@@ -60,15 +61,15 @@ with t.span("run"):
 print(t.spans[0]["name"], "->", [c["name"] for c in t.spans[0]["children"]])
 ```
 
-The tracer builds a tree you can render or export: each span knows its duration and
+The tracer builds a tree you can render or export. Each span knows its own duration and
 attributes, so "why was this run slow?" becomes "which span dominated the time?".
 
 ## Use It
 
-Claude Code / Codex (and the Agent SDK) emit traces/telemetry you can inspect; for a custom
-harness you wrap each model and tool call in a span. Trajectory evals (Phase 15) run over
-these traces. In production you export spans to a backend (lesson 05) so every run is
-diagnosable after the fact.
+Claude Code, Codex, and the Agent SDK all emit traces and telemetry you can inspect. For a
+custom harness, you wrap each model call and each tool call in a span yourself. Trajectory
+evals (Phase 15) run over these traces. In production you export spans to a backend
+(lesson 05), so every run stays diagnosable after the fact.
 
 ## Ship It
 
