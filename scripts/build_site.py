@@ -32,6 +32,7 @@ TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical produ
 TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical product management
 AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
 KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
+SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -226,7 +227,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Nine separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Ten separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -282,6 +283,13 @@ LANDING = """<!doctype html>
       <h2>Knowledge graphs →</h2>
       <p>Treat what the company knows as a product — entities and ontologies, the
       construction pipeline, GraphRAG, governance, and the business case, in CPO language.</p>
+    </a>
+    <a class="card" href="system-design/index.html">
+      <span class="tag">Module</span>
+      <h2>System design →</h2>
+      <p>How real systems are designed at scale — from rate limiters to stock exchanges —
+      with the architecture, tradeoffs, and failure modes that shape product decisions.
+      28 systems across 8 lessons, diagrams included.</p>
     </a>
     <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
       <span class="tag">Explore</span>
@@ -448,6 +456,10 @@ def main():
     # 1g. Knowledge graphs module: copy its pre-rendered pages.
     if os.path.isdir(KG_HTML):
         shutil.copytree(KG_HTML, os.path.join(SITE, "knowledge-graphs"))
+
+    # 1h. System design module: copy its pre-rendered pages.
+    if os.path.isdir(SD_HTML):
+        shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.

@@ -69,7 +69,8 @@ def rewrite_target(target, cur_mod):
     # single ../ climbs to the site root where the other tracks sit. Flat tracks
     # flatten to one page per lesson; phased tracks (harness, flowable) keep their tree.
     FLAT = ("agentic-ai", "first-principles", "product-sense",
-            "technical-product-sense", "technical-product-management", "knowledge-graphs")
+            "technical-product-sense", "technical-product-management", "knowledge-graphs",
+            "system-design")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):
