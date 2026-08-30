@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Location &amp; geo services — System Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,canvas{max-width:100%;height:auto}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+/* tablet: collapse to a single column */
+@media (max-width:880px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .content{min-width:0;padding:32px 22px 70px}
+  .sidebar{display:none}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:160px}
+}
+
+/* phone-first: high readability on iPhone-class widths */
+@media (max-width:560px){
+  body{font-size:17px;line-height:1.7}
+  .topbar{padding:12px 16px;gap:12px}
+  .brand span{font-size:15px}
+  .brand em{display:none}
+  .content{padding:24px 16px 64px}
+  .index{padding:36px 16px 64px}
+  .chip{font-size:11px}
+  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
+  .hero .lede,.hero-meta{font-size:15px}
+  .hero-meta{line-height:1.6}
+  .index-hero h1{font-size:30px;line-height:1.12}
+  .index-hero .lede{font-size:16.5px}
+  .lesson{padding:34px 0 8px;margin-top:22px}
+  .lesson-head{gap:10px}
+  .lesson h2{font-size:22px;line-height:1.22}
+  .lesson h3{font-size:18.5px}
+  .lesson p,.lesson li{font-size:16.5px}
+  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
+  pre code{font-size:12.8px}
+  code{font-size:12.8px;word-break:break-word}
+  /* wide tables scroll instead of breaking the page */
+  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    white-space:nowrap;font-size:13.5px}
+  .cards,.threads{grid-template-columns:1fr}
+  .pagenav{flex-direction:column;gap:12px}
+  .navcard{flex:1 1 auto}
+  .navcard.next{text-align:left;align-items:flex-start}
+  .pm-band,.recap{padding:18px 18px}
+  .recap{margin-top:30px}
+  /* comfortable tap targets */
+  a,.iw-btn,summary{touch-action:manipulation}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>System Design</span><em>a standalone module</em></a>
+  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink active" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 06</span>
+    <h1>Location &amp; geo services</h1>
+  </div>
+  <h2>TL;DR</h2>
+<p>Location-aware systems face a fundamental challenge: mapping the continuous, curved surface of the Earth onto discrete, queryable data structures. <strong>Proximity search</strong> (find businesses near me) uses geohashing to convert 2D coordinates into sortable 1D strings, enabling efficient range queries on standard databases. <strong>Nearby friends</strong> (real-time location sharing) adds the streaming dimension — 334K location updates per second flowing through WebSocket servers and Redis pub/sub channels. <strong>Google Maps</strong> stacks multiple geospatial problems: tiling the planet into a hierarchy of pre-rendered images, routing through continent-scale road graphs, and computing adaptive ETAs from live traffic. The common thread: spatial indexing is the bottleneck, and the choice of index structure (geohash, quadtree, S2 cells) determines every downstream tradeoff.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the technical PM</strong></p>
+<p><strong>Why it matters</strong> — Any feature involving "nearby," "around me," or "estimated arrival" depends on spatial indexing. The choice of geospatial data structure determines query latency, update cost, and whether your system can scale to millions of moving entities.</p>
+<p><strong>What it changes in your decisions</strong> — You stop treating location as just a lat/long column with a distance filter. You budget for the infrastructure to handle continuous location streams (WebSockets, pub/sub), and you size your tile/routing CDN for the coverage area.</p>
+<p><strong>Ask your eng team</strong> — <em>"Are we using geohash or quadtree for spatial indexing, and how do we handle queries at geohash boundaries?"</em></p>
+<p><strong>Risk if ignored</strong> — Your "find nearby" feature scans every record in the database, your real-time location sharing drains phone batteries, or your routing engine gives ETAs that are 30% off because it ignores live traffic.</p>
+</blockquote>
+<hr />
+<h2>Proximity service</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>100M daily active users</li>
+<li>200M businesses in the database</li>
+<li>Users search for businesses within a radius (500m to 5km)</li>
+<li>Read-heavy: business data changes infrequently; searches happen constantly</li>
+<li>Latency target: results in under 200ms</li>
+</ul>
+<h3>The spatial indexing problem</h3>
+<p>The naive approach — scan all 200M businesses, compute the distance to the user, filter by radius — is O(n) per query. At 100M DAU, that's unacceptable.</p>
+<p>The problem is that standard database indexes (B-trees) work on one dimension. Latitude and longitude are two dimensions. You need a way to convert 2D spatial proximity into something a 1D index can handle.</p>
+<h3>Approaches compared</h3>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>How it works</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2D range scan</strong></td>
+<td><code>WHERE lat BETWEEN x1 AND x2 AND lng BETWEEN y1 AND y2</code></td>
+<td>Simple</td>
+<td>Two index scans intersected; slow at scale</td>
+</tr>
+<tr>
+<td><strong>Even grid</strong></td>
+<td>Divide world into equal-sized cells</td>
+<td>Conceptually simple</td>
+<td>Uneven data distribution (ocean cells empty, city cells overloaded)</td>
+</tr>
+<tr>
+<td><strong>Geohash</strong></td>
+<td>Encode lat/lng into a base-32 string; shared prefix = spatial proximity</td>
+<td>Sortable, standard DB index, easy neighbor lookup</td>
+<td>Edge cases at cell boundaries</td>
+</tr>
+<tr>
+<td><strong>Quadtree</strong></td>
+<td>Recursively subdivide space; split cells that exceed a threshold</td>
+<td>Adaptive density</td>
+<td>In-memory only; hard to distribute</td>
+</tr>
+<tr>
+<td><strong>Google S2</strong></td>
+<td>Map sphere to cube faces, then use Hilbert curves</td>
+<td>Handles poles and antimeridian; tunable cell levels</td>
+<td>Complex implementation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Geohash is the standard choice</strong> for most proximity services: it's simple, works with any database that supports range queries, and handles the common case well.</p>
+<h3>How geohashing works</h3>
+<p>Geohash recursively bisects the world, alternating between longitude and latitude, encoding each decision as a bit. The bits are then encoded as a base-32 string:</p>
+<style>
+.sd-geo{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-geo-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+/* Geohash grid */
+.sd-geo-grid-wrap{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+  padding:16px;margin:0 0 12px}
+.sd-geo-grid-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#6b6a64;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+.sd-geo-grid-label .tag{font-size:9px;font-weight:700;border-radius:20px;
+  padding:2px 10px;color:#fff;background:#4a6fa5;letter-spacing:.6px}
+.sd-geo-grid-container{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.sd-geo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;width:fit-content}
+.sd-geo-cell{width:56px;height:42px;border-radius:4px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:9.5px;font-weight:600;
+  transition:background .15s}
+.sd-geo-cell-default{background:#f4f2ea;border:1px solid #e0dccd;color:#6b6a64}
+.sd-geo-cell-center{background:#bd5d3a;border:1.5px solid #a04d2f;color:#fff;
+  box-shadow:0 2px 6px rgba(189,93,58,.25)}
+.sd-geo-cell-neighbor{background:#fbefe9;border:1.5px solid #efd8ca;color:#4a2f22}
+.sd-geo-cell-far{background:#f4f2ea;border:1px solid #e0dccd;color:#c5c1b2}
+.sd-geo-cell small{font-size:7.5px;font-weight:450;margin-top:1px}
+.sd-geo-cell-center small{color:rgba(255,255,255,.75)}
+.sd-geo-cell-neighbor small{color:#a2765d}
+/* Legend for grid */
+.sd-geo-legend{font-size:10.5px;color:#6b6a64;line-height:1.8}
+.sd-geo-legend-item{display:flex;align-items:center;gap:6px;margin:3px 0}
+.sd-geo-legend-swatch{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.sd-geo-legend-swatch-center{background:#bd5d3a;border:1px solid #a04d2f}
+.sd-geo-legend-swatch-neighbor{background:#fbefe9;border:1px solid #efd8ca}
+.sd-geo-legend-swatch-far{background:#f4f2ea;border:1px solid #e0dccd}
+.sd-geo-precision{margin:10px 0 0;padding:8px 10px;background:#f4f2ea;border:1px solid #e0dccd;
+  border-radius:8px;font-size:10px;color:#6b6a64;line-height:1.5}
+.sd-geo-precision strong{color:#3d3c37}
+/* Lookup pipeline */
+.sd-geo-pipeline{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+  padding:16px;margin:0 0 12px}
+.sd-geo-pipe-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#6b6a64;margin:0 0 12px;display:flex;align-items:center;gap:6px}
+.sd-geo-pipe-label .tag{font-size:9px;font-weight:700;border-radius:20px;
+  padding:2px 10px;color:#fff;background:#5a8a4a;letter-spacing:.6px}
+.sd-geo-pipe{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.sd-geo-step{border-radius:8px;padding:8px 12px;font-size:11px;font-weight:600;
+  text-align:center;line-height:1.35;flex-shrink:0}
+.sd-geo-step small{display:block;font-size:9px;font-weight:450;margin-top:2px}
+.sd-geo-s-input{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-geo-s-compute{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-geo-s-expand{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-geo-s-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-geo-s-result{background:#bd5d3a;border:1px solid #a04d2f;color:#fff}
+.sd-geo-arr{flex:0 0 auto;color:#c9c4b4;font-size:13px;font-weight:700;padding:0 3px}
+.sd-geo-arr-lbl{font-size:8px;color:#8a8778;font-weight:500;display:block;text-align:center}
+.sd-geo-arr-wrap{display:flex;flex-direction:column;align-items:center;padding:0 1px}
+/* Comparison chips */
+.sd-geo-compare{display:flex;gap:10px;flex-wrap:wrap}
+.sd-geo-compare-card{flex:1;min-width:140px;background:#fff;border:1px solid #e4e0d5;
+  border-radius:10px;padding:12px}
+.sd-geo-compare-name{font-size:11px;font-weight:650;color:#3d3c37;margin:0 0 6px;
+  display:flex;align-items:center;gap:5px}
+.sd-geo-compare-name .badge{font-size:8px;font-weight:700;border-radius:10px;padding:1px 7px}
+.sd-geo-compare-name .badge-rec{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-geo-compare-pts{font-size:10px;color:#6b6a64;line-height:1.6}
+.sd-geo-compare-pts span{display:block}
+@media (max-width:640px){
+  .sd-geo{padding:18px 14px 16px}
+  .sd-geo-grid-container{flex-direction:column}
+  .sd-geo-grid{margin:0 auto}
+  .sd-geo-pipe{flex-direction:column;gap:4px;align-items:stretch}
+  .sd-geo-arr{transform:rotate(90deg);text-align:center;padding:2px 0}
+  .sd-geo-compare{flex-direction:column}
+}
+</style>
+<div class="sd-geo">
+  <div class="sd-geo-title">Geospatial indexing - geohash grid + neighbor lookup</div>
+
+  <!-- Geohash grid visualization -->
+  <div class="sd-geo-grid-wrap">
+    <div class="sd-geo-grid-label">
+      <span class="tag">Geohash</span>
+      Recursive subdivision of the map into grid cells
+    </div>
+    <div class="sd-geo-grid-container">
+      <div>
+        <div class="sd-geo-grid">
+          <div class="sd-geo-cell sd-geo-cell-far">9q8w<small>far</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8x<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8y<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q8z<small>far</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8t<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8v<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-center">9q8s<small>you are here</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8u<small>neighbor</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-far">9q8e<small>far</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8g<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8f<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q8d<small>far</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-far">9q87<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q86<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q85<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q84<small></small></div>
+        </div>
+      </div>
+      <div>
+        <div class="sd-geo-legend">
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-center"></div>
+            <span>Query cell (your location)</span>
+          </div>
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-neighbor"></div>
+            <span>8 neighbors (always queried)</span>
+          </div>
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-far"></div>
+            <span>Outside search radius</span>
+          </div>
+        </div>
+        <div class="sd-geo-precision">
+          <strong>Precision vs. area:</strong><br>
+          4 chars = ~39km &middot; 5 chars = ~5km &middot; 6 chars = ~1.2km<br>
+          More chars = smaller cell = finer search
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lookup pipeline -->
+  <div class="sd-geo-pipeline">
+    <div class="sd-geo-pipe-label">
+      <span class="tag">Query</span>
+      Nearby search pipeline
+    </div>
+    <div class="sd-geo-pipe">
+      <div class="sd-geo-step sd-geo-s-input">lat, lng<small>37.77, -122.42</small></div>
+      <div class="sd-geo-arr-wrap"><span class="sd-geo-arr">→</span></div>
+      <div class="sd-geo-step sd-geo-s-compute">Compute<small>geohash(lat,lng,6)</small></div>
+      <div class="sd-geo-arr-wrap">
+        <span class="sd-geo-arr">→</span>
+        <span class="sd-geo-arr-lbl">"9q8s"</span>
+      </div>
+      <div class="sd-geo-step sd-geo-s-expand">Expand<small>cell + 8 neighbors</small></div>
+      <div class="sd-geo-arr-wrap">
+        <span class="sd-geo-arr">→</span>
+        <span class="sd-geo-arr-lbl">9 keys</span>
+      </div>
+      <div class="sd-geo-step sd-geo-s-store">Redis<small>ZRANGEBYSCORE</small></div>
+      <div class="sd-geo-arr-wrap"><span class="sd-geo-arr">→</span></div>
+      <div class="sd-geo-step sd-geo-s-result">Sort<small>by distance</small></div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="sd-geo-compare">
+    <div class="sd-geo-compare-card">
+      <div class="sd-geo-compare-name">
+        Geohash
+        <span class="badge badge-rec">Recommended</span>
+      </div>
+      <div class="sd-geo-compare-pts">
+        <span>+ Simple string prefix matching</span>
+        <span>+ Easy to store in Redis sorted sets</span>
+        <span>+ Incrementally refine precision</span>
+        <span>- Edge cases at cell boundaries</span>
+      </div>
+    </div>
+    <div class="sd-geo-compare-card">
+      <div class="sd-geo-compare-name">Quadtree</div>
+      <div class="sd-geo-compare-pts">
+        <span>+ Dynamic subdivision by density</span>
+        <span>+ Natural spatial indexing</span>
+        <span>- Must rebuild on updates</span>
+        <span>- Harder to distribute</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Key properties:</p>
+<ul>
+<li><strong>Prefix sharing</strong> — points with the same geohash prefix are spatially close (with caveats at boundaries).</li>
+<li><strong>Precision control</strong> — longer geohash = smaller cell. A 6-character geohash covers ~1.2 km x 0.6 km.</li>
+<li><strong>Range queryable</strong> — "find all businesses in cell 9q8yyk" is a simple string prefix query on a B-tree index.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Geohash length</th>
+<th>Cell width</th>
+<th>Cell height</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>~39 km</td>
+<td>~20 km</td>
+<td>Regional search</td>
+</tr>
+<tr>
+<td>5</td>
+<td>~5 km</td>
+<td>~5 km</td>
+<td>City district</td>
+</tr>
+<tr>
+<td>6</td>
+<td>~1.2 km</td>
+<td>~0.6 km</td>
+<td>Neighborhood</td>
+</tr>
+<tr>
+<td>7</td>
+<td>~150 m</td>
+<td>~150 m</td>
+<td>Block level</td>
+</tr>
+</tbody>
+</table>
+<h3>The boundary problem and 8-neighbor lookup</h3>
+<p>Geohash has a well-known edge case: two points on opposite sides of a cell boundary can be very close geographically but have completely different geohash prefixes.</p>
+<p>The solution: query the target cell <strong>and all 8 neighboring cells</strong>:</p>
+<pre class="mermaid">flowchart TB
+  subgraph &quot;9-cell query grid&quot;
+    direction LR
+    NW[&quot;NW neighbor&quot;] --- N[&quot;N neighbor&quot;] --- NE[&quot;NE neighbor&quot;]
+    W[&quot;W neighbor&quot;] --- C[&quot;Target cell&lt;br/&gt;(user&#x27;s geohash)&quot;] --- E[&quot;E neighbor&quot;]
+    SW[&quot;SW neighbor&quot;] --- S[&quot;S neighbor&quot;] --- SE[&quot;SE neighbor&quot;]
+  end</pre>
+<p>This guarantees coverage: any point within the search radius falls within one of these 9 cells (assuming the cell size is chosen to match the search radius). The query becomes 9 prefix lookups — still fast on an indexed column.</p>
+<h3>Caching with Redis</h3>
+<p>Business data changes slowly (new restaurant listings, address updates), but searches are extremely frequent. Cache businesses by geohash key in Redis:</p>
+<ul>
+<li><strong>Key:</strong> <code>geohash:{precision}:{geohash_value}</code> (e.g., <code>geohash:6:9q8yyk</code>)</li>
+<li><strong>Value:</strong> list of business IDs in that cell</li>
+<li><strong>TTL:</strong> long (hours), because business locations rarely change</li>
+<li><strong>Invalidation:</strong> when a business is added/updated/removed, recompute its geohash and update the relevant key</li>
+</ul>
+<p>A search query resolves to 9 Redis lookups (the target cell + 8 neighbors), each returning a list of business IDs. Client-side or API-side filtering then computes exact distances and applies the radius filter.</p>
+<h3>Architecture</h3>
+<pre class="mermaid">flowchart LR
+  C[Client] --&gt; LB[Load balancer]
+  LB --&gt; API[API servers]
+  API --&gt; RC[Redis cache&lt;br/&gt;geohash -&gt; business IDs]
+  API --&gt; DB[(Business DB&lt;br/&gt;business details)]
+  BG[Background worker] --&gt;|&quot;Rebuild cache&lt;br/&gt;on business changes&quot;| RC
+  DB --&gt;|&quot;Change stream&quot;| BG</pre>
+<hr />
+<h2>Nearby friends</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>1 billion total users, 10% concurrent (~100M online at any time)</li>
+<li>10M actively sharing location simultaneously</li>
+<li>Location updates every 30 seconds per active user</li>
+<li>Update rate: 10M / 30 = <strong>~334K location updates per second</strong></li>
+<li>Show friends within 5 miles, refresh every 30 seconds</li>
+<li>Average user has 400 friends, ~10% are nearby at any time</li>
+</ul>
+<h3>Why HTTP polling fails</h3>
+<p>At 334K updates/sec, if each update requires:</p>
+<ol>
+<li>Client sends location to server (HTTP request)</li>
+<li>Server queries all friends' locations</li>
+<li>Server returns nearby friends list</li>
+</ol>
+<p>This is request-heavy, latency-heavy, and wasteful — most updates won't change the nearby-friends list.</p>
+<h3>WebSocket servers (stateful)</h3>
+<p>The solution: <strong>persistent WebSocket connections</strong> between each client and a WebSocket server. The server holds in-memory state mapping user_id to their connection:</p>
+<pre class="mermaid">flowchart TD
+  subgraph &quot;WebSocket server 1&quot;
+    U1[User A connection]
+    U2[User B connection]
+    U3[User C connection]
+  end
+  subgraph &quot;WebSocket server 2&quot;
+    U4[User D connection]
+    U5[User E connection]
+  end</pre>
+<p>When User A sends a location update:</p>
+<ol>
+<li>The WebSocket server receives it.</li>
+<li>It looks up User A's friend list.</li>
+<li>For each friend, it checks: is that friend nearby?</li>
+<li>If yes, it pushes User A's new location to the friend's WebSocket connection.</li>
+</ol>
+<p>The problem: User A's friends may be connected to <em>different</em> WebSocket servers. You need a way for Server 1 to notify Server 2 that User A moved.</p>
+<h3>Redis pub/sub for cross-server communication</h3>
+<p>Each user gets a <strong>Redis pub/sub channel</strong> named after their user_id. When User A comes online:</p>
+<ul>
+<li>User A's WebSocket server subscribes to the channels of all of User A's friends.</li>
+<li>When a friend sends a location update, it publishes to their own channel.</li>
+<li>User A's server receives the publish, computes the distance, and pushes the update to User A if the friend is within range.</li>
+</ul>
+<pre class="mermaid">sequenceDiagram
+  participant A as User A&lt;br/&gt;(WS Server 1)
+  participant R as Redis pub/sub
+  participant B as User B&lt;br/&gt;(WS Server 2)
+
+  Note over A,B: User A and User B are friends
+  A-&gt;&gt;R: Subscribe to channel:user_b
+  B-&gt;&gt;R: Publish to channel:user_b (lat, lng, ts)
+  R-&gt;&gt;A: Receive User B&#x27;s location
+  A-&gt;&gt;A: Compute distance, push to User A if nearby</pre>
+<h3>Scaling Redis pub/sub</h3>
+<p>With 10M concurrent users each subscribing to ~400 friend channels, the total subscription count is 4 billion. A single Redis instance cannot handle this.</p>
+<p><strong>Consistent hashing</strong> distributes users across a Redis pub/sub cluster:</p>
+<ul>
+<li>Hash(user_id) determines which Redis node holds that user's channel.</li>
+<li>When a new Redis node is added, only ~1/N of channels need to migrate.</li>
+<li>The WebSocket server maintains connections to multiple Redis nodes (one per friend's assigned node).</li>
+</ul>
+<h3>Redis location cache</h3>
+<p>Separate from the pub/sub layer, a <strong>Redis location cache</strong> stores the latest known position of every active user:</p>
+<ul>
+<li><strong>Key:</strong> <code>loc:{user_id}</code></li>
+<li><strong>Value:</strong> <code>{lat, lng, timestamp}</code></li>
+<li><strong>TTL:</strong> 10 minutes (if no update arrives, the user is assumed offline/inactive)</li>
+</ul>
+<p>This cache serves two purposes:</p>
+<ol>
+<li>When a user first comes online, it bootstraps their nearby-friends list without waiting for individual friend updates.</li>
+<li>It provides a fallback when pub/sub messages are lost.</li>
+</ol>
+<h3>Alternative: Erlang distributed processes</h3>
+<p>An alternative architecture uses Erlang/Elixir (or similar actor-model systems) where each user is a lightweight process:</p>
+<ul>
+<li>Each user process holds their state (location, friend list, subscriptions).</li>
+<li>Erlang's built-in distributed messaging replaces Redis pub/sub.</li>
+<li>The BEAM VM handles millions of concurrent processes per node.</li>
+<li>Processes are location-transparent — they can migrate between nodes.</li>
+</ul>
+<p>This eliminates the Redis layer but couples you to the Erlang ecosystem. WhatsApp famously used this approach to handle 2M connections per server.</p>
+<hr />
+<h2>Google Maps</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>1 billion daily active users</li>
+<li>Global coverage: roads, transit, walking, cycling</li>
+<li>Petabytes of map data (satellite imagery, street data, POIs)</li>
+<li>Sub-second tile loading</li>
+<li>Real-time traffic-aware routing and ETA</li>
+</ul>
+<h3>Web Mercator projection</h3>
+<p>Maps display a spherical planet on a flat screen. <strong>Web Mercator</strong> (EPSG:3857) projects the sphere onto a cylinder, then unrolls it:</p>
+<ul>
+<li>The world becomes a square at zoom level 0.</li>
+<li>Each zoom level divides each tile into 4 sub-tiles.</li>
+<li>At zoom level N, there are 4^N tiles total.</li>
+<li>Zoom 0 = 1 tile (whole world). Zoom 21 = ~4 trillion tiles (building-level detail).</li>
+</ul>
+<p>The projection distorts area near the poles (Greenland looks enormous) but preserves angles and shapes locally, which is what navigation needs.</p>
+<h3>Geohashing for tile addressing</h3>
+<p>Each tile is addressed by (zoom_level, x, y), but the system uses geohashing principles for spatial indexing:</p>
+<ul>
+<li>A tile's geohash-like address enables efficient CDN caching (nearby tiles share prefixes, enabling prefix-based cache grouping).</li>
+<li>Tile requests are the dominant read pattern — pre-render and cache aggressively.</li>
+</ul>
+<h3>Static pre-rendered tiles + CDN</h3>
+<p>Map tiles are <strong>pre-rendered</strong> at all zoom levels and served as static images from a CDN:</p>
+<pre class="mermaid">flowchart LR
+  C[Client] --&gt;|&quot;tile request:&lt;br/&gt;zoom/x/y.png&quot;| CDN[CDN edge server]
+  CDN --&gt;|&quot;cache miss&quot;| TILE[Tile render service]
+  TILE --&gt; MAPDB[(Map data store)]
+  CDN --&gt;|&quot;cache hit&quot;| C</pre>
+<p>At Google's scale, the tile set is hundreds of petabytes. But the access pattern is highly skewed:</p>
+<ul>
+<li>Most users look at a few cities → those tiles are always cached at the edge.</li>
+<li>Remote areas are rarely accessed → cache misses are rare and acceptable.</li>
+<li>Tiles change infrequently (road networks update weekly/monthly) → long TTLs.</li>
+</ul>
+<h3>Hierarchical routing tiles</h3>
+<p>Road network routing at global scale cannot use a single graph — the full graph has billions of nodes. Instead, the road network is partitioned into <strong>routing tiles</strong> at multiple hierarchy levels:</p>
+<pre class="mermaid">flowchart TD
+  L0[&quot;Level 0: Local roads&lt;br/&gt;Small tiles, full detail&quot;]
+  L1[&quot;Level 1: Arterial roads&lt;br/&gt;Medium tiles, major roads only&quot;]
+  L2[&quot;Level 2: Highways&lt;br/&gt;Large tiles, highways and expressways&quot;]
+  L0 --&gt;|&quot;Connect to higher level&lt;br/&gt;at tile boundaries&quot;| L1
+  L1 --&gt;|&quot;Connect to higher level&lt;br/&gt;at tile boundaries&quot;| L2</pre>
+<p>For a cross-country route:</p>
+<ol>
+<li>Route locally from origin to the nearest highway (Level 0).</li>
+<li>Route on highways to near the destination (Level 2).</li>
+<li>Route locally from highway to destination (Level 0).</li>
+</ol>
+<p>This hierarchical decomposition reduces the search space from billions of nodes to thousands per query.</p>
+<h3>A* shortest path</h3>
+<p>Within each routing tile, the system uses <strong>A* search</strong> — a variant of Dijkstra's algorithm that uses a heuristic (straight-line distance to destination) to prioritize exploring nodes in the direction of the goal:</p>
+<ul>
+<li><strong>Edge weights</strong> incorporate distance, speed limit, road type, and real-time traffic.</li>
+<li><strong>Pre-computed contractions</strong> (Contraction Hierarchies) shortcut through low-importance nodes, reducing the graph size by 10-100x.</li>
+<li>The combination of hierarchical tiles + A* + contraction hierarchies makes continent-scale routing possible in milliseconds.</li>
+</ul>
+<h3>Client-side GPS batching</h3>
+<p>Mobile clients send GPS coordinates, but not every reading:</p>
+<ul>
+<li>GPS readings arrive at 1 Hz (once per second).</li>
+<li>Sending every reading wastes bandwidth and battery.</li>
+<li>The client <strong>batches</strong> readings and sends them every 15-30 seconds, or when significant movement is detected.</li>
+<li>The batch includes timestamps for each reading, enabling the server to reconstruct the path.</li>
+</ul>
+<h3>Adaptive ETA via tile-based traffic tracking</h3>
+<p>Real-time ETA depends on current traffic conditions, computed from the aggregate behavior of all map users:</p>
+<ol>
+<li>Every active navigation client reports its (tile, speed, timestamp) via GPS batches.</li>
+<li>A traffic processing service aggregates speeds per road segment per time window.</li>
+<li>The aggregated speeds update edge weights in the routing graph.</li>
+<li>ETA computation for new routes uses these live-updated weights.</li>
+</ol>
+<pre class="mermaid">flowchart LR
+  CLIENTS[&quot;Millions of&lt;br/&gt;navigation clients&quot;] --&gt;|&quot;GPS batches&quot;| INGEST[Ingestion service]
+  INGEST --&gt; KAFKA[Kafka / stream processor]
+  KAFKA --&gt; AGG[&quot;Traffic aggregation&lt;br/&gt;(per segment, per 5-min window)&quot;]
+  AGG --&gt; GRAPH[&quot;Routing graph&lt;br/&gt;edge weight update&quot;]
+  GRAPH --&gt; ETA[&quot;ETA computation&lt;br/&gt;for new route requests&quot;]</pre>
+<p>The feedback loop is powerful: the more users navigate with the system, the better the traffic data, the more accurate the ETAs, the more users trust and use the system.</p>
+<hr />
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Geohash boundary misses</strong> — a business 50m away sits across a geohash boundary and is missed because only the center cell was queried. Always query 8 neighbors.</li>
+<li><strong>WebSocket server failure</strong> — a server crash disconnects thousands of users. They must reconnect (to a different server), re-subscribe to all friend channels, and re-bootstrap their nearby list. Design for fast reconnection.</li>
+<li><strong>Redis pub/sub message loss</strong> — Redis pub/sub is fire-and-forget; if the subscriber is temporarily disconnected, messages are lost. The location cache provides eventual consistency, but real-time accuracy degrades.</li>
+<li><strong>GPS drift in indoor/urban environments</strong> — GPS accuracy drops to 10-50m near tall buildings or indoors. Nearby-friends may show a friend "nearby" who is actually several blocks away, inside a building.</li>
+<li><strong>Stale traffic data</strong> — if the traffic aggregation pipeline lags (processing backlog, pipeline failure), ETA computation uses outdated edge weights. On fast-changing roads (accident, event), the ETA drifts.</li>
+<li><strong>Tile rendering backlog</strong> — when map data updates, millions of tiles need re-rendering. If the render pipeline can't keep up, users see stale map tiles for days or weeks.</li>
+<li><strong>Hot geohash cells</strong> — Times Square, Shibuya Crossing, or a stadium during an event creates extreme load on one geohash cell. The Redis key for that cell becomes a hotspot. Mitigation: split hot cells into sub-cells or replicate the key.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Have you chosen a spatial index (geohash, quadtree, S2) and justified the choice against your data distribution and query pattern?</li>
+<li class="task todo">For geohash: are you querying 8 neighbors plus the target cell to avoid boundary misses?</li>
+<li class="task todo">For real-time location: are you using persistent connections (WebSocket) rather than polling?</li>
+<li class="task todo">Is the pub/sub layer scaled with consistent hashing, and is there a fallback for lost messages?</li>
+<li class="task todo">For mapping: are tiles pre-rendered and CDN-cached, with appropriate TTLs?</li>
+<li class="task todo">Is the routing graph hierarchically decomposed to avoid full-graph searches?</li>
+<li class="task todo">Are GPS updates batched client-side to preserve battery and bandwidth?</li>
+<li class="task todo">Is there a traffic aggregation feedback loop for adaptive ETA?</li>
+<li class="task todo">Have you tested behavior under GPS drift, stale data, and pub/sub message loss?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="core-building-blocks.html">Core building blocks</a> — consistent hashing for distributing Redis pub/sub channels; key-value stores for the location cache</li>
+<li><a href="real-time-systems.html">Real-time systems</a> — WebSocket connection management patterns from the chat system design</li>
+<li><a href="data-infrastructure.html">Data infrastructure</a> — Kafka-based stream processing for the traffic aggregation pipeline</li>
+<li><a href="storage-and-sync.html">Storage &amp; sync</a> — notification via long polling as an alternative to WebSockets</li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="storage-and-sync.html"><span class="lbl">← Previous</span><span class="ttl">Storage &amp; sync</span></a><a class="navcard next" href="data-infrastructure.html"><span class="lbl">→ Next</span><span class="ttl">Data infrastructure</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+  themeVariables:{
+    background:'#faf9f5',
+    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
+    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
+    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
+    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
+    edgeLabelBackground:'#faf9f5',
+    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
+    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
+    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
+    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
+    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
+    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
+    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
+    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
+    quadrantTitleFill:'#1f1e1d',
+    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
+    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+});
+await mermaid.run({querySelector:'pre.mermaid'});
+// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+document.querySelectorAll('pre.mermaid svg').forEach(s=>{
+  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+  const cw=s.parentElement.clientWidth||0;
+  if(cw&&w>cw*1.6){s.style.maxWidth='none';
+    const h=document.createElement('span');h.className='mm-hint';
+    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
+});
+</script>
+<style id="reader-css">
+/* ---- font choices (only active when data-rf is set) ---- */
+html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}
+html[data-rf="georgia"]{--rs-font:Georgia,"Times New Roman",serif}
+html[data-rf="sf"]{--rs-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif}
+html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
+html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.chip,a){font-family:var(--rs-font) !important}
+html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *,html[data-rf] main p code,html[data-rf] main li code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace !important}
+html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
+/* ---- size scaling (only active when data-rs is set) ---- */
+html[data-rs] main{font-size:calc(16.5px * var(--rs-scale,1)) !important}
+html[data-rs] main h1{font-size:2.35em !important;line-height:1.15 !important}
+html[data-rs] main h2{font-size:1.7em !important}
+html[data-rs] main h3{font-size:1.25em !important}
+html[data-rs] main h4{font-size:1em !important}
+html[data-rs] main .lede{font-size:1.2em !important}
+html[data-rs] main table{font-size:.9em !important}
+html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
+html[data-rs] main .pm-callout p{font-size:.95em !important}
+html[data-rs] main pre{font-size:.85em !important}
+/* ---- margins / column width (only active when data-rm is set) ---- */
+html[data-rm="n"] main{max-width:620px !important}
+html[data-rm="w"] main{max-width:1120px !important}
+/* ---- the widget ---- */
+/* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
+#rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e4e0d5;background:#faf9f5;color:#1f1e1d;
+  font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
+#rs-btn:hover{border-color:#d97757;color:#bd5d3a}
+#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#faf9f5;border:1px solid #e4e0d5;
+  border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
+#rs-panel.open{display:block}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8a8778;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h:first-child{margin-top:0}
+.rs-fonts{display:flex;flex-direction:column;gap:4px}
+.rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
+  border:1px solid transparent;border-radius:8px;background:none;font-size:15px;color:#1f1e1d;cursor:pointer;text-align:left}
+.rs-fonts button:hover{background:#f2f0e9}
+.rs-fonts button.on{border-color:#d97757;background:#fbefe9}
+.rs-fonts button .rs-check{color:#bd5d3a;font-weight:700;visibility:hidden}
+.rs-fonts button.on .rs-check{visibility:visible}
+.rs-row{display:flex;align-items:center;gap:8px}
+.rs-row button{flex:1;padding:7px 0;border:1px solid #e4e0d5;border-radius:8px;background:#fff;
+  cursor:pointer;color:#1f1e1d;font-size:14px}
+.rs-row button:hover{border-color:#d97757}
+.rs-row button.on{border-color:#d97757;background:#fbefe9;font-weight:600}
+.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#8a8778;font-variant-numeric:tabular-nums}
+#rs-sminus{font-size:13px}#rs-splus{font-size:17px}
+#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:8px;background:#f2f0e9;
+  color:#8a8778;font-size:13px;cursor:pointer}
+#rs-reset:hover{color:#bd5d3a}
+@media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
+@media print{#rs-root{display:none}}
+</style>
+<div id="rs-root">
+  <div id="rs-panel" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts">
+      <button data-f="" style="font-family:inherit">Original<span class="rs-check">✓</span></button>
+      <button data-f="charter" style="font-family:Charter,'Bitstream Charter',Georgia,serif">Charter<span class="rs-check">✓</span></button>
+      <button data-f="georgia" style="font-family:Georgia,serif">Georgia<span class="rs-check">✓</span></button>
+      <button data-f="sf" style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif">San Francisco<span class="rs-check">✓</span></button>
+      <button data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif">Tahoma<span class="rs-check">✓</span></button>
+      <button data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica<span class="rs-check">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button id="rs-sminus" aria-label="Decrease font size">A</button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button id="rs-splus" aria-label="Increase font size">A</button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="rs-row rs-margins">
+      <button data-m="n" title="Narrow column">▮</button>
+      <button data-m="" title="Default">▬</button>
+      <button data-m="w" title="Wide column">▭</button>
+    </div>
+    <button id="rs-reset">Reset to defaults</button>
+  </div>
+  <button id="rs-btn" aria-label="Reader settings" aria-expanded="false" title="Reader settings — font, size, margins">Aa</button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string')st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-f')===st.f)});
+    panel.querySelectorAll('.rs-margins button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-m')===st.m)});
+  }
+  btn.addEventListener('click',function(){
+    var open=panel.classList.toggle('open');btn.setAttribute('aria-expanded',open)});
+  document.addEventListener('click',function(e){
+    if(!root.contains(e.target)){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  panel.querySelectorAll('.rs-margins button').forEach(function(b){
+    b.addEventListener('click',function(){st.m=b.getAttribute('data-m');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save()});
+  apply();
+})();
+</script>
+</body></html>
