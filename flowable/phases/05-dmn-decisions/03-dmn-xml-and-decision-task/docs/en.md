@@ -81,9 +81,9 @@ python3 -c "import xml.dom.minidom, sys; xml.dom.minidom.parse(sys.argv[1]); pri
 
 ## Use It
 
-Deploy the `.dmn` exactly like a process model (Phase 1's client works —
-`POST /dmn-repository/deployments` on the REST engine), then replace the loan triage's
-hard-coded gateway policy with a decision task:
+Deploy the `.dmn` exactly like a process model. Phase 1's client works, using
+`POST /dmn-repository/deployments` on the REST engine. Then replace the loan
+triage's hard-coded gateway policy with a decision task:
 
 ```xml
 <serviceTask id="decideCredit" name="Credit decision" flowable:type="dmn">
@@ -100,17 +100,18 @@ hard-coded gateway policy with a decision task:
 </sequenceFlow>
 ```
 
-The task reads `score` and `amount` from the instance, evaluates the table, and writes
-`decision` and `rate` back as process variables. Compare the gateway now with Phase
-1's: `${score >= 700}` (policy in the diagram) became `${decision == 'auto-approve'}`
-(routing on a decision made elsewhere). That's Principle 7 mechanised — and the
-evaluation itself runs inside the decision task's transaction segment, so every Phase
-2 rule (boundaries, async, rollback) applies unchanged.
+The task reads `score` and `amount` from the instance, evaluates the table, and
+writes `decision` and `rate` back as process variables. Compare the gateway now with
+Phase 1's: `${score >= 700}` (policy in the diagram) became
+`${decision == 'auto-approve'}` (routing on a decision made elsewhere). That's
+Principle 7 mechanised. The evaluation itself runs inside the decision task's
+transaction segment, so every Phase 2 rule — boundaries, async, rollback — applies
+unchanged.
 
 ## Ship It
 
 This lesson ships
-[`outputs/credit-decision.dmn`](../outputs/credit-decision.dmn) — the capstone's
+[`outputs/credit-decision.dmn`](../outputs/credit-decision.dmn), the capstone's
 credit decision, deployable as-is.
 
 ## Check Yourself
@@ -146,13 +147,13 @@ writes).</details>
 - D) gateways can't read numbers
 
 <details><summary>Answer</summary>B — gateways route, tables decide. The threshold
-lives where the committee can change it; the diagram only branches on the
+lives where the committee can change it, and the diagram only branches on the
 answer.</details>
 
 **Challenge.** Deploy `credit-decision.dmn` to your local engine, extend Phase 1's
 `loan-triage.bpmn20.xml` with the decision task above, and re-run Phase 1's REST
-client unchanged. Then redeploy the `.dmn` with row 2's cap raised to ₹7.5 lakh and
-prove — with two instance runs — that the policy changed without the process
+client unchanged. Then redeploy the `.dmn` with row 2's cap raised to ₹7.5 lakh.
+Prove, with two instance runs, that the policy changed without the process
 deployment moving.
 
 ## Related

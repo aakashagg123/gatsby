@@ -10,11 +10,12 @@ Concept reading: [Principle 7](../../../../foundations/process-automation-princi
 
 The technology from lessons 01–03 delivers exactly one thing: policy that can change
 without an engineering release. That is a *capability*, not an outcome. Handed out
-without governance it produces the failure modes every rules-engine veteran has seen:
-the table nobody dares edit because nobody remembers why row 17 exists; the "quick
-change" that priced a segment negative for a weekend; the audit that finds the table
-in production doesn't match the policy the committee approved. DMN moves the risk from
-*deployment* to *authorship* — and authorship needs the same discipline code got.
+without governance, it produces the failure modes every rules-engine veteran has
+seen. The table nobody dares edit, because nobody remembers why row 17 exists. The
+"quick change" that priced a segment negative for a weekend. The audit that finds
+the table in production doesn't match the policy the committee approved. DMN moves
+the risk from *deployment* to *authorship*, and authorship needs the same discipline
+code got.
 
 ## The Concept
 
@@ -34,15 +35,15 @@ violation fires in production (lesson 02), does the alert route to a person who 
 
 **2. The change ritual.** The healthy pipeline looks like code review because it is
 one: propose (edited table), diff (row-level — this is why tables beat prose policy
-documents), approve (the owner + a second pair of eyes), deploy (new version via the
-same CI that deploys models). The anti-pattern is edit-in-production consoles: the
-capability to change policy in a browser is precisely why write access to production
-tables should not exist.
+documents), approve (the owner plus a second pair of eyes), and deploy (new version
+via the same CI that deploys models). The anti-pattern is edit-in-production
+consoles. The capability to change policy in a browser is exactly why write access
+to production tables should not exist.
 
 **3. Validation.** Tables are data, so they're testable as data:
 
 - **Golden cases** — a spreadsheet of input → expected output pairs the owner
-  maintains; every table version must pass before deploy. Your lesson-01 engine is a
+  maintains. Every table version must pass before deploy. Your lesson-01 engine is a
   perfectly good runner for it.
 - **Structural checks** — overlap detection for UNIQUE tables, completeness over
   representative inputs (the lesson-01/02 challenges), type checks on cells.
@@ -50,14 +51,14 @@ tables should not exist.
   *and* v8 and diff the decisions. "This change flips 3.2% of applications from auto
   to manual" is the sentence the committee actually needs.
 
-**4. Audit.** Two rules keep the regulator conversation short: history must record
-*which table version* produced each decision (Flowable's DMN history does, if you keep
-it — Phase 9's retention decision applies), and in regulated flows, pin in-flight
+**4. Audit.** Two rules keep the regulator conversation short. History must record
+*which table version* produced each decision (Flowable's DMN history does, if you
+keep it — Phase 9's retention decision applies). In regulated flows, pin in-flight
 instances to the version that started them rather than "latest" — the Phase 8
 versioning discipline, applied to decisions.
 
-And the scope question that precedes all four: **does this rule belong in a table at
-all?** The boundary from Phase 1's task-type guide, sharpened:
+One scope question precedes all four: **does this rule belong in a table at all?**
+Here's the boundary from Phase 1's task-type guide, sharpened:
 
 | Belongs in DMN | Belongs in code |
 | :-- | :-- |
@@ -69,8 +70,8 @@ all?** The boundary from Phase 1's task-type guide, sharpened:
 ## Ship It
 
 This lesson ships
-[`outputs/decision-governance-checklist.md`](../outputs/decision-governance-checklist.md)
-— the four questions as a per-table checklist, ready for your team's operating doc.
+[`outputs/decision-governance-checklist.md`](../outputs/decision-governance-checklist.md):
+the four questions as a per-table checklist, ready for your team's operating doc.
 
 ## Check Yourself
 
@@ -82,7 +83,7 @@ This lesson ships
 - D) nobody; it self-heals
 
 <details><summary>Answer</summary>B — this is Phase 4's two-planes logic applied to
-decisions: a table bug is not a transient fault, and the routing of its alert is the
+decisions. A table bug is not a transient fault, and the routing of its alert is the
 practical test of whether ownership exists.</details>
 
 **Q2.** The committee approves a band change. The *safest* path to production is…
@@ -103,7 +104,7 @@ possible.</details>
 - C) in a script task
 - D) in the gateway
 
-<details><summary>Answer</summary>B — tables hold the numbers the business tunes;
+<details><summary>Answer</summary>B — tables hold the numbers the business tunes, and
 computation stays in tested code. Splitting exactly there keeps both sides
 honest.</details>
 
