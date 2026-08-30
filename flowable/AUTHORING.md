@@ -1,7 +1,7 @@
 # Authoring a lesson
 
-Every lesson in *Flowable from Scratch* has the **same shape**, so readers never
-re-learn the navigation and the build script can parse it.
+Every lesson in *Flowable from Scratch* has the **same shape**. Readers never re-learn
+the navigation, and the build script can parse it.
 
 ## Folder structure
 
@@ -48,7 +48,7 @@ a process model (.bpmn20.xml) · decision table (.dmn) · module · client · de
 
 ## Diagrams — lead with a picture
 
-Use **Mermaid** for process flows and architecture, **tables** for comparisons. At
+Use **Mermaid** for process flows and architecture, and **tables** for comparisons. At
 minimum, the Concept beat should open with a diagram:
 
 ````markdown
@@ -68,8 +68,8 @@ as text.
 
 ## Quiz format (Check Yourself)
 
-Each question is multiple choice, 3–4 options, exactly one correct, with the answer in
-a collapsed block so readers self-test first:
+Each question is multiple choice, with 3–4 options and exactly one correct answer. The
+answer sits in a collapsed block, so readers self-test first:
 
 ```markdown
 **Q1.** A token reaches a user task. What does the engine do?

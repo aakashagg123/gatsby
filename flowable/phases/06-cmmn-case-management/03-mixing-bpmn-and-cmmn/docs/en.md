@@ -7,14 +7,14 @@
 
 ## The Problem
 
-Lesson 01's litmus test rarely returns a pure answer. A card dispute:
-investigation is genuinely discretionary (contact, evidence review — worker's
-call, any order), but the *chargeback itself* is a scheme-mandated, deadline-
-driven, prescribed sequence — as BPMN as anything in the capstone. Force the
-whole thing into CMMN and you hand a regulated sequence to worker discretion;
-force it into BPMN and you're back to lesson 01's hairball. The platform's
-answer (Phase 0's map): reference across engines, and let each stage live in its
-paradigm.
+Lesson 01's litmus test rarely returns a pure answer. Take a card dispute.
+Investigation is genuinely discretionary — contact, evidence review, all the
+worker's call, in any order. But the *chargeback itself* is a scheme-mandated,
+deadline-driven, prescribed sequence, as BPMN as anything in the capstone.
+Force the whole thing into CMMN and you hand a regulated sequence to worker
+discretion. Force it into BPMN and you're back to lesson 01's hairball. The
+platform's answer (Phase 0's map) is to reference across engines, and let
+each stage live in its own paradigm.
 
 ## The Concept
 
@@ -43,24 +43,24 @@ The bridge constructs, both directions:
 
 Design rules for the seam:
 
-1. **Sentries gate the *launch*, BPMN owns the *inside*.** In the shipped model,
-   neither chargeback nor refund is available until evidence review completes —
-   but once launched, the chargeback's scheme deadlines (Phase 7 timers) and
-   retries (Phase 4) run under process discipline, untouchable by case
-   discretion. Guardrail outside, contract inside.
+1. **Sentries gate the *launch*, BPMN owns the *inside*.** In the shipped
+   model, neither chargeback nor refund is available until evidence review
+   completes. But once launched, the chargeback's scheme deadlines (Phase 7
+   timers) and retries (Phase 4) run under process discipline, untouchable by
+   case discretion. The guardrail sits outside; the contract sits inside.
 2. **Reference by key, version independently.** The case names
-   `chargebackProcess`; Phase 8's whole apparatus applies to each artifact
-   separately. The scheme changes its rules → redeploy the process; the ops
-   team reorganises investigation → redeploy the case. Neither deploy touches
-   the other.
-3. **Variables cross explicitly.** In/out parameter mappings on the process
-   task — not ambient sharing. The Phase 10.03 boundary discipline applies at
-   this seam too: pass references and routing facts.
-4. **Blocking vs non-blocking is a real decision.** Blocking (default): the
-   case item stays active until the process finishes — the case *waits on* the
-   how. Non-blocking: fire-and-continue — the case records that the process
-   was launched and moves on. Chargeback: blocking (its outcome drives the
-   case). Notification process: non-blocking.
+   `chargebackProcess`. Phase 8's whole apparatus applies to each artifact
+   separately. When the scheme changes its rules, redeploy the process. When
+   the ops team reorganises investigation, redeploy the case. Neither deploy
+   touches the other.
+3. **Variables cross explicitly.** Use in/out parameter mappings on the
+   process task — not ambient sharing. The Phase 10.03 boundary discipline
+   applies at this seam too: pass references and routing facts.
+4. **Blocking vs non-blocking is a real decision.** Blocking is the default:
+   the case item stays active until the process finishes, so the case *waits
+   on* the how. Non-blocking is fire-and-continue: the case records that the
+   process was launched and moves on. Chargeback stays blocking, because its
+   outcome drives the case. A notification process stays non-blocking.
 
 ## Use It
 
@@ -74,18 +74,19 @@ the bridge in full:
 </processTask>
 ```
 
-The drill (a good afternoon exercise): write a three-step `chargebackProcess` in
-BPMN (Phase 1 skills — file, timer wait, post outcome), deploy both artifacts,
-start a dispute case, and watch the two paradigms hand off — the chargeback
-plan item is *unavailable* until evidence completes (sentry), *available* after
-(worker's choice — maybe this dispute settles with a goodwill refund instead),
-and once started, its BPMN innards march on rails. One case, one process
-instance, two clocks of authority.
+Try this drill, a good afternoon exercise. Write a three-step
+`chargebackProcess` in BPMN using Phase 1 skills — file, timer wait, post
+outcome. Deploy both artifacts, start a dispute case, and watch the two
+paradigms hand off. The chargeback plan item is *unavailable* until evidence
+completes (sentry), then *available* after (the worker's choice — maybe this
+dispute settles with a goodwill refund instead). Once started, its BPMN
+innards march on rails. One case, one process instance, two clocks of
+authority.
 
-The reverse bridge you've already almost met: the capstone's challenge lesson
+You've already almost met the reverse bridge. The capstone's challenge lesson
 suggested a fraud referral — that's a BPMN **case service task** opening
 lesson 02's `fraudInvestigation` from inside `loanOrigination`. Prescription
-spawning discretion.
+spawns discretion.
 
 ## Ship It
 
@@ -104,7 +105,7 @@ decides *how*?
 - D) the customer
 
 <details><summary>Answer</summary>B — the seam in one sentence: discretion
-outside, contract inside.</details>
+sits outside, the contract sits inside.</details>
 
 **Q2.** A blocking process task completes…
 
@@ -124,15 +125,16 @@ result.</details>
 - C) only the case
 - D) both, atomically
 
-<details><summary>Answer</summary>B — the same decoupling as BPMN→DMN in Phase
-5: the platform's cross-references exist exactly for independent
+<details><summary>Answer</summary>B — this is the same decoupling as BPMN→DMN
+in Phase 5. The platform's cross-references exist exactly for independent
 cadences.</details>
 
-**Challenge.** Build the drill: the three-step `chargebackProcess` (with a Phase
-7 timer for the scheme's response window), deploy both, run one dispute to a
-chargeback outcome and one to a goodwill refund. Then add the reverse bridge —
-a case service task in the capstone's decline path opening a retention case —
-and you've used every cross-engine reference on Phase 0's map.
+**Challenge.** Build the drill: the three-step `chargebackProcess` (with a
+Phase 7 timer for the scheme's response window). Deploy both, then run one
+dispute to a chargeback outcome and one to a goodwill refund. Then add the
+reverse bridge — a case service task in the capstone's decline path opening a
+retention case — and you've used every cross-engine reference on Phase 0's
+map.
 
 ## Related
 

@@ -7,14 +7,15 @@
 
 ## The Problem
 
-CPU, memory, request latency — the platform team's dashboards are green while two
-hundred applications sit dead-lettered (capstone drill 5), a pool nobody staffs
-grows past 300, and one instance from March quietly holds a treasury reservation.
-Process engines fail *by accumulation*, not by crashing, and infrastructure metrics
-can't see accumulation. The engine's own tables can — every "is origination
-healthy?" question is a count over runtime tables (lesson 01's routing rule), and
-the whole monitoring problem is choosing which counts, with which thresholds, wake
-which owner.
+CPU, memory, and request latency all look fine on the platform team's dashboards.
+Meanwhile two hundred applications sit dead-lettered (capstone drill 5), a pool
+nobody staffs grows past 300, and one instance from March quietly holds a treasury
+reservation. Process engines fail *by accumulation*, not by crashing, and
+infrastructure metrics can't see accumulation.
+
+The engine's own tables can. Every "is origination healthy?" question is a count
+over runtime tables (lesson 01's routing rule). The whole monitoring problem is
+choosing which counts, with which thresholds, wake which owner.
 
 ## The Concept
 
@@ -32,9 +33,9 @@ earlier lesson:
 
 Design rules that make these six work:
 
-1. **Every alert names the human who can act.** Dead letters page engineering;
-   deep pools page the ops lead; a table bug pages the table's owner (Phase 5's
-   governance). An alert routed to "the channel" is a log line with anxiety.
+1. **Every alert names the human who can act.** Dead letters page engineering.
+   Deep pools page the ops lead. A table bug pages the table's owner (Phase 5's
+   governance). An alert routed to "the channel" is just a log line with anxiety.
 2. **Thresholds derive from the process, not the infrastructure.** "Oldest
    instance > 45 days" means something *because* the capstone's offer expires at
    30 — the model's own timers define normal. Set thresholds per definition, not
@@ -44,7 +45,8 @@ Design rules that make these six work:
    you're building lesson 01's dashboards on the wrong endpoint.
 4. **The probe is the contract; the transport is fashion.** The same six numbers
    feed a cron mail, a Prometheus exporter, or Flowable's actuator/micrometer
-   metrics — start with the numbers, promote the transport when the team standardises.
+   metrics. Start with the numbers, and promote the transport when the team
+   standardises.
 
 ## Use It
 
@@ -64,12 +66,12 @@ $ echo $?
 1
 ```
 
-Wire it as: cron every 5 minutes → non-zero exit posts the output to the incident
-channel. That's a complete v1 monitoring stack — the capstone runbook's five-line
-health check, made permanent. The dashboard spec
+Wire it as a cron job every 5 minutes: a non-zero exit posts the output to the
+incident channel. That's a complete v1 monitoring stack — the capstone runbook's
+five-line health check, made permanent. The dashboard spec
 ([`outputs/dashboard-spec.md`](../outputs/dashboard-spec.md)) defines the panel
-layout and history-side additions (cycle time, step durations) for the eventual
-Grafana build.
+layout and the history-side additions (cycle time, step durations) for the
+eventual Grafana build.
 
 ## Ship It
 

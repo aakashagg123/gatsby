@@ -8,12 +8,12 @@
 
 ## The Problem
 
-Lesson 01 sold the paradigm; now the vocabulary. CMMN's spec is notoriously
-dense — but the working subset is four constructs, and one deployable case shows
-all of them: a fraud investigation where two evidence tasks can run in any
-order, a milestone fires when both are done, and only *then* does the escalation
-stage — legal referral, regulator report — become available. Guardrails without
-a route.
+Lesson 01 sold the paradigm. Now comes the vocabulary. CMMN's spec is
+notoriously dense, but the working subset is four constructs. One deployable
+case shows all of them: a fraud investigation where two evidence tasks can
+run in any order, a milestone fires when both are done, and only *then* does
+the escalation stage — legal referral, regulator report — become available.
+Guardrails without a route.
 
 ## The Concept
 
@@ -40,18 +40,19 @@ flowchart TB
 | **Milestone** | a named achievement, no work of its own | *occurs* when its sentry fires — the case's progress vocabulary |
 | **Sentry** | the guardrail: ON-parts (events: "X completed") + optional IF-part (condition on case data) | when satisfied → entry criterion enables the item / exit criterion terminates it |
 
-Two semantics that make CMMN genuinely different, not just different-shaped:
+Two semantics make CMMN genuinely different, not just different-shaped:
 
 1. **Enablement, not invocation.** A satisfied entry sentry doesn't *start*
-   work — it makes the item *available for the worker to start* (auto-start
-   exists via `isBlocking`/manual-activation flags, but discretion is the
-   default). Compare Phase 7's event subprocesses: same arming idea, but there
-   the event fires the work; here it unlocks it.
-2. **Completion is negotiated, not reached.** No end event: the case can
-   complete when no required items are pending and nothing is active — or the
-   worker terminates it. "When is this case done?" is a modelling decision you
-   make with required-rules, and forgetting it produces immortal cases (the
-   CMMN equivalent of Phase 1's dead-instance gateway bug).
+   work. It makes the item *available for the worker to start* (auto-start
+   exists through `isBlocking`/manual-activation flags, but discretion is the
+   default). Compare Phase 7's event subprocesses: the arming idea is the
+   same, but there the event fires the work — here it only unlocks it.
+2. **Completion is negotiated, not reached.** There is no end event. The
+   case can complete when no required items are pending and nothing is
+   active, or when the worker terminates it. "When is this case done?" is a
+   modelling decision you make with required-rules. Forget it and you get
+   immortal cases — the CMMN equivalent of Phase 1's dead-instance gateway
+   bug.
 
 ## Use It
 
@@ -82,10 +83,10 @@ curl -su rest-admin:test -X POST .../cmmn-runtime/case-instances \
 # watch 'Refer to legal' and 'File regulator report' appear only after both.
 ```
 
-That "appear only after" moment is the whole lesson: nothing routed a token —
-completing the second evidence task satisfied a sentry, the milestone occurred,
-the stage's entry criterion fired, and two new tasks became available for a
-human to choose between.
+That "appear only after" moment is the whole lesson. Nothing routed a token.
+Completing the second evidence task satisfied a sentry, the milestone
+occurred, the stage's entry criterion fired, and two new tasks became
+available for a human to choose between.
 
 ## Ship It
 
@@ -112,9 +113,9 @@ stays the scheduler.</details>
 - C) XOR
 - D) sequence
 
-<details><summary>Answer</summary>B — within a sentry: AND; multiple sentries on
-one item: OR. The most-quizzed fact in CMMN, and the one that silently inverts
-your guardrail if misremembered.</details>
+<details><summary>Answer</summary>B — within one sentry the parts combine as
+AND. Multiple sentries on one item combine as OR. This is the most-quizzed
+fact in CMMN, and misremembering it silently inverts your guardrail.</details>
 
 **Q3.** A case with no required items and no exit criteria…
 
@@ -123,13 +124,15 @@ your guardrail if misremembered.</details>
 - C) errors at deploy
 - D) completes after a timeout
 
-<details><summary>Answer</summary>B — the CMMN counterpart of the no-default-flow
-gateway: legal model, operational leak. Decide completion explicitly.</details>
+<details><summary>Answer</summary>B — this is the CMMN counterpart of the
+no-default-flow gateway: a correct legal model with an operational leak.
+Decide completion explicitly.</details>
 
 **Challenge.** Add an IF-part to `sentryEscalation` —
-`${suspectedAmount > 1000000}` — so escalation unlocks only for large cases, and
-a `repetitionRule` on the interview task (real investigations interview more
-than once). Deploy and verify both against the REST drill above.
+`${suspectedAmount > 1000000}` — so escalation unlocks only for large cases.
+Then add a `repetitionRule` on the interview task, since real investigations
+interview more than once. Deploy and verify both against the REST drill
+above.
 
 ## Related
 

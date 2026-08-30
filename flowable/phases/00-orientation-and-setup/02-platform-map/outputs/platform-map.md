@@ -33,11 +33,12 @@ lesson: 02
 
 ## Lineage & editions
 
-- 2016 fork of Activiti by its original authors; BPMN engine lineage to 2010.
-- **Open source**: all four engines + REST — everything this course uses.
-- **Flowable Work / Design**: commercial modelers, task/admin UIs, orchestration
-  conveniences on the same engines. Evaluate for UI/velocity (Phase 10, lesson
-  05), not for engine capability.
+- Flowable is a 2016 fork of Activiti by its original authors. The BPMN engine's
+  lineage goes back to 2010.
+- **Open source**: all four engines plus REST — everything this course uses.
+- **Flowable Work / Design**: commercial modelers, task/admin UIs, and
+  orchestration conveniences on the same engines. Evaluate this layer for
+  UI/velocity (Phase 10, lesson 05), not for engine capability.
 
 ## Modelling smells → wrong column
 
