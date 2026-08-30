@@ -1,7 +1,8 @@
 # The job executor: timers, retries, async work
 
-> **Motto** — Every "later" in your process — timers, retries, async steps — is a row
-> in a jobs table, and the executor is just a loop that locks due rows and runs them.
+> **Motto** — Every "later" in your process — timers, retries, async steps — is a
+> row in a jobs table. The executor is just a loop that locks due rows and runs
+> them.
 
 *Part of Phase 02 — The engine: state & transactions. Concept reading:
 [Principle 5 — time is a first-class citizen](../../../../foundations/process-automation-principles.md).*
@@ -9,11 +10,12 @@
 ## The Problem
 
 Lesson 03 ended with promises: async tasks "get picked up in a new transaction",
-timers "fire in three days", failures "retry with backoff". Some component has to keep
-those promises — across restarts, across a cluster, without firing the same timer
-twice from two nodes. That component is the **job executor**, and when something in
-production "just didn't happen" (a reminder never sent, an async step stuck), the job
-executor's tables are where you'll be looking. Better to have built one first.
+timers "fire in three days," failures "retry with backoff." Some component has
+to keep those promises — across restarts, across a cluster, without firing the
+same timer twice from two nodes. That component is the **job executor**. When
+something in production "just didn't happen" (a reminder never sent, an async
+step stuck), the job executor's tables are where you'll look. Better to have
+built one first.
 
 ## The Concept
 

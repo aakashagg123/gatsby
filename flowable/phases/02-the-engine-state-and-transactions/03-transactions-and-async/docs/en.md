@@ -105,9 +105,9 @@ triggered the segment.</details>
 - C) B must be the last task
 - D) the process needs a second engine
 
-<details><summary>Answer</summary>B — async means retries, retries mean the call can
-fire twice. Only idempotency on the receiving side makes that safe. Async without
-idempotency is how double payments happen.</details>
+<details><summary>Answer</summary>B — async means retries, and retries mean the
+call can fire twice. Only idempotency on the receiving side makes that safe.
+Async without idempotency is how double payments happen.</details>
 
 **Q3.** Two parallel branches of synchronous service tasks: do they run concurrently?
 
@@ -117,14 +117,14 @@ idempotency is how double payments happen.</details>
 - D) only with more than two branches
 
 <details><summary>Answer</summary>B — parallel gateways are token bookkeeping, not
-threads. True overlap needs async boundaries so the job executor can run branches on
-its own threads.</details>
+threads. True overlap needs async boundaries so the job executor can run
+branches on its own threads.</details>
 
-**Challenge.** Take the loan-triage model from Phase 1 and decide — on paper — where
-async boundaries belong if `creditCheck` calls a real bureau (slow, flaky, but
-idempotent) and `autoApprove` posts to a core-banking API (fast, but *not*
-idempotent). Write down what the failure of each task now does, and what you'd need to
-monitor. Check your answer against the cheat sheet.
+**Challenge.** Take the loan-triage model from Phase 1 and decide, on paper,
+where async boundaries belong if `creditCheck` calls a real bureau (slow,
+flaky, but idempotent) and `autoApprove` posts to a core-banking API (fast, but
+*not* idempotent). Write down what the failure of each task now does, and what
+you'd need to monitor. Check your answer against the cheat sheet.
 
 ## Related
 

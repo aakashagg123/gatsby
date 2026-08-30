@@ -54,17 +54,17 @@ When to reach for it — and when not:
 | The "undo" is really a business process (refund approval, clawback with maker-checker) | model it as a normal subprocess — compensation handlers should be mechanical undos, not workflows |
 | Only the last step ever fails | consider just reordering: do the risky step first |
 
-The honest cost: compensable processes are roughly twice the modelling and testing
-surface (every do has an undo, and undo paths need tests too). Use compensation where
-the *sequence of external commitments* genuinely demands unwind — not as decoration on
-every service task.
+Here's the honest cost: compensable processes roughly double the modelling and
+testing surface, since every do has an undo, and undo paths need tests too. Use
+compensation where the *sequence of external commitments* genuinely demands unwind,
+not as decoration on every service task.
 
 ## Ship It
 
 This lesson ships
-[`outputs/compensation-patterns.md`](../outputs/compensation-patterns.md) — the
-pattern card: XML skeleton, the four rules, and a checklist for deciding whether a
-step needs a handler.
+[`outputs/compensation-patterns.md`](../outputs/compensation-patterns.md): the
+pattern card with an XML skeleton, the four rules, and a checklist for deciding
+whether a step needs a handler.
 
 ## Check Yourself
 
@@ -76,8 +76,8 @@ handlers run, in what order?
 - C) A's, B's and C's
 - D) C's only
 
-<details><summary>Answer</summary>B — C never completed so it has nothing to undo;
-the others unwind newest-first.</details>
+<details><summary>Answer</summary>B — C never completed, so it has nothing to undo.
+The others unwind newest-first.</details>
 
 **Q2.** A compensation handler calling the treasury's release API times out. What
 happens?
@@ -103,10 +103,10 @@ maker-checker approval." Model the refund as…
 reversals. Anything with its own approvals, waits, and decisions is a process and
 deserves to be modelled as one.</details>
 
-**Challenge.** Take the capstone's disbursal sequence (reserve → issue policy →
-disburse) and write its compensation table: for each step, the undo API, whether the
-undo is idempotent, and what happens if the undo itself dead-letters. That table *is*
-the hard part of compensation — the XML is twenty minutes.
+**Challenge.** Take the capstone's disbursal sequence (reserve, issue policy,
+disburse) and write its compensation table. For each step, note the undo API,
+whether the undo is idempotent, and what happens if the undo itself dead-letters.
+That table *is* the hard part of compensation — the XML takes twenty minutes.
 
 ## Related
 
