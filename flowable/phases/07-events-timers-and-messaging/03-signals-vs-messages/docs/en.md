@@ -8,13 +8,14 @@
 
 ## The Problem
 
-Two events land in your loan platform on the same afternoon. The bureau's callback for
-application APP-002: exactly one instance must receive it, and delivering it twice or
-to a sibling would be a correctness bug. And RBI revises the repo rate: *every*
-in-flight application holding a floating-rate offer must recalculate. Same engine, same
-"something happened outside" shape — opposite delivery semantics. BPMN gives each its
-own primitive, and models that use the wrong one work fine in the demo and fail at the
-first duplicate or the first thousand-instance broadcast.
+Two events land in your loan platform on the same afternoon. First, the bureau's
+callback for application APP-002: exactly one instance must receive it, and
+delivering it twice or to a sibling would be a correctness bug. Second, RBI revises
+the repo rate: *every* in-flight application holding a floating-rate offer must
+recalculate. Same engine, same "something happened outside" shape, but opposite
+delivery semantics. BPMN gives each its own primitive. Models that use the wrong one
+work fine in the demo, then fail at the first duplicate or the first
+thousand-instance broadcast.
 
 ## The Concept
 
@@ -40,19 +41,19 @@ flowchart TB
 Two design rules fall out:
 
 1. **If you need a correlation key, it's a message.** The moment "which instance?"
-   has an answer, broadcast is wrong — a signal named `bureauCallback-APP-002` (a real
-   anti-pattern found in real models) is a message wearing a signal costume, and it
-   defeats duplicate detection.
+   has an answer, broadcast is wrong. A signal named `bureauCallback-APP-002` — a
+   real anti-pattern found in real models — is a message wearing a signal costume,
+   and it defeats duplicate detection.
 2. **If zero listeners is fine, it's a signal.** Messages *must* land; signals are
-   fire-and-forget by design. This is also the operational warning: a signal caught by
-   10,000 instances moves 10,000 tokens — on a synchronous throw, in one transaction.
-   Broadcast to large populations wants async continuations (Phase 2) between the
-   catch and any heavy work.
+   fire-and-forget by design. Here is the operational warning too: a signal caught
+   by 10,000 instances moves 10,000 tokens, on a synchronous throw, in one
+   transaction. Broadcast to large populations needs async continuations (Phase 2)
+   between the catch and any heavy work.
 
 Both also come as **event subprocess** triggers (lesson 05) — "while this scope is
-active, react to X" — which is where signals shine: a `complianceFreeze` signal event
-subprocess in every onboarding process is one drawn element per model, not a boundary
-on every task.
+active, react to X." This is where signals shine: a `complianceFreeze` signal event
+subprocess in every onboarding process is one drawn element per model, not a
+boundary on every task.
 
 ## Ship It
 
@@ -71,7 +72,7 @@ or signal?
 - D) timer
 
 <details><summary>Answer</summary>B — "that batch's" is a correlation key wearing
-prose. One intended receiver = message, always.</details>
+prose. One intended receiver always means a message.</details>
 
 **Q2.** A signal is thrown and no instance is waiting. What should happen?
 
@@ -81,8 +82,8 @@ prose. One intended receiver = message, always.</details>
 - D) a new instance starts
 
 <details><summary>Answer</summary>B — this is the semantic core of the split. If
-zero receivers worries you, you wanted a message (or a signal *start* event, which
-does create instances).</details>
+zero receivers worries you, you wanted a message — or a signal *start* event, which
+does create instances.</details>
 
 **Q3.** The model review finds `<signal name="paymentConfirmed-${orderId}"/>`. The
 verdict?
@@ -93,13 +94,13 @@ verdict?
 - D) prefer a timer
 
 <details><summary>Answer</summary>B — per-key signal names re-implement correlation
-without its safety rails (no ambiguity refusal, no unmatched-delivery
-surface).</details>
+without its safety rails: no ambiguity refusal, no unmatched-delivery
+surface.</details>
 
 **Challenge.** Sweep a process model you own (or the capstone, next phase) and label
 every external interaction M or S using the two rules. Then find the one that's
 neither — a *conditional* event or a polling loop — and write down why it resisted
-classification; that's usually where an event registry (next lesson) belongs.
+classification. That's usually where an event registry (next lesson) belongs.
 
 ## Related
 

@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Location-aware systems face a fundamental challenge: mapping the continuous, curved surface of the Earth onto discrete, queryable data structures. **Proximity search** (find businesses near me) uses geohashing to convert 2D coordinates into sortable 1D strings, enabling efficient range queries on standard databases. **Nearby friends** (real-time location sharing) adds the streaming dimension — 334K location updates per second flowing through WebSocket servers and Redis pub/sub channels. **Google Maps** stacks multiple geospatial problems: tiling the planet into a hierarchy of pre-rendered images, routing through continent-scale road graphs, and computing adaptive ETAs from live traffic. The common thread: spatial indexing is the bottleneck, and the choice of index structure (geohash, quadtree, S2 cells) determines every downstream tradeoff.
+Location-aware systems face a fundamental challenge: mapping the continuous, curved surface of the Earth onto discrete, queryable data structures. **Proximity search** (find businesses near me) uses geohashing to convert 2D coordinates into sortable 1D strings. This enables efficient range queries on standard databases. **Nearby friends** (real-time location sharing) adds the streaming dimension — 334K location updates per second flowing through WebSocket servers and Redis pub/sub channels. **Google Maps** stacks multiple geospatial problems: tiling the planet into a hierarchy of pre-rendered images, routing through continent-scale road graphs, and computing adaptive ETAs from live traffic. The common thread: spatial indexing is the bottleneck. The choice of index structure — geohash, quadtree, S2 cells — determines every downstream tradeoff.
 
 > 🎯 **For the technical PM**
 >

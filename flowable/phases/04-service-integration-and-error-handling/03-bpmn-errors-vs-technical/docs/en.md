@@ -8,13 +8,14 @@ required.*
 
 ## The Problem
 
-The bureau call fails. But "fails" is two completely different situations wearing one
-word: **"this PAN has no bureau file"** (a fact about the applicant — calling again
-won't conjure a file) and **"connection timed out"** (a fact about infrastructure —
-calling again in a minute may well succeed). Handle the first with retries and you loop
-pointlessly against a correct answer; handle the second by routing to a rejection path
-and you decline loans because a router hiccuped. Most workflow incidents in production
-trace back to these two planes being confused at design time.
+The bureau call fails. But "fails" covers two completely different situations. One is
+**"this PAN has no bureau file"** — a fact about the applicant, and calling again
+won't conjure a file. The other is **"connection timed out"** — a fact about
+infrastructure, and calling again in a minute may well succeed. Handle the first with
+retries, and you loop pointlessly against a correct answer. Handle the second by
+routing to a rejection path, and you decline loans because a router hiccuped. Most
+workflow incidents in production trace back to these two planes being confused at
+design time.
 
 ## The Concept
 
@@ -40,29 +41,28 @@ flowchart TB
 Three design consequences:
 
 1. **Error codes are part of your process's API.** `NO_BUREAU_RECORD`,
-   `KYC_MISMATCH`, `LIMIT_EXCEEDED` — a small, named, documented set. Boundary events
-   subscribe by code; catch-all boundaries (no code) are the `except Exception` of
-   BPMN — legitimate as a last line, lazy as a first.
+   `KYC_MISMATCH`, `LIMIT_EXCEEDED` — keep the set small, named, and documented.
+   Boundary events subscribe by code. Catch-all boundaries (no code) are the
+   `except Exception` of BPMN — legitimate as a last line, lazy as a first.
 2. **Business people review business failures.** Because BPMN errors are on the
    diagram, "what happens when KYC fails?" is answered by pointing, not by reading
-   Java. That's the reason to be disciplined about the split — it keeps the diagram
-   honest (Principle 2).
+   Java. Being disciplined about the split keeps the diagram honest (Principle 2).
 3. **Technical failures are invisible in the model — deliberately.** The diagram
    would drown if every timeout appeared on it. The engine's contract is: rollback,
    retry, dead-letter. Your job is monitoring that pipeline (lesson 05), not drawing
    it.
 
-The grey zone: *"bureau is down and ops wants a manual fallback after 3 failed
-attempts."* That's a technical failure that **becomes** a business decision after
-persistence. The pattern: let retries exhaust, and use the dead-letter handler (or
-`handleTaskFailureAsBpmnError` on HTTP tasks) to convert the final failure into a BPMN
-error the model routes. Escalation is then visible in the diagram, while transient
-blips stay out of it.
+Here's the grey zone: *"bureau is down and ops wants a manual fallback after 3 failed
+attempts."* That's a technical failure that **becomes** a business decision after it
+persists. The pattern: let retries exhaust, then use the dead-letter handler (or
+`handleTaskFailureAsBpmnError` on HTTP tasks) to convert the final failure into a
+BPMN error the model routes. Escalation becomes visible in the diagram, while
+transient blips stay out of it.
 
 ## Ship It
 
 This lesson ships
-[`outputs/failure-planes-cheatsheet.md`](../outputs/failure-planes-cheatsheet.md) —
+[`outputs/failure-planes-cheatsheet.md`](../outputs/failure-planes-cheatsheet.md):
 the decision table plus a review checklist for delegate code and models.
 
 ## Check Yourself
@@ -76,8 +76,8 @@ subprocess catches it anywhere up the scope chain. The instance…
 - D) dead-letters the job
 
 <details><summary>Answer</summary>B — BPMN errors are never retried and don't
-dead-letter; uncaught means the model has a hole. Ship a catch-all boundary or fix the
-model.</details>
+dead-letter. Uncaught means the model has a hole. Ship a catch-all boundary or fix
+the model.</details>
 
 **Q2.** The KYC service returns "documents don't match". The delegate should…
 
@@ -86,9 +86,9 @@ model.</details>
 - C) set a variable and return, hoping a gateway checks it
 - D) log a warning
 
-<details><summary>Answer</summary>B — a mismatch is an outcome; retrying re-asks a
-settled question. (C *works* but hides the failure semantics — error events exist so
-outcomes off the happy path are first-class.)</details>
+<details><summary>Answer</summary>B — a mismatch is an outcome, and retrying re-asks
+a settled question. C *works* but hides the failure semantics — error events exist so
+outcomes off the happy path are first-class.</details>
 
 **Q3.** Which failure appears on the BPMN diagram?
 
@@ -100,10 +100,10 @@ outcomes off the happy path are first-class.)</details>
 <details><summary>Answer</summary>C — only business outcomes get drawn. A, B, D are
 the job executor's problem and monitoring's problem.</details>
 
-**Challenge.** Audit one real integration you own. List every way it fails; tag each
-*outcome* or *malfunction*; then check the code — how many outcomes are currently
-thrown as generic exceptions (and therefore pointlessly retried)? That list is your
-error-code catalogue for the boundary events you'll build next lesson.
+**Challenge.** Audit one real integration you own. List every way it fails, and tag
+each one *outcome* or *malfunction*. Then check the code: how many outcomes are
+currently thrown as generic exceptions, and therefore pointlessly retried? That list
+is your error-code catalogue for the boundary events you'll build next lesson.
 
 ## Related
 

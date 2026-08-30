@@ -113,8 +113,8 @@ just checks reality against the model's promise.</details>
 Rate-vs-baseline is the one signal that watches the front door.</details>
 
 **Challenge.** Add the history side to the probe: median time-to-decision over the
-trailing 7 days (lesson 01's challenge computed it once) and week-over-week
-application rate — then run the capstone driver in a loop, kill your fake bureau
+trailing 7 days (lesson 01's challenge computed it once), and week-over-week
+application rate. Then run the capstone driver in a loop, kill your fake bureau
 mid-run, and verify which signals fire in which order. The ordering *is* your
 incident playbook.
 

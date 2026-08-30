@@ -9,11 +9,11 @@
 ## The Problem
 
 Phases 8.01–8.03 dealt with versions after the fact. But the cost of every future
-migration is set earlier — in the modeler, the moment someone "tidies up" element
+migration is set earlier, in the modeler, the moment someone "tidies up" element
 IDs, deletes a task that tokens might occupy, or renames a variable. Each of those
 edits is invisible in review ("the diagram looks the same!") and turns the next
-deploy from *drain quietly* into *migration project*. Teams need the same instinct
-database engineers have about column renames — and it fits on one page.
+deploy from *drain quietly* into *migration project*. Teams need the same
+instinct database engineers have about column renames. It fits on one page.
 
 ## The Concept
 
@@ -28,23 +28,23 @@ lesson 02's auto-mapping:
 
 The deeper rules behind the buckets:
 
-1. **Element IDs are your ABI.** The diagram is the code (Principle 2), and IDs are
-   its stable symbols — auto-mapping (8.02), history queries, timer re-seating all
-   key on them. Rename labels freely; rename IDs never (cosmetic ID renames are the
-   #1 self-inflicted migration).
-2. **Variables are a schema without a migrator.** The engine maps *positions*, not
-   data: a v5 step reading `employmentType` finds nothing in a v1-started instance
-   that never wrote it. Every new read needs a default
-   (`${employmentType ?? 'salaried'}`), a backfill, or a guard — exactly a nullable
-   column with no `DEFAULT`.
+1. **Element IDs are your ABI.** The diagram is the code (Principle 2), and IDs
+   are its stable symbols. Auto-mapping (8.02), history queries, and timer
+   re-seating all key on them. Rename labels freely, but never rename IDs —
+   cosmetic ID renames are the #1 self-inflicted migration.
+2. **Variables are a schema without a migrator.** The engine maps *positions*,
+   not data. A v5 step reading `employmentType` finds nothing in a v1-started
+   instance that never wrote it. Every new read needs a default
+   (`${employmentType ?? 'salaried'}`), a backfill, or a guard — exactly like a
+   nullable column with no `DEFAULT`.
 3. **Additive beats mutative.** Need different behaviour at `review`? Add
-   `reviewV2` on a new path and route to it — old tokens keep a valid home, new
-   instances take the new road, and the old branch is deleted a quarter later when
-   the population drains. Two small versions beat one clever one.
-4. **Gateways must stay total for *old* data.** New conditions are evaluated
-   against variables written under old versions; every exclusive gateway keeps a
-   default flow, and conditions tolerate missing variables (Phase 1's dead-instance
-   rule, now with a time dimension).
+   `reviewV2` on a new path and route to it. Old tokens keep a valid home, new
+   instances take the new road, and you delete the old branch a quarter later
+   once the population drains. Two small versions beat one clever one.
+4. **Gateways must stay total for *old* data.** New conditions get evaluated
+   against variables written under old versions. Every exclusive gateway keeps
+   a default flow, and conditions must tolerate missing variables — Phase 1's
+   dead-instance rule, now with a time dimension.
 
 ## Ship It
 

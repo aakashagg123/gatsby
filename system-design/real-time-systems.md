@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Three systems where latency is the product: a **chat system** serving 50 million daily users through WebSocket connections to stateful chat servers, with a key-value store for message history and heartbeat-based presence detection. A **search autocomplete** system that responds in under 100ms at 48,000 peak QPS by pre-computing top-k results at every node of a trie data structure, rebuilt weekly in batch and sharded by prefix range. And a **video streaming platform** at YouTube scale (5 billion daily views) that parallelizes upload and transcoding through a DAG-based processing pipeline, serves popular content from CDN edge nodes, and streams via adaptive bitrate protocols (MPEG-DASH, HLS) that adjust quality to the viewer's bandwidth in real time.
+Three systems where latency is the product. A **chat system** serves 50 million daily users through WebSocket connections to stateful chat servers. It uses a key-value store for message history and heartbeat-based presence detection. A **search autocomplete** system responds in under 100ms at 48,000 peak QPS. It pre-computes top-k results at every node of a trie data structure, rebuilt weekly in batch and sharded by prefix range. And a **video streaming platform** at YouTube scale (5 billion daily views) parallelizes upload and transcoding through a DAG-based processing pipeline. It serves popular content from CDN edge nodes, and streams via adaptive bitrate protocols (MPEG-DASH, HLS) that adjust quality to the viewer's bandwidth in real time.
 
 > 🎯 **For the technical PM**
 >
@@ -77,7 +77,7 @@ flowchart TD
 
 **Stateless services** — Authentication, user profile, group management, and all non-chat API calls. These are standard HTTP services behind a load balancer, horizontally scalable, using a relational database.
 
-**Stateful chat servers** — Each client maintains a WebSocket connection to one chat server. The server tracks which clients are connected and routes messages accordingly. Because connections are stateful, you can't arbitrarily load-balance them — a client must reconnect to a specific server (or any server, with a shared presence layer).
+**Stateful chat servers** — Each client maintains a WebSocket connection to one chat server. The server tracks which clients are connected and routes messages accordingly. Because connections are stateful, you can't arbitrarily load-balance them. A client must reconnect to a specific server, or to any server if there's a shared presence layer.
 
 **Service discovery (Zookeeper)** — When a client connects, the service discovery layer assigns it to a chat server based on server load, geographic proximity, and available capacity. Zookeeper maintains the registry of available chat servers and their current connection counts.
 
@@ -90,7 +90,7 @@ Message history has a distinctive access pattern:
 - **Writes are append-only** — messages are never updated (ignoring edits for simplicity)
 - **The dataset is enormous** — 50M users sending 40 messages/day = 2 billion messages/day
 
-A relational database struggles with this: random reads across a 2-billion-row-per-day table are slow, and the write volume overwhelms single-master replication. A **key-value store** (HBase, Cassandra) is the standard choice:
+A relational database struggles with this. Random reads across a 2-billion-row-per-day table are slow, and the write volume overwhelms single-master replication. A **key-value store** (HBase, Cassandra) is the standard choice:
 
 - **Key:** `(channel_id, message_id)` where message_id is a Snowflake-style time-ordered ID
 - **Value:** message content, sender, timestamp, metadata
@@ -280,8 +280,8 @@ flowchart TD
 The pipeline has four components:
 
 1. **Preprocessor** — Validates the video, splits it into GOPs (Group of Pictures — small, independently decodable segments). GOPs enable parallel encoding.
-2. **DAG Scheduler** — Determines task dependencies and parallelism. Video encoding at different resolutions can run in parallel; audio and video can be processed independently; muxing depends on both completing.
-3. **Resource Manager** — Allocates CPU/GPU workers to tasks. GPU-intensive tasks (H.265 encoding, 4K) get GPU workers; lighter tasks (thumbnail generation) get CPU workers.
+2. **DAG Scheduler** — Determines task dependencies and parallelism. Video encoding at different resolutions can run in parallel. Audio and video can be processed independently. Muxing depends on both completing.
+3. **Resource Manager** — Allocates CPU/GPU workers to tasks. GPU-intensive tasks (H.265 encoding, 4K) get GPU workers. Lighter tasks (thumbnail generation) get CPU workers.
 4. **Task Workers** — Execute individual encoding tasks. Horizontally scaled, stateless — they pull tasks from a queue, process the GOP, and write the output to storage.
 
 ### Streaming: adaptive bitrate

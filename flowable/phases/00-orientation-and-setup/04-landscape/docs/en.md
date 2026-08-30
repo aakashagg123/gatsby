@@ -1,6 +1,6 @@
 # The landscape: Flowable vs Camunda 7/8 vs Temporal vs DIY
 
-> **Motto** — These tools don't compete on features; they compete on *who authors the
+> **Motto** — These tools don't compete on features. They compete on *who authors the
 > flow* — business-readable models, or engineers' code — and that one axis decides
 > most evaluations.
 
@@ -10,12 +10,12 @@ lesson 05 revisits this with commercial depth once you've built everything.*
 ## The Problem
 
 Every engine evaluation drowns in feature matrices — fifty rows of checkmarks that
-all look the same — while the real differences sit on two axes the matrices don't
-show: who authors and reads the flow (business-facing model vs engineer-only code),
-and where state lives (your database vs a platform you operate/rent). Getting those
-two right makes the shortlist obvious; getting them wrong produces the classic
-mis-buys — Temporal for a maker-checker back office, or a BPM suite for pure
-service orchestration no human will ever read.
+all look the same. The real differences sit on two axes the matrices don't show:
+who authors and reads the flow (a business-facing model vs. engineer-only code),
+and where state lives (your database vs. a platform you operate or rent). Get
+those two right and the shortlist becomes obvious. Get them wrong and you produce
+the classic mis-buys: Temporal for a maker-checker back office, or a BPM suite for
+pure service orchestration that no human will ever read.
 
 ## The Concept
 
@@ -45,27 +45,29 @@ The five, honestly:
 | **Temporal** | none — workflows *are* code (Java/Go/TS/Python) | its own cluster/cloud | engineer-only orchestration: sagas, retries, infra workflows, polyglot teams | no business-facing artifact: no diagram to review, no DMN, human-task layer is DIY |
 | **DIY** | none | your tables | 3-state flows that never change | every Phase 2–9 concern, rebuilt badly, later |
 
-Three evaluation rules that survive contact with vendors:
+Three evaluation rules survive contact with vendors:
 
 1. **Author axis first.** If compliance, ops, or product must *read* the flow —
-   maker-checker, regulated lending, claims — you need the model-first column;
-   Temporal isn't a weaker candidate there, it's a category error (and vice versa
-   for pure service sagas nobody non-technical will read).
-2. **State axis = operational identity.** Flowable/Camunda 7 ride the database
-   you already run, back up, and audit (Phases 2, 9 were *about* that). Camunda 8
-   and Temporal are additional stateful platforms with their own ops story —
-   sometimes worth it, never free.
+   maker-checker, regulated lending, claims — you need the model-first column.
+   Temporal isn't a weaker candidate there; it's a category error. The reverse is
+   also true: don't pick a model-first tool for pure service sagas that no
+   non-technical person will ever read.
+2. **State axis = operational identity.** Flowable and Camunda 7 ride the
+   database you already run, back up, and audit (Phases 2 and 9 were *about*
+   that). Camunda 8 and Temporal are additional stateful platforms with their
+   own ops story — sometimes worth it, never free.
 3. **Everything in this course transfers.** Tokens, wait states, transactions,
-   jobs, correlation, versioning — Camunda 7 shares the lineage outright; Camunda
-   8 keeps the BPMN semantics on a different substrate; even Temporal's
-   durable-execution model is Phase 2's bet expressed in code. You evaluated
-   engines by *building one*; that's the durable advantage.
+   jobs, correlation, versioning — Camunda 7 shares the lineage outright.
+   Camunda 8 keeps the BPMN semantics on a different substrate. Even Temporal's
+   durable-execution model is Phase 2's bet, expressed in code. You evaluated
+   these engines by *building one* — that's the durable advantage.
 
 ## Ship It
 
 This lesson ships
 [`outputs/landscape-comparison.md`](../outputs/landscape-comparison.md) — the two-
-axis map, the five-way table, and the three rules as an evaluation worksheet.
+axis map, the five-way table, and the three rules, packaged as an evaluation
+worksheet.
 
 ## Check Yourself
 
@@ -78,7 +80,7 @@ fit?
 - D) DIY
 
 <details><summary>Answer</summary>B — rule 1 in reverse. Model-first tools earn
-their keep only when someone non-technical reads the model.</details>
+their keep only when someone non-technical actually reads the model.</details>
 
 **Q2.** Camunda 8's biggest operational difference from Flowable is…
 
@@ -87,8 +89,8 @@ their keep only when someone non-technical reads the model.</details>
 - C) pricing only
 - D) no DMN
 
-<details><summary>Answer</summary>B — the state axis. Feature lists blur; *where
-the rows live* changes your on-call rota.</details>
+<details><summary>Answer</summary>B — the state axis. Feature lists blur together,
+but *where the rows live* changes your on-call rota.</details>
 
 **Q3.** Regulated lending flow, humans throughout, audit trail mandatory, JVM
 team, state must stay in the bank's own PostgreSQL. The shortlist is…
@@ -102,9 +104,10 @@ team, state must stay in the bank's own PostgreSQL. The shortlist is…
 which is the cell this whole course happens to live in.</details>
 
 **Challenge.** Take the capstone's requirements (humans, timers, DMN, audit, your
-DB) and write the two-paragraph "why not Temporal / why not Camunda 8" memo an
-architecture review would demand. Then invert it: change two requirements until
-Temporal *wins*. Knowing the flip conditions is what makes the evaluation yours.
+DB) and write the two-paragraph "why not Temporal / why not Camunda 8" memo that
+an architecture review would demand. Then invert it: change two requirements
+until Temporal *wins*. Knowing the flip conditions is what makes the evaluation
+yours.
 
 ## Related
 

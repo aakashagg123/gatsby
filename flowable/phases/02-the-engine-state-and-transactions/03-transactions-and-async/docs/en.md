@@ -1,8 +1,8 @@
 # Transaction boundaries & async continuations
 
-> **Motto** — Everything between two wait states is one transaction: know where those
-> boundaries are and incidents become mechanical; guess, and "the engine re-ran my
-> payment" becomes your war story.
+> **Motto** — Everything between two wait states is one transaction. Know where
+> those boundaries are and incidents become mechanical. Guess, and "the engine
+> re-ran my payment" becomes your war story.
 
 *Part of Phase 02 — The engine: state & transactions. Concept lesson — no code
 required. Concept reading:
@@ -11,21 +11,22 @@ required. Concept reading:
 ## The Problem
 
 A process executes: service task A (reserve funds) → service task B (call the
-disbursal API) → service task C (write the ledger entry). C throws. What happened to A
-and B?
+disbursal API) → service task C (write the ledger entry). C throws. What
+happened to A and B?
 
-If you don't know the answer *precisely*, you can't write safe service tasks. The
-answer is: **A and B roll back too** — the token returns to the previous wait state as
-if none of the three ever ran — *except* the disbursal API was really called, because
-an external HTTP call can't be rolled back by your database transaction. Congratulations:
-money moved and your process has no record of it. This lesson is about never being
-surprised by that again.
+If you don't know the answer *precisely*, you can't write safe service tasks.
+The answer is: **A and B roll back too**. The token returns to the previous
+wait state as if none of the three ever ran — *except* the disbursal API really
+was called, because an external HTTP call can't be rolled back by your database
+transaction. Money moved, and your process has no record of it. This lesson is
+about never being surprised by that again.
 
 ## The Concept
 
-The engine advances tokens synchronously, in the caller's thread and transaction, until
-it hits a wait state — then commits. The unit of atomicity is therefore *the segment
-between wait states*, not the individual task:
+The engine advances tokens synchronously, in the caller's thread and
+transaction, until it hits a wait state — then it commits. The unit of
+atomicity is therefore *the segment between wait states*, not the individual
+task:
 
 ```mermaid
 flowchart LR
@@ -33,15 +34,16 @@ flowchart LR
   W1 --> A["task A"] --> B["task B"] --> C["task C"] --> W2
 ```
 
-- C throws → TX 1 rolls back → the token is back at W1; A's and B's *engine-side*
-  effects (variables, state) are undone. The client that completed W1's task gets the
-  exception.
-- Any effect that escaped the transaction (an HTTP call, an email) is **not** undone.
+- C throws, so TX 1 rolls back and the token returns to W1. A's and B's
+  *engine-side* effects (variables, state) are undone. The client that
+  completed W1's task gets the exception.
+- Any effect that escaped the transaction (an HTTP call, an email) is **not**
+  undone.
 
 **Async continuations** let you cut this segment. Marking a task
-`flowable:async="true"` inserts a boundary *before* it: the engine commits the token's
-position as a **job** and returns; the job executor (next lesson) picks it up in a new
-transaction.
+`flowable:async="true"` inserts a boundary *before* it: the engine commits the
+token's position as a **job** and returns. The job executor (next lesson) picks
+it up in a new transaction.
 
 ```mermaid
 flowchart LR
@@ -50,19 +52,20 @@ flowchart LR
   B --> C["task C"] --> W2["timer"]
 ```
 
-Now B failing rolls back only B and C; A's completion is safely committed, and the job
-retries B without re-running A. Async is how you get:
+Now B failing rolls back only B and C. A's completion stays safely committed,
+and the job retries B without re-running A. Async is how you get:
 
-1. **Fault isolation** — flaky externals retry alone instead of dragging the whole
-   segment back.
-2. **Fast API responses** — the user's "submit" returns after the commit instead of
-   after the slow bureau call.
-3. **Real parallelism** — parallel branches actually run concurrently only if the
-   branches are async (otherwise Phase 1's truth holds: one thread walks both).
+1. **Fault isolation** — flaky externals retry alone instead of dragging the
+   whole segment back.
+2. **Fast API responses** — the user's "submit" returns after the commit
+   instead of after the slow bureau call.
+3. **Real parallelism** — parallel branches actually run concurrently only if
+   the branches are async (otherwise Phase 1's truth holds: one thread walks
+   both).
 
-The cost: after an async boundary, failures no longer surface to the caller — they
-become **failed jobs** (dead-letter after retries), which means you need the
-job-executor operational story from lesson 04 and Phase 9's monitoring.
+There's a cost: after an async boundary, failures no longer surface to the
+caller. They become **failed jobs** (dead-letter after retries), so you need
+the job-executor operational story from lesson 04 and Phase 9's monitoring.
 
 Rules of thumb for placing boundaries:
 
@@ -78,8 +81,8 @@ Rules of thumb for placing boundaries:
 
 This lesson ships
 [`outputs/async-flags-cheatsheet.md`](../outputs/async-flags-cheatsheet.md) — the
-one-pager for model reviews: what each flag does, where boundaries fall, and the
-payment-safety checklist.
+one-pager for model reviews. It covers what each flag does, where boundaries
+fall, and the payment-safety checklist.
 
 ## Check Yourself
 
@@ -91,9 +94,9 @@ state is…
 - C) the instance is dead-lettered
 - D) C retries automatically
 
-<details><summary>Answer</summary>B — one segment, one transaction. Without an async
-boundary there are no retries; the failure propagates to whoever triggered the
-segment.</details>
+<details><summary>Answer</summary>B — one segment, one transaction. Without an
+async boundary there are no retries, so the failure propagates to whoever
+triggered the segment.</details>
 
 **Q2.** Task B calls a payment API and is marked async. What *must* also be true?
 

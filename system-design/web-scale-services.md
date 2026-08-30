@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Four systems that define "internet scale": a **URL shortener** that maps 100 million new short links per day using a distributed ID generator and Base62 encoding, choosing between 301 redirects (faster, cached) and 302 redirects (trackable, measurable). A **web crawler** that systematically downloads billions of pages using BFS traversal, a URL frontier with politeness and priority queues, and deduplication at every layer. A **notification system** that routes 16 million daily notifications across push (APNS/FCM), SMS (Twilio), and email (SendGrid) through per-channel message queues with templating, rate limiting, and retry logic. And a **news feed system** that serves a personalized timeline by combining fanout-on-write for normal users with fanout-on-read for celebrities, backed by a five-layer cache architecture.
+Four systems that define "internet scale." A **URL shortener** maps 100 million new short links per day, using a distributed ID generator and Base62 encoding. It chooses between 301 redirects (faster, cached) and 302 redirects (trackable, measurable). A **web crawler** systematically downloads billions of pages, using BFS traversal, a URL frontier with politeness and priority queues, and deduplication at every layer. A **notification system** routes 16 million daily notifications across push (APNS/FCM), SMS (Twilio), and email (SendGrid). Each channel gets its own message queue, with templating, rate limiting, and retry logic. And a **news feed system** serves a personalized timeline by combining fanout-on-write for normal users with fanout-on-read for celebrities, backed by a five-layer cache architecture.
 
 > 🎯 **For the technical PM**
 >
@@ -20,7 +20,7 @@ Four systems that define "internet scale": a **URL shortener** that maps 100 mil
 
 ## URL shortener
 
-The product: given a long URL, produce a short one (e.g., `tinyurl.com/abc123`); given the short URL, redirect to the original. At 100 million new URLs per day with a 10:1 read-to-write ratio, that's 1 billion redirects per day — roughly 11,600 reads/second average, 23,000+ at peak.
+The product: given a long URL, produce a short one (e.g., `tinyurl.com/abc123`). Given the short URL, redirect to the original. At 100 million new URLs per day with a 10:1 read-to-write ratio, that's 1 billion redirects per day — roughly 11,600 reads/second average, 23,000+ at peak.
 
 ### The encoding decision
 
@@ -68,7 +68,7 @@ flowchart TD
   end
 ```
 
-**Write flow:** Client submits a long URL. The system generates a unique ID via the distributed ID generator, converts it to Base62, stores the `(shortCode, longURL)` mapping in the database, and returns the short URL.
+**Write flow:** Client submits a long URL. The system generates a unique ID via the distributed ID generator and converts it to Base62. It stores the `(shortCode, longURL)` mapping in the database and returns the short URL.
 
 **Read flow:** Client visits a short URL. The system checks the cache (Redis) first. On a cache hit, it issues a 302 redirect immediately. On a cache miss, it queries the database, populates the cache, then redirects. Given the 10:1 read-to-write ratio, the cache hit rate should be high — popular short links will stay hot in cache.
 
@@ -238,7 +238,7 @@ The product: show each user a personalized timeline of posts from people they fo
 
 Two fundamental approaches:
 
-**Fanout on write (push model)** — When a user publishes a post, immediately write it to every follower's feed cache. The feed is pre-computed; reading is instant (just fetch the cache).
+**Fanout on write (push model)** — When a user publishes a post, immediately write it to every follower's feed cache. The feed is pre-computed. Reading is instant — just fetch the cache.
 
 - **Pro:** Feed reads are O(1) — read from the pre-computed cache. Feed loads are fast.
 - **Con:** Writes are expensive. A user with 10M followers triggers 10M cache writes. Inactive users' feeds are computed but never read — wasted work.

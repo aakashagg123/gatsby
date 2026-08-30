@@ -1,7 +1,7 @@
 # Compensation: undoing completed work
 
-> **Motto** — You can't roll back what already committed; you can only run another
-> action that puts the world right — and compensation is modelling that action next to
+> **Motto** — You can't roll back what already committed. You can only run another
+> action that puts the world right, and compensation is modelling that action next to
 > the work it undoes.
 
 *Part of Phase 04 — Service integration & error handling. Concept lesson — no code
@@ -9,20 +9,20 @@ required.*
 
 ## The Problem
 
-Loan disbursal, three committed steps in: funds reserved at the treasury, insurance
-policy issued, and then the e-agreement step discovers the applicant withdrew.
-Transactions can't help — each step committed long ago, across three external systems
-that have no common rollback. But the business absolutely has an answer: *release the
-reservation, cancel the policy*. Every mature operations team has these "undo
-procedures"; the question is whether they live in a wiki (executed by hand, at 2 a.m.,
-sometimes) or in the model (executed by the engine, in order, always).
+Take a loan disbursal, three committed steps in: funds reserved at the treasury,
+insurance policy issued, and then the e-agreement step discovers the applicant
+withdrew. Transactions can't help. Each step committed long ago, across three
+external systems that have no common rollback. But the business has an answer:
+*release the reservation, cancel the policy*. Every mature operations team has these
+"undo procedures." The question is whether they live in a wiki, executed by hand at
+2 a.m. sometimes, or in the model, executed by the engine, in order, always.
 
 ## The Concept
 
-Compensation is the saga pattern with a diagram. Each step that changes the world gets
-a **compensation handler** — its undo action — attached like a boundary event. If the
-process later throws a compensation event, the engine runs the handlers of *completed*
-activities, in reverse order:
+Compensation is the saga pattern with a diagram. Each step that changes the world
+gets a **compensation handler** — its undo action — attached like a boundary event.
+If the process later throws a compensation event, the engine runs the handlers of
+*completed* activities in reverse order:
 
 ```mermaid
 flowchart LR
