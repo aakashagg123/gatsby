@@ -1,0 +1,202 @@
+<style>
+.sd-fin{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-fin-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 6px}
+.sd-fin-subtitle{font-size:11.5px;color:#6b6a64;margin:0 0 18px;line-height:1.4}
+/* Shared patterns bar */
+.sd-fin-patterns{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.sd-fin-pattern{font-size:10.5px;font-weight:600;border-radius:8px;padding:6px 12px;
+  display:inline-flex;align-items:center;gap:5px}
+.sd-fin-p-acid{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-p-idemp{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-fin-p-event{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-fin-p-recon{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-fin-pattern small{font-size:9px;font-weight:450;color:#8a8778}
+/* System grid */
+.sd-fin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.sd-fin-card{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:14px;
+  position:relative;display:flex;flex-direction:column}
+.sd-fin-card-head{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.sd-fin-card-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
+  box-shadow:0 1px 4px rgba(189,93,58,.15)}
+.sd-fin-card:nth-child(1) .sd-fin-card-num{background:#bd5d3a;color:#fff}
+.sd-fin-card:nth-child(2) .sd-fin-card-num{background:#5a8a4a;color:#fff}
+.sd-fin-card:nth-child(3) .sd-fin-card-num{background:#4a6fa5;color:#fff}
+.sd-fin-card:nth-child(4) .sd-fin-card-num{background:#8a7a5a;color:#fff}
+.sd-fin-card:nth-child(5) .sd-fin-card-num{background:#7a5a8a;color:#fff}
+.sd-fin-card-name{font-size:12.5px;font-weight:650;color:#3d3c37;line-height:1.2}
+.sd-fin-card-sub{font-size:9.5px;color:#8a8778;font-weight:450}
+/* Key mechanism highlight */
+.sd-fin-mechanism{background:#fef9f5;border:1px solid #efd8ca;border-radius:8px;
+  padding:8px 10px;margin:0 0 8px;flex:1}
+.sd-fin-mech-label{font-size:8.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.7px;color:#a2765d;margin:0 0 4px}
+.sd-fin-mech-content{font-size:10.5px;color:#4a2f22;line-height:1.5;font-weight:500}
+.sd-fin-mech-content code{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:9.5px;
+  background:#fbefe9;border:1px solid #efd8ca;border-radius:3px;padding:0 4px;color:#bd5d3a}
+/* Tags */
+.sd-fin-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto;padding-top:6px}
+.sd-fin-tag{font-size:9px;font-weight:600;border-radius:5px;padding:2px 6px}
+.sd-fin-tag-acid{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-tag-idemp{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-fin-tag-event{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-fin-tag-recon{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+/* Connector bar at bottom */
+.sd-fin-connector{margin:14px 0 0;padding:12px 14px;background:#fff;
+  border:1px solid #e4e0d5;border-radius:10px}
+.sd-fin-conn-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#a39f90;margin:0 0 8px}
+.sd-fin-conn-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
+.sd-fin-conn-flow strong{color:#3d3c37;font-weight:600}
+.sd-fin-conn-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
+.sd-fin-conn-flow .chip{display:inline-block;font-size:9.5px;font-weight:600;
+  border-radius:5px;padding:1px 6px;margin:1px 0}
+.sd-fin-conn-flow .chip-w{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-conn-flow .chip-g{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+@media (max-width:640px){
+  .sd-fin{padding:18px 14px 16px}
+  .sd-fin-grid{grid-template-columns:1fr}
+  .sd-fin-patterns{gap:4px}
+}
+</style>
+<div class="sd-fin">
+  <div class="sd-fin-title">Transactional and financial systems</div>
+  <div class="sd-fin-subtitle">Five systems, four shared patterns that make money safe</div>
+
+  <!-- Shared patterns -->
+  <div class="sd-fin-patterns">
+    <span class="sd-fin-pattern sd-fin-p-acid">ACID Transactions<small>correctness</small></span>
+    <span class="sd-fin-pattern sd-fin-p-idemp">Idempotency<small>safe retries</small></span>
+    <span class="sd-fin-pattern sd-fin-p-event">Event Sourcing<small>audit trail</small></span>
+    <span class="sd-fin-pattern sd-fin-p-recon">Reconciliation<small>consistency check</small></span>
+  </div>
+
+  <!-- System cards -->
+  <div class="sd-fin-grid">
+    <!-- Payment System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">1</div>
+        <div>
+          <div class="sd-fin-card-name">Payment System</div>
+          <div class="sd-fin-card-sub">PSP integration, ledger</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Double-entry ledger: every payment creates a <code>debit</code> + <code>credit</code> row that must sum to zero. Idempotency key prevents duplicate charges on retry.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+
+    <!-- Digital Wallet -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">2</div>
+        <div>
+          <div class="sd-fin-card-name">Digital Wallet</div>
+          <div class="sd-fin-card-sub">Balance management</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Event-sourced balance: current balance is <code>SUM(events)</code>, never stored directly. Transfer = atomic debit from wallet A + credit to wallet B in one transaction.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+
+    <!-- Stock Exchange -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">3</div>
+        <div>
+          <div class="sd-fin-card-name">Stock Exchange</div>
+          <div class="sd-fin-card-sub">Matching engine</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Order book with price-time priority. Matching engine processes orders sequentially on a single thread for determinism. Sequencer assigns global order IDs.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+      </div>
+    </div>
+
+    <!-- Auction System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">4</div>
+        <div>
+          <div class="sd-fin-card-name">Auction System</div>
+          <div class="sd-fin-card-sub">Real-time bidding</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Optimistic locking on <code>current_price</code>: bid accepted only if <code>bid > version_price</code>. WebSocket push for live price updates. Escrow holds funds until auction closes.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+      </div>
+    </div>
+
+    <!-- Ticket System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">5</div>
+        <div>
+          <div class="sd-fin-card-name">Ticket Booking</div>
+          <div class="sd-fin-card-sub">Inventory + reservations</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Two-phase reservation: <code>HOLD</code> (TTL) then <code>CONFIRM</code> or expire. <code>SELECT ... FOR UPDATE</code> prevents double-booking the same seat.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared connector -->
+  <div class="sd-fin-connector">
+    <div class="sd-fin-conn-title">The universal safety net</div>
+    <div class="sd-fin-conn-flow">
+      Every request carries an <span class="chip chip-w">idempotency_key</span>
+      <span class="arr">→</span> checked before processing
+      <span class="arr">→</span> if seen, return cached result<br>
+      Every state change emits an <span class="chip chip-g">event</span>
+      <span class="arr">→</span> append to immutable log
+      <span class="arr">→</span> nightly reconciliation job diffs events vs. balances
+      <span class="arr">→</span> alerts on mismatch
+    </div>
+  </div>
+</div>

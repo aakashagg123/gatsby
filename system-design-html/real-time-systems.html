@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Real-time systems — System Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,canvas{max-width:100%;height:auto}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+/* tablet: collapse to a single column */
+@media (max-width:880px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .content{min-width:0;padding:32px 22px 70px}
+  .sidebar{display:none}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:160px}
+}
+
+/* phone-first: high readability on iPhone-class widths */
+@media (max-width:560px){
+  body{font-size:17px;line-height:1.7}
+  .topbar{padding:12px 16px;gap:12px}
+  .brand span{font-size:15px}
+  .brand em{display:none}
+  .content{padding:24px 16px 64px}
+  .index{padding:36px 16px 64px}
+  .chip{font-size:11px}
+  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
+  .hero .lede,.hero-meta{font-size:15px}
+  .hero-meta{line-height:1.6}
+  .index-hero h1{font-size:30px;line-height:1.12}
+  .index-hero .lede{font-size:16.5px}
+  .lesson{padding:34px 0 8px;margin-top:22px}
+  .lesson-head{gap:10px}
+  .lesson h2{font-size:22px;line-height:1.22}
+  .lesson h3{font-size:18.5px}
+  .lesson p,.lesson li{font-size:16.5px}
+  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
+  pre code{font-size:12.8px}
+  code{font-size:12.8px;word-break:break-word}
+  /* wide tables scroll instead of breaking the page */
+  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    white-space:nowrap;font-size:13.5px}
+  .cards,.threads{grid-template-columns:1fr}
+  .pagenav{flex-direction:column;gap:12px}
+  .navcard{flex:1 1 auto}
+  .navcard.next{text-align:left;align-items:flex-start}
+  .pm-band,.recap{padding:18px 18px}
+  .recap{margin-top:30px}
+  /* comfortable tap targets */
+  a,.iw-btn,summary{touch-action:manipulation}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>System Design</span><em>a standalone module</em></a>
+  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink active" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 04</span>
+    <h1>Real-time systems</h1>
+  </div>
+  <h2>TL;DR</h2>
+<p>Three systems where latency is the product: a <strong>chat system</strong> serving 50 million daily users through WebSocket connections to stateful chat servers, with a key-value store for message history and heartbeat-based presence detection. A <strong>search autocomplete</strong> system that responds in under 100ms at 48,000 peak QPS by pre-computing top-k results at every node of a trie data structure, rebuilt weekly in batch and sharded by prefix range. And a <strong>video streaming platform</strong> at YouTube scale (5 billion daily views) that parallelizes upload and transcoding through a DAG-based processing pipeline, serves popular content from CDN edge nodes, and streams via adaptive bitrate protocols (MPEG-DASH, HLS) that adjust quality to the viewer's bandwidth in real time.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the technical PM</strong></p>
+<p><strong>Why it matters</strong> — In real-time systems, latency <em>is</em> the feature. A chat message that takes 3 seconds to deliver feels broken. Autocomplete that takes 500ms is useless — the user has already finished typing. A video that buffers for 10 seconds loses the viewer. These systems require fundamentally different architecture from request-response services: persistent connections, stateful servers, and aggressive caching at every layer.</p>
+<p><strong>What it changes in your decisions</strong> — You define latency budgets per interaction (message delivery &lt; 200ms, autocomplete &lt; 100ms, video start &lt; 2s). You size infrastructure for concurrent connections, not just QPS. You accept that stateful servers are harder to operate than stateless ones, and plan accordingly.</p>
+<p><strong>Ask your eng team</strong> — <em>"What's the delivery latency at P99 for a 1:1 message, a group message to 500 people, and a presence update — and which of those degrades first under load?"</em></p>
+<p><strong>Risk if ignored</strong> — Chat that feels sluggish compared to competitors. Autocomplete that returns stale or irrelevant suggestions because the trie update cycle is too slow. Video that buffers on mobile because the CDN strategy doesn't account for the long tail of content.</p>
+</blockquote>
+<hr />
+<h2>Chat system</h2>
+<p>The product: real-time messaging for 50 million daily active users. 1:1 chats, group chats (up to 500 members), online presence indicators, and message history. The fundamental challenge: HTTP is request-response, but chat requires the server to <em>push</em> messages to the client the instant they arrive.</p>
+<h3>Connection strategy: polling, long polling, WebSocket</h3>
+<p>Three approaches to server-to-client communication, with very different resource profiles:</p>
+<p><strong>Polling</strong> — The client sends a request every few seconds asking "any new messages?" The server responds immediately with either new messages or an empty response.</p>
+<ul>
+<li><strong>Pro:</strong> Simple, works everywhere.</li>
+<li><strong>Con:</strong> Wasteful — most polls return empty responses. With 50M users polling every 3 seconds, that's 16M requests/second for mostly nothing. Latency is bounded by the polling interval.</li>
+</ul>
+<p><strong>Long polling</strong> — The client sends a request, and the server holds it open until a new message arrives (or a timeout, typically 30-60 seconds). When a message arrives, the server responds immediately and the client opens a new connection.</p>
+<ul>
+<li><strong>Pro:</strong> Reduces empty responses. Lower latency than polling.</li>
+<li><strong>Con:</strong> The sender and receiver may connect to different servers — the server holding the sender's connection may not be the one holding the receiver's long poll. Requires server coordination. Still opens a new HTTP connection for each message cycle.</li>
+</ul>
+<p><strong>WebSocket</strong> — A persistent, full-duplex connection initiated by an HTTP upgrade handshake. Once established, both client and server can send messages at any time over the same connection.</p>
+<ul>
+<li><strong>Pro:</strong> True real-time. Minimal overhead per message (no HTTP headers on each exchange). Efficient for bidirectional communication.</li>
+<li><strong>Con:</strong> Stateful — the server must maintain the connection. Load balancing is harder (connections are sticky). Server restarts disconnect all clients on that server.</li>
+</ul>
+<p>WebSocket is the clear winner for chat. The initial connection cost is amortized over thousands of messages, and the per-message overhead drops from ~800 bytes (HTTP headers) to ~6 bytes (WebSocket frame).</p>
+<style>
+.sd-chat{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-chat-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+.sd-chat-arch{position:relative}
+/* Main flow row */
+.sd-chat-flow{display:flex;align-items:center;gap:0;justify-content:center;
+  flex-wrap:wrap;margin:0 0 14px}
+.sd-chat-node{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;
+  text-align:center;line-height:1.35;flex-shrink:0;position:relative}
+.sd-chat-node small{display:block;font-size:9.5px;font-weight:450;margin-top:2px}
+.sd-chat-client{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22;min-width:80px}
+.sd-chat-ws{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a;min-width:90px}
+.sd-chat-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-chat-mq{background:#f4eee8;border:1px solid #e0d4c4;color:#6b5a44}
+.sd-chat-svc{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-chat-arrow{flex:0 0 auto;padding:0 3px;display:flex;flex-direction:column;
+  align-items:center;gap:1px}
+.sd-chat-arrow-char{color:#c9c4b4;font-size:14px;font-weight:700}
+.sd-chat-arrow-lbl{font-size:8px;color:#8a8778;font-weight:500;white-space:nowrap}
+/* Connection protocol badges */
+.sd-chat-badge{position:absolute;top:-8px;right:-6px;font-size:8px;font-weight:700;
+  border-radius:10px;padding:1px 7px;color:#fff;letter-spacing:.4px;white-space:nowrap}
+.sd-chat-badge-ws{background:#4a6fa5}
+.sd-chat-badge-http{background:#8a8778}
+/* Service layer */
+.sd-chat-services{display:flex;gap:8px;justify-content:center;margin:0 0 14px;flex-wrap:wrap}
+.sd-chat-svc-card{background:#fff;border:1px solid #e4e0d5;border-radius:10px;
+  padding:10px 14px;text-align:center;flex:0 1 auto;min-width:100px}
+.sd-chat-svc-name{font-size:11px;font-weight:650;color:#3d3c37;margin:0 0 2px}
+.sd-chat-svc-desc{font-size:9.5px;color:#8a8778;font-weight:450}
+/* Legend / patterns */
+.sd-chat-patterns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 0}
+.sd-chat-pattern{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px}
+.sd-chat-pattern-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.sd-chat-pattern-title .dot{width:6px;height:6px;border-radius:50%}
+.sd-chat-pattern-title .dot-1to1{background:#4a6fa5}
+.sd-chat-pattern-title .dot-group{background:#bd5d3a}
+.sd-chat-pattern-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
+.sd-chat-pattern-flow strong{color:#3d3c37;font-weight:600}
+.sd-chat-pattern-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
+@media (max-width:640px){
+  .sd-chat{padding:18px 14px 16px}
+  .sd-chat-flow{flex-direction:column;gap:4px;align-items:stretch}
+  .sd-chat-arrow{transform:rotate(90deg);padding:2px 0}
+  .sd-chat-patterns{grid-template-columns:1fr}
+  .sd-chat-services{flex-direction:column;align-items:stretch}
+}
+</style>
+<div class="sd-chat">
+  <div class="sd-chat-title">Chat system - websocket architecture</div>
+  <div class="sd-chat-arch">
+    <!-- Main message flow -->
+    <div class="sd-chat-flow">
+      <div class="sd-chat-node sd-chat-client">
+        Client A
+        <small>sender</small>
+        <span class="sd-chat-badge sd-chat-badge-ws">WS</span>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">persistent</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-ws">
+        WS Server 1
+        <small>stateful conn</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">publish</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-mq">
+        Message Queue
+        <small>Redis pub/sub</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">subscribe</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-ws">
+        WS Server 2
+        <small>stateful conn</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">push</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-client">
+        Client B
+        <small>receiver</small>
+        <span class="sd-chat-badge sd-chat-badge-ws">WS</span>
+      </div>
+    </div>
+
+    <!-- Supporting services -->
+    <div class="sd-chat-services">
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Zookeeper</div>
+        <div class="sd-chat-svc-desc">service discovery: which WS server holds which user</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">KV Store</div>
+        <div class="sd-chat-svc-desc">user_id → ws_server mapping for routing</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Message DB</div>
+        <div class="sd-chat-svc-desc">persistent storage with message_id sequence</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Presence</div>
+        <div class="sd-chat-svc-desc">online/offline via heartbeat + fan-out</div>
+      </div>
+    </div>
+
+    <!-- 1:1 vs Group patterns -->
+    <div class="sd-chat-patterns">
+      <div class="sd-chat-pattern">
+        <div class="sd-chat-pattern-title">
+          <span class="dot dot-1to1"></span>
+          <span style="color:#3d4a7a">1:1 Chat</span>
+        </div>
+        <div class="sd-chat-pattern-flow">
+          <strong>A</strong> <span class="arr">→</span> WS server
+          <span class="arr">→</span> lookup B's server in KV
+          <span class="arr">→</span> route via MQ
+          <span class="arr">→</span> <strong>B</strong><br>
+          If <strong>B offline</strong> <span class="arr">→</span> push notification service
+        </div>
+      </div>
+      <div class="sd-chat-pattern">
+        <div class="sd-chat-pattern-title">
+          <span class="dot dot-group"></span>
+          <span style="color:#bd5d3a">Group Chat</span>
+        </div>
+        <div class="sd-chat-pattern-flow">
+          <strong>A</strong> <span class="arr">→</span> WS server
+          <span class="arr">→</span> fetch group members
+          <span class="arr">→</span> MQ per recipient server<br>
+          Small groups: copy to each &middot; Large groups: fan-out on read
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Architecture: stateless + stateful tiers</h3>
+<p>The chat system separates stateless services from stateful chat servers:</p>
+<pre class="mermaid">flowchart TD
+  Client[Client apps] &lt;--&gt;|WebSocket| CS[Chat Servers&lt;br/&gt;stateful]
+  Client --&gt;|HTTP| SL[Stateless Services&lt;br/&gt;auth, profile, group mgmt]
+  SL --&gt; DB[(Relational DB)]
+  CS --&gt; KV[(KV Store&lt;br/&gt;chat history)]
+  CS --&gt; MQ[Message Queue]
+  SL --&gt; SD[Service Discovery&lt;br/&gt;Zookeeper]
+  SD --&gt; CS</pre>
+<p><strong>Stateless services</strong> — Authentication, user profile, group management, and all non-chat API calls. These are standard HTTP services behind a load balancer, horizontally scalable, using a relational database.</p>
+<p><strong>Stateful chat servers</strong> — Each client maintains a WebSocket connection to one chat server. The server tracks which clients are connected and routes messages accordingly. Because connections are stateful, you can't arbitrarily load-balance them — a client must reconnect to a specific server (or any server, with a shared presence layer).</p>
+<p><strong>Service discovery (Zookeeper)</strong> — When a client connects, the service discovery layer assigns it to a chat server based on server load, geographic proximity, and available capacity. Zookeeper maintains the registry of available chat servers and their current connection counts.</p>
+<h3>Chat storage: why not RDBMS</h3>
+<p>Message history has a distinctive access pattern:</p>
+<ul>
+<li><strong>Recent messages</strong> are read frequently (opening a chat loads the last 20-50 messages)</li>
+<li><strong>Old messages</strong> are read rarely (scrolling back)</li>
+<li><strong>Writes are append-only</strong> — messages are never updated (ignoring edits for simplicity)</li>
+<li><strong>The dataset is enormous</strong> — 50M users sending 40 messages/day = 2 billion messages/day</li>
+</ul>
+<p>A relational database struggles with this: random reads across a 2-billion-row-per-day table are slow, and the write volume overwhelms single-master replication. A <strong>key-value store</strong> (HBase, Cassandra) is the standard choice:</p>
+<ul>
+<li><strong>Key:</strong> <code>(channel_id, message_id)</code> where message_id is a Snowflake-style time-ordered ID</li>
+<li><strong>Value:</strong> message content, sender, timestamp, metadata</li>
+<li><strong>Access pattern:</strong> range scan on message_id within a channel (fetch latest N messages)</li>
+</ul>
+<p>The time-ordered key ensures that recent messages are physically co-located on disk, making the dominant query (latest messages) a fast sequential read.</p>
+<h3>Message flow: 1:1 chat</h3>
+<ol>
+<li>User A sends a message via their WebSocket connection to Chat Server 1</li>
+<li>Chat Server 1 generates a message ID (time-ordered) and stores the message in the KV store</li>
+<li>Chat Server 1 checks the connection registry: is User B connected? To which server?</li>
+<li>If User B is connected to Chat Server 2, route the message to Chat Server 2 via an internal message queue</li>
+<li>Chat Server 2 pushes the message to User B over their WebSocket connection</li>
+<li>If User B is offline, the message is stored and a push notification is sent via the <a href="web-scale-services.html">notification system</a></li>
+</ol>
+<h3>Message flow: group chat</h3>
+<p>Group messages use a <strong>per-recipient inbox</strong> model. When a message is sent to a group of 500 members:</p>
+<ol>
+<li>The message is stored once in the KV store</li>
+<li>A copy of the message reference (message ID + group ID) is written to each member's inbox</li>
+<li>Each member's chat server pushes the message to connected members</li>
+<li>Offline members receive it from their inbox when they reconnect</li>
+</ol>
+<p>This is essentially fanout-on-write at the message level — similar to the <a href="web-scale-services.html">news feed</a> pattern. For small groups (under 500), the fanout cost is acceptable. For broadcast channels with millions of subscribers, you'd switch to fanout-on-read.</p>
+<h3>Message sync</h3>
+<p>When a client reconnects (after a network switch, app background/foreground, or server failover), it needs to catch up on missed messages. The client tracks <code>cur_max_message_id</code> — the ID of the last message it received. On reconnection:</p>
+<ol>
+<li>Client sends <code>cur_max_message_id</code> to the chat server</li>
+<li>Server queries the KV store: all messages in the user's channels with ID &gt; <code>cur_max_message_id</code></li>
+<li>Server pushes the delta to the client</li>
+</ol>
+<p>This is efficient because message IDs are time-ordered — the query is a simple range scan.</p>
+<h3>Online presence</h3>
+<p>Presence (online/offline/away status) seems simple but is surprisingly expensive at scale. With 50M daily users, presence changes are frequent (phone locks, network switches, app backgrounding).</p>
+<p><strong>Heartbeat model:</strong></p>
+<ol>
+<li>Client sends a heartbeat to the presence server every 5 seconds via the WebSocket connection</li>
+<li>If the server doesn't receive a heartbeat for 30 seconds, it marks the user as offline</li>
+<li>When a user's status changes, the presence server publishes the update</li>
+</ol>
+<p><strong>Fanout for presence updates:</strong> If User A has 500 friends online, each status change triggers 500 push updates. This is manageable for 1:1 friend lists. For group chats, presence is fetched on-demand (when a user opens the group info) rather than pushed in real time.</p>
+<pre class="mermaid">flowchart TD
+  UC[User Client] --&gt;|heartbeat every 5s| PS[Presence Service]
+  PS --&gt;|status change| PubSub[Pub/Sub Channel]
+  PubSub --&gt; F1[Friend 1&#x27;s chat server]
+  PubSub --&gt; F2[Friend 2&#x27;s chat server]
+  PubSub --&gt; FN[Friend N&#x27;s chat server]</pre>
+<hr />
+<h2>Search autocomplete</h2>
+<p>The product: as a user types in a search box, show the top 5 most relevant completions in under 100ms. With 10 million daily active users, each typing an average of 5 queries with 6 characters each, that's 300 million keystrokes per day — about 3,500 QPS average, 48,000 at peak (roughly 14x average, accounting for time-of-day concentration).</p>
+<h3>The trie data structure</h3>
+<p>A <strong>trie</strong> (prefix tree) is the natural data structure for prefix matching. Each node represents a character, and the path from root to a node represents a prefix. Searching for "din" walks root → d → i → n in O(L) time, where L is the prefix length.</p>
+<p>The naive approach — walk to the prefix node, then enumerate all descendants to find completions — is too slow. A subtree might contain millions of terms. Instead, <strong>cache the top-k results at every node</strong>:</p>
+<pre class="mermaid">flowchart TD
+  Root[&quot;(root)&quot;] --&gt; D[&quot;d&lt;br/&gt;top-5: dinner, disney, dinosaur, dine, direct&quot;]
+  D --&gt; DI[&quot;di&lt;br/&gt;top-5: dinner, disney, dinosaur, dine, direct&quot;]
+  DI --&gt; DIN[&quot;din&lt;br/&gt;top-5: dinner, dinosaur, dine, dining, dingo&quot;]
+  DI --&gt; DIS[&quot;dis&lt;br/&gt;top-5: disney, discover, discount, discuss, display&quot;]
+  DIN --&gt; DINN[&quot;dinn&lt;br/&gt;top-5: dinner, dinnerware, dinning, ...&quot;]
+  DIN --&gt; DINO[&quot;dino&lt;br/&gt;top-5: dinosaur, dino, dinosaurs, ...&quot;]</pre>
+<p>With top-k cached at each node, the query is a single trie traversal — O(L) to reach the prefix node, then O(1) to return the cached results. The tradeoff: updating cached results on every query is expensive, so the trie is rebuilt periodically.</p>
+<h3>Two-service architecture</h3>
+<p>The system splits into a <strong>Data Gathering Service</strong> (offline, batch) and a <strong>Query Service</strong> (online, real-time):</p>
+<pre class="mermaid">flowchart TD
+  subgraph &quot;Data Gathering Service (offline)&quot;
+    QL[Query Logs] --&gt; Agg[Aggregator&lt;br/&gt;weekly batch]
+    Agg --&gt; TB[Trie Builder]
+    TB --&gt; Snap[Trie Snapshot&lt;br/&gt;to object storage]
+  end
+
+  subgraph &quot;Query Service (online)&quot;
+    User[User keystroke] --&gt; API[API Server]
+    API --&gt; Cache[Browser/CDN cache]
+    Cache --&gt;|miss| TS[Trie Servers]
+    TS --&gt; Snap
+  end</pre>
+<p><strong>Data Gathering Service:</strong> Runs weekly (or more frequently for trending queries). Aggregates query logs, computes frequency-weighted rankings, builds a new trie with top-k cached at every node, and stores the trie snapshot in object storage (S3). The weekly cadence is intentional — daily rebuilds rarely change the results for established queries, and the batch processing cost is non-trivial. For trending/breaking topics, a separate real-time pipeline can inject hot queries into the trie between rebuilds.</p>
+<p><strong>Query Service:</strong> Trie servers load the latest snapshot into memory. On a user keystroke, the API server routes the prefix to the appropriate trie server, which returns the cached top-k in microseconds. If the trie is too large for a single server's memory, it's sharded.</p>
+<h3>Trie sharding</h3>
+<p>Two strategies for distributing the trie across multiple servers:</p>
+<p><strong>By prefix range</strong> — Server 1 handles a-f, Server 2 handles g-m, etc. Simple, but uneven — prefixes starting with 's' or 'c' have far more entries than 'x' or 'z'. Adjust ranges based on measured query distribution rather than alphabet position.</p>
+<p><strong>By hash</strong> — Hash the prefix and route to a server. Even distribution, but a single query can't be answered by a single server if prefixes of different lengths hash to different servers. Less practical for tries.</p>
+<p>Prefix-range sharding with uneven splits (based on empirical query volume) is the standard approach.</p>
+<h3>Client-side optimization</h3>
+<p>The client plays a crucial role in keeping latency low and reducing server load:</p>
+<ul>
+<li><strong>Debounce</strong> — Don't send a request on every keystroke. Wait 50-100ms after the user stops typing before sending the query. This eliminates requests for intermediate characters.</li>
+<li><strong>Browser caching</strong> — Autocomplete results for a prefix are highly cacheable. Set <code>Cache-Control: max-age=3600</code> (or longer). "din" will return the same top-5 for most of the day. The browser cache eliminates server requests for repeated prefixes.</li>
+<li><strong>AJAX (no page reload)</strong> — Autocomplete requests are asynchronous; the page doesn't reload between keystrokes.</li>
+<li><strong>Abort previous requests</strong> — If the user types "d", then "di" before the "d" response returns, abort the "d" request. The browser's AbortController API handles this.</li>
+</ul>
+<p>These optimizations can reduce actual server QPS by 80%+ compared to naive per-keystroke requests.</p>
+<h3>Data freshness vs. cost</h3>
+<p>The weekly batch rebuild means truly trending queries (breaking news, viral events) won't appear in autocomplete for up to a week. Options:</p>
+<ul>
+<li><strong>Accept the lag</strong> — for most products, a 1-week delay is fine. Users still find what they need via full search.</li>
+<li><strong>Real-time injection</strong> — a streaming pipeline (Kafka + Flink) detects query frequency spikes and injects hot terms into the trie between rebuilds.</li>
+<li><strong>Hybrid</strong> — the trie servers maintain a small "hot terms" overlay that's updated hourly, merged with the weekly-built base trie at query time.</li>
+</ul>
+<hr />
+<h2>YouTube / video streaming platform</h2>
+<p>The product: a video platform at YouTube scale — 5 billion videos watched per day, hundreds of hours of video uploaded every minute. The system must handle video upload, processing (transcoding into multiple formats and resolutions), storage, and streaming — each with distinct scaling challenges.</p>
+<h3>Upload flow: parallel processing</h3>
+<p>Video upload is split into two parallel streams that proceed independently:</p>
+<pre class="mermaid">flowchart TD
+  User[Creator uploads] --&gt; UP[Upload Service]
+  UP --&gt; VS[Video Storage&lt;br/&gt;original file]
+  UP --&gt; MD[Metadata Service]
+  MD --&gt; MDB[(Metadata DB&lt;br/&gt;title, description, tags)]
+  MD --&gt; MDC[Metadata Cache]
+  VS --&gt; TC[Transcoding Pipeline]
+  TC --&gt; TS[Transcoded Storage&lt;br/&gt;multiple resolutions]
+  TS --&gt; CDN[CDN Distribution]</pre>
+<ol>
+<li><strong>Video file</strong> — uploaded to a temporary storage location, then passed to the transcoding pipeline</li>
+<li><strong>Metadata</strong> — title, description, tags, thumbnail are stored in a relational database and cache immediately</li>
+</ol>
+<p>The metadata path completes quickly (the video page can be "live" with a "processing" status). The video processing path is the slow, compute-intensive part.</p>
+<h3>Transcoding: DAG-based pipeline</h3>
+<p>Video transcoding (converting a raw upload into multiple formats, resolutions, and bitrates) is not a single operation — it's a directed acyclic graph (DAG) of dependent tasks:</p>
+<pre class="mermaid">flowchart TD
+  Raw[Original video] --&gt; PP[Preprocessor&lt;br/&gt;split into GOPs]
+  PP --&gt; V1[Video encoding&lt;br/&gt;360p H.264]
+  PP --&gt; V2[Video encoding&lt;br/&gt;720p H.264]
+  PP --&gt; V3[Video encoding&lt;br/&gt;1080p H.264]
+  PP --&gt; V4[Video encoding&lt;br/&gt;4K H.265]
+  PP --&gt; A1[Audio encoding&lt;br/&gt;AAC]
+  PP --&gt; A2[Audio encoding&lt;br/&gt;Opus]
+  V1 --&gt; Merge[Muxer&lt;br/&gt;combine audio + video]
+  V2 --&gt; Merge
+  V3 --&gt; Merge
+  V4 --&gt; Merge
+  A1 --&gt; Merge
+  A2 --&gt; Merge
+  Merge --&gt; Thumb[Thumbnail generation]
+  Merge --&gt; WM[Watermark / DRM]
+  WM --&gt; QC[Quality check]
+  QC --&gt; Store[Transcoded storage]</pre>
+<p>The pipeline has four components:</p>
+<ol>
+<li><strong>Preprocessor</strong> — Validates the video, splits it into GOPs (Group of Pictures — small, independently decodable segments). GOPs enable parallel encoding.</li>
+<li><strong>DAG Scheduler</strong> — Determines task dependencies and parallelism. Video encoding at different resolutions can run in parallel; audio and video can be processed independently; muxing depends on both completing.</li>
+<li><strong>Resource Manager</strong> — Allocates CPU/GPU workers to tasks. GPU-intensive tasks (H.265 encoding, 4K) get GPU workers; lighter tasks (thumbnail generation) get CPU workers.</li>
+<li><strong>Task Workers</strong> — Execute individual encoding tasks. Horizontally scaled, stateless — they pull tasks from a queue, process the GOP, and write the output to storage.</li>
+</ol>
+<h3>Streaming: adaptive bitrate</h3>
+<p>Users watch videos on devices ranging from 4K TVs on fiber to phones on 3G. Serving a single bitrate is wasteful (too high for slow connections, too low for fast ones). <strong>Adaptive bitrate streaming</strong> solves this:</p>
+<p>The video is pre-encoded at multiple quality levels. Each quality level is split into small segments (2-10 seconds). The player downloads segments one at a time, choosing the quality level that matches its current bandwidth. If bandwidth drops (the viewer enters a tunnel), the player switches to a lower quality for the next segment — seamlessly, without rebuffering.</p>
+<p>Two dominant protocols:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Developed by</th>
+<th>Container</th>
+<th>Adoption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MPEG-DASH</strong></td>
+<td>MPEG consortium</td>
+<td>MP4</td>
+<td>Open standard; Netflix, YouTube</td>
+</tr>
+<tr>
+<td><strong>HLS</strong> (HTTP Live Streaming)</td>
+<td>Apple</td>
+<td>MPEG-TS or fMP4</td>
+<td>Required on iOS/Safari; widely supported</td>
+</tr>
+</tbody>
+</table>
+<p>Both work the same way: a manifest file lists available quality levels and segment URLs. The player downloads the manifest, then fetches segments at the appropriate quality. All delivery happens over standard HTTP/HTTPS — no special streaming servers needed.</p>
+<h3>CDN strategy: popular vs. long-tail</h3>
+<p>Video storage and delivery have a distinctive distribution: a small percentage of videos account for the vast majority of views (head), while millions of videos are watched rarely (long tail).</p>
+<pre class="mermaid">flowchart LR
+  subgraph &quot;Popular content (head)&quot;
+    CDN[CDN Edge Servers&lt;br/&gt;worldwide]
+  end
+  subgraph &quot;Long-tail content&quot;
+    Origin[Origin Servers&lt;br/&gt;centralized storage]
+  end
+  Viewer[Viewer] --&gt;|popular video| CDN
+  Viewer --&gt;|rare video| Origin
+  Origin --&gt;|on first request| CDN</pre>
+<p><strong>Popular videos</strong> are pushed to CDN edge servers worldwide. The CDN caches them close to viewers, reducing latency and origin load. For a viral video, the CDN absorbs &gt;99% of the traffic.</p>
+<p><strong>Long-tail videos</strong> stay on origin servers. Serving them from CDN would be wasteful — the CDN storage cost exceeds the benefit for a video watched once a month. If a long-tail video suddenly becomes popular (someone shares it on social media), the CDN pulls it on the first request and caches it, transitioning it from origin to edge automatically.</p>
+<h3>Upload security: pre-signed URLs</h3>
+<p>Users upload videos directly to object storage (S3), bypassing the application servers. This avoids using application-server bandwidth for large file transfers. The flow:</p>
+<ol>
+<li>Client requests an upload URL from the API server</li>
+<li>API server generates a <strong>pre-signed URL</strong> — a time-limited, one-use URL that grants write access to a specific storage path</li>
+<li>Client uploads the video directly to storage using the pre-signed URL</li>
+<li>Storage notifies the transcoding pipeline via an event (S3 event notification, or a message queue)</li>
+</ol>
+<p>Pre-signed URLs are secure: they expire (typically in 15-60 minutes), they're scoped to a specific path, and they can't be reused. The client never receives storage credentials.</p>
+<h3>Cost optimization</h3>
+<p>Video infrastructure is expensive. Key optimizations:</p>
+<ul>
+<li><strong>Encode only what's needed</strong> — Don't encode 4K for a 360p upload. Detect the source resolution and encode only at that level and below.</li>
+<li><strong>Encode popular resolutions first</strong> — 720p and 1080p are watched most. Encode these first; queue 4K for later.</li>
+<li><strong>Short videos skip some formats</strong> — A 10-second clip doesn't need HLS segmentation; a single progressive download is fine.</li>
+<li><strong>Regional CDN placement</strong> — Don't push content to CDN regions where it has no viewers. Use analytics to determine which regions need which content.</li>
+<li><strong>Tiered storage</strong> — Move old, rarely-accessed transcoded files to cold storage (S3 Glacier). Keep only the original and the most popular resolutions in hot storage.</li>
+</ul>
+<hr />
+<h2>Failure modes</h2>
+<ul>
+<li><strong>WebSocket server restart</strong> — All clients connected to a chat server lose their connection simultaneously. Without graceful drain (migrating connections before shutdown), thousands of clients reconnect at once, potentially overwhelming other servers. Implement connection draining: stop accepting new connections, notify clients to reconnect to a different server, wait for transfer before shutting down.</li>
+<li><strong>Chat message ordering</strong> — Messages routed through different servers or queue partitions can arrive out of order. Time-ordered message IDs (Snowflake) provide global ordering, but displaying order should be based on server-assigned IDs, not client timestamps (which can be wrong).</li>
+<li><strong>Presence false positives</strong> — A user's phone loses network for 20 seconds (under the 30-second timeout) and regains it. They appear online the entire time, but messages sent during the outage queue up. Reduce the heartbeat interval for a more responsive (but more expensive) presence system.</li>
+<li><strong>Autocomplete stale results</strong> — The weekly trie rebuild means trending queries take up to a week to appear. If a major event breaks and users search for it, autocomplete is useless. Implement a hot-term injection pipeline or accept the lag as a product decision.</li>
+<li><strong>Autocomplete trie memory pressure</strong> — The trie with cached top-k at every node can be large. If it exceeds available memory, the server swaps to disk and latency spikes from microseconds to milliseconds — still fast, but potentially above the 100ms budget when combined with network latency.</li>
+<li><strong>Video transcoding backlog</strong> — A viral challenge causes upload volume to spike 10x. The transcoding pipeline queues up, and videos take hours to process instead of minutes. Auto-scale transcoding workers, but with cost guardrails — unbounded auto-scaling can generate enormous cloud bills.</li>
+<li><strong>CDN cache miss storm</strong> — A popular video's CDN cache expires across all edge servers simultaneously. Thousands of viewers hit the origin at once. Use staggered TTLs (jitter) or cache-lock (only one edge server fetches from origin; others wait for the cached copy).</li>
+<li><strong>Video playback buffering</strong> — Adaptive bitrate switching is too aggressive — the player oscillates between quality levels, causing visible quality changes every few seconds. Implement hysteresis: require bandwidth to be consistently higher/lower for several segments before switching.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Is the chat system using WebSocket for real-time messaging, with HTTP fallback for environments that block WebSocket?</li>
+<li class="task todo">Is chat history stored in a KV store with time-ordered keys for efficient range queries?</li>
+<li class="task todo">Does the presence system use heartbeats with a reasonable timeout (not too aggressive, not too slow)?</li>
+<li class="task todo">Is group chat fanout bounded — what's the maximum group size, and what happens above it?</li>
+<li class="task todo">Is the autocomplete trie rebuilt on a schedule, and is there a mechanism for injecting trending queries between rebuilds?</li>
+<li class="task todo">Are autocomplete results cached in the browser with appropriate Cache-Control headers?</li>
+<li class="task todo">Is client-side debouncing in place for autocomplete keystrokes?</li>
+<li class="task todo">Does the video transcoding pipeline split work into parallelizable GOPs?</li>
+<li class="task todo">Is the CDN strategy differentiated for popular vs. long-tail content?</li>
+<li class="task todo">Are pre-signed URLs used for direct-to-storage uploads with appropriate expiration?</li>
+<li class="task todo">Is adaptive bitrate streaming implemented with hysteresis to prevent quality oscillation?</li>
+<li class="task todo">What is the P99 message delivery latency for 1:1 chat, group chat, and presence updates?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="core-building-blocks.html">Core building blocks</a> — the Snowflake ID generator used for time-ordered message IDs, and the consistent hashing used for chat server assignment</li>
+<li><a href="web-scale-services.html">Web-scale services</a> — the notification system that handles offline message delivery, and the news feed fanout pattern used in group chat</li>
+<li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — the estimation techniques for sizing WebSocket connection capacity and transcoding throughput</li>
+<li><a href="data-infrastructure.html">Data infrastructure</a> — the distributed message queues that connect chat servers and the event pipelines that feed autocomplete trie rebuilds</li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="web-scale-services.html"><span class="lbl">← Previous</span><span class="ttl">Web-scale services</span></a><a class="navcard next" href="storage-and-sync.html"><span class="lbl">→ Next</span><span class="ttl">Storage &amp; sync</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+  themeVariables:{
+    background:'#faf9f5',
+    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
+    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
+    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
+    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
+    edgeLabelBackground:'#faf9f5',
+    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
+    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
+    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
+    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
+    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
+    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
+    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
+    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
+    quadrantTitleFill:'#1f1e1d',
+    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
+    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+});
+await mermaid.run({querySelector:'pre.mermaid'});
+// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+document.querySelectorAll('pre.mermaid svg').forEach(s=>{
+  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+  const cw=s.parentElement.clientWidth||0;
+  if(cw&&w>cw*1.6){s.style.maxWidth='none';
+    const h=document.createElement('span');h.className='mm-hint';
+    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
+});
+</script>
+<style id="reader-css">
+/* ---- font choices (only active when data-rf is set) ---- */
+html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}
+html[data-rf="georgia"]{--rs-font:Georgia,"Times New Roman",serif}
+html[data-rf="sf"]{--rs-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif}
+html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
+html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.chip,a){font-family:var(--rs-font) !important}
+html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *,html[data-rf] main p code,html[data-rf] main li code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace !important}
+html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
+/* ---- size scaling (only active when data-rs is set) ---- */
+html[data-rs] main{font-size:calc(16.5px * var(--rs-scale,1)) !important}
+html[data-rs] main h1{font-size:2.35em !important;line-height:1.15 !important}
+html[data-rs] main h2{font-size:1.7em !important}
+html[data-rs] main h3{font-size:1.25em !important}
+html[data-rs] main h4{font-size:1em !important}
+html[data-rs] main .lede{font-size:1.2em !important}
+html[data-rs] main table{font-size:.9em !important}
+html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
+html[data-rs] main .pm-callout p{font-size:.95em !important}
+html[data-rs] main pre{font-size:.85em !important}
+/* ---- margins / column width (only active when data-rm is set) ---- */
+html[data-rm="n"] main{max-width:620px !important}
+html[data-rm="w"] main{max-width:1120px !important}
+/* ---- the widget ---- */
+/* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
+#rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e4e0d5;background:#faf9f5;color:#1f1e1d;
+  font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
+#rs-btn:hover{border-color:#d97757;color:#bd5d3a}
+#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#faf9f5;border:1px solid #e4e0d5;
+  border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
+#rs-panel.open{display:block}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8a8778;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h:first-child{margin-top:0}
+.rs-fonts{display:flex;flex-direction:column;gap:4px}
+.rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
+  border:1px solid transparent;border-radius:8px;background:none;font-size:15px;color:#1f1e1d;cursor:pointer;text-align:left}
+.rs-fonts button:hover{background:#f2f0e9}
+.rs-fonts button.on{border-color:#d97757;background:#fbefe9}
+.rs-fonts button .rs-check{color:#bd5d3a;font-weight:700;visibility:hidden}
+.rs-fonts button.on .rs-check{visibility:visible}
+.rs-row{display:flex;align-items:center;gap:8px}
+.rs-row button{flex:1;padding:7px 0;border:1px solid #e4e0d5;border-radius:8px;background:#fff;
+  cursor:pointer;color:#1f1e1d;font-size:14px}
+.rs-row button:hover{border-color:#d97757}
+.rs-row button.on{border-color:#d97757;background:#fbefe9;font-weight:600}
+.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#8a8778;font-variant-numeric:tabular-nums}
+#rs-sminus{font-size:13px}#rs-splus{font-size:17px}
+#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:8px;background:#f2f0e9;
+  color:#8a8778;font-size:13px;cursor:pointer}
+#rs-reset:hover{color:#bd5d3a}
+@media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
+@media print{#rs-root{display:none}}
+</style>
+<div id="rs-root">
+  <div id="rs-panel" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts">
+      <button data-f="" style="font-family:inherit">Original<span class="rs-check">✓</span></button>
+      <button data-f="charter" style="font-family:Charter,'Bitstream Charter',Georgia,serif">Charter<span class="rs-check">✓</span></button>
+      <button data-f="georgia" style="font-family:Georgia,serif">Georgia<span class="rs-check">✓</span></button>
+      <button data-f="sf" style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif">San Francisco<span class="rs-check">✓</span></button>
+      <button data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif">Tahoma<span class="rs-check">✓</span></button>
+      <button data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica<span class="rs-check">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button id="rs-sminus" aria-label="Decrease font size">A</button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button id="rs-splus" aria-label="Increase font size">A</button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="rs-row rs-margins">
+      <button data-m="n" title="Narrow column">▮</button>
+      <button data-m="" title="Default">▬</button>
+      <button data-m="w" title="Wide column">▭</button>
+    </div>
+    <button id="rs-reset">Reset to defaults</button>
+  </div>
+  <button id="rs-btn" aria-label="Reader settings" aria-expanded="false" title="Reader settings — font, size, margins">Aa</button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string')st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-f')===st.f)});
+    panel.querySelectorAll('.rs-margins button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-m')===st.m)});
+  }
+  btn.addEventListener('click',function(){
+    var open=panel.classList.toggle('open');btn.setAttribute('aria-expanded',open)});
+  document.addEventListener('click',function(e){
+    if(!root.contains(e.target)){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  panel.querySelectorAll('.rs-margins button').forEach(function(b){
+    b.addEventListener('click',function(){st.m=b.getAttribute('data-m');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save()});
+  apply();
+})();
+</script>
+</body></html>

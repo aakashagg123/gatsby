@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Web-scale services — System Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,canvas{max-width:100%;height:auto}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+/* tablet: collapse to a single column */
+@media (max-width:880px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .content{min-width:0;padding:32px 22px 70px}
+  .sidebar{display:none}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:160px}
+}
+
+/* phone-first: high readability on iPhone-class widths */
+@media (max-width:560px){
+  body{font-size:17px;line-height:1.7}
+  .topbar{padding:12px 16px;gap:12px}
+  .brand span{font-size:15px}
+  .brand em{display:none}
+  .content{padding:24px 16px 64px}
+  .index{padding:36px 16px 64px}
+  .chip{font-size:11px}
+  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
+  .hero .lede,.hero-meta{font-size:15px}
+  .hero-meta{line-height:1.6}
+  .index-hero h1{font-size:30px;line-height:1.12}
+  .index-hero .lede{font-size:16.5px}
+  .lesson{padding:34px 0 8px;margin-top:22px}
+  .lesson-head{gap:10px}
+  .lesson h2{font-size:22px;line-height:1.22}
+  .lesson h3{font-size:18.5px}
+  .lesson p,.lesson li{font-size:16.5px}
+  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
+  pre code{font-size:12.8px}
+  code{font-size:12.8px;word-break:break-word}
+  /* wide tables scroll instead of breaking the page */
+  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    white-space:nowrap;font-size:13.5px}
+  .cards,.threads{grid-template-columns:1fr}
+  .pagenav{flex-direction:column;gap:12px}
+  .navcard{flex:1 1 auto}
+  .navcard.next{text-align:left;align-items:flex-start}
+  .pm-band,.recap{padding:18px 18px}
+  .recap{margin-top:30px}
+  /* comfortable tap targets */
+  a,.iw-btn,summary{touch-action:manipulation}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>System Design</span><em>a standalone module</em></a>
+  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink active" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 03</span>
+    <h1>Web-scale services</h1>
+  </div>
+  <h2>TL;DR</h2>
+<p>Four systems that define "internet scale": a <strong>URL shortener</strong> that maps 100 million new short links per day using a distributed ID generator and Base62 encoding, choosing between 301 redirects (faster, cached) and 302 redirects (trackable, measurable). A <strong>web crawler</strong> that systematically downloads billions of pages using BFS traversal, a URL frontier with politeness and priority queues, and deduplication at every layer. A <strong>notification system</strong> that routes 16 million daily notifications across push (APNS/FCM), SMS (Twilio), and email (SendGrid) through per-channel message queues with templating, rate limiting, and retry logic. And a <strong>news feed system</strong> that serves a personalized timeline by combining fanout-on-write for normal users with fanout-on-read for celebrities, backed by a five-layer cache architecture.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the technical PM</strong></p>
+<p><strong>Why it matters</strong> — These are the systems your product decisions directly shape. The URL shortener's redirect choice (301 vs 302) determines whether you can track click analytics. The crawler's politeness settings determine whether you get blocked by every major site. The notification system's rate limiter is the difference between engagement and user churn from spam. The news feed's fanout strategy determines whether celebrity posts take minutes or milliseconds to appear.</p>
+<p><strong>What it changes in your decisions</strong> — You define SLAs with numbers attached: redirect latency under 20ms, notification delivery within 30 seconds, feed refresh under 500ms. You make explicit tradeoffs between features (analytics tracking vs redirect speed) and know the engineering cost of each.</p>
+<p><strong>Ask your eng team</strong> — <em>"What's our P99 notification delivery latency, and what happens to the queue when a single notification targets 10 million followers?"</em></p>
+<p><strong>Risk if ignored</strong> — Short URLs that can't be tracked because you chose the wrong redirect code. A crawler that gets IP-banned from target sites within hours. Notifications that arrive minutes late because a celebrity mention flooded the queue. A news feed where new posts take 30 seconds to appear for users following popular accounts.</p>
+</blockquote>
+<hr />
+<h2>URL shortener</h2>
+<p>The product: given a long URL, produce a short one (e.g., <code>tinyurl.com/abc123</code>); given the short URL, redirect to the original. At 100 million new URLs per day with a 10:1 read-to-write ratio, that's 1 billion redirects per day — roughly 11,600 reads/second average, 23,000+ at peak.</p>
+<h3>The encoding decision</h3>
+<p>Two approaches to generating the short code:</p>
+<p><strong>Hash + collision resolution</strong> — Hash the long URL (e.g., CRC32 or MD5), take the first 7 characters. If there's a collision (another URL already mapped to that code), append a predefined string and re-hash. Problem: checking for collisions requires a database query on every write, and the collision rate grows as the table fills.</p>
+<p><strong>Distributed ID generator + Base62</strong> — Generate a unique numeric ID (using the Snowflake approach from <a href="core-building-blocks.html">lesson 2</a>), then encode it in Base62 (a-z, A-Z, 0-9). A 7-character Base62 string supports 62^7 = 3.5 trillion unique URLs. No collision checking needed — the ID is guaranteed unique.</p>
+<p>The Base62 approach wins for high-throughput systems because it eliminates collision resolution and the database lookup on every write.</p>
+<h3>The redirect decision</h3>
+<p>This seemingly minor HTTP choice has major product implications:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Browser behavior</th>
+<th>Analytics impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>301</strong></td>
+<td>Moved Permanently</td>
+<td>Browser caches; future visits skip your server</td>
+<td>You lose visibility — can't count clicks after first visit</td>
+</tr>
+<tr>
+<td><strong>302</strong></td>
+<td>Found (Temporary)</td>
+<td>Browser always hits your server first</td>
+<td>Every click is tracked — essential for analytics</td>
+</tr>
+</tbody>
+</table>
+<p>If click tracking and analytics are part of your product (they usually are), use 302. If pure redirect speed matters and you have no analytics requirement, use 301.</p>
+<h3>System architecture</h3>
+<style>
+.sd-url{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-url-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+.sd-url-flow{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+  padding:16px;margin:0 0 12px;position:relative}
+.sd-url-flow-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;margin:0 0 12px;display:flex;align-items:center;gap:6px}
+.sd-url-flow-label .tag{font-size:9px;font-weight:700;border-radius:20px;
+  padding:2px 10px;color:#fff;letter-spacing:.6px}
+.sd-url-flow-label .tag-write{background:#bd5d3a}
+.sd-url-flow-label .tag-read{background:#5a8a4a}
+.sd-url-pipe{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.sd-url-node{border-radius:8px;padding:8px 12px;font-size:11.5px;font-weight:600;
+  text-align:center;line-height:1.35;flex-shrink:0;max-width:140px}
+.sd-url-node small{display:block;font-size:9.5px;font-weight:450;margin-top:2px}
+.sd-url-node-client{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-url-node-api{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-url-node-process{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-url-node-db{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-url-node-cache{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-url-node-result{background:#bd5d3a;border:1px solid #a04d2f;color:#fff}
+.sd-url-arrow{flex:0 0 auto;color:#c9c4b4;font-size:13px;font-weight:700;padding:0 4px}
+.sd-url-arrow-label{font-size:8.5px;color:#8a8778;font-weight:500;display:block;
+  text-align:center;line-height:1.1}
+.sd-url-arrow-wrap{display:flex;flex-direction:column;align-items:center;padding:0 2px}
+.sd-url-example{margin:14px 0 0;padding:10px 14px;background:#fff;
+  border:1px solid #e4e0d5;border-radius:10px}
+.sd-url-example-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#a39f90;margin:0 0 6px}
+.sd-url-example-row{display:flex;align-items:center;gap:6px;font-size:11.5px;
+  color:#6b6a64;line-height:1.8}
+.sd-url-example-row code{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:11px;
+  background:#f4f2ea;border:1px solid #e0dccd;border-radius:4px;padding:1px 6px;
+  color:#45443c}
+.sd-url-example-row .arr{color:#c9c4b4;font-weight:700}
+.sd-url-branch{display:flex;align-items:stretch;gap:0;margin:8px 0 0}
+.sd-url-branch-path{display:flex;align-items:center;gap:0;flex:1}
+.sd-url-branch-split{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.sd-url-branch-label{font-size:8.5px;color:#5a8a4a;font-weight:600;
+  background:#e8f0e4;border:1px solid #c8dbc0;border-radius:4px;padding:1px 6px}
+.sd-url-branch-label-miss{color:#bd5d3a;background:#fbefe9;border-color:#efd8ca}
+@media (max-width:640px){
+  .sd-url{padding:18px 14px 16px}
+  .sd-url-pipe{flex-direction:column;align-items:stretch;gap:4px}
+  .sd-url-arrow{transform:rotate(90deg);text-align:center;padding:2px 0}
+  .sd-url-node{max-width:100%}
+  .sd-url-arrow-wrap{flex-direction:row;gap:4px}
+}
+</style>
+<div class="sd-url">
+  <div class="sd-url-title">URL shortener - data flow architecture</div>
+
+  <!-- Write flow -->
+  <div class="sd-url-flow">
+    <div class="sd-url-flow-label">
+      <span class="tag tag-write">Write</span>
+      <span style="color:#6b6a64;font-size:11px;font-weight:500">Shorten a URL</span>
+    </div>
+    <div class="sd-url-pipe">
+      <div class="sd-url-node sd-url-node-client">Client<small>POST /shorten</small></div>
+      <div class="sd-url-arrow-wrap"><span class="sd-url-arrow">→</span></div>
+      <div class="sd-url-node sd-url-node-api">API Gateway<small>auth + rate limit</small></div>
+      <div class="sd-url-arrow-wrap"><span class="sd-url-arrow">→</span></div>
+      <div class="sd-url-node sd-url-node-process">ID Generator<small>Snowflake / counter</small></div>
+      <div class="sd-url-arrow-wrap">
+        <span class="sd-url-arrow">→</span>
+        <span class="sd-url-arrow-label">base62</span>
+      </div>
+      <div class="sd-url-node sd-url-node-process">Base62 Encode<small>id → "zn9edcu"</small></div>
+      <div class="sd-url-arrow-wrap"><span class="sd-url-arrow">→</span></div>
+      <div class="sd-url-node sd-url-node-db">DB Write<small>shortURL → longURL</small></div>
+    </div>
+  </div>
+
+  <!-- Read flow -->
+  <div class="sd-url-flow">
+    <div class="sd-url-flow-label">
+      <span class="tag tag-read">Read</span>
+      <span style="color:#6b6a64;font-size:11px;font-weight:500">Redirect (100:1 read-heavy)</span>
+    </div>
+    <div class="sd-url-pipe">
+      <div class="sd-url-node sd-url-node-client">Client<small>GET /zn9edcu</small></div>
+      <div class="sd-url-arrow-wrap"><span class="sd-url-arrow">→</span></div>
+      <div class="sd-url-node sd-url-node-cache">Cache<small>Redis lookup</small></div>
+      <div class="sd-url-arrow-wrap">
+        <span class="sd-url-arrow">→</span>
+      </div>
+      <div class="sd-url-branch-split">
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="sd-url-branch-label">HIT</span>
+          <span class="sd-url-arrow" style="font-size:11px">→</span>
+          <div class="sd-url-node sd-url-node-result" style="padding:5px 10px;font-size:10.5px">302 Redirect</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="sd-url-branch-label sd-url-branch-label-miss">MISS</span>
+          <span class="sd-url-arrow" style="font-size:11px">→</span>
+          <div class="sd-url-node sd-url-node-db" style="padding:5px 10px;font-size:10.5px">DB<small>backfill cache</small></div>
+          <span class="sd-url-arrow" style="font-size:11px">→</span>
+          <div class="sd-url-node sd-url-node-result" style="padding:5px 10px;font-size:10.5px">302 Redirect</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example -->
+  <div class="sd-url-example">
+    <div class="sd-url-example-title">Encoding example</div>
+    <div class="sd-url-example-row">
+      <code>2009215674938</code>
+      <span class="arr">→</span>
+      base62(id)
+      <span class="arr">→</span>
+      <code>zn9edcu</code>
+      <span class="arr">→</span>
+      <code>tinyurl.com/zn9edcu</code>
+    </div>
+    <div style="font-size:10px;color:#8a8778;margin-top:4px">
+      62 chars (a-z A-Z 0-9) &middot; 7 chars = 62<sup>7</sup> = 3.5 trillion URLs
+    </div>
+  </div>
+</div>
+
+<p><strong>Write flow:</strong> Client submits a long URL. The system generates a unique ID via the distributed ID generator, converts it to Base62, stores the <code>(shortCode, longURL)</code> mapping in the database, and returns the short URL.</p>
+<p><strong>Read flow:</strong> Client visits a short URL. The system checks the cache (Redis) first. On a cache hit, it issues a 302 redirect immediately. On a cache miss, it queries the database, populates the cache, then redirects. Given the 10:1 read-to-write ratio, the cache hit rate should be high — popular short links will stay hot in cache.</p>
+<h3>Storage estimation</h3>
+<p>At 100M new URLs/day for 10 years: 365 billion records. Each record is ~100 bytes (short code + long URL + metadata). Total: ~36 TB. This is within the range of a sharded relational database or a distributed KV store partitioned via consistent hashing.</p>
+<hr />
+<h2>Web crawler</h2>
+<p>A web crawler systematically browses the web by downloading pages, extracting links, and following them. At scale (billions of pages), the challenge isn't downloading — it's doing so politely, efficiently, and without getting stuck in loops or traps.</p>
+<h3>Traversal strategy</h3>
+<p><strong>BFS is preferred</strong> over DFS because DFS can get trapped in deep link chains on a single domain (forums, paginated archives, infinite calendars). BFS explores breadth-first, discovering more domains and more diverse content early.</p>
+<h3>URL frontier architecture</h3>
+<p>The URL frontier is the heart of the crawler — a sophisticated queue that manages which URLs to crawl next, balancing politeness, priority, and freshness.</p>
+<pre class="mermaid">flowchart TD
+  Seeds[Seed URLs] --&gt; Frontier[URL Frontier]
+
+  subgraph Frontier
+    PQ[Priority Queues&lt;br/&gt;PageRank, freshness, type]
+    PQ --&gt; PS[Politeness Scheduler&lt;br/&gt;Per-host queues with delay]
+  end
+
+  Frontier --&gt; DL[Downloader&lt;br/&gt;DNS cache, timeouts]
+  DL --&gt; Parser[HTML Parser]
+  Parser --&gt; Dedup[Content Dedup&lt;br/&gt;Checksums/simhash]
+  Dedup --&gt; Extract[URL Extractor]
+  Extract --&gt; Filter[URL Filter&lt;br/&gt;robots.txt, blocklist]
+  Filter --&gt; Seen{URL seen?}
+  Seen --&gt;|No| Frontier
+  Seen --&gt;|Yes| Discard[Discard]</pre>
+<h3>Priority</h3>
+<p>Not all URLs are equal. The frontier maintains <strong>priority queues</strong> that rank URLs by:</p>
+<ul>
+<li><strong>PageRank</strong> — pages linked to by many other pages are more important</li>
+<li><strong>Content type</strong> — known high-quality domains get priority</li>
+<li><strong>Freshness</strong> — pages that change frequently (news sites) should be re-crawled sooner</li>
+<li><strong>Depth</strong> — pages discovered earlier in the BFS tend to be more important</li>
+</ul>
+<p>A <strong>prioritizer</strong> assigns each URL a priority score and routes it to the appropriate queue. The front-end selector picks from higher-priority queues more frequently.</p>
+<h3>Politeness</h3>
+<p>Hammering a single domain will get you blocked. The politeness layer ensures:</p>
+<ul>
+<li><strong>Per-host queues</strong> — all URLs for the same host go into the same queue, processed sequentially</li>
+<li><strong>Configurable delay</strong> — a minimum time between requests to the same host (typically 1-2 seconds)</li>
+<li><strong>robots.txt compliance</strong> — the crawler checks and caches each site's robots.txt before crawling</li>
+</ul>
+<p>This means the crawler maintains hundreds of thousands of per-host queues. A queue-router maps each URL's hostname to its queue, and worker threads pull from different host queues in parallel.</p>
+<h3>Deduplication</h3>
+<p>Deduplication happens at two levels:</p>
+<ol>
+<li>
+<p><strong>URL dedup</strong> — a set (often backed by a Bloom filter for memory efficiency) tracks which URLs have been seen. Before adding a URL to the frontier, check the set. This prevents crawl loops (A links to B, B links to A).</p>
+</li>
+<li>
+<p><strong>Content dedup</strong> — different URLs can serve identical content (mirrors, syndication, URL parameters). Compute a content hash (or simhash for near-duplicate detection) and skip pages whose content matches a previously crawled page.</p>
+</li>
+</ol>
+<h3>Robustness</h3>
+<p>Production crawlers handle dozens of edge cases:</p>
+<ul>
+<li><strong>Spider traps</strong> — URLs that generate infinite content (e.g., <code>/calendar/2025/01</code>, <code>/calendar/2025/02</code>, ...). Set a maximum URL depth or detect pattern repetition.</li>
+<li><strong>DNS resolution</strong> — DNS lookups are slow. Cache DNS results aggressively (locally and in a shared cache).</li>
+<li><strong>Timeouts</strong> — set aggressive timeouts. A crawler that waits 30 seconds for a response wastes precious throughput.</li>
+<li><strong>Content types</strong> — skip binary files, images, and non-HTML content unless specifically needed.</li>
+<li><strong>Distributed coordination</strong> — multiple crawler instances must partition the URL space (by domain hash) to avoid duplicate work.</li>
+</ul>
+<hr />
+<h2>Notification system</h2>
+<p>The product: deliver 10 million mobile push notifications, 1 million SMS messages, and 5 million emails per day — 16 million total, across three channels with different providers, latency expectations, and failure modes.</p>
+<h3>Provider landscape</h3>
+<p>Each channel has its own delivery infrastructure:</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Provider</th>
+<th>Protocol</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>iOS push</strong></td>
+<td>APNS (Apple)</td>
+<td>HTTP/2, certificate-based</td>
+<td>Token-based auth, payload ≤ 4 KB</td>
+</tr>
+<tr>
+<td><strong>Android push</strong></td>
+<td>FCM (Google)</td>
+<td>HTTP/JSON</td>
+<td>API-key auth, payload ≤ 4 KB</td>
+</tr>
+<tr>
+<td><strong>SMS</strong></td>
+<td>Twilio, Nexmo</td>
+<td>REST API</td>
+<td>Per-message cost, carrier variability</td>
+</tr>
+<tr>
+<td><strong>Email</strong></td>
+<td>SendGrid, SES</td>
+<td>SMTP/API</td>
+<td>Deliverability reputation, bounce handling</td>
+</tr>
+</tbody>
+</table>
+<h3>Architecture: per-channel message queues</h3>
+<p>The critical design insight: <strong>each channel gets its own message queue and worker pool</strong>. This prevents a slow channel (SMS, which depends on carrier networks) from blocking a fast channel (push, which is near-instant).</p>
+<pre class="mermaid">flowchart TD
+  Svc[Service / Trigger] --&gt; NS[Notification Service]
+  NS --&gt; Valid[Validation &amp; templating]
+  Valid --&gt; Cache[User preference cache]
+  Cache --&gt; MQ1[Push Queue]
+  Cache --&gt; MQ2[SMS Queue]
+  Cache --&gt; MQ3[Email Queue]
+  MQ1 --&gt; PW[Push Workers&lt;br/&gt;APNS / FCM]
+  MQ2 --&gt; SW[SMS Workers&lt;br/&gt;Twilio]
+  MQ3 --&gt; EW[Email Workers&lt;br/&gt;SendGrid]
+  PW --&gt; Track[Event Tracking]
+  SW --&gt; Track
+  EW --&gt; Track</pre>
+<h3>Notification templates</h3>
+<p>At 16M notifications/day, you don't craft individual messages. Templates define the structure:</p>
+<pre><code>Hello {{user.first_name}}, your order {{order.id}} has shipped!
+Tracking: {{tracking.url}}
+</code></pre>
+<p>Templates are stored, versioned, and cached. The notification service merges the template with user-specific data at send time. This enables A/B testing (different templates for different cohorts), localization (language-specific templates), and rapid iteration without code deployments.</p>
+<h3>Rate limiting</h3>
+<p>Without rate limiting, a bug or misconfigured campaign can blast millions of users with duplicate notifications — the fastest way to destroy app engagement. The notification system applies rate limits at multiple levels:</p>
+<ul>
+<li><strong>Per-user</strong> — no more than <em>n</em> notifications per channel per hour (e.g., max 3 push per hour)</li>
+<li><strong>Per-campaign</strong> — a marketing campaign has a total send budget</li>
+<li><strong>Per-channel</strong> — respect provider rate limits (APNS throttles per-device, SendGrid has hourly sending limits)</li>
+</ul>
+<p>The rate limiter uses the same algorithms from <a href="core-building-blocks.html">lesson 2</a> — typically sliding window counter backed by Redis.</p>
+<h3>Retry and failure handling</h3>
+<p>Notifications fail: APNS returns an invalid token, Twilio gets a carrier error, SendGrid bounces an email. The system must:</p>
+<ol>
+<li><strong>Retry with exponential backoff</strong> — first retry after 1s, then 2s, 4s, 8s, up to a maximum (e.g., 1 hour)</li>
+<li><strong>Dead letter queue</strong> — after <em>n</em> retries, move the notification to a DLQ for manual investigation</li>
+<li><strong>Token invalidation</strong> — if APNS returns "invalid token," remove the device token from the user's record to stop future failures</li>
+<li><strong>Bounce handling</strong> — hard email bounces (invalid address) should permanently suppress the address; soft bounces (mailbox full) can be retried</li>
+</ol>
+<h3>Event tracking</h3>
+<p>The notification system tracks the full lifecycle:</p>
+<ul>
+<li><strong>Created</strong> — notification request received</li>
+<li><strong>Queued</strong> — placed in channel queue</li>
+<li><strong>Sent</strong> — delivered to provider (APNS, Twilio, SendGrid)</li>
+<li><strong>Delivered</strong> — provider confirmed delivery (not available for all channels)</li>
+<li><strong>Opened</strong> — user opened the notification (via tracking pixel for email, or app callback for push)</li>
+<li><strong>Clicked</strong> — user tapped a link (via redirect URL with tracking parameter)</li>
+</ul>
+<p>This data feeds analytics dashboards and enables product decisions: which notification types drive engagement, which channels perform best for which user segments, when to send for maximum open rates.</p>
+<hr />
+<h2>News feed system</h2>
+<p>The product: show each user a personalized timeline of posts from people they follow. Facebook's news feed, Twitter's timeline, Instagram's feed. The core challenge: when a user with 10 million followers posts, how do you make that post appear in all 10 million feeds quickly?</p>
+<h3>The fanout problem</h3>
+<p>Two fundamental approaches:</p>
+<p><strong>Fanout on write (push model)</strong> — When a user publishes a post, immediately write it to every follower's feed cache. The feed is pre-computed; reading is instant (just fetch the cache).</p>
+<ul>
+<li><strong>Pro:</strong> Feed reads are O(1) — read from the pre-computed cache. Feed loads are fast.</li>
+<li><strong>Con:</strong> Writes are expensive. A user with 10M followers triggers 10M cache writes. Inactive users' feeds are computed but never read — wasted work.</li>
+</ul>
+<p><strong>Fanout on read (pull model)</strong> — When a user opens their feed, the system fetches posts from all followed users on the fly, merges, ranks, and returns.</p>
+<ul>
+<li><strong>Pro:</strong> Writes are O(1). No wasted work for inactive users.</li>
+<li><strong>Con:</strong> Feed reads are expensive — must fetch from many sources and merge. Slow for users following thousands of accounts.</li>
+</ul>
+<p><strong>Hybrid approach (the production answer):</strong> Use fanout-on-write for most users (fast reads for the common case). For users with massive followings (celebrities, verified accounts), use fanout-on-read — their posts are fetched and merged into the feed at read time rather than pushed to millions of caches.</p>
+<pre class="mermaid">flowchart TD
+  subgraph &quot;Fanout on Write (normal users)&quot;
+    P1[User posts] --&gt; FW[Fanout Service]
+    FW --&gt; SG[Social Graph&lt;br/&gt;get followers]
+    SG --&gt; FW
+    FW --&gt; FC1[Follower 1 feed cache]
+    FW --&gt; FC2[Follower 2 feed cache]
+    FW --&gt; FCN[Follower N feed cache]
+  end
+
+  subgraph &quot;Fanout on Read (celebrities)&quot;
+    FR1[Feed request] --&gt; Fetch[Fetch Service]
+    Fetch --&gt; CP[Celebrity posts store]
+    Fetch --&gt; Merge[Merge with cached feed]
+  end</pre>
+<h3>Feed publishing flow</h3>
+<ol>
+<li>User creates a post via the API</li>
+<li>Post is stored in the <strong>post database</strong> and the <strong>post cache</strong></li>
+<li>The <strong>fanout service</strong> queries the <strong>social graph cache</strong> for the user's followers</li>
+<li>For each follower, the post ID is inserted into their <strong>feed cache</strong> (a sorted set in Redis, ordered by timestamp or ranking score)</li>
+<li>If the poster is a celebrity (follower count above threshold), skip fanout — the post stays only in the post store</li>
+</ol>
+<h3>Feed retrieval flow</h3>
+<ol>
+<li>User opens their feed</li>
+<li>The system reads the user's <strong>feed cache</strong> (pre-computed post IDs)</li>
+<li>For each celebrity the user follows, fetch their recent posts from the <strong>post store</strong></li>
+<li>Merge the cached feed with celebrity posts</li>
+<li>Rank (by time, engagement, ML model) and return the top <em>N</em> posts</li>
+<li>For each post ID, hydrate the full content from the <strong>post cache</strong> and <strong>user cache</strong> (author name, avatar)</li>
+</ol>
+<h3>The five-layer cache</h3>
+<p>Feed performance depends entirely on cache architecture. Production news feed systems use five distinct cache layers:</p>
+<table>
+<thead>
+<tr>
+<th>Cache layer</th>
+<th>What it stores</th>
+<th>Why it's separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>News feed cache</strong></td>
+<td>Pre-computed feed (list of post IDs per user)</td>
+<td>The hottest data — every feed load hits this</td>
+</tr>
+<tr>
+<td><strong>Content cache</strong></td>
+<td>Post bodies, images, metadata</td>
+<td>Large objects; different eviction pattern from feed IDs</td>
+</tr>
+<tr>
+<td><strong>Social graph cache</strong></td>
+<td>Follow/friend relationships</td>
+<td>Queried on every fanout; rarely changes</td>
+</tr>
+<tr>
+<td><strong>Action cache</strong></td>
+<td>Likes, comments, shares per post</td>
+<td>High write rate; separate to avoid invalidating content cache</td>
+</tr>
+<tr>
+<td><strong>Counter cache</strong></td>
+<td>Like counts, comment counts, share counts</td>
+<td>Extremely high write rate; often approximate</td>
+</tr>
+</tbody>
+</table>
+<p>Each layer has its own cluster, eviction policy, and TTL. Mixing them in a single cache would cause hot data (counters) to evict warm data (social graph), degrading overall hit rates.</p>
+<h3>Social graph cache</h3>
+<p>The social graph (who follows whom) is read on every fanout and every feed fetch. It changes rarely (follows/unfollows are infrequent compared to posts and reads). Storing it in a dedicated cache with long TTLs and lazy invalidation keeps fanout latency low. The data structure is typically a hash map: <code>user_id → set of follower_ids</code>.</p>
+<hr />
+<h2>Failure modes</h2>
+<ul>
+<li><strong>URL shortener hash collision</strong> — If using hash+collision resolution, high write rates increase collision frequency, degrading write latency. Monitor collision rate; switch to ID-based encoding if it exceeds 1%.</li>
+<li><strong>URL shortener cache stampede</strong> — A popular short URL expires from cache, and thousands of concurrent redirects hit the database simultaneously. Use cache warming or probabilistic early expiration.</li>
+<li><strong>Crawler politeness violation</strong> — A bug in the per-host delay logic causes aggressive crawling, getting your IP range blocked by major sites. Monitor per-host request rates with hard circuit breakers.</li>
+<li><strong>Crawler infinite loops</strong> — Spider traps (auto-generated calendars, session-ID URLs) create infinite URL generation. Set maximum crawl depth per domain and detect URL pattern repetition.</li>
+<li><strong>Notification thundering herd</strong> — A system event (e.g., "service restored") triggers notifications to all users simultaneously, overwhelming the provider. Jitter the send times across a window.</li>
+<li><strong>Notification duplicate delivery</strong> — Retry logic without idempotency causes users to receive the same notification multiple times. Use idempotency keys per notification.</li>
+<li><strong>News feed celebrity bottleneck</strong> — A celebrity with 50M followers posts during peak hours. Even with the hybrid approach, the fan-on-read merge at read time can spike latency. Pre-compute celebrity feeds on a schedule rather than on-demand.</li>
+<li><strong>News feed stale cache</strong> — A user unfollows someone, but the social graph cache hasn't been invalidated. The unfollowed user's posts continue appearing in the feed until the cache expires.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Does your URL shortener use 301 or 302 redirects, and does the product team understand the analytics implications?</li>
+<li class="task todo">Is the short-code generation collision-free (ID-based), or does it require collision resolution?</li>
+<li class="task todo">Does your crawler respect robots.txt and enforce per-host request delays?</li>
+<li class="task todo">Is crawl deduplication happening at both the URL level and the content level?</li>
+<li class="task todo">Does each notification channel have its own message queue and worker pool?</li>
+<li class="task todo">Are per-user notification rate limits in place to prevent spam?</li>
+<li class="task todo">Does the notification system retry with exponential backoff and have a dead letter queue?</li>
+<li class="task todo">Is the news feed fanout strategy hybrid (push for normal users, pull for celebrities)?</li>
+<li class="task todo">Can you name all five cache layers and their eviction strategies?</li>
+<li class="task todo">What's the P99 latency for feed retrieval, and is it within your product SLA?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="core-building-blocks.html">Core building blocks</a> — the rate limiter, consistent hashing, and ID generator that these services are built on</li>
+<li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — the estimation and scaling techniques used to size these systems</li>
+<li><a href="real-time-systems.html">Real-time systems</a> — chat and autocomplete systems that share the queue-and-worker pattern with notifications</li>
+<li><a href="data-infrastructure.html">Data infrastructure</a> — distributed message queues that underpin the notification and feed architectures</li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="core-building-blocks.html"><span class="lbl">← Previous</span><span class="ttl">Core building blocks</span></a><a class="navcard next" href="real-time-systems.html"><span class="lbl">→ Next</span><span class="ttl">Real-time systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+  themeVariables:{
+    background:'#faf9f5',
+    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
+    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
+    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
+    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
+    edgeLabelBackground:'#faf9f5',
+    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
+    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
+    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
+    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
+    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
+    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
+    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
+    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
+    quadrantTitleFill:'#1f1e1d',
+    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
+    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+});
+await mermaid.run({querySelector:'pre.mermaid'});
+// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+document.querySelectorAll('pre.mermaid svg').forEach(s=>{
+  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+  const cw=s.parentElement.clientWidth||0;
+  if(cw&&w>cw*1.6){s.style.maxWidth='none';
+    const h=document.createElement('span');h.className='mm-hint';
+    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
+});
+</script>
+<style id="reader-css">
+/* ---- font choices (only active when data-rf is set) ---- */
+html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}
+html[data-rf="georgia"]{--rs-font:Georgia,"Times New Roman",serif}
+html[data-rf="sf"]{--rs-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif}
+html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
+html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.chip,a){font-family:var(--rs-font) !important}
+html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *,html[data-rf] main p code,html[data-rf] main li code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace !important}
+html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
+/* ---- size scaling (only active when data-rs is set) ---- */
+html[data-rs] main{font-size:calc(16.5px * var(--rs-scale,1)) !important}
+html[data-rs] main h1{font-size:2.35em !important;line-height:1.15 !important}
+html[data-rs] main h2{font-size:1.7em !important}
+html[data-rs] main h3{font-size:1.25em !important}
+html[data-rs] main h4{font-size:1em !important}
+html[data-rs] main .lede{font-size:1.2em !important}
+html[data-rs] main table{font-size:.9em !important}
+html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
+html[data-rs] main .pm-callout p{font-size:.95em !important}
+html[data-rs] main pre{font-size:.85em !important}
+/* ---- margins / column width (only active when data-rm is set) ---- */
+html[data-rm="n"] main{max-width:620px !important}
+html[data-rm="w"] main{max-width:1120px !important}
+/* ---- the widget ---- */
+/* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
+#rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e4e0d5;background:#faf9f5;color:#1f1e1d;
+  font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
+#rs-btn:hover{border-color:#d97757;color:#bd5d3a}
+#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#faf9f5;border:1px solid #e4e0d5;
+  border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
+#rs-panel.open{display:block}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8a8778;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h:first-child{margin-top:0}
+.rs-fonts{display:flex;flex-direction:column;gap:4px}
+.rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
+  border:1px solid transparent;border-radius:8px;background:none;font-size:15px;color:#1f1e1d;cursor:pointer;text-align:left}
+.rs-fonts button:hover{background:#f2f0e9}
+.rs-fonts button.on{border-color:#d97757;background:#fbefe9}
+.rs-fonts button .rs-check{color:#bd5d3a;font-weight:700;visibility:hidden}
+.rs-fonts button.on .rs-check{visibility:visible}
+.rs-row{display:flex;align-items:center;gap:8px}
+.rs-row button{flex:1;padding:7px 0;border:1px solid #e4e0d5;border-radius:8px;background:#fff;
+  cursor:pointer;color:#1f1e1d;font-size:14px}
+.rs-row button:hover{border-color:#d97757}
+.rs-row button.on{border-color:#d97757;background:#fbefe9;font-weight:600}
+.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#8a8778;font-variant-numeric:tabular-nums}
+#rs-sminus{font-size:13px}#rs-splus{font-size:17px}
+#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:8px;background:#f2f0e9;
+  color:#8a8778;font-size:13px;cursor:pointer}
+#rs-reset:hover{color:#bd5d3a}
+@media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
+@media print{#rs-root{display:none}}
+</style>
+<div id="rs-root">
+  <div id="rs-panel" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts">
+      <button data-f="" style="font-family:inherit">Original<span class="rs-check">✓</span></button>
+      <button data-f="charter" style="font-family:Charter,'Bitstream Charter',Georgia,serif">Charter<span class="rs-check">✓</span></button>
+      <button data-f="georgia" style="font-family:Georgia,serif">Georgia<span class="rs-check">✓</span></button>
+      <button data-f="sf" style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif">San Francisco<span class="rs-check">✓</span></button>
+      <button data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif">Tahoma<span class="rs-check">✓</span></button>
+      <button data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica<span class="rs-check">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button id="rs-sminus" aria-label="Decrease font size">A</button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button id="rs-splus" aria-label="Increase font size">A</button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="rs-row rs-margins">
+      <button data-m="n" title="Narrow column">▮</button>
+      <button data-m="" title="Default">▬</button>
+      <button data-m="w" title="Wide column">▭</button>
+    </div>
+    <button id="rs-reset">Reset to defaults</button>
+  </div>
+  <button id="rs-btn" aria-label="Reader settings" aria-expanded="false" title="Reader settings — font, size, margins">Aa</button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string')st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-f')===st.f)});
+    panel.querySelectorAll('.rs-margins button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-m')===st.m)});
+  }
+  btn.addEventListener('click',function(){
+    var open=panel.classList.toggle('open');btn.setAttribute('aria-expanded',open)});
+  document.addEventListener('click',function(e){
+    if(!root.contains(e.target)){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  panel.querySelectorAll('.rs-margins button').forEach(function(b){
+    b.addEventListener('click',function(){st.m=b.getAttribute('data-m');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save()});
+  apply();
+})();
+</script>
+</body></html>

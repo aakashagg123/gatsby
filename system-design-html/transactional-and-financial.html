@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Transactional &amp; financial systems — System Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F5; --bg2:#F4F2EA; --panel:#FFFFFF; --line:#E7E2D5; --line2:#EFEBE0;
+  --ink:#1A1915; --ink2:#3D3B35; --mut:#6F6C62; --accent:#D97757; --accent-d:#C2613F;
+  --accent-soft:#FBEFE9; --green:#3F7A52; --radius:14px;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
+  font-size:16.5px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,canvas{max-width:100%;height:auto}
+a{color:var(--accent-d);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
+  padding:14px 26px;background:rgba(250,249,245,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.brand:hover{text-decoration:none}
+.brand span{font-size:16px;letter-spacing:.2px}
+.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
+  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
+.spark{flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
+  padding:5px 10px;border-radius:8px}
+.topnav a:hover{background:var(--bg2);color:var(--accent-d);text-decoration:none}
+
+/* layout */
+.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
+  max-width:1240px;margin:0 auto}
+.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
+.sticky{position:sticky;top:74px}
+.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:10px;
+  color:var(--ink2);font-size:14.5px;font-weight:500}
+.modlink:hover{background:var(--bg2);text-decoration:none}
+.modlink.active{background:var(--accent-soft);color:var(--accent-d)}
+.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
+  border-left:1px solid var(--line);padding-left:12px}
+.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
+.sub a:hover{color:var(--accent-d);text-decoration:none}
+
+/* content column */
+.content{padding:46px 56px 90px;max-width:880px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent-d);background:var(--accent-soft);
+  padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.1;
+  color:var(--ink);margin:.1em 0 .25em}
+.lede{font-size:20px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
+.hero-meta{font-size:14px;color:var(--mut)}
+.hero-meta strong{color:var(--accent-d);font-weight:600}
+
+.intro{color:var(--ink2)}
+.intro blockquote{margin:18px 0}
+
+/* table of contents */
+.toc{margin:30px 0 8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px}
+.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin-bottom:10px}
+.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
+  border-bottom:1px solid var(--line2)}
+.toc a:last-child{border-bottom:none}
+.toc a:hover{color:var(--accent-d);text-decoration:none}
+.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
+
+/* lessons */
+.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
+.lesson:first-of-type{border-top:none}
+.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:7px;font-weight:600}
+.lesson h2{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1.18;
+  color:var(--ink);margin:0}
+.lesson h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);
+  margin:1.8em 0 .5em}
+.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
+  letter-spacing:.2px}
+.lesson p{margin:.85em 0}
+.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
+.lesson li{margin:.32em 0}
+.lesson strong{color:var(--ink);font-weight:600}
+.lesson em{color:var(--ink2)}
+hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+
+/* PM callout */
+.pm-callout{position:relative;background:linear-gradient(180deg,#FBF0EA,#FBEEE7);
+  border:1px solid #F0D3C4;border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px 14px;margin:26px 0}
+.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent-d);
+  font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 .5em}
+.pm-callout p{margin:.5em 0;font-size:15.5px}
+.pm-callout strong{color:var(--ink)}
+
+/* generic blockquote */
+blockquote{margin:18px 0;padding:4px 20px;border-left:3px solid var(--accent);
+  color:var(--ink2);background:var(--bg2);border-radius:0 10px 10px 0}
+blockquote p{margin:.5em 0}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td code,th code{font-size:12.5px}
+
+/* code */
+code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--accent-d);
+  padding:2px 6px;border-radius:6px}
+pre{background:#211F1B;color:#EDE9DF;border-radius:var(--radius);padding:18px 20px;
+  overflow-x:auto;margin:18px 0;border:1px solid #2c2a25;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:13px}
+
+/* task lists */
+.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
+.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
+.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
+.lesson li.done:before{content:"☑";color:var(--green)}
+
+.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
+  font-family:var(--mono)}
+.totop:hover{color:var(--accent-d);text-decoration:none}
+
+/* page nav + footer */
+.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
+  flex-wrap:wrap}
+.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.navcard:hover{border-color:var(--accent);text-decoration:none}
+.navcard.next{text-align:right;align-items:flex-end}
+.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
+.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
+.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--mut);font-size:13.5px}
+
+/* ---- index page ---- */
+.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
+.index-hero{text-align:center;padding:20px 0 30px}
+.index-hero h1{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1.08;
+  color:var(--ink);margin:.15em 0 .3em}
+.index-hero h1 em{font-style:italic;color:var(--accent)}
+.index-hero .lede{max-width:720px;margin:0 auto;font-size:20px}
+.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.index-meta span{font-size:13px;color:var(--ink2);background:var(--panel);
+  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
+  font-family:var(--mono)}
+.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
+  background:linear-gradient(180deg,#FBF0EA,#FBEEE7);border:1px solid #F0D3C4;
+  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
+.pm-band .pm-ic{font-size:24px;line-height:1.2}
+.pm-band strong{color:var(--ink)}
+.sec{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);
+  text-align:center;margin:60px 0 26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;color:var(--ink2)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;
+  box-shadow:0 10px 30px -18px rgba(120,70,40,.45);transition:.18s}
+.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
+  width:fit-content;padding:3px 10px;border-radius:7px;font-weight:600;margin-bottom:12px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);margin:0 0 .35em}
+.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
+.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
+.card li{margin:.2em 0}
+.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
+.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.4px;color:var(--accent-d);opacity:.9}
+.card-go{padding-top:6px;color:var(--accent-d);font-weight:600;font-size:14px}
+.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+  max-width:920px;margin:0 auto}
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
+.thread p{margin:0;font-size:14px;color:var(--mut)}
+
+/* tablet: collapse to a single column */
+@media (max-width:880px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .content{min-width:0;padding:32px 22px 70px}
+  .sidebar{display:none}
+  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
+  .topnav{display:none}
+  .iw-field input[type=range]{width:160px}
+}
+
+/* phone-first: high readability on iPhone-class widths */
+@media (max-width:560px){
+  body{font-size:17px;line-height:1.7}
+  .topbar{padding:12px 16px;gap:12px}
+  .brand span{font-size:15px}
+  .brand em{display:none}
+  .content{padding:24px 16px 64px}
+  .index{padding:36px 16px 64px}
+  .chip{font-size:11px}
+  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
+  .hero .lede,.hero-meta{font-size:15px}
+  .hero-meta{line-height:1.6}
+  .index-hero h1{font-size:30px;line-height:1.12}
+  .index-hero .lede{font-size:16.5px}
+  .lesson{padding:34px 0 8px;margin-top:22px}
+  .lesson-head{gap:10px}
+  .lesson h2{font-size:22px;line-height:1.22}
+  .lesson h3{font-size:18.5px}
+  .lesson p,.lesson li{font-size:16.5px}
+  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
+  pre code{font-size:12.8px}
+  code{font-size:12.8px;word-break:break-word}
+  /* wide tables scroll instead of breaking the page */
+  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    white-space:nowrap;font-size:13.5px}
+  .cards,.threads{grid-template-columns:1fr}
+  .pagenav{flex-direction:column;gap:12px}
+  .navcard{flex:1 1 auto}
+  .navcard.next{text-align:left;align-items:flex-start}
+  .pm-band,.recap{padding:18px 18px}
+  .recap{margin-top:30px}
+  /* comfortable tap targets */
+  a,.iw-btn,summary{touch-action:manipulation}
+}
+
+/* ---- recap section ---- */
+.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid #F0D3C4;
+  border-radius:var(--radius);background:linear-gradient(180deg,#FBF6F1,#FAF9F5)}
+.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.recap-ic{font-size:22px}
+.recap h2{font-family:var(--serif);font-weight:600;font-size:27px;color:var(--ink);margin:0}
+.recap h2:not(.recap-head h2){margin-top:1.4em}
+.recap h2{}
+.recap .recap-head + p{margin-top:.6em}
+.recap table{background:#fff}
+.recap blockquote{background:#fff;border-left:3px solid var(--accent)}
+
+/* ---- interactive widgets ---- */
+.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden}
+.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:11px}
+.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
+.iw-head h3{font-family:var(--serif);margin:0;font-size:19px;color:var(--ink);font-weight:600}
+.iw-body{padding:22px 24px}
+.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
+.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
+.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
+.iw-field .v{font-family:var(--mono);color:var(--accent-d);font-weight:600}
+.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
+.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
+.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:9px;transition:.15s}
+.iw-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
+.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-d)}
+.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
+  cursor:pointer;user-select:none}
+.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+.iw-out{background:var(--bg2);border-radius:11px;padding:16px 18px;margin-top:8px}
+.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
+.iw-good{color:var(--green);font-weight:600}.iw-bad{color:#b3402a;font-weight:600}
+.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
+.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
+.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
+.iw-track{flex:1;height:13px;background:#e7e2d5;border-radius:7px;overflow:hidden}
+.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
+  transition:width .45s ease,background-color .3s}
+/* pipeline stages (mod 00) */
+.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
+.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:10px;font-size:13px;
+  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
+.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-d)}
+.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:#b3402a;background:#fbe7e1;color:#b3402a}
+.iw-arrow{color:var(--mut);font-size:14px}
+/* chunk grid (mod 03) */
+.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.iw-chunk{width:20px;height:20px;border-radius:5px;background:#ded8c9}
+.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
+/* trace spans (mod 04) */
+.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
+.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
+.iw-spanbar-wrap{flex:1;background:#efeae0;border-radius:6px;height:22px;position:relative}
+.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
+.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
+.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
+.iw-stack span{display:block;height:100%}
+.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
+.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
+pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#D97757"/></svg><span>System Design</span><em>a standalone module</em></a>
+  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink active" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 08</span>
+    <h1>Transactional &amp; financial systems</h1>
+  </div>
+  <h2>TL;DR</h2>
+<p>Financial and transactional systems are where distributed systems meet zero tolerance for error. A <strong>hotel reservation</strong> system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A <strong>gaming leaderboard</strong> exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A <strong>payment system</strong> orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A <strong>digital wallet</strong> evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A <strong>stock exchange</strong> pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability, and the cost of a bug is measured in dollars, not just user frustration.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the technical PM</strong></p>
+<p><strong>Why it matters</strong> — These systems handle money, reservations, and competitive rankings — domains where a bug is a financial loss, a legal liability, or a PR disaster. The engineering tradeoffs are dominated by correctness constraints that don't exist in social media or content systems.</p>
+<p><strong>What it changes in your decisions</strong> — You accept higher latency for stronger consistency. You insist on idempotency for every write operation. You budget for reconciliation infrastructure and audit trails. You question every "eventually consistent" proposal when money is involved.</p>
+<p><strong>Ask your eng team</strong> — <em>"What happens if this operation is executed twice — do we double-charge, double-book, or is it safely idempotent?"</em></p>
+<p><strong>Risk if ignored</strong> — You double-book hotel rooms during peak season, double-charge customers during payment retries, or discover that your ledger is off by $2M during the quarterly audit.</p>
+</blockquote>
+<hr />
+<h2>Hotel reservation system</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>5,000 hotels, 1 million rooms total</li>
+<li>~3 TPS average reservation rate (modest write load)</li>
+<li>Read-heavy: users browse availability far more than they book</li>
+<li>Zero tolerance for double-booking</li>
+<li>Support for concurrent booking of the same room type</li>
+</ul>
+<h3>Data model: reserve roomTypeID, not roomID</h3>
+<p>A critical design insight: <strong>guests reserve a room type, not a specific room</strong>. Room assignment happens at check-in, not at booking time.</p>
+<style>
+.sd-fin{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-fin-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 6px}
+.sd-fin-subtitle{font-size:11.5px;color:#6b6a64;margin:0 0 18px;line-height:1.4}
+/* Shared patterns bar */
+.sd-fin-patterns{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.sd-fin-pattern{font-size:10.5px;font-weight:600;border-radius:8px;padding:6px 12px;
+  display:inline-flex;align-items:center;gap:5px}
+.sd-fin-p-acid{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-p-idemp{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-fin-p-event{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-fin-p-recon{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-fin-pattern small{font-size:9px;font-weight:450;color:#8a8778}
+/* System grid */
+.sd-fin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.sd-fin-card{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:14px;
+  position:relative;display:flex;flex-direction:column}
+.sd-fin-card-head{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.sd-fin-card-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
+  box-shadow:0 1px 4px rgba(189,93,58,.15)}
+.sd-fin-card:nth-child(1) .sd-fin-card-num{background:#bd5d3a;color:#fff}
+.sd-fin-card:nth-child(2) .sd-fin-card-num{background:#5a8a4a;color:#fff}
+.sd-fin-card:nth-child(3) .sd-fin-card-num{background:#4a6fa5;color:#fff}
+.sd-fin-card:nth-child(4) .sd-fin-card-num{background:#8a7a5a;color:#fff}
+.sd-fin-card:nth-child(5) .sd-fin-card-num{background:#7a5a8a;color:#fff}
+.sd-fin-card-name{font-size:12.5px;font-weight:650;color:#3d3c37;line-height:1.2}
+.sd-fin-card-sub{font-size:9.5px;color:#8a8778;font-weight:450}
+/* Key mechanism highlight */
+.sd-fin-mechanism{background:#fef9f5;border:1px solid #efd8ca;border-radius:8px;
+  padding:8px 10px;margin:0 0 8px;flex:1}
+.sd-fin-mech-label{font-size:8.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.7px;color:#a2765d;margin:0 0 4px}
+.sd-fin-mech-content{font-size:10.5px;color:#4a2f22;line-height:1.5;font-weight:500}
+.sd-fin-mech-content code{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:9.5px;
+  background:#fbefe9;border:1px solid #efd8ca;border-radius:3px;padding:0 4px;color:#bd5d3a}
+/* Tags */
+.sd-fin-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto;padding-top:6px}
+.sd-fin-tag{font-size:9px;font-weight:600;border-radius:5px;padding:2px 6px}
+.sd-fin-tag-acid{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-tag-idemp{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-fin-tag-event{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-fin-tag-recon{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+/* Connector bar at bottom */
+.sd-fin-connector{margin:14px 0 0;padding:12px 14px;background:#fff;
+  border:1px solid #e4e0d5;border-radius:10px}
+.sd-fin-conn-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#a39f90;margin:0 0 8px}
+.sd-fin-conn-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
+.sd-fin-conn-flow strong{color:#3d3c37;font-weight:600}
+.sd-fin-conn-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
+.sd-fin-conn-flow .chip{display:inline-block;font-size:9.5px;font-weight:600;
+  border-radius:5px;padding:1px 6px;margin:1px 0}
+.sd-fin-conn-flow .chip-w{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-fin-conn-flow .chip-g{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+@media (max-width:640px){
+  .sd-fin{padding:18px 14px 16px}
+  .sd-fin-grid{grid-template-columns:1fr}
+  .sd-fin-patterns{gap:4px}
+}
+</style>
+<div class="sd-fin">
+  <div class="sd-fin-title">Transactional and financial systems</div>
+  <div class="sd-fin-subtitle">Five systems, four shared patterns that make money safe</div>
+
+  <!-- Shared patterns -->
+  <div class="sd-fin-patterns">
+    <span class="sd-fin-pattern sd-fin-p-acid">ACID Transactions<small>correctness</small></span>
+    <span class="sd-fin-pattern sd-fin-p-idemp">Idempotency<small>safe retries</small></span>
+    <span class="sd-fin-pattern sd-fin-p-event">Event Sourcing<small>audit trail</small></span>
+    <span class="sd-fin-pattern sd-fin-p-recon">Reconciliation<small>consistency check</small></span>
+  </div>
+
+  <!-- System cards -->
+  <div class="sd-fin-grid">
+    <!-- Payment System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">1</div>
+        <div>
+          <div class="sd-fin-card-name">Payment System</div>
+          <div class="sd-fin-card-sub">PSP integration, ledger</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Double-entry ledger: every payment creates a <code>debit</code> + <code>credit</code> row that must sum to zero. Idempotency key prevents duplicate charges on retry.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+
+    <!-- Digital Wallet -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">2</div>
+        <div>
+          <div class="sd-fin-card-name">Digital Wallet</div>
+          <div class="sd-fin-card-sub">Balance management</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Event-sourced balance: current balance is <code>SUM(events)</code>, never stored directly. Transfer = atomic debit from wallet A + credit to wallet B in one transaction.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+
+    <!-- Stock Exchange -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">3</div>
+        <div>
+          <div class="sd-fin-card-name">Stock Exchange</div>
+          <div class="sd-fin-card-sub">Matching engine</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Order book with price-time priority. Matching engine processes orders sequentially on a single thread for determinism. Sequencer assigns global order IDs.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-event">Events</span>
+      </div>
+    </div>
+
+    <!-- Auction System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">4</div>
+        <div>
+          <div class="sd-fin-card-name">Auction System</div>
+          <div class="sd-fin-card-sub">Real-time bidding</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Optimistic locking on <code>current_price</code>: bid accepted only if <code>bid > version_price</code>. WebSocket push for live price updates. Escrow holds funds until auction closes.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+      </div>
+    </div>
+
+    <!-- Ticket System -->
+    <div class="sd-fin-card">
+      <div class="sd-fin-card-head">
+        <div class="sd-fin-card-num">5</div>
+        <div>
+          <div class="sd-fin-card-name">Ticket Booking</div>
+          <div class="sd-fin-card-sub">Inventory + reservations</div>
+        </div>
+      </div>
+      <div class="sd-fin-mechanism">
+        <div class="sd-fin-mech-label">Key mechanism</div>
+        <div class="sd-fin-mech-content">
+          Two-phase reservation: <code>HOLD</code> (TTL) then <code>CONFIRM</code> or expire. <code>SELECT ... FOR UPDATE</code> prevents double-booking the same seat.
+        </div>
+      </div>
+      <div class="sd-fin-tags">
+        <span class="sd-fin-tag sd-fin-tag-acid">ACID</span>
+        <span class="sd-fin-tag sd-fin-tag-idemp">Idempotency</span>
+        <span class="sd-fin-tag sd-fin-tag-recon">Reconcile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared connector -->
+  <div class="sd-fin-connector">
+    <div class="sd-fin-conn-title">The universal safety net</div>
+    <div class="sd-fin-conn-flow">
+      Every request carries an <span class="chip chip-w">idempotency_key</span>
+      <span class="arr">→</span> checked before processing
+      <span class="arr">→</span> if seen, return cached result<br>
+      Every state change emits an <span class="chip chip-g">event</span>
+      <span class="arr">→</span> append to immutable log
+      <span class="arr">→</span> nightly reconciliation job diffs events vs. balances
+      <span class="arr">→</span> alerts on mismatch
+    </div>
+  </div>
+</div>
+
+<p>This simplification means the availability check is a count query (<code>SELECT available_count FROM inventory WHERE hotel_id=X AND room_type='KNG' AND date BETWEEN ...</code>), not a scan of individual room status.</p>
+<h3>Double-booking prevention</h3>
+<p>Three approaches, with increasing sophistication:</p>
+<p><strong>Pessimistic locking:</strong></p>
+<pre><code>SELECT ... FOR UPDATE WHERE hotel_id=X AND room_type='KNG' AND date='2024-10-15'
+-- Check availability
+-- If available: UPDATE SET available_count = available_count - 1
+COMMIT
+</code></pre>
+<p>The <code>FOR UPDATE</code> lock blocks all other transactions trying to book the same room type on the same date. Safe but serializes all bookings — a bottleneck at high concurrency.</p>
+<p><strong>Optimistic locking (version column):</strong></p>
+<pre><code>SELECT available_count, version FROM inventory WHERE ...
+-- Check availability (application side)
+UPDATE inventory SET available_count = available_count - 1, version = version + 1
+  WHERE ... AND version = {read_version}
+-- If 0 rows updated: conflict, retry
+</code></pre>
+<p>No locks held during the check. If two transactions read the same version, only one succeeds; the other retries. Better concurrency, but retries add latency under contention.</p>
+<p><strong>Database constraints (preferred):</strong></p>
+<pre><code>ALTER TABLE inventory ADD CONSTRAINT chk_availability
+  CHECK (available_count &gt;= 0);
+
+UPDATE inventory SET available_count = available_count - 1
+  WHERE hotel_id=X AND room_type='KNG' AND date='2024-10-15';
+-- DB rejects if available_count would go negative
+</code></pre>
+<p>The database enforces the invariant. No application-level locking logic. The simplest correct solution for this scale.</p>
+<h3>Idempotency via reservationID</h3>
+<p>Network failures cause retries. Without idempotency, a retry creates a duplicate reservation:</p>
+<ol>
+<li>Client generates a unique <code>reservation_id</code> (UUID) before sending the request.</li>
+<li>Server uses <code>reservation_id</code> as the primary key (or a unique constraint).</li>
+<li>If the same <code>reservation_id</code> arrives twice, the second INSERT is rejected (duplicate key) and the server returns the existing reservation.</li>
+</ol>
+<p>This pattern is universal in financial systems — it appears in every design in this lesson.</p>
+<h3>Why MySQL (ACID) at this scale</h3>
+<p>At ~3 TPS, there is no need for distributed databases. A single MySQL instance with replication handles this comfortably:</p>
+<ul>
+<li><strong>ACID transactions</strong> guarantee that availability checks and reservation writes are atomic.</li>
+<li><strong>Relational constraints</strong> enforce business rules (no negative availability) in the database layer.</li>
+<li><strong>Read replicas</strong> handle the read-heavy browse/search traffic.</li>
+<li><strong>Failover</strong> to a hot standby for availability.</li>
+</ul>
+<p>The lesson: don't reach for distributed databases when a well-tuned RDBMS solves the problem.</p>
+<hr />
+<h2>Gaming leaderboard</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>5M daily active users, 25M total registered</li>
+<li>Real-time leaderboard: show a player's rank and the top N players</li>
+<li>Updated on every game completion (score increment)</li>
+<li>Monthly/weekly/all-time leaderboards</li>
+<li>Latency: rank lookup in under 50ms</li>
+</ul>
+<h3>Redis sorted sets</h3>
+<p>Redis sorted sets are purpose-built for this:</p>
+<ul>
+<li><strong>ZINCRBY</strong> <code>leaderboard:2024-10</code> <code>player_123</code> <code>50</code> — increment player_123's score by 50. O(log N).</li>
+<li><strong>ZREVRANK</strong> <code>leaderboard:2024-10</code> <code>player_123</code> — get player_123's rank (0-indexed, highest score first). O(log N).</li>
+<li><strong>ZREVRANGE</strong> <code>leaderboard:2024-10</code> <code>0</code> <code>9</code> <code>WITHSCORES</code> — get the top 10 players with scores. O(log N + K).</li>
+</ul>
+<pre class="mermaid">flowchart LR
+  GAME[Game server] --&gt;|&quot;ZINCRBY&lt;br/&gt;+50 points&quot;| REDIS[Redis sorted set&lt;br/&gt;leaderboard:2024-10]
+  CLIENT[Client] --&gt;|&quot;ZREVRANK&lt;br/&gt;my rank?&quot;| REDIS
+  CLIENT --&gt;|&quot;ZREVRANGE 0 9&lt;br/&gt;top 10?&quot;| REDIS</pre>
+<p>All three core operations — increment, rank lookup, and top-N — are O(log N), which at 25M members means ~25 comparisons. On Redis, that's sub-millisecond.</p>
+<h3>Monthly keys and TTL</h3>
+<p>Each time period gets its own sorted set key:</p>
+<ul>
+<li><code>leaderboard:2024-10</code> — October 2024</li>
+<li><code>leaderboard:2024-W43</code> — week 43</li>
+<li><code>leaderboard:alltime</code> — never expires</li>
+</ul>
+<p>Monthly keys get a TTL (e.g., 90 days after the month ends). This avoids unbounded memory growth.</p>
+<h3>Scaling beyond a single Redis instance</h3>
+<p>A single Redis instance holds the sorted set in memory. For 25M members with 8-byte scores and ~20-byte member names, that's ~700 MB — well within a single instance's capacity.</p>
+<p>But if the player base grows to hundreds of millions, or if there are thousands of concurrent leaderboards:</p>
+<p><strong>Range partitioning</strong> — split the score range across Redis instances:</p>
+<ul>
+<li>Instance 1: scores 0-999</li>
+<li>Instance 2: scores 1000-9999</li>
+<li>Instance 3: scores 10000+</li>
+</ul>
+<p>Problem: score distributions are skewed (most players cluster in the middle), so partitions are uneven.</p>
+<p><strong>Hash partitioning</strong> — hash player_id to a shard. Each shard holds a partial leaderboard.</p>
+<ul>
+<li>Getting a player's rank requires querying all shards and merging.</li>
+<li>Top-N requires querying all shards for their top-N and merging.</li>
+<li>Trade-off: write distribution is even, but reads are scatter-gather.</li>
+</ul>
+<p>For most games (under 100M players), a single beefy Redis instance is sufficient and simpler.</p>
+<hr />
+<h2>Payment system</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>Millions of transactions per day</li>
+<li>Integration with Payment Service Providers (PSPs): Stripe, Braintree, Adyen</li>
+<li>Double-entry ledger for every money movement</li>
+<li>Exactly-once payment execution</li>
+<li>Nightly reconciliation against PSP and bank records</li>
+</ul>
+<h3>PSP integration and hosted payment page</h3>
+<p>The payment system does <strong>not</strong> handle raw credit card numbers. Instead:</p>
+<ol>
+<li>The client loads a <strong>hosted payment page</strong> from the PSP (Stripe Checkout, Braintree Drop-in).</li>
+<li>The user enters card details directly into the PSP's iframe.</li>
+<li>The PSP returns a payment token to the client.</li>
+<li>The client sends the token to the merchant's backend.</li>
+<li>The backend calls the PSP API with the token to execute the charge.</li>
+</ol>
+<pre class="mermaid">sequenceDiagram
+  participant U as User
+  participant C as Client app
+  participant PSP as PSP (Stripe)
+  participant M as Merchant backend
+
+  C-&gt;&gt;PSP: Load hosted payment page
+  U-&gt;&gt;PSP: Enter card details
+  PSP--&gt;&gt;C: Payment token (tok_xxx)
+  C-&gt;&gt;M: Submit order + token
+  M-&gt;&gt;PSP: Charge token (amount, currency, idempotency_key)
+  PSP--&gt;&gt;M: Payment result (success/failure)
+  M--&gt;&gt;C: Order confirmation</pre>
+<p>This keeps the merchant out of PCI scope — they never see, store, or transmit card numbers.</p>
+<h3>Double-entry ledger</h3>
+<p>Every money movement is recorded as <strong>two entries</strong> that sum to zero:</p>
+<table>
+<thead>
+<tr>
+<th>Transaction</th>
+<th>Debit (from)</th>
+<th>Credit (to)</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer pays</td>
+<td>Customer wallet</td>
+<td>Merchant revenue</td>
+<td>$100.00</td>
+</tr>
+<tr>
+<td>PSP fee</td>
+<td>Merchant revenue</td>
+<td>PSP fees payable</td>
+<td>$2.90</td>
+</tr>
+<tr>
+<td>Refund</td>
+<td>Merchant revenue</td>
+<td>Customer wallet</td>
+<td>$100.00</td>
+</tr>
+</tbody>
+</table>
+<p>The invariant: <strong>sum of all debits = sum of all credits</strong>, always. If they diverge, something is wrong and the discrepancy must be investigated before any more transactions process.</p>
+<p>Double-entry bookkeeping is 700 years old and remains the gold standard because:</p>
+<ul>
+<li>Every transaction is self-documenting (where the money came from, where it went).</li>
+<li>Errors are detectable (the books don't balance).</li>
+<li>Auditing is straightforward (follow the chain of entries).</li>
+</ul>
+<h3>Idempotency via payment_order_id</h3>
+<p>The most dangerous failure in payments: a network timeout after the PSP charges the card but before the merchant records the success. The merchant retries, and the customer is charged twice.</p>
+<p>Prevention:</p>
+<ol>
+<li>The merchant generates a unique <code>payment_order_id</code> before calling the PSP.</li>
+<li>This ID is sent as the PSP's <code>idempotency_key</code>.</li>
+<li>If the PSP receives the same idempotency_key twice, it returns the original result without re-executing.</li>
+<li>The merchant's own database uses <code>payment_order_id</code> as a unique key.</li>
+</ol>
+<h3>Retry queue and dead-letter queue</h3>
+<p>Failed payment attempts follow a structured retry path:</p>
+<pre class="mermaid">flowchart LR
+  PAY[Payment request] --&gt; EXEC[Execute via PSP]
+  EXEC --&gt;|&quot;Success&quot;| LEDGER[Record in ledger]
+  EXEC --&gt;|&quot;Transient failure&lt;br/&gt;(timeout, 500)&quot;| RETRY[&quot;Retry queue&lt;br/&gt;(exponential backoff)&quot;]
+  RETRY --&gt;|&quot;Retry attempt&quot;| EXEC
+  RETRY --&gt;|&quot;Max retries&lt;br/&gt;exceeded&quot;| DLQ[&quot;Dead-letter queue&lt;br/&gt;(manual investigation)&quot;]
+  EXEC --&gt;|&quot;Permanent failure&lt;br/&gt;(card declined)&quot;| FAIL[Mark failed]</pre>
+<ul>
+<li><strong>Transient failures</strong> (timeouts, 500 errors) go to the retry queue with exponential backoff (1s, 2s, 4s, 8s...).</li>
+<li>After max retries (typically 3-5), the payment moves to the <strong>dead-letter queue</strong> for manual investigation.</li>
+<li><strong>Permanent failures</strong> (card declined, insufficient funds) are not retried.</li>
+</ul>
+<h3>Nightly reconciliation</h3>
+<p>The payment system, PSP, and bank each have their own record of every transaction. <strong>Reconciliation</strong> verifies that all three agree:</p>
+<ol>
+<li>Download the PSP's settlement report (all charges, refunds, fees for the day).</li>
+<li>Download the bank's statement (deposits received).</li>
+<li>Compare against the internal ledger, line by line.</li>
+<li>Flag discrepancies for investigation.</li>
+</ol>
+<p>Discrepancies happen more often than you'd expect: timezone differences, currency rounding, PSP processing delays, partial refunds. A robust reconciliation pipeline is not optional — it's how you catch errors before the quarterly audit.</p>
+<hr />
+<h2>Digital wallet</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>1 million transactions per second (TPS) at peak</li>
+<li>Balance correctness: no cent lost, no cent created</li>
+<li>Auditability: complete history of every balance change</li>
+<li>Low latency: balance check in under 10ms</li>
+</ul>
+<h3>Evolution of the architecture</h3>
+<p>The architecture evolves through four stages as TPS requirements grow:</p>
+<p><strong>Stage 1: Redis (simple but fragile)</strong></p>
+<p>Store balances in Redis as key-value pairs. INCR/DECR for transfers. Fast but no durability guarantee — a Redis crash loses uncommitted transactions.</p>
+<p><strong>Stage 2: Sharded RDBMS with 2PC</strong></p>
+<p>Move balances to MySQL, sharded by user_id. A transfer between two users on different shards requires <strong>two-phase commit (2PC)</strong>:</p>
+<ol>
+<li><strong>Prepare:</strong> both shards lock the rows and confirm they can execute.</li>
+<li><strong>Commit:</strong> the coordinator tells both shards to commit.</li>
+</ol>
+<p>If either shard fails during prepare, both abort. If the coordinator crashes after prepare but before commit, the shards remain locked until the coordinator recovers — this is the <strong>blocking problem</strong> of 2PC.</p>
+<p><strong>Try-Confirm/Cancel (TC/C)</strong> is a business-level alternative:</p>
+<ol>
+<li><strong>Try:</strong> tentatively debit the sender (hold the amount).</li>
+<li><strong>Confirm:</strong> credit the receiver and finalize the debit.</li>
+<li><strong>Cancel:</strong> if confirm fails, reverse the hold.</li>
+</ol>
+<p>TC/C avoids distributed locks but requires compensating transactions (reversal logic).</p>
+<p><strong>Stage 3: Event sourcing + CQRS</strong></p>
+<pre class="mermaid">flowchart LR
+  CMD[Transfer command] --&gt; ES[&quot;Event store&lt;br/&gt;(append-only log)&quot;]
+  ES --&gt; PROJ[&quot;Projection&lt;br/&gt;(materialize balances)&quot;]
+  PROJ --&gt; READ[&quot;Read model&lt;br/&gt;(current balances)&quot;]
+  ES --&gt; AUDIT[&quot;Audit log&lt;br/&gt;(complete history)&quot;]</pre>
+<p>Instead of updating a balance column, append an event: <code>{type: "transfer", from: A, to: B, amount: 50, timestamp: ...}</code>.</p>
+<p>The current balance is a <strong>projection</strong> — computed by replaying all events for that user. This is cached in a read model (Redis or a materialized view) for fast lookups.</p>
+<p><strong>CQRS (Command Query Responsibility Segregation):</strong> writes go to the event store; reads come from the projected read model. They can scale independently.</p>
+<p><strong>Stage 4: Raft replication</strong></p>
+<p>At 1M TPS, even sharded databases struggle. The final architecture uses a custom storage engine with <strong>Raft consensus</strong> for replication:</p>
+<ul>
+<li>Each shard is a Raft group (leader + 2 followers).</li>
+<li>Writes go to the leader, which replicates to followers before acknowledging.</li>
+<li>If the leader fails, a follower is elected within milliseconds.</li>
+<li>The event log <em>is</em> the Raft log — no separate replication mechanism.</li>
+</ul>
+<h3>Why event sourcing for wallets</h3>
+<p>Event sourcing is not just an implementation choice — it's a regulatory requirement:</p>
+<ul>
+<li><strong>Auditability:</strong> the event log is a complete, immutable record of every transaction. Regulators can request it.</li>
+<li><strong>Debugging:</strong> reproduce any balance by replaying events up to a point in time.</li>
+<li><strong>Correction:</strong> to fix a wrong transaction, append a compensating event (a reversal), don't modify history.</li>
+<li><strong>Analytics:</strong> replay events through different projections to answer business questions.</li>
+</ul>
+<hr />
+<h2>Stock exchange</h2>
+<h3>Scale and requirements</h3>
+<ul>
+<li>1 billion orders per day (~30K orders/sec sustained, 100K+ peak)</li>
+<li>Matching latency: microseconds (not milliseconds)</li>
+<li>Deterministic execution: same inputs must produce same outputs</li>
+<li>Zero message loss in the critical path</li>
+<li>Market data disseminated to thousands of subscribers in real time</li>
+</ul>
+<h3>Single-server architecture with mmap</h3>
+<p>The most surprising design choice: the matching engine runs on a <strong>single server</strong>, not a distributed cluster.</p>
+<p>Why single-server:</p>
+<ul>
+<li>Eliminates network latency between components (cross-network hops are microseconds to milliseconds; in-process is nanoseconds).</li>
+<li>Deterministic execution — no distributed consensus delays.</li>
+<li>Modern servers handle 100K+ orders/sec with custom code.</li>
+</ul>
+<p><strong>mmap'd shared memory</strong> connects components within the server:</p>
+<pre class="mermaid">flowchart LR
+  subgraph &quot;Single server&quot;
+    SEQ[&quot;Sequencer&lt;br/&gt;(assign order)&quot;]
+    OB[&quot;Order book&lt;br/&gt;(matching engine)&quot;]
+    REPORT[&quot;Trade reporter&quot;]
+    SEQ --&gt;|&quot;mmap shared&lt;br/&gt;memory&quot;| OB
+    OB --&gt;|&quot;mmap shared&lt;br/&gt;memory&quot;| REPORT
+  end
+  GW[&quot;Gateway&lt;br/&gt;(network I/O)&quot;] --&gt; SEQ
+  REPORT --&gt; MD[&quot;Market data&lt;br/&gt;publisher&quot;]</pre>
+<p>mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory; the matching engine reads it directly — zero copy.</p>
+<h3>Custom sequencer (not Kafka)</h3>
+<p>A stock exchange cannot use Kafka as a sequencer because:</p>
+<ul>
+<li>Kafka's latency is milliseconds; the exchange needs microseconds.</li>
+<li>Kafka's ordering is per-partition; the exchange needs total order across all symbols (or per-symbol with deterministic interleaving).</li>
+<li>Kafka's consumer pull model adds latency; the exchange pushes events directly.</li>
+</ul>
+<p>The custom sequencer:</p>
+<ol>
+<li>Receives orders from the gateway.</li>
+<li>Assigns a globally monotonic sequence number.</li>
+<li>Writes the sequenced order to the mmap'd ring buffer.</li>
+<li>The matching engine consumes from the ring buffer in sequence order.</li>
+</ol>
+<h3>Order book: doubly-linked list + hash map</h3>
+<p>The <strong>order book</strong> tracks all outstanding buy and sell orders for a symbol, sorted by price-time priority:</p>
+<pre class="mermaid">flowchart TB
+  subgraph &quot;Order book for AAPL&quot;
+    subgraph &quot;Asks (sell orders, ascending price)&quot;
+      A1[&quot;$150.10 x 200 shares&quot;]
+      A2[&quot;$150.15 x 500 shares&quot;]
+      A3[&quot;$150.20 x 300 shares&quot;]
+    end
+    subgraph &quot;Bids (buy orders, descending price)&quot;
+      B1[&quot;$150.05 x 400 shares&quot;]
+      B2[&quot;$150.00 x 600 shares&quot;]
+      B3[&quot;$149.95 x 100 shares&quot;]
+    end
+  end
+  A1 --- A2 --- A3
+  B1 --- B2 --- B3</pre>
+<p>Data structure: a <strong>doubly-linked list</strong> of price levels, with a <strong>hash map</strong> from order_id to its node in the list:</p>
+<ul>
+<li><strong>Add order:</strong> hash map insert + linked list insertion at the correct price level. O(1) amortized.</li>
+<li><strong>Cancel order:</strong> hash map lookup + linked list removal. O(1).</li>
+<li><strong>Match (execute trade):</strong> walk the best bid/ask price levels. O(1) for a simple match; O(K) for a fill across K price levels.</li>
+</ul>
+<p>Why not a tree? Trees have O(log N) operations. At microsecond latency targets, the constant factor of hash map + linked list beats tree traversal. Cache locality matters — the linked list at each price level keeps related orders contiguous in memory.</p>
+<h3>Event sourcing + Raft for durability</h3>
+<p>The exchange uses <strong>event sourcing</strong>: every order, cancellation, and trade is an event in an append-only log. The order book state is a deterministic projection of this log.</p>
+<p>For disaster recovery, the event log is replicated via <strong>Raft consensus</strong> to standby servers:</p>
+<ul>
+<li>The primary processes events and replicates the log to followers.</li>
+<li>If the primary fails, a follower replays the log and becomes the new primary.</li>
+<li>Because the log is deterministic, the follower's order book state is identical to the primary's at any given sequence number.</li>
+</ul>
+<h3>Reliable UDP multicast for market data</h3>
+<p>Market data (price updates, trade executions) must reach thousands of subscribers simultaneously. TCP unicast doesn't scale — one connection per subscriber, with TCP's congestion control adding latency.</p>
+<p><strong>Reliable UDP multicast:</strong></p>
+<ul>
+<li>The exchange publishes market data to a multicast group (one packet reaches all subscribers simultaneously).</li>
+<li>Each packet carries a sequence number.</li>
+<li>Subscribers detect gaps (missing sequence numbers) and request retransmission via a side channel.</li>
+<li>The exchange buffers recent packets for retransmission.</li>
+</ul>
+<p>The tradeoff: UDP multicast requires network infrastructure support (IGMP, switches with multicast routing). It works within a datacenter or across connected exchanges, not over the public internet.</p>
+<hr />
+<h2>Failure modes</h2>
+<ul>
+<li><strong>Double-booking despite locking</strong> — optimistic locking retries can succeed if the retry window is too wide and availability changes between retries. DB constraints are the safest fallback.</li>
+<li><strong>Redis sorted set memory exhaustion</strong> — an all-time leaderboard for a game with 100M players uses significant memory. Monitor memory; archive old data.</li>
+<li><strong>Payment idempotency key collision</strong> — if the idempotency key is too short or poorly generated, collisions cause silent payment failures (the PSP returns the old result for a new, different payment). Use UUIDs.</li>
+<li><strong>2PC coordinator failure</strong> — in the digital wallet's Stage 2, a coordinator crash during the commit phase leaves shards in a locked, uncertain state. TC/C or event sourcing eliminates this class of failure.</li>
+<li><strong>Exchange sequencer failure</strong> — a single sequencer is a single point of failure. Failover to a standby sequencer must preserve the sequence number without gaps or duplicates. This requires Raft-replicated sequence state.</li>
+<li><strong>Reconciliation drift</strong> — if the payment system's nightly reconciliation is delayed or skipped, discrepancies compound and become harder to investigate. Reconciliation must be treated as a P0 operational process.</li>
+<li><strong>Event sourcing replay time</strong> — rebuilding a wallet's balance from billions of events is slow. Periodic snapshots (checkpoints) reduce replay time but add complexity.</li>
+<li><strong>Market data multicast gap storm</strong> — if many subscribers miss the same packet, they all request retransmission simultaneously, overwhelming the retransmit server. Mitigation: stagger retransmission requests with jitter.</li>
+</ul>
+<h2>Practitioner checklist</h2>
+<ul>
+<li class="task todo">Is every write operation in the financial path idempotent, with a client-generated unique key?</li>
+<li class="task todo">For reservations: is double-booking prevented by a database constraint, not just application logic?</li>
+<li class="task todo">For leaderboards: have you verified that the data set fits in Redis memory, with a plan for growth?</li>
+<li class="task todo">For payments: is the ledger double-entry, and does the sum of debits always equal the sum of credits?</li>
+<li class="task todo">Is there a dead-letter queue for failed operations, with alerting and manual investigation workflow?</li>
+<li class="task todo">For wallets: is the event log the source of truth, with balances as derived projections?</li>
+<li class="task todo">For the exchange: is the matching engine deterministic — same inputs always produce same outputs?</li>
+<li class="task todo">Is nightly reconciliation automated, with discrepancy alerting?</li>
+<li class="task todo">Have you tested the failure of every component in the critical payment/trading path?</li>
+<li class="task todo">Are compensating transactions defined for every operation that can partially succeed?</li>
+</ul>
+<h2>Related lessons</h2>
+<ul>
+<li><a href="data-infrastructure.html">Data infrastructure</a> — exactly-once delivery semantics in Kafka, which underpins payment event processing</li>
+<li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — back-of-envelope estimation for TPS, storage, and latency budgets</li>
+<li><a href="core-building-blocks.html">Core building blocks</a> — consistent hashing for wallet shard distribution; unique ID generation for idempotency keys</li>
+<li><a href="real-time-systems.html">Real-time systems</a> — low-latency pub/sub patterns from chat and streaming that inform market data distribution</li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="data-infrastructure.html"><span class="lbl">← Previous</span><span class="ttl">Data infrastructure</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main></div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+  themeVariables:{
+    background:'#faf9f5',
+    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
+    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
+    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
+    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
+    edgeLabelBackground:'#faf9f5',
+    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
+    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
+    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
+    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
+    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
+    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
+    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
+    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
+    quadrantTitleFill:'#1f1e1d',
+    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
+    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+});
+await mermaid.run({querySelector:'pre.mermaid'});
+// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+document.querySelectorAll('pre.mermaid svg').forEach(s=>{
+  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+  const cw=s.parentElement.clientWidth||0;
+  if(cw&&w>cw*1.6){s.style.maxWidth='none';
+    const h=document.createElement('span');h.className='mm-hint';
+    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
+});
+</script>
+<style id="reader-css">
+/* ---- font choices (only active when data-rf is set) ---- */
+html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}
+html[data-rf="georgia"]{--rs-font:Georgia,"Times New Roman",serif}
+html[data-rf="sf"]{--rs-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif}
+html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
+html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.chip,a){font-family:var(--rs-font) !important}
+html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *,html[data-rf] main p code,html[data-rf] main li code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace !important}
+html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
+/* ---- size scaling (only active when data-rs is set) ---- */
+html[data-rs] main{font-size:calc(16.5px * var(--rs-scale,1)) !important}
+html[data-rs] main h1{font-size:2.35em !important;line-height:1.15 !important}
+html[data-rs] main h2{font-size:1.7em !important}
+html[data-rs] main h3{font-size:1.25em !important}
+html[data-rs] main h4{font-size:1em !important}
+html[data-rs] main .lede{font-size:1.2em !important}
+html[data-rs] main table{font-size:.9em !important}
+html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
+html[data-rs] main .pm-callout p{font-size:.95em !important}
+html[data-rs] main pre{font-size:.85em !important}
+/* ---- margins / column width (only active when data-rm is set) ---- */
+html[data-rm="n"] main{max-width:620px !important}
+html[data-rm="w"] main{max-width:1120px !important}
+/* ---- the widget ---- */
+/* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
+#rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e4e0d5;background:#faf9f5;color:#1f1e1d;
+  font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
+#rs-btn:hover{border-color:#d97757;color:#bd5d3a}
+#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#faf9f5;border:1px solid #e4e0d5;
+  border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
+#rs-panel.open{display:block}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8a8778;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h:first-child{margin-top:0}
+.rs-fonts{display:flex;flex-direction:column;gap:4px}
+.rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
+  border:1px solid transparent;border-radius:8px;background:none;font-size:15px;color:#1f1e1d;cursor:pointer;text-align:left}
+.rs-fonts button:hover{background:#f2f0e9}
+.rs-fonts button.on{border-color:#d97757;background:#fbefe9}
+.rs-fonts button .rs-check{color:#bd5d3a;font-weight:700;visibility:hidden}
+.rs-fonts button.on .rs-check{visibility:visible}
+.rs-row{display:flex;align-items:center;gap:8px}
+.rs-row button{flex:1;padding:7px 0;border:1px solid #e4e0d5;border-radius:8px;background:#fff;
+  cursor:pointer;color:#1f1e1d;font-size:14px}
+.rs-row button:hover{border-color:#d97757}
+.rs-row button.on{border-color:#d97757;background:#fbefe9;font-weight:600}
+.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#8a8778;font-variant-numeric:tabular-nums}
+#rs-sminus{font-size:13px}#rs-splus{font-size:17px}
+#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:8px;background:#f2f0e9;
+  color:#8a8778;font-size:13px;cursor:pointer}
+#rs-reset:hover{color:#bd5d3a}
+@media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
+@media print{#rs-root{display:none}}
+</style>
+<div id="rs-root">
+  <div id="rs-panel" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts">
+      <button data-f="" style="font-family:inherit">Original<span class="rs-check">✓</span></button>
+      <button data-f="charter" style="font-family:Charter,'Bitstream Charter',Georgia,serif">Charter<span class="rs-check">✓</span></button>
+      <button data-f="georgia" style="font-family:Georgia,serif">Georgia<span class="rs-check">✓</span></button>
+      <button data-f="sf" style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif">San Francisco<span class="rs-check">✓</span></button>
+      <button data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif">Tahoma<span class="rs-check">✓</span></button>
+      <button data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica<span class="rs-check">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button id="rs-sminus" aria-label="Decrease font size">A</button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button id="rs-splus" aria-label="Increase font size">A</button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="rs-row rs-margins">
+      <button data-m="n" title="Narrow column">▮</button>
+      <button data-m="" title="Default">▬</button>
+      <button data-m="w" title="Wide column">▭</button>
+    </div>
+    <button id="rs-reset">Reset to defaults</button>
+  </div>
+  <button id="rs-btn" aria-label="Reader settings" aria-expanded="false" title="Reader settings — font, size, margins">Aa</button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string')st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-f')===st.f)});
+    panel.querySelectorAll('.rs-margins button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-m')===st.m)});
+  }
+  btn.addEventListener('click',function(){
+    var open=panel.classList.toggle('open');btn.setAttribute('aria-expanded',open)});
+  document.addEventListener('click',function(e){
+    if(!root.contains(e.target)){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+  panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  panel.querySelectorAll('.rs-margins button').forEach(function(b){
+    b.addEventListener('click',function(){st.m=b.getAttribute('data-m');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save()});
+  apply();
+})();
+</script>
+</body></html>
