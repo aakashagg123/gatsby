@@ -72,10 +72,10 @@ fees branch : 1750
 same table, FIRST: {'band': 'prime'} (bug hidden)
 ```
 
-Same rows, same input: UNIQUE **catches** the boundary overlap; FIRST silently ships
-whichever band happens to sit higher in the file. And the COLLECT+SUM fee table shows
-the accumulation case — base fee + branch surcharge + big-ticket diligence = 1750,
-three rows contributing to one number.
+Same rows, same input. UNIQUE **catches** the boundary overlap, while FIRST silently
+ships whichever band happens to sit higher in the file. The COLLECT+SUM fee table
+shows the accumulation case — base fee, branch surcharge, and big-ticket diligence
+sum to 1750, three rows contributing to one number.
 
 ## Use It
 
@@ -86,17 +86,17 @@ In DMN XML the policy is one attribute (lesson 03 writes the full file):
 <decisionTable id="feeTable" hitPolicy="COLLECT" aggregation="SUM">
 ```
 
-Flowable evaluates exactly these semantics, with one operational note: a UNIQUE
-violation or a no-match surfaces as an evaluation failure in the calling process —
-i.e. a *technical* error on the decision task, landing in the Phase 4 pipeline
-(retry, dead-letter). Retrying won't fix a table bug, which is precisely why UNIQUE
-violations should page the table's owner, not ops (lesson 04).
+Flowable evaluates exactly these semantics, with one operational note. A UNIQUE
+violation or a no-match surfaces as an evaluation failure in the calling process — a
+*technical* error on the decision task, landing in the Phase 4 pipeline (retry,
+dead-letter). Retrying won't fix a table bug, which is exactly why UNIQUE violations
+should page the table's owner, not ops (lesson 04).
 
 ## Ship It
 
-This lesson ships [`code/hit_policies.py`](../code/hit_policies.py) — the complete
-toy DMN engine (tables + UNIQUE/FIRST/ANY/COLLECT with aggregation), small enough to
-use as an oracle when a production table misbehaves.
+This lesson ships [`code/hit_policies.py`](../code/hit_policies.py): the complete
+toy DMN engine, with tables and UNIQUE/FIRST/ANY/COLLECT plus aggregation. It's
+small enough to use as an oracle when a production table misbehaves.
 
 ## Check Yourself
 
@@ -129,13 +129,13 @@ burden is the hidden cost that makes UNIQUE the better default.</details>
 - D) validating a PAN
 
 <details><summary>Answer</summary>B — accumulation across all applicable rows is what
-COLLECT exists for; classification and pricing pick *one* answer.</details>
+COLLECT exists for. Classification and pricing pick *one* answer.</details>
 
-**Challenge.** Write a static overlap checker for UNIQUE tables: for each pair of
-rows, decide whether some input could satisfy both (for interval predicates this is
-just interval intersection). Run it on `RISK_BAND` — it should flag rows 1–2 *without
-evaluating anything*. You've built the validation Flowable's model editor runs on
-save.
+**Challenge.** Write a static overlap checker for UNIQUE tables. For each pair of
+rows, decide whether some input could satisfy both — for interval predicates, this
+is just interval intersection. Run it on `RISK_BAND`: it should flag rows 1–2
+*without evaluating anything*. You've built the validation Flowable's model editor
+runs on save.
 
 ## Related
 

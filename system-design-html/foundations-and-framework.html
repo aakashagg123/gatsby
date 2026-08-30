@@ -314,10 +314,10 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Foundations &amp; framework</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Every system starts as one server and grows by separating concerns: compute from storage, reads from writes, hot data from cold. <strong>Scaling</strong> is the art of adding capacity without redesigning — through load balancers, replication, caching, CDNs, message queues, and sharding. Before you design anything, <strong>back-of-envelope estimation</strong> forces you to confront the numbers: QPS, storage, bandwidth, cost. And the <strong>four-step framework</strong> (scope → high-level design → deep dive → wrap-up) keeps you from getting lost in detail before you've agreed on what you're building.</p>
+<p>Every system starts as one server. It grows by separating concerns: compute from storage, reads from writes, hot data from cold. <strong>Scaling</strong> is the art of adding capacity without redesigning. It uses load balancers, replication, caching, CDNs, message queues, and sharding. Before you design anything, <strong>back-of-envelope estimation</strong> forces you to confront the numbers: QPS, storage, bandwidth, cost. The <strong>four-step framework</strong> — scope, high-level design, deep dive, wrap-up — keeps you from getting lost in detail before you've agreed on what you're building.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
-<p><strong>Why it matters</strong> — If you can't estimate QPS or spot where a system will bottleneck, you're making capacity and timeline decisions blind. The framework isn't academic — it's how your team should scope every technical bet.</p>
+<p><strong>Why it matters</strong> — If you can't estimate QPS or spot where a system will bottleneck, you're making capacity and timeline decisions blind. The framework isn't academic. It's how your team should scope every technical bet.</p>
 <p><strong>What it changes in your decisions</strong> — You stop treating scaling as "we'll figure it out later." You insist on estimation before committing to architecture. You know when vertical scaling hits a wall and horizontal scaling demands statelessness.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's our peak QPS, and which tier hits its limit first — compute, storage, or network?"</em></p>
 <p><strong>Risk if ignored</strong> — You ship a system that works at demo scale and breaks at launch scale, or you over-provision by 10× because nobody ran the numbers.</p>
@@ -419,14 +419,14 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
 </div>
 
 <h3>Single server to separated tiers</h3>
-<p>Everything starts on one machine: web server, database, cache, static files. The first split separates <strong>compute</strong> (web/application servers) from <strong>storage</strong> (database), because they scale differently — compute is stateless and horizontally scalable, storage needs replication and consistency guarantees.</p>
+<p>Everything starts on one machine: web server, database, cache, static files. The first split separates <strong>compute</strong> (web/application servers) from <strong>storage</strong> (database). They scale differently: compute is stateless and horizontally scalable, while storage needs replication and consistency guarantees.</p>
 <h3>Load balancing and replication</h3>
-<p>A <strong>load balancer</strong> sits in front of web servers and distributes requests. Users hit the LB's public IP; individual servers keep private IPs, hidden from clients. This enables horizontal scaling (add servers behind the LB) and eliminates single points of failure.</p>
-<p><strong>Database replication</strong> follows, typically master-slave: writes go to the master, reads fan out across replicas. If the master fails, a slave is promoted. If a slave fails, reads redirect to others. The tradeoff: replication lag means reads can be stale — acceptable for most features, dangerous for financial transactions.</p>
+<p>A <strong>load balancer</strong> sits in front of web servers and distributes requests. Users hit the LB's public IP. Individual servers keep private IPs, hidden from clients. This enables horizontal scaling (add servers behind the LB) and eliminates single points of failure.</p>
+<p><strong>Database replication</strong> follows, typically master-slave: writes go to the master, reads fan out across replicas. If the master fails, a slave is promoted. If a slave fails, reads redirect to others. The tradeoff: replication lag means reads can be stale. That's acceptable for most features, but dangerous for financial transactions.</p>
 <h3>Caching, CDN, and statelessness</h3>
 <p>A <strong>cache tier</strong> (Redis, Memcached) sits between the web tier and the database. Read-through caching: check cache first, fall back to DB, populate cache for next read. Critical decisions: expiration policy, eviction strategy (LRU is the default), and how to handle cache-DB inconsistency during writes.</p>
 <p>A <strong>CDN</strong> pushes static assets to edge servers near users. CDN cost is proportional to traffic, so cache expiration tuning matters — too short wastes origin bandwidth, too long serves stale content.</p>
-<p><strong>Statelessness</strong> means moving session data out of individual web servers into a shared store (Redis, or a dedicated session DB). This lets any request go to any server, which is what makes auto-scaling and multi-datacenter deployments possible.</p>
+<p><strong>Statelessness</strong> means moving session data out of individual web servers into a shared store (Redis, or a dedicated session DB). This lets any request go to any server. That's what makes auto-scaling and multi-datacenter deployments possible.</p>
 <h3>Sharding: the final frontier</h3>
 <p>When the database itself becomes the bottleneck, you <strong>shard</strong> — partition data across multiple database instances. The key decision is the <strong>shard key</strong>: it must distribute data evenly and support your most common queries without cross-shard joins.</p>
 <p>Sharding introduces three hard problems:</p>
@@ -613,7 +613,7 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
 </div>
 
 <h3>Step 1: Understand the problem and establish scope</h3>
-<p>Ask clarifying questions. Document assumptions. Determine the scale (users, QPS, storage, latency requirements). Identify the most important features — you can't design everything in 45 minutes; scope decides what to detail and what to sketch.</p>
+<p>Ask clarifying questions. Document assumptions. Determine the scale (users, QPS, storage, latency requirements). Identify the most important features. You can't design everything in 45 minutes, so scope decides what to detail and what to sketch.</p>
 <h3>Step 2: Propose high-level design and get buy-in</h3>
 <p>Draw the box diagram: clients, load balancers, web servers, caches, databases, message queues, CDNs. Walk through the main use cases against the diagram. Do a quick back-of-envelope check. Get agreement before going deeper.</p>
 <h3>Step 3: Design deep dive</h3>

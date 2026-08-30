@@ -314,7 +314,7 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Data infrastructure</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Data infrastructure is the plumbing beneath every system in this track. <strong>Distributed message queues</strong> (Kafka) decouple producers from consumers using append-only logs, partitioned topics, and consumer groups — the same pattern that appears as a building block in metrics, ad aggregation, email, and a dozen other designs. <strong>Metrics monitoring</strong> combines pull-based collection (Prometheus) with time-series databases and down-sampling to track 10M metrics without drowning in data. <strong>Ad click aggregation</strong> applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. <strong>Distributed email</strong> handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.</p>
+<p>Data infrastructure is the plumbing beneath every system in this track. <strong>Distributed message queues</strong> (Kafka) decouple producers from consumers, using append-only logs, partitioned topics, and consumer groups. This same pattern appears as a building block in metrics, ad aggregation, email, and a dozen other designs. <strong>Metrics monitoring</strong> combines pull-based collection (Prometheus) with time-series databases and down-sampling, to track 10M metrics without drowning in data. <strong>Ad click aggregation</strong> applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. <strong>Distributed email</strong> handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
 <p><strong>Why it matters</strong> — Message queues, metrics pipelines, and event aggregation are invisible to users but determine whether your system can absorb traffic spikes, detect problems before users do, and produce accurate billing. They are the foundations your visible features rest on.</p>
@@ -674,7 +674,7 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   KAFKA --&gt; WRITE[TSDB writer pool]
   WRITE --&gt; TSDB[(Time-series DB&lt;br/&gt;e.g., InfluxDB, Thanos)]
   KAFKA --&gt; ALERT[Alert evaluator]</pre>
-<p>Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst; the TSDB writer pool processes at a sustainable rate.</p>
+<p>Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.</p>
 <h3>Time-series storage: down-sampling and encoding</h3>
 <p>Raw metrics at 10-second intervals generate enormous data volumes. <strong>Down-sampling</strong> reduces older data:</p>
 <table>

@@ -141,10 +141,11 @@ discussion.)</details>
 have opinions; Phase 9 gives you the answers.</details>
 
 **Challenge.** Wire lesson 03's `loan-triage.bpmn20.xml` into
-`src/main/resources/processes/`, replace the expression-based `creditCheck` with the
-delegate above, and make the delegate throw for amounts over ₹50 lakh. Observe: does
-the start call fail, or does a job dead-letter? Explain the answer using lesson 03's
-boundary rules, then add `flowable:async="true"` and watch the behaviour flip.
+`src/main/resources/processes/`, replace the expression-based `creditCheck` with
+the delegate above, and make the delegate throw for amounts over ₹50 lakh.
+Observe: does the start call fail, or does a job dead-letter? Explain the answer
+using lesson 03's boundary rules, then add `flowable:async="true"` and watch the
+behaviour flip.
 
 ## Related
 
