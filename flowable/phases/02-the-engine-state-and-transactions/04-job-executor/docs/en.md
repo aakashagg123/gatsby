@@ -123,8 +123,9 @@ Tuning threads, acquisition size, and lock times is Phase 9, lesson 03.
 ## Ship It
 
 This lesson ships the executor as a module:
-[`code/job_executor.py`](../code/job_executor.py) — store, acquisition, backoff, and
-dead-lettering in ~100 lines you can reason about during a production incident.
+[`code/job_executor.py`](../code/job_executor.py) — store, acquisition, backoff,
+and dead-lettering in ~100 lines you can reason about during a production
+incident.
 
 ## Check Yourself
 
@@ -135,9 +136,10 @@ dead-lettering in ~100 lines you can reason about during a production incident.
 - C) jobs are sharded by node
 - D) it does run twice, harmlessly
 
-<details><summary>Answer</summary>B — no messaging, no leader election; the database's
-own update semantics are the mutual exclusion. (Lock timeouts mean a *rare* double-run
-is still possible after a node death — handlers should be idempotent.)</details>
+<details><summary>Answer</summary>B — no messaging, no leader election. The
+database's own update semantics provide the mutual exclusion. (Lock timeouts
+mean a *rare* double-run is still possible after a node death, so handlers
+should be idempotent.)</details>
 
 **Q2.** A job's retries hit zero. The engine…
 
@@ -147,7 +149,8 @@ is still possible after a node death — handlers should be idempotent.)</detail
 - D) rolls back the whole instance
 
 <details><summary>Answer</summary>C — dead letters are the "stop and ask a human"
-state. Unmonitored, they are silently stuck processes — alert on that table.</details>
+state. Left unmonitored, they become silently stuck processes — alert on that
+table.</details>
 
 **Q3.** Why does a crashed node not strand the jobs it had locked?
 

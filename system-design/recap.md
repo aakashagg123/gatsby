@@ -4,17 +4,17 @@
 
 ## TL;DR
 
-This track covered **28 real-world systems** across eight lessons, from single-server scaling patterns to microsecond-latency stock exchanges. The systems span six categories — web-scale services, real-time communication, storage, geospatial, data infrastructure, and financial/transactional — but the same dozen patterns appear again and again. This recap maps every system at a glance, names the recurring patterns that connect them, and distills the practitioner-level takeaways that cut across all 28 designs.
+This track covered **28 real-world systems** across eight lessons, from single-server scaling patterns to microsecond-latency stock exchanges. The systems span six categories: web-scale services, real-time communication, storage, geospatial, data infrastructure, and financial/transactional. But the same dozen patterns appear again and again. This recap maps every system at a glance. It names the recurring patterns that connect them, and distills the practitioner-level takeaways that cut across all 28 designs.
 
 > 🎯 **For the technical PM**
 >
 > **Why it matters** — Seeing the patterns that repeat across 28 systems gives you a vocabulary for evaluating any new design. You stop treating each system as a special case and start recognizing the shared building blocks and tradeoffs.
 >
-> **What it changes in your decisions** — When your team proposes an architecture, you can identify which of these 28 systems it most resembles, ask whether they've addressed that system's known failure modes, and check whether they've chosen the right consistency/availability tradeoff.
+> **What it changes in your decisions** — When your team proposes an architecture, you can identify which of these 28 systems it most resembles. You can ask whether they've addressed that system's known failure modes, and check whether they've chosen the right consistency/availability tradeoff.
 >
 > **Ask your eng team** — *"Which of these established system designs is ours closest to, and what did we learn from their known failure modes?"*
 >
-> **Risk if ignored** — You reinvent solutions to problems that were solved a decade ago, miss failure modes that are well-documented in existing designs, and make avoidable tradeoff mistakes.
+> **Risk if ignored** — You reinvent solutions to problems that were solved a decade ago. You miss failure modes that are well-documented in existing designs, and make avoidable tradeoff mistakes.
 
 ---
 
