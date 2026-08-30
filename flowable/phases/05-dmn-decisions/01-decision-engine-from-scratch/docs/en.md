@@ -116,7 +116,7 @@ route on. The gateway keeps only *routing* (`${decision == 'auto-approve'}`), an
 
 ## Ship It
 
-This lesson ships [`code/decision_engine.py`](../code/decision_engine.py) — the toy
+This lesson ships [`code/decision_engine.py`](../code/decision_engine.py), the toy
 DMN core that lesson 02 extends with the full hit-policy family.
 
 ## Check Yourself
@@ -128,8 +128,9 @@ DMN core that lesson 02 extends with the full hit-policy family.
 - C) tables can't express ranges
 - D) nothing; it's syntax
 
-<details><summary>Answer</summary>B — the logic is equivalent; the *representation*
-is the product. Policy-as-data is what lets non-engineers own it.</details>
+<details><summary>Answer</summary>B — the logic is equivalent, but the
+*representation* is the product. Policy-as-data is what lets non-engineers own
+it.</details>
 
 **Q2.** Score 780, amount 4,00,000: rows 1 and 2 both match. What decides the result?
 
@@ -139,7 +140,7 @@ is the product. Policy-as-data is what lets non-engineers own it.</details>
 - D) it's always an error
 
 <details><summary>Answer</summary>C — overlap resolution is a declared policy, not a
-convention. UNIQUE makes it an error; FIRST makes row order load-bearing.</details>
+convention. UNIQUE makes it an error, and FIRST makes row order load-bearing.</details>
 
 **Q3.** `evaluate` returns `None` (no rule matched). In a credit table this most
 likely means…
@@ -154,8 +155,8 @@ bug (after wrong hit policy). Completeness is checkable precisely because the po
 is data.</details>
 
 **Challenge.** Add a third input column `employment` (`"salaried"`/`"self-employed"`)
-to `CREDIT` with a stricter amount cap for self-employed applicants, and write a
-ten-line completeness checker: generate the cross product of representative values
+to `CREDIT`, with a stricter amount cap for self-employed applicants. Then write a
+ten-line completeness checker: generate the cross product of representative values,
 and report every combination where `evaluate` returns `None`.
 
 ## Related

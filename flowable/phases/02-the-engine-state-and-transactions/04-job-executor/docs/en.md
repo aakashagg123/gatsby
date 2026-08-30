@@ -159,13 +159,14 @@ table.</details>
 - C) a supervisor reassigns them
 - D) it does strand them until restart
 
-<details><summary>Answer</summary>B — time-limited locks make crash recovery automatic
-at the cost of the rare duplicate execution.</details>
+<details><summary>Answer</summary>B — time-limited locks make crash recovery
+automatic, at the cost of the rare duplicate execution.</details>
 
-**Challenge.** Add priority: jobs get a `priority` int, acquisition takes highest
-first, and starvation is prevented by boosting priority with age. Then simulate a
-burst of 100 low-priority jobs plus one urgent timer and verify the timer still fires
-on time — you've just met every queue-tuning trade-off Phase 9 discusses.
+**Challenge.** Add priority: give jobs a `priority` int, have acquisition take
+the highest first, and prevent starvation by boosting priority with age. Then
+simulate a burst of 100 low-priority jobs plus one urgent timer, and verify the
+timer still fires on time. You've just met every queue-tuning trade-off Phase 9
+discusses.
 
 ## Related
 
