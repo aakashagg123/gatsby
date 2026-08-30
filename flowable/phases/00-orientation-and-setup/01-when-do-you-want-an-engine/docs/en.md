@@ -1,26 +1,27 @@
 # What is a process engine, and when do you want one
 
-> **Motto** — You want a process engine when your problem is *long-running, stateful,
-> auditable coordination of humans, systems, and time* — and not one minute before.
+> **Motto** — You want a process engine for one problem: *long-running, stateful,
+> auditable coordination of humans, systems, and time.* Wait until you actually have
+> that problem.
 
 *Part of Phase 00 — Orientation & setup. Concept lesson — no code required. Concept
 reading: [Principle 10](../../../../foundations/process-automation-principles.md).*
 
 ## The Problem
 
-"Should we use a workflow engine?" is usually asked backwards — after someone saw a
-demo, not after diagnosing the pain. The pain that actually justifies one looks like
-this: a business flow spanning days or months; state tracked in a `status` column
-that five services mutate; deadlines enforced by cron jobs that drift; "where is
-case X stuck?" answered by a SQL archaeologist; and an auditor asking which rules
+People usually ask "should we use a workflow engine?" backwards — after someone saw
+a demo, not after diagnosing the pain. The pain that actually justifies one looks
+like this: a business flow spans days or months. A `status` column tracks state,
+and five services mutate it. Cron jobs enforce deadlines and drift over time. A SQL
+archaeologist answers "where is case X stuck?" And an auditor asks which rules
 version decided a case. If you have most of that list, an engine converts it into a
 diagram, rows, timers, and history. If you don't, an engine converts a simple
 system into a distributed one with extra ceremony.
 
 ## The Concept
 
-A process engine is three commitments in one runtime (the whole course in one
-diagram):
+A process engine makes three commitments in one runtime. Here is the whole course
+in one diagram:
 
 ```mermaid
 flowchart LR
@@ -40,23 +41,23 @@ The diagnostic, as a table — count your yes-answers:
 | ≥ 4 yes | strong engine case |
 | ≤ 2 yes | see the alternatives below |
 
-And the honest alternatives, because most flows *shouldn't* be on an engine:
+Most flows *shouldn't* run on an engine. Here are the honest alternatives:
 
-- **A `status` column + a queue** — short, fully automated, rarely-changing flows.
-  Three states and one retry policy don't need BPMN.
+- **A `status` column + a queue** — for short, fully automated, rarely-changing
+  flows. Three states and one retry policy don't need BPMN.
 - **A saga/durable-execution runtime (Temporal-style)** — code-first orchestration
-  for engineers, no diagram, no business-facing model (lesson 04 compares
+  for engineers. No diagram, no business-facing model (lesson 04 compares the two
   properly).
-- **Event choreography** — services reacting to each other's events, no central
-  coordinator: maximal autonomy, but "where is case X?" has no single answer —
-  the exact question an engine exists to answer.
+- **Event choreography** — services react to each other's events, with no central
+  coordinator. You get maximal autonomy, but "where is case X?" has no single
+  answer. That question is the exact reason an engine exists.
 
 ## Ship It
 
 This lesson ships
 [`outputs/engine-fit-checklist.md`](../outputs/engine-fit-checklist.md) — the
-diagnostic plus the alternatives table, for the next "should we use a workflow
-engine?" meeting.
+diagnostic plus the alternatives table. Bring it to the next "should we use a
+workflow engine?" meeting.
 
 ## Check Yourself
 
@@ -68,7 +69,7 @@ engine?" meeting.
 - D) claims handling: adjusters, deadlines, regulators
 
 <details><summary>Answer</summary>B — no waits, no humans, no time, no audit
-pressure. A queue and a worker do it with less machinery.</details>
+pressure. A queue and a worker do the job with less machinery.</details>
 
 **Q2.** The strongest single signal *for* an engine is…
 
@@ -77,7 +78,7 @@ pressure. A queue and a worker do it with less machinery.</details>
 - C) high throughput
 - D) a team that knows Java
 
-<details><summary>Answer</summary>B — durable waiting + accountability is the
+<details><summary>Answer</summary>B — durable waiting plus accountability is the
 combination nothing else provides as cheaply.</details>
 
 **Q3.** Event choreography loses to orchestration precisely when…
@@ -91,8 +92,8 @@ combination nothing else provides as cheaply.</details>
 its product. Buy it when that question matters.</details>
 
 **Challenge.** Run the diagnostic on three real flows in your organisation. For the
-highest scorer, write the one-paragraph pitch *against* using an engine — if you
-can't steelman the alternative, you haven't finished the analysis.
+highest scorer, write a one-paragraph pitch *against* using an engine. If you can't
+make a strong case for the alternative, you haven't finished the analysis.
 
 ## Related
 

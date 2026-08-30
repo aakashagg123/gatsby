@@ -8,11 +8,13 @@
 
 ## The Problem
 
-Month-end again: 20,000 timers fire in an hour, async bureau calls pile up, and
-"the process is slow" tickets arrive — but *which part* is slow? Teams respond by
-doubling thread pools (usually wrong) or blaming the database (sometimes right).
-The Phase 2 toy executor gave you the mental model; production tuning is about
-mapping symptoms onto its loop — acquire → lock → execute → settle — and knowing
+It's month-end again. 20,000 timers fire in an hour, async bureau calls pile up,
+and "the process is slow" tickets arrive. But *which part* is slow? Teams respond
+by doubling thread pools (usually wrong) or blaming the database (sometimes
+right).
+
+The Phase 2 toy executor gave you the mental model. Production tuning means
+mapping symptoms onto its loop — acquire, lock, execute, settle — and knowing
 which Spring Boot property moves which stage.
 
 ## The Concept
@@ -43,21 +45,21 @@ Symptom → dial, the table you actually use during the incident:
 | same job executes twice | lock time < job duration | raise lock time; verify handler idempotency |
 | one instance's jobs serialize | `exclusive` jobs (correct default) | leave it — exclusivity prevents optimistic-lock storms (Phase 2 cheat sheet) |
 
-Two cluster notes: acquisition contention across many nodes shows up as
-optimistic-lock exceptions *in acquisition* (harmless noise at low rates, a signal
-to stagger poll intervals at high rates); and scaling executor nodes multiplies
-pressure on the *shared* database — which is why the third row of that table is
-where most tuning journeys actually end.
+Two cluster notes. Acquisition contention across many nodes shows up as
+optimistic-lock exceptions *in acquisition* — harmless noise at low rates, but a
+signal to stagger poll intervals at high rates. And scaling executor nodes
+multiplies pressure on the *shared* database, which is why most tuning journeys
+end at the third row of that table.
 
 ## Use It
 
 The shipped settings file —
 [`outputs/application-tuned.properties`](../outputs/application-tuned.properties) —
 is Phase 2's starter config with the four dials set for a mid-volume fintech
-workload and each choice annotated. Apply it, then *prove* a change helped: replay
-the month-end burst (the capstone driver in a loop), watching due-job count and
-job age from lesson 04's probe before and after. Untested tuning is superstition
-with YAML.
+workload, and each choice is annotated. Apply it, then *prove* the change helped.
+Replay the month-end burst (the capstone driver in a loop) and watch due-job count
+and job age from lesson 04's probe, before and after. Untested tuning is
+superstition with YAML.
 
 ## Ship It
 

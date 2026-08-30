@@ -1,6 +1,6 @@
 # Wait states & persistence: why the engine sleeps
 
-> **Motto** — A process engine's superpower is not running things; it's *stopping* —
+> **Motto** — A process engine's superpower isn't running things. It's *stopping* —
 > durably, cheaply, for months — and picking up exactly where it left off.
 
 *Part of Phase 02 — The engine: state & transactions. Concept reading:
@@ -8,11 +8,12 @@
 
 ## The Problem
 
-Phase 1's engine sleeps politely at user tasks — in RAM. Restart the Python process and
-every in-flight leave request evaporates. Real processes wait for days (document
-upload), weeks (manager on leave), months (mortgage). No thread, no in-memory object,
-no single server can be trusted to live that long. If the waiting state isn't in a
-database, you don't have a process engine; you have a demo.
+Phase 1's engine sleeps politely at user tasks — but only in RAM. Restart the
+Python process and every in-flight leave request evaporates. Real processes wait
+for days (document upload), weeks (manager on leave), or months (mortgage). No
+thread, no in-memory object, no single server can be trusted to live that long.
+If the waiting state isn't in a database, you don't have a process engine — you
+have a demo.
 
 ## The Concept
 
@@ -36,17 +37,17 @@ sequenceDiagram
   E-->>C: return
 ```
 
-Consequences, all of which you'll rely on later:
+This discipline has consequences, and you'll rely on all of them later:
 
-- **Restart-safety for free.** Nothing in memory matters between calls, so crashes and
-  deploys lose nothing.
-- **Any node can serve any instance.** State lives in shared tables → a cluster is just
-  several engines pointing at one schema. (What stops two nodes grabbing the same
-  timer job is the job executor's locking — lesson 04.)
-- **A million in-flight instances ≈ a million rows**, not a million threads. Waiting
-  is the cheapest thing the engine does.
-- **Completed instances vanish from runtime tables.** Live state stays small and fast;
-  the audit trail lives in separate history tables (Phase 9).
+- **Restart-safety for free.** Nothing in memory matters between calls, so
+  crashes and deploys lose nothing.
+- **Any node can serve any instance.** State lives in shared tables, so a
+  cluster is just several engines pointing at one schema. (The job executor's
+  locking — lesson 04 — stops two nodes from grabbing the same timer job.)
+- **A million in-flight instances ≈ a million rows**, not a million threads.
+  Waiting is the cheapest thing the engine does.
+- **Completed instances vanish from runtime tables.** Live state stays small
+  and fast; the audit trail lives in separate history tables (Phase 9).
 
 In Flowable these rows are the `ACT_RU_*` tables (`RU` = runtime): `ACT_RU_EXECUTION`
 (our tokens), `ACT_RU_TASK` (open user tasks), `ACT_RU_VARIABLE` (variables),
@@ -54,9 +55,9 @@ In Flowable these rows are the `ACT_RU_*` tables (`RU` = runtime): `ACT_RU_EXECU
 
 ## Build It
 
-[`code/persistent_engine.py`](../code/persistent_engine.py) adds a SQLite store to the
-Phase-1 engine. The whole idea is in the save/load pair plus one rule — *save on every
-sleep, delete on completion*:
+[`code/persistent_engine.py`](../code/persistent_engine.py) adds a SQLite store to
+the Phase-1 engine. The whole idea lives in the save/load pair plus one rule —
+*save on every sleep, delete on completion*:
 
 ```python
 def _save(self, inst_id, key, tokens, variables):
@@ -89,8 +90,8 @@ after approval: instance complete      ← engine_b, a fresh object, resumed it
 runtime rows remaining: 0              ← completed instances leave no runtime state
 ```
 
-`engine_b` never saw the start call. It didn't need to — the database *is* the
-instance.
+`engine_b` never saw the start call, and it didn't need to. The database *is*
+the instance.
 
 ## Use It
 
@@ -105,15 +106,15 @@ curl -u rest-admin:test \
 # → Manual credit review, exactly where it was
 ```
 
-If you point the container at a real PostgreSQL instead of its default in-container DB,
-you can even destroy the container entirely and start a new one — instances survive,
-because instances are rows.
+If you point the container at a real PostgreSQL instead of its default
+in-container DB, you can even destroy the container entirely and start a new
+one. Instances survive, because instances are rows.
 
 ## Ship It
 
 This lesson ships the persistent engine as a module:
-[`code/persistent_engine.py`](../code/persistent_engine.py) — lesson 04's job executor
-builds directly on its store.
+[`code/persistent_engine.py`](../code/persistent_engine.py). Lesson 04's job
+executor builds directly on its store.
 
 ## Check Yourself
 
@@ -125,8 +126,9 @@ engine doing for that instance?
 - C) nothing — the instance exists only as database rows
 - D) heartbeating to keep the instance alive
 
-<details><summary>Answer</summary>C — this is the whole point. Waiting consumes zero
-compute; the instance is rows in `ACT_RU_*` until the next stimulus.</details>
+<details><summary>Answer</summary>C — this is the whole point. Waiting consumes
+zero compute. The instance is just rows in `ACT_RU_*` until the next
+stimulus.</details>
 
 **Q2.** Two engine nodes share one database. Node A started an instance; node B gets
 the complete-task call. What happens?
@@ -136,8 +138,9 @@ the complete-task call. What happens?
 - C) an error: instances are pinned to their starting node
 - D) the instance is migrated first
 
-<details><summary>Answer</summary>B — state in shared tables means no node affinity.
-This is why "clustering Flowable" is mostly "point engines at the same schema".</details>
+<details><summary>Answer</summary>B — state in shared tables means no node
+affinity. This is why "clustering Flowable" mostly means "point engines at the
+same schema".</details>
 
 **Q3.** Why does completing the last task *delete* the runtime row instead of flagging
 it done?
@@ -150,10 +153,10 @@ it done?
 <details><summary>Answer</summary>B — the runtime/history split keeps the tables the
 engine touches on every step small. Audit questions go to history (Phase 9).</details>
 
-**Challenge.** Add optimistic locking: a `revision` column incremented on every save,
-with `UPDATE ... WHERE id=? AND revision=?` failing if another transaction got there
-first. Simulate two racing `complete_task` calls and watch one lose. You've just
-rebuilt Flowable's `ACT_RU_EXECUTION.REV_` column and its
+**Challenge.** Add optimistic locking: a `revision` column that increments on
+every save, with `UPDATE ... WHERE id=? AND revision=?` failing if another
+transaction got there first. Simulate two racing `complete_task` calls and watch
+one lose. You've just rebuilt Flowable's `ACT_RU_EXECUTION.REV_` column and its
 `FlowableOptimisticLockingException`.
 
 ## Related

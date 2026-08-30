@@ -1,6 +1,6 @@
 # Service tasks: delegates, expressions, delegate expressions
 
-> **Motto** — A service task is a seam, not a place: the model names *what* happens,
+> **Motto** — A service task is a seam, not a place. The model names *what* happens,
 > and one of three wiring styles decides *where* the code lives.
 
 *Part of Phase 04 — Service integration & error handling. Concept reading:
@@ -9,11 +9,11 @@
 ## The Problem
 
 Phase 1's service tasks used inline expressions
-(`${execution.setVariable('decision', ...)}`) — fine for demos, unacceptable for a
-bureau call with authentication, timeouts, and logging. That logic belongs in real
-classes in your codebase. The question every team then argues about: *how does a box in
-the diagram find your Java code?* Flowable gives three answers, and choosing the wrong
-one costs you testability or Spring injection.
+(`${execution.setVariable('decision', ...)}`). That's fine for demos, but
+unacceptable for a bureau call with authentication, timeouts, and logging. That
+logic belongs in real classes in your codebase. Every team then argues the same
+question: how does a box in the diagram find your Java code? Flowable gives three
+answers, and choosing the wrong one costs you testability or Spring injection.
 
 ## The Concept
 
@@ -33,13 +33,13 @@ flowchart LR
 Whichever style you choose, two contracts hold:
 
 1. **The delegate runs inside the engine's transaction** (Phase 2, lesson 03). Throw,
-   and the segment rolls back; mark the task async and the throw becomes a retrying
-   job instead.
+   and the segment rolls back. Mark the task async, and the throw becomes a
+   retrying job instead.
 2. **Failures come in two kinds, and the *type* you throw decides the routing.** A
-   `BpmnError` is a *business* outcome the diagram should show (no bureau record →
-   reject path) — it's caught by error boundary events (lesson 04). Any other
-   exception is a *technical* failure — rollback and retry (lesson 05). Mixing these
-   up is the single most common Flowable design bug.
+   `BpmnError` is a *business* outcome the diagram should show, like no bureau
+   record routing to a reject path. Error boundary events catch it (lesson 04). Any
+   other exception is a *technical* failure that triggers rollback and retry
+   (lesson 05). Mixing these up is the single most common Flowable design bug.
 
 ## Use It
 
@@ -63,8 +63,9 @@ public static class SpringBureauDelegate implements JavaDelegate {
 }
 ```
 
-wired as `<serviceTask id="bureauCall" flowable:delegateExpression="${bureauDelegate}"/>`.
-And the business-vs-technical failure contract, in code:
+This wires up as
+`<serviceTask id="bureauCall" flowable:delegateExpression="${bureauDelegate}"/>`.
+Here's the business-vs-technical failure contract, in code:
 
 ```java
 if (score == -1) {
@@ -73,15 +74,15 @@ if (score == -1) {
 // bureau down? just let the IOException/RuntimeException fly -> rollback + retry
 ```
 
-Testing is the quiet win of the expression style: `${bureauGateway.score(pan)}` calls
-a plain method — your existing unit tests already cover it, and the process test only
-has to assert the wiring.
+Testing is the quiet win of the expression style. `${bureauGateway.score(pan)}` calls
+a plain method, so your existing unit tests already cover it, and the process test
+only has to assert the wiring.
 
 ## Ship It
 
-This lesson ships [`code/Delegates.java`](../code/Delegates.java) — a reference file
-showing all three wirings with the failure contract annotated, ready to copy into a
-Spring Boot service alongside Phase 2's starter.
+This lesson ships [`code/Delegates.java`](../code/Delegates.java), a reference file
+showing all three wirings with the failure contract annotated. Copy it into a Spring
+Boot service alongside Phase 2's starter.
 
 ## Check Yourself
 
@@ -104,8 +105,8 @@ bean.</details>
 - D) log and continue
 
 <details><summary>Answer</summary>C — "no record" is a business outcome, not a
-malfunction; retrying won't change it. It belongs on the diagram as an error boundary
-path.</details>
+malfunction, and retrying won't change it. It belongs on the diagram as an error
+boundary path.</details>
 
 **Q3.** A delegate writes a variable, then throws a plain exception. The variable is…
 
@@ -118,8 +119,8 @@ path.</details>
 the segment's transaction, and everything in it rolls back together.</details>
 
 **Challenge.** Wrap an existing class you own with the expression style — no
-JavaDelegate, no engine imports — and write down what you'd lose versus a delegate
-(access to `DelegateExecution`, local variables, BpmnError codes). That trade-off is
+JavaDelegate, no engine imports. Write down what you'd lose versus a delegate:
+access to `DelegateExecution`, local variables, BpmnError codes. That trade-off is
 the real decision between styles 2 and 3.
 
 ## Related

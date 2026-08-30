@@ -9,13 +9,15 @@ required.*
 
 ## The Problem
 
-The build-vs-buy meeting is usually fought with the wrong numbers: license fees vs
-"free", or sprint estimates vs sales decks. The real comparison is total cost of a
-*capability* over five years — and the biggest line items are the ones this course
-spent nine phases on: the state machine (Phase 2), retries and dead letters (4),
-timers (7), versioning of in-flight work (8), and operations (9). Teams that
-haven't named those items compare a visible license fee against an invisible
-engineering mortgage — and the DIY option wins meetings it should lose.
+The build-vs-buy meeting is usually fought with the wrong numbers: license fees
+against "free," or sprint estimates against sales decks. The real comparison is
+the total cost of a *capability* over five years. The biggest line items are the
+ones this course spent nine phases on: the state machine (Phase 2), retries and
+dead letters (4), timers (7), versioning of in-flight work (8), and operations
+(9).
+
+Teams that haven't named those items compare a visible license fee against an
+invisible engineering mortgage. The DIY option wins meetings it should lose.
 
 ## The Concept
 
@@ -31,24 +33,24 @@ Three options, priced over the same five columns:
 
 The honest decision logic:
 
-1. **DIY is a niche, not a default.** It wins only at Phase 0.01's low scores —
+1. **DIY is a niche, not a default.** It wins only at Phase 0.01's low scores:
    short, automated, stable flows. Past that line, "build" means re-deriving
-   Phases 2–9 under deadline pressure; the checklist below exists to make that
+   Phases 2-9 under deadline pressure. The checklist below exists to make that
    mortgage visible in the meeting.
-2. **Open source is a build decision in disguise — about the *edges*.** The
-   engine is free and excellent; you are choosing to build UIs (Phase 3's
-   clients → a real inbox), the ops practice (Phase 9), and to own upgrades.
-   For a JVM product team with this course behind them, that's a known,
-   bounded cost — often the right one in fintech, where the engine's DB rides
-   your existing audit/residency story (Phase 0.04's axis).
+2. **Open source is a build decision in disguise, about the *edges*.** The
+   engine is free and excellent. You are choosing to build UIs (Phase 3's
+   clients grow into a real inbox), run the ops practice (Phase 9), and own
+   upgrades. For a JVM product team with this course behind them, that's a
+   known, bounded cost. It's often the right one in fintech, where the engine's
+   DB rides your existing audit and residency story (Phase 0.04's axis).
 3. **Buy when the bottleneck is the layer above the engine.** Many
    citizen-developer teams, heavy modeler usage, task UIs for hundreds of ops
-   users, vendor SLA required by procurement — that's Work's actual product
-   (10.01's third column). Buying an engine you'll only call over REST from
-   your own UIs is paying for shelfware chrome.
-4. **Count the option value of the standard.** BPMN/DMN artifacts outlive
+   users, or a vendor SLA required by procurement — that's Work's actual
+   product (10.01's third column). Buying an engine you'll only call over REST
+   from your own UIs just pays for shelfware chrome.
+4. **Count the option value of the standard.** BPMN and DMN artifacts outlive
    vendors: the capstone's XML deploys on Flowable today and Camunda tomorrow.
-   DIY state machines and proprietary low-code flows have no such exit — price
+   DIY state machines and proprietary low-code flows have no such exit. Price
    that asymmetry, especially at contract renewal time.
 
 ## Ship It
@@ -93,11 +95,10 @@ is a team-shape question.</details>
 the commercial products differentiate on the human layer. Buy where your
 bottleneck actually is.</details>
 
-**Challenge.** Fill the worksheet for the capstone platform three ways (DIY, OSS,
-buy) with your organisation's real day-rates and team shape. Then write the
-sentence that would change your answer — "we would switch from OSS to buy the
-day ___" — because the trigger, not the snapshot, is what the annual review
-needs.
+**Challenge.** Fill the worksheet for the capstone platform three ways: DIY, OSS,
+and buy, with your organisation's real day-rates and team shape. Then write the
+sentence that would change your answer: "we would switch from OSS to buy the day
+___." The trigger, not the snapshot, is what the annual review needs.
 
 ## Related
 

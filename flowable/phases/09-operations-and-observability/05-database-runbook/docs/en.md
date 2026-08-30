@@ -9,13 +9,15 @@ Closes the loop opened by
 
 ## The Problem
 
-Phase 2 made the design bet explicit — state lives in the database — and this whole
-course has been cashing cheques against it: wait states are rows, clustering is a
-shared schema, jobs are guarded UPDATEs, history is an append-only ledger. The bill
-arrives in production: the engine's ceiling *is* the database's ceiling, and most
-"Flowable is slow" incidents are database incidents wearing a workflow costume.
-Executor tuning already hit this wall (lesson 03's third row); this lesson is what's
-on the other side of it.
+Phase 2 made the design bet explicit: state lives in the database. This whole
+course has been cashing cheques against that bet — wait states are rows,
+clustering is a shared schema, jobs are guarded UPDATEs, and history is an
+append-only ledger.
+
+The bill arrives in production. The engine's ceiling *is* the database's ceiling,
+and most "Flowable is slow" incidents are database incidents wearing a workflow
+costume. Executor tuning already hit this wall (lesson 03's third row). This
+lesson is what's on the other side of it.
 
 ## The Concept
 
@@ -35,30 +37,30 @@ flowchart TB
 The operational rules, each traceable to a lesson:
 
 1. **Size for history, tune for runtime.** Runtime stays proportional to live load
-   (Phase 2's delete-on-complete); history grows at `rate × level × retention`
+   (Phase 2's delete-on-complete). History grows at `rate × level × retention`
    (lesson 02's formula — the worksheet's steady-state number is your sizing
    input). Disk planning is a history conversation; latency planning is a runtime
    one.
 2. **Index for *your* queries, on history.** The engine ships correct indexes for
    its own runtime access paths — don't touch those. Your custom load is dashboard
    and audit queries on history (`ACT_HI_PROCINST(END_TIME_)` for cleanup,
-   `ACT_HI_ACTINST(PROC_INST_ID_, ACT_ID_)` for timelines, business-key lookups) —
-   profile them like any application query and index accordingly.
+   `ACT_HI_ACTINST(PROC_INST_ID_, ACT_ID_)` for timelines, business-key lookups).
+   Profile them like any application query and index accordingly.
 3. **Contention is a design smell before it's a DB problem.** Optimistic-lock
-   exceptions on EXECUTION usually mean parallel branches hammering shared state —
-   the fix is Phase 2's `exclusive` default or restructuring the model, not
-   `SELECT FOR UPDATE`. Job-acquisition contention across nodes → lesson 03's
+   exceptions on EXECUTION usually mean parallel branches are hammering shared
+   state. The fix is Phase 2's `exclusive` default or restructuring the model, not
+   `SELECT FOR UPDATE`. Job-acquisition contention across nodes needs lesson 03's
    stagger, not row-lock hints.
 4. **Cleanup jobs are production workloads.** Lesson 02's retention deletes and
-   Phase 8's dead-version pruning run *inside* business hours' blast radius:
-   batch them (bounded deletes), schedule off-peak, watch replication lag, and
-   reconcile archive counts before every delete. A runaway cleanup job has taken
-   down more engines than any traffic spike.
+   Phase 8's dead-version pruning run *inside* business hours' blast radius.
+   Batch them (bounded deletes), schedule them off-peak, watch replication lag,
+   and reconcile archive counts before every delete. A runaway cleanup job has
+   taken down more engines than any traffic spike.
 5. **Backups must be schema-consistent.** Runtime and history describe the same
-   instances (lesson 01's same-transaction rule); restoring them to different
+   instances (lesson 01's same-transaction rule). Restoring them to different
    points in time manufactures instances whose past disagrees with their present.
-   One database, one snapshot, one restore point — and a quarterly restore drill
-   that replays the capstone against the restored copy.
+   Use one database, one snapshot, one restore point, and a quarterly restore
+   drill that replays the capstone against the restored copy.
 
 ## Ship It
 
@@ -101,10 +103,10 @@ owns runtime access. Adding runtime indexes also taxes every token write.</detai
 inside one snapshot. Split restores forge history.</details>
 
 **Challenge.** Fill the runbook's sizing worksheet with lesson 02's steady-state
-number, then run the restore drill against the local Docker engine: snapshot the
+number. Then run the restore drill against the local Docker engine: snapshot the
 DB mid-capstone-run, destroy the container, restore, and verify the parked
-instance resumes (Phase 2, lesson 01's promise — now *your* procedure, not the
-course's claim).
+instance resumes. That's Phase 2, lesson 01's promise — now *your* procedure, not
+the course's claim.
 
 ## Related
 

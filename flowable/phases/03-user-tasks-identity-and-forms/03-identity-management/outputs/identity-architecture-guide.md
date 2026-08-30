@@ -10,7 +10,7 @@ lesson: 03
 
 ## The rule
 
-The engine **consumes** identity; the IdP **owns** it. Empty engine identity tables
+The engine **consumes** identity. The IdP **owns** it. Empty engine identity tables
 are a healthy sign.
 
 ## Three architectures
@@ -27,16 +27,16 @@ are a healthy sign.
 2. Your API layer (never raw `flowable-rest`) validates the token.
 3. Task queries take the claim values as inputs:
    `taskCandidateGroupIn(claims.groups)`, `taskAssignee(claims.sub)`.
-4. Claim/complete calls pass `claims.sub` as the acting user; the engine records
-   it in the audit trail as an opaque ID.
+4. Claim and complete calls pass `claims.sub` as the acting user. The engine
+   records it in the audit trail as an opaque ID.
 5. Membership changes apply on the caller's next request — no sync.
 
 ## Contracts to protect
 
 - [ ] Group names in models ↔ group claims in tokens: treat renames as breaking
       changes (alias during transition).
-- [ ] Audit joinability: the IdP must be able to resolve historical user IDs —
-      including departed users — for as long as history retention (Phase 9) runs.
+- [ ] Audit joinability: the IdP must resolve historical user IDs, including
+      departed users, for as long as history retention (Phase 9) runs.
 - [ ] Engine API perimeter: `flowable-rest`/engine APIs reachable only from your
       service layer, never from end-user clients.
 

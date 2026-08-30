@@ -1,6 +1,6 @@
 # System design for the technical PM
 
-How real systems are designed at scale — from rate limiters to stock exchanges — with the architecture, tradeoffs, and failure modes that shape product decisions.
+How real systems are designed at scale — from rate limiters to stock exchanges. This track covers the architecture, tradeoffs, and failure modes that shape product decisions.
 
 ```mermaid
 flowchart LR
@@ -40,8 +40,8 @@ This track covers **28 real-world systems** across eight lessons, grouped by the
 
 ## Connects to other tracks
 
-- The [technical product sense](../technical-product-sense/README.md) track teaches you how to *read* systems; this track teaches you how they're *designed*.
-- The [AI engineering](../content/00-foundations/README.md) modules show what's different when LLMs are in the loop — caching, isolation, cost — and this track shows the distributed-systems foundations that everything rests on.
+- The [technical product sense](../technical-product-sense/README.md) track teaches you how to *read* systems. This track teaches you how they're *designed*.
+- The [AI engineering](../content/00-foundations/README.md) modules show what's different when LLMs are in the loop — caching, isolation, cost. This track shows the distributed-systems foundations everything rests on.
 - The [agentic AI](../agentic-ai/README.md) track uses message queues, event sourcing, and state machines from this track as agent infrastructure.
 
 ## The lessons

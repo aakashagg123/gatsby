@@ -1,17 +1,18 @@
 # The task lifecycle: created → assigned → completed
 
-> **Motto** — A user task is a state machine with sharp edges: claim makes one person
-> accountable, and every refused transition is a double-payment that didn't happen.
+> **Motto** — A user task is a state machine with sharp edges. Claim makes one
+> person accountable, and every refused transition is a double payment that
+> didn't happen.
 
 *Part of Phase 03 — User tasks, identity & forms.*
 
 ## The Problem
 
-Phase 1 treated a user task as "a token sleeping until someone completes it". Put five
-credit analysts in front of fifty applications and "someone" becomes the problem: two
-analysts open the same case, both spend twenty minutes, one submits — the other's work
-is lost or, worse, *both* submit and the second overwrites the first. Inboxes need an
-ownership protocol, and it has to be enforced by the engine, not by team etiquette.
+Phase 1 treated a user task as a token that sleeps until someone completes it. Put
+five credit analysts in front of fifty applications, and "someone" becomes a problem.
+Two analysts open the same case, and both spend twenty minutes on it. One submits, and
+the other's work is lost — or, worse, both submit and the second overwrites the first.
+Inboxes need an ownership protocol, and the engine must enforce it, not team etiquette.
 
 ## The Concept
 
@@ -29,22 +30,23 @@ stateDiagram-v2
 The rules that carry the weight:
 
 1. **CREATED is a pool, CLAIMED is a person.** An unclaimed task is visible to every
-   candidate; *claim* is an atomic race that exactly one wins (in Flowable it's an
-   optimistic-locked update — Phase 2's revision column doing this exact job).
-2. **Only the assignee completes.** Not "anyone in the group" — the person who
-   claimed. Between claim and complete, everyone else's claim attempts are refused
-   with a reason.
+   candidate. Claim is an atomic race, and exactly one candidate wins. In Flowable
+   that's an optimistic-locked update — the same job Phase 2's revision column does.
+2. **Only the assignee completes.** Not "anyone in the group" — only the person who
+   claimed the task. Between claim and complete, the engine refuses everyone else's
+   claim attempts and gives a reason.
 3. **Delegation preserves accountability.** Delegate hands the *work* to a helper but
-   records the original assignee as `owner`; *resolve* hands it back. The audit trail
-   shows both — which is what your maker-checker policy actually requires.
-4. **Every transition is logged.** "Who claimed, when, who delegated to whom" is the
-   evidence an ops dispute or an audit needs, and it exists because the lifecycle is
-   explicit rather than a `status` column three services write to.
+   records the original assignee as `owner`. Resolve hands the work back. The audit
+   trail shows both steps, which is what a maker-checker policy requires.
+4. **Every transition is logged.** The log shows who claimed the task, when, and who
+   delegated to whom. An ops dispute or an audit needs this evidence, and it exists
+   because the lifecycle is explicit, not a single `status` column three services
+   write to.
 
 ## Build It
 
 [`code/task_lifecycle.py`](../code/task_lifecycle.py) — the machine is a dataclass
-and five methods, each opening with its precondition:
+with five methods, and each method opens with its precondition:
 
 ```python
 def claim(self, user, groups):
@@ -70,8 +72,9 @@ audit trail:
   - completed by asha
 ```
 
-Note what the refusals protect: not data integrity in the abstract, but twenty
-minutes of a second analyst's attention and the ambiguity of two submitted decisions.
+The refusals protect something concrete, not abstract data integrity. They save
+twenty minutes of a second analyst's attention, and they prevent the ambiguity of two
+submitted decisions.
 
 ## Use It
 
@@ -85,16 +88,16 @@ taskService.resolveTask(taskId);            // back to asha, DelegationState.RES
 taskService.complete(taskId, variables);
 ```
 
-Over REST it's the single task endpoint with an `action` field —
+Over REST, one task endpoint handles all of this through an `action` field:
 `{"action": "claim", "assignee": "asha"}`, `{"action": "delegate", ...}`,
-`{"action": "resolve"}`, `{"action": "complete", "variables": [...]}` — which the
-next lesson's client drives end to end.
+`{"action": "resolve"}`, `{"action": "complete", "variables": [...]}`. The next
+lesson's client drives these calls end to end.
 
 ## Ship It
 
-This lesson ships [`code/task_lifecycle.py`](../code/task_lifecycle.py) — the
-lifecycle as an executable reference, including the refusal messages a good task API
-owes its users.
+This lesson ships [`code/task_lifecycle.py`](../code/task_lifecycle.py), the
+lifecycle as an executable reference. It includes the refusal messages a good task
+API owes its users.
 
 ## Check Yourself
 
@@ -128,13 +131,13 @@ sign-off stays with the person your policy holds accountable.</details>
 - D) variables can't be written without an assignee
 
 <details><summary>Answer</summary>B — claim-before-complete is the accountability
-protocol. (Flowable technically allows assignee-less completion via API — teams that
-care about audit lock it down.)</details>
+protocol. Flowable technically allows assignee-less completion through the API, but
+teams that care about audits lock this down.</details>
 
-**Challenge.** Add `escalate(to_group)`: a claimed task past its due date returns to
+**Challenge.** Add `escalate(to_group)`. A claimed task past its due date returns to
 a *different* pool (the supervisors'), recording the original assignee. Then decide —
 and defend — whether escalation should be allowed from DELEGATED, and what happens to
-the owner field if so. You've just designed the policy questions Phase 7's
+the owner field if so. You've just designed the policy questions that Phase 7's
 escalation timers will trigger.
 
 ## Related

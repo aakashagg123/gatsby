@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Every large-scale system assembles from a small set of reusable primitives. **Rate limiters** protect services from being overwhelmed — by users, by bugs, by attacks — using algorithms that trade precision for memory and latency. **Consistent hashing** distributes data across a changing set of servers without triggering full re-mappings, and virtual nodes smooth out the inevitable hot spots. **Distributed key-value stores** force you to choose between consistency and availability (CAP theorem) and then give you dials — quorum parameters, vector clocks, gossip protocols — to fine-tune that choice. **Unique ID generators** seem trivial until you need 10,000 IDs per second across five datacenters with no coordination — Twitter's Snowflake shows how a 64-bit integer can encode time, location, and sequence without a single network call.
+Every large-scale system assembles from a small set of reusable primitives. **Rate limiters** protect services from being overwhelmed by users, by bugs, or by attacks. They use algorithms that trade precision for memory and latency. **Consistent hashing** distributes data across a changing set of servers without triggering full re-mappings. Virtual nodes smooth out the inevitable hot spots. **Distributed key-value stores** force you to choose between consistency and availability (the CAP theorem). They then give you dials — quorum parameters, vector clocks, gossip protocols — to fine-tune that choice. **Unique ID generators** seem trivial until you need 10,000 IDs per second across five datacenters with no coordination. Twitter's Snowflake shows how a 64-bit integer can encode time, location, and sequence without a single network call.
 
 > 🎯 **For the technical PM**
 >
@@ -52,11 +52,11 @@ flowchart LR
 
 **Leaking bucket** — Requests enter a FIFO queue of fixed size. The queue drains at a constant rate. If the queue is full, new requests are dropped. Unlike token bucket, this produces a perfectly smooth output rate — no bursts. Useful when the downstream service can't handle spikes. Shopify uses this via their Leaky Bucket library.
 
-**Fixed window counter** — Divide time into windows (e.g., 60-second intervals). Maintain a counter per window. Increment on each request; reject when counter exceeds threshold. Simple, low memory (one counter per window). Problem: a burst at the boundary between two windows can allow 2x the intended rate — 100 requests in the last 500ms of window 1 and 100 requests in the first 500ms of window 2 gives 200 requests in a one-second span despite a 100/minute limit.
+**Fixed window counter** — Divide time into windows (e.g., 60-second intervals). Maintain a counter per window. Increment on each request. Reject when the counter exceeds the threshold. Simple, low memory (one counter per window). Problem: a burst at the boundary between two windows can allow 2x the intended rate. 100 requests in the last 500ms of window 1, plus 100 requests in the first 500ms of window 2, gives 200 requests in a one-second span — despite a 100/minute limit.
 
 **Sliding window log** — Keep a sorted set of timestamps for each request. When a new request arrives, remove all timestamps older than the window. If the remaining count exceeds the threshold, reject. Precise, but memory-intensive — every request is logged.
 
-**Sliding window counter** — A hybrid: take the weighted count from the previous window and add the current window's count. If the previous window had 70 requests and is 30% elapsed into the current window, the weighted count is `70 * 0.70 + current_count`. Only two counters per window, near-zero memory, and the boundary spike problem is smoothed. This is the most common choice in production.
+**Sliding window counter** — A hybrid: take the weighted count from the previous window and add the current window's count. If the previous window had 70 requests, and the current window is 30% elapsed, the weighted count is `70 * 0.70 + current_count`. Only two counters per window, near-zero memory, and the boundary spike problem is smoothed. This is the most common choice in production.
 
 ### Distributed rate limiting with Redis
 
@@ -91,7 +91,7 @@ These headers are essential for well-behaved clients to implement backoff. Witho
 
 ## Consistent hashing
 
-When you have *n* servers and need to decide which server stores a given key, the naive approach is `hash(key) % n`. This works until you add or remove a server — then *n* changes, and almost every key maps to a different server. In a cache layer, that means a mass cache miss. In a database, it means a full data migration.
+When you have *n* servers and need to decide which server stores a given key, the naive approach is `hash(key) % n`. This works until you add or remove a server. Then *n* changes, and almost every key maps to a different server. In a cache layer, that means a mass cache miss. In a database, it means a full data migration.
 
 Consistent hashing solves this: when a server is added or removed, only `k/n` keys need to move (where *k* is the total number of keys), rather than nearly all of them.
 
@@ -122,7 +122,7 @@ With a small number of servers, the ring can be badly unbalanced. Three servers 
 
 ### Virtual nodes
 
-The fix: map each physical server to multiple positions on the ring. Server A gets `hash("A-0")`, `hash("A-1")`, ... `hash("A-199")`. With 200 virtual nodes per physical server, the distribution becomes nearly uniform, and removing a server spreads its load across many neighbors rather than one.
+The fix: map each physical server to multiple positions on the ring. Server A gets `hash("A-0")`, `hash("A-1")`, ... `hash("A-199")`. With 200 virtual nodes per physical server, the distribution becomes nearly uniform. Removing a server spreads its load across many neighbors rather than one.
 
 The tradeoff is space: you need to store the mapping from virtual node to physical server. With 200 virtual nodes per server and 1,000 servers, that's 200,000 ring entries — trivially small.
 
@@ -140,7 +140,7 @@ Consistent hashing is everywhere in distributed infrastructure:
 
 ## Distributed key-value store
 
-A key-value store maps keys to values — `put(key, value)` and `get(key)`. At small scale, this is a hash map in memory. At large scale, it's a distributed system that must handle node failures, network partitions, and concurrent writes — which forces you into the most fundamental tradeoff in distributed computing.
+A key-value store maps keys to values — `put(key, value)` and `get(key)`. At small scale, this is a hash map in memory. At large scale, it's a distributed system that must handle node failures, network partitions, and concurrent writes. That forces you into the most fundamental tradeoff in distributed computing.
 
 ### CAP theorem
 
@@ -211,7 +211,7 @@ Each node maintains a membership list with heartbeat counters. Periodically, eac
 
 ### Permanent failure recovery: Merkle trees
 
-When a replica comes back after a prolonged outage, how do you know which keys are out of date? Comparing every key is expensive. **Merkle trees** (hash trees) solve this: each node maintains a tree where leaves are hashes of key ranges and parent nodes are hashes of children. Two replicas compare their root hashes — if they match, the data is identical. If not, they recurse down the tree, comparing children until they find the divergent key ranges. This reduces the data transferred during synchronization from *O(n)* to *O(log n)*.
+When a replica comes back after a prolonged outage, how do you know which keys are out of date? Comparing every key is expensive. **Merkle trees** (hash trees) solve this: each node maintains a tree where leaves are hashes of key ranges and parent nodes are hashes of children. Two replicas compare their root hashes. If they match, the data is identical. If not, they recurse down the tree, comparing children until they find the divergent key ranges. This reduces the data transferred during synchronization from *O(n)* to *O(log n)*.
 
 ### Write and read paths
 

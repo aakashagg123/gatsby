@@ -1,7 +1,7 @@
 # Task queries & the task inbox pattern
 
 > **Motto** — Every worklist UI is two queries wearing pixels: *my claimed tasks* plus
-> *my groups' unclaimed pool* — get the two-list shape right and the rest is styling.
+> *my groups' unclaimed pool*. Get the two-list shape right, and the rest is styling.
 
 *Part of Phase 03 — User tasks, identity & forms. This is the phase's closing **Use
 It** lesson.*
@@ -9,12 +9,12 @@ It** lesson.*
 ## The Problem
 
 The phase so far gave you tasks with lifecycles, group pools, identity, and form
-contracts. The user-facing question remains: *what does Asha see when she opens her
-work screen?* Teams overthink this into "workflow portals" with saved searches and
-seventeen filters — or underthink it into one flat list where claimed and unclaimed
-work blur together, so analysts either hoard (claim everything, work none of it) or
-collide (work unclaimed items without claiming — lesson 01's race, reintroduced by
-the UI).
+contracts. One question remains: *what does Asha see when she opens her work
+screen?* Teams overthink this into "workflow portals" with saved searches and
+seventeen filters. Or they underthink it into one flat list where claimed and
+unclaimed work blur together. Then analysts either hoard — claim everything, work
+none of it — or collide, working unclaimed items without claiming them. That's
+lesson 01's race, reintroduced by the UI.
 
 ## The Concept
 
@@ -35,27 +35,27 @@ Rules the shape encodes:
 1. **My-tasks first, always.** A claimed task blocks everyone else (lesson 01), so
    claimed-but-idle work is the most expensive kind. The UI ordering *is* the policy
    "finish what you claimed before taking more".
-2. **The pool's verb is claim, not complete.** One click moves it to *my tasks*;
+2. **The pool's verb is claim, not complete.** One click moves it to *my tasks*, and
    completion happens there. UIs that offer complete-from-pool re-create the
    collision the lifecycle exists to prevent.
-3. **Groups come from identity claims** (lesson 03) — the inbox never asks the
-   engine who Asha is; it passes her groups in.
+3. **Groups come from identity claims** (lesson 03). The inbox never asks the engine
+   who Asha is — it passes her groups in.
 4. **Urgency = due date.** `dueDate` on the task (set in the model or at runtime)
-   drives sort order and the OVERDUE flag; Phase 7's escalation timers fire off the
+   drives sort order and the OVERDUE flag. Phase 7's escalation timers fire off the
    same field. An inbox sorted by creation date instead of due date quietly
-   optimises for staleness.
+   optimizes for staleness.
 
-Query mechanics worth knowing before you need them: the REST query endpoint
-(`POST /query/tasks`) supports pagination (`start`/`size` — inboxes over large pools
-must page), sorting, and variable filters (`processVariables: [{name, operation,
-value}]` — "show only applications above ₹10 lakh"). For dashboards that include
-*finished* work, the same query shape exists against history
-(`/query/historic-task-instances`) — runtime queries only ever see open tasks
-(Phase 2's delete-on-complete rule).
+Some query mechanics are worth knowing before you need them. The REST query
+endpoint (`POST /query/tasks`) supports pagination (`start`/`size` — inboxes over
+large pools must page), sorting, and variable filters (`processVariables: [{name,
+operation, value}]` — for example, "show only applications above ₹10 lakh"). For
+dashboards that include *finished* work, the same query shape exists against history
+(`/query/historic-task-instances`). Runtime queries only ever see open tasks,
+because of Phase 2's delete-on-complete rule.
 
 ## Use It
 
-[`code/inbox_client.py`](../code/inbox_client.py) is the pattern as a CLI — the merge
+[`code/inbox_client.py`](../code/inbox_client.py) is the pattern as a CLI. The merge
 de-duplicates tasks visible through several of the user's groups:
 
 ```python
@@ -77,14 +77,14 @@ $ python3 inbox_client.py asha credit-ops,mumbai-ops
   [        ] Collect documents  (task 7710, instance 7699)
 ```
 
-Pair it with lesson 02's `claim`/`complete` and lesson 04's form renderer and you
-have a functioning ops console in ~200 lines of stdlib Python — which is the point:
-the engine carries the state; clients stay thin.
+Pair it with lesson 02's `claim`/`complete` and lesson 04's form renderer, and you
+have a functioning ops console in about 200 lines of stdlib Python. That's the
+point: the engine carries the state, and clients stay thin.
 
 ## Ship It
 
-This lesson ships [`code/inbox_client.py`](../code/inbox_client.py) — the two-query
-inbox with de-dupe, due-date sort, and overdue flags; the capstone driver reuses it
+This lesson ships [`code/inbox_client.py`](../code/inbox_client.py): the two-query
+inbox with de-dupe, due-date sort, and overdue flags. The capstone driver reuses it
 to show pending work mid-run.
 
 ## Check Yourself
@@ -120,10 +120,11 @@ same row, not copies of it.</details>
 <details><summary>Answer</summary>B — the runtime/history split from Phase 2 decides
 which endpoint can even see the data.</details>
 
-**Challenge.** Add `--variables amount>1000000` filtering to the client (the query
-endpoint's `processVariables` operations), then add a `--summary` mode printing per-
-group pool depth and oldest-item age — the two numbers an ops lead actually watches.
-You've built the metrics feed Phase 9's dashboard lesson formalises.
+**Challenge.** Add `--variables amount>1000000` filtering to the client, using the
+query endpoint's `processVariables` operations. Then add a `--summary` mode that
+prints per-group pool depth and oldest-item age — the two numbers an ops lead
+actually watches. You've built the metrics feed that Phase 9's dashboard lesson
+formalizes.
 
 ## Related
 

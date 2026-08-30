@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Financial and transactional systems are where distributed systems meet zero tolerance for error. A **hotel reservation** system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A **gaming leaderboard** exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A **payment system** orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A **digital wallet** evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A **stock exchange** pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability, and the cost of a bug is measured in dollars, not just user frustration.
+Financial and transactional systems are where distributed systems meet zero tolerance for error. A **hotel reservation** system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A **gaming leaderboard** exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A **payment system** orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A **digital wallet** evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A **stock exchange** pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability. The cost of a bug is measured in dollars, not just user frustration.
 
 > 🎯 **For the technical PM**
 >
@@ -68,7 +68,7 @@ UPDATE inventory SET available_count = available_count - 1, version = version + 
   WHERE ... AND version = {read_version}
 -- If 0 rows updated: conflict, retry
 ```
-No locks held during the check. If two transactions read the same version, only one succeeds; the other retries. Better concurrency, but retries add latency under contention.
+No locks held during the check. If two transactions read the same version, only one succeeds. The other retries. Better concurrency, but retries add latency under contention.
 
 **Database constraints (preferred):**
 ```
@@ -129,7 +129,7 @@ flowchart LR
   CLIENT -->|"ZREVRANGE 0 9<br/>top 10?"| REDIS
 ```
 
-All three core operations — increment, rank lookup, and top-N — are O(log N), which at 25M members means ~25 comparisons. On Redis, that's sub-millisecond.
+All three core operations — increment, rank lookup, and top-N — are O(log N). At 25M members, that means about 25 comparisons — sub-millisecond on Redis.
 
 ### Monthly keys and TTL
 
@@ -282,7 +282,7 @@ Move balances to MySQL, sharded by user_id. A transfer between two users on diff
 1. **Prepare:** both shards lock the rows and confirm they can execute.
 2. **Commit:** the coordinator tells both shards to commit.
 
-If either shard fails during prepare, both abort. If the coordinator crashes after prepare but before commit, the shards remain locked until the coordinator recovers — this is the **blocking problem** of 2PC.
+If either shard fails during prepare, both abort. If the coordinator crashes after prepare but before commit, the shards remain locked until the coordinator recovers. This is the **blocking problem** of 2PC.
 
 **Try-Confirm/Cancel (TC/C)** is a business-level alternative:
 1. **Try:** tentatively debit the sender (hold the amount).
@@ -305,7 +305,7 @@ Instead of updating a balance column, append an event: `{type: "transfer", from:
 
 The current balance is a **projection** — computed by replaying all events for that user. This is cached in a read model (Redis or a materialized view) for fast lookups.
 
-**CQRS (Command Query Responsibility Segregation):** writes go to the event store; reads come from the projected read model. They can scale independently.
+**CQRS (Command Query Responsibility Segregation):** writes go to the event store. Reads come from the projected read model. They can scale independently.
 
 **Stage 4: Raft replication**
 
@@ -361,7 +361,7 @@ flowchart LR
   REPORT --> MD["Market data<br/>publisher"]
 ```
 
-mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory; the matching engine reads it directly — zero copy.
+mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory. The matching engine reads it directly — zero copy.
 
 ### Custom sequencer (not Kafka)
 

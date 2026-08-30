@@ -1,18 +1,19 @@
 # Run Flowable locally: Docker, REST API, first ping
 
-> **Motto** — One container, one base URL, one credential pair — everything this
+> **Motto** — One container, one base URL, one credential pair. Everything this
 > course does to a real engine starts from the three lines on this page.
 
 *Part of Phase 00 — Orientation & setup. This is the phase's **Use It** lesson.*
 
 ## The Problem
 
-Every Use It beat from Phase 1 onward assumes a running engine, and every "the
-lesson doesn't work" report traces to one of three boring causes: the container
-isn't running, the URL is wrong, or auth failed. This lesson pins the setup once
-and ships the diagnostic that separates those causes in five seconds — the same
-first-contact ritual you'll run against a *real* environment someday, where "is it
-up, what's deployed, is anything stuck" are the opening moves of every incident.
+Every Use It beat from Phase 1 onward assumes a running engine. Every "the lesson
+doesn't work" report traces to one of three boring causes: the container isn't
+running, the URL is wrong, or auth failed. This lesson pins the setup once and
+ships a diagnostic that separates those causes in five seconds. It's the same
+first-contact ritual you'll run against a *real* environment someday, where "is
+it up, what's deployed, is anything stuck" are the opening moves of every
+incident.
 
 ## The Concept
 
@@ -33,17 +34,17 @@ What that container is — and importantly, isn't:
 | Auth | HTTP Basic, one admin user | fine locally; a real deployment puts your API layer in front (Phase 3, lesson 03) |
 | Custom Java | none — you can't add delegates | why course models use expressions/HTTP/DMN tasks (Phases 1, 4, 5) |
 
-Two upgrades worth knowing exist, both deferred deliberately: pointing the
+Two upgrades exist, and this course defers both deliberately. Pointing the
 container at PostgreSQL (`FLOWABLE_DATASOURCE_*` env vars) makes state survive
-container replacement — Phase 2 lesson 01's Use It uses exactly that property; and
-the *embedded* topology (engine inside your Spring Boot app) is Phase 2 lesson 05
+container replacement — Phase 2 lesson 01's Use It uses exactly that property.
+The *embedded* topology (engine inside your Spring Boot app) is Phase 2 lesson 05
 and the Phase 10 topology decision.
 
 The REST surface follows one idiom everywhere, which is why a single ping script
 generalises: `repository/*` for deployed artifacts, `runtime/*` for live state,
-`management/*` for jobs and engine internals, `history/*` for the past, `query/*`
-for rich filters. Learn the five prefixes and you can navigate any endpoint you
-haven't met yet.
+`management/*` for jobs and engine internals, `history/*` for the past, and
+`query/*` for rich filters. Learn these five prefixes and you can navigate any
+endpoint you haven't met yet.
 
 ## Use It
 
@@ -61,16 +62,17 @@ dead letters   : 0
 engine is ready — next: deploy something (Phase 1, lesson 04's flowable_client.py)
 ```
 
-The zeros on a fresh container are the correct answer — and the same script run
-mid-course doubles as a tiny health check (it's the ancestor of Phase 9's probe:
-same queries, no thresholds). Kill the container and run it again to see the
-unreachable branch; change the password to see the auth branch. Now you've seen
-all three failure modes on purpose, before any lesson shows you one by accident.
+The zeros on a fresh container are the correct answer. The same script, run
+mid-course, doubles as a tiny health check — it's the ancestor of Phase 9's probe,
+same queries, no thresholds. Kill the container and run the script again to see
+the unreachable branch. Change the password to see the auth branch. Now you've
+seen all three failure modes on purpose, before any lesson shows you one by
+accident.
 
 ## Ship It
 
 This lesson ships [`code/ping.py`](../code/ping.py) — first-contact diagnostics
-for any Flowable engine, local or remote.
+you can run against any Flowable engine, local or remote.
 
 ## Check Yourself
 
@@ -82,9 +84,9 @@ This is…
 - C) a licensing limit
 - D) REST caching
 
-<details><summary>Answer</summary>B — ephemerality is the default's trade. Phase
-2's persistence promise applies to the *database*, and this container's database
-lives inside it.</details>
+<details><summary>Answer</summary>B — ephemerality is the trade you make with the
+default setup. Phase 2's persistence promise applies to the *database*, and this
+container's database lives inside it.</details>
 
 **Q2.** A colleague's script gets HTTP 401 against the container. The fix is…
 
@@ -93,9 +95,8 @@ lives inside it.</details>
 - C) use port 8081
 - D) disable auth
 
-<details><summary>Answer</summary>B — ping.py names the two branches separately
-because conflating them wastes the first twenty minutes of every setup
-session.</details>
+<details><summary>Answer</summary>B — ping.py names the two branches separately.
+Mixing them up wastes the first twenty minutes of every setup session.</details>
 
 **Q3.** Which REST prefix answers "what *could* run" vs "what *is* running"?
 
@@ -104,14 +105,14 @@ session.</details>
 - C) management vs query
 - D) form vs task
 
-<details><summary>Answer</summary>B — repository holds deployed definitions (the
-potential); runtime holds live instances (the actual). The other prefixes follow
+<details><summary>Answer</summary>B — repository holds deployed definitions, the
+potential. Runtime holds live instances, the actual. The other prefixes follow
 the same one-word logic.</details>
 
-**Challenge.** Point the container at a local PostgreSQL (official image docs list
-the `FLOWABLE_DATASOURCE_*` variables), deploy Phase 1's model, destroy and
-recreate the container, and run ping.py — the deployment count surviving is Phase
-2, lesson 01's claim, verified with your own hands on day zero.
+**Challenge.** Point the container at a local PostgreSQL (the official image docs
+list the `FLOWABLE_DATASOURCE_*` variables), deploy Phase 1's model, destroy and
+recreate the container, and run ping.py. Watch the deployment count survive —
+that's Phase 2, lesson 01's claim, verified with your own hands on day zero.
 
 ## Related
 

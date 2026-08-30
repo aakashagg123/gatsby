@@ -14,8 +14,9 @@ lesson: 05
 - History level (9.02): ______ → rows/instance ≈ activities + tasks + variables
 - Keep window: ______ months
 - **Steady-state history rows ≈ rate × rows/instance × keep window** = ______
-- Runtime rows ≈ live instances × (tokens + open tasks + variables) — small;
-  verify it *stays* small (a growing runtime table is a stuck-work signal, 9.04).
+- Runtime rows ≈ live instances × (tokens + open tasks + variables). This is
+  small; verify it *stays* small (a growing runtime table is a stuck-work signal,
+  9.04).
 
 ## Indexes
 

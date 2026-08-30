@@ -1,7 +1,7 @@
 # Compensation: undoing completed work
 
-> **Motto** — You can't roll back what already committed; you can only run another
-> action that puts the world right — and compensation is modelling that action next to
+> **Motto** — You can't roll back what already committed. You can only run another
+> action that puts the world right, and compensation is modelling that action next to
 > the work it undoes.
 
 *Part of Phase 04 — Service integration & error handling. Concept lesson — no code
@@ -9,20 +9,20 @@ required.*
 
 ## The Problem
 
-Loan disbursal, three committed steps in: funds reserved at the treasury, insurance
-policy issued, and then the e-agreement step discovers the applicant withdrew.
-Transactions can't help — each step committed long ago, across three external systems
-that have no common rollback. But the business absolutely has an answer: *release the
-reservation, cancel the policy*. Every mature operations team has these "undo
-procedures"; the question is whether they live in a wiki (executed by hand, at 2 a.m.,
-sometimes) or in the model (executed by the engine, in order, always).
+Take a loan disbursal, three committed steps in: funds reserved at the treasury,
+insurance policy issued, and then the e-agreement step discovers the applicant
+withdrew. Transactions can't help. Each step committed long ago, across three
+external systems that have no common rollback. But the business has an answer:
+*release the reservation, cancel the policy*. Every mature operations team has these
+"undo procedures." The question is whether they live in a wiki, executed by hand at
+2 a.m. sometimes, or in the model, executed by the engine, in order, always.
 
 ## The Concept
 
-Compensation is the saga pattern with a diagram. Each step that changes the world gets
-a **compensation handler** — its undo action — attached like a boundary event. If the
-process later throws a compensation event, the engine runs the handlers of *completed*
-activities, in reverse order:
+Compensation is the saga pattern with a diagram. Each step that changes the world
+gets a **compensation handler** — its undo action — attached like a boundary event.
+If the process later throws a compensation event, the engine runs the handlers of
+*completed* activities in reverse order:
 
 ```mermaid
 flowchart LR
@@ -54,17 +54,17 @@ When to reach for it — and when not:
 | The "undo" is really a business process (refund approval, clawback with maker-checker) | model it as a normal subprocess — compensation handlers should be mechanical undos, not workflows |
 | Only the last step ever fails | consider just reordering: do the risky step first |
 
-The honest cost: compensable processes are roughly twice the modelling and testing
-surface (every do has an undo, and undo paths need tests too). Use compensation where
-the *sequence of external commitments* genuinely demands unwind — not as decoration on
-every service task.
+Here's the honest cost: compensable processes roughly double the modelling and
+testing surface, since every do has an undo, and undo paths need tests too. Use
+compensation where the *sequence of external commitments* genuinely demands unwind,
+not as decoration on every service task.
 
 ## Ship It
 
 This lesson ships
-[`outputs/compensation-patterns.md`](../outputs/compensation-patterns.md) — the
-pattern card: XML skeleton, the four rules, and a checklist for deciding whether a
-step needs a handler.
+[`outputs/compensation-patterns.md`](../outputs/compensation-patterns.md): the
+pattern card with an XML skeleton, the four rules, and a checklist for deciding
+whether a step needs a handler.
 
 ## Check Yourself
 
@@ -76,8 +76,8 @@ handlers run, in what order?
 - C) A's, B's and C's
 - D) C's only
 
-<details><summary>Answer</summary>B — C never completed so it has nothing to undo;
-the others unwind newest-first.</details>
+<details><summary>Answer</summary>B — C never completed, so it has nothing to undo.
+The others unwind newest-first.</details>
 
 **Q2.** A compensation handler calling the treasury's release API times out. What
 happens?
@@ -103,10 +103,10 @@ maker-checker approval." Model the refund as…
 reversals. Anything with its own approvals, waits, and decisions is a process and
 deserves to be modelled as one.</details>
 
-**Challenge.** Take the capstone's disbursal sequence (reserve → issue policy →
-disburse) and write its compensation table: for each step, the undo API, whether the
-undo is idempotent, and what happens if the undo itself dead-letters. That table *is*
-the hard part of compensation — the XML is twenty minutes.
+**Challenge.** Take the capstone's disbursal sequence (reserve, issue policy,
+disburse) and write its compensation table. For each step, note the undo API,
+whether the undo is idempotent, and what happens if the undo itself dead-letters.
+That table *is* the hard part of compensation — the XML takes twenty minutes.
 
 ## Related
 

@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Cloud storage systems solve two distinct problems: **file sync** (Google Drive) keeps user files consistent across devices by splitting them into content-addressed blocks, syncing only deltas, and resolving conflicts; **object storage** (S3) stores immutable blobs at planetary scale with extreme durability guarantees through replication or erasure coding. Both split metadata from data, but for different reasons — file sync needs fast tree traversal and conflict detection, while object storage needs petabyte-scale durability at minimal overhead. Understanding the boundary between these two models determines whether your product stores files that users edit or objects that services consume.
+Cloud storage systems solve two distinct problems. **File sync** (Google Drive) keeps user files consistent across devices. It splits them into content-addressed blocks, syncs only deltas, and resolves conflicts. **Object storage** (S3) stores immutable blobs at planetary scale, with extreme durability guarantees through replication or erasure coding. Both split metadata from data, but for different reasons: file sync needs fast tree traversal and conflict detection, while object storage needs petabyte-scale durability at minimal overhead. Understanding the boundary between these two models determines whether your product stores files that users edit or objects that services consume.
 
 > 🎯 **For the technical PM**
 >

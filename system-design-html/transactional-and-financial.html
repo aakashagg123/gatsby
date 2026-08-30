@@ -314,7 +314,7 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Transactional &amp; financial systems</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Financial and transactional systems are where distributed systems meet zero tolerance for error. A <strong>hotel reservation</strong> system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A <strong>gaming leaderboard</strong> exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A <strong>payment system</strong> orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A <strong>digital wallet</strong> evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A <strong>stock exchange</strong> pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability, and the cost of a bug is measured in dollars, not just user frustration.</p>
+<p>Financial and transactional systems are where distributed systems meet zero tolerance for error. A <strong>hotel reservation</strong> system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A <strong>gaming leaderboard</strong> exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A <strong>payment system</strong> orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A <strong>digital wallet</strong> evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A <strong>stock exchange</strong> pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability. The cost of a bug is measured in dollars, not just user frustration.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
 <p><strong>Why it matters</strong> — These systems handle money, reservations, and competitive rankings — domains where a bug is a financial loss, a legal liability, or a PR disaster. The engineering tradeoffs are dominated by correctness constraints that don't exist in social media or content systems.</p>
@@ -554,7 +554,7 @@ UPDATE inventory SET available_count = available_count - 1, version = version + 
   WHERE ... AND version = {read_version}
 -- If 0 rows updated: conflict, retry
 </code></pre>
-<p>No locks held during the check. If two transactions read the same version, only one succeeds; the other retries. Better concurrency, but retries add latency under contention.</p>
+<p>No locks held during the check. If two transactions read the same version, only one succeeds. The other retries. Better concurrency, but retries add latency under contention.</p>
 <p><strong>Database constraints (preferred):</strong></p>
 <pre><code>ALTER TABLE inventory ADD CONSTRAINT chk_availability
   CHECK (available_count &gt;= 0);
@@ -602,7 +602,7 @@ UPDATE inventory SET available_count = available_count - 1
   GAME[Game server] --&gt;|&quot;ZINCRBY&lt;br/&gt;+50 points&quot;| REDIS[Redis sorted set&lt;br/&gt;leaderboard:2024-10]
   CLIENT[Client] --&gt;|&quot;ZREVRANK&lt;br/&gt;my rank?&quot;| REDIS
   CLIENT --&gt;|&quot;ZREVRANGE 0 9&lt;br/&gt;top 10?&quot;| REDIS</pre>
-<p>All three core operations — increment, rank lookup, and top-N — are O(log N), which at 25M members means ~25 comparisons. On Redis, that's sub-millisecond.</p>
+<p>All three core operations — increment, rank lookup, and top-N — are O(log N). At 25M members, that means about 25 comparisons — sub-millisecond on Redis.</p>
 <h3>Monthly keys and TTL</h3>
 <p>Each time period gets its own sorted set key:</p>
 <ul>
@@ -751,7 +751,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li><strong>Prepare:</strong> both shards lock the rows and confirm they can execute.</li>
 <li><strong>Commit:</strong> the coordinator tells both shards to commit.</li>
 </ol>
-<p>If either shard fails during prepare, both abort. If the coordinator crashes after prepare but before commit, the shards remain locked until the coordinator recovers — this is the <strong>blocking problem</strong> of 2PC.</p>
+<p>If either shard fails during prepare, both abort. If the coordinator crashes after prepare but before commit, the shards remain locked until the coordinator recovers. This is the <strong>blocking problem</strong> of 2PC.</p>
 <p><strong>Try-Confirm/Cancel (TC/C)</strong> is a business-level alternative:</p>
 <ol>
 <li><strong>Try:</strong> tentatively debit the sender (hold the amount).</li>
@@ -767,7 +767,7 @@ UPDATE inventory SET available_count = available_count - 1
   ES --&gt; AUDIT[&quot;Audit log&lt;br/&gt;(complete history)&quot;]</pre>
 <p>Instead of updating a balance column, append an event: <code>{type: "transfer", from: A, to: B, amount: 50, timestamp: ...}</code>.</p>
 <p>The current balance is a <strong>projection</strong> — computed by replaying all events for that user. This is cached in a read model (Redis or a materialized view) for fast lookups.</p>
-<p><strong>CQRS (Command Query Responsibility Segregation):</strong> writes go to the event store; reads come from the projected read model. They can scale independently.</p>
+<p><strong>CQRS (Command Query Responsibility Segregation):</strong> writes go to the event store. Reads come from the projected read model. They can scale independently.</p>
 <p><strong>Stage 4: Raft replication</strong></p>
 <p>At 1M TPS, even sharded databases struggle. The final architecture uses a custom storage engine with <strong>Raft consensus</strong> for replication:</p>
 <ul>
@@ -813,7 +813,7 @@ UPDATE inventory SET available_count = available_count - 1
   end
   GW[&quot;Gateway&lt;br/&gt;(network I/O)&quot;] --&gt; SEQ
   REPORT --&gt; MD[&quot;Market data&lt;br/&gt;publisher&quot;]</pre>
-<p>mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory; the matching engine reads it directly — zero copy.</p>
+<p>mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory. The matching engine reads it directly — zero copy.</p>
 <h3>Custom sequencer (not Kafka)</h3>
 <p>A stock exchange cannot use Kafka as a sequencer because:</p>
 <ul>

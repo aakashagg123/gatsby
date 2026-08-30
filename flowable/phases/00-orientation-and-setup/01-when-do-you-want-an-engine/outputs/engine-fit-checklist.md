@@ -17,8 +17,8 @@ Score one point per yes:
 - [ ] The business changes the flow/policy more often than engineering deploys.
 - [ ] "Where is case X stuck?" is a question someone asks weekly.
 
-**5–6:** strong engine case — start at Phase 1.
-**3–4:** engine plausible; prototype the hairiest flow first (Phase 0, lesson 03).
+**5–6:** strong engine case. Start at Phase 1.
+**3–4:** engine plausible. Prototype the hairiest flow first (Phase 0, lesson 03).
 **0–2:** use the right lighter tool:
 
 | Situation | Use instead |
@@ -29,7 +29,7 @@ Score one point per yes:
 | one team's UI wizard | application state, not workflow |
 
 Red flags that someone is solving the wrong problem with an engine:
-"we'll use it as our microservice orchestrator for everything" (it's for
-*business* processes, not RPC); "the diagram will document our code" (if it
-doesn't execute, it will lie — Principle 2); "we need it for scale" (engines buy
-coordination, not throughput).
+"we'll use it as our microservice orchestrator for everything" — it's for
+*business* processes, not RPC. "The diagram will document our code" — if it
+doesn't execute, it will lie (Principle 2). "We need it for scale" — engines buy
+coordination, not throughput.

@@ -1,20 +1,21 @@
 # Hit policies: FIRST, UNIQUE, COLLECT and why they matter
 
-> **Motto** — The hit policy is the table's contract about overlap: UNIQUE makes
-> overlaps a caught bug, FIRST makes them silent policy — choose like it matters,
+> **Motto** — The hit policy is the table's contract about overlap. UNIQUE makes
+> overlaps a caught bug, and FIRST makes them silent policy. Choose like it matters,
 > because it does.
 
 *Part of Phase 05 — DMN: decisions as tables.*
 
 ## The Problem
 
-Lesson 01 ended on a cliff: score 780, amount ₹4 lakh, two rows match. Multiply that by
-a real table — forty rows, five input columns, edited quarterly by three different
-analysts — and overlaps are not an edge case, they're a certainty. The question is
-never "will rows overlap" but "what happens when they do": error? first wins? all of
-them? The DMN answer is a single declared letter on the table — the **hit policy** —
-and tables copied from examples with an unconsidered `FIRST` are how banks end up
-pricing the same customer two different ways depending on row order.
+Lesson 01 ended on a cliff: score 780, amount ₹4 lakh, two rows match. Multiply that
+by a real table — forty rows, five input columns, edited quarterly by three
+different analysts — and overlaps stop being an edge case. They become a certainty.
+The question is never "will rows overlap" but "what happens when they do": error,
+first wins, or all of them? The DMN answer is a single declared setting on the table
+— the **hit policy**. Tables copied from examples with an unconsidered `FIRST` are
+how banks end up pricing the same customer two different ways depending on row
+order.
 
 ## The Concept
 
@@ -36,15 +37,15 @@ flowchart TB
 
 Two consequences people learn the hard way:
 
-1. **UNIQUE is the strictest and therefore the safest default.** It turns analyst
+1. **UNIQUE is the strictest, and therefore the safest default.** It turns analyst
    mistakes (a `<=` where `<` was meant) into loud evaluation errors instead of quiet
    misclassification. Use FIRST only when "specific rules shadow general ones" is
-   genuinely the mental model — and then treat *row reordering as a policy change*
+   genuinely the mental model. Then treat *row reordering as a policy change*,
    requiring the same review as an edit.
-2. **No-match is part of the contract too.** UNIQUE/FIRST returning nothing means the
-   table has a hole; COLLECT returning an empty list may be perfectly normal (no
-   surcharges applied). Decide which your table means, and make the process route the
-   empty case explicitly.
+2. **No-match is part of the contract too.** UNIQUE and FIRST returning nothing means
+   the table has a hole. COLLECT returning an empty list may be perfectly normal,
+   like no surcharges applied. Decide which your table means, and make the process
+   route the empty case explicitly.
 
 ## Build It
 
@@ -71,10 +72,10 @@ fees branch : 1750
 same table, FIRST: {'band': 'prime'} (bug hidden)
 ```
 
-Same rows, same input: UNIQUE **catches** the boundary overlap; FIRST silently ships
-whichever band happens to sit higher in the file. And the COLLECT+SUM fee table shows
-the accumulation case — base fee + branch surcharge + big-ticket diligence = 1750,
-three rows contributing to one number.
+Same rows, same input. UNIQUE **catches** the boundary overlap, while FIRST silently
+ships whichever band happens to sit higher in the file. The COLLECT+SUM fee table
+shows the accumulation case — base fee, branch surcharge, and big-ticket diligence
+sum to 1750, three rows contributing to one number.
 
 ## Use It
 
@@ -85,17 +86,17 @@ In DMN XML the policy is one attribute (lesson 03 writes the full file):
 <decisionTable id="feeTable" hitPolicy="COLLECT" aggregation="SUM">
 ```
 
-Flowable evaluates exactly these semantics, with one operational note: a UNIQUE
-violation or a no-match surfaces as an evaluation failure in the calling process —
-i.e. a *technical* error on the decision task, landing in the Phase 4 pipeline
-(retry, dead-letter). Retrying won't fix a table bug, which is precisely why UNIQUE
-violations should page the table's owner, not ops (lesson 04).
+Flowable evaluates exactly these semantics, with one operational note. A UNIQUE
+violation or a no-match surfaces as an evaluation failure in the calling process — a
+*technical* error on the decision task, landing in the Phase 4 pipeline (retry,
+dead-letter). Retrying won't fix a table bug, which is exactly why UNIQUE violations
+should page the table's owner, not ops (lesson 04).
 
 ## Ship It
 
-This lesson ships [`code/hit_policies.py`](../code/hit_policies.py) — the complete
-toy DMN engine (tables + UNIQUE/FIRST/ANY/COLLECT with aggregation), small enough to
-use as an oracle when a production table misbehaves.
+This lesson ships [`code/hit_policies.py`](../code/hit_policies.py): the complete
+toy DMN engine, with tables and UNIQUE/FIRST/ANY/COLLECT plus aggregation. It's
+small enough to use as an oracle when a production table misbehaves.
 
 ## Check Yourself
 
@@ -128,13 +129,13 @@ burden is the hidden cost that makes UNIQUE the better default.</details>
 - D) validating a PAN
 
 <details><summary>Answer</summary>B — accumulation across all applicable rows is what
-COLLECT exists for; classification and pricing pick *one* answer.</details>
+COLLECT exists for. Classification and pricing pick *one* answer.</details>
 
-**Challenge.** Write a static overlap checker for UNIQUE tables: for each pair of
-rows, decide whether some input could satisfy both (for interval predicates this is
-just interval intersection). Run it on `RISK_BAND` — it should flag rows 1–2 *without
-evaluating anything*. You've built the validation Flowable's model editor runs on
-save.
+**Challenge.** Write a static overlap checker for UNIQUE tables. For each pair of
+rows, decide whether some input could satisfy both — for interval predicates, this
+is just interval intersection. Run it on `RISK_BAND`: it should flag rows 1–2
+*without evaluating anything*. You've built the validation Flowable's model editor
+runs on save.
 
 ## Related
 

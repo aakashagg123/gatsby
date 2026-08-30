@@ -4,11 +4,11 @@
 
 ## TL;DR
 
-Every system starts as one server and grows by separating concerns: compute from storage, reads from writes, hot data from cold. **Scaling** is the art of adding capacity without redesigning — through load balancers, replication, caching, CDNs, message queues, and sharding. Before you design anything, **back-of-envelope estimation** forces you to confront the numbers: QPS, storage, bandwidth, cost. And the **four-step framework** (scope → high-level design → deep dive → wrap-up) keeps you from getting lost in detail before you've agreed on what you're building.
+Every system starts as one server. It grows by separating concerns: compute from storage, reads from writes, hot data from cold. **Scaling** is the art of adding capacity without redesigning. It uses load balancers, replication, caching, CDNs, message queues, and sharding. Before you design anything, **back-of-envelope estimation** forces you to confront the numbers: QPS, storage, bandwidth, cost. The **four-step framework** — scope, high-level design, deep dive, wrap-up — keeps you from getting lost in detail before you've agreed on what you're building.
 
 > 🎯 **For the technical PM**
 >
-> **Why it matters** — If you can't estimate QPS or spot where a system will bottleneck, you're making capacity and timeline decisions blind. The framework isn't academic — it's how your team should scope every technical bet.
+> **Why it matters** — If you can't estimate QPS or spot where a system will bottleneck, you're making capacity and timeline decisions blind. The framework isn't academic. It's how your team should scope every technical bet.
 >
 > **What it changes in your decisions** — You stop treating scaling as "we'll figure it out later." You insist on estimation before committing to architecture. You know when vertical scaling hits a wall and horizontal scaling demands statelessness.
 >
@@ -37,13 +37,13 @@ flowchart TD
 
 ### Single server to separated tiers
 
-Everything starts on one machine: web server, database, cache, static files. The first split separates **compute** (web/application servers) from **storage** (database), because they scale differently — compute is stateless and horizontally scalable, storage needs replication and consistency guarantees.
+Everything starts on one machine: web server, database, cache, static files. The first split separates **compute** (web/application servers) from **storage** (database). They scale differently: compute is stateless and horizontally scalable, while storage needs replication and consistency guarantees.
 
 ### Load balancing and replication
 
-A **load balancer** sits in front of web servers and distributes requests. Users hit the LB's public IP; individual servers keep private IPs, hidden from clients. This enables horizontal scaling (add servers behind the LB) and eliminates single points of failure.
+A **load balancer** sits in front of web servers and distributes requests. Users hit the LB's public IP. Individual servers keep private IPs, hidden from clients. This enables horizontal scaling (add servers behind the LB) and eliminates single points of failure.
 
-**Database replication** follows, typically master-slave: writes go to the master, reads fan out across replicas. If the master fails, a slave is promoted. If a slave fails, reads redirect to others. The tradeoff: replication lag means reads can be stale — acceptable for most features, dangerous for financial transactions.
+**Database replication** follows, typically master-slave: writes go to the master, reads fan out across replicas. If the master fails, a slave is promoted. If a slave fails, reads redirect to others. The tradeoff: replication lag means reads can be stale. That's acceptable for most features, but dangerous for financial transactions.
 
 ### Caching, CDN, and statelessness
 
@@ -51,7 +51,7 @@ A **cache tier** (Redis, Memcached) sits between the web tier and the database. 
 
 A **CDN** pushes static assets to edge servers near users. CDN cost is proportional to traffic, so cache expiration tuning matters — too short wastes origin bandwidth, too long serves stale content.
 
-**Statelessness** means moving session data out of individual web servers into a shared store (Redis, or a dedicated session DB). This lets any request go to any server, which is what makes auto-scaling and multi-datacenter deployments possible.
+**Statelessness** means moving session data out of individual web servers into a shared store (Redis, or a dedicated session DB). This lets any request go to any server. That's what makes auto-scaling and multi-datacenter deployments possible.
 
 ### Sharding: the final frontier
 
@@ -118,7 +118,7 @@ flowchart LR
 
 ### Step 1: Understand the problem and establish scope
 
-Ask clarifying questions. Document assumptions. Determine the scale (users, QPS, storage, latency requirements). Identify the most important features — you can't design everything in 45 minutes; scope decides what to detail and what to sketch.
+Ask clarifying questions. Document assumptions. Determine the scale (users, QPS, storage, latency requirements). Identify the most important features. You can't design everything in 45 minutes, so scope decides what to detail and what to sketch.
 
 ### Step 2: Propose high-level design and get buy-in
 

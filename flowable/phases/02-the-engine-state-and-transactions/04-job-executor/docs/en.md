@@ -1,7 +1,8 @@
 # The job executor: timers, retries, async work
 
-> **Motto** — Every "later" in your process — timers, retries, async steps — is a row
-> in a jobs table, and the executor is just a loop that locks due rows and runs them.
+> **Motto** — Every "later" in your process — timers, retries, async steps — is a
+> row in a jobs table. The executor is just a loop that locks due rows and runs
+> them.
 
 *Part of Phase 02 — The engine: state & transactions. Concept reading:
 [Principle 5 — time is a first-class citizen](../../../../foundations/process-automation-principles.md).*
@@ -9,17 +10,18 @@
 ## The Problem
 
 Lesson 03 ended with promises: async tasks "get picked up in a new transaction",
-timers "fire in three days", failures "retry with backoff". Some component has to keep
-those promises — across restarts, across a cluster, without firing the same timer
-twice from two nodes. That component is the **job executor**, and when something in
-production "just didn't happen" (a reminder never sent, an async step stuck), the job
-executor's tables are where you'll be looking. Better to have built one first.
+timers "fire in three days," failures "retry with backoff." Some component has
+to keep those promises — across restarts, across a cluster, without firing the
+same timer twice from two nodes. That component is the **job executor**. When
+something in production "just didn't happen" (a reminder never sent, an async
+step stuck), the job executor's tables are where you'll look. Better to have
+built one first.
 
 ## The Concept
 
-A job is durable work-to-do: *what* (continue this execution / fire this timer),
-*when* (`due`), *how many attempts remain* (`retries`), and *who's working on it*
-(`locked_by`, `lock_until`). The executor loop:
+A job is durable work-to-do. It records *what* (continue this execution / fire
+this timer), *when* (`due`), *how many attempts remain* (`retries`), and *who's
+working on it* (`locked_by`, `lock_until`). Here is the executor loop:
 
 ```mermaid
 flowchart LR
@@ -30,12 +32,12 @@ flowchart LR
   R -- no --> X["move to dead-letter table"]
 ```
 
-The whole cluster story is inside **acquire**: locking is a conditional `UPDATE`, and
-because the database serialises updates, two nodes can run the same query
-simultaneously and each job is still acquired exactly once. Locks carry a timeout
-(`lock_until`) so a node that dies mid-job doesn't strand its work — the lock expires
-and another node picks it up. (Corollary: job handlers must tolerate the rare
-double-run — idempotency again.)
+The whole cluster story lives inside **acquire**. Locking is a conditional
+`UPDATE`, and because the database serialises updates, two nodes can run the
+same query simultaneously and each job still gets acquired exactly once. Locks
+carry a timeout (`lock_until`) so a node that dies mid-job doesn't strand its
+work — the lock expires and another node picks it up. (One consequence: job
+handlers must tolerate the rare double-run. Idempotency, again.)
 
 Flowable's tables map one-to-one:
 
@@ -46,14 +48,15 @@ Flowable's tables map one-to-one:
 | `ACT_RU_SUSPENDED_JOB` | jobs of suspended instances |
 | `ACT_RU_DEADLETTER_JOB` | out of retries — **needs a human** |
 
-Dead letters are the operational contract: after the last retry the engine stops
-trying and files the job where nothing runs it again. If nobody watches that table,
-failed async work is silently frozen — Phase 9 makes it an alert.
+Dead letters are the operational contract. After the last retry, the engine
+stops trying and files the job where nothing runs it again. If nobody watches
+that table, failed async work sits silently frozen — Phase 9 turns that into an
+alert.
 
 ## Build It
 
-[`code/job_executor.py`](../code/job_executor.py). Acquisition — the cluster-safety
-core — in full:
+Here is [`code/job_executor.py`](../code/job_executor.py). Acquisition — the
+cluster-safety core — in full:
 
 ```python
 def acquire(self, node, limit=10):
@@ -89,12 +92,12 @@ t=+370s:
 dead letters: [(3, 'async')]
 ```
 
-Note node-B's silence at t=0: it ran, found everything locked by node-A, and acquired
-nothing. That non-event *is* the cluster correctness property.
+Note node-B's silence at t=0: it ran, found everything locked by node-A, and
+acquired nothing. That non-event *is* the cluster correctness property.
 
 ## Use It
 
-In Flowable the executor is on by default in Spring Boot
+In Flowable, the executor is on by default in Spring Boot
 (`flowable.async-executor-activate=true`). Timers come straight from the model:
 
 ```xml
@@ -105,9 +108,9 @@ In Flowable the executor is on by default in Spring Boot
 </boundaryEvent>
 ```
 
-Retries default to 3; customise per task
-(`flowable:failedJobRetryTimeCycle="R5/PT10M"` — 5 retries, 10 minutes apart). Inspect
-and revive dead letters over REST:
+Retries default to 3. Customise per task with
+`flowable:failedJobRetryTimeCycle="R5/PT10M"` (5 retries, 10 minutes apart).
+Inspect and revive dead letters over REST:
 
 ```bash
 curl -u rest-admin:test ".../management/deadletter-jobs"
@@ -120,8 +123,9 @@ Tuning threads, acquisition size, and lock times is Phase 9, lesson 03.
 ## Ship It
 
 This lesson ships the executor as a module:
-[`code/job_executor.py`](../code/job_executor.py) — store, acquisition, backoff, and
-dead-lettering in ~100 lines you can reason about during a production incident.
+[`code/job_executor.py`](../code/job_executor.py) — store, acquisition, backoff,
+and dead-lettering in ~100 lines you can reason about during a production
+incident.
 
 ## Check Yourself
 
@@ -132,9 +136,10 @@ dead-lettering in ~100 lines you can reason about during a production incident.
 - C) jobs are sharded by node
 - D) it does run twice, harmlessly
 
-<details><summary>Answer</summary>B — no messaging, no leader election; the database's
-own update semantics are the mutual exclusion. (Lock timeouts mean a *rare* double-run
-is still possible after a node death — handlers should be idempotent.)</details>
+<details><summary>Answer</summary>B — no messaging, no leader election. The
+database's own update semantics provide the mutual exclusion. (Lock timeouts
+mean a *rare* double-run is still possible after a node death, so handlers
+should be idempotent.)</details>
 
 **Q2.** A job's retries hit zero. The engine…
 
@@ -144,7 +149,8 @@ is still possible after a node death — handlers should be idempotent.)</detail
 - D) rolls back the whole instance
 
 <details><summary>Answer</summary>C — dead letters are the "stop and ask a human"
-state. Unmonitored, they are silently stuck processes — alert on that table.</details>
+state. Left unmonitored, they become silently stuck processes — alert on that
+table.</details>
 
 **Q3.** Why does a crashed node not strand the jobs it had locked?
 
@@ -153,13 +159,14 @@ state. Unmonitored, they are silently stuck processes — alert on that table.</
 - C) a supervisor reassigns them
 - D) it does strand them until restart
 
-<details><summary>Answer</summary>B — time-limited locks make crash recovery automatic
-at the cost of the rare duplicate execution.</details>
+<details><summary>Answer</summary>B — time-limited locks make crash recovery
+automatic, at the cost of the rare duplicate execution.</details>
 
-**Challenge.** Add priority: jobs get a `priority` int, acquisition takes highest
-first, and starvation is prevented by boosting priority with age. Then simulate a
-burst of 100 low-priority jobs plus one urgent timer and verify the timer still fires
-on time — you've just met every queue-tuning trade-off Phase 9 discusses.
+**Challenge.** Add priority: give jobs a `priority` int, have acquisition take
+the highest first, and prevent starvation by boosting priority with age. Then
+simulate a burst of 100 low-priority jobs plus one urgent timer, and verify the
+timer still fires on time. You've just met every queue-tuning trade-off Phase 9
+discusses.
 
 ## Related
 

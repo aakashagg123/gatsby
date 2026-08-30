@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-Data infrastructure is the plumbing beneath every system in this track. **Distributed message queues** (Kafka) decouple producers from consumers using append-only logs, partitioned topics, and consumer groups — the same pattern that appears as a building block in metrics, ad aggregation, email, and a dozen other designs. **Metrics monitoring** combines pull-based collection (Prometheus) with time-series databases and down-sampling to track 10M metrics without drowning in data. **Ad click aggregation** applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. **Distributed email** handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.
+Data infrastructure is the plumbing beneath every system in this track. **Distributed message queues** (Kafka) decouple producers from consumers, using append-only logs, partitioned topics, and consumer groups. This same pattern appears as a building block in metrics, ad aggregation, email, and a dozen other designs. **Metrics monitoring** combines pull-based collection (Prometheus) with time-series databases and down-sampling, to track 10M metrics without drowning in data. **Ad click aggregation** applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. **Distributed email** handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.
 
 > 🎯 **For the technical PM**
 >
@@ -174,7 +174,7 @@ flowchart LR
   KAFKA --> ALERT[Alert evaluator]
 ```
 
-Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst; the TSDB writer pool processes at a sustainable rate.
+Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.
 
 ### Time-series storage: down-sampling and encoding
 

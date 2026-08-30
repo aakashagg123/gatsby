@@ -9,18 +9,18 @@ lesson.*
 ## The Problem
 
 The customer can withdraw their application at *any* point — during document
-collection, verification, review, offer. Model that with boundary events and you pin
-the same withdrawal catch onto every activity, five copies that must stay in sync
-through every model edit. Miss one and withdrawal during that step is silently
-impossible. The same shape recurs for "compliance freeze", "fraud flag raised",
-"send a status nudge weekly while open" — reactions that belong to the *process as a
-whole*, not to any single box.
+collection, verification, review, or offer. Model that with boundary events, and
+you pin the same withdrawal catch onto every activity: five copies that must stay
+in sync through every model edit. Miss one, and withdrawal during that step becomes
+silently impossible. The same shape recurs for "compliance freeze," "fraud flag
+raised," and "send a status nudge weekly while open" — reactions that belong to the
+*process as a whole*, not to any single box.
 
 ## The Concept
 
-An event subprocess is a subprocess with `triggeredByEvent="true"`: it has no incoming
-flows, sits inside a scope, and its **start event** — message, timer, signal, error —
-arms when the scope becomes active:
+An event subprocess is a subprocess with `triggeredByEvent="true"`. It has no
+incoming flows, it sits inside a scope, and its **start event** — message, timer,
+signal, or error — arms when the scope becomes active:
 
 ```mermaid
 flowchart TB
@@ -43,16 +43,16 @@ The one attribute that changes everything is on the start event:
 | `true` (default) | the scope's main flow is **terminated**; only the handler runs | withdrawal, fraud stop, hard cancellation |
 | `false` | a **parallel** token runs the handler; main flow untouched; can fire repeatedly | nudges, escalations, audit pings |
 
-Placement = scope: at process level it guards the whole instance; inside an embedded
-subprocess it guards just that stage (a withdrawal handler that only applies before
-disbursal, say). And the error event subprocess variant is Phase 4's scope-chain
-walking, drawn: errors uncaught by any boundary land in the enclosing scope's error
-event subprocess before killing the instance.
+Placement decides scope. At process level, it guards the whole instance. Inside an
+embedded subprocess, it guards just that stage — a withdrawal handler that only
+applies before disbursal, say. The error event subprocess variant is Phase 4's
+scope-chain walking, drawn: errors uncaught by any boundary land in the enclosing
+scope's error event subprocess before killing the instance.
 
 Versus boundary events, the trade is *coverage vs precision*: one drawn element
 covering the scope, or per-activity reactions where each step should respond
-differently. The withdrawal case wants coverage; "this specific bureau call gets a
-manual fallback" wanted the boundary (Phase 4).
+differently. The withdrawal case wants coverage. "This specific bureau call gets a
+manual fallback" wanted the boundary instead (Phase 4).
 
 ## Use It
 
@@ -80,11 +80,11 @@ Deploy it with Phase 1's client and run the drill:
 
 1. Start an instance; `collectDocs` is waiting.
 2. Deliver `customerWithdrawal` (lesson 02's REST correlation, business key =
-   application). The open task **vanishes** — interrupting start killed the main
-   flow — and history shows `recordWithdrawal` ran; `outcome = withdrawn`.
-3. Start a second instance and leave it. Every 7 days (or sooner if you shrink the
-   cycle for the test), `sendNudge` executes while `collectDocs` stays open —
-   parallel tokens, main flow untouched.
+   application). The open task **vanishes**, because the interrupting start killed
+   the main flow. History shows `recordWithdrawal` ran, with `outcome = withdrawn`.
+3. Start a second instance and leave it. Every 7 days — sooner if you shrink the
+   cycle for the test — `sendNudge` executes while `collectDocs` stays open.
+   Parallel tokens run; the main flow stays untouched.
 
 ## Ship It
 
@@ -123,14 +123,14 @@ instance fires…
 - C) it only catches technical errors
 - D) unrelated mechanism
 
-<details><summary>Answer</summary>B — same walking-outward search, one more place to
-land before "uncaught BpmnError = dead instance".</details>
+<details><summary>Answer</summary>B — this is the same walking-outward search, with one
+more place to land before "uncaught BpmnError = dead instance."</details>
 
 **Challenge.** Add a third handler to the model: an interrupting **signal** event
 subprocess for `complianceFreeze` (lesson 03's broadcast) that routes to a user task
-"await compliance clearance" instead of ending the instance. Then answer: after
-clearance, how do you resume the main flow — and why does that question reveal the
-difference between *pausing* a process and *terminating* it?
+"await compliance clearance" instead of ending the instance. Then answer this: after
+clearance, how do you resume the main flow? That question reveals the difference
+between *pausing* a process and *terminating* it.
 
 ## Related
 

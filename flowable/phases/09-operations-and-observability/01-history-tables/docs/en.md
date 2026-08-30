@@ -8,13 +8,15 @@
 
 ## The Problem
 
-Phase 2 established that completed instances *vanish* from runtime tables, and every
-lesson since has quietly leaned on the other side of that split: Phase 1's client
-read `historic-activity-instances`, Phase 8's audit sentence depends on history
-pinning, the capstone printed a timeline after the instance was gone. Time to make
-the split explicit — because querying the wrong family is the most common ops
-mistake ("the instance disappeared!" — no, it *completed*), and because history is
-the table family that grows forever if nobody owns it (lesson 02).
+Phase 2 showed that completed instances *vanish* from runtime tables. Every lesson
+since has quietly leaned on the other side of that split. Phase 1's client read
+`historic-activity-instances`. Phase 8's audit sentence depends on history pinning.
+The capstone printed a timeline after the instance was already gone.
+
+This lesson makes the split explicit. Querying the wrong family is the most common
+ops mistake — someone says "the instance disappeared!" when it actually
+*completed*. History is also the table family that grows forever if nobody owns it
+(lesson 02).
 
 ## The Concept
 
@@ -38,20 +40,21 @@ flowchart LR
 
 The rules of the split:
 
-1. **Runtime is a working set, not a record.** Its size tracks *live* load only —
-   which is what keeps every token operation fast (Phase 2's design bet). A row
-   leaving `ACT_RU_TASK` is success, not data loss.
-2. **History is written in the same transaction** as the runtime change (at the
-   default history level) — the audit trail can't drift from what actually
-   happened, and a rollback erases both sides together (Phase 2's boundaries apply
-   to history too).
+1. **Runtime is a working set, not a record.** Its size tracks only *live* load,
+   and that keeps every token operation fast (Phase 2's design bet). A row leaving
+   `ACT_RU_TASK` means success, not data loss.
+2. **History is written in the same transaction** as the runtime change, at the
+   default history level. The audit trail can't drift from what actually happened,
+   and a rollback erases both sides together. Phase 2's transaction boundaries
+   apply to history too.
 3. **Query routing is mechanical.** Open work → runtime (`/runtime/tasks`,
    `/query/tasks`). Anything involving "completed", "how long did", "who did", or a
    date range → history (`/history/...`, `/query/historic-...`). Dashboards that
    join both (throughput + backlog) make two queries, not one clever one.
-4. **History is where the metrics live.** Cycle time (`START_TIME_ → END_TIME_` on
-   ACTINST), SLA attainment, per-step durations, decision version per case (Phase
-   8) — all history reads. Lesson 04 builds the probe on exactly these.
+4. **History is where the metrics live:** cycle time (`START_TIME_` to
+   `END_TIME_` on ACTINST), SLA attainment, per-step durations, and decision
+   version per case (Phase 8). All of these are history reads. Lesson 04 builds
+   the probe on exactly these.
 
 ## Ship It
 
@@ -93,8 +96,8 @@ trade.)</details>
 first, panic later.</details>
 
 **Challenge.** Using only history endpoints, reconstruct the capstone driver's
-closing summary (timeline + final variables) for an instance that finished
-yesterday — then compute one number the driver didn't: minutes spent waiting at
+closing summary (timeline and final variables) for an instance that finished
+yesterday. Then compute one number the driver didn't: minutes spent waiting at
 each user task (ACTINST start/end deltas). You've just written the seed of lesson
 04's probe.
 

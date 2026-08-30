@@ -8,23 +8,24 @@
 
 ## The Problem
 
-Your leave-approval flow lives in code: a controller sets `status = "PENDING"`, a
-different service checks it, someone adds an `if` for the escalation case, and within a
-year nobody can say what the actual process is without reading four repositories. The
-business asks "where is Priya's request stuck?" and the answer is a database query and a
-shrug.
+Your leave-approval flow lives in code. A controller sets `status = "PENDING"`, a
+different service checks it, and someone adds an `if` for the escalation case.
+Within a year, nobody can say what the actual process is without reading four
+repositories. The business asks "where is Priya's request stuck?" and the answer
+is a database query and a shrug.
 
-A process engine's first promise is that the flow is *explicit*: a graph you can draw,
-deploy, and interrogate — "the token is sitting at Manager Approval, and has been for
-three days." Before Flowable's version of that can feel obvious rather than magical, you
-need to build the execution model it rests on. It's smaller than you think.
+A process engine's first promise is that the flow is *explicit*: a graph you can
+draw, deploy, and interrogate — "the token is sitting at Manager Approval, and has
+been for three days." Before Flowable's version of that can feel obvious rather
+than magical, you need to build the execution model it rests on. That model is
+smaller than you think.
 
 ## The Concept
 
 A BPMN model, stripped of its notation, is a directed graph. Nodes are events, tasks,
-and gateways; edges are **sequence flows**. Execution is a **token**: born at the start
-event, moved along flows, consumed at an end event. The instance is complete when no
-tokens remain.
+and gateways. Edges are **sequence flows**. Execution is a **token**: it's born at
+the start event, moves along flows, and is consumed at an end event. The instance
+is complete when no tokens remain.
 
 ```mermaid
 flowchart LR
@@ -37,18 +38,18 @@ flowchart LR
 Two node behaviours matter today:
 
 1. **Automatic nodes** (start, service tasks, end): the engine executes them and moves
-   the token on immediately — it never stops on its own account.
+   the token on immediately. It never stops on its own account.
 2. **Wait states** (the user task 👤): the token *stops*. The engine has done all it
-   can; the world must act — a human completes the task — before the token moves again.
+   can. The world must act — a human completes the task — before the token moves again.
 
-Everything a process engine does is one of two operations: **advance tokens until every
-one is asleep or consumed**, and **wake a specific token when the world provides what it
-was waiting for**.
+A process engine only ever does one of two operations: **advance tokens until
+every one is asleep or consumed**, or **wake a specific token when the world
+provides what it was waiting for**.
 
 ## Build It
 
-No engine, no XML — plain Python, so the semantics are undeniable.
-[`code/token_engine.py`](../code/token_engine.py), the heart of it:
+No engine, no XML — just plain Python, so the semantics are undeniable. Here is the
+heart of [`code/token_engine.py`](../code/token_engine.py):
 
 ```python
 def advance(inst):
@@ -89,10 +90,11 @@ tokens after start: ['approve']     ← the engine slept at the user task
 tokens after approval: []           ← complete; the log shows every step
 ```
 
-Note what `start()` did **not** do: it did not block a thread waiting for the manager.
-It advanced as far as it could and returned. That single design choice — covered
-properly in [Phase 2](../../../02-the-engine-state-and-transactions/01-wait-states-and-persistence/docs/en.md) —
-is why an engine can hold a million in-flight instances on one box.
+Note what `start()` did **not** do: it did not block a thread waiting for the
+manager. It advanced as far as it could, then returned. That single design choice
+— covered properly in
+[Phase 2](../../../02-the-engine-state-and-transactions/01-wait-states-and-persistence/docs/en.md)
+— is why an engine can hold a million in-flight instances on one box.
 
 ## Use It
 
@@ -120,8 +122,8 @@ in [lesson 03](../../03-bpmn-xml-by-hand/docs/en.md).
 ## Ship It
 
 This lesson ships [`outputs/token_engine.py`](../outputs/token_engine.py) — the toy
-engine as a reusable module. Phase 2 extends it with persistence, and the gateway
-lesson next door teaches it to fork.
+engine, packaged as a reusable module. Phase 2 extends it with persistence, and
+the gateway lesson next door teaches it to fork.
 
 ## Check Yourself
 
@@ -143,7 +145,7 @@ as far as it can, then sleeps. Completion is a separate, later interaction.</det
 - D) when the start event is re-triggered
 
 <details><summary>Answer</summary>B — no tokens, no instance. With parallel branches
-(lesson 02) there can be several tokens, and *all* must be consumed.</details>
+(lesson 02) there can be several tokens, and *all* of them must be consumed.</details>
 
 **Q3.** In the Build It engine, what distinguishes a service task from a user task?
 
@@ -153,13 +155,13 @@ as far as it can, then sleeps. Completion is a separate, later interaction.</det
 - D) nothing — they're interchangeable
 
 <details><summary>Answer</summary>A — the engine executes a service task's handler and
-moves on immediately; a user task parks the token until `complete_user_task` is
+moves on immediately. A user task parks the token until `complete_user_task` is
 called.</details>
 
 **Challenge.** Add a `script` node kind that evaluates a Python expression against the
 variables and stores the result — you've just rebuilt BPMN's script task. Then make
 `advance` raise a clear error when a node has *zero* outgoing flows and isn't an end
-event: you've just rebuilt model validation.
+event — you've just rebuilt model validation.
 
 ## Related
 

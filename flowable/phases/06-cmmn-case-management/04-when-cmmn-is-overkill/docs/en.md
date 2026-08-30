@@ -8,14 +8,14 @@ phase's honest closing.*
 
 ## The Problem
 
-CMMN is elegant, standardised, and — in most organisations that adopted it —
-regretted. Camunda deprecated their implementation years ago for lack of use;
-Flowable keeps a first-class one (it's genuinely good, and Flowable Work's case
-UIs lean on it), but the industry pattern is clear: teams choose CMMN in the
-architecture phase for flexibility they never exercise, then pay its costs —
-scarcer skills, weaker tooling ecosystems, harder testing, models reviewers
-can't read — for years. This lesson is the checklist that keeps you off that
-path, and the short list of cases where CMMN earns its keep.
+CMMN is elegant and standardised, and most organisations that adopted it
+regret it. Camunda deprecated their implementation years ago for lack of use.
+Flowable keeps a first-class one — it's genuinely good, and Flowable Work's
+case UIs lean on it — but the industry pattern is clear. Teams choose CMMN in
+the architecture phase for flexibility they never exercise, then pay its
+costs for years: scarcer skills, weaker tooling ecosystems, harder testing,
+and models reviewers can't read. This lesson is the checklist that keeps you
+off that path, and the short list of cases where CMMN earns its keep.
 
 ## The Concept
 
@@ -32,10 +32,11 @@ flowchart TB
   verdict -- "usually" --> bpmn["BPMN, simpler than feared"]
 ```
 
-Most "dynamic" requirements decompose into: *interruptions* (event
-subprocesses), *exceptions* (boundary events), *rework* (loops), and *variants*
-(DMN-driven routing). What remains — genuine practitioner authority over
-sequencing, lesson 01's litmus test — is rarer than the meeting believes.
+Most "dynamic" requirements decompose into *interruptions* (event
+subprocesses), *exceptions* (boundary events), *rework* (loops), and
+*variants* (DMN-driven routing). What remains — genuine practitioner
+authority over sequencing, lesson 01's litmus test — is rarer than the
+meeting believes.
 
 The real costs you accept with CMMN, spelled out:
 
@@ -47,18 +48,19 @@ The real costs you accept with CMMN, spelled out:
 | **Legibility** | sentries encode logic invisibly (an AND across ON-parts, an IF-part in XML) — the diagram shows less of the behaviour than BPMN's does, the opposite of Principle 2's promise |
 | **Ops intuition** | "where is case X stuck?" has fuzzier answers when nothing was ever *supposed* to happen next (Phase 9's oldest-instance signal needs rethinking per case model) |
 
-When CMMN genuinely earns it — all three at once:
+CMMN genuinely earns it only when all three hold at once:
 
-1. Practitioner authority over sequencing is *real and defended* (investigators,
-   adjusters, clinicians — people whose judgment is the product);
-2. The discretionary surface is *large* (a dozen-plus optional activities —
-   below that, one BPMN stage with event subprocesses covers it);
-3. Guardrails still matter (sentries, milestones, required items — otherwise
-   you wanted a task list, not an engine).
+1. Practitioner authority over sequencing is *real and defended* — people
+   like investigators, adjusters, and clinicians, whose judgment is the
+   product.
+2. The discretionary surface is *large*: a dozen-plus optional activities.
+   Below that, one BPMN stage with event subprocesses covers it.
+3. Guardrails still matter — sentries, milestones, required items. Without
+   them, you wanted a task list, not an engine.
 
 Fraud investigation (lesson 02) passes all three. Dispute handling passed by
-*containing* its discretion in one stage (lesson 03). The capstone fails 1 —
-and that's the normal case, which is the point.
+*containing* its discretion in one stage (lesson 03). The capstone fails
+condition 1 — and that's the normal case, which is the point.
 
 ## Ship It
 
@@ -78,8 +80,8 @@ order." The first answer is…
 - D) Temporal
 
 <details><summary>Answer</summary>B — unordered *inputs* are not unordered
-*work*. The litmus test asks who sequences the work, and onboarding's work is
-prescribed.</details>
+*work*. The litmus test asks who sequences the work, and onboarding's work
+is prescribed.</details>
 
 **Q2.** CMMN's testability cost comes from…
 
@@ -88,8 +90,8 @@ prescribed.</details>
 - C) missing assertions
 - D) XML
 
-<details><summary>Answer</summary>B — discretion for the worker is combinatorics
-for the tester. Budget for it or constrain the model.</details>
+<details><summary>Answer</summary>B — discretion for the worker becomes
+combinatorics for the tester. Budget for it, or constrain the model.</details>
 
 **Q3.** The containment strategy for a mostly-prescribed flow with one
 discretionary pocket is…
@@ -102,12 +104,12 @@ discretionary pocket is…
 <details><summary>Answer</summary>B — lesson 03's seam exists precisely so
 CMMN's costs are paid only on the stage that needs its powers.</details>
 
-**Challenge.** Take lesson 02's fraud investigation and — as devil's advocate —
-model it in plain BPMN using only the escape hatches. Write down exactly where
-it breaks (hint: "interview may repeat, statements may be skipped, order is
-judgment" survives; "escalation stage unlocked by evidence" does too; what
-finally breaks is *completion semantics*). Knowing precisely where BPMN fails
-is what earns you the right to use CMMN there.
+**Challenge.** Take lesson 02's fraud investigation and, as devil's advocate,
+model it in plain BPMN using only the escape hatches. Write down exactly
+where it breaks. Hint: "interview may repeat, statements may be skipped,
+order is judgment" survives, and "escalation stage unlocked by evidence"
+does too — what finally breaks is *completion semantics*. Knowing precisely
+where BPMN fails is what earns you the right to use CMMN there.
 
 ## Related
 

@@ -1,7 +1,8 @@
 # User tasks vs service tasks: where humans and systems meet
 
-> **Motto** — Every box in your process is a promise about *who* does the work and *how
-> long the engine will wait* — choose the task type by the promise, not the icon.
+> **Motto** — Every box in your process is a promise about *who* does the work and
+> *how long the engine will wait*. Choose the task type by the promise, not the
+> icon.
 
 *Part of Phase 01 — BPMN & the token model. Concept lesson — no code required.
 Concept reading: [Principle 6 — separate the flow from the work](../../../../foundations/process-automation-principles.md).*
@@ -10,10 +11,11 @@ Concept reading: [Principle 6 — separate the flow from the work](../../../../f
 
 Every real process is a braid of human judgment and system calls: an ops analyst
 reviews the file, a bureau API returns a score, a rules engine decides, a customer
-uploads a document. Model a human step as a service task and the process crashes
-looking for code that doesn't exist; model an API call as a user task and it sits in
-somebody's inbox forever. Task-type choices are the requirements document of your
-process — and they're the thing PMs and engineers most often get wrong together.
+uploads a document. Model a human step as a service task, and the process
+crashes looking for code that doesn't exist. Model an API call as a user task,
+and it sits in somebody's inbox forever. Task-type choices are the requirements
+document of your process, and they're the thing PMs and engineers most often get
+wrong together.
 
 ## The Concept
 
@@ -45,26 +47,28 @@ flowchart TB
 
 Three decision rules cover 95% of modelling calls:
 
-1. **"Does the flow stop until someone/something outside the engine acts?"** Yes → you
-   need a wait state (user task, receive task, timer). No → an automatic task.
+1. **"Does the flow stop until someone or something outside the engine acts?"**
+   Yes → you need a wait state (user task, receive task, timer). No → use an
+   automatic task.
 2. **"Is the external call fast and reliable enough to hold a transaction open?"**
-   A sub-second internal API can be a synchronous service task. A bureau that takes 30
-   seconds and fails at month-end must be an async call: fire a service task, then park
-   at a message catch until the callback — or mark the task async
+   A sub-second internal API can be a synchronous service task. A bureau that
+   takes 30 seconds and fails at month-end must be an async call: fire a service
+   task, then park at a message catch until the callback. Or mark the task async
    ([Phase 2, lesson 03](../../../02-the-engine-state-and-transactions/03-transactions-and-async/docs/en.md)).
-3. **"Would the business want to change this logic without a release?"** Yes → it's not
-   a script task, it's a DMN business rule task (Phase 5).
+3. **"Would the business want to change this logic without a release?"** Yes →
+   it's not a script task, it's a DMN business rule task (Phase 5).
 
-The anti-pattern to police in model reviews: **script tasks accumulating business
-logic**. A script task is invisible to code review tooling, untestable in isolation,
-and versioned only with the model. Two lines of glue, fine; an eligibility rule, never.
+Watch for one anti-pattern in model reviews: **script tasks accumulating business
+logic**. A script task is invisible to code review tooling, untestable in
+isolation, and versioned only with the model. Two lines of glue are fine; an
+eligibility rule never belongs there.
 
 ## Ship It
 
 This lesson ships
-[`outputs/task-type-guide.md`](../outputs/task-type-guide.md) — a one-page decision
-guide you can paste into your team's modelling conventions doc and use in model
-reviews.
+[`outputs/task-type-guide.md`](../outputs/task-type-guide.md) — a one-page
+decision guide. Paste it into your team's modelling conventions doc and use it in
+model reviews.
 
 ## Check Yourself
 
@@ -76,8 +80,8 @@ reviews.
 - D) script task with a retry loop
 
 <details><summary>Answer</summary>C — slow or unreliable externals must not hold the
-engine's transaction open. Fire-and-wait (or async + job retries) keeps the instance
-durable across the flakiness.</details>
+engine's transaction open. Fire-and-wait (or async plus job retries) keeps the
+instance durable across the flakiness.</details>
 
 **Q2.** A maker-checker approval where any of five supervisors may act is best
 modelled as…
@@ -88,8 +92,8 @@ modelled as…
 - D) a script task
 
 <details><summary>Answer</summary>B — candidate groups are exactly this: one task,
-many eligible claimants, first claim wins. Five parallel tasks would require all five
-to act.</details>
+many eligible claimants, first claim wins. Five parallel tasks would require all
+five to act.</details>
 
 **Q3.** Business asks to tweak the auto-approval threshold monthly. Where should that
 logic live?
@@ -104,9 +108,10 @@ cadence belongs in a decision table, deployable independently of process and
 code.</details>
 
 **Challenge.** Take one real process from your domain (loan disbursal, vendor
-onboarding, refund approval). List every step, and for each write: who acts, does the
-engine wait, and what task type follows from rules 1–3. Where you hesitate, that's
-where your requirements are actually unclear — which is the point.
+onboarding, refund approval). List every step, and for each write down: who acts,
+does the engine wait, and what task type follows from rules 1–3. Where you
+hesitate, that's where your requirements are actually unclear — that's the
+point.
 
 ## Related
 

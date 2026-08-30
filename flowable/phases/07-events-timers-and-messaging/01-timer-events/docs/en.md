@@ -9,13 +9,13 @@
 
 ## The Problem
 
-"Expire the offer after 30 days. Remind the customer daily for the first three. Escalate
-approvals stuck past four hours." In ordinary systems each of these becomes a cron job,
-a scheduler table, and a slow drift between what the code does and what the SLA document
-says. The process engine's claim is stronger: the deadline is *part of the flow* — drawn
-on the diagram, deployed with the model, cancelled automatically when the step it
-guards completes. You built the firing machinery in Phase 2 (the job executor); this
-lesson is the semantics layered on top.
+"Expire the offer after 30 days. Remind the customer daily for the first three.
+Escalate approvals stuck past four hours." In ordinary systems, each of these becomes
+a cron job and a scheduler table. Over time, what the code does drifts from what the
+SLA document says. The process engine makes a stronger claim: the deadline is *part of
+the flow*. It is drawn on the diagram, deployed with the model, and cancelled
+automatically when the step it guards completes. You built the firing machinery in
+Phase 2 (the job executor). This lesson adds the semantics on top.
 
 ## The Concept
 
@@ -37,15 +37,15 @@ flowchart LR
 | **Intermediate catch** | token parks until the time passes | cooling-off periods, "wait until 9 am" |
 | **Timer start event** | new instance per firing | scheduled batch processes |
 
-Underneath, every one of them is a row in the timer-job table with a due date — armed
-when the token arrives, **disarmed when the activity completes first**. That
-cancellation is the part cron can never give you: complete the offer task and the
-expiry simply never fires; no "check if still relevant" guard code anywhere.
+Underneath, every one of them is a row in the timer-job table with a due date. It
+arms when the token arrives, and **disarms when the activity completes first**. That
+cancellation is the part cron can never give you. Complete the offer task, and the
+expiry simply never fires — no "check if still relevant" guard code anywhere.
 
-The two flavours of boundary timer are the design decision that matters:
-*interrupting* = the deadline **changes the flow** (expiry ends the offer);
-*non-interrupting* = the deadline **adds work** (a reminder, while the offer stays
-open). Reminders-then-expiry is the composition you'll use constantly: a
+The two flavours of boundary timer are the design decision that matters.
+*Interrupting* means the deadline **changes the flow** (expiry ends the offer).
+*Non-interrupting* means the deadline **adds work** (a reminder, while the offer
+stays open). Reminders-then-expiry is the composition you'll use constantly: a
 non-interrupting `R3/P1D` cycle plus an interrupting `P30D` on the same task.
 
 ## Build It
@@ -77,10 +77,10 @@ $ python3 timer_events.py
 timers drained; sanity: PT4H=14400s P1DT12H=129600s
 ```
 
-Note what `expire` does besides flipping state: it cancels the reminder cycle —
-interrupting boundaries tear down their siblings. And `accept_offer_completed()` shows
-the other direction: completing the task disarms *both* timers. Arming and disarming
-are the whole trick; firing is just Phase 2's `tick`.
+Note what `expire` does besides flipping state: it cancels the reminder cycle.
+Interrupting boundaries tear down their siblings. And `accept_offer_completed()` shows
+the other direction — completing the task disarms *both* timers. Arming and disarming
+are the whole trick. Firing is just Phase 2's `tick`.
 
 ## Use It
 
@@ -100,15 +100,15 @@ The same composition in Flowable XML — two boundary events on one task:
 ```
 
 `cancelActivity` is the interrupting/non-interrupting switch. Durations can be
-expressions — `<timeDuration>${offerValidity}</timeDuration>` — so the 30 days can
+expressions, like `<timeDuration>${offerValidity}</timeDuration>`, so the 30 days can
 come from a DMN table (Phase 5) instead of being baked into the model. Operationally,
-these are rows in `ACT_RU_TIMER_JOB`; a timer that "didn't fire" is diagnosed with
+these are rows in `ACT_RU_TIMER_JOB`. A timer that "didn't fire" is diagnosed with
 exactly the Phase 2/Phase 4 job tooling.
 
 ## Ship It
 
 This lesson ships [`code/timer_events.py`](../code/timer_events.py) — the ISO-8601
-parser and arm/disarm/fire semantics as a module; the capstone model uses the
+parser and arm/disarm/fire semantics as a module. The capstone model uses the
 composition verbatim.
 
 ## Check Yourself
@@ -131,8 +131,8 @@ removes all the "is this still relevant?" guard code cron solutions need.</detai
 - C) a timer start event
 - D) an intermediate catch after the task
 
-<details><summary>Answer</summary>B — non-interrupting means "add work, don't abort";
-the cycle gives you the repetition.</details>
+<details><summary>Answer</summary>B — non-interrupting means "add work, don't abort."
+The cycle gives you the repetition.</details>
 
 **Q3.** `R3/P1D` means…
 
@@ -145,9 +145,9 @@ the cycle gives you the repetition.</details>
 used for retry cycles (`R5/PT10M`). Omit the count (`R/P1D`) for unbounded.</details>
 
 **Challenge.** Add `parse_date` (absolute ISO timestamps) and a `TimerService.at()`
-for it, then model a "cooling-off until the 1st of next month" intermediate catch.
-Then break the parser deliberately — `PT30` (no unit) — and make the error message say
-*which* part of the string is malformed; bad ISO strings in models are a real
+for it. Then model a "cooling-off until the 1st of next month" intermediate catch.
+Next, break the parser deliberately with `PT30` (no unit), and make the error message
+say *which* part of the string is malformed. Bad ISO strings in models are a real
 deploy-time failure class.
 
 ## Related

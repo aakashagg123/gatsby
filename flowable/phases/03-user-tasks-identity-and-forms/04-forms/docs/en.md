@@ -1,19 +1,19 @@
 # Forms: form properties, form keys, external form apps
 
 > **Motto** — The engine owns the *contract* of a form — fields, types, required,
-> writable; who renders the pixels is a separate decision with three answers.
+> writable. Who renders the pixels is a separate decision with three answers.
 
 *Part of Phase 03 — User tasks, identity & forms.*
 
 ## The Problem
 
-A task inbox without forms is a list of names: "Approve leave request" — approve
-*what*, based on *which* data, answering *which* questions? Every user task implies a
-small data contract: show these values, collect those answers, validate them, write
-them as variables. Teams that skip modelling this contract end up with UI code that
-knows secret variable names ("the frontend sets `apprvd`, stringly-typed") and
-processes that break when a form field is renamed — the same drift the diagram was
-supposed to prevent, reintroduced at the UI layer.
+A task inbox without forms is just a list of names, like "Approve leave request."
+Approve *what*, based on *which* data, answering *which* questions? Every user task
+implies a small data contract: show these values, collect those answers, validate
+them, and write them as variables. Teams that skip modelling this contract end up
+with UI code that knows secret variable names (the frontend sets `apprvd`,
+stringly-typed). Their processes break when a form field is renamed — the same drift
+the diagram was supposed to prevent, reintroduced at the UI layer.
 
 ## The Concept
 
@@ -34,16 +34,16 @@ flowchart LR
   UI --> S["POST form-data<br/>→ engine VALIDATES,<br/>writes variables, completes task"]
 ```
 
-Submitting through the form endpoint is the point: type checks, required checks, and
-enum membership run **engine-side** before the task completes — the UI can't invent
-`apprvd`, skip a mandatory answer, or send `coverage=cousin`. Read-only expression
-properties (`expression="${employee}" writable="false"`) cover the "show context,
-don't let them change it" half of every form.
+Submitting through the form endpoint is the point. Type checks, required checks, and
+enum membership all run **engine-side** before the task completes. The UI can't
+invent `apprvd`, skip a mandatory answer, or send `coverage=cousin`. Read-only
+expression properties (`expression="${employee}" writable="false"`) cover the other
+half of every form: show context, but don't let the user change it.
 
-The honest scope line: form properties handle flat, structured questions. Multi-step
-wizards, conditional sections, file uploads — that's form-key territory, where the
-engine stores *which* screen and your form app owns the rest. The failure mode to
-avoid is the middle: half the contract in properties, half in UI code, drifting
+Here's the honest scope: form properties handle flat, structured questions.
+Multi-step wizards, conditional sections, and file uploads belong to form-key
+territory, where the engine stores *which* screen and your form app owns the rest.
+Avoid the middle ground — half the contract in properties, half in UI code, drifting
 independently.
 
 ## Use It
@@ -81,15 +81,15 @@ the task asks for:
 submitted; task gone: True
 ```
 
-Change `"approved": "true"` to `"approved": "maybe"` and the submit fails
-engine-side — the contract holding against a bad client is the demo's real payload.
+Change `"approved": "true"` to `"approved": "maybe"`, and the submit fails
+engine-side. The contract holding against a bad client is the demo's real payload.
 
 ## Ship It
 
 This lesson ships both halves of the pattern:
-[`leave-request-form.bpmn20.xml`](../outputs/leave-request-form.bpmn20.xml) (the
-contract in the model) and [`form_client.py`](../code/form_client.py) (a contract-
-driven client any UI team can crib from).
+[`leave-request-form.bpmn20.xml`](../outputs/leave-request-form.bpmn20.xml), the
+contract in the model, and [`form_client.py`](../code/form_client.py), a
+contract-driven client any UI team can crib from.
 
 ## Check Yourself
 
@@ -102,7 +102,7 @@ with raw variables?
 - D) it skips the task lifecycle
 
 <details><summary>Answer</summary>B — the form endpoint is the enforced version of
-the contract; raw completion trusts the client.</details>
+the contract. Raw completion trusts the client.</details>
 
 **Q2.** `flowable:formKey="kyc-review-v2"` means the engine…
 
@@ -126,7 +126,7 @@ display half of the contract, and they keep even *context* out of UI-side variab
 name guessing.</details>
 
 **Challenge.** Add a `days` property (`type="long"`, required) and make the client
-submit `days: "ten"` — observe the engine-side rejection. Then write the twenty-line
+submit `days: "ten"`. Observe the engine-side rejection. Then write the twenty-line
 generic renderer: fetch any task's form-data and produce a text-mode form (prompt per
 property, enum menus, skip read-only). That renderer working against *both* demo
 tasks unmodified is the portability argument for contracts-in-the-model.
