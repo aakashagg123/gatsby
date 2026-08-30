@@ -19,9 +19,9 @@ built one first.
 
 ## The Concept
 
-A job is durable work-to-do: *what* (continue this execution / fire this timer),
-*when* (`due`), *how many attempts remain* (`retries`), and *who's working on it*
-(`locked_by`, `lock_until`). The executor loop:
+A job is durable work-to-do. It records *what* (continue this execution / fire
+this timer), *when* (`due`), *how many attempts remain* (`retries`), and *who's
+working on it* (`locked_by`, `lock_until`). Here is the executor loop:
 
 ```mermaid
 flowchart LR
@@ -32,12 +32,12 @@ flowchart LR
   R -- no --> X["move to dead-letter table"]
 ```
 
-The whole cluster story is inside **acquire**: locking is a conditional `UPDATE`, and
-because the database serialises updates, two nodes can run the same query
-simultaneously and each job is still acquired exactly once. Locks carry a timeout
-(`lock_until`) so a node that dies mid-job doesn't strand its work — the lock expires
-and another node picks it up. (Corollary: job handlers must tolerate the rare
-double-run — idempotency again.)
+The whole cluster story lives inside **acquire**. Locking is a conditional
+`UPDATE`, and because the database serialises updates, two nodes can run the
+same query simultaneously and each job still gets acquired exactly once. Locks
+carry a timeout (`lock_until`) so a node that dies mid-job doesn't strand its
+work — the lock expires and another node picks it up. (One consequence: job
+handlers must tolerate the rare double-run. Idempotency, again.)
 
 Flowable's tables map one-to-one:
 
@@ -48,14 +48,15 @@ Flowable's tables map one-to-one:
 | `ACT_RU_SUSPENDED_JOB` | jobs of suspended instances |
 | `ACT_RU_DEADLETTER_JOB` | out of retries — **needs a human** |
 
-Dead letters are the operational contract: after the last retry the engine stops
-trying and files the job where nothing runs it again. If nobody watches that table,
-failed async work is silently frozen — Phase 9 makes it an alert.
+Dead letters are the operational contract. After the last retry, the engine
+stops trying and files the job where nothing runs it again. If nobody watches
+that table, failed async work sits silently frozen — Phase 9 turns that into an
+alert.
 
 ## Build It
 
-[`code/job_executor.py`](../code/job_executor.py). Acquisition — the cluster-safety
-core — in full:
+Here is [`code/job_executor.py`](../code/job_executor.py). Acquisition — the
+cluster-safety core — in full:
 
 ```python
 def acquire(self, node, limit=10):
@@ -91,12 +92,12 @@ t=+370s:
 dead letters: [(3, 'async')]
 ```
 
-Note node-B's silence at t=0: it ran, found everything locked by node-A, and acquired
-nothing. That non-event *is* the cluster correctness property.
+Note node-B's silence at t=0: it ran, found everything locked by node-A, and
+acquired nothing. That non-event *is* the cluster correctness property.
 
 ## Use It
 
-In Flowable the executor is on by default in Spring Boot
+In Flowable, the executor is on by default in Spring Boot
 (`flowable.async-executor-activate=true`). Timers come straight from the model:
 
 ```xml
@@ -107,9 +108,9 @@ In Flowable the executor is on by default in Spring Boot
 </boundaryEvent>
 ```
 
-Retries default to 3; customise per task
-(`flowable:failedJobRetryTimeCycle="R5/PT10M"` — 5 retries, 10 minutes apart). Inspect
-and revive dead letters over REST:
+Retries default to 3. Customise per task with
+`flowable:failedJobRetryTimeCycle="R5/PT10M"` (5 retries, 10 minutes apart).
+Inspect and revive dead letters over REST:
 
 ```bash
 curl -u rest-admin:test ".../management/deadletter-jobs"

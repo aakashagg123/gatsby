@@ -1,7 +1,7 @@
 # A decision engine in 80 lines: rules, inputs, outputs
 
-> **Motto** — A business rule is a row, not an `if`: make policy data instead of code
-> and the people who own the policy can finally read it.
+> **Motto** — A business rule is a row, not an `if`. Make policy data instead of
+> code, and the people who own the policy can finally read it.
 
 *Part of Phase 05 — DMN: decisions as tables. Concept reading:
 [Principle 7 — decisions are not processes](../../../../foundations/process-automation-principles.md).*
