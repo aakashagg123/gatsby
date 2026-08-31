@@ -6,17 +6,18 @@
 
 ## The Problem
 
-Read-only tools are safe to retry. But the moment a tool *does* something — sends an email,
-charges a card, creates a file, opens a PR — retries become dangerous. The agent loop
-retries on errors (Phase 2 lesson 06), a transient network blip can re-trigger a call, and
-a confused model can repeat itself. Without idempotency you get double-sends and duplicate
-charges: the most expensive class of tool bug because it touches the real world.
+Read-only tools are safe to retry. But the moment a tool *does* something — sends an
+email, charges a card, creates a file, opens a PR — retries become dangerous. The agent
+loop retries on errors (Phase 2 lesson 06), a transient network blip can re-trigger a
+call, and a confused model can repeat itself. Without idempotency you get double-sends
+and duplicate charges. This is the most expensive class of tool bug, because it touches
+the real world.
 
 ## The Concept
 
 Make each side-effecting call carry an **idempotency key** derived from its intent. The
-harness records completed keys; a repeat with the same key returns the stored result instead
-of acting again.
+harness records completed keys. A repeat with the same key returns the stored result
+instead of acting again.
 
 ```mermaid
 flowchart LR

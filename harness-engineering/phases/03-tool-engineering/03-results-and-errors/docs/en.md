@@ -6,10 +6,10 @@
 
 ## The Problem
 
-After a tool runs, its output goes back to the model as a `tool_result`. How you shape that
-result determines whether the model uses it well: huge raw dumps blow the context budget,
-unlabeled errors confuse it, and missing the `is_error` flag means failures look like
-success. The feedback channel needs structure.
+After a tool runs, its output goes back to the model as a `tool_result`. How you shape
+that result determines whether the model uses it well. Huge raw dumps blow the context
+budget, unlabeled errors confuse the model, and a missing `is_error` flag makes failures
+look like success. The feedback channel needs structure.
 
 ## The Concept
 
@@ -53,14 +53,14 @@ print(err("t2", "file not found"))           # is_error True
 print(_block("t3", "x" * 5000, False)["content"][-30:])  # …[truncated 1000 chars]
 ```
 
-The truncation note matters: the model knows output was cut, rather than silently reasoning
-over a partial result.
+The truncation note matters. The model knows output was cut, rather than silently
+reasoning over a partial result.
 
 ## Use It
 
 These dicts are exactly the `tool_result` content blocks you append as a user turn in the
-SDK loop. The `is_error` flag tells the model to treat the content as a failure to recover
-from. Truncation here is the first taste of context engineering (Phase 4).
+SDK loop. The `is_error` flag tells the model to treat the content as a failure to
+recover from. Truncation here is the first taste of context engineering (Phase 4).
 
 ## Ship It
 

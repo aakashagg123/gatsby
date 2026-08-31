@@ -95,7 +95,7 @@ wave planning, and worktree command generation.
 - C) drop one
 - D) error and stop the whole sprint
 
-<details><summary>Answer</summary>B — disjoint files per wave (principle 06); the
+<details><summary>Answer</summary>B — disjoint files per wave (principle 06). The
 conflict detector forces the split.</details>
 
 **Q2.** Why give each worker its own git worktree?
@@ -105,7 +105,7 @@ conflict detector forces the split.</details>
 - C) to avoid writing tests
 - D) it's required by the SDK
 
-<details><summary>Answer</summary>B — isolation is the point; branches merge after the
+<details><summary>Answer</summary>B — isolation is the point. Branches merge after the
 wave.</details>
 
 **Challenge.** Add cycle detection that names the tasks in the cycle (e.g. `a → b → a`)

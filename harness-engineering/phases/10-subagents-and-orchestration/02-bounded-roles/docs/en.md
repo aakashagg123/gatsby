@@ -1,6 +1,6 @@
 # Bounded roles & context allowlists
 
-> **Motto** — Each agent reads only its allowlist; everything else is off-limits by construction.
+> **Motto** — Each agent reads only its allowlist — everything else is off-limits by construction.
 
 *Part of Phase 10 — Subagents & Orchestration. Concept:
 [The Ten Principles of a Working Harness](../../../../foundations/harness-principles.md)
