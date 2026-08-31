@@ -84,10 +84,10 @@ re-dispatch without consuming a step. The model only ever sees clean messages.
 
 ## Use It
 
-In production the transient bucket becomes a real backoff policy (`anthropic` raises
-`APIStatusError` with `.status_code`; you retry 429/5xx with exponential backoff and
-jitter — Phase 14). The classification you wrote here is the decision layer that sits on
-top of any retry library.
+In production the transient bucket becomes a real backoff policy. The `anthropic` library
+raises `APIStatusError` with `.status_code`, and you retry 429/5xx errors with
+exponential backoff and jitter (Phase 14). The classification you wrote here is the
+decision layer that sits on top of any retry library.
 
 ## Ship It
 

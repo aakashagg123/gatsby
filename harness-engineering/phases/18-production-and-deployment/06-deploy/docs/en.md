@@ -9,7 +9,7 @@
 The phase's pieces — remote execution, CI, webhooks, config/flags, rollout — combine into one
 **deployment pipeline** for the coding agent you build in Phase 19. This lesson is the
 checklist that takes the capstone agent from "runs on my machine" to "runs safely in
-production," each item pointing at the lesson that justifies it.
+production." Each item points at the lesson that justifies it.
 
 ## The Concept
 
@@ -37,9 +37,9 @@ The artifact is `outputs/deploy-checklist.md` — a go-live checklist for the ca
 ## Use It
 
 Run the checklist before pointing real traffic (or a real repo's PRs) at your agent. For a
-Claude Code / Codex user, much of this is provided by the platform (sandboxed cloud
-execution, permissions, network policy); your job is the project-level config (`settings.json`,
-`CLAUDE.md`, hooks, evals in CI) and knowing which guarantees come from where. The capstone
+Claude Code / Codex user, the platform provides much of this: sandboxed cloud execution,
+permissions, network policy. Your job is the project-level config (`settings.json`,
+`CLAUDE.md`, hooks, evals in CI), and knowing which guarantees come from where. The capstone
 (Phase 19) is what you deploy with it.
 
 ## Ship It

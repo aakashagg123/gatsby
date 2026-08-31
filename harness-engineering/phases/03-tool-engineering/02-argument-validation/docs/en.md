@@ -6,10 +6,11 @@
 
 ## The Problem
 
-The model fills in tool arguments from a schema, but it can still get them wrong: a missing
-required field, a string where a number belongs, a value outside an allowed set. If you call
-the function anyway you get a Python traceback (or worse, a silently wrong action). Validate
-against the schema first, and a bad call becomes a clean message the model can fix.
+The model fills in tool arguments from a schema, but it can still get them wrong: a
+missing required field, a string where a number belongs, a value outside an allowed set.
+Call the function anyway and you get a Python traceback, or worse, a silently wrong
+action. Validate against the schema first, and a bad call becomes a clean message the
+model can fix.
 
 ## The Concept
 
@@ -62,14 +63,14 @@ print(validate({"unit": "k"}, schema))               # missing required 'temp'
 print(validate({"temp": "hot"}, schema))             # temp: expected number, got str
 ```
 
-The error strings are written for the *model* to read — name the field and what was wrong,
-so it self-corrects in one turn.
+The error strings are written for the *model* to read. Name the field and what was
+wrong, so it self-corrects in one turn.
 
 ## Use It
 
-Providers do some validation, but you should validate at the dispatch boundary too:
-defense in depth, and your messages are tuned for recovery. This is the same
-errors-are-data principle from the agent loop, applied to arguments.
+Providers do some validation, but you should validate at the dispatch boundary too. It
+adds defense in depth, and you control the wording of the message for recovery. This is
+the same errors-are-data principle from the agent loop, applied to arguments.
 
 ## Ship It
 

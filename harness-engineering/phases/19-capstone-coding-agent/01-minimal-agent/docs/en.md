@@ -7,9 +7,9 @@
 ## The Problem
 
 You've built every piece in isolation. The capstone proves they compose. Project 1 is the
-**minimal coding agent**: the agent loop (P2) dispatching file tools (P6) and a bash tool (P7)
-through a typed registry (P3), driving a real task end-to-end — read a file, edit it, run it —
-on a real (temp) directory. No new concepts; just integration.
+**minimal coding agent**: the agent loop (P2) dispatches file tools (P6) and a bash tool (P7)
+through a typed registry (P3). It drives a real task end-to-end — read a file, edit it, run
+it — on a real (temp) directory. There are no new concepts here, just integration.
 
 ## The Concept
 
@@ -25,7 +25,7 @@ flowchart LR
 ## Build It
 
 `code/agent.py` — a self-contained minimal coding agent. A scripted model stands in for the
-real one (swap in the Phase 2 L5 SDK loop), so it runs offline and demonstrates the full
+real one (swap in the Phase 2 L5 SDK loop). This lets it run offline and demonstrate the full
 read→edit→run cycle on a temp file:
 
 ```python
@@ -48,16 +48,16 @@ def run(task, model, max_steps=10):
             history.append({"role": "tool", "content": out})
 ```
 
-The scripted model reads a buggy file, edits the bug, and runs it to confirm — the agent loop
-from Phase 2 wired to the real file/shell tools from Phases 6–7. Run `python3 agent.py` to
-watch it fix and verify a file.
+The scripted model reads a buggy file, edits the bug, and runs it to confirm the fix. This
+wires the agent loop from Phase 2 to the real file/shell tools from Phases 6–7. Run
+`python3 agent.py` to watch it fix and verify a file.
 
 ## Use It
 
 This is Claude Code / Codex at its core: a loop, tools, files, shell. Everything else in the
-curriculum (context, memory, permissions, subagents, evals, deploy) is a *layer* on this
-skeleton — which is exactly what projects 02–04 add. Swap the scripted model for the Phase 2
-L5 SDK loop and it's a real agent.
+curriculum — context, memory, permissions, subagents, evals, deploy — is a *layer* on this
+skeleton. That's exactly what projects 02–04 add. Swap the scripted model for the Phase 2 L5
+SDK loop, and it's a real agent.
 
 ## Ship It
 

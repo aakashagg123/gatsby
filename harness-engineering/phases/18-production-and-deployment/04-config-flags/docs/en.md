@@ -6,10 +6,11 @@
 
 ## The Problem
 
-A production harness has knobs: which model, which tools enabled, budgets, prompt version,
-new features. Hardcoding them means a redeploy for every change and no way to turn something
-off fast. **Layered config + feature flags** let you change behavior at runtime — defaults in
-code, overrides per environment, and flags to enable a feature for some/all traffic.
+A production harness has knobs: which model, which tools are enabled, budgets, prompt
+version, new features. Hardcoding them means a redeploy for every change, and no way to turn
+something off fast. **Layered config + feature flags** let you change behavior at runtime
+instead — defaults in code, overrides per environment, and flags that enable a feature for
+some or all traffic.
 
 ## The Concept
 
@@ -21,7 +22,7 @@ flowchart LR
   M --> C["effective config"]
 ```
 
-Later layers override earlier ones; flags gate features independently of a deploy.
+Later layers override earlier ones. Flags gate features independently of a deploy.
 
 ## Build It
 
@@ -51,12 +52,13 @@ print(cfg["model"], cfg["max_steps"])                  # opus, 10
 print([flag_enabled("new_planner", u, 30) for u in ["u1", "u2", "u3", "u4"]])
 ```
 
-Config merges deterministically (last layer wins); the flag hashes the unit id so a given
-user consistently sees the feature on or off — the basis for canary rollout (next lesson).
+Config merges deterministically: the last layer wins. The flag hashes the unit id, so a given
+user consistently sees the feature on or off. This is the basis for canary rollout (next
+lesson).
 
 ## Use It
 
-For Claude Code / Codex this maps to `settings.json` layering (user / project / local) plus
+For Claude Code / Codex, this maps to `settings.json` layering (user / project / local) plus
 env vars — the same defaults→overrides model. In a custom harness, flags let you ship a new
 prompt version or tool to 10% of traffic and watch the metrics (Phase 16) before going to
 100%. Config-as-data keeps behavior changes reviewable and reversible.
