@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Running an autonomous agent on your own machine, with your full filesystem and credentials,
-is the highest-blast-radius option. Production agents run in **remote, sandboxed, ephemeral**
-environments: a container cloned fresh from the repo, with a scoped network policy and
-injected secrets, reclaimed after the run. This is the deployment form of the sandboxing
-(Phase 7) and security (Phase 17) lessons.
+Running an autonomous agent on your own machine gives it your full filesystem and
+credentials. This is the highest-blast-radius option. Production agents run in **remote,
+sandboxed, ephemeral** environments instead: a container cloned fresh from the repo, with a
+scoped network policy and injected secrets. The box is reclaimed after the run. This is the
+deployment form of the sandboxing (Phase 7) and security (Phase 17) lessons.
 
 ## The Concept
 
@@ -26,10 +26,10 @@ Key properties: ephemeral (no state survives), isolated (can't reach your laptop
 
 ## Use It
 
-This is exactly how **Claude Code on the web / Codex cloud** run — and the environment *this
-very curriculum was built in*: a fresh clone, a chosen network policy, injected env, and a
-box reclaimed after inactivity (which is why anything worth keeping must be committed and
-pushed). The artifact is an environment config that captures these choices.
+This is exactly how **Claude Code on the web / Codex cloud** run. It's also the environment
+*this very curriculum was built in*: a fresh clone, a chosen network policy, injected env,
+and a box reclaimed after inactivity. Commit and push anything worth keeping, because the box
+does not persist. The artifact is an environment config that captures these choices.
 
 `outputs/environment.md` documents the deployment contract: trigger, base image, setup
 script, network policy, secrets, and the "commit or lose it" rule.

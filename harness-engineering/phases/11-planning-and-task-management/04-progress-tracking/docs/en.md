@@ -1,6 +1,6 @@
 # Progress tracking & self-correction
 
-> **Motto** — Watch the plan execute; when a step stalls or fails, re-plan instead of grinding.
+> **Motto** — Watch the plan execute — when a step stalls or fails, re-plan instead of grinding.
 
 *Part of Phase 11 — Planning & Task Management.*
 
@@ -22,7 +22,7 @@ flowchart LR
   R -- "no" --> RE["re-plan this step / escalate"]
 ```
 
-Progress is measured by *verification*, not by the agent's say-so; stalls trigger re-planning.
+Progress is measured by *verification*, not by the agent's say-so. Stalls trigger re-planning.
 
 ## Build It
 
@@ -57,8 +57,8 @@ print(Progress(max_retries=1).run_step("flaky", lambda s: None, lambda s: False)
 # needs_replan — stop grinding, escalate/re-plan
 ```
 
-`verify` is the gate: a step is only "complete" when its check passes; persistent failure
-returns `needs_replan` so the agent (or human) changes approach instead of looping.
+`verify` is the gate: a step is only "complete" when its check passes. Persistent failure
+returns `needs_replan`, so the agent (or human) changes approach instead of looping.
 
 ## Use It
 

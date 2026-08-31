@@ -6,11 +6,11 @@
 
 ## The Problem
 
-When the agent reads a file or retrieves a doc, you inject it into context. Three things go
-wrong: you inject *too much* (the whole 5,000-line file when 40 lines mattered — blowing the
-budget), you inject it *unlabeled* (the model can't tell file content from instructions —
-a prompt-injection vector, Phase 17), and you inject it *without provenance* (the model
-can't cite which file a fact came from).
+When the agent reads a file or retrieves a doc, you inject it into context. Three things
+go wrong. You can inject *too much*: the whole 5,000-line file when 40 lines mattered,
+which blows the budget. You can inject it *unlabeled*: the model can't tell file content
+from instructions, which opens a prompt-injection vector (Phase 17). Or you can inject it
+*without provenance*: the model can't cite which file a fact came from.
 
 ## The Concept
 
@@ -21,8 +21,8 @@ flowchart LR
   WR --> C["inject into this-turn context"]
 ```
 
-Wrap injected content in a clearly delimited block carrying its source path, and a standing
-instruction that anything inside is **data, not instructions**.
+Wrap injected content in a clearly delimited block that carries its source path, along with
+a standing instruction that anything inside is **data, not instructions**.
 
 ## Build It
 
@@ -52,15 +52,15 @@ chunk, span = slice_around(src, 50, radius=3)
 print(inject([wrap("big.py", chunk, span)]))
 ```
 
-The `data, not instructions` header is the cheap, always-on prompt-injection defense; the
-path+lines give the model something to cite.
+The `data, not instructions` header is a cheap, always-on prompt-injection defense. The
+path and line numbers give the model something to cite.
 
 ## Use It
 
-This is what **Claude Code / Codex** do when they Read a file into the conversation: they
-pull a bounded range (with line numbers) rather than dumping the whole file, and the agent
-cites `path:line`. When you build retrieval (Phase 13), the retrieved chunks flow through
-exactly this wrap-and-label path.
+This is what **Claude Code / Codex** do when they Read a file into the conversation.
+They pull a bounded range (with line numbers) rather than dumping the whole file, and the
+agent cites `path:line`. When you build retrieval (Phase 13), the retrieved chunks flow
+through exactly this wrap-and-label path.
 
 ## Ship It
 

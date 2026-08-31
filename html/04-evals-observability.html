@@ -316,23 +316,22 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
     <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
-  <div class="intro"><p>LLM systems fail <em>silently</em>: a wrong answer looks exactly like a right one, and quality
-can regress with no code change at all (a model update, a data shift, an aging index).
-The only defense is measurement — before you ship (evals) and while you run
-(observability) — plus knowing what it all costs.</p>
+  <div class="intro"><p>LLM systems fail <em>silently</em>. A wrong answer looks exactly like a right one, and quality
+can regress with no code change at all — a model update, a data shift, an aging index.
+The only defense is measurement: evals before you ship, observability while you run,
+and clear knowledge of what it all costs.</p>
 <ul>
 <li><a href="#evals"><strong>Evals</strong></a> — golden sets, regression tests, adversarial tests,
-  LLM-as-judge, and human evals. How you know it's <em>correct</em>.</li>
+  LLM-as-judge, and human evals. How you know an output is <em>correct</em>.</li>
 <li><a href="#observability"><strong>Observability</strong></a> — traces, spans, tokens, latency, errors, and
-  drift. How you know it's <em>working</em> in production.</li>
+  drift. How you know the system is <em>working</em> in production.</li>
 <li><a href="#cost-attribution"><strong>Cost attribution</strong></a> — per feature, workflow, tenant, and
   journey. How you know what it's <em>costing</em> and who's paying.</li>
 </ul>
-<p>This module is the backbone the rest of the curriculum leans on: every "validate before
-shipping" in <a href="02-reliable-outputs.html">reliable outputs</a>, every "measure
-retrieval" in <a href="03-rag.html">RAG</a>, and every quality claim about
-<a href="01-inference-internals.html#quantization-formats">quantization</a> ultimately routes
-through here.</p>
+<p>This module is the backbone the rest of the curriculum leans on. Every "validate before
+shipping" step in <a href="02-reliable-outputs.html">reliable outputs</a>, every "measure
+retrieval" step in <a href="03-rag.html">RAG</a>, and every quality claim about
+<a href="01-inference-internals.html#quantization-formats">quantization</a> routes through here.</p>
 <h2>Connects to other tracks</h2>
 <ul>
 <li><a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals for agents</a> — trajectory evals on top of this stack.</li>
@@ -357,46 +356,49 @@ through here.</p>
  <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--mut)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
 </div></div></section>
   <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</h2></div><h2>TL;DR</h2>
-<p>Evals are the test suite for a non-deterministic system. Because you can't assert exact
-equality, you build <strong>golden sets</strong> (curated inputs with known-good outputs), run them
-as <strong>regression tests</strong> in CI to block quality drops, add <strong>adversarial tests</strong> for the
-ways you expect it to break, and score open-ended outputs with <strong>LLM-as-judge</strong>
-(calibrated against <strong>human evals</strong>). Without evals you're flying blind: every prompt
-tweak, model swap, or <a href="01-inference-internals.html#quantization-formats">quantization</a>
-change is a coin flip, and regressions ship silently.</p>
+<p>Evals are the test suite for a non-deterministic system. You can't assert exact
+equality, so you build different tools instead. <strong>Golden sets</strong> are curated inputs with
+known-good outputs. <strong>Regression tests</strong> run those golden sets in CI to block quality
+drops. <strong>Adversarial tests</strong> cover the ways you expect the system to break.
+<strong>LLM-as-judge</strong> scores open-ended outputs, calibrated against <strong>human evals</strong>. Without
+evals you're flying blind: every prompt tweak, model swap, or
+<a href="01-inference-internals.html#quantization-formats">quantization</a> change becomes a coin
+flip, and regressions ship silently.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set <em>is</em> the product spec — it encodes what "good" actually means.</p>
+<p><strong>Why it matters</strong> — Evals are the difference between "we think it got better" and "we know." For an AI-native PM, the eval set <em>is</em> the product spec. It encodes what "good" actually means.</p>
 <p><strong>What it changes in your decisions</strong> — Your release gates, how you compare model options, and how you prove improvement to stakeholders.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's our regression eval, and does it run before every model or prompt change ships?"</em></p>
 <p><strong>Product risk if ignored</strong> — A model update silently regresses 5% of cases and you hear about it from users, not from CI.</p>
 </blockquote>
 <h2>Mental model</h2>
 <p>Traditional tests assert <code>f(x) == expected</code>. LLM outputs are variable and open-ended,
-so you shift from exact-match to <strong>graded quality over a representative distribution</strong>:</p>
+so exact-match doesn't work. Instead you grade <strong>quality over a representative
+distribution</strong>:</p>
 <ul>
 <li>For closed tasks (classification, extraction, structured output) you <em>can</em> use
   exact/structural checks.</li>
 <li>For open tasks (summaries, answers, code) you grade against a <strong>rubric</strong> with a judge
-  (model or human), and track <em>aggregate</em> scores and <em>regressions</em>, not single outputs.</li>
+  (model or human). Track <em>aggregate</em> scores and <em>regressions</em>, not single outputs.</li>
 </ul>
 <p>Evals turn "it feels better" into a number you can gate on.</p>
 <h2>Error analysis — look at your traces first</h2>
-<p>Before choosing metrics or building graders, practice <strong>error analysis</strong> — the
-discipline (borrowed from qualitative research) that turns raw production behaviour
-into an eval suite that measures <em>your</em> failures, not generic ones:</p>
+<p>Before you choose metrics or build graders, practice <strong>error analysis</strong>. This
+discipline, borrowed from qualitative research, turns raw production behavior into an
+eval suite that measures <em>your</em> failures, not generic ones:</p>
 <ol>
-<li><strong>Create a dataset</strong> — pull real traces: random samples plus anything flagged by
+<li><strong>Create a dataset.</strong> Pull real traces: random samples plus anything flagged by
    users, cheap screens, or your own suspicion.</li>
-<li><strong>Open coding</strong> — read traces one by one and label failures free-form, in your own
-   words ("ignored the date constraint," "cited the wrong doc"). No taxonomy yet.</li>
-<li><strong>Axial coding</strong> — cluster those labels into a failure taxonomy: the five or ten
+<li><strong>Open coding.</strong> Read traces one by one and label failures free-form, in your own
+   words — "ignored the date constraint," "cited the wrong doc." Don't build a taxonomy
+   yet.</li>
+<li><strong>Axial coding.</strong> Cluster those labels into a failure taxonomy: the five or ten
    recurring modes that actually matter.</li>
-<li><strong>Iterate</strong> — build automated evaluators for the <em>recurring, high-impact</em> modes only,
-   then re-run the analysis on fresh production traces regularly; the taxonomy rots as
-   users find new ways to use (and break) the product.</li>
+<li><strong>Iterate.</strong> Build automated evaluators only for the <em>recurring, high-impact</em> modes.
+   Re-run the analysis on fresh production traces regularly, because the taxonomy rots
+   as users find new ways to use — and break — the product.</li>
 </ol>
-<p>This is also the minimum viable eval setup: a spreadsheet of traces, pass/fail labels,
+<p>This is also the minimum viable eval setup. A spreadsheet of traces, pass/fail labels,
 and notes beats a metrics dashboard you haven't validated. Most teams over-invest in
 scoring infrastructure and under-invest in the hours of reading traces that tell you
 what's worth scoring.</p>
@@ -408,19 +410,19 @@ known-good outputs or acceptance criteria.</p>
   per feature and per <a href="#cost-attribution">tenant</a> segment where behavior differs.</li>
 <li><strong>Labeled with intent.</strong> Store <em>why</em> an output is correct (criteria/rubric), not just
   the string, so judges and humans can grade consistently.</li>
-<li><strong>Living.</strong> Grow it from production: every incident and bug becomes a new golden case
-  so the same regression can't recur (this is how evals compound in value).</li>
+<li><strong>Living.</strong> Grow it from production. Every incident and bug becomes a new golden case,
+  so the same regression can't recur. This is how evals compound in value.</li>
 <li><strong>Stratified.</strong> Tag cases by capability (math, extraction, refusal, multi-hop) so you
   see <em>where</em> quality moves, not just an aggregate.</li>
 </ul>
 <h2>Regression tests — gate every change</h2>
 <p>Run the golden set automatically before prompt, model, retrieval, or infra changes
-ship; block on score drops.</p>
+ship, and block the change on score drops.</p>
 <ul>
 <li>Catches the silent killers: a model upgrade that helps 95% and breaks 5%, a prompt
   edit with side effects, a <a href="01-inference-internals.html#quantization-formats">quantization</a>
   step that hurts strict-format tasks.</li>
-<li>Report per-stratum deltas, not one number — a flat average can hide a category falling
+<li>Report per-stratum deltas, not one number. A flat average can hide a category falling
   off a cliff.</li>
 <li>This is the CI gate referenced throughout the curriculum
   (<a href="02-reliable-outputs.html#structured-output">structured output</a>,
@@ -433,24 +435,25 @@ ship; block on score drops.</p>
 <li><strong>Prompt injection / jailbreaks</strong> — does retrieved or user content hijack behavior?
   (see <a href="05-safety-multitenancy.html#safety-engineering">safety engineering</a>).</li>
 <li><strong>Edge inputs</strong> — empty, huge, malformed, multilingual, contradictory, out-of-scope.</li>
-<li><strong>Hallucination bait</strong> — questions whose answer isn't in context; does it say "I don't
-  know" or fabricate? (<a href="03-rag.html#retrieval-evals">grounding</a>).</li>
+<li><strong>Hallucination bait</strong> — questions whose answer isn't in context. Does it say "I don't
+  know," or does it fabricate an answer?
+  (<a href="03-rag.html#retrieval-evals">grounding</a>).</li>
 <li><strong>Format stress</strong> — does structured output stay valid under weird inputs?</li>
 <li><strong>Tool misuse</strong> — does it call dangerous tools when goaded?
 Adversarial cases join the golden set and run in regression.</li>
 </ul>
 <h2>LLM-as-judge — scoring at scale</h2>
-<p>Use a model to grade outputs against a rubric (correctness, grounding, helpfulness,
-style). Powerful but it has failure modes you must control:</p>
+<p>Use a model to grade outputs against a rubric — correctness, grounding, helpfulness,
+style. It's powerful, but it has failure modes you must control:</p>
 <ul>
 <li><strong>Calibrate against humans.</strong> Establish agreement between judge and human labels
-  before trusting it; re-check periodically.</li>
+  before you trust it, and re-check periodically.</li>
 <li><strong>Known biases:</strong> position bias (favoring the first option), verbosity bias (longer =
-  better), self-preference (favoring its own family), leniency. Mitigate with
+  better), self-preference (favoring its own family), and leniency. Mitigate them with
   randomized order, pairwise comparison, clear rubrics, and reference answers.</li>
-<li><strong>Prefer comparative grading</strong> (A vs. B) over absolute scores where possible — it's
+<li><strong>Prefer comparative grading</strong> (A vs. B) over absolute scores where possible. It's
   more reliable.</li>
-<li><strong>Don't judge with the same model under test</strong> for safety-critical evals; a separate
+<li><strong>Don't judge with the same model under test</strong> for safety-critical evals. A separate
   judge avoids blind spots.</li>
 <li>The judge is itself a system to evaluate — its accuracy is a metric you monitor.</li>
 </ul>
@@ -465,29 +468,30 @@ style). Powerful but it has failure modes you must control:</p>
   the rest.</li>
 </ul>
 <p>A vocabulary note for eng conversations: public <strong>agent benchmarks</strong> became the
-industry's shared shorthand — <strong>SWE-bench Verified</strong> (real GitHub issues, resolved
-end-to-end), <strong>GAIA</strong> (general assistant tasks), <strong>OSWorld</strong> (computer use),
-<strong>tau-bench</strong> (tool-using customer-service agents), <strong>Terminal-Bench</strong> (command-line
-work). Know what each measures so "we're at X%" means something to you — and know the
-caveat: public benchmarks saturate and leak into training data, which is why serious
-teams treat them as market signals and run <em>private</em> evals (this lesson) as the real
-gate. On the observability side, <strong>OpenTelemetry's GenAI semantic conventions</strong> are
-standardizing trace formats, which means eval and observability tooling is becoming
-portable across vendors rather than a lock-in decision.</p>
+industry's shared shorthand. <strong>SWE-bench Verified</strong> covers real GitHub issues resolved
+end-to-end. <strong>GAIA</strong> covers general assistant tasks. <strong>OSWorld</strong> covers computer use.
+<strong>tau-bench</strong> covers tool-using customer-service agents. <strong>Terminal-Bench</strong> covers
+command-line work. Know what each measures, so "we're at X%" means something to you.
+Know the caveat too: public benchmarks saturate and leak into training data. That's why
+serious teams treat them as market signals and run <em>private</em> evals (this lesson) as the
+real gate. On the observability side, <strong>OpenTelemetry's GenAI semantic conventions</strong>
+are standardizing trace formats. That means eval and observability tooling is becoming
+portable across vendors, not a lock-in decision.</p>
 <h2>Grading choices that keep evals honest</h2>
 <ul>
-<li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales: forced decisions
-  are more consistent across annotators, trivially aggregable, and map directly to a
+<li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales. Forced decisions
+  are more consistent across annotators, easy to aggregate, and map directly to a
   launch bar. A 3.7 average hides exactly the disagreement a pass/fail split exposes.</li>
 <li><strong>Skip generic similarity metrics.</strong> BERTScore, ROUGE, and off-the-shelf "quality"
-  metric packs correlate poorly with what <em>your</em> users consider good; a custom evaluator
-  per failure mode (from your error analysis) is worth a dozen ready-made scores.</li>
-<li><strong>Don't automate everything.</strong> An evaluator per failure mode you've ever seen is
-  maintenance debt; automate the recurring, high-impact modes and keep the long tail in
-  periodic human review.</li>
+  metric packs correlate poorly with what <em>your</em> users consider good. A custom
+  evaluator per failure mode, built from your error analysis, is worth a dozen
+  ready-made scores.</li>
+<li><strong>Don't automate everything.</strong> An evaluator for every failure mode you've ever seen
+  becomes maintenance debt. Automate the recurring, high-impact modes, and keep the
+  long tail in periodic human review.</li>
 <li><strong>Annotation is product judgment — keep it in-house.</strong> Outsourced labelers apply
-  <em>their</em> judgment of good, not yours, and the learning (what's failing and why)
-  leaves with the vendor. PM and eng should label traces together — disagreements
+  <em>their</em> judgment of good, not yours, and the learning — what's failing and why —
+  leaves with the vendor. PM and eng should label traces together. Disagreements
   between them are requirement discoveries, not noise. A minimal custom review
   interface (render the trace intelligently, keyboard shortcuts, cluster/filter) pays
   for itself in review throughput.</li>
@@ -537,11 +541,12 @@ portable across vendors rather than a lock-in decision.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>No regression gate</strong> — silent quality drop after a model/prompt change.</li>
-<li><strong>Unrepresentative golden set</strong> — green evals, unhappy users; the set doesn't match
+<li><strong>Unrepresentative golden set</strong> — green evals, unhappy users. The set doesn't match
   reality.</li>
 <li><strong>Trusting an uncalibrated judge</strong> — confident, biased scores.</li>
-<li><strong>Aggregate hides a cliff</strong> — average flat while a category collapses; stratify.</li>
-<li><strong>Stale evals</strong> — the set rots as the product evolves; prune and grow it.</li>
+<li><strong>Aggregate hides a cliff</strong> — average flat while a category collapses. Stratify to
+  catch it.</li>
+<li><strong>Stale evals</strong> — the set rots as the product evolves. Prune and grow it.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -560,23 +565,23 @@ portable across vendors rather than a lock-in decision.</p>
 <li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="observability"><div class="lesson-head"><span class="lesson-num">04.2</span><h2>LLM observability: traces, spans, tokens, latency, errors, and drift</h2></div><h2>TL;DR</h2>
-<p><a href="#evals">Evals</a> tell you if the system is correct <em>before</em> you ship; observability
+<p><a href="#evals">Evals</a> tell you if the system is correct <em>before</em> you ship. Observability
 tells you what it's doing <em>in production</em>. LLM observability is a first-class
-discipline because these systems fail silently and non-deterministically: you need
+discipline because these systems fail silently and non-deterministically. You need
 end-to-end <strong>traces</strong> made of <strong>spans</strong>, with <strong>tokens</strong>, <strong>latency</strong> (split into
-TTFT/TPOT), <strong>errors</strong>, <strong>quality</strong>, and <strong>cost</strong> on every step — plus <strong>drift</strong>
-detection to catch the slow regressions that no deploy caused. If you can't replay
-exactly what happened on a bad request, you can't fix it.</p>
+TTFT/TPOT), <strong>errors</strong>, <strong>quality</strong>, and <strong>cost</strong> on every step. You also need
+<strong>drift</strong> detection to catch the slow regressions that no deploy caused. If you can't
+replay exactly what happened on a bad request, you can't fix it.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.</p>
+<p><strong>Why it matters</strong> — AI fails silently. Wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind, and you learn about problems from churn.</p>
 <p><strong>What it changes in your decisions</strong> — What you instrument, your incident-response plan, and how you detect slow quality decay.</p>
 <p><strong>Ask your eng team</strong> — <em>"Can we pull up exactly what happened on a specific bad request?"</em></p>
 <p><strong>Product risk if ignored</strong> — Quality drifts down for weeks with no alarm, you can't debug complaints, and you're flying blind.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>A single LLM request is a distributed transaction across many components (retrieval,
-rerank, model calls, tools, validation, repair). Borrow distributed-tracing ideas, but
+<p>A single LLM request is a distributed transaction across many components: retrieval,
+rerank, model calls, tools, validation, repair. Borrow distributed-tracing ideas, but
 add the LLM-specific dimensions:</p>
 <pre><code>TRACE: &quot;answer support ticket #4821&quot;  (tenant=acme, feature=support_copilot)
  ├─ span: retrieve         42ms   chunks=8  recall_proxy=...
@@ -588,41 +593,41 @@ add the LLM-specific dimensions:</p>
  └─ span: tool.create_note 75ms   idempotency_key=... status=ok
 TOTAL 1.05s   $0.0046   status=ok
 </code></pre>
-<p>The trace is the unit of debugging; the span is the unit of measurement.</p>
+<p>The trace is the unit of debugging. The span is the unit of measurement.</p>
 <h2>What to capture</h2>
 <h3>Traces &amp; spans</h3>
 <ul>
-<li>One trace per request; one span per meaningful step (retrieve, rerank, each model
-  call, each tool, validate, repair, route decision).</li>
-<li>Record inputs/outputs <strong>with privacy controls</strong> — prompts and completions are gold for
-  debugging but may contain PII; redact/tokenize and respect
+<li>One trace per request, and one span per meaningful step: retrieve, rerank, each model
+  call, each tool, validate, repair, route decision.</li>
+<li>Record inputs/outputs <strong>with privacy controls</strong>. Prompts and completions are gold for
+  debugging, but they may contain PII. Redact or tokenize them, and respect
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant boundaries</a>.</li>
 <li>Capture the <em>decisions</em>: which model/route was chosen, why fallback fired, which
   budget terminated an <a href="02-reliable-outputs.html#agent-guardrails">agent</a>.</li>
 </ul>
 <h3>Tokens</h3>
 <ul>
-<li>Input vs. output tokens per call (they cost differently and behave differently —
-  <a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>).</li>
+<li>Input vs. output tokens per call. They cost differently and behave differently — see
+  <a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>.</li>
 <li>Prompt-cache hit/miss (a cheap cost lever — see
   <a href="01-inference-internals.html#prompt-vs-semantic-caching">caching</a>).</li>
 <li>Tokens are the raw material for <a href="#cost-attribution">cost attribution</a>.</li>
 </ul>
 <h3>Latency</h3>
 <ul>
-<li><strong>Split it:</strong> TTFT (≈ prefill) and TPOT/inter-token (≈ decode) separately — a single
-  "latency" number hides which phase is slow.</li>
+<li><strong>Split it.</strong> Track TTFT (≈ prefill) and TPOT/inter-token (≈ decode) separately. A
+  single "latency" number hides which phase is slow.</li>
 <li>Queueing time vs. compute time; end-to-end including retrieval/tools.</li>
-<li>Report <strong>distributions (p50/p95/p99)</strong>, never just the mean — tails are where SLOs and
+<li>Report <strong>distributions (p50/p95/p99)</strong>, never just the mean. Tails are where SLOs and
   <a href="01-inference-internals.html#kv-cache-management">preemption spikes</a> live.</li>
 </ul>
 <h3>Errors</h3>
 <ul>
 <li>Provider errors (timeout, rate-limit, 5xx), validation/parse failures, repair
   exhaustion, tool failures, budget terminations, refusals.</li>
-<li><strong>The hard part: silent errors.</strong> A grounded-looking hallucination throws nothing.
-  Approximate quality online with proxy signals (validation pass rate, grounding
-  spot-checks, <a href="#evals">judge</a> sampling, user thumbs/edits/retries).</li>
+<li><strong>The hard part: silent errors.</strong> A grounded-looking hallucination throws no error.
+  Approximate quality online with proxy signals: validation pass rate, grounding
+  spot-checks, <a href="#evals">judge</a> sampling, and user thumbs/edits/retries.</li>
 </ul>
 <h3>Drift</h3>
 <p>The regression that no deploy caused:</p>
@@ -630,12 +635,12 @@ TOTAL 1.05s   $0.0046   status=ok
 <li><strong>Input drift</strong> — query mix, length, language, new topics shift over time.</li>
 <li><strong>Output/quality drift</strong> — judge scores, refusal rate, format-validity, grounding
   trending down.</li>
-<li><strong>Model drift</strong> — provider updated weights underneath you; behavior changes with no
-  code change.</li>
+<li><strong>Model drift</strong> — the provider updated weights underneath you, and behavior changes
+  with no code change.</li>
 <li><strong>Data/retrieval drift</strong> — corpus grows/ages; <a href="03-rag.html#retrieval-evals">recall</a>
   decays.
-Detect by tracking these distributions over time and alerting on shifts — and by
-<strong>re-running evals on a schedule</strong>, not only at deploy.</li>
+Detect drift by tracking these distributions over time and alerting on shifts. Also
+<strong>re-run evals on a schedule</strong>, not only at deploy.</li>
 </ul>
 <h2>From signals to operations</h2>
 <ul>
@@ -644,27 +649,27 @@ Detect by tracking these distributions over time and alerting on shifts — and 
 <li><strong>Alerts:</strong> on error spikes, cost spikes, cache-hit collapse, drift, budget-hit rate.</li>
 <li><strong>Trace-level debugging:</strong> jump from an alert or a user complaint to the exact trace,
   with the full chain reconstructed.</li>
-<li><strong>Feed the loop:</strong> sampled production traces become new <a href="#evals">eval</a> cases;
-  observed failures become <a href="#evals">adversarial tests</a>. Observability and evals are
+<li><strong>Feed the loop.</strong> Sampled production traces become new <a href="#evals">eval</a> cases, and
+  observed failures become <a href="#evals">adversarial tests</a>. Observability and evals form
   a cycle, not two silos.</li>
 </ul>
 <h2>Guardrails vs. evaluators</h2>
 <p>Two production roles that get conflated because both "check outputs":</p>
 <ul>
-<li><strong>Guardrails</strong> run <strong>inline</strong>, per request, and can <em>block</em> — the output is checked
-  (PII, policy, format, obvious hallucination signals) before the user sees it. They
-  must be fast and cheap enough to sit on the critical path, and they fail closed for
-  the worst categories.</li>
+<li><strong>Guardrails</strong> run <strong>inline</strong>, per request, and can <em>block</em> the output. They check
+  for PII, policy violations, bad format, and obvious hallucination signals before the
+  user sees the output. They must be fast and cheap enough to sit on the critical path,
+  and they fail closed for the worst categories.</li>
 <li><strong>Evaluators</strong> run <strong>offline</strong> — in CI to gate changes, and over sampled production
   traffic to measure quality trends. They can be slow, expensive, and thorough, because
   no user is waiting.</li>
 </ul>
-<p>The distinction disciplines your architecture: an evaluator too slow or too expensive
-to run on every request is not a guardrail, and a guardrail lightweight enough for the
-hot path is usually too crude to be your quality measurement. Using an evaluator to
-auto-<em>correct</em> outputs in production (grade, then regenerate on failure) is possible
-but pays latency and cost per retry — reserve it for high-stakes surfaces, and log
-every correction as an eval case.</p>
+<p>This distinction disciplines your architecture. An evaluator too slow or too expensive
+to run on every request is not a guardrail. A guardrail lightweight enough for the hot
+path is usually too crude to be your quality measurement. Using an evaluator to
+auto-<em>correct</em> outputs in production — grade, then regenerate on failure — is possible,
+but it pays latency and cost on every retry. Reserve it for high-stakes surfaces, and
+log every correction as an eval case.</p>
 <h2>Tradeoffs</h2>
 <table>
 <thead>
@@ -730,10 +735,10 @@ sample + all errors, and judge-score a representative slice.</p>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="cost-attribution"><div class="lesson-head"><span class="lesson-num">04.3</span><h2>Cost attribution per feature, workflow, tenant, and user journey — not just per model</h2></div><h2>TL;DR</h2>
 <p>"Our LLM bill is $80k/month" is not an actionable number. To optimize, control, and
-price an AI product you must attribute cost along the dimensions you make decisions on:
+price an AI product, you must attribute cost along the dimensions you make decisions on:
 <strong>which feature, which workflow, which tenant, which user journey</strong> is spending the
-tokens. Per-model spend is what the provider invoices; per-<em>feature</em>/<em>tenant</em> spend is
-what tells you what to cache, route, cap, or bill. Cost attribution is a product and
+tokens. Per-model spend is what the provider invoices. Per-<em>feature</em>/<em>tenant</em> spend
+tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
@@ -743,7 +748,7 @@ business capability, not just a finance line item.</p>
 <p><strong>Product risk if ignored</strong> — You price blind, a few power users quietly destroy margin, and you can't tell which feature to fix.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>Tokens are the currency, and every token is generated <em>for a reason</em> — a feature
+<p>Tokens are the currency, and every token is generated <em>for a reason</em>: a feature
 serving a workflow for a tenant during a user journey. If your <a href="#observability">traces</a>
 carry those tags, cost rolls up along any of them:</p>
 <pre><code>$ total
@@ -756,17 +761,17 @@ carry those tags, cost rolls up along any of them:</p>
 <p>The provider gives you only the last row. You have to build the rest.</p>
 <h2>Why per-model is not enough</h2>
 <ul>
-<li><strong>You can't optimize what you can't localize.</strong> A 30% cost cut hides in <em>which</em>
-  feature's prompt is bloated or <em>which</em> workflow loops too much — invisible at the
-  model level.</li>
+<li><strong>You can't optimize what you can't localize.</strong> A 30% cost cut might hide in <em>which</em>
+  feature's prompt is bloated, or <em>which</em> workflow loops too much. Neither is visible
+  at the model level.</li>
 <li><strong>Tenants are wildly uneven.</strong> In multi-tenant SaaS, a tiny fraction of tenants often
   drives most spend. Without per-<a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant</a>
-  cost you can't find unprofitable accounts, set quotas, or price fairly.</li>
+  cost, you can't find unprofitable accounts, set quotas, or price fairly.</li>
 <li><strong>Unit economics need a denominator.</strong> "Cost per resolved ticket," "per generated
   report," "per active user" — these require attribution to the <em>unit</em>, not the model.</li>
 <li><strong>Runaway detection.</strong> A <a href="02-reliable-outputs.html#agent-guardrails">runaway agent</a> or
   a <a href="01-inference-internals.html#prompt-vs-semantic-caching">cache-busting prefix</a> shows
-  up as a feature/tenant cost spike — but only if cost is sliced that way.</li>
+  up as a feature/tenant cost spike, but only if cost is sliced that way.</li>
 </ul>
 <h2>What to capture (per call, then roll up)</h2>
 <p>On every model/tool span, record:</p>
@@ -779,7 +784,7 @@ carry those tags, cost rolls up along any of them:</p>
 <li><strong>Dimensional tags:</strong> feature, workflow step, tenant, user, request/journey id.</li>
 <li><strong>Derived cost:</strong> apply the price book (per-model, per-token-type) to the tokens.</li>
 </ul>
-<p>These are the same <a href="#observability">tags on your traces</a> — cost attribution is an
+<p>These are the same <a href="#observability">tags on your traces</a>. Cost attribution is an
 aggregation over instrumented spans, not a separate system.</p>
 <h2>Dimensions that matter</h2>
 <table>
@@ -819,33 +824,34 @@ aggregation over instrumented spans, not a separate system.</p>
 </tbody>
 </table>
 <h2>From attribution to control</h2>
-<p>Attribution is the input; control is the point:</p>
+<p>Attribution is the input. Control is the point:</p>
 <ul>
 <li><strong>Budgets &amp; quotas</strong> per tenant/feature; alert and throttle on breach (ties to
   <a href="02-reliable-outputs.html#agent-guardrails">agent budgets</a>).</li>
-<li><strong>Routing decisions:</strong> push cheap traffic to small models; reserve big models for
-  hard cases (<a href="02-reliable-outputs.html#model-routing">routing</a>) — measured by cost-per-route.</li>
-<li><strong>Caching ROI:</strong> quantify savings from prompt/semantic caching and protect cache-hit
+<li><strong>Routing decisions.</strong> Push cheap traffic to small models, and reserve big models for
+  hard cases (<a href="02-reliable-outputs.html#model-routing">routing</a>). Measure this by
+  cost-per-route.</li>
+<li><strong>Caching ROI.</strong> Quantify savings from prompt/semantic caching, and protect cache-hit
   rate as a cost metric.</li>
-<li><strong>Context discipline:</strong> target the bloated prompts attribution exposes
+<li><strong>Context discipline.</strong> Target the bloated prompts attribution exposes
   (<a href="00-foundations.html#context-engineering">context engineering</a>).</li>
-<li><strong>Compression &amp; summarization:</strong> prompt-compression tools (LLMLingua-class, up to
-  ~20× on long prompts with little quality loss) and summarizing multi-turn
+<li><strong>Compression &amp; summarization.</strong> Prompt-compression tools (LLMLingua-class, up to
+  ~20x on long prompts with little quality loss) and summarizing multi-turn
   conversation history shrink exactly the token lines attribution flags first.</li>
-<li><strong>Serving efficiency:</strong> for self-hosted models, the runtime itself is a lever —
-  optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
+<li><strong>Serving efficiency.</strong> For self-hosted models, the runtime itself is a lever.
+  Optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
   per-token price without touching the product.</li>
-<li><strong>Pricing &amp; packaging:</strong> set plan limits and prices from real unit economics, not
+<li><strong>Pricing &amp; packaging.</strong> Set plan limits and prices from real unit economics, not
   guesses.</li>
 </ul>
 <h2>Tradeoffs</h2>
 <ul>
-<li><strong>Tag granularity vs. overhead</strong> — more dimensions = richer slicing but more
+<li><strong>Tag granularity vs. overhead</strong> — more dimensions mean richer slicing but more
   instrumentation and cardinality cost. Tag the dimensions you actually <em>decide</em> on.</li>
 <li><strong>Real-time vs. batch</strong> — live cost dashboards enable fast reaction but cost more to
-  run than daily rollups; match to how fast you need to act.</li>
-<li><strong>Cost vs. quality vs. latency</strong> — cheapest route isn't always acceptable; attribution
-  lets you optimize cost <em>within</em> quality/latency SLOs, the theme of
+  run than daily rollups. Match the choice to how fast you need to act.</li>
+<li><strong>Cost vs. quality vs. latency</strong> — the cheapest route isn't always acceptable.
+  Attribution lets you optimize cost <em>within</em> quality/latency SLOs, the theme of
   <a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack tradeoffs</a>.</li>
 </ul>
 <h2>Failure modes</h2>
@@ -876,20 +882,20 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
   <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
-<p><strong>Klarna's AI assistant (2024).</strong> Klarna reported its OpenAI-powered assistant was
-handling <strong>~two-thirds of customer-service chats</strong> — work it equated to hundreds of
-full-time agents — within months. 🎯 <em>PM takeaway:</em> at that volume you <em>cannot</em> operate on
-vibes. <a href="#cost-attribution">Cost attribution</a> (what does each resolved chat cost?) and
-continuous <a href="#observability">quality monitoring</a> are what make a number like that safe
-rather than terrifying.</p>
+<p><strong>Klarna's AI assistant (2024).</strong> Klarna reported its OpenAI-powered assistant handled
+<strong>~two-thirds of customer-service chats</strong> within months — work it equated to hundreds of
+full-time agents. 🎯 <em>PM takeaway:</em> at that volume you cannot operate on vibes.
+<a href="#cost-attribution">Cost attribution</a> (what does each resolved chat cost?) and
+continuous <a href="#observability">quality monitoring</a> make a number like that safe rather
+than terrifying.</p>
 <p><strong>"Did the model change?" (the GPT-4 drift debates).</strong> Practitioners repeatedly reported
-that hosted models <em>behaved differently over time</em> on the same prompts, sparking public
-back-and-forth about silent regressions. 🎯 <em>PM takeaway:</em> you can't control the
-provider's weights — so you need <strong>your own</strong> <a href="#evals">regression evals</a>. Teams with a
-golden set find out from CI; teams without one find out from churn.</p>
+that hosted models <em>behaved differently over time</em> on the same prompts. This sparked
+public debate about silent regressions. 🎯 <em>PM takeaway:</em> you can't control the
+provider's weights, so you need <strong>your own</strong> <a href="#evals">regression evals</a>. Teams with a
+golden set find out from CI. Teams without one find out from churn.</p>
 <p><strong>The LLM-observability category exists now.</strong> LangSmith, Langfuse, Arize Phoenix,
-Braintrust and others turned <a href="#observability">traces, spans, token/cost accounting, and eval runs</a>
-into a standard tooling layer. 🎯 <em>PM takeaway:</em> this is no longer exotic — "we have no
+Braintrust, and others turned <a href="#observability">traces, spans, token/cost accounting, and eval runs</a>
+into a standard tooling layer. 🎯 <em>PM takeaway:</em> this is no longer exotic. "We have no
 tracing or evals" is now a visible maturity gap, not a defensible default.</p>
 <h2>Module recap</h2>
 <table>
@@ -918,10 +924,11 @@ tracing or evals" is now a visible maturity gap, not a defensible default.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> <strong>you cannot operate what you cannot measure.</strong> Evals tell you it's
-<em>correct</em> before you ship; observability tells you it's <em>working</em> while it runs; cost
-attribution tells you what it's <em>costing</em> and who's driving it. All three feed each
-other — production traces become new eval cases; incidents become adversarial tests.</p>
+<p><strong>The through-line:</strong> <strong>you cannot operate what you cannot measure.</strong> Evals tell you an
+output is <em>correct</em> before you ship. Observability tells you the system is <em>working</em>
+while it runs. Cost attribution tells you what it's <em>costing</em> and who's driving it. All
+three feed each other: production traces become new eval cases, and incidents become
+adversarial tests.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"If quality dropped 10% tomorrow, would we find out from our
 dashboards — or from angry users three weeks later?"</em></p>

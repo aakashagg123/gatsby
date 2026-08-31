@@ -4,12 +4,12 @@
 
 ## TL;DR
 
-If you can't measure it, you shipped an opinion. The measurement stack has three layers:
-a **metric tree** connecting one north-star outcome to the input metrics teams can
-actually move; **instrumentation** written into the spec so the events exist when you
-need them; and **experiments** (A/B tests) that separate "the metric moved because of us"
+If you can't measure it, you shipped an opinion. The measurement stack has three layers.
+A **metric tree** connects one north-star outcome to the input metrics teams can
+actually move. **Instrumentation** gets written into the spec, so the events exist when
+you need them. And **experiments** (A/B tests) separate "the metric moved because of us"
 from "the metric moved." Experiments keep you honest, but they're not free and not
-always right: they need enough traffic, an up-front hypothesis, guardrail metrics, and
+always right. They need enough traffic, an up-front hypothesis, guardrail metrics, and
 the discipline not to peek and stop at the first flattering result. Where you can't
 test, you can still reason — with before/after comparisons, holdouts, and humility.
 
@@ -57,8 +57,8 @@ flowchart TB
   (moving it plausibly moves the parent).
 - **Guardrails** — the "do no harm" set: latency, cost, support load, trust. Every
   experiment and launch is judged on its target metric *and* on leaving guardrails intact.
-- **Leading vs. lagging** — retention is lagging (you learn you failed months later);
-  activation is leading. Manage with leading indicators, report with lagging ones.
+- **Leading vs. lagging** — retention is lagging (you learn you failed months later).
+  Activation is leading. Manage with leading indicators, report with lagging ones.
 
 Beware **Goodhart's law**: any metric made a target gets gamed, usually innocently.
 "Answers delivered" as a target produces more answers, not better ones. Pair every
@@ -77,14 +77,14 @@ your drop-off analysis will have holes exactly where the mystery is.
 ## Experiments without self-deception
 
 An A/B test randomly splits users, shows each group a variant, and compares. The
-mechanics are a solved problem; the discipline isn't:
+mechanics are a solved problem. The discipline isn't:
 
 - **Hypothesis first, in writing** — "we believe moving X will lift Y by ~Z% because…"
   Written *before* launch, because post-hoc, any result can be narrated into a win. A
   useful companion question: *"if this were wildly successful, what would that look
   like?"* — answered up front, it sets the bar a result has to clear. And name whether
   the change is an **experiment** (a bet that might die) or an **incremental
-  improvement** (a step that should compound); they're judged by different standards,
+  improvement** (a step that should compound). They're judged by different standards,
   and confusing them narrates failures into learnings and learnings into failures.
 - **Power before launch** — small effects need surprising amounts of traffic. If the
   calculator says eight months to significance, the honest answer is "this isn't
@@ -92,9 +92,9 @@ mechanics are a solved problem; the discipline isn't:
 - **No peeking** — checking daily and stopping at the first p < 0.05 is how teams ship
   noise. Fix the duration up front (or use sequential methods designed for early looks).
 - **Judge the guardrails too** — a win on the target that degrades latency or support
-  volume isn't a win; it's a trade you should make consciously or not at all.
+  volume isn't a win. It's a trade you should make consciously or not at all.
 - **Segments lie enthusiastically** — slice a neutral result twenty ways and one slice
-  will "win" by chance. Segment analyses generate hypotheses for the *next* test; they
+  will "win" by chance. Segment analyses generate hypotheses for the *next* test. They
   don't rescue this one.
 
 When you can't test — traffic too small, change too structural, effect too slow — use
@@ -110,7 +110,7 @@ For model-powered features, wire *offline* and *online* measurement together:
 - **Offline: eval scores** — the graded example set from your
   [spec](./specs-prds-and-rfcs.md), run against every prompt/model/retrieval change
   *before* it ships. This is your regression suite for quality.
-- **Online: behavioural proxies** — users rarely click thumbs-down; they silently
+- **Online: behavioural proxies** — users rarely click thumbs-down. They silently
   *edit* the draft, *retry* the question rephrased, or *abandon* the flow. Edit distance,
   retry rate, and acceptance rate are your truest online quality signals — instrument
   them from day one.

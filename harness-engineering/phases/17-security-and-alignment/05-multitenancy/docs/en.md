@@ -6,11 +6,11 @@
 
 ## The Problem
 
-If your harness serves multiple users/tenants, the worst failure is **cross-tenant leakage**:
-tenant A's data appears in tenant B's session. The sneakiest vector is the **cache** — a
-semantic or prompt cache keyed without the tenant id can serve A's cached response to B. The
-fix is to scope every cache key, memory store, and retrieval index by tenant, so isolation is
-structural, not hopeful.
+If your harness serves multiple users or tenants, the worst failure is **cross-tenant
+leakage** — tenant A's data appears in tenant B's session. The sneakiest vector is the
+**cache**. A semantic or prompt cache keyed without the tenant id can serve A's cached
+response to B. The fix is to scope every cache key, memory store, and retrieval index by
+tenant, so isolation is structural, not hopeful.
 
 ## The Concept
 
@@ -51,16 +51,16 @@ print(c.get("tenantB", "secret report"))   # None — B cannot see A's cached en
 print(c.get("tenantA", "secret report"))   # 'A's data'
 ```
 
-Because the tenant id is part of the key, the *same* query from a different tenant is a
-*different* key — A's cached value is unreachable by B. Apply the same namespacing to memory
-(Phase 9) and retrieval indexes (Phase 13).
+Because the tenant id is part of the key, the *same* query from a different tenant produces
+a *different* key. A's cached value stays unreachable by B. Apply the same namespacing to
+memory (Phase 9) and retrieval indexes (Phase 13).
 
 ## Use It
 
-For a single-developer Claude Code / Codex user this is less acute, but the moment you build a
-multi-user product on the harness, it's critical — and it's the exact "cache contamination"
-failure from the AI-engineering conceptual track. Audit every shared store: is the tenant id
-in the key? If not, that's a leak waiting to happen.
+For a single-developer Claude Code or Codex user this risk is less acute. But the moment you
+build a multi-user product on the harness, it becomes critical — this is the exact "cache
+contamination" failure from the AI-engineering conceptual track. Audit every shared store
+and ask: is the tenant id in the key? If not, that's a leak waiting to happen.
 
 ## Ship It
 

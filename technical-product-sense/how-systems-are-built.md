@@ -4,11 +4,11 @@
 
 ## TL;DR
 
-Almost every product is a **client** talking to a **server**, and the server is rarely one
+Almost every product is a **client** talking to a **server**. The server is rarely one
 thing — it's a chain: a CDN and load balancer at the edge, an API layer, one or more
 **services** holding business logic, and behind them **datastores**, **caches**, and
-**queues** for work that shouldn't block the user. Understanding this path — and where your
-feature's work actually happens — is the foundation of every other technical judgment: what's
+**queues** for work that shouldn't block the user. Understanding this path, and where your
+feature's work actually happens, is the foundation of every other technical judgment: what's
 cheap, what's slow, what can fail, and what a change will really cost.
 
 > 🎯 **For the AI PM**
@@ -19,19 +19,19 @@ cheap, what's slow, what can fail, and what a change will really cost.
 > the base picture.
 >
 > **What it changes in your decisions** — You ask *where* the model call sits in the request
-> path, whether it blocks the user, and what happens to the rest of the system when it's slow
-> or down — before committing to the feature.
+> path, and whether it blocks the user. You also ask what happens to the rest of the system
+> when it's slow or down — before you commit to the feature.
 >
 > **Ask yourself** — *"When a user triggers this feature, what boxes does the request pass
 > through, and which one is doing the expensive work?"*
 >
-> **Risk if ignored** — Promising a feature whose architecture makes it slow, costly, or
-> fragile in ways you only discover after engineering starts.
+> **Risk if ignored** — You promise a feature, and its architecture turns out slow, costly,
+> or fragile. You find out only after engineering starts.
 
 ## The path of a request
 
-When a user does something, a request travels through layers — each with a job, a cost, and a
-failure mode:
+When a user does something, a request travels through several layers. Each layer has its own
+job, cost, and failure mode:
 
 ```mermaid
 flowchart LR
@@ -47,72 +47,72 @@ flowchart LR
   W --> DB
 ```
 
-- **Client** — the browser or app. Anything done here is free for your servers but limited by
-  the user's device and network.
-- **CDN / edge** — serves static assets and cached responses close to the user; the cheapest,
-  fastest layer. If something can be cached at the edge, it should be.
+- **Client** — the browser or app. Work done here is free for your servers, but limited by the
+  user's device and network.
+- **CDN / edge** — serves static assets and cached responses close to the user. It's the
+  cheapest, fastest layer. Cache anything here that you can.
 - **Load balancer** — spreads traffic across many identical server instances. This is *how*
   systems handle more users: run more copies behind the balancer.
 - **API layer** — the front door to your logic; authenticates, validates, routes.
 - **Services** — where business logic lives. Big systems split into multiple services
-  (sometimes "microservices") so teams and scaling concerns stay independent.
-- **Database** — the source of truth, on disk. Reliable but comparatively slow; the usual
-  bottleneck.
-- **Cache** — a fast, in-memory copy of hot data (e.g. Redis). Turns a slow DB read into a
-  fast one — at the cost of possible **staleness**.
-- **Queue + worker** — for work that shouldn't make the user wait (sending email, generating a
-  report, calling a slow model). The request returns immediately; a worker does the job
+  (sometimes called "microservices") so teams and scaling concerns stay independent.
+- **Database** — the source of truth, stored on disk. It's reliable but comparatively slow,
+  and it's the usual bottleneck.
+- **Cache** — a fast, in-memory copy of hot data (for example, Redis). It turns a slow
+  database read into a fast one, at the cost of possible **staleness**.
+- **Queue + worker** — for work that shouldn't make the user wait: sending email, generating a
+  report, calling a slow model. The request returns immediately, and a worker does the job
   **asynchronously**.
 
 ## Synchronous vs. asynchronous — the key product lever
 
 The single most useful distinction here: does the user **wait** for this work, or not?
 
-- **Synchronous** (in the request path) — the user stares at a spinner until it's done. Keep
-  this fast; every box adds to their wait.
+- **Synchronous** (in the request path) — the user stares at a spinner until the work is done.
+  Keep this fast — every box you add increases their wait.
 - **Asynchronous** (via a queue) — the request returns "got it, working on it," and the result
-  arrives later (a notification, a status that flips to "ready"). This is how you make heavy
-  work feel instant — at the cost of designing for "it's not done yet."
+  arrives later: a notification, or a status that flips to "ready." This is how you make heavy
+  work feel instant, at the cost of designing for "it's not done yet."
 
-Choosing sync vs. async *is* a product decision: it shapes the UX (spinner vs. "we'll email
+Choosing sync vs. async *is* a product decision. It shapes the UX (spinner vs. "we'll email
 you"), the perceived speed, and the system's resilience.
 
 ## Monolith vs. services
 
-Early products are often a **monolith** — one codebase, one deploy. Simple and fast to build.
-As teams and load grow, systems split into **services** so parts can scale and ship
-independently. Neither is "right"; the trade-off is **simplicity vs. independence**. As a PM,
-you don't pick the architecture, but knowing which one you're in explains why some changes
-are a one-line tweak and others touch five teams.
+Early products are often a **monolith** — one codebase, one deploy. This is simple and fast
+to build. As teams and load grow, systems split into **services** so parts can scale and ship
+independently. Neither approach is "right" — the trade-off is **simplicity vs. independence**.
+As a PM, you don't pick the architecture. But knowing which one you're in explains why some
+changes are a one-line tweak, and others touch five teams.
 
 ## A worked pass: "add PDF export"
 
 Watch the request path turn a one-line feature request into an architecture decision.
-"Users can export their report as a PDF" sounds like a button. Walk it: the click hits
-the API layer, the service has to gather a report's data (several database reads),
-render a PDF (CPU-heavy, 5–30 seconds for big reports), and return it. Held
-synchronously, that's a spinner the user stares at, a request that times out on the
-biggest accounts — precisely the customers who want export most — and a service tied up
-doing renders instead of serving traffic.
+"Users can export their report as a PDF" sounds like a button. Walk through it: the click
+hits the API layer, and the service gathers the report's data (several database reads). It
+then renders a PDF — CPU-heavy work that takes 5–30 seconds for big reports — and returns it.
+Held synchronously, that's a spinner the user stares at. The request times out on the
+biggest accounts, which are exactly the customers who want export most. And the service
+stays tied up doing renders instead of serving traffic.
 
-So the shape changes: the click *enqueues* an export job and returns "we'll email you /
-it'll appear here" immediately; a worker renders the PDF, drops it in object storage,
-and notifies. Same feature, different promise to the user — and different work: now you
-need a jobs queue, a status surface ("preparing your export…"), retry behaviour for
-failed renders, and an expiry policy for stored files. None of that appeared in the
-one-line request; all of it was implied by *where the work sits on the path*. That's the
-skill this lesson builds — hearing "add a button" and seeing the queue behind it.
+So the shape changes. The click *enqueues* an export job and returns "we'll email you / it'll
+appear here" immediately. A worker renders the PDF, drops it in object storage, and notifies
+the user. It's the same feature, but a different promise to the user — and different work.
+Now you need a jobs queue, a status surface ("preparing your export…"), retry behavior for
+failed renders, and an expiry policy for stored files. None of that appeared in the one-line
+request. All of it was implied by *where the work sits on the path*. That's the skill this
+lesson builds — hearing "add a button" and seeing the queue behind it.
 
 ## Failure modes
 
-- **Assuming one box** — treating "the backend" as a single thing, so you can't reason about
+- **Assuming one box** — you treat "the backend" as a single thing, so you can't reason about
   where slowness or failure comes from.
-- **Everything synchronous** — forcing heavy work into the request path, so the UX is a long
-  spinner that times out.
-- **Cache-as-truth** — forgetting the cache can be stale, and promising data is "live" when
+- **Everything synchronous** — you force heavy work into the request path, so the UX becomes a
+  long spinner that times out.
+- **Cache-as-truth** — you forget the cache can be stale, and you promise data is "live" when
   it isn't.
-- **Ignoring the async tax** — choosing async without designing the "pending / ready / failed"
-  states the UX now needs.
+- **Ignoring the async tax** — you choose async without designing the "pending / ready /
+  failed" states the UX now needs.
 
 ## Practitioner checklist
 

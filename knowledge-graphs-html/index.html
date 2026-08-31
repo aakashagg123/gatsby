@@ -315,21 +315,21 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <p class="lede">Treat what the company knows as a product — entities, relationships, ontologies, GraphRAG, governance, and the business case, in CPO language.</p>
     <div class="index-meta"><span>8 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
   </div>
-  <div class="intro"><p>Every company already <em>has</em> a knowledge graph — it's just scattered across forty
+  <div class="intro"><p>Every company already <em>has</em> a knowledge graph. It is just scattered across forty
 databases, a CRM, a wiki, and the heads of its senior people. Customers connect to
 contracts, contracts to products, products to suppliers, suppliers to risks. The
-connections are where the value lives: the churn risk you'd spot if support tickets were
-linked to renewal dates, the fraud ring you'd see if devices were linked to accounts, the
-cross-sell you'd make if usage were linked to entitlements. A <strong>knowledge graph</strong> is the
-decision to make those connections explicit, queryable, and owned — to treat <em>what the
-company knows</em> as a product with a data model, a quality bar, and a roadmap.</p>
+connections are where the value lives. You would spot the churn risk if support tickets
+were linked to renewal dates. You would see the fraud ring if devices were linked to
+accounts. You would make the cross-sell if usage were linked to entitlements. A
+<strong>knowledge graph</strong> makes those connections explicit, queryable, and owned. It treats
+<em>what the company knows</em> as a product, with a data model, a quality bar, and a roadmap.</p>
 <p>This module is the product leader's map of that territory. It teaches what a knowledge
-graph actually is (and when a plain database is honestly fine), why the ontology is a
-product decision disguised as a technical one, where the real cost hides (construction
-and curation, not storage), what becomes computable once knowledge is connected, and how
-graphs and LLMs fix each other's weaknesses — grounding on one side, extraction at scale
-on the other. It closes with the capstone every CPO needs: the business case, the
-sequencing, and the honest list of reasons <em>not</em> to build one.</p>
+graph actually is, and when a plain database is honestly fine. It shows why the ontology
+is a product decision disguised as a technical one. It shows where the real cost hides:
+construction and curation, not storage. It covers what becomes computable once knowledge
+is connected, and how graphs and LLMs fix each other's weaknesses — grounding on one
+side, extraction at scale on the other. It closes with the capstone every CPO needs: the
+business case, the sequencing, and the honest list of reasons <em>not</em> to build one.</p>
 <h2>The knowledge graph (about knowledge graphs)</h2>
 <p>Fittingly, the module <em>is</em> one. Every lesson hangs off this picture:</p>
 <pre class="mermaid">flowchart TB
@@ -370,13 +370,13 @@ sequencing, and the honest list of reasons <em>not</em> to build one.</p>
   REAS --&gt; PROD
   LLM --&gt; PROD
   PROD --&gt;|&quot;funds the next domain&quot;| SRC</pre>
-<p>Read it in three passes. <strong>The asset:</strong> an ontology defines what things mean, a
-construction pipeline turns scattered sources into one connected graph, and storage makes
-it queryable — that pipeline, not the database, is where most of the money goes. <strong>The
+<p>Read it in three passes. <strong>The asset:</strong> an ontology defines what things mean. A
+construction pipeline turns scattered sources into one connected graph. Storage makes it
+queryable. That pipeline, not the database, is where most of the money goes. <strong>The
 payoff:</strong> once knowledge is connected, you can compute what tables can't cheaply express —
-multi-hop questions, fraud rings, recommendations — and you can ground LLMs in facts your
+multi-hop questions, fraud rings, recommendations. You can also ground LLMs in facts your
 company actually stands behind. <strong>The flywheel:</strong> governance keeps the asset trustworthy,
-the product wins fund the next domain, and the graph compounds — which is the whole
+the product wins fund the next domain, and the graph compounds. That is the whole
 strategic argument.</p>
 <h2>The lessons</h2>
 <ul>
@@ -397,11 +397,11 @@ strategic argument.</p>
 <li><a href="knowledge-graphs-as-a-product.html"><strong>Knowledge graphs as a product</strong></a> — the capstone:
   ROI, sequencing, build vs. buy, team shape, and when <em>not</em> to build one.</li>
 </ul>
-<p>Each lesson pairs the mechanics with a <strong>🎯 For the product leader</strong> briefing — why it
+<p>Each lesson pairs the mechanics with a <strong>🎯 For the product leader</strong> briefing: why it
 matters, the decision it changes, the sharp question to ask your data team, and the risk
 if you ignore it — plus a diagram to make it concrete. The AI-retrieval side connects
 directly to <a href="../ai/03-rag.html">RAG &amp; retrieval</a> and the
-<a href="../agentic-ai/index.html">Agentic AI track</a>; the data-modeling instincts build on
+<a href="../agentic-ai/index.html">Agentic AI track</a>. The data-modeling instincts build on
 <a href="../technical-product-sense/data-and-the-data-model.html">Data &amp; the data model</a>.</p>
 <h2>Connects to other tracks</h2>
 <ul>

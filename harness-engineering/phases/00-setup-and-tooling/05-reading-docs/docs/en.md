@@ -8,8 +8,8 @@
 
 Model APIs change: new parameters, new models, deprecations. An agent (or a learner) that
 answers from training memory will confidently use a stale model id or a removed flag. The
-fix is a habit — and a skill — that says *check the authoritative source before
-answering*, rather than guessing.
+fix is a habit, encoded as a skill: *check the authoritative source before answering,
+rather than guessing*.
 
 ## The Concept
 
@@ -19,21 +19,21 @@ Three moves separate guessing from engineering:
 2. **Verify specifics** — model ids, parameter names, limits — against it.
 3. **Cite where it came from** — so the next reader can re-verify.
 
-This is the human version of *legibility*: don't crawl everything; go straight to the
+This is the human version of *legibility*: don't crawl everything. Go straight to the
 authoritative file and quote it.
 
 ## Build It
 
 A skill that encodes the habit so any agent applies it. `outputs/SKILL.md` triggers on
-LLM/API questions and forces a docs check before answering, defaulting to the latest
+LLM/API questions and forces a docs check before answering. It defaults to the latest
 models (Fable 5; the Claude 4.x family — Opus 4.8 `claude-opus-4-8`, Sonnet 4.6, Haiku
 4.5).
 
 ## Use It
 
-Installed into Claude/Cursor/Codex, the skill activates on questions about model choice,
-pricing, parameters, or limits and answers from the reference rather than memory — the
-same discipline this whole course models.
+Installed into Claude, Cursor, or Codex, the skill activates on questions about model
+choice, pricing, parameters, or limits. It answers from the reference rather than
+memory — the same discipline this whole course models.
 
 ## Ship It
 

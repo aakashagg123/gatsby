@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Three roles can carry text — but they don't carry equal authority, and conflating them is
-a security and reliability bug. Stuff instructions into a user message and they're easier
-to override (including by injected content, Phase 17). Put volatile task data in the system
-prompt and you defeat caching and blur what's a rule vs. what's input. You need a clear
-policy for what goes where.
+Three roles can carry text, but they don't carry equal authority. Conflating them is a
+security and reliability bug. Put instructions in a user message and they become easier
+to override, including by injected content (Phase 17). Put volatile task data in the
+system prompt and you defeat caching. You also blur the line between a rule and an input.
+You need a clear policy for what goes where.
 
 ## The Concept
 
@@ -30,7 +30,7 @@ flowchart TB
 
 ## Build It (a placement policy)
 
-There's no algorithm here — the artifact is a written policy you apply when constructing
+There's no algorithm here. The artifact is a written policy you apply when constructing
 every call. `outputs/role-placement.md` encodes it:
 
 - Rules, persona, and the output contract → **system**.
@@ -41,9 +41,9 @@ every call. `outputs/role-placement.md` encodes it:
 
 ## Use It
 
-In the SDK, `system=` is the durable layer; `messages=` carries the task and history.
-Phase 5 builds the system prompt in depth; Phase 17 shows why retrieved content must be
-clearly demarcated as data so a malicious document can't escalate to instruction.
+In the SDK, `system=` is the durable layer, and `messages=` carries the task and history.
+Phase 5 builds the system prompt in depth. Phase 17 shows why retrieved content must be
+clearly marked as data, so a malicious document can't escalate to an instruction.
 
 ## Ship It
 

@@ -6,11 +6,11 @@
 
 ## The Problem
 
-The minimal agent (project 01) is unsafe (it'll run anything), forgetful (no memory), and
-context-blind (it'd overflow on a big task). Project 02 wraps it with three layers from the
-curriculum: a **permission gate** (P8) on every tool call, a **scratchpad** (P9) for working
-state, and **context budgeting/truncation** (P4) so long runs don't blow the window — turning
-a toy into something you'd let near a real repo.
+The minimal agent (project 01) is unsafe — it'll run anything. It's also forgetful, with no
+memory, and context-blind, so it would overflow on a big task. Project 02 wraps it with three
+layers from the curriculum: a **permission gate** (P8) on every tool call, a **scratchpad**
+(P9) for working state, and **context budgeting/truncation** (P4) so long runs don't blow the
+window. This turns a toy into something you'd let near a real repo.
 
 ## The Concept
 
@@ -49,7 +49,7 @@ def run(task, model, scratch, max_steps=12, budget_chars=8000):
             history.append({"role": "tool", "content": out})
 ```
 
-The gate blocks dangerous calls (a denied `rm -rf` returns a message, not destruction), the
+The gate blocks dangerous calls: a denied `rm -rf` returns a message, not destruction. The
 scratchpad carries facts across steps, and `truncate` keeps the window bounded. Run
 `python3 agent.py` to see a denied dangerous command and a remembered note.
 
@@ -57,7 +57,7 @@ scratchpad carries facts across steps, and `truncate` keeps the window bounded. 
 
 This mirrors how you actually run Claude Code / Codex: permissions on every action
 (`settings.json`), the agent's todo/scratch state, and automatic context compaction. Project
-02 is the minimal agent made *operable* — the difference between a demo and something you trust
+02 makes the minimal agent *operable* — the difference between a demo and something you trust
 on a codebase.
 
 ## Ship It

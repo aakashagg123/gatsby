@@ -4,50 +4,51 @@
 
 ## TL;DR
 
-Once the graph exists, it has to live somewhere queryable. Three honest options: a
-**property graph database** (Neo4j and kin, queried in Cypher/GQL) — the pragmatic
-default for product features; an **RDF triple store** (queried in SPARQL) — the
-standards-based choice when interoperability, formal semantics, or cross-organization
-data exchange matter; or a **graph layer on the database you already run** (recursive
-SQL, or graph extensions on Postgres/warehouse) — the right answer more often than
-vendors admit, especially below a few million entities and three hops. The technical
-dividing line is the **traversal-vs-join** question: graph databases make "follow five
-hops from here" fast and *writable*; relational stores make it slow and unreadable —
-but if your queries never go deep, that advantage never cashes. The product-leader
-mistake to avoid: this is the *least* important decision in the module — teams agonize
-over databases while the [pipeline](./building-the-graph.md) and
+Once the graph exists, it has to live somewhere queryable. There are three honest
+options. A **property graph database** (Neo4j and kin, queried in Cypher/GQL) is the
+pragmatic default for product features. An **RDF triple store** (queried in SPARQL) is
+the standards-based choice when interoperability, formal semantics, or
+cross-organization data exchange matter. A **graph layer on the database you already
+run** (recursive SQL, or graph extensions on Postgres/warehouse) is the right answer
+more often than vendors admit, especially below a few million entities and three hops.
+The technical dividing line is the **traversal-vs-join** question. Graph databases make
+"follow five hops from here" fast and *writable*. Relational stores make it slow and
+unreadable — but if your queries never go deep, that advantage never cashes. Avoid the
+product-leader mistake: this is the *least* important decision in the module. Teams
+agonize over databases while the [pipeline](./building-the-graph.md) and
 [ontology](./ontologies-and-data-modeling.md) — which actually determine success — go
 under-resourced. Pick boring, pick managed, move on.
 
 > 🎯 **For the product leader**
 >
 > **Why it matters** — This is where the vendor money is, so it's where the noise is.
-> Every graph-database vendor will frame your project as a database choice. It isn't —
-> but the choice still sets your latency floor, your ops burden, and a real
-> lock-in cost, because query languages don't port cheaply.
+> Every graph-database vendor will frame your project as a database choice. It isn't.
+> But the choice still sets your latency floor, your ops burden, and a real lock-in
+> cost, because query languages don't port cheaply.
 >
-> **What it changes in your decisions** — You ask for the *query shapes* (how many hops,
-> how much fan-out, what latency budget, embedded in which user-facing feature) before
-> anyone names a product. Query shapes decide the store; the store never decides the
-> product.
+> **What it changes in your decisions** — You ask for the *query shapes* first: how
+> many hops, how much fan-out, what latency budget, embedded in which user-facing
+> feature. Ask this before anyone names a product. Query shapes decide the store; the
+> store never decides the product.
 >
 > **Ask yourself** — *"What's the deepest traversal on our roadmap, at what latency,
 > inside which feature — and did we benchmark the boring option on that exact query?"*
 >
-> **Risk if ignored** — Six months of bake-off theater for a workload Postgres handles;
-> or the inverse — a relationship-heavy feature built on SQL that collapses at demo
-> scale, taking the roadmap down with it.
+> **Risk if ignored** — Six months of bake-off theater for a workload Postgres handles.
+> Or the inverse: a relationship-heavy feature built on SQL collapses at demo scale,
+> taking the roadmap down with it.
 
 ## The traversal-vs-join argument, honestly
 
 The core claim for graph databases: relationships are stored as direct pointers, so
 following an edge costs the same whether the graph holds a thousand nodes or a billion
-(*index-free adjacency*), while each relational join re-finds partners via index lookups
-that compound as hops multiply. The claim is true — *for deep, path-shaped queries*.
-"All customers exposed to supplier X through any chain of parts" is painful in SQL at
-hop four and trivial in Cypher. But for one- and two-hop lookups, aggregations, and
-reporting, a tuned relational store is equal or better, with operational maturity graphs
-still can't match. There is also a readability dividend that shows up in team velocity:
+(*index-free adjacency*). Each relational join, by contrast, re-finds partners via
+index lookups that compound as hops multiply. The claim is true — *for deep,
+path-shaped queries*. "All customers exposed to supplier X through any chain of parts"
+is painful in SQL at hop four and trivial in Cypher. But for one- and two-hop lookups,
+aggregations, and reporting, a tuned relational store is equal or better, with
+operational maturity graphs still can't match. There is also a readability dividend
+that shows up in team velocity:
 
 ```mermaid
 flowchart TB
@@ -64,7 +65,7 @@ flowchart TB
   SQL --> W["Works — but depth is hand-rolled,<br/>every new relationship is a schema change"]
 ```
 
-The variable-depth `*1..4` is the tell: the graph query *states the question*; the SQL
+The variable-depth `*1..4` is the tell. The graph query *states the question*; the SQL
 *implements* it. When relationship questions are your product's daily bread, that gap
 compounds into feature velocity. When they're occasional, it's a curiosity.
 
@@ -78,10 +79,10 @@ compounds into feature velocity. When they're occasional, it's a curiosity.
 | Weaknesses | Historically vendor-flavored (GQL is fixing this); semantics live in your docs, not the store | Steeper learning curve, thinner tooling and talent, reification friction for edge properties | Deep/variable-depth traversal slow and brittle; graph algorithms mostly absent |
 | Natural home | Product features: recommendations, fraud, 360° views, [GraphRAG](./knowledge-graphs-and-llms.md) | Regulated and cross-organization domains: pharma, government, publishing, finance reference data | Modest scale, shallow hops, or proving value before buying infrastructure |
 
-Deployment nuance worth knowing exists (native stores vs. multi-model engines vs.
-graph-on-warehouse; managed offerings from every major cloud) — but it's an
-engineering-owned decision. Your leverage is earlier: *family*, driven by query shapes
-and interoperability needs.
+Deployment nuance worth knowing exists — native stores vs. multi-model engines vs.
+graph-on-warehouse, managed offerings from every major cloud — but it's an
+engineering-owned decision. Your leverage comes earlier, in choosing the *family*,
+driven by query shapes and interoperability needs.
 
 ## How to run the decision
 
@@ -89,8 +90,8 @@ and interoperability needs.
    budget, freshness, and whether they sit inside a user-facing request path or a
    nightly batch. This one page does more than any bake-off.
 2. **Benchmark the boring option first.** Load a production-scale sample into what you
-   already run. If it holds your latency at your depth — stop; revisit at the next order
-   of magnitude. No graph database earns its ops burden below that bar.
+   already run. If it holds your latency at your depth, stop — revisit at the next
+   order of magnitude. No graph database earns its ops burden below that bar.
 3. **If traversal wins, default to a managed property graph.** Largest talent pool,
    best algorithm support, and GQL standardization is steadily lowering the lock-in tax.
    Choose RDF deliberately, for interoperability or regulatory semantics — not by
@@ -104,22 +105,22 @@ and interoperability needs.
 One more boundary worth policing: **graph stores serve knowledge; they don't replace
 your OLTP systems**. The graph is a connective layer over systems of record — billing
 still lives in billing. Teams that try to make the graph the system of record inherit
-transaction-processing problems graph databases are bad at, and lose the ability to
-rebuild the graph from sources when (not if) the pipeline needs a redo.
+transaction-processing problems graph databases are bad at. They also lose the ability
+to rebuild the graph from sources when — not if — the pipeline needs a redo.
 
 ## Failure modes
 
 - **Bake-off theater** — six months comparing engines on synthetic benchmarks while the
   real risks (resolution quality, curation staffing) go unexamined.
 - **Résumé-driven storage** — a graph database adopted for two-hop lookups Postgres
-  served fine; the team now runs an extra distributed system for nothing.
+  served fine. The team now runs an extra distributed system for nothing.
 - **The inverse** — "we'll just use SQL" for a product whose core loop is four-hop,
-  variable-depth traversal; every new feature is a recursive-CTE archaeology dig.
+  variable-depth traversal. Every new feature becomes a recursive-CTE archaeology dig.
 - **Graph as system of record** — the store that should mirror knowledge starts
-  *owning* it; now you have dual-write bugs and no replay path.
+  *owning* it. Now you have dual-write bugs and no replay path.
 - **Unbounded queries in the request path** — a `*1..` traversal with no depth cap or
-  timeout ships inside a user-facing endpoint; one dense node (every graph has a
-  celebrity) times out the feature.
+  timeout ships inside a user-facing endpoint. One dense node — every graph has a
+  celebrity — times out the feature.
 
 ## Practitioner checklist
 

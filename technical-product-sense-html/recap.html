@@ -314,29 +314,30 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Technical product sense — recap &amp; real-world examples</h1>
   </div>
   <h2>Real-world examples &amp; war stories</h2>
-<p><strong>The duplicate-charge outage.</strong> A payment request times out, the client retries, and without
-<a href="apis-and-contracts.html">idempotency</a> the customer is charged twice — a support-and-refund
-fire drill that a single idempotency key would have prevented. 🎯 <em>Takeaway:</em> "what happens on
-retry?" is one of the highest-leverage questions a PM can ask, and it's invisible until it
-isn't.</p>
-<p><strong>The p95 that averaged fine.</strong> A feature ships with a healthy 200 ms <em>average</em> response, and
+<p><strong>The duplicate-charge outage.</strong> A payment request times out. The client retries. Without
+<a href="apis-and-contracts.html">idempotency</a>, the customer gets charged twice. One missing
+idempotency key turns into a support-and-refund fire drill. 🎯 <em>Takeaway:</em> "what happens on
+retry?" is one of the highest-leverage questions a PM can ask. It stays invisible until the
+day it isn't.</p>
+<p><strong>The p95 that averaged fine.</strong> A feature ships with a healthy 200 ms <em>average</em> response. But
 the team's most valuable power users — the ones with the most data — quietly suffer 4-second
-loads because the <a href="latency-scale-performance.html">p95 tail</a> was never checked. 🎯 <em>Takeaway:</em>
-averages hide your worst experiences; always ask for percentiles.</p>
+loads. Nobody checked the <a href="latency-scale-performance.html">p95 tail</a>. 🎯 <em>Takeaway:</em> averages
+hide your worst experiences. Always ask for percentiles.</p>
 <p><strong>The migration that wasn't scoped.</strong> A "quick" feature turns out to need a relationship the
-<a href="data-and-the-data-model.html">data model</a> never stored, so a two-week estimate becomes a
+<a href="data-and-the-data-model.html">data model</a> never stored. A two-week estimate becomes a
 two-month migration. 🎯 <em>Takeaway:</em> "does this data exist, in a usable shape?" belongs in
 discovery, not mid-build.</p>
-<p><strong>Air Canada's chatbot invented a refund policy (2024).</strong> A support bot returned a confident,
-well-formed, and <em>wrong</em> answer, and a tribunal held the airline to it. 🎯 <em>Takeaway:</em> the
-<a href="technical-sense-for-ai.html">AI-specific failure</a> is a 200-OK wrong answer — which is why
+<p><strong>Air Canada's chatbot invented a refund policy (2024).</strong> A support bot gave a confident,
+well-formed, and <em>wrong</em> answer. A tribunal held the airline to it. 🎯 <em>Takeaway:</em> the
+<a href="technical-sense-for-ai.html">AI-specific failure</a> is a 200-OK wrong answer. That is why
 <a href="reliability-and-failure.html">validation, grounding, and a wrong-answer path</a> are core, not
 polish.</p>
-<p><strong>The AI feature nobody could debug.</strong> A model feature ships without evals or observability;
-weeks later, quality has drifted and no one can tell whether it's the prompt, the retrieval,
-the model version, or the data. 🎯 <em>Takeaway:</em> <a href="technical-sense-for-ai.html">evals and observability</a>
-<em>are</em> the reliability of an AI feature — the <a href="tech-debt-and-estimation.html">debt</a> of skipping
-them comes due exactly when you can least afford it.</p>
+<p><strong>The AI feature nobody could debug.</strong> A model feature ships without evals or observability.
+Weeks later, quality has drifted and no one can tell why — the prompt, the retrieval, the
+model version, or the data could all be the cause. 🎯 <em>Takeaway:</em>
+<a href="technical-sense-for-ai.html">evals and observability</a> <em>are</em> the reliability of an AI feature.
+The <a href="tech-debt-and-estimation.html">debt</a> of skipping them comes due exactly when you can
+least afford it.</p>
 <h2>Module recap</h2>
 <table>
 <thead>
@@ -385,10 +386,11 @@ them comes due exactly when you can least afford it.</p>
 </tbody>
 </table>
 <p><strong>The through-line:</strong> technical product sense is the ability to see the <em>system</em> behind the
-feature — the boxes a request travels, the contracts between them, where the data lives, where
-time and money go, how it fails, and what it costs to change. For the AI PM, every one of these
-gains a probabilistic twist, and the discipline is the same: understand the shape of the system
-well enough to build <em>with</em> it — and to earn the trust of the engineers who do.</p>
+feature. That means the boxes a request travels, the contracts between them, where the data
+lives, where time and money go, how it fails, and what it costs to change. For the AI PM,
+every one of these gains a probabilistic twist. The discipline stays the same: understand the
+shape of the system well enough to build <em>with</em> it, and to earn the trust of the engineers
+who do.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"For this feature, can I draw the system on a whiteboard — the boxes,
 the slow hop, the failure paths — and if there's a model in it, is the product the trustworthy
@@ -400,27 +402,27 @@ machinery around the model, not the model itself?"</em></p>
 <li>
 <p><strong>"It's slow" and "it falls over under load" — why must you never conflate them?</strong>
  <br />
-<details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) have different fixes — finding/caching the slow hop vs. horizontal scaling and shared-bottleneck relief. Fixing the wrong one wastes months. (<a href="latency-scale-performance.html">Latency, scale & performance</a>)</details></p>
+<details><summary>Answer</summary>Latency (one request's time) and scale (how many requests) need different fixes. Latency needs you to find and cache the slow hop. Scale needs horizontal scaling and relief for the shared bottleneck. Fixing the wrong one wastes months. (<a href="latency-scale-performance.html">Latency, scale & performance</a>)</details></p>
 </li>
 <li>
 <p><strong>A payment call times out and the app retries. What property makes that safe, and how does it work?</strong>
  <br />
-<details><summary>Answer</summary>Idempotency — the client sends a unique key per attempt and the server returns the original result for a repeated key, so a retry can't double-charge. (<a href="apis-and-contracts.html">APIs & contracts</a>)</details></p>
+<details><summary>Answer</summary>Idempotency. The client sends a unique key per attempt. The server returns the original result for a repeated key, so a retry can't double-charge. (<a href="apis-and-contracts.html">APIs & contracts</a>)</details></p>
 </li>
 <li>
 <p><strong>Why is "where does this data live, and how is it shaped?" a product question?</strong>
  <br />
-<details><summary>Answer</summary>The data model decides what features are possible without a migration — a question the model can't answer is a feature you can't ship. And analytical reads don't belong on the transactional store. (<a href="data-and-the-data-model.html">Data & the data model</a>)</details></p>
+<details><summary>Answer</summary>The data model decides what features are possible without a migration. A question the model can't answer is a feature you can't ship. Analytical reads also don't belong on the transactional store. (<a href="data-and-the-data-model.html">Data & the data model</a>)</details></p>
 </li>
 <li>
 <p><strong>Name the four tools that keep a dependency slowdown from becoming your outage.</strong>
  <br />
-<details><summary>Answer</summary>Timeouts (cap the wait), retries with backoff and jitter (don't synchronize the storm), circuit breakers (fail fast while it's sick), and a designed fallback for what the user sees. (<a href="reliability-and-failure.html">Reliability & failure</a>)</details></p>
+<details><summary>Answer</summary>Timeouts cap the wait. Retries with backoff and jitter stop the storm from synchronizing. Circuit breakers fail fast while a dependency is sick. And a designed fallback controls what the user sees. (<a href="reliability-and-failure.html">Reliability & failure</a>)</details></p>
 </li>
 <li>
 <p><strong>What's the blast-radius question, and when do you ask it?</strong>
  <br />
-<details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" — asked at design time for every component, credential, and data store, not after the incident. (<a href="security-and-privacy.html">Security & privacy sense</a>)</details>
+<details><summary>Answer</summary>"If this piece were compromised tonight, what does the attacker hold tomorrow?" Ask it at design time, for every component, credential, and data store — not after the incident. (<a href="security-and-privacy.html">Security & privacy sense</a>)</details>
 </p>
 </li>
 </ol>

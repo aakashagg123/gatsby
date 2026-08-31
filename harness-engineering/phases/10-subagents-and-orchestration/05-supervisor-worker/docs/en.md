@@ -1,14 +1,14 @@
 # Supervisor / worker patterns
 
-> **Motto** — A supervisor decomposes and delegates; workers execute in isolation and report back.
+> **Motto** — A supervisor decomposes and delegates — workers execute in isolation and report back.
 
 *Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–04.*
 
 ## The Problem
 
-A single agent doing everything in one context hits two walls: the context fills with
+A single agent doing everything in one context hits two walls. The context fills with
 detail irrelevant to the current sub-task, and there's no parallelism. The
-supervisor/worker pattern splits the roles — a supervisor that *plans and coordinates*
+supervisor/worker pattern splits the roles: a supervisor that *plans and coordinates*
 but writes no code, and workers that each own one isolated sub-task. The supervisor never
 sees a worker's full transcript, only its result. This keeps each context small and lets
 independent work run in parallel (within the budget from lesson 01).
@@ -27,7 +27,7 @@ flowchart TB
   A --> O["combined output"]
 ```
 
-The supervisor holds the *plan*; each worker holds only its *task*. Results flow back up
+The supervisor holds the *plan*. Each worker holds only its *task*. Results flow back up
 — not transcripts. This is bounded roles (lesson 02) applied to delegation.
 
 ## Build It
@@ -80,8 +80,8 @@ print(sup.run("add route; add model; fail step"))
 #  'summary': '2/3 tasks succeeded'}
 ```
 
-The supervisor only ever sees each worker's `Result`, never its internal steps —
-context stays small and the failure is isolated, not contagious.
+The supervisor only ever sees each worker's `Result`, never its internal steps.
+Context stays small, and a failure stays isolated instead of spreading.
 
 ## Use It
 
@@ -104,7 +104,7 @@ decomposes, dispatches isolated workers in batches, and aggregates results.
 - C) nothing
 - D) the worker's system prompt
 
-<details><summary>Answer</summary>B — results flow up, not transcripts; this keeps the
+<details><summary>Answer</summary>B — results flow up, not transcripts. This keeps the
 supervisor's context small and bounded (lesson 02).</details>
 
 **Q2.** Why batch worker dispatch by `max_workers`?

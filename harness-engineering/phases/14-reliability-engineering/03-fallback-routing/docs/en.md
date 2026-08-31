@@ -6,10 +6,10 @@
 
 ## The Problem
 
-A single hardcoded model is a single point of failure and often the wrong cost/latency
-tradeoff. **Routing** picks the right model per task (cheap model for simple work, strong
-model for hard work), and a **fallback chain** tries the next option when one errors or is
-overloaded — so a provider blip degrades quality, not availability.
+A single hardcoded model is a single point of failure, and often the wrong cost/latency
+tradeoff. **Routing** picks the right model per task: a cheap model for simple work, a
+strong model for hard work. A **fallback chain** tries the next option when one errors or is
+overloaded, so a provider blip degrades quality instead of availability.
 
 ## The Concept
 
@@ -21,7 +21,7 @@ flowchart LR
   B -- "fails" --> C["fallback 2"] --> X["all failed → degraded mode"]
 ```
 
-Routing chooses the *first* try by fit; the chain handles *failure* by trying the rest.
+Routing chooses the *first* try by fit. The chain handles *failure* by trying the rest.
 
 ## Build It
 
@@ -50,15 +50,16 @@ chain = route("simple task", "haiku", "strong", is_hard=lambda t: "complex" in t
 print(with_fallback(["strong", "haiku"], call))   # falls back to haiku
 ```
 
-Routing keeps cost down on easy tasks; the fallback chain keeps the service up when the
-preferred model errors — both decisions live in the harness, not the business logic.
+Routing keeps cost down on easy tasks. The fallback chain keeps the service up when the
+preferred model errors. Both decisions live in the harness, not the business logic.
 
 ## Use It
 
-For Claude Code / Codex users this is model selection (e.g. a fast model for routine edits,
-a stronger model for hard reasoning) plus the SDK/provider's resilience. In a custom harness
-you implement the chain explicitly. Key principle (from the conceptual track): you can change
-models without rewriting business logic — routing is a harness concern.
+For Claude Code and Codex users, this is model selection — a fast model for routine edits, a
+stronger model for hard reasoning — plus the SDK or provider's own resilience. In a custom
+harness, you implement the chain explicitly. The key principle, from the conceptual track:
+you can change models without rewriting business logic, because routing is a harness
+concern.
 
 ## Ship It
 

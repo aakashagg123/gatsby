@@ -9,11 +9,11 @@
 ## The Problem
 
 Spawning one subagent is easy (previous lessons). Coordinating *several* against the
-same repo is where harnesses go wrong: two workers edit the same file and silently
-overwrite each other; a run loops 40 times and spends $12; an interrupted wave has to
-restart from zero; nobody approved what got built. The fix isn't a smarter prompt —
-it's structure: a **contract** that fixes the target and budget before dispatch, and
-**waves** that hard-stop for a human between them.
+same repo is where harnesses go wrong. Two workers edit the same file and silently
+overwrite each other. A run loops 40 times and spends $12. An interrupted wave has to
+restart from zero. Nobody approved what got built. The fix isn't a smarter prompt — it's
+structure: a **contract** that fixes the target and budget before dispatch, and **waves**
+that hard-stop for a human between them.
 
 ## The Concept
 
@@ -36,17 +36,17 @@ flowchart TB
 Four invariants, straight from the principles:
 
 1. **Spec first (01):** no worker runs until a contract is approved.
-2. **Budget upfront (03):** `maxWorkers / maxCallsPerWorker / maxWaves` are declared;
-   hitting any ceiling stops the run — it never auto-extends.
-3. **File isolation (06):** the dependency graph assigns each worker disjoint files;
-   anything with an unresolved dependency waits for the next wave.
+2. **Budget upfront (03):** `maxWorkers / maxCallsPerWorker / maxWaves` are declared.
+   Hitting any ceiling stops the run — it never auto-extends.
+3. **File isolation (06):** the dependency graph assigns each worker disjoint files.
+   Anything with an unresolved dependency waits for the next wave.
 4. **Hard stops + checkpoints (04, 10):** each wave ends with a summary and waits for
-   an explicit "continue"; every worker writes a checkpoint so an interrupted run
-   resumes, not restarts.
+   an explicit "continue." Every worker writes a checkpoint, so an interrupted run
+   resumes instead of restarting.
 
 ## Build It
 
-A real orchestrator, standard library only — the agents are stubs so the *coordination*
+A real orchestrator, standard library only. The agents are stubs, so the *coordination*
 is what you can see. `code/orchestrator.py`:
 
 ```python
@@ -125,15 +125,15 @@ run_sprint(contract,
 # sprint complete
 ```
 
-`plan_waves` is the heart: it refuses to put two tasks that touch the same file in the
-same wave, and holds back tasks whose dependencies haven't landed.
+`plan_waves` is the heart. It refuses to put two tasks that touch the same file in the
+same wave, and it holds back tasks whose dependencies haven't landed.
 
 ## Use It
 
 In a real harness the stubs become Claude Code subagents and git worktrees. The
-contract becomes `_agent-team/sprint-contract.json`; `approve`/`cont` become the human
-gates; `run_worker` spawns an agent in its own worktree and reads back its
-`checkpoint.md`. The deck's `/agent-team` skill is exactly this orchestrator wired to
+contract becomes `_agent-team/sprint-contract.json`. `approve`/`cont` become the human
+gates. `run_worker` spawns an agent in its own worktree and reads back its
+`checkpoint.md`. The deck's `/agent-team` skill is exactly this orchestrator, wired to
 the planning, discovery, worker, review, and memory agents. See `outputs/` for the
 contract template and the one-shot setup prompt that generates the whole pipeline.
 
@@ -156,7 +156,7 @@ This lesson ships two artifacts:
 - C) The plan is secret
 - D) It's faster
 
-<details><summary>Answer</summary>B — principle 02. With the plan in hand the reviewer
+<details><summary>Answer</summary>B — principle 02. With the plan in hand, the reviewer
 defends intent instead of judging the output on its own terms.</details>
 
 **Q2.** Two tasks both edit `api/routes.py`. The orchestrator should…
@@ -180,7 +180,7 @@ cause silent overwrites; `plan_waves` enforces disjoint file sets per wave.</det
 decides whether to spend more.</details>
 
 **Challenge.** Add a `dry_run` mode that prints the wave plan and the per-wave worker
-count *without* dispatching, so a human can sanity-check file ownership against the
+count *without* dispatching. This lets a human sanity-check file ownership against the
 budget before approving the contract.
 
 ## Related

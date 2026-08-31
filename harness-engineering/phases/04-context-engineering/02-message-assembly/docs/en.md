@@ -7,10 +7,10 @@
 ## The Problem
 
 The same pieces — system prompt, project memory, tool schemas, retrieved files, history,
-the new user turn — can be arranged many ways. Order matters for two reasons: caching
-(stable-first keeps the cached prefix valid, Phase 1 lesson 08) and salience (the model
-weights recent/closing context heavily). A haphazard assembler quietly kills your cache
-hit rate and buries the current task.
+and the new user turn — can be arranged many ways. Order matters for two reasons. Caching
+rewards a stable-first order, because it keeps the cached prefix valid (Phase 1 lesson 08).
+Salience rewards it too, because the model weights recent, closing context heavily. A
+haphazard assembler quietly kills your cache hit rate and buries the current task.
 
 ## The Concept
 
@@ -19,8 +19,8 @@ flowchart LR
   S["system + memory + tools (stable, cacheable)"] --> H["history (semi-stable)"] --> F["retrieved files for THIS turn"] --> U["the user's request (last)"]
 ```
 
-A canonical order: stable/cacheable prefix → history → this-turn context → the request
-itself last, so the model's attention lands on the actual ask.
+Use a canonical order: stable/cacheable prefix, then history, then this-turn context, then
+the request itself last. That way the model's attention lands on the actual ask.
 
 ## Build It
 
@@ -52,9 +52,9 @@ consistent across every call.
 
 ## Use It
 
-This mirrors how **Claude Code / Codex** lay out a turn: the system prompt and project
-memory (`CLAUDE.md` / `AGENTS.md`) form the stable, cached head; files the agent reads are
-injected for the current turn; your message comes last. Keeping memory files lean and
+This mirrors how **Claude Code / Codex** lay out a turn. The system prompt and project
+memory (`CLAUDE.md` / `AGENTS.md`) form the stable, cached head. Files the agent reads are
+injected for the current turn, and your message comes last. Keeping memory files lean and
 stable is what makes the cached prefix pay off (Phase 1 lesson 08).
 
 ## Ship It

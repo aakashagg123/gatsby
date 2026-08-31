@@ -4,12 +4,13 @@
 
 ## TL;DR
 
-Almost every decision in an LLM system is a move in a four-way tradeoff between
-**latency**, **quality**, **cost**, and **reliability**. You rarely improve one without
-spending another. Mature AI engineering means making these tradeoffs *deliberately and
-per-use-case* — driven by explicit SLOs and budgets — instead of accepting whatever
-defaults give you. This lesson is the map that connects every other lesson in the
-repository to the axis it moves.
+Almost every decision in an LLM system is a move in a four-way tradeoff
+between **latency**, **quality**, **cost**, and **reliability**. You
+rarely improve one without spending another. Mature AI engineering means
+making these tradeoffs *deliberately and per-use-case*, driven by explicit
+SLOs and budgets, instead of accepting whatever defaults give you. This
+lesson is the map that connects every other lesson in the repository to
+the axis it moves.
 
 > 🎯 **For the AI-native PM**
 >
@@ -19,22 +20,24 @@ repository to the axis it moves.
 >
 > **Ask your eng team** — *"Which of latency / quality / cost / reliability are we choosing to trade here, and in exchange for what?"*
 >
-> **Product risk if ignored** — "Make it faster, cheaper, and better" with no target — so the team can't tell when they're done or when they've gone too far.
+> **Product risk if ignored** — "Make it faster, cheaper, and better" with no target means the team can't tell when they're done or when they've gone too far.
 
 
 ## The four axes
 
-- **Latency** — TTFT and TPOT ([prefill vs. decode](../01-inference-internals/prefill-vs-decode.md)),
-  end-to-end including retrieval/tools; judged at p95/p99, not the mean.
-- **Quality** — correctness, grounding, format validity, helpfulness; measured by
-  [evals](../04-evals-observability/evals.md), not vibes.
+- **Latency** — TTFT and TPOT
+  ([prefill vs. decode](../01-inference-internals/prefill-vs-decode.md)),
+  end-to-end including retrieval and tools. Judge it at p95/p99, not the
+  mean.
+- **Quality** — correctness, grounding, format validity, helpfulness.
+  Measure it with [evals](../04-evals-observability/evals.md), not vibes.
 - **Cost** — $/request and per-unit economics, attributed by
   [feature/tenant](../04-evals-observability/cost-attribution.md).
-- **Reliability** — availability, graceful degradation, consistency, isolation; the
-  worst-case behavior, not the average.
+- **Reliability** — availability, graceful degradation, consistency,
+  isolation. This is the worst-case behavior, not the average.
 
-You cannot maximize all four. The job is to hit your *required* level on each and
-optimize the rest.
+You cannot maximize all four. The job is to hit your *required* level on
+each and optimize the rest.
 
 ## Same lever, different axis — the whole stack
 
@@ -62,54 +65,63 @@ the best one *for a given SLO*.
 
 ## The classic tensions
 
-- **Latency ↔ Quality** — a bigger model or more retrieval/reasoning is better but
-  slower. Cascades and routing let you spend latency only on hard requests.
-- **Cost ↔ Quality** — cheaper/smaller/quantized cuts cost and may cut quality; keep it
-  *within* a quality floor enforced by evals.
-- **Latency ↔ Cost (throughput)** — batching lowers $/token but raises per-user TPOT;
-  pick the operating point from your SLO.
-- **Reliability ↔ Cost/Latency** — retries, fallbacks, multi-provider, and isolation all
-  add cost/latency to buy resilience.
-- **Quality ↔ Reliability** — the most capable single model may be less *available* than
-  a routed multi-provider setup that's slightly weaker but never down.
+- **Latency ↔ Quality** — a bigger model or more retrieval/reasoning is
+  better but slower. Cascades and routing let you spend latency only on
+  hard requests.
+- **Cost ↔ Quality** — a cheaper, smaller, or quantized model cuts cost and
+  may cut quality. Keep it *within* a quality floor enforced by evals.
+- **Latency ↔ Cost (throughput)** — batching lowers $/token but raises
+  per-user TPOT. Pick the operating point from your SLO.
+- **Reliability ↔ Cost/Latency** — retries, fallbacks, multi-provider
+  setups, and isolation all add cost and latency to buy resilience.
+- **Quality ↔ Reliability** — the most capable single model may be less
+  *available* than a routed multi-provider setup that's slightly weaker
+  but never down.
 
 ## How to make the tradeoff deliberately
 
-1. **Set SLOs/budgets per use case.** Interactive chat ≠ overnight batch job ≠
-   safety-critical workflow. Define required latency, quality floor, cost ceiling, and
-   availability *separately* for each.
-2. **Measure all four.** [Observability](../04-evals-observability/observability.md) for
-   latency/cost/reliability, [evals](../04-evals-observability/evals.md) for quality. You
-   can't trade what you don't measure.
-3. **Optimize the slack, protect the floor.** Improve the unconstrained axes without
-   breaching the required level on the others — e.g. cut cost via quantization *only if*
-   evals stay above the quality floor.
-4. **Differentiate by request.** [Route](../02-reliable-outputs/model-routing.md) easy
-   traffic cheap/fast, hard traffic capable; don't pay worst-case cost for the average
-   request.
-5. **Revisit continuously.** Models, prices, and traffic change; today's optimal point
-   drifts — re-evaluate as part of operations. Four forces are falling or rising in
-   your favor *simultaneously*: training costs falling, per-token inference costs
-   falling, tokens-per-second rising, and usable context windows growing. That means
-   every "not economical" and "too slow" verdict has an expiry date — keep a list of
-   the features that just missed the bar, and re-run the numbers on a schedule, because
-   the dial-up era's "no" is often the broadband era's product. The canonical proof is
-   the **DeepSeek moment** (January 2025): efficiency work (latent attention, FP8
-   training, mixture-of-experts) delivered near-frontier reasoning at a fraction of
-   assumed cost, and the open-weight wave behind it (R1, Qwen3, Kimi K2) has kept
-   frontier-adjacent capability within reach of commodity budgets ever since. Whole
-   product categories that were "uneconomic" in 2024 stopped being so in one quarter.
+1. **Set SLOs/budgets per use case.** Interactive chat, an overnight batch
+   job, and a safety-critical workflow are not the same. Define required
+   latency, quality floor, cost ceiling, and availability *separately* for
+   each.
+2. **Measure all four.** Use
+   [observability](../04-evals-observability/observability.md) for
+   latency, cost, and reliability, and
+   [evals](../04-evals-observability/evals.md) for quality. You can't trade
+   what you don't measure.
+3. **Optimize the slack, protect the floor.** Improve the unconstrained
+   axes without breaching the required level on the others. For example,
+   cut cost via quantization *only if* evals stay above the quality floor.
+4. **Differentiate by request.**
+   [Route](../02-reliable-outputs/model-routing.md) easy traffic cheap and
+   fast, and hard traffic to a capable model. Don't pay worst-case cost for
+   the average request.
+5. **Revisit continuously.** Models, prices, and traffic change, so
+   today's optimal point drifts — re-evaluate as part of operations. Four
+   forces are falling or rising in your favor *simultaneously*: training
+   costs are falling, per-token inference costs are falling, tokens-per-second
+   is rising, and usable context windows are growing. That means every "not
+   economical" and "too slow" verdict has an expiry date. Keep a list of the
+   features that just missed the bar, and re-run the numbers on a schedule,
+   because the dial-up era's "no" is often the broadband era's product. The
+   canonical proof is the **DeepSeek moment** (January 2025): efficiency
+   work (latent attention, FP8 training, mixture-of-experts) delivered
+   near-frontier reasoning at a fraction of assumed cost, and the
+   open-weight wave behind it (R1, Qwen3, Kimi K2) has kept
+   frontier-adjacent capability within reach of commodity budgets ever
+   since. Whole product categories that were "uneconomic" in 2024 stopped
+   being so in one quarter.
 
 ## Failure modes
 
-- **Optimizing one axis blindly** — cost-cutting that quietly tanks quality, or a
-  latency push that wrecks reliability.
-- **One config for all requests** — paying premium cost/latency on easy cases or starving
-  hard ones.
-- **No SLOs** — "make it faster/cheaper/better" with no target means you can't tell when
-  you're done or when you've gone too far.
-- **Mean-driven decisions** — tuning to averages while p99 latency and worst-case
-  reliability — the things users actually feel — degrade.
+- **Optimizing one axis blindly** — cost-cutting that quietly tanks
+  quality, or a latency push that wrecks reliability.
+- **One config for all requests** — paying premium cost and latency on
+  easy cases, or starving hard ones.
+- **No SLOs** — "make it faster, cheaper, better" with no target means you
+  can't tell when you're done or when you've gone too far.
+- **Mean-driven decisions** — tuning to averages while p99 latency and
+  worst-case reliability, the things users actually feel, degrade.
 
 ## Practitioner checklist
 

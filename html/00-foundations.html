@@ -317,8 +317,8 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>The hardest part of AI engineering is not the model. It is everything <em>around</em> the
-model: the control flow, the context you feed it, the validation you wrap it in,
-and the operational discipline that turns a clever demo into a system people can
+model: the control flow, the context you feed it, and the validation you wrap it
+in. Operational discipline is what turns a clever demo into a system people can
 depend on.</p>
 <p>This module establishes the three mindset shifts that the rest of the curriculum
 assumes:</p>
@@ -355,10 +355,10 @@ middle.</strong> Engineer it like one.</p>
 optimizes the <em>system</em> that sends it: retries, validators, tool wiring, budgets,
 fallbacks, caching, and observability. In production, the harness is where most of
 your reliability — and most of your bugs — actually live. A great prompt inside a
-naive harness is fragile; an average prompt inside a strong harness ships.</p>
+naive harness is fragile. An average prompt inside a strong harness ships.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — The reliability your users feel comes from the system <em>around</em> the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item; the work that actually moves retention is harness work — validation, fallbacks, budgets, routing.</p>
+<p><strong>Why it matters</strong> — The reliability your users feel comes from the system <em>around</em> the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item. The work that actually moves retention is harness work — validation, fallbacks, budgets, routing.</p>
 <p><strong>What it changes in your decisions</strong> — How you scope "AI quality" epics, where you spend engineering cycles, and what you can credibly promise in an SLA.</p>
 <p><strong>Ask your eng team</strong> — <em>"If the model returns garbage on a single call, what does the user actually see?"</em></p>
 <p><strong>Product risk if ignored</strong> — You ship a dazzling demo, then burn quarters firefighting reliability you never put on the roadmap.</p>
@@ -490,18 +490,18 @@ the prompt.</p>
 <p>The context window is a scarce, expensive, and <em>quality-sensitive</em> resource. Context
 engineering is the discipline of deciding <strong>what</strong> goes into it, <strong>in what order</strong>,
 <strong>in what form</strong>, and <strong>what gets left out</strong> — on every single call. "Just stuff in
-more text" is the anti-pattern: longer context costs more, runs slower, and often
+more text" is the anti-pattern. Longer context costs more, runs slower, and often
 makes answers <em>worse</em>, not better.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — Context is a budget you spend on <em>every</em> request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.</p>
+<p><strong>Why it matters</strong> — Context is a budget you spend on <em>every</em> request. It shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.</p>
 <p><strong>What it changes in your decisions</strong> — What data you invest in making retrievable, how you scope memory/personalization features, and your cost-per-interaction.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's actually in the context window on a typical request, and what does each part cost us?"</em></p>
-<p><strong>Product risk if ignored</strong> — Prompt creep quietly triples unit cost and <em>lowers</em> quality — invisible until the invoice or the churn shows up.</p>
+<p><strong>Product risk if ignored</strong> — Prompt creep quietly triples unit cost and <em>lowers</em> quality. It stays invisible until the invoice or the churn shows up.</p>
 </blockquote>
 <h2>Mental model</h2>
 <p>Treat the context window like a working set in a memory hierarchy, not a junk
-drawer. The model can only attend to what is in front of it, and its effective
+drawer. The model can only attend to what is in front of it. Its effective
 attention is <strong>non-uniform</strong>: information at the start and end of the window is used
 more reliably than information buried in the middle ("lost in the middle"). So
 context engineering optimizes three things at once:</p>
@@ -512,27 +512,29 @@ context engineering optimizes three things at once:</p>
 <li><strong>Position &amp; format</strong> — is it placed and shaped so the model actually uses it?</li>
 </ol>
 <h2>From data-first to context-first</h2>
-<p>Two era-framings from the PM side of this discipline are worth internalizing. First:
-the data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
-<strong>context-first</strong> one — the question is no longer <em>"what data do we have?"</em> but <em>"what
-context does this decision need to be meaningful?"</em> Data is inert until it's framed;
-the same model with the same data behaves entirely differently depending on what makes
-it into the window, in what form.</p>
+<p>Two era-framings from the PM side of this discipline are worth knowing. First, the
+data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
+<strong>context-first</strong> one. The question is no longer <em>"what data do we have?"</em> It is
+<em>"what context does this decision need to be meaningful?"</em> Data is inert until it's
+framed. The same model with the same data behaves entirely differently, depending on
+what makes it into the window and in what form.</p>
 <p>Second: <strong>prompt engineering alone is stagecraft, not architecture.</strong> Clever wording
 dazzles in a demo and fails as a system, for three structural reasons:</p>
 <ul>
 <li><strong>Fragility</strong> — a prompt tuned for "how do I request a refund?" falters on "can I
-  get my money back if I cancel mid-cycle?"; one phrasing shift collapses the trick.</li>
-<li><strong>No memory</strong> — prompts operate in isolation; without engineered context the system
-  contradicts itself across sessions (the assistant that recommends the SMB market on
-  Monday and enterprise-only on Tuesday, because nothing carried the strategy forward).</li>
-<li><strong>Operational debt</strong> — every new use case demands fresh tinkering, until the team
-  maintains a library of brittle bespoke prompts instead of one adaptive system.</li>
+  get my money back if I cancel mid-cycle?" One phrasing shift collapses the trick.</li>
+<li><strong>No memory</strong> — prompts operate in isolation. Without engineered context, the
+  system contradicts itself across sessions: the assistant recommends the SMB market
+  on Monday and enterprise-only on Tuesday, because nothing carried the strategy
+  forward.</li>
+<li><strong>Operational debt</strong> — every new use case demands fresh tinkering. Over time the
+  team ends up maintaining a library of brittle bespoke prompts instead of one
+  adaptive system.</li>
 </ul>
-<p>The enterprise bar is higher than any single output: the context pipeline has to carry
-what the user is <em>entitled to</em>, what policy dictates, and when to escalate — CRM data,
-legal guardrails, strategic goals — assembled systematically per request. That
-pipeline is this lesson's subject; the prompt is just its last mile.</p>
+<p>The enterprise bar is higher than any single output. The context pipeline has to
+carry what the user is <em>entitled to</em>, what policy dictates, and when to escalate —
+CRM data, legal guardrails, strategic goals — assembled systematically on every
+request. That pipeline is this lesson's subject. The prompt is just its last mile.</p>
 <h2>Why more tokens is not more quality</h2>
 <ul>
 <li><strong>Distraction.</strong> Irrelevant retrieved chunks pull attention away from the answer.
@@ -634,13 +636,13 @@ the art of spending your token budget where it moves the answer.</p>
 <li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="infra-not-demos"><div class="lesson-head"><span class="lesson-num">00.3</span><h2>Shipping LLM systems as infrastructure, not demos</h2></div><h2>TL;DR</h2>
 <p>A demo proves the model <em>can</em> do the task once. Infrastructure makes it do the task
-correctly, observably, affordably, and safely — for every user, every tenant, at
-p99, indefinitely. The gap between the two is almost entirely engineering:
+correctly, observably, affordably, and safely. It must work for every user, every
+tenant, at p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
-judged by their best case; infrastructure is judged by its worst case.</p>
+judged by their best case. Infrastructure is judged by its worst case.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.</p>
+<p><strong>Why it matters</strong> — The gap between an impressive demo and a dependable feature is work that doesn't demo well. It is most of the project timeline. PMs who can't see that gap chronically under-scope AI projects.</p>
 <p><strong>What it changes in your decisions</strong> — Your launch-readiness criteria, your definition of done for AI features, and the expectations you set with execs.</p>
 <p><strong>Ask your eng team</strong> — <em>"What would it take to operate this for a year without it surprising us?"</em></p>
 <p><strong>Product risk if ignored</strong> — Friday-demo, Monday-outage: you green-light a launch that was never operationally real.</p>
@@ -713,12 +715,13 @@ judged by their best case; infrastructure is judged by its worst case.</p>
 <li><strong>Non-determinism</strong> breaks "write a test that asserts equality." You need
   distribution-level and rubric-based evaluation, not exact-match unit tests.</li>
 <li><strong>Silent failure.</strong> A wrong answer looks exactly like a right one. Errors don't
-  throw; they <em>read plausibly</em>. Detection requires
+  throw; they <em>read plausibly</em>. Detecting them requires
   <a href="04-evals-observability.html#evals">evals</a> and
   <a href="04-evals-observability.html#observability">drift monitoring</a>, not exception
   handlers.</li>
-<li><strong>Upstream drift.</strong> The model provider can update weights; your data changes; your
-  retrieval index ages. The system can regress with <em>no code change at all</em>.</li>
+<li><strong>Upstream drift.</strong> The model provider can update weights, your data can change,
+  and your retrieval index can age. The system can regress with <em>no code change at
+  all</em>.</li>
 <li><strong>Unbounded cost and latency.</strong> Token usage — and therefore dollars and seconds —
   depends on inputs and on how many times an <a href="02-reliable-outputs.html#agent-guardrails">agent loops</a>.</li>
 </ul>
@@ -766,20 +769,20 @@ judged by their best case; infrastructure is judged by its worst case.</p>
   <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
 <p><strong>Samsung's source-code leak (2023).</strong> Within weeks of allowing ChatGPT, Samsung
 engineers pasted confidential source code and internal meeting notes into it to debug
-and summarize — and that data left the company's control. Samsung restricted the tool.
-🎯 <em>PM takeaway:</em> what data is <em>allowed into the context</em> — and where it then goes — is a
-product and policy boundary you own. That's <a href="#harness-engineering">harness</a>, not
-prompting.</p>
-<p><strong>"Lost in the Middle" (Liu et al., 2023).</strong> A widely-cited study showed models reliably
-use information at the <em>beginning and end</em> of a long context but "lose" facts buried in
-the middle — even when the answer is right there. 🎯 <em>PM takeaway:</em> "just give the model
-more context" can <em>lower</em> quality. Placement and trimming are real work — see
-<a href="#context-engineering">context engineering</a>.</p>
-<p><strong>The POC graveyard.</strong> Industry surveys repeatedly find that the large majority of
-generative-AI proof-of-concepts never reach production. The demo works; the <em>operational</em>
-version — evals, guardrails, monitoring, cost control — is where projects stall. 🎯 <em>PM
-takeaway:</em> the demo-to-prod gap is mostly <a href="#infra-not-demos">harness and ops</a>. Budget
-for it explicitly, or you'll relaunch the same demo three times.</p>
+and summarize. That data left the company's control, so Samsung restricted the tool.
+🎯 <em>PM takeaway:</em> you own the product and policy boundary for what data is <em>allowed into
+the context</em> — and where it goes after that. That's <a href="#harness-engineering">harness</a>,
+not prompting.</p>
+<p><strong>"Lost in the Middle" (Liu et al., 2023).</strong> A widely-cited study showed that models
+reliably use information at the <em>beginning and end</em> of a long context. They "lose" facts
+buried in the middle, even when the answer is right there. 🎯 <em>PM takeaway:</em> giving the
+model more context can <em>lower</em> quality, not raise it. Placement and trimming are real
+work — see <a href="#context-engineering">context engineering</a>.</p>
+<p><strong>The POC graveyard.</strong> Industry surveys repeatedly find that most generative-AI
+proof-of-concepts never reach production. The demo works. The <em>operational</em> version —
+evals, guardrails, monitoring, cost control — is where projects stall. 🎯 <em>PM takeaway:</em>
+the demo-to-prod gap is mostly <a href="#infra-not-demos">harness and ops</a> work. Budget for
+it explicitly, or you'll relaunch the same demo three times.</p>
 <h2>Module recap</h2>
 <table>
 <thead>
@@ -793,23 +796,23 @@ for it explicitly, or you'll relaunch the same demo three times.</p>
 <tr>
 <td><a href="#harness-engineering">Harness engineering</a></td>
 <td>Reliability lives in the code <em>around</em> the model</td>
-<td>Where you spend eng cycles; what "AI quality" means</td>
+<td>Where you spend eng cycles, and what "AI quality" means</td>
 </tr>
 <tr>
 <td><a href="#context-engineering">Context engineering</a></td>
 <td>The context window is a budget, not a junk drawer</td>
-<td>Cost-per-call; data you make retrievable</td>
+<td>Cost per call, and data you make retrievable</td>
 </tr>
 <tr>
 <td><a href="#infra-not-demos">Infra, not demos</a></td>
-<td>Demos are judged best-case; infra is judged worst-case</td>
-<td>Launch-readiness; definition of done</td>
+<td>Demos are judged on their best case; infra is judged on its worst case</td>
+<td>Launch readiness, and definition of done</td>
 </tr>
 </tbody>
 </table>
 <p><strong>The through-line:</strong> a production LLM feature is <em>a distributed system with a stochastic
 component in the middle.</em> Engineer it like one. The model is one fast, unreliable,
-stateless function call; everything that makes it useful and safe — assembly, validation,
+stateless function call. Everything that makes it useful and safe — assembly, validation,
 budgets, fallbacks, observability — is yours to build.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"If the model returns garbage on a single call, what does the

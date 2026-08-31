@@ -18,8 +18,8 @@ flowchart LR
   Q["regex + file filter"] --> S["scan matching files"] --> M["path:line: match (+context)"]
 ```
 
-Grep returns *locations*; the agent then Reads the promising ones (lesson 01) and Edits
-(lesson 02). Search → read → edit is the core file-ops loop.
+Grep returns *locations*. The agent then Reads the promising ones (lesson 01) and Edits
+them (lesson 02). Search → read → edit is the core file-ops loop.
 
 ## Build It
 
@@ -59,10 +59,10 @@ The `path:line` format is what the agent cites and feeds straight into the read 
 
 ## Use It
 
-This is the **Grep** tool in Claude Code / Codex (built on ripgrep): regex content search
-with file-type/glob filters and context flags, returning matches the agent uses to navigate.
-Glob (lesson 04) finds files by name; Grep finds them by content; Read loads the hit; Edit
-changes it.
+This is the **Grep** tool in Claude Code / Codex, built on ripgrep. It does regex content
+search with file-type and glob filters and context flags, and it returns matches the agent
+uses to navigate. Glob (lesson 04) finds files by name, and Grep finds them by content. Read
+loads the hit, and Edit changes it.
 
 ## Ship It
 

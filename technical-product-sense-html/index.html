@@ -316,18 +316,18 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>for APMs &amp; PMs</span><span>diagrams included</span></div>
   </div>
   <div class="intro"><p>Product sense tells you <em>what</em> to build. <strong>Technical product sense</strong> tells you what it will
-take to build it — and what the system will and won't let you do. It's the ability to read
-an architecture, reason about data, latency, and failure, and hold a credible conversation
-with engineers about trade-offs. You don't need to write the code; you need to understand
-the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
-<p>For APMs and PMs moving into <strong>AI product management</strong>, this is non-optional. An AI feature
-is a distributed system with a probabilistic component bolted into it — latency, cost,
-failure, and data flow are now <em>product</em> decisions, not back-end details. This module
-builds the mental models, one system concept at a time, and <strong>each lesson ships a diagram</strong>
-you can redraw on a whiteboard.</p>
+take to build it. It also tells you what the system will and won't let you do. It means you
+can read an architecture, reason about data, latency, and failure, and hold a credible
+conversation with engineers about trade-offs. You don't need to write the code. You need to
+understand the <em>shape</em> of the system well enough to make good calls and earn engineers' trust.</p>
+<p>For APMs and PMs moving into <strong>AI product management</strong>, this skill is not optional. An AI
+feature is a distributed system with a probabilistic component bolted into it. Latency, cost,
+failure, and data flow are now <em>product</em> decisions, not back-end details. This module builds
+the mental models one system concept at a time. <strong>Each lesson ships a diagram</strong> you can
+redraw on a whiteboard.</p>
 <h2>The knowledge graph</h2>
-<p>A system is a request path, the contracts and data it moves through, and the forces that
-degrade it — with the AI capstone bolting a probabilistic component into the middle:</p>
+<p>A system is a request path, plus the contracts and data it moves through, and the forces
+that degrade it. The AI capstone bolts a probabilistic component into the middle:</p>
 <pre class="mermaid">flowchart TB
   REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
   REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
@@ -359,8 +359,8 @@ degrade it — with the AI capstone bolting a probabilistic component into the m
 <li><a href="technical-sense-for-ai.html"><strong>Technical sense for AI systems</strong></a> — the capstone: the
   anatomy of an AI feature, evals and observability, and cost/latency as UX.</li>
 </ul>
-<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — why it matters when the
-system has a model in it — and a diagram to make it concrete.</p>
+<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing. It explains why the
+concept matters when the system has a model in it, and includes a diagram to make it concrete.</p>
 <h2>Connects to other tracks</h2>
 <ul>
 <li><a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">Latency / quality / cost / reliability tradeoffs</a> — the same tradeoffs when the system has a model in it.</li>

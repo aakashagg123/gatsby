@@ -7,8 +7,8 @@
 ## The Problem
 
 You've built injection evals, output-as-data, egress guards, redaction, and tenant isolation.
-The payoff is a **security-review skill** the agent runs on a diff (its own or a PR's) to
-catch the vulnerabilities this phase covers — before they ship. It turns the phase's knowledge
+The payoff is a **security-review skill**: the agent runs it on a diff, its own or a PR's, to
+catch the vulnerabilities this phase covers before they ship. It turns the phase's knowledge
 into a repeatable check, the way `/security-review` works in Claude Code.
 
 ## The Concept
@@ -23,17 +23,17 @@ flowchart LR
 ## Build It / Use It
 
 The artifact is `outputs/SKILL.md` — a `/security-review` skill whose checklist *is* this
-phase: it scans a diff for executing model output as code, unbounded egress, hardcoded
-secrets, missing tenant scoping, and unsafe handling of untrusted content, reporting findings
-with severity and a fix.
+phase. It scans a diff for executing model output as code, unbounded egress, hardcoded
+secrets, missing tenant scoping, and unsafe handling of untrusted content. It reports each
+finding with a severity and a fix.
 
 ## Use It
 
 Run `/security-review` before merging anything that touches tool dispatch, network calls,
 auth, caching, or untrusted-input handling. In Claude Code this mirrors the built-in
-`/security-review`; installing this skill focuses it on *harness* threats specifically. Pair
-it with the injection eval (lesson 01) in CI — the skill is the human-in-the-loop review, the
-eval is the automated gate.
+`/security-review`, but installing this skill focuses it on *harness* threats specifically.
+Pair it with the injection eval (lesson 01) in CI. The skill is the human-in-the-loop review,
+and the eval is the automated gate.
 
 ## Ship It
 

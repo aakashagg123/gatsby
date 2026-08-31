@@ -1,18 +1,18 @@
 # Agentic AI for the AI PM
 
-A chatbot answers; an **agent acts**. Give a language model tools, a goal, and permission
+A chatbot answers. An **agent acts**. Give a language model tools, a goal, and permission
 to loop — observe, decide, act, check the result, repeat — and you get software that can
 *do things*: research a market, fix a bug, book the logistics, run the workflow. That's
-the promise. The practice is a young discipline with real engineering behind it and a
-thick layer of hype on top — invented protocol acronyms, "8-layer stacks," and demos that
-collapse on contact with production.
+the promise. The practice is a young discipline. It has real engineering behind it, but
+also a thick layer of hype on top — invented protocol acronyms, "8-layer stacks," and
+demos that collapse on contact with production.
 
-This module is the honest map. It teaches what an agent actually is, the machinery that
-makes one work (tools, context, memory, planning), what changes when agents multiply
-(multi-agent systems and the real protocol landscape), and the three disciplines that
-separate shipped agents from viral demos: **reliability, security, and unit economics**.
-Every lesson ships a diagram; the module opens with a **knowledge graph** so you can see
-how the pieces connect before studying them one at a time.
+This module is the honest map. It teaches what an agent actually is, and the machinery
+that makes one work: tools, context, memory, planning. It covers what changes when agents
+multiply — multi-agent systems and the real protocol landscape. And it covers the three
+disciplines that separate shipped agents from viral demos: **reliability, security, and
+unit economics**. Every lesson ships a diagram. The module opens with a **knowledge
+graph** so you can see how the pieces connect before you study them one at a time.
 
 ## The knowledge graph
 
@@ -86,13 +86,13 @@ flowchart TB
   EVAL --> UX
 ```
 
-Read it in three passes. **The spine:** knowledge flows into the model, the model drives
-the loop, the loop acts through tools, and tool results flow back as new knowledge — that
-cycle *is* the agent. **The amplifiers:** planning and reflection make each cycle
-smarter; multi-agent patterns run many cycles at once. **The disciplines:** every cycle
-leaves a trace, error analysis turns traces into evaluators, guardrails police the loop
-inline while evals gate it offline, security bounds every tool, a human approves the
-irreversible, and economics decides whether any of it is a business.
+Read it in three passes. **The spine:** knowledge flows into the model. The model drives
+the loop. The loop acts through tools, and tool results flow back as new knowledge. That
+cycle *is* the agent. **The amplifiers:** planning and reflection make each cycle smarter.
+Multi-agent patterns run many cycles at once. **The disciplines:** every cycle leaves a
+trace. Error analysis turns traces into evaluators. Guardrails police the loop inline,
+while evals gate it offline. Security bounds every tool. A human approves the
+irreversible. Economics decides whether any of it is a business.
 
 ## The lessons
 
@@ -113,10 +113,10 @@ irreversible, and economics decides whether any of it is a business.
 - [**Agentic AI as a product**](./agentic-ai-as-a-product.md) — the capstone: unit
   economics, pricing, agent UX, and deciding where agents actually pay.
 
-Each lesson pairs the concept with a **🎯 For the AI PM** briefing — the decision it
-should change and the question it should make you ask — and a diagram to make it
-concrete. Builders who want to go deeper than concepts can construct this machinery hands-on
-in the [Harness engineering track](../harness-engineering/README.md).
+Each lesson pairs the concept with a **🎯 For the AI PM** briefing. It names the decision
+the concept should change, and the question it should make you ask. Each lesson also has
+a diagram to make it concrete. Builders who want to go deeper than concepts can construct
+this machinery hands-on in the [Harness engineering track](../harness-engineering/README.md).
 
 ## Connects to other tracks
 

@@ -4,13 +4,13 @@
 
 ## TL;DR
 
-Writing is the PM's power tool, and the documents form a stack: **vision** (why we exist)
+Writing is the PM's power tool. The documents form a stack: **vision** (why we exist)
 → **strategy** (where we'll win) → **roadmap** (what, in what order) → **PRD** (what
 exactly, for one initiative) → **RFC / design doc** (how, written by engineering) →
 **tickets** (the work itself). Each layer answers questions the layer below shouldn't have
-to re-litigate. The PRD is yours: a good one nails the *problem*, *goals and non-goals*,
+to re-litigate. The PRD is yours. A good one nails the *problem*, *goals and non-goals*,
 *requirements with acceptance criteria*, *non-functional requirements*, and *how we'll
-measure success* — and stays silent on implementation. The RFC is engineering's: your job
+measure success* — and stays silent on implementation. The RFC is engineering's. Your job
 there is to be its sharpest *reader*, checking the design against the product intent it
 claims to serve.
 
@@ -62,7 +62,7 @@ Length is not quality — one to four pages beats twenty. The sections that earn
   "V1 does not support bulk import" kills a hundred Slack threads in advance.
 - **Requirements with acceptance criteria** — each requirement testable: *given* a
   context, *when* the user acts, *then* this observable result. "The search should be
-  fast" is an opinion; "search returns first results within 500 ms at p95" is a
+  fast" is an opinion. "Search returns first results within 500 ms at p95" is a
   requirement.
 - **Non-functional requirements (NFRs)** — the ones that get forgotten until they're
   emergencies: latency and availability targets, scale assumptions, privacy and data
@@ -72,12 +72,12 @@ Length is not quality — one to four pages beats twenty. The sections that earn
   If the PRD only describes the happy path, the engineers design the unhappy ones alone.
 - **Success metrics** — the numbers that will move if this works, and when you'll check
   ([Metrics & experimentation](./metrics-and-experimentation.md)).
-- **Open questions** — an explicit list. Pretending certainty you don't have costs trust;
-  a visible open-questions section *builds* it.
+- **Open questions** — an explicit list. Pretending certainty you don't have costs trust.
+  A visible open-questions section *builds* it.
 
 What a PRD should *not* contain: database schemas, API designs, technology choices, or a
-solution disguised as a requirement ("build a Redis cache" is a design; "repeat visits
-must load in under a second" is the requirement behind it).
+solution disguised as a requirement. ("Build a Redis cache" is a design. "Repeat visits
+must load in under a second" is the requirement behind it.)
 
 ## Reading an RFC like a PM
 
@@ -88,7 +88,7 @@ architecture — but you're the only reader checking it against product intent. 
   requirement ("we'll refresh nightly instead of real-time"). Nightly might be fine — but
   that's your call, made in the open.
 - **The trade-offs section** — every honest RFC lists rejected alternatives. Check the
-  rejection reasons against product priorities; engineers optimize for elegance and
+  rejection reasons against product priorities. Engineers optimize for elegance and
   operability, which *usually* aligns with users, but not always.
 - **The migration/rollout plan** — how the world moves from old to new
   ([Launches, rollouts & migrations](./launches-rollouts-and-migrations.md)). Missing
@@ -96,8 +96,8 @@ architecture — but you're the only reader checking it against product intent. 
 - **New promises being made** — an RFC that exposes a new API or data contract is creating
   something other teams will depend on, which is product surface, whether or not it has a UI.
 
-Comment with questions, not directives: "what happens to requirement 4's p95 target under
-this design?" moves the conversation; "use Postgres instead" ends it.
+Comment with questions, not directives. "What happens to requirement 4's p95 target under
+this design?" moves the conversation. "Use Postgres instead" ends it.
 
 ## Acceptance criteria for probabilistic features
 
@@ -118,7 +118,7 @@ capstone builds on exactly this section.
 ## Failure modes
 
 - **The write-once PRD** — treated as done when circulated, never updated as reality
-  arrives. A stale spec is worse than none; people follow it.
+  arrives. A stale spec is worse than none. People follow it.
 - **Solutioneering** — specifying implementation in the PRD. You get your design *and*
   full blame when it underperforms — and you taught the engineers not to think.
 - **The unread masterpiece** — twenty pages nobody finishes. If the team can't recall the

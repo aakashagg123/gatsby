@@ -7,9 +7,9 @@
 ## The Problem
 
 You can't tell whether a prompt tweak, model bump, or tool change helped or hurt without a
-*measurement*. A **golden set** is the answer: a fixed list of representative tasks, each
-with a known-good expectation and a scoring function. Run it before and after a change and
-the diff in score tells you the truth — replacing "seems better" with a number.
+*measurement*. A **golden set** is the answer. It's a fixed list of representative tasks, each
+with a known-good expectation and a scoring function. Run it before and after a change, and
+the diff in score tells you the truth. It replaces "seems better" with a number.
 
 ## The Concept
 
@@ -19,8 +19,8 @@ flowchart LR
   R --> S["score vs. expectation"] --> A["aggregate: pass rate"]
 ```
 
-Cases should be representative (cover the real distribution) and stable (a deterministic
-score, or tolerant of acceptable variation).
+Cases should be representative — they cover the real distribution — and stable, meaning a
+deterministic score, or one that tolerates acceptable variation.
 
 ## Build It
 
@@ -44,15 +44,15 @@ score = lambda out, exp: 1.0 if exp.lower() in out.lower() else 0.0
 print(run_golden(cases, harness, score)["pass_rate"])    # 0.5 — measurable
 ```
 
-The pass rate is now a number you can track across changes; a drop points at exactly which
+The pass rate is now a number you can track across changes. A drop points at exactly which
 cases regressed.
 
 ## Use It
 
-For a Claude Code / Codex workflow, a golden set can be a handful of representative tasks in
-your repo ("fix this bug", "add this endpoint") with a check (tests pass, output matches).
-Run it before/after changing `CLAUDE.md`, a skill, or the model. Evals are the discipline
-that turns prompt/harness changes from guesswork into engineering.
+For a Claude Code or Codex workflow, a golden set can be a handful of representative tasks in
+your repo ("fix this bug", "add this endpoint"), each with a check (tests pass, output
+matches). Run it before and after changing `CLAUDE.md`, a skill, or the model. Evals are the
+discipline that turns prompt and harness changes from guesswork into engineering.
 
 ## Ship It
 
@@ -67,7 +67,7 @@ that turns prompt/harness changes from guesswork into engineering.
 - C) remove tests
 - D) nothing
 
-<details><summary>Answer</summary>B — measurement, not vibes.</details>
+<details><summary>Answer</summary>B — a measurement, not a guess.</details>
 
 **Q2.** Good golden cases are…
 
@@ -76,7 +76,7 @@ that turns prompt/harness changes from guesswork into engineering.
 - C) all edge cases only
 - D) as few as possible
 
-<details><summary>Answer</summary>B — representative + stable.</details>
+<details><summary>Answer</summary>B — representative and stable.</details>
 
 **Challenge.** Add per-case tags (e.g. "math", "retrieval") and report pass rate per tag, so
 a regression localizes to a category.

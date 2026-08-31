@@ -316,9 +316,9 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   <h2>TL;DR</h2>
 <p>Prioritization is the job reduced to one sentence: <strong>you have 10x more good ideas than
 capacity, and the order you build them in is the strategy</strong>. Frameworks — RICE, ICE, cost
-of delay, Kano — don't make the decision for you; they make your <em>reasoning legible</em> so it
+of delay, Kano — don't make the decision for you. They make your <em>reasoning legible</em>, so it
 can be challenged and improved. The roadmap that comes out the other side is a
-<strong>communication of bets and their sequence</strong>, not a delivery contract — which is why
+<strong>communication of bets and their sequence</strong>, not a delivery contract. That's why
 <em>now / next / later</em> beats a Gantt chart for most audiences. And because every "yes" is a
 hundred implicit "no"s, saying no — clearly, with the reasoning attached — is the most
 valuable sentence a PM produces.</p>
@@ -342,7 +342,7 @@ late — while the boring fix that users actually begged for waits another quart
 <li><strong>RICE</strong> — score = (Reach × Impact × Confidence) / Effort. Its real value is the
   <strong>Confidence</strong> term: it forces you to admit which numbers are guesses. A 10/10 impact at
   20% confidence should lose to a 6/10 at 90%.</li>
-<li><strong>ICE</strong> (Impact, Confidence, Ease) — RICE's quick cousin; fine for triaging a long list
+<li><strong>ICE</strong> (Impact, Confidence, Ease) — RICE's quick cousin. Fine for triaging a long list
   in an hour, too coarse for the final call on big bets.</li>
 <li><strong>Cost of delay / WSJF</strong> — asks "what does <em>waiting</em> cost per month?" instead of "what
   is this worth?" This flips priorities when timing matters: a medium-value item ahead of
@@ -355,7 +355,7 @@ late — while the boring fix that users actually begged for waits another quart
   top ten for uncovered basics before celebrating the delighters.</li>
 </ul>
 <p>All of them share failure math: garbage estimates in, confident-looking garbage out. The
-discipline isn't the arithmetic — it's writing your assumptions down where someone can
+discipline isn't the arithmetic. It's writing your assumptions down where someone can
 tell you they're wrong.</p>
 <pre class="mermaid">quadrantChart
     title Value vs. effort — where the roadmap fights happen
@@ -371,29 +371,29 @@ tell you they're wrong.</p>
     &quot;New onboarding flow&quot;: [0.55, 0.6]
     &quot;Admin CSV export&quot;: [0.25, 0.3]
     &quot;Rewrite settings page&quot;: [0.8, 0.25]</pre>
-<p>Note the summarizer appearing twice: a feasibility spike doesn't just reduce risk, it
-<em>moves the dot</em> — effort estimates tighten dramatically once someone has actually tried
+<p>Note the summarizer appearing twice. A feasibility spike doesn't just reduce risk — it
+<em>moves the dot</em>. Effort estimates tighten dramatically once someone has actually tried
 it. Cheap discovery work exists to reposition expensive bets before you commit.</p>
 <h2>Roadmaps are bets, not promises</h2>
 <p>A roadmap does two jobs at once — aligning stakeholders and guiding the team — and the
 classic mistake is using one artifact for both:</p>
 <ul>
 <li><strong>Now / next / later</strong> — the default for most audiences. <em>Now</em> is committed and
-  specific; <em>next</em> is planned but re-orderable; <em>later</em> is directional. The buckets encode
+  specific. <em>Next</em> is planned but re-orderable. <em>Later</em> is directional. The buckets encode
   honesty about certainty, which date-based roadmaps destroy: paint a feature on Q3 and by
   Friday it's a commitment someone sold to a customer.</li>
 <li><strong>Outcome-based roadmaps</strong> — organize by the problem or metric ("cut onboarding
   drop-off by 30%") rather than the feature. Harder to write, but they preserve the
   team's freedom to change <em>solution</em> without appearing to change <em>plan</em>.</li>
 <li><strong>Date-based roadmaps</strong> — legitimate when dates are real: compliance deadlines,
-  contractual commitments, coordinated launches. Use dates where dates exist; don't
+  contractual commitments, coordinated launches. Use dates where dates exist. Don't
   invent them for decoration.</li>
 </ul>
 <p>Whatever the format, reserve explicit capacity <strong>before</strong> feature prioritization begins:
 a platform/debt allocation (teams commonly hold 15–30% — see
 <a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt</a>) and, on AI products,
 an eval/data line item. Debt never wins a head-to-head RICE contest against a shiny
-feature; that's precisely why it gets a reserved lane instead of a lottery ticket.</p>
+feature. That's precisely why it gets a reserved lane instead of a lottery ticket.</p>
 <h2>Saying no</h2>
 <p>Every framework ends at the same human moment: telling someone their thing didn't make
 the cut. The craft:</p>

@@ -314,13 +314,13 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Specs, PRDs &amp; RFCs</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Writing is the PM's power tool, and the documents form a stack: <strong>vision</strong> (why we exist)
+<p>Writing is the PM's power tool. The documents form a stack: <strong>vision</strong> (why we exist)
 → <strong>strategy</strong> (where we'll win) → <strong>roadmap</strong> (what, in what order) → <strong>PRD</strong> (what
 exactly, for one initiative) → <strong>RFC / design doc</strong> (how, written by engineering) →
 <strong>tickets</strong> (the work itself). Each layer answers questions the layer below shouldn't have
-to re-litigate. The PRD is yours: a good one nails the <em>problem</em>, <em>goals and non-goals</em>,
+to re-litigate. The PRD is yours. A good one nails the <em>problem</em>, <em>goals and non-goals</em>,
 <em>requirements with acceptance criteria</em>, <em>non-functional requirements</em>, and <em>how we'll
-measure success</em> — and stays silent on implementation. The RFC is engineering's: your job
+measure success</em> — and stays silent on implementation. The RFC is engineering's. Your job
 there is to be its sharpest <em>reader</em>, checking the design against the product intent it
 claims to serve.</p>
 <blockquote class="pm-callout">
@@ -362,7 +362,7 @@ and change the PRD, not get silently absorbed.</p>
   "V1 does not support bulk import" kills a hundred Slack threads in advance.</li>
 <li><strong>Requirements with acceptance criteria</strong> — each requirement testable: <em>given</em> a
   context, <em>when</em> the user acts, <em>then</em> this observable result. "The search should be
-  fast" is an opinion; "search returns first results within 500 ms at p95" is a
+  fast" is an opinion. "Search returns first results within 500 ms at p95" is a
   requirement.</li>
 <li><strong>Non-functional requirements (NFRs)</strong> — the ones that get forgotten until they're
   emergencies: latency and availability targets, scale assumptions, privacy and data
@@ -372,12 +372,12 @@ and change the PRD, not get silently absorbed.</p>
   If the PRD only describes the happy path, the engineers design the unhappy ones alone.</li>
 <li><strong>Success metrics</strong> — the numbers that will move if this works, and when you'll check
   (<a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a>).</li>
-<li><strong>Open questions</strong> — an explicit list. Pretending certainty you don't have costs trust;
-  a visible open-questions section <em>builds</em> it.</li>
+<li><strong>Open questions</strong> — an explicit list. Pretending certainty you don't have costs trust.
+  A visible open-questions section <em>builds</em> it.</li>
 </ul>
 <p>What a PRD should <em>not</em> contain: database schemas, API designs, technology choices, or a
-solution disguised as a requirement ("build a Redis cache" is a design; "repeat visits
-must load in under a second" is the requirement behind it).</p>
+solution disguised as a requirement. ("Build a Redis cache" is a design. "Repeat visits
+must load in under a second" is the requirement behind it.)</p>
 <h2>Reading an RFC like a PM</h2>
 <p>The RFC (design doc) is where engineering proposes <em>how</em>. You won't judge the
 architecture — but you're the only reader checking it against product intent. Read for:</p>
@@ -386,7 +386,7 @@ architecture — but you're the only reader checking it against product intent. 
   requirement ("we'll refresh nightly instead of real-time"). Nightly might be fine — but
   that's your call, made in the open.</li>
 <li><strong>The trade-offs section</strong> — every honest RFC lists rejected alternatives. Check the
-  rejection reasons against product priorities; engineers optimize for elegance and
+  rejection reasons against product priorities. Engineers optimize for elegance and
   operability, which <em>usually</em> aligns with users, but not always.</li>
 <li><strong>The migration/rollout plan</strong> — how the world moves from old to new
   (<a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a>). Missing
@@ -394,8 +394,8 @@ architecture — but you're the only reader checking it against product intent. 
 <li><strong>New promises being made</strong> — an RFC that exposes a new API or data contract is creating
   something other teams will depend on, which is product surface, whether or not it has a UI.</li>
 </ul>
-<p>Comment with questions, not directives: "what happens to requirement 4's p95 target under
-this design?" moves the conversation; "use Postgres instead" ends it.</p>
+<p>Comment with questions, not directives. "What happens to requirement 4's p95 target under
+this design?" moves the conversation. "Use Postgres instead" ends it.</p>
 <h2>Acceptance criteria for probabilistic features</h2>
 <p>The AI-specific craft deserves its own pattern. You can't write "the summary is always
 accurate." You <em>can</em> write:</p>
@@ -413,7 +413,7 @@ capstone builds on exactly this section.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>The write-once PRD</strong> — treated as done when circulated, never updated as reality
-  arrives. A stale spec is worse than none; people follow it.</li>
+  arrives. A stale spec is worse than none. People follow it.</li>
 <li><strong>Solutioneering</strong> — specifying implementation in the PRD. You get your design <em>and</em>
   full blame when it underperforms — and you taught the engineers not to think.</li>
 <li><strong>The unread masterpiece</strong> — twenty pages nobody finishes. If the team can't recall the

@@ -4,18 +4,20 @@
 
 ## TL;DR
 
-Three ways to make inference faster or cheaper, with very different risk profiles.
-**Speculative decoding** speeds up [decode](./prefill-vs-decode.md) with *zero quality
-change* (the output distribution is provably preserved) but needs extra memory and
-helps only when a small draft model agrees often. **Quantization** shrinks the model
-to use less memory/bandwidth — cheaper and faster, with a *bounded, measurable*
-quality risk. **Distillation** trains a genuinely smaller model — the biggest
-speed/cost win, but the largest and least reversible quality risk, plus real training
-cost. Pick by which resource you're short on and how much quality risk you can carry.
+Three ways to make inference faster or cheaper, with very different risk
+profiles. **Speculative decoding** speeds up [decode](./prefill-vs-decode.md)
+with *zero quality change* — the output distribution is provably preserved.
+But it needs extra memory, and it helps only when a small draft model agrees
+often. **Quantization** shrinks the model to use less memory and bandwidth,
+which is cheaper and faster, with a *bounded, measurable* quality risk.
+**Distillation** trains a genuinely smaller model. It's the biggest
+speed/cost win, but it carries the largest and least reversible quality
+risk, plus real training cost. Pick by which resource you're short on and
+how much quality risk you can carry.
 
 > 🎯 **For the AI-native PM**
 >
-> **Why it matters** — These are the three knobs for "make it cheaper and faster," and each carries a *different* quality risk. Pick the wrong one and it shows up as a silent quality regression your users feel.
+> **Why it matters** — These are the three knobs for "make it cheaper and faster," and each carries a *different* quality risk. Pick the wrong one, and it shows up as a silent quality regression your users feel.
 >
 > **What it changes in your decisions** — Your cost-reduction roadmap, how much quality risk you'll accept, and the eval gates you require before rollout.
 >
@@ -27,43 +29,51 @@ cost. Pick by which resource you're short on and how much quality risk you can c
 ## The three techniques
 
 ### Speculative decoding — *free speed, same answer*
-A small, fast **draft** model proposes the next *k* tokens; the large **target** model
-verifies all *k* in a single forward pass (parallel verification is cheap because the
-target is bandwidth-bound, not compute-bound). Accepted tokens are kept; on the first
-rejection it falls back to the target's own token. Because verification uses the
-target's true probabilities, **the output distribution is identical** to plain decode.
+A small, fast **draft** model proposes the next *k* tokens. The large
+**target** model verifies all *k* in a single forward pass — parallel
+verification is cheap because the target is bandwidth-bound, not
+compute-bound. The server keeps accepted tokens; on the first rejection, it
+falls back to the target's own token. Because verification uses the
+target's true probabilities, **the output distribution is identical** to
+plain decode.
 
-- **Wins:** lower TPOT / inter-token latency; can be 1.5–3× faster on agreeable
-  workloads.
-- **Costs:** extra GPU memory for the draft model; benefit depends entirely on the
-  **acceptance rate** — if the draft rarely agrees, you pay overhead for little gain.
-- **Scope:** decode only. Does nothing for prefill-dominated (long-prompt) latency.
-- **Variants:** separate draft model, Medusa-style extra heads, n-gram/lookahead, EAGLE.
+- **Wins:** lower TPOT / inter-token latency. It can be 1.5–3× faster on
+  agreeable workloads.
+- **Costs:** extra GPU memory for the draft model. The benefit depends
+  entirely on the **acceptance rate** — if the draft rarely agrees, you pay
+  overhead for little gain.
+- **Scope:** decode only. It does nothing for prefill-dominated (long-prompt)
+  latency.
+- **Variants:** separate draft model, Medusa-style extra heads, n-gram or
+  lookahead decoding, EAGLE.
 
 ### Quantization — *smaller model, bounded quality risk*
-Store (and sometimes compute) weights/activations in fewer bits — FP16 → INT8 / FP8 /
-INT4. Less data to move directly helps the bandwidth-bound decode phase and frees
-[KV/memory headroom](./kv-cache-management.md) for bigger batches.
+Store, and sometimes compute, weights and activations in fewer bits — FP16
+to INT8, FP8, or INT4. Moving less data directly helps the bandwidth-bound
+decode phase and frees [KV/memory headroom](./kv-cache-management.md) for
+bigger batches.
 
 - **Wins:** lower memory footprint, lower $/token, often lower latency, more
   concurrency.
-- **Costs:** quality degradation that grows as bits shrink and varies by method and
-  by what you quantize (weights vs. activations vs. KV). 8-bit is usually near-lossless;
-  4-bit needs care; below that, quality often falls off a cliff.
-- **Reversibility:** high — it's a post-training transform you can dial back.
+- **Costs:** quality degradation that grows as bits shrink, and that varies
+  by method and by what you quantize — weights, activations, or KV. 8-bit is
+  usually near-lossless. 4-bit needs care. Below that, quality often falls
+  off a cliff.
+- **Reversibility:** high. It's a post-training transform you can dial back.
 - Full detail and method comparison: [Quantization formats](./quantization-formats.md).
 
 ### Distillation — *a new, smaller model*
-Train a small **student** to imitate a large **teacher** (matching its outputs or
-output distributions). The result is a permanently smaller, cheaper, faster model
-specialized to your task distribution.
+Train a small **student** to imitate a large **teacher**, matching its
+outputs or output distributions. The result is a permanently smaller,
+cheaper, faster model specialized to your task distribution.
 
-- **Wins:** the largest steady-state speed/cost reduction; great for a narrow,
-  high-volume task.
-- **Costs:** upfront training effort and data; quality ceiling is lower and depends on
-  the teacher and data; **generality is lost** — the student is good at what it was
-  distilled for and can be brittle off-distribution.
-- **Reversibility:** low — you've trained an artifact and built a pipeline around it.
+- **Wins:** the largest steady-state speed/cost reduction. It's great for a
+  narrow, high-volume task.
+- **Costs:** upfront training effort and data. The quality ceiling is lower
+  and depends on the teacher and data. **Generality is lost** — the student
+  is good at what it was distilled for and can be brittle off-distribution.
+- **Reversibility:** low. You've trained an artifact and built a pipeline
+  around it.
 
 ## Choosing between them
 
@@ -76,29 +86,36 @@ specialized to your task distribution.
 | Helps prefill? | No | Yes (less data/faster math) | Yes (smaller model) |
 | Best when | Latency-bound, draft agrees | Memory/cost-bound | One high-volume task, willing to train |
 
-They are **composable**: a common production stack is a *quantized* model served with
-*speculative decoding*, and for a hot narrow task a *distilled* student that is itself
-quantized. They attack different resources, so stacking compounds the wins.
+They are **composable**: a common production stack is a *quantized* model
+served with *speculative decoding*, and for a hot narrow task, a *distilled*
+student that is itself quantized. They attack different resources, so
+stacking compounds the wins.
 
 ## Decision guide
 
-1. **Latency-bound, output-heavy, can't touch quality?** → Speculative decoding first.
-2. **Memory/cost-bound, can tolerate a small, measured quality dip?** → Quantization
-   (start at INT8/FP8, validate, only go to INT4 if evals hold).
-3. **One narrow, very high-volume task where a big model is overkill?** → Distillation,
-   then quantize the student.
-4. **Always:** gate every one of these behind your [eval suite](../04-evals-observability/evals.md).
-   Speculative decoding shouldn't move evals at all (red flag if it does); quantization
-   and distillation *will* — you must measure by how much.
+1. **Latency-bound, output-heavy, can't touch quality?** Reach for
+   speculative decoding first.
+2. **Memory/cost-bound, and can tolerate a small, measured quality dip?**
+   Use quantization — start at INT8/FP8, validate, and only go to INT4 if
+   evals hold.
+3. **One narrow, very high-volume task where a big model is overkill?** Use
+   distillation, then quantize the student.
+4. **Always:** gate every one of these behind your
+   [eval suite](../04-evals-observability/evals.md). Speculative decoding
+   shouldn't move evals at all — that's a red flag if it does. Quantization
+   and distillation *will* move evals, so you must measure by how much.
 
 ## Failure modes
 
-- **Speculative decoding with a bad draft** — low acceptance rate makes it net-neutral
-  or slower; measure acceptance rate, not just "it's enabled."
-- **Quantizing past the cliff** — INT4 on a task with tight numeric/format demands
-  silently degrades; caught only by [evals](../04-evals-observability/evals.md), not eyeballing.
-- **Distilling on the wrong distribution** — student looks great offline, fails on the
-  long tail of real traffic it wasn't distilled for.
+- **Speculative decoding with a bad draft** — a low acceptance rate makes
+  it net-neutral or slower. Measure acceptance rate, not just "it's
+  enabled."
+- **Quantizing past the cliff** — INT4 on a task with tight numeric or
+  format demands silently degrades. Only [evals](../04-evals-observability/evals.md)
+  catch this, not eyeballing.
+- **Distilling on the wrong distribution** — the student looks great
+  offline but fails on the long tail of real traffic it wasn't distilled
+  for.
 
 ## Practitioner checklist
 

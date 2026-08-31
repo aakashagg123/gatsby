@@ -7,8 +7,8 @@
 ## The Problem
 
 If the model is a black box, every later debugging session is guesswork. Before you lean
-on the SDK, make one call with nothing but `urllib` so you can see exactly what goes over
-the wire: the URL, the headers (including the API key and version), and the JSON body.
+on the SDK, make one call with nothing but `urllib`. Watch exactly what goes over the
+wire: the URL, the headers (including the API key and version), and the JSON body.
 Then the SDK holds no mysteries.
 
 ## The Concept
@@ -24,7 +24,7 @@ POST https://api.anthropic.com/v1/messages
   { "model": "...", "max_tokens": N, "messages": [ {role, content} ] }
 ```
 
-The response JSON has a `content` array of blocks; for plain text you read
+The response JSON has a `content` array of blocks. For plain text, read
 `content[0].text`.
 
 ## Build It

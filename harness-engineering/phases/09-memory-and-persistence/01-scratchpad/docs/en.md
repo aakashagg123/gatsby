@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Within a single task the agent accumulates facts it needs to remember: the file it's
-editing, a value it computed, a decision it made. Re-deriving these every turn wastes tokens
-and invites drift. A **scratchpad** is a small key/value store the harness keeps for the
-session — the agent writes notes, reads them back, and they survive across turns without
-bloating the conversation.
+Within a single task, the agent accumulates facts it needs to remember: the file it's
+editing, a value it computed, a decision it made. Re-deriving these every turn wastes
+tokens and invites drift. A **scratchpad** fixes this. It's a small key/value store the
+harness keeps for the session. The agent writes notes and reads them back, and they
+survive across turns without bloating the conversation.
 
 ## The Concept
 
@@ -21,8 +21,8 @@ flowchart LR
   S --> R["scratchpad.get(key) next turn"]
 ```
 
-The scratchpad is *structured* state (distinct from the message history): durable for the
-session, queryable by key, and cheap to keep out of the context until needed.
+The scratchpad is *structured* state, distinct from the message history. It's durable for
+the session, queryable by key, and cheap to keep out of the context until needed.
 
 ## Build It
 
@@ -52,15 +52,15 @@ print(sp.get("editing"))      # api/routes.py
 print(sp.summary())
 ```
 
-Expose `set`/`get` as tools and the agent manages its own working memory; `summary()` can be
-injected into context when the agent needs a refresher.
+Expose `set`/`get` as tools and the agent manages its own working memory. `summary()` can
+be injected into context when the agent needs a refresher.
 
 ## Use It
 
 In Claude Code / Codex this maps to the **todo/plan list** the agent maintains (Phase 11)
-and to scratch notes it keeps in the working directory (e.g. a `NOTES.md` or the per-task
-`checkpoint.md` from Phase 10). The principle: durable working state lives in the harness, not
-in the model's head — so it survives turns and compaction.
+and to scratch notes it keeps in the working directory — a `NOTES.md`, say, or the per-task
+`checkpoint.md` from Phase 10. The principle: durable working state lives in the harness,
+not in the model's head, so it survives turns and compaction.
 
 ## Ship It
 
@@ -87,8 +87,8 @@ in the model's head — so it survives turns and compaction.
 
 <details><summary>Answer</summary>B — structured, not a transcript.</details>
 
-**Challenge.** Add a `tools`-exposed `note(key, value)` and have the loop inject
-`summary()` only when the scratchpad changed since last turn.
+**Challenge.** Add a `tools`-exposed `note(key, value)`. Have the loop inject `summary()`
+only when the scratchpad changed since the last turn.
 
 ## Related
 

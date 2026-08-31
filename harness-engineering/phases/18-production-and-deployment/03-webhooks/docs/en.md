@@ -6,10 +6,10 @@
 
 ## The Problem
 
-A production agent isn't only invoked by a human typing; it reacts to **events**: a PR
+A production agent isn't only invoked by a human typing. It also reacts to **events**: a PR
 comment, a failing CI run, a new issue, a merge. An event-driven harness receives webhooks,
-authenticates them, routes each event type to a handler, and acts — turning the agent into a
-service that responds to your systems. The risk: untrusted event payloads (Phase 17), so
+authenticates them, routes each event type to a handler, and acts. This turns the agent into
+a service that responds to your systems. The risk is untrusted event payloads (Phase 17), so
 treat their content as data.
 
 ## The Concept
@@ -54,17 +54,17 @@ print(router.dispatch({"type": "ci_failure", "run": "build #42"}))
 print(router.dispatch({"type": "push"}))     # ignored
 ```
 
-The router maps event types to handlers; unknown events are ignored (not errored). In
-production you'd verify the webhook signature before dispatch and treat every payload field as
+The router maps event types to handlers. Unknown events are ignored, not errored. In
+production, verify the webhook signature before dispatch and treat every payload field as
 untrusted input.
 
 ## Use It
 
-This is how agents "watch" a PR or repo — the same pattern behind the PR-activity events a
-Claude Code session can subscribe to (CI results, review comments arrive as events and wake
-the agent). For your own deployment, a webhook endpoint + this router turns the harness into a
-service. Always: verify signatures, treat payloads as data, and gate any action the handler
-takes (Phase 8).
+This is how agents "watch" a PR or repo. It's the same pattern behind the PR-activity events
+a Claude Code session can subscribe to: CI results and review comments arrive as events and
+wake the agent. For your own deployment, a webhook endpoint plus this router turns the
+harness into a service. Always verify signatures, treat payloads as data, and gate any action
+the handler takes (Phase 8).
 
 ## Ship It
 

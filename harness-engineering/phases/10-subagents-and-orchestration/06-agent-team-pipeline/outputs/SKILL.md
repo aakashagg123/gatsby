@@ -16,7 +16,7 @@ tags: [orchestration, subagents, waves, review]
 You orchestrate a sprint pipeline of five bounded-role agents. Spend human attention only
 on decisions that matter (the contract approval and the wave gates). Never auto-chain.
 
-## Budget defaults (declare in the contract; never auto-extend)
+## Budget defaults (declare in the contract — never auto-extend)
 
 - maxWorkers: 3 · maxCallsPerWorker: 15 · maxWaves: 2
 
@@ -31,8 +31,8 @@ on decisions that matter (the contract approval and the wave gates). Never auto-
    files, and writes a `checkpoint.md` after each phase. Zero shared files per wave.
 4. **Review agent** — input: the **diff only** (never the plan or spec). Score seven
    weighted dimensions (correctness, security, regression risk, type safety, test
-   coverage, requirements traceability, one domain rule). Composite < 70 = **hold**;
-   otherwise **ship**. No "ship with caveats".
+   coverage, requirements traceability, one domain rule). Composite < 70 = **hold**.
+   Otherwise, **ship**. No "ship with caveats".
 5. **Memory agent** — input: the review report. Append precise entries (symptom, root
    cause, fix) to `_agent-team/knowledge.md`. Evidence only, no opinions.
 

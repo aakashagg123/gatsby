@@ -8,9 +8,9 @@
 
 With the wire protocol in hand (lesson 01), build a real **server**. MCP servers expose
 three capability types: **tools** (functions the agent calls), **resources** (data the agent
-reads, like files or records), and **prompts** (reusable prompt templates). Implement the
-`tools/list` + `tools/call` (and resource) methods over the dispatcher and you have a server
-any MCP client can use.
+reads, like files or records), and **prompts** (reusable prompt templates). Implement
+`tools/list`, `tools/call`, and the resource methods over the dispatcher. That gives you a
+server any MCP client can use.
 
 ## The Concept
 
@@ -62,15 +62,15 @@ print(srv.handle(request(2, "tools/call", {"name": "add", "arguments": {"a": 2, 
 print(srv.handle(request(3, "resources/read", {"uri": "file://readme"})))
 ```
 
-The server is just the dispatcher plus registries for tools and resources — `tools/list`
-returns schemas, `tools/call` runs the function, `resources/read` returns content.
+The server is just the dispatcher plus registries for tools and resources. `tools/list`
+returns schemas, `tools/call` runs the function, and `resources/read` returns content.
 
 ## Use It
 
-This is what a real MCP server does (the memory server from Phase 9 is one). You add such
-servers to Claude Code via `.mcp.json` / `claude mcp add` and to Codex via its MCP config;
-the agent then sees the server's tools alongside its built-ins. Popular servers expose
-GitHub, databases, browsers, and docs this way.
+This is what a real MCP server does. The memory server from Phase 9 is one example. You add
+such servers to Claude Code with `.mcp.json` or `claude mcp add`, and to Codex through its
+MCP config. The agent then sees the server's tools alongside its built-ins. Popular servers
+expose GitHub, databases, browsers, and docs this way.
 
 ## Ship It
 

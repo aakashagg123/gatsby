@@ -8,9 +8,9 @@
 
 Even with good prompting, model output sometimes fails its contract: malformed JSON (Phase 1
 L7), a missing section (Phase 5 L4), a tool arg that won't validate (Phase 3 L2). Rejecting
-outright is wasteful; the model can usually *repair* if you show it the specific error. A
-repair loop validates, and on failure re-prompts with the error — bounded so it can't loop
-forever.
+the output outright is wasteful. The model can usually *repair* it if you show it the
+specific error. A repair loop validates the output, and on failure re-prompts with the
+error. It stays bounded so it can't loop forever.
 
 ## The Concept
 
@@ -51,17 +51,17 @@ def val(o):
 print(repair_loop(gen, val))     # ok after 2 attempts
 ```
 
-The error string is the repair signal — specific and model-readable, the same
-errors-are-data principle as the agent loop, now bounded by an attempt budget so a
-persistently-broken generator falls through to a fallback.
+The error string is the repair signal. It's specific and model-readable, the same
+errors-are-data principle as the agent loop, but now bounded by an attempt budget. A
+persistently broken generator falls through to a fallback.
 
 ## Use It
 
-This wraps any structured generation in Claude Code / Codex: JSON tool args, a required
-output format, a code patch that must apply. Prefer prevention first (tool-schema output,
-Phase 3 L7) — the repair loop is the safety net when the contract still isn't met. Pair it
-with retries (lesson 01): retries handle *transport* failures, repair handles *content*
-failures.
+This wraps any structured generation in Claude Code and Codex: JSON tool args, a required
+output format, a code patch that must apply. Prefer prevention first, with tool-schema
+output (Phase 3 L7). The repair loop is the safety net for when the contract still isn't
+met. Pair it with retries (lesson 01): retries handle *transport* failures, and repair
+handles *content* failures.
 
 ## Ship It
 

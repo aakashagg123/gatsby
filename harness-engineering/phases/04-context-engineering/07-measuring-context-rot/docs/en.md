@@ -6,15 +6,15 @@
 
 ## The Problem
 
-As the window fills, answer quality drops — the model misses a fact buried among thousands
+As the window fills, answer quality drops. The model misses a fact buried among thousands
 of tokens, or anchors on stale content. This "context rot" is why budgeting, truncation,
 and compaction matter. But which strategy actually helps? You can't tell without a metric.
 This lesson builds a tiny eval that *measures* retrieval-from-context as the window grows.
 
 ## The Concept
 
-A **needle-in-a-haystack** test: hide a known fact (the needle) in filler (the haystack)
-at varying depths and sizes, ask the model to recall it, and score accuracy.
+A **needle-in-a-haystack** test hides a known fact (the needle) in filler (the haystack)
+at varying depths and sizes. It then asks the model to recall the fact and scores accuracy.
 
 ```mermaid
 flowchart LR
@@ -66,10 +66,10 @@ metric Phase 15 formalizes for the whole harness.
 
 ## Use It
 
-This is the metric behind the advice you already follow in **Claude Code / Codex**: keep
-context lean, `/clear` between tasks, and don't paste enormous files. When you change how
-your harness assembles context, re-run a grid like this to prove the change helped instead
-of guessing.
+This is the metric behind the advice you already follow in **Claude Code / Codex**.
+Keep context lean, run `/clear` between tasks, and don't paste enormous files. When you
+change how your harness assembles context, re-run a grid like this to prove the change
+helped instead of guessing.
 
 ## Ship It
 

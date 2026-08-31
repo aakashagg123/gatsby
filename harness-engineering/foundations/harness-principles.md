@@ -4,12 +4,12 @@
 
 ## TL;DR
 
-A harness is the system that orchestrates agents so that **human attention is spent
+A harness is the system that orchestrates agents. Its job is to spend **human attention
 only on decisions that matter — and never twice on the same class of problem**. Ten
-principles form its skeleton. Each encodes a lesson that, if skipped, resurfaces as a
-runtime failure: wasted tokens, corrupted state, or an agent confidently doing the
-wrong thing. The fix is almost never "try harder" or "write a longer prompt" — it's to
-add the missing *structural* capability to the repo.
+principles form its skeleton. Each principle encodes a lesson. Skip it, and the lesson
+resurfaces as a runtime failure: wasted tokens, corrupted state, or an agent confidently
+doing the wrong thing. The fix is almost never "try harder" or "write a longer prompt."
+It's to add the missing *structural* capability to the repo.
 
 > 🎯 **For the AI-native PM**
 >
@@ -32,12 +32,12 @@ add the missing *structural* capability to the repo.
 | --- | --- | --- |
 | 01 | **Spec first, always** | Lock the sprint contract — tasks, files in scope, acceptance criteria, budget ceilings — and halt for human approval *before* any worker fires. Everything after is execution against a known target. |
 | 02 | **Bounded roles, bounded context** | Each agent sees only what its role needs. The reviewer sees the diff, never the plan — context leakage turns review into rationalisation. Enforce via an explicit read allowlist in prompt construction, not agent self-restraint. |
-| 03 | **Declare the budget upfront** | Every run declares `maxWorkers`, `maxCallsPerWorker`, `maxWaves` before dispatch. Human attention is the scarce resource; budget it like compute. On a hit, stop and report — never auto-extend. |
+| 03 | **Declare the budget upfront** | Every run declares `maxWorkers`, `maxCallsPerWorker`, `maxWaves` before dispatch. Human attention is the scarce resource. Budget it like compute. On a hit, stop and report — never auto-extend. |
 | 04 | **Hard stops between waves** | After each parallel wave the orchestrator emits a one-line summary and halts. The next wave needs an explicit human "continue." Each break is a real decision: proceed, pivot, or stop. |
-| 05 | **Independent adversarial review** | The reviewer gets only the diff. Score across seven named, weighted dimensions; a composite below **70** blocks the wave. Two verdicts only: **ship** or **hold** — no "ship with caveats." |
-| 06 | **File isolation per worker** | Each worker runs in its own git worktree; zero shared files per wave, enforced by the dependency graph. Shared files between parallel workers cause merge conflicts and silent overwrites — the worst harness failure. |
+| 05 | **Independent adversarial review** | The reviewer gets only the diff. Score across seven named, weighted dimensions. A composite below **70** blocks the wave. Two verdicts only: **ship** or **hold** — no "ship with caveats." |
+| 06 | **File isolation per worker** | Each worker runs in its own git worktree. Zero shared files per wave, enforced by the dependency graph. Shared files between parallel workers cause merge conflicts and silent overwrites — the worst harness failure. |
 | 07 | **Persistent cross-sprint memory** | `knowledge.md` is the append-only system of record — evidence only, no opinions. Each entry: symptom, root cause, fix. A short `AGENTS.md` (~100 lines) is a table of contents, not an encyclopedia. |
-| 08 | **Patch the harness, not the prompt** | When an agent repeats a class of mistake, encode the fix once as a lint rule, pattern file, or contract test — then delete the matching prose from the prompt. The rule is now the authority. |
+| 08 | **Patch the harness, not the prompt** | When an agent repeats a class of mistake, encode the fix once — as a lint rule, a pattern file, or a contract test. Then delete the matching prose from the prompt. The rule is now the authority. |
 | 09 | **Right-size before dispatching** | The harness has real overhead (≥5 orchestration turns before any code). Apply the **45-minute test**: would parallelising save more than 45 minutes of sequential work? If not, implement directly. |
 | 10 | **Checkpoint everything** | Workers write progressive `checkpoint.md` files — phase done, what changed, next step. An interrupted run resumes from the last checkpoint, not from zero. |
 

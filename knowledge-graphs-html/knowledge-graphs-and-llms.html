@@ -315,46 +315,45 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>Knowledge graphs and language models fix each other's defining weaknesses, in both
-directions. <strong>Graph → LLM:</strong> a model's knowledge is latent, frozen, and unattributable —
-it will state your customer count fluently and wrongly; a graph supplies explicit,
-current, <em>citable</em> facts to ground generation, via GraphRAG (retrieve subgraphs, not
-just text chunks), text-to-query (the model translates a natural-language question into
-Cypher/SPARQL and the <em>database</em> answers), and graph-shaped
-<a href="../agentic-ai/context-and-memory.html">memory for agents</a>. <strong>LLM → graph:</strong> construction
-was always the bottleneck, and extraction — reading contracts and tickets and drafting
-entities, relationships, and mappings — is exactly the labor LLMs made an order of
-magnitude cheaper. The circle closes into a flywheel: the model helps build the graph;
-the graph keeps the model honest. The discipline holding it together: <strong>LLM-drafted
-facts enter the graph only through the
-<a href="building-the-graph.html">confidence-and-review pipeline</a></strong> — never straight from
-generation into "truth" — because a hallucinated fact, once stored, launders itself
-into every downstream answer with a straight face.</p>
+directions. <strong>Graph → LLM:</strong> a model's knowledge is latent, frozen, and
+unattributable — it will state your customer count fluently and wrongly. A graph
+supplies explicit, current, <em>citable</em> facts to ground generation, via GraphRAG
+(retrieve subgraphs, not just text chunks), text-to-query (the model translates a
+natural-language question into Cypher/SPARQL and the <em>database</em> answers), and
+graph-shaped <a href="../agentic-ai/context-and-memory.html">memory for agents</a>. <strong>LLM → graph:</strong>
+construction was always the bottleneck, and extraction — reading contracts and tickets
+and drafting entities, relationships, and mappings — is exactly the labor LLMs made an
+order of magnitude cheaper. The circle closes into a flywheel: the model helps build
+the graph; the graph keeps the model honest. The discipline holding it together:
+<strong>LLM-drafted facts enter the graph only through the
+<a href="building-the-graph.html">confidence-and-review pipeline</a></strong>, never straight from
+generation into "truth." A hallucinated fact, once stored, launders itself into every
+downstream answer with a straight face.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — This intersection is why knowledge graphs left the semantic-web
 ghetto and landed on CPO roadmaps. "Our assistant answers from <em>our</em> facts, with
 citations, respecting <em>our</em> permissions" is a product claim vector-only RAG makes
-weakly and a graph makes strongly — and your enterprise buyers can tell the
-difference in the security review.</p>
-<p><strong>What it changes in your decisions</strong> — Grounding stops being a model-quality
-line-item ("reduce hallucinations") and becomes an asset decision: what knowledge do
-we own, how fresh is it, and which answers must be <em>provably</em> sourced? It also
-reprices graph construction: the pre-LLM cost estimates in your old business case are
-stale.</p>
+weakly and a graph makes strongly. Your enterprise buyers can tell the difference in
+the security review.</p>
+<p><strong>What it changes in your decisions</strong> — Grounding stops being a model-quality line
+item ("reduce hallucinations") and becomes an asset decision: what knowledge do we
+own, how fresh is it, and which answers must be <em>provably</em> sourced? It also reprices
+graph construction — the pre-LLM cost estimates in your old business case are stale.</p>
 <p><strong>Ask yourself</strong> — <em>"When our AI feature answers a customer, can it cite the fact,
 the fact's source, and the reason this user was allowed to see it?"</em></p>
-<p><strong>Risk if ignored</strong> — An assistant that hallucinates policy in your brand's voice —
-or the quieter failure: an LLM-built graph whose unreviewed errors surface a year
-later as confidently cited "facts" in front of your biggest account.</p>
+<p><strong>Risk if ignored</strong> — An assistant that hallucinates policy in your brand's voice. Or
+the quieter failure: an LLM-built graph whose unreviewed errors surface a year later
+as confidently cited "facts" in front of your biggest account.</p>
 </blockquote>
 <h2>Direction one: the graph grounds the model</h2>
 <p>Plain <a href="../ai/03-rag.html#rag-architecture">RAG</a> retrieves text chunks that <em>look
-similar</em> to the question. That fails structurally on two question types: <strong>multi-hop</strong>
-("which of our customers are exposed to Supplia's recall?" — no single chunk contains
-the answer, because the answer is a <em>path</em> across systems) and <strong>global</strong> ("what are
-the main themes in this quarter's tickets?" — the answer is a summary over everything,
-not any retrievable passage). Graph-augmented retrieval answers both by retrieving
-<em>structure</em>:</p>
+similar</em> to the question. That fails structurally on two question types. <strong>Multi-hop</strong>
+questions ("which of our customers are exposed to Supplia's recall?") have no
+single-chunk answer, because the answer is a <em>path</em> across systems. <strong>Global</strong>
+questions ("what are the main themes in this quarter's tickets?") need a summary over
+everything, not any one retrievable passage. Graph-augmented retrieval answers both by
+retrieving <em>structure</em>:</p>
 <pre class="mermaid">flowchart TB
   Q[&quot;User question&quot;] --&gt; R{&quot;Retrieval planner&quot;}
   R --&gt;|&quot;similarity is enough&quot;| VEC[&quot;Vector search&lt;br/&gt;relevant text chunks&quot;]
@@ -373,7 +372,7 @@ not any retrievable passage). Graph-augmented retrieval answers both by retrievi
   global-question trick: pre-summarize graph
   <a href="reasoning-and-analytics.html">communities</a> so "themes across the corpus" becomes
   retrievable. The honest caveat: it adds an indexing stage that costs real money and
-  must be <a href="governance-quality-and-trust.html">kept fresh</a> — reach for it when multi-hop
+  must be <a href="governance-quality-and-trust.html">kept fresh</a>. Reach for it when multi-hop
   and global questions are actually on your roadmap, not because the acronym is warm.</li>
 <li><strong>Text-to-query</strong> — the model writes Cypher/SPARQL; the database executes it. The
   numbers come from the <em>store</em>, not the model's imagination — the right pattern for
@@ -386,29 +385,29 @@ not any retrievable passage). Graph-augmented retrieval answers both by retrievi
   applies unchanged — you're just adding a second retriever with different failure
   modes.</li>
 </ul>
-<p>Two properties make this pattern enterprise-grade rather than merely accurate:
-<strong>provenance flows through</strong> (claim → fact → source document — auditable answers), and
-<strong>permissions apply at retrieval</strong> — the graph knows who may see which subgraph, so the
+<p>Two properties make this pattern enterprise-grade rather than merely accurate.
+<strong>Provenance flows through</strong> — claim → fact → source document — for auditable answers.
+<strong>Permissions apply at retrieval</strong> — the graph knows who may see which subgraph, so the
 assistant's knowledge shrinks to the asker's entitlements
 (<a href="../ai/05-safety-multitenancy.html#safety-engineering">the leakage problem</a>, solved
 at the right layer). For agentic products, the same graph serves as
-<a href="../agentic-ai/context-and-memory.html">structured memory</a>: facts an agent learns get
+<a href="../agentic-ai/context-and-memory.html">structured memory</a>. Facts an agent learns get
 written back as triples with provenance — queryable and reviewable — instead of
 accumulating in an unauditable text scratchpad.</p>
 <h2>Direction two: the model builds the graph</h2>
-<p><a href="building-the-graph.html">Construction</a> was always the cost center, and its most
+<p><a href="building-the-graph.html">Construction</a> was always the cost center. Its most
 expensive station — reading unstructured text and drafting structured facts — is now
 LLM work: entity and relationship extraction from contracts and tickets, schema-mapping
 suggestions, even candidate scoring for entity resolution. Teams that shelved
-knowledge-graph plans in 2019 because "we'd need an NLP team" should re-run that math;
-this repricing is a big part of why the field revived.</p>
+knowledge-graph plans in 2019 because "we'd need an NLP team" should re-run that math.
+This repricing is a big part of why the field revived.</p>
 <p>The discipline that keeps it from backfiring:</p>
 <ul>
 <li><strong>Extraction drafts; the pipeline decides.</strong> LLM output enters as <em>candidate</em> facts
-  with confidence and source, flows through the same thresholds and
+  with confidence and source. It flows through the same thresholds and
   <a href="building-the-graph.html">review queues</a> as any extractor's output, and only then
   becomes knowledge. The graph's whole value is being the thing you <em>don't</em> have to
-  second-guess; one unreviewed hallucination path breaks that contract.</li>
+  second-guess — one unreviewed hallucination path breaks that contract.</li>
 <li><strong>The ontology is the leash.</strong> Free-range extraction invents creative relationship
   types faster than any committee can review them. Constrain extraction to the
   ontology's types; route genuinely new patterns to the
@@ -455,24 +454,24 @@ this repricing is a big part of why the field revived.</p>
 </tr>
 </tbody>
 </table>
-<p>The postures stack — most serious deployments end at "hybrid" — and the sequencing
-advice is unglamorous: start with vector RAG, <em>measure</em> where it fails
+<p>The postures stack — most serious deployments end at "hybrid." The sequencing advice
+is unglamorous: start with vector RAG, <em>measure</em> where it fails
 (<a href="../ai/03-rag.html#retrieval-evals">retrieval evals</a>), and let the observed failure
 types — multi-hop, quantitative, global — justify each graph investment in order.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Hallucination laundering</strong> — LLM-extracted facts written straight to the graph;
-  future answers cite them with perfect provenance chains ending in a hallucination.</li>
+<li><strong>Hallucination laundering</strong> — LLM-extracted facts written straight to the graph.
+  Future answers cite them with perfect provenance chains ending in a hallucination.</li>
 <li><strong>GraphRAG as fashion</strong> — the expensive indexing pipeline built for a workload that
   was 95% single-hop document Q&amp;A vectors already handled.</li>
-<li><strong>Ungoverned text-to-query</strong> — generated queries executed raw: wrong answers
-  delivered with database confidence, and a prompt-injection surface into your store
-  (<a href="../ai/05-safety-multitenancy.html#safety-engineering">injection</a> applies to
-  query generation too).</li>
+<li><strong>Ungoverned text-to-query</strong> — generated queries executed raw. Wrong answers get
+  delivered with database confidence, and it opens a prompt-injection surface into
+  your store (<a href="../ai/05-safety-multitenancy.html#safety-engineering">injection</a>
+  applies to query generation too).</li>
 <li><strong>Grounding on a stale graph</strong> — the assistant faithfully cites facts eighteen
-  months old; provenance makes the wrongness <em>look</em> authoritative.</li>
-<li><strong>Two sources of truth</strong> — vector index and graph drift apart until they disagree;
-  answers depend on which retriever won the race.</li>
+  months old. Provenance makes the wrongness <em>look</em> authoritative.</li>
+<li><strong>Two sources of truth</strong> — vector index and graph drift apart until they disagree.
+  Answers depend on which retriever won the race.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

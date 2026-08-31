@@ -7,9 +7,9 @@
 ## The Problem
 
 `write(path, content)` replaces a file wholesale. If the agent writes a file it never read,
-it may destroy content it didn't know was there. The safety rule coding agents use: you may
-only overwrite a file you've **read this session** (so the model saw what it's replacing),
-and new files are fine. This prevents the "agent nuked my config" class of incident.
+it may destroy content it didn't know was there. Coding agents use one safety rule: you may
+only overwrite a file you've **read this session**, so the model saw what it's replacing.
+New files are always fine. This rule prevents the "agent nuked my config" class of incident.
 
 ## The Concept
 
@@ -63,10 +63,9 @@ replace it.
 
 ## Use It
 
-This is the **Write** tool rule in Claude Code / Codex: overwriting an existing file you
-haven't read in the session is blocked; creating a new file is fine. It's why the agent
-Reads before it Writes. For partial changes it prefers Edit (lesson 02) over Write
-entirely.
+This is the **Write** tool rule in Claude Code / Codex. Overwriting an existing file you
+haven't read in the session is blocked. Creating a new file is always fine. This is why the
+agent reads before it writes. For partial changes, it prefers Edit (lesson 02) over Write.
 
 ## Ship It
 

@@ -314,36 +314,36 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Knowledge graphs as a product</h1>
   </div>
   <h2>TL;DR</h2>
-<p>The capstone question is never "should we have a knowledge graph?" — it's "which
-product bets get cheaper, better, or possible if our knowledge were connected, and what
-does that cost end to end?" Run it like any platform investment, with three honest
-numbers: <strong>cost</strong> (dominated by <a href="building-the-graph.html">construction and curation</a>,
-forever — storage is a rounding error), <strong>value</strong> (features shipped on top; the graph
-itself earns nothing), and <strong>compounding</strong> (each new domain makes every previous domain
-more valuable — the property that separates graphs from ordinary data projects, <em>if</em>
-you sequence for it). The playbook that survives contact: start with one killer query
-in one domain, ship a visible feature in a quarter or two, let each win fund the next
-domain, and treat the ontology-plus-curated-graph as the moat — competitors can buy
-your database vendor tomorrow; they can't buy your resolved entities or the
-organizational agreement encoded in your ontology. And hold the honest exit: if the
-questions are single-hop, the domain fits one system, or nobody owns curation, the
-right call is <em>no</em> — written down, with the trigger that would reopen it.</p>
+<p>The capstone question is never "should we have a knowledge graph?" It's "which product
+bets get cheaper, better, or possible if our knowledge were connected, and what does
+that cost end to end?" Run it like any platform investment, with three honest numbers.
+<strong>Cost</strong> is dominated by <a href="building-the-graph.html">construction and curation</a>, forever —
+storage is a rounding error. <strong>Value</strong> comes only from features shipped on top; the
+graph itself earns nothing. <strong>Compounding</strong> means each new domain makes every previous
+domain more valuable. That's the property that separates graphs from ordinary data
+projects, <em>if</em> you sequence for it. The playbook that survives contact: start with one
+killer query in one domain, ship a visible feature in a quarter or two, and let each
+win fund the next domain. Treat the ontology-plus-curated-graph as the moat —
+competitors can buy your database vendor tomorrow, but they can't buy your resolved
+entities or the organizational agreement encoded in your ontology. Hold the honest exit
+too: if the questions are single-hop, the domain fits one system, or nobody owns
+curation, the right call is <em>no</em> — written down, with the trigger that would reopen it.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — This is the lesson where the other seven become a budget line
 and a roadmap. Knowledge graphs fail at the portfolio level far more often than the
-technical level: funded as infrastructure with no feature attached, or starved as a
-side quest when the compounding needed patience.</p>
+technical level. They get funded as infrastructure with no feature attached, or
+starved as a side quest when the compounding needed patience.</p>
 <p><strong>What it changes in your decisions</strong> — The graph never appears on your roadmap as
 itself; only features do, each carrying its slice of graph cost. Sequencing changes
-too: domain order is chosen for <em>adjacency</em> (shared entities with the last domain),
+too. Domain order is chosen for <em>adjacency</em> — shared entities with the last domain —
 not for whichever VP shouted loudest.</p>
 <p><strong>Ask yourself</strong> — <em>"What's the first feature, in which quarter, that a user will
 notice — and does each next domain reuse entities the graph already resolved?"</em></p>
-<p><strong>Risk if ignored</strong> — The two canonical deaths: the <em>platform mirage</em> (two years of
-foundation-building, zero shipped features, budget yanked at the first CFO review)
-and the <em>pilot orphan</em> (a great demo nobody funded to steady state, decaying into
-the <a href="governance-quality-and-trust.html">quiet death</a>).</p>
+<p><strong>Risk if ignored</strong> — The two canonical deaths: the <em>platform mirage</em> — two years of
+foundation-building, zero shipped features, budget yanked at the first CFO review —
+and the <em>pilot orphan</em>: a great demo nobody funded to steady state, decaying into the
+<a href="governance-quality-and-trust.html">quiet death</a>.</p>
 </blockquote>
 <h2>The business case, in three honest numbers</h2>
 <p><strong>Cost — construction dominates, forever.</strong> The end-to-end shape:
@@ -351,19 +351,19 @@ the <a href="governance-quality-and-trust.html">quiet death</a>).</p>
 tuning, <em>permanent</em> curation staffing, <a href="ontologies-and-data-modeling.html">ontology</a>
 stewardship, plus the smallest line — <a href="storage-and-querying.html">storage and compute</a>.
 LLMs <a href="knowledge-graphs-and-llms.html">repriced extraction</a> meaningfully, but they moved
-the construction share of budget from perhaps 80% to 60-70%; the steady-state curation
-tail they reduce only somewhat, since LLM-drafted facts <em>increase</em> review volume. Any
-business case whose cost model is mostly database licensing was written by the database
-vendor.</p>
+the construction share of budget from perhaps 80% to 60-70%. They reduce the
+steady-state curation tail only somewhat, since LLM-drafted facts <em>increase</em> review
+volume. Any business case whose cost model is mostly database licensing was written by
+the database vendor.</p>
 <p><strong>Value — features, attributed honestly.</strong> The graph monetizes only through what ships
 on top: the fraud feature's loss reduction, the assistant's deflection rate, the
 360-view's expansion revenue, the risk dashboard's audit pass. Attribute each feature's
 graph-share the same way you'd
-<a href="../ai/04-evals-observability.html#cost-attribution">attribute model cost per feature</a> —
-without that discipline, the graph is unfundable at every budget review and
+<a href="../ai/04-evals-observability.html#cost-attribution">attribute model cost per feature</a>.
+Without that discipline, the graph is unfundable at every budget review and
 indispensable in every architecture diagram, simultaneously.</p>
 <p><strong>Compounding — the strategic argument, with a condition.</strong> Domain two reuses domain
-one's resolved customers; the supplier domain connects to both; each addition raises
+one's resolved customers. The supplier domain connects to both. Each addition raises
 the value of every prior query. That's the moat logic — the curated, resolved,
 agreed-upon graph is expensive to replicate <em>because your competitor must redo the
 organizational work, not just the software</em>. But compounding only happens if domains
@@ -380,13 +380,13 @@ built).</p>
   F --&gt; B
   E --&gt;|&quot;no&quot;| G[&quot;Stop honestly&lt;br/&gt;write down why + the&lt;br/&gt;trigger to revisit&quot;]
   D -.-&gt;|&quot;every loop&quot;| H[&quot;Steady-state ops:&lt;br/&gt;freshness, metrics,&lt;br/&gt;curation queue&quot;]</pre>
-<p>The loop deserves three annotations. <strong>Ship inside an existing surface</strong> — the first
+<p>The loop deserves three annotations. <strong>Ship inside an existing surface.</strong> The first
 graph feature should improve a screen people already use (the account view gains
-"supply-chain exposure"), not launch a "graph explorer" destination nobody visits;
-graphs are middleware, and middleware wins by disappearing. <strong>A quarter or two, not a
-year</strong> — if the first visible feature is further out, the scope is wrong, not the
-timeline. <strong>The loop is also the org design</strong> — each turn adds a domain steward and
-expands the <a href="governance-quality-and-trust.html">governance</a> cast; the team grows with
+"supply-chain exposure"), not launch a "graph explorer" destination nobody visits.
+Graphs are middleware, and middleware wins by disappearing. <strong>A quarter or two, not a
+year.</strong> If the first visible feature is further out, the scope is wrong, not the
+timeline. <strong>The loop is also the org design.</strong> Each turn adds a domain steward and
+expands the <a href="governance-quality-and-trust.html">governance</a> cast. The team grows with
 proven value, never ahead of it. Prioritize the queue like any other
 <a href="../technical-product-management/prioritization-and-roadmaps.html">roadmap under constraint</a> —
 the graph earns no exemption from ROI ordering.</p>
@@ -427,17 +427,17 @@ the graph earns no exemption from ROI ordering.</p>
 </tr>
 </tbody>
 </table>
-<p>In practice the answer is a seam, not a box: build the differentiating core, buy the
-commodity edges (external identifiers double as resolution anchors), and let the
+<p>In practice the answer is a seam, not a box. Build the differentiating core; buy the
+commodity edges (external identifiers double as resolution anchors). Let the
 <a href="knowledge-graphs-and-llms.html">measured failures of LLM-only retrieval</a> tell you when
 the graph investment turns on. The strategic instinct is the same one behind every
 <a href="../technical-product-sense/economics-of-infrastructure.html">build-vs-buy call</a>: own
 what differentiates, rent what doesn't.</p>
 <h2>When the answer is no</h2>
-<p>Say no crisply when: the valuable questions are <strong>single-hop</strong> (a good schema wins);
-the domain <strong>fits one system of record</strong> (the connective layer connects nothing); the
-knowledge <strong>changes faster than curation can follow</strong> (the graph would always lie);
-<strong>nobody will own stewardship</strong> (an orphaned graph is a liability with a dashboard); or
+<p>Say no crisply when: the valuable questions are <strong>single-hop</strong> (a good schema wins),
+the domain <strong>fits one system of record</strong> (the connective layer connects nothing), the
+knowledge <strong>changes faster than curation can follow</strong> (the graph would always lie),
+<strong>nobody will own stewardship</strong> (an orphaned graph is a liability with a dashboard), or
 the honest goal is <strong>"AI strategy" optics</strong> (a graph built for the board deck dies the
 quarter attention moves). A written no — with the trigger that reopens it ("when
 support tickets require joining three systems," "when the assistant's multi-hop
@@ -445,14 +445,14 @@ failure rate crosses X") — is a strategy artifact worth as much as a build.</p
 <h2>Failure modes</h2>
 <ul>
 <li><strong>The platform mirage</strong> — "first we build the foundation, then the features." The
-  foundation takes two years; the features never arrive; the budget dies at review.</li>
-<li><strong>The pilot orphan</strong> — a demo that wowed, funded as a project not a product; no
+  foundation takes two years. The features never arrive. The budget dies at review.</li>
+<li><strong>The pilot orphan</strong> — a demo that wowed, funded as a project not a product. No
   steady state, no steward, quiet death by staleness.</li>
 <li><strong>Non-adjacent domain hopping</strong> — each new domain chosen politically, sharing no
-  entities with the last; costs stack linearly, value doesn't compound.</li>
+  entities with the last. Costs stack linearly; value doesn't compound.</li>
 <li><strong>The unattributed platform</strong> — no feature carries graph cost, so the graph looks
-  free until it looks expensive; first budget squeeze kills it.</li>
-<li><strong>Moat mistaken for database</strong> — believing the store is the asset; the actual moat —
+  free until it looks expensive. The first budget squeeze kills it.</li>
+<li><strong>Moat mistaken for database</strong> — believing the store is the asset. The actual moat —
   resolved identities, agreed ontology, curation muscle — goes unfunded.</li>
 <li><strong>No written no</strong> — the graph idea returns every planning cycle, burns a discovery
   spike each time, and is never either built or buried.</li>

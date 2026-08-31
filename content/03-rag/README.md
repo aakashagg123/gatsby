@@ -10,7 +10,7 @@ it's a confident model reciting the wrong or stale passage.
 - [**Retrieval evals**](./retrieval-evals.md) — measuring it: recall, precision,
   grounding, attribution, and citation quality. You cannot tune what you don't measure.
 
-RAG is applied [context engineering](../00-foundations/context-engineering.md): the
+RAG is applied [context engineering](../00-foundations/context-engineering.md). The
 retriever decides what occupies the window, and the generator can only be as good as
 what the retriever found. The two lessons here are a matched pair — build the pipeline,
 then prove it works.

@@ -8,9 +8,9 @@
 
 ## The Problem
 
-A wave is half done — three of five workers finished — and the run is interrupted: a
+A wave is half done — three of five workers finished — when the run is interrupted: a
 crash, a timeout, a closed laptop. Without checkpoints, resuming means re-running the
-*entire* wave, redoing work that already landed and possibly duplicating side effects.
+*entire* wave. That redoes work that already landed and can duplicate side effects.
 This is the most expensive class of harness failure because it scales with how much you'd
 already accomplished. The fix: each worker records progressive checkpoints, and the
 orchestrator reads them to skip completed work on resume.
@@ -76,14 +76,14 @@ write_checkpoint("api", "implement", "logic added", nxt="test")
 print(run_task("api", phases)["phase"])     # -> "test"  (only the last phase ran)
 ```
 
-On resume, `scaffold` and `implement` are skipped; only `test` runs. An interrupted run
+On resume, `scaffold` and `implement` are skipped. Only `test` runs. An interrupted run
 costs you the *current* phase, not the whole task.
 
 ## Use It
 
 In Claude Code, this maps to per-task workspace files (e.g. `checkpoint.md`,
 `file-changes.md` under `.claude-workspace/`). A worker subagent writes its checkpoint
-after each meaningful phase; the orchestrator reads it before resuming an interrupted
+after each meaningful phase. The orchestrator reads it before resuming an interrupted
 task. The data model you built here is exactly what those files encode.
 
 ## Ship It
@@ -112,8 +112,9 @@ trail.</details>
 
 <details><summary>Answer</summary>B — that's the entire point of checkpointing.</details>
 
-**Challenge.** Make checkpoints atomic: write to a temp file and `os.replace` it, so an
-interruption *during* the checkpoint write can't leave a corrupt half-written file.
+**Challenge.** Make checkpoints atomic: write to a temp file and `os.replace` it. That
+way, an interruption *during* the checkpoint write can't leave a corrupt half-written
+file.
 
 ## Related
 

@@ -1,6 +1,6 @@
 # Bounded roles & context allowlists
 
-> **Motto** — Each agent reads only its allowlist; everything else is off-limits by construction.
+> **Motto** — Each agent reads only its allowlist — everything else is off-limits by construction.
 
 *Part of Phase 10 — Subagents & Orchestration. Concept:
 [The Ten Principles of a Working Harness](../../../../foundations/harness-principles.md)
@@ -9,12 +9,12 @@
 ## The Problem
 
 When several agents share a pipeline, the lazy move is to hand each one the whole
-context — the spec, the plan, the diff, everything. It feels helpful and it quietly
-breaks the pipeline. The clearest failure is review: a reviewer who can see the author's
-plan starts *rationalising* it ("the author meant well") instead of judging the output
-on its own terms. Context leakage turns independent review into a rubber stamp. The fix
-isn't asking the agent to "be objective" — it's constructing its context so it
-*cannot* see what it shouldn't.
+context — the spec, the plan, the diff, everything. This feels helpful, but it quietly
+breaks the pipeline. The clearest failure shows up in review. A reviewer who can see the
+author's plan starts to *rationalise* the output ("the author meant well") instead of
+judging it on its own terms. Context leakage turns independent review into a rubber
+stamp. The fix isn't asking the agent to "be objective." Instead, build its context so
+it *cannot* see what it shouldn't.
 
 ## The Concept
 
@@ -62,16 +62,16 @@ print(list(reviewer_ctx))                       # ['diff'] — plan/spec are abs
 assert_no_leak("reviewer", reviewer_ctx)        # passes
 ```
 
-The reviewer's prompt is built from `reviewer_ctx`; the plan literally isn't in scope.
-`assert_no_leak` is a contract test you can run in CI so a future refactor can't widen a
+The reviewer's prompt is built from `reviewer_ctx`. The plan literally isn't in scope.
+`assert_no_leak` is a contract test. Run it in CI so a future refactor can't widen a
 role's view by accident.
 
 ## Use It
 
-In Claude Code, role bounding is how you write subagent prompts and the `Agent` tool:
-each subagent receives only the inputs its task needs, and you don't pass the parent's
-full transcript. The discipline is the same — the allowlist lives in how you assemble the
-subagent's prompt, enforced by construction, not by instruction.
+In Claude Code, role bounding shapes how you write subagent prompts and use the `Agent`
+tool. Each subagent receives only the inputs its task needs, and you never pass the
+parent's full transcript. The discipline stays the same: the allowlist lives in how you
+assemble the subagent's prompt, enforced by construction, not by instruction.
 
 ## Ship It
 
@@ -97,11 +97,11 @@ the diff on its own terms.</details>
 - C) in the model weights
 - D) after the agent responds
 
-<details><summary>Answer</summary>B — enforcement is structural; self-restraint is not a
+<details><summary>Answer</summary>B — enforcement is structural. Self-restraint is not a
 control.</details>
 
-**Challenge.** Add a `"taste"` reviewer role that sees the diff *and* a style guide but
-still not the plan, and prove with `assert_no_leak` that two reviewer roles cover
+**Challenge.** Add a `"taste"` reviewer role that sees the diff *and* a style guide, but
+still not the plan. Prove with `assert_no_leak` that two reviewer roles cover
 complementary concerns without either seeing intent.
 
 ## Related

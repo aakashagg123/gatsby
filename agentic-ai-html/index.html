@@ -315,18 +315,18 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <p class="lede">What agents actually are — the loop, tools, memory, and planning — and the reliability, security, and economics that turn demos into products.</p>
     <div class="index-meta"><span>8 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
   </div>
-  <div class="intro"><p>A chatbot answers; an <strong>agent acts</strong>. Give a language model tools, a goal, and permission
+  <div class="intro"><p>A chatbot answers. An <strong>agent acts</strong>. Give a language model tools, a goal, and permission
 to loop — observe, decide, act, check the result, repeat — and you get software that can
 <em>do things</em>: research a market, fix a bug, book the logistics, run the workflow. That's
-the promise. The practice is a young discipline with real engineering behind it and a
-thick layer of hype on top — invented protocol acronyms, "8-layer stacks," and demos that
-collapse on contact with production.</p>
-<p>This module is the honest map. It teaches what an agent actually is, the machinery that
-makes one work (tools, context, memory, planning), what changes when agents multiply
-(multi-agent systems and the real protocol landscape), and the three disciplines that
-separate shipped agents from viral demos: <strong>reliability, security, and unit economics</strong>.
-Every lesson ships a diagram; the module opens with a <strong>knowledge graph</strong> so you can see
-how the pieces connect before studying them one at a time.</p>
+the promise. The practice is a young discipline. It has real engineering behind it, but
+also a thick layer of hype on top — invented protocol acronyms, "8-layer stacks," and
+demos that collapse on contact with production.</p>
+<p>This module is the honest map. It teaches what an agent actually is, and the machinery
+that makes one work: tools, context, memory, planning. It covers what changes when agents
+multiply — multi-agent systems and the real protocol landscape. And it covers the three
+disciplines that separate shipped agents from viral demos: <strong>reliability, security, and
+unit economics</strong>. Every lesson ships a diagram. The module opens with a <strong>knowledge
+graph</strong> so you can see how the pieces connect before you study them one at a time.</p>
 <h2>The knowledge graph</h2>
 <p>Agentic AI isn't a layer cake — it's a loop with disciplines attached. Everything in this
 module hangs off this picture:</p>
@@ -444,13 +444,13 @@ module hangs off this picture:</p>
   </div>
 </div>
 
-<p>Read it in three passes. <strong>The spine:</strong> knowledge flows into the model, the model drives
-the loop, the loop acts through tools, and tool results flow back as new knowledge — that
-cycle <em>is</em> the agent. <strong>The amplifiers:</strong> planning and reflection make each cycle
-smarter; multi-agent patterns run many cycles at once. <strong>The disciplines:</strong> every cycle
-leaves a trace, error analysis turns traces into evaluators, guardrails police the loop
-inline while evals gate it offline, security bounds every tool, a human approves the
-irreversible, and economics decides whether any of it is a business.</p>
+<p>Read it in three passes. <strong>The spine:</strong> knowledge flows into the model. The model drives
+the loop. The loop acts through tools, and tool results flow back as new knowledge. That
+cycle <em>is</em> the agent. <strong>The amplifiers:</strong> planning and reflection make each cycle smarter.
+Multi-agent patterns run many cycles at once. <strong>The disciplines:</strong> every cycle leaves a
+trace. Error analysis turns traces into evaluators. Guardrails police the loop inline,
+while evals gate it offline. Security bounds every tool. A human approves the
+irreversible. Economics decides whether any of it is a business.</p>
 <h2>The lessons</h2>
 <ul>
 <li><a href="what-is-an-agent.html"><strong>What is an agent?</strong></a> — the loop, the autonomy spectrum from
@@ -470,10 +470,10 @@ irreversible, and economics decides whether any of it is a business.</p>
 <li><a href="agentic-ai-as-a-product.html"><strong>Agentic AI as a product</strong></a> — the capstone: unit
   economics, pricing, agent UX, and deciding where agents actually pay.</li>
 </ul>
-<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing — the decision it
-should change and the question it should make you ask — and a diagram to make it
-concrete. Builders who want to go deeper than concepts can construct this machinery hands-on
-in the <a href="../harness/index.html">Harness engineering track</a>.</p>
+<p>Each lesson pairs the concept with a <strong>🎯 For the AI PM</strong> briefing. It names the decision
+the concept should change, and the question it should make you ask. Each lesson also has
+a diagram to make it concrete. Builders who want to go deeper than concepts can construct
+this machinery hands-on in the <a href="../harness/index.html">Harness engineering track</a>.</p>
 <h2>Connects to other tracks</h2>
 <ul>
 <li><a href="../ai/02-reliable-outputs.html#function-calling">Tools &amp; function calling reliability</a> — the contract layer under the agent's tool calls.</li>

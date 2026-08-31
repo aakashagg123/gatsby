@@ -6,12 +6,12 @@
 
 ## The Problem
 
-You've built scratchpad, persistence, long-term memory, and distillation as Python modules.
-To make them usable from a *real* agent, they need to be reachable as **tools** the agent can
-call. The clean, portable way is the Model Context Protocol (MCP): wrap memory in an MCP
-server exposing `remember` and `recall`, and Claude Code / Codex can connect to it and use it
-every session. (You build MCP from scratch in Phase 12; here you see why memory is a natural
-MCP server.)
+You've built scratchpad, persistence, long-term memory, and distillation as Python
+modules. To make them usable from a *real* agent, they need to be reachable as **tools**
+the agent can call. The clean, portable way is the Model Context Protocol (MCP): wrap
+memory in an MCP server exposing `remember` and `recall`. Claude Code / Codex can then
+connect to it and use it every session. You build MCP from scratch in Phase 12; here you
+see why memory is a natural MCP server.
 
 ## The Concept
 
@@ -23,14 +23,14 @@ flowchart LR
   S --> D[("durable store")]
 ```
 
-Memory-as-a-server means it's shared across sessions and across tools, and survives the
+Memory-as-a-server means it's shared across sessions and across tools. It survives the
 ephemeral agent process.
 
 ## Build It / Use It
 
 The real server uses the MCP SDK (Phase 12). `code/memory_server.py` shows the tool layer
-over the Phase 9 store — a plain class whose methods are the MCP tools, so the logic is
-testable without a transport:
+over the Phase 9 store: a plain class whose methods are the MCP tools. This keeps the
+logic testable without a transport.
 
 ```python
 class MemoryServer:
@@ -69,14 +69,14 @@ print(s.recall("pnpm"))         # ['Project uses pnpm.']
 print([t["name"] for t in s.tools()])   # ['remember', 'recall']
 ```
 
-In Phase 12 you wrap this exact surface in the MCP wire protocol; here the point is that
+In Phase 12 you wrap this exact surface in the MCP wire protocol. Here the point is that
 memory is just two tools over a durable store.
 
 ## Use It
 
-This is exactly a **memory MCP server** you add to Claude Code / Codex (e.g. via
-`.mcp.json` / MCP config): the agent gains `remember` and `recall` tools and carries
-knowledge across sessions. It's the productized form of everything in this phase — and a
+This is exactly a **memory MCP server** you add to Claude Code / Codex, for example via
+`.mcp.json` / MCP config. The agent gains `remember` and `recall` tools and carries
+knowledge across sessions. It's the productized form of everything in this phase, and a
 real, popular category of MCP server.
 
 ## Ship It
@@ -104,7 +104,7 @@ memory MCP server.
 
 <details><summary>Answer</summary>B — write and relevance-read.</details>
 
-**Challenge.** After Phase 12, wrap this `MemoryServer` in the MCP protocol and connect it to
+**Challenge.** After Phase 12, wrap this `MemoryServer` in the MCP protocol. Connect it to
 your agent so `recall` runs at the start of each task.
 
 ## Related

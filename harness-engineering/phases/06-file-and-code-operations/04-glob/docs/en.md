@@ -8,8 +8,8 @@
 
 The agent rarely knows exact paths up front. It needs to *discover* files by pattern —
 "all `*.py` under `src`", "every test file" — to build a mental map of the repo and pick
-what to read. A glob tool turns a pattern into a list of paths, ideally newest-first so
-recently-changed files surface.
+what to read. A glob tool turns a pattern into a list of paths. Ideally the list runs
+newest-first, so recently-changed files surface.
 
 ## The Concept
 
@@ -39,15 +39,15 @@ for n in ["a.py", "b.py", "c.txt"]:
 print(glob("*.py", root=d))      # ['.../b.py', '.../a.py'] (recent first)
 ```
 
-Recency-first ordering matters: when many files match, the ones the agent (or developer)
+Recency-first ordering matters. When many files match, the ones the agent (or developer)
 just touched are usually the relevant ones.
 
 ## Use It
 
-This is the **Glob** tool in Claude Code / Codex: fast pattern matching that returns paths
-sorted by modification time, so the agent can answer "where is X?" and choose what to Read
-without scanning the whole tree. It pairs with Grep (next lesson): glob narrows by name,
-grep narrows by content.
+This is the **Glob** tool in Claude Code / Codex. It does fast pattern matching and returns
+paths sorted by modification time, so the agent can answer "where is X?" and choose what to
+Read without scanning the whole tree. It pairs with Grep (next lesson): glob narrows by
+name, and grep narrows by content.
 
 ## Ship It
 

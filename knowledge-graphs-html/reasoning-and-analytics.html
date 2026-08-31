@@ -316,33 +316,35 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   <h2>TL;DR</h2>
 <p>The payoff for all that construction: once knowledge is a graph, whole families of
 questions become <em>computable</em> that tables and documents can't express at any price.
-Five families cover nearly everything on a product roadmap: <strong>traversal</strong> (follow chains:
-exposure, lineage, "how are these two connected?"), <strong>centrality</strong> (which nodes matter
-most — the PageRank family), <strong>community detection</strong> (which nodes cluster — fraud rings,
-customer segments, duplicate candidates), <strong>link prediction</strong> (which edges are missing or
-likely next — recommendations, next-best-action), and <strong>rule-based inference</strong> (facts
-that follow logically from stated facts — "subsidiary of a sanctioned entity is
-sanctioned-adjacent"). Each maps to a product capability you can name in a roadmap
-review, and each has a different trust profile: traversal and inference produce
-<em>explainable</em> answers you can show a regulator; predictions produce <em>probabilistic</em> ones
-you should ship as suggestions, not facts. Knowing which family a proposed feature sits
-in tells you its cost, its latency, and how much explanation your UX owes the user.</p>
+Five families cover nearly everything on a product roadmap. <strong>Traversal</strong> follows
+chains: exposure, lineage, "how are these two connected?" <strong>Centrality</strong> finds which
+nodes matter most — the PageRank family. <strong>Community detection</strong> finds which nodes
+cluster — fraud rings, customer segments, duplicate candidates. <strong>Link prediction</strong>
+finds which edges are missing or likely next — recommendations, next-best-action.
+<strong>Rule-based inference</strong> derives facts that follow logically from stated facts —
+"subsidiary of a sanctioned entity is sanctioned-adjacent." Each family maps to a
+product capability you can name in a roadmap review, and each has a different trust
+profile. Traversal and inference produce <em>explainable</em> answers you can show a
+regulator. Predictions produce <em>probabilistic</em> ones you should ship as suggestions, not
+facts. Knowing which family a proposed feature sits in tells you its cost, its latency,
+and how much explanation your UX owes the user.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — "Graph analytics" sounds like a data-science luxury. It's
 actually the menu of what your graph investment can <em>ship</em>: the fraud feature, the
 recommendation engine, the risk-exposure dashboard are all entries on this menu. If
-you can't name the families, you can't spot which roadmap items the graph makes cheap —
-or be appropriately suspicious when a pitch calls a prediction a fact.</p>
+you can't name the families, you can't spot which roadmap items the graph makes
+cheap. You also can't be appropriately suspicious when a pitch calls a prediction a
+fact.</p>
 <p><strong>What it changes in your decisions</strong> — Roadmap items get tagged with their family,
 which sets three things at once: compute pattern (real-time query vs. batch job),
 explainability (deterministic vs. probabilistic), and eval burden (correctness vs.
 <a href="../ai/04-evals-observability.html#evals">precision/recall on a golden set</a>).</p>
 <p><strong>Ask yourself</strong> — <em>"For this graph-powered feature: is the answer traversed, inferred,
 or predicted — and does the UX honestly reflect which one it is?"</em></p>
-<p><strong>Risk if ignored</strong> — A link <em>prediction</em> ships rendered like a stored <em>fact</em>; a
-customer asks "why does your product say we work with X?"; and the honest answer —
-"an algorithm guessed" — lands in a complaint, or a headline.</p>
+<p><strong>Risk if ignored</strong> — A link <em>prediction</em> ships rendered like a stored <em>fact</em>. A
+customer asks "why does your product say we work with X?" The honest answer — "an
+algorithm guessed" — lands in a complaint, or a headline.</p>
 </blockquote>
 <h2>The five families, as product capabilities</h2>
 <pre class="mermaid">flowchart TB
@@ -366,30 +368,30 @@ customer asks "why does your product say we work with X?"; and the honest answer
   LP --&gt; F5[&quot;Recommendations,&lt;br/&gt;next-best-action, data repair&quot;]</pre>
 <p><strong>Traversal</strong> is the workhorse — the multi-hop questions from
 <a href="what-is-a-knowledge-graph.html">lesson 1</a>, plus the underrated <em>pathfinding</em> form:
-"show every chain connecting this customer to this sanctioned entity." The answer is the
-path itself — evidence you can put in front of an auditor. Runs live, in the request
-path, if <a href="storage-and-querying.html">depth-capped</a>.</p>
+"show every chain connecting this customer to this sanctioned entity." The answer is
+the path itself — evidence you can put in front of an auditor. It runs live, in the
+request path, if <a href="storage-and-querying.html">depth-capped</a>.</p>
 <p><strong>Centrality</strong> ranks importance by structure. PageRank and its relatives find the
 supplier whose failure cascades furthest, the person the org actually routes through
-(rarely the org chart's answer), the account whose loss would unravel a network. Batch
-computation, refreshed on a schedule, consumed as a score.</p>
+(rarely the org chart's answer), and the account whose loss would unravel a network.
+This is batch computation, refreshed on a schedule, and consumed as a score.</p>
 <p><strong>Community detection</strong> finds dense clusters no one labeled: accounts that share
 devices, addresses, and payment methods (a fraud ring, structurally, <em>before</em> any
 individual account misbehaves — the reason graph analytics is standard kit in financial
-crime); customers that cluster by actual usage rather than firmographics; and — a nice
-dogfooding touch — probable duplicates the <a href="building-the-graph.html">resolution pipeline</a>
-missed.</p>
-<p><strong>Link prediction</strong> guesses edges that are missing or coming: customers-who-look-like-this
-also-need-that (recommendations), this person likely-knows that person, this record is
-probably the same entity as that one. The modern machinery is <strong>graph embeddings</strong> —
-compressing each node's neighborhood into a vector so "structurally similar" becomes
-computable — and increasingly graph neural networks. Powerful, and <em>probabilistic to the
-bone</em>: these are suggestions wearing math.</p>
+crime), customers that cluster by actual usage rather than firmographics, and — a nice
+dogfooding touch — probable duplicates the
+<a href="building-the-graph.html">resolution pipeline</a> missed.</p>
+<p><strong>Link prediction</strong> guesses edges that are missing or coming: customers who look like
+this one also need that (recommendations), this person likely knows that person, this
+record is probably the same entity as that one. The modern machinery is <strong>graph
+embeddings</strong> — compressing each node's neighborhood into a vector so "structurally
+similar" becomes computable — and increasingly graph neural networks. It is powerful,
+and <em>probabilistic to the bone</em>: these are suggestions wearing math.</p>
 <p><strong>Rule-based inference</strong> derives facts logically: <em>part-of</em> chains roll up, ownership
 percolates through corporate trees, "handles EU personal data" propagates to every
-system downstream of one that does. Deterministic, auditable, and the reason
-<a href="ontologies-and-data-modeling.html">formal ontologies</a> exist; in regulated domains this
-family is the product.</p>
+system downstream of one that does. It is deterministic and auditable, and it is the
+reason <a href="ontologies-and-data-modeling.html">formal ontologies</a> exist. In regulated
+domains, this family is the product.</p>
 <h2>The trust gradient</h2>
 <p>The families differ most in <em>what kind of answer</em> they produce — and your UX, evals,
 and compliance posture must track it:</p>
@@ -430,36 +432,36 @@ and compliance posture must track it:</p>
 </tbody>
 </table>
 <p>The gradient also sets <em>where</em> mistakes hurt. A wrong stored fact corrupts every family
-downstream — which is why <a href="building-the-graph.html">construction quality</a> outranks
+downstream — this is why <a href="building-the-graph.html">construction quality</a> outranks
 algorithm choice. A wrong prediction, honestly framed as a suggestion, costs a shrug.
 The catastrophic combination is a prediction <em>stored back into the graph as a fact</em>:
 the guess launders itself into evidence, and six months later nobody remembers it was a
-guess. If predictions must be persisted, they carry their
+guess. If predictions must be persisted, they must carry their
 <a href="governance-quality-and-trust.html">confidence and provenance</a> forever.</p>
 <h2>Operational shape</h2>
 <p>Two compute patterns, two cost profiles. <strong>Query-time</strong> work (traversal, inference on
-demand) lives in the request path: milliseconds, depth caps, timeouts — feature latency
+demand) lives in the request path: milliseconds, depth caps, timeouts. Feature latency
 is graph latency. <strong>Batch</strong> work (centrality, communities, embeddings, prediction
-scoring) runs on schedules and ships scores: cheap to serve, but <em>stale by design</em> —
-the fraud ring detected nightly is invisible for up to 24 hours, and whether that's fine
-is a product decision, not an infrastructure one. Most platforms bundle these algorithms
-into libraries, so the engineering lift is usually integration, not invention; the real
-work is choosing thresholds and owning what the scores <em>mean</em>.</p>
+scoring) runs on schedules and ships scores. It's cheap to serve, but <em>stale by
+design</em> — the fraud ring detected nightly is invisible for up to 24 hours, and whether
+that's fine is a product decision, not an infrastructure one. Most platforms bundle
+these algorithms into libraries, so the engineering lift is usually integration, not
+invention. The real work is choosing thresholds and owning what the scores <em>mean</em>.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Predictions cosplaying as facts</strong> — the link-prediction output rendered in the same
-  UI as curated knowledge; trust in the whole graph dies with the first bad guess.</li>
+  UI as curated knowledge. Trust in the whole graph dies with the first bad guess.</li>
 <li><strong>Garbage in, insight out</strong> — centrality and community algorithms run happily on a
-  graph full of <a href="building-the-graph.html">false merges</a>; the "key supplier" is two
+  graph full of <a href="building-the-graph.html">false merges</a>. The "key supplier" is two
   companies fused by a resolution bug.</li>
 <li><strong>Celebrity-node blowups</strong> — the mega-hub (the bank everyone uses, the component in
-  everything) makes traversals explode and communities meaningless; dense nodes need
+  everything) makes traversals explode and communities meaningless. Dense nodes need
   modeling care, caps, or exclusion rules.</li>
-<li><strong>Unstable scores presented as truth</strong> — community boundaries shift run to run;
-  yesterday's "Segment 7" is today's "Segment 12," and downstream teams built process on
-  the labels.</li>
+<li><strong>Unstable scores presented as truth</strong> — community boundaries shift run to run.
+  Yesterday's "Segment 7" is today's "Segment 12," and downstream teams built process
+  on the labels.</li>
 <li><strong>Batch cadence mismatch</strong> — a real-time decision (payment approval) fed by a
-  nightly score; the ring that formed at 9 a.m. clears payments all day.</li>
+  nightly score. The ring that formed at 9 a.m. clears payments all day.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

@@ -314,12 +314,12 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Metrics &amp; experimentation</h1>
   </div>
   <h2>TL;DR</h2>
-<p>If you can't measure it, you shipped an opinion. The measurement stack has three layers:
-a <strong>metric tree</strong> connecting one north-star outcome to the input metrics teams can
-actually move; <strong>instrumentation</strong> written into the spec so the events exist when you
-need them; and <strong>experiments</strong> (A/B tests) that separate "the metric moved because of us"
+<p>If you can't measure it, you shipped an opinion. The measurement stack has three layers.
+A <strong>metric tree</strong> connects one north-star outcome to the input metrics teams can
+actually move. <strong>Instrumentation</strong> gets written into the spec, so the events exist when
+you need them. And <strong>experiments</strong> (A/B tests) separate "the metric moved because of us"
 from "the metric moved." Experiments keep you honest, but they're not free and not
-always right: they need enough traffic, an up-front hypothesis, guardrail metrics, and
+always right. They need enough traffic, an up-front hypothesis, guardrail metrics, and
 the discipline not to peek and stop at the first flattering result. Where you can't
 test, you can still reason — with before/after comparisons, holdouts, and humility.</p>
 <blockquote class="pm-callout">
@@ -359,8 +359,8 @@ detector is a customer thread going viral.</p>
   (moving it plausibly moves the parent).</li>
 <li><strong>Guardrails</strong> — the "do no harm" set: latency, cost, support load, trust. Every
   experiment and launch is judged on its target metric <em>and</em> on leaving guardrails intact.</li>
-<li><strong>Leading vs. lagging</strong> — retention is lagging (you learn you failed months later);
-  activation is leading. Manage with leading indicators, report with lagging ones.</li>
+<li><strong>Leading vs. lagging</strong> — retention is lagging (you learn you failed months later).
+  Activation is leading. Manage with leading indicators, report with lagging ones.</li>
 </ul>
 <p>Beware <strong>Goodhart's law</strong>: any metric made a target gets gamed, usually innocently.
 "Answers delivered" as a target produces more answers, not better ones. Pair every
@@ -375,14 +375,14 @@ Then check the funnel: every step a user takes toward value should emit somethin
 your drop-off analysis will have holes exactly where the mystery is.</p>
 <h2>Experiments without self-deception</h2>
 <p>An A/B test randomly splits users, shows each group a variant, and compares. The
-mechanics are a solved problem; the discipline isn't:</p>
+mechanics are a solved problem. The discipline isn't:</p>
 <ul>
 <li><strong>Hypothesis first, in writing</strong> — "we believe moving X will lift Y by ~Z% because…"
   Written <em>before</em> launch, because post-hoc, any result can be narrated into a win. A
   useful companion question: <em>"if this were wildly successful, what would that look
   like?"</em> — answered up front, it sets the bar a result has to clear. And name whether
   the change is an <strong>experiment</strong> (a bet that might die) or an <strong>incremental
-  improvement</strong> (a step that should compound); they're judged by different standards,
+  improvement</strong> (a step that should compound). They're judged by different standards,
   and confusing them narrates failures into learnings and learnings into failures.</li>
 <li><strong>Power before launch</strong> — small effects need surprising amounts of traffic. If the
   calculator says eight months to significance, the honest answer is "this isn't
@@ -390,9 +390,9 @@ mechanics are a solved problem; the discipline isn't:</p>
 <li><strong>No peeking</strong> — checking daily and stopping at the first p &lt; 0.05 is how teams ship
   noise. Fix the duration up front (or use sequential methods designed for early looks).</li>
 <li><strong>Judge the guardrails too</strong> — a win on the target that degrades latency or support
-  volume isn't a win; it's a trade you should make consciously or not at all.</li>
+  volume isn't a win. It's a trade you should make consciously or not at all.</li>
 <li><strong>Segments lie enthusiastically</strong> — slice a neutral result twenty ways and one slice
-  will "win" by chance. Segment analyses generate hypotheses for the <em>next</em> test; they
+  will "win" by chance. Segment analyses generate hypotheses for the <em>next</em> test. They
   don't rescue this one.</li>
 </ul>
 <p>When you can't test — traffic too small, change too structural, effect too slow — use
@@ -406,7 +406,7 @@ Weaker evidence honestly labelled beats strong claims from weak designs.</p>
 <li><strong>Offline: eval scores</strong> — the graded example set from your
   <a href="specs-prds-and-rfcs.html">spec</a>, run against every prompt/model/retrieval change
   <em>before</em> it ships. This is your regression suite for quality.</li>
-<li><strong>Online: behavioural proxies</strong> — users rarely click thumbs-down; they silently
+<li><strong>Online: behavioural proxies</strong> — users rarely click thumbs-down. They silently
   <em>edit</em> the draft, <em>retry</em> the question rephrased, or <em>abandon</em> the flow. Edit distance,
   retry rate, and acceptance rate are your truest online quality signals — instrument
   them from day one.</li>

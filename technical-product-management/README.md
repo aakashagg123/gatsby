@@ -2,17 +2,18 @@
 
 Product sense tells you *what* to build. Technical product sense tells you what the system
 will *let* you build. **Technical product management** is the discipline that turns those
-judgments into shipped software: the role, the artifacts, the rituals, and the release
-machinery that carry an idea from a hunch to a feature running reliably in production. It's
-the *operating system* of the PM job — the part you're actually evaluated on when the
-quarter ends.
+judgments into shipped software. It covers the role, the artifacts, the rituals, and the
+release machinery that carry an idea from a hunch to a feature running reliably in
+production. It's the *operating system* of the PM job — the part you're actually evaluated
+on when the quarter ends.
 
 For APMs and PMs moving into **AI product management**, the craft matters double. AI
-features are harder to spec (behaviour is probabilistic), harder to estimate (quality is
-discovered, not designed), harder to launch (a model can regress silently), and harder to
-measure (the interesting failures don't throw errors). Every lesson here teaches the general
-practice first, then shows exactly what changes when there's a model in the build. **Each
-lesson ships a diagram** you can redraw on a whiteboard.
+features are harder to spec, because behaviour is probabilistic. They're harder to
+estimate, because quality is discovered, not designed. They're harder to launch, because a
+model can regress silently. And they're harder to measure, because the interesting failures
+don't throw errors. Every lesson here teaches the general practice first, then shows
+exactly what changes when there's a model in the build. **Each lesson ships a diagram** you
+can redraw on a whiteboard.
 
 ## The knowledge graph
 

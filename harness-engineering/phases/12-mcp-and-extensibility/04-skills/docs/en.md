@@ -6,11 +6,11 @@
 
 ## The Problem
 
-You can't put every workflow, rubric, and procedure into the system prompt — it would be
-enormous and mostly irrelevant on any given task. **Skills** solve this with progressive
-disclosure: each skill is a small `SKILL.md` with a name + description the agent always sees,
-but whose full body is loaded only when the description matches the task. The agent gets a
-big library of capabilities at near-zero standing context cost.
+You can't put every workflow, rubric, and procedure into the system prompt. It would grow
+huge and stay mostly irrelevant on any given task. **Skills** solve this with progressive
+disclosure. Each skill is a small `SKILL.md` file with a name and description the agent
+always sees, but its full body loads only when the description matches the task. The agent
+gets a big library of capabilities at near-zero standing context cost.
 
 ## The Concept
 
@@ -21,23 +21,24 @@ flowchart LR
   M -- "no" --> S["skip — costs nothing"]
 ```
 
-This is the legibility principle as a mechanism: read the index, follow one link, load only
-what you need.
+This is the legibility principle as a mechanism. Read the index, follow one link, and load
+only what you need.
 
 ## Build It (the format)
 
-The artifact is the skill format itself. `outputs/SKILL.md` is a template: YAML frontmatter
-(`name`, `description` with trigger phrases) + a procedure body. The whole course ships
-skills in this exact shape (`/find-your-level`, `/check-understanding`, `/agent-team`,
-`/plan-and-build`). The rule for a good description: list the *trigger phrases* so matching is
-reliable; keep the body focused on one capability.
+The artifact is the skill format itself. `outputs/SKILL.md` is a template with YAML
+frontmatter (`name`, `description` with trigger phrases) plus a procedure body. The whole
+course ships skills in this exact shape (`/find-your-level`, `/check-understanding`,
+`/agent-team`, `/plan-and-build`). A good description lists the *trigger phrases* so matching
+stays reliable, and keeps the body focused on one capability.
 
 ## Use It
 
-This is Claude Code / Codex **skills**: drop a `SKILL.md` under `.claude/skills/<name>/`, and
-the agent surfaces it when relevant and loads its body on demand. Progressive disclosure is
-why you can install dozens of skills without bloating context — only the matching one's body
-enters the window. Every `outputs/SKILL.md` in this course is installable this way.
+This is Claude Code and Codex **skills**. Drop a `SKILL.md` file under
+`.claude/skills/<name>/`, and the agent surfaces it when relevant and loads its body on
+demand. Progressive disclosure is why you can install dozens of skills without bloating
+context — only the matching one's body enters the window. Every `outputs/SKILL.md` in this
+course is installable this way.
 
 ## Ship It
 

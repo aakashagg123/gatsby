@@ -5,10 +5,10 @@
 ## TL;DR
 
 "Our LLM bill is $80k/month" is not an actionable number. To optimize, control, and
-price an AI product you must attribute cost along the dimensions you make decisions on:
+price an AI product, you must attribute cost along the dimensions you make decisions on:
 **which feature, which workflow, which tenant, which user journey** is spending the
-tokens. Per-model spend is what the provider invoices; per-*feature*/*tenant* spend is
-what tells you what to cache, route, cap, or bill. Cost attribution is a product and
+tokens. Per-model spend is what the provider invoices. Per-*feature*/*tenant* spend
+tells you what to cache, route, cap, or bill. Cost attribution is a product and
 business capability, not just a finance line item.
 
 > 🎯 **For the AI-native PM**
@@ -24,7 +24,7 @@ business capability, not just a finance line item.
 
 ## Mental model
 
-Tokens are the currency, and every token is generated *for a reason* — a feature
+Tokens are the currency, and every token is generated *for a reason*: a feature
 serving a workflow for a tenant during a user journey. If your [traces](./observability.md)
 carry those tags, cost rolls up along any of them:
 
@@ -41,17 +41,17 @@ The provider gives you only the last row. You have to build the rest.
 
 ## Why per-model is not enough
 
-- **You can't optimize what you can't localize.** A 30% cost cut hides in *which*
-  feature's prompt is bloated or *which* workflow loops too much — invisible at the
-  model level.
+- **You can't optimize what you can't localize.** A 30% cost cut might hide in *which*
+  feature's prompt is bloated, or *which* workflow loops too much. Neither is visible
+  at the model level.
 - **Tenants are wildly uneven.** In multi-tenant SaaS, a tiny fraction of tenants often
   drives most spend. Without per-[tenant](../05-safety-multitenancy/multi-tenant-isolation.md)
-  cost you can't find unprofitable accounts, set quotas, or price fairly.
+  cost, you can't find unprofitable accounts, set quotas, or price fairly.
 - **Unit economics need a denominator.** "Cost per resolved ticket," "per generated
   report," "per active user" — these require attribution to the *unit*, not the model.
 - **Runaway detection.** A [runaway agent](../02-reliable-outputs/agent-guardrails.md) or
   a [cache-busting prefix](../01-inference-internals/prompt-vs-semantic-caching.md) shows
-  up as a feature/tenant cost spike — but only if cost is sliced that way.
+  up as a feature/tenant cost spike, but only if cost is sliced that way.
 
 ## What to capture (per call, then roll up)
 
@@ -64,7 +64,7 @@ On every model/tool span, record:
 - **Dimensional tags:** feature, workflow step, tenant, user, request/journey id.
 - **Derived cost:** apply the price book (per-model, per-token-type) to the tokens.
 
-These are the same [tags on your traces](./observability.md) — cost attribution is an
+These are the same [tags on your traces](./observability.md). Cost attribution is an
 aggregation over instrumented spans, not a separate system.
 
 ## Dimensions that matter
@@ -79,32 +79,33 @@ aggregation over instrumented spans, not a separate system.
 
 ## From attribution to control
 
-Attribution is the input; control is the point:
+Attribution is the input. Control is the point:
 - **Budgets & quotas** per tenant/feature; alert and throttle on breach (ties to
   [agent budgets](../02-reliable-outputs/agent-guardrails.md)).
-- **Routing decisions:** push cheap traffic to small models; reserve big models for
-  hard cases ([routing](../02-reliable-outputs/model-routing.md)) — measured by cost-per-route.
-- **Caching ROI:** quantify savings from prompt/semantic caching and protect cache-hit
+- **Routing decisions.** Push cheap traffic to small models, and reserve big models for
+  hard cases ([routing](../02-reliable-outputs/model-routing.md)). Measure this by
+  cost-per-route.
+- **Caching ROI.** Quantify savings from prompt/semantic caching, and protect cache-hit
   rate as a cost metric.
-- **Context discipline:** target the bloated prompts attribution exposes
+- **Context discipline.** Target the bloated prompts attribution exposes
   ([context engineering](../00-foundations/context-engineering.md)).
-- **Compression & summarization:** prompt-compression tools (LLMLingua-class, up to
-  ~20× on long prompts with little quality loss) and summarizing multi-turn
+- **Compression & summarization.** Prompt-compression tools (LLMLingua-class, up to
+  ~20x on long prompts with little quality loss) and summarizing multi-turn
   conversation history shrink exactly the token lines attribution flags first.
-- **Serving efficiency:** for self-hosted models, the runtime itself is a lever —
-  optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
+- **Serving efficiency.** For self-hosted models, the runtime itself is a lever.
+  Optimized inference engines (vLLM, TGI) and inference-specialized hardware change the
   per-token price without touching the product.
-- **Pricing & packaging:** set plan limits and prices from real unit economics, not
+- **Pricing & packaging.** Set plan limits and prices from real unit economics, not
   guesses.
 
 ## Tradeoffs
 
-- **Tag granularity vs. overhead** — more dimensions = richer slicing but more
+- **Tag granularity vs. overhead** — more dimensions mean richer slicing but more
   instrumentation and cardinality cost. Tag the dimensions you actually *decide* on.
 - **Real-time vs. batch** — live cost dashboards enable fast reaction but cost more to
-  run than daily rollups; match to how fast you need to act.
-- **Cost vs. quality vs. latency** — cheapest route isn't always acceptable; attribution
-  lets you optimize cost *within* quality/latency SLOs, the theme of
+  run than daily rollups. Match the choice to how fast you need to act.
+- **Cost vs. quality vs. latency** — the cheapest route isn't always acceptable.
+  Attribution lets you optimize cost *within* quality/latency SLOs, the theme of
   [stack tradeoffs](../06-strategy-tradeoffs/inference-stack-tradeoffs.md).
 
 ## Failure modes

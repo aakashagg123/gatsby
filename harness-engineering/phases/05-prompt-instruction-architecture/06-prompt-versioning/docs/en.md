@@ -22,8 +22,8 @@ flowchart LR
   E --> W["pick winner; promote or roll back"]
 ```
 
-A registry stores versioned prompts; an A/B run scores both on a fixed eval set; you
-promote the winner (and can revert instantly).
+A registry stores versioned prompts. An A/B run scores both on a fixed eval set. You
+promote the winner, and can revert instantly.
 
 ## Build It
 
@@ -70,11 +70,11 @@ Now "is the new prompt better?" has a number, and rollback is one call.
 
 ## Use It
 
-For **Claude Code / Codex** users, the practical form is: keep your `CLAUDE.md`/`AGENTS.md`
-and any custom skill prompts in git (they're versioned automatically), and when you change
-one, run your eval set (Phase 15) on a few representative tasks before and after. The
-registry here is what you'd build inside a larger harness or skill that ships multiple
-prompt variants.
+For **Claude Code / Codex** users, the practical form is simple. Keep your
+`CLAUDE.md`/`AGENTS.md` and any custom skill prompts in git, since they're versioned
+automatically. When you change one, run your eval set (Phase 15) on a few representative
+tasks before and after. The registry here is what you'd build inside a larger harness or
+skill that ships multiple prompt variants.
 
 ## Ship It
 

@@ -5,13 +5,13 @@
 ## TL;DR
 
 Owning a product includes owning its worst hour. An **incident** is any unplanned event
-degrading what users depend on; the discipline around it has three phases with
+degrading what users depend on. The discipline around it has three phases with
 different tempos: **respond** (stop the bleeding — mitigation before diagnosis, one
 incident commander, users informed honestly), **recover** (restore service, then
 restore *trust*), and **learn** (a **blameless postmortem** that finds the systemic
-causes and converts them into funded fixes). The PM is rarely the one typing the fix —
-your incident-time job is user impact, communication, and decisions that trade
-recovery speed against risk; your postmortem-time job is making sure the lessons
+causes and converts them into funded fixes). The PM is rarely the one typing the fix.
+Your incident-time job is user impact, communication, and decisions that trade
+recovery speed against risk. Your postmortem-time job is making sure the lessons
 actually reach the roadmap.
 
 > 🎯 **For the AI PM**
@@ -22,8 +22,8 @@ actually reach the roadmap.
 > detectors, and playbooks all need an AI-shaped extension.
 >
 > **What it changes in your decisions** — You define *quality incidents* (eval-score
-> drop, spike in user overrides) as pageable events, not just availability incidents;
-> and every AI feature ships with a kill switch and a degraded mode you chose on
+> drop, spike in user overrides) as pageable events, not just availability incidents.
+> Every AI feature ships with a kill switch and a degraded mode you chose on
 > purpose.
 >
 > **Ask yourself** — *"If this feature started confidently misbehaving at 2 a.m., how
@@ -46,7 +46,7 @@ flowchart LR
 ```
 
 Severity drives everything: a **SEV1** (users broadly down, data at risk) gets a war
-room and executive updates; a **SEV3** (degraded corner case) gets a ticket. Agree on
+room and executive updates. A **SEV3** (degraded corner case) gets a ticket. Agree on
 the ladder *before* you need it — arguing about severity during an incident is how
 minutes become hours. Two rules survive every framework: **mitigate before you
 diagnose** (rollback first, root-cause later — which is why
@@ -59,7 +59,7 @@ so ten helpful engineers don't make eleven uncoordinated changes.
 Not the keyboard — the blast radius:
 
 - **Size the user impact** — who is affected, how badly, and is it getting worse?
-  Engineering knows what's broken; you know what it *means* — which customers, which
+  Engineering knows what's broken. You know what it *means* — which customers, which
   commitments, which revenue.
 - **Own communication** — honest, plain, and on a cadence: status page, support
   macros, account teams for the big customers. "We know, we're on it, next update at
@@ -67,13 +67,13 @@ Not the keyboard — the blast radius:
   handling.
 - **Make the product calls** — degrade or disable? Ship the risky fast fix or the
   safe slow one? Accept data loss for recovery speed? These are product decisions
-  that arrive dressed as technical ones; being in the room is the job.
-- **Keep the timeline** — someone should be logging what happened when; it's the raw
-  material of the postmortem and it's never reconstructible afterward.
+  that arrive dressed as technical ones. Being in the room is the job.
+- **Keep the timeline** — someone should be logging what happened when. It's the raw
+  material of the postmortem, and it's never reconstructible afterward.
 
 ## Blameless postmortems — learning as an artifact
 
-The postmortem's premise: people acted reasonably on the information they had; the
+The postmortem's premise: people acted reasonably on the information they had. The
 *system* let them down. Blamelessness isn't kindness — it's instrumentation: the
 moment a postmortem can hurt someone, it stops hearing the truth.
 
@@ -110,15 +110,15 @@ postmortems all pointing at the same subsystem.
 ## Failure modes
 
 - **Diagnosis before mitigation** — an hour of root-causing while the rollback
-  button waits; users pay for the team's curiosity.
-- **The headless incident** — no commander; parallel uncoordinated fixes, one of
+  button waits. Users pay for the team's curiosity.
+- **The headless incident** — no commander. Parallel uncoordinated fixes, one of
   which causes incident number two.
-- **Blameful postmortems** — the room optimizes for self-defense; the same incident
+- **Blameful postmortems** — the room optimizes for self-defense. The same incident
   returns with a different name on it.
-- **Action-item graveyard** — lessons documented, never funded; the postmortem
+- **Action-item graveyard** — lessons documented, never funded. The postmortem
   becomes a ritual of description.
 - **Availability-only monitoring** — the AI feature is "up" while its quality is
-  quietly on fire; no error, no page, no idea.
+  quietly on fire. No error, no page, no idea.
 
 ## Practitioner checklist
 

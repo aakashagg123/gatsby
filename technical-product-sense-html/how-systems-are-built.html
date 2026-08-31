@@ -314,11 +314,11 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>How systems are built</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Almost every product is a <strong>client</strong> talking to a <strong>server</strong>, and the server is rarely one
+<p>Almost every product is a <strong>client</strong> talking to a <strong>server</strong>. The server is rarely one
 thing — it's a chain: a CDN and load balancer at the edge, an API layer, one or more
 <strong>services</strong> holding business logic, and behind them <strong>datastores</strong>, <strong>caches</strong>, and
-<strong>queues</strong> for work that shouldn't block the user. Understanding this path — and where your
-feature's work actually happens — is the foundation of every other technical judgment: what's
+<strong>queues</strong> for work that shouldn't block the user. Understanding this path, and where your
+feature's work actually happens, is the foundation of every other technical judgment: what's
 cheap, what's slow, what can fail, and what a change will really cost.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
@@ -327,16 +327,16 @@ store, a model endpoint (often a third party), maybe a vector database. Each is 
 latency source, cost center, and failure point. You can't reason about any of them without
 the base picture.</p>
 <p><strong>What it changes in your decisions</strong> — You ask <em>where</em> the model call sits in the request
-path, whether it blocks the user, and what happens to the rest of the system when it's slow
-or down — before committing to the feature.</p>
+path, and whether it blocks the user. You also ask what happens to the rest of the system
+when it's slow or down — before you commit to the feature.</p>
 <p><strong>Ask yourself</strong> — <em>"When a user triggers this feature, what boxes does the request pass
 through, and which one is doing the expensive work?"</em></p>
-<p><strong>Risk if ignored</strong> — Promising a feature whose architecture makes it slow, costly, or
-fragile in ways you only discover after engineering starts.</p>
+<p><strong>Risk if ignored</strong> — You promise a feature, and its architecture turns out slow, costly,
+or fragile. You find out only after engineering starts.</p>
 </blockquote>
 <h2>The path of a request</h2>
-<p>When a user does something, a request travels through layers — each with a job, a cost, and a
-failure mode:</p>
+<p>When a user does something, a request travels through several layers. Each layer has its own
+job, cost, and failure mode:</p>
 <pre class="mermaid">flowchart LR
   U[&quot;User / client&quot;] --&gt; CDN[&quot;CDN / edge&quot;]
   CDN --&gt; LB[&quot;Load balancer&quot;]
@@ -349,65 +349,65 @@ failure mode:</p>
   Q --&gt; W[&quot;Worker&lt;br/&gt;(async jobs)&quot;]
   W --&gt; DB</pre>
 <ul>
-<li><strong>Client</strong> — the browser or app. Anything done here is free for your servers but limited by
-  the user's device and network.</li>
-<li><strong>CDN / edge</strong> — serves static assets and cached responses close to the user; the cheapest,
-  fastest layer. If something can be cached at the edge, it should be.</li>
+<li><strong>Client</strong> — the browser or app. Work done here is free for your servers, but limited by the
+  user's device and network.</li>
+<li><strong>CDN / edge</strong> — serves static assets and cached responses close to the user. It's the
+  cheapest, fastest layer. Cache anything here that you can.</li>
 <li><strong>Load balancer</strong> — spreads traffic across many identical server instances. This is <em>how</em>
   systems handle more users: run more copies behind the balancer.</li>
 <li><strong>API layer</strong> — the front door to your logic; authenticates, validates, routes.</li>
 <li><strong>Services</strong> — where business logic lives. Big systems split into multiple services
-  (sometimes "microservices") so teams and scaling concerns stay independent.</li>
-<li><strong>Database</strong> — the source of truth, on disk. Reliable but comparatively slow; the usual
-  bottleneck.</li>
-<li><strong>Cache</strong> — a fast, in-memory copy of hot data (e.g. Redis). Turns a slow DB read into a
-  fast one — at the cost of possible <strong>staleness</strong>.</li>
-<li><strong>Queue + worker</strong> — for work that shouldn't make the user wait (sending email, generating a
-  report, calling a slow model). The request returns immediately; a worker does the job
+  (sometimes called "microservices") so teams and scaling concerns stay independent.</li>
+<li><strong>Database</strong> — the source of truth, stored on disk. It's reliable but comparatively slow,
+  and it's the usual bottleneck.</li>
+<li><strong>Cache</strong> — a fast, in-memory copy of hot data (for example, Redis). It turns a slow
+  database read into a fast one, at the cost of possible <strong>staleness</strong>.</li>
+<li><strong>Queue + worker</strong> — for work that shouldn't make the user wait: sending email, generating a
+  report, calling a slow model. The request returns immediately, and a worker does the job
   <strong>asynchronously</strong>.</li>
 </ul>
 <h2>Synchronous vs. asynchronous — the key product lever</h2>
 <p>The single most useful distinction here: does the user <strong>wait</strong> for this work, or not?</p>
 <ul>
-<li><strong>Synchronous</strong> (in the request path) — the user stares at a spinner until it's done. Keep
-  this fast; every box adds to their wait.</li>
+<li><strong>Synchronous</strong> (in the request path) — the user stares at a spinner until the work is done.
+  Keep this fast — every box you add increases their wait.</li>
 <li><strong>Asynchronous</strong> (via a queue) — the request returns "got it, working on it," and the result
-  arrives later (a notification, a status that flips to "ready"). This is how you make heavy
-  work feel instant — at the cost of designing for "it's not done yet."</li>
+  arrives later: a notification, or a status that flips to "ready." This is how you make heavy
+  work feel instant, at the cost of designing for "it's not done yet."</li>
 </ul>
-<p>Choosing sync vs. async <em>is</em> a product decision: it shapes the UX (spinner vs. "we'll email
+<p>Choosing sync vs. async <em>is</em> a product decision. It shapes the UX (spinner vs. "we'll email
 you"), the perceived speed, and the system's resilience.</p>
 <h2>Monolith vs. services</h2>
-<p>Early products are often a <strong>monolith</strong> — one codebase, one deploy. Simple and fast to build.
-As teams and load grow, systems split into <strong>services</strong> so parts can scale and ship
-independently. Neither is "right"; the trade-off is <strong>simplicity vs. independence</strong>. As a PM,
-you don't pick the architecture, but knowing which one you're in explains why some changes
-are a one-line tweak and others touch five teams.</p>
+<p>Early products are often a <strong>monolith</strong> — one codebase, one deploy. This is simple and fast
+to build. As teams and load grow, systems split into <strong>services</strong> so parts can scale and ship
+independently. Neither approach is "right" — the trade-off is <strong>simplicity vs. independence</strong>.
+As a PM, you don't pick the architecture. But knowing which one you're in explains why some
+changes are a one-line tweak, and others touch five teams.</p>
 <h2>A worked pass: "add PDF export"</h2>
 <p>Watch the request path turn a one-line feature request into an architecture decision.
-"Users can export their report as a PDF" sounds like a button. Walk it: the click hits
-the API layer, the service has to gather a report's data (several database reads),
-render a PDF (CPU-heavy, 5–30 seconds for big reports), and return it. Held
-synchronously, that's a spinner the user stares at, a request that times out on the
-biggest accounts — precisely the customers who want export most — and a service tied up
-doing renders instead of serving traffic.</p>
-<p>So the shape changes: the click <em>enqueues</em> an export job and returns "we'll email you /
-it'll appear here" immediately; a worker renders the PDF, drops it in object storage,
-and notifies. Same feature, different promise to the user — and different work: now you
-need a jobs queue, a status surface ("preparing your export…"), retry behaviour for
-failed renders, and an expiry policy for stored files. None of that appeared in the
-one-line request; all of it was implied by <em>where the work sits on the path</em>. That's the
-skill this lesson builds — hearing "add a button" and seeing the queue behind it.</p>
+"Users can export their report as a PDF" sounds like a button. Walk through it: the click
+hits the API layer, and the service gathers the report's data (several database reads). It
+then renders a PDF — CPU-heavy work that takes 5–30 seconds for big reports — and returns it.
+Held synchronously, that's a spinner the user stares at. The request times out on the
+biggest accounts, which are exactly the customers who want export most. And the service
+stays tied up doing renders instead of serving traffic.</p>
+<p>So the shape changes. The click <em>enqueues</em> an export job and returns "we'll email you / it'll
+appear here" immediately. A worker renders the PDF, drops it in object storage, and notifies
+the user. It's the same feature, but a different promise to the user — and different work.
+Now you need a jobs queue, a status surface ("preparing your export…"), retry behavior for
+failed renders, and an expiry policy for stored files. None of that appeared in the one-line
+request. All of it was implied by <em>where the work sits on the path</em>. That's the skill this
+lesson builds — hearing "add a button" and seeing the queue behind it.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Assuming one box</strong> — treating "the backend" as a single thing, so you can't reason about
+<li><strong>Assuming one box</strong> — you treat "the backend" as a single thing, so you can't reason about
   where slowness or failure comes from.</li>
-<li><strong>Everything synchronous</strong> — forcing heavy work into the request path, so the UX is a long
-  spinner that times out.</li>
-<li><strong>Cache-as-truth</strong> — forgetting the cache can be stale, and promising data is "live" when
+<li><strong>Everything synchronous</strong> — you force heavy work into the request path, so the UX becomes a
+  long spinner that times out.</li>
+<li><strong>Cache-as-truth</strong> — you forget the cache can be stale, and you promise data is "live" when
   it isn't.</li>
-<li><strong>Ignoring the async tax</strong> — choosing async without designing the "pending / ready / failed"
-  states the UX now needs.</li>
+<li><strong>Ignoring the async tax</strong> — you choose async without designing the "pending / ready /
+  failed" states the UX now needs.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

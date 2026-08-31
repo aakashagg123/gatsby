@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Secrets sneak into two dangerous places: the **context** (a config file the agent read
-contains an API key, now in the prompt) and the **logs/traces** (you record the
-conversation, key and all). Either is a leak waiting to happen. **Redaction** scrubs
-secret-shaped strings on the way in (before the model sees them) and on the way out (before
-anything is logged or returned).
+Secrets sneak into two dangerous places. The **context** is one — a config file the agent
+reads can contain an API key, which then lands in the prompt. The **logs and traces** are
+the other — you record the conversation, key and all. Either is a leak waiting to happen.
+**Redaction** scrubs secret-shaped strings on the way in, before the model sees them, and on
+the way out, before anything is logged or returned.
 
 ## The Concept
 
@@ -20,8 +20,8 @@ flowchart LR
   OUT["model/tool output"] --> R2["redact secrets → logs / user"]
 ```
 
-Redaction is pattern-based (key formats, tokens) plus known-value masking (your actual
-secrets), applied at both boundaries.
+Redaction combines pattern-based matching (key formats, tokens) with known-value masking
+(your actual secrets). It applies at both boundaries.
 
 ## Build It
 
@@ -53,16 +53,17 @@ print(redact(s, known_values=[os.getenv("ANTHROPIC_API_KEY")]))
 # key=[REDACTED] and token=[REDACTED]
 ```
 
-Apply `redact` when injecting file/tool content into context *and* when writing traces (Phase
-16) or returning output — both boundaries, so a secret is scrubbed coming and going.
+Apply `redact` when injecting file or tool content into context, and again when writing
+traces (Phase 16) or returning output. Cover both boundaries, so a secret is scrubbed coming
+and going.
 
 ## Use It
 
-Wire redaction into a PostToolUse hook (Phase 8) so tool output is scrubbed before it enters
-context or logs, and into your trace exporter (Phase 16). For a Claude Code / Codex user this
-complements the `.env` block (Phase 0): even if a secret lands in some file the agent reads,
-redaction keeps it out of the model and the logs. Combine with rotating any secret that *was*
-exposed.
+Wire redaction into a PostToolUse hook (Phase 8), so tool output is scrubbed before it
+enters context or logs, and into your trace exporter (Phase 16). For a Claude Code or Codex
+user this complements the `.env` block (Phase 0). Even if a secret lands in some file the
+agent reads, redaction keeps it out of the model and the logs. Combine this with rotating
+any secret that *was* exposed.
 
 ## Ship It
 

@@ -6,10 +6,11 @@
 
 ## The Problem
 
-Agents spend money per token, and a coding agent can burn a lot. Without **cost accounting**
-you can't answer "what did this run cost?", "which feature is expensive?", or "is this tenant
-profitable?" — and you can't enforce budgets (Phase 14) meaningfully. The harness must
-convert token usage into dollars and attribute it along the dimensions you care about.
+Agents spend money per token, and a coding agent can burn a lot of tokens. Without **cost
+accounting** you can't answer basic questions: what did this run cost, which feature is
+expensive, is this tenant profitable. You also can't enforce budgets (Phase 14) in any
+meaningful way. The harness must convert token usage into dollars, then attribute that cost
+along the dimensions you care about.
 
 ## The Concept
 
@@ -19,8 +20,8 @@ flowchart LR
   P --> C["cost per call"] --> A["attribute: session / feature / tenant"]
 ```
 
-Pricing is per-model and per-direction (input vs. output, plus cache reads); attribution tags
-each cost with who/what it was for.
+Pricing is per-model and per-direction — input, output, and cache reads each have their own
+rate. Attribution tags each cost with who or what it was for.
 
 ## Build It
 
@@ -53,15 +54,16 @@ m.record("claude-haiku-4-5-20251001", 50_000, 5_000, tag="feature:search")
 print(m.report())     # cost attributed per feature
 ```
 
-Tagging each `record` lets you slice spend by feature/session/tenant — the input to pricing
-decisions and per-tenant budgets.
+Tagging each `record` call lets you slice spend by feature, session, or tenant. That
+breakdown feeds pricing decisions and per-tenant budgets.
 
 ## Use It
 
-The SDK returns real `usage` (input/output/cache tokens) on every response; feed it to a
-meter like this, tagged by the session/feature/tenant. For a Claude Code / Codex user this is
-why long autonomous runs cost what they do, and why model routing (Phase 14) matters — a
-cheaper model on routine work is a direct line-item saving. Always verify current prices.
+The SDK returns real `usage` data (input, output, and cache tokens) on every response. Feed
+that data to a meter like this one, tagged by session, feature, or tenant. For a Claude Code
+or Codex user, this is why long autonomous runs cost what they do. It's also why model
+routing (Phase 14) matters — a cheaper model on routine work is a direct line-item saving.
+Always verify current prices.
 
 ## Ship It
 

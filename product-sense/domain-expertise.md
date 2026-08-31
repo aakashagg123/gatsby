@@ -5,11 +5,11 @@
 ## TL;DR
 
 PM fundamentals transfer across industries, but **domain expertise** — deep knowledge of the
-specific world your product lives in — is what upgrades guessing into *knowing*. It acts as
+specific world your product lives in — upgrades guessing into *knowing*. It acts as
 a filter on decisions: you can tell must-haves from nice-to-haves, anticipate what will hit
-resistance, and move faster because you recognize patterns. Build it deliberately
-(immersive learning, asking "dumb" questions, hands-on experience, a network of experts),
-but don't get **trapped** by it — experts drift into "I am the user" and stop validating.
+resistance, and move faster because you recognize patterns. Build it deliberately —
+immersive learning, asking "dumb" questions, hands-on experience, a network of experts.
+But don't get **trapped** by it. Experts drift into "I am the user" and stop validating.
 The best domain experts pair deep knowledge with an outsider's willingness to ask *"why is
 it done this way at all?"*
 
@@ -20,8 +20,9 @@ it done this way at all?"*
 > Thin knowledge in either produces confident, wrong product bets.
 >
 > **What it changes in your decisions** — You learn enough of the model's failure surface to
-> know which features are safe to ship and which need a human in the loop — and enough of the
-> user's world to know where a wrong answer is merely annoying versus genuinely harmful.
+> know which features are safe to ship and which need a human in the loop. You learn enough
+> of the user's world to know where a wrong answer is merely annoying versus genuinely
+> harmful.
 >
 > **Ask yourself** — *"In this domain, what does a confidently-wrong model output actually cost
 > the user — and do I know that cost well enough to set the quality bar?"*
@@ -50,8 +51,8 @@ adds value in context.
 
 Experts decide faster because they **recognize patterns** and recall lessons from similar
 situations. A fintech PM who knows payments cold will quickly reject a "cool" feature whose
-compliance approval would take a year — and find a creative path that meets the need without
-the red tape, where a novice would charge in and hit the wall.
+compliance approval would take a year, and find a creative path that meets the need without
+the red tape. A novice would charge in and hit the wall.
 
 Domain knowledge also builds **credibility**: speaking your users' and stakeholders' language
 makes you a more persuasive communicator and a more trusted decision-maker — sales and
@@ -72,7 +73,7 @@ Entering a new domain, be systematic:
   day 60, I'll have talked to 5 domain experts and read 3 seminal reports").
 - **Ask "dumb" questions (AMA-style)** — flip *Ask Me Anything*: have experts explain things to
   you. Not grasping how ACH differs from wire transfers? Ask a fintech ops manager. Humility
-  and curiosity win respect; it's far better to ask early than to decide wrong out of
+  and curiosity win respect. It's far better to ask early than to decide wrong out of
   ignorance.
 - **Hands-on experience** — live the domain: observe hospital staff using the software; sell
   something on your own e-commerce platform; build a small project with your own API.
@@ -105,22 +106,22 @@ informed hypothesis — is itself the mark of expertise.
 
 ## Actionable steps
 
-- **Make a 90-day learning plan** — key topics, experts to meet, resources to read; track it
+- **Make a 90-day learning plan** — key topics, experts to meet, resources to read. Track it
   like onboarding.
-- **Join domain communities** — forums, Slack groups, meetups; absorb practitioners'
+- **Join domain communities** — forums, Slack groups, meetups. Absorb practitioners'
   real-world nuances.
 - **Run expert/user panels** — invite experienced users or specialists to Q&A with the team.
-- **Document domain knowledge** — a living wiki of terms, regulations, and common workflows;
-  writing it reinforces your learning and onboards others.
+- **Document domain knowledge** — a living wiki of terms, regulations, and common workflows.
+  Writing it reinforces your learning and onboards others.
 - **Test your expertise** — write the 5 hardest questions someone could ask about your
-  product/domain and answer them; the gaps are your study list.
+  product/domain and answer them. The gaps are your study list.
 
 > **📦 Mini-case — the EMR that doctors hate.** Electronic medical records were largely
 > designed with deep domain input — from billing and compliance experts. The result
 > optimizes claims perfectly and forces clinicians through fifteen clicks to record an
-> ordinary visit. Domain expertise *was* present; it was the wrong domain's, and
+> ordinary visit. Domain expertise *was* present. It was the wrong domain's, and
 > nobody asked the outsider question "why does a doctor's tool feel like an invoice?"
-> Expertise tells you how the world works; only user contact tells you whose version
+> Expertise tells you how the world works. Only user contact tells you whose version
 > of the world your product just encoded.
 
 ## Failure modes
