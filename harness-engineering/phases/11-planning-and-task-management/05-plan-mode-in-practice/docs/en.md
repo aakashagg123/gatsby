@@ -35,9 +35,8 @@ If a step stalls, it re-plans.
 
 Install the skill and run `/plan-and-build "<goal>"` in Claude Code / Codex. It enforces the
 habits this phase teaches: plan before acting, keep a visible todo list, verify each step,
-and re-plan instead of grinding. For most users this is the single highest-leverage workflow
-— it's what turns "the agent went off and did something" into "the agent and I agreed on a
-plan, and I watched it land."
+and re-plan instead of grinding. For most users, this is the single highest-leverage workflow. It turns "the agent went off
+and did something" into "the agent and I agreed on a plan, and I watched it land."
 
 ## Ship It
 

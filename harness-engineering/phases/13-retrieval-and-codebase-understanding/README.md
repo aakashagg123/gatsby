@@ -1,7 +1,7 @@
 # Phase 13 — Retrieval & codebase understanding
 
-> Help the agent find the right 200 lines in a million-line repo — repo maps, embeddings,
-> hybrid search, code-aware chunking, and a retrieval tool the agent calls.
+> Help the agent find the right 200 lines in a million-line repo. Covers repo maps,
+> embeddings, hybrid search, code-aware chunking, and a retrieval tool the agent calls.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|
