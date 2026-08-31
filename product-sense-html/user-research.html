@@ -315,22 +315,22 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>Product sense is built from user contact, so the craft of <em>getting</em> that contact well
-is a discipline of its own. The method landscape splits on two axes: <strong>qualitative</strong>
-(interviews, usability tests — <em>why</em> people do things) vs. <strong>quantitative</strong> (analytics,
-surveys at scale — <em>how many</em> do it), and <strong>attitudinal</strong> (what people say) vs.
-<strong>behavioural</strong> (what they actually do). The two iron rules: match the method to the
-question, and <strong>trust behaviour over statements</strong> — users are honest about problems
-and unreliable about solutions and futures. Interviewing is the core skill: past
-behaviour over hypotheticals, open questions over leading ones, silence over filling
-it, and five users per round beats fifty per year.</p>
+is a discipline of its own. The method landscape splits on two axes. <strong>Qualitative</strong>
+methods — interviews, usability tests — answer <em>why</em> people do things. <strong>Quantitative</strong>
+methods — analytics, surveys at scale — answer <em>how many</em> do it. A second axis separates
+<strong>attitudinal</strong> data (what people say) from <strong>behavioural</strong> data (what they actually do).
+Two rules govern the choice: match the method to the question, and <strong>trust behaviour over
+statements</strong> — users are honest about problems and unreliable about solutions and futures.
+Interviewing is the core skill: favor past behaviour over hypotheticals, open questions
+over leading ones, and silence over filling it. Five users per round beats fifty per year.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — AI products add research questions classic funnels miss: do
 users <em>trust</em> the output, can they <em>repair</em> a wrong answer, do they understand what
 the system can't do? None of these appear in analytics until they appear as churn.</p>
 <p><strong>What it changes in your decisions</strong> — You watch users react to <em>imperfect</em> AI
-output (seed the test with a wrong answer on purpose); you treat edits, retries,
-and abandonments as research data; and you never validate an AI feature only on its
+output, by seeding the test with a wrong answer on purpose. You treat edits, retries,
+and abandonments as research data. You never validate an AI feature only on its
 best-case demo behaviour.</p>
 <p><strong>Ask yourself</strong> — <em>"Have I watched a real user hit a wrong answer from this
 feature — and did they recover, retry, or quietly leave?"</em></p>
@@ -346,14 +346,15 @@ in three weeks on what users actually <em>did</em>.</p>
   QUANT --&gt;|&quot;finds anomalies to explain&quot;| QUAL
   SAY[&quot;Attitudinal:&lt;br/&gt;what people SAY&quot;] -.-&gt;|&quot;weak for predictions,&lt;br/&gt;good for perceptions&quot;| Q
   DO[&quot;Behavioural:&lt;br/&gt;what people DO&quot;] -.-&gt;|&quot;the ground truth&quot;| Q</pre>
-<p>The pairing is the point: qualitative finds the <em>why</em> behind the numbers, quantitative
-tells you which whys are common enough to matter. A funnel drop-off (quant) tells you
-where; five interviews (qual) tell you what happened there; a survey (quant again)
-tells you how widely the explanation holds. Research that stays on one side of the map
-produces either anecdotes with no scale or scale with no explanation.</p>
-<p>And always weight by the say–do gap: users who <em>said</em> they'd pay, didn't; users who
+<p>The pairing is the point. Qualitative research finds the <em>why</em> behind the numbers.
+Quantitative research tells you which whys are common enough to matter. A funnel
+drop-off (quant) tells you where. Five interviews (qual) tell you what happened there.
+A survey (quant again) tells you how widely the explanation holds. Research that stays
+on one side of the map produces either anecdotes with no scale, or scale with no
+explanation.</p>
+<p>Always weight for the say–do gap. Users who <em>said</em> they'd pay, didn't. Users who
 <em>said</em> the old design was fine had already stopped using it. Statements are data about
-perceptions; behaviour is data about the world.</p>
+perceptions. Behaviour is data about the world.</p>
 <h2>Interviewing — the core skill</h2>
 <p>Most PM research is conversations, and most conversations are quietly corrupted by the
 asker. The craft:</p>
@@ -361,18 +362,18 @@ asker. The craft:</p>
 <li><strong>Past behaviour, not hypotheticals.</strong> "Tell me about the last time you booked
   travel for work" beats "would you use a tool that…?" every single time. People are
   historians of their own behaviour and terrible futurists.</li>
-<li><strong>Open, then narrow.</strong> Start wide ("walk me through it"), drill into specifics
-  ("what did you do next? what were you feeling there?"), save your topics for the
-  end. The structure of the <a href="../first-principles/the-method.html">5 Whys</a> works on
+<li><strong>Open, then narrow.</strong> Start wide ("walk me through it"). Drill into specifics
+  ("what did you do next? what were you feeling there?"). Save your own topics for
+  the end. The structure of the <a href="../first-principles/the-method.html">5 Whys</a> works on
   humans too — gently.</li>
 <li><strong>Don't lead, don't pitch.</strong> "Don't you think X would help?" produces polite
-  agreement, not truth. If you're testing your idea, watch them <em>use</em> it; don't ask
+  agreement, not truth. If you're testing your idea, watch them <em>use</em> it. Don't ask
   them to bless it.</li>
 <li><strong>Silence is a tool.</strong> The best material arrives after the pause you resisted
   filling.</li>
-<li><strong>Small n, high frequency.</strong> Five users per round, rounds every few weeks,
+<li><strong>Small n, high frequency.</strong> Five users per round, with rounds every few weeks,
   compounds into the <a href="cognitive-empathy.html">pattern → heuristic → intuition</a>
-  engine. Fifty interviews once a year produces a report; five a month produces
+  engine. Fifty interviews once a year produces a report. Five a month produces
   product sense.</li>
 </ul>
 <p>Usability testing is interviewing's behavioural twin: give a task, watch, and narrate
@@ -383,8 +384,8 @@ yourself alongside the product to explain it to everyone else.</p>
 <ul>
 <li><strong>The trust curve.</strong> First impressions of AI features are unstable: delight at a
   good answer, betrayal at a bad one. Research the <em>second</em> session, not just the
-  first — and deliberately show participants an imperfect output to watch the
-  recovery: do they edit, retry, distrust the feature, or distrust the whole product?
+  first. Deliberately show participants an imperfect output, and watch the recovery:
+  do they edit, retry, distrust the feature, or distrust the whole product?
   (<a href="product-sense-for-ai.html">Trust design</a> is downstream of what you learn here.)</li>
 <li><strong>The mental model.</strong> Users bring wildly different theories of what the system is
   ("it's Google," "it's a person," "it knows my account"). Mismatched mental models

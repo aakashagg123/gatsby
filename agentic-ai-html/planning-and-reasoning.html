@@ -314,16 +314,16 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Planning &amp; reasoning</h1>
   </div>
   <h2>TL;DR</h2>
-<p>"Cognition" in an agent is not a module you install — it's the model, prompted and
+<p>"Cognition" in an agent is not a module you install. It's the model, prompted and
 orchestrated into <strong>patterns</strong>. The big four: <strong>ReAct</strong> (interleave thinking and acting,
 one step at a time), <strong>plan-and-execute</strong> (draft the whole plan first, then work it,
 revising as reality pushes back), <strong>reflection</strong> (generate, critique your own output,
 retry), and <strong>decomposition</strong> (split the goal into subtasks, farm them out, integrate).
-Modern <em>reasoning models</em> bake much of this in — they "think" before answering, and
-think longer on harder problems, trading latency and tokens for accuracy (<strong>test-time
-compute</strong>). The product craft is matching pattern and thinking budget to the task:
-reasoning helps most on verifiable, multi-constraint problems; it's expensive decoration
-on lookups; and no pattern rescues an agent whose environment gives it no feedback to
+Modern <em>reasoning models</em> bake much of this in. They "think" before answering, and think
+longer on harder problems, trading latency and tokens for accuracy (<strong>test-time
+compute</strong>). The product craft is matching pattern and thinking budget to the task.
+Reasoning helps most on verifiable, multi-constraint problems. It's expensive decoration
+on lookups. And no pattern rescues an agent whose environment gives it no feedback to
 reason <em>about</em>.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
@@ -331,13 +331,13 @@ reason <em>about</em>.</p>
 one second or deliberate for two minutes at 50× the tokens, and somebody — you — has
 to decide what each task deserves. Pattern choice drives the three numbers users feel:
 quality, latency, and cost.</p>
-<p><strong>What it changes in your decisions</strong> — You stop asking "is the model smart enough?"
-and start asking "what's the thinking budget for this task tier, and what checkable
+<p><strong>What it changes in your decisions</strong> — Stop asking "is the model smart enough?" and
+start asking "what's the thinking budget for this task tier, and what checkable
 feedback does the agent get so its thinking converges instead of spiraling?"</p>
 <p><strong>Ask yourself</strong> — <em>"When this agent gets the plan wrong at step 2, what tells it —
 and how much have we spent by the time it finds out?"</em></p>
 <p><strong>Risk if ignored</strong> — An agent that burns two minutes and 100k tokens deliberating
-over a FAQ answer, or one that executes a flawed plan at full speed because nothing
+over a FAQ answer. Or one that executes a flawed plan at full speed, because nothing
 in the loop ever checked the plan.</p>
 </blockquote>
 <h2>The patterns</h2>
@@ -360,62 +360,64 @@ in the loop ever checked the plan.</p>
     F2 --&gt;|&quot;passes&quot;| F3[&quot;Deliver&quot;]
   end</pre>
 <ul>
-<li><strong>ReAct</strong> — the default loop from <a href="what-is-an-agent.html">lesson 1</a> with the thinking
-  made explicit: reason about the situation, act, observe, reason again. Strong when
-  each step's result should shape the next (debugging, research). Weakness: myopia — no
-  global picture, so it can wander or loop.</li>
-<li><strong>Plan-and-execute</strong> — think globally first. Better for multi-part deliverables and
-  long tasks; also gives you a natural <strong>human checkpoint</strong> — showing the plan before
-  execution is the cheapest, highest-leverage approval gate in agent UX. Weakness:
-  plans meet reality; the pattern only works with an explicit "revise the plan" path.</li>
-<li><strong>Reflection / self-correction</strong> — quality through iteration. Crucial nuance: models
-  are mediocre critics of their own <em>unverifiable</em> claims, but excellent responders to
-  <strong>external verification</strong> — failing tests, compiler errors, schema validators, a
-  checklist. Reflection pays roughly in proportion to how checkable the work is; that's
-  why coding agents (tests!) improved faster than open-ended writing agents.</li>
+<li><strong>ReAct</strong> — the default loop from <a href="what-is-an-agent.html">lesson 1</a>, with the thinking
+  made explicit: reason about the situation, act, observe, reason again. It's strong when
+  each step's result should shape the next (debugging, research). Its weakness is
+  myopia — no global picture, so it can wander or loop.</li>
+<li><strong>Plan-and-execute</strong> — think globally first. This works better for multi-part
+  deliverables and long tasks. It also gives you a natural <strong>human checkpoint</strong> —
+  showing the plan before execution is the cheapest, highest-leverage approval gate in
+  agent UX. Its weakness: plans meet reality, and the pattern only works with an
+  explicit "revise the plan" path.</li>
+<li><strong>Reflection / self-correction</strong> — quality through iteration. Here's the crucial
+  nuance: models are mediocre critics of their own <em>unverifiable</em> claims, but excellent
+  responders to <strong>external verification</strong> — failing tests, compiler errors, schema
+  validators, a checklist. Reflection pays roughly in proportion to how checkable the
+  work is. That's why coding agents, which have tests, improved faster than open-ended
+  writing agents.</li>
 <li><strong>Decomposition</strong> — split, delegate (often to <a href="multi-agent-and-protocols.html">subagents</a>),
-  integrate. Buys focus and parallelism; costs coordination — subtasks done brilliantly
-  can still integrate into nonsense unless something owns the whole.</li>
+  integrate. This buys focus and parallelism, but costs coordination. Subtasks done
+  brilliantly can still integrate into nonsense unless something owns the whole.</li>
 </ul>
 <p>The patterns have a short research lineage worth knowing, because vendors still name
-frameworks after it: <strong>chain-of-thought</strong> (prompt the model to reason step-by-step
-before answering) came first; <strong>self-consistency</strong> improved it by sampling several
-chains and taking the majority answer; <strong>Tree-of-Thoughts</strong> generalized it to exploring
+frameworks after it. <strong>Chain-of-thought</strong> (prompt the model to reason step-by-step
+before answering) came first. <strong>Self-consistency</strong> improved it by sampling several
+chains and taking the majority answer. <strong>Tree-of-Thoughts</strong> generalized it to exploring
 multiple reasoning branches with backtracking — deliberate search instead of one linear
 chain. <strong>ReAct</strong> grafted chain-of-thought onto action: thought → act → observe, taught
 to the model with a few in-context examples. Reasoning models internalized most of this
 lineage — you now buy it as "thinking" rather than prompt it by hand — but the names
 survive in framework docs, and the underlying moves survive in every agent transcript
 you'll read.</p>
-<p>These compose: a serious coding agent plans, executes each step ReAct-style, reflects
-against tests, and decomposes big work. Frameworks mostly package these patterns with
-plumbing — evaluate them on the plumbing, because the patterns themselves are a page of
-prompting.</p>
+<p>These patterns compose. A serious coding agent plans, executes each step ReAct-style,
+reflects against tests, and decomposes big work. Frameworks mostly package these
+patterns with plumbing — evaluate them on the plumbing, because the patterns themselves
+are a page of prompting.</p>
 <h2>Test-time compute: thinking as a budget</h2>
 <p>Reasoning models (o-series, Claude's extended thinking, R1, Gemini thinking) generate
-internal chains of thought before answering, and accuracy on hard problems climbs with
+internal chains of thought before answering. Accuracy on hard problems climbs with
 thinking time — a new scaling axis that happens at <em>inference</em>, on your bill, per
-request. Three product consequences:</p>
+request. Three product consequences follow:</p>
 <ul>
 <li><strong>Thinking is tierable.</strong> Route by stakes: no thinking for lookups, standard for
   everyday tasks, deep deliberation for the gnarly 5%. A single global setting
   overspends on the easy and underserves the hard.</li>
 <li><strong>Latency is now a quality dial, and users can see it.</strong> "Thinking…" for 90 seconds is
-  acceptable for "audit this contract," fatal for autocomplete. Set thinking budgets
+  acceptable for "audit this contract," but fatal for autocomplete. Set thinking budgets
   per surface, not per model.</li>
 <li><strong>More thinking isn't monotonic value.</strong> Past a point, extra deliberation adds cost
   and sometimes second-guesses correct answers. Find the knee of the curve with
   <a href="reliability-and-evals.html">evals</a>, not vibes.</li>
 </ul>
-<p>And the boundary that keeps you honest: reasoning improves <em>derivation</em> — math, code,
-constraint-juggling, multi-hop logic. It does not add knowledge the model lacks
-(that's <a href="context-and-memory.html">retrieval</a>), and it doesn't reliably fix
-hallucination — a model can reason beautifully from a false premise. Diagnose which
-failure you have before buying thinking tokens.</p>
+<p>One boundary keeps you honest: reasoning improves <em>derivation</em> — math, code,
+constraint-juggling, multi-hop logic. It does not add knowledge the model lacks (that's
+<a href="context-and-memory.html">retrieval</a>), and it doesn't reliably fix hallucination — a
+model can reason beautifully from a false premise. Diagnose which failure you have
+before buying thinking tokens.</p>
 <h2>Feedback beats brilliance</h2>
-<p>The strongest single lever on agent intelligence isn't the pattern or the budget — it's
+<p>The strongest single lever on agent intelligence isn't the pattern or the budget. It's
 the <strong>quality of the feedback the environment returns</strong>. An agent with tests,
-validators, error messages that teach, and checkable intermediate results converges; an
+validators, error messages that teach, and checkable intermediate results converges. An
 agent acting into a void diverges, no matter how clever. This is why "make the work
 verifiable" — add a checker tool, define acceptance criteria the agent can run, return
 <a href="tools-and-function-calling.html">errors that explain</a> — routinely beats "make the
@@ -424,12 +426,12 @@ ask what the agent would <em>see</em> if it were wrong.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Deliberation as decoration</strong> — maximum thinking budget on every request because the
-  demo looked smarter; the invoice and the latency graph disagree.</li>
+  demo looked smarter. The invoice and the latency graph disagree.</li>
 <li><strong>Plan worship</strong> — executing a stale plan after step 1 disproved it, because nobody
   built the revise path.</li>
 <li><strong>Self-grading inflation</strong> — trusting the model's "I checked my work" without an
-  external verifier; reflection without verification is confidence laundering.</li>
-<li><strong>Endless pondering</strong> — reasoning loops without budgets on ambiguous tasks; the agent
+  external verifier. Reflection without verification is confidence laundering.</li>
+<li><strong>Endless pondering</strong> — reasoning loops without budgets on ambiguous tasks. The agent
   thinks in circles at your expense instead of asking a human.</li>
 <li><strong>Pattern cargo-culting</strong> — adopting a framework's five-agent planner-critic-executor
   architecture for a task a single well-prompted loop handles better and cheaper.</li>

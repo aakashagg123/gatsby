@@ -314,22 +314,22 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Product sense for AI products</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies when your product is powered by a model — but the
-<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic, non-stationary,
-and confidently wrong sometimes</strong>, which reshapes five instincts: quality becomes something
-you <em>measure with evals</em> rather than eyeball; trust has to be engineered under
-<strong>non-determinism</strong>; <strong>latency and cost</strong> become first-class UX, not back-end details; the
-capability frontier is <strong>jagged</strong>, so scoping is a product skill; and <strong>feedback becomes a
-flywheel</strong> you design on purpose. The AI PM's edge is knowing where a model genuinely adds
-value — and where a boring deterministic feature wins.</p>
+<p>Everything in this module still applies when your product is powered by a model. But the
+<em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic,
+non-stationary, and confidently wrong sometimes</strong>. That reshapes five instincts. Quality
+becomes something you <em>measure with evals</em> rather than eyeball. Trust has to be engineered
+under <strong>non-determinism</strong>. <strong>Latency and cost</strong> become first-class UX, not back-end
+details. The capability frontier is <strong>jagged</strong>, so scoping is a product skill. And
+<strong>feedback becomes a flywheel</strong> you design on purpose. The AI PM's edge is knowing where a
+model genuinely adds value, and where a boring deterministic feature wins.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This is the synthesis lesson: it takes motivation, empathy, creativity,
-communication, and domain expertise and ports them into the one place they most often
-break — a product whose core component is a stochastic model.</p>
-<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product and
-start treating the <em>system around it</em> (evals, guardrails, fallbacks, UX for failure) as the
-product — which is exactly where taste and judgment live.</p>
+<p><strong>Why it matters</strong> — This is the synthesis lesson. It takes motivation, empathy,
+creativity, communication, and domain expertise, and ports them into the one place they
+most often break: a product whose core component is a stochastic model.</p>
+<p><strong>What it changes in your decisions</strong> — You stop treating "the model" as the product. You
+start treating the <em>system around it</em> — evals, guardrails, fallbacks, UX for failure — as
+the product. That system is exactly where taste and judgment live.</p>
 <p><strong>Ask yourself</strong> — <em>"For this job, does a probabilistic model actually beat a deterministic
 feature — and if it does, how will the product stay trustworthy when the model is wrong?"</em></p>
 <p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
@@ -356,10 +356,11 @@ distribution — the same prompt can produce a great answer today and a poor one
 product taste has to become <strong>measurable</strong>. The AI PM defines what "good" means as an
 <strong>eval</strong>: a graded set of representative and adversarial cases the product must pass, run
 continuously so quality doesn't silently regress. Your product sense — knowing what a great
-output <em>feels</em> like for this user — is what makes the eval meaningful; without it, you
-optimize a number that doesn't map to value. And it's exercised trace by trace: reading real
-outputs and calling pass or fail, not reviewing an aggregate score someone else defined —
-the dashboard tells you <em>that</em> quality moved, the traces tell you <em>what good means here</em>.</p>
+output <em>feels</em> like for this user — is what makes the eval meaningful. Without it, you
+optimize a number that doesn't map to value. And you exercise it trace by trace: read real
+outputs and call pass or fail, rather than reviewing an aggregate score someone else
+defined. The dashboard tells you <em>that</em> quality moved. The traces tell you <em>what good means
+here</em>.</p>
 <p>This is the same instinct as <a href="motivation-and-behaviour.html">measuring satisfaction</a>, just
 moved upstream into the model's outputs. (The engineering of this — golden sets,
 LLM-as-judge, regression gates — is the subject of the AI Engineering track's
@@ -414,7 +415,7 @@ they're <strong>product</strong> concerns, because they trade directly against q
 </tbody>
 </table>
 <p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency; a legal-review tool can wait for accuracy. (The
+assistant lives or dies on latency. A legal-review tool can wait for accuracy. (The
 mechanics of these trade-offs are the AI Engineering track's
 <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
 <a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
@@ -429,24 +430,24 @@ isn't "we have AI," it's <em>"we found the job where this model is genuinely rel
 valuable, for a user who cares."</em> Often the best AI product uses the model for the 20% that
 delights and a deterministic system for the 80% that must be correct.</p>
 <p>For enterprise products, plot the job on two axes: <strong>task complexity</strong> and the buyer's
-<strong>tolerance to task failure</strong>. Most visible AI wins live where failure is cheap (a blog
-outline that misses is deleted); enterprise value lives where failure is expensive (a
-diagnosis, a payment) — and the way in is not to wait for a perfect model but to take
+<strong>tolerance to task failure</strong>. Most visible AI wins live where failure is cheap — a blog
+outline that misses is just deleted. Enterprise value lives where failure is expensive —
+a diagnosis, a payment. The way in is not to wait for a perfect model. Instead, take
 jobs of modest complexity in low-tolerance domains and <em>wrap service checks around
 them</em>: verification steps, human gates, escalation paths. The frontier then shifts
-outward with the model — but the scoping discipline is what got you in the room.</p>
+outward with the model, but the scoping discipline is what got you in the room.</p>
 <h2>AI-enabled vs. AI-native</h2>
-<p>A distinction that sharpens scoping conversations: an <strong>AI-enabled</strong> product bolts a
+<p>A distinction sharpens scoping conversations: an <strong>AI-enabled</strong> product bolts a
 model onto an existing product — the photo editor that grows an "AI-enhance" button. An
 <strong>AI-native</strong> product is built around the model — the generative image platform where,
 without the model, there is no product. The test is one question: <em>turn the model off —
-what's left?</em> Both are legitimate; the product-sense failure is building one while
+what's left?</em> Both are legitimate. The product-sense failure is building one while
 pricing, roadmapping, or pitching the other. AI-enabled work is feature work: the
 existing product's quality bar, margins, and UX conventions still govern. AI-native work
-changes the question you start from — not <em>"how can AI enhance this feature?"</em> but
+changes the question you start from. It's not <em>"how can AI enhance this feature?"</em> but
 <em>"if intelligence were the core material, how would we solve this problem from
-scratch?"</em> — and it makes the eval, the failure UX, and the cost curve the product,
-not accessories to it.</p>
+scratch?"</em> That reframing makes the eval, the failure UX, and the cost curve the
+product itself, not accessories to it.</p>
 <h2>The patterns users now expect</h2>
 <p>Product sense includes knowing the reference points users bring, and 2025 reset them.
 Four patterns became the standard candles every AI product gets compared against:</p>
@@ -459,12 +460,12 @@ Four patterns became the standard candles every AI product gets compared against
   proactivity delights precisely until it presumes.</li>
 <li><strong>Persistent memory as a headline feature</strong> — "it remembers me" moved from silent
   personalization to a marketed, user-visible, user-editable surface. Products that
-  remember silently now read as creepy; products that forget read as broken.</li>
+  remember silently now read as creepy. Products that forget read as broken.</li>
 <li><strong>Visible thinking</strong> — showing reasoning progress ("searching… comparing…
-  reconsidering…") became a trust affordance. Users forgive latency they can watch;
-  they distrust magic that arrives instantly and wrong.</li>
+  reconsidering…") became a trust affordance. Users forgive latency they can watch.
+  They distrust magic that arrives instantly and wrong.</li>
 </ul>
-<p>None of these obligates you to build all four — but every user who's touched a 2025-era
+<p>None of these obligates you to build all four. But every user who's touched a 2025-era
 assistant now carries them as priors, and your product is scored against those priors
 whether you like it or not.</p>
 <h2>Feedback is a flywheel you design</h2>
@@ -473,8 +474,8 @@ thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hoo
 becomes literal: user effort improves the product's data, which improves outputs, which
 earns more use. Product sense here is deciding <strong>what feedback to capture, how to make giving
 it feel worthwhile, and how to close the loop</strong> without violating trust or privacy.</p>
-<p>One caution from systems thinking: a flywheel is a <em>reinforcing</em> feedback loop, and
-reinforcing loops amplify whatever is in them — engagement, but also bias (a model that
+<p>One caution from systems thinking: a flywheel is a <em>reinforcing</em> feedback loop.
+Reinforcing loops amplify whatever is in them — engagement, but also bias (a model that
 under-serves a group gets less engagement from that group, which further shrinks their
 share of the training signal) and filter bubbles. Design the <strong>balancing loops</strong>
 alongside the flywheel: monitoring for skew, ethical checks on what the loop optimizes,
@@ -483,7 +484,7 @@ fastest.</p>
 <h2>Keep a human in the loop where it counts</h2>
 <p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
 merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
-financial transaction). The former can be fully automated; the latter needs a human
+financial transaction). The former can be fully automated. The latter needs a human
 checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
 <strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
 sense.</p>
@@ -494,7 +495,7 @@ sense.</p>
 <li><strong>Name the axis that matters</strong> — latency, quality, or cost — and optimize for the user's job,
   not all three.</li>
 <li><strong>Scope to the reliable frontier</strong> — list the jobs the model does reliably and the ones it
-  doesn't; ship the first, guard or defer the second.</li>
+  doesn't. Ship the first, and guard or defer the second.</li>
 <li><strong>Instrument the feedback loop</strong> — capture corrections and close the loop into evals and,
   where appropriate, the product.</li>
 <li><strong>Match autonomy to stakes</strong> — full automation where wrong is cheap; human-in-the-loop where
@@ -502,7 +503,7 @@ sense.</p>
 </ul>
 <blockquote>
 <p><strong>📦 Mini-case — Air Canada's chatbot.</strong> The airline's support bot confidently
-described a bereavement-refund policy that didn't exist; a tribunal made the company
+described a bereavement-refund policy that didn't exist. A tribunal made the company
 honor it. Every theme of this lesson in one incident: an ungrounded model given full
 authority in the UX (no citations, no "I don't know"), no eval that would have
 caught policy hallucination, and a failure whose cost was legal and reputational,

@@ -326,7 +326,7 @@ it's a confident model reciting the wrong or stale passage.</p>
 <li><a href="#retrieval-evals"><strong>Retrieval evals</strong></a> — measuring it: recall, precision,
   grounding, attribution, and citation quality. You cannot tune what you don't measure.</li>
 </ul>
-<p>RAG is applied <a href="00-foundations.html#context-engineering">context engineering</a>: the
+<p>RAG is applied <a href="00-foundations.html#context-engineering">context engineering</a>. The
 retriever decides what occupies the window, and the generator can only be as good as
 what the retriever found. The two lessons here are a matched pair — build the pipeline,
 then prove it works.</p>
@@ -352,12 +352,13 @@ then prove it works.</p>
 </div>
 <div class="iw-legend"><span><i style="background:#D97757"></i>relevant</span><span><i style="background:#ded8c9"></i>noise</span><span><i style="background:#fff;outline:2px solid #1A1915"></i>kept after rerank</span></div></div></section>
   <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</h2></div><h2>TL;DR</h2>
-<p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong> decides
-what a retrievable unit <em>is</em>; <strong>embeddings</strong> decide how meaning is matched; <strong>hybrid
-search</strong> combines keyword and vector recall; <strong>reranking</strong> sharpens precision before
-the prompt; <strong>freshness</strong> keeps the index from lying. The generator can only answer
-from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
-retrieval bugs. Optimize retrieval first, generation second.</p>
+<p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong>
+decides what a retrievable unit <em>is</em>. <strong>Embeddings</strong> decide how meaning is
+matched. <strong>Hybrid search</strong> combines keyword and vector recall. <strong>Reranking</strong>
+sharpens precision before the prompt. <strong>Freshness</strong> keeps the index from
+lying. The generator can only answer from what retrieval surfaces, so most
+"the LLM is wrong" RAG bugs are actually retrieval bugs. Optimize retrieval
+first, generation second.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI gave a wrong answer" bugs are actually <em>retrieval</em> bugs, not model bugs. RAG quality is where grounded, current, citeable answers come from — the core of enterprise trust.</p>
@@ -372,80 +373,93 @@ retrieval bugs. Optimize retrieval first, generation second.</p>
 QUERY TIME:   query ──▶ (rewrite) ──▶ hybrid search (dense + lexical)
                     ──▶ rerank top-N ──▶ trim to budget ──▶ context + cite ──▶ generate
 </code></pre>
-<p>This is <a href="00-foundations.html#context-engineering">context engineering</a> in motion:
-retrieval is <em>how the right information gets into the window</em>.</p>
+<p>This is <a href="00-foundations.html#context-engineering">context engineering</a> in
+motion: retrieval is <em>how the right information gets into the window</em>.</p>
 <h2>Chunking — define the retrievable unit</h2>
 <ul>
-<li><strong>Why it matters:</strong> too big → chunks dilute relevance and waste tokens; too small →
-  you lose the context needed to answer. Chunk size is a recall/precision dial.</li>
-<li><strong>Strategies:</strong> fixed-size with <strong>overlap</strong> (simple, robust); <strong>structure-aware</strong>
-  (split on headings/sections/functions — usually better because it respects meaning);
-  <strong>semantic chunking</strong> (split where topic shifts).</li>
-<li><strong>Match chunk size to task shape:</strong> fixed-output tasks (extract a field, answer a
-  pointed question) tolerate <strong>large chunks</strong> — the model finds the needle; expansive-
-  output tasks (summarize, synthesize across sources) want <strong>smaller chunks</strong> so
-  retrieval can compose coverage from many places instead of drowning in a few.</li>
-<li><strong>Carry metadata</strong> on every chunk: source id, title, section, timestamp, tenant,
-  permissions. Metadata powers <a href="#retrieval-evals">citations</a>, <a href="#freshness">freshness</a>,
-  and <a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant filtering</a>.</li>
-<li><strong>Tabular/structured data</strong> often shouldn't be free-text chunked at all — consider
-  text-to-SQL or structured retrieval instead.</li>
+<li><strong>Why it matters:</strong> chunks that are too big dilute relevance and waste
+  tokens; chunks that are too small lose the context needed to answer.
+  Chunk size is a recall/precision dial.</li>
+<li><strong>Strategies:</strong> fixed-size with <strong>overlap</strong> is simple and robust.
+  <strong>Structure-aware</strong> chunking splits on headings, sections, or functions,
+  and is usually better because it respects meaning. <strong>Semantic chunking</strong>
+  splits where the topic shifts.</li>
+<li><strong>Match chunk size to task shape:</strong> fixed-output tasks — extract a field,
+  answer a pointed question — tolerate <strong>large chunks</strong>, since the model
+  finds the needle. Expansive-output tasks — summarize, synthesize across
+  sources — want <strong>smaller chunks</strong>, so retrieval can compose coverage from
+  many places instead of drowning in a few.</li>
+<li><strong>Carry metadata</strong> on every chunk: source id, title, section, timestamp,
+  tenant, permissions. Metadata powers <a href="#retrieval-evals">citations</a>,
+  <a href="#freshness">freshness</a>, and
+  <a href="05-safety-multitenancy.html#multi-tenant-isolation">tenant filtering</a>.</li>
+<li><strong>Tabular/structured data</strong> often shouldn't be free-text chunked at all.
+  Consider text-to-SQL or structured retrieval instead.</li>
 </ul>
 <h2>Embeddings — how meaning is matched</h2>
 <ul>
-<li>Embeddings map text to vectors so semantic nearness = vector nearness. Choice of
-  model sets your semantic ceiling.</li>
-<li><strong>Match query and document embeddings</strong> (same model/space). <strong>Domain fit matters</strong> —
-  a general embedder may miss jargon, code, or multilingual content; sometimes a
-  domain-tuned embedder is the highest-leverage change.</li>
-<li><strong>Asymmetric search:</strong> short queries vs. long passages benefit from models trained
-  for that (query/passage encoders).</li>
-<li><strong>Cost/latency:</strong> embedding dimension and model size trade retrieval quality against
-  storage and query speed. Re-embedding the whole corpus on a model change is a real
-  migration cost — version your embeddings.</li>
+<li>Embeddings map text to vectors, so semantic nearness equals vector
+  nearness. The choice of model sets your semantic ceiling.</li>
+<li><strong>Match query and document embeddings</strong> to the same model and space.
+  <strong>Domain fit matters</strong> — a general embedder may miss jargon, code, or
+  multilingual content, so sometimes a domain-tuned embedder is the
+  highest-leverage change.</li>
+<li><strong>Asymmetric search:</strong> short queries versus long passages benefit from
+  models trained for that, such as query/passage encoders.</li>
+<li><strong>Cost and latency:</strong> embedding dimension and model size trade retrieval
+  quality against storage and query speed. Re-embedding the whole corpus on
+  a model change is a real migration cost, so version your embeddings.</li>
 </ul>
 <h2>Hybrid search — recall from two angles</h2>
-<p>Dense (vector) search captures <em>meaning</em> but can miss exact terms (IDs, error codes,
-rare names, acronyms). Lexical search (BM25/keyword) nails exact matches but misses
-paraphrase. <strong>Hybrid</strong> runs both and fuses results (e.g. Reciprocal Rank Fusion or
-weighted scores).</p>
+<p>Dense (vector) search captures <em>meaning</em> but can miss exact terms — IDs,
+error codes, rare names, acronyms. Lexical search (BM25/keyword) nails
+exact matches but misses paraphrase. <strong>Hybrid</strong> search runs both and fuses
+the results, for example with Reciprocal Rank Fusion or weighted scores.</p>
 <ul>
-<li>Hybrid almost always beats either alone, especially for technical/enterprise corpora
-  full of exact identifiers.</li>
-<li>Add <strong>metadata filters</strong> (tenant, date, doc type, ACL) as hard constraints <em>before</em>
-  ranking — both for relevance and for <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation/security</a>.</li>
+<li>Hybrid almost always beats either alone, especially for technical or
+  enterprise corpora full of exact identifiers.</li>
+<li>Add <strong>metadata filters</strong> — tenant, date, doc type, ACL — as hard
+  constraints <em>before</em> ranking. This helps both relevance and
+  <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation/security</a>.</li>
 </ul>
 <h2>Reranking — precision before the prompt</h2>
-<p>First-stage retrieval optimizes recall (cast a wide net, top-50). A <strong>cross-encoder
-reranker</strong> then scores each (query, chunk) pair jointly for true relevance and keeps
-the top few.</p>
+<p>First-stage retrieval optimizes recall by casting a wide net, say the top</p>
+<ol start="50">
+<li>A <strong>cross-encoder reranker</strong> then scores each (query, chunk) pair
+jointly for true relevance and keeps the top few.</li>
+</ol>
 <ul>
-<li><strong>Why:</strong> cheaply pull many candidates, then spend a precise model on a short list.
-  This is usually the single biggest precision win in a RAG system.</li>
+<li><strong>Why:</strong> you cheaply pull many candidates, then spend a precise model on
+  a short list. This is usually the single biggest precision win in a RAG
+  system.</li>
 <li><strong>Effect on the generator:</strong> fewer, better chunks reduce distraction and
-  <a href="00-foundations.html#context-engineering">lost-in-the-middle</a> failures, and cut
-  <a href="01-inference-internals.html#prefill-vs-decode">prefill cost</a>.</li>
-<li><strong>Cost:</strong> an extra model call and latency — but on a small candidate set, and it
-  often lets you <em>shrink</em> the context you send, paying for itself.</li>
+  <a href="00-foundations.html#context-engineering">lost-in-the-middle</a> failures,
+  and cut <a href="01-inference-internals.html#prefill-vs-decode">prefill cost</a>.</li>
+<li><strong>Cost:</strong> an extra model call and latency, but on a small candidate set.
+  It often lets you <em>shrink</em> the context you send, paying for itself.</li>
 </ul>
 <h2>Freshness — keep the index honest</h2>
-<p>A retrieval index is a cache of your data and goes stale the moment the source changes.</p>
+<p>A retrieval index is a cache of your data, and it goes stale the moment the
+source changes.</p>
 <ul>
-<li><strong>Incremental indexing / CDC:</strong> re-embed and upsert on create/update/delete; don't
-  full-rebuild nightly if data changes continuously.</li>
-<li><strong>Deletions and tombstones:</strong> removed source docs must leave the index, or you'll
-  cite deleted/retracted content.</li>
-<li><strong>Recency signals:</strong> timestamp chunks and let ranking prefer recent versions; expire
-  or down-weight stale ones.</li>
-<li>Freshness failures mirror <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>:
+<li><strong>Incremental indexing / CDC:</strong> re-embed and upsert on create, update, or
+  delete. Don't full-rebuild nightly if data changes continuously.</li>
+<li><strong>Deletions and tombstones:</strong> removed source docs must leave the index,
+  or you'll cite deleted or retracted content.</li>
+<li><strong>Recency signals:</strong> timestamp chunks and let ranking prefer recent
+  versions. Expire or down-weight stale ones.</li>
+<li>Freshness failures mirror
+  <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>:
   a confident answer from outdated data.</li>
 </ul>
 <h2>Generation &amp; attribution</h2>
 <ul>
-<li>Pass reranked, trimmed chunks <strong>with source tags</strong> and instruct the model to answer
-  <em>from the context</em> and <strong>cite</strong> sources — enabling <a href="#retrieval-evals">grounding and citation evals</a>.</li>
-<li>Handle "<strong>not in the context</strong>" explicitly: the model should say it doesn't know
-  rather than fill the gap from parametric memory (a hallucination guard).</li>
+<li>Pass reranked, trimmed chunks <strong>with source tags</strong> and instruct the model
+  to answer <em>from the context</em> and <strong>cite</strong> sources. This enables
+  <a href="#retrieval-evals">grounding and citation evals</a>.</li>
+<li>Handle "<strong>not in the context</strong>" explicitly: the model should say it
+  doesn't know rather than fill the gap from parametric memory — a
+  hallucination guard.</li>
 </ul>
 <h2>Tradeoffs</h2>
 <table>
@@ -486,14 +500,17 @@ the top few.</p>
 </table>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Right answer never retrieved</strong> — chunking/embedding/recall problem; no prompt fixes
-  it. Measure <a href="#retrieval-evals">retrieval recall</a>.</li>
-<li><strong>Answer buried in noise</strong> — too many chunks, no reranking; distraction degrades the
-  answer.</li>
-<li><strong>Stale/deleted content cited</strong> — freshness/deletion gap.</li>
-<li><strong>Exact-match misses</strong> — dense-only search can't find an error code; add lexical.</li>
-<li><strong>Cross-tenant leakage</strong> — missing ACL/tenant filter returns another customer's docs
-  (see <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation</a>).</li>
+<li><strong>Right answer never retrieved</strong> — a chunking, embedding, or recall
+  problem. No prompt fix helps. Measure
+  <a href="#retrieval-evals">retrieval recall</a>.</li>
+<li><strong>Answer buried in noise</strong> — too many chunks with no reranking, so
+  distraction degrades the answer.</li>
+<li><strong>Stale/deleted content cited</strong> — a freshness or deletion gap.</li>
+<li><strong>Exact-match misses</strong> — dense-only search can't find an error code. Add
+  lexical search.</li>
+<li><strong>Cross-tenant leakage</strong> — a missing ACL or tenant filter returns another
+  customer's docs. See
+  <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation</a>.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -513,15 +530,16 @@ the top few.</p>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval evals: recall, precision, grounding, attribution, and citation quality</h2></div><h2>TL;DR</h2>
-<p>A <a href="#rag-architecture">RAG system</a> has two failure surfaces — <em>did we retrieve the
-right thing?</em> and <em>did the model use it faithfully?</em> — and you must measure them
-<strong>separately</strong>, or you'll tune the prompt to fix a retrieval bug (or vice versa).
-Retrieval is judged by <strong>recall</strong> and <strong>precision</strong>; generation-over-retrieval is
-judged by <strong>grounding</strong> (faithfulness), <strong>attribution</strong> (claims traced to sources),
-and <strong>citation quality</strong>. End-to-end answer quality alone hides which half is broken.</p>
+<p>A <a href="#rag-architecture">RAG system</a> has two failure surfaces: <em>did we
+retrieve the right thing?</em> and <em>did the model use it faithfully?</em> You must
+measure them <strong>separately</strong>, or you'll tune the prompt to fix a retrieval
+bug, or the reverse. Retrieval is judged by <strong>recall</strong> and <strong>precision</strong>.
+Generation-over-retrieval is judged by <strong>grounding</strong> (faithfulness),
+<strong>attribution</strong> (claims traced to sources), and <strong>citation quality</strong>.
+End-to-end answer quality alone hides which half is broken.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
-<p><strong>Why it matters</strong> — You can't claim "grounded" or "accurate" unless you measure grounding and attribution <em>separately</em>. This is what turns a marketing claim into a number you can defend to customers and legal.</p>
+<p><strong>Why it matters</strong> — You can't claim "grounded" or "accurate" unless you measure grounding and attribution <em>separately</em>. This turns a marketing claim into a number you can defend to customers and legal.</p>
 <p><strong>What it changes in your decisions</strong> — The quality bar you commit to, how you report accuracy externally, and any citation guarantees.</p>
 <p><strong>Ask your eng team</strong> — <em>"How do we measure that answers are actually supported by sources, instead of plausibly made up?"</em></p>
 <p><strong>Product risk if ignored</strong> — You market accuracy you can't substantiate; hallucinated citations become a credibility — and legal — problem.</p>
@@ -532,63 +550,77 @@ and <strong>citation quality</strong>. End-to-end answer quality alone hides whi
             recall, precision            grounding, attribution, citations
 </code></pre>
 <p>If end-to-end accuracy is low, the split tells you where to invest: better
-chunking/embeddings/reranking vs. better prompting/grounding constraints. Without it,
-you're guessing. This mirrors the general <a href="04-evals-observability.html#evals">evals</a>
-discipline applied to retrieval.</p>
-<p>(Every long-context model release re-raises "is RAG dead?" The answer stays no — as
-long as knowledge is larger than the window, changes faster than retraining, or is
-permissioned per user, retrieval is how freshness, access control, and cost control
-happen. What the question <em>should</em> prompt is exactly this lesson: measure your
-retrieval separately, so you know what it's contributing.)</p>
+chunking, embeddings, and reranking, or better prompting and grounding
+constraints. Without it, you're guessing. This mirrors the general
+<a href="04-evals-observability.html#evals">evals</a> discipline applied to
+retrieval.</p>
+<p>(Every long-context model release re-raises "is RAG dead?" The answer stays
+no. As long as knowledge is larger than the window, changes faster than
+retraining, or is permissioned per user, retrieval is how freshness, access
+control, and cost control happen. What the question <em>should</em> prompt is
+exactly this lesson: measure your retrieval separately, so you know what
+it's contributing.)</p>
 <h2>Retrieval metrics</h2>
-<p>You need labeled data: queries paired with the document(s)/chunk(s) that <em>should</em> be
-retrieved (a <a href="04-evals-observability.html#evals">golden set</a> for retrieval).</p>
+<p>You need labeled data: queries paired with the documents or chunks that
+<em>should</em> be retrieved — a <a href="04-evals-observability.html#evals">golden set</a>
+for retrieval.</p>
 <ul>
-<li><strong>Recall@k</strong> — of all relevant chunks, how many appear in the top <em>k</em>? This is the
-  ceiling on the whole system: <strong>if the right chunk isn't retrieved, no prompt can fix
-  the answer.</strong> Usually the first metric to optimize.</li>
-<li><strong>Precision@k</strong> — of the top <em>k</em> retrieved, how many are actually relevant? Low
-  precision means the <a href="00-foundations.html#context-engineering">context</a> is noisy and
-  the generator gets distracted (and you pay for junk tokens).</li>
-<li><strong>MRR / nDCG</strong> — rank-aware metrics: is the relevant chunk near the <em>top</em>, not just
-  present? Important because of <a href="00-foundations.html#context-engineering">lost-in-the-middle</a>
-  and because <a href="#rag-architecture">reranking</a> is judged on ordering.</li>
-<li><strong>Context recall vs. context precision</strong> — recall = did we get enough to answer;
-  precision = how much of what we got was needed. The classic recall/precision tension.</li>
+<li><strong>Recall@k</strong> — of all relevant chunks, how many appear in the top <em>k</em>?
+  This is the ceiling on the whole system: <strong>if the right chunk isn't
+  retrieved, no prompt can fix the answer.</strong> It's usually the first metric
+  to optimize.</li>
+<li><strong>Precision@k</strong> — of the top <em>k</em> retrieved, how many are actually
+  relevant? Low precision means the
+  <a href="00-foundations.html#context-engineering">context</a> is noisy, the
+  generator gets distracted, and you pay for junk tokens.</li>
+<li><strong>MRR / nDCG</strong> — rank-aware metrics: is the relevant chunk near the <em>top</em>,
+  not just present? These matter because of
+  <a href="00-foundations.html#context-engineering">lost-in-the-middle</a>, and
+  because <a href="#rag-architecture">reranking</a> is judged on ordering.</li>
+<li><strong>Context recall vs. context precision</strong> — recall asks did we get enough
+  to answer; precision asks how much of what we got was needed. This is the
+  classic recall/precision tension.</li>
 </ul>
-<p>Use these to tune chunk size, k, hybrid weighting, and reranking directly — each metric
-points at a specific stage.</p>
+<p>Use these to tune chunk size, k, hybrid weighting, and reranking directly —
+each metric points at a specific stage.</p>
 <h2>Generation-over-retrieval metrics</h2>
 <p>Even with perfect retrieval, the model can ignore or misuse the context.</p>
 <ul>
-<li><strong>Grounding / faithfulness</strong> — is every claim in the answer <em>supported by the
-  retrieved context</em>, not invented from parametric memory? Low grounding = hallucination
-  despite good retrieval. Measure by checking each answer claim against the provided
-  chunks (often via <a href="04-evals-observability.html#evals">LLM-as-judge</a> or NLI/entailment
-  scoring).</li>
-<li><strong>Attribution</strong> — can each claim be <em>traced to the specific source</em> that supports it?
-  Stronger than grounding: not just "supported somewhere" but "supported <em>by this
-  citation</em>."</li>
-<li><strong>Citation quality</strong> — are the citations (a) <strong>present</strong> where claims need them,
-  (b) <strong>correct</strong> (the cited source actually supports the claim, not a hallucinated or
-  mismatched reference), and (c) <strong>complete</strong> (no unsupported claims left uncited)?</li>
-<li><strong>Answer relevance / completeness</strong> — does the answer actually address the question,
-  using the retrieved material?</li>
+<li><strong>Grounding / faithfulness</strong> — is every claim in the answer <em>supported by
+  the retrieved context</em>, not invented from parametric memory? Low
+  grounding means hallucination despite good retrieval. Measure it by
+  checking each answer claim against the provided chunks, often via an
+  <a href="04-evals-observability.html#evals">LLM-as-judge</a> or NLI/entailment
+  scoring.</li>
+<li><strong>Attribution</strong> — can each claim be <em>traced to the specific source</em> that
+  supports it? This is stronger than grounding: not just "supported
+  somewhere" but "supported <em>by this citation</em>."</li>
+<li><strong>Citation quality</strong> — are the citations (a) <strong>present</strong> where claims
+  need them, (b) <strong>correct</strong> — the cited source actually supports the
+  claim, not a hallucinated or mismatched reference — and (c) <strong>complete</strong>,
+  with no unsupported claims left uncited?</li>
+<li><strong>Answer relevance / completeness</strong> — does the answer actually address
+  the question, using the retrieved material?</li>
 </ul>
-<p>A useful framing (the "RAG triad"): <strong>context relevance</strong> (retrieval), <strong>groundedness</strong>
-(answer ⊆ context), and <strong>answer relevance</strong> (answer ⊆ question). All three must hold.</p>
+<p>A useful framing is the "RAG triad": <strong>context relevance</strong> (retrieval),
+<strong>groundedness</strong> (answer ⊆ context), and <strong>answer relevance</strong> (answer ⊆
+question). All three must hold.</p>
 <h2>How to actually run these</h2>
 <ol>
-<li><strong>Build a retrieval golden set</strong> — representative queries with labeled relevant
-   chunks. Include hard cases: exact-identifier lookups, paraphrases, multi-hop,
-   "answer not in corpus."</li>
-<li><strong>Score retrieval offline</strong> (recall@k, precision@k, nDCG) on every index/chunking/
-   embedding/reranker change — cheap, deterministic, fast to iterate.</li>
-<li><strong>Score grounding/attribution</strong> with an <a href="04-evals-observability.html#evals">LLM judge</a>
-   against a rubric, spot-validated by humans; calibrate the judge before trusting it.</li>
-<li><strong>Track freshness explicitly</strong> — include time-sensitive queries whose correct answer
-   changes, to catch <a href="#rag-architecture">stale-index</a> regressions.</li>
-<li><strong>Gate changes in CI</strong> so a chunking tweak that quietly drops recall can't ship.</li>
+<li><strong>Build a retrieval golden set</strong> — representative queries with labeled
+   relevant chunks. Include hard cases: exact-identifier lookups,
+   paraphrases, multi-hop, "answer not in corpus."</li>
+<li><strong>Score retrieval offline</strong> (recall@k, precision@k, nDCG) on every
+   index, chunking, embedding, or reranker change. It's cheap,
+   deterministic, and fast to iterate.</li>
+<li><strong>Score grounding and attribution</strong> with an
+   <a href="04-evals-observability.html#evals">LLM judge</a> against a rubric,
+   spot-validated by humans. Calibrate the judge before trusting it.</li>
+<li><strong>Track freshness explicitly</strong> — include time-sensitive queries whose
+   correct answer changes, to catch
+   <a href="#rag-architecture">stale-index</a> regressions.</li>
+<li><strong>Gate changes in CI</strong> so a chunking tweak that quietly drops recall
+   can't ship.</li>
 </ol>
 <h2>Tradeoffs &amp; what each metric pushes</h2>
 <table>
@@ -627,18 +659,21 @@ points at a specific stage.</p>
 </tr>
 </tbody>
 </table>
-<p>Don't chase recall to 100% — beyond "enough," extra chunks hurt precision, grounding,
-and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p>
+<p>Don't chase recall to 100%. Beyond "enough," extra chunks hurt precision,
+grounding, and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Grading only end-to-end</strong> — you can't tell whether retrieval or generation is the
-  problem, so you fix the wrong one.</li>
-<li><strong>Hallucinated citations</strong> — answer cites a source that doesn't support the claim;
-  reads authoritative, is wrong. Citation-correctness eval catches it.</li>
-<li><strong>Recall regressions hidden by the LLM</strong> — a strong model papers over weak retrieval
-  using parametric knowledge, inflating accuracy while grounding silently drops.</li>
-<li><strong>Stale golden set</strong> — labels drift from the live corpus; refresh them.</li>
-<li><strong>Untrusted judge</strong> — an uncalibrated LLM judge for grounding gives false confidence.</li>
+<li><strong>Grading only end-to-end</strong> — you can't tell whether retrieval or
+  generation is the problem, so you fix the wrong one.</li>
+<li><strong>Hallucinated citations</strong> — the answer cites a source that doesn't
+  support the claim. It reads authoritative but is wrong. A
+  citation-correctness eval catches it.</li>
+<li><strong>Recall regressions hidden by the LLM</strong> — a strong model papers over
+  weak retrieval using parametric knowledge, inflating accuracy while
+  grounding silently drops.</li>
+<li><strong>Stale golden set</strong> — labels drift from the live corpus. Refresh them.</li>
+<li><strong>Untrusted judge</strong> — an uncalibrated LLM judge for grounding gives false
+  confidence.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -659,27 +694,30 @@ and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
   <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
-<p><strong>Air Canada's invented refund policy (2024).</strong> The canonical grounding failure: the bot
-answered from "imagination" instead of the airline's actual, current policy — and a
-tribunal made the company honor the made-up version. 🎯 <em>PM takeaway:</em> the fix is
-architectural — answer <strong>only from retrieved, current sources, with citations</strong>, and say
-"I don't know" when the context is silent. See
-<a href="#rag-architecture">RAG architecture</a>.</p>
-<p><strong>Enterprise RAG with permissions (Glean, Notion AI, Sourcegraph).</strong> Production systems
-that search across a company's docs, tickets, and code live or die on three things this
-module covers: <strong>hybrid search</strong> (so exact identifiers and error codes are found),
-<strong>permission/ACL filtering</strong> (so retrieval never crosses a user's access — a
-<a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant boundary</a>), and
-<strong>freshness</strong> (so deleted or superseded docs stop being cited). 🎯 <em>PM takeaway:</em> retrieval
-quality and access scoping <em>are</em> the product.</p>
+<p><strong>Air Canada's invented refund policy (2024).</strong> This is the canonical
+grounding failure: the bot answered from "imagination" instead of the
+airline's actual, current policy, and a tribunal made the company honor the
+made-up version. 🎯 <em>PM takeaway:</em> the fix is architectural. Answer <strong>only
+from retrieved, current sources, with citations</strong>, and say "I don't know"
+when the context is silent. See <a href="#rag-architecture">RAG architecture</a>.</p>
+<p><strong>Enterprise RAG with permissions (Glean, Notion AI, Sourcegraph).</strong>
+Production systems that search across a company's docs, tickets, and code
+live or die on three things this module covers: <strong>hybrid search</strong>, so exact
+identifiers and error codes are found; <strong>permission/ACL filtering</strong>, so
+retrieval never crosses a user's access — a
+<a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant boundary</a>;
+and <strong>freshness</strong>, so deleted or superseded docs stop being cited. 🎯 <em>PM
+takeaway:</em> retrieval quality and access scoping <em>are</em> the product.</p>
 <p><strong>Citations as a feature (Perplexity, Bing/Copilot).</strong> These products made
-inline source attribution a core trust signal. 🎯 <em>PM takeaway:</em> if you want users (or
-legal) to trust answers, you need <a href="#retrieval-evals">attribution and citation quality</a>
-you can measure — not just a confident paragraph.</p>
-<p><strong>"Lost in the middle," again.</strong> The same research that warns against over-stuffing
-context is why dumping your top-50 chunks <em>hurts</em>: the answer gets buried. 🎯 <em>PM takeaway:</em>
-<strong>reranking down to a few great chunks</strong> beats retrieving many mediocre ones — better
-answers <em>and</em> lower <a href="04-evals-observability.html#cost-attribution">token cost</a>.</p>
+inline source attribution a core trust signal. 🎯 <em>PM takeaway:</em> if you want
+users, or legal, to trust answers, you need
+<a href="#retrieval-evals">attribution and citation quality</a> you can measure,
+not just a confident paragraph.</p>
+<p><strong>"Lost in the middle," again.</strong> The same research that warns against
+over-stuffing context is why dumping your top-50 chunks <em>hurts</em>: the answer
+gets buried. 🎯 <em>PM takeaway:</em> <strong>reranking down to a few great chunks</strong>
+beats retrieving many mediocre ones. You get better answers <em>and</em> lower
+<a href="04-evals-observability.html#cost-attribution">token cost</a>.</p>
 <h2>Module recap</h2>
 <table>
 <thead>
@@ -702,11 +740,12 @@ answers <em>and</em> lower <a href="04-evals-observability.html#cost-attribution
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> most "the AI gave a wrong answer" bugs are <strong>retrieval</strong> bugs, not
-model bugs. Build the pipeline — chunk → embed → hybrid search → rerank → keep fresh — then
-<strong>prove it</strong> by measuring recall/precision (did we find it?) separately from
-grounding/attribution (did we use it faithfully?). The generator can only be as good as
-what retrieval surfaces.</p>
+<p><strong>The through-line:</strong> most "the AI gave a wrong answer" bugs are
+<strong>retrieval</strong> bugs, not model bugs. Build the pipeline — chunk, embed,
+hybrid search, rerank, keep fresh — then <strong>prove it</strong> by measuring recall
+and precision (did we find it?) separately from grounding and attribution
+(did we use it faithfully?). The generator can only be as good as what
+retrieval surfaces.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"When an answer is wrong, did we fail to </em><em>retrieve</em><em> the right
 source, or fail to </em><em>ground</em><em> the answer in it?"</em> Different bug, different fix.</p>

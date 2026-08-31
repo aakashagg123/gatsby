@@ -315,23 +315,23 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>Agent reliability is ruled by one brutal equation: errors <strong>compound across steps</strong>. A
-step that succeeds 95% of the time sounds fine — until the task takes 20 such steps and
+step that succeeds 95% of the time sounds fine, until the task takes 20 such steps and
 end-to-end success drops toward 36%. That's why agents demo brilliantly and deploy
-disappointingly, and why the reliability toolkit is what it is: <strong>shorten the chain</strong>
-(fewer, higher-level steps), <strong>verify mid-flight</strong> (checkpoints that catch errors before
-they propagate), <strong>recover</strong> (retries, revisions, escalation), and <strong>measure like you
-mean it</strong> — evals that grade both outcomes <em>and</em> trajectories, plus tracing that lets a
-human replay any run. An agent without evals and traces isn't unreliable — it's
-<em>unknowable</em>, which is worse.</p>
+disappointingly. It's also why the reliability toolkit looks the way it does:
+<strong>shorten the chain</strong> (fewer, higher-level steps), <strong>verify mid-flight</strong> (checkpoints
+that catch errors before they propagate), <strong>recover</strong> (retries, revisions, escalation),
+and <strong>measure like you mean it</strong> — evals that grade both outcomes <em>and</em> trajectories,
+plus tracing that lets a human replay any run. An agent without evals and traces isn't
+unreliable — it's <em>unknowable</em>, which is worse.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — The gap between "worked in the demo" and "works for customers"
 is precisely this lesson. Reliability determines the two numbers that make or break
 agent economics: task completion rate and human-intervention rate.</p>
-<p><strong>What it changes in your decisions</strong> — You spec reliability the way you spec
-features: target completion rate per task tier, maximum intervention rate, and the
-recovery behaviour when — not if — a step fails. And you refuse to scale an agent
-whose failures you can't see, replay, and categorize.</p>
+<p><strong>What it changes in your decisions</strong> — Spec reliability the way you spec features:
+target completion rate per task tier, maximum intervention rate, and the recovery
+behaviour when — not if — a step fails. Refuse to scale an agent whose failures you
+can't see, replay, and categorize.</p>
 <p><strong>Ask yourself</strong> — <em>"How many sequential things must go right for this task — and
 what's our measured per-step success rate, not our hoped one?"</em></p>
 <p><strong>Risk if ignored</strong> — You promise autonomy on 30-step tasks with 5%-per-step error,
@@ -345,79 +345,80 @@ ship a coin flip, and learn about it from churn instead of dashboards.</p>
     line &quot;99% per step&quot; [99, 95, 90, 82, 74, 61]
     line &quot;95% per step&quot; [95, 77, 60, 36, 21, 8]
     line &quot;90% per step&quot; [90, 59, 35, 12, 4, 1]</pre>
-<p>Top curve: 99% per step. Middle: 95%. Bottom: 90%. Read the middle one: a <em>good</em>
-per-step rate (95%) yields near-total failure on 50-step work. Three consequences worth tattooing on every agent roadmap:</p>
+<p>The top curve is 99% per step. The middle is 95%. The bottom is 90%. Read the middle one:
+a <em>good</em> per-step rate (95%) yields near-total failure on 50-step work. Three
+consequences are worth tattooing on every agent roadmap:</p>
 <ul>
-<li><strong>Small per-step gains are enormous end-to-end.</strong> 95% → 99% per step takes a 20-step
-  task from 36% to 82%. This is why unglamorous work — <a href="tools-and-function-calling.html">better tool errors</a>,
-  <a href="context-and-memory.html">cleaner context</a>, tighter prompts — routinely beats model
-  upgrades.</li>
+<li><strong>Small per-step gains are enormous end-to-end.</strong> Going from 95% to 99% per step takes
+  a 20-step task from 36% to 82%. This is why unglamorous work — <a href="tools-and-function-calling.html">better tool
+  errors</a>, <a href="context-and-memory.html">cleaner context</a>,
+  tighter prompts — routinely beats model upgrades.</li>
 <li><strong>Shortening the chain is a reliability strategy.</strong> One right-altitude tool call
   replacing four low-level ones removes three failure opportunities. So does narrowing
   scope: an agent that does less, more reliably, is usually the better product
   (<a href="agentic-ai-as-a-product.html">lesson 8</a>).</li>
 <li><strong>Checkpoints reset the math.</strong> A mid-task verification that catches and fixes errors
   effectively restarts the compounding clock. Recovery, not perfection, is the design
-  goal — the best agents aren't the ones that never err; they're the ones that notice.</li>
+  goal. The best agents aren't the ones that never err — they're the ones that notice.</li>
 </ul>
-<p>Design recovery in tiers: <strong>retry</strong> (transient failures, with backoff and a cap — the
-same action repeated identically five times is a loop, not persistence), <strong>revise</strong>
-(feed the error back and let the model change approach — this is where
-<a href="tools-and-function-calling.html">teaching errors</a> pay), <strong>restart</strong> (a checkpoint
-rollback beats forty steps of drift), and <strong>escalate</strong> (hand to a human with context —
-a <em>feature</em>, not a failure; the agent that says "I'm stuck, here's where" keeps trust
-that a confident wrong answer destroys).</p>
+<p>Design recovery in tiers. <strong>Retry</strong> handles transient failures, with backoff and a cap —
+the same action repeated identically five times is a loop, not persistence. <strong>Revise</strong>
+feeds the error back and lets the model change approach; this is where <a href="tools-and-function-calling.html">teaching
+errors</a> pay off. <strong>Restart</strong> rolls back to a
+checkpoint, because that beats forty steps of drift. <strong>Escalate</strong> hands off to a human
+with context — a <em>feature</em>, not a failure. An agent that says "I'm stuck, here's where"
+keeps trust that a confident wrong answer destroys.</p>
 <h2>Evals: grade the journey, not just the destination</h2>
 <p>Everything from <a href="../technical-product-management/tpm-for-ai-products.html">eval-driven development</a>
-applies; agents add a layer, because two runs can reach the same answer — one cleanly,
+applies. Agents add a layer, because two runs can reach the same answer — one cleanly,
 one via eleven wasted tool calls and a lucky guess. Grade both:</p>
 <ul>
 <li><strong>Outcome evals</strong> — did the task succeed? Prefer <em>verifiable</em> endpoints: the test
   passes, the record updated correctly, the extracted data matches ground truth. For
-  fuzzy outcomes, rubric-graded by an LLM judge with human spot-audits.</li>
-<li><strong>Trajectory evals</strong> — was the <em>path</em> sane? Right tools called, no forbidden actions,
-  no flailing (retry storms, circular reasoning), efficient step count, correct
-  escalation when stuck. Trajectory regressions are your early warning: paths often rot
-  before outcomes do.</li>
-<li><strong>The suite</strong> — dozens-to-hundreds of realistic tasks, run on every change (prompt,
+  fuzzy outcomes, use rubric grading by an LLM judge with human spot-audits.</li>
+<li><strong>Trajectory evals</strong> — was the <em>path</em> sane? Check for the right tools called, no
+  forbidden actions, no flailing (retry storms, circular reasoning), efficient step
+  count, and correct escalation when stuck. Trajectory regressions are your early
+  warning — paths often rot before outcomes do.</li>
+<li><strong>The suite</strong> — dozens to hundreds of realistic tasks, run on every change (prompt,
   toolbox, model version), with production failures folded back in monthly. One eval
-  dimension people forget: <strong>cost and steps per task</strong> — a change that keeps quality but
+  dimension people forget: <strong>cost and steps per task</strong>. A change that keeps quality but
   doubles tokens is a regression.</li>
 </ul>
-<p>Two agent-specific measurement traps. <strong>Non-determinism:</strong> run each eval task several
-times and report pass rates with spread — a single green run proves little.
-<strong>Environment drift:</strong> agent evals need stable sandboxed environments (seeded data,
-frozen APIs); an eval that flakes because the test environment changed teaches teams to
-ignore evals.</p>
-<p>And the multi-turn debugging discipline, since agent failures rarely live where they
-surface: annotate the <strong>first upstream failing step</strong>, not the visibly wrong final
-answer — twenty downstream turns of confusion usually trace to one bad retrieval or
-tool result. In multi-agent systems, log traces <em>per agent</em> but stitch them into one
-session view, or every incident becomes four transcripts and no story. For sessions
-with human handoffs, evaluate the agent's work <em>up to the handoff</em> (and whether it
-escalated at the right moment) rather than blaming it for what happened after. Above
-all: before building elaborate multi-step evaluators, try <strong>simplifying the workflow</strong>
-— a step that's hard to evaluate is often a step that shouldn't exist.</p>
+<p>Two agent-specific measurement traps deserve attention. <strong>Non-determinism</strong>: run each
+eval task several times and report pass rates with spread, since a single green run
+proves little. <strong>Environment drift</strong>: agent evals need stable sandboxed environments
+(seeded data, frozen APIs). An eval that flakes because the test environment changed
+teaches teams to ignore evals.</p>
+<p>There's also a multi-turn debugging discipline, since agent failures rarely live where
+they surface: annotate the <strong>first upstream failing step</strong>, not the visibly wrong final
+answer. Twenty downstream turns of confusion usually trace to one bad retrieval or tool
+result. In multi-agent systems, log traces <em>per agent</em> but stitch them into one session
+view, or every incident becomes four transcripts and no story. For sessions with human
+handoffs, evaluate the agent's work <em>up to the handoff</em> — and whether it escalated at
+the right moment — rather than blaming it for what happened after. Above all, before
+building elaborate multi-step evaluators, try <strong>simplifying the workflow</strong>. A step
+that's hard to evaluate is often a step that shouldn't exist.</p>
 <h2>Observability: every run replayable</h2>
-<p>The non-negotiable: <strong>full traces</strong> — every model call, every tool call and result,
+<p>The non-negotiable is <strong>full traces</strong>: every model call, every tool call and result,
 every decision point, linked per run. Traces are how you debug ("why did it delete
 that?"), how you build eval sets (yesterday's weird trace is tomorrow's test case), and
-how you audit (<a href="safety-security-and-governance.html">governance</a>). On top of traces,
-the dashboard that matters: completion rate by task tier, intervention/escalation rate,
-steps and cost per task, tool-error rates by tool, and — the sleeper metric — <strong>user
-overrides</strong> (how often humans redo the agent's work; the truest quality signal you
-have, and it arrives before churn does).</p>
+how you audit (<a href="safety-security-and-governance.html">governance</a>). On top of traces, the
+dashboard that matters tracks: completion rate by task tier, intervention/escalation
+rate, steps and cost per task, tool-error rates by tool, and — the sleeper metric —
+<strong>user overrides</strong>. That's how often humans redo the agent's work. It's the truest
+quality signal you have, and it arrives before churn does.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Demo-grade confidence</strong> — extrapolating from five hand-picked 3-step tasks to
-  production 30-step tasks; the compounding law collects either way.</li>
+  production 30-step tasks. The compounding law collects either way.</li>
 <li><strong>Outcome-only evals</strong> — the answer's right, the path is degenerating, and nobody
   notices until the paths stop reaching answers.</li>
 <li><strong>Retry theater</strong> — identical retries hammering a failing step, burning budget to
   fail slower.</li>
-<li><strong>The unknowable agent</strong> — no traces; every incident is archaeology, every fix is a
-  guess, every "it's better now" is a vibe.</li>
-<li><strong>Flaky eval environments</strong> — tests that fail for environment reasons until everyone
+<li><strong>The unknowable agent</strong> — no traces. Every incident is archaeology, every fix is a
+  guess, and every "it's better now" is a vibe.</li>
+<li><strong>Flaky eval environments</strong> — tests that fail for environment reasons, until everyone
   stops believing red means anything.</li>
 </ul>
 <h2>Practitioner checklist</h2>

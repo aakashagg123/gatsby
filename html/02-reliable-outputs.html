@@ -317,7 +317,7 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
   <div class="intro"><p>A model that is right 95% of the time will break a workflow that calls it a hundred
-times. This module is about closing that gap — turning a stochastic text generator
+times. This module is about closing that gap. It turns a stochastic text generator
 into a component whose outputs and actions downstream systems can <em>trust</em>.</p>
 <ul>
 <li><a href="#structured-output"><strong>Structured output</strong></a> — getting valid, schema-conformant
@@ -356,12 +356,13 @@ is the <a href="00-foundations.html#harness-engineering">harness</a> doing its j
  <div class="iw-note" id="ab-detail">Each step costs ~8¢ and makes a tool call. Difficulty = chance of finishing per step.</div>
 </div></div></section>
   <section class="lesson" id="structured-output"><div class="lesson-head"><span class="lesson-num">02.1</span><h2>Structured output: validation, repair loops, and fallback chains</h2></div><h2>TL;DR</h2>
-<p>When a downstream system expects JSON (or any schema), "usually valid" is a production
-incident waiting to happen. Reliable structured output is a <em>pipeline</em>, not a prompt:
-<strong>constrain</strong> generation where you can, <strong>validate</strong> every output against a schema,
-<strong>repair</strong> failures by feeding the error back, and <strong>fall back</strong> through progressively
-safer options so a malformed response never reaches your business logic. The goal is a
-component that returns valid data or a clean, typed error — never garbage.</p>
+<p>When a downstream system expects JSON, or any schema, "usually valid" is a
+production incident waiting to happen. Reliable structured output is a
+<em>pipeline</em>, not a prompt: <strong>constrain</strong> generation where you can,
+<strong>validate</strong> every output against a schema, <strong>repair</strong> failures by feeding
+the error back, and <strong>fall back</strong> through progressively safer options so a
+malformed response never reaches your business logic. The goal is a
+component that returns valid data or a clean, typed error, never garbage.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Most "the AI broke the workflow" incidents are a malformed output that a downstream system trusted. This is reliability your users — and your integrations — feel immediately.</p>
@@ -370,8 +371,9 @@ component that returns valid data or a clean, typed error — never garbage.</p>
 <p><strong>Product risk if ignored</strong> — One parse error takes down an entire automated workflow and erodes trust in the whole feature.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>Model output is <strong>untrusted input</strong>. You wouldn't <code>JSON.parse()</code> a request body and
-use it without validation; don't do it with a model either. The pipeline:</p>
+<p>Model output is <strong>untrusted input</strong>. You wouldn't <code>JSON.parse()</code> a request
+body and use it without validation. Don't do it with a model either. The
+pipeline:</p>
 <pre><code>generate ──▶ parse ──▶ validate(schema) ──▶ ✅ typed object
    ▲           │            │
    │           └─ fail ─────┤
@@ -384,28 +386,32 @@ use it without validation; don't do it with a model either. The pipeline:</p>
 <h2>Layer 1 — Constrain generation (prevent, don't just detect)</h2>
 <p>The cheapest invalid output is the one that can't be produced.</p>
 <ul>
-<li><strong>Constrained / structured decoding</strong> (grammar- or schema-guided, e.g. JSON-schema
-  modes, GBNF grammars, "JSON mode," tool/function schemas) masks the token
-  distribution so only schema-valid tokens can be emitted. This makes <em>syntactic</em>
-  validity near-certain.</li>
-<li><strong>Caveat:</strong> constrained decoding guarantees the output <em>parses and fits the schema</em>,
-  not that it's <em>semantically correct</em>. A grammar can force <code>{"age": 200}</code> to be valid
-  JSON; it can't make 200 a sensible age. You still need validation.</li>
-<li>Be aware constrained decoding can interact with quality — over-tight grammars can
-  push the model into awkward continuations; pair it with clear schema descriptions.</li>
+<li><strong>Constrained / structured decoding</strong> — grammar- or schema-guided, such as
+  JSON-schema modes, GBNF grammars, "JSON mode," or tool/function schemas —
+  masks the token distribution so the model can emit only schema-valid
+  tokens. This makes <em>syntactic</em> validity near-certain.</li>
+<li><strong>Caveat:</strong> constrained decoding guarantees the output <em>parses and fits
+  the schema</em>, not that it's <em>semantically correct</em>. A grammar can force
+  <code>{"age": 200}</code> to be valid JSON, but it can't make 200 a sensible age. You
+  still need validation.</li>
+<li>Constrained decoding can interact with quality — over-tight grammars can
+  push the model into awkward continuations. Pair it with clear schema
+  descriptions.</li>
 </ul>
 <h2>Layer 2 — Validate (always, even with constrained decoding)</h2>
-<p>Validate every output against a real schema (Pydantic, JSON Schema, zod, protobuf):</p>
+<p>Validate every output against a real schema (Pydantic, JSON Schema, zod,
+protobuf):</p>
 <ul>
-<li><strong>Syntactic:</strong> does it parse and match types/required fields?</li>
-<li><strong>Semantic:</strong> are values in range, enums legal, references resolvable, invariants
-  held? (<code>end_date &gt; start_date</code>, <code>total == sum(items)</code>, ids that exist.)</li>
-<li>Validation produces a precise, machine-readable error — which is the fuel for the
-  repair loop.</li>
+<li><strong>Syntactic:</strong> does it parse and match types and required fields?</li>
+<li><strong>Semantic:</strong> are values in range, are enums legal, do references resolve,
+  do invariants hold? (<code>end_date &gt; start_date</code>, <code>total == sum(items)</code>, ids
+  that exist.)</li>
+<li>Validation produces a precise, machine-readable error, which is the fuel
+  for the repair loop.</li>
 </ul>
 <h2>Layer 3 — Repair loop (bounded)</h2>
-<p>On validation failure, send the model the invalid output <strong>plus the specific error</strong>
-and ask it to fix only what's wrong:</p>
+<p>On validation failure, send the model the invalid output <strong>plus the
+specific error</strong> and ask it to fix only what's wrong:</p>
 <pre><code>for attempt in 1..MAX_REPAIRS:        # MAX_REPAIRS is small (1–2)
     out = model(prompt + last_output + validation_error)
     if validate(out): return out
@@ -413,24 +419,26 @@ return fallback(...)                   # don't loop forever
 </code></pre>
 <p>Discipline:</p>
 <ul>
-<li><strong>Bound it.</strong> One or two repairs, then fall back. Unbounded repair is an
-  <a href="#agent-guardrails">agent runaway</a> and a cost leak.</li>
-<li><strong>Be specific.</strong> "Field <code>priority</code> must be one of [low, med, high]; got <code>urgent</code>" repairs
-  far better than "invalid JSON."</li>
-<li><strong>Track repair rate</strong> in <a href="04-evals-observability.html#observability">observability</a> —
-  a rising rate signals prompt/model/schema drift.</li>
+<li><strong>Bound it.</strong> Allow one or two repairs, then fall back. Unbounded repair
+  is an <a href="#agent-guardrails">agent runaway</a> and a cost leak.</li>
+<li><strong>Be specific.</strong> "Field <code>priority</code> must be one of [low, med, high]; got
+  <code>urgent</code>" repairs far better than "invalid JSON."</li>
+<li><strong>Track repair rate</strong> in
+  <a href="04-evals-observability.html#observability">observability</a> — a rising
+  rate signals prompt, model, or schema drift.</li>
 </ul>
 <h2>Layer 4 — Fallback chain</h2>
 <p>When repair fails, degrade deliberately instead of throwing:</p>
 <ol>
-<li><strong>Stricter generation</strong> — re-run with constrained decoding / lower temperature.</li>
-<li><strong>A more capable model</strong> — escalate via <a href="#model-routing">model routing</a> for the
-   hard case.</li>
-<li><strong>A safe default / partial result</strong> — e.g. return the fields you <em>could</em> validate,
-   flag the rest.</li>
-<li><strong>A clean typed error</strong> — surface a structured failure the caller can handle and
-   that <a href="#model-routing">degraded-mode UX</a> can render — never a stack trace or raw
-   model text.</li>
+<li><strong>Stricter generation</strong> — re-run with constrained decoding or lower
+   temperature.</li>
+<li><strong>A more capable model</strong> — escalate via
+   <a href="#model-routing">model routing</a> for the hard case.</li>
+<li><strong>A safe default or partial result</strong> — for example, return the fields
+   you <em>could</em> validate and flag the rest.</li>
+<li><strong>A clean typed error</strong> — surface a structured failure the caller can
+   handle and that <a href="#model-routing">degraded-mode UX</a> can render. Never
+   a stack trace or raw model text.</li>
 </ol>
 <h2>Tradeoffs</h2>
 <table>
@@ -466,16 +474,20 @@ return fallback(...)                   # don't loop forever
 </table>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Trusting <code>JSON.parse</code> with no schema</strong> — a stray markdown fence or trailing comma
-  crashes the workflow. (Strip fences defensively; still validate.)</li>
-<li><strong>Unbounded repair loops</strong> — a persistently malformed case retries forever, burning
-  cost — see <a href="#agent-guardrails">budgets</a>.</li>
-<li><strong>Valid-but-wrong</strong> — schema passes, values are nonsense; only semantic validation
-  and <a href="04-evals-observability.html#evals">evals</a> catch it.</li>
-<li><strong>Quantization-induced malformation</strong> — <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a>
-  degrades strict-format adherence; watch JSON validity after model swaps.</li>
-<li><strong>Silent schema drift</strong> — you tightened the schema; repair rate spiked; nobody
-  noticed because it wasn't monitored.</li>
+<li><strong>Trusting <code>JSON.parse</code> with no schema</strong> — a stray markdown fence or
+  trailing comma crashes the workflow. Strip fences defensively, and still
+  validate.</li>
+<li><strong>Unbounded repair loops</strong> — a persistently malformed case retries
+  forever, burning cost. See <a href="#agent-guardrails">budgets</a>.</li>
+<li><strong>Valid-but-wrong</strong> — the schema passes but values are nonsense. Only
+  semantic validation and <a href="04-evals-observability.html#evals">evals</a> catch
+  this.</li>
+<li><strong>Quantization-induced malformation</strong> —
+  <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a>
+  degrades strict-format adherence, so watch JSON validity after model
+  swaps.</li>
+<li><strong>Silent schema drift</strong> — you tightened the schema and repair rate
+  spiked, but nobody noticed because it wasn't monitored.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -494,22 +506,23 @@ return fallback(...)                   # don't loop forever
 <li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="function-calling"><div class="lesson-head"><span class="lesson-num">02.2</span><h2>Function calling reliability, tool contracts, argument validation, and idempotency</h2></div><h2>TL;DR</h2>
-<p>Function calling is where a model stops generating text and starts <em>causing effects</em> —
-writing to databases, sending messages, moving money. That raises the stakes from
-"wrong answer" to "wrong action." Reliability comes from treating tool calls like an
-API boundary with an untrusted client: <strong>tight contracts</strong>, <strong>strict argument
-validation</strong>, <strong>idempotency</strong> so retries are safe, and <strong>authorization</strong> so the model
-can't do what the user couldn't. The model proposes; your harness disposes.</p>
+<p>Function calling is where a model stops generating text and starts <em>causing
+effects</em> — writing to databases, sending messages, moving money. That
+raises the stakes from "wrong answer" to "wrong action." Reliability comes
+from treating tool calls like an API boundary with an untrusted client:
+<strong>tight contracts</strong>, <strong>strict argument validation</strong>, <strong>idempotency</strong> so
+retries are safe, and <strong>authorization</strong> so the model can't do what the user
+couldn't. The model proposes; your harness disposes.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — This is where the AI stops <em>talking</em> and starts <em>doing</em> — moving money, sending email, editing records. The blast radius of a wrong action is far larger than a wrong sentence.</p>
 <p><strong>What it changes in your decisions</strong> — Which actions you let the AI take autonomously vs. behind a confirmation, and your audit/compliance posture.</p>
 <p><strong>Ask your eng team</strong> — <em>"If the model calls a tool with a hallucinated argument, what stops it from actually acting on it?"</em></p>
-<p><strong>Product risk if ignored</strong> — A double-charge, a wrong-customer email, or an unauthorized change — a real-world incident, not a chat mistake.</p>
+<p><strong>Product risk if ignored</strong> — A double-charge, a wrong-customer email, or an unauthorized change becomes a real-world incident, not a chat mistake.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>The model is an <strong>untrusted client</strong> of your tools. Its function call is a <em>request</em>,
-not a command you execute blindly:</p>
+<p>The model is an <strong>untrusted client</strong> of your tools. Its function call is a
+<em>request</em>, not a command you execute blindly:</p>
 <pre><code>model proposes call ──▶ validate args (schema + semantics)
                     ──▶ authorize (can THIS user/tenant do this?)
                     ──▶ execute idempotently (safe to retry)
@@ -518,77 +531,87 @@ not a command you execute blindly:</p>
 <p>Every arrow can reject. A hallucinated or malformed call should fail validation, not
 hit your database.</p>
 <h2>Tool contracts</h2>
-<p>A tool contract is the schema + semantics + guarantees of a callable:</p>
+<p>A tool contract is the schema, semantics, and guarantees of a callable:</p>
 <ul>
-<li><strong>Crisp schema.</strong> Typed, required vs. optional, enums, formats, ranges. This is the
-  same <a href="#structured-output">structured-output</a> discipline applied to <em>arguments</em>.</li>
-<li><strong>Descriptions are part of the contract.</strong> The model picks and fills tools from
-  their names/descriptions. Vague descriptions cause wrong tool selection and bad
-  arguments — write them like API docs, with units and examples.</li>
-<li><strong>Narrow surface area.</strong> Fewer, well-scoped tools beat many overlapping ones; the
-  model confuses similar tools. Don't expose a raw <code>run_sql</code> when you mean
-  <code>get_orders_by_customer</code>.</li>
-<li><strong>Errors are contractual.</strong> Return structured, actionable errors ("customer_id not
-  found") so the model can recover, not opaque 500s.</li>
+<li><strong>Crisp schema.</strong> Typed, required versus optional, enums, formats, ranges.
+  This is the same <a href="#structured-output">structured-output</a> discipline
+  applied to <em>arguments</em>.</li>
+<li><strong>Descriptions are part of the contract.</strong> The model picks and fills tools
+  from their names and descriptions. Vague descriptions cause wrong tool
+  selection and bad arguments. Write them like API docs, with units and
+  examples.</li>
+<li><strong>Narrow surface area.</strong> Fewer, well-scoped tools beat many overlapping
+  ones, because the model confuses similar tools. Don't expose a raw
+  <code>run_sql</code> when you mean <code>get_orders_by_customer</code>.</li>
+<li><strong>Errors are contractual.</strong> Return structured, actionable errors, such as
+  "customer_id not found," so the model can recover — not opaque 500s.</li>
 </ul>
 <h2>Argument validation</h2>
 <p>Never pass model-provided arguments straight through:</p>
 <ul>
-<li><strong>Syntactic + semantic validation</strong> against the schema (types, enums, ranges,
-  referential existence).</li>
-<li><strong>Hallucinated arguments are common</strong> — plausible-looking IDs, dates, enum values
-  that don't exist. Validate against the real system of record before acting.</li>
-<li><strong>On invalid args, feed the error back</strong> for a bounded <a href="#structured-output">repair</a>
-  rather than executing or crashing.</li>
+<li><strong>Syntactic and semantic validation</strong> against the schema — types, enums,
+  ranges, referential existence.</li>
+<li><strong>Hallucinated arguments are common</strong> — plausible-looking IDs, dates, and
+  enum values that don't exist. Validate against the real system of record
+  before acting.</li>
+<li><strong>On invalid args, feed the error back</strong> for a bounded
+  <a href="#structured-output">repair</a> rather than executing or crashing.</li>
 </ul>
 <h2>Idempotency — the keystone for safe retries</h2>
-<p>Models retry, networks fail, agents re-issue calls. If a tool isn't idempotent, a
-retry can double-charge a card or send two emails.</p>
+<p>Models retry, networks fail, agents re-issue calls. If a tool isn't
+idempotent, a retry can double-charge a card or send two emails.</p>
 <ul>
-<li><strong>Idempotency keys.</strong> Have the caller supply (or the harness derive) a stable key per
-  logical operation; the tool dedupes on it so repeats are no-ops returning the prior
-  result.</li>
-<li><strong>Prefer idempotent designs.</strong> <code>set_status(order, shipped)</code> is naturally idempotent;
-  <code>increment_balance(+10)</code> is not — model it as <code>apply_transaction(txn_id, +10)</code>.</li>
-<li><strong>Separate read vs. write.</strong> Reads are freely retryable; writes need keys. Mark which
-  tools have side effects so the harness knows what's safe to repeat.</li>
-<li>This is what makes <a href="#agent-guardrails">agent guardrails</a> and retry/fallback logic
-  safe: you can re-run a step without fear.</li>
+<li><strong>Idempotency keys.</strong> Have the caller supply, or the harness derive, a
+  stable key per logical operation. The tool dedupes on it, so repeats are
+  no-ops that return the prior result.</li>
+<li><strong>Prefer idempotent designs.</strong> <code>set_status(order, shipped)</code> is naturally
+  idempotent; <code>increment_balance(+10)</code> is not. Model it instead as
+  <code>apply_transaction(txn_id, +10)</code>.</li>
+<li><strong>Separate read from write.</strong> Reads are freely retryable; writes need
+  keys. Mark which tools have side effects so the harness knows what's safe
+  to repeat.</li>
+<li>This is what makes <a href="#agent-guardrails">agent guardrails</a> and
+  retry/fallback logic safe: you can re-run a step without fear.</li>
 </ul>
 <h2>Authorization &amp; boundaries</h2>
 <p>The model must never be able to do something the <em>user</em> couldn't:</p>
 <ul>
-<li><strong>Enforce permissions in the tool, keyed on the real session/tenant</strong> — not on
-  arguments the model supplies. A model told "you are admin" by a
-  <a href="05-safety-multitenancy.html#safety-engineering">prompt injection</a> must still be
-  blocked by the tool's own authz.</li>
-<li><strong>Scope every call to the tenant/user context</strong> to prevent
+<li><strong>Enforce permissions in the tool, keyed on the real session or tenant</strong> —
+  not on arguments the model supplies. A model told "you are admin" by a
+  <a href="05-safety-multitenancy.html#safety-engineering">prompt injection</a> must
+  still be blocked by the tool's own authz.</li>
+<li><strong>Scope every call to the tenant or user context</strong> to prevent
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">cross-tenant access</a>.</li>
-<li><strong>Least privilege.</strong> Give tools the minimum scope they need; dangerous actions get
-  confirmation or human approval.</li>
+<li><strong>Least privilege.</strong> Give tools the minimum scope they need. Dangerous
+  actions get confirmation or human approval.</li>
 </ul>
 <h2>Reliability patterns</h2>
 <ul>
-<li><strong>Parallel vs. sequential calls</strong> — validate and (where side-effecting) order them;
-  watch for the model issuing conflicting parallel writes.</li>
-<li><strong>Timeouts + retries with backoff</strong> — but only retry idempotent operations
-  automatically.</li>
-<li><strong>Circuit breakers</strong> — if a tool is failing, stop calling it and degrade rather than
-  hammering it.</li>
-<li><strong>Result shaping</strong> — return concise, structured results; dumping a 10k-token API
-  response back into context wrecreates a <a href="00-foundations.html#context-engineering">context-engineering</a>
-  problem.</li>
+<li><strong>Parallel versus sequential calls</strong> — validate them, and order them where
+  they have side effects. Watch for the model issuing conflicting parallel
+  writes.</li>
+<li><strong>Timeouts and retries with backoff</strong> — but only retry idempotent
+  operations automatically.</li>
+<li><strong>Circuit breakers</strong> — if a tool is failing, stop calling it and degrade
+  rather than hammering it.</li>
+<li><strong>Result shaping</strong> — return concise, structured results. Dumping a
+  10k-token API response back into context recreates a
+  <a href="00-foundations.html#context-engineering">context-engineering</a> problem.</li>
 </ul>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Hallucinated tool call</strong> — the model invents a tool or an argument; caught by
-  validating tool names and args against the real contract/system.</li>
-<li><strong>Non-idempotent retry</strong> — double-send / double-charge after a timeout retry.</li>
-<li><strong>Confused-deputy / injection</strong> — retrieved or tool-returned content tells the model
-  to call a dangerous tool; blocked by tool-side authz, not by trusting the model.</li>
-<li><strong>Wrong tool selected</strong> — overlapping/vague tools; fix descriptions and narrow the
-  surface.</li>
-<li><strong>Context blowup</strong> — verbose tool results crowd out the task; shape and truncate them.</li>
+<li><strong>Hallucinated tool call</strong> — the model invents a tool or an argument.
+  Catch this by validating tool names and args against the real contract or
+  system.</li>
+<li><strong>Non-idempotent retry</strong> — a double-send or double-charge after a timeout
+  retry.</li>
+<li><strong>Confused-deputy / injection</strong> — retrieved or tool-returned content tells
+  the model to call a dangerous tool. Block this with tool-side authz, not
+  by trusting the model.</li>
+<li><strong>Wrong tool selected</strong> — overlapping or vague tools cause this. Fix
+  descriptions and narrow the surface.</li>
+<li><strong>Context blowup</strong> — verbose tool results crowd out the task. Shape and
+  truncate them.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -608,23 +631,24 @@ retry can double-charge a card or send two emails.</p>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="agent-guardrails"><div class="lesson-head"><span class="lesson-num">02.3</span><h2>Agent guardrails: loop budgets, tool budgets, and termination conditions</h2></div><h2>TL;DR</h2>
-<p>An agent is a loop: think → act → observe → repeat. Loops need brakes. Without
-explicit <strong>budgets</strong> (max iterations, max tool calls, max tokens, max wall-clock, max
-cost) and clear <strong>termination conditions</strong>, an agent can spin forever, thrash a tool,
-or quietly run up a large bill — and because each step looks locally reasonable,
-nobody notices until the invoice or the incident. Guardrails make the worst case
-<em>bounded and observable</em> instead of open-ended.</p>
+<p>An agent is a loop: think, act, observe, repeat. Loops need brakes. Without
+explicit <strong>budgets</strong> — max iterations, max tool calls, max tokens, max
+wall-clock, max cost — and clear <strong>termination conditions</strong>, an agent can
+spin forever, thrash a tool, or quietly run up a large bill. Each step looks
+locally reasonable, so nobody notices until the invoice or the incident.
+Guardrails make the worst case <em>bounded and observable</em> instead of
+open-ended.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Agents can loop, thrash, and run up cost with no upper bound. Budgets are how you make worst-case behavior — and worst-case spend — predictable enough to ship.</p>
 <p><strong>What it changes in your decisions</strong> — Whether you ship autonomous agents at all, your per-task cost ceilings, and the UX for "I couldn't finish that."</p>
 <p><strong>Ask your eng team</strong> — <em>"What's the most this agent can cost — or do — on a single request?"</em></p>
-<p><strong>Product risk if ignored</strong> — A runaway agent burns budget or takes too many actions: bill shock, or a trust-destroying incident.</p>
+<p><strong>Product risk if ignored</strong> — A runaway agent burns budget or takes too many actions, causing bill shock or a trust-destroying incident.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>Treat the agent loop like any unbounded recursion in production: it needs a base case
-<em>and</em> a depth limit. The model decides <em>what</em> to do next; your harness decides
-<em>whether it's still allowed to</em>.</p>
+<p>Treat the agent loop like any unbounded recursion in production: it needs a
+base case <em>and</em> a depth limit. The model decides <em>what</em> to do next. Your
+harness decides <em>whether it's still allowed to</em>.</p>
 <pre><code>while not done:
     if over_any_budget(): terminate_with_partial_result_or_escalate()
     action = model.decide(state)
@@ -674,60 +698,67 @@ nobody notices until the invoice or the incident. Guardrails make the worst case
 </tr>
 </tbody>
 </table>
-<p>Set defaults conservatively; raise per-task only with justification. Budgets should be
-enforced by the harness, not requested of the model in the prompt — a model under
-<a href="05-safety-multitenancy.html#safety-engineering">injection</a> or confusion won't respect
-a polite "please stop after 5 steps."</p>
+<p>Set defaults conservatively, and raise them per-task only with
+justification. The harness should enforce budgets, not request them of the
+model in the prompt — a model under
+<a href="05-safety-multitenancy.html#safety-engineering">injection</a> or confusion
+won't respect a polite "please stop after 5 steps."</p>
 <h2>Termination conditions</h2>
-<p>An agent should stop on the <em>first</em> of:</p>
+<p>An agent should stop on the <em>first</em> of these:</p>
 <ul>
-<li><strong>Goal met</strong> — a checkable success condition (output validates, task verified), not
-  the model's self-assessment alone.</li>
-<li><strong>Explicit stop</strong> — the model emits a terminal action/answer.</li>
+<li><strong>Goal met</strong> — a checkable success condition (output validates, task
+  verified), not the model's self-assessment alone.</li>
+<li><strong>Explicit stop</strong> — the model emits a terminal action or answer.</li>
 <li><strong>Budget exceeded</strong> — any cap above.</li>
-<li><strong>No progress</strong> — repeated identical actions, oscillation, or repeated errors
-  (detect loops: same tool+args N times → break).</li>
+<li><strong>No progress</strong> — repeated identical actions, oscillation, or repeated
+  errors. Detect loops by breaking when the same tool and args repeat N
+  times.</li>
 <li><strong>Unrecoverable error</strong> — a tool hard-fails in a way retries won't fix.</li>
 </ul>
-<p>Critically, define what happens <em>at</em> termination: return best partial result, escalate
-to a human, fall back to a simpler path, or return a clean typed error — never just
-hang or dump raw state.</p>
+<p>Critically, define what happens <em>at</em> termination: return the best partial
+result, escalate to a human, fall back to a simpler path, or return a clean
+typed error. Never just hang or dump raw state.</p>
 <h2>Detecting "no progress"</h2>
-<p>Runaway agents often aren't infinite — they're <em>circular</em>. Cheap detectors:</p>
+<p>Runaway agents often aren't infinite — they're <em>circular</em>. Here are some
+cheap detectors:</p>
 <ul>
-<li>Hash (action, args); if the same hash repeats K times, stop.</li>
-<li>Track whether state/goal-distance is changing; if not, stop.</li>
-<li>Cap consecutive tool errors.
-These catch the common "agent keeps calling search with the same query" failure that a
-raw iteration cap would let run to the limit.</li>
+<li>Hash (action, args). If the same hash repeats K times, stop.</li>
+<li>Track whether state or goal-distance is changing. If not, stop.</li>
+<li>Cap consecutive tool errors.</li>
 </ul>
+<p>These catch the common "agent keeps calling search with the same query"
+failure that a raw iteration cap would let run to the limit.</p>
 <h2>Observability for agents</h2>
 <p>Budgets are only safe if you can <em>see</em> them. Every agent run should emit a
-<a href="04-evals-observability.html#observability">trace</a> with one span per step: action,
-args, tool latency, tokens, cost, and which budget (if any) terminated it. Aggregate:</p>
+<a href="04-evals-observability.html#observability">trace</a> with one span per step:
+action, args, tool latency, tokens, cost, and which budget, if any,
+terminated it. Aggregate:</p>
 <ul>
-<li>distribution of steps-per-task (a rising tail = degrading agent),</li>
-<li>budget-hit rate (how often you terminate on a cap vs. success),</li>
+<li>the distribution of steps-per-task — a rising tail means a degrading agent,</li>
+<li>budget-hit rate — how often you terminate on a cap versus success,</li>
 <li>cost-per-task by <a href="04-evals-observability.html#cost-attribution">feature/tenant</a>.</li>
 </ul>
 <h2>Tradeoffs</h2>
 <ul>
-<li><strong>Tight budgets</strong> → safe and cheap, but may cut off legitimately hard tasks
-  (premature termination). <strong>Loose budgets</strong> → solves more, risks runaways and cost.
-  Tune with evals: measure success rate <em>and</em> cost as you vary caps.</li>
-<li>Budgets interact with <a href="#model-routing">model routing</a>: a cheap model may need
-  more steps; escalate hard tasks rather than letting a weak model loop.</li>
+<li><strong>Tight budgets</strong> are safe and cheap, but they may cut off legitimately
+  hard tasks — premature termination. <strong>Loose budgets</strong> solve more tasks but
+  risk runaways and cost. Tune with evals: measure success rate <em>and</em> cost
+  as you vary caps.</li>
+<li>Budgets interact with <a href="#model-routing">model routing</a>: a cheap model
+  may need more steps. Escalate hard tasks rather than letting a weak model
+  loop.</li>
 </ul>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Runaway agent</strong> — no cap, circular reasoning, large bill. (The canonical
-  <a href="06-strategy-tradeoffs.html#production-failure-modes">production failure</a>.)</li>
-<li><strong>Tool thrash</strong> — same call repeated; non-idempotent versions cause repeated side
-  effects (see <a href="#function-calling">idempotency</a>).</li>
-<li><strong>Premature termination</strong> — budget too tight, hard tasks fail; looks like "the agent
-  is dumb" when it's actually "the agent was cut off."</li>
-<li><strong>Silent budget hits</strong> — terminating on cap without surfacing it hides a quality
-  problem as a "completed" run.</li>
+<li><strong>Runaway agent</strong> — no cap, circular reasoning, large bill. This is the
+  canonical <a href="06-strategy-tradeoffs.html#production-failure-modes">production failure</a>.</li>
+<li><strong>Tool thrash</strong> — the same call repeats; non-idempotent versions cause
+  repeated side effects (see <a href="#function-calling">idempotency</a>).</li>
+<li><strong>Premature termination</strong> — the budget is too tight, so hard tasks fail.
+  This looks like "the agent is dumb" when it's actually "the agent was cut
+  off."</li>
+<li><strong>Silent budget hits</strong> — terminating on a cap without surfacing it hides
+  a quality problem as a "completed" run.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -747,24 +778,25 @@ args, tool latency, tokens, cost, and which budget (if any) terminated it. Aggre
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="model-routing"><div class="lesson-head"><span class="lesson-num">02.4</span><h2>Model routing, graceful fallback logic, and degraded-mode UX</h2></div><h2>TL;DR</h2>
-<p>Don't hard-wire one model to every request. <strong>Routing</strong> sends each request to the
-<em>right</em> model for its difficulty, latency budget, and cost — small/cheap for easy
-cases, large/expensive for hard ones. <strong>Fallback</strong> keeps the system up when a model
-times out, errors, rate-limits, or returns low-confidence output by trying another
-path. <strong>Degraded-mode UX</strong> makes the fallback <em>honest and usable</em> for the user instead
-of a silent quality drop or a hard failure. Together they decouple your product's
-reliability from any single model's reliability.</p>
+<p>Don't hard-wire one model to every request. <strong>Routing</strong> sends each request
+to the <em>right</em> model for its difficulty, latency budget, and cost: a
+small, cheap model for easy cases, a large, expensive one for hard ones.
+<strong>Fallback</strong> keeps the system up when a model times out, errors,
+rate-limits, or returns low-confidence output, by trying another path.
+<strong>Degraded-mode UX</strong> makes the fallback <em>honest and usable</em> for the user,
+instead of a silent quality drop or a hard failure. Together they decouple
+your product's reliability from any single model's reliability.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Routing decouples your product's reliability and cost from any single model. It's how you survive a provider outage and how you hit margin without tanking quality.</p>
 <p><strong>What it changes in your decisions</strong> — Your vendor strategy, the SLA you can credibly offer, and your degraded-mode UX.</p>
 <p><strong>Ask your eng team</strong> — <em>"If our main provider has a bad hour, what do our users experience?"</em></p>
-<p><strong>Product risk if ignored</strong> — Single-vendor dependence means their outage is your outage — and silent quality drops on fallback quietly erode trust.</p>
+<p><strong>Product risk if ignored</strong> — Single-vendor dependence means their outage is your outage. Silent quality drops on fallback quietly erode trust.</p>
 </blockquote>
 <h2>Mental model</h2>
-<p>Your provider/model is a dependency with its own latency, error rate, and outages.
-Production systems don't bet availability on a single dependency — they route and fall
-back. The same applies here:</p>
+<p>Your provider or model is a dependency with its own latency, error rate, and
+outages. Production systems don't bet availability on a single dependency —
+they route and fall back. The same applies here:</p>
 <pre><code>request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
         ──▶ pick model (cheap → capable)
         ──▶ call with timeout
@@ -776,57 +808,67 @@ back. The same applies here:</p>
 </code></pre>
 <h2>Routing strategies</h2>
 <ul>
-<li><strong>Difficulty-based (cascade).</strong> Try a cheap/fast model first; escalate to a stronger
-  one only when needed (low confidence, validation failure, explicit "I'm not sure").
-  Most traffic is easy, so cascades cut cost dramatically — but add latency on
-  escalated requests. Pairs naturally with <a href="#structured-output">structured-output fallback</a>.</li>
-<li><strong>Classifier / router model.</strong> A small upfront classifier predicts which model can
-  handle the request, routing in one hop (no escalation latency) at the cost of router
-  accuracy.</li>
-<li><strong>Capability-based.</strong> Route by need: vision → multimodal model, code → code model,
-  long context → long-context model, cheap bulk → small model.</li>
-<li><strong>Constraint-based.</strong> Honor latency SLOs (fast model for interactive),
-  <a href="04-evals-observability.html#cost-attribution">cost budgets</a>, and <strong>data-residency/
-  privacy</strong> (sensitive data → on-prem/approved model only — a
-  <a href="05-safety-multitenancy.html#safety-engineering">safety boundary</a>).</li>
+<li><strong>Difficulty-based (cascade).</strong> Try a cheap, fast model first, and
+  escalate to a stronger one only when needed — low confidence, validation
+  failure, an explicit "I'm not sure." Most traffic is easy, so cascades cut
+  cost dramatically, but they add latency on escalated requests. This pairs
+  naturally with <a href="#structured-output">structured-output fallback</a>.</li>
+<li><strong>Classifier / router model.</strong> A small upfront classifier predicts which
+  model can handle the request, routing in one hop with no escalation
+  latency, at the cost of router accuracy.</li>
+<li><strong>Capability-based.</strong> Route by need: vision goes to a multimodal model,
+  code goes to a code model, long context goes to a long-context model,
+  cheap bulk work goes to a small model.</li>
+<li><strong>Constraint-based.</strong> Honor latency SLOs (a fast model for interactive
+  use), <a href="04-evals-observability.html#cost-attribution">cost budgets</a>, and
+  <strong>data-residency and privacy</strong> rules — sensitive data goes only to an
+  on-prem or approved model, a
+  <a href="05-safety-multitenancy.html#safety-engineering">safety boundary</a>.</li>
 </ul>
-<p>A market note that settles the "is routing worth it?" debate: in August 2025 the
-biggest product in the industry shipped it as the <em>default architecture</em> — GPT-5's
-headline design is a real-time router deciding per request whether a fast model or a
-deliberate reasoning model answers. When routing is how the frontier lab spends its
-own margin, treating it as an optional optimization in your stack is leaving the same
-economics on the table.</p>
+<p>A market note that settles the "is routing worth it?" debate: in August
+2025, the biggest product in the industry shipped it as the <em>default
+architecture</em>. GPT-5's headline design is a real-time router deciding per
+request whether a fast model or a deliberate reasoning model answers. When
+routing is how the frontier lab spends its own margin, treating it as an
+optional optimization in your stack leaves the same economics on the
+table.</p>
 <h2>Graceful fallback logic</h2>
 <p>Fail over on the right signals, in order of cost:</p>
 <ol>
-<li><strong>Transient errors</strong> (timeout, 5xx, rate-limit) → retry with backoff (only
-   <a href="#function-calling">idempotent</a> operations) then failover to an alternate
-   provider/model.</li>
-<li><strong>Quality signals</strong> (validation failure, low confidence, refusal) → escalate to a
-   stronger model or stricter generation.</li>
-<li><strong>Hard outage</strong> → serve from <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic cache</a>,
-   a smaller local model, or a non-LLM fallback (templated/rule-based response).</li>
+<li><strong>Transient errors</strong> (timeout, 5xx, rate-limit) — retry with backoff,
+   only for <a href="#function-calling">idempotent</a> operations, then fail over
+   to an alternate provider or model.</li>
+<li><strong>Quality signals</strong> (validation failure, low confidence, refusal) —
+   escalate to a stronger model or stricter generation.</li>
+<li><strong>Hard outage</strong> — serve from a
+   <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic cache</a>,
+   a smaller local model, or a non-LLM fallback such as a templated or
+   rule-based response.</li>
 </ol>
 <p>Principles:</p>
 <ul>
-<li><strong>Multi-provider</strong> removes single-vendor outage risk — but you must keep prompts and
-  <a href="04-evals-observability.html#evals">evals</a> portable, since models behave differently.</li>
-<li><strong>Circuit breakers</strong>: when a model is failing, stop routing to it for a cooldown
-  rather than piling on.</li>
-<li><strong>Idempotency + budgets</strong>: fallback chains can multiply calls; bound them like any
-  <a href="#agent-guardrails">agent loop</a>.</li>
+<li><strong>Multi-provider</strong> removes single-vendor outage risk. But you must keep
+  prompts and <a href="04-evals-observability.html#evals">evals</a> portable, since
+  models behave differently.</li>
+<li><strong>Circuit breakers</strong>: when a model is failing, stop routing to it for a
+  cooldown rather than piling on.</li>
+<li><strong>Idempotency and budgets</strong>: fallback chains can multiply calls, so bound
+  them like any <a href="#agent-guardrails">agent loop</a>.</li>
 </ul>
 <h2>Degraded-mode UX</h2>
-<p>A fallback that silently lowers quality is a <em>trust</em> bug. Make degradation legible:</p>
+<p>A fallback that silently lowers quality is a <em>trust</em> bug. Make degradation
+legible:</p>
 <ul>
-<li><strong>Be honest.</strong> "We're experiencing high load — here's a quick answer; ask for more
-  detail to retry" beats a confidently worse answer presented as normal.</li>
-<li><strong>Preserve the core job.</strong> Drop nice-to-haves (citations, rich formatting, long
-  reasoning) before dropping the actual answer.</li>
-<li><strong>Offer a path back.</strong> Let the user retry the full-quality path when it recovers.</li>
-<li><strong>Never expose internals.</strong> No stack traces, raw model text, or "provider X 503" —
-  surface a clean, typed, user-appropriate message (the end of the
-  <a href="#structured-output">structured-output fallback chain</a>).</li>
+<li><strong>Be honest.</strong> "We're experiencing high load — here's a quick answer; ask
+  for more detail to retry" beats a confidently worse answer presented as
+  normal.</li>
+<li><strong>Preserve the core job.</strong> Drop nice-to-haves — citations, rich
+  formatting, long reasoning — before dropping the actual answer.</li>
+<li><strong>Offer a path back.</strong> Let the user retry the full-quality path when it
+  recovers.</li>
+<li><strong>Never expose internals.</strong> No stack traces, raw model text, or "provider
+  X 503." Surface a clean, typed, user-appropriate message instead — the end
+  of the <a href="#structured-output">structured-output fallback chain</a>.</li>
 </ul>
 <h2>Tradeoffs</h2>
 <table>
@@ -862,15 +904,18 @@ economics on the table.</p>
 </table>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>No fallback</strong> — provider has a bad hour, your whole feature is down.</li>
-<li><strong>Silent degradation</strong> — quality quietly drops on fallback; users lose trust, evals
-  don't catch it because they only test the happy path.</li>
-<li><strong>Routing misclassification</strong> — easy task sent to the expensive model (cost) or hard
-  task to the weak model (quality). Monitor per-route success and cost.</li>
-<li><strong>Fallback amplification</strong> — chained retries/failovers explode cost and latency
-  without budgets.</li>
-<li><strong>Portability gaps</strong> — failover model gives differently-shaped output that breaks
-  downstream parsing; validate every route against the same schema/evals.</li>
+<li><strong>No fallback</strong> — the provider has a bad hour, and your whole feature is
+  down.</li>
+<li><strong>Silent degradation</strong> — quality quietly drops on fallback. Users lose
+  trust, and evals don't catch it because they only test the happy path.</li>
+<li><strong>Routing misclassification</strong> — an easy task goes to the expensive model
+  (a cost problem), or a hard task goes to the weak model (a quality
+  problem). Monitor per-route success and cost.</li>
+<li><strong>Fallback amplification</strong> — chained retries and failovers explode cost
+  and latency without budgets.</li>
+<li><strong>Portability gaps</strong> — the failover model gives differently-shaped output
+  that breaks downstream parsing. Validate every route against the same
+  schema and evals.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -891,27 +936,31 @@ economics on the table.</p>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
   <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
-<p><strong>The $1 Chevy Tahoe (December 2023).</strong> A Chevrolet dealership's ChatGPT-powered website
-bot was prompt-injected by users into "agreeing" to sell a Tahoe for $1 and stating the
-offer was "legally binding, no takesies-backsies." It went viral. 🎯 <em>PM takeaway:</em> never
-let raw model output be <em>authoritative</em> for a commitment or action — that's
-<a href="#agent-guardrails">guardrails</a> plus <a href="#function-calling">tool-side authority</a>,
-and it's exactly what <a href="04-evals-observability.html#evals">adversarial evals</a> exist to
-catch before launch.</p>
-<p><strong>DPD's bot swears at a customer (January 2024).</strong> After a system update, the parcel
-company's chatbot was goaded into swearing and writing a poem about how terrible DPD is.
-The clip spread widely. 🎯 <em>PM takeaway:</em> a model update is a <em>change that needs
-regression + adversarial testing</em> and live <a href="#agent-guardrails">guardrails</a> — "it
-worked before the update" is not a safety property.</p>
-<p><strong>Air Canada must honor its bot's invented policy (2024).</strong> A tribunal held the airline
-responsible after its chatbot fabricated a bereavement-refund policy. 🎯 <em>PM takeaway:</em>
-ungrounded, unvalidated output is a <em>liability</em>, not just a bad answer — push toward
-<a href="#structured-output">structured, grounded responses</a> and own what the AI says.</p>
-<p><strong>The industry standardizes structured output.</strong> Providers shipped JSON mode,
-function-calling schemas, and constrained/structured decoding precisely because
-"usually-valid JSON" kept breaking real workflows. 🎯 <em>PM takeaway:</em> schema validation +
-repair + fallback is now table stakes, not a nice-to-have. See
-<a href="#structured-output">structured output</a>.</p>
+<p><strong>The $1 Chevy Tahoe (December 2023).</strong> Users prompt-injected a Chevrolet
+dealership's ChatGPT-powered website bot into "agreeing" to sell a Tahoe for
+$1 and stating the offer was "legally binding, no takesies-backsies." It
+went viral. 🎯 <em>PM takeaway:</em> never let raw model output be <em>authoritative</em>
+for a commitment or action. That's <a href="#agent-guardrails">guardrails</a> plus
+<a href="#function-calling">tool-side authority</a>, and it's exactly what
+<a href="04-evals-observability.html#evals">adversarial evals</a> exist to catch
+before launch.</p>
+<p><strong>DPD's bot swears at a customer (January 2024).</strong> After a system update,
+users goaded the parcel company's chatbot into swearing and writing a poem
+about how terrible DPD is. The clip spread widely. 🎯 <em>PM takeaway:</em> a model
+update is a <em>change that needs regression and adversarial testing</em> and live
+<a href="#agent-guardrails">guardrails</a>. "It worked before the update" is not a
+safety property.</p>
+<p><strong>Air Canada must honor its bot's invented policy (2024).</strong> A tribunal held
+the airline responsible after its chatbot fabricated a bereavement-refund
+policy. 🎯 <em>PM takeaway:</em> ungrounded, unvalidated output is a <em>liability</em>,
+not just a bad answer. Push toward
+<a href="#structured-output">structured, grounded responses</a> and own what the
+AI says.</p>
+<p><strong>The industry standardizes structured output.</strong> Providers shipped JSON
+mode, function-calling schemas, and constrained/structured decoding
+precisely because "usually-valid JSON" kept breaking real workflows. 🎯 <em>PM
+takeaway:</em> schema validation, repair, and fallback are now table stakes,
+not a nice-to-have. See <a href="#structured-output">structured output</a>.</p>
 <h2>Module recap</h2>
 <table>
 <thead>
@@ -944,10 +993,11 @@ repair + fallback is now table stakes, not a nice-to-have. See
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> <strong>never trust model output as if it were a typed return value.</strong>
-Validate it, bound it, authorize it, and have a fallback. Reliability is a property your
-<a href="00-foundations.html#harness-engineering">harness</a> provides — the model is a brilliant,
-manipulable, occasionally-wrong component in the middle.</p>
+<p><strong>The through-line:</strong> <strong>never trust model output as if it were a typed
+return value.</strong> Validate it, bound it, authorize it, and have a fallback.
+Reliability is a property your <a href="00-foundations.html#harness-engineering">harness</a>
+provides. The model is a brilliant, manipulable, occasionally-wrong
+component in the middle.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"When the model is wrong — and it will be — what catches it
 before the user, the database, or the press does?"</em></p>

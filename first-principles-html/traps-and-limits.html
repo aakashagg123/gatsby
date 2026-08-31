@@ -318,43 +318,44 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
 failure modes are predictable: <strong>cognitive biases</strong> that masquerade as reasoning, the
 arrogance of <strong>reinventing solved problems</strong>, <strong>analysis paralysis</strong> from decomposing what
 didn't need decomposing, and <strong>false analogies</strong> that import the wrong field's answer. The
-mature skill isn't "always reason from first principles" — it's knowing <em>when analogy wins</em>,
+mature skill isn't "always reason from first principles." It's knowing <em>when analogy wins</em>,
 respecting accumulated expertise, and treating the choice of method as itself a
-<a href="../ai/06-strategy-tradeoffs.html">tradeoff</a>. Use this lesson as the safety rail on the
-other five.</p>
+<a href="../ai/06-strategy-tradeoffs.html">tradeoff</a>. Use this lesson as the safety rail
+on the other five.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the builder</strong></p>
-<p><strong>Why it matters</strong> — Half-learned first-principles thinking is <em>more</em> dangerous than none:
-it gives you the confidence to override conventions you didn't understand, at full speed.
+<p><strong>Why it matters</strong> — Half-learned first-principles thinking is <em>more</em> dangerous than none.
+It gives you the confidence to override conventions you didn't understand, at full speed.
 The failure modes are where smart people do their dumbest work.</p>
-<p><strong>What it changes in your decisions</strong> — You add a gate before "let's rethink this from
+<p><strong>What it changes in your decisions</strong> — Add a gate before "let's rethink this from
 scratch": <em>is this actually a first-principles problem, do I have the fundamentals, and
 what does the existing convention know that I don't?</em></p>
 <p><strong>Ask yourself</strong> — <em>"Am I reasoning, or am I rationalizing a conclusion I already wanted —
 and is the convention I'm about to override actually load-bearing?"</em></p>
-<p><strong>Risk if ignored</strong> — Confident reinvention of a worse wheel; bias dressed up as logic;
-and decision paralysis that ships nothing.</p>
+<p><strong>Risk if ignored</strong> — Confident reinvention of a worse wheel. Bias dressed up as logic.
+Decision paralysis that ships nothing.</p>
 </blockquote>
 <h2>Trap 1 · Bias wearing the mask of reasoning</h2>
 <p>Your reasoning runs on a brain full of systematic shortcuts. They don't announce
-themselves; they <em>feel like</em> clear thinking, which is what makes them dangerous to a method
-that trusts your judgment.</p>
+themselves. They <em>feel like</em> clear thinking, which is what makes them dangerous to a
+method that trusts your judgment.</p>
 <ul>
-<li><strong>Confirmation bias</strong> — you "deconstruct" a problem and somehow every surviving first
+<li><strong>Confirmation bias</strong> — You "deconstruct" a problem and somehow every surviving first
   principle supports the answer you already wanted. The
   <a href="the-method.html">method's challenge step</a> only works if you genuinely hunt for
   disconfirming claims, not decorative ones.</li>
-<li><strong>Motivated reasoning</strong> — when the conclusion affects you, your standard of evidence
+<li><strong>Motivated reasoning</strong> — When the conclusion affects you, your standard of evidence
   silently drops for what you like and rises for what you don't.</li>
-<li><strong>Anchoring</strong> — the first number or framing you saw quietly sets the range for everything
-  after, including your "from scratch" estimate.</li>
-<li><strong>Dunning–Kruger</strong> — the less you know about a field, the <em>more</em> confident you feel
-  decomposing it, because you can't see what you're missing. The most dangerous moment for
-  first-principles thinking is a little knowledge.</li>
+<li><strong>Anchoring</strong> — The first number or framing you saw quietly sets the range for
+  everything after, including your "from scratch" estimate.</li>
+<li><strong>Dunning–Kruger</strong> — The less you know about a field, the <em>more</em> confident you feel
+  decomposing it, because you can't see what you're missing. The most dangerous moment
+  for first-principles thinking is a little knowledge.</li>
 </ul>
-<p>The defense is structural, not willpower: invert the question ("what would prove me
-<em>wrong</em>?"), seek the strongest opposing case, and use the <a href="learning-how-to-learn.html">Feynman test</a>
-to expose where your "fundamentals" are actually hand-waving.</p>
+<p>The defense is structural, not willpower. Invert the question ("what would prove me
+<em>wrong</em>?"), seek the strongest opposing case, and use the
+<a href="learning-how-to-learn.html">Feynman test</a> to expose where your "fundamentals" are
+actually hand-waving.</p>
 <h2>Trap 2 · Reinventing solved problems</h2>
 <p>First-principles thinking has a seductive failure mode: treating <em>all</em> accumulated knowledge
 as "mere convention" to be cleared away and re-derived personally. Sometimes the convention
@@ -365,29 +366,30 @@ tissue of everyone who already hit the wall you're about to walk into.</p>
 no purpose," first understand <em>why someone built it</em>. If you can't explain why it's there,
 you're not yet qualified to remove it.</p>
 </blockquote>
-<p>This is the precise counterweight to first-principles enthusiasm. Re-deriving cryptography,
-or a safety regulation, or a database's isolation guarantees from scratch usually produces
-something worse, slowly, because the convention already encodes failures you haven't
-imagined yet — exactly the
-<a href="../ai/06-strategy-tradeoffs.html#production-failure-modes">production failure modes</a> others paid
-to learn. The rule: <strong>you've earned the right to override a convention only once you can
-articulate why it exists.</strong></p>
+<p>This is the precise counterweight to first-principles enthusiasm. Re-deriving
+cryptography, or a safety regulation, or a database's isolation guarantees from scratch
+usually produces something worse, slowly, because the convention already encodes failures
+you haven't imagined yet. These are exactly the
+<a href="../ai/06-strategy-tradeoffs.html#production-failure-modes">production failure modes</a>
+others paid to learn. The rule: <strong>you've earned the right to override a convention only
+once you can articulate why it exists.</strong></p>
 <h2>Trap 3 · Analysis paralysis</h2>
 <p>Decomposition is effortful and open-ended, and that's a hazard. Run it on a problem that
 didn't need it and you can spend a week re-deriving the obvious, or get stuck in
-<a href="the-method.html">bottomless decomposition</a> where no premise is ever "fundamental enough" to
-build on. First principles must <strong>terminate in action</strong>; a perfect analysis delivered too
-late is a failure, not a triumph. Most decisions are reversible and low-stakes — for those,
-the conventional answer shipped today beats the from-scratch answer shipped next month.</p>
+<a href="the-method.html">bottomless decomposition</a> where no premise is ever "fundamental enough"
+to build on. First principles must <strong>terminate in action</strong>. A perfect analysis delivered
+too late is a failure, not a triumph. Most decisions are reversible and low-stakes. For
+those, the conventional answer shipped today beats the from-scratch answer shipped next
+month.</p>
 <h2>Trap 4 · The false analogy</h2>
-<p>This trap belongs to the <a href="becoming-a-polymath.html">polymath</a>, whose whole edge is importing
-one field's models into another. The danger: matching on <strong>surface</strong> similarity instead of
-<strong>deep structure</strong>, and importing a model that doesn't actually fit. "The economy is like a
-household budget" <em>sounds</em> like cross-disciplinary insight and is mostly wrong, because the
-deep structures differ. Range amplifies whatever you've got: real structural insight <em>or</em>
-confident nonsense. The guard is the same one <a href="becoming-a-polymath.html">transfer</a> relies
-on — match on structure, and always carry each model's <strong>failure conditions</strong>
-(<a href="mental-models-latticework.html">map ≠ territory</a>).</p>
+<p>This trap belongs to the <a href="becoming-a-polymath.html">polymath</a>, whose whole edge is
+importing one field's models into another. The danger: matching on <strong>surface</strong> similarity
+instead of <strong>deep structure</strong>, and importing a model that doesn't actually fit. "The
+economy is like a household budget" <em>sounds</em> like cross-disciplinary insight and is mostly
+wrong, because the deep structures differ. Range amplifies whatever you've got — real
+structural insight <em>or</em> confident nonsense. The guard is the same one
+<a href="becoming-a-polymath.html">transfer</a> relies on: match on structure, and always carry each
+model's <strong>failure conditions</strong> (<a href="mental-models-latticework.html">map ≠ territory</a>).</p>
 <h2>Knowing which tool the moment deserves</h2>
 <pre class="mermaid">flowchart TB
   Q[&quot;Decision in front of you&quot;] --&gt; S{&quot;Stakes high enough to&lt;br/&gt;repay slow reasoning?&quot;}
@@ -428,31 +430,30 @@ loyalty. A rough decision aid:</p>
 </tr>
 </tbody>
 </table>
-<p>Notice the symmetry with the rest of the curriculum: just as
-<a href="../ai/06-strategy-tradeoffs.html">Module 06</a> insists every technical choice names its
-cost, <em>how you reason</em> is itself a choice with a cost. Defaulting to first principles
+<p>Notice the symmetry with the rest of the curriculum. Just as
+<a href="../ai/06-strategy-tradeoffs.html">Module 06</a> insists every technical choice names
+its cost, <em>how you reason</em> is itself a choice with a cost. Defaulting to first principles
 everywhere is as naïve as never using it.</p>
 <blockquote>
 <p><strong>📦 Mini-case — reinventing the calendar.</strong> A startup, reasoning "from first
-principles," decided recurring billing dates were an inherited convention and built
-a novel cycle-based scheme. Six months later they had re-derived, one support
-ticket at a time, why billing anchors to calendar months: payroll timing, corporate
-card cycles, accounting periods — bedrock constraints that lived in <em>other
-people's</em> systems, invisible from inside the whiteboard session. First-principles
-reasoning fails exactly here: when the "arbitrary convention" encodes constraints
-you haven't met yet. Before overturning a convention, find out what it knows.</p>
+principles," decided recurring billing dates were an inherited convention and built a
+novel cycle-based scheme. Six months later they had re-derived, one support ticket at a
+time, why billing anchors to calendar months: payroll timing, corporate card cycles,
+accounting periods — bedrock constraints that lived in <em>other people's</em> systems,
+invisible from inside the whiteboard session. First-principles reasoning fails exactly
+here: when the "arbitrary convention" encodes constraints you haven't met yet. Before
+overturning a convention, find out what it knows.</p>
 </blockquote>
 <h2>Failure modes (of this module's own ideas)</h2>
 <ul>
-<li><strong>First-principles as identity</strong> — reaching for decomposition reflexively to signal
+<li><strong>First-principles as identity</strong> — Decomposition gets reached for reflexively to signal
   cleverness, including where analogy plainly wins.</li>
-<li><strong>Bias laundering</strong> — using the method's vocabulary to dignify a predetermined
-  conclusion.</li>
-<li><strong>Expertise contempt</strong> — dismissing conventions you can't yet explain (the broken
+<li><strong>Bias laundering</strong> — The method's vocabulary dignifies a predetermined conclusion.</li>
+<li><strong>Expertise contempt</strong> — Conventions you can't yet explain get dismissed (the broken
   Chesterton's Fence).</li>
-<li><strong>Paralysis</strong> — analysis that never terminates in a decision.</li>
-<li><strong>Polymath overreach</strong> — confident false analogies imported across fields on surface
-  resemblance.</li>
+<li><strong>Paralysis</strong> — Analysis never terminates in a decision.</li>
+<li><strong>Polymath overreach</strong> — Confident false analogies get imported across fields on
+  surface resemblance.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

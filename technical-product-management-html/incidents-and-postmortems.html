@@ -315,13 +315,13 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>Owning a product includes owning its worst hour. An <strong>incident</strong> is any unplanned event
-degrading what users depend on; the discipline around it has three phases with
+degrading what users depend on. The discipline around it has three phases with
 different tempos: <strong>respond</strong> (stop the bleeding — mitigation before diagnosis, one
 incident commander, users informed honestly), <strong>recover</strong> (restore service, then
 restore <em>trust</em>), and <strong>learn</strong> (a <strong>blameless postmortem</strong> that finds the systemic
-causes and converts them into funded fixes). The PM is rarely the one typing the fix —
-your incident-time job is user impact, communication, and decisions that trade
-recovery speed against risk; your postmortem-time job is making sure the lessons
+causes and converts them into funded fixes). The PM is rarely the one typing the fix.
+Your incident-time job is user impact, communication, and decisions that trade
+recovery speed against risk. Your postmortem-time job is making sure the lessons
 actually reach the roadmap.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
@@ -330,8 +330,8 @@ errors thrown, a model update can shift behaviour overnight, and "the bot said
 something horrifying" is an incident with a screenshot. Your incident definitions,
 detectors, and playbooks all need an AI-shaped extension.</p>
 <p><strong>What it changes in your decisions</strong> — You define <em>quality incidents</em> (eval-score
-drop, spike in user overrides) as pageable events, not just availability incidents;
-and every AI feature ships with a kill switch and a degraded mode you chose on
+drop, spike in user overrides) as pageable events, not just availability incidents.
+Every AI feature ships with a kill switch and a degraded mode you chose on
 purpose.</p>
 <p><strong>Ask yourself</strong> — <em>"If this feature started confidently misbehaving at 2 a.m., how
 would we know, who would decide to pull it, and what would users see instead?"</em></p>
@@ -348,7 +348,7 @@ ever truly learned.</p>
   RES --&gt; PM[&quot;POSTMORTEM&lt;br/&gt;blameless · systemic ·&lt;br/&gt;5 Whys&quot;]
   PM --&gt;|&quot;action items with owners&lt;br/&gt;enter the roadmap&quot;| DET</pre>
 <p>Severity drives everything: a <strong>SEV1</strong> (users broadly down, data at risk) gets a war
-room and executive updates; a <strong>SEV3</strong> (degraded corner case) gets a ticket. Agree on
+room and executive updates. A <strong>SEV3</strong> (degraded corner case) gets a ticket. Agree on
 the ladder <em>before</em> you need it — arguing about severity during an incident is how
 minutes become hours. Two rules survive every framework: <strong>mitigate before you
 diagnose</strong> (rollback first, root-cause later — which is why
@@ -359,7 +359,7 @@ so ten helpful engineers don't make eleven uncoordinated changes.</p>
 <p>Not the keyboard — the blast radius:</p>
 <ul>
 <li><strong>Size the user impact</strong> — who is affected, how badly, and is it getting worse?
-  Engineering knows what's broken; you know what it <em>means</em> — which customers, which
+  Engineering knows what's broken. You know what it <em>means</em> — which customers, which
   commitments, which revenue.</li>
 <li><strong>Own communication</strong> — honest, plain, and on a cadence: status page, support
   macros, account teams for the big customers. "We know, we're on it, next update at
@@ -367,12 +367,12 @@ so ten helpful engineers don't make eleven uncoordinated changes.</p>
   handling.</li>
 <li><strong>Make the product calls</strong> — degrade or disable? Ship the risky fast fix or the
   safe slow one? Accept data loss for recovery speed? These are product decisions
-  that arrive dressed as technical ones; being in the room is the job.</li>
-<li><strong>Keep the timeline</strong> — someone should be logging what happened when; it's the raw
-  material of the postmortem and it's never reconstructible afterward.</li>
+  that arrive dressed as technical ones. Being in the room is the job.</li>
+<li><strong>Keep the timeline</strong> — someone should be logging what happened when. It's the raw
+  material of the postmortem, and it's never reconstructible afterward.</li>
 </ul>
 <h2>Blameless postmortems — learning as an artifact</h2>
-<p>The postmortem's premise: people acted reasonably on the information they had; the
+<p>The postmortem's premise: people acted reasonably on the information they had. The
 <em>system</em> let them down. Blamelessness isn't kindness — it's instrumentation: the
 moment a postmortem can hurt someone, it stops hearing the truth.</p>
 <p>The document is short and structured: impact (users, duration, cost) · timeline ·
@@ -407,15 +407,15 @@ postmortems all pointing at the same subsystem.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Diagnosis before mitigation</strong> — an hour of root-causing while the rollback
-  button waits; users pay for the team's curiosity.</li>
-<li><strong>The headless incident</strong> — no commander; parallel uncoordinated fixes, one of
+  button waits. Users pay for the team's curiosity.</li>
+<li><strong>The headless incident</strong> — no commander. Parallel uncoordinated fixes, one of
   which causes incident number two.</li>
-<li><strong>Blameful postmortems</strong> — the room optimizes for self-defense; the same incident
+<li><strong>Blameful postmortems</strong> — the room optimizes for self-defense. The same incident
   returns with a different name on it.</li>
-<li><strong>Action-item graveyard</strong> — lessons documented, never funded; the postmortem
+<li><strong>Action-item graveyard</strong> — lessons documented, never funded. The postmortem
   becomes a ritual of description.</li>
 <li><strong>Availability-only monitoring</strong> — the AI feature is "up" while its quality is
-  quietly on fire; no error, no page, no idea.</li>
+  quietly on fire. No error, no page, no idea.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

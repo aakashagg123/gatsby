@@ -316,9 +316,10 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
     <div class="hero-meta">3 lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
-  <div class="intro"><p>The final module steps back from individual techniques to the judgment that ties them
-together: choosing the right approach, naming the cost of every choice, and recognizing
-how production systems actually break.</p>
+  <div class="intro"><p>The final module steps back from individual techniques to the judgment
+that ties them together. It covers choosing the right approach, naming the
+cost of every choice, and recognizing how production systems actually
+break.</p>
 <ul>
 <li><a href="#finetune-vs-icl-vs-rag"><strong>Fine-tuning vs. in-context learning vs. RAG vs. distillation</strong></a>
   — four ways to make a model do your task, and when each is the <em>wrong</em> tool.</li>
@@ -327,9 +328,9 @@ how production systems actually break.</p>
 <li><a href="#production-failure-modes"><strong>Production failure modes</strong></a> — the recurring ways LLM
   systems fail in the wild, mapped back to the lessons that prevent them.</li>
 </ul>
-<p>This module is where the rest of the curriculum converges: every earlier lesson is a
-point in the tradeoff space these three describe. Read it last, then revisit the others
-with the tradeoffs in mind.</p>
+<p>This module is where the rest of the curriculum converges: every earlier
+lesson is a point in the tradeoff space these three describe. Read it
+last, then revisit the others with the tradeoffs in mind.</p>
 <h2>Connects to other tracks</h2>
 <ul>
 <li><a href="../technical-product-sense/latency-scale-performance.html">Latency, scale &amp; performance</a> — the same tradeoffs framed for a PM.</li>
@@ -358,19 +359,21 @@ with the tradeoffs in mind.</p>
  <div class="iw-note" id="fx-note">Baseline. Toggle one or more levers above.</div>
 </div></div></section>
   <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</h2></div><h2>TL;DR</h2>
-<p>These four are not competitors; they solve <em>different problems</em>. <strong>In-context learning
-(ICL)</strong> shapes behavior via the prompt — zero infra, instant iteration, but pays tokens
-every call. <strong>RAG</strong> injects <em>knowledge</em> at query time — best for facts that change or
-are too large to memorize. <strong>Fine-tuning</strong> bakes in <em>behavior/format/style</em> — best when
-the prompt can't reliably get there. <strong>Distillation</strong> produces a smaller, cheaper model
-for a <em>narrow, high-volume</em> task. The expensive mistake is reaching for fine-tuning when
-you have a <em>knowledge</em> problem (use RAG) or a <em>prompt</em> problem (use ICL).</p>
+<p>These four are not competitors; they solve <em>different problems</em>.
+<strong>In-context learning (ICL)</strong> shapes behavior via the prompt. It needs zero
+infra and gives instant iteration, but it pays tokens on every call. <strong>RAG</strong>
+injects <em>knowledge</em> at query time. It's best for facts that change or are
+too large to memorize. <strong>Fine-tuning</strong> bakes in <em>behavior, format, and
+style</em>. It's best when the prompt can't reliably get there. <strong>Distillation</strong>
+produces a smaller, cheaper model for a <em>narrow, high-volume</em> task. The
+expensive mistake is reaching for fine-tuning when you have a <em>knowledge</em>
+problem (use RAG instead) or a <em>prompt</em> problem (use ICL instead).</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Teams burn entire quarters fine-tuning when they actually had a retrieval problem (or vice versa). Picking the right approach is the highest-leverage <em>early</em> product decision you'll make.</p>
 <p><strong>What it changes in your decisions</strong> — Your build approach and timeline, your data investment, and whether fine-tuning is even the right project.</p>
 <p><strong>Ask your eng team</strong> — <em>"Is this a knowledge problem (use RAG) or a behavior problem (maybe fine-tune)?"</em></p>
-<p><strong>Product risk if ignored</strong> — A quarter spent fine-tuning a model that's already stale, when RAG would have been cheaper, fresher, and citeable.</p>
+<p><strong>Product risk if ignored</strong> — A quarter is spent fine-tuning a model that's already stale, when RAG would have been cheaper, fresher, and citeable.</p>
 </blockquote>
 <h2>The key distinction: knowledge vs. behavior</h2>
 <pre><code>Need the model to KNOW something it doesn't?      → RAG (or ICL for small/static facts)
@@ -378,77 +381,96 @@ Need the model to BEHAVE a certain way reliably?  → Fine-tuning (or ICL if pro
 Need a cheaper/faster model for ONE narrow task?  → Distillation
 Just need to steer it, fast, with no infra?       → In-context learning
 </code></pre>
-<p>Most "should we fine-tune?" questions dissolve once you ask: <em>is this a knowledge gap or
-a behavior gap?</em> Fine-tuning teaches behavior, not facts — it's a poor and stale way to
-store knowledge that RAG handles live.</p>
+<p>Most "should we fine-tune?" questions dissolve once you ask: <em>is this a
+knowledge gap or a behavior gap?</em> Fine-tuning teaches behavior, not facts.
+It's a poor and stale way to store knowledge that RAG handles live.</p>
 <h2>The four approaches</h2>
 <h3>In-context learning (ICL)</h3>
-<p>Instructions + few-shot examples in the <a href="00-foundations.html#context-engineering">context</a>;
-no weight changes.</p>
+<p>Instructions and few-shot examples in the
+<a href="00-foundations.html#context-engineering">context</a>, with no weight
+changes.</p>
 <ul>
-<li><strong>Best for:</strong> fast iteration, prototypes, tasks a capable model can do when <em>shown how</em>,
-  low/medium volume.</li>
-<li><strong>Costs:</strong> every example is paid for on <em>every</em> call (tokens, latency,
-  <a href="01-inference-internals.html#prefill-vs-decode">prefill</a>); limited by context window;
-  can't teach truly novel behavior.</li>
-<li><strong>Wrong when:</strong> the prompt is huge and repeated at scale (fine-tune or distill to amortize),
-  or you need knowledge that changes (RAG).</li>
+<li><strong>Best for:</strong> fast iteration, prototypes, tasks a capable model can do
+  when <em>shown how</em>, and low or medium volume.</li>
+<li><strong>Costs:</strong> every example is paid for on <em>every</em> call — tokens, latency,
+  <a href="01-inference-internals.html#prefill-vs-decode">prefill</a>. It's limited by
+  the context window, and it can't teach truly novel behavior.</li>
+<li><strong>Wrong when:</strong> the prompt is huge and repeated at scale (fine-tune or
+  distill to amortize the cost), or you need knowledge that changes (use
+  RAG).</li>
 </ul>
 <h3>RAG</h3>
 <p>Retrieve relevant data at query time and ground the answer in it
 (<a href="03-rag.html#rag-architecture">RAG architecture</a>).</p>
 <ul>
 <li><strong>Best for:</strong> large, changing, or proprietary knowledge; needing
-  <a href="03-rag.html#retrieval-evals">citations/attribution</a>; <a href="03-rag.html#rag-architecture">freshness</a>;
-  reducing hallucination on facts.</li>
-<li><strong>Costs:</strong> a whole pipeline to build and operate (chunking, embeddings, indexing,
-  reranking, freshness); retrieval quality caps answer quality; per-call latency + token cost.</li>
-<li><strong>Wrong when:</strong> the problem is <em>behavior/format/tone</em> (retrieval won't fix it), or the
-  knowledge is tiny and static (just put it in the prompt).</li>
+  <a href="03-rag.html#retrieval-evals">citations/attribution</a>;
+  <a href="03-rag.html#rag-architecture">freshness</a>; reducing hallucination on
+  facts.</li>
+<li><strong>Costs:</strong> a whole pipeline to build and operate — chunking, embeddings,
+  indexing, reranking, freshness. Retrieval quality caps answer quality,
+  and you pay per-call latency and token cost.</li>
+<li><strong>Wrong when:</strong> the problem is <em>behavior, format, or tone</em> (retrieval
+  won't fix it), or the knowledge is tiny and static (just put it in the
+  prompt).</li>
 </ul>
 <h3>Fine-tuning</h3>
-<p>Update weights (often parameter-efficient, e.g. LoRA) on task examples.</p>
+<p>Update weights, often with a parameter-efficient method like LoRA, on task
+examples.</p>
 <ul>
-<li><strong>Best for:</strong> consistent format/style/behavior the prompt can't reliably get; encoding
-  a domain <em>skill</em>; shortening prompts (move few-shots into weights → cheaper inference);
-  a narrow task done at high volume.</li>
-<li><strong>Costs:</strong> data curation + training pipeline; <strong>re-training on drift</strong>; risks
-  (catastrophic forgetting, overfitting); a model artifact to version, evaluate, and
-  serve; slow iteration vs. editing a prompt.</li>
-<li><strong>Wrong when:</strong> you need <em>fresh facts</em> (it's frozen at training time → RAG), you have
-  little data, or a prompt change would have sufficed. Fine-tuning to "add knowledge" is
-  the classic anti-pattern: stale, expensive, and unattributable.</li>
+<li><strong>Best for:</strong> consistent format, style, or behavior the prompt can't
+  reliably get; encoding a domain <em>skill</em>; shortening prompts by moving
+  few-shots into weights for cheaper inference; a narrow task done at high
+  volume.</li>
+<li><strong>Costs:</strong> data curation and a training pipeline; <strong>re-training on
+  drift</strong>; risks like catastrophic forgetting and overfitting; a model
+  artifact to version, evaluate, and serve; slow iteration compared with
+  editing a prompt.</li>
+<li><strong>Wrong when:</strong> you need <em>fresh facts</em> — it's frozen at training time, so
+  use RAG instead — you have little data, or a prompt change would have
+  sufficed. Fine-tuning to "add knowledge" is the classic anti-pattern:
+  stale, expensive, and unattributable.</li>
 </ul>
 <h3>Distillation</h3>
 <p>Train a small <strong>student</strong> to mimic a large <strong>teacher</strong>
 (<a href="01-inference-internals.html#speculative-quantization-distillation">details</a>).</p>
 <ul>
-<li><strong>Best for:</strong> a proven, narrow, <em>high-volume</em> task where a big model works but is too
-  slow/expensive; squeezing steady-state cost and latency.</li>
-<li><strong>Costs:</strong> teacher-generated data + training; lower quality ceiling; loses generality
-  (brittle off-distribution); a pipeline to maintain.</li>
-<li><strong>Wrong when:</strong> the task is broad/evolving, volume is low (not worth it), or you haven't
-  yet nailed the task with a big model (distill <em>after</em> it works).</li>
+<li><strong>Best for:</strong> a proven, narrow, <em>high-volume</em> task where a big model
+  works but is too slow or expensive; squeezing steady-state cost and
+  latency.</li>
+<li><strong>Costs:</strong> teacher-generated data and training; a lower quality ceiling;
+  lost generality that makes it brittle off-distribution; a pipeline to
+  maintain.</li>
+<li><strong>Wrong when:</strong> the task is broad or evolving, volume is low (not worth
+  it), or you haven't yet nailed the task with a big model — distill
+  <em>after</em> it works.</li>
 </ul>
 <h2>Decision guide</h2>
 <ol>
-<li><strong>Start with ICL.</strong> Cheapest to try; often enough. Establish <a href="04-evals-observability.html#evals">evals</a> here.</li>
-<li><strong>Knowledge gap?</strong> → <strong>RAG</strong>. Facts that are large, proprietary, or changing; need citations.</li>
-<li><strong>Behavior gap the prompt can't close (after honest prompt effort)?</strong> → <strong>Fine-tune</strong>.
-   Format/style/skill consistency; also to shrink expensive long prompts at scale.</li>
-<li><strong>Proven narrow task, high volume, cost/latency-bound?</strong> → <strong>Distill</strong> (then optionally
-   <a href="01-inference-internals.html#quantization-formats">quantize</a> the student).</li>
-<li><strong>They compose.</strong> The mature stack is often: a (possibly fine-tuned or distilled) model,
-   <strong>with RAG</strong> for knowledge, <strong>plus ICL</strong> for per-request steering — chosen per
-   subproblem, not globally.</li>
+<li><strong>Start with ICL.</strong> It's the cheapest to try and often enough. Establish
+   <a href="04-evals-observability.html#evals">evals</a> here.</li>
+<li><strong>Knowledge gap?</strong> Use <strong>RAG</strong> — facts that are large, proprietary, or
+   changing, and that need citations.</li>
+<li><strong>Behavior gap the prompt can't close, after honest prompt effort?</strong>
+   <strong>Fine-tune</strong> — for format, style, or skill consistency, and also to
+   shrink expensive long prompts at scale.</li>
+<li><strong>Proven narrow task, high volume, cost/latency-bound?</strong> <strong>Distill</strong>,
+   then optionally
+   <a href="01-inference-internals.html#quantization-formats">quantize</a> the
+   student.</li>
+<li><strong>They compose.</strong> The mature stack is often a model (possibly
+   fine-tuned or distilled), <strong>with RAG</strong> for knowledge, <strong>plus ICL</strong> for
+   per-request steering, chosen per subproblem, not globally.</li>
 </ol>
-<p>The same triad shows up <em>inside agents</em>, where Google's <em>Agents</em> whitepaper calls it
-<strong>targeted learning</strong> — teaching a model when and how to use its tools: <strong>in-context
-learning</strong> (tools and few-shot examples in the prompt, ReAct-style), <strong>retrieval-based
-in-context learning</strong> (dynamically populating the prompt with the most relevant examples
-from an external store — RAG applied to <em>behavior</em>, not just facts), and <strong>fine-tuning</strong>
-on a corpus of tool-use examples before inference. Different problem, identical decision
-structure: start in the prompt, retrieve when it must scale, train when it must be innate.</p>
+<p>The same triad shows up <em>inside agents</em>, where Google's <em>Agents</em>
+whitepaper calls it <strong>targeted learning</strong>: teaching a model when and how to
+use its tools. <strong>In-context learning</strong> puts tools and few-shot examples in
+the prompt, ReAct-style. <strong>Retrieval-based in-context learning</strong> dynamically
+populates the prompt with the most relevant examples from an external
+store — RAG applied to <em>behavior</em>, not just facts. And <strong>fine-tuning</strong>
+trains on a corpus of tool-use examples before inference. It's a different
+problem with an identical decision structure: start in the prompt,
+retrieve when it must scale, train when it must be innate.</p>
 <h2>Comparison</h2>
 <table>
 <thead>
@@ -514,14 +536,18 @@ structure: start in the prompt, retrieve when it must scale, train when it must 
 </table>
 <h2>Failure modes (using the wrong tool)</h2>
 <ul>
-<li><strong>Fine-tuning for knowledge</strong> → stale, expensive, no citations; should have been RAG.</li>
-<li><strong>RAG for a behavior problem</strong> → retrieval is perfect, output still wrong format;
-  needed prompting or fine-tuning.</li>
-<li><strong>Premature fine-tuning/distillation</strong> → committed to an artifact before the task was
-  even solved with a big model and good evals.</li>
-<li><strong>ICL at scale</strong> → a 6k-token prompt repeated millions of times; should have amortized
-  into weights (<a href="04-evals-observability.html#cost-attribution">cost attribution</a> reveals it).</li>
-<li><strong>No evals first</strong> → you can't tell whether the new approach actually helped.</li>
+<li><strong>Fine-tuning for knowledge</strong> — stale, expensive, and uncited; this
+  should have been RAG.</li>
+<li><strong>RAG for a behavior problem</strong> — retrieval is perfect, but output is
+  still the wrong format; this needed prompting or fine-tuning.</li>
+<li><strong>Premature fine-tuning/distillation</strong> — you committed to an artifact
+  before the task was even solved with a big model and good evals.</li>
+<li><strong>ICL at scale</strong> — a 6k-token prompt repeated millions of times should
+  have been amortized into weights.
+  <a href="04-evals-observability.html#cost-attribution">Cost attribution</a>
+  reveals it.</li>
+<li><strong>No evals first</strong> — you can't tell whether the new approach actually
+  helped.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -540,32 +566,35 @@ structure: start in the prompt, retrieve when it must scale, train when it must 
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, quality, cost, and reliability across the full inference stack</h2></div><h2>TL;DR</h2>
-<p>Almost every decision in an LLM system is a move in a four-way tradeoff between
-<strong>latency</strong>, <strong>quality</strong>, <strong>cost</strong>, and <strong>reliability</strong>. You rarely improve one without
-spending another. Mature AI engineering means making these tradeoffs <em>deliberately and
-per-use-case</em> — driven by explicit SLOs and budgets — instead of accepting whatever
-defaults give you. This lesson is the map that connects every other lesson in the
-repository to the axis it moves.</p>
+<p>Almost every decision in an LLM system is a move in a four-way tradeoff
+between <strong>latency</strong>, <strong>quality</strong>, <strong>cost</strong>, and <strong>reliability</strong>. You
+rarely improve one without spending another. Mature AI engineering means
+making these tradeoffs <em>deliberately and per-use-case</em>, driven by explicit
+SLOs and budgets, instead of accepting whatever defaults give you. This
+lesson is the map that connects every other lesson in the repository to
+the axis it moves.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — Latency, quality, cost, reliability — you cannot maximize all four, and pretending otherwise is how AI roadmaps go off the rails. This is the PM's core tradeoff framework.</p>
 <p><strong>What it changes in your decisions</strong> — Your SLOs per use case, what you choose to optimize vs. protect, and how you set realistic targets.</p>
 <p><strong>Ask your eng team</strong> — <em>"Which of latency / quality / cost / reliability are we choosing to trade here, and in exchange for what?"</em></p>
-<p><strong>Product risk if ignored</strong> — "Make it faster, cheaper, and better" with no target — so the team can't tell when they're done or when they've gone too far.</p>
+<p><strong>Product risk if ignored</strong> — "Make it faster, cheaper, and better" with no target means the team can't tell when they're done or when they've gone too far.</p>
 </blockquote>
 <h2>The four axes</h2>
 <ul>
-<li><strong>Latency</strong> — TTFT and TPOT (<a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>),
-  end-to-end including retrieval/tools; judged at p95/p99, not the mean.</li>
-<li><strong>Quality</strong> — correctness, grounding, format validity, helpfulness; measured by
-  <a href="04-evals-observability.html#evals">evals</a>, not vibes.</li>
+<li><strong>Latency</strong> — TTFT and TPOT
+  (<a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>),
+  end-to-end including retrieval and tools. Judge it at p95/p99, not the
+  mean.</li>
+<li><strong>Quality</strong> — correctness, grounding, format validity, helpfulness.
+  Measure it with <a href="04-evals-observability.html#evals">evals</a>, not vibes.</li>
 <li><strong>Cost</strong> — $/request and per-unit economics, attributed by
   <a href="04-evals-observability.html#cost-attribution">feature/tenant</a>.</li>
-<li><strong>Reliability</strong> — availability, graceful degradation, consistency, isolation; the
-  worst-case behavior, not the average.</li>
+<li><strong>Reliability</strong> — availability, graceful degradation, consistency,
+  isolation. This is the worst-case behavior, not the average.</li>
 </ul>
-<p>You cannot maximize all four. The job is to hit your <em>required</em> level on each and
-optimize the rest.</p>
+<p>You cannot maximize all four. The job is to hit your <em>required</em> level on
+each and optimize the rest.</p>
 <h2>Same lever, different axis — the whole stack</h2>
 <p>Each technique elsewhere in this repo is a trade among the four:</p>
 <table>
@@ -668,54 +697,63 @@ optimize the rest.</p>
 the best one <em>for a given SLO</em>.</p>
 <h2>The classic tensions</h2>
 <ul>
-<li><strong>Latency ↔ Quality</strong> — a bigger model or more retrieval/reasoning is better but
-  slower. Cascades and routing let you spend latency only on hard requests.</li>
-<li><strong>Cost ↔ Quality</strong> — cheaper/smaller/quantized cuts cost and may cut quality; keep it
-  <em>within</em> a quality floor enforced by evals.</li>
-<li><strong>Latency ↔ Cost (throughput)</strong> — batching lowers $/token but raises per-user TPOT;
-  pick the operating point from your SLO.</li>
-<li><strong>Reliability ↔ Cost/Latency</strong> — retries, fallbacks, multi-provider, and isolation all
-  add cost/latency to buy resilience.</li>
-<li><strong>Quality ↔ Reliability</strong> — the most capable single model may be less <em>available</em> than
-  a routed multi-provider setup that's slightly weaker but never down.</li>
+<li><strong>Latency ↔ Quality</strong> — a bigger model or more retrieval/reasoning is
+  better but slower. Cascades and routing let you spend latency only on
+  hard requests.</li>
+<li><strong>Cost ↔ Quality</strong> — a cheaper, smaller, or quantized model cuts cost and
+  may cut quality. Keep it <em>within</em> a quality floor enforced by evals.</li>
+<li><strong>Latency ↔ Cost (throughput)</strong> — batching lowers $/token but raises
+  per-user TPOT. Pick the operating point from your SLO.</li>
+<li><strong>Reliability ↔ Cost/Latency</strong> — retries, fallbacks, multi-provider
+  setups, and isolation all add cost and latency to buy resilience.</li>
+<li><strong>Quality ↔ Reliability</strong> — the most capable single model may be less
+  <em>available</em> than a routed multi-provider setup that's slightly weaker
+  but never down.</li>
 </ul>
 <h2>How to make the tradeoff deliberately</h2>
 <ol>
-<li><strong>Set SLOs/budgets per use case.</strong> Interactive chat ≠ overnight batch job ≠
-   safety-critical workflow. Define required latency, quality floor, cost ceiling, and
-   availability <em>separately</em> for each.</li>
-<li><strong>Measure all four.</strong> <a href="04-evals-observability.html#observability">Observability</a> for
-   latency/cost/reliability, <a href="04-evals-observability.html#evals">evals</a> for quality. You
-   can't trade what you don't measure.</li>
-<li><strong>Optimize the slack, protect the floor.</strong> Improve the unconstrained axes without
-   breaching the required level on the others — e.g. cut cost via quantization <em>only if</em>
-   evals stay above the quality floor.</li>
-<li><strong>Differentiate by request.</strong> <a href="02-reliable-outputs.html#model-routing">Route</a> easy
-   traffic cheap/fast, hard traffic capable; don't pay worst-case cost for the average
-   request.</li>
-<li><strong>Revisit continuously.</strong> Models, prices, and traffic change; today's optimal point
-   drifts — re-evaluate as part of operations. Four forces are falling or rising in
-   your favor <em>simultaneously</em>: training costs falling, per-token inference costs
-   falling, tokens-per-second rising, and usable context windows growing. That means
-   every "not economical" and "too slow" verdict has an expiry date — keep a list of
-   the features that just missed the bar, and re-run the numbers on a schedule, because
-   the dial-up era's "no" is often the broadband era's product. The canonical proof is
-   the <strong>DeepSeek moment</strong> (January 2025): efficiency work (latent attention, FP8
-   training, mixture-of-experts) delivered near-frontier reasoning at a fraction of
-   assumed cost, and the open-weight wave behind it (R1, Qwen3, Kimi K2) has kept
-   frontier-adjacent capability within reach of commodity budgets ever since. Whole
-   product categories that were "uneconomic" in 2024 stopped being so in one quarter.</li>
+<li><strong>Set SLOs/budgets per use case.</strong> Interactive chat, an overnight batch
+   job, and a safety-critical workflow are not the same. Define required
+   latency, quality floor, cost ceiling, and availability <em>separately</em> for
+   each.</li>
+<li><strong>Measure all four.</strong> Use
+   <a href="04-evals-observability.html#observability">observability</a> for
+   latency, cost, and reliability, and
+   <a href="04-evals-observability.html#evals">evals</a> for quality. You can't trade
+   what you don't measure.</li>
+<li><strong>Optimize the slack, protect the floor.</strong> Improve the unconstrained
+   axes without breaching the required level on the others. For example,
+   cut cost via quantization <em>only if</em> evals stay above the quality floor.</li>
+<li><strong>Differentiate by request.</strong>
+   <a href="02-reliable-outputs.html#model-routing">Route</a> easy traffic cheap and
+   fast, and hard traffic to a capable model. Don't pay worst-case cost for
+   the average request.</li>
+<li><strong>Revisit continuously.</strong> Models, prices, and traffic change, so
+   today's optimal point drifts — re-evaluate as part of operations. Four
+   forces are falling or rising in your favor <em>simultaneously</em>: training
+   costs are falling, per-token inference costs are falling, tokens-per-second
+   is rising, and usable context windows are growing. That means every "not
+   economical" and "too slow" verdict has an expiry date. Keep a list of the
+   features that just missed the bar, and re-run the numbers on a schedule,
+   because the dial-up era's "no" is often the broadband era's product. The
+   canonical proof is the <strong>DeepSeek moment</strong> (January 2025): efficiency
+   work (latent attention, FP8 training, mixture-of-experts) delivered
+   near-frontier reasoning at a fraction of assumed cost, and the
+   open-weight wave behind it (R1, Qwen3, Kimi K2) has kept
+   frontier-adjacent capability within reach of commodity budgets ever
+   since. Whole product categories that were "uneconomic" in 2024 stopped
+   being so in one quarter.</li>
 </ol>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Optimizing one axis blindly</strong> — cost-cutting that quietly tanks quality, or a
-  latency push that wrecks reliability.</li>
-<li><strong>One config for all requests</strong> — paying premium cost/latency on easy cases or starving
-  hard ones.</li>
-<li><strong>No SLOs</strong> — "make it faster/cheaper/better" with no target means you can't tell when
-  you're done or when you've gone too far.</li>
-<li><strong>Mean-driven decisions</strong> — tuning to averages while p99 latency and worst-case
-  reliability — the things users actually feel — degrade.</li>
+<li><strong>Optimizing one axis blindly</strong> — cost-cutting that quietly tanks
+  quality, or a latency push that wrecks reliability.</li>
+<li><strong>One config for all requests</strong> — paying premium cost and latency on
+  easy cases, or starving hard ones.</li>
+<li><strong>No SLOs</strong> — "make it faster, cheaper, better" with no target means you
+  can't tell when you're done or when you've gone too far.</li>
+<li><strong>Mean-driven decisions</strong> — tuning to averages while p99 latency and
+  worst-case reliability, the things users actually feel, degrade.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>
@@ -733,86 +771,100 @@ the best one <em>for a given SLO</em>.</p>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production failure modes &amp; how to engineer around them</h2></div><h2>TL;DR</h2>
-<p>LLM systems fail in a recognizable handful of ways: <strong>hallucinated tool calls</strong>,
-<strong>malformed JSON</strong>, <strong>stale retrieval</strong>, <strong>runaway agents</strong>, and <strong>silent eval
-regressions</strong> — plus their cousins (cost spikes, cross-tenant leaks, prompt injection,
-degraded fallbacks). What they share is that they're <em>quiet</em>: the system keeps returning
-plausible-looking output while doing the wrong thing. This lesson is a field guide: each
-mode, why it happens, how to detect it, and which lesson hardens against it. Treat it as
+<p>LLM systems fail in a recognizable handful of ways: <strong>hallucinated tool
+calls</strong>, <strong>malformed JSON</strong>, <strong>stale retrieval</strong>, <strong>runaway agents</strong>, and
+<strong>silent eval regressions</strong>, plus their cousins — cost spikes, cross-tenant
+leaks, prompt injection, degraded fallbacks. What they share is that
+they're <em>quiet</em>: the system keeps returning plausible-looking output while
+doing the wrong thing. This lesson is a field guide: each mode, why it
+happens, how to detect it, and which lesson hardens against it. Treat it as
 the integration test for everything else in the repository.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI-native PM</strong></p>
 <p><strong>Why it matters</strong> — These are the incidents that will actually page your team. Knowing the catalog lets you put prevention on the roadmap <em>before</em> the postmortem instead of after it.</p>
 <p><strong>What it changes in your decisions</strong> — Your pre-launch risk review, what you choose to monitor, and what goes in the runbook.</p>
 <p><strong>Ask your eng team</strong> — <em>"Which of these five failure modes can happen to us today, and what's our detection for each?"</em></p>
-<p><strong>Product risk if ignored</strong> — You learn the catalog the expensive way — one outage at a time.</p>
+<p><strong>Product risk if ignored</strong> — You learn the catalog the expensive way, one outage at a time.</p>
 </blockquote>
 <h2>Why LLM failures are different</h2>
-<p>In a normal service, failures throw: exceptions, 500s, timeouts. LLM failures often
-<strong>succeed loudly and are wrong quietly</strong> — a hallucination reads like a fact, a malformed
-plan parses far enough to act, a stale answer looks current. So the engineering response
-isn't just error handling; it's <strong>validation, bounding, grounding, and measurement</strong> that
+<p>In a normal service, failures throw exceptions, 500s, timeouts. LLM
+failures often <strong>succeed loudly and are wrong quietly</strong> — a hallucination
+reads like a fact, a malformed plan parses far enough to act, a stale
+answer looks current. So the engineering response isn't just error
+handling; it's <strong>validation, bounding, grounding, and measurement</strong> that
 make silent failures <em>visible and contained</em>.</p>
 <h2>The catalog</h2>
 <h3>1. Hallucinated tool calls</h3>
 <ul>
-<li><strong>What:</strong> the model invents a tool, a parameter, or a plausible-but-fake argument
-  (a non-existent id, an invalid enum), then "acts."</li>
-<li><strong>Why:</strong> model output is treated as a trusted command; arguments aren't checked against
-  the real system.</li>
-<li><strong>Detect:</strong> tool-name/arg validation failures; downstream "not found" errors;
-  <a href="04-evals-observability.html#observability">traces</a> of rejected calls.</li>
-<li><strong>Engineer around it:</strong> strict <a href="02-reliable-outputs.html#function-calling">tool contracts + argument validation</a>;
-  validate args against the system of record; structured, actionable tool errors;
-  <a href="02-reliable-outputs.html#function-calling">idempotency</a> so a bad-then-retried call is safe.</li>
+<li><strong>What:</strong> the model invents a tool, a parameter, or a plausible-but-fake
+  argument — a non-existent id, an invalid enum — then "acts."</li>
+<li><strong>Why:</strong> the system treats model output as a trusted command, and
+  arguments aren't checked against the real system.</li>
+<li><strong>Detect:</strong> tool-name/arg validation failures; downstream "not found"
+  errors; <a href="04-evals-observability.html#observability">traces</a> of rejected
+  calls.</li>
+<li><strong>Engineer around it:</strong> strict
+  <a href="02-reliable-outputs.html#function-calling">tool contracts and argument validation</a>;
+  validate args against the system of record; give structured, actionable
+  tool errors; add
+  <a href="02-reliable-outputs.html#function-calling">idempotency</a> so a
+  bad-then-retried call is safe.</li>
 </ul>
 <h3>2. Malformed JSON / structured output</h3>
 <ul>
-<li><strong>What:</strong> output doesn't parse or violates the schema; a markdown fence, a trailing
-  comma, a missing field takes down a workflow.</li>
-<li><strong>Why:</strong> trusting raw generation; no validation; sometimes worsened by
-  <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a> hurting
-  format adherence.</li>
+<li><strong>What:</strong> output doesn't parse or violates the schema. A markdown fence,
+  a trailing comma, or a missing field takes down a workflow.</li>
+<li><strong>Why:</strong> the system trusts raw generation with no validation, sometimes
+  made worse by
+  <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a>
+  hurting format adherence.</li>
 <li><strong>Detect:</strong> parse/validation failure rate; repair rate trend.</li>
-<li><strong>Engineer around it:</strong> <a href="02-reliable-outputs.html#structured-output">constrained decoding + schema validation + bounded repair +
-  fallback chain</a>; never <code>JSON.parse</code> without
-  a schema; track validity after model/quantization changes.</li>
+<li><strong>Engineer around it:</strong>
+  <a href="02-reliable-outputs.html#structured-output">constrained decoding, schema validation, bounded repair, and a fallback chain</a>.
+  Never <code>JSON.parse</code> without a schema. Track validity after model or
+  quantization changes.</li>
 </ul>
 <h3>3. Stale retrieval</h3>
 <ul>
-<li><strong>What:</strong> RAG cites outdated, deleted, or superseded content — confidently wrong on
-  facts that <em>changed</em>.</li>
-<li><strong>Why:</strong> the index is a cache that drifted from the source; deletions not propagated;
-  no recency signals. (Same shape as <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>.)</li>
-<li><strong>Detect:</strong> <a href="03-rag.html#retrieval-evals">freshness evals</a> with time-sensitive queries;
-  recall/grounding trends; user "that's out of date" signals.</li>
-<li><strong>Engineer around it:</strong> incremental indexing + deletion handling + recency ranking
-  (<a href="03-rag.html#rag-architecture">RAG freshness</a>); cache TTLs/invalidation; "say I don't
-  know" when context is absent.</li>
+<li><strong>What:</strong> RAG cites outdated, deleted, or superseded content, confidently
+  wrong on facts that <em>changed</em>.</li>
+<li><strong>Why:</strong> the index is a cache that drifted from the source, deletions
+  weren't propagated, and there are no recency signals. This is the same
+  shape as
+  <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>.</li>
+<li><strong>Detect:</strong> <a href="03-rag.html#retrieval-evals">freshness evals</a> with
+  time-sensitive queries; recall/grounding trends; user "that's out of
+  date" signals.</li>
+<li><strong>Engineer around it:</strong> incremental indexing, deletion handling, and
+  recency ranking (<a href="03-rag.html#rag-architecture">RAG freshness</a>); cache
+  TTLs and invalidation; "say I don't know" when context is absent.</li>
 </ul>
 <h3>4. Runaway agents</h3>
 <ul>
-<li><strong>What:</strong> an agent loops, thrashes a tool, or fans out — burning time and money, often
-  <em>circularly</em> rather than infinitely.</li>
-<li><strong>Why:</strong> no budgets, no termination/no-progress detection; non-idempotent tools amplify
-  the damage.</li>
-<li><strong>Detect:</strong> budget-hit rate, steps-per-task distribution, <a href="04-evals-observability.html#cost-attribution">cost</a>
-  spikes by feature/tenant, repeated identical actions.</li>
-<li><strong>Engineer around it:</strong> <a href="02-reliable-outputs.html#agent-guardrails">loop/tool/token/cost/time budgets + termination + no-progress
-  detection</a>; idempotent tools; per-tenant
-  cost alerts.</li>
+<li><strong>What:</strong> an agent loops, thrashes a tool, or fans out, burning time and
+  money, often <em>circularly</em> rather than infinitely.</li>
+<li><strong>Why:</strong> there are no budgets and no termination or no-progress
+  detection, and non-idempotent tools amplify the damage.</li>
+<li><strong>Detect:</strong> budget-hit rate, steps-per-task distribution,
+  <a href="04-evals-observability.html#cost-attribution">cost</a> spikes by
+  feature/tenant, repeated identical actions.</li>
+<li><strong>Engineer around it:</strong>
+  <a href="02-reliable-outputs.html#agent-guardrails">loop, tool, token, cost, and time budgets, plus termination and no-progress detection</a>;
+  idempotent tools; per-tenant cost alerts.</li>
 </ul>
 <h3>5. Silent eval regressions</h3>
 <ul>
-<li><strong>What:</strong> quality drops with <em>no code change</em> — a provider model update, a prompt tweak
-  with side effects, <a href="04-evals-observability.html#observability">drift</a> in data/inputs —
+<li><strong>What:</strong> quality drops with <em>no code change</em> — a provider model update,
+  a prompt tweak with side effects, or
+  <a href="04-evals-observability.html#observability">drift</a> in data or inputs —
   and nobody notices for weeks.</li>
-<li><strong>Why:</strong> no regression gate; reliance on "it looked fine"; aggregate metrics hiding a
-  category cliff.</li>
-<li><strong>Detect:</strong> <a href="04-evals-observability.html#evals">regression evals in CI</a>; scheduled
-  re-runs; per-stratum deltas; online quality proxies + drift monitors.</li>
-<li><strong>Engineer around it:</strong> golden sets gating every change; stratified reporting;
-  production sampling feeding back into evals.</li>
+<li><strong>Why:</strong> there's no regression gate, the team relies on "it looked
+  fine," and aggregate metrics hide a category cliff.</li>
+<li><strong>Detect:</strong> <a href="04-evals-observability.html#evals">regression evals in CI</a>;
+  scheduled re-runs; per-stratum deltas; online quality proxies and drift
+  monitors.</li>
+<li><strong>Engineer around it:</strong> golden sets that gate every change; stratified
+  reporting; production sampling that feeds back into evals.</li>
 </ul>
 <h2>The cousins (don't forget these)</h2>
 <table>
@@ -862,15 +914,16 @@ make silent failures <em>visible and contained</em>.</p>
 </tbody>
 </table>
 <h2>The common cure</h2>
-<p>Every mode above is defeated by the same four habits — the thesis of this whole
-repository:</p>
+<p>Every mode above is defeated by the same four habits, the thesis of this
+whole repository:</p>
 <ol>
-<li><strong>Treat model output as untrusted</strong> → validate, bound, authorize.</li>
-<li><strong>Put brakes on everything</strong> → budgets, timeouts, fallbacks.</li>
-<li><strong>Ground and isolate</strong> → cite from context; scope by tenant.</li>
-<li><strong>Measure relentlessly</strong> → <a href="04-evals-observability.html#evals">evals</a> before shipping,
-   <a href="04-evals-observability.html#observability">observability</a> while running, and feed
-   incidents back into both.</li>
+<li><strong>Treat model output as untrusted.</strong> Validate, bound, authorize.</li>
+<li><strong>Put brakes on everything.</strong> Use budgets, timeouts, fallbacks.</li>
+<li><strong>Ground and isolate.</strong> Cite from context; scope by tenant.</li>
+<li><strong>Measure relentlessly.</strong> Run <a href="04-evals-observability.html#evals">evals</a>
+   before shipping and
+   <a href="04-evals-observability.html#observability">observability</a> while
+   running, and feed incidents back into both.</li>
 </ol>
 <p>This is the difference between <a href="00-foundations.html#infra-not-demos">a demo and infrastructure</a>.</p>
 <h2>Practitioner checklist (pre-launch failure review)</h2>
@@ -894,25 +947,33 @@ repository:</p>
 <li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
   <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
-<p><strong>The "fine-tune our docs into the model" anti-pattern.</strong> A recurring industry story:
-a team fine-tunes a model to "teach it our knowledge base," ships something that's
-<strong>stale the day the docs change</strong>, can't cite its sources, and is expensive to re-train —
-then quietly rebuilds it as <a href="03-rag.html#rag-architecture">RAG</a>. 🎯 <em>PM takeaway:</em> classify
-the problem <em>first</em> — knowledge → RAG, behavior → fine-tune. See
+<p><strong>The "fine-tune our docs into the model" anti-pattern.</strong> This is a
+recurring industry story: a team fine-tunes a model to "teach it our
+knowledge base," ships something that's <strong>stale the day the docs change</strong>,
+can't cite its sources, and is expensive to re-train, then quietly
+rebuilds it as <a href="03-rag.html#rag-architecture">RAG</a>. 🎯 <em>PM takeaway:</em>
+classify the problem <em>first</em>. A knowledge problem needs RAG; a behavior
+problem needs fine-tuning. See
 <a href="#finetune-vs-icl-vs-rag">fine-tune vs. ICL vs. RAG vs. distillation</a>.</p>
-<p><strong>Cheap-first routing / cascades (e.g., FrugalGPT research).</strong> Sending most traffic to a
-small model and escalating only the hard cases has been shown to cut cost dramatically
-while holding quality — because most requests are easy. 🎯 <em>PM takeaway:</em> don't pay
-worst-case cost for the average request; <a href="02-reliable-outputs.html#model-routing">route by difficulty</a>.</p>
-<p><strong>Distillation and small specialized models.</strong> Distilled rerankers, embedders, and
-on-device models deliver most of the quality of a big model for a narrow task at a
-fraction of the cost/latency. 🎯 <em>PM takeaway:</em> once a task is <em>proven and high-volume</em>, a
-smaller specialized model can transform your unit economics — but distill <em>after</em> it
-works, not before. See <a href="01-inference-internals.html#speculative-quantization-distillation">distillation</a>.</p>
-<p><strong>Every real launch picks a point on the four axes.</strong> Interactive chat optimizes latency;
-an overnight batch job optimizes cost; a medical or legal workflow optimizes
-reliability and quality over speed. 🎯 <em>PM takeaway:</em> there is no globally "best" config —
-only the best one for <em>your</em> SLO. See <a href="#inference-stack-tradeoffs">the four-axis tradeoff</a>.</p>
+<p><strong>Cheap-first routing / cascades (e.g., FrugalGPT research).</strong> Sending
+most traffic to a small model and escalating only the hard cases has been
+shown to cut cost dramatically while holding quality, because most
+requests are easy. 🎯 <em>PM takeaway:</em> don't pay worst-case cost for the
+average request.
+<a href="02-reliable-outputs.html#model-routing">Route by difficulty</a>.</p>
+<p><strong>Distillation and small specialized models.</strong> Distilled rerankers,
+embedders, and on-device models deliver most of the quality of a big model
+for a narrow task at a fraction of the cost and latency. 🎯 <em>PM takeaway:</em>
+once a task is <em>proven and high-volume</em>, a smaller specialized model can
+transform your unit economics. But distill <em>after</em> it works, not before.
+See
+<a href="01-inference-internals.html#speculative-quantization-distillation">distillation</a>.</p>
+<p><strong>Every real launch picks a point on the four axes.</strong> Interactive chat
+optimizes latency. An overnight batch job optimizes cost. A medical or
+legal workflow optimizes reliability and quality over speed. 🎯 <em>PM
+takeaway:</em> there is no globally "best" config, only the best one for
+<em>your</em> SLO. See
+<a href="#inference-stack-tradeoffs">the four-axis tradeoff</a>.</p>
 <h2>Module recap</h2>
 <table>
 <thead>
@@ -940,10 +1001,11 @@ only the best one for <em>your</em> SLO. See <a href="#inference-stack-tradeoffs
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> mature AI engineering is <strong>deliberate tradeoff-making.</strong> Pick the
-right tool for the <em>type</em> of problem, accept that improving one axis spends another, and
-treat the failure catalog as your pre-launch checklist. The whole curriculum converges
-here: every earlier lesson is a point in this tradeoff space.</p>
+<p><strong>The through-line:</strong> mature AI engineering is <strong>deliberate
+tradeoff-making.</strong> Pick the right tool for the <em>type</em> of problem, accept
+that improving one axis spends another, and treat the failure catalog as
+your pre-launch checklist. The whole curriculum converges here: every
+earlier lesson is a point in this tradeoff space.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"Which axis are we choosing to trade — and is this a knowledge,
 behavior, or cost problem?"</em> Answer both and most of the roadmap writes itself.</p>

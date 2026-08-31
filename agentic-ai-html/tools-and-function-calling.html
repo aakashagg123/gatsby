@@ -315,27 +315,27 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>Tools are how a model stops being a text generator and starts being an actor. The
-mechanics are simple: you describe functions to the model (name, purpose, typed
-parameters); the model replies "call this one, with these arguments"; <strong>your code</strong>
-executes the call and feeds the result back; the model continues. The model never runs
-anything itself — which means the harness owning execution is where safety, permissions,
-and reliability actually live. The craft is mostly <strong>tool design</strong> (few, well-described,
-right-altitude tools beat a hundred thin API wrappers), <strong>integration</strong> (MCP made
-tools portable across apps and vendors), and <strong>containment</strong> (sandboxes and scoped
-credentials, because a tool call is real-world action).</p>
+mechanics are simple. You describe functions to the model: name, purpose, typed
+parameters. The model replies "call this one, with these arguments." <strong>Your code</strong>
+executes the call and feeds the result back. Then the model continues. The model never
+runs anything itself — which means the harness that owns execution is where safety,
+permissions, and reliability actually live. The craft is mostly <strong>tool design</strong> (a few
+well-described, right-altitude tools beat a hundred thin API wrappers), <strong>integration</strong>
+(MCP made tools portable across apps and vendors), and <strong>containment</strong> (sandboxes and
+scoped credentials, because a tool call is real-world action).</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — The tool list <em>is</em> the product surface of an agent: it defines
+<p><strong>Why it matters</strong> — The tool list <em>is</em> the product surface of an agent. It defines
 everything the agent can do, everything that can go wrong, and most of what it costs.
 Two agents on the same model with different toolboxes are different products.</p>
-<p><strong>What it changes in your decisions</strong> — You review the toolbox like you review a
-permissions screen: what can this agent read, write, spend, and delete; which of
-those actions are reversible; and which require a human's approval. And you treat
-"add a tool" with the gravity of "add a capability," not "add a config line."</p>
+<p><strong>What it changes in your decisions</strong> — Review the toolbox like you review a
+permissions screen: what can this agent read, write, spend, and delete? Which of those
+actions are reversible, and which require a human's approval? Treat "add a tool" with
+the gravity of "add a capability," not "add a config line."</p>
 <p><strong>Ask yourself</strong> — <em>"For each tool: what's the worst realistic thing the agent could
 do with it, and would we survive that on a bad day?"</em></p>
 <p><strong>Risk if ignored</strong> — An over-provisioned agent meets a manipulated input
-(<a href="safety-security-and-governance.html">prompt injection</a>) or its own confusion, and
+(<a href="safety-security-and-governance.html">prompt injection</a>) or its own confusion. It then
 uses a legitimate tool to do something catastrophic — politely, and at machine speed.</p>
 </blockquote>
 <h2>The mechanics</h2>
@@ -354,53 +354,52 @@ uses a legitimate tool to do something catastrophic — politely, and at machine
     M--&gt;&gt;H: next tool_call... (loop)
     M--&gt;&gt;H: final answer
     H--&gt;&gt;U: response with findings</pre>
-<p>The two arrows worth staring at: the model only ever <em>requests</em> a call, and the harness
-<em>executes and can refuse</em>. Every control you'll ever want — allowlists, approval
-prompts, rate limits, spend caps, logging — attaches at that harness step. A model with
-tools is exactly as dangerous as the harness lets it be.</p>
-<p>One taxonomy worth knowing, because platform docs and eng teams use it (it's from
-Google's <em>Agents</em> whitepaper): tools split by <strong>where the call executes</strong>.
-<strong>Extensions</strong> run agent-side — the agent's runtime calls the API directly, useful for
+<p>Two arrows are worth staring at: the model only ever <em>requests</em> a call, and the harness
+<em>executes and can refuse</em>. Every control you'll ever want — allowlists, approval prompts,
+rate limits, spend caps, logging — attaches at that harness step. A model with tools is
+exactly as dangerous as the harness lets it be.</p>
+<p>One taxonomy is worth knowing, because platform docs and eng teams use it. It comes from
+Google's <em>Agents</em> whitepaper: tools split by <strong>where the call executes</strong>.
+<strong>Extensions</strong> run agent-side — the agent's runtime calls the API directly. This suits
 pre-built integrations and multi-hop chains where the next call depends on the last
 result. <strong>Function calling</strong> runs client-side — the model only <em>outputs</em> the function
 name and arguments, and your application executes (or refuses) the call, exactly as in
-the diagram above. <strong>Data stores</strong> are the retrieval path — documents vector-indexed so
+the diagram above. <strong>Data stores</strong> are the retrieval path: documents vector-indexed so
 the agent can query them at runtime (<a href="context-and-memory.html">context &amp; memory</a>). The
-whitepaper's three canonical reasons to keep execution client-side are the reasons this
-lesson defaults to it: security and auth restrictions that mean the agent shouldn't hold
-API credentials; timing and order-of-operations constraints (batch jobs,
-human-in-the-loop review before anything fires); and APIs that simply aren't reachable
-from the agent's infrastructure. Choosing agent-side execution is choosing convenience
-over a control point — make that trade knowingly.</p>
-<p>Two late-2025 developments upgraded the mechanics. <strong>Code execution as tool-glue</strong>:
-instead of emitting one tool call per turn (each result round-tripping through the
-context), the model writes a short program that calls many MCP tools directly and
-returns only the final result — collapsing token cost and latency on multi-tool
-workflows, and making the code sandbox the orchestration surface. And <strong>Skills</strong>:
-packaged procedural knowledge (a folder with instructions, scripts, and resources the
-agent loads when relevant) as a third primitive alongside tools and prompts — tools
-give the agent <em>capabilities</em>, skills give it <em>know-how</em> about when and how to use
-them. Both matter to the PM the same way: the toolbox review now includes what code
-the agent can run and what procedures it has been handed, not just which APIs it can
-call.</p>
+whitepaper gives three canonical reasons to keep execution client-side, and this lesson
+defaults to it for the same reasons: security and auth restrictions mean the agent
+shouldn't hold API credentials; timing and order-of-operations constraints (batch jobs,
+human-in-the-loop review before anything fires) require a checkpoint; and some APIs
+simply aren't reachable from the agent's infrastructure. Choosing agent-side execution
+means choosing convenience over a control point — make that trade knowingly.</p>
+<p>Two late-2025 developments upgraded the mechanics. <strong>Code execution as tool-glue</strong>: the
+model can write a short program that calls many MCP tools directly and returns only the
+final result, instead of emitting one tool call per turn with each result round-tripping
+through the context. This collapses token cost and latency on multi-tool workflows, and
+makes the code sandbox the orchestration surface. <strong>Skills</strong>: packaged procedural
+knowledge — a folder with instructions, scripts, and resources the agent loads when
+relevant — is now a third primitive alongside tools and prompts. Tools give the agent
+<em>capabilities</em>; skills give it <em>know-how</em> about when and how to use them. Both matter to
+the PM the same way: the toolbox review now covers what code the agent can run and what
+procedures it has been handed, not just which APIs it can call.</p>
 <p>What counts as a tool spans a wide range: retrieval and web search; code execution (the
 universal power tool — a Python sandbox turns "things the model can describe" into
 "things the model can do"); file and document operations; business APIs (CRM, calendar,
 payments); and computer/browser use, where the model drives real UIs by looking at the
-screen — powerful, slower, and the most fragile of the family.</p>
+screen. Computer use is powerful, slower, and the most fragile of the family.</p>
 <h2>Tool design is UX design (for a model)</h2>
 <p>Models use tools well when the toolbox is designed for a <em>reader</em>, not a machine:</p>
 <ul>
 <li><strong>Few and distinct beats many and overlapping.</strong> Given 40 near-duplicate tools, models
-  pick wrong ones and waste turns; a handful of clearly-separated capabilities works
+  pick wrong ones and waste turns. A handful of clearly-separated capabilities works
   dramatically better. If two tools are confusable to you, they're confusable to it.</li>
 <li><strong>Right altitude.</strong> Don't wrap every endpoint 1:1. <code>book_meeting(person, topic, week)</code>
   beats making the model orchestrate <code>list_calendars</code> → <code>get_availability</code> →
   <code>create_event</code> → <code>send_invite</code> across four calls it can fumble. Fold your reliability
-  into the tool; spend the model's intelligence on judgment, not plumbing.</li>
+  into the tool. Spend the model's intelligence on judgment, not plumbing.</li>
 <li><strong>Descriptions are prompts.</strong> The tool description is the manual the model reads.
   State what it's for, when <em>not</em> to use it, and what it returns — including on failure.</li>
-<li><strong>Errors must teach.</strong> A tool that returns "error 500" produces a stuck loop; one that
+<li><strong>Errors must teach.</strong> A tool that returns "error 500" produces a stuck loop. One that
   returns "date must be YYYY-MM-DD, e.g. 2026-07-01" produces a self-correcting one.
   The quality of your error messages is a <em>feature</em> of your agent.</li>
 <li><strong>Return what's needed, not what exists.</strong> A tool that dumps 40 KB of JSON into the
@@ -408,14 +407,14 @@ screen — powerful, slower, and the most fragile of the family.</p>
   (<a href="context-and-memory.html">context &amp; memory</a>). Summarize, paginate, truncate.</li>
 </ul>
 <h2>Integration and containment</h2>
-<p><strong>MCP (Model Context Protocol)</strong> standardized the boring, valuable part: instead of
-every app hand-wiring every integration, a tool provider ships one MCP server (exposing
-tools, with schemas) and any MCP-capable agent can use it. Think "USB for tools." It's
+<p><strong>MCP (Model Context Protocol)</strong> standardized the boring, valuable part. Instead of
+every app hand-wiring every integration, a tool provider ships one MCP server exposing
+tools with schemas, and any MCP-capable agent can use it. Think "USB for tools." It's
 real, widely adopted, and the piece of the much-hyped protocol landscape most worth
 knowing (<a href="multi-agent-and-protocols.html">the honest protocol map</a> comes in lesson 5).
 An ecosystem note that becomes a product note: an MCP server someone else wrote is
-<em>third-party code your agent trusts</em> — its tool results enter your context, so vet
-servers like dependencies, not like plugins.</p>
+<em>third-party code your agent trusts</em> — its tool results enter your context. Vet servers
+like dependencies, not like plugins.</p>
 <p><strong>Containment</strong> is the other half of integration. The working defaults:</p>
 <ul>
 <li><strong>Sandboxes</strong> — code execution happens in an isolated, disposable environment with no
@@ -423,23 +422,23 @@ servers like dependencies, not like plugins.</p>
   code.</li>
 <li><strong>Least privilege</strong> — the agent gets the narrowest scopes that let it do the job:
   read-only where read-only suffices, this-folder not all-folders, staging not prod.</li>
-<li><strong>Graduated irreversibility</strong> — reads are free; writes are logged; destructive or
+<li><strong>Graduated irreversibility</strong> — reads are free, writes are logged, and destructive or
   outward-facing actions (delete, send, spend) require confirmation or a
   <a href="safety-security-and-governance.html">human's approval</a>. Map every tool to a tier
   <em>before</em> launch.</li>
 </ul>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>The kitchen-sink toolbox</strong> — 60 auto-generated API wrappers; the agent spends its
+<li><strong>The kitchen-sink toolbox</strong> — 60 auto-generated API wrappers. The agent spends its
   intelligence navigating your plumbing and still picks wrong.</li>
 <li><strong>Prod credentials in the loop</strong> — the agent's "read the database" tool quietly has
   write scope too, discovered the day it matters.</li>
-<li><strong>Mute errors</strong> — tools that fail without explaining; the agent retries the same
-  broken call five times and gives up (or worse, doesn't).</li>
-<li><strong>Context-flooding tools</strong> — every call returns the full firehose; cost balloons and
+<li><strong>Mute errors</strong> — tools that fail without explaining. The agent retries the same
+  broken call five times and gives up, or worse, doesn't.</li>
+<li><strong>Context-flooding tools</strong> — every call returns the full firehose. Cost balloons and
   quality drops as the signal drowns.</li>
 <li><strong>Unvetted MCP servers</strong> — installing community tool servers like browser extensions,
-  granting each one a seat inside your agent's trust boundary.</li>
+  and granting each one a seat inside your agent's trust boundary.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

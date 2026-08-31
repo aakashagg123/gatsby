@@ -314,10 +314,10 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>The method: deconstruct, challenge, reconstruct</h1>
   </div>
   <h2>TL;DR</h2>
-<p>First-principles thinking isn't a flash of genius — it's a three-step loop you can run on
-purpose. <strong>Deconstruct</strong> the problem into component claims; <strong>challenge</strong> each claim until
-you find the few that are actually bedrock and the many that are merely inherited;
-<strong>reconstruct</strong> a solution from the bedrock up. Three classic tools power the loop:
+<p>First-principles thinking isn't a flash of genius. It's a three-step loop you can run on
+purpose. <strong>Deconstruct</strong> the problem into component claims. <strong>Challenge</strong> each claim until
+you find the few that are actually bedrock and the many that are merely inherited.
+<strong>Reconstruct</strong> a solution from the bedrock up. Three classic tools power the loop:
 <strong>Socratic questioning</strong> to surface assumptions, the <strong>5 Whys</strong> to drill to root causes,
 and <strong>Fermi estimation</strong> to sanity-check magnitudes from scratch. The output is not just an
 answer but a <em>map of which constraints are real</em>.</p>
@@ -325,10 +325,10 @@ answer but a <em>map of which constraints are real</em>.</p>
 <p>🎯 <strong>For the builder</strong></p>
 <p><strong>Why it matters</strong> — "Think from first principles" is useless as advice without a
 procedure. A procedure makes the skill teachable, repeatable, and reviewable by other
-people — it turns insight into process.</p>
+people. It turns insight into process.</p>
 <p><strong>What it changes in your decisions</strong> — You can run the loop in a meeting, on a
-whiteboard, in a doc. You stop waiting for inspiration and start <em>operating</em> a method,
-which means juniors can do it too and you can audit where the reasoning broke.</p>
+whiteboard, in a doc. You stop waiting for inspiration and start <em>operating</em> a method.
+That means juniors can do it too, and you can audit where the reasoning broke.</p>
 <p><strong>Ask yourself</strong> — <em>"Which of these requirements did we derive, and which did we just
 inherit and never re-check?"</em></p>
 <p><strong>Risk if ignored</strong> — Without an explicit method, "first principles" becomes a rhetorical
@@ -342,15 +342,15 @@ flourish people attach to whatever they already wanted to do.</p>
   SQ[&quot;Socratic questioning&quot;] --&gt; C
   W5[&quot;The 5 Whys&quot;] --&gt; C
   FE[&quot;Fermi estimation&quot;] --&gt; R</pre>
-<p>It is a <em>loop</em>, not a line: reconstruction usually exposes a claim you mislabeled, sending
+<p>It is a <em>loop</em>, not a line. Reconstruction usually exposes a claim you mislabeled, sending
 you back to challenge it again.</p>
 <h3>1 · Deconstruct — break the problem into claims</h3>
-<p>Write down everything the current answer assumes. Be ruthlessly explicit; the goal is to
+<p>Write down everything the current answer assumes. Be ruthlessly explicit. The goal is to
 drag invisible assumptions into the light where they can be examined. For "our onboarding
 takes two weeks," the claims might be: <em>setup requires manual provisioning · provisioning
 requires a human approval · approval takes a day · there are nine steps · each step needs
 the previous one's output…</em></p>
-<p>The trick is <strong>granularity</strong>: keep splitting until each claim is something you could
+<p>The trick is <strong>granularity</strong>. Keep splitting until each claim is something you could
 independently mark true, false, or "actually a goal in disguise." A claim you can't
 evaluate is still too coarse.</p>
 <h3>2 · Challenge — test each assumption to its root</h3>
@@ -366,7 +366,7 @@ do the challenging.</p>
 <h3>3 · Reconstruct — build up from what survived</h3>
 <p>Take only the claims that survived as bedrock and ask: <em>given just these, what's the best
 solution?</em> Crucially, you are no longer bound by the original answer's shape. The
-reconstructed solution is allowed to look nothing like the thing you started with — that's
+reconstructed solution is allowed to look nothing like the thing you started with. That's
 the entire point, and the source of any non-obvious result.</p>
 <h2>Tool 1 · Socratic questioning — surface the assumption</h2>
 <p>Socratic questioning is structured doubt. A compact, reusable set:</p>
@@ -407,9 +407,9 @@ the entire point, and the source of any non-obvious result.</p>
 <p>The single highest-yield question is <strong>"how do I know this is true?"</strong> Run it on the claim
 that feels <em>most obvious</em>. Obviousness is exactly where unexamined assumptions hide.</p>
 <h2>Tool 2 · The 5 Whys — drill to the root cause</h2>
-<p>Borrowed from Toyota's production system: ask "why?" roughly five times in a chain, each
-answer becoming the next question, until you reach a root you can actually fix rather than a
-symptom you'd keep patching.</p>
+<p>Borrowed from Toyota's production system. Ask "why?" roughly five times in a chain, with
+each answer becoming the next question, until you reach a root you can actually fix rather
+than a symptom you'd keep patching.</p>
 <pre><code>The deploy failed.                         → why?
   The migration timed out.                 → why?
     It locked a 40M-row table.             → why?
@@ -419,19 +419,19 @@ symptom you'd keep patching.</p>
 </code></pre>
 <p>Patch at the top (retry the deploy) and it recurs forever. Fix at the root (add the column
 without a row-rewrite) and the class of failure disappears. "Five" is a guideline, not a
-ritual — stop when you hit something fundamental, which connects directly to
+ritual. Stop when you hit something fundamental — this connects directly to
 <a href="../ai/06-strategy-tradeoffs.html#production-failure-modes">production failure modes</a>.</p>
 <h2>Tool 3 · Fermi estimation — rebuild the number from scratch</h2>
 <p>Named for Enrico Fermi, who estimated the Trinity blast's yield by dropping scraps of paper
 and watching how far the shockwave pushed them. A Fermi estimate decomposes an unknown
-quantity into factors you <em>can</em> guess and multiplies them — deriving a number from
+quantity into factors you <em>can</em> guess and multiplies them. It derives a number from
 fundamentals rather than looking it up or trusting a vendor's claim.</p>
 <p>The canonical interview version — <em>how many piano tuners are in Chicago?</em> — decomposes into
 population ÷ people-per-household × fraction-with-pianos ÷ pianos-per-tuner-per-year, and
-lands within a factor of a few of the truth. The point isn't piano tuners; it's the move:
+lands within a factor of a few of the truth. The point isn't piano tuners. It's the move:
 <strong>when someone hands you a number, can you reconstruct its order of magnitude from
-components?</strong> If you can't, you can't tell whether it's reasonable — and "this number is
-off by 100×" is one of the most valuable things first-principles reasoning catches.</p>
+components?</strong> If you can't, you can't tell whether it's reasonable. "This number is off by
+100×" is one of the most valuable things first-principles reasoning catches.</p>
 <p>This is the quantitative twin of decomposition, and it pairs naturally with the
 <a href="mental-models-latticework.html">opportunity-cost and second-order</a> models from the next
 lesson.</p>
@@ -443,30 +443,31 @@ lesson.</p>
 <li><strong>Challenge</strong> — <em>Do users need it daily?</em> (Socratic) → actually most read last week's.
    <em>Why 9 hours?</em> (5 Whys) → it re-derives from raw events every run because results were
    never cached. <em>Is a bigger server even the lever?</em> (Fermi) → 90% of the time is in one
-   recompute that a cache eliminates; CPU is barely the bottleneck.</li>
-<li><strong>Reconstruct</strong> — from the survivors (most reads are stale-tolerant; the cost is
-   recomputation, not hardware): cache incremental results, recompute only deltas. The "9
-   hours" and the "bigger server" both evaporate — and neither was a real constraint.</li>
+   recompute that a cache eliminates. CPU is barely the bottleneck.</li>
+<li><strong>Reconstruct</strong> — Most reads are stale-tolerant, and the real cost is recomputation, not
+   hardware. So cache incremental results and recompute only deltas. The "9 hours" and the
+   "bigger server" both evaporate — neither was a real constraint.</li>
 </ol>
 <blockquote>
 <p><strong>📦 Mini-case — the two-week onboarding.</strong> A B2B team "knew" enterprise onboarding
-takes two weeks — every competitor's does. Deconstructed: nine steps, each waiting on
-the previous, two requiring human approval. Challenged: both approvals existed
-because of one incident four years earlier, and seven steps had no data dependency
-on each other. Reconstructed: parallel steps, approvals replaced by automated checks
-with an escalation path — onboarding in a day. The two weeks was an artifact of
-history, discoverable only by asking <em>which of these claims is actually load-bearing?</em></p>
+takes two weeks, because every competitor's does. Deconstructed: nine steps, each
+waiting on the previous, two requiring human approval. Challenged: both approvals
+existed because of one incident four years earlier. Seven steps had no data
+dependency on each other. Reconstructed: parallel steps, with approvals replaced by
+automated checks and an escalation path. Onboarding now takes a day. The two weeks
+was an artifact of history, discoverable only by asking <em>which of these claims is
+actually load-bearing?</em></p>
 </blockquote>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>Stopping at the first satisfying answer</strong> — the loop ended when you got the conclusion
-  you wanted, not when you hit bedrock. Confirmation bias wearing the method's clothes
+<li><strong>Stopping at the first satisfying answer</strong> — The loop ends when you get the conclusion
+  you wanted, not when you hit bedrock. It's confirmation bias wearing the method's clothes
   (see <a href="traps-and-limits.html">traps &amp; limits</a>).</li>
-<li><strong>Theatrical 5 Whys</strong> — asking "why" five times mechanically and accepting shallow
-  answers, reaching a fake root. Depth, not count, is the goal.</li>
-<li><strong>False-precision Fermi</strong> — treating an order-of-magnitude estimate as a real forecast.
+<li><strong>Theatrical 5 Whys</strong> — Asking "why" five times mechanically and accepting shallow
+  answers reaches a fake root. Depth, not count, is the goal.</li>
+<li><strong>False-precision Fermi</strong> — Treating an order-of-magnitude estimate as a real forecast.
   It's a <em>sanity check</em>, not a budget.</li>
-<li><strong>Deconstructing forever</strong> — analysis with no reconstruction. The method must terminate
+<li><strong>Deconstructing forever</strong> — Analysis with no reconstruction. The method must terminate
   in a rebuilt answer or it was just procrastination.</li>
 </ul>
 <h2>Practitioner checklist</h2>
