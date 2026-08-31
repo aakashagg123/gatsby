@@ -6,10 +6,10 @@
 
 ## The Problem
 
-A harness is code that calls a model and runs tools on your machine. If your Python
-version drifts, your dependencies leak between projects, or your API key lives in shell
-history, every later lesson inherits the mess. Five minutes of setup now saves hours of
-"works on my machine" later.
+A harness is code that calls a model and runs tools on your machine. Your Python version
+can drift, your dependencies can leak between projects, or your API key can end up in
+shell history. Any of these mistakes carries into every later lesson. Five minutes of
+setup now saves hours of "works on my machine" later.
 
 ## The Concept
 
@@ -43,8 +43,8 @@ print("key set:", bool(os.getenv("ANTHROPIC_API_KEY")))
 PY
 ```
 
-Run `bash outputs/setup.sh`. It's safe to re-run — the venv is created once, deps are
-upgraded, and the check tells you whether your key is visible.
+Run `bash outputs/setup.sh`. It's safe to re-run: the venv is created once and deps are
+upgraded each time. The check at the end tells you whether your key is visible.
 
 ## Use It
 

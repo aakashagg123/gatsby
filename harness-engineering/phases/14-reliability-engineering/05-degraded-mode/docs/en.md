@@ -6,10 +6,10 @@
 
 ## The Problem
 
-Retries fail, fallbacks exhaust, budgets run out — sometimes the agent genuinely can't
+Retries fail, fallbacks exhaust, budgets run out. Sometimes the agent genuinely can't
 complete the task. The wrong response is to crash with a stack trace or, worse, fabricate a
-success. **Degraded mode** is the graceful answer: return whatever partial, verified result
-you have, clearly state what couldn't be done and why, and offer a next step. This is the
+success. **Degraded mode** is the graceful answer. Return whatever partial, verified result
+you have, state clearly what couldn't be done and why, and offer a next step. This is the
 reliability payoff users actually feel.
 
 ## The Concept
@@ -21,8 +21,8 @@ flowchart LR
   S --> N["offer a next step (retry later / narrower scope / human)"]
 ```
 
-The contract: never silently drop work, never claim success you didn't verify (ties to
-"report outcomes faithfully").
+The contract: never silently drop work, and never claim success you didn't verify. This ties
+back to "report outcomes faithfully."
 
 ## Build It
 

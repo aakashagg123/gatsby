@@ -8,10 +8,10 @@ Modern shipping separates two things that used to be one: **deploy** (code reach
 production, dark, behind a feature flag) and **release** (users actually see it, at a
 percentage you control). That separation enables **progressive delivery** — internal
 users, then beta, then 1%, 10%, 50%, 100% — with metrics checked at every stage and a
-rollback plan that's a flag-flip, not a fire drill. Launch is the *marketing* moment and
+rollback plan that's a flag-flip, not a fire drill. Launch is the *marketing* moment, and
 needs its own machinery: support enablement, docs, comms, and a go/no-go that someone
-actually owns. And the least glamorous, highest-risk work in the discipline is the
-**migration** — moving users and data off the old thing — where the rule is: the effort
+actually owns. The least glamorous, highest-risk work in the discipline is the
+**migration** — moving users and data off the old thing. The rule there: the effort
 lives in the transition, not the destination, and you're not done until the old thing is
 *off*.
 
@@ -24,7 +24,7 @@ lives in the transition, not the destination, and you're not done until the old 
 > that worked yesterday.
 >
 > **What it changes in your decisions** — Every AI rollout stage gates on *quality*
-> signals (acceptance rate, eval spot-checks) alongside crashes and latency; and model or
+> signals (acceptance rate, eval spot-checks) alongside crashes and latency. Model or
 > prompt swaps get the full migration treatment — offline eval diff, side-by-side
 > shadow run, staged ramp with rollback — never a quiet Tuesday config change.
 >
@@ -56,16 +56,16 @@ Each stage exists to catch a different class of problem:
 
 - **Dark / deployed-off** — integration verified in production with zero user exposure.
 - **Internal (dogfooding)** — the cheapest honest users you'll ever have. If your own
-  team routes around the feature, users will too; listen *before* beta.
+  team routes around the feature, users will too. Listen *before* beta.
 - **Beta** — opted-in users who expect rough edges and give real-workflow feedback. Set
-  expectations explicitly; a beta user surprised by instability is a churn story.
+  expectations explicitly. A beta user surprised by instability is a churn story.
 - **Canary (1–5%)** — the money stage. Enough traffic for real signal on crashes,
-  latency, cost, and (for AI) quality proxies; small enough that a disaster is an
+  latency, cost, and (for AI) quality proxies. Small enough that a disaster is an
   apology, not a headline. Define the **abort criteria before you start** — "flag off if
   error rate exceeds X or acceptance rate drops Y%" — because mid-incident is the worst
   time to negotiate thresholds.
 - **Ramp** — watch the [guardrail metrics](./metrics-and-experimentation.md) at each
-  step; costs and tail latencies that looked fine at 5% have opinions at 50%.
+  step. Costs and tail latencies that looked fine at 5% have opinions at 50%.
 - **GA and cleanup** — the flag comes *out*. A codebase of permanent flags is
   [tech debt](../technical-product-sense/tech-debt-and-estimation.md) with a countdown
   attached.
@@ -78,11 +78,11 @@ hard, you find out now, not at 2 a.m.
 
 ## Launch ≠ release
 
-Release is traffic percentages; **launch** is the coordinated moment the world is told.
+Release is traffic percentages. **Launch** is the coordinated moment the world is told.
 The launch machinery PMs own:
 
 - **Tiering** — not everything deserves fireworks. A tier-1 launch (press, exec
-  visibility) needs weeks of coordination; a tier-3 (changelog note) needs a paragraph.
+  visibility) needs weeks of coordination. A tier-3 (changelog note) needs a paragraph.
   Deciding the tier early prevents both over-production and under-communication.
 - **Support enablement** — support sees the surge first. They get docs, known-issues
   lists, and escalation paths *before* the announcement, or launch day becomes their
@@ -92,7 +92,7 @@ The launch machinery PMs own:
   the genuine option of "no." A go/no-go that has never said no-go is a ceremony.
 - **The post-launch review** — 2–4 weeks after: metrics vs. the PRD's predictions,
   honest deltas, lessons written down. This closes the
-  [discovery loop](./discovery-to-delivery.md); skipping it means every launch teaches
+  [discovery loop](./discovery-to-delivery.md). Skipping it means every launch teaches
   nothing.
 
 ## Migrations: the transition is the project
