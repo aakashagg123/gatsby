@@ -148,7 +148,7 @@ can plug in real dispatch, budgets, and observability without rewriting the core
 - D) It isn't necessary
 
 <details><summary>Answer</summary>B — history is the only memory the model has. Drop a
-tool result and the model is blind to its own action's outcome.</details>
+tool result, and the model is blind to its own action's outcome.</details>
 
 **Q2.** A tool raises an exception mid-loop. The best default is to…
 

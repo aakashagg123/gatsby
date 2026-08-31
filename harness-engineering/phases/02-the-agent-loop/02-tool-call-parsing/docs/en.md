@@ -7,12 +7,12 @@
 
 ## The Problem
 
-In lesson 01 the fake model handed us tidy `tool_calls` dicts. Real models don't — they
-emit content blocks (or, with weaker models, free-form text like
-`I'll call add(2, 3)`). Before the loop can *act*, it has to parse that intent into a
-structured `(name, args)` it can trust, reject malformed calls, and turn one model
-message into possibly several tool invocations. Get this wrong and the loop either
-crashes on bad input or executes something the model didn't actually request.
+In lesson 01 the fake model handed us tidy `tool_calls` dicts. Real models don't. They
+emit content blocks, or, with weaker models, free-form text like `I'll call add(2, 3)`.
+Before the loop can *act*, it has to parse that intent into a structured `(name, args)`
+pair it can trust. It also has to reject malformed calls and turn one model message into
+possibly several tool invocations. Get this wrong and the loop either crashes on bad
+input or executes something the model didn't actually request.
 
 ## The Concept
 
@@ -26,8 +26,8 @@ flowchart LR
 ```
 
 The act step has three jobs: **extract** every tool call from one message, **validate**
-each against the tool's schema, and **dispatch** them (in order, or in parallel if
-independent). Parsing failures are data — they go back to the model, they don't raise.
+each against the tool's schema, and **dispatch** them, in order or in parallel if they're
+independent. Parsing failures are data. They go back to the model instead of raising.
 
 ## Build It
 
@@ -84,7 +84,7 @@ print(act('add({"a": 2})', tools, schema))
 ```
 
 Notice every path returns a result — valid, unknown tool, missing arg, runtime error.
-The loop never sees an exception; the model sees a message it can recover from.
+The loop never sees an exception. The model sees a message it can recover from.
 
 ## Use It
 

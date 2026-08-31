@@ -67,7 +67,7 @@ discipline that turns prompt and harness changes from guesswork into engineering
 - C) remove tests
 - D) nothing
 
-<details><summary>Answer</summary>B — measurement, not vibes.</details>
+<details><summary>Answer</summary>B — a measurement, not a guess.</details>
 
 **Q2.** Good golden cases are…
 
@@ -76,7 +76,7 @@ discipline that turns prompt and harness changes from guesswork into engineering
 - C) all edge cases only
 - D) as few as possible
 
-<details><summary>Answer</summary>B — representative + stable.</details>
+<details><summary>Answer</summary>B — representative and stable.</details>
 
 **Challenge.** Add per-case tags (e.g. "math", "retrieval") and report pass rate per tag, so
 a regression localizes to a category.
