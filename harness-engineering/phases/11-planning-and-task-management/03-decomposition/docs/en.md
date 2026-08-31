@@ -52,7 +52,7 @@ prompt that yields small, ordered, verifiable steps.
 **Q1.** What makes a step in a good plan?
 
 - A) it's vague enough to be flexible
-- B) it changes one coherent thing, names files, and has a done-check; ordered by dependency
+- B) it changes one coherent thing, names files, and has a done-check, ordered by dependency
 - C) it's as large as possible
 - D) it has no verification
 

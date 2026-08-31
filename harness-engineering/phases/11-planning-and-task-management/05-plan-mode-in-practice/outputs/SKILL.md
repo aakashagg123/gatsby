@@ -23,7 +23,7 @@ stall. Do not start editing before the plan is approved.
 2. **Plan mode.** Stay read-only — analyze and present the plan. **Stop and ask for
    approval.** Do not write/edit/run mutating commands yet.
 3. **Execute.** After approval, work one step at a time. Keep a visible todo list with
-   exactly one item in progress. Run each step's verification; only mark it complete when
+   exactly one item in progress. Run each step's verification. Only mark it complete when
    the check passes.
 4. **Self-correct.** If a step fails after a small retry budget, stop grinding — re-plan
    that step or escalate to the human. Never mark a step done that didn't verify.

@@ -27,8 +27,9 @@ flowchart LR
 ## Build It / Use It
 
 The artifact is `outputs/SKILL.md` — a `/plan-and-build` skill that runs the loop using this
-phase's discipline: produce a decomposed plan, stop in plan mode for approval, then execute
-each step and only check it off when its verification passes, re-planning if a step stalls.
+phase's discipline. It produces a decomposed plan, then stops in plan mode for approval.
+After approval, it executes each step and checks it off only when verification passes.
+If a step stalls, it re-plans.
 
 ## Use It
 
