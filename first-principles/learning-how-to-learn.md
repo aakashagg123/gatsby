@@ -128,33 +128,33 @@ binge-reading. It is several times more durable.
 
 ## How this powers the rest of the module
 
-This lesson is the **engine** under the other five. The [latticework](./mental-models-latticework.md)
-demands you learn many models to *fluency*, not familiarity — that's retrieval, spacing, and
-Feynman. [Polymathy](./becoming-a-polymath.md) demands you reach working competence in field
-after field *affordably* — that's the entire economic case for learning efficiently. And
-[first-principles reasoning](./the-method.md) is itself a learnable skill that improves with
-deliberate practice on real problems. Learn to learn, and everything else in this module gets
-cheaper.
+This lesson is the **engine** under the other five. The
+[latticework](./mental-models-latticework.md) demands you learn many models to *fluency*,
+not familiarity — that's retrieval, spacing, and Feynman.
+[Polymathy](./becoming-a-polymath.md) demands you reach working competence in field after
+field *affordably* — that's the entire economic case for learning efficiently. And
+[first-principles reasoning](./the-method.md) is itself a learnable skill that improves
+with deliberate practice on real problems. Learn to learn, and everything else in this
+module gets cheaper.
 
-> **📦 Mini-case — the two study groups.** The repeated lab finding (Roediger &
-> Karpicke's testing-effect studies): students who *re-read* a passage four times
-> feel more confident and score worse a week later than students who read once and
-> were *tested* three times. Fluency and learning move in opposite directions —
-> re-reading maximizes the feeling, retrieval maximizes the retention. Every
-> technique in this lesson is that finding, generalized: if studying feels smooth,
-> it probably isn't working.
+> **📦 Mini-case — the two study groups.** The repeated lab finding, from Roediger &
+> Karpicke's testing-effect studies: students who *re-read* a passage four times feel more
+> confident and score worse a week later than students who read once and were *tested*
+> three times. Fluency and learning move in opposite directions. Re-reading maximizes the
+> feeling; retrieval maximizes the retention. Every technique in this lesson is that
+> finding, generalized: if studying feels smooth, it probably isn't working.
 
 ## Failure modes
 
-- **Mistaking familiarity for mastery** — the fluency illusion; the headline trap.
-- **Passive review** — re-reading and highlighting feel productive and barely move
+- **Mistaking familiarity for mastery** — The fluency illusion, the headline trap.
+- **Passive review** — Re-reading and highlighting feel productive and barely move
   retention.
-- **Massed cramming** — works for the exam tomorrow, gone by next week; useless for building
-  a durable lattice.
-- **Practice without feedback** — repeating something the same way forever, reinforcing
-  flaws instead of fixing them.
-- **Avoiding the discomfort** — quitting a method *because* it feels hard, which is exactly
-  the signal it's working.
+- **Massed cramming** — Works for the exam tomorrow, gone by next week. Useless for
+  building a durable lattice.
+- **Practice without feedback** — Something gets repeated the same way forever,
+  reinforcing flaws instead of fixing them.
+- **Avoiding the discomfort** — Quitting a method *because* it feels hard, which is
+  exactly the signal it's working.
 
 ## Practitioner checklist
 

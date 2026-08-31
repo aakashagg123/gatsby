@@ -6,11 +6,11 @@
 
 ## The Problem
 
-The tempting way to "edit" with an LLM is to have it output the entire new file. That's
-slow, token-hungry, and dangerous: the model silently drops a function or reformats code it
-shouldn't touch. The robust primitive is an **exact-string replacement** — find one unique
-occurrence of `old`, replace with `new` — so the change is surgical and verifiable, and
-everything else is untouched by construction.
+The tempting way to "edit" with an LLM is to have it output the entire new file. That
+approach is slow and token-hungry. It is also dangerous: the model can silently drop a
+function or reformat code it shouldn't touch. The robust primitive is an **exact-string
+replacement**: find one unique occurrence of `old` and replace it with `new`. The change
+stays surgical and verifiable, and everything else stays untouched by construction.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   C -- "yes" --> R["replace, write"]
 ```
 
-Uniqueness is the safety property: if `old` matches twice, refuse and ask for more
-surrounding context, so you never edit the wrong spot.
+Uniqueness is the safety property. If `old` matches twice, the tool refuses and asks for
+more surrounding context, so it never edits the wrong spot.
 
 ## Build It
 
@@ -56,10 +56,10 @@ code.
 
 ## Use It
 
-This is the **Edit** tool in Claude Code / Codex: it requires the `old_string` to match
-exactly and uniquely, and errors if it's ambiguous — which is why the agent reads first
-(lesson 01) to grab enough surrounding context for a unique match. `replace_all` is the
-opt-in for intentional multi-site edits.
+This is the **Edit** tool in Claude Code / Codex. It requires `old_string` to match exactly
+and uniquely, and it errors when the match is ambiguous. That's why the agent reads first
+(lesson 01): reading grabs enough surrounding context for a unique match. `replace_all` is
+the opt-in for intentional multi-site edits.
 
 ## Ship It
 

@@ -8,9 +8,9 @@
 
 A coding agent resends a large, mostly-identical prefix on every turn: the system prompt,
 tool definitions, project context. Reprocessing those tokens every call is slow and
-expensive. Prompt caching lets the provider reuse the computation for an unchanged prefix —
-but only if your harness lays the context out so the stable part comes first and is marked
-cacheable. Lay it out wrong and you get zero cache hits.
+expensive. Prompt caching lets the provider reuse the computation for an unchanged prefix.
+But this only works if your harness lays out the context so the stable part comes first
+and is marked cacheable. Lay it out wrong and you get zero cache hits.
 
 ## The Concept
 

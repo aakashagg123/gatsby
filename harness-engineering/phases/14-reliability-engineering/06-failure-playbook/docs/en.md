@@ -6,11 +6,10 @@
 
 ## The Problem
 
-You've built the reliability primitives (retries, repair, fallback, budgets, degraded mode).
-The capstone is a **playbook**: a named list of the failure modes a coding-agent harness hits
-in production and the *structural* fix for each — so when something breaks, you reach for the
-mechanism, not a longer prompt. This is the reliability thread of the whole course in one
-page.
+You've built the reliability primitives: retries, repair, fallback, budgets, degraded mode.
+The capstone is a **playbook** — a named list of the failure modes a coding-agent harness hits
+in production, and the *structural* fix for each. When something breaks, you reach for the
+mechanism, not a longer prompt. This page holds the reliability thread of the whole course.
 
 ## The Concept
 
@@ -34,14 +33,14 @@ The artifact is `outputs/failure-playbook.md`. A sample of the entries:
 | "It claimed success but tests failed" | verify before reporting; degraded mode (L5) |
 | "Same mistake every week" | encode a lint rule / hook, delete the prompt line (P8, principles) |
 
-Each row's fix is a mechanism you built — the playbook is the index from symptom to lesson.
+Each row's fix is a mechanism you built. The playbook is the index from symptom to lesson.
 
 ## Use It
 
 Keep this playbook handy as a pre-launch checklist and an incident guide for any agent you
-ship — including how you operate Claude Code / Codex on real work. When you hit a new failure
-mode, add a row: symptom → structural fix, and (per the harness principles) prefer patching
-the harness over lengthening the prompt.
+ship, including how you operate Claude Code or Codex on real work. When you hit a new
+failure mode, add a row: symptom, then structural fix. Per the harness principles, prefer
+patching the harness over lengthening the prompt.
 
 ## Ship It
 
@@ -66,7 +65,7 @@ production failure-mode → structural-fix playbook.
 - C) more retries
 - D) a longer prompt
 
-<details><summary>Answer</summary>B — verification + honest reporting.</details>
+<details><summary>Answer</summary>B — verify, then report honestly.</details>
 
 **Challenge.** Add three failure modes from your own experience with each one's structural
 fix, and turn the table into a pre-launch checklist you run before shipping an agent.

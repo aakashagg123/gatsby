@@ -9,13 +9,13 @@
 
 A single model call can *describe* what to do — "run the tests, then read the failing
 file" — but it can't actually do any of it. The model has no hands. It can't run a
-command, read a file, or see the result of its own suggestion. One call in, one block
-of text out, no memory of the last call.
+command, read a file, or see the result of its own suggestion. One call goes in, one
+block of text comes out, and the model has no memory of the last call.
 
 Every coding agent you've used — Claude Code, Cursor's agent, Codex — closes that gap
-with the same small primitive: a loop that calls the model, executes the tools the
-model asks for, feeds the results back, and calls again. Until you've written that
-loop, the rest of harness engineering has nowhere to live.
+with the same small primitive: a loop. The loop calls the model, runs the tools the
+model asks for, feeds the results back, and calls the model again. Until you've written
+that loop, the rest of harness engineering has nowhere to live.
 
 ## The Concept
 
@@ -35,12 +35,12 @@ flowchart LR
 
 Three invariants make it work:
 
-1. **History is the memory.** The model is stateless; the loop carries the whole
-   conversation — including tool results — forward on every call.
-2. **Tool calls are data, not control flow.** The model *requests* an action; the
+1. **History is the memory.** The model is stateless. The loop carries the whole
+   conversation forward on every call, including tool results.
+2. **Tool calls are data, not control flow.** The model *requests* an action, and the
    harness decides whether and how to run it. (This is also the security boundary —
    see [Phase 17](../../../../ROADMAP.md).)
-3. **The loop must terminate.** A max-step ceiling is not optional; it's the
+3. **The loop must terminate.** A max-step ceiling is not optional. It's the
    difference between an agent and a runaway bill.
 
 ## Build It
@@ -95,7 +95,7 @@ course is a better tool, a better history, or a better stopping rule.
 ## Use It
 
 Now swap the fake model for the real one. The Anthropic SDK speaks the same
-`messages -> message` shape; tool calls arrive as `tool_use` content blocks and you
+`messages -> message` shape. Tool calls arrive as `tool_use` content blocks, and you
 return `tool_result` blocks. We default to the latest model, **Claude Opus 4.8**
 (`claude-opus-4-8`). `code/agent_loop_sdk.py`:
 

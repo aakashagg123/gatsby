@@ -52,15 +52,16 @@ print(run_with_degrade(lambda b: {"done": ["step1", "step2"]}, B()))
 # status: degraded, partial result + reason + next step
 ```
 
-Every outcome is structured and honest: complete, degraded (with partial + reason + next),
-or failed (with error + next) — the user always knows exactly where things stand.
+Every outcome is structured and honest: complete, degraded (with partial result, reason, and
+next step), or failed (with error and next step). The user always knows exactly where things
+stand.
 
 ## Use It
 
-For a Claude Code / Codex user this is the difference between "I edited 3 of 5 files; the
-other 2 failed type-checking — here's the error and what I'd try next" versus a crash or a
-false "done." Insist on it: a good agent reports partial progress and failures plainly. This
-is the user-facing capstone of the whole reliability phase.
+For a Claude Code or Codex user, this is the difference between "I edited 3 of 5 files; the
+other 2 failed type-checking — here's the error and what I'd try next" and a crash or a false
+"done." Insist on it. A good agent reports partial progress and failures plainly. This is the
+user-facing capstone of the whole reliability phase.
 
 ## Ship It
 
@@ -76,7 +77,7 @@ wrapper.
 - C) claim success anyway
 - D) silently stop
 
-<details><summary>Answer</summary>B — graceful, honest degradation.</details>
+<details><summary>Answer</summary>B — degrade gracefully and honestly.</details>
 
 **Q2.** Degraded mode must never…
 
@@ -85,7 +86,7 @@ wrapper.
 - C) suggest a next step
 - D) state a reason
 
-<details><summary>Answer</summary>B — no fabricated success.</details>
+<details><summary>Answer</summary>B — never fabricate success.</details>
 
 **Challenge.** Extend the wrapper to attach the budget `report()` (Phase 14 L4) to a degraded
 result so the user sees exactly what was spent.
