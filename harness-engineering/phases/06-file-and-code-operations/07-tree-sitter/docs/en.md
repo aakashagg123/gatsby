@@ -9,8 +9,8 @@
 Exact-string edits (lesson 02) cover most changes, but some are inherently structural:
 "rename this function everywhere it's *called*", "add a parameter to every method in this
 class", "find all functions missing a docstring". String matching can't reliably tell a
-call from a definition from a comment. For these you parse the code into a syntax tree and
-operate on nodes — that's what **tree-sitter** gives you.
+call from a definition from a comment. For these tasks you parse the code into a syntax
+tree and operate on nodes. That's what **tree-sitter** gives you.
 
 ## The Concept
 
@@ -25,9 +25,9 @@ spans, which stays precise where strings are ambiguous.
 ## Build It / Use It
 
 Tree-sitter is a library, so this is **Use It**. `code/structural.py` shows the shape with
-`tree_sitter` (install required); it also includes a stdlib `ast`-based fallback that runs
-here, listing every function definition and its line — the kind of structural query strings
-can't do reliably:
+`tree_sitter` (install required). It also includes a stdlib `ast`-based fallback that runs
+here. This fallback lists every function definition and its line — the kind of structural
+query strings can't do reliably:
 
 ```python
 import ast
@@ -49,15 +49,15 @@ print(list_functions(src))                 # [('a', 1), ('b', 4)]
 print(functions_missing_docstring(src))    # ['b']
 ```
 
-`ast` is Python-only; **tree-sitter** generalizes this to dozens of languages with one API,
-which is why coding agents use it for cross-language structural understanding.
+`ast` is Python-only. **tree-sitter** generalizes this to dozens of languages with one API.
+That's why coding agents use it for cross-language structural understanding.
 
 ## Use It
 
-Claude Code / Codex lean on string Edit for most changes, but structural awareness (via
-tree-sitter under the hood, or language servers) powers things like accurate symbol
-navigation and large-scale refactors. When your task is "every call site" or "every method,"
-reach for a parser instead of a regex.
+Claude Code / Codex lean on string Edit for most changes. But structural awareness — via
+tree-sitter under the hood, or language servers — powers accurate symbol navigation and
+large-scale refactors. When your task is "every call site" or "every method," reach for a
+parser instead of a regex.
 
 ## Ship It
 

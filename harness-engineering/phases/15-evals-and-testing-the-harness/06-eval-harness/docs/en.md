@@ -6,10 +6,10 @@
 
 ## The Problem
 
-The pieces (golden, trajectory, judge, adversarial, gate) are only useful assembled into one
-**eval harness** you run with a single command — locally before a change and in CI to block
-regressions. This is the productized form of the phase: `run_evals()` → an aggregate score
-and a pass/fail you can wire into the same workflow as your tests.
+The pieces — golden, trajectory, judge, adversarial, gate — are only useful assembled into
+one **eval harness** you run with a single command. Run it locally before a change and in CI
+to block regressions. This is the productized form of the phase: `run_evals()` produces an
+aggregate score and a pass/fail you can wire into the same workflow as your tests.
 
 ## The Concept
 
@@ -44,16 +44,16 @@ report = run_evals(suites)
 print(report, "PASS" if gate(report["aggregate"], 0.93) else "FAIL")
 ```
 
-In a real setup each suite runs the actual cases from lessons 01–05; `run_evals` aggregates
-and `gate` (lesson 04) turns it into a CI pass/fail.
+In a real setup, each suite runs the actual cases from lessons 01–05. `run_evals` aggregates
+the scores, and `gate` (lesson 04) turns the result into a CI pass/fail.
 
 ## Use It
 
 Add `python eval_harness.py` to your CI next to the tests, and run it locally before changing
-`CLAUDE.md`, a skill, a tool, or the model. For a Claude Code / Codex user this closes the
-loop the whole course has been building toward: you change the harness, the evals tell you —
-with a number and a gate — whether it got better or worse. Evals are how harness engineering
-stays engineering.
+`CLAUDE.md`, a skill, a tool, or the model. For a Claude Code or Codex user, this closes the
+loop the whole course has been building toward. You change the harness, and the evals tell
+you — with a number and a gate — whether it got better or worse. Evals are how harness
+engineering stays engineering.
 
 ## Ship It
 

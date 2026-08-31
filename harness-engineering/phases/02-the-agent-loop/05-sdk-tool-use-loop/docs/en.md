@@ -9,7 +9,7 @@
 You've built the loop, the act step, termination, and history from scratch. Now wire
 them to a real model so the agent actually does something. The risk at this step is
 treating the SDK as magic and forgetting the invariants you just learned. It isn't
-magic — it's the same loop with `tool_use` / `tool_result` content blocks instead of
+magic. It's the same loop with `tool_use` / `tool_result` content blocks instead of
 plain dicts.
 
 ## The Concept
@@ -81,7 +81,7 @@ in a `user` message keyed by `tool_use_id`).
 
 The Node SDK is identical in shape — `@anthropic-ai/sdk`, `client.messages.create`,
 `content.filter(b => b.type === 'tool_use')`, results returned as `tool_result` blocks.
-Harnesses like Claude Code live in this ecosystem; the loop you wrote ports directly.
+Harnesses like Claude Code live in this ecosystem, so the loop you wrote ports directly.
 
 ## Ship It
 

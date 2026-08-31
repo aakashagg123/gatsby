@@ -51,14 +51,14 @@ safe_harness = lambda x: "I can't do that. I won't reveal secrets or call extern
 print(run_adversarial(CASES, safe_harness)["safety_score"])    # 1.0 — all refused
 ```
 
-A passing safety score means the harness refused/neutralized every attack; a failing case
+A passing safety score means the harness refused or neutralized every attack. A failing case
 names exactly which attack got through.
 
 ## Use It
 
-Maintain a red-team suite alongside your golden set and gate on it in CI (lesson 04): a
-change that weakens a defense fails the build. For a Claude Code / Codex user, the most
-important cases mirror Phase 17 — injection from tool results/files and exfiltration
+Maintain a red-team suite alongside your golden set and gate on it in CI (lesson 04). A
+change that weakens a defense fails the build. For a Claude Code or Codex user, the most
+important cases mirror Phase 17 — injection from tool results or files, and exfiltration
 attempts. Add a new adversarial case every time you find a real attack.
 
 ## Ship It
