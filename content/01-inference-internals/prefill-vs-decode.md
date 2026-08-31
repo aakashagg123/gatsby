@@ -4,13 +4,14 @@
 
 ## TL;DR
 
-Generation has two phases with opposite hardware profiles. **Prefill** processes the
-entire prompt in parallel to build the [KV cache](./kv-cache-management.md) — it is
-**compute-bound** and its cost scales with *input* length. **Decode** then emits
-output tokens one at a time, each step reading the whole model and KV cache — it is
-**memory-bandwidth-bound** and its cost scales with *output* length. They have
-different bottlenecks, so they are optimized with different techniques. Conflating
-them leads to optimizing the wrong thing.
+Generation has two phases with opposite hardware profiles. **Prefill**
+processes the entire prompt in parallel to build the
+[KV cache](./kv-cache-management.md). It is **compute-bound**, and its cost
+scales with *input* length. **Decode** then emits output tokens one at a
+time. Each step reads the whole model and KV cache, so decode is
+**memory-bandwidth-bound**, and its cost scales with *output* length. The two
+phases have different bottlenecks, so you optimize them with different
+techniques. Mix them up and you'll optimize the wrong thing.
 
 > 🎯 **For the AI-native PM**
 >

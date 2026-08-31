@@ -1,7 +1,8 @@
 # Module 01 · Inference internals
 
-You can't make good latency, cost, and reliability decisions without knowing what
-actually happens when a model serves a request. This module opens the box.
+You need to know what happens when a model serves a request. Without that, you
+can't make good decisions about latency, cost, and reliability. This module
+opens the box.
 
 Two phases, one cache, and a handful of throughput and compression techniques
 explain almost everything about LLM serving economics:
