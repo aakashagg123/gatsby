@@ -30,10 +30,11 @@ tracing or evals" is now a visible maturity gap, not a defensible default.
 | [Observability](./observability.md) | LLMs fail silently; you must instrument quality, not just errors | Incident response; drift detection |
 | [Cost attribution](./cost-attribution.md) | Per-feature/tenant cost, not just the total bill | Pricing, packaging, where to optimize |
 
-**The through-line:** **you cannot operate what you cannot measure.** Evals tell you it's
-*correct* before you ship; observability tells you it's *working* while it runs; cost
-attribution tells you what it's *costing* and who's driving it. All three feed each
-other — production traces become new eval cases; incidents become adversarial tests.
+**The through-line:** **you cannot operate what you cannot measure.** Evals tell you an
+output is *correct* before you ship. Observability tells you the system is *working*
+while it runs. Cost attribution tells you what it's *costing* and who's driving it. All
+three feed each other: production traces become new eval cases, and incidents become
+adversarial tests.
 
 > **Walk-away question:** *"If quality dropped 10% tomorrow, would we find out from our
 > dashboards — or from angry users three weeks later?"*

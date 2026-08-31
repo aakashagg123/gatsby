@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Your from-scratch server and client (lessons 01–03) taught you the protocol, but you don't
-ship hand-rolled JSON-RPC framing and stdio plumbing in production — you use the official
-**MCP SDK** (`mcp` for Python, `@modelcontextprotocol/sdk` for TypeScript). It handles the
-handshake, transports (stdio/HTTP), schemas, and errors. Because you built the toy version,
-the SDK is transparent.
+Your from-scratch server and client (lessons 01–03) taught you the protocol. But you don't
+ship hand-rolled JSON-RPC framing and stdio plumbing in production. Instead you use the
+official **MCP SDK** (`mcp` for Python, `@modelcontextprotocol/sdk` for TypeScript). It
+handles the handshake, transports (stdio/HTTP), schemas, and errors. Because you built the
+toy version first, the SDK's internals are transparent to you.
 
 ## The Concept
 
@@ -19,7 +19,7 @@ flowchart LR
   D["@tool-decorated functions"] --> SDK["MCP SDK: framing + transport"] --> A["Claude Code / Codex"]
 ```
 
-You declare tools; the SDK exposes them over a real transport to any MCP client.
+You declare tools, and the SDK exposes them over a real transport to any MCP client.
 
 ## Build It / Use It
 
@@ -48,15 +48,15 @@ if __name__ == "__main__":
     mcp.run()                    # serves over stdio by default
 ```
 
-The `@mcp.tool()` decorator does what your lesson-02 `add_tool` did — derives the schema from
-the type hints and registers the handler — and `mcp.run()` is your dispatcher + transport.
-Compare it to `server.py` to see exactly what the SDK abstracts.
+The `@mcp.tool()` decorator does what your lesson-02 `add_tool` did. It derives the schema
+from the type hints and registers the handler, and `mcp.run()` is your dispatcher and
+transport combined. Compare it to `server.py` to see exactly what the SDK abstracts.
 
 ## Use It
 
 Register it with Claude Code (`claude mcp add memory -- python sdk_server.py`) or in Codex's
 MCP config, and the agent gains `remember`/`recall` tools across sessions. This is the
-end-state of the phase: a real, installable MCP server whose internals you fully understand
+end-state of the phase: a real, installable MCP server. You fully understand its internals
 because you built the protocol by hand first.
 
 ## Ship It

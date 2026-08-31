@@ -1,6 +1,6 @@
 # Phase 09 — Memory & persistence
 
-> Statelessness is the model's problem; memory is the harness's job — scratchpad, resume,
+> Statelessness is the model's problem. Memory is the harness's job — scratchpad, resume,
 > long-term recall, and cross-session compaction.
 
 | # | Lesson | Type | Lang | Ships |

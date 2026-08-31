@@ -1,21 +1,21 @@
 # Technical product sense for the AI PM
 
 Product sense tells you *what* to build. **Technical product sense** tells you what it will
-take to build it — and what the system will and won't let you do. It's the ability to read
-an architecture, reason about data, latency, and failure, and hold a credible conversation
-with engineers about trade-offs. You don't need to write the code; you need to understand
-the *shape* of the system well enough to make good calls and earn engineers' trust.
+take to build it. It also tells you what the system will and won't let you do. It means you
+can read an architecture, reason about data, latency, and failure, and hold a credible
+conversation with engineers about trade-offs. You don't need to write the code. You need to
+understand the *shape* of the system well enough to make good calls and earn engineers' trust.
 
-For APMs and PMs moving into **AI product management**, this is non-optional. An AI feature
-is a distributed system with a probabilistic component bolted into it — latency, cost,
-failure, and data flow are now *product* decisions, not back-end details. This module
-builds the mental models, one system concept at a time, and **each lesson ships a diagram**
-you can redraw on a whiteboard.
+For APMs and PMs moving into **AI product management**, this skill is not optional. An AI
+feature is a distributed system with a probabilistic component bolted into it. Latency, cost,
+failure, and data flow are now *product* decisions, not back-end details. This module builds
+the mental models one system concept at a time. **Each lesson ships a diagram** you can
+redraw on a whiteboard.
 
 ## The knowledge graph
 
-A system is a request path, the contracts and data it moves through, and the forces that
-degrade it — with the AI capstone bolting a probabilistic component into the middle:
+A system is a request path, plus the contracts and data it moves through, and the forces
+that degrade it. The AI capstone bolts a probabilistic component into the middle:
 
 ```mermaid
 flowchart TB
@@ -50,8 +50,8 @@ flowchart TB
 - [**Technical sense for AI systems**](./technical-sense-for-ai.md) — the capstone: the
   anatomy of an AI feature, evals and observability, and cost/latency as UX.
 
-Each lesson pairs the concept with a **🎯 For the AI PM** briefing — why it matters when the
-system has a model in it — and a diagram to make it concrete.
+Each lesson pairs the concept with a **🎯 For the AI PM** briefing. It explains why the
+concept matters when the system has a model in it, and includes a diagram to make it concrete.
 
 ## Connects to other tracks
 

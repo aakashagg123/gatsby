@@ -1,7 +1,7 @@
 # Module 02 · Reliable outputs & tool use
 
 A model that is right 95% of the time will break a workflow that calls it a hundred
-times. This module is about closing that gap — turning a stochastic text generator
+times. This module is about closing that gap. It turns a stochastic text generator
 into a component whose outputs and actions downstream systems can *trust*.
 
 - [**Structured output**](./structured-output.md) — getting valid, schema-conformant

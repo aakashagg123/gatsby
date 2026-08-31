@@ -27,13 +27,13 @@ it explicitly, or you'll relaunch the same demo three times.
 
 | Lesson | The one idea | The decision it drives |
 | --- | --- | --- |
-| [Harness engineering](./harness-engineering.md) | Reliability lives in the code *around* the model | Where you spend eng cycles; what "AI quality" means |
-| [Context engineering](./context-engineering.md) | The context window is a budget, not a junk drawer | Cost-per-call; data you make retrievable |
-| [Infra, not demos](./infra-not-demos.md) | Demos are judged best-case; infra is judged worst-case | Launch-readiness; definition of done |
+| [Harness engineering](./harness-engineering.md) | Reliability lives in the code *around* the model | Where you spend eng cycles, and what "AI quality" means |
+| [Context engineering](./context-engineering.md) | The context window is a budget, not a junk drawer | Cost per call, and data you make retrievable |
+| [Infra, not demos](./infra-not-demos.md) | Demos are judged on their best case; infra is judged on its worst case | Launch readiness, and definition of done |
 
 **The through-line:** a production LLM feature is *a distributed system with a stochastic
 component in the middle.* Engineer it like one. The model is one fast, unreliable,
-stateless function call; everything that makes it useful and safe — assembly, validation,
+stateless function call. Everything that makes it useful and safe — assembly, validation,
 budgets, fallbacks, observability — is yours to build.
 
 > **Walk-away question:** *"If the model returns garbage on a single call, what does the

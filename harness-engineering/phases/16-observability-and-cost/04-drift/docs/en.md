@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Even with regression gates (Phase 15), production quality can **drift**: a model update, a
-changing input distribution, or a stale retrieval index slowly degrades results over days or
-weeks — no single PR to blame. Drift detection watches a live metric (eval score, success
-rate, user thumbs) over rolling windows and alerts when the recent window falls below the
-baseline.
+Even with regression gates (Phase 15), production quality can **drift**. A model update, a
+changing input distribution, or a stale retrieval index can slowly degrade results over days
+or weeks, with no single PR to blame. Drift detection watches a live metric — eval score,
+success rate, user thumbs — over rolling windows. It alerts when the recent window falls
+below the baseline.
 
 ## The Concept
 
@@ -46,16 +46,17 @@ print(detect_drift(healthy))    # drift False
 print(detect_drift(drifting))   # drift True (recent window dropped)
 ```
 
-The detector flags when the recent average falls a threshold below the prior baseline — a
-trend, not a single bad data point — so you investigate before users complain.
+The detector flags a drop when the recent average falls a threshold below the prior
+baseline. It looks for a trend, not a single bad data point, so you investigate before
+users complain.
 
 ## Use It
 
-Feed drift detection a live signal: periodic eval-set runs, task success rate, or user
-feedback, tagged in your traces (lesson 01) and cost/quality dashboards. For a Claude Code /
-Codex user, the practical version is noticing your agent's success rate slipping after a model
-or prompt change and re-running the eval suite (Phase 15) to localize it. Regression gates
-catch drift *at merge*; drift detection catches it *in production*.
+Feed drift detection a live signal — periodic eval-set runs, task success rate, or user
+feedback — tagged in your traces (lesson 01) and cost/quality dashboards. For a Claude Code
+or Codex user, the practical version is this: you notice your agent's success rate slipping
+after a model or prompt change, then re-run the eval suite (Phase 15) to localize it.
+Regression gates catch drift *at merge*. Drift detection catches it *in production*.
 
 ## Ship It
 

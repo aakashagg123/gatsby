@@ -7,7 +7,7 @@
 ## The Problem
 
 A non-streaming call blocks until the whole reply is ready. For anything interactive that
-feels broken. Streaming sends the reply as a series of **server-sent events (SSE)** — but
+feels broken. Streaming sends the reply as a series of **server-sent events (SSE)**. But
 now your harness has to parse those events and *reassemble* them into the final message.
 Build the parser and streaming stops being a black box.
 

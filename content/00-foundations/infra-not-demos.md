@@ -5,14 +5,14 @@
 ## TL;DR
 
 A demo proves the model *can* do the task once. Infrastructure makes it do the task
-correctly, observably, affordably, and safely — for every user, every tenant, at
-p99, indefinitely. The gap between the two is almost entirely engineering:
+correctly, observably, affordably, and safely. It must work for every user, every
+tenant, at p99, indefinitely. The gap between the two is almost entirely engineering:
 evaluation, observability, cost control, safety, and graceful degradation. Demos are
-judged by their best case; infrastructure is judged by its worst case.
+judged by their best case. Infrastructure is judged by its worst case.
 
 > 🎯 **For the AI-native PM**
 >
-> **Why it matters** — The gap between an impressive demo and a dependable feature is the work that doesn't demo well — and it's most of the timeline. PMs who can't see that gap chronically under-scope AI projects.
+> **Why it matters** — The gap between an impressive demo and a dependable feature is work that doesn't demo well. It is most of the project timeline. PMs who can't see that gap chronically under-scope AI projects.
 >
 > **What it changes in your decisions** — Your launch-readiness criteria, your definition of done for AI features, and the expectations you set with execs.
 >
@@ -52,12 +52,13 @@ If you can't answer these, you have a demo.
 - **Non-determinism** breaks "write a test that asserts equality." You need
   distribution-level and rubric-based evaluation, not exact-match unit tests.
 - **Silent failure.** A wrong answer looks exactly like a right one. Errors don't
-  throw; they *read plausibly*. Detection requires
+  throw; they *read plausibly*. Detecting them requires
   [evals](../04-evals-observability/evals.md) and
   [drift monitoring](../04-evals-observability/observability.md), not exception
   handlers.
-- **Upstream drift.** The model provider can update weights; your data changes; your
-  retrieval index ages. The system can regress with *no code change at all*.
+- **Upstream drift.** The model provider can update weights, your data can change,
+  and your retrieval index can age. The system can regress with *no code change at
+  all*.
 - **Unbounded cost and latency.** Token usage — and therefore dollars and seconds —
   depends on inputs and on how many times an [agent loops](../02-reliable-outputs/agent-guardrails.md).
 

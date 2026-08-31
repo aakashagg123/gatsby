@@ -8,11 +8,11 @@ Prompt engineering optimizes the *string* you send the model. Harness engineerin
 optimizes the *system* that sends it: retries, validators, tool wiring, budgets,
 fallbacks, caching, and observability. In production, the harness is where most of
 your reliability — and most of your bugs — actually live. A great prompt inside a
-naive harness is fragile; an average prompt inside a strong harness ships.
+naive harness is fragile. An average prompt inside a strong harness ships.
 
 > 🎯 **For the AI-native PM**
 >
-> **Why it matters** — The reliability your users feel comes from the system *around* the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item; the work that actually moves retention is harness work — validation, fallbacks, budgets, routing.
+> **Why it matters** — The reliability your users feel comes from the system *around* the model, not the prompt inside it. "Improve the prompt" is rarely your highest-leverage roadmap item. The work that actually moves retention is harness work — validation, fallbacks, budgets, routing.
 >
 > **What it changes in your decisions** — How you scope "AI quality" epics, where you spend engineering cycles, and what you can credibly promise in an SLA.
 >

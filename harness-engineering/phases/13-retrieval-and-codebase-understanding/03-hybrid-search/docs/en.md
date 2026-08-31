@@ -6,10 +6,11 @@
 
 ## The Problem
 
-Lexical search nails exact identifiers (`parse_config`) but misses paraphrases; semantic
+Lexical search nails exact identifiers (`parse_config`) but misses paraphrases. Semantic
 search nails meaning but can rank a vaguely-related file above the exact one. Using either
 alone leaves recall on the table. **Hybrid search** fuses both result lists, and a **rerank**
-step reorders the merged set by a sharper relevance signal — the combination beats either.
+step reorders the merged set by a sharper relevance signal. The combination beats either
+method alone.
 
 ## The Concept
 
@@ -21,8 +22,8 @@ flowchart LR
   F --> R["rerank top-N"] --> O["final results"]
 ```
 
-A common, robust fusion is **reciprocal rank fusion (RRF)**: score each doc by the sum of
-`1/(k+rank)` across the lists it appears in — no score calibration needed.
+A common, robust fusion is **reciprocal rank fusion (RRF)**. Score each doc by the sum of
+`1/(k+rank)` across the lists it appears in. It needs no score calibration.
 
 ## Build It
 
@@ -45,15 +46,15 @@ print(rrf(lexical, semantic))
 ```
 
 RRF rewards docs that *both* methods rank highly, so the exact match (lexical) and the
-meaning match (semantic) reinforce each other; a true reranker (a cross-encoder or an
-LLM-as-judge over the top-N) can refine further.
+meaning match (semantic) reinforce each other. A true reranker — a cross-encoder or an
+LLM-as-judge over the top-N — can refine the results further.
 
 ## Use It
 
-Production code search and RAG almost always go hybrid + rerank — it's the single biggest
+Production code search and RAG almost always go hybrid plus rerank. It's the single biggest
 recall/precision win after basic retrieval. For an agent, this is "find the relevant code"
-done well; the reranker is often an LLM scoring the top-N for actual relevance to the task
-(connecting to Phase 15 LLM-as-judge).
+done well. The reranker is often an LLM scoring the top-N for actual relevance to the task,
+connecting to Phase 15's LLM-as-judge.
 
 ## Ship It
 

@@ -4,9 +4,9 @@
 
 ## TL;DR
 
-Underneath every product is a **data model** — the entities it stores (users, orders,
+Underneath every product is a **data model**: the entities it stores (users, orders,
 messages) and the **relationships** between them. That model quietly decides what your
-product can and can't do: a question the data model can't answer is a feature you can't ship
+product can and can't do. A question the data model can't answer is a feature you can't ship
 without a migration. Two big distinctions matter for PMs: **transactional** stores (fast,
 correct writes for the live product) vs. **analytical** stores (big reads for reporting and
 ML), and **structured** vs. **unstructured** data. "Where does this data live, and how is it
@@ -14,18 +14,19 @@ shaped?" is one of the most productive technical questions you can ask.
 
 > 🎯 **For the AI PM**
 >
-> **Why it matters** — AI features are *made of* data: training/fine-tuning sets, the documents
-> you retrieve over, embeddings in a vector store, and the logs you evaluate on. The quality
-> and shape of that data caps the quality of the feature — more than the model choice does.
+> **Why it matters** — AI features are *made of* data: training/fine-tuning sets, the
+> documents you retrieve over, embeddings in a vector store, and the logs you evaluate on.
+> The quality and shape of that data caps the quality of the feature — more than the model
+> choice does.
 >
 > **What it changes in your decisions** — You ask what data exists, who's allowed to see it
 > (permissions are part of the model), and whether it's clean and connected enough to power
-> the feature — before assuming a model can.
+> the feature — before you assume a model can do it.
 >
 > **Ask yourself** — *"Does the data to answer this actually exist, in a shape we can use, and
 > are we allowed to use it?"*
 >
-> **Risk if ignored** — Committing to an AI feature the data can't support, or leaking one
+> **Risk if ignored** — You commit to an AI feature the data can't support. Or you leak one
 > user's data into another's because the model ignored the permission relationships.
 
 ## Entities and relationships
@@ -54,16 +55,16 @@ erDiagram
   }
 ```
 
-Read the crow's-foot notation as "one-to-many": a **user** places *many* **orders**; an
-**order** contains *many* **order items**; a **product** appears in *many* order items. The
-relationships are the point — they're what let you answer "what has this user bought?" A
+Read the crow's-foot notation as "one-to-many": a **user** places *many* **orders**, an
+**order** contains *many* **order items**, and a **product** appears in *many* order items.
+The relationships are the point — they're what let you answer "what has this user bought?" A
 question the relationships don't support (say, "which products are viewed together?") needs
 *new* data, not just a new query.
 
 ## Structured vs. unstructured
 
 - **Structured** data fits neat rows and columns (a user's email, an order's total) and lives
-  in a **relational database** you query with SQL. Precise, easy to aggregate.
+  in a **relational database** you query with SQL. It's precise and easy to aggregate.
 - **Unstructured** data — text, images, audio, documents — doesn't fit a table. It's stored in
   blob storage or document/vector databases and searched differently. Most AI features live
   here: you're retrieving over documents, not joining tables.
@@ -74,52 +75,51 @@ Knowing which kind your feature needs tells you which storage and which failure 
 
 The same data often lives in two systems for two jobs:
 
-- **Transactional (OLTP)** — the live product's database: many small, fast, correct reads and
-  writes (place an order, update a profile). Optimized for *now*.
+- **Transactional (OLTP)** — the live product's database. It handles many small, fast,
+  correct reads and writes, like placing an order or updating a profile. Optimized for *now*.
 - **Analytical (OLAP)** — a **data warehouse** where data is copied for big reads: dashboards,
   metrics, ML training. Optimized for *scanning history*.
 
-Data flows from transactional → warehouse on a delay (minutes to hours). That lag is why "the
-number in the dashboard" and "the number in the app" can differ — and why an ML feature
-trained on the warehouse is working from slightly stale reality.
+Data flows from transactional to warehouse on a delay of minutes to hours. That lag is why
+"the number in the dashboard" and "the number in the app" can differ. It's also why an ML
+feature trained on the warehouse is working from slightly stale reality.
 
 ## Permissions are part of the model
 
-Who is *allowed* to see each row is not an afterthought — it's part of the data model
-(tenant IDs, ACLs, sharing rules). For any feature that surfaces data — search, feeds, and
-especially AI retrieval — the permission relationships must be enforced at query time, or
-you leak data across users. This is the [multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md)
+Who is *allowed* to see each row is not an afterthought — it's part of the data model (tenant
+IDs, ACLs, sharing rules). For any feature that surfaces data — search, feeds, and especially
+AI retrieval — the permission relationships must be enforced at query time. Otherwise you leak
+data across users. This is the [multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md)
 the AI Engineering track covers in depth.
 
 ## A worked pass: "show sellers their repeat customers"
 
-A marketplace PM asks for a small feature: a "repeat customer" badge on seller
-dashboards. The data model says no. Orders reference a *session* for guest checkouts,
-not a durable customer identity; the same buyer appears as three unrelated rows. The
-"small feature" is actually: introduce a customer-identity entity, decide how to match
-guests (email? payment fingerprint? consent implications either way), backfill months
-of orders, and only then count repeats. Two sprints, one privacy review — because of a
-modeling decision made two years earlier when guest checkout shipped. The lesson: *a
-question the data model can't answer is a feature you can't ship without a migration*,
-and the time to hear that is at spec time, which is why "where does this data live and
-how is it shaped?" belongs in every kickoff.
+A marketplace PM asks for a small feature: a "repeat customer" badge on seller dashboards.
+The data model says no. Orders reference a *session* for guest checkouts, not a durable
+customer identity, so the same buyer appears as three unrelated rows. The "small feature" is
+actually: introduce a customer-identity entity, decide how to match guests (email? payment
+fingerprint? consent implications either way), backfill months of orders, and only then count
+repeats. That's two sprints and one privacy review, because of a modeling decision made two
+years earlier when guest checkout shipped. The lesson is that *a question the data model can't
+answer is a feature you can't ship without a migration*. The time to hear that is at spec
+time, which is why "where does this data live and how is it shaped?" belongs in every kickoff.
 
-The sequel is the OLTP/OLAP version. The badge ships; a "top sellers by repeat rate"
-leaderboard follows; someone points the leaderboard query at the production database,
-and checkout latency spikes every hour on the hour. Analytical reads over millions of
-rows don't belong on the transactional store that's processing live orders — they
-belong in the warehouse, fed by a pipeline, a few minutes stale and happily so. Same
-data, two stores, two jobs.
+The sequel is the OLTP/OLAP version. The badge ships, and a "top sellers by repeat rate"
+leaderboard follows. Someone points the leaderboard query at the production database, and
+checkout latency spikes every hour on the hour. Analytical reads over millions of rows don't
+belong on the transactional store that's processing live orders. They belong in the
+warehouse, fed by a pipeline, a few minutes stale and happily so. Same data, two stores, two
+jobs.
 
 ## Failure modes
 
-- **The data doesn't exist** — a feature that needs a relationship nobody ever stored;
-  discovered mid-build.
-- **Structured/unstructured mismatch** — trying to force documents into tables, or free-text
+- **The data doesn't exist** — a feature needs a relationship nobody ever stored, and you
+  discover it mid-build.
+- **Structured/unstructured mismatch** — you force documents into tables, or run free-text
   search over data that should have been structured.
-- **Stale-analytics surprises** — treating warehouse numbers as live, or training on data
-  that lags reality.
-- **Ignoring permissions** — retrieving or aggregating across rows a user shouldn't see.
+- **Stale-analytics surprises** — you treat warehouse numbers as live, or train on data that
+  lags reality.
+- **Ignoring permissions** — you retrieve or aggregate across rows a user shouldn't see.
 
 ## Practitioner checklist
 

@@ -7,10 +7,10 @@
 ## The Problem
 
 To embed and retrieve code (lessons 02–03), you split files into chunks. Naive fixed-size
-chunking ("every 50 lines") slices through the middle of functions, so a retrieved chunk is
-half a function with no context — useless to embed and worse to hand the model. Code should
-be chunked on **structural boundaries** (functions, classes) so each chunk is a coherent,
-self-contained unit.
+chunking ("every 50 lines") slices through the middle of functions. A retrieved chunk ends up
+as half a function with no context — useless to embed and worse to hand the model. Code
+should be chunked on **structural boundaries**, like functions and classes, so each chunk is
+a coherent, self-contained unit.
 
 ## The Concept
 
@@ -47,15 +47,16 @@ for c in chunk_code(src):
     print(c["name"], c["lines"])     # login (3,4) ; Session (6,8)
 ```
 
-Each chunk is a complete definition with its line span — coherent to embed, and it carries
-`path:line` so a retrieval hit links straight to the read tool (Phase 6).
+Each chunk is a complete definition with its line span. It's coherent to embed, and it
+carries `path:line` so a retrieval hit links straight to the read tool (Phase 6).
 
 ## Use It
 
-Code-aware chunking (via `ast` or, multi-language, tree-sitter from Phase 6) is what makes
-code retrieval actually useful — retrieved units are whole functions, not fragments. For an
-agent, this means "find code related to X" returns something it can read and edit directly.
-Oversized definitions still need a secondary split, but the boundary stays structural.
+Code-aware chunking — via `ast`, or tree-sitter from Phase 6 for multiple languages — is
+what makes code retrieval actually useful. Retrieved units are whole functions, not
+fragments. For an agent, this means "find code related to X" returns something it can read
+and edit directly. Oversized definitions still need a secondary split, but the boundary
+stays structural.
 
 ## Ship It
 

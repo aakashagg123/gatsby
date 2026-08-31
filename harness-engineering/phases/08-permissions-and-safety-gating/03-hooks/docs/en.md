@@ -66,9 +66,10 @@ a prompt.
 ## Use It
 
 This is the Claude Code **hooks** system in `settings.json` (`PreToolUse`, `PostToolUse`,
-and more) — exactly where the `.env` guard (Phase 0) and tool budgets (Phase 3) and egress
-guard (Phase 7) plug in. Codex offers comparable lifecycle hooks. A PostToolUse linter hook
-that injects violations into context is the canonical "lint as a teaching tool" pattern.
+and more). It's exactly where the `.env` guard (Phase 0), the tool budgets (Phase 3), and
+the egress guard (Phase 7) plug in. Codex offers comparable lifecycle hooks. A PostToolUse
+linter hook that injects violations into context is the canonical "lint as a teaching tool"
+pattern.
 
 ## Ship It
 
@@ -95,7 +96,7 @@ that injects violations into context is the canonical "lint as a teaching tool" 
 <details><summary>Answer</summary>B — it reacts to the result.</details>
 
 **Challenge.** Add a PostToolUse hook that redacts anything matching an API-key pattern from
-tool output (a preview of Phase 17 secret redaction).
+tool output. This previews the Phase 17 secret redaction lesson.
 
 ## Related
 

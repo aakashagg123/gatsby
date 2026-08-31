@@ -113,10 +113,10 @@ irreversible. Economics decides whether any of it is a business.
 - [**Agentic AI as a product**](./agentic-ai-as-a-product.md) — the capstone: unit
   economics, pricing, agent UX, and deciding where agents actually pay.
 
-Each lesson pairs the concept with a **🎯 For the AI PM** briefing — the decision it
-should change and the question it should make you ask — and a diagram to make it
-concrete. Builders who want to go deeper than concepts can construct this machinery hands-on
-in the [Harness engineering track](../harness-engineering/README.md).
+Each lesson pairs the concept with a **🎯 For the AI PM** briefing. It names the decision
+the concept should change, and the question it should make you ask. Each lesson also has
+a diagram to make it concrete. Builders who want to go deeper than concepts can construct
+this machinery hands-on in the [Harness engineering track](../harness-engineering/README.md).
 
 ## Connects to other tracks
 

@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Beyond what the agent does, you control *how* it communicates: terse vs. explanatory,
-when it refuses or asks for confirmation, and how it phrases guardrails. Weak steering
-gives you an agent that over-explains, barrels through risky actions without asking, or
-refuses unhelpfully. Steering text is the lever — but it's only persuasion, so it pairs
-with hard enforcement (hooks, Phase 8) for anything that truly matters.
+Beyond what the agent does, you control *how* it communicates: terse or explanatory,
+quick to refuse or quick to ask for confirmation, and how it phrases guardrails. Weak
+steering gives you an agent that over-explains, barrels through risky actions without
+asking, or refuses unhelpfully. Steering text is the lever, but it's only persuasion. So it
+pairs with hard enforcement — hooks, Phase 8 — for anything that truly matters.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   R -.->|hard cases| H["+ hook enforcement (Phase 8)"]
 ```
 
-Steering shapes the *soft* behavior; for safety-critical limits, steering is the polite
-front and a hook is the wall behind it.
+Steering shapes the *soft* behavior. For safety-critical limits, steering is the polite
+front, and a hook is the wall behind it.
 
 ## Build It
 
@@ -40,10 +40,10 @@ Each snippet is a line you can paste into the system prompt or memory file.
 
 ## Use It
 
-In **Claude Code / Codex** this maps to output styles and your memory-file instructions
-("be concise", "always confirm before deleting files"). Crucially: steering is advisory.
-For "never touch `.env`" you *also* add the PreToolUse hook from Phase 0/8 — the steering
-text explains the boundary, the hook enforces it.
+In **Claude Code / Codex** this maps to output styles and your memory-file instructions,
+such as "be concise" or "always confirm before deleting files." Steering is advisory,
+though — for "never touch `.env`" you *also* add the PreToolUse hook from Phase 0/8. The
+steering text explains the boundary, and the hook enforces it.
 
 ## Ship It
 
