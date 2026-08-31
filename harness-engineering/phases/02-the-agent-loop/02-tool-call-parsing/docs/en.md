@@ -88,11 +88,11 @@ The loop never sees an exception. The model sees a message it can recover from.
 
 ## Use It
 
-With the Anthropic SDK you don't regex anything — tool calls arrive as typed
-`tool_use` content blocks (`block.name`, `block.input`, `block.id`). The validation and
-dispatch logic above is unchanged; only `parse_calls` collapses to
+With the Anthropic SDK you don't regex anything. Tool calls arrive as typed `tool_use`
+content blocks (`block.name`, `block.input`, `block.id`). The validation and dispatch
+logic above stays unchanged; only `parse_calls` collapses to
 `[b for b in msg.content if b.type == "tool_use"]`. You built the text fallback so you
-understand what the SDK is saving you from (and why a no-tools model needs it).
+understand what the SDK saves you from, and why a no-tools model needs it.
 
 ## Ship It
 

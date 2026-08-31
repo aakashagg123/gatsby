@@ -6,10 +6,11 @@
 
 ## The Problem
 
-Single edits (lesson 02) are great for one spot, but a coherent change often spans several
-hunks or files. Bundling them as a **patch** makes the change reviewable as a unit (the
-review agent in Phase 10/15 sees a diff), and lets you apply it **atomically**: if any hunk
-doesn't apply cleanly, reject the whole thing rather than leave the tree half-edited.
+Single edits (lesson 02) work well for one spot, but a coherent change often spans several
+hunks or files. Bundling them as a **patch** makes the change reviewable as a unit — the
+review agent in Phase 10/15 sees a diff. A patch also applies **atomically**: if any hunk
+fails to apply cleanly, the tool rejects the whole patch rather than leaving the tree
+half-edited.
 
 ## The Concept
 
@@ -20,8 +21,8 @@ flowchart LR
   V -- "yes" --> A["apply all, write"]
 ```
 
-Validate every hunk first; only write if all pass. All-or-nothing avoids partial,
-inconsistent edits.
+Validate every hunk first, and only write if all hunks pass. This all-or-nothing rule
+avoids partial, inconsistent edits.
 
 ## Build It
 
@@ -55,9 +56,9 @@ tree stays consistent.
 ## Use It
 
 When Claude Code / Codex make a multi-file change, each edit is an exact-string replacement
-(lesson 02), and the *set* of edits is what you review as a diff before it lands (and what
-the review gate scores, Phase 10/15). The atomic-validate-then-apply discipline here is what
-keeps a multi-file change from landing half-done.
+(lesson 02). The *set* of edits is what you review as a diff before it lands, and it's also
+what the review gate scores (Phase 10/15). The atomic-validate-then-apply discipline in this
+lesson keeps a multi-file change from landing half-done.
 
 ## Ship It
 

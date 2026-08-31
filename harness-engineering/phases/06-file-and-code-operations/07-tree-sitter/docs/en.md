@@ -19,8 +19,8 @@ flowchart LR
   S["source"] --> T["tree-sitter parse → AST"] --> Q["query nodes (functions, calls…)"] --> E["edit by node span"]
 ```
 
-A parser turns text into a typed tree; you query node types and edit by their byte/line
-spans — precise where strings are ambiguous.
+A parser turns text into a typed tree. You query node types and edit by their byte or line
+spans, which stays precise where strings are ambiguous.
 
 ## Build It / Use It
 

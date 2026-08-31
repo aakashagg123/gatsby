@@ -6,10 +6,10 @@
 
 ## The Problem
 
-Golden tasks cover normal use; they won't catch a prompt injection in a retrieved file, a
+Golden tasks cover normal use. They won't catch a prompt injection in a retrieved file, a
 request to exfiltrate secrets, or a jailbreak. **Adversarial evals** are a suite of hostile
-inputs with a checker that the harness *refused or neutralized* them. Without these, you only
-discover your security failures in production (Phase 17). Red-teaming makes safety
+inputs, checked against whether the harness *refused or neutralized* them. Without these, you
+only discover your security failures in production (Phase 17). Red-teaming makes safety
 measurable.
 
 ## The Concept
@@ -21,8 +21,8 @@ flowchart LR
   C --> S["safety score"]
 ```
 
-Each case pairs a hostile input with a *negative* expectation: the harness must NOT do the
-bad thing (leak the secret, run the injected command).
+Each case pairs a hostile input with a *negative* expectation. The harness must NOT do the
+bad thing — leak the secret, or run the injected command.
 
 ## Build It
 
