@@ -28,7 +28,8 @@ to output a numbered plan where each step names the change, the files, and the v
 
 - 3–7 steps (merge trivial ones, split giant ones).
 - Each step: **what** changes, **where** (files), **how to verify** (test/command).
-- Order by dependency; flag steps that need human input.
+- Order by dependency.
+- Flag steps that need human input.
 - End with the overall acceptance check.
 
 This maps directly onto the todo model (lesson 01) and, scaled up, the sprint contract

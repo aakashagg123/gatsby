@@ -56,14 +56,15 @@ def step(messages, tools):
     return messages, None
 ```
 
-Each result reuses your hand-built validation and wrapping. Parallelism is safe *because*
-side-effecting tools are idempotent (lesson 04).
+Each result reuses your hand-built validation and wrapping. Parallelism is safe
+*because* side-effecting tools are idempotent (lesson 04).
 
 ## Use It
 
-This is the production tool loop: pass `tools=schemas()`, collect every `tool_use`, run them
-(in parallel when independent), and return all `tool_result` blocks in one user turn. The SDK
-also supports forcing a specific tool via `tool_choice` for structured output.
+This is the production tool loop: pass `tools=schemas()`, collect every `tool_use`, run
+them in parallel when they're independent, and return all `tool_result` blocks in one
+user turn. The SDK also supports forcing a specific tool via `tool_choice` for structured
+output.
 
 ## Ship It
 

@@ -98,7 +98,7 @@ to catch a wrong approach before any code is written.
 
 ## Related
 
-- Builds on: [Todo model](../../01-todo-model/docs/en.md); Phase 8 — [Permission modes](../../../08-permissions-and-safety-gating/01-permission-modes/docs/en.md)
+- Builds on: [Todo model](../../01-todo-model/docs/en.md), Phase 8 — [Permission modes](../../../08-permissions-and-safety-gating/01-permission-modes/docs/en.md)
 - Next: [Task decomposition prompts](../../03-decomposition/docs/en.md)
 - Related: Phase 10 — spec-first
 - [Roadmap](../../../../ROADMAP.md)
