@@ -4,13 +4,14 @@
 
 ## TL;DR
 
-Don't hard-wire one model to every request. **Routing** sends each request to the
-*right* model for its difficulty, latency budget, and cost — small/cheap for easy
-cases, large/expensive for hard ones. **Fallback** keeps the system up when a model
-times out, errors, rate-limits, or returns low-confidence output by trying another
-path. **Degraded-mode UX** makes the fallback *honest and usable* for the user instead
-of a silent quality drop or a hard failure. Together they decouple your product's
-reliability from any single model's reliability.
+Don't hard-wire one model to every request. **Routing** sends each request
+to the *right* model for its difficulty, latency budget, and cost: a
+small, cheap model for easy cases, a large, expensive one for hard ones.
+**Fallback** keeps the system up when a model times out, errors,
+rate-limits, or returns low-confidence output, by trying another path.
+**Degraded-mode UX** makes the fallback *honest and usable* for the user,
+instead of a silent quality drop or a hard failure. Together they decouple
+your product's reliability from any single model's reliability.
 
 > 🎯 **For the AI-native PM**
 >
@@ -20,14 +21,14 @@ reliability from any single model's reliability.
 >
 > **Ask your eng team** — *"If our main provider has a bad hour, what do our users experience?"*
 >
-> **Product risk if ignored** — Single-vendor dependence means their outage is your outage — and silent quality drops on fallback quietly erode trust.
+> **Product risk if ignored** — Single-vendor dependence means their outage is your outage. Silent quality drops on fallback quietly erode trust.
 
 
 ## Mental model
 
-Your provider/model is a dependency with its own latency, error rate, and outages.
-Production systems don't bet availability on a single dependency — they route and fall
-back. The same applies here:
+Your provider or model is a dependency with its own latency, error rate, and
+outages. Production systems don't bet availability on a single dependency —
+they route and fall back. The same applies here:
 
 ```
 request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
@@ -42,57 +43,67 @@ request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
 
 ## Routing strategies
 
-- **Difficulty-based (cascade).** Try a cheap/fast model first; escalate to a stronger
-  one only when needed (low confidence, validation failure, explicit "I'm not sure").
-  Most traffic is easy, so cascades cut cost dramatically — but add latency on
-  escalated requests. Pairs naturally with [structured-output fallback](./structured-output.md).
-- **Classifier / router model.** A small upfront classifier predicts which model can
-  handle the request, routing in one hop (no escalation latency) at the cost of router
-  accuracy.
-- **Capability-based.** Route by need: vision → multimodal model, code → code model,
-  long context → long-context model, cheap bulk → small model.
-- **Constraint-based.** Honor latency SLOs (fast model for interactive),
-  [cost budgets](../04-evals-observability/cost-attribution.md), and **data-residency/
-  privacy** (sensitive data → on-prem/approved model only — a
-  [safety boundary](../05-safety-multitenancy/safety-engineering.md)).
+- **Difficulty-based (cascade).** Try a cheap, fast model first, and
+  escalate to a stronger one only when needed — low confidence, validation
+  failure, an explicit "I'm not sure." Most traffic is easy, so cascades cut
+  cost dramatically, but they add latency on escalated requests. This pairs
+  naturally with [structured-output fallback](./structured-output.md).
+- **Classifier / router model.** A small upfront classifier predicts which
+  model can handle the request, routing in one hop with no escalation
+  latency, at the cost of router accuracy.
+- **Capability-based.** Route by need: vision goes to a multimodal model,
+  code goes to a code model, long context goes to a long-context model,
+  cheap bulk work goes to a small model.
+- **Constraint-based.** Honor latency SLOs (a fast model for interactive
+  use), [cost budgets](../04-evals-observability/cost-attribution.md), and
+  **data-residency and privacy** rules — sensitive data goes only to an
+  on-prem or approved model, a
+  [safety boundary](../05-safety-multitenancy/safety-engineering.md).
 
-A market note that settles the "is routing worth it?" debate: in August 2025 the
-biggest product in the industry shipped it as the *default architecture* — GPT-5's
-headline design is a real-time router deciding per request whether a fast model or a
-deliberate reasoning model answers. When routing is how the frontier lab spends its
-own margin, treating it as an optional optimization in your stack is leaving the same
-economics on the table.
+A market note that settles the "is routing worth it?" debate: in August
+2025, the biggest product in the industry shipped it as the *default
+architecture*. GPT-5's headline design is a real-time router deciding per
+request whether a fast model or a deliberate reasoning model answers. When
+routing is how the frontier lab spends its own margin, treating it as an
+optional optimization in your stack leaves the same economics on the
+table.
 
 ## Graceful fallback logic
 
 Fail over on the right signals, in order of cost:
-1. **Transient errors** (timeout, 5xx, rate-limit) → retry with backoff (only
-   [idempotent](./function-calling.md) operations) then failover to an alternate
-   provider/model.
-2. **Quality signals** (validation failure, low confidence, refusal) → escalate to a
-   stronger model or stricter generation.
-3. **Hard outage** → serve from [semantic cache](../01-inference-internals/prompt-vs-semantic-caching.md),
-   a smaller local model, or a non-LLM fallback (templated/rule-based response).
+1. **Transient errors** (timeout, 5xx, rate-limit) — retry with backoff,
+   only for [idempotent](./function-calling.md) operations, then fail over
+   to an alternate provider or model.
+2. **Quality signals** (validation failure, low confidence, refusal) —
+   escalate to a stronger model or stricter generation.
+3. **Hard outage** — serve from a
+   [semantic cache](../01-inference-internals/prompt-vs-semantic-caching.md),
+   a smaller local model, or a non-LLM fallback such as a templated or
+   rule-based response.
 
 Principles:
-- **Multi-provider** removes single-vendor outage risk — but you must keep prompts and
-  [evals](../04-evals-observability/evals.md) portable, since models behave differently.
-- **Circuit breakers**: when a model is failing, stop routing to it for a cooldown
-  rather than piling on.
-- **Idempotency + budgets**: fallback chains can multiply calls; bound them like any
-  [agent loop](./agent-guardrails.md).
+- **Multi-provider** removes single-vendor outage risk. But you must keep
+  prompts and [evals](../04-evals-observability/evals.md) portable, since
+  models behave differently.
+- **Circuit breakers**: when a model is failing, stop routing to it for a
+  cooldown rather than piling on.
+- **Idempotency and budgets**: fallback chains can multiply calls, so bound
+  them like any [agent loop](./agent-guardrails.md).
 
 ## Degraded-mode UX
 
-A fallback that silently lowers quality is a *trust* bug. Make degradation legible:
-- **Be honest.** "We're experiencing high load — here's a quick answer; ask for more
-  detail to retry" beats a confidently worse answer presented as normal.
-- **Preserve the core job.** Drop nice-to-haves (citations, rich formatting, long
-  reasoning) before dropping the actual answer.
-- **Offer a path back.** Let the user retry the full-quality path when it recovers.
-- **Never expose internals.** No stack traces, raw model text, or "provider X 503" —
-  surface a clean, typed, user-appropriate message (the end of the
-  [structured-output fallback chain](./structured-output.md)).
+A fallback that silently lowers quality is a *trust* bug. Make degradation
+legible:
+- **Be honest.** "We're experiencing high load — here's a quick answer; ask
+  for more detail to retry" beats a confidently worse answer presented as
+  normal.
+- **Preserve the core job.** Drop nice-to-haves — citations, rich
+  formatting, long reasoning — before dropping the actual answer.
+- **Offer a path back.** Let the user retry the full-quality path when it
+  recovers.
+- **Never expose internals.** No stack traces, raw model text, or "provider
+  X 503." Surface a clean, typed, user-appropriate message instead — the end
+  of the [structured-output fallback chain](./structured-output.md).
 
 ## Tradeoffs
 
@@ -105,15 +116,18 @@ A fallback that silently lowers quality is a *trust* bug. Make degradation legib
 
 ## Failure modes
 
-- **No fallback** — provider has a bad hour, your whole feature is down.
-- **Silent degradation** — quality quietly drops on fallback; users lose trust, evals
-  don't catch it because they only test the happy path.
-- **Routing misclassification** — easy task sent to the expensive model (cost) or hard
-  task to the weak model (quality). Monitor per-route success and cost.
-- **Fallback amplification** — chained retries/failovers explode cost and latency
-  without budgets.
-- **Portability gaps** — failover model gives differently-shaped output that breaks
-  downstream parsing; validate every route against the same schema/evals.
+- **No fallback** — the provider has a bad hour, and your whole feature is
+  down.
+- **Silent degradation** — quality quietly drops on fallback. Users lose
+  trust, and evals don't catch it because they only test the happy path.
+- **Routing misclassification** — an easy task goes to the expensive model
+  (a cost problem), or a hard task goes to the weak model (a quality
+  problem). Monitor per-route success and cost.
+- **Fallback amplification** — chained retries and failovers explode cost
+  and latency without budgets.
+- **Portability gaps** — the failover model gives differently-shaped output
+  that breaks downstream parsing. Validate every route against the same
+  schema and evals.
 
 ## Practitioner checklist
 

@@ -7,19 +7,20 @@
 Underneath every product is a **data model**: the entities it stores (users, orders,
 messages) and the **relationships** between them. That model quietly decides what your
 product can and can't do. A question the data model can't answer is a feature you can't ship
-without a migration. Two big distinctions matter for PMs: **transactional** stores (fast,
-correct writes for the live product) vs. **analytical** stores (big reads for reporting and
-ML), and **structured** vs. **unstructured** data. "Where does this data live, and how is it
-shaped?" is one of the most productive technical questions you can ask.
+without a migration. Two big distinctions matter for PMs. **Transactional** stores handle
+fast, correct writes for the live product; **analytical** stores handle big reads for
+reporting and ML. And **structured** data differs from **unstructured** data. "Where does
+this data live, and how is it shaped?" is one of the most productive technical questions you
+can ask.
 
 > 🎯 **For the AI PM**
 >
 > **Why it matters** — AI features are *made of* data: training/fine-tuning sets, the
 > documents you retrieve over, embeddings in a vector store, and the logs you evaluate on.
-> The quality and shape of that data caps the quality of the feature — more than the model
+> The quality and shape of that data caps the quality of the feature, more than the model
 > choice does.
 >
-> **What it changes in your decisions** — You ask what data exists, who's allowed to see it
+> **What it changes in your decisions** — Ask what data exists, who's allowed to see it
 > (permissions are part of the model), and whether it's clean and connected enough to power
 > the feature — before you assume a model can do it.
 >
@@ -57,9 +58,9 @@ erDiagram
 
 Read the crow's-foot notation as "one-to-many": a **user** places *many* **orders**, an
 **order** contains *many* **order items**, and a **product** appears in *many* order items.
-The relationships are the point — they're what let you answer "what has this user bought?" A
-question the relationships don't support (say, "which products are viewed together?") needs
-*new* data, not just a new query.
+The relationships are the point. They're what let you answer "what has this user bought?" A
+question the relationships don't support — say, "which products are viewed together?" —
+needs *new* data, not just a new query.
 
 ## Structured vs. unstructured
 
@@ -86,23 +87,25 @@ feature trained on the warehouse is working from slightly stale reality.
 
 ## Permissions are part of the model
 
-Who is *allowed* to see each row is not an afterthought — it's part of the data model (tenant
-IDs, ACLs, sharing rules). For any feature that surfaces data — search, feeds, and especially
-AI retrieval — the permission relationships must be enforced at query time. Otherwise you leak
-data across users. This is the [multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md)
-the AI Engineering track covers in depth.
+Who is *allowed* to see each row is not an afterthought. It's part of the data model —
+tenant IDs, ACLs, sharing rules. For any feature that surfaces data — search, feeds, and
+especially AI retrieval — the permission relationships must be enforced at query time.
+Otherwise you leak data across users. This is the
+[multi-tenant boundary](../content/05-safety-multitenancy/multi-tenant-isolation.md) the AI
+Engineering track covers in depth.
 
 ## A worked pass: "show sellers their repeat customers"
 
 A marketplace PM asks for a small feature: a "repeat customer" badge on seller dashboards.
 The data model says no. Orders reference a *session* for guest checkouts, not a durable
 customer identity, so the same buyer appears as three unrelated rows. The "small feature" is
-actually: introduce a customer-identity entity, decide how to match guests (email? payment
-fingerprint? consent implications either way), backfill months of orders, and only then count
-repeats. That's two sprints and one privacy review, because of a modeling decision made two
-years earlier when guest checkout shipped. The lesson is that *a question the data model can't
-answer is a feature you can't ship without a migration*. The time to hear that is at spec
-time, which is why "where does this data live and how is it shaped?" belongs in every kickoff.
+actually this: introduce a customer-identity entity, decide how to match guests (email?
+payment fingerprint? consent implications either way), backfill months of orders, and only
+then count repeats. That's two sprints and one privacy review, because of a modeling decision
+made two years earlier when guest checkout shipped. The lesson is that *a question the data
+model can't answer is a feature you can't ship without a migration*. The time to hear that is
+at spec time. That's why "where does this data live and how is it shaped?" belongs in every
+kickoff.
 
 The sequel is the OLTP/OLAP version. The badge ships, and a "top sellers by repeat rate"
 leaderboard follows. Someone points the leaderboard query at the production database, and
@@ -113,13 +116,13 @@ jobs.
 
 ## Failure modes
 
-- **The data doesn't exist** — a feature needs a relationship nobody ever stored, and you
+- **The data doesn't exist** — A feature needs a relationship nobody ever stored, and you
   discover it mid-build.
-- **Structured/unstructured mismatch** — you force documents into tables, or run free-text
-  search over data that should have been structured.
-- **Stale-analytics surprises** — you treat warehouse numbers as live, or train on data that
-  lags reality.
-- **Ignoring permissions** — you retrieve or aggregate across rows a user shouldn't see.
+- **Structured/unstructured mismatch** — Documents get forced into tables, or free-text
+  search runs over data that should have been structured.
+- **Stale-analytics surprises** — Warehouse numbers get treated as live, or a model trains on
+  data that lags reality.
+- **Ignoring permissions** — Retrieval or aggregation crosses rows a user shouldn't see.
 
 ## Practitioner checklist
 

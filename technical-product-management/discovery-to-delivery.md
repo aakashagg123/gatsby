@@ -4,25 +4,25 @@
 
 ## TL;DR
 
-Products don't move in a straight line from idea to launch; they move through two parallel
+Products don't move in a straight line from idea to launch. They move through two parallel
 tracks. **Discovery** answers "should we build this, and what exactly?" — cheaply, with
 prototypes, data, and user conversations. **Delivery** answers "build it well" — with
 specs, sprints, and releases. The classic failure is skipping discovery and using the
-delivery track (the expensive one) to find out an idea was wrong. The discipline is
-**dual-track**: discovery runs continuously, a step ahead of delivery, feeding it only
-ideas that have already survived a risk check — *valuable, usable, feasible, viable* —
-while telemetry from shipped work flows back to seed the next round of discovery.
+delivery track, the expensive one, to find out an idea was wrong. The discipline is
+**dual-track**: discovery runs continuously, a step ahead of delivery, and feeds it only
+ideas that have already survived a risk check — *valuable, usable, feasible, viable*.
+Telemetry from shipped work then flows back to seed the next round of discovery.
 
 > 🎯 **For the AI PM**
 >
-> **Why it matters** — For an AI feature, feasibility can't be assessed in a meeting; it
+> **Why it matters** — For an AI feature, feasibility can't be assessed in a meeting. It
 > has to be *demonstrated*. Whether the model can actually do the task, at acceptable
 > quality and cost, is unknowable until you've run it against real examples.
 >
 > **What it changes in your decisions** — Discovery for AI features always includes a
 > **feasibility spike**: a prompt or fine-tune tested against a few dozen real inputs,
 > scored, *before* the feature enters the delivery track. "The demo looked great" is not a
-> discovery output; a scored eval set is.
+> discovery output. A scored eval set is.
 >
 > **Ask yourself** — *"What evidence do I have that this is valuable, usable, feasible, and
 > viable — and which of those four am I taking on faith?"*
@@ -69,7 +69,7 @@ Marty Cagan's four risks are the standard checklist, and they map to who you nee
 - **Viable** — does it work for the business: cost to serve, legal, support load, brand?
   The risk PMs are most uniquely responsible for, because nobody else is looking.
 
-The output of discovery is not a document; it's a **decision** — build, kill, or reshape —
+The output of discovery is not a document. It's a **decision** — build, kill, or reshape —
 plus the evidence that justifies it. Kills are wins: every idea killed for $5k of
 discovery is a quarter of delivery capacity saved.
 
@@ -90,7 +90,7 @@ release actually closes the loop back into discovery.
 ## The loop is the point
 
 The diagram's most important arrow is the last one: **release feeds discovery**. A shipped
-feature is a hypothesis put into production; telemetry and user feedback are the results
+feature is a hypothesis put into production. Telemetry and user feedback are the results
 coming back. Teams that skip this arrow ship feature after feature into the void and call
 it velocity. Put a date in the calendar the day you launch: 2–4 weeks out, review the
 metrics against what the PRD predicted, and write down what you learned. That document is

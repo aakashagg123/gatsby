@@ -5,20 +5,20 @@
 ## TL;DR
 
 **Technical debt** is the accumulated cost of past shortcuts — code and architecture that made
-sense (or didn't) at the time and now slow every future change. It's not "bad engineering";
-some debt is a deliberate, smart trade to ship faster, as long as you pay it down. **Estimates**
-are the other half of this literacy: they're probabilistic ranges, not promises, and knowing
-*why* something is a "small" or "large" is what lets you sequence work and negotiate scope. The
-PM's job isn't to write the code or the estimate — it's to make the debt and the trade-offs
-**visible** and to prioritize them honestly.
+sense (or didn't) at the time and now slow every future change. It's not "bad engineering."
+Some debt is a deliberate, smart trade to ship faster, as long as you pay it down.
+**Estimates** are the other half of this literacy. They're probabilistic ranges, not promises,
+and knowing *why* something is "small" or "large" is what lets you sequence work and negotiate
+scope. The PM's job isn't to write the code or the estimate. It's to make the debt and the
+trade-offs **visible** and to prioritize them honestly.
 
 > 🎯 **For the AI PM**
 >
 > **Why it matters** — AI features accrue a distinctive debt: prompt spaghetti, no evals,
-> untracked model versions, a data pipeline held together with tape. This debt is invisible
+> untracked model versions, a data pipeline held together with tape. This debt stays invisible
 > until quality silently regresses and nobody can tell why.
 >
-> **What it changes in your decisions** — You budget for the unglamorous foundations — evals,
+> **What it changes in your decisions** — Budget for the unglamorous foundations — evals,
 > observability, data quality — as first-class roadmap items, because in AI they *are* the
 > product's reliability.
 >
@@ -49,20 +49,20 @@ quadrantChart
   "Custom reporting engine": [0.85, 0.35]
 ```
 
-**Quick wins** (low effort, high impact) go first; **big bets** (high effort, high impact) get
-planned deliberately; **time sinks** (high effort, low impact) get questioned hard. Debt
+**Quick wins** (low effort, high impact) go first. **Big bets** (high effort, high impact) get
+planned deliberately. **Time sinks** (high effort, low impact) get questioned hard. Debt
 paydown items *belong on this map alongside features* — that's how you avoid the trap where
 debt never wins against the next shiny thing.
 
 ## Understanding technical debt
 
-- **Deliberate debt** — a conscious "we'll do it the quick way now and fix it later" to hit a
+- **Deliberate debt** — A conscious "we'll do it the quick way now and fix it later" to hit a
   deadline. Legitimate — *if* the "later" is real and scheduled.
-- **Accidental debt** — mess that accrues from changing requirements and rushed decisions.
-- **The interest** — debt charges *interest*: every feature built on shaky foundations takes
+- **Accidental debt** — Mess that accrues from changing requirements and rushed decisions.
+- **The interest** — Debt charges *interest*. Every feature built on shaky foundations takes
   longer and breaks more. Left unpaid, teams reach the point where simple changes take weeks.
 
-The PM's role is to keep debt **visible and prioritized** — translate "the code is a mess" into
+The PM's role is to keep debt **visible and prioritized**. Translate "the code is a mess" into
 "this is why the last three features slipped, and here's what paying it down buys us."
 
 ## Reading an estimate
@@ -71,45 +71,46 @@ An estimate is a **probability distribution**, not a date. When an engineer says
 weeks," hear "probably two, could be one, could be four." Useful instincts:
 
 - **Ask what makes it big or small.** The *why* — "we've done this before" vs. "we've never
-  touched that system" — is more informative than the number.
-- **Uncertainty is data.** A wide range ("2–6 weeks") is telling you there's unknown risk;
-  the fix is often a spike (a short timeboxed investigation) to shrink the range, not to
-  demand a tighter guess.
-- **Beware the 90% done trap.** The last 10% (edge cases, error handling, polish) routinely
+  touched that system" — tells you more than the number does.
+- **Uncertainty is data.** A wide range ("2–6 weeks") tells you there's unknown risk. The fix
+  is often a spike — a short timeboxed investigation — to shrink the range, not to demand a
+  tighter guess.
+- **Beware the 90% done trap.** The last 10% — edge cases, error handling, polish — routinely
   takes as long as the first 90%. "Almost done" is the most dangerous status.
-- **Complexity compounds.** Two features that each touch the same system aren't additive;
-  integration is where estimates blow up.
+- **Complexity compounds.** Two features that each touch the same system aren't additive.
+  Integration is where estimates blow up.
 
-You're not there to squeeze the number down — you're there to *understand* it, so you can
+You're not there to squeeze the number down. You're there to *understand* it, so you can
 sequence work, cut scope intelligently, and set expectations you can keep.
 
 ## A worked pass: reading a "3 weeks for a form"
 
-The estimate that sounds absurd until you decompose it. You ask for two extra fields on
+Here's an estimate that sounds absurd until you decompose it. You ask for two extra fields on
 the signup form; engineering says three weeks. The wrong response is "it's a *form*."
-The right response is "walk me through it" — and the walk reveals: the fields need a
-schema migration on a 40-million-row table (which, on this database version, locks the
-table unless done in stages), a backfill for existing users, changes to three services
-that validate signup payloads, handling for old app versions that will keep submitting
-the old shape for months, and updates to the data-export pipeline a partner depends on.
-The form is two days; the *system the form touches* is three weeks.
+The right response is "walk me through it." The walk reveals: the fields need a schema
+migration on a 40-million-row table (which, on this database version, locks the table unless
+done in stages), a backfill for existing users, changes to three services that validate signup
+payloads, handling for old app versions that will keep submitting the old shape for months,
+and updates to the data-export pipeline a partner depends on. The form is two days. The
+*system the form touches* is three weeks.
 
-Now the negotiation is honest and specific instead of adversarial: do old app versions
-really need support, or can the fields be optional until the next forced upgrade? Does
-the partner export need the fields at launch, or in Q3? Can the backfill run lazily on
-next login instead of up front? Each question trades scope against time *knowingly* —
-and each is only askable because you asked what the three weeks was made of. That's
-what "reading an estimate" means: not challenging the number, decomposing it.
+Now the negotiation is honest and specific instead of adversarial. Do old app versions really
+need support, or can the fields be optional until the next forced upgrade? Does the partner
+export need the fields at launch, or in Q3? Can the backfill run lazily on next login instead
+of up front? Each question trades scope against time *knowingly*, and each is only askable
+because you asked what the three weeks was made of. That's what "reading an estimate" means:
+not challenging the number, decomposing it.
 
 ## Failure modes
 
-- **Invisible debt** — debt that never makes the roadmap, so it compounds until the team
-  grinds to a halt.
-- **Treating estimates as promises** — committing externally to the optimistic end of a range.
-- **Debt always loses** — features always beating paydown, because the cost of debt was never
+- **Invisible debt** — Debt never makes the roadmap, so it compounds until the team grinds to
+  a halt.
+- **Treating estimates as promises** — A team commits externally to the optimistic end of a
+  range.
+- **Debt always loses** — Features always beat paydown, because the cost of debt was never
   made concrete.
-- **No AI foundations** — shipping model features with no evals or observability, then being
-  unable to diagnose quality regressions.
+- **No AI foundations** — Model features ship with no evals or observability, and then no one
+  can diagnose quality regressions.
 
 ## Practitioner checklist
 

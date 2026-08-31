@@ -8,48 +8,49 @@ First-principles thinking and polymathy are power tools, and power tools cut the
 failure modes are predictable: **cognitive biases** that masquerade as reasoning, the
 arrogance of **reinventing solved problems**, **analysis paralysis** from decomposing what
 didn't need decomposing, and **false analogies** that import the wrong field's answer. The
-mature skill isn't "always reason from first principles" — it's knowing *when analogy wins*,
+mature skill isn't "always reason from first principles." It's knowing *when analogy wins*,
 respecting accumulated expertise, and treating the choice of method as itself a
-[tradeoff](../content/06-strategy-tradeoffs/README.md). Use this lesson as the safety rail on the
-other five.
+[tradeoff](../content/06-strategy-tradeoffs/README.md). Use this lesson as the safety rail
+on the other five.
 
 > 🎯 **For the builder**
 >
-> **Why it matters** — Half-learned first-principles thinking is *more* dangerous than none:
-> it gives you the confidence to override conventions you didn't understand, at full speed.
+> **Why it matters** — Half-learned first-principles thinking is *more* dangerous than none.
+> It gives you the confidence to override conventions you didn't understand, at full speed.
 > The failure modes are where smart people do their dumbest work.
 >
-> **What it changes in your decisions** — You add a gate before "let's rethink this from
+> **What it changes in your decisions** — Add a gate before "let's rethink this from
 > scratch": *is this actually a first-principles problem, do I have the fundamentals, and
 > what does the existing convention know that I don't?*
 >
 > **Ask yourself** — *"Am I reasoning, or am I rationalizing a conclusion I already wanted —
 > and is the convention I'm about to override actually load-bearing?"*
 >
-> **Risk if ignored** — Confident reinvention of a worse wheel; bias dressed up as logic;
-> and decision paralysis that ships nothing.
+> **Risk if ignored** — Confident reinvention of a worse wheel. Bias dressed up as logic.
+> Decision paralysis that ships nothing.
 
 ## Trap 1 · Bias wearing the mask of reasoning
 
 Your reasoning runs on a brain full of systematic shortcuts. They don't announce
-themselves; they *feel like* clear thinking, which is what makes them dangerous to a method
-that trusts your judgment.
+themselves. They *feel like* clear thinking, which is what makes them dangerous to a
+method that trusts your judgment.
 
-- **Confirmation bias** — you "deconstruct" a problem and somehow every surviving first
+- **Confirmation bias** — You "deconstruct" a problem and somehow every surviving first
   principle supports the answer you already wanted. The
   [method's challenge step](./the-method.md) only works if you genuinely hunt for
   disconfirming claims, not decorative ones.
-- **Motivated reasoning** — when the conclusion affects you, your standard of evidence
+- **Motivated reasoning** — When the conclusion affects you, your standard of evidence
   silently drops for what you like and rises for what you don't.
-- **Anchoring** — the first number or framing you saw quietly sets the range for everything
-  after, including your "from scratch" estimate.
-- **Dunning–Kruger** — the less you know about a field, the *more* confident you feel
-  decomposing it, because you can't see what you're missing. The most dangerous moment for
-  first-principles thinking is a little knowledge.
+- **Anchoring** — The first number or framing you saw quietly sets the range for
+  everything after, including your "from scratch" estimate.
+- **Dunning–Kruger** — The less you know about a field, the *more* confident you feel
+  decomposing it, because you can't see what you're missing. The most dangerous moment
+  for first-principles thinking is a little knowledge.
 
-The defense is structural, not willpower: invert the question ("what would prove me
-*wrong*?"), seek the strongest opposing case, and use the [Feynman test](./learning-how-to-learn.md)
-to expose where your "fundamentals" are actually hand-waving.
+The defense is structural, not willpower. Invert the question ("what would prove me
+*wrong*?"), seek the strongest opposing case, and use the
+[Feynman test](./learning-how-to-learn.md) to expose where your "fundamentals" are
+actually hand-waving.
 
 ## Trap 2 · Reinventing solved problems
 
@@ -62,33 +63,34 @@ tissue of everyone who already hit the wall you're about to walk into.
 > no purpose," first understand *why someone built it*. If you can't explain why it's there,
 > you're not yet qualified to remove it.
 
-This is the precise counterweight to first-principles enthusiasm. Re-deriving cryptography,
-or a safety regulation, or a database's isolation guarantees from scratch usually produces
-something worse, slowly, because the convention already encodes failures you haven't
-imagined yet — exactly the
-[production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md) others paid
-to learn. The rule: **you've earned the right to override a convention only once you can
-articulate why it exists.**
+This is the precise counterweight to first-principles enthusiasm. Re-deriving
+cryptography, or a safety regulation, or a database's isolation guarantees from scratch
+usually produces something worse, slowly, because the convention already encodes failures
+you haven't imagined yet. These are exactly the
+[production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md)
+others paid to learn. The rule: **you've earned the right to override a convention only
+once you can articulate why it exists.**
 
 ## Trap 3 · Analysis paralysis
 
 Decomposition is effortful and open-ended, and that's a hazard. Run it on a problem that
 didn't need it and you can spend a week re-deriving the obvious, or get stuck in
-[bottomless decomposition](./the-method.md) where no premise is ever "fundamental enough" to
-build on. First principles must **terminate in action**; a perfect analysis delivered too
-late is a failure, not a triumph. Most decisions are reversible and low-stakes — for those,
-the conventional answer shipped today beats the from-scratch answer shipped next month.
+[bottomless decomposition](./the-method.md) where no premise is ever "fundamental enough"
+to build on. First principles must **terminate in action**. A perfect analysis delivered
+too late is a failure, not a triumph. Most decisions are reversible and low-stakes. For
+those, the conventional answer shipped today beats the from-scratch answer shipped next
+month.
 
 ## Trap 4 · The false analogy
 
-This trap belongs to the [polymath](./becoming-a-polymath.md), whose whole edge is importing
-one field's models into another. The danger: matching on **surface** similarity instead of
-**deep structure**, and importing a model that doesn't actually fit. "The economy is like a
-household budget" *sounds* like cross-disciplinary insight and is mostly wrong, because the
-deep structures differ. Range amplifies whatever you've got: real structural insight *or*
-confident nonsense. The guard is the same one [transfer](./becoming-a-polymath.md) relies
-on — match on structure, and always carry each model's **failure conditions**
-([map ≠ territory](./mental-models-latticework.md)).
+This trap belongs to the [polymath](./becoming-a-polymath.md), whose whole edge is
+importing one field's models into another. The danger: matching on **surface** similarity
+instead of **deep structure**, and importing a model that doesn't actually fit. "The
+economy is like a household budget" *sounds* like cross-disciplinary insight and is mostly
+wrong, because the deep structures differ. Range amplifies whatever you've got — real
+structural insight *or* confident nonsense. The guard is the same one
+[transfer](./becoming-a-polymath.md) relies on: match on structure, and always carry each
+model's **failure conditions** ([map ≠ territory](./mental-models-latticework.md)).
 
 ## Knowing which tool the moment deserves
 
@@ -113,31 +115,30 @@ loyalty. A rough decision aid:
 | You lack the domain fundamentals | You have (or can get) the fundamentals to decompose honestly |
 | Speed matters more than optimality | A non-obvious, better answer would pay for the effort |
 
-Notice the symmetry with the rest of the curriculum: just as
-[Module 06](../content/06-strategy-tradeoffs/README.md) insists every technical choice names its
-cost, *how you reason* is itself a choice with a cost. Defaulting to first principles
+Notice the symmetry with the rest of the curriculum. Just as
+[Module 06](../content/06-strategy-tradeoffs/README.md) insists every technical choice names
+its cost, *how you reason* is itself a choice with a cost. Defaulting to first principles
 everywhere is as naïve as never using it.
 
 > **📦 Mini-case — reinventing the calendar.** A startup, reasoning "from first
-> principles," decided recurring billing dates were an inherited convention and built
-> a novel cycle-based scheme. Six months later they had re-derived, one support
-> ticket at a time, why billing anchors to calendar months: payroll timing, corporate
-> card cycles, accounting periods — bedrock constraints that lived in *other
-> people's* systems, invisible from inside the whiteboard session. First-principles
-> reasoning fails exactly here: when the "arbitrary convention" encodes constraints
-> you haven't met yet. Before overturning a convention, find out what it knows.
+> principles," decided recurring billing dates were an inherited convention and built a
+> novel cycle-based scheme. Six months later they had re-derived, one support ticket at a
+> time, why billing anchors to calendar months: payroll timing, corporate card cycles,
+> accounting periods — bedrock constraints that lived in *other people's* systems,
+> invisible from inside the whiteboard session. First-principles reasoning fails exactly
+> here: when the "arbitrary convention" encodes constraints you haven't met yet. Before
+> overturning a convention, find out what it knows.
 
 ## Failure modes (of this module's own ideas)
 
-- **First-principles as identity** — reaching for decomposition reflexively to signal
+- **First-principles as identity** — Decomposition gets reached for reflexively to signal
   cleverness, including where analogy plainly wins.
-- **Bias laundering** — using the method's vocabulary to dignify a predetermined
-  conclusion.
-- **Expertise contempt** — dismissing conventions you can't yet explain (the broken
+- **Bias laundering** — The method's vocabulary dignifies a predetermined conclusion.
+- **Expertise contempt** — Conventions you can't yet explain get dismissed (the broken
   Chesterton's Fence).
-- **Paralysis** — analysis that never terminates in a decision.
-- **Polymath overreach** — confident false analogies imported across fields on surface
-  resemblance.
+- **Paralysis** — Analysis never terminates in a decision.
+- **Polymath overreach** — Confident false analogies get imported across fields on
+  surface resemblance.
 
 ## Practitioner checklist
 

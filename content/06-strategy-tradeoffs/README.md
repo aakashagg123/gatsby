@@ -1,8 +1,9 @@
 # Module 06 · Strategy & tradeoffs
 
-The final module steps back from individual techniques to the judgment that ties them
-together: choosing the right approach, naming the cost of every choice, and recognizing
-how production systems actually break.
+The final module steps back from individual techniques to the judgment
+that ties them together. It covers choosing the right approach, naming the
+cost of every choice, and recognizing how production systems actually
+break.
 
 - [**Fine-tuning vs. in-context learning vs. RAG vs. distillation**](./finetune-vs-icl-vs-rag.md)
   — four ways to make a model do your task, and when each is the *wrong* tool.
@@ -11,9 +12,9 @@ how production systems actually break.
 - [**Production failure modes**](./production-failure-modes.md) — the recurring ways LLM
   systems fail in the wild, mapped back to the lessons that prevent them.
 
-This module is where the rest of the curriculum converges: every earlier lesson is a
-point in the tradeoff space these three describe. Read it last, then revisit the others
-with the tradeoffs in mind.
+This module is where the rest of the curriculum converges: every earlier
+lesson is a point in the tradeoff space these three describe. Read it
+last, then revisit the others with the tradeoffs in mind.
 
 
 ## Connects to other tracks

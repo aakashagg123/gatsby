@@ -4,12 +4,13 @@
 
 ## TL;DR
 
-RAG is a pipeline, and quality is bounded by its weakest stage. **Chunking** decides
-what a retrievable unit *is*; **embeddings** decide how meaning is matched; **hybrid
-search** combines keyword and vector recall; **reranking** sharpens precision before
-the prompt; **freshness** keeps the index from lying. The generator can only answer
-from what retrieval surfaces — so most "the LLM is wrong" RAG bugs are actually
-retrieval bugs. Optimize retrieval first, generation second.
+RAG is a pipeline, and quality is bounded by its weakest stage. **Chunking**
+decides what a retrievable unit *is*. **Embeddings** decide how meaning is
+matched. **Hybrid search** combines keyword and vector recall. **Reranking**
+sharpens precision before the prompt. **Freshness** keeps the index from
+lying. The generator can only answer from what retrieval surfaces, so most
+"the LLM is wrong" RAG bugs are actually retrieval bugs. Optimize retrieval
+first, generation second.
 
 > 🎯 **For the AI-native PM**
 >
@@ -32,83 +33,94 @@ QUERY TIME:   query ──▶ (rewrite) ──▶ hybrid search (dense + lexical
                     ──▶ rerank top-N ──▶ trim to budget ──▶ context + cite ──▶ generate
 ```
 
-This is [context engineering](../00-foundations/context-engineering.md) in motion:
-retrieval is *how the right information gets into the window*.
+This is [context engineering](../00-foundations/context-engineering.md) in
+motion: retrieval is *how the right information gets into the window*.
 
 ## Chunking — define the retrievable unit
 
-- **Why it matters:** too big → chunks dilute relevance and waste tokens; too small →
-  you lose the context needed to answer. Chunk size is a recall/precision dial.
-- **Strategies:** fixed-size with **overlap** (simple, robust); **structure-aware**
-  (split on headings/sections/functions — usually better because it respects meaning);
-  **semantic chunking** (split where topic shifts).
-- **Match chunk size to task shape:** fixed-output tasks (extract a field, answer a
-  pointed question) tolerate **large chunks** — the model finds the needle; expansive-
-  output tasks (summarize, synthesize across sources) want **smaller chunks** so
-  retrieval can compose coverage from many places instead of drowning in a few.
-- **Carry metadata** on every chunk: source id, title, section, timestamp, tenant,
-  permissions. Metadata powers [citations](./retrieval-evals.md), [freshness](#freshness),
-  and [tenant filtering](../05-safety-multitenancy/multi-tenant-isolation.md).
-- **Tabular/structured data** often shouldn't be free-text chunked at all — consider
-  text-to-SQL or structured retrieval instead.
+- **Why it matters:** chunks that are too big dilute relevance and waste
+  tokens; chunks that are too small lose the context needed to answer.
+  Chunk size is a recall/precision dial.
+- **Strategies:** fixed-size with **overlap** is simple and robust.
+  **Structure-aware** chunking splits on headings, sections, or functions,
+  and is usually better because it respects meaning. **Semantic chunking**
+  splits where the topic shifts.
+- **Match chunk size to task shape:** fixed-output tasks — extract a field,
+  answer a pointed question — tolerate **large chunks**, since the model
+  finds the needle. Expansive-output tasks — summarize, synthesize across
+  sources — want **smaller chunks**, so retrieval can compose coverage from
+  many places instead of drowning in a few.
+- **Carry metadata** on every chunk: source id, title, section, timestamp,
+  tenant, permissions. Metadata powers [citations](./retrieval-evals.md),
+  [freshness](#freshness), and
+  [tenant filtering](../05-safety-multitenancy/multi-tenant-isolation.md).
+- **Tabular/structured data** often shouldn't be free-text chunked at all.
+  Consider text-to-SQL or structured retrieval instead.
 
 ## Embeddings — how meaning is matched
 
-- Embeddings map text to vectors so semantic nearness = vector nearness. Choice of
-  model sets your semantic ceiling.
-- **Match query and document embeddings** (same model/space). **Domain fit matters** —
-  a general embedder may miss jargon, code, or multilingual content; sometimes a
-  domain-tuned embedder is the highest-leverage change.
-- **Asymmetric search:** short queries vs. long passages benefit from models trained
-  for that (query/passage encoders).
-- **Cost/latency:** embedding dimension and model size trade retrieval quality against
-  storage and query speed. Re-embedding the whole corpus on a model change is a real
-  migration cost — version your embeddings.
+- Embeddings map text to vectors, so semantic nearness equals vector
+  nearness. The choice of model sets your semantic ceiling.
+- **Match query and document embeddings** to the same model and space.
+  **Domain fit matters** — a general embedder may miss jargon, code, or
+  multilingual content, so sometimes a domain-tuned embedder is the
+  highest-leverage change.
+- **Asymmetric search:** short queries versus long passages benefit from
+  models trained for that, such as query/passage encoders.
+- **Cost and latency:** embedding dimension and model size trade retrieval
+  quality against storage and query speed. Re-embedding the whole corpus on
+  a model change is a real migration cost, so version your embeddings.
 
 ## Hybrid search — recall from two angles
 
-Dense (vector) search captures *meaning* but can miss exact terms (IDs, error codes,
-rare names, acronyms). Lexical search (BM25/keyword) nails exact matches but misses
-paraphrase. **Hybrid** runs both and fuses results (e.g. Reciprocal Rank Fusion or
-weighted scores).
+Dense (vector) search captures *meaning* but can miss exact terms — IDs,
+error codes, rare names, acronyms. Lexical search (BM25/keyword) nails
+exact matches but misses paraphrase. **Hybrid** search runs both and fuses
+the results, for example with Reciprocal Rank Fusion or weighted scores.
 
-- Hybrid almost always beats either alone, especially for technical/enterprise corpora
-  full of exact identifiers.
-- Add **metadata filters** (tenant, date, doc type, ACL) as hard constraints *before*
-  ranking — both for relevance and for [isolation/security](../05-safety-multitenancy/multi-tenant-isolation.md).
+- Hybrid almost always beats either alone, especially for technical or
+  enterprise corpora full of exact identifiers.
+- Add **metadata filters** — tenant, date, doc type, ACL — as hard
+  constraints *before* ranking. This helps both relevance and
+  [isolation/security](../05-safety-multitenancy/multi-tenant-isolation.md).
 
 ## Reranking — precision before the prompt
 
-First-stage retrieval optimizes recall (cast a wide net, top-50). A **cross-encoder
-reranker** then scores each (query, chunk) pair jointly for true relevance and keeps
-the top few.
+First-stage retrieval optimizes recall by casting a wide net, say the top
+50. A **cross-encoder reranker** then scores each (query, chunk) pair
+jointly for true relevance and keeps the top few.
 
-- **Why:** cheaply pull many candidates, then spend a precise model on a short list.
-  This is usually the single biggest precision win in a RAG system.
+- **Why:** you cheaply pull many candidates, then spend a precise model on
+  a short list. This is usually the single biggest precision win in a RAG
+  system.
 - **Effect on the generator:** fewer, better chunks reduce distraction and
-  [lost-in-the-middle](../00-foundations/context-engineering.md) failures, and cut
-  [prefill cost](../01-inference-internals/prefill-vs-decode.md).
-- **Cost:** an extra model call and latency — but on a small candidate set, and it
-  often lets you *shrink* the context you send, paying for itself.
+  [lost-in-the-middle](../00-foundations/context-engineering.md) failures,
+  and cut [prefill cost](../01-inference-internals/prefill-vs-decode.md).
+- **Cost:** an extra model call and latency, but on a small candidate set.
+  It often lets you *shrink* the context you send, paying for itself.
 
 ## Freshness — keep the index honest
 
-A retrieval index is a cache of your data and goes stale the moment the source changes.
-- **Incremental indexing / CDC:** re-embed and upsert on create/update/delete; don't
-  full-rebuild nightly if data changes continuously.
-- **Deletions and tombstones:** removed source docs must leave the index, or you'll
-  cite deleted/retracted content.
-- **Recency signals:** timestamp chunks and let ranking prefer recent versions; expire
-  or down-weight stale ones.
-- Freshness failures mirror [semantic-cache staleness](../01-inference-internals/prompt-vs-semantic-caching.md):
+A retrieval index is a cache of your data, and it goes stale the moment the
+source changes.
+- **Incremental indexing / CDC:** re-embed and upsert on create, update, or
+  delete. Don't full-rebuild nightly if data changes continuously.
+- **Deletions and tombstones:** removed source docs must leave the index,
+  or you'll cite deleted or retracted content.
+- **Recency signals:** timestamp chunks and let ranking prefer recent
+  versions. Expire or down-weight stale ones.
+- Freshness failures mirror
+  [semantic-cache staleness](../01-inference-internals/prompt-vs-semantic-caching.md):
   a confident answer from outdated data.
 
 ## Generation & attribution
 
-- Pass reranked, trimmed chunks **with source tags** and instruct the model to answer
-  *from the context* and **cite** sources — enabling [grounding and citation evals](./retrieval-evals.md).
-- Handle "**not in the context**" explicitly: the model should say it doesn't know
-  rather than fill the gap from parametric memory (a hallucination guard).
+- Pass reranked, trimmed chunks **with source tags** and instruct the model
+  to answer *from the context* and **cite** sources. This enables
+  [grounding and citation evals](./retrieval-evals.md).
+- Handle "**not in the context**" explicitly: the model should say it
+  doesn't know rather than fill the gap from parametric memory — a
+  hallucination guard.
 
 ## Tradeoffs
 
@@ -122,14 +134,17 @@ A retrieval index is a cache of your data and goes stale the moment the source c
 
 ## Failure modes
 
-- **Right answer never retrieved** — chunking/embedding/recall problem; no prompt fixes
-  it. Measure [retrieval recall](./retrieval-evals.md).
-- **Answer buried in noise** — too many chunks, no reranking; distraction degrades the
-  answer.
-- **Stale/deleted content cited** — freshness/deletion gap.
-- **Exact-match misses** — dense-only search can't find an error code; add lexical.
-- **Cross-tenant leakage** — missing ACL/tenant filter returns another customer's docs
-  (see [isolation](../05-safety-multitenancy/multi-tenant-isolation.md)).
+- **Right answer never retrieved** — a chunking, embedding, or recall
+  problem. No prompt fix helps. Measure
+  [retrieval recall](./retrieval-evals.md).
+- **Answer buried in noise** — too many chunks with no reranking, so
+  distraction degrades the answer.
+- **Stale/deleted content cited** — a freshness or deletion gap.
+- **Exact-match misses** — dense-only search can't find an error code. Add
+  lexical search.
+- **Cross-tenant leakage** — a missing ACL or tenant filter returns another
+  customer's docs. See
+  [isolation](../05-safety-multitenancy/multi-tenant-isolation.md).
 
 ## Practitioner checklist
 

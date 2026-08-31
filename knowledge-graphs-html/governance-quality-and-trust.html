@@ -314,20 +314,20 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Governance, quality &amp; trust</h1>
   </div>
   <h2>TL;DR</h2>
-<p>A knowledge graph is a <strong>trust product</strong>: the moment one executive meeting catches it
+<p>A knowledge graph is a <strong>trust product</strong>. The moment one executive meeting catches it
 wrong — Acme listed twice, a dead subsidiary alive, revenue attached to the wrong
 parent — usage quietly collapses, and no amount of coverage wins it back. Trust is
-manufactured by four disciplines. <strong>Provenance:</strong> every fact carries where it came from,
-when, via what, at what confidence — the difference between "the graph says" and "the
-graph shows." <strong>Quality metrics:</strong> coverage, correctness, freshness, and resolution
-precision, measured per domain and reported like product KPIs, because "is the graph
-good?" is otherwise unanswerable. <strong>Permissions:</strong> the graph aggregates your most
-connected view of customers and people, which means it aggregates risk — access must be
-scoped at the node-and-edge level, and connection-making itself audited, because a graph
-can <em>infer</em> what no single source was allowed to say. <strong>Ownership:</strong> named stewards per
-domain and an ontology owner, or quality is everyone's job and therefore no one's. None
-of this is bureaucracy bolted on after launch; it's the operating system that keeps the
-asset an asset.</p>
+manufactured by four disciplines. <strong>Provenance:</strong> every fact carries where it came
+from, when, via what, and at what confidence. That's the difference between "the graph
+says" and "the graph shows." <strong>Quality metrics:</strong> coverage, correctness, freshness, and
+resolution precision, measured per domain and reported like product KPIs — because "is
+the graph good?" is otherwise unanswerable. <strong>Permissions:</strong> the graph aggregates your
+most connected view of customers and people, which means it aggregates risk. Access
+must be scoped at the node-and-edge level, and connection-making itself audited,
+because a graph can <em>infer</em> what no single source was allowed to say. <strong>Ownership:</strong>
+named stewards per domain and an ontology owner — or quality is everyone's job and
+therefore no one's. None of this is bureaucracy bolted on after launch. It's the
+operating system that keeps the asset an asset.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — The graph's entire value proposition is <em>being believable</em> —
@@ -335,14 +335,14 @@ to your teams, your AI features, and your auditors. Governance is what converts 
 pile of extracted facts into something a regulated enterprise will let near a
 customer. It is also, increasingly, what your buyers' security reviews grade.</p>
 <p><strong>What it changes in your decisions</strong> — Quality gets a dashboard and a bar, not a
-vibe: features declare the confidence tier they consume, launches gate on domain
-quality metrics, and privacy review treats <em>inferred</em> connections as data in their
-own right — not just the sources they came from.</p>
+vibe. Features declare the confidence tier they consume. Launches gate on domain
+quality metrics. Privacy review treats <em>inferred</em> connections as data in their own
+right, not just the sources they came from.</p>
 <p><strong>Ask yourself</strong> — <em>"If a customer, a regulator, or the DPO asked why the graph
 asserts this fact about them — can we show source, time, method, and who was allowed
 to see it?"</em></p>
-<p><strong>Risk if ignored</strong> — The quiet death: no incident, no postmortem — just teams
-drifting back to spreadsheets because the graph was wrong twice; or the loud one — a
+<p><strong>Risk if ignored</strong> — The quiet death: no incident, no postmortem, just teams
+drifting back to spreadsheets because the graph was wrong twice. Or the loud one: a
 re-identification or leakage finding, because nobody treated the <em>connections</em> as
 personal data.</p>
 </blockquote>
@@ -365,9 +365,9 @@ regulated domains, "how do you know this?" is a legal question with a deadline.
 <strong>Repair</strong> — when a source turns out wrong, provenance is the blast-radius map: find
 every fact and <a href="reasoning-and-analytics.html">inference</a> downstream and re-derive.
 <strong>Erasure</strong> — data-subject deletion must reach not just copied records but <em>conclusions
-drawn from them</em>; without provenance, right-to-erasure over a graph is archaeology.
+drawn from them</em>. Without provenance, right-to-erasure over a graph is archaeology.
 Provenance is cheap at <a href="building-the-graph.html">construction time</a> and brutally
-expensive to retrofit — it goes in the pipeline from day one or effectively never.</p>
+expensive to retrofit. It goes in the pipeline from day one, or effectively never.</p>
 <h2>Quality: four numbers on a dashboard</h2>
 <p>"Is the graph good?" decomposes into four measurable questions, each with a different
 fix when it dips:</p>
@@ -407,30 +407,31 @@ fix when it dips:</p>
 </tr>
 </tbody>
 </table>
-<p>Three practices turn the numbers into governance. <strong>Report per domain, not globally</strong> —
+<p>Three practices turn the numbers into governance. <strong>Report per domain, not globally.</strong>
 "94% correct overall" hides the 71%-correct supplier domain your risk feature reads.
-<strong>Tier the consumption</strong> — features declare the quality bar they need (an internal
-explorer tolerates draft facts; an <a href="knowledge-graphs-and-llms.html">AI answer to a customer</a>
-reads only reviewed, fresh, high-confidence tiers). This one mechanism lets exploration
-and rigor share a graph without either poisoning the other. <strong>Gate launches on the
-metric</strong> — a graph-backed feature ships when its domain hits the bar, which converts
-quality from aspiration into a schedule input.</p>
+<strong>Tier the consumption.</strong> Features declare the quality bar they need — an internal
+explorer tolerates draft facts, while an
+<a href="knowledge-graphs-and-llms.html">AI answer to a customer</a> reads only reviewed, fresh,
+high-confidence tiers. This one mechanism lets exploration and rigor share a graph
+without either poisoning the other. <strong>Gate launches on the metric.</strong> A graph-backed
+feature ships when its domain hits the bar, which converts quality from aspiration into
+a schedule input.</p>
 <h2>Permissions: the graph aggregates risk</h2>
 <p>The graph's superpower — connecting everything — is precisely its risk profile. Three
 problems are graph-specific, and standard database access control solves none of them:</p>
 <ul>
-<li><strong>Aggregation.</strong> Each source was individually innocuous; connected, they profile a
-  person or expose a strategy. Fifty siloed facts about an employee were fine;
-  the <em>joined</em> fifty are a dossier. Access must scope at node/edge level (which
-  subgraph, which relationship types), not "graph: yes/no."</li>
+<li><strong>Aggregation.</strong> Each source was individually innocuous. Connected, they profile a
+  person or expose a strategy. Fifty siloed facts about an employee were fine; the
+  <em>joined</em> fifty are a dossier. Access must scope at node/edge level — which subgraph,
+  which relationship types — not "graph: yes/no."</li>
 <li><strong>Inference.</strong> <a href="reasoning-and-analytics.html">Reasoning</a> mints <em>new</em> facts — and can
   derive what no source was permitted to state ("these two 'unrelated' accounts share a
-  beneficial owner"). Inferred facts need classification and review <em>as data</em>, and
-  re-identification risk assessed on the connected whole — the
+  beneficial owner"). Inferred facts need classification and review <em>as data</em>, with
+  re-identification risk assessed on the connected whole. The
   <a href="../technical-product-sense/security-and-privacy.html">DPDP/GDPR lens</a> applies to
   conclusions, not just records.</li>
 <li><strong>The AI backdoor.</strong> An assistant grounded on the full graph <em>answers</em> with anything
-  it can reach; retrieval-time permission filtering
+  it can reach. Retrieval-time permission filtering
   (<a href="knowledge-graphs-and-llms.html">lesson 6</a>) is the enforcement point, and it must
   mirror source-system entitlements rather than inventing looser ones. The graph should
   never be the path by which someone learns what their CRM role hid — that's
@@ -441,27 +442,27 @@ problems are graph-specific, and standard database access control solves none of
 <p>Governance without names is a slideware ritual. The minimum viable cast: an <strong>ontology
 owner</strong> (arbitrates <a href="ontologies-and-data-modeling.html">meaning</a>, versions the
 contract), <strong>domain stewards</strong> (own correctness and the
-<a href="building-the-graph.html">review queues</a> for their entity types — sitting in the
+<a href="building-the-graph.html">review queues</a> for their entity types, sitting in the
 domain, not a central data office), a <strong>platform owner</strong> (pipeline, store, SLOs), and a
 <strong>privacy/security reviewer</strong> with standing over inferred data. Small graphs run this
-as hats, not headcount — what matters is that each question ("what does this mean?",
-"is this true?", "who may see it?") has exactly one desk it lands on. It's the same
+as hats, not headcount. What matters is that each question — "what does this mean?",
+"is this true?", "who may see it?" — has exactly one desk it lands on. It's the same
 lesson every <a href="../technical-product-sense/data-and-the-data-model.html">data platform</a>
 learns: assets without owners become swamps.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>The quiet death</strong> — no dashboard, no stewards; two visible errors in front of the
+<li><strong>The quiet death</strong> — no dashboard, no stewards. Two visible errors in front of the
   wrong audience, and the org routes back to spreadsheets without ever filing a ticket.</li>
-<li><strong>Provenance retrofit</strong> — launched without source pointers "to move fast"; the first
+<li><strong>Provenance retrofit</strong> — launched without source pointers "to move fast." The first
   audit, erasure request, or bad-source repair becomes a quarter-long dig.</li>
 <li><strong>Global averages hiding local rot</strong> — the overall correctness number looks fine
   while the one domain your flagship feature reads decays below usability.</li>
 <li><strong>Access modeled on sources, not aggregation</strong> — everyone who could see <em>a</em> source
-  can see the <em>joined</em> view; the dossier problem ships as a feature.</li>
+  can see the <em>joined</em> view. The dossier problem ships as a feature.</li>
 <li><strong>Inferred facts skipping privacy review</strong> — "we only derived it" is not a defense
   the regulator recognizes.</li>
-<li><strong>Erasure that misses inferences</strong> — the record is deleted; the conclusions built on
-  it live on, citing a source that no longer exists.</li>
+<li><strong>Erasure that misses inferences</strong> — the record is deleted, but the conclusions
+  built on it live on, citing a source that no longer exists.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

@@ -4,30 +4,29 @@
 
 ## TL;DR
 
-Users act when **motivation is high and friction is low** — the Fogg behaviour model puts
-it as *Behaviour = Motivation × Ability × Trigger*. Product sense starts with reading that
-equation in your own product: hunt down needless friction, make the core action
-**rewarding** so satisfaction feeds motivation (the Hook model's Trigger → Action → Reward
-→ Investment loop), and use **ethical nudges** — defaults, reminders, social proof — to make
-the beneficial path the path of least resistance. The discipline is *conscious* friction:
-add it only where it creates value, remove it everywhere else.
+Users act when **motivation is high and friction is low**. The Fogg behaviour model states
+this as *Behaviour = Motivation × Ability × Trigger*. Product sense starts with reading
+that equation in your own product. Hunt down needless friction. Make the core action
+**rewarding**, so satisfaction feeds motivation — this is the Hook model's Trigger → Action
+→ Reward → Investment loop. Use **ethical nudges** — defaults, reminders, social proof — to
+make the beneficial path the path of least resistance. The discipline is *conscious*
+friction: add it only where it creates value, and remove it everywhere else.
 
 > 🎯 **For the AI PM**
 >
-> **Why it matters** — AI features fail less often because the model is dumb and more often
-> because users never build the habit: the magic moment is buried behind friction, or the
-> first output disappoints and they never return. The behaviour equation is how you find
-> that gap.
+> **Why it matters** — AI features rarely fail because the model is dumb. They fail because
+> users never build the habit: the magic moment stays buried behind friction, or the first
+> output disappoints and they never return. The behaviour equation is how you find that gap.
 >
-> **What it changes in your decisions** — You measure and remove steps between "user arrives"
-> and "user feels the model's value," and you design the *reward* after the first successful
-> prompt as deliberately as the model itself.
+> **What it changes in your decisions** — You measure and remove the steps between "user
+> arrives" and "user feels the model's value." You design the *reward* after the first
+> successful prompt as deliberately as you design the model itself.
 >
 > **Ask yourself** — *"What is the friction between a new user and their first genuinely
 > useful model output — and how fast does that first win arrive?"*
 >
 > **Risk if ignored** — A technically impressive model with great demos and terrible
-> retention, because nobody engineered the motivation-and-friction path around it.
+> retention. Nobody engineered the motivation-and-friction path around it.
 
 ## The behaviour equation
 
@@ -44,27 +43,28 @@ flowchart LR
 ```
 
 The **Fogg behaviour model** — *B = M × A × T* — says a behaviour happens only when
-motivation, ability (ease), and a trigger converge. As a multiplication, if any term is
-near zero, the behaviour doesn't happen. The practical corollary: **if you want to
-encourage an activity, make it easy.** High friction — complex steps, confusing UI — stifles
-even a motivated user; reducing friction lets existing motivation convert into action.
+motivation, ability (ease), and a trigger converge. It's a multiplication, so if any term
+is near zero, the behaviour doesn't happen. The practical corollary: **if you want to
+encourage an activity, make it easy.** High friction — complex steps, confusing UI —
+stifles even a motivated user. Reducing friction lets existing motivation convert into
+action.
 
-Picture a fintech signup. The motivation is there (the user *wants* the savings account),
-but a 10-field form with poor guidance means many abandon — friction overrides motivation.
-A 2-field signup or a federated login lets that motivation translate into action. So map
-the journey, **measure drop-off at each step**, and prioritize the steps where users
-struggle.
+Picture a fintech signup. The motivation is there — the user *wants* the savings account.
+But a 10-field form with poor guidance makes many users abandon it, because friction
+overrides motivation. A 2-field signup or a federated login lets that motivation translate
+into action. Map the journey, **measure drop-off at each step**, and prioritize the steps
+where users struggle.
 
-**But not all friction is bad.** A little friction can ensure quality or commitment — an
-email verification yields a higher-quality user base; a confirmation step prevents costly
-mistakes. The principle is **conscious friction**: add it only when it adds value
-(security, thoughtfulness, safety) and eliminate it when it doesn't.
+**But not all friction is bad.** A little friction can ensure quality or commitment. Email
+verification yields a higher-quality user base; a confirmation step prevents costly
+mistakes. The principle is **conscious friction**: add it only when it adds value —
+security, thoughtfulness, safety — and eliminate it everywhere else.
 
 ## Satisfaction and habit
 
-**Satisfaction** is the fulfilment a user gets from your product — and it's what turns a
+**Satisfaction** is the fulfilment a user gets from your product. It's what turns a
 one-time user into a returning one, because a satisfying experience *increases* intrinsic
-motivation to come back. Satisfaction and motivation are a loop, not two separate things.
+motivation to come back. Satisfaction and motivation form a loop, not two separate things.
 
 Nir Eyal's **Hook model** shows how that loop hardens into a habit:
 
@@ -75,11 +75,11 @@ Nir Eyal's **Hook model** shows how that loop hardens into a habit:
 ```
 
 The **reward** phase is where satisfaction lands — a sense of accomplishment, useful
-information, delight. That burst reinforces the behaviour; then the **investment** phase
-(the user adds data, preferences, effort) raises commitment and loads the next trigger. So
+information, delight. That burst reinforces the behaviour. Then the **investment** phase —
+the user adds data, preferences, effort — raises commitment and loads the next trigger. So
 ask: *what is actually rewarding about our core action?* Make sure each critical action is
 followed by clear value or positive feedback — a friendly confirmation, a progress bar, a
-checkmark. A satisfied user tolerates minor friction; a frustrated one drops off at the
+checkmark. A satisfied user tolerates minor friction. A frustrated one drops off at the
 first hurdle.
 
 ## Nudges — influence without coercion
@@ -93,12 +93,12 @@ first hurdle.
 | **Prompts & reminders** | External trigger when motivation is likely | "It's been a week since your last workout" |
 | **Social proof** | Herd behaviour builds trust | "Join 5,000+ peers using this" |
 | **Gamification** | Streaks, points, badges boost motivation | Progress streaks |
-| **Framing & personalization** | Highlight the benefit; tailor the choice | "Recommended for you" |
+| **Framing & personalization** | Highlight the benefit and tailor the choice | "Recommended for you" |
 
 The rule is **ethics first**: the goal is to help users reach *their* goals with less
 friction, not to manipulate them toward *your* metrics. Always ask, *"is this nudge helping
-the user, or just helping us?"* Ethical nudges build trust; dark patterns destroy it.
-LinkedIn's profile-completeness bar is the canonical good nudge — it shows progress and
+the user, or just helping us?"* Ethical nudges build trust. Dark patterns destroy it.
+LinkedIn's profile-completeness bar is the canonical good nudge. It shows progress and
 rewards a "100% complete" state that genuinely benefits the user.
 
 ## Actionable steps
@@ -108,23 +108,23 @@ rewards a "100% complete" state that genuinely benefits the user.
 - **Engineer quick wins** — make new users hit the core value within the first minutes.
 - **Add one ethical nudge** where users hesitate — a friendly default, a timely reminder,
   social proof — and watch both usage *and* sentiment.
-- **Measure satisfaction** at key touchpoints (NPS, CSAT); where it's low, look for
-  friction; where it's high, amplify the moment.
+- **Measure satisfaction** at key touchpoints (NPS, CSAT). Where it's low, look for
+  friction. Where it's high, amplify the moment.
 - **Run a behavioural-design audit** on new features: does the copy and flow reduce needless
   friction and reward the right action?
 
-> **📦 Mini-case — Duolingo's streak.** The behaviour equation, productized: motivation
-> (don't lose the streak) is manufactured by the product itself, ability is a
-> one-minute lesson, and the trigger is a push notification timed to your usual
+> **📦 Mini-case — Duolingo's streak.** The behaviour equation, productized. Motivation
+> (don't lose the streak) is manufactured by the product itself. Ability is a
+> one-minute lesson. The trigger is a push notification timed to your usual
 > practice hour. Note the ethical line the design walks: streak freezes and repair
-> let users *recover* — the nudge pushes practice, not anxiety. When a habit feature
+> let users *recover*. The nudge pushes practice, not anxiety. When a habit feature
 > feels coercive, it's usually because it punishes lapses instead of rewarding
 > returns.
 
 ## Failure modes
 
-- **Friction you never measured** — the drop-off is in a step you assumed was fine; instrument
-  it before you defend it.
+- **Friction you never measured** — the drop-off happens in a step you assumed was fine.
+  Instrument it before you defend it.
 - **Action without reward** — users complete the core action and feel nothing, so no habit
   forms.
 - **Manipulative nudges** — short-term metric wins that erode trust (the dark-pattern trap).

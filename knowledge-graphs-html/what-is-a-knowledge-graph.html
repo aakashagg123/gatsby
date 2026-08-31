@@ -317,42 +317,43 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
 <p>A knowledge graph stores knowledge as <strong>things and the relationships between them</strong> —
 <code>(Acme Corp) —supplies→ (Widget X)</code>, <code>(Widget X) —part of→ (Product Y)</code> — instead of as
 rows in disconnected tables or words in disconnected documents. Each fact is a small,
-explicit statement (a <strong>triple</strong>: subject → relationship → object), and because facts
-share entities, they snap together into one connected web you can <em>traverse</em>: from a
-customer, hop to their contracts, to the products in them, to the supplier of a failing
-part — in one query. That's the entire trick, and it's enough to change what your product
-can answer. The strategic shift was named by Google in 2012 — <strong>things, not strings</strong>:
-stop matching text, start knowing what the text refers to. The product test is equally
-plain: if your most valuable unanswered questions require <em>joining knowledge across
-three or more hops</em> — or the relationships themselves are the product — you're in
+explicit statement: a <strong>triple</strong> of subject → relationship → object. Facts share
+entities, so they snap together into one connected web you can <em>traverse</em>. From a
+customer, you can hop to their contracts, to the products in them, to the supplier of a
+failing part — all in one query. That's the entire trick, and it's enough to change what
+your product can answer. Google named the strategic shift in 2012: <strong>things, not
+strings</strong>. Stop matching text; start knowing what the text refers to. The product test is
+equally plain. If your most valuable unanswered questions require <em>joining knowledge
+across three or more hops</em> — or the relationships themselves are the product — you're in
 knowledge-graph territory. If not, a well-modeled database is honestly fine.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — "Knowledge graph" is a term you'll hear from vendors, data teams,
-and AI strategy decks, often meaning wildly different things. If you can't state what
-one actually is — explicit entities and relationships, queryable by traversal — you
-can't tell a genuine capability from a rebranded database, or price what building one
-would take.</p>
-<p><strong>What it changes in your decisions</strong> — You stop evaluating "should we have a knowledge
-graph?" (an infrastructure question) and start evaluating "which questions can't we
-answer today because the knowledge is disconnected?" (a product question). The graph is
-justified by the questions, never the other way around.</p>
+<p><strong>Why it matters</strong> — You will hear "knowledge graph" from vendors, data teams, and AI
+strategy decks, often meaning wildly different things. If you can't state what one
+actually is — explicit entities and relationships, queryable by traversal — you can't
+tell a genuine capability from a rebranded database. You also can't price what
+building one would take.</p>
+<p><strong>What it changes in your decisions</strong> — You stop asking "should we have a knowledge
+graph?" That's an infrastructure question. You start asking "which questions can't we
+answer today because the knowledge is disconnected?" That's a product question. The
+questions justify the graph, never the other way around.</p>
 <p><strong>Ask yourself</strong> — <em>"What are the three most valuable questions my product can't answer
 today because the answer lives in more than one system?"</em></p>
 <p><strong>Risk if ignored</strong> — You fund a two-year platform project with no killer query
-attached, or you dismiss the idea entirely and watch a competitor answer in one hop
-what takes your team a week of spreadsheet archaeology.</p>
+attached. Or you dismiss the idea entirely, and a competitor answers in one hop what
+takes your team a week of spreadsheet archaeology.</p>
 </blockquote>
 <h2>Things, not strings</h2>
 <p>Search for "jaguar" in a text index and you get documents containing the string. A
 knowledge graph instead knows there are three <em>things</em> — an animal, a car brand, a
 sports team — each with its own identity, properties, and relationships. Google's 2012
-Knowledge Graph launch put a name on this shift, and the phrase is the cleanest summary
-of the whole field: <strong>a string is what something is called; a thing is what it is.</strong></p>
+Knowledge Graph launch put a name on this shift. The phrase is still the cleanest
+summary of the whole field: <strong>a string is what something is called; a thing is what it
+is.</strong></p>
 <p>Your company runs on strings today. "Acme Corp" in the CRM, "ACME Inc." in billing,
 "acme-corp-2019" in the contract system — three strings, one thing, and no system that
-knows it. The knowledge graph move is to mint one identity for the thing and attach every
-fact to it:</p>
+knows it. The knowledge graph move is to mint one identity for the thing, then attach
+every fact to it:</p>
 <pre class="mermaid">flowchart LR
   subgraph G[&quot;One connected view — the graph&quot;]
     ACME((&quot;Acme Corp&lt;br/&gt;Customer&quot;)):::ent
@@ -374,30 +375,30 @@ fact to it:</p>
   classDef doc fill:#f4f2ea,stroke:#ddd8ca
   classDef q fill:#f9f1dd,stroke:#e5d9b8</pre>
 <p>Every arrow is a stored fact. The question on the left is unanswerable in any single
-source system — it <em>is</em> answerable, in milliseconds, once the arrows exist. That's the
-product argument for knowledge graphs in one picture.</p>
+source system. Once the arrows exist, it answers in milliseconds. That's the product
+argument for knowledge graphs, in one picture.</p>
 <h2>The anatomy: entities, relationships, triples</h2>
 <p>Strip away vendor vocabulary and there are only four parts:</p>
 <ul>
 <li><strong>Entities (nodes)</strong> — the things: customers, products, people, suppliers, documents,
   policies. Each has a stable identity that survives renaming and typos.</li>
 <li><strong>Relationships (edges)</strong> — typed, directional connections: <em>supplies</em>, <em>owns</em>,
-  <em>reports to</em>, <em>depends on</em>. The type carries meaning; "connected to" is not a
-  relationship, it's a shrug.</li>
+  <em>reports to</em>, <em>depends on</em>. The type carries the meaning. "Connected to" is not a
+  relationship — it's a shrug.</li>
 <li><strong>Properties</strong> — attributes on either: a customer's segment, a contract's renewal
   date, a relationship's start date or confidence score.</li>
 <li><strong>Triples</strong> — the atomic fact format: <em>subject → predicate → object</em>. "Supplia
-  supplies Widget X." Every knowledge graph, whatever the technology underneath,
-  decomposes into a pile of these small sentences — which is why graphs and language
-  models get along so well (<a href="knowledge-graphs-and-llms.html">lesson 6</a>).</li>
+  supplies Widget X." Every knowledge graph, whatever the technology underneath, breaks
+  down into a pile of these small sentences. That's why graphs and language models get
+  along so well (<a href="knowledge-graphs-and-llms.html">lesson 6</a>).</li>
 </ul>
 <p>Two properties of this shape do most of the work. <strong>Facts compose.</strong> Nobody wrote down
 "Supplia's recall threatens Acme's renewal" — it <em>emerges</em> from four independently
-recorded facts. A graph answers questions nobody anticipated when the data was entered;
-a table schema answers exactly the questions its designer anticipated. <strong>The schema
+recorded facts. A graph answers questions nobody anticipated when the data was entered.
+A table schema answers only the questions its designer anticipated. <strong>The schema
 bends.</strong> Adding a new relationship type ("is regulated by") doesn't require migrating
-tables — you start drawing new arrows. That flexibility is a gift and a hazard, which is
-why the <a href="ontologies-and-data-modeling.html">ontology lesson</a> comes next.</p>
+tables — you just start drawing new arrows. That flexibility is a gift and a hazard,
+which is why the <a href="ontologies-and-data-modeling.html">ontology lesson</a> comes next.</p>
 <h2>What a knowledge graph is <em>not</em></h2>
 <p>The fastest way to sharpen the concept is to name its neighbours:</p>
 <table>
@@ -411,37 +412,37 @@ why the <a href="ontologies-and-data-modeling.html">ontology lesson</a> comes ne
 <tbody>
 <tr>
 <td>A relational database</td>
-<td>Tables <em>can</em> store relationships (join tables), but every hop is a join you designed in advance; five-hop paths and "any path between A and B" questions get slow and unwritable</td>
+<td>Tables <em>can</em> store relationships (join tables), but every hop is a join you designed in advance. Five-hop paths and "any path between A and B" questions get slow and hard to write</td>
 <td>Transactions, reporting, anything with a fixed, known access pattern</td>
 </tr>
 <tr>
 <td>A vector store</td>
-<td>Embeddings capture <em>similarity</em> ("these two documents feel alike") — fuzzy, unexplainable, and unauditable; a graph captures <em>stated facts</em> with provenance</td>
+<td>Embeddings capture <em>similarity</em> ("these two documents feel alike"). That's fuzzy, unexplainable, and unauditable. A graph captures <em>stated facts</em> with provenance</td>
 <td>Semantic search over text, <a href="../ai/03-rag.html#rag-architecture">RAG retrieval</a></td>
 </tr>
 <tr>
 <td>A data warehouse / lake</td>
-<td>Warehouses centralize <em>records</em> for aggregation; they don't resolve identity across sources or make relationships first-class</td>
+<td>Warehouses centralize <em>records</em> for aggregation. They don't resolve identity across sources or make relationships first-class</td>
 <td>BI, metrics, large-scale batch analytics</td>
 </tr>
 <tr>
 <td>An LLM</td>
-<td>A model's knowledge is <em>latent</em> — statistical, unattributable, frozen at training, and sometimes wrong with confidence; a graph's knowledge is explicit, current, and citable</td>
+<td>A model's knowledge is <em>latent</em> — statistical, unattributable, frozen at training, and sometimes wrong with confidence. A graph's knowledge is explicit, current, and citable</td>
 <td>Language understanding, generation, extraction (<a href="knowledge-graphs-and-llms.html">lesson 6</a>)</td>
 </tr>
 <tr>
 <td>A taxonomy or org chart</td>
-<td>Trees allow one parent per node; real knowledge is a web — a product belongs to a category, a supplier, a compliance regime all at once</td>
+<td>Trees allow one parent per node. Real knowledge is a web — a product belongs to a category, a supplier, and a compliance regime, all at once</td>
 <td>Simple classification, navigation menus</td>
 </tr>
 </tbody>
 </table>
 <p>The honest summary: a knowledge graph is a <em>complement</em> to all of these, not a
 replacement for any of them. It typically sits <strong>across</strong> your systems of record as a
-connective layer — which is exactly why identity resolution
+connective layer. That's exactly why identity resolution
 (<a href="building-the-graph.html">lesson 3</a>) is the hard part.</p>
 <h2>The test: do you actually need one?</h2>
-<p>Three signals say yes; their absence says no.</p>
+<p>Three signals say yes. Their absence says no.</p>
 <ol>
 <li><strong>Your valuable questions are multi-hop.</strong> "Which customers are exposed to this
    supplier?" "Which features does this regulation touch?" "Who in the org has worked
@@ -455,8 +456,8 @@ connective layer — which is exactly why identity resolution
    company is paying for the same graph three times, badly.</li>
 </ol>
 <p>If none of these hold — your questions are one-hop, your joins are known in advance,
-one system of record covers the domain — then a knowledge graph is a solution seeking a
-problem, and the <a href="knowledge-graphs-as-a-product.html">capstone lesson</a> will tell you to
+one system of record covers the domain — a knowledge graph is a solution seeking a
+problem. The <a href="knowledge-graphs-as-a-product.html">capstone lesson</a> will tell you to
 spend the money elsewhere.</p>
 <h2>Failure modes</h2>
 <ul>
@@ -469,7 +470,7 @@ spend the money elsewhere.</p>
 <li><strong>Confusing similarity with knowledge</strong> — treating vector-search neighbours as facts.
   "These two suppliers have similar descriptions" is not "these two suppliers are the
   same company."</li>
-<li><strong>Ignoring the maintenance tail</strong> — a graph is a living asset; a snapshot built once
+<li><strong>Ignoring the maintenance tail</strong> — a graph is a living asset. A snapshot built once
   and never refreshed decays into a liability (<a href="governance-quality-and-trust.html">lesson 7</a>).</li>
 </ul>
 <h2>Practitioner checklist</h2>
