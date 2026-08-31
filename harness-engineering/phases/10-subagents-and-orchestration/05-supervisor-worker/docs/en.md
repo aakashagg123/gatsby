@@ -1,6 +1,6 @@
 # Supervisor / worker patterns
 
-> **Motto** — A supervisor decomposes and delegates; workers execute in isolation and report back.
+> **Motto** — A supervisor decomposes and delegates — workers execute in isolation and report back.
 
 *Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–04.*
 
@@ -104,7 +104,7 @@ decomposes, dispatches isolated workers in batches, and aggregates results.
 - C) nothing
 - D) the worker's system prompt
 
-<details><summary>Answer</summary>B — results flow up, not transcripts; this keeps the
+<details><summary>Answer</summary>B — results flow up, not transcripts. This keeps the
 supervisor's context small and bounded (lesson 02).</details>
 
 **Q2.** Why batch worker dispatch by `max_workers`?

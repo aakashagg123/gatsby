@@ -58,14 +58,14 @@ print(idem.run(k, send))     # ('sent', 'replayed')  ← no second send
 print("emails sent:", len(sends))   # 1
 ```
 
-One real action, even though the loop "called" twice. The key is derived from intent, so an
-identical request dedupes while a different one proceeds.
+One real action happens, even though the loop "called" twice. The key is derived from
+intent, so an identical request dedupes while a different one proceeds.
 
 ## Use It
 
-In production the `_done` store is durable (a DB/Redis), keyed by a client-supplied
-idempotency key, often with a TTL. Many real APIs (payments especially) accept an
-`Idempotency-Key` header for exactly this reason — your wrapper is the agent-side
+In production the `_done` store is durable (a DB or Redis), keyed by a client-supplied
+idempotency key, often with a TTL. Many real APIs, payments especially, accept an
+`Idempotency-Key` header for exactly this reason. Your wrapper is the agent-side
 counterpart.
 
 ## Ship It

@@ -7,9 +7,9 @@
 ## The Problem
 
 Letting an agent start editing immediately on a big or fuzzy task is how you get the wrong
-thing built fast. **Plan mode** inverts that: the agent may *read and analyze* but **not
-mutate** anything; it produces a plan; you approve (or redirect); only then does it act.
-It's the spec-first principle (Phase 10) at the single-agent level.
+thing built fast. **Plan mode** inverts that. The agent may *read and analyze* but **not
+mutate** anything. It produces a plan. You approve it, or redirect it. Only then does it
+act. It's the spec-first principle (Phase 10) at the single-agent level.
 
 ## The Concept
 
@@ -21,8 +21,8 @@ flowchart LR
   H -- "yes" --> A["exit plan mode → act"]
 ```
 
-The enforcement is a permission mode (Phase 8): in plan mode, mutating tools
-(write/edit/bash) are denied; reads are allowed.
+The enforcement is a permission mode (Phase 8). In plan mode, mutating tools
+(write/edit/bash) are denied, but reads are allowed.
 
 ## Build It
 

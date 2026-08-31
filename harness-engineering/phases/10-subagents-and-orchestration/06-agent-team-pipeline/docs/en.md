@@ -2,7 +2,7 @@
 
 > **Motto** — Wire the contract, roles, dependency graph, checkpoints, and review into one skill.
 
-*Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–05; completes the phase.*
+*Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–05 and completes the phase.*
 
 ## The Problem
 
@@ -27,8 +27,8 @@ flowchart TB
   H --> M["memory agent → append to knowledge.md"]
 ```
 
-Five agents, each with a bounded role; budgets and hard stops from lesson 01; file
-isolation from lesson 03; checkpoints from lesson 04. The skill is the glue.
+Five agents, each with a bounded role. Budgets and hard stops come from lesson 01, file
+isolation from lesson 03, and checkpoints from lesson 04. The skill is the glue.
 
 ## Build It (the skill definition)
 

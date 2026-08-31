@@ -6,10 +6,10 @@
 
 ## The Problem
 
-You've built schemas, validation, results, idempotency, and budgets by hand. Now wire them
-to the real SDK — and handle the case the toy loop glossed over: the model can emit
+You've built schemas, validation, results, idempotency, and budgets by hand. Now wire
+them to the real SDK, and handle the case the toy loop glossed over: the model can emit
 **multiple `tool_use` blocks in one turn**. If you only run the first, the model waits
-forever for the rest; if you return results in the wrong shape, the API rejects them.
+forever for the rest. If you return results in the wrong shape, the API rejects them.
 
 ## The Concept
 

@@ -6,10 +6,10 @@
 
 ## The Problem
 
-The most dangerous thing a compromised or misled agent can do is *call home* — POST your
+The most dangerous thing a compromised or misled agent can do is *call home*: POST your
 source or secrets to an attacker's server (a prompt-injection payoff, Phase 17). Filesystem
-sandboxing doesn't stop this; you need **egress control**: an allowlist of hosts the agent's
-commands may reach, denying everything else by default.
+sandboxing doesn't stop this. You need **egress control**: an allowlist of hosts the agent's
+commands may reach, which denies everything else by default.
 
 ## The Concept
 
@@ -20,14 +20,15 @@ flowchart LR
   P -- "no" --> DENY["block (default-deny)"]
 ```
 
-Default-deny is the rule: enumerate the few hosts you need (package registries, your APIs)
-and block the rest, so an unexpected exfiltration attempt simply fails.
+Default-deny is the rule. Enumerate the few hosts you need — package registries, your
+APIs — and block the rest, so an unexpected exfiltration attempt simply fails.
 
 ## Build It / Use It
 
-True egress control is enforced at the network/OS layer (firewall, proxy, container netpol),
-so this is **Use It**. The harness-side artifact is a **PreToolUse hook** that inspects a
-command and blocks obvious egress to non-allowlisted hosts. `outputs/egress-guard.sh`:
+True egress control is enforced at the network or OS layer (firewall, proxy, container
+network policy), so this is **Use It**. The harness-side artifact is a **PreToolUse hook**
+that inspects a command and blocks obvious egress to non-allowlisted hosts.
+`outputs/egress-guard.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -44,15 +45,15 @@ done
 exit 0
 ```
 
-This is a *belt* (cheap, harness-level); the *suspenders* is an actual network policy
-(default-deny firewall / proxy) that the hook can't be tricked past.
+This hook is a *belt* — cheap, harness-level. The *suspenders* is an actual network policy,
+a default-deny firewall or proxy, that the hook can't be tricked past.
 
 ## Use It
 
-This is precisely what the **network policy** on Claude Code on the web / Codex cloud does:
-the environment's outbound access is governed by a chosen policy (e.g. no network, or an
-allowlist), enforced at the infrastructure layer. Locally, you add a hook like this plus your
-OS firewall. Either way: default-deny, allowlist the few hosts you trust.
+This is precisely what the **network policy** on Claude Code on the web / Codex cloud does.
+The environment's outbound access follows a chosen policy — no network, or an allowlist —
+enforced at the infrastructure layer. Locally, you add a hook like this plus your OS
+firewall. Either way, default-deny and allowlist only the few hosts you trust.
 
 ## Ship It
 
