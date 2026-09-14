@@ -32,6 +32,7 @@ TPS_HTML = os.path.join(ROOT, "technical-product-sense-html")  # technical produ
 TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical product management
 AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
 KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
+RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
@@ -227,7 +228,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Ten separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Eleven separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -283,6 +284,13 @@ LANDING = """<!doctype html>
       <h2>Knowledge graphs →</h2>
       <p>Treat what the company knows as a product — entities and ontologies, the
       construction pipeline, GraphRAG, governance, and the business case, in CPO language.</p>
+    </a>
+    <a class="card" href="rag-vector-databases/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>RAG &amp; vector databases →</h2>
+      <p>Grounding models in your data — embeddings, vector databases, chunking, retrieval
+      quality, and when to reach for long-context, fine-tuning, or a graph. First of the
+      Generative AI family.</p>
     </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
@@ -457,7 +465,11 @@ def main():
     if os.path.isdir(KG_HTML):
         shutil.copytree(KG_HTML, os.path.join(SITE, "knowledge-graphs"))
 
-    # 1h. System design module: copy its pre-rendered pages.
+    # 1h. RAG & vector databases module (Generative AI family): copy its pages.
+    if os.path.isdir(RAG_HTML):
+        shutil.copytree(RAG_HTML, os.path.join(SITE, "rag-vector-databases"))
+
+    # 1i. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 

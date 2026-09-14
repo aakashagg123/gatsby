@@ -157,6 +157,18 @@ order below moves from thinking skills to product craft to agents.
 7. [Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md)
 8. [Knowledge graphs as a product](./knowledge-graphs/knowledge-graphs-as-a-product.md) · [Recap](./knowledge-graphs/recap.md)
 
+## [RAG & vector databases](./rag-vector-databases/README.md)
+
+First module of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [Why RAG?](./rag-vector-databases/why-rag.md)
+2. [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md)
+3. [Vector databases](./rag-vector-databases/vector-databases.md)
+4. [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md)
+5. [Retrieval quality](./rag-vector-databases/retrieval-quality.md)
+6. [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
+7. [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md) · [Recap](./rag-vector-databases/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

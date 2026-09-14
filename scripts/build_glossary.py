@@ -21,7 +21,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Flat standalone tracks: <track>/<lesson>.md -> <track>/<lesson>.html
 FLAT_TRACKS = {
     "agentic-ai", "first-principles", "product-sense", "technical-product-sense",
-    "technical-product-management", "knowledge-graphs",
+    "technical-product-management", "knowledge-graphs", "rag-vector-databases",
 }
 # Phased tracks share the harness folder shape; only README/foundations are linked.
 PHASED = {"flowable": "flowable", "harness-engineering": "harness"}
