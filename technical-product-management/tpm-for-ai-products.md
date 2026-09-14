@@ -4,13 +4,13 @@
 
 ## TL;DR
 
-Everything in this module still applies to AI products — and every practice bends the
+Everything in this module still applies to AI products. Every practice bends the
 same way, for the same root cause: **behaviour is probabilistic and quality is
-discovered, not designed**. So the operating loop reorganizes around evidence:
-**eval-driven development** makes a graded example set the spec, the regression suite,
-and the launch gate all at once; discovery starts with feasibility spikes; delivery
-mixes experiment-shaped work with feature-shaped work; releases treat every model and
-prompt change as a migration; and the product that wins long-term is the one whose
+discovered, not designed**. So the operating loop reorganizes around evidence.
+**Eval-driven development** makes a graded example set the spec, the regression suite,
+and the launch gate all at once. Discovery starts with feasibility spikes. Delivery
+mixes experiment-shaped work with feature-shaped work. Releases treat every model and
+prompt change as a migration. And the product that wins long-term is the one whose
 **data flywheel** — production feedback improving evals, evals enabling safe iteration,
 iteration improving the product — spins fastest. The AI PM's job is to build and protect
 that loop.
@@ -18,7 +18,7 @@ that loop.
 > 🎯 **For the AI PM**
 >
 > **Why it matters** — This lesson *is* the briefing. The previous seven taught the
-> general craft; this one assembles the AI-specific deltas into a single operating loop
+> general craft. This one assembles the AI-specific deltas into a single operating loop
 > you can run.
 >
 > **What it changes in your decisions** — You budget for the loop, not just the feature:
@@ -56,7 +56,7 @@ as PM is making sure all three arrows back into the eval suite actually exist.
 The eval suite is to an AI feature what the test suite is to code — except the PM
 co-owns it, because it encodes *product judgment*:
 
-- **Sourcing** — start with 50–200 real (or realistic) inputs from discovery; grade
+- **Sourcing** — start with 50–200 real (or realistic) inputs from discovery. Grade
   ideal outputs with a rubric. This is exactly the "graded examples" section of
   [your PRD](./specs-prds-and-rfcs.md), graduated into infrastructure.
 - **Grading** — three tiers, in cost order: exact/programmatic checks (did it cite a
@@ -67,12 +67,12 @@ co-owns it, because it encodes *product judgment*:
   Where that bar sits is a product decision balancing user trust, cost of errors, and
   competitive urgency — the modern version of "how good is good enough."
 - **Maintenance** — a static suite rots as users find new ways to use (and break) the
-  feature. Feed production failures back in monthly; retire cases that stop
+  feature. Feed production failures back in monthly. Retire cases that stop
   discriminating. Treat suite freshness like test coverage: a number someone owns.
 - **The ritual** — a standing PM + eng session reading raw production traces together:
   label failures free-form, cluster them into a failure taxonomy, and only then decide
-  which modes deserve automated evaluators. The PM reads *traces*, not dashboards —
-  and a PM–eng disagreement over whether an output passes is a requirements discovery,
+  which modes deserve automated evaluators. The PM reads *traces*, not dashboards.
+  A PM–eng disagreement over whether an output passes is a requirements discovery,
   not annotation noise. Budget accordingly: eval construction and error analysis are a
   first-class share of the feature's development budget, not a tax on it.
 
@@ -97,7 +97,7 @@ not a meeting.
   math (an AI feature's *effective* reach is reach × the fraction of inputs it handles
   well).
 - **Execution** ([lesson 5](./working-with-engineering.md)) — experiment-shaped work
-  runs as time-boxed spikes with score-based exit criteria; "still at 82%, bar is 85%"
+  runs as time-boxed spikes with score-based exit criteria. "Still at 82%, bar is 85%"
   is a legitimate, informative sprint outcome, not a slip.
 - **Metrics** ([lesson 6](./metrics-and-experimentation.md)) — the quality layer:
   offline eval scores paired with online proxies (acceptance, edit distance,
@@ -156,7 +156,7 @@ it themselves — "vibe coding," Karpathy's February 2025 coinage that ended the
 Collins' word of the year. Three changes follow for this lesson's operating loop:
 
 - **Discovery ships artifacts, not documents.** A working prototype in front of five
-  users beats a PRD in front of five stakeholders; increasingly the prototype *is* the
+  users beats a PRD in front of five stakeholders. Increasingly the prototype *is* the
   spec, with the written doc recording the decisions the prototype forced.
 - **The PM–eng contract compresses.** "Here's what I mean" becomes something engineers
   can click, which kills a whole class of specification ambiguity — and creates a new
@@ -181,7 +181,7 @@ eval bar and scoping decisions above run on.
   this impossible.
 - **Eval-less iteration** — prompt changes shipped on vibes. Without scores, every
   change is a coin flip you can't distinguish from progress.
-- **The static eval** — a suite built at launch and never fed; a year later it certifies
+- **The static eval** — a suite built at launch and never fed. A year later it certifies
   quality on problems users stopped having.
 - **Flywheel-blind economics** — shipping without feedback capture (or the rights to use
   it), then wondering why the product stopped improving after launch.

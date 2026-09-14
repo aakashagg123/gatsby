@@ -7,8 +7,8 @@
 ## The Problem
 
 The harness runs an agent that reads and writes files. Two failure modes follow
-immediately: a key hardcoded in source gets committed to git forever, and an agent
-"helpfully" edits `.env` and prints it into a transcript or log. Both are how credentials
+immediately. A key hardcoded in source gets committed to git forever. An agent might
+"helpfully" edit `.env` and print it into a transcript or log. Both are how credentials
 escape. Hygiene here is structural, not a reminder you hope everyone remembers.
 
 ## The Concept
@@ -44,7 +44,7 @@ esac
 ```
 
 Exit code 2 tells the harness to deny the call and surface the message. The agent sees
-"BLOCKED" and moves on; the secret file is never writable by the model.
+"BLOCKED" and moves on. The secret file is never writable by the model.
 
 ## Use It
 

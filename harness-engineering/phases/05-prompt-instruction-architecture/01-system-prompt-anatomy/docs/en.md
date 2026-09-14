@@ -27,9 +27,9 @@ tool guidance, workflow, output contract.
 
 ## Build It
 
-The artifact is a structured template, not code. `outputs/system-prompt-template.md` lays
-out the five sections with fill-ins and notes on what belongs where (and what doesn't —
-volatile data never goes here; it kills caching).
+The artifact is a structured template, not code. `outputs/system-prompt-template.md`
+lays out the five sections with fill-ins and notes on what belongs where. It also notes
+what doesn't belong: volatile data never goes here, because it kills caching.
 
 Key rules encoded in the template:
 
@@ -42,10 +42,10 @@ Key rules encoded in the template:
 
 ## Use It
 
-This *is* the system prompt that **Claude Code / Codex** ship — plus your additions. The
+This *is* the system prompt that **Claude Code / Codex** ship, plus your additions. The
 parts you control are layered in through project memory (`CLAUDE.md` / `AGENTS.md`, next
-lesson) and output styles. Knowing the anatomy tells you where your instruction belongs: a
-hard rule goes in constraints (and ideally becomes a hook, Phase 8), a formatting
+lesson) and output styles. Knowing the anatomy tells you where your instruction belongs. A
+hard rule goes in constraints, and ideally also becomes a hook (Phase 8). A formatting
 preference goes in the output contract.
 
 ## Ship It

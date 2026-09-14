@@ -6,10 +6,10 @@
 
 ## The Problem
 
-You've built schemas, validation, results, idempotency, and budgets by hand. Now wire them
-to the real SDK — and handle the case the toy loop glossed over: the model can emit
+You've built schemas, validation, results, idempotency, and budgets by hand. Now wire
+them to the real SDK, and handle the case the toy loop glossed over: the model can emit
 **multiple `tool_use` blocks in one turn**. If you only run the first, the model waits
-forever for the rest; if you return results in the wrong shape, the API rejects them.
+forever for the rest. If you return results in the wrong shape, the API rejects them.
 
 ## The Concept
 
@@ -56,14 +56,15 @@ def step(messages, tools):
     return messages, None
 ```
 
-Each result reuses your hand-built validation and wrapping. Parallelism is safe *because*
-side-effecting tools are idempotent (lesson 04).
+Each result reuses your hand-built validation and wrapping. Parallelism is safe
+*because* side-effecting tools are idempotent (lesson 04).
 
 ## Use It
 
-This is the production tool loop: pass `tools=schemas()`, collect every `tool_use`, run them
-(in parallel when independent), and return all `tool_result` blocks in one user turn. The SDK
-also supports forcing a specific tool via `tool_choice` for structured output.
+This is the production tool loop: pass `tools=schemas()`, collect every `tool_use`, run
+them in parallel when they're independent, and return all `tool_result` blocks in one
+user turn. The SDK also supports forcing a specific tool via `tool_choice` for structured
+output.
 
 ## Ship It
 

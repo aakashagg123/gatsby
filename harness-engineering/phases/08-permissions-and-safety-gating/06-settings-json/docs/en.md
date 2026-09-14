@@ -8,9 +8,9 @@
 
 You've built permission modes, allow/deny lists, hooks, approvals, and capability scoping
 from scratch. In Claude Code / Codex you don't re-implement these — you **declare** them.
-The artifact that ties the phase together is a real `settings.json` (Claude Code) wiring
-permission rules and hooks, so the safety layer is version-controlled config, not code you
-maintain.
+The artifact that ties the phase together is a real `settings.json` (Claude Code) that
+wires up permission rules and hooks. The safety layer becomes version-controlled config,
+not code you maintain.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart TB
   H --> K["the hooks (lesson 03)"]
 ```
 
-`permissions` encodes the allow/deny lists; `hooks` wires the deterministic pre/post scripts
-(the `.env` guard, the linter, the egress guard).
+`permissions` encodes the allow/deny lists. `hooks` wires the deterministic pre/post
+scripts — the `.env` guard, the linter, the egress guard.
 
 ## Build It / Use It
 
@@ -48,16 +48,16 @@ phase's safety layer:
 }
 ```
 
-Drop it at `.claude/settings.json`, put the hook scripts (from Phase 0/7) under
-`.claude/hooks/`, and the gate + hooks you built by hand are now enforced by the tool.
+Drop it at `.claude/settings.json`, and put the hook scripts (from Phase 0/7) under
+`.claude/hooks/`. The gate and hooks you built by hand are now enforced by the tool.
 Codex uses its own config file for the equivalent approval and command rules.
 
 ## Use It
 
 This is the practical payoff of the phase for a Claude Code / Codex user: a checked-in
-config that makes your agent safe-by-default on this repo — reads flow, dangerous commands
-are denied, `.env` is protected, the linter runs after every edit. Because it's a file, it's
-reviewable and shareable with your team.
+config that makes your agent safe by default on this repo. Reads flow, dangerous commands
+are denied, `.env` is protected, and the linter runs after every edit. Because it's a file,
+it's reviewable and shareable with your team.
 
 ## Ship It
 
@@ -85,8 +85,8 @@ permissions + hooks configuration wiring the phase.
 <details><summary>Answer</summary>B — config is enforcement; prompts are
 persuasion.</details>
 
-**Challenge.** Add a `permissions.deny` entry for writing anywhere outside the repo, and a
-PostToolUse hook that runs the test suite after edits to `src/`.
+**Challenge.** Add a `permissions.deny` entry for writing anywhere outside the repo. Also
+add a PostToolUse hook that runs the test suite after edits to `src/`.
 
 ## Related
 

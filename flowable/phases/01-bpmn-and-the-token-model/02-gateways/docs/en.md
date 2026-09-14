@@ -8,12 +8,12 @@
 
 ## The Problem
 
-Yesterday's engine could only walk a straight line. Real processes branch — "auto-approve
-if the score clears 700, otherwise send to manual review" — and they parallelise — "run
-the credit check and the KYC check at the same time, then continue when *both* are
-done." Model either of those with single-outgoing-flow nodes and you can't: branching is
-ambiguous (which flow does the token take?) and joining is impossible (how do you know
-both branches finished?).
+Yesterday's engine could only walk a straight line. Real processes branch —
+"auto-approve if the score clears 700, otherwise send to manual review" — and
+they parallelise — "run the credit check and the KYC check at the same time, then
+continue when *both* are done." You can't model either of those with
+single-outgoing-flow nodes. Branching is ambiguous (which flow does the token
+take?) and joining is impossible (how do you know both branches finished?).
 
 ## The Concept
 
@@ -46,13 +46,14 @@ flowchart LR
 
 Two rules save you hours of debugging:
 
-1. **Conditions live on the flows, not in the gateway.** The exclusive gateway is just
-   the point where flow guards are evaluated, in order, with one flow marked as the
-   guardless default. No matching flow and no default = a dead instance.
-2. **A parallel join is a counter.** It fires when the number of tokens that arrived
-   equals the number of incoming flows. Draw a parallel fork with three branches into a
-   join with two incoming flows and you've built a process that never completes —
-   the most common modelling bug in BPMN.
+1. **Conditions live on the flows, not in the gateway.** The exclusive gateway is
+   just the point where flow guards are evaluated, in order, with one flow marked
+   as the guardless default. No matching flow and no default means a dead
+   instance.
+2. **A parallel join is a counter.** It fires when the number of tokens that
+   arrived equals the number of incoming flows. Draw a parallel fork with three
+   branches into a join with two incoming flows, and you've built a process that
+   never completes. That's the most common modelling bug in BPMN.
 
 ## Build It
 
@@ -90,10 +91,10 @@ score 640 -> waiting at ['review']
 after review -> manually-approved
 ```
 
-Watch the token count in the log: 1 token forks to 2, the join merges 2 back to 1.
-"Parallel" here means *both branches will be walked before the join fires* — not
-threads. Real engines are the same: parallel gateways are about token bookkeeping, and
-actual concurrency only appears with async continuations
+Watch the token count in the log: 1 token forks to 2, and the join merges 2 back
+to 1. "Parallel" here means *both branches will be walked before the join fires*
+— not threads. Real engines work the same way: parallel gateways are about token
+bookkeeping, and actual concurrency only appears with async continuations
 ([Phase 2, lesson 03](../../../02-the-engine-state-and-transactions/03-transactions-and-async/docs/en.md)).
 
 ## Use It
@@ -119,8 +120,8 @@ You'll write a full deployable model with exactly this shape in
 ## Ship It
 
 This lesson ships the gateway-aware engine as a module:
-[`code/gateways.py`](../code/gateways.py) — drop-in successor to lesson 01's
-`token_engine.py`; Phase 2 builds persistence on top of it.
+[`code/gateways.py`](../code/gateways.py) — a drop-in successor to lesson 01's
+`token_engine.py`. Phase 2 builds persistence on top of it.
 
 ## Check Yourself
 
@@ -133,8 +134,8 @@ true and no default flow is set. What happens?
 - D) the instance completes
 
 <details><summary>Answer</summary>C — no matching condition and no default means the
-token has nowhere to go. Flowable throws; our toy engine asserts. Always model a
-default flow.</details>
+token has nowhere to go. Flowable throws an error; our toy engine asserts. Always
+model a default flow.</details>
 
 **Q2.** A parallel join has 2 incoming flows. One branch's token has arrived; the other
 branch is parked at a user task. The join…
@@ -145,7 +146,8 @@ branch is parked at a user task. The join…
 - D) duplicates the arrived token
 
 <details><summary>Answer</summary>B — a parallel join is a counter over incoming flows.
-Until every branch delivers its token, the arrived ones sleep at the join.</details>
+Until every branch delivers its token, the tokens that already arrived sleep at
+the join.</details>
 
 **Q3.** How many tokens exist right after a parallel fork with 3 outgoing flows?
 
@@ -157,10 +159,10 @@ Until every branch delivers its token, the arrived ones sleep at the join.</deta
 <details><summary>Answer</summary>C — one per outgoing flow, unconditionally. (An
 *inclusive* gateway is the one that forks per true condition.)</details>
 
-**Challenge.** Implement the inclusive gateway: fork a token per *true* guard, and make
-the join wait only for the branches that were actually taken. You'll need to remember
-at fork time how many tokens the join should expect — which is exactly why inclusive
-joins are the hairiest code in every real BPM engine.
+**Challenge.** Implement the inclusive gateway: fork a token per *true* guard, and
+make the join wait only for the branches that were actually taken. You'll need to
+remember, at fork time, how many tokens the join should expect. That bookkeeping
+is exactly why inclusive joins are the hairiest code in every real BPM engine.
 
 ## Related
 

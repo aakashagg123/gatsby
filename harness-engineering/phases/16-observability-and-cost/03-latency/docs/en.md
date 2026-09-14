@@ -6,11 +6,11 @@
 
 ## The Problem
 
-"The agent feels slow" is not actionable. Model latency decomposes into **prefill** (process
-the input → produce the first token, measured as **TTFT**, time-to-first-token) and **decode**
-(generate each subsequent token). Long input → slow prefill; long output → slow decode.
-Measuring them separately tells you whether to trim context or shorten output — different
-fixes.
+"The agent feels slow" is not actionable on its own. Model latency breaks into two parts:
+**prefill**, which processes the input and produces the first token (measured as **TTFT**,
+time-to-first-token), and **decode**, which generates each token after that. A long input
+makes prefill slow. A long output makes decode slow. Measuring them separately tells you
+which fix to apply — trim the context, or shorten the output.
 
 ## The Concept
 
@@ -21,8 +21,9 @@ flowchart LR
   D --> E["total = TTFT + output_tokens × per_token"]
 ```
 
-Big context inflates TTFT (and is why prompt caching, Phase 1 L8, helps); long generations
-inflate decode (and is why streaming, Phase 1 L4, improves *perceived* latency).
+A big context inflates TTFT — this is why prompt caching (Phase 1 L8) helps. A long
+generation inflates decode — this is why streaming (Phase 1 L4) improves *perceived*
+latency.
 
 ## Build It
 
@@ -55,15 +56,15 @@ def fake_stream():
 print(measure(fake_stream()))   # ttft ~0.05s, then ~10ms/token
 ```
 
-Now "slow" is quantified: a high TTFT points at input size (trim context / cache); a high
-per-token points at output length (shorten / stream).
+Now "slow" is a number, not a feeling. A high TTFT points at input size — trim the context
+or cache it. A high per-token time points at output length — shorten it or stream it.
 
 ## Use It
 
-The SDK's streaming API (Phase 1 L4) is how you observe TTFT in practice — first delta = TTFT.
-For a Claude Code / Codex user, streaming makes long generations *feel* fast even when total
-latency is high, and a lean, cached context keeps TTFT low. Track p50/p95 TTFT and total in
-your traces (lesson 01) to catch latency regressions.
+The SDK's streaming API (Phase 1 L4) is how you observe TTFT in practice — the first delta
+you receive is the TTFT. For a Claude Code or Codex user, streaming makes long generations
+*feel* fast even when total latency is high. A lean, cached context also keeps TTFT low.
+Track p50/p95 TTFT and total latency in your traces (lesson 01) to catch regressions.
 
 ## Ship It
 

@@ -6,10 +6,10 @@
 
 ## The Problem
 
-Close the terminal, hit a crash, or come back tomorrow — and the conversation is gone unless
-the harness persisted it. Resuming means restoring the message history (Phase 2 lesson 04)
-and the scratchpad (lesson 01) so the agent continues where it left off. The serialization
-has to round-trip cleanly, including tool-call pairing.
+Close the terminal, hit a crash, or come back tomorrow, and the conversation is gone
+unless the harness persisted it. Resuming means restoring the message history (Phase 2
+lesson 04) and the scratchpad (lesson 01), so the agent continues where it left off. The
+serialization has to round-trip cleanly, including tool-call pairing.
 
 ## The Concept
 
@@ -53,15 +53,15 @@ hist, scratch = store.load()
 print(len(hist), scratch)        # 1 {'editing': 'a.py'}
 ```
 
-Saving after each turn (or each tool call) makes the session crash-resilient; loading on
+Saving after each turn, or each tool call, makes the session crash-resilient. Loading on
 start resumes it exactly.
 
 ## Use It
 
 This is Claude Code's session resume (`claude --resume` / `--continue`) and Codex's session
-history: conversations are persisted so you can pick a prior session back up. On Claude Code
-on the web, the container is ephemeral — which is *why* anything worth keeping must be
-committed/pushed, and why long state belongs in files, not just the chat.
+history. Conversations are persisted so you can pick a prior session back up. On Claude Code
+on the web, the container is ephemeral. That's *why* anything worth keeping must be
+committed and pushed, and why long state belongs in files, not just the chat.
 
 ## Ship It
 
@@ -88,7 +88,7 @@ store.
 
 <details><summary>Answer</summary>B — persist to the repo; the box is temporary.</details>
 
-**Challenge.** Save after every turn and add a `--resume` flag to the Phase 0 REPL that loads
+**Challenge.** Save after every turn. Add a `--resume` flag to the Phase 0 REPL that loads
 the last session on start.
 
 ## Related

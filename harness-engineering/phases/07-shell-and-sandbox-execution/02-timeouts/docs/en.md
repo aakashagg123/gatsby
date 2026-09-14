@@ -7,9 +7,9 @@
 ## The Problem
 
 A command can hang: a test waiting on input, a server that never exits, an infinite loop.
-Without a timeout the agent blocks indefinitely and the whole session stalls. The bash tool
-must impose a **deadline** and, on expiry, **kill** the process (and its children) cleanly,
-returning a timeout result the model can react to.
+Without a timeout, the agent blocks indefinitely and the whole session stalls. The bash tool
+must impose a **deadline**. On expiry, it must **kill** the process and its children
+cleanly, and return a timeout result the model can react to.
 
 ## The Concept
 
@@ -20,8 +20,8 @@ flowchart LR
   W -- "no" --> K["kill process group → return timeout"]
 ```
 
-Killing the process *group* matters: a shell command may spawn children that outlive the
-parent if you only kill the parent.
+Killing the process *group* matters. A shell command may spawn children that outlive the
+parent if you kill only the parent.
 
 ## Build It
 
@@ -48,15 +48,15 @@ print(run("echo quick", timeout=5))          # normal result
 print(run("sleep 30", timeout=1))            # timeout after 1s, process killed
 ```
 
-`start_new_session=True` puts the command in its own group so `killpg` reaps children too —
-no orphaned `sleep`/servers left running.
+`start_new_session=True` puts the command in its own group, so `killpg` reaps children too.
+No orphaned `sleep` processes or servers are left running.
 
 ## Use It
 
-The **Bash** tool in Claude Code / Codex takes a timeout (with a default and a max) and
-kills commands that exceed it; that's why you set a generous timeout for a slow build but
-the agent never hangs forever. For genuinely long-running things (a dev server), you don't
-raise the timeout — you background it (next lesson).
+The **Bash** tool in Claude Code / Codex takes a timeout, with a default and a max, and
+kills commands that exceed it. That's why you can set a generous timeout for a slow build,
+and the agent still never hangs forever. For genuinely long-running things, like a dev
+server, don't raise the timeout — background it instead (next lesson).
 
 ## Ship It
 

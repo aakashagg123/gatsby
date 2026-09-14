@@ -9,14 +9,14 @@ Concept reading:
 
 ## The Problem
 
-Try to model a fraud investigation in BPMN and watch it fight you: the
+Try to model a fraud investigation in BPMN and watch it fight you. The
 investigator might request statements, interview the customer, call the bank,
-escalate — in any order, some never, some repeatedly, driven by judgment.
-Your diagram becomes a hairball of loops and inclusive gateways trying to
-*prescribe* what is inherently *discretionary*. That's not a modelling skill
-gap; it's a paradigm mismatch. BPMN's core assumption — a knowable
-happy path — doesn't hold for knowledge work, and CMMN exists for exactly the
-work where it doesn't.
+or escalate — in any order, some steps never happen, others repeat, and
+judgment drives the choice. Your diagram becomes a hairball of loops and
+inclusive gateways. It tries to *prescribe* work that is inherently
+*discretionary*. That is not a modelling skill gap. It is a paradigm
+mismatch. BPMN assumes a knowable happy path, and that assumption does not
+hold for knowledge work. CMMN exists for exactly this kind of work.
 
 ## The Concept
 
@@ -45,18 +45,20 @@ flowchart TB
 | Completion | tokens reach end events | required items done, nothing active — or worker closes it |
 | Home turf | origination, payments, onboarding — the whole course so far | investigations, disputes, complex claims, advisory work |
 
-The litmus test, in one question: **who owns the order?** If the *organisation*
-does ("KYC before decision, always" — every capstone step), it's a process. If
-the *practitioner* does ("interview first or statements first? depends on the
-case"), it's a case. Most real systems are processes with a few discretionary
-pockets — which is why lesson 03's mixing pattern (cases calling processes, and
-vice versa) matters more than pure CMMN, and why lesson 04 will warn you how
-rarely *pure* CMMN is the answer.
+The litmus test is one question: **who owns the order?** If the
+*organisation* owns it ("KYC before decision, always" — every capstone
+step), it's a process. If the *practitioner* owns it ("interview first or
+statements first? it depends on the case"), it's a case. Most real systems
+are processes with a few discretionary pockets. That is why lesson 03's
+mixing pattern — cases calling processes, and processes calling cases —
+matters more than pure CMMN. It is also why lesson 04 warns you how rarely
+*pure* CMMN is the right answer.
 
-One mental bridge from what you've built: a CMMN case behaves like a scope full
-of Phase 7 event subprocesses — units of work that arm when their condition
-holds — with the *human* as the event source. Same engine machinery underneath
-(Phase 2's rows, Phase 3's tasks); different authority over sequencing.
+Here is a mental bridge from what you've already built. A CMMN case behaves
+like a scope full of Phase 7 event subprocesses — units of work that arm
+when their condition holds — but the *human* is the event source. The engine
+machinery underneath is the same (Phase 2's rows, Phase 3's tasks). Only the
+authority over sequencing changes.
 
 ## Ship It
 
@@ -85,7 +87,7 @@ is expressed by…
 - D) it can't be expressed
 
 <details><summary>Answer</summary>B — sentries are guardrails on *availability*,
-not a route: the worker still chooses among whatever is enabled.</details>
+not a route. The worker still chooses among whatever is enabled.</details>
 
 **Q3.** Loan origination (the capstone) is a process, not a case, because…
 
@@ -98,11 +100,11 @@ not a route: the worker still chooses among whatever is enabled.</details>
 one discretionary pocket (fraud referral) is exactly where lesson 03's mixing
 would enter.</details>
 
-**Challenge.** Take three "too dynamic for BPMN" claims you've heard (or make
-them: dispute handling, hardship restructuring, high-value client onboarding)
-and run the litmus test on each *step*, not each flow. Typical finding: 80% of
-the "dynamic" flow is prescribed, with one genuinely discretionary stage — the
-shape lesson 03 models.
+**Challenge.** Take three "too dynamic for BPMN" claims you've heard, or make
+them up: dispute handling, hardship restructuring, high-value client
+onboarding. Run the litmus test on each *step*, not each flow. The typical
+finding: 80% of the "dynamic" flow is prescribed, with one genuinely
+discretionary stage. That one stage is the shape lesson 03 models.
 
 ## Related
 

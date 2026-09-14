@@ -8,10 +8,11 @@
 ## The Problem
 
 The model is stateless: every call must carry the whole conversation, including tool
-results. So far we've appended raw dicts to a list. That works until you need to:
-serialize a session to disk, replay it, count its tokens, or — critically — keep the
-`assistant` tool-request and its `tool_result` paired so the provider doesn't reject the
-request. History is a data structure with invariants, not just a list.
+results. So far we've appended raw dicts to a list. That works until you need to
+serialize a session to disk, replay it, or count its tokens. It also breaks if you don't
+keep the `assistant` tool-request and its `tool_result` paired, since an unpaired request
+makes the provider reject the call. History is a data structure with invariants, not just
+a list.
 
 ## The Concept
 
@@ -79,11 +80,11 @@ print(h.complete())          # True — safe to call the model again
 ```
 
 `complete()` is the guard: the loop must not call the model while a tool result is
-outstanding. `dump()`/`load()` make sessions resumable — the seed of Phase 9 memory.
+outstanding. `dump()` and `load()` make sessions resumable — the seed of Phase 9 memory.
 
 ## Use It
 
-The SDK enforces the same pairing at the wire level: an assistant message with a
+The SDK enforces the same pairing at the wire level. An assistant message with a
 `tool_use` block must be followed by a user message containing a `tool_result` block
 with the matching `tool_use_id`, or the API errors. Because you built `_pending`
 tracking yourself, that error message ("expected tool_result for id …") is now obvious

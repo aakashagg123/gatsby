@@ -6,10 +6,11 @@
 
 ## The Problem
 
-A new prompt version, tool, or model can regress in ways evals missed (Phase 15) — you find
-out in production. **Canary rollout** limits the blast radius: route a small % of traffic to
-the new version, watch the metrics (Phase 16), and ramp up only if healthy. A **kill switch**
-lets you revert to the known-good version instantly when something goes wrong — no redeploy.
+A new prompt version, tool, or model can regress in ways evals missed (Phase 15), and you
+find out in production. **Canary rollout** limits the blast radius: route a small % of
+traffic to the new version, watch the metrics (Phase 16), and ramp up only if it's healthy. A
+**kill switch** lets you revert to the known-good version instantly when something goes
+wrong, with no redeploy.
 
 ## The Concept
 
@@ -52,14 +53,14 @@ r.kill()
 print(set(r.version_for(u) for u in [f"u{i}" for i in range(10)]))   # all stable
 ```
 
-Canary sends ~20% to v4; if metrics dip, `kill()` routes everyone back to v3 instantly. Ramp
+Canary sends ~20% to v4. If metrics dip, `kill()` routes everyone back to v3 instantly. Ramp
 by raising `percent` once the canary looks healthy.
 
 ## Use It
 
-For prompt/skill/model changes (Phase 5 versioning), roll out as a canary keyed by user/repo,
-watch the eval/drift signals (Phase 15/16), and keep the kill switch wired to a config flag
-(lesson 04) so revert is one toggle — not a redeploy. This is how you ship harness changes to
+For prompt/skill/model changes (Phase 5 versioning), roll out as a canary keyed by user/repo
+and watch the eval/drift signals (Phase 15/16). Keep the kill switch wired to a config flag
+(lesson 04), so revert is one toggle, not a redeploy. This is how you ship harness changes to
 real users without betting everything on the first %.
 
 ## Ship It

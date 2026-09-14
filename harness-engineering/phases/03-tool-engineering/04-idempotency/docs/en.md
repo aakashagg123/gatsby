@@ -6,17 +6,18 @@
 
 ## The Problem
 
-Read-only tools are safe to retry. But the moment a tool *does* something — sends an email,
-charges a card, creates a file, opens a PR — retries become dangerous. The agent loop
-retries on errors (Phase 2 lesson 06), a transient network blip can re-trigger a call, and
-a confused model can repeat itself. Without idempotency you get double-sends and duplicate
-charges: the most expensive class of tool bug because it touches the real world.
+Read-only tools are safe to retry. But the moment a tool *does* something — sends an
+email, charges a card, creates a file, opens a PR — retries become dangerous. The agent
+loop retries on errors (Phase 2 lesson 06), a transient network blip can re-trigger a
+call, and a confused model can repeat itself. Without idempotency you get double-sends
+and duplicate charges. This is the most expensive class of tool bug, because it touches
+the real world.
 
 ## The Concept
 
 Make each side-effecting call carry an **idempotency key** derived from its intent. The
-harness records completed keys; a repeat with the same key returns the stored result instead
-of acting again.
+harness records completed keys. A repeat with the same key returns the stored result
+instead of acting again.
 
 ```mermaid
 flowchart LR
@@ -57,14 +58,14 @@ print(idem.run(k, send))     # ('sent', 'replayed')  ← no second send
 print("emails sent:", len(sends))   # 1
 ```
 
-One real action, even though the loop "called" twice. The key is derived from intent, so an
-identical request dedupes while a different one proceeds.
+One real action happens, even though the loop "called" twice. The key is derived from
+intent, so an identical request dedupes while a different one proceeds.
 
 ## Use It
 
-In production the `_done` store is durable (a DB/Redis), keyed by a client-supplied
-idempotency key, often with a TTL. Many real APIs (payments especially) accept an
-`Idempotency-Key` header for exactly this reason — your wrapper is the agent-side
+In production the `_done` store is durable (a DB or Redis), keyed by a client-supplied
+idempotency key, often with a TTL. Many real APIs, payments especially, accept an
+`Idempotency-Key` header for exactly this reason. Your wrapper is the agent-side
 counterpart.
 
 ## Ship It

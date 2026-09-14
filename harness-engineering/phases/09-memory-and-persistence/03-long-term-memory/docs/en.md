@@ -6,11 +6,11 @@
 
 ## The Problem
 
-The scratchpad (lesson 01) dies with the session; persisted sessions (lesson 02) are
-per-conversation. Some knowledge should outlive both: "this project uses pnpm", "the auth
-flow lives in `auth/`", "we decided against Redis". Long-term memory is a durable store the
-agent writes such facts to and *retrieves the relevant ones from* on later tasks — without
-loading the entire memory into context.
+The scratchpad (lesson 01) dies with the session. Persisted sessions (lesson 02) are
+per-conversation. Some knowledge should outlive both: "this project uses pnpm," "the auth
+flow lives in `auth/`," "we decided against Redis." Long-term memory is a durable store.
+The agent writes such facts to it and *retrieves the relevant ones from* it on later tasks,
+without loading the entire memory into context.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   R --> C["inject into context"]
 ```
 
-Write is append; read is *retrieval* (relevance-ranked), so context stays lean even as the
-store grows. Lexical ranking here; embeddings in Phase 13.
+Write is append; read is *retrieval*, ranked by relevance, so context stays lean even as
+the store grows. This lesson uses lexical ranking. Phase 13 covers embeddings.
 
 ## Build It
 
@@ -59,15 +59,15 @@ m.remember("Auth flow lives in auth/.", tags=["auth"])
 print(m.retrieve("how do I build"))     # ['This project uses pnpm, not npm.']
 ```
 
-The agent calls `remember` when it learns something durable, and the harness calls
-`retrieve` to surface the few relevant facts per task — not the whole store.
+The agent calls `remember` when it learns something durable. The harness calls `retrieve`
+to surface the few relevant facts per task — not the whole store.
 
 ## Use It
 
 This is the pattern behind project memory that persists beyond one chat: a `knowledge.md`
 (the append-only system of record from the harness principles), per-user memory, or a
-dedicated **memory MCP server** (lesson 05) that Claude Code / Codex query each session. The
-key discipline: retrieve relevant facts, don't dump the whole memory into `CLAUDE.md`.
+dedicated **memory MCP server** (lesson 05) that Claude Code / Codex query each session.
+The key discipline: retrieve relevant facts. Don't dump the whole memory into `CLAUDE.md`.
 
 ## Ship It
 
@@ -95,7 +95,7 @@ long-term memory store.
 <details><summary>Answer</summary>B — persist durable knowledge, not transient
 chatter.</details>
 
-**Challenge.** Replace lexical scoring with embedding similarity (Phase 13) and dedupe
+**Challenge.** Replace lexical scoring with embedding similarity (Phase 13). Dedupe
 near-identical facts on `remember`.
 
 ## Related

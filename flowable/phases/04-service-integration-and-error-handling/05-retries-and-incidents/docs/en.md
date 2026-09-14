@@ -1,21 +1,22 @@
 # Retries & incident handling: what happens when a bureau call fails
 
-> **Motto** — Retries buy you time, not correctness: after the last retry a failed job
-> goes silent in the dead-letter table, and your incident process is whatever you built
-> to watch it.
+> **Motto** — Retries buy you time, not correctness. After the last retry, a failed
+> job goes silent in the dead-letter table, and your incident process is whatever
+> you built to watch it.
 
 *Part of Phase 04 — Service integration & error handling. Builds directly on
 [Phase 2, lesson 04 — the job executor](../../../02-the-engine-state-and-transactions/04-job-executor/docs/en.md).*
 
 ## The Problem
 
-Month-end, 22:40. The bureau starts returning 502s. Two hundred loan applications hit
-their async `bureauCall` task; each fails, retries three times over a few minutes —
-still 502 — and dead-letters. At 23:05 the bureau recovers. Nothing happens. The two
-hundred instances sit frozen, invisible to customers ("my application just says
-processing"), invisible to the diagram (technical failures don't appear there —
-lesson 03), invisible to everyone except a table nobody is watching. The engine did
-exactly what it promised. The gap is operational, and this lesson closes it.
+It's month-end, 22:40. The bureau starts returning 502s. Two hundred loan
+applications hit their async `bureauCall` task. Each one fails, retries three times
+over a few minutes, still gets a 502, and dead-letters. At 23:05 the bureau
+recovers, but nothing happens. The two hundred instances sit frozen. They're
+invisible to customers ("my application just says processing"), invisible to the
+diagram (technical failures don't appear there — lesson 03), and invisible to
+everyone except a table nobody is watching. The engine did exactly what it promised.
+The gap is operational, and this lesson closes it.
 
 ## The Concept
 
@@ -34,31 +35,32 @@ flowchart LR
 
 Your three levers, and where each is set:
 
-1. **The retry policy** — per task in the model:
-   `flowable:failedJobRetryTimeCycle="R5/PT10M"` (5 attempts, 10 minutes apart).
-   Defaults (3 tries, immediate-ish) are almost never what a flaky third party needs;
-   an external call without an explicit cycle is a model-review flag. Match the cycle
-   to the dependency: a bureau that has 15-minute blips deserves `R6/PT15M`, not three
-   instant retries that all land inside the same outage.
+1. **The retry policy** — set per task in the model:
+   `flowable:failedJobRetryTimeCycle="R5/PT10M"` (5 attempts, 10 minutes apart). The
+   defaults (3 tries, immediate-ish) are almost never what a flaky third party needs,
+   so an external call without an explicit cycle is a model-review flag. Match the
+   cycle to the dependency. A bureau with 15-minute blips deserves `R6/PT15M`, not
+   three instant retries that all land inside the same outage.
 2. **The dead-letter watch** — a monitor on the dead-letter count (Phase 9 wires it
-   properly). The count's normal value is zero; anything else pages someone. Without
-   this, every lever downstream is decoration.
+   properly). The count's normal value is zero, and anything else pages someone.
+   Without this, every lever downstream is decoration.
 3. **The revive loop** — after the cause is fixed, move the jobs back
-   (`action: move`); they re-enter the executable queue with a fresh budget. Because
-   the failed transaction rolled back, re-running is safe *if the task is idempotent* —
-   which you guaranteed when you made it async (Phase 2's payment-safety checklist).
+   (`action: move`). They re-enter the executable queue with a fresh budget. Because
+   the failed transaction rolled back, re-running is safe *if the task is
+   idempotent*, which you guaranteed when you made it async (Phase 2's
+   payment-safety checklist).
 
-The escalation pattern from lesson 03 completes the picture: where ops wants a
+The escalation pattern from lesson 03 completes the picture. Where ops wants a
 *modelled* fallback instead of a frozen instance ("after retries exhaust, route to
 manual processing"), convert the terminal failure into a BPMN error the diagram
-catches. Transient blips stay invisible; persistent failure becomes a drawn, staffed
-path.
+catches. Transient blips stay invisible, and persistent failure becomes a drawn,
+staffed path.
 
 ## Use It
 
 [`code/incident_client.py`](../code/incident_client.py) is the ops loop as a script —
-stdlib only, same auth as Phase 1's client. Triage groups the table by root cause so
-two hundred identical 502s read as one line, not two hundred:
+stdlib only, same auth as Phase 1's client. Triage groups the table by root cause,
+so two hundred identical 502s read as one line, not two hundred:
 
 ```
 $ python3 incident_client.py
@@ -82,17 +84,17 @@ def revive(job_id):
     call("POST", f"/management/deadletter-jobs/{job_id}", {"action": "move"})
 ```
 
-Note what the triage output *separates*: 199 jobs share a cause that recovery will fix
-(revive them all), while the lone NPE is a code bug — reviving it without a fix just
-buys another lap through the retry loop. Group-by-cause is the difference between an
-incident and a mystery.
+Note what the triage output *separates*. The 199 jobs share a cause that recovery
+will fix, so revive them all. The lone NPE is a code bug — reviving it without a fix
+just buys another lap through the retry loop. Group-by-cause is the difference
+between an incident and a mystery.
 
 ## Ship It
 
 This lesson ships
-[`outputs/incident_client.py`](../outputs/incident_client.py) — triage +
-revive for the dead-letter table. The capstone's failure drill uses it verbatim, and
-Phase 9 turns its counts into alerts.
+[`outputs/incident_client.py`](../outputs/incident_client.py): triage and revive for
+the dead-letter table. The capstone's failure drill uses it verbatim, and Phase 9
+turns its counts into alerts.
 
 ## Check Yourself
 
@@ -127,10 +129,10 @@ what makes the re-run safe.</details>
 <details><summary>Answer</summary>B — the operational question is "what broke and can
 I revive in bulk", not "what is job 5821's story".</details>
 
-**Challenge.** Extend the client with `retry --cause "HTTP 502"`: revive only jobs
+**Challenge.** Extend the client with `retry --cause "HTTP 502"`. Revive only jobs
 whose stack trace matches, leaving genuine bugs dead. Then add a `--watch` mode that
-polls the count every 60 s and prints only on change — you've written the minimum
-viable dead-letter monitor, one webhook short of Phase 9's alerting.
+polls the count every 60 seconds and prints only on change. You've written the
+minimum viable dead-letter monitor, one webhook short of Phase 9's alerting.
 
 ## Related
 

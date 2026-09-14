@@ -8,12 +8,12 @@
 ## The Problem
 
 Your platform team blue-greens services: stand up green, shift traffic, kill blue,
-done in an afternoon. Then they ask why the process tier can't work the same way —
-and the answer is Phase 2: instances are *state with a lifespan*. A mortgage
-application mid-flight is "traffic" that lasts nine months. You cannot cut it over
-by flipping a load balancer; you can only decide, deliberately, which definition
-each cohort of live state follows — and be able to tell an auditor, for any given
-application, *which rules it ran under and why*.
+done in an afternoon. Then they ask why the process tier can't work the same way.
+The answer is Phase 2: instances are *state with a lifespan*. A mortgage
+application mid-flight is "traffic" that lasts nine months. You cannot cut it
+over by flipping a load balancer. You can only decide, deliberately, which
+definition each cohort of live state follows, and be able to tell an auditor,
+for any given application, *which rules it ran under and why*.
 
 ## The Concept
 
@@ -36,19 +36,20 @@ flowchart TB
 
 Decision discipline that keeps this survivable:
 
-1. **Drain is the default; justify anything else.** Migration is risk (lesson 02),
-   routing is double operations. The question is never "can we move them" but "what
-   breaks if we don't".
-2. **Suspend is your brake, not a strategy.** A bad deploy → suspend that
-   definition version (stops new starts; live instances continue) while you decide.
-   Suspending *instances* freezes real customers — an incident action with a
-   comms plan, not a rollout tool.
-3. **Rollback = roll forward.** There is no un-deploy: v5 defective → deploy v6
-   (fixed, or a copy of v4) and apply the same three-way choice to v5's brief
-   population. Deleting a version with live instances is how you orphan state.
+1. **Drain is the default; justify anything else.** Migration is risk (lesson
+   02), and routing means double operations. The question is never "can we move
+   them," but "what breaks if we don't."
+2. **Suspend is your brake, not a strategy.** After a bad deploy, suspend that
+   definition version — this stops new starts while live instances continue —
+   and decide from there. Suspending *instances* freezes real customers. That
+   is an incident action with a comms plan, not a rollout tool.
+3. **Rollback means roll forward.** There is no un-deploy. If v5 is defective,
+   deploy v6 (fixed, or a copy of v4) and apply the same three-way choice to
+   v5's brief population. Deleting a version with live instances is how you
+   orphan state.
 4. **The cohort line is the compliance artifact.** Whichever strategy you pick,
    the deliverable an audit accepts is a statement per application of *which
-   version decided it* — lesson 01's history pinning gives you that for free
+   version decided it*. Lesson 01's history pinning gives you that for free,
    **if** history retention (Phase 9) outlives the question.
 
 ## Ship It

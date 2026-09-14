@@ -10,12 +10,14 @@ Phase 2, lesson 05.*
 
 ## The Problem
 
-Phase 2's comparison table settled the mechanics; what's left is the organisational
-decision, and it's stickier than any technical one: topology fixes team boundaries
-(who owns models, who owns the engine), failure domains (whose outage is a workflow
-outage), and upgrade politics (who schedules engine bumps). Teams that let topology
-happen by accident — usually "embedded, because the tutorial was" — discover the
-real constraints at the worst time: the second team wants in.
+Phase 2's comparison table settled the mechanics. What's left is the
+organisational decision, and it's stickier than any technical one. Topology fixes
+team boundaries (who owns models, who owns the engine), failure domains (whose
+outage is a workflow outage), and upgrade politics (who schedules engine bumps).
+
+Teams that let topology happen by accident — usually "embedded, because the
+tutorial was" — discover the real constraints at the worst time: when the second
+team wants in.
 
 ## The Concept
 
@@ -45,17 +47,19 @@ The decision table, with the rows that actually decide it on top:
 
 Rules of thumb that survive re-orgs:
 
-1. **Count the teams, then decide.** One team, one JVM product → embedded, and
-   enjoy the atomic commits. The moment a *second* team needs processes, embedded
-   forks into engine-per-service (fine! separate schemas, separate upgrades) or
-   flips standalone — decide which *before* the second team arrives.
+1. **Count the teams, then decide.** One team, one JVM product means embedded,
+   and you get the atomic commits. The moment a *second* team needs processes,
+   embedded forks into engine-per-service (fine — separate schemas, separate
+   upgrades) or flips to standalone. Decide which *before* the second team
+   arrives.
 2. **Never share one embedded engine's schema across services.** It welds their
-   deploys, upgrades, and incidents together — the worst of both topologies. The
-   platform team you'd need to referee it is the sign you wanted standalone.
+   deploys, upgrades, and incidents together — the worst of both topologies. If
+   you'd need a platform team to referee it, that's the sign you wanted
+   standalone.
 3. **Standalone's perimeter rule is absolute** (Phase 3.03): the engine API is an
    admin surface; it sits behind your services, never exposed to end clients.
-4. **Mixed is legitimate at scale:** core products embed for atomicity; long-tail
-   departmental flows share a standalone engine; Work enters if the UI/velocity
+4. **Mixed is legitimate at scale.** Core products embed for atomicity. Long-tail
+   departmental flows share a standalone engine. Work enters if the UI/velocity
    trade (lesson 05) says buy.
 
 ## Ship It

@@ -6,10 +6,11 @@
 
 ## The Problem
 
-Your hand-built tracer (lesson 01) is great for understanding, but in production you want
-spans in your existing dashboards (Grafana, Honeycomb, Datadog) — not a bespoke format.
-**OpenTelemetry (OTel)** is the industry standard: emit spans with attributes via the OTel
-SDK and export them anywhere. This is the production end-state of the phase.
+Your hand-built tracer (lesson 01) is great for understanding tracing, but production needs
+more. You want spans in your existing dashboards — Grafana, Honeycomb, Datadog — not a
+bespoke format. **OpenTelemetry (OTel)** is the industry standard for this. You emit spans
+with attributes via the OTel SDK, and you can export them anywhere. This is the production
+end-state of the phase.
 
 ## The Concept
 
@@ -18,7 +19,7 @@ flowchart LR
   A["agent spans (model/tool calls)"] --> O["OpenTelemetry SDK"] --> X["exporter → Grafana / Honeycomb / Datadog"]
 ```
 
-You instrument once with OTel; the backend is a config choice.
+You instrument once with OTel. The backend is then a config choice.
 
 ## Build It / Use It
 
@@ -44,16 +45,18 @@ def run(query):
             s.set_attribute("tool.name", "bash")
 ```
 
-The structure mirrors your scratch tracer; OTel adds standard **semantic conventions** (e.g.
-`gen_ai.*` attributes for LLM calls) so backends understand your agent spans out of the box.
+The structure mirrors your scratch tracer. OTel adds standard **semantic conventions** — for
+example, `gen_ai.*` attributes for LLM calls — so backends understand your agent spans out
+of the box.
 
 ## Use It
 
-Instrument the harness's model and tool calls with OTel spans + `gen_ai.*` attributes, point
-the exporter at your backend, and you get latency (lesson 03), token/cost (lesson 02), and
-drift (lesson 04) signals in dashboards you already run. The Agent SDK and many MCP servers
-emit OTel-compatible telemetry; you consume it the same way. This is observability you don't
-have to build from scratch — because you understand what's underneath.
+Instrument the harness's model and tool calls with OTel spans and `gen_ai.*` attributes.
+Point the exporter at your backend, and you get latency (lesson 03), token/cost (lesson 02),
+and drift (lesson 04) signals in dashboards you already run. The Agent SDK and many MCP
+servers emit OTel-compatible telemetry, so you consume it the same way. This is
+observability you don't have to build from scratch, because you understand what's
+underneath.
 
 ## Ship It
 

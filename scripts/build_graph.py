@@ -38,11 +38,12 @@ TRACKS = [
     ("agentic-ai", "Agentic AI", "#4a3aa7", "agentic-ai"),
     ("knowledge-graphs", "Knowledge graphs", "#00879e", "knowledge-graphs"),
     ("rag-vector-databases", "RAG & vector databases", "#7a4fd6", "rag-vector-databases"),
+    ("system-design", "System design", "#bd5d3a", "system-design"),
     ("flowable", "Flowable", "#a63d40", "flowable"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "technical-product-management", "agentic-ai", "knowledge-graphs",
-               "rag-vector-databases"}
+               "rag-vector-databases", "system-design"}
 # Phased tracks share the harness-engineering folder shape:
 # (track id, source dir, site prefix, track title)
 PHASED_TRACKS = [

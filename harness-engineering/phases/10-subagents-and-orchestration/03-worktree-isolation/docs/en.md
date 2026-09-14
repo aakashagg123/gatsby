@@ -11,7 +11,7 @@
 Two workers running in parallel both edit `api/routes.py`. One finishes, the other
 finishes a moment later and overwrites the first — silently. No error, no conflict
 marker, just lost work. This is the worst class of harness failure because nothing
-*tells* you it happened. The prevention is structural: derive which files each task owns
+*tells* you it happened. The prevention is structural. Derive which files each task owns
 from a dependency graph, and never put two tasks that touch the same file in the same
 wave. Give each worker its own git worktree so even the filesystem is isolated.
 
@@ -75,11 +75,11 @@ dependency, the planner separates them across waves rather than risk a silent ov
 
 ## Use It
 
-In a real harness, `worktree_cmds` runs for real: each worker gets `../wt-<task>` as its
-working directory, edits only its owned files, commits to its branch, and the orchestrator
-merges branches between waves (where the review gate, Phase 15, decides ship/hold). Git
-worktrees give you filesystem-level isolation for free — no containers required for the
-same-repo case.
+In a real harness, `worktree_cmds` runs for real. Each worker gets `../wt-<task>` as its
+working directory, edits only its owned files, and commits to its branch. Between waves,
+the orchestrator merges the branches — that's where the review gate (Phase 15) decides
+ship or hold. Git worktrees give you filesystem-level isolation for free, with no
+containers required for the same-repo case.
 
 ## Ship It
 
@@ -95,7 +95,7 @@ wave planning, and worktree command generation.
 - C) drop one
 - D) error and stop the whole sprint
 
-<details><summary>Answer</summary>B — disjoint files per wave (principle 06); the
+<details><summary>Answer</summary>B — disjoint files per wave (principle 06). The
 conflict detector forces the split.</details>
 
 **Q2.** Why give each worker its own git worktree?
@@ -105,7 +105,7 @@ conflict detector forces the split.</details>
 - C) to avoid writing tests
 - D) it's required by the SDK
 
-<details><summary>Answer</summary>B — isolation is the point; branches merge after the
+<details><summary>Answer</summary>B — isolation is the point. Branches merge after the
 wave.</details>
 
 **Challenge.** Add cycle detection that names the tasks in the cycle (e.g. `a → b → a`)

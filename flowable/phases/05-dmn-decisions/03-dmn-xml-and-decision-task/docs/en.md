@@ -1,6 +1,6 @@
 # DMN XML & the decision task: wiring DMN into BPMN
 
-> **Motto** — The table is a deployable artifact with its own lifecycle; the process
+> **Motto** — The table is a deployable artifact with its own lifecycle. The process
 > just asks the question — one task, key in, variables out.
 
 *Part of Phase 05 — DMN: decisions as tables. This is the phase's **Use It** lesson.*
@@ -8,10 +8,10 @@
 ## The Problem
 
 You have the semantics (lessons 01–02) as Python. Flowable's DMN engine wants the
-standard interchange format: a `.dmn` XML file, deployable next to your `.bpmn20.xml`
-models but *independently* of them — that independence being the entire point
-(Principle 7: the table changes on the committee's cadence, the process on
-engineering's). And the process needs exactly one touchpoint: a task that names the
+standard interchange format: a `.dmn` XML file, deployable next to your
+`.bpmn20.xml` models but *independently* of them. That independence is the entire
+point (Principle 7: the table changes on the committee's cadence, the process on
+engineering's). The process needs exactly one touchpoint: a task that names the
 table, feeds it variables, and collects the outputs.
 
 ## The Concept
@@ -41,10 +41,10 @@ A `.dmn` file mirrors what you built by hand, element for element:
 | `Rule.then` values | `<outputEntry><text>"auto-approve"</text></outputEntry>` |
 | `hit_policy` | `<decisionTable hitPolicy="FIRST">` |
 
-Like the process definition key in Phase 1, the **decision key** is the stable name:
-redeploying `creditDecision` creates version 2, 3, … and callers get the latest by
-default. Policy rollout without touching the process — and Phase 8's versioning
-questions apply here too.
+Like the process definition key in Phase 1, the **decision key** is the stable name.
+Redeploying `creditDecision` creates version 2, 3, and so on, and callers get the
+latest by default. That's policy rollout without touching the process, and Phase 8's
+versioning questions apply here too.
 
 ## Build It
 
@@ -57,10 +57,10 @@ transcribed. The parts worth staring at:
   <decisionTable id="creditDecisionTable" hitPolicy="FIRST">
 ```
 
-`hitPolicy="FIRST"` is a *choice made on purpose* here: the rows are
-exception-then-default (specific auto-approve bands first, catch-all decline last), so
-order-as-shadowing is the honest mental model. Lesson 02's caveat stands — reordering
-rows in this file is a policy change and reviews like one.
+`hitPolicy="FIRST"` is a *choice made on purpose* here. The rows are
+exception-then-default (specific auto-approve bands first, catch-all decline last),
+so order-as-shadowing is the honest mental model. Lesson 02's caveat stands:
+reordering rows in this file is a policy change, and it should be reviewed like one.
 
 ```xml
 <rule>
@@ -71,8 +71,8 @@ rows in this file is a policy change and reviews like one.
 </rule>
 ```
 
-Cells are expressions over the input (`>= 650`), `-` is "any", string outputs are
-quoted. Same well-formedness check as Phase 1's BPMN:
+Cells are expressions over the input (`>= 650`). `-` means "any," and string outputs
+are quoted. Same well-formedness check as Phase 1's BPMN:
 
 ```bash
 python3 -c "import xml.dom.minidom, sys; xml.dom.minidom.parse(sys.argv[1]); print('well-formed')" \
@@ -81,9 +81,9 @@ python3 -c "import xml.dom.minidom, sys; xml.dom.minidom.parse(sys.argv[1]); pri
 
 ## Use It
 
-Deploy the `.dmn` exactly like a process model (Phase 1's client works —
-`POST /dmn-repository/deployments` on the REST engine), then replace the loan triage's
-hard-coded gateway policy with a decision task:
+Deploy the `.dmn` exactly like a process model. Phase 1's client works, using
+`POST /dmn-repository/deployments` on the REST engine. Then replace the loan
+triage's hard-coded gateway policy with a decision task:
 
 ```xml
 <serviceTask id="decideCredit" name="Credit decision" flowable:type="dmn">
@@ -100,17 +100,18 @@ hard-coded gateway policy with a decision task:
 </sequenceFlow>
 ```
 
-The task reads `score` and `amount` from the instance, evaluates the table, and writes
-`decision` and `rate` back as process variables. Compare the gateway now with Phase
-1's: `${score >= 700}` (policy in the diagram) became `${decision == 'auto-approve'}`
-(routing on a decision made elsewhere). That's Principle 7 mechanised — and the
-evaluation itself runs inside the decision task's transaction segment, so every Phase
-2 rule (boundaries, async, rollback) applies unchanged.
+The task reads `score` and `amount` from the instance, evaluates the table, and
+writes `decision` and `rate` back as process variables. Compare the gateway now with
+Phase 1's: `${score >= 700}` (policy in the diagram) became
+`${decision == 'auto-approve'}` (routing on a decision made elsewhere). That's
+Principle 7 mechanised. The evaluation itself runs inside the decision task's
+transaction segment, so every Phase 2 rule — boundaries, async, rollback — applies
+unchanged.
 
 ## Ship It
 
 This lesson ships
-[`outputs/credit-decision.dmn`](../outputs/credit-decision.dmn) — the capstone's
+[`outputs/credit-decision.dmn`](../outputs/credit-decision.dmn), the capstone's
 credit decision, deployable as-is.
 
 ## Check Yourself
@@ -146,13 +147,13 @@ writes).</details>
 - D) gateways can't read numbers
 
 <details><summary>Answer</summary>B — gateways route, tables decide. The threshold
-lives where the committee can change it; the diagram only branches on the
+lives where the committee can change it, and the diagram only branches on the
 answer.</details>
 
 **Challenge.** Deploy `credit-decision.dmn` to your local engine, extend Phase 1's
 `loan-triage.bpmn20.xml` with the decision task above, and re-run Phase 1's REST
-client unchanged. Then redeploy the `.dmn` with row 2's cap raised to ₹7.5 lakh and
-prove — with two instance runs — that the policy changed without the process
+client unchanged. Then redeploy the `.dmn` with row 2's cap raised to ₹7.5 lakh.
+Prove, with two instance runs, that the policy changed without the process
 deployment moving.
 
 ## Related

@@ -67,13 +67,13 @@ print(sample(logits, temp=0.0001))   # ~always 0 (argmax) — deterministic
 print([sample(logits, temp=1.0, rng=__import__('random').Random(s)) for s in range(5)])
 ```
 
-Low temperature collapses to greedy (reproducible); higher temperature with top-p gives
+Low temperature collapses to greedy (reproducible). Higher temperature with top-p gives
 controlled variety.
 
 ## Use It
 
 In the API you set `temperature` and `top_p` on `messages.create`. For reproducible
-evals (Phase 15), pin a low temperature; for brainstorming, raise it. Note: even at
+evals (Phase 15), pin a low temperature. For brainstorming, raise it. Note: even at
 temperature 0, exact determinism isn't guaranteed across infrastructure — design tests to
 tolerate small variation.
 

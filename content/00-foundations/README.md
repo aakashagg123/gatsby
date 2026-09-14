@@ -1,8 +1,8 @@
 # Module 00 · Foundations
 
 The hardest part of AI engineering is not the model. It is everything *around* the
-model: the control flow, the context you feed it, the validation you wrap it in,
-and the operational discipline that turns a clever demo into a system people can
+model: the control flow, the context you feed it, and the validation you wrap it
+in. Operational discipline is what turns a clever demo into a system people can
 depend on.
 
 This module establishes the three mindset shifts that the rest of the curriculum
@@ -19,6 +19,12 @@ If you internalize only one idea from this whole repository, make it this: **a
 production LLM feature is a distributed system with a stochastic component in the
 middle.** Engineer it like one.
 
+
+## Connects to other tracks
+
+- [Context & memory in agents](../../agentic-ai/context-and-memory.md) — the same curation discipline inside the loop.
+- [Context engineering in the harness](../../harness-engineering/phases/04-context-engineering/README.md) — budgeting and assembling context by hand.
+- [Technical sense for AI systems](../../technical-product-sense/technical-sense-for-ai.md) — the PM-altitude view of the same stack.
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 

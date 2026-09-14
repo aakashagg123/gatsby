@@ -45,17 +45,18 @@ print(report["status"], report["cost"])     # complete, with cost attributed + a
 # Then: eval_gate(run_evals(...)) before shipping (P15), deploy checklist (P18).
 ```
 
-Every run is now bounded (budget), observable (trace + cost), and only ships if the eval gate
-passes — the production wrapper around the agent you built in projects 01–03.
+Every run is now bounded by budget, observable through trace and cost, and only ships if the
+eval gate passes. This is the production wrapper around the agent you built in projects
+01–03.
 
 ## Use It
 
 This is the end state: a coding agent with the full harness — loop, tools, files, shell,
-context, memory, permissions, subagents, MCP, retrieval, reliability, evals, observability, and
-a deploy path. For a Claude Code / Codex user, it's the mental model of *everything the
-platform does for you* plus *everything you add* (`settings.json`, `CLAUDE.md`, hooks, skills,
-MCP servers, CI evals). You finished the course — you can now build, operate, and reason about
-a harness end to end.
+context, memory, permissions, subagents, MCP, retrieval, reliability, evals, observability,
+and a deploy path. For a Claude Code / Codex user, it's the mental model of *everything the
+platform does for you*, plus *everything you add*: `settings.json`, `CLAUDE.md`, hooks,
+skills, MCP servers, CI evals. You finished the course. You can now build, operate, and
+reason about a harness end to end.
 
 ## Ship It
 

@@ -7,24 +7,24 @@
 The context window is a scarce, expensive, and *quality-sensitive* resource. Context
 engineering is the discipline of deciding **what** goes into it, **in what order**,
 **in what form**, and **what gets left out** — on every single call. "Just stuff in
-more text" is the anti-pattern: longer context costs more, runs slower, and often
+more text" is the anti-pattern. Longer context costs more, runs slower, and often
 makes answers *worse*, not better.
 
 > 🎯 **For the AI-native PM**
 >
-> **Why it matters** — Context is a budget you spend on *every* request — it shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.
+> **Why it matters** — Context is a budget you spend on *every* request. It shows up directly in latency, cost, and answer quality. "Just give the model more info" is a product decision with a bill and a quality cost attached.
 >
 > **What it changes in your decisions** — What data you invest in making retrievable, how you scope memory/personalization features, and your cost-per-interaction.
 >
 > **Ask your eng team** — *"What's actually in the context window on a typical request, and what does each part cost us?"*
 >
-> **Product risk if ignored** — Prompt creep quietly triples unit cost and *lowers* quality — invisible until the invoice or the churn shows up.
+> **Product risk if ignored** — Prompt creep quietly triples unit cost and *lowers* quality. It stays invisible until the invoice or the churn shows up.
 
 
 ## Mental model
 
 Treat the context window like a working set in a memory hierarchy, not a junk
-drawer. The model can only attend to what is in front of it, and its effective
+drawer. The model can only attend to what is in front of it. Its effective
 attention is **non-uniform**: information at the start and end of the window is used
 more reliably than information buried in the middle ("lost in the middle"). So
 context engineering optimizes three things at once:
@@ -36,28 +36,30 @@ context engineering optimizes three things at once:
 
 ## From data-first to context-first
 
-Two era-framings from the PM side of this discipline are worth internalizing. First:
-the data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
-**context-first** one — the question is no longer *"what data do we have?"* but *"what
-context does this decision need to be meaningful?"* Data is inert until it's framed;
-the same model with the same data behaves entirely differently depending on what makes
-it into the window, in what form.
+Two era-framings from the PM side of this discipline are worth knowing. First, the
+data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
+**context-first** one. The question is no longer *"what data do we have?"* It is
+*"what context does this decision need to be meaningful?"* Data is inert until it's
+framed. The same model with the same data behaves entirely differently, depending on
+what makes it into the window and in what form.
 
 Second: **prompt engineering alone is stagecraft, not architecture.** Clever wording
 dazzles in a demo and fails as a system, for three structural reasons:
 
 - **Fragility** — a prompt tuned for "how do I request a refund?" falters on "can I
-  get my money back if I cancel mid-cycle?"; one phrasing shift collapses the trick.
-- **No memory** — prompts operate in isolation; without engineered context the system
-  contradicts itself across sessions (the assistant that recommends the SMB market on
-  Monday and enterprise-only on Tuesday, because nothing carried the strategy forward).
-- **Operational debt** — every new use case demands fresh tinkering, until the team
-  maintains a library of brittle bespoke prompts instead of one adaptive system.
+  get my money back if I cancel mid-cycle?" One phrasing shift collapses the trick.
+- **No memory** — prompts operate in isolation. Without engineered context, the
+  system contradicts itself across sessions: the assistant recommends the SMB market
+  on Monday and enterprise-only on Tuesday, because nothing carried the strategy
+  forward.
+- **Operational debt** — every new use case demands fresh tinkering. Over time the
+  team ends up maintaining a library of brittle bespoke prompts instead of one
+  adaptive system.
 
-The enterprise bar is higher than any single output: the context pipeline has to carry
-what the user is *entitled to*, what policy dictates, and when to escalate — CRM data,
-legal guardrails, strategic goals — assembled systematically per request. That
-pipeline is this lesson's subject; the prompt is just its last mile.
+The enterprise bar is higher than any single output. The context pipeline has to
+carry what the user is *entitled to*, what policy dictates, and when to escalate —
+CRM data, legal guardrails, strategic goals — assembled systematically on every
+request. That pipeline is this lesson's subject. The prompt is just its last mile.
 
 ## Why more tokens is not more quality
 

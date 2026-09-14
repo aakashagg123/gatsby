@@ -1,7 +1,7 @@
 # Phase 12 — MCP & extensibility
 
 > Make the harness pluggable. Build the Model Context Protocol from scratch — wire format,
-> server, client — then use the official SDK, and wire skills & plugins for Claude Code / Codex.
+> server, client. Then use the official SDK, and wire skills & plugins for Claude Code / Codex.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|

@@ -1,0 +1,206 @@
+<style>
+.sd-bb{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-bb-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+.sd-bb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sd-bb-card{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px;
+  position:relative;overflow:hidden}
+.sd-bb-card-head{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.sd-bb-card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.sd-bb-card:nth-child(1) .sd-bb-card-icon{background:#fbefe9;color:#bd5d3a;border:1px solid #ecc4ae}
+.sd-bb-card:nth-child(2) .sd-bb-card-icon{background:#e8f0e4;color:#3d5c34;border:1px solid #c8dbc0}
+.sd-bb-card:nth-child(3) .sd-bb-card-icon{background:#e9edf8;color:#3d4a7a;border:1px solid #c0c9e2}
+.sd-bb-card:nth-child(4) .sd-bb-card-icon{background:#f4f2ea;color:#6b6a64;border:1px solid #e0dccd}
+.sd-bb-card-name{font-size:13px;font-weight:650;color:#3d3c37}
+.sd-bb-card-sub{font-size:10.5px;color:#8a8778;font-weight:500}
+.sd-bb-visual{margin:0 0 10px;position:relative}
+/* Token bucket visual */
+.sd-bb-bucket{display:flex;align-items:flex-end;gap:3px;height:40px;padding:6px 8px;
+  background:#fef9f5;border:1px solid #efd8ca;border-radius:8px}
+.sd-bb-token{width:14px;border-radius:3px;background:#d97757}
+.sd-bb-token:nth-child(1){height:28px}
+.sd-bb-token:nth-child(2){height:28px}
+.sd-bb-token:nth-child(3){height:28px}
+.sd-bb-token:nth-child(4){height:28px;opacity:.35;border:1px dashed #d97757;background:transparent}
+.sd-bb-token:nth-child(5){height:28px;opacity:.2;border:1px dashed #d97757;background:transparent}
+.sd-bb-refill{position:absolute;top:4px;right:8px;font-size:9px;color:#a2765d;font-weight:600}
+/* Hash ring visual */
+.sd-bb-ring{width:80px;height:80px;border:2px solid #c8dbc0;border-radius:50%;
+  position:relative;margin:0 auto}
+.sd-bb-node{position:absolute;width:16px;height:16px;border-radius:50%;
+  font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.sd-bb-node-a{background:#5a8a4a;top:-8px;left:50%;transform:translateX(-50%)}
+.sd-bb-node-b{background:#3d5c34;right:-8px;top:50%;transform:translateY(-50%)}
+.sd-bb-node-c{background:#7aaa6a;bottom:-8px;left:50%;transform:translateX(-50%)}
+.sd-bb-key{position:absolute;width:10px;height:10px;border-radius:50%;background:#d97757;
+  border:1.5px solid #fff}
+.sd-bb-key1{top:6px;right:6px}
+.sd-bb-key2{bottom:14px;left:4px}
+/* Quorum visual */
+.sd-bb-quorum{display:flex;gap:4px;justify-content:center;align-items:center}
+.sd-bb-replica{width:28px;height:34px;border-radius:6px;display:flex;align-items:center;
+  justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.sd-bb-replica-ack{background:#4a6fa5;border:1px solid #3d5c8a}
+.sd-bb-replica-wait{background:#b8c4d8;border:1px solid #a0adc4}
+.sd-bb-quorum-label{font-size:9px;color:#3d4a7a;font-weight:600;margin:0 2px}
+/* Snowflake visual */
+.sd-bb-snowflake{display:flex;gap:1px;border-radius:6px;overflow:hidden;height:22px}
+.sd-bb-sf-seg{display:flex;align-items:center;justify-content:center;
+  font-size:7.5px;font-weight:700;color:#fff;padding:0 3px;white-space:nowrap}
+.sd-bb-sf-sign{background:#8a8778;flex:0 0 12px}
+.sd-bb-sf-ts{background:#6b6a64;flex:3}
+.sd-bb-sf-dc{background:#a39f90;flex:0.6}
+.sd-bb-sf-wk{background:#8a8778;flex:0.6}
+.sd-bb-sf-seq{background:#45443c;flex:1.2}
+.sd-bb-details{display:flex;flex-wrap:wrap;gap:4px}
+.sd-bb-detail{font-size:10px;font-weight:550;border-radius:6px;padding:3px 7px;
+  line-height:1.3;display:inline-flex;align-items:center;gap:3px}
+.sd-bb-detail-warm{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-bb-detail-green{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-bb-detail-blue{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-bb-detail-neutral{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-bb-connections{margin:14px 0 0;padding:12px 14px;background:#fff;
+  border:1px solid #e4e0d5;border-radius:10px}
+.sd-bb-conn-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#a39f90;margin:0 0 8px}
+.sd-bb-conn-row{display:flex;align-items:center;gap:6px;font-size:11px;
+  color:#6b6a64;line-height:1.5;margin:3px 0}
+.sd-bb-conn-arrow{color:#c9c4b4;font-weight:700;flex-shrink:0}
+@media (max-width:640px){
+  .sd-bb{padding:18px 14px 16px}
+  .sd-bb-grid{grid-template-columns:1fr}
+}
+</style>
+<div class="sd-bb">
+  <div class="sd-bb-title">Four core building blocks</div>
+  <div class="sd-bb-grid">
+    <!-- Rate Limiter -->
+    <div class="sd-bb-card">
+      <div class="sd-bb-card-head">
+        <div class="sd-bb-card-icon">RL</div>
+        <div>
+          <div class="sd-bb-card-name">Rate Limiter</div>
+          <div class="sd-bb-card-sub">Token bucket algorithm</div>
+        </div>
+      </div>
+      <div class="sd-bb-visual">
+        <div class="sd-bb-bucket">
+          <div class="sd-bb-token"></div>
+          <div class="sd-bb-token"></div>
+          <div class="sd-bb-token"></div>
+          <div class="sd-bb-token"></div>
+          <div class="sd-bb-token"></div>
+        </div>
+        <div class="sd-bb-refill">refill rate: r/sec</div>
+      </div>
+      <div class="sd-bb-details">
+        <span class="sd-bb-detail sd-bb-detail-warm">Token bucket</span>
+        <span class="sd-bb-detail sd-bb-detail-warm">Sliding window</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">Redis counters</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">HTTP 429</span>
+      </div>
+    </div>
+    <!-- Consistent Hashing -->
+    <div class="sd-bb-card">
+      <div class="sd-bb-card-head">
+        <div class="sd-bb-card-icon">CH</div>
+        <div>
+          <div class="sd-bb-card-name">Consistent Hashing</div>
+          <div class="sd-bb-card-sub">Hash ring with virtual nodes</div>
+        </div>
+      </div>
+      <div class="sd-bb-visual" style="display:flex;align-items:center;justify-content:center;padding:4px 0">
+        <div class="sd-bb-ring">
+          <div class="sd-bb-node sd-bb-node-a">S1</div>
+          <div class="sd-bb-node sd-bb-node-b">S2</div>
+          <div class="sd-bb-node sd-bb-node-c">S3</div>
+          <div class="sd-bb-key sd-bb-key1" title="key"></div>
+          <div class="sd-bb-key sd-bb-key2" title="key"></div>
+        </div>
+        <div style="margin-left:14px;font-size:9.5px;color:#6b6a64;line-height:1.6">
+          <div><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#5a8a4a;vertical-align:middle;margin-right:3px"></span> Server</div>
+          <div><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#d97757;vertical-align:middle;margin-right:3px"></span> Key</div>
+          <div style="color:#8a8778;margin-top:2px">walk CW to find server</div>
+        </div>
+      </div>
+      <div class="sd-bb-details">
+        <span class="sd-bb-detail sd-bb-detail-green">Virtual nodes</span>
+        <span class="sd-bb-detail sd-bb-detail-green">Minimal rebalance</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">Uniform load</span>
+      </div>
+    </div>
+    <!-- KV Store -->
+    <div class="sd-bb-card">
+      <div class="sd-bb-card-head">
+        <div class="sd-bb-card-icon">KV</div>
+        <div>
+          <div class="sd-bb-card-name">Key-Value Store</div>
+          <div class="sd-bb-card-sub">Quorum consensus (W + R > N)</div>
+        </div>
+      </div>
+      <div class="sd-bb-visual" style="padding:6px 0">
+        <div class="sd-bb-quorum">
+          <div class="sd-bb-replica sd-bb-replica-ack">ACK</div>
+          <div class="sd-bb-replica sd-bb-replica-ack">ACK</div>
+          <div class="sd-bb-replica sd-bb-replica-wait">...</div>
+          <div class="sd-bb-quorum-label">W=2, R=2, N=3</div>
+        </div>
+      </div>
+      <div class="sd-bb-details">
+        <span class="sd-bb-detail sd-bb-detail-blue">Gossip protocol</span>
+        <span class="sd-bb-detail sd-bb-detail-blue">Vector clocks</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">Merkle trees</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">Sloppy quorum</span>
+      </div>
+    </div>
+    <!-- Unique ID Generator -->
+    <div class="sd-bb-card">
+      <div class="sd-bb-card-head">
+        <div class="sd-bb-card-icon">ID</div>
+        <div>
+          <div class="sd-bb-card-name">Unique ID Generator</div>
+          <div class="sd-bb-card-sub">Snowflake 64-bit layout</div>
+        </div>
+      </div>
+      <div class="sd-bb-visual" style="padding:8px 0 6px">
+        <div class="sd-bb-snowflake">
+          <div class="sd-bb-sf-seg sd-bb-sf-sign">0</div>
+          <div class="sd-bb-sf-seg sd-bb-sf-ts">timestamp (41 bits)</div>
+          <div class="sd-bb-sf-seg sd-bb-sf-dc">dc</div>
+          <div class="sd-bb-sf-seg sd-bb-sf-wk">wk</div>
+          <div class="sd-bb-sf-seg sd-bb-sf-seq">sequence (12)</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:8.5px;color:#8a8778;margin-top:3px;padding:0 2px">
+          <span>1 bit</span><span>41 bits = 69 years</span><span>5+5 bits</span><span>12 bits = 4096/ms</span>
+        </div>
+      </div>
+      <div class="sd-bb-details">
+        <span class="sd-bb-detail sd-bb-detail-neutral">Time-sortable</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">No coordination</span>
+        <span class="sd-bb-detail sd-bb-detail-neutral">~4M IDs/sec/machine</span>
+      </div>
+    </div>
+  </div>
+  <div class="sd-bb-connections">
+    <div class="sd-bb-conn-title">How they connect</div>
+    <div class="sd-bb-conn-row">
+      <span style="color:#bd5d3a;font-weight:600">Rate Limiter</span>
+      <span class="sd-bb-conn-arrow">→</span>
+      uses <strong style="color:#3d5c34">Consistent Hashing</strong> to distribute counters across Redis nodes
+    </div>
+    <div class="sd-bb-conn-row">
+      <span style="color:#3d4a7a;font-weight:600">KV Store</span>
+      <span class="sd-bb-conn-arrow">→</span>
+      uses <strong style="color:#3d5c34">Consistent Hashing</strong> to partition data and <strong style="color:#45443c">Snowflake IDs</strong> for write ordering
+    </div>
+    <div class="sd-bb-conn-row">
+      <span style="color:#3d5c34;font-weight:600">Consistent Hashing</span>
+      <span class="sd-bb-conn-arrow">→</span>
+      underpins every distributed system that needs <strong style="color:#45443c">horizontal scaling</strong>
+    </div>
+  </div>
+</div>

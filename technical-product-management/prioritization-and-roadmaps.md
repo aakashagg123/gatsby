@@ -6,9 +6,9 @@
 
 Prioritization is the job reduced to one sentence: **you have 10x more good ideas than
 capacity, and the order you build them in is the strategy**. Frameworks — RICE, ICE, cost
-of delay, Kano — don't make the decision for you; they make your *reasoning legible* so it
+of delay, Kano — don't make the decision for you. They make your *reasoning legible*, so it
 can be challenged and improved. The roadmap that comes out the other side is a
-**communication of bets and their sequence**, not a delivery contract — which is why
+**communication of bets and their sequence**, not a delivery contract. That's why
 *now / next / later* beats a Gantt chart for most audiences. And because every "yes" is a
 hundred implicit "no"s, saying no — clearly, with the reasoning attached — is the most
 valuable sentence a PM produces.
@@ -36,7 +36,7 @@ valuable sentence a PM produces.
 - **RICE** — score = (Reach × Impact × Confidence) / Effort. Its real value is the
   **Confidence** term: it forces you to admit which numbers are guesses. A 10/10 impact at
   20% confidence should lose to a 6/10 at 90%.
-- **ICE** (Impact, Confidence, Ease) — RICE's quick cousin; fine for triaging a long list
+- **ICE** (Impact, Confidence, Ease) — RICE's quick cousin. Fine for triaging a long list
   in an hour, too coarse for the final call on big bets.
 - **Cost of delay / WSJF** — asks "what does *waiting* cost per month?" instead of "what
   is this worth?" This flips priorities when timing matters: a medium-value item ahead of
@@ -49,7 +49,7 @@ valuable sentence a PM produces.
   top ten for uncovered basics before celebrating the delighters.
 
 All of them share failure math: garbage estimates in, confident-looking garbage out. The
-discipline isn't the arithmetic — it's writing your assumptions down where someone can
+discipline isn't the arithmetic. It's writing your assumptions down where someone can
 tell you they're wrong.
 
 ```mermaid
@@ -69,8 +69,8 @@ quadrantChart
     "Rewrite settings page": [0.8, 0.25]
 ```
 
-Note the summarizer appearing twice: a feasibility spike doesn't just reduce risk, it
-*moves the dot* — effort estimates tighten dramatically once someone has actually tried
+Note the summarizer appearing twice. A feasibility spike doesn't just reduce risk — it
+*moves the dot*. Effort estimates tighten dramatically once someone has actually tried
 it. Cheap discovery work exists to reposition expensive bets before you commit.
 
 ## Roadmaps are bets, not promises
@@ -79,21 +79,21 @@ A roadmap does two jobs at once — aligning stakeholders and guiding the team �
 classic mistake is using one artifact for both:
 
 - **Now / next / later** — the default for most audiences. *Now* is committed and
-  specific; *next* is planned but re-orderable; *later* is directional. The buckets encode
+  specific. *Next* is planned but re-orderable. *Later* is directional. The buckets encode
   honesty about certainty, which date-based roadmaps destroy: paint a feature on Q3 and by
   Friday it's a commitment someone sold to a customer.
 - **Outcome-based roadmaps** — organize by the problem or metric ("cut onboarding
   drop-off by 30%") rather than the feature. Harder to write, but they preserve the
   team's freedom to change *solution* without appearing to change *plan*.
 - **Date-based roadmaps** — legitimate when dates are real: compliance deadlines,
-  contractual commitments, coordinated launches. Use dates where dates exist; don't
+  contractual commitments, coordinated launches. Use dates where dates exist. Don't
   invent them for decoration.
 
 Whatever the format, reserve explicit capacity **before** feature prioritization begins:
 a platform/debt allocation (teams commonly hold 15–30% — see
 [tech debt](../technical-product-sense/tech-debt-and-estimation.md)) and, on AI products,
 an eval/data line item. Debt never wins a head-to-head RICE contest against a shiny
-feature; that's precisely why it gets a reserved lane instead of a lottery ticket.
+feature. That's precisely why it gets a reserved lane instead of a lottery ticket.
 
 ## Saying no
 

@@ -1,0 +1,181 @@
+<style>
+.sd-geo{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-geo-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+/* Geohash grid */
+.sd-geo-grid-wrap{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+  padding:16px;margin:0 0 12px}
+.sd-geo-grid-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#6b6a64;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+.sd-geo-grid-label .tag{font-size:9px;font-weight:700;border-radius:20px;
+  padding:2px 10px;color:#fff;background:#4a6fa5;letter-spacing:.6px}
+.sd-geo-grid-container{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.sd-geo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;width:fit-content}
+.sd-geo-cell{width:56px;height:42px;border-radius:4px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:9.5px;font-weight:600;
+  transition:background .15s}
+.sd-geo-cell-default{background:#f4f2ea;border:1px solid #e0dccd;color:#6b6a64}
+.sd-geo-cell-center{background:#bd5d3a;border:1.5px solid #a04d2f;color:#fff;
+  box-shadow:0 2px 6px rgba(189,93,58,.25)}
+.sd-geo-cell-neighbor{background:#fbefe9;border:1.5px solid #efd8ca;color:#4a2f22}
+.sd-geo-cell-far{background:#f4f2ea;border:1px solid #e0dccd;color:#c5c1b2}
+.sd-geo-cell small{font-size:7.5px;font-weight:450;margin-top:1px}
+.sd-geo-cell-center small{color:rgba(255,255,255,.75)}
+.sd-geo-cell-neighbor small{color:#a2765d}
+/* Legend for grid */
+.sd-geo-legend{font-size:10.5px;color:#6b6a64;line-height:1.8}
+.sd-geo-legend-item{display:flex;align-items:center;gap:6px;margin:3px 0}
+.sd-geo-legend-swatch{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.sd-geo-legend-swatch-center{background:#bd5d3a;border:1px solid #a04d2f}
+.sd-geo-legend-swatch-neighbor{background:#fbefe9;border:1px solid #efd8ca}
+.sd-geo-legend-swatch-far{background:#f4f2ea;border:1px solid #e0dccd}
+.sd-geo-precision{margin:10px 0 0;padding:8px 10px;background:#f4f2ea;border:1px solid #e0dccd;
+  border-radius:8px;font-size:10px;color:#6b6a64;line-height:1.5}
+.sd-geo-precision strong{color:#3d3c37}
+/* Lookup pipeline */
+.sd-geo-pipeline{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+  padding:16px;margin:0 0 12px}
+.sd-geo-pipe-label{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:#6b6a64;margin:0 0 12px;display:flex;align-items:center;gap:6px}
+.sd-geo-pipe-label .tag{font-size:9px;font-weight:700;border-radius:20px;
+  padding:2px 10px;color:#fff;background:#5a8a4a;letter-spacing:.6px}
+.sd-geo-pipe{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.sd-geo-step{border-radius:8px;padding:8px 12px;font-size:11px;font-weight:600;
+  text-align:center;line-height:1.35;flex-shrink:0}
+.sd-geo-step small{display:block;font-size:9px;font-weight:450;margin-top:2px}
+.sd-geo-s-input{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-geo-s-compute{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
+.sd-geo-s-expand{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
+.sd-geo-s-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-geo-s-result{background:#bd5d3a;border:1px solid #a04d2f;color:#fff}
+.sd-geo-arr{flex:0 0 auto;color:#c9c4b4;font-size:13px;font-weight:700;padding:0 3px}
+.sd-geo-arr-lbl{font-size:8px;color:#8a8778;font-weight:500;display:block;text-align:center}
+.sd-geo-arr-wrap{display:flex;flex-direction:column;align-items:center;padding:0 1px}
+/* Comparison chips */
+.sd-geo-compare{display:flex;gap:10px;flex-wrap:wrap}
+.sd-geo-compare-card{flex:1;min-width:140px;background:#fff;border:1px solid #e4e0d5;
+  border-radius:10px;padding:12px}
+.sd-geo-compare-name{font-size:11px;font-weight:650;color:#3d3c37;margin:0 0 6px;
+  display:flex;align-items:center;gap:5px}
+.sd-geo-compare-name .badge{font-size:8px;font-weight:700;border-radius:10px;padding:1px 7px}
+.sd-geo-compare-name .badge-rec{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-geo-compare-pts{font-size:10px;color:#6b6a64;line-height:1.6}
+.sd-geo-compare-pts span{display:block}
+@media (max-width:640px){
+  .sd-geo{padding:18px 14px 16px}
+  .sd-geo-grid-container{flex-direction:column}
+  .sd-geo-grid{margin:0 auto}
+  .sd-geo-pipe{flex-direction:column;gap:4px;align-items:stretch}
+  .sd-geo-arr{transform:rotate(90deg);text-align:center;padding:2px 0}
+  .sd-geo-compare{flex-direction:column}
+}
+</style>
+<div class="sd-geo">
+  <div class="sd-geo-title">Geospatial indexing - geohash grid + neighbor lookup</div>
+
+  <!-- Geohash grid visualization -->
+  <div class="sd-geo-grid-wrap">
+    <div class="sd-geo-grid-label">
+      <span class="tag">Geohash</span>
+      Recursive subdivision of the map into grid cells
+    </div>
+    <div class="sd-geo-grid-container">
+      <div>
+        <div class="sd-geo-grid">
+          <div class="sd-geo-cell sd-geo-cell-far">9q8w<small>far</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8x<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8y<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q8z<small>far</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8t<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8v<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-center">9q8s<small>you are here</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8u<small>neighbor</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-far">9q8e<small>far</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8g<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-neighbor">9q8f<small>neighbor</small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q8d<small>far</small></div>
+
+          <div class="sd-geo-cell sd-geo-cell-far">9q87<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q86<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q85<small></small></div>
+          <div class="sd-geo-cell sd-geo-cell-far">9q84<small></small></div>
+        </div>
+      </div>
+      <div>
+        <div class="sd-geo-legend">
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-center"></div>
+            <span>Query cell (your location)</span>
+          </div>
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-neighbor"></div>
+            <span>8 neighbors (always queried)</span>
+          </div>
+          <div class="sd-geo-legend-item">
+            <div class="sd-geo-legend-swatch sd-geo-legend-swatch-far"></div>
+            <span>Outside search radius</span>
+          </div>
+        </div>
+        <div class="sd-geo-precision">
+          <strong>Precision vs. area:</strong><br>
+          4 chars = ~39km &middot; 5 chars = ~5km &middot; 6 chars = ~1.2km<br>
+          More chars = smaller cell = finer search
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lookup pipeline -->
+  <div class="sd-geo-pipeline">
+    <div class="sd-geo-pipe-label">
+      <span class="tag">Query</span>
+      Nearby search pipeline
+    </div>
+    <div class="sd-geo-pipe">
+      <div class="sd-geo-step sd-geo-s-input">lat, lng<small>37.77, -122.42</small></div>
+      <div class="sd-geo-arr-wrap"><span class="sd-geo-arr">→</span></div>
+      <div class="sd-geo-step sd-geo-s-compute">Compute<small>geohash(lat,lng,6)</small></div>
+      <div class="sd-geo-arr-wrap">
+        <span class="sd-geo-arr">→</span>
+        <span class="sd-geo-arr-lbl">"9q8s"</span>
+      </div>
+      <div class="sd-geo-step sd-geo-s-expand">Expand<small>cell + 8 neighbors</small></div>
+      <div class="sd-geo-arr-wrap">
+        <span class="sd-geo-arr">→</span>
+        <span class="sd-geo-arr-lbl">9 keys</span>
+      </div>
+      <div class="sd-geo-step sd-geo-s-store">Redis<small>ZRANGEBYSCORE</small></div>
+      <div class="sd-geo-arr-wrap"><span class="sd-geo-arr">→</span></div>
+      <div class="sd-geo-step sd-geo-s-result">Sort<small>by distance</small></div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="sd-geo-compare">
+    <div class="sd-geo-compare-card">
+      <div class="sd-geo-compare-name">
+        Geohash
+        <span class="badge badge-rec">Recommended</span>
+      </div>
+      <div class="sd-geo-compare-pts">
+        <span>+ Simple string prefix matching</span>
+        <span>+ Easy to store in Redis sorted sets</span>
+        <span>+ Incrementally refine precision</span>
+        <span>- Edge cases at cell boundaries</span>
+      </div>
+    </div>
+    <div class="sd-geo-compare-card">
+      <div class="sd-geo-compare-name">Quadtree</div>
+      <div class="sd-geo-compare-pts">
+        <span>+ Dynamic subdivision by density</span>
+        <span>+ Natural spatial indexing</span>
+        <span>- Must rebuild on updates</span>
+        <span>- Harder to distribute</span>
+      </div>
+    </div>
+  </div>
+</div>

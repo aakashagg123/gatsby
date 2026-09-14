@@ -6,11 +6,10 @@
 
 ## The Problem
 
-The single most important guard against a runaway agent is a **budget**. Step ceilings
-(Phase 2), tool budgets (Phase 3), and now token/cost ceilings together bound the worst case:
-no request can loop forever or spend unbounded money. A harness without budgets is one
-confused plan away from a $100 bill or an infinite loop. Budgets make the worst case
-*known*.
+A **budget** is the single most important guard against a runaway agent. Step ceilings
+(Phase 2), tool budgets (Phase 3), and token/cost ceilings work together to bound the worst
+case. No request can loop forever or spend unbounded money. A harness without budgets is one
+confused plan away from a $100 bill or an infinite loop. Budgets make the worst case *known*.
 
 ## The Concept
 
@@ -21,8 +20,9 @@ flowchart LR
   B -- "no" --> STOP["stop, report what was spent, return partial"]
 ```
 
-Track multiple meters (steps, tool calls, tokens, est. cost); hitting any one stops the run
-gracefully with a report — never silently and never auto-extended.
+Track multiple meters: steps, tool calls, tokens, and estimated cost. Hitting any one meter
+stops the run gracefully and reports what happened. The harness never stops silently and
+never auto-extends a budget.
 
 ## Build It
 
@@ -55,20 +55,20 @@ for _ in range(5):
 print(b.exceeded(), b.report())     # ['tokens'] hit first
 ```
 
-The loop calls `charge` after each model/tool call and stops when `exceeded()` is non-empty —
-returning what it has, with a report of where the budget went.
+The loop calls `charge` after each model or tool call. It stops when `exceeded()` returns a
+non-empty list, and returns what it has so far, with a report of where the budget went.
 
 ## Use It
 
-Budgets are the orchestration ceilings from Phase 10 (`maxWorkers/maxCallsPerWorker/
-maxWaves`) generalized to the single agent. For a Claude Code / Codex user, this is why long
-autonomous runs should be scoped — and why the harness's step/token limits exist. Always set
-them; never let "it'll probably be fine" be the only ceiling.
+Budgets generalize the orchestration ceilings from Phase 10 (`maxWorkers/maxCallsPerWorker/
+maxWaves`) down to the single agent. This is why a Claude Code or Codex user should scope
+long autonomous runs, and why the harness's step and token limits exist. Always set them.
+Never let "it'll probably be fine" be the only ceiling.
 
 ## Ship It
 
-[`code/budget.py`](../../04-budgets/code/budget.py) — a multi-meter (steps/tokens/cost) budget
-guard.
+[`code/budget.py`](../../04-budgets/code/budget.py) — a multi-meter budget guard that tracks
+steps, tokens, and cost.
 
 ## Check Yourself
 
@@ -79,7 +79,7 @@ guard.
 - C) it improves accuracy
 - D) no reason
 
-<details><summary>Answer</summary>B — budgets make the worst case known.</details>
+<details><summary>Answer</summary>B — a budget makes the worst case known.</details>
 
 **Q2.** On hitting a budget, the harness should…
 
@@ -88,7 +88,7 @@ guard.
 - C) ignore it
 - D) crash
 
-<details><summary>Answer</summary>B — stop gracefully; never auto-extend.</details>
+<details><summary>Answer</summary>B — stop gracefully. Never auto-extend.</details>
 
 **Challenge.** Wire `Budget` into the Phase 2 agent loop so each step charges steps+tokens
 and the loop exits with the report when any meter is hit.

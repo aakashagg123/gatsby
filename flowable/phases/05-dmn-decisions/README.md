@@ -1,6 +1,6 @@
 # Phase 05 — DMN: decisions as tables
 
-> Externalise business rules into decision tables the business can read — and change
+> Externalise business rules into decision tables the business can read. Change them
 > without a deploy.
 
 | # | Lesson | Type | Lang | Ships |

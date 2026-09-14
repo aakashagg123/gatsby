@@ -7,9 +7,9 @@
 ## The Problem
 
 Many outputs have no single correct string — a code explanation, a refactor, a summary. You
-can't `==` them against an expectation. **LLM-as-judge** scores such outputs: a model grades
-the candidate against a written rubric (correctness, completeness, style), returning a score
-and rationale. It scales subjective evaluation — but only if the rubric is specific and the
+can't `==` them against an expectation. **LLM-as-judge** scores such outputs. A model grades
+the candidate against a written rubric (correctness, completeness, style) and returns a score
+and rationale. It scales subjective evaluation, but only if the rubric is specific and the
 judge is well-controlled.
 
 ## The Concept
@@ -21,8 +21,8 @@ flowchart LR
   J --> S["score + rationale"]
 ```
 
-Guardrails: a concrete rubric, a fixed scale, low temperature, and (ideally) the judge
-doesn't see which system produced the output (avoid bias).
+Guardrails: use a concrete rubric, a fixed scale, and low temperature. Ideally the judge
+doesn't see which system produced the output, to avoid bias.
 
 ## Build It
 
@@ -49,15 +49,15 @@ v = judge("Paris is the capital of France.", "Capital of France?", fake_model)
 print(v, "->", normalize(v))     # {'score': 4, ...} -> 0.8
 ```
 
-In production `call_model` is a real (low-temperature) judge; the rubric and JSON contract
+In production, `call_model` is a real, low-temperature judge. The rubric and JSON contract
 (Phase 1 L7) make the verdict parseable and the score aggregatable into a pass rate.
 
 ## Use It
 
-LLM-as-judge powers evals where exact matching fails (code quality, explanations) and the
-rerank step in retrieval (Phase 13). It's also the review agent from Phase 10 — a judge over
-a diff. Caveats to teach: judges have biases (length, position, self-preference); validate
-the judge against human labels before trusting it.
+LLM-as-judge powers evals where exact matching fails, such as code quality and explanations,
+and it powers the rerank step in retrieval (Phase 13). It's also the review agent from Phase
+10 — a judge over a diff. One caveat: judges have biases (length, position,
+self-preference), so validate the judge against human labels before you trust it.
 
 ## Ship It
 
@@ -72,7 +72,7 @@ the judge against human labels before trusting it.
 - C) for token counting
 - D) never
 
-<details><summary>Answer</summary>B — subjective/open-ended scoring.</details>
+<details><summary>Answer</summary>B — subjective, open-ended scoring.</details>
 
 **Q2.** A key guardrail for a judge is…
 

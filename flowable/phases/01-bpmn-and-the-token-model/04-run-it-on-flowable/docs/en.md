@@ -8,11 +8,12 @@ toy engine's semantics, now on production machinery.*
 
 ## The Problem
 
-You have a token engine in your head and a deployable model on disk. What you don't yet
-have is proof that the real engine behaves like your mental model — that starting an
-instance advances tokens until they sleep, that a user task really is a wait state, and
-that the engine remembers everything it did. The fastest way to that proof is the REST
-API: no Java, no build, just HTTP against a Docker container.
+You have a token engine in your head and a deployable model on disk. What you
+don't yet have is proof that the real engine behaves like your mental model —
+that starting an instance advances tokens until they sleep, that a user task
+really is a wait state, and that the engine remembers everything it did. The
+fastest way to that proof is the REST API: no Java, no build, just HTTP against a
+Docker container.
 
 ## The Concept
 
@@ -44,9 +45,10 @@ flowchart LR
 | `POST /runtime/tasks/{id}` (complete) | `complete_user_task()` |
 | `GET /history/historic-activity-instances` | reading `inst.log` |
 
-One idea is new: **deployment is separate from execution**. You deploy a *definition*
-once; you start many *instances* of it. The engine versions definitions on every
-redeploy of the same key — which is what makes Phase 8 (migration) a topic at all.
+One idea is new: **deployment is separate from execution**. You deploy a
+*definition* once, then start many *instances* of it. The engine versions
+definitions on every redeploy of the same key. That versioning is what makes
+Phase 8 (migration) a topic at all.
 
 ## Build It
 
@@ -57,8 +59,8 @@ docker run -p 8080:8080 flowable/flowable-rest
 # REST base: http://localhost:8080/flowable-rest/service   (rest-admin / test)
 ```
 
-The client is stdlib-only — [`code/flowable_client.py`](../code/flowable_client.py).
-The two calls that matter most:
+The client is stdlib-only: [`code/flowable_client.py`](../code/flowable_client.py).
+Here are the two calls that matter most:
 
 ```python
 def start_instance(key, variables):
@@ -88,16 +90,16 @@ audit trail: ['applicationReceived', 'fork', 'creditCheck', 'kycCheck', 'join',
               'route', 'manualReview', 'decided']
 ```
 
-The `ended: True` on the first instance is the deepest lesson here: when no wait state
-lies on the path, **the whole process runs synchronously inside your HTTP call** and
-the instance is already gone by the time you get the response. The engine only
-persists and returns early when it hits a wait state. Phase 2 is entirely about the
-machinery behind that sentence.
+The `ended: True` on the first instance is the deepest lesson here. When no wait
+state lies on the path, **the whole process runs synchronously inside your HTTP
+call**, and the instance is already gone by the time you get the response. The
+engine only persists and returns early when it hits a wait state. Phase 2 is
+entirely about the machinery behind that sentence.
 
 ## Use It
 
-This lesson *is* the Use It. For completeness, the same lifecycle in the embedded Java
-API — recognise every line:
+This lesson *is* the Use It. For completeness, here is the same lifecycle in the
+embedded Java API — you should recognise every line:
 
 ```java
 repositoryService.createDeployment()
@@ -112,8 +114,8 @@ taskService.complete(task.getId(), Map.of("decision", "manually-approved"));
 ## Ship It
 
 This lesson ships [`outputs/flowable_client.py`](../outputs/flowable_client.py) — a
-dependency-free REST client covering deploy / start / tasks / complete / history. The
-Phase 11 capstone driver grows out of this file.
+dependency-free REST client covering deploy, start, tasks, complete, and history.
+The Phase 11 capstone driver grows out of this file.
 
 ## Check Yourself
 
@@ -125,8 +127,8 @@ Phase 11 capstone driver grows out of this file.
 - D) the instance was cancelled
 
 <details><summary>Answer</summary>B — the engine advances synchronously until tokens
-sleep or die. No wait state means the instance completes before the HTTP response is
-written.</details>
+sleep or die. No wait state means the instance completes before the engine writes
+the HTTP response.</details>
 
 **Q2.** Where do completed instances live?
 
@@ -135,9 +137,9 @@ written.</details>
 - C) in the history tables — runtime rows are removed when the instance ends
 - D) in a log file
 
-<details><summary>Answer</summary>C — runtime tables hold only live state (that's what
-keeps them fast); history tables keep the audit trail. The split is Phase 9's opening
-topic.</details>
+<details><summary>Answer</summary>C — runtime tables hold only live state, which is
+what keeps them fast. History tables keep the audit trail. The split is Phase 9's
+opening topic.</details>
 
 **Q3.** You redeploy `loan-triage.bpmn20.xml` with a changed gateway condition. Running
 instances started before the redeploy…
@@ -147,14 +149,14 @@ instances started before the redeploy…
 - C) are cancelled
 - D) fail at the gateway
 
-<details><summary>Answer</summary>B — definitions are versioned; instances pin the
-version they started on. Moving them is *migration*, Phase 8.</details>
+<details><summary>Answer</summary>B — definitions are versioned, and instances pin
+the version they started on. Moving them is *migration*, Phase 8.</details>
 
 **Challenge.** Add a `cancel_instance(instance_id, reason)` function
 (`DELETE /runtime/process-instances/{id}`), start a third instance, cancel it, and
-check what history says about it. Then start twenty instances with random scores and
-write a five-line "ops dashboard": how many completed, how many waiting, oldest waiting
-task.
+check what history says about it. Then start twenty instances with random scores
+and write a five-line "ops dashboard": how many completed, how many waiting, and
+the oldest waiting task.
 
 ## Related
 

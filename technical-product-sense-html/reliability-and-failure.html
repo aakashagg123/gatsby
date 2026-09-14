@@ -315,7 +315,7 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
   </div>
   <h2>TL;DR</h2>
 <p>In a distributed system, <strong>things fail all the time</strong> — networks drop, services time out,
-dependencies go down. Reliability isn't the absence of failure; it's designing so that
+dependencies go down. Reliability isn't the absence of failure. It's designing so that
 failure is <em>contained and graceful</em>. The core tools: <strong>retries</strong> (with backoff) for transient
 errors, <strong>timeouts</strong> so a slow dependency doesn't hang everything, <strong>fallbacks</strong> and
 <strong>graceful degradation</strong> so a partial answer beats an error, and <strong>circuit breakers</strong> so one
@@ -323,10 +323,10 @@ sick service doesn't drag down the rest. The product decision is: <em>when this 
 the user see?</em></p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — Model APIs fail in ways classic services don't: they rate-limit,
-time out under load, and occasionally return confidently wrong output — a "failure" that
-returns HTTP 200. Your reliability design has to cover <em>bad answers</em>, not just <em>no answers</em>.</p>
-<p><strong>What it changes in your decisions</strong> — You design the degraded path explicitly: what the
+<p><strong>Why it matters</strong> — Model APIs fail in ways classic services don't. They rate-limit, time
+out under load, and occasionally return confidently wrong output — a "failure" that returns
+HTTP 200. Your reliability design has to cover <em>bad answers</em>, not just <em>no answers</em>.</p>
+<p><strong>What it changes in your decisions</strong> — Design the degraded path explicitly: what the
 feature does when the model is slow, throttled, down, or wrong — a cached answer, a smaller
 model, a non-AI fallback, or an honest "try again."</p>
 <p><strong>Ask yourself</strong> — <em>"When the model is unavailable or returns garbage, what does the user
@@ -353,23 +353,23 @@ unhandled crash. The difference between a robust product and a fragile one is wh
 non-happy paths were designed or just... happened.</p>
 <h2>The core tools</h2>
 <ul>
-<li><strong>Retries with backoff</strong> — many failures are transient (a blip, a momentary overload).
-  Retrying often works — but retry <em>immediately and forever</em> and you amplify an outage into a
-  stampede. Use <strong>exponential backoff</strong> (wait longer each time) and a retry limit. And retries
-  are only safe if the operation is <a href="apis-and-contracts.html">idempotent</a>.</li>
-<li><strong>Timeouts</strong> — never wait forever. A timeout converts "hung indefinitely" into "failed
+<li><strong>Retries with backoff</strong> — Many failures are transient — a blip, a momentary overload.
+  Retrying often works. But retry <em>immediately and forever</em> and you amplify an outage into a
+  stampede. Use <strong>exponential backoff</strong> (wait longer each time) and a retry limit. Retries are
+  only safe if the operation is <a href="apis-and-contracts.html">idempotent</a>.</li>
+<li><strong>Timeouts</strong> — Never wait forever. A timeout converts "hung indefinitely" into "failed
   quickly," so you can fall back. Every external call needs one.</li>
-<li><strong>Fallbacks &amp; graceful degradation</strong> — when the best answer isn't available, return a
+<li><strong>Fallbacks &amp; graceful degradation</strong> — When the best answer isn't available, return a
   <em>good-enough</em> one: a cached result, a simpler computation, a default. A search box that
   falls back to keyword results when the smart ranker is down still works.</li>
-<li><strong>Circuit breakers</strong> — if a dependency is clearly down, stop hammering it: "trip the breaker"
-  and fail fast (straight to the fallback) until it recovers. This stops one failure from
+<li><strong>Circuit breakers</strong> — If a dependency is clearly down, stop hammering it. "Trip the breaker"
+  and fail fast, straight to the fallback, until it recovers. This stops one failure from
   cascading across the system.</li>
 </ul>
 <h2>SLAs, SLOs, and the cost of nines</h2>
-<p>Reliability is measured in <strong>uptime</strong> — the "nines." 99.9% ("three nines") is ~8.7 hours of
-downtime a year; 99.99% is ~52 minutes. Each extra nine costs disproportionately more
-engineering. So reliability is a <strong>product trade-off</strong>, not an absolute: a payments flow may
+<p>Reliability is measured in <strong>uptime</strong> — the "nines." 99.9% ("three nines") is about 8.7 hours
+of downtime a year. 99.99% is about 52 minutes. Each extra nine costs disproportionately more
+engineering. So reliability is a <strong>product trade-off</strong>, not an absolute. A payments flow may
 need four nines; a "related articles" widget can fail silently and nobody's hurt. Match the
 target to what a failure actually costs the user.</p>
 <ul>
@@ -379,27 +379,28 @@ target to what a failure actually costs the user.</p>
 <p>Deciding <em>which</em> parts of your product need high reliability — and which can degrade quietly —
 is one of the clearest expressions of technical product sense.</p>
 <h2>A worked pass: the retry storm</h2>
-<p>How a slowdown becomes an outage. Your payment provider degrades — responses go from
-300 ms to 8 seconds. Every service calling it starts timing out and, being helpful,
-<em>retries</em>. Traffic to the struggling provider triples. Your own request threads are now
-parked waiting on payments, so unrelated pages slow down; users, being human, refresh —
-another retry storm, one layer up. A 20-minute provider blip becomes a site-wide
-outage, caused not by the failure but by <em>your response to it</em>.</p>
-<p>The toolkit, applied in order: <strong>timeouts</strong> cap how long anything waits (8-second calls
-get cut at 2); <strong>backoff with jitter</strong> spaces retries out instead of synchronizing
-them; a <strong>circuit breaker</strong> notices the provider is sick and fails fast for a while
-instead of queueing more victims; and a <strong>fallback</strong> decides what the user sees —
-"payment is taking longer than usual, we'll email your receipt" beats a spinner beats
-an error page. The product decision hiding in the incident: which of those experiences
-did you <em>choose</em> in the spec, and which did users get by accident? Write the failure
-UX down before launch; the system will exercise it whether or not you designed it.</p>
+<p>Here's how a slowdown becomes an outage. Your payment provider degrades — responses go
+from 300 ms to 8 seconds. Every service calling it starts timing out and, being
+helpful, <em>retries</em>. Traffic to the struggling provider triples. Your own request
+threads are now parked waiting on payments, so unrelated pages slow down. Users, being
+human, refresh — another retry storm, one layer up. A 20-minute provider blip becomes
+a site-wide outage, caused not by the failure but by <em>your response to it</em>.</p>
+<p>The toolkit, applied in order: <strong>timeouts</strong> cap how long anything waits (8-second
+calls get cut at 2). <strong>Backoff with jitter</strong> spaces retries out instead of
+synchronizing them. A <strong>circuit breaker</strong> notices the provider is sick and fails fast
+for a while instead of queueing more victims. A <strong>fallback</strong> decides what the user
+sees — "payment is taking longer than usual, we'll email your receipt" beats a
+spinner, which beats an error page. The product decision hiding in the incident: which
+of those experiences did you <em>choose</em> in the spec, and which did users get by
+accident? Write the failure UX down before launch. The system will exercise it
+whether or not you designed it.</p>
 <h2>Failure modes</h2>
 <ul>
-<li><strong>No degraded path</strong> — the feature only has "works" and "white screen"; the first outage is
+<li><strong>No degraded path</strong> — The feature only has "works" and "white screen." The first outage is
   visible to every user.</li>
-<li><strong>Retry storms</strong> — naive retries with no backoff turn a small blip into a full outage.</li>
-<li><strong>Timeout-less calls</strong> — one slow dependency hangs the whole request.</li>
-<li><strong>Uniform reliability</strong> — spending four-nines effort on a widget that could fail silently,
+<li><strong>Retry storms</strong> — Naive retries with no backoff turn a small blip into a full outage.</li>
+<li><strong>Timeout-less calls</strong> — One slow dependency hangs the whole request.</li>
+<li><strong>Uniform reliability</strong> — Four-nines effort gets spent on a widget that could fail silently,
   while the checkout has no fallback.</li>
 </ul>
 <h2>Practitioner checklist</h2>

@@ -7,10 +7,10 @@
 ## The Problem
 
 In-session compaction (Phase 4 lesson 04) shrinks one conversation. But across many
-sessions you accumulate transcripts you'll never re-read — yet they contain hard-won lessons
-("the flaky test is a timing issue", "don't bump that dep"). Cross-session compaction
-extracts those lessons into long-term memory (lesson 03) so the *knowledge* persists while
-the raw transcripts can be archived or discarded.
+sessions you accumulate transcripts you'll never re-read. They still contain hard-won
+lessons, such as "the flaky test is a timing issue" or "don't bump that dep." Cross-session
+compaction extracts those lessons into long-term memory (lesson 03). The *knowledge*
+persists while the raw transcripts can be archived or discarded.
 
 ## The Concept
 
@@ -21,8 +21,8 @@ flowchart LR
   T --> A["archive/discard raw transcript"]
 ```
 
-This is the harness-principles "persistent cross-sprint memory": append precise lessons
-(symptom, root cause, fix) — evidence, not vague summaries.
+This is the harness-principles "persistent cross-sprint memory": append precise lessons —
+symptom, root cause, fix. Write evidence, not vague summaries.
 
 ## Build It
 
@@ -50,15 +50,17 @@ print(distill(transcript, remember=lambda f, tags: saved.append(f)))   # distill
 print(saved)
 ```
 
-In production `distill` is a model call ("extract durable lessons as symptom→fix") writing to
-`LongTermMemory` or `knowledge.md`. The transcript can then be archived; the lesson endures.
+In production `distill` is a model call ("extract durable lessons as symptom→fix") that
+writes to `LongTermMemory` or `knowledge.md`. The transcript can then be archived. The
+lesson endures.
 
 ## Use It
 
-This is the **memory agent** from the harness-principles pipeline (Phase 10): after a sprint,
-it appends precisely-worded failure patterns to `knowledge.md`. For a Claude Code / Codex
-user, the lightweight version is ending a session by asking the agent to "append what we
-learned to `knowledge.md`", so the next session starts smarter without re-reading old chats.
+This is the **memory agent** from the harness-principles pipeline (Phase 10). After a
+sprint, it appends precisely worded failure patterns to `knowledge.md`. For a Claude
+Code / Codex user, the lightweight version is ending a session by asking the agent to
+"append what we learned to `knowledge.md`." The next session then starts smarter without
+re-reading old chats.
 
 ## Ship It
 
@@ -86,7 +88,7 @@ distiller.
 <details><summary>Answer</summary>B — evidence, not vague summary.</details>
 
 **Challenge.** Make `distill` a real model call that returns structured `{symptom, cause,
-fix}` entries and dedupe against existing memory before writing.
+fix}` entries. Dedupe against existing memory before writing.
 
 ## Related
 

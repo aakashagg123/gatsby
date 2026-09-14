@@ -12,8 +12,9 @@ Work through the three questions in order. Stop at the first answer.
 
 ## 1. Does the flow stop until someone or something outside the engine acts?
 
-- **A person acts** → **User task.** Use `assignee` only for genuinely personal work;
-  default to `candidateGroups` (one task, many eligible claimants, first claim wins).
+- **A person acts** → **User task.** Use `assignee` only for genuinely personal
+  work. Default to `candidateGroups` — one task, many eligible claimants, first
+  claim wins.
 - **An external system calls back later** → **Receive task / message catch event.**
   Correlate by business key, not by task ID.
 - **Only time passes** → **Timer event** (ISO-8601: `PT4H`, `P3D`, `R3/PT1H`).
@@ -23,8 +24,8 @@ Work through the three questions in order. Stop at the first answer.
 
 - **Yes (sub-second, internal, idempotent)** → **Service task** (delegate or
   expression) or **HTTP task** for plain REST.
-- **No (slow, flaky, third-party, rate-limited)** → make it asynchronous:
-  `flowable:async="true"` on the task (job executor retries come free), or
+- **No (slow, flaky, third-party, rate-limited)** → make it asynchronous. Add
+  `flowable:async="true"` on the task and job executor retries come free, or
   fire-and-wait with a message catch for the callback.
 
 ## 3. Will the business want to change this logic without a release?

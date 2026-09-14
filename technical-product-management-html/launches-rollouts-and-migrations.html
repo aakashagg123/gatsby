@@ -318,10 +318,10 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
 production, dark, behind a feature flag) and <strong>release</strong> (users actually see it, at a
 percentage you control). That separation enables <strong>progressive delivery</strong> — internal
 users, then beta, then 1%, 10%, 50%, 100% — with metrics checked at every stage and a
-rollback plan that's a flag-flip, not a fire drill. Launch is the <em>marketing</em> moment and
+rollback plan that's a flag-flip, not a fire drill. Launch is the <em>marketing</em> moment, and
 needs its own machinery: support enablement, docs, comms, and a go/no-go that someone
-actually owns. And the least glamorous, highest-risk work in the discipline is the
-<strong>migration</strong> — moving users and data off the old thing — where the rule is: the effort
+actually owns. The least glamorous, highest-risk work in the discipline is the
+<strong>migration</strong> — moving users and data off the old thing. The rule there: the effort
 lives in the transition, not the destination, and you're not done until the old thing is
 <em>off</em>.</p>
 <blockquote class="pm-callout">
@@ -332,7 +332,7 @@ volume, and abuse that only appears in public. And the riskiest recurring change
 your code — it's the <strong>model or prompt upgrade</strong>, which can silently regress behaviour
 that worked yesterday.</p>
 <p><strong>What it changes in your decisions</strong> — Every AI rollout stage gates on <em>quality</em>
-signals (acceptance rate, eval spot-checks) alongside crashes and latency; and model or
+signals (acceptance rate, eval spot-checks) alongside crashes and latency. Model or
 prompt swaps get the full migration treatment — offline eval diff, side-by-side
 shadow run, staged ramp with rollback — never a quiet Tuesday config change.</p>
 <p><strong>Ask yourself</strong> — <em>"At 1%, what signal tells me quality is wrong — and can I get back
@@ -358,16 +358,16 @@ customer's workflow ships to 100% in one step, and the rollback path turns out t
 <ul>
 <li><strong>Dark / deployed-off</strong> — integration verified in production with zero user exposure.</li>
 <li><strong>Internal (dogfooding)</strong> — the cheapest honest users you'll ever have. If your own
-  team routes around the feature, users will too; listen <em>before</em> beta.</li>
+  team routes around the feature, users will too. Listen <em>before</em> beta.</li>
 <li><strong>Beta</strong> — opted-in users who expect rough edges and give real-workflow feedback. Set
-  expectations explicitly; a beta user surprised by instability is a churn story.</li>
+  expectations explicitly. A beta user surprised by instability is a churn story.</li>
 <li><strong>Canary (1–5%)</strong> — the money stage. Enough traffic for real signal on crashes,
-  latency, cost, and (for AI) quality proxies; small enough that a disaster is an
+  latency, cost, and (for AI) quality proxies. Small enough that a disaster is an
   apology, not a headline. Define the <strong>abort criteria before you start</strong> — "flag off if
   error rate exceeds X or acceptance rate drops Y%" — because mid-incident is the worst
   time to negotiate thresholds.</li>
 <li><strong>Ramp</strong> — watch the <a href="metrics-and-experimentation.html">guardrail metrics</a> at each
-  step; costs and tail latencies that looked fine at 5% have opinions at 50%.</li>
+  step. Costs and tail latencies that looked fine at 5% have opinions at 50%.</li>
 <li><strong>GA and cleanup</strong> — the flag comes <em>out</em>. A codebase of permanent flags is
   <a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt</a> with a countdown
   attached.</li>
@@ -378,11 +378,11 @@ version still work under the old one? That last question is the sneaky one — a
 that writes a new data format can make "just turn it off" impossible. If rollback is
 hard, you find out now, not at 2 a.m.</p>
 <h2>Launch ≠ release</h2>
-<p>Release is traffic percentages; <strong>launch</strong> is the coordinated moment the world is told.
+<p>Release is traffic percentages. <strong>Launch</strong> is the coordinated moment the world is told.
 The launch machinery PMs own:</p>
 <ul>
 <li><strong>Tiering</strong> — not everything deserves fireworks. A tier-1 launch (press, exec
-  visibility) needs weeks of coordination; a tier-3 (changelog note) needs a paragraph.
+  visibility) needs weeks of coordination. A tier-3 (changelog note) needs a paragraph.
   Deciding the tier early prevents both over-production and under-communication.</li>
 <li><strong>Support enablement</strong> — support sees the surge first. They get docs, known-issues
   lists, and escalation paths <em>before</em> the announcement, or launch day becomes their
@@ -392,7 +392,7 @@ The launch machinery PMs own:</p>
   the genuine option of "no." A go/no-go that has never said no-go is a ceremony.</li>
 <li><strong>The post-launch review</strong> — 2–4 weeks after: metrics vs. the PRD's predictions,
   honest deltas, lessons written down. This closes the
-  <a href="discovery-to-delivery.html">discovery loop</a>; skipping it means every launch teaches
+  <a href="discovery-to-delivery.html">discovery loop</a>. Skipping it means every launch teaches
   nothing.</li>
 </ul>
 <h2>Migrations: the transition is the project</h2>

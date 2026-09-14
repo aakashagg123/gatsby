@@ -8,48 +8,50 @@
 matching text and start knowing what text *refers to* — entities with identities,
 properties, and relationships, powering the info panels beside search results. It gave
 the field its name and its cleanest slogan. 🎯 *Takeaway:* the shift that mattered
-wasn't a database — it was [treating identity as the product](./what-is-a-knowledge-graph.md).
-The moment "jaguar" became three *things* instead of one string, whole product surfaces
-became possible.
+wasn't a database. It was
+[treating identity as the product](./what-is-a-knowledge-graph.md). The moment
+"jaguar" became three *things* instead of one string, whole product surfaces became
+possible.
 
 **The Panama Papers (2016).** Handed 11.5 million leaked documents, the ICIJ loaded
 extracted entities — companies, officers, addresses — into a graph database and let
 hundreds of journalists *traverse*: from a politician to a shell company to a shared
 registered agent to the next shell. Connections no keyword search could surface fell
-out as paths. 🎯 *Takeaway:* [traversal is a capability, not a report](./reasoning-and-analytics.md)
-— when the question is "how is A connected to B?", the graph doesn't just answer
-faster; it answers questions you couldn't previously ask. (Note also what did the heavy
-lifting first: extraction and [entity resolution](./building-the-graph.md) across
-millions of messy documents.)
+out as paths. 🎯 *Takeaway:*
+[traversal is a capability, not a report](./reasoning-and-analytics.md). When the
+question is "how is A connected to B?", the graph doesn't just answer faster — it
+answers questions you couldn't previously ask. (Note also what did the heavy lifting
+first: extraction and [entity resolution](./building-the-graph.md) across millions of
+messy documents.)
 
 **Amazon's Product Graph (2018→).** Amazon set out to build an authoritative graph of
 products and everything about them — brands, attributes, compatibility, variants —
 feeding search, recommendations, and Alexa answers. The published lesson: the hard
-science was never storage; it was extraction from messy seller text and reconciling
+science was never storage. It was extraction from messy seller text and reconciling
 conflicting sources at catalog scale. 🎯 *Takeaway:* exactly the
 [80% claim](./building-the-graph.md) — the pipeline is the product. Even with
 world-class infrastructure, the budget and the breakthroughs live in extraction and
 resolution.
 
 **LinkedIn's Economic Graph.** LinkedIn frames its entire asset as one graph — members,
-companies, skills, jobs, schools — and its features as traversals of it: "people you
-may know" is [link prediction](./reasoning-and-analytics.md); recruiter search is
-multi-hop filtering; economic research is aggregate graph analytics. 🎯 *Takeaway:*
+companies, skills, jobs, schools — and its features as traversals of it. "People you
+may know" is [link prediction](./reasoning-and-analytics.md). Recruiter search is
+multi-hop filtering. Economic research is aggregate graph analytics. 🎯 *Takeaway:*
 when [the relationships are the product](./what-is-a-knowledge-graph.md), the graph
-isn't infrastructure behind the product — it *is* the product, and every feature is a
+isn't infrastructure behind the product — it *is* the product. Every feature is a
 different query against the same compounding asset.
 
 **NASA's lessons-learned graph.** NASA connected decades of siloed mission documents,
-incident reports, and engineering lessons into a knowledge graph so an engineer
+incident reports, and engineering lessons into a knowledge graph, so an engineer
 designing a component can find what past programs learned — across programs, decades,
 and vocabularies that never matched. 🎯 *Takeaway:* the
-[ontology work is organizational](./ontologies-and-data-modeling.md) — the technical
-graph was the easy half; agreeing what a "lesson," an "anomaly," and a "subsystem"
+[ontology work is organizational](./ontologies-and-data-modeling.md). The technical
+graph was the easy half. Agreeing what a "lesson," an "anomaly," and a "subsystem"
 mean across generations of programs was the actual project.
 
 **Microsoft GraphRAG (2024).** Microsoft Research showed that vector-only RAG fails on
 *global* questions ("what are the main themes in this corpus?") and multi-hop
-questions — and that building a graph over the corpus, detecting communities, and
+questions. Building a graph over the corpus, detecting communities, and
 pre-summarizing them lets an LLM answer both, with sources. The pattern went from
 paper to product roadmaps in about a year. 🎯 *Takeaway:* the
 [graph-LLM marriage](./knowledge-graphs-and-llms.md) is not vendor fog — it targets
@@ -57,8 +59,8 @@ measured, structural failures of similarity-only retrieval. But adopt it the way
 lesson says: after your evals show *those* failures, not before.
 
 **The enterprise graveyard (ongoing).** Every data leader knows one: the two-year
-enterprise-ontology program with a 400-page model and no shipped feature; the pilot
-that wowed and then decayed unstewarded; the "graph initiative" renamed twice and
+enterprise-ontology program with a 400-page model and no shipped feature, the pilot
+that wowed and then decayed unstewarded, the "graph initiative" renamed twice and
 quietly absorbed into a BI team. These don't make conference talks, which is why the
 pattern repeats. 🎯 *Takeaway:* the failures are portfolio failures —
 [no killer query, no visible feature, no steady state](./knowledge-graphs-as-a-product.md)
@@ -79,13 +81,13 @@ postmortem. Sequencing and stewardship, not technology, decide survival.
 | [Knowledge graphs as a product](./knowledge-graphs-as-a-product.md) | Fund features, sequence adjacent domains, let the asset compound | What ships in two quarters that a user will notice? |
 
 **The through-line:** every lesson is an annotation on the
-[module's own knowledge graph](./README.md): an ontology gives meaning, a pipeline
-manufactures the asset, storage serves it, reasoning and LLMs cash it into features,
-governance keeps it believable, and the product loop funds the next domain. The
+[module's own knowledge graph](./README.md). An ontology gives meaning. A pipeline
+manufactures the asset. Storage serves it. Reasoning and LLMs cash it into features.
+Governance keeps it believable. The product loop funds the next domain. The
 organizations that win with knowledge graphs aren't the ones with the biggest node
-counts or the fanciest databases — they're the ones that picked killer queries, paid
-the unglamorous resolution-and-curation bill, showed their work on every fact, and let
-the asset compound one adjacent domain at a time.
+counts or the fanciest databases. They're the ones that picked killer queries, paid the
+unglamorous resolution-and-curation bill, showed their work on every fact, and let the
+asset compound one adjacent domain at a time.
 
 > **Walk-away question:** *"For my knowledge graph: can I name the killer query, the
 > first visible feature and its quarter, the steward behind each domain, the four

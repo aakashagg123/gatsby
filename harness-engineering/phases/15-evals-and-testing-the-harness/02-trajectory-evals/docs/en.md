@@ -6,9 +6,9 @@
 
 ## The Problem
 
-Golden-set scoring (lesson 01) checks the final output, but an agent can reach a right answer
+Golden-set scoring (lesson 01) checks the final output. But an agent can reach a right answer
 the wrong way — skipping the tests, editing the wrong file first, calling a tool 10 times. A
-**trajectory eval** scores the *sequence of actions*: did it call the expected tools, in a
+**trajectory eval** scores the *sequence of actions*. Did it call the expected tools, in a
 sane order, without forbidden steps? This catches process bugs a final-answer check misses.
 
 ## The Concept
@@ -46,15 +46,15 @@ print(score_trajectory(traj, must_include=["read", "bash"], must_not=["rm"], max
 # score 1.0 — read the code, made the edit, ran tests; no forbidden tools
 ```
 
-Trajectory checks encode process expectations — "always run tests", "never call the delete
-tool", "don't exceed N steps" — and score how well a run followed them.
+Trajectory checks encode process expectations, such as "always run tests", "never call the
+delete tool", or "don't exceed N steps", and score how well a run followed them.
 
 ## Use It
 
-For coding agents this is how you verify good *habits*, not just good answers: did it read
-before editing (Phase 6), run tests before claiming done (Phase 11), stay within budget
-(Phase 14)? Trajectory evals over recorded runs (traces, Phase 16) catch regressions in
-behavior that output-only checks would miss.
+For coding agents this is how you verify good *habits*, not just good answers. Did it read
+before editing (Phase 6)? Did it run tests before claiming done (Phase 11)? Did it stay within
+budget (Phase 14)? Trajectory evals over recorded runs (traces, Phase 16) catch regressions
+in behavior that output-only checks would miss.
 
 ## Ship It
 

@@ -6,14 +6,14 @@
 
 ## The Problem
 
-The model doesn't see characters; it sees **tokens**. Cost, latency, and the hard limit
+The model doesn't see characters. It sees **tokens**. Cost, latency, and the hard limit
 of the context window are all measured in tokens. If your harness doesn't track them, it
 will silently overflow the window (truncating who-knows-what) or surprise you with a bill.
 You need a way to estimate tokens and a budget check before every call.
 
 ## The Concept
 
-A token is roughly a word-piece; a common rough rule is **~4 characters ≈ 1 token** for
+A token is roughly a word-piece. A common rough rule is **~4 characters ≈ 1 token** for
 English. The context window is a fixed budget shared by *input + output*:
 
 ```

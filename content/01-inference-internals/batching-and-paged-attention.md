@@ -7,8 +7,8 @@
 Two innovations made modern LLM serving economical. **Continuous batching** keeps the
 GPU full by adding and removing requests at the *token* level instead of waiting for
 a whole batch to finish. **Paged attention** manages the [KV cache](./kv-cache-management.md)
-in fixed-size, non-contiguous blocks (like OS virtual memory) so memory isn't wasted
-or fragmented — which lets you fit more sequences and therefore batch more. Together
+in fixed-size, non-contiguous blocks (like OS virtual memory), so memory isn't wasted
+or fragmented. That lets you fit more sequences and therefore batch more. Together
 they turn the bandwidth-bound [decode](./prefill-vs-decode.md) phase into a
 high-throughput one.
 
@@ -51,36 +51,36 @@ every step:
 
 Effects:
 - **GPU stays saturated** — finished slots are immediately refilled by waiting
-  requests; no idle bubbles.
+  requests. No idle bubbles.
 - **New requests don't wait for a batch boundary** — they join almost immediately, so
   queueing latency drops.
 - **Throughput rises sharply** at a given latency target compared to static batching.
 
 The catch: prefill of a newly admitted request can momentarily interfere with ongoing
-decode (a TTFT-vs-TPOT tension). **Chunked prefill** mitigates this by slicing big
-prefills and interleaving them with decode steps so no single large prompt stalls the
+decode (a TTFT-vs-TPOT tension). **Chunked prefill** mitigates this. It slices big
+prefills and interleaves them with decode steps, so no single large prompt stalls the
 token stream.
 
 ## Paged attention
 
 Borrowing virtual-memory ideas from operating systems: divide the KV cache into
 fixed-size **blocks (pages)**. A sequence's KV is a *list of blocks* that need not be
-contiguous; a block table maps logical positions to physical blocks.
+contiguous. A block table maps logical positions to physical blocks.
 
 Benefits:
 - **Near-zero fragmentation** — allocate blocks on demand as a sequence grows, instead
   of reserving its maximum up front. More sequences fit in the same HBM →
   bigger batches → higher throughput.
 - **Cheap sharing (copy-on-write).** Sequences with a common prefix can *share* the
-  physical blocks for that prefix and only diverge when they differ — this is the
+  physical blocks for that prefix, and only diverge when they differ. This is the
   mechanism behind efficient [prefix caching](./prompt-vs-semantic-caching.md) and
-  parallel sampling/beam search.
+  parallel sampling or beam search.
 - **Clean eviction/swap units.** Blocks are natural granules to evict or swap to host
   memory under [memory pressure](./kv-cache-management.md).
 
 ## How they reinforce each other
 
-Paged attention raises how many sequences fit in memory; continuous batching turns
+Paged attention raises how many sequences fit in memory. Continuous batching turns
 that headroom into sustained GPU utilization. The product is dramatically higher
 throughput — and therefore lower **cost per token** — at comparable latency. This is
 the core reason a well-configured open-source server (vLLM, TGI, TensorRT-LLM, SGLang)

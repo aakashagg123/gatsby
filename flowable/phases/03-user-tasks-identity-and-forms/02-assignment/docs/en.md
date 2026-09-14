@@ -1,18 +1,18 @@
 # Assignment: assignee, candidate users, candidate groups
 
-> **Motto** — Assign roles, not people: `assignee="ravi"` is an outage waiting for
-> Ravi's resignation letter; `candidateGroups="credit-ops"` survives every org chart.
+> **Motto** — Assign roles, not people. `assignee="ravi"` is an outage waiting for
+> Ravi's resignation letter. `candidateGroups="credit-ops"` survives every org chart.
 
 *Part of Phase 03 — User tasks, identity & forms.*
 
 ## The Problem
 
-Every user task must answer "whose inbox does this land in?" — and the answer is
-written in the model, which means a bad answer is *deployed*. The classic failure is
-hard-coding a person: the task `flowable:assignee="ravi"` works until Ravi is on
-leave, transferred, or gone, at which point live instances sit in the inbox of someone
-who will never come back, and fixing it means migrating instances or editing task
-state by hand. Assignment is a modelling decision with operational blast radius.
+Every user task must answer one question: whose inbox does this land in? The model
+writes the answer, so a bad answer gets deployed. The classic failure is hard-coding
+a person. The task `flowable:assignee="ravi"` works fine until Ravi goes on leave,
+transfers, or leaves the company. Then live instances sit in the inbox of someone who
+will never come back, and fixing it means migrating instances or editing task state
+by hand. Assignment is a modelling decision with real operational risk.
 
 ## The Concept
 
@@ -34,19 +34,20 @@ flowchart LR
 
 Two refinements that keep models clean:
 
-1. **Expressions over literals, always.** `flowable:assignee="${applicant}"` (the
-   instance knows who applied), `flowable:candidateGroups="${region}-credit-ops"`
-   (routing by data). The model states the *rule*; identity data supplies the names
-   at runtime.
-2. **Pools compose with the lifecycle.** A claimed task leaves the pool queries
-   (lesson 01's race, visible in the API); unclaim returns it. The pool *is* the
-   backlog view, which is why lesson 05 builds the whole inbox on two queries.
+1. **Expressions over literals, always.** Use `flowable:assignee="${applicant}"`
+   (the instance knows who applied) or `flowable:candidateGroups="${region}-credit-ops"`
+   (routing by data). The model states the *rule*, and identity data supplies the
+   names at runtime.
+2. **Pools compose with the lifecycle.** A claimed task leaves the pool queries —
+   that's lesson 01's race, visible in the API. Unclaim returns the task to the pool.
+   The pool *is* the backlog view, which is why lesson 05 builds the whole inbox on
+   two queries.
 
 ## Use It
 
 [`code/assignment_client.py`](../code/assignment_client.py) drives the protocol
-against Phase 1's `loanTriage` (whose review task declares
-`flowable:candidateGroups="credit-ops"`). The two queries that matter:
+against Phase 1's `loanTriage`. Its review task declares
+`flowable:candidateGroups="credit-ops"`. Two queries matter:
 
 ```python
 def group_pool(group):
@@ -76,8 +77,8 @@ The 409 is lesson 01's `TransitionError` on the wire — same guarantee, same re
 ## Ship It
 
 This lesson ships
-[`outputs/assignment_client.py`](../outputs/assignment_client.py) — pool/claim/
-complete as reusable functions; lesson 05's inbox builds on the same two queries.
+[`outputs/assignment_client.py`](../outputs/assignment_client.py): pool, claim, and
+complete as reusable functions. Lesson 05's inbox builds on the same two queries.
 
 ## Check Yourself
 
@@ -99,7 +100,7 @@ complete as reusable functions; lesson 05's inbox builds on the same two queries
 - D) the group was removed
 
 <details><summary>Answer</summary>B — pool and personal list are two filters over
-the same task table; the claim transition is what moves rows between them.</details>
+the same task table. The claim transition moves rows between them.</details>
 
 **Q3.** "The customer's own relationship manager reviews the file." Best modelling?
 
@@ -109,13 +110,13 @@ the same task table; the claim transition is what moves rows between them.</deta
 - D) a service task that emails someone
 
 <details><summary>Answer</summary>B — genuinely personal work is the assignee case,
-but the *name* comes from data, not the model. (C would let any RM claim it —
-different policy.)</details>
+but the *name* comes from data, not the model. C would let any RM claim it, which is
+a different policy.</details>
 
-**Challenge.** Extend the client with `reassign_orphans(from_user, to_group)`: find
-every task assigned to a departed user (`assignee=from_user`), unclaim each back to
-the pool, and print the audit line. That script is the standard "Ravi resigned"
-runbook — better to have written it before you need it.
+**Challenge.** Extend the client with `reassign_orphans(from_user, to_group)`. Find
+every task assigned to a departed user (`assignee=from_user`), unclaim each one back
+to the pool, and print the audit line. That script is the standard "Ravi resigned"
+runbook — write it before you need it.
 
 ## Related
 

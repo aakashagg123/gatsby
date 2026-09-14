@@ -7,9 +7,10 @@
 ## The Problem
 
 A server is useless without a **client**. The harness side of MCP connects to a server,
-calls `initialize`, fetches `tools/list`, and merges those tools into the agent's tool set
-so the model can call them — routing each `tool_use` for a server tool back over `tools/call`.
-This is how external tools become indistinguishable from built-ins to the model.
+calls `initialize`, and fetches `tools/list`. It merges those tools into the agent's tool set
+so the model can call them, and routes each `tool_use` for a server tool back over
+`tools/call`. This is how external tools become indistinguishable from built-ins to the
+model.
 
 ## The Concept
 
@@ -54,16 +55,17 @@ tools = client.list_tools()                 # [{'name': 'add', ...}]
 print(client.call("add", a=2, b=3))         # 5
 ```
 
-`list_tools()` feeds the model's `tools=` (merged via the Phase 3 registry); `call()` is what
-the loop runs when the model invokes a server tool. The model never knows the tool lives in
-another process.
+`list_tools()` feeds the model's `tools=` list, merged through the Phase 3 registry.
+`call()` is what the loop runs when the model invokes a server tool. The model never knows
+the tool lives in another process.
 
 ## Use It
 
-This client logic is built into Claude Code / Codex: you declare servers in config, the tool
-connects and discovers their tools at startup, and they appear (often namespaced, like
-`mcp__github__*`) in the agent's toolset. When a server's tools don't show up, it's almost
-always a failed `initialize`/`tools/list` — exactly the calls you implemented.
+This client logic is built into Claude Code and Codex. You declare servers in config, and
+the tool connects and discovers their tools at startup. They then appear in the agent's
+toolset, often namespaced like `mcp__github__*`. When a server's tools don't show up, the
+cause is almost always a failed `initialize` or `tools/list` call — exactly the calls you
+implemented.
 
 ## Ship It
 

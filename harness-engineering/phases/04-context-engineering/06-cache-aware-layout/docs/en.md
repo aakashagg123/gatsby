@@ -7,10 +7,10 @@
 ## The Problem
 
 You've budgeted, assembled, trimmed, compacted, and injected. The last question is
-*economic*: a coding agent resends a huge stable prefix every turn (system + memory + tool
-schemas). Without a cache-aware layout you pay full price to reprocess it each call — slow
-and expensive across a long session. This lesson ties context engineering to prompt
-caching (Phase 1 lesson 08).
+*economic*. A coding agent resends a huge stable prefix every turn: system, memory, and
+tool schemas. Without a cache-aware layout, you pay full price to reprocess it each call,
+which grows slow and expensive across a long session. This lesson ties context engineering
+to prompt caching (Phase 1 lesson 08).
 
 ## The Concept
 
@@ -49,16 +49,16 @@ def build_request(memory, tools, history, files, user_msg):
                 system=system, tools=tools, messages=messages)
 ```
 
-Across a session the stable prefix is written to cache once and read cheaply thereafter;
+Across a session the stable prefix is written to cache once and read cheaply after that.
 `usage.cache_read_input_tokens` confirms it.
 
 ## Use It
 
 This is precisely why **Claude Code / Codex** keep `CLAUDE.md` / `AGENTS.md` and tool
-definitions stable and up front, and compact history rather than rewriting the prefix: a
-changed byte early would invalidate the cache. Your takeaway as a user: keep memory files
-lean and stable; let the tool manage history. As a builder: never interleave volatile data
-into the cached prefix.
+definitions stable and up front, and compact history instead of rewriting the prefix. A
+changed byte early in the prefix would invalidate the cache. As a user, keep memory files
+lean and stable, and let the tool manage history. As a builder, never interleave volatile
+data into the cached prefix.
 
 ## Ship It
 

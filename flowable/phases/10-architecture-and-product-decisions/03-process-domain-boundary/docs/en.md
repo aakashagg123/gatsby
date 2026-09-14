@@ -10,14 +10,15 @@ required. Concept reading:
 
 ## The Problem
 
-Engines are seductive state stores: variables persist, history remembers, the API
-queries nicely. So the slide begins — the loan amount lives only as a process
-variable; the mobile app renders account state from the task list; reporting joins
-`ACT_HI_VARINST` for revenue numbers. Eighteen months later the "workflow engine"
-is the system of record for a loan book, Phase 9's retention decision has become a
-data-loss decision, and replacing or even upgrading the engine means migrating
-your *business data*. Every BPM veteran has seen this exact failure; it has a
-boundary-shaped cure.
+Engines are seductive state stores. Variables persist, history remembers, and the
+API queries nicely. So the slide begins: the loan amount lives only as a process
+variable, the mobile app renders account state from the task list, and reporting
+joins `ACT_HI_VARINST` for revenue numbers.
+
+Eighteen months later, the "workflow engine" is the system of record for a loan
+book. Phase 9's retention decision has become a data-loss decision, and replacing
+or even upgrading the engine means migrating your *business data*. Every BPM
+veteran has seen this exact failure, and it has a boundary-shaped cure.
 
 ## The Concept
 
@@ -39,33 +40,33 @@ flowchart LR
 
 The four boundary rules:
 
-1. **Variables carry references, not truth.** `loanId`, `applicationId`, a
-   `score` the flow routes on — yes. The loan's amount, rate schedule, customer
-   PII as the *only* copy — never. (Phases 2.02 and 9.02 gave the tactical
-   reasons — size, PII custody; this is the strategic one: variables are
-   coordination scratchpad, and their retention clock must be allowed to run
-   out.)
+1. **Variables carry references, not truth.** `loanId`, `applicationId`, and a
+   `score` the flow routes on — yes. The loan's amount, rate schedule, or
+   customer PII as the *only* copy — never. Phases 2.02 and 9.02 gave the
+   tactical reasons (size, PII custody). This is the strategic one: variables
+   are coordination scratchpad, and their retention clock must be allowed to run
+   out.
 2. **The translation lives in the delegates.** Phase 4's delegates and HTTP
-   tasks are the anti-corruption layer: they call *domain APIs* and write back
-   the minimal routing facts. A delegate reaching around its service to UPDATE
-   domain tables directly has smuggled domain logic into the engine's
-   transaction — convenient (Phase 2.05's atomicity!) and corrosive, because now
-   the domain's invariants are enforced from two places.
+   tasks are the anti-corruption layer. They call *domain APIs* and write back
+   only the minimal routing facts. A delegate that reaches around its service to
+   UPDATE domain tables directly has smuggled domain logic into the engine's
+   transaction. That's convenient (Phase 2.05's atomicity) but corrosive,
+   because now the domain's invariants are enforced from two places.
 3. **Queries cross the boundary in one direction each.** "What must Asha do
-   today?" → engine (tasks, Phase 3). "What is loan L-401's balance?" → domain.
-   The app that renders *loan state* from *task state* has inverted the arrow —
-   tasks say what's pending, never what's true.
+   today?" goes to the engine (tasks, Phase 3). "What is loan L-401's balance?"
+   goes to the domain. An app that renders *loan state* from *task state* has
+   inverted the arrow — tasks say what's pending, never what's true.
 4. **History is *process* audit, not business reporting.** "Who approved, when,
-   under which version" → `ACT_HI_*` (Phases 8, 9). Revenue, portfolio, NPA
-   reporting → domain events into your warehouse. The test: if Phase 9's
-   retention job deleting a row would lose business truth, that truth was in the
-   wrong store.
+   under which version" goes to `ACT_HI_*` (Phases 8, 9). Revenue, portfolio,
+   and NPA reporting go to domain events in your warehouse. Here's the test: if
+   Phase 9's retention job deleting a row would lose business truth, that truth
+   was in the wrong store.
 
-The payoff for holding the line: engines become *replaceable* (the Phase 0
-landscape evaluation stays a real option forever), retention stays a compliance
-dial rather than a data-loss risk, and domain services stay testable without a
-running engine — which is also what keeps model changes (Phase 8) cheap, because
-models orchestrate stable APIs instead of touching schemas.
+Holding the line pays off. Engines become *replaceable* — the Phase 0 landscape
+evaluation stays a real option forever. Retention stays a compliance dial rather
+than a data-loss risk. Domain services stay testable without a running engine.
+This also keeps model changes (Phase 8) cheap, because models orchestrate stable
+APIs instead of touching schemas.
 
 ## Ship It
 
@@ -109,11 +110,11 @@ is the corruption the layer is named for.</details>
 <details><summary>Answer</summary>B — retention is the boundary's enforcement
 mechanism: coordination state must be *allowed* to expire.</details>
 
-**Challenge.** Audit the capstone against the four rules: list every variable and
-tag it reference/routing-fact/truth. (`decision` and `rate` are the interesting
-ones — routing facts the *domain must also record* via the disburse delegate.)
-Then write the one-sentence answer to "why doesn't reporting query ACT_HI_
-directly?" for your data team.
+**Challenge.** Audit the capstone against the four rules. List every variable and
+tag it reference, routing-fact, or truth. (`decision` and `rate` are the
+interesting ones — routing facts the *domain must also record* via the disburse
+delegate.) Then write the one-sentence answer to "why doesn't reporting query
+ACT_HI_ directly?" for your data team.
 
 ## Related
 

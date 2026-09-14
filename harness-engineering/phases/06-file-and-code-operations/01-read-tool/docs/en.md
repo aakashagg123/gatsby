@@ -6,10 +6,10 @@
 
 ## The Problem
 
-An agent that edits code first has to *read* it — but reading a 5,000-line file whole blows
-the context budget (Phase 4) and gives the model no way to refer to a location. The read
-tool must return **line numbers** (so the model can cite `path:line` and target edits) and
-support **ranges** (so it loads only what it needs).
+An agent that edits code must read it first. Reading a 5,000-line file whole blows the
+context budget (Phase 4), and it gives the model no way to refer to a location. The read
+tool must return **line numbers**, so the model can cite `path:line` and target edits. It
+must also support **ranges**, so it loads only what it needs.
 
 ## The Concept
 
@@ -19,7 +19,7 @@ flowchart LR
   N --> B["return bounded slice"]
 ```
 
-Line numbers turn the file into an addressable surface; offset/limit keeps reads within
+Line numbers turn the file into an addressable surface. Offset and limit keep reads within
 budget.
 
 ## Build It
@@ -45,15 +45,15 @@ print(read(p, offset=5, limit=3))     # lines 5–7, numbered
 os.remove(p)
 ```
 
-The numbering is exactly what lets the model say "change line 6" and what the edit tool
-(next lesson) and `path:line` citations rely on.
+The numbering is what lets the model say "change line 6". The edit tool (next lesson) and
+`path:line` citations depend on this same numbering.
 
 ## Use It
 
-This is the **Read** tool in Claude Code / Codex: it returns `cat -n`-style numbered lines
-and accepts offset/limit so the agent pages through large files instead of swallowing them.
-Because reads are numbered and bounded, the agent's context stays lean (Phase 4) and its
-edits stay precise.
+This is the **Read** tool in Claude Code / Codex. It returns `cat -n`-style numbered lines
+and accepts offset/limit, so the agent pages through large files instead of swallowing them
+whole. Because reads are numbered and bounded, the agent's context stays lean (Phase 4) and
+its edits stay precise.
 
 ## Ship It
 

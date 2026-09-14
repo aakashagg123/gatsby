@@ -4,17 +4,17 @@
 
 ## TL;DR
 
-[Evals](./evals.md) tell you if the system is correct *before* you ship; observability
+[Evals](./evals.md) tell you if the system is correct *before* you ship. Observability
 tells you what it's doing *in production*. LLM observability is a first-class
-discipline because these systems fail silently and non-deterministically: you need
+discipline because these systems fail silently and non-deterministically. You need
 end-to-end **traces** made of **spans**, with **tokens**, **latency** (split into
-TTFT/TPOT), **errors**, **quality**, and **cost** on every step — plus **drift**
-detection to catch the slow regressions that no deploy caused. If you can't replay
-exactly what happened on a bad request, you can't fix it.
+TTFT/TPOT), **errors**, **quality**, and **cost** on every step. You also need
+**drift** detection to catch the slow regressions that no deploy caused. If you can't
+replay exactly what happened on a bad request, you can't fix it.
 
 > 🎯 **For the AI-native PM**
 >
-> **Why it matters** — AI fails silently — wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind and you learn about problems from churn.
+> **Why it matters** — AI fails silently. Wrong answers look exactly like right ones. Without traces, tokens, latency, and drift, you're operating blind, and you learn about problems from churn.
 >
 > **What it changes in your decisions** — What you instrument, your incident-response plan, and how you detect slow quality decay.
 >
@@ -25,8 +25,8 @@ exactly what happened on a bad request, you can't fix it.
 
 ## Mental model
 
-A single LLM request is a distributed transaction across many components (retrieval,
-rerank, model calls, tools, validation, repair). Borrow distributed-tracing ideas, but
+A single LLM request is a distributed transaction across many components: retrieval,
+rerank, model calls, tools, validation, repair. Borrow distributed-tracing ideas, but
 add the LLM-specific dimensions:
 
 ```
@@ -41,51 +41,51 @@ TRACE: "answer support ticket #4821"  (tenant=acme, feature=support_copilot)
 TOTAL 1.05s   $0.0046   status=ok
 ```
 
-The trace is the unit of debugging; the span is the unit of measurement.
+The trace is the unit of debugging. The span is the unit of measurement.
 
 ## What to capture
 
 ### Traces & spans
-- One trace per request; one span per meaningful step (retrieve, rerank, each model
-  call, each tool, validate, repair, route decision).
-- Record inputs/outputs **with privacy controls** — prompts and completions are gold for
-  debugging but may contain PII; redact/tokenize and respect
+- One trace per request, and one span per meaningful step: retrieve, rerank, each model
+  call, each tool, validate, repair, route decision.
+- Record inputs/outputs **with privacy controls**. Prompts and completions are gold for
+  debugging, but they may contain PII. Redact or tokenize them, and respect
   [tenant boundaries](../05-safety-multitenancy/multi-tenant-isolation.md).
 - Capture the *decisions*: which model/route was chosen, why fallback fired, which
   budget terminated an [agent](../02-reliable-outputs/agent-guardrails.md).
 
 ### Tokens
-- Input vs. output tokens per call (they cost differently and behave differently —
-  [prefill vs. decode](../01-inference-internals/prefill-vs-decode.md)).
+- Input vs. output tokens per call. They cost differently and behave differently — see
+  [prefill vs. decode](../01-inference-internals/prefill-vs-decode.md).
 - Prompt-cache hit/miss (a cheap cost lever — see
   [caching](../01-inference-internals/prompt-vs-semantic-caching.md)).
 - Tokens are the raw material for [cost attribution](./cost-attribution.md).
 
 ### Latency
-- **Split it:** TTFT (≈ prefill) and TPOT/inter-token (≈ decode) separately — a single
-  "latency" number hides which phase is slow.
+- **Split it.** Track TTFT (≈ prefill) and TPOT/inter-token (≈ decode) separately. A
+  single "latency" number hides which phase is slow.
 - Queueing time vs. compute time; end-to-end including retrieval/tools.
-- Report **distributions (p50/p95/p99)**, never just the mean — tails are where SLOs and
+- Report **distributions (p50/p95/p99)**, never just the mean. Tails are where SLOs and
   [preemption spikes](../01-inference-internals/kv-cache-management.md) live.
 
 ### Errors
 - Provider errors (timeout, rate-limit, 5xx), validation/parse failures, repair
   exhaustion, tool failures, budget terminations, refusals.
-- **The hard part: silent errors.** A grounded-looking hallucination throws nothing.
-  Approximate quality online with proxy signals (validation pass rate, grounding
-  spot-checks, [judge](./evals.md) sampling, user thumbs/edits/retries).
+- **The hard part: silent errors.** A grounded-looking hallucination throws no error.
+  Approximate quality online with proxy signals: validation pass rate, grounding
+  spot-checks, [judge](./evals.md) sampling, and user thumbs/edits/retries.
 
 ### Drift
 The regression that no deploy caused:
 - **Input drift** — query mix, length, language, new topics shift over time.
 - **Output/quality drift** — judge scores, refusal rate, format-validity, grounding
   trending down.
-- **Model drift** — provider updated weights underneath you; behavior changes with no
-  code change.
+- **Model drift** — the provider updated weights underneath you, and behavior changes
+  with no code change.
 - **Data/retrieval drift** — corpus grows/ages; [recall](../03-rag/retrieval-evals.md)
   decays.
-Detect by tracking these distributions over time and alerting on shifts — and by
-**re-running evals on a schedule**, not only at deploy.
+Detect drift by tracking these distributions over time and alerting on shifts. Also
+**re-run evals on a schedule**, not only at deploy.
 
 ## From signals to operations
 
@@ -94,28 +94,28 @@ Detect by tracking these distributions over time and alerting on shifts — and 
 - **Alerts:** on error spikes, cost spikes, cache-hit collapse, drift, budget-hit rate.
 - **Trace-level debugging:** jump from an alert or a user complaint to the exact trace,
   with the full chain reconstructed.
-- **Feed the loop:** sampled production traces become new [eval](./evals.md) cases;
-  observed failures become [adversarial tests](./evals.md). Observability and evals are
+- **Feed the loop.** Sampled production traces become new [eval](./evals.md) cases, and
+  observed failures become [adversarial tests](./evals.md). Observability and evals form
   a cycle, not two silos.
 
 ## Guardrails vs. evaluators
 
 Two production roles that get conflated because both "check outputs":
 
-- **Guardrails** run **inline**, per request, and can *block* — the output is checked
-  (PII, policy, format, obvious hallucination signals) before the user sees it. They
-  must be fast and cheap enough to sit on the critical path, and they fail closed for
-  the worst categories.
+- **Guardrails** run **inline**, per request, and can *block* the output. They check
+  for PII, policy violations, bad format, and obvious hallucination signals before the
+  user sees the output. They must be fast and cheap enough to sit on the critical path,
+  and they fail closed for the worst categories.
 - **Evaluators** run **offline** — in CI to gate changes, and over sampled production
   traffic to measure quality trends. They can be slow, expensive, and thorough, because
   no user is waiting.
 
-The distinction disciplines your architecture: an evaluator too slow or too expensive
-to run on every request is not a guardrail, and a guardrail lightweight enough for the
-hot path is usually too crude to be your quality measurement. Using an evaluator to
-auto-*correct* outputs in production (grade, then regenerate on failure) is possible
-but pays latency and cost per retry — reserve it for high-stakes surfaces, and log
-every correction as an eval case.
+This distinction disciplines your architecture. An evaluator too slow or too expensive
+to run on every request is not a guardrail. A guardrail lightweight enough for the hot
+path is usually too crude to be your quality measurement. Using an evaluator to
+auto-*correct* outputs in production — grade, then regenerate on failure — is possible,
+but it pays latency and cost on every retry. Reserve it for high-stakes surfaces, and
+log every correction as an eval case.
 
 ## Tradeoffs
 

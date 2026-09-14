@@ -1,0 +1,147 @@
+<style>
+.sd-chat{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
+  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-chat-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
+  color:#a39f90;font-weight:700;margin:0 0 18px}
+.sd-chat-arch{position:relative}
+/* Main flow row */
+.sd-chat-flow{display:flex;align-items:center;gap:0;justify-content:center;
+  flex-wrap:wrap;margin:0 0 14px}
+.sd-chat-node{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;
+  text-align:center;line-height:1.35;flex-shrink:0;position:relative}
+.sd-chat-node small{display:block;font-size:9.5px;font-weight:450;margin-top:2px}
+.sd-chat-client{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22;min-width:80px}
+.sd-chat-ws{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a;min-width:90px}
+.sd-chat-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
+.sd-chat-mq{background:#f4eee8;border:1px solid #e0d4c4;color:#6b5a44}
+.sd-chat-svc{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-chat-arrow{flex:0 0 auto;padding:0 3px;display:flex;flex-direction:column;
+  align-items:center;gap:1px}
+.sd-chat-arrow-char{color:#c9c4b4;font-size:14px;font-weight:700}
+.sd-chat-arrow-lbl{font-size:8px;color:#8a8778;font-weight:500;white-space:nowrap}
+/* Connection protocol badges */
+.sd-chat-badge{position:absolute;top:-8px;right:-6px;font-size:8px;font-weight:700;
+  border-radius:10px;padding:1px 7px;color:#fff;letter-spacing:.4px;white-space:nowrap}
+.sd-chat-badge-ws{background:#4a6fa5}
+.sd-chat-badge-http{background:#8a8778}
+/* Service layer */
+.sd-chat-services{display:flex;gap:8px;justify-content:center;margin:0 0 14px;flex-wrap:wrap}
+.sd-chat-svc-card{background:#fff;border:1px solid #e4e0d5;border-radius:10px;
+  padding:10px 14px;text-align:center;flex:0 1 auto;min-width:100px}
+.sd-chat-svc-name{font-size:11px;font-weight:650;color:#3d3c37;margin:0 0 2px}
+.sd-chat-svc-desc{font-size:9.5px;color:#8a8778;font-weight:450}
+/* Legend / patterns */
+.sd-chat-patterns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 0}
+.sd-chat-pattern{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px}
+.sd-chat-pattern-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.sd-chat-pattern-title .dot{width:6px;height:6px;border-radius:50%}
+.sd-chat-pattern-title .dot-1to1{background:#4a6fa5}
+.sd-chat-pattern-title .dot-group{background:#bd5d3a}
+.sd-chat-pattern-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
+.sd-chat-pattern-flow strong{color:#3d3c37;font-weight:600}
+.sd-chat-pattern-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
+@media (max-width:640px){
+  .sd-chat{padding:18px 14px 16px}
+  .sd-chat-flow{flex-direction:column;gap:4px;align-items:stretch}
+  .sd-chat-arrow{transform:rotate(90deg);padding:2px 0}
+  .sd-chat-patterns{grid-template-columns:1fr}
+  .sd-chat-services{flex-direction:column;align-items:stretch}
+}
+</style>
+<div class="sd-chat">
+  <div class="sd-chat-title">Chat system - websocket architecture</div>
+  <div class="sd-chat-arch">
+    <!-- Main message flow -->
+    <div class="sd-chat-flow">
+      <div class="sd-chat-node sd-chat-client">
+        Client A
+        <small>sender</small>
+        <span class="sd-chat-badge sd-chat-badge-ws">WS</span>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">persistent</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-ws">
+        WS Server 1
+        <small>stateful conn</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">publish</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-mq">
+        Message Queue
+        <small>Redis pub/sub</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">subscribe</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-ws">
+        WS Server 2
+        <small>stateful conn</small>
+      </div>
+      <div class="sd-chat-arrow">
+        <span class="sd-chat-arrow-lbl">push</span>
+        <span class="sd-chat-arrow-char">⟶</span>
+      </div>
+      <div class="sd-chat-node sd-chat-client">
+        Client B
+        <small>receiver</small>
+        <span class="sd-chat-badge sd-chat-badge-ws">WS</span>
+      </div>
+    </div>
+
+    <!-- Supporting services -->
+    <div class="sd-chat-services">
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Zookeeper</div>
+        <div class="sd-chat-svc-desc">service discovery: which WS server holds which user</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">KV Store</div>
+        <div class="sd-chat-svc-desc">user_id → ws_server mapping for routing</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Message DB</div>
+        <div class="sd-chat-svc-desc">persistent storage with message_id sequence</div>
+      </div>
+      <div class="sd-chat-svc-card">
+        <div class="sd-chat-svc-name">Presence</div>
+        <div class="sd-chat-svc-desc">online/offline via heartbeat + fan-out</div>
+      </div>
+    </div>
+
+    <!-- 1:1 vs Group patterns -->
+    <div class="sd-chat-patterns">
+      <div class="sd-chat-pattern">
+        <div class="sd-chat-pattern-title">
+          <span class="dot dot-1to1"></span>
+          <span style="color:#3d4a7a">1:1 Chat</span>
+        </div>
+        <div class="sd-chat-pattern-flow">
+          <strong>A</strong> <span class="arr">→</span> WS server
+          <span class="arr">→</span> lookup B's server in KV
+          <span class="arr">→</span> route via MQ
+          <span class="arr">→</span> <strong>B</strong><br>
+          If <strong>B offline</strong> <span class="arr">→</span> push notification service
+        </div>
+      </div>
+      <div class="sd-chat-pattern">
+        <div class="sd-chat-pattern-title">
+          <span class="dot dot-group"></span>
+          <span style="color:#bd5d3a">Group Chat</span>
+        </div>
+        <div class="sd-chat-pattern-flow">
+          <strong>A</strong> <span class="arr">→</span> WS server
+          <span class="arr">→</span> fetch group members
+          <span class="arr">→</span> MQ per recipient server<br>
+          Small groups: copy to each &middot; Large groups: fan-out on read
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

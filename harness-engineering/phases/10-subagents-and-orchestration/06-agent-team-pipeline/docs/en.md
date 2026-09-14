@@ -2,7 +2,7 @@
 
 > **Motto** — Wire the contract, roles, dependency graph, checkpoints, and review into one skill.
 
-*Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–05; completes the phase.*
+*Part of Phase 10 — Subagents & Orchestration. Builds on lessons 01–05 and completes the phase.*
 
 ## The Problem
 
@@ -10,7 +10,7 @@ You've built every piece separately: the budgeted-wave orchestrator (01), bounde
 (02), worktree isolation and the dependency graph (03), checkpoints (04), and the
 supervisor pattern (05). On their own they're modules. Assembled, they're a **pipeline**:
 a repeatable, auditable process that takes a goal and produces reviewed, merged code with
-a memory of what was learned. This lesson wires them into a single Claude Code skill so a
+a memory of what was learned. This lesson wires them into a single Claude Code skill. A
 human runs `/agent-team "build X"` and gets the whole disciplined flow.
 
 ## The Concept
@@ -27,15 +27,15 @@ flowchart TB
   H --> M["memory agent → append to knowledge.md"]
 ```
 
-Five agents, each with a bounded role; budgets and hard stops from lesson 01; file
-isolation from lesson 03; checkpoints from lesson 04. The skill is the glue.
+Five agents, each with a bounded role. Budgets and hard stops come from lesson 01, file
+isolation from lesson 03, and checkpoints from lesson 04. The skill is the glue.
 
 ## Build It (the skill definition)
 
 The pipeline is encoded as `outputs/SKILL.md` — a Claude Code skill that orchestrates
 five subagents. It declares each agent's inputs/outputs (legibility: the pipeline is
 discoverable from the repo), the budget defaults, and the wave discipline. The Python
-modules from lessons 01–05 are the reference implementation of its control logic; the
+modules from lessons 01–05 are the reference implementation of its control logic. The
 skill expresses the same logic for a real agent runtime.
 
 Key wiring decisions, each tracing to an earlier lesson:
@@ -60,9 +60,9 @@ cp outputs/SKILL.md .claude/skills/agent-team/SKILL.md
 /agent-team "add a health-check route returning {status: ok}"
 ```
 
-The planning agent emits a contract; you approve it; workers run in isolated worktrees;
-the reviewer returns ship/hold; the wave halts for your "continue"; the memory agent
-records what was learned. Every principle from the
+The planning agent emits a contract, and you approve it. Workers run in isolated
+worktrees. The reviewer returns ship or hold. The wave halts for your "continue". The
+memory agent records what was learned. Every principle from the
 [ten principles](../../../../foundations/harness-principles.md) is now mechanical.
 
 ## Ship It
@@ -79,7 +79,7 @@ agent-team pipeline skill.
 - C) to save tokens
 - D) skills run faster
 
-<details><summary>Answer</summary>B — the repo explains itself; an agent (or human) finds
+<details><summary>Answer</summary>B — the repo explains itself. An agent (or human) finds
 the process without external context.</details>
 
 **Q2.** The review agent in the pipeline receives…
@@ -89,7 +89,7 @@ the process without external context.</details>
 - C) the full worker transcripts
 - D) the memory file
 
-<details><summary>Answer</summary>B — bounded roles (lesson 02); independent review needs
+<details><summary>Answer</summary>B — bounded roles (lesson 02). Independent review needs
 the diff alone.</details>
 
 **Challenge.** Extend the skill with a `dry-run` that prints the wave plan, per-wave

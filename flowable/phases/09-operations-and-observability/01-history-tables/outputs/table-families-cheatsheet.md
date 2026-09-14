@@ -31,11 +31,11 @@ lesson: 01
 ## "The instance disappeared" — triage
 
 1. `/history/historic-process-instances?processInstanceId=X`
-   - has `endTime` → it **completed**; read outcome variables from history. Done.
-   - `deleteReason` set → it was **terminated/cancelled**; the reason says by what.
-2. No history row at all → it never started (check the caller's error handling).
-3. History row open but no runtime row → you're on the wrong engine/schema —
-   check the datasource before anything else.
+   - has `endTime` → it **completed**. Read the outcome variables from history. Done.
+   - `deleteReason` set → it was **terminated/cancelled**. The reason field says by what.
+2. No history row at all → it never started. Check the caller's error handling.
+3. History row open but no runtime row → you're on the wrong engine or schema.
+   Check the datasource before anything else.
 
 ## Two standing rules
 

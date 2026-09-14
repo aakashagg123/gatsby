@@ -7,9 +7,10 @@
 ## The Problem
 
 A tool the agent can call freely is a tool it can call 200 times. Termination (Phase 2)
-bounds *steps*, but a single step can fire many tool calls, and some tools are expensive or
-rate-limited upstream. You need per-tool ceilings — total calls, calls per window — enforced
-at the dispatch boundary, so a runaway plan or a hammering loop is stopped early.
+bounds *steps*, but a single step can fire many tool calls, and some tools are expensive
+or rate-limited upstream. You need per-tool ceilings — total calls, calls per window —
+enforced at the dispatch boundary. That way a runaway plan or a hammering loop stops
+early.
 
 ## The Concept
 
@@ -56,14 +57,14 @@ print(b.allow(now=0))    # (False, 'rate limit: max 2/10s')
 print(b.allow(now=11))   # (True, None)  ← window slid
 ```
 
-A denied call returns a message to the model ("budget exhausted") — the agent can wrap up
+A denied call returns a message to the model ("budget exhausted"). The agent can wrap up
 gracefully instead of crashing.
 
 ## Use It
 
-In Claude Code this is a `PreToolUse` hook (Phase 8): it inspects the pending tool call and
-exits non-zero to deny when over budget. The same guard protects an upstream API's rate
-limit by keying the window per tool.
+In Claude Code this is a `PreToolUse` hook (Phase 8). It inspects the pending tool call
+and exits non-zero to deny when over budget. The same guard protects an upstream API's
+rate limit by keying the window per tool.
 
 ## Ship It
 

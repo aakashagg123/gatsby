@@ -6,10 +6,10 @@
 
 ## The Problem
 
-A harness reaches production through GitHub: it opens PRs, responds to issues, and — crucially
-— its **evals run in CI** as a required check (Phase 15). You also trigger agent work from
-GitHub events (a label, a comment, a failing build). This lesson wires the eval gate into a
-GitHub Actions workflow so a change that regresses the harness can't merge.
+A harness reaches production through GitHub. It opens PRs, responds to issues, and —
+crucially — its **evals run in CI** as a required check (Phase 15). GitHub events also
+trigger agent work: a label, a comment, a failing build. This lesson wires the eval gate into
+a GitHub Actions workflow, so a change that regresses the harness can't merge.
 
 ## The Concept
 
@@ -43,16 +43,16 @@ jobs:
         run: python3 harness-engineering/phases/15-evals-and-testing-the-harness/06-eval-harness/code/eval_harness.py
 ```
 
-The eval harness exits nonzero on a regression (Phase 15 L6), so the job fails and the PR is
-blocked — evals become a required check exactly like unit tests.
+The eval harness exits nonzero on a regression (Phase 15 L6). The job fails and the PR is
+blocked. Evals become a required check, exactly like unit tests.
 
 ## Use It
 
-For the GitHub side of an agent (opening PRs, reading issues, posting reviews) you use the
-**GitHub MCP server** or the `gh` CLI — the agent's GitHub actions flow through MCP tools
-(Phase 12). Triggering: a workflow on `issues`/`pull_request`/`label` events can dispatch an
-agent run (e.g. "Claude, fix this"). The discipline: agent *output* still goes through review
-and the eval gate before it merges.
+For the GitHub side of an agent — opening PRs, reading issues, posting reviews — you use the
+**GitHub MCP server** or the `gh` CLI. The agent's GitHub actions flow through MCP tools
+(Phase 12). For triggering, a workflow on `issues`/`pull_request`/`label` events can dispatch
+an agent run (for example, "Claude, fix this"). The discipline stays the same: agent *output*
+still goes through review and the eval gate before it merges.
 
 ## Ship It
 

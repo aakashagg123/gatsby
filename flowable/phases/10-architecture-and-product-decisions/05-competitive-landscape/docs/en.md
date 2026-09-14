@@ -10,11 +10,13 @@ required. This is Phase 0, lesson 04's rematch, with everything you've built sin
 ## The Problem
 
 Phase 0's landscape gave you two axes for a cold start. Now you know what a wait
-state costs, what migration risk feels like, and what the ops surface demands —
-so the final comparison can be what real selections need: the same
-course-derived question set put to all four serious candidates, with the answers
-that survive a proof-of-concept. This is also the lesson to reread the day a
-renewal, a Camunda 8 pitch, or a "should we move to Temporal" thread lands.
+state costs, what migration risk feels like, and what the ops surface demands.
+The final comparison can be what real selections need: the same course-derived
+question set put to all four serious candidates, with answers that survive a
+proof-of-concept.
+
+This is also the lesson to reread the day a renewal, a Camunda 8 pitch, or a
+"should we move to Temporal" thread lands.
 
 ## The Concept
 
@@ -32,19 +34,20 @@ The course's seven questions, asked of all four:
 
 Reading the columns like an owner:
 
-1. **Flowable OSS vs Work is *only* the edges question** (10.04): same engines,
-   same answers to every internals row — Work adds modelers, task/admin UIs,
-   CMMN-heavy case UIs, and a vendor SLA. Decide by counting UI users, not by
-   engine features.
-2. **Camunda 8 is the same *language*, different *physics*.** BPMN semantics you
-   know, but state moves from your RDBMS to Zeebe — Phase 2's and Phase 9's
-   chapters get rewritten (exporters instead of ACT_HI_ SQL, platform ops
-   instead of DB ops). Choose it for genuine throughput ceilings or its SaaS,
-   not as "newer Camunda 7".
-3. **Temporal's column is consistent, and consistently code.** Superb durable
-   execution, real timers/signals — with humans, decisions, and diagrams as
-   DIY. Its versioning row deserves special respect: "old code paths in workers
-   forever" is Phase 8's problem *without* the migration tooling.
+1. **Flowable OSS vs Work is *only* the edges question** (10.04). Both run the
+   same engines and give the same answers to every internals row. Work adds
+   modelers, task and admin UIs, CMMN-heavy case UIs, and a vendor SLA. Decide
+   by counting UI users, not by engine features.
+2. **Camunda 8 is the same *language*, different *physics*.** BPMN semantics
+   you already know, but state moves from your RDBMS to Zeebe. Phase 2's and
+   Phase 9's chapters get rewritten — exporters instead of ACT_HI_ SQL,
+   platform ops instead of DB ops. Choose it for genuine throughput ceilings or
+   its SaaS, not as "newer Camunda 7."
+3. **Temporal's column is consistent, and consistently code.** It has superb
+   durable execution and real timers and signals, but humans, decisions, and
+   diagrams are all DIY. Its versioning row deserves special respect: "old code
+   paths in workers forever" is Phase 8's problem *without* the migration
+   tooling.
 4. **The PoC that settles it** (two weeks, either finalist): the capstone.
    Parallel checks, an error-boundary fallback, a DMN decision, a timed offer,
    one migration mid-flight, and the Phase 9 probe pointed at it. Any candidate
@@ -92,9 +95,9 @@ engine feature to team discipline. Ask any large Temporal shop about workflow
 patching.</details>
 
 **Challenge.** Run the PoC script mentally against a *fifth* candidate — any
-low-code/iPaaS workflow tool procurement suggests — and note which of the seven
-questions it can't answer at all. That gap analysis, in an email, has ended more
-bad evaluations than any matrix.
+low-code or iPaaS workflow tool procurement suggests. Note which of the seven
+questions it can't answer at all. That gap analysis, written up in an email, has
+ended more bad evaluations than any matrix.
 
 ## Related
 

@@ -1,7 +1,8 @@
 # Phase 08 — Permissions & safety gating
 
-> The line between "agent" and "incident" is the permission layer — modes, allow/deny,
-> hooks, approvals, and least privilege, as wired in Claude Code / Codex `settings.json`.
+> The line between "agent" and "incident" is the permission layer. It's built from modes,
+> allow/deny, hooks, approvals, and least privilege, wired in Claude Code / Codex
+> `settings.json`.
 
 | # | Lesson | Type | Lang | Ships |
 |---|--------|------|------|-------|

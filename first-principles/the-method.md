@@ -4,10 +4,10 @@
 
 ## TL;DR
 
-First-principles thinking isn't a flash of genius — it's a three-step loop you can run on
-purpose. **Deconstruct** the problem into component claims; **challenge** each claim until
-you find the few that are actually bedrock and the many that are merely inherited;
-**reconstruct** a solution from the bedrock up. Three classic tools power the loop:
+First-principles thinking isn't a flash of genius. It's a three-step loop you can run on
+purpose. **Deconstruct** the problem into component claims. **Challenge** each claim until
+you find the few that are actually bedrock and the many that are merely inherited.
+**Reconstruct** a solution from the bedrock up. Three classic tools power the loop:
 **Socratic questioning** to surface assumptions, the **5 Whys** to drill to root causes,
 and **Fermi estimation** to sanity-check magnitudes from scratch. The output is not just an
 answer but a *map of which constraints are real*.
@@ -16,11 +16,11 @@ answer but a *map of which constraints are real*.
 >
 > **Why it matters** — "Think from first principles" is useless as advice without a
 > procedure. A procedure makes the skill teachable, repeatable, and reviewable by other
-> people — it turns insight into process.
+> people. It turns insight into process.
 >
 > **What it changes in your decisions** — You can run the loop in a meeting, on a
-> whiteboard, in a doc. You stop waiting for inspiration and start *operating* a method,
-> which means juniors can do it too and you can audit where the reasoning broke.
+> whiteboard, in a doc. You stop waiting for inspiration and start *operating* a method.
+> That means juniors can do it too, and you can audit where the reasoning broke.
 >
 > **Ask yourself** — *"Which of these requirements did we derive, and which did we just
 > inherit and never re-check?"*
@@ -40,18 +40,18 @@ flowchart LR
   FE["Fermi estimation"] --> R
 ```
 
-It is a *loop*, not a line: reconstruction usually exposes a claim you mislabeled, sending
+It is a *loop*, not a line. Reconstruction usually exposes a claim you mislabeled, sending
 you back to challenge it again.
 
 ### 1 · Deconstruct — break the problem into claims
 
-Write down everything the current answer assumes. Be ruthlessly explicit; the goal is to
+Write down everything the current answer assumes. Be ruthlessly explicit. The goal is to
 drag invisible assumptions into the light where they can be examined. For "our onboarding
 takes two weeks," the claims might be: *setup requires manual provisioning · provisioning
 requires a human approval · approval takes a day · there are nine steps · each step needs
 the previous one's output…*
 
-The trick is **granularity**: keep splitting until each claim is something you could
+The trick is **granularity**. Keep splitting until each claim is something you could
 independently mark true, false, or "actually a goal in disguise." A claim you can't
 evaluate is still too coarse.
 
@@ -71,7 +71,7 @@ do the challenging.
 
 Take only the claims that survived as bedrock and ask: *given just these, what's the best
 solution?* Crucially, you are no longer bound by the original answer's shape. The
-reconstructed solution is allowed to look nothing like the thing you started with — that's
+reconstructed solution is allowed to look nothing like the thing you started with. That's
 the entire point, and the source of any non-obvious result.
 
 ## Tool 1 · Socratic questioning — surface the assumption
@@ -92,9 +92,9 @@ that feels *most obvious*. Obviousness is exactly where unexamined assumptions h
 
 ## Tool 2 · The 5 Whys — drill to the root cause
 
-Borrowed from Toyota's production system: ask "why?" roughly five times in a chain, each
-answer becoming the next question, until you reach a root you can actually fix rather than a
-symptom you'd keep patching.
+Borrowed from Toyota's production system. Ask "why?" roughly five times in a chain, with
+each answer becoming the next question, until you reach a root you can actually fix rather
+than a symptom you'd keep patching.
 
 ```
 The deploy failed.                         → why?
@@ -107,22 +107,22 @@ The deploy failed.                         → why?
 
 Patch at the top (retry the deploy) and it recurs forever. Fix at the root (add the column
 without a row-rewrite) and the class of failure disappears. "Five" is a guideline, not a
-ritual — stop when you hit something fundamental, which connects directly to
+ritual. Stop when you hit something fundamental — this connects directly to
 [production failure modes](../content/06-strategy-tradeoffs/production-failure-modes.md).
 
 ## Tool 3 · Fermi estimation — rebuild the number from scratch
 
 Named for Enrico Fermi, who estimated the Trinity blast's yield by dropping scraps of paper
 and watching how far the shockwave pushed them. A Fermi estimate decomposes an unknown
-quantity into factors you *can* guess and multiplies them — deriving a number from
+quantity into factors you *can* guess and multiplies them. It derives a number from
 fundamentals rather than looking it up or trusting a vendor's claim.
 
 The canonical interview version — *how many piano tuners are in Chicago?* — decomposes into
 population ÷ people-per-household × fraction-with-pianos ÷ pianos-per-tuner-per-year, and
-lands within a factor of a few of the truth. The point isn't piano tuners; it's the move:
+lands within a factor of a few of the truth. The point isn't piano tuners. It's the move:
 **when someone hands you a number, can you reconstruct its order of magnitude from
-components?** If you can't, you can't tell whether it's reasonable — and "this number is
-off by 100×" is one of the most valuable things first-principles reasoning catches.
+components?** If you can't, you can't tell whether it's reasonable. "This number is off by
+100×" is one of the most valuable things first-principles reasoning catches.
 
 This is the quantitative twin of decomposition, and it pairs naturally with the
 [opportunity-cost and second-order](./mental-models-latticework.md) models from the next
@@ -137,29 +137,30 @@ lesson.
 2. **Challenge** — *Do users need it daily?* (Socratic) → actually most read last week's.
    *Why 9 hours?* (5 Whys) → it re-derives from raw events every run because results were
    never cached. *Is a bigger server even the lever?* (Fermi) → 90% of the time is in one
-   recompute that a cache eliminates; CPU is barely the bottleneck.
-3. **Reconstruct** — from the survivors (most reads are stale-tolerant; the cost is
-   recomputation, not hardware): cache incremental results, recompute only deltas. The "9
-   hours" and the "bigger server" both evaporate — and neither was a real constraint.
+   recompute that a cache eliminates. CPU is barely the bottleneck.
+3. **Reconstruct** — Most reads are stale-tolerant, and the real cost is recomputation, not
+   hardware. So cache incremental results and recompute only deltas. The "9 hours" and the
+   "bigger server" both evaporate — neither was a real constraint.
 
 > **📦 Mini-case — the two-week onboarding.** A B2B team "knew" enterprise onboarding
-> takes two weeks — every competitor's does. Deconstructed: nine steps, each waiting on
-> the previous, two requiring human approval. Challenged: both approvals existed
-> because of one incident four years earlier, and seven steps had no data dependency
-> on each other. Reconstructed: parallel steps, approvals replaced by automated checks
-> with an escalation path — onboarding in a day. The two weeks was an artifact of
-> history, discoverable only by asking *which of these claims is actually load-bearing?*
+> takes two weeks, because every competitor's does. Deconstructed: nine steps, each
+> waiting on the previous, two requiring human approval. Challenged: both approvals
+> existed because of one incident four years earlier. Seven steps had no data
+> dependency on each other. Reconstructed: parallel steps, with approvals replaced by
+> automated checks and an escalation path. Onboarding now takes a day. The two weeks
+> was an artifact of history, discoverable only by asking *which of these claims is
+> actually load-bearing?*
 
 ## Failure modes
 
-- **Stopping at the first satisfying answer** — the loop ended when you got the conclusion
-  you wanted, not when you hit bedrock. Confirmation bias wearing the method's clothes
+- **Stopping at the first satisfying answer** — The loop ends when you get the conclusion
+  you wanted, not when you hit bedrock. It's confirmation bias wearing the method's clothes
   (see [traps & limits](./traps-and-limits.md)).
-- **Theatrical 5 Whys** — asking "why" five times mechanically and accepting shallow
-  answers, reaching a fake root. Depth, not count, is the goal.
-- **False-precision Fermi** — treating an order-of-magnitude estimate as a real forecast.
+- **Theatrical 5 Whys** — Asking "why" five times mechanically and accepting shallow
+  answers reaches a fake root. Depth, not count, is the goal.
+- **False-precision Fermi** — Treating an order-of-magnitude estimate as a real forecast.
   It's a *sanity check*, not a budget.
-- **Deconstructing forever** — analysis with no reconstruction. The method must terminate
+- **Deconstructing forever** — Analysis with no reconstruction. The method must terminate
   in a rebuilt answer or it was just procrastination.
 
 ## Practitioner checklist

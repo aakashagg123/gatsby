@@ -169,6 +169,20 @@ First module of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_
 6. [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
 7. [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md) · [Recap](./rag-vector-databases/recap.md)
 
+## [System design](./system-design/README.md)
+
+How real systems are designed at scale — from rate limiters to stock exchanges — with the
+architecture, tradeoffs, and failure modes that shape product decisions.
+
+1. [Foundations & framework](./system-design/foundations-and-framework.md)
+2. [Core building blocks](./system-design/core-building-blocks.md)
+3. [Web-scale services](./system-design/web-scale-services.md)
+4. [Real-time systems](./system-design/real-time-systems.md)
+5. [Storage & sync](./system-design/storage-and-sync.md)
+6. [Location & geo services](./system-design/location-and-geo-services.md)
+7. [Data infrastructure](./system-design/data-infrastructure.md)
+8. [Transactional & financial systems](./system-design/transactional-and-financial.md) · [Recap](./system-design/recap.md)
+
 ## [Harness engineering](./harness-engineering/README.md)
 
 The hands-on build track: construct a coding agent's harness phase by phase. Start with

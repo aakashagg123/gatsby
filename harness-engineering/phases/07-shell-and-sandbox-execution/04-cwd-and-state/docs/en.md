@@ -6,10 +6,10 @@
 
 ## The Problem
 
-A subtle, common bug: the agent runs `cd backend`, then `npm test`, and the test runs in the
-*wrong* directory. Why? Each tool call spawns a new shell, so environment changes — `cd`,
-`export`, activated venvs — **don't persist** between calls. If the harness doesn't track
-working directory and env itself, multi-step shell workflows silently break.
+Here is a subtle, common bug: the agent runs `cd backend`, then `npm test`, and the test
+runs in the *wrong* directory. Why? Each tool call spawns a new shell, so environment
+changes — `cd`, `export`, activated venvs — **don't persist** between calls. If the harness
+doesn't track working directory and env itself, multi-step shell workflows silently break.
 
 ## The Concept
 
@@ -19,8 +19,8 @@ flowchart LR
   S["harness tracks cwd + env"] --> C["inject into every run"] --> OK["state persists"]
 ```
 
-The fix: the harness keeps a session `cwd` (and env) and applies it to each command, OR you
-write compound commands (`cd backend && npm test`) so state lives within one call.
+The fix: the harness keeps a session `cwd` and env, and applies them to each command. Or you
+write compound commands (`cd backend && npm test`), so state lives within one call.
 
 ## Build It
 
@@ -61,9 +61,9 @@ ephemeral shell.
 
 ## Use It
 
-In Claude Code / Codex the shell environment **doesn't** persist between Bash calls — this
-is documented behavior. The practical rules: use absolute paths, or chain with `&&` in one
-command, rather than relying on a prior `cd`. The session pattern here is what a custom
+In Claude Code / Codex, the shell environment **doesn't** persist between Bash calls. This
+is documented behavior. The practical rule: use absolute paths, or chain commands with `&&`
+in one call, rather than relying on a prior `cd`. The session pattern here is what a custom
 harness builds to make state persist deliberately.
 
 ## Ship It

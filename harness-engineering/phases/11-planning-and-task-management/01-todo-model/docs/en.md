@@ -8,8 +8,8 @@
 
 On a multi-step task, an agent without an explicit task list drifts: it forgets a step,
 repeats one, or declares victory early. A structured **todo model** — items with a status
-and order — gives the agent (and you) a shared, visible plan it works through and updates,
-so progress is legible and nothing is silently dropped.
+and order — gives the agent, and you, a shared, visible plan. The agent works through the
+plan and updates it, so progress is legible and nothing is silently dropped.
 
 ## The Concept
 
@@ -21,7 +21,7 @@ flowchart LR
   U --> L
 ```
 
-Exactly one item `in_progress` at a time keeps focus; statuses make "what's left" obvious.
+Exactly one item `in_progress` at a time keeps focus. Statuses make "what's left" obvious.
 
 ## Build It
 
@@ -76,10 +76,11 @@ threads.
 
 ## Use It
 
-This is Claude Code's **todo list** (the checklist you see it maintain) and Codex's plan:
-the agent writes the plan, marks one item in progress, completes it, moves on — and you can
-watch it. As a user, asking the agent to "make a plan first" on a big task triggers exactly
-this, and gives you a checkpoint to correct course before it builds the wrong thing.
+This is Claude Code's **todo list** (the checklist you see it maintain) and Codex's plan.
+The agent writes the plan, marks one item in progress, completes it, and moves on — and
+you can watch it happen. As a user, asking the agent to "make a plan first" on a big task
+triggers exactly this pattern. It gives you a checkpoint to correct course before the
+agent builds the wrong thing.
 
 ## Ship It
 

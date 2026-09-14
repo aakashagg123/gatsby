@@ -7,10 +7,10 @@
 ## The Problem
 
 Evals only protect you if they *run automatically* and *block regressions*. A **regression
-gate** runs the golden/trajectory/judge evals in CI on every change to prompts, skills,
-tools, or the model, compares the score to a baseline, and **fails the build** if it dropped
-beyond a tolerance. This is what stops the silent "it worked yesterday" regression from the
-failure playbook.
+gate** runs the golden, trajectory, and judge evals in CI on every change to prompts, skills,
+tools, or the model. It compares the score to a baseline and **fails the build** if the score
+dropped beyond a tolerance. This is what stops the silent "it worked yesterday" regression
+from the failure playbook.
 
 ## The Concept
 
@@ -45,16 +45,16 @@ print(gate(0.91, 0.90))     # ok (improved)
 print(gate(0.85, 0.90))     # REGRESSION (dropped 0.05 > tolerance)
 ```
 
-The gate returns a nonzero exit code on regression so CI fails the PR — the eval suite
-becomes a required check, exactly like unit tests.
+The gate returns a nonzero exit code on regression, so CI fails the PR. The eval suite becomes
+a required check, exactly like unit tests.
 
 ## Use It
 
-Wire this into the same CI that runs your tests: on a PR that touches `CLAUDE.md`, a skill,
-a tool, or bumps the model, run the eval suite and gate on the score. For a Claude Code /
-Codex user, even a tiny golden set gated in CI catches the prompt/skill change that quietly
-made things worse. Store the baseline in the repo and update it intentionally when you
-genuinely improve.
+Wire this into the same CI that runs your tests. On a PR that touches `CLAUDE.md`, a skill,
+a tool, or bumps the model, run the eval suite and gate on the score. For a Claude Code or
+Codex user, even a tiny golden set gated in CI catches the prompt or skill change that
+quietly made things worse. Store the baseline in the repo, and update it intentionally when
+you genuinely improve.
 
 ## Ship It
 
@@ -69,7 +69,7 @@ genuinely improve.
 - C) a longer prompt
 - D) more models
 
-<details><summary>Answer</summary>B — automatic + blocking.</details>
+<details><summary>Answer</summary>B — automatic and blocking.</details>
 
 **Q2.** Why a tolerance band rather than exact equality?
 

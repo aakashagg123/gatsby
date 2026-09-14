@@ -9,13 +9,15 @@ required.*
 
 ## The Problem
 
-The platform works; now the second brand, the second country, or the second
+The platform works. Now the second brand, the second country, or the second
 *bank partner* wants onboarding onto it. "Just add a tenant column" and "give
-everyone their own stack" are both real answers with order-of-magnitude cost
-differences — and the wrong pick surfaces late, as either an auditor's finding
-("partner A's ops can query partner B's loans") or a finance finding ("we run
-forty engines at 2% utilisation"). Flowable supports three stops on the dial;
-the work is knowing which failure you're buying.
+everyone their own stack" are both real answers, and they differ in cost by an
+order of magnitude.
+
+The wrong pick surfaces late — as an auditor's finding ("partner A's ops can
+query partner B's loans") or a finance finding ("we run forty engines at 2%
+utilisation"). Flowable supports three stops on the dial. The work is knowing
+which failure you're buying.
 
 ## The Concept
 
@@ -32,30 +34,33 @@ flowchart LR
 | Per-tenant versions/models | shared definitions, or per-tenant deployments by tag | naturally per-tenant | trivially per-tenant |
 | Fits | many small tenants, same product, no data-residency walls | regulated partners, residency, "your data in your database" contracts | few, large, paranoid tenants; different countries' stacks |
 
-Flowable mechanics for the first stop, because it's the one with sharp edges:
-deployments, definitions, instances, tasks, and jobs all carry a **tenant ID** —
-set at deployment (`.tenantId("partnerA")`) and start time, filterable in every
-query (`taskCandidateGroupIn(...).taskTenantId("partnerA")`). The same key can be
-deployed per tenant with different versions — partner-specific process variants
-without forking the platform.
+Here are the Flowable mechanics for the first stop, because it's the one with
+sharp edges. Deployments, definitions, instances, tasks, and jobs all carry a
+**tenant ID**. You set it at deployment (`.tenantId("partnerA")`) and at start
+time, and you can filter on it in every query
+(`taskCandidateGroupIn(...).taskTenantId("partnerA")`). The same key can be
+deployed per tenant with different versions, giving you partner-specific process
+variants without forking the platform.
 
 The rules that keep each stop safe:
 
 1. **Row tenancy stands or falls at the API layer.** The engine *stores* tenant
-   IDs; it doesn't *enforce* them. Your perimeter (Phase 3.03's claims mapping —
+   IDs; it doesn't *enforce* them. Your perimeter (Phase 3.03's claims mapping:
    tenant comes from the token, never the request body) must inject the tenant
-   filter into every query and command. One missed filter is a cross-tenant leak;
-   make it structurally impossible (a wrapper client, not a code-review rule).
-2. **Shared definitions vs per-tenant definitions is a product decision.** One
-   shared model = one upgrade, tenants move together (Phase 8 cohorts get a
-   tenant dimension). Per-tenant deployments = variants allowed, N migration
+   filter into every query and command. One missed filter is a cross-tenant leak,
+   so make it structurally impossible with a wrapper client, not a code-review
+   rule.
+2. **Shared vs per-tenant definitions is a product decision.** One shared model
+   means one upgrade, and tenants move together (Phase 8 cohorts get a tenant
+   dimension). Per-tenant deployments allow variants, but cost N migration
    projects. Pick per *process*, not platform-wide.
-3. **Ops signals need the tenant dimension early.** Phase 9's probe per tenant —
-   one tenant's dead-letter storm or pool depth must be attributable, or the
-   noisy tenant hides inside platform averages until they're everyone's problem.
-4. **Residency trumps elegance.** "Partner data stays in partner's database /
-   country" ends the row-tenancy conversation regardless of cost — that's the
-   schema or stack stop, by contract.
+3. **Ops signals need the tenant dimension early.** Run Phase 9's probe per
+   tenant, so one tenant's dead-letter storm or pool depth stays attributable.
+   Otherwise the noisy tenant hides inside platform averages until they're
+   everyone's problem.
+4. **Residency trumps elegance.** A clause like "partner data stays in partner's
+   database, in partner's country" ends the row-tenancy conversation regardless
+   of cost. That's the schema or stack stop, by contract.
 
 ## Ship It
 
@@ -98,9 +103,9 @@ price is every Phase 8 discipline times N. Choose per process.</details>
 
 **Challenge.** Take the capstone platform and onboard two hypothetical tenants: a
 sister brand (same product, same country) and a bank partner (residency clause,
-custom review step). Place each on the dial, list the enforcement mechanics for
-the first and the migration-cost line for the second — you'll usually land on two
-*different* stops, which is the mixed-tenancy reality most platforms run.
+custom review step). Place each on the dial. List the enforcement mechanics for
+the first, and the migration-cost line for the second. You'll usually land on two
+*different* stops — that's the mixed-tenancy reality most platforms run.
 
 ## Related
 

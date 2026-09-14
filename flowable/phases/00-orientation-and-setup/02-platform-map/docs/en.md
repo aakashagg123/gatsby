@@ -8,13 +8,13 @@
 
 ## The Problem
 
-"Flowable" names a platform, not a single engine — and newcomers conflate the
-parts: modelling a decision as gateway spaghetti because they never met DMN,
-forcing ad-hoc casework into BPMN because CMMN was invisible, or hand-rolling a
-Kafka consumer the event registry would have replaced (all mistakes this course
-spends whole phases undoing). One map up front prevents most of them — and
-explains what you inherited from the project's history as a 2016 fork of Activiti,
-built by that engine's original authors.
+"Flowable" names a platform, not a single engine, and newcomers conflate the
+parts. They model a decision as gateway spaghetti because they never met DMN.
+They force ad-hoc casework into BPMN because CMMN was invisible to them. Or they
+hand-roll a Kafka consumer that the event registry would have replaced. This
+course spends whole phases undoing these mistakes. One map up front prevents most
+of them, and explains what you inherited from the project's history: Flowable is
+a 2016 fork of Activiti, built by that engine's original authors.
 
 ## The Concept
 
@@ -35,24 +35,26 @@ flowchart TB
   platform --- API
 ```
 
-What the map buys you in practice:
+Here is what the map buys you in practice:
 
 1. **One artifact type per question.** *What order do things happen?* → BPMN.
    *What work is available, human decides order?* → CMMN. *Which answer given
    these inputs?* → DMN. *What outside signal starts/continues work?* → event
-   registry. Modelling smells (script-task rules, gateway policy constants,
-   consumer glue services) are usually a question in the wrong engine.
+   registry. A modelling smell (script-task rules, gateway policy constants,
+   consumer glue services) usually means the question is in the wrong engine.
 2. **Cross-references, not imports.** A BPMN decision task references a DMN key
-   (Phase 5); a CMMN process task references a BPMN key (Phase 6); an event
+   (Phase 5). A CMMN process task references a BPMN key (Phase 6). An event
    definition triggers either. Each artifact versions independently (Phase 8) —
    that independence is the governance story.
-3. **One operational surface.** Same database, same history split, same job
-   executor family, same REST idioms — Phase 2 and Phase 9 apply to all four
-   engines, which is why this course teaches the machinery once via BPMN.
-4. **Editions, briefly** (Phase 10 covers the decision): everything above is the
-   open-source core. *Flowable Work/Design* is the commercial layer — modelers,
-   task UIs, admin consoles — on the same engines. Course rule: learn on the
-   core; evaluate the paid layer for the UIs, never for engine features.
+3. **One operational surface.** All four engines share the same database, the
+   same history split, the same job executor family, and the same REST idioms.
+   Phase 2 and Phase 9 apply to all four, which is why this course teaches the
+   machinery once, through BPMN.
+4. **Editions, briefly** (Phase 10 covers the decision in full). Everything
+   above is the open-source core. *Flowable Work/Design* is the commercial
+   layer — modelers, task UIs, admin consoles — on the same engines. Course
+   rule: learn on the core, and evaluate the paid layer for its UIs, never for
+   engine features.
 
 ## Ship It
 
@@ -70,7 +72,7 @@ answer is…
 - D) CMMN
 
 <details><summary>Answer</summary>B — "which answer given inputs" is DMN's
-question. Gateways route; tables decide.</details>
+question. Gateways route, and tables decide.</details>
 
 **Q2.** A BPMN process uses a DMN table. When the table changes…
 
@@ -80,7 +82,7 @@ question. Gateways route; tables decide.</details>
 - D) the engine migrates instances
 
 <details><summary>Answer</summary>B — reference-by-key is the platform's decoupling
-mechanism, and the reason Phase 5's governance works.</details>
+mechanism. It's the reason Phase 5's governance works.</details>
 
 **Q3.** The four engines share…
 
@@ -89,11 +91,11 @@ mechanism, and the reason Phase 5's governance works.</details>
 - C) only the modeler
 - D) a message bus
 
-<details><summary>Answer</summary>B — one operational education covers the
-platform; that's why this course teaches internals through BPMN alone.</details>
+<details><summary>Answer</summary>B — one operational education covers the whole
+platform, which is why this course teaches internals through BPMN alone.</details>
 
 **Challenge.** Take the capstone and label every artifact with its engine (process,
-decision table, event pair — and the hypothetical fraud-investigation case from
+decision table, event pair, and the hypothetical fraud-investigation case from
 Phase 6). Then find one thing in *your* organisation's workflow landscape that's
 currently in the wrong column.
 

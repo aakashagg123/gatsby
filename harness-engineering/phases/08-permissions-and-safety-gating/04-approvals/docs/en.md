@@ -6,10 +6,11 @@
 
 ## The Problem
 
-When the gate says "ask" (lesson 01), the harness needs an actual **approval flow**: present
-the pending action clearly, capture a decision, and remember it (so the agent doesn't ask
-the same class of thing five times). Done badly, approvals are either skipped (unsafe) or
-constant (annoying). Done well, they spend human attention only on genuine decision points.
+When the gate says "ask" (lesson 01), the harness needs an actual **approval flow**. It
+must present the pending action clearly, capture a decision, and remember it, so the agent
+doesn't ask the same class of thing five times. Done badly, approvals are either skipped
+(unsafe) or constant (annoying). Done well, they spend human attention only on genuine
+decision points.
 
 ## The Concept
 
@@ -22,8 +23,8 @@ flowchart LR
   D -- "deny" --> NO["refuse"]
 ```
 
-The "approve always for this class" option is what keeps you from re-approving the same safe
-pattern — the harness learns the allow rule from your decision.
+The "approve always for this class" option keeps you from re-approving the same safe
+pattern. The harness learns the allow rule from your decision.
 
 ## Build It
 
@@ -53,15 +54,15 @@ print(ap.request("git", "git push"))     # True (no re-ask — remembered)
 print(ap.request("rm", "rm -rf build"))  # False
 ```
 
-"Approve always" promotes a one-time decision into a standing allow (lesson 02) — the human
+"Approve always" promotes a one-time decision into a standing allow (lesson 02). The human
 teaches the policy by using it.
 
 ## Use It
 
-This is the Claude Code / Codex approval prompt: when the agent proposes a gated action, you
-choose yes / no / "yes and don't ask again for this", and the tool remembers the last option
-as a session (or persisted) allow rule. The orchestration version of this is the wave
-approval gate from Phase 10 (spec-first, hard-stop between waves).
+This is the Claude Code / Codex approval prompt. When the agent proposes a gated action,
+you choose yes / no / "yes and don't ask again for this", and the tool remembers the last
+option as a session (or persisted) allow rule. The orchestration version of this is the
+wave approval gate from Phase 10 — spec-first, with a hard stop between waves.
 
 ## Ship It
 
@@ -89,7 +90,7 @@ approval gate from Phase 10 (spec-first, hard-stop between waves).
 <details><summary>Answer</summary>B — reserve human attention for real decisions.</details>
 
 **Challenge.** Persist the `always` set to disk so remembered approvals survive across
-sessions (and add a way to revoke one).
+sessions. Add a way to revoke one, too.
 
 ## Related
 

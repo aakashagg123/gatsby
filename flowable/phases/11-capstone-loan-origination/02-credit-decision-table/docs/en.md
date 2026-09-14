@@ -20,17 +20,18 @@
 
 Design notes, all cash-outs of earlier lessons:
 
-- **`hitPolicy="FIRST"`, deliberately** — the rows are exception-then-default
+- **`hitPolicy="FIRST"`, deliberately.** The rows are exception-then-default
   (Phase 5, lesson 02's criterion), and the self-employed tightening *depends* on
-  more-specific-first: a salaried 760/₹8L file hits row 1; a self-employed 760/₹8L
-  file falls past row 3's cap into manual review. Reordering these rows is a policy
-  change and reviews as one.
-- **The catch-all decline is the completeness guarantee** — no input combination
-  returns nothing, so the process's default gateway path is belt-and-braces, not a
-  load-bearing hole-plug.
-- **The employment axis came from governance, not engineering**: the committee's
-  "self-employed needs tighter caps" lands as two rows and a new input — no Java, no
-  BPMN change, one `.dmn` redeploy (the asymmetry that justified Phase 5).
+  more-specific-first ordering. A salaried 760/₹8L file hits row 1. A
+  self-employed 760/₹8L file falls past row 3's cap into manual review.
+  Reordering these rows is a policy change, and it must be reviewed as one.
+- **The catch-all decline is the completeness guarantee.** No input combination
+  returns nothing, so the process's default gateway path is belt-and-braces, not
+  a load-bearing hole-plug.
+- **The employment axis came from governance, not engineering.** The committee's
+  "self-employed needs tighter caps" lands as two rows and a new input. No Java,
+  no BPMN change — just one `.dmn` redeploy. That's the asymmetry that justified
+  Phase 5.
 
 ## Verify It
 

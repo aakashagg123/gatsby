@@ -8,14 +8,16 @@
 
 ## The Problem
 
-The Docker image and Phase 2's starter both run `history-level=full` — right for
-learning, and the default nobody revisits. A loan book doing 50k applications a
-month writes millions of ACTINST and VARINST rows; two years later the history
-tables dwarf runtime a thousandfold, dashboards slow, backups balloon, and — the
-sharp end — the DPO asks why customer PAN values sit in `ACT_HI_VARINST` seven years
-past any retention basis. Recording level and retention window are one decision with
-three stakeholders: ops (query speed), finance (storage), compliance (both a floor
-*and* a ceiling on keeping data).
+The Docker image and Phase 2's starter both run `history-level=full`. That's right
+for learning, but it's a default nobody revisits. A loan book doing 50k
+applications a month writes millions of ACTINST and VARINST rows. Two years later,
+the history tables dwarf runtime a thousandfold, dashboards slow down, and backups
+balloon. At the sharp end, the DPO asks why customer PAN values still sit in
+`ACT_HI_VARINST` seven years past any retention basis.
+
+Recording level and retention window are one decision with three stakeholders: ops
+(query speed), finance (storage), and compliance (a floor *and* a ceiling on
+keeping data).
 
 ## The Concept
 
@@ -28,11 +30,11 @@ three stakeholders: ops (query speed), finance (storage), compliance (both a flo
 | `audit` (engine default) | + variable values, form properties | the usual regulated-flow answer |
 | `full` | + variable *updates* (every intermediate value) | debugging, courses, never high-volume production by accident |
 
-Two refinements before dropping a level globally: per-definition override
+Two refinements help before you drop a level globally. A per-definition override
 (`flowable:historyLevel` on the process) keeps `audit` for the loan book while the
-notification workflow runs `activity`; and **transient variables** (Phase 2) plus
-"store a document *reference*, not the document" solve most PII-in-history findings
-without touching the level.
+notification workflow runs `activity`. And **transient variables** (Phase 2), plus
+"store a document *reference*, not the document," solve most PII-in-history
+findings without touching the level.
 
 **Lever 2 — how long it stays.** Growth is `rate × record size × retention`, and
 retention is the only lever that bounds it:
@@ -44,13 +46,15 @@ flowchart LR
   A --> D["deleted: past the compliance ceiling<br/>(DPDP/GDPR erasure basis ends)"]
 ```
 
-The floor comes from audit/regulatory obligations (Phase 8's audit sentence must
-stay answerable); the ceiling from data-protection law — *keeping everything
-forever is a compliance failure in the other direction.* Mechanically: Flowable's
-built-in history-cleaning job (`flowable.enable-history-cleaning=true` +
-`history-cleaning-after` window) or scheduled batch deletes by `END_TIME_` —
-always end-time based, never touching open instances, always archived-before-
-deleted if the warehouse is the system of record for old cases.
+The floor comes from audit and regulatory obligations — Phase 8's audit sentence
+must stay answerable. The ceiling comes from data-protection law: *keeping
+everything forever is a compliance failure in the other direction.*
+
+Mechanically, use Flowable's built-in history-cleaning job
+(`flowable.enable-history-cleaning=true` plus a `history-cleaning-after` window),
+or scheduled batch deletes keyed on `END_TIME_`. Always key on end time, never
+touch open instances, and always archive before you delete if the warehouse is the
+system of record for old cases.
 
 **The one metric:** history growth per week, plotted against the deletion job's
 throughput. If ingest exceeds cleanup, the ceiling is just an outage with a date.
@@ -95,9 +99,9 @@ exactly the way "delete after a month" fails the auditor.</details>
 instances are runtime's concern, and their history must survive them.</details>
 
 **Challenge.** Fill the worksheet for the capstone: level per definition, keep
-window, archive target, deletion basis — then compute the steady-state row count at
-50k applications/month and check it against your database sizing (lesson 05). If
-the number surprises you, that was the point.
+window, archive target, and deletion basis. Then compute the steady-state row
+count at 50k applications a month and check it against your database sizing
+(lesson 05). If the number surprises you, that was the point.
 
 ## Related
 

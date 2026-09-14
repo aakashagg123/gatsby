@@ -7,8 +7,8 @@
 ## The Problem
 
 With many MCP servers and plugins connected, the agent could face *hundreds* of tool
-schemas — bloating the context and slowing tool selection. **Deferred loading** fixes this:
-keep a lightweight index of tool *names*, and fetch a tool's full schema only when it's
+schemas. That bloats the context and slows tool selection. **Deferred loading** fixes this.
+Keep a lightweight index of tool *names*, and fetch a tool's full schema only when it's
 selected or searched for. It's progressive disclosure (lesson 04) applied to tools.
 
 ## The Concept
@@ -54,14 +54,14 @@ print(reg.search("pr"))               # ['github_create_pr']
 print(reg.load("github_create_pr"))   # full schema fetched only now
 ```
 
-Only names sit in context; a heavy schema is materialized just-in-time when the agent
+Only names sit in context. A heavy schema is materialized just-in-time when the agent
 searches for or selects the tool.
 
 ## Use It
 
-This is exactly the **deferred tool / tool-search** pattern you've seen: large tool sets
-(many MCP servers, plugin bundles) are presented as names, and the agent fetches a tool's
-full schema via a search step before calling it. Claude Code plugins and big MCP fleets rely
+This is exactly the **deferred tool / tool-search** pattern you've seen. Large tool sets —
+many MCP servers, plugin bundles — are presented as names. The agent fetches a tool's full
+schema through a search step before calling it. Claude Code plugins and big MCP fleets rely
 on this so connecting many servers doesn't drown the context window.
 
 ## Ship It

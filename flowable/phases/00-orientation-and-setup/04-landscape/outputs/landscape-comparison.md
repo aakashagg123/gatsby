@@ -10,11 +10,11 @@ lesson: 04
 
 ## The two axes (answer these before any feature matrix)
 
-1. **Author axis** — who must read/author the flow?
-   Business/compliance/ops read it → model-first (BPMN family).
-   Engineers only → code-first (durable execution) is simpler and honest.
+1. **Author axis** — who must read or author the flow?
+   Business, compliance, or ops reads it → model-first (BPMN family).
+   Only engineers read it → code-first (durable execution) is simpler and honest.
 2. **State axis** — where may state live?
-   Must stay in your existing RDBMS (audit, ops, data residency) →
+   State must stay in your existing RDBMS (audit, ops, data residency) →
    Flowable / Camunda 7 class. A separate platform is acceptable → Camunda 8 /
    Temporal enter the shortlist.
 
@@ -37,10 +37,12 @@ lesson: 04
 
 ## Questions that cut through vendor decks
 
-- Show me the audit answer: "which rules version decided case X?" (Phase 8's
-  sentence — who produces it, from which store?)
-- What is the *second* stateful system I now operate, and its backup/DR story?
-- Where do human tasks, forms, and candidate groups come from — native or DIY?
-- What happens to in-flight instances on deploy? (If the answer isn't Phase 8's
-  three rules, dig.)
-- Which parts are open source today, and what moved editions in the last 3 years?
+- Ask for the audit answer: "which rules version decided case X?" (Phase 8's
+  sentence.) Who produces it, and from which store?
+- What is the *second* stateful system you'd now operate, and what is its
+  backup/DR story?
+- Where do human tasks, forms, and candidate groups come from — native, or DIY?
+- What happens to in-flight instances on deploy? If the answer isn't Phase 8's
+  three rules, dig deeper.
+- Which parts are open source today, and what moved editions in the last three
+  years?

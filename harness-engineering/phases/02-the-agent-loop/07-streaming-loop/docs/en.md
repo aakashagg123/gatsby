@@ -7,11 +7,11 @@
 ## The Problem
 
 A non-streaming loop waits for the entire model response before showing anything. For a
-coding agent that may "think" for many seconds, that's a dead UI and a worse feeling of
-control — the user can't tell if it's working or hung, and can't interrupt early.
-Streaming changes the experience: text appears token-by-token, and you still have to
-*accumulate* those tokens (and any tool calls) into a complete message before the act
-step can run.
+coding agent that may "think" for many seconds, that's a dead UI. It also weakens the
+user's sense of control: they can't tell if it's working or hung, and they can't
+interrupt early. Streaming changes the experience — text appears token-by-token. But you
+still have to *accumulate* those tokens, and any tool calls, into a complete message
+before the act step can run.
 
 ## The Concept
 
@@ -27,8 +27,8 @@ flowchart LR
 ```
 
 The key insight: streaming changes *how you receive* the message, not the loop's logic.
-You still end each turn with a complete message, then apply the same termination and act
-steps from earlier lessons.
+You still end each turn with a complete message. Then you apply the same termination and
+act steps from earlier lessons.
 
 ## Build It
 
@@ -78,15 +78,15 @@ run("2 + 3?", fake_stream, {"add": lambda a, b: a + b})
 #          The answer is 5.
 ```
 
-The text streams as it arrives; the tool call is accumulated and dispatched only once the
-turn is complete. Loop logic = unchanged.
+The text streams as it arrives. The tool call is accumulated and dispatched only once the
+turn is complete. Loop logic stays unchanged.
 
 ## Use It
 
-The SDK exposes this as `with client.messages.stream(...) as stream:` — you iterate
+The SDK exposes this as `with client.messages.stream(...) as stream:`. You iterate
 `stream.text_stream` for live text, and `stream.get_final_message()` gives you the
-assembled message (with `tool_use` blocks) to run the act step on. Same two-part shape:
-stream for the human, assemble for the loop.
+assembled message, with `tool_use` blocks, to run the act step on. It's the same
+two-part shape: stream for the human, assemble for the loop.
 
 ## Ship It
 

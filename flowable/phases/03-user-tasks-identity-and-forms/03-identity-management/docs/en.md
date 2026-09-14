@@ -1,7 +1,7 @@
 # Identity management: users, groups, and external IdPs
 
-> **Motto** — The engine needs to know *who may act*; it should almost never be the
-> system that decides *who exists* — that's your IdP's job.
+> **Motto** — The engine needs to know *who may act*. It should almost never decide
+> *who exists* — that's your IdP's job.
 
 *Part of Phase 03 — User tasks, identity & forms. Concept lesson — no code required.*
 
@@ -9,11 +9,12 @@
 
 Candidate groups (lesson 02) quietly assumed somebody maintains the answer to "who is
 in credit-ops?" Flowable ships a built-in identity store — user and group tables,
-membership, even passwords — and the demo-grade temptation is to use it: create users
-over REST, done. Six months later HR moves three analysts, nobody updates the engine's
-tables, tasks route to ex-members, and security asks why a workflow engine is storing
-password hashes outside the corporate IdP. Identity is a *boundary* decision, and the
-default should be: the engine consumes identity, it doesn't own it.
+membership, even passwords. The demo-grade temptation is to use it: create users over
+REST, and you're done. Six months later, HR moves three analysts and nobody updates
+the engine's tables. Tasks route to ex-members, and security asks why a workflow
+engine stores password hashes outside the corporate IdP. Identity is a *boundary*
+decision, and the default should be that the engine consumes identity — it doesn't
+own it.
 
 ## The Concept
 
@@ -33,10 +34,10 @@ flowchart TB
 | Auth | engine verifies passwords | IdP authenticates, engine authorizes | IdP issues tokens; your API layer maps claims → candidate groups |
 | Honest use | demos, tests, this course's Docker image | legacy setups already invested | production |
 
-The delegated pattern deserves spelling out because it's the one that surprises
+The delegated pattern deserves a closer look because it's the one that surprises
 people: **the engine never looks membership up**. Task queries take the group list as
-an *input* — `candidateGroup in (...)` — so your API layer extracts groups from the
-caller's token (OIDC claims) and passes them in per request:
+an *input* — `candidateGroup in (...)`. Your API layer extracts groups from the
+caller's token (OIDC claims) and passes them in with each request:
 
 ```
 JWT claims: { sub: "asha", groups: ["credit-ops", "mumbai"] }
@@ -44,28 +45,28 @@ JWT claims: { sub: "asha", groups: ["credit-ops", "mumbai"] }
 taskService.createTaskQuery().taskCandidateGroupIn(List.of("credit-ops", "mumbai"))
 ```
 
-Membership changes in the IdP take effect on the next request — no sync job, no
-stale mirror, no password storage. The engine's identity tables stay empty; what it
-*does* keep is history: "claimed by asha" as an opaque string, joined back to a real
-person by the IdP when the auditor asks.
+Membership changes in the IdP take effect on the next request. There's no sync job,
+no stale mirror, no password storage. The engine's identity tables stay empty. What
+it *does* keep is history — "claimed by asha" as an opaque string, joined back to a
+real person by the IdP when an auditor asks.
 
 Two design consequences:
 
-1. **Group names become an API contract** between IdP and models.
-   `flowable:candidateGroups="credit-ops"` must match a claim the IdP emits —
-   version and review group renames like the breaking changes they are.
+1. **Group names become an API contract** between the IdP and the models.
+   `flowable:candidateGroups="credit-ops"` must match a claim the IdP emits. Version
+   and review group renames like the breaking changes they are.
 2. **Authorization lives at your API layer**, not in the engine. The engine enforces
-   task-level rules (only the assignee completes — lesson 01); *which tasks a caller
-   may query at all* is your perimeter. Exposing `flowable-rest` directly to end
-   users hands them an admin API; it sits behind your service in every production
-   topology (Phase 10).
+   task-level rules, like only the assignee can complete a task (lesson 01). Which
+   tasks a caller may query at all is your perimeter to guard. Exposing
+   `flowable-rest` directly to end users hands them an admin API, so it sits behind
+   your service in every production topology (Phase 10).
 
 ## Ship It
 
 This lesson ships
-[`outputs/identity-architecture-guide.md`](../outputs/identity-architecture-guide.md)
-— the three architectures, the claims-to-groups mapping pattern, and a migration
-checklist off the built-in store.
+[`outputs/identity-architecture-guide.md`](../outputs/identity-architecture-guide.md).
+It covers the three architectures, the claims-to-groups mapping pattern, and a
+migration checklist off the built-in store.
 
 ## Check Yourself
 
@@ -77,8 +78,8 @@ time?
 - C) a nightly sync
 - D) the model
 
-<details><summary>Answer</summary>B — the engine consumes group lists; it never
-resolves membership. That inversion is what removes sync lag and password
+<details><summary>Answer</summary>B — the engine consumes group lists and never
+resolves membership itself. That inversion removes sync lag and password
 custody.</details>
 
 **Q2.** The IdP team renames `credit-ops` to `retail-credit-ops`. What breaks?
@@ -103,10 +104,10 @@ migrate.</details>
 references, not credential custody. Empty identity tables are a healthy
 sign.</details>
 
-**Challenge.** Sketch the claims-to-groups mapping for your own stack: which token
-claim carries groups, where the mapping code sits, and what happens to an in-flight
-task when its claimer is deactivated in the IdP mid-task (hint: lesson 02's orphan
-runbook). If you can't answer the last one, that's the gap to close first.
+**Challenge.** Sketch the claims-to-groups mapping for your own stack. Note which
+token claim carries groups, where the mapping code sits, and what happens to an
+in-flight task when its claimer is deactivated in the IdP mid-task (hint: lesson 02's
+orphan runbook). If you can't answer the last one, that's the gap to close first.
 
 ## Related
 

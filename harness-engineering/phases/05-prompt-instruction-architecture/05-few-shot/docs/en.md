@@ -8,8 +8,8 @@
 
 Sometimes prose instructions don't land a tricky format or an edge case, and the fix is to
 *show* the model: a few input→output examples. But examples cost tokens, and dumping ten of
-them bloats the prompt and the cached prefix. The skill is selecting a *small, relevant*
-set — and, when you have many, picking dynamically per query rather than always sending all.
+them bloats the prompt and the cached prefix. The skill is selecting a *small, relevant* set. When you have many examples, pick them
+dynamically per query rather than always sending all.
 
 ## The Concept
 
@@ -52,11 +52,11 @@ Selecting the two nearest examples keeps the prompt small while still teaching t
 
 ## Use It
 
-In **Claude Code / Codex**, you rarely hand-write few-shot blocks — instead you put a
-canonical example in `CLAUDE.md`/`AGENTS.md` (e.g. "a route looks like this") so it's
-applied every turn, and the agent generalizes. The dynamic-selection version is what you
-build when a skill needs to choose examples per request. Keep examples few and relevant:
-more isn't better once the pattern is clear.
+In **Claude Code / Codex**, you rarely hand-write few-shot blocks. Instead, you put a
+canonical example in `CLAUDE.md`/`AGENTS.md` — for instance, "a route looks like this" — so
+it's applied every turn, and the agent generalizes. The dynamic-selection version is what
+you build when a skill needs to choose examples per request. Keep examples few and
+relevant: more isn't better once the pattern is clear.
 
 ## Ship It
 

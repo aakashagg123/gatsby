@@ -7,10 +7,11 @@
 ## The Problem
 
 The deepest injection defense is architectural: **never let model output directly drive
-privileged control flow**. If the harness `eval()`s the model's text, or runs whatever shell
-string it emits, an injected instruction becomes code execution. Instead, model output is
-*data* the harness validates against an allowlist of permitted actions before anything
-happens. This is the structural reason the permission layer (Phase 8) exists.
+privileged control flow**. If the harness runs `eval()` on the model's text, or runs
+whatever shell string it emits, an injected instruction becomes code execution. Instead,
+treat model output as *data*. The harness validates it against an allowlist of permitted
+actions before anything happens. This is the structural reason the permission layer
+(Phase 8) exists.
 
 ## The Concept
 
@@ -22,8 +23,8 @@ flowchart LR
   V -- "no" --> DENY["reject — never executed"]
 ```
 
-The model can *ask* for any action; only allowlisted, validated actions run. Injection can
-change the *request* but not the *policy*.
+The model can *ask* for any action, but only allowlisted, validated actions run. Injection
+can change the *request* but never the *policy*.
 
 ## Build It
 
@@ -49,15 +50,16 @@ print(safe_dispatch("delete_everything", {}, tools))         # denied — not al
 ```
 
 Even if the model is fully hijacked and "decides" to delete everything, `safe_dispatch`
-refuses because the action isn't on the allowlist — the policy lives in the harness, not in
-the model's text.
+refuses. The action isn't on the allowlist. The policy lives in the harness, not in the
+model's text.
 
 ## Use It
 
-This is why Claude Code / Codex route every model-requested action through the permission
-system (Phase 8) and typed tools (Phase 3) rather than executing free-form text: the model
-can request, but an allowlist + validation + permission gate decide. The rule to internalize:
-**model output is data**; treat it as untrusted input to your dispatcher, never as code.
+This is why Claude Code and Codex route every model-requested action through the permission
+system (Phase 8) and typed tools (Phase 3), rather than executing free-form text. The model
+can request an action, but an allowlist, validation, and a permission gate decide whether it
+runs. The rule to internalize: **model output is data**. Treat it as untrusted input to your
+dispatcher, never as code.
 
 ## Ship It
 

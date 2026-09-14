@@ -4,19 +4,19 @@
 
 ## TL;DR
 
-A technical product manager owns the same thing every PM owns — **outcomes** — but earns
-them on products where the hard decisions are technical: platforms, APIs, infrastructure,
-data products, and AI features. The role sits at the intersection of **business** (is it
-worth building?), **users** (does it solve a real problem?), and **engineering** (can we
-build and run it?). You are not the architect and not the engineering manager: you don't
-decide *how* it's built or *who* builds it — you decide *what* gets built, *why*, in *what
-order*, and *what "good" means*. Your leverage is influence without authority, and it runs
-on three currencies: context, clarity, and trust.
+A technical product manager owns the same thing every PM owns: **outcomes**. But they earn
+those outcomes on products where the hard decisions are technical — platforms, APIs,
+infrastructure, data products, and AI features. The role sits at the intersection of
+**business** (is it worth building?), **users** (does it solve a real problem?), and
+**engineering** (can we build and run it?). You are not the architect and not the
+engineering manager. You don't decide *how* it's built or *who* builds it. You decide
+*what* gets built, *why*, in *what order*, and *what "good" means*. Your leverage is
+influence without authority, and it runs on three currencies: context, clarity, and trust.
 
 > 🎯 **For the AI PM**
 >
 > **Why it matters** — An AI PM is a technical PM by default. Model choice, eval design,
-> latency budgets, and data rights are product decisions on an AI product; you can't
+> latency budgets, and data rights are product decisions on an AI product. You can't
 > delegate them all to engineering and still claim to own the outcome.
 >
 > **What it changes in your decisions** — You treat "which model, at what cost, with what
@@ -59,7 +59,7 @@ flowchart TB
 
 ## The PM ↔ TPM ↔ EM spectrum
 
-Titles vary wildly across companies; the underlying spectrum doesn't:
+Titles vary wildly across companies. The underlying spectrum doesn't:
 
 | Role | Optimizes for | Customer is | Typical outputs |
 | --- | --- | --- | --- |
@@ -86,11 +86,11 @@ You have no direct authority over the people who build the product. Your leverag
 - **Trust** — built by understanding enough of the technical picture to ask good questions
   (see the [technical product sense track](../technical-product-sense/README.md)), by never
   negotiating an estimate you don't understand, and by taking the blame boundary seriously:
-  you absorb ambiguity from above; you don't pass panic downward.
+  you absorb ambiguity from above. You don't pass panic downward.
 
 A useful mental model: the PM is the team's **API to the rest of the company**. Requests
-come to you in business language; you translate them into a prioritized, unambiguous
-contract; the team's work flows back out through you as narrative the company understands.
+come to you in business language. You translate them into a prioritized, unambiguous
+contract. The team's work flows back out through you as narrative the company understands.
 
 ## The buck stops with you
 
@@ -98,9 +98,9 @@ One responsibility doesn't delegate: you are the **arbiter of completeness**. Yo
 hired to notice incomplete work — your own and everyone else's — because nobody
 downstream necessarily knows the right questions to ask. The tell is familiar: you hit
 send on an answer already knowing the follow-up question you didn't address, and it
-arrives ten minutes later. As a one-off it's laziness; as a habit it's how A− products
-ship — you know in your heart it's an A−, nobody else calls it, and it launches as
-exactly that. Guard against it structurally: before anything leaves your hands, ask
+arrives ten minutes later. As a one-off, it's laziness. As a habit, it's how A− products
+ship: you know in your heart it's an A−, nobody else calls it, and it launches as
+exactly that. Guard against it structurally. Before anything leaves your hands, ask
 what question the recipient will ask next, and answer it in the same artifact.
 
 ## A week in the role
@@ -126,7 +126,7 @@ definition and the cycle worsens. Guarding the discovery time *is* the job.
 - **The absentee** — delegating "technical stuff" wholesale, then being surprised by a
   latency, cost, or privacy property that was knowable months earlier.
 - **The hero translator** — hoarding context so all information flows through you. It feels
-  like leverage; it's a bottleneck and a bus-factor of one.
+  like leverage. It's really a bottleneck and a bus-factor of one.
 
 ## Practitioner checklist
 

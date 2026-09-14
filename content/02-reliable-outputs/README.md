@@ -1,7 +1,7 @@
 # Module 02 · Reliable outputs & tool use
 
 A model that is right 95% of the time will break a workflow that calls it a hundred
-times. This module is about closing that gap — turning a stochastic text generator
+times. This module is about closing that gap. It turns a stochastic text generator
 into a component whose outputs and actions downstream systems can *trust*.
 
 - [**Structured output**](./structured-output.md) — getting valid, schema-conformant
@@ -17,6 +17,12 @@ The throughline: **never trust model output as if it were a typed return value.*
 Treat it as untrusted input to be validated, bounded, and made safe to act on. This
 is the [harness](../00-foundations/harness-engineering.md) doing its job.
 
+
+## Connects to other tracks
+
+- [Tools & function calling](../../agentic-ai/tools-and-function-calling.md) — the agent's view of the same tool contracts.
+- [Tool engineering in the harness](../../harness-engineering/phases/03-tool-engineering/README.md) — building reliable tools by hand.
+- [Service integration & error handling (Flowable)](../../flowable/phases/04-service-integration-and-error-handling/README.md) — the same idempotency and retry discipline in a process engine.
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
 

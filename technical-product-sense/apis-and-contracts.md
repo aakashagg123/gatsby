@@ -4,23 +4,23 @@
 
 ## TL;DR
 
-An **API** is the contract by which one piece of software talks to another — your app to your
+An **API** is the contract by which one piece of software talks to another: your app to your
 server, your server to a payment provider, your product to a model. The contract defines the
 *request* (what you send), the *response* (what you get), and the promises around it:
 **idempotency** (safe to retry), **versioning** (changes don't break callers), and error
-behaviour. PMs don't design the wire format, but the contract *is* the product surface for
-anything integrated — and getting it wrong is expensive to undo, because other people build
+behavior. PMs don't design the wire format. But the contract *is* the product surface for
+anything integrated, and getting it wrong is expensive to undo, because other people build
 on it.
 
 > 🎯 **For the AI PM**
 >
-> **Why it matters** — Model providers are APIs, and your AI feature's reliability is
-> governed by their contract: rate limits, timeouts, streaming, token limits, and what
-> happens on a 429 or 500. Your own AI feature is *also* an API others may call.
+> **Why it matters** — Model providers are APIs. Their contract governs your AI feature's
+> reliability: rate limits, timeouts, streaming, token limits, and what happens on a 429 or
+> 500. Your own AI feature is *also* an API others may call.
 >
 > **What it changes in your decisions** — You treat "what happens when the model API is slow,
-> rate-limited, or errors?" as a first-class requirement, and you design idempotency so a
-> retried request doesn't charge the user twice or fire an action twice.
+> rate-limited, or errors?" as a first-class requirement. You design idempotency so a retried
+> request doesn't charge the user twice or fire an action twice.
 >
 > **Ask yourself** — *"If this call fails or is retried, what does the contract guarantee — and
 > is it safe?"*
@@ -48,7 +48,7 @@ sequenceDiagram
   Note over C,A: A retry with the same key returns the same order — no duplicate
 ```
 
-Each arrow is a promise. The client promises a well-formed request with auth; the API
+Each arrow is a promise. The client promises a well-formed request with auth. The API
 promises to validate, do the work, and return a **status code** (2xx success, 4xx "you
 messed up," 5xx "we messed up") plus a body.
 
@@ -66,57 +66,56 @@ messed up," 5xx "we messed up") plus a body.
 
 ## Idempotency — the retry-safety promise
 
-Networks fail mid-request, so clients **retry**. If a retried "create payment" runs twice,
-the user is charged twice. **Idempotency** means *doing the same operation twice has the same
-effect as doing it once* — usually via an idempotency key the server remembers. Reads are
-naturally idempotent; the danger is writes. Whenever a duplicate would be harmful (payments,
-messages, actions), the contract must be idempotent. This is one of the highest-leverage
+Networks fail mid-request, so clients **retry**. If a retried "create payment" runs twice, the
+user is charged twice. **Idempotency** means *doing the same operation twice has the same
+effect as doing it once* — usually through an idempotency key the server remembers. Reads are
+naturally idempotent; writes are the danger. Whenever a duplicate would be harmful — payments,
+messages, actions — the contract must be idempotent. This is one of the highest-leverage
 technical questions a PM can ask.
 
 ## Versioning — changing without breaking
 
 Once others call your API, you can't freely change it — a rename breaks their code. Teams
-handle change with **versioning** (`/v1/`, `/v2/`) and by only making **backward-compatible**
-changes to a live version (add optional fields; never remove or repurpose existing ones).
-The product consequence: **API changes are slow and deliberate**, because every caller is a
-dependency. Design the contract as if you'll live with it for years — because you will.
+handle change with **versioning** (`/v1/`, `/v2/`) and by making only **backward-compatible**
+changes to a live version: add optional fields, and never remove or repurpose existing ones.
+The product consequence is that **API changes are slow and deliberate**, because every caller
+is a dependency. Design the contract as if you'll live with it for years, because you will.
 
 ## Webhooks — the API that calls you
 
-Sometimes you need to know when something happens elsewhere (a payment cleared, a job
-finished). Polling ("is it done yet?") is wasteful; a **webhook** flips it — the other system
-`POST`s to *your* endpoint when the event occurs. Webhooks power most integrations, and they
-bring their own contract concerns: they can arrive out of order, more than once (idempotency
-again), or not at all (so you still need a reconciliation fallback).
+Sometimes you need to know when something happens elsewhere: a payment cleared, a job
+finished. Polling ("is it done yet?") is wasteful, so a **webhook** flips it — the other
+system `POST`s to *your* endpoint when the event occurs. Webhooks power most integrations, and
+they bring their own contract concerns. They can arrive out of order, arrive more than once
+(idempotency again), or not arrive at all — so you still need a reconciliation fallback.
 
 ## A worked pass: the double charge
 
-The classic contract failure, end to end. A user taps "Pay," the request reaches the
-payment service, the charge succeeds — but the response is lost to a network blip. The
-app, seeing a timeout, retries. Without idempotency, the second request is a second
-charge: the user pays twice, support gets a furious ticket, and finance spends a week on
-refunds. With an **idempotency key** — the app sends a unique ID per payment attempt,
-and the server returns the *original* result for a repeated key — the retry is
-harmless. One header field is the difference between "resilient" and "refund queue."
+Here is the classic contract failure, end to end. A user taps "Pay," and the request reaches
+the payment service. The charge succeeds, but the response is lost to a network blip. The app
+sees a timeout and retries. Without idempotency, the second request is a second charge: the
+user pays twice, support gets a furious ticket, and finance spends a week on refunds. With an
+**idempotency key** — the app sends a unique ID per payment attempt, and the server returns
+the *original* result for a repeated key — the retry is harmless. One header field is the
+difference between "resilient" and "refund queue."
 
-The PM's contract review fits in five questions: *What happens if this call is retried?*
-(idempotency) — *What does the caller see when it fails?* (error contract: is "card
-declined" distinguishable from "try again"?) — *Who else consumes this, and what breaks
-if we rename a field?* (versioning: additive changes are safe; renames and removals are
-breaking) — *How does the other side learn something happened?* (webhook vs. polling,
-and what happens when the webhook receiver is down) — *What are the rate limits, and
-what do we do when we hit them?* You don't need to design the wire format to ask all
-five — and every one of them is a user-visible product behaviour wearing an engineering
-costume.
+The PM's contract review fits in five questions. *What happens if this call is retried?*
+That's idempotency. *What does the caller see when it fails?* That's the error contract — is
+"card declined" distinguishable from "try again"? *Who else consumes this, and what breaks if
+we rename a field?* That's versioning: additive changes are safe, renames and removals are
+breaking. *How does the other side learn something happened?* That's webhook vs. polling, and
+what happens when the webhook receiver is down. *What are the rate limits, and what do we do
+when we hit them?* You don't need to design the wire format to ask all five. Every one of them
+is a user-visible product behavior wearing an engineering costume.
 
 ## Failure modes
 
-- **No retry plan** — the feature assumes every call succeeds; the first upstream 500 takes it
-  down.
+- **No retry plan** — the feature assumes every call succeeds, so the first upstream 500 takes
+  it down.
 - **Non-idempotent writes** — retries create duplicate charges, orders, or messages.
-- **Breaking changes** — removing or renaming a response field and silently breaking every
+- **Breaking changes** — you remove or rename a response field and silently break every
   caller.
-- **Ignoring rate limits** — designing a feature that needs more calls than the upstream API
+- **Ignoring rate limits** — you design a feature that needs more calls than the upstream API
   allows.
 
 ## Practitioner checklist

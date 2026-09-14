@@ -314,37 +314,38 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Ontologies &amp; data modeling</h1>
   </div>
   <h2>TL;DR</h2>
-<p>The <strong>ontology</strong> is the graph's data model: the agreed list of entity types (Customer,
-Product, Supplier), the relationship types allowed between them (<em>holds</em>, <em>supplies</em>,
-<em>depends on</em>), and the rules that make facts mean the same thing everywhere. It sounds
-like a technical artifact; it is actually a <strong>product contract</strong> — it fixes, in advance,
-the set of questions your graph can ever answer and the set of teams who have to agree on
-vocabulary. Ontology design is therefore a negotiation, not a specification: sales'
-"account," finance's "billing entity," and legal's "counterparty" are three views of one
-thing, and someone has to decide how they map. The craft is scoping: model the handful of
-entity types your first killer queries need, borrow standard vocabularies where they
-exist, version the ontology like an API, and let it grow one proven domain at a time.
-The failure mode has a name in every data team — <em>boiling the ocean</em> — and it has killed
-more knowledge-graph programs than any technology choice.</p>
+<p>The <strong>ontology</strong> is the graph's data model. It is the agreed list of entity types
+(Customer, Product, Supplier), the relationship types allowed between them (<em>holds</em>,
+<em>supplies</em>, <em>depends on</em>), and the rules that make facts mean the same thing everywhere.
+It sounds like a technical artifact. It is actually a <strong>product contract</strong> — it fixes,
+in advance, the set of questions your graph can ever answer and the set of teams who
+have to agree on vocabulary. Ontology design is therefore a negotiation, not a
+specification. Sales' "account," finance's "billing entity," and legal's "counterparty"
+are three views of one thing, and someone has to decide how they map. The craft is
+scoping: model the handful of entity types your first killer queries need, borrow
+standard vocabularies where they exist, version the ontology like an API, and let it
+grow one proven domain at a time. Every data team has a name for the failure mode —
+<em>boiling the ocean</em> — and it has killed more knowledge-graph programs than any
+technology choice.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — Every question your product will ever answer from the graph must
 be expressible in the ontology's vocabulary. If "subsidiary" isn't modeled, no query
-about corporate families will ever run — no matter how good the database is. The
+about corporate families will ever run, no matter how good the database is. The
 ontology is where product strategy silently becomes data architecture.</p>
 <p><strong>What it changes in your decisions</strong> — You treat ontology reviews the way you treat
-API reviews: as product decisions needing your input, not plumbing to delegate. And
-you resource them accordingly — the scarce skill is someone who can hold both the
-domain and the modeling discipline.</p>
+API reviews: as product decisions that need your input, not plumbing to delegate. You
+resource them accordingly. The scarce skill is someone who can hold both the domain
+and the modeling discipline.</p>
 <p><strong>Ask yourself</strong> — <em>"Which questions on next year's roadmap can this ontology not
 express — and are we choosing that on purpose?"</em></p>
-<p><strong>Risk if ignored</strong> — A modeling committee runs for a year producing a 400-type
-enterprise ontology nobody uses; or the opposite — three teams each invent their own
-definition of 'customer' and the graph faithfully connects things that don't mean the
-same thing.</p>
+<p><strong>Risk if ignored</strong> — A modeling committee runs for a year and produces a 400-type
+enterprise ontology nobody uses. Or the opposite happens: three teams each invent
+their own definition of 'customer,' and the graph faithfully connects things that
+don't mean the same thing.</p>
 </blockquote>
 <h2>Three layers: taxonomy, ontology, instances</h2>
-<p>The words get used interchangeably; they shouldn't be:</p>
+<p>The words get used interchangeably. They shouldn't be:</p>
 <pre class="mermaid">flowchart TB
   subgraph L1[&quot;TAXONOMY — categories in a tree&quot;]
     T1[&quot;Electronics &gt; Components &gt; Fasteners&quot;]
@@ -363,9 +364,9 @@ same thing.</p>
   L1 --&gt;|&quot;classifies things in&quot;| L2
   L2 --&gt;|&quot;is the template for&quot;| L3</pre>
 <ul>
-<li><strong>Taxonomy</strong> — a classification tree: categories and subcategories. Useful, familiar
-  (every e-commerce catalog has one), and strictly weaker than an ontology: a tree gives
-  each thing one parent, and knowledge is a web.</li>
+<li><strong>Taxonomy</strong> — a classification tree: categories and subcategories. It's useful and
+  familiar — every e-commerce catalog has one — but strictly weaker than an ontology. A
+  tree gives each thing one parent, and knowledge is a web.</li>
 <li><strong>Ontology</strong> — the type system: which kinds of things exist, which relationships are
   allowed between which types, and what constraints hold ("every Contract has exactly one
   renewal date," "<em>subsidiary of</em> is transitive"). This is the layer this lesson is about.</li>
@@ -373,17 +374,17 @@ same thing.</p>
   are shaped by a schema.</li>
 </ul>
 <p>The product consequence: taxonomy debates ("where does this SKU go?") are cheap and
-reversible; ontology debates ("what <em>is</em> a customer?") are expensive and load-bearing.
+reversible. Ontology debates ("what <em>is</em> a customer?") are expensive and load-bearing.
 Budget your attention accordingly.</p>
 <h2>The ontology is a negotiation</h2>
 <p>"Customer" means the paying legal entity to finance, the user organization to product,
 the buying committee to sales, and the counterparty to legal. All four are right. An
-ontology doesn't pick a winner — it models the distinctions explicitly: a <code>LegalEntity</code>
+ontology doesn't pick a winner. It models the distinctions explicitly: a <code>LegalEntity</code>
 <em>pays for</em> a <code>Subscription</code> <em>used by</em> an <code>Organization</code> <em>containing</em> <code>Users</code>. The work
 is getting four departments to <em>agree that this decomposition captures what they each
-mean</em> — which is organizational alignment wearing a data-modeling costume.</p>
-<p>This is why ontology projects run by engineering alone stall: the blockers aren't
-technical. Practical rules that keep the negotiation shippable:</p>
+mean</em> — organizational alignment wearing a data-modeling costume.</p>
+<p>This is why ontology projects run by engineering alone stall — the blockers aren't
+technical. Practical rules keep the negotiation shippable:</p>
 <ul>
 <li><strong>Anchor on questions, not completeness.</strong> Take the three killer queries from
   <a href="what-is-a-knowledge-graph.html">lesson 1</a> and model <em>only</em> the types and edges they
@@ -396,12 +397,13 @@ technical. Practical rules that keep the negotiation shippable:</p>
   (schema.org), industries (NAICS), products (GS1), finance (FIBO), medicine (SNOMED).
   Borrowing buys interoperability and skips six months of committee.</li>
 <li><strong>Version it like an API.</strong> The ontology <em>is</em> an interface — downstream queries,
-  pipelines, and features depend on it. Additive changes are cheap; renames and
-  semantic changes are breaking changes and deserve the same ceremony as
+  pipelines, and features depend on it. Additive changes are cheap. Renames and
+  semantic changes are breaking changes, and deserve the same ceremony as
   <a href="../technical-product-sense/apis-and-contracts.html">API contract changes</a>.</li>
 </ul>
 <h2>Design decisions that echo for years</h2>
-<p>A few modeling choices come up in every domain, and each is secretly a product decision:</p>
+<p>A few modeling choices come up in every domain. Each one is secretly a product
+decision:</p>
 <table>
 <thead>
 <tr>
@@ -434,36 +436,36 @@ technical. Practical rules that keep the negotiation shippable:</p>
 <tr>
 <td>Negation &amp; absence</td>
 <td>Is "no known relationship" stored or inferred?</td>
-<td>Whether compliance can ask "prove we <em>don't</em> deal with X" — absence of an edge is not evidence of absence</td>
+<td>Whether compliance can ask "prove we <em>don't</em> deal with X." Absence of an edge is not evidence of absence</td>
 </tr>
 </tbody>
 </table>
-<p>You don't need to resolve all five up front — you need to know which ones your roadmap
-will hit, because retrofitting time or provenance onto a live graph is a migration, not
-a patch.</p>
+<p>You don't need to resolve all five up front. You need to know which ones your roadmap
+will hit — retrofitting time or provenance onto a live graph is a migration, not a
+patch.</p>
 <h2>How deep to model: the pragmatism dial</h2>
-<p>Formal ontology languages (OWL, SHACL) support machine reasoning: define "<em>supplies</em> is
-transitive through <em>subsidiary of</em>" and the system infers indirect exposure
-automatically (<a href="reasoning-and-analytics.html">reasoning lesson</a>). That power has a cost —
-formal modeling talent is rare, and heavyweight ontologies are slow to change. Most
-successful product graphs sit deliberately low on the formality dial: a well-named set
-of types and edges, a handful of constraints, documentation humans actually read — and
-formality added <em>only</em> where automated inference pays for it (compliance, medicine,
-engineering). "As formal as the killer queries require, and no more" is the right
-default; academic completeness is how graphs die in committee.</p>
+<p>Formal ontology languages (OWL, SHACL) support machine reasoning. Define "<em>supplies</em> is
+transitive through <em>subsidiary of</em>," and the system infers indirect exposure
+automatically (<a href="reasoning-and-analytics.html">reasoning lesson</a>). That power has a
+cost: formal modeling talent is rare, and heavyweight ontologies are slow to change.
+Most successful product graphs sit deliberately low on the formality dial: a well-named
+set of types and edges, a handful of constraints, and documentation humans actually
+read. Add formality <em>only</em> where automated inference pays for it — compliance,
+medicine, engineering. "As formal as the killer queries require, and no more" is the
+right default. Academic completeness is how graphs die in committee.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Boiling the ocean</strong> — the enterprise-wide ontology program that must model
   everything before anything ships. Eighteen months later: a beautiful document, no
   graph, no users, no budget.</li>
 <li><strong>The committee ontology</strong> — every stakeholder's vocabulary included verbatim to avoid
-  conflict; the result has four flavors of "customer" and connects none of them.</li>
+  conflict. The result has four flavors of "customer" and connects none of them.</li>
 <li><strong>Engineering-only modeling</strong> — technically elegant types that don't match how the
-  business actually talks; adoption dies at the first demo.</li>
-<li><strong>The frozen ontology</strong> — treated as finished after v1; two years later half the new
+  business actually talks. Adoption dies at the first demo.</li>
+<li><strong>The frozen ontology</strong> — treated as finished after v1. Two years later, half the new
   product's concepts don't fit, and teams route around the graph.</li>
 <li><strong>Untyped edges</strong> — everything connected by "related to." The graph draws nicely and
-  answers nothing; a relationship type that means anything means nothing.</li>
+  answers nothing. A relationship type that means anything means nothing.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

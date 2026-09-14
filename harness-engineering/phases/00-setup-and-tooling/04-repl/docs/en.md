@@ -7,9 +7,9 @@
 ## The Problem
 
 You can make a one-shot call (lesson 02). But to *feel* the model as a conversational
-partner — and to have a sandbox for every later concept — you need a loop that reads your
-input, sends the running conversation, prints the reply, and remembers the turn. This is
-the agent loop (Phase 2) stripped of tools: just conversation state.
+partner, and to have a sandbox for every later concept, you need a loop. The loop reads
+your input, sends the running conversation, prints the reply, and remembers the turn.
+This is the agent loop (Phase 2) stripped of tools — just conversation state.
 
 ## The Concept
 
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 ```
 
 That's a working conversational harness in ~20 lines. Phase 2 adds tools to the same
-loop; everything else in the course thickens it.
+loop. Everything else in the course thickens it.
 
 ## Use It
 

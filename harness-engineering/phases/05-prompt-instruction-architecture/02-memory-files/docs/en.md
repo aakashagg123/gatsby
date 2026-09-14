@@ -6,11 +6,11 @@
 
 ## The Problem
 
-`CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex) are how *you* inject durable, project-
-specific instructions into every turn. The failure mode is predictable: the file grows
-into a 2,000-line manual, the agent stops absorbing it, you stop maintaining it, and it
-crowds the cached prefix. A good memory file is short and points to detail rather than
-inlining it (the legibility principle from harness foundations).
+`CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex) are how *you* inject durable,
+project-specific instructions into every turn. The failure mode is predictable: the file
+grows into a 2,000-line manual, and the agent stops absorbing it. You stop maintaining it,
+and it crowds the cached prefix. A good memory file is short, and it points to detail
+rather than inlining it (the legibility principle from harness foundations).
 
 ## The Concept
 
@@ -41,10 +41,10 @@ wouldn't re-read.
 
 ## Use It
 
-Drop the file at the repo root as `CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex) and
+Drop the file at the repo root as `CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex), and
 both tools load it automatically each session. When the agent repeats a mistake, resist
-adding a paragraph — encode the fix as a lint rule or hook (Phase 8) and keep the memory
-file lean (patch the harness, not the prompt).
+adding a paragraph. Instead, encode the fix as a lint rule or hook (Phase 8) and keep the
+memory file lean — patch the harness, not the prompt.
 
 ## Ship It
 

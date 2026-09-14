@@ -314,20 +314,20 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Technical product management for AI</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Everything in this module still applies to AI products — and every practice bends the
+<p>Everything in this module still applies to AI products. Every practice bends the
 same way, for the same root cause: <strong>behaviour is probabilistic and quality is
-discovered, not designed</strong>. So the operating loop reorganizes around evidence:
-<strong>eval-driven development</strong> makes a graded example set the spec, the regression suite,
-and the launch gate all at once; discovery starts with feasibility spikes; delivery
-mixes experiment-shaped work with feature-shaped work; releases treat every model and
-prompt change as a migration; and the product that wins long-term is the one whose
+discovered, not designed</strong>. So the operating loop reorganizes around evidence.
+<strong>Eval-driven development</strong> makes a graded example set the spec, the regression suite,
+and the launch gate all at once. Discovery starts with feasibility spikes. Delivery
+mixes experiment-shaped work with feature-shaped work. Releases treat every model and
+prompt change as a migration. And the product that wins long-term is the one whose
 <strong>data flywheel</strong> — production feedback improving evals, evals enabling safe iteration,
 iteration improving the product — spins fastest. The AI PM's job is to build and protect
 that loop.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — This lesson <em>is</em> the briefing. The previous seven taught the
-general craft; this one assembles the AI-specific deltas into a single operating loop
+general craft. This one assembles the AI-specific deltas into a single operating loop
 you can run.</p>
 <p><strong>What it changes in your decisions</strong> — You budget for the loop, not just the feature:
 eval construction, feedback instrumentation, and model-change management are line
@@ -356,7 +356,7 @@ as PM is making sure all three arrows back into the eval suite actually exist.</
 <p>The eval suite is to an AI feature what the test suite is to code — except the PM
 co-owns it, because it encodes <em>product judgment</em>:</p>
 <ul>
-<li><strong>Sourcing</strong> — start with 50–200 real (or realistic) inputs from discovery; grade
+<li><strong>Sourcing</strong> — start with 50–200 real (or realistic) inputs from discovery. Grade
   ideal outputs with a rubric. This is exactly the "graded examples" section of
   <a href="specs-prds-and-rfcs.html">your PRD</a>, graduated into infrastructure.</li>
 <li><strong>Grading</strong> — three tiers, in cost order: exact/programmatic checks (did it cite a
@@ -367,12 +367,12 @@ co-owns it, because it encodes <em>product judgment</em>:</p>
   Where that bar sits is a product decision balancing user trust, cost of errors, and
   competitive urgency — the modern version of "how good is good enough."</li>
 <li><strong>Maintenance</strong> — a static suite rots as users find new ways to use (and break) the
-  feature. Feed production failures back in monthly; retire cases that stop
+  feature. Feed production failures back in monthly. Retire cases that stop
   discriminating. Treat suite freshness like test coverage: a number someone owns.</li>
 <li><strong>The ritual</strong> — a standing PM + eng session reading raw production traces together:
   label failures free-form, cluster them into a failure taxonomy, and only then decide
-  which modes deserve automated evaluators. The PM reads <em>traces</em>, not dashboards —
-  and a PM–eng disagreement over whether an output passes is a requirements discovery,
+  which modes deserve automated evaluators. The PM reads <em>traces</em>, not dashboards.
+  A PM–eng disagreement over whether an output passes is a requirements discovery,
   not annotation noise. Budget accordingly: eval construction and error analysis are a
   first-class share of the feature's development budget, not a tax on it.</li>
 </ul>
@@ -396,7 +396,7 @@ not a meeting.</p>
   math (an AI feature's <em>effective</em> reach is reach × the fraction of inputs it handles
   well).</li>
 <li><strong>Execution</strong> (<a href="working-with-engineering.html">lesson 5</a>) — experiment-shaped work
-  runs as time-boxed spikes with score-based exit criteria; "still at 82%, bar is 85%"
+  runs as time-boxed spikes with score-based exit criteria. "Still at 82%, bar is 85%"
   is a legitimate, informative sprint outcome, not a slip.</li>
 <li><strong>Metrics</strong> (<a href="metrics-and-experimentation.html">lesson 6</a>) — the quality layer:
   offline eval scores paired with online proxies (acceptance, edit distance,
@@ -450,7 +450,7 @@ it themselves — "vibe coding," Karpathy's February 2025 coinage that ended the
 Collins' word of the year. Three changes follow for this lesson's operating loop:</p>
 <ul>
 <li><strong>Discovery ships artifacts, not documents.</strong> A working prototype in front of five
-  users beats a PRD in front of five stakeholders; increasingly the prototype <em>is</em> the
+  users beats a PRD in front of five stakeholders. Increasingly the prototype <em>is</em> the
   spec, with the written doc recording the decisions the prototype forced.</li>
 <li><strong>The PM–eng contract compresses.</strong> "Here's what I mean" becomes something engineers
   can click, which kills a whole class of specification ambiguity — and creates a new
@@ -474,7 +474,7 @@ eval bar and scoping decisions above run on.</p>
   this impossible.</li>
 <li><strong>Eval-less iteration</strong> — prompt changes shipped on vibes. Without scores, every
   change is a coin flip you can't distinguish from progress.</li>
-<li><strong>The static eval</strong> — a suite built at launch and never fed; a year later it certifies
+<li><strong>The static eval</strong> — a suite built at launch and never fed. A year later it certifies
   quality on problems users stopped having.</li>
 <li><strong>Flywheel-blind economics</strong> — shipping without feedback capture (or the rights to use
   it), then wondering why the product stopped improving after launch.</li>

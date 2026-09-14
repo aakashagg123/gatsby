@@ -6,11 +6,11 @@
 
 ## The Problem
 
-One tool is a dict entry. Fifty tools — across files, plugins, and MCP servers (Phase 12) —
-need a single place that knows them all: to produce the `tools=` schema list, to dispatch by
-name, to filter which tools a given agent/role may see (bounded roles, Phase 10), and to add
-tools at runtime. Without a registry, tool wiring sprawls and you can't scope what an agent
-can do.
+One tool is a dict entry. Fifty tools — across files, plugins, and MCP servers (Phase
+12) — need a single place that knows them all. That place produces the `tools=` schema
+list, dispatches by name, filters which tools a given agent or role may see (bounded
+roles, Phase 10), and adds tools at runtime. Without a registry, tool wiring sprawls and
+you can't scope what an agent can do.
 
 ## The Concept
 
@@ -62,14 +62,14 @@ print([s["name"] for s in r.visible_to({"add"})])     # ['add'] — reviewer can
 print(r.dispatch("rm", {"path": "x"}, allow={"add"})) # error: not permitted
 ```
 
-The `allow` set is the seam where permissions (Phase 8) and bounded roles (Phase 10) plug
-in: the same registry exposes different tools to different agents.
+The `allow` set is the seam where permissions (Phase 8) and bounded roles (Phase 10)
+plug in. The same registry exposes different tools to different agents.
 
 ## Use It
 
-The registry produces `tools=` for the SDK and routes `tool_use` calls to implementations.
-MCP servers (Phase 12) register their tools here on connect, so discovered tools and local
-tools share one dispatch path.
+The registry produces `tools=` for the SDK and routes `tool_use` calls to
+implementations. MCP servers (Phase 12) register their tools here on connect, so
+discovered tools and local tools share one dispatch path.
 
 ## Ship It
 

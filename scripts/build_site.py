@@ -33,6 +33,7 @@ TPM_HTML = os.path.join(ROOT, "technical-product-management-html")  # technical 
 AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
 KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
+SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -162,10 +163,15 @@ const blocks=[]; const stripped = md.replace(/```mermaid\\n([\\s\\S]*?)```/g,(m,
 let html = marked.parse(stripped);
 html = html.replace(/__MERMAID_(\\d+)__/g,(m,i)=>blocks[+i]);
 const el = document.getElementById('content'); el.innerHTML = html;
-// rewrite intra-site .md links to their .html viewers
+// rewrite intra-site .md links to their .html viewers. AI-engineering lessons
+// deploy under ai/<module>.html#<lesson> (not content/), so remap those first.
 el.querySelectorAll('a[href]').forEach(a=>{{
-  const h=a.getAttribute('href');
-  if(h && !/^https?:|^#/.test(h)) a.setAttribute('href', h.replace(/\\.md(#|$)/,'.html$1'));
+  let h=a.getAttribute('href');
+  if(!h || /^https?:|^#/.test(h)) return;
+  h = h.replace(/(^|\\/)content\\/(\\d\\d-[\\w-]+)\\/README\\.md/,'$1ai/$2.html')
+       .replace(/(^|\\/)content\\/(\\d\\d-[\\w-]+)\\/([\\w-]+)\\.md/,'$1ai/$2.html#$3')
+       .replace(/\\.md(#|$)/,'.html$1');
+  a.setAttribute('href', h);
 }});
 await mermaid.run({{querySelector:'pre.mermaid'}});
 document.querySelectorAll('pre.mermaid svg').forEach(s=>{{
@@ -222,7 +228,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Ten separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Eleven separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -285,6 +291,13 @@ LANDING = """<!doctype html>
       <p>Grounding models in your data — embeddings, vector databases, chunking, retrieval
       quality, and when to reach for long-context, fine-tuning, or a graph. First of the
       Generative AI family.</p>
+    </a>
+    <a class="card" href="system-design/index.html">
+      <span class="tag">Module</span>
+      <h2>System design →</h2>
+      <p>How real systems are designed at scale — from rate limiters to stock exchanges —
+      with the architecture, tradeoffs, and failure modes that shape product decisions.
+      28 systems across 8 lessons, diagrams included.</p>
     </a>
     <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
       <span class="tag">Explore</span>
@@ -455,6 +468,10 @@ def main():
     # 1h. RAG & vector databases module (Generative AI family): copy its pages.
     if os.path.isdir(RAG_HTML):
         shutil.copytree(RAG_HTML, os.path.join(SITE, "rag-vector-databases"))
+
+    # 1i. System design module: copy its pre-rendered pages.
+    if os.path.isdir(SD_HTML):
+        shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.

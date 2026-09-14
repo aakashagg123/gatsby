@@ -5,10 +5,10 @@
 ## TL;DR
 
 Most software teams run some flavour of **agile**: work sliced small, built in short
-cycles, corrected by feedback — either in **sprints** (Scrum: fixed 1–2 week cycles with
-planning, review, and retro) or **flow** (Kanban: continuous pull through a
+cycles, corrected by feedback. This happens either in **sprints** (Scrum: fixed 1–2 week
+cycles with planning, review, and retro) or **flow** (Kanban: continuous pull through a
 work-in-progress-limited board). The rituals are where the PM's product intent physically
-enters the machine, and each one has a specific PM job: bring the *why* and the priorities
+enters the machine. Each one has a specific PM job: bring the *why* and the priorities
 to planning, make scope calls at standup speed during the sprint, judge outcomes at
 review, and hear the process feedback at retro. Underneath all of it runs the **trust
 economy**: estimates are honoured as estimates, bad news travels fast in both directions,
@@ -54,13 +54,13 @@ flowchart LR
   meeting, not an archaeology session. A PM who shows up to refinement with crisp
   acceptance criteria is worth two who show up only to demos.
 - **Sprint planning** — you bring the ordered backlog and the context (*why these, why
-  now*); the team decides how much fits. The commitment must be theirs — a sprint stuffed
+  now*). The team decides how much fits. The commitment must be theirs — a sprint stuffed
   by the PM is a sprint the team never owned.
 - **Daily standup** — not a status report to you. You're there to catch the sentence
   "blocked, waiting on product" and kill it within hours. PM decision latency is invisible
   in every metric and deadly in every sprint.
 - **Review/demo** — working software against acceptance criteria. Praise specifically,
-  question honestly; "looks great, ship it" to something that misses a criterion teaches
+  question honestly. "Looks great, ship it" to something that misses a criterion teaches
   the team the criteria are decoration.
 - **Retrospective** — the team's meeting about *how* it works. Attend if invited, listen
   more than you talk, and actually fix the top process complaint if it's yours to fix.
@@ -70,7 +70,7 @@ flowchart LR
 strongest when the work is plannable feature-building. Kanban pulls work continuously
 through WIP limits — strongest for interrupt-heavy or flow-shaped work (platform teams,
 support-heavy products, ops). Many teams blend them. Your concern isn't the methodology
-name; it's that priorities enter cleanly and feedback exits regularly.
+name. It's that priorities enter cleanly and feedback exits regularly.
 
 ## Estimates and the trust economy
 
@@ -84,7 +84,7 @@ belongs *here* is the relationship layer:
   using it is respected.
 - **Ask for the drivers, not a discount.** "What's the expensive part?" routinely reveals
   that 60% of the cost sits in an edge case you didn't actually need. Cutting *that* is
-  collaborative; pressuring the number is adversarial.
+  collaborative. Pressuring the number is adversarial.
 - **Deliver bad news upward at full speed.** If the sprint says the date is wrong, the
   date-holder hears it *this week*, from you, with options. Teams watch what you do with
   bad news, and it determines whether you get the early warnings.
@@ -113,7 +113,7 @@ The compounding, unglamorous behaviours that make engineers *want* your product 
 - **Estimate haggling** — negotiating numbers instead of scope. You'll get quieter
   estimates, not faster software.
 - **Mid-sprint scope injection** — "one tiny addition" that reshuffles the committed
-  plan. Do it twice and planning stops meaning anything; there's a backlog for a reason.
+  plan. Do it twice and planning stops meaning anything. There's a backlog for a reason.
 - **Standup-as-status-court** — engineers performing progress for the PM instead of
   coordinating with each other. You've turned a sync tool into a surveillance tool.
 - **Research punished as slippage** (AI-specific) — experiment work judged by feature

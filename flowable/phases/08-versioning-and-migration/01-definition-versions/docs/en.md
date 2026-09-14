@@ -9,12 +9,12 @@
 ## The Problem
 
 You fix a gateway condition and redeploy. The dashboard still shows applications
-taking the old path. Bug? No — the most misunderstood *feature* in BPM: those
-instances started before your fix, and they are executing the definition they
-started on. Without a precise model of versioning you'll either "fix" things twice,
-or — worse — assume a compliance-mandated change reached in-flight cases when it
-didn't. Every question in this phase reduces to: *which definition does this token
-read next?*
+taking the old path. Is that a bug? No — it is the most misunderstood *feature* in
+BPM. Those instances started before your fix, and they are executing the
+definition they started on. Without a precise model of versioning, you will either
+"fix" things twice, or — worse — assume a compliance-mandated change reached
+in-flight cases when it didn't. Every question in this phase reduces to one:
+*which definition does this token read next?*
 
 ## The Concept
 
@@ -34,21 +34,22 @@ flowchart LR
 
 Three rules carry everything:
 
-1. **Redeploy = append.** Same key → version N+1; old versions remain deployed and
-   *executable*. The definition ID (`key:version:generated`) is the precise handle;
-   the key alone means "latest" only at start time.
-2. **Starts bind latest, instances pin forever.** `startProcessInstanceByKey`
-   resolves the newest version *at that moment*; the instance stores the definition
-   ID and reads it for every subsequent step, wait state, and timer.
+1. **Redeploy means append.** Same key → version N+1, and old versions remain
+   deployed and *executable*. The definition ID (`key:version:generated`) is the
+   precise handle. The key alone means "latest" only at start time.
+2. **Starts bind latest; instances pin forever.** `startProcessInstanceByKey`
+   resolves the newest version *at that moment*. The instance then stores that
+   definition ID and reads it for every subsequent step, wait state, and timer.
 3. **Simultaneous versions are normal.** A 90-day mortgage process under weekly
-   deploys means ~13 versions live at once. That's not mess — that's the engine
-   keeping Phase 2's promise (persisted state must keep meaning what it meant).
+   deploys means roughly 13 versions live at once. That's not mess — it's the
+   engine keeping Phase 2's promise that persisted state must keep meaning what it
+   meant.
 
-Consequences people trip on: version-pinning applies to *everything* attached to the
-definition — timers fire into the old diagram, DMN references resolve per the old
-task config; history rows record the version that ran (your audit answer); and the
-repository grows monotonically — cleaning up truly-dead old versions is a deliberate
-operational act (Phase 9), never automatic.
+Here are the consequences people trip on. Version-pinning applies to *everything*
+attached to the definition: timers fire into the old diagram, and DMN references
+resolve per the old task config. History rows record the version that ran — that's
+your audit answer. And the repository grows monotonically. Cleaning up truly-dead
+old versions is a deliberate operational act (Phase 9), never automatic.
 
 ## Use It
 
@@ -67,11 +68,11 @@ old instance still pinned: True
    MIGRATION (lesson 02); until then both versions execute.
 ```
 
-Two operational notes that follow directly: deploys are cheap and additive, so
+Two operational notes follow directly. Deploys are cheap and additive, so
 deploy-often is safe *for new starts* — the risk lives entirely in forgetting the
-pinned population; and if a bad version ships, you can suspend *that definition
-version* (`repository/process-definitions/{id}` with `action: suspend`) to stop new
-starts on it while good versions keep serving.
+pinned population. And if a bad version ships, you can suspend *that definition
+version* (`repository/process-definitions/{id}` with `action: suspend`) to stop
+new starts on it while good versions keep serving.
 
 ## Ship It
 
@@ -89,7 +90,8 @@ lookup) that lesson 02's migration client builds on.
 - D) failed
 
 <details><summary>Answer</summary>B — rule 3. If the regulator's change must reach
-in-flight cases, redeploying is half the job; lesson 02 is the other half.</details>
+in-flight cases, redeploying is only half the job. Lesson 02 is the other
+half.</details>
 
 **Q2.** A timer armed under v2 fires after v6 ships. Which diagram does the token
 continue in?
@@ -114,9 +116,9 @@ carries.</details>
 after start speaks definition IDs.</details>
 
 **Challenge.** Extend the client with `population(key)`: for each deployed version,
-print live-instance count and oldest start date. That one table — "who is still on
-v1 and since when" — is the input every migration decision (lesson 02) and every
-version-cleanup decision (Phase 9) starts from.
+print the live-instance count and oldest start date. That one table — "who is
+still on v1 and since when" — is the input every migration decision (lesson 02)
+and every version-cleanup decision (Phase 9) starts from.
 
 ## Related
 

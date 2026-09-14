@@ -314,31 +314,31 @@ pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid 
     <h1>Multi-agent systems &amp; protocols</h1>
   </div>
   <h2>TL;DR</h2>
-<p>Sometimes one loop isn't enough — the task is too big for one context window, too
+<p>Sometimes one loop isn't enough. The task is too big for one context window, too
 parallel for one worker, or needs specialists. Multi-agent systems answer with a few
 recurring <strong>topologies</strong>: an <strong>orchestrator</strong> delegating to <strong>subagents</strong> (the workhorse
-pattern), <strong>pipelines</strong> of specialists, and <strong>peer handoffs</strong>. The honest rule: multi-agent
-buys <em>context isolation</em> and <em>parallelism</em>, and pays in <em>coordination overhead</em> — poorly
-split, a crowd of agents underperforms one good loop at many times the cost. On
-protocols: two matter today — <strong>MCP</strong> connects agents to tools; <strong>A2A</strong> aims to connect
-agents to each other (real, early). The rest of the acronym soup on stack infographics
-is speculative, niche, or invented; treat "the agent internet" as a research direction,
-not an install step.</p>
+pattern), <strong>pipelines</strong> of specialists, and <strong>peer handoffs</strong>. The honest rule:
+multi-agent buys <em>context isolation</em> and <em>parallelism</em>, and pays in <em>coordination
+overhead</em>. Split poorly, a crowd of agents underperforms one good loop at many times the
+cost. On protocols: two matter today. <strong>MCP</strong> connects agents to tools. <strong>A2A</strong> aims to
+connect agents to each other, and it's real but early. The rest of the acronym soup on
+stack infographics is speculative, niche, or invented. Treat "the agent internet" as a
+research direction, not an install step.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — Multi-agent architectures are where agent budgets go to
-multiply: token spend scales with agent count, and coordination failures are
-emergent — each agent behaves, the <em>system</em> misbehaves. They're also the industry's
-favourite thing to oversell.</p>
-<p><strong>What it changes in your decisions</strong> — You demand the same justification for "add an
+multiply. Token spend scales with agent count, and coordination failures are
+emergent — each agent behaves, but the <em>system</em> misbehaves. They're also the
+industry's favourite thing to oversell.</p>
+<p><strong>What it changes in your decisions</strong> — Demand the same justification for "add an
 agent" as for "add a service": a named bottleneck (context, parallelism, or
 specialization) that a single loop demonstrably can't clear. Architecture diagrams
 with six agents get the question "what did each one earn?"</p>
 <p><strong>Ask yourself</strong> — <em>"Would one agent with better tools and cleaner context do this —
 and have we actually tried?"</em></p>
 <p><strong>Risk if ignored</strong> — A five-agent system that's slower, costlier, and less debuggable
-than the single agent it replaced — adopted because the diagram looked like an org
-chart and org charts feel like progress.</p>
+than the single agent it replaced. Teams adopt it because the diagram looked like an
+org chart, and org charts feel like progress.</p>
 </blockquote>
 <h2>The topologies</h2>
 <pre class="mermaid">flowchart TB
@@ -360,11 +360,11 @@ chart and org charts feel like progress.</p>
   end</pre>
 <ul>
 <li><strong>Orchestrator–subagents</strong> — a lead agent decomposes the task, spawns focused workers
-  (each with its own context window and a scoped toolbox), and integrates results. The
-  two genuine wins: <strong>context isolation</strong> (a subagent can burn 100k tokens grepping
-  logs and return one paragraph — the lead's context stays clean, which is often the
-  real reason this beats one agent) and <strong>parallelism</strong> (three research threads at
-  once). The recurring cost: the orchestrator's brief <em>is</em> the spec; vague briefs yield
+  (each with its own context window and a scoped toolbox), and integrates results. This
+  brings two genuine wins. <strong>Context isolation</strong>: a subagent can burn 100k tokens
+  grepping logs and return one paragraph, so the lead's context stays clean — often the
+  real reason this beats one agent. <strong>Parallelism</strong>: three research threads run at once.
+  The recurring cost is that the orchestrator's brief <em>is</em> the spec. Vague briefs yield
   duplicated or contradictory work.</li>
 <li><strong>Pipeline</strong> — sequential specialists, each stage checkable. This is the multi-agent
   version of a <a href="what-is-an-agent.html">workflow</a>: predictable, testable stage by stage,
@@ -373,25 +373,25 @@ chart and org charts feel like progress.</p>
   state and all (the customer-support shape). The design work is in the handoff: what
   context transfers, and does the user feel a seam?</li>
 </ul>
-<p>Two disciplines keep any topology sane. <strong>Structured handoffs</strong> — subagent briefs and
-returns are defined artifacts (task, constraints, expected output format), not vibes;
-most multi-agent failures are really specification failures at the seams. <strong>Someone owns
-the whole</strong> — one place (orchestrator or human) is accountable for the integrated
+<p>Two disciplines keep any topology sane. <strong>Structured handoffs</strong>: subagent briefs and
+returns are defined artifacts (task, constraints, expected output format), not vibes.
+Most multi-agent failures are really specification failures at the seams. <strong>Someone owns
+the whole</strong>: one place — orchestrator or human — is accountable for the integrated
 result, or you ship beautifully-done fragments that don't compose.</p>
 <h2>The protocol landscape, honestly</h2>
 <p>You've seen the infographics: eight layers, a "protocol layer" listing A2A, MCP, ACP,
-ANP, AGORA, TAP, OAP, FCP, AGP as if they were TCP/IP. Reality check, worth internalizing
-because it inoculates you against a whole genre of hype:</p>
+ANP, AGORA, TAP, OAP, FCP, AGP as if they were TCP/IP. Here's the reality check, worth
+internalizing because it inoculates you against a whole genre of hype:</p>
 <ul>
-<li><strong>MCP (Model Context Protocol)</strong> — real, shipped, broadly adopted across major
-  vendors; the standard way to plug tools and data into agents
-  (<a href="tools-and-function-calling.html">lesson 2</a>). If you learn one protocol, it's this.</li>
+<li><strong>MCP (Model Context Protocol)</strong> — real, shipped, and broadly adopted across major
+  vendors. It's the standard way to plug tools and data into agents
+  (<a href="tools-and-function-calling.html">lesson 2</a>). If you learn one protocol, learn this.</li>
 <li><strong>A2A (Agent2Agent)</strong> — real (Google-initiated, now a Linux Foundation project):
-  agents advertising capabilities and delegating to each other across vendors. Early —
-  watch it, pilot it where a partner ecosystem demands, don't architect your product
-  around universal adoption.</li>
+  agents advertise capabilities and delegate to each other across vendors. It's early —
+  watch it, pilot it where a partner ecosystem demands it, but don't architect your
+  product around universal adoption.</li>
 <li><strong>The rest</strong> — a mix of research proposals, single-vendor efforts, and acronyms that
-  exist mainly on infographics. Some may mature; none is a dependency you should list
+  exist mainly on infographics. Some may mature. None is a dependency you should list
   today.</li>
 </ul>
 <p>One protocol family did arrive with real backing: <strong>agentic commerce</strong>. Google's
@@ -399,46 +399,46 @@ because it inoculates you against a whole genre of hype:</p>
 Protocol, powering Instant Checkout inside ChatGPT) both shipped in late 2025 —
 mandates, payment credentials, and merchant integration for agents that <em>buy things</em>.
 It's early, but note what it validates: the money layer is exactly the transaction-cost
-territory that <a href="agentic-ai-as-a-product.html">workflow capture</a> says agents absorb, so
-watch this family more closely than the alphabet soup above.</p>
-<p>The strategic read: tool-to-agent standardization (MCP) succeeded because the problem
-was concrete and the payoff immediate. Agent-to-agent standardization is harder — it
-needs identity, trust, payments, and liability answers, not just message formats — so
-the "agent internet" arrives (if it does) the way the web did: unevenly, driven by a few
-killer use cases. Meanwhile, every external agent your agent talks to is an
-<strong>untrusted input source</strong> wearing a peer costume — the
-<a href="safety-security-and-governance.html">security lesson</a> applies double at
-organization boundaries.</p>
+territory that <a href="agentic-ai-as-a-product.html">workflow capture</a> says agents absorb.
+Watch this family more closely than the alphabet soup above.</p>
+<p>Here's the strategic read: tool-to-agent standardization (MCP) succeeded because the
+problem was concrete and the payoff immediate. Agent-to-agent standardization is
+harder — it needs identity, trust, payments, and liability answers, not just message
+formats. So the "agent internet" arrives, if it does, the way the web did: unevenly,
+driven by a few killer use cases. Meanwhile, every external agent your agent talks to is
+an <strong>untrusted input source</strong> wearing a peer costume. The
+<a href="safety-security-and-governance.html">security lesson</a> applies double at organization
+boundaries.</p>
 <h2>When to go multi-agent</h2>
 <p>A decision rule that survives contact with vendors:</p>
 <ol>
-<li><strong>Start with one agent.</strong> Better tools, tighter prompts, cleaner
+<li><strong>Start with one agent.</strong> Better tools, tighter prompts, and cleaner
    <a href="context-and-memory.html">context</a> fix most "we need more agents" symptoms.</li>
 <li><strong>Add subagents when a bottleneck is named:</strong> context (isolate the messy subtask),
    parallelism (independent threads), or specialization (genuinely different
-   tools/permissions — e.g. only the deploy agent holds deploy credentials, which is a
-   <em>security</em> win as much as an architecture one).</li>
+   tools/permissions — for example, only the deploy agent holds deploy credentials,
+   which is a <em>security</em> win as much as an architecture one).</li>
 <li><strong>Stop when coordination cost shows up</strong> — in the token bill, the latency, or the
    debugging sessions that now span four transcripts.</li>
 </ol>
 <p>The industry name for the mature end of step 2 is <strong>agent chaining</strong>, or a <strong>"mixture
-of agent experts"</strong> — specialized agents, each strong in one domain or task, composed
-into one system. It's a real pattern (it's how serious coding and research agents are
-built today), but note what makes it work in practice: the specialists earn their place
-by owning <em>different tools, permissions, or context</em> — not by having a different
-adjective in their prompt.</p>
+of agent experts"</strong>: specialized agents, each strong in one domain or task, composed
+into one system. It's a real pattern — serious coding and research agents are built this
+way today — but note what makes it work in practice. The specialists earn their place by
+owning <em>different tools, permissions, or context</em>, not by having a different adjective
+in their prompt.</p>
 <h2>Failure modes</h2>
 <ul>
 <li><strong>Org-chart architecture</strong> — agents mirroring your team structure instead of the
-  task's structure; the coordination overhead mirrors your meetings, too.</li>
-<li><strong>Vague briefs</strong> — subagents told "research the market" twice; one returns consumer,
-  one returns enterprise, neither returns what the plan needed.</li>
-<li><strong>The telephone game</strong> — key constraints degrading across three handoffs until the
+  task's structure. The coordination overhead mirrors your meetings, too.</li>
+<li><strong>Vague briefs</strong> — subagents told "research the market" twice. One returns consumer,
+  one returns enterprise, and neither returns what the plan needed.</li>
+<li><strong>The telephone game</strong> — key constraints degrade across three handoffs, until the
   final agent optimizes the wrong thing.</li>
 <li><strong>Protocol-driven roadmaps</strong> — building for an "agent internet" of standards that
   don't exist yet, while competitors ship value on MCP and plain APIs.</li>
-<li><strong>Emergent runaway</strong> — agents in a loop re-triggering each other; budgets and
-  circuit breakers exist per <em>system</em>, not just per agent.</li>
+<li><strong>Emergent runaway</strong> — agents in a loop re-trigger each other. Budgets and circuit
+  breakers must exist per <em>system</em>, not just per agent.</li>
 </ul>
 <h2>Practitioner checklist</h2>
 <ul>

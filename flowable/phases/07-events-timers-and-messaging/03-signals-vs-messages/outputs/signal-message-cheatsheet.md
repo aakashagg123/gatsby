@@ -13,8 +13,8 @@ lesson: 03
 1. **Can you name the one instance this is for?** → key exists → **message**.
 2. **Is zero receivers a normal outcome?** → yes → **signal**.
 
-Disagreeing answers (key exists AND zero-receivers-fine) usually means a message
-whose "nobody waiting" case you must handle explicitly (park + alert).
+Disagreeing answers (a key exists AND zero receivers is fine) usually mean a
+message. You must handle its "nobody waiting" case explicitly (park + alert).
 
 ## Decision table
 

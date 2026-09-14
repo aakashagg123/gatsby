@@ -8,8 +8,8 @@
 
 Every call you make sends a *list of messages*, each tagged with a role. Get the roles or
 ordering wrong and the API rejects the request or the model misbehaves. Before any higher
-abstraction, you need a precise mental model — and a small helper — for constructing
-well-formed message lists.
+abstraction, you need a precise mental model for well-formed message lists, and a small
+helper to build them.
 
 ## The Concept
 

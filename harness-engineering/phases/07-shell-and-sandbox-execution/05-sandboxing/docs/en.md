@@ -6,10 +6,11 @@
 
 ## The Problem
 
-The bash tool runs arbitrary commands the model chose, possibly influenced by untrusted
-content (Phase 17). Even with permission gating, you want a *containment* layer so a bad
-command can't read your SSH keys, wipe your home directory, or call out to the internet. That
-layer is the sandbox: filesystem, process, and network isolation around execution.
+The bash tool runs arbitrary commands the model chose, and untrusted content may have
+influenced that choice (Phase 17). Even with permission gating, you want a *containment*
+layer, so a bad command can't read your SSH keys, wipe your home directory, or call out to
+the internet. That layer is the sandbox: filesystem, process, and network isolation around
+execution.
 
 ## The Concept
 
@@ -21,14 +22,16 @@ flowchart TB
   S --> N["network: egress policy (next lesson)"]
 ```
 
-Layers, weakest-trust to strongest: a separate working directory, OS resource limits, Linux
-namespaces / seccomp, and full containers/VMs. More isolation = more safety, more setup.
+The layers run from weakest to strongest: a separate working directory, OS resource limits,
+Linux namespaces or seccomp, and full containers or VMs. More isolation means more safety,
+and also more setup.
 
 ## Build It / Use It
 
-Real sandboxing is OS-level, so this is **Use It**. `code/sandbox_demo.py` shows the cheapest
-useful layer you can apply from Python — run a command with reduced privileges and resource
-limits via `resource` + a restricted cwd/env (the deeper layers are containers/namespaces):
+Real sandboxing is OS-level, so this is **Use It**. `code/sandbox_demo.py` shows the
+cheapest useful layer you can apply from Python: run a command with reduced privileges and
+resource limits, using `resource` plus a restricted cwd and env. The deeper layers are
+containers and namespaces:
 
 ```python
 import subprocess, resource, os
@@ -49,16 +52,17 @@ import tempfile
 print(run_limited("echo sandboxed && pwd", tempfile.mkdtemp())["stdout"])
 ```
 
-This caps CPU/memory and strips the environment to the workspace — a real (if minimal)
-containment step. Production harnesses go further: a container or microVM per session.
+This caps CPU and memory, and strips the environment down to the workspace. It's a real, if
+minimal, containment step. Production harnesses go further, with a container or microVM per
+session.
 
 ## Use It
 
 This is exactly why **Claude Code on the web / Codex cloud** run in **isolated, ephemeral
-containers**: the repo is cloned fresh, execution is contained, and the box is reclaimed
-after. Locally, Claude Code uses permission gating (Phase 8) plus OS sandboxing where
-available. The takeaway: never run an agent's shell with your full user privileges if you can
-contain it.
+containers**. The repo is cloned fresh, execution stays contained, and the box is reclaimed
+afterward. Locally, Claude Code uses permission gating (Phase 8) plus OS sandboxing where
+available. The takeaway: never run an agent's shell with your full user privileges if you
+can contain it instead.
 
 ## Ship It
 

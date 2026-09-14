@@ -8,9 +8,9 @@
 
 You want the model to return data your code can consume — a JSON object. Even with a clear
 instruction, models sometimes wrap JSON in prose ("Here's the result: { … }"), add
-trailing commas, or emit a code fence. One malformed reply and a naive `json.loads` takes
-down the workflow. The harness needs to *extract*, *validate*, and *repair* before trusting
-output.
+trailing commas, or emit a code fence. One malformed reply and a naive `json.loads` call
+takes down the workflow. The harness needs to *extract*, *validate*, and *repair* output
+before it trusts that output.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   F --> P
 ```
 
-Three layers, each cheap: pull the JSON out of surrounding prose, attempt common repairs,
-and validate required fields before use.
+Three cheap layers: pull the JSON out of surrounding prose, attempt common repairs, then
+validate the required fields before use.
 
 ## Build It
 
@@ -77,10 +77,10 @@ When `parse` returns an error, the harness re-prompts the model with the error m
 
 ## Use It
 
-The SDK also supports forcing structure via **tool use** (define a tool whose schema *is*
-your output type and let the model fill it). That's the robust production path (Phase 3);
-this lesson's extractor is the fallback for plain-text models and the thing tools save you
-from.
+The SDK also supports forcing structure via **tool use**: define a tool whose schema *is*
+your output type and let the model fill it. That's the robust production path (Phase 3).
+This lesson's extractor is the fallback for plain-text models, and the thing tools save
+you from.
 
 ## Ship It
 

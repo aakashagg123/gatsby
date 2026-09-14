@@ -9,8 +9,8 @@
 You ask the agent for a specific shape — "a summary, then a bullet list of changed files,
 then the diff" — and most of the time you get it. "Most of the time" breaks downstream
 automation. A response *contract* is the format stated in the prompt **plus** a check in
-the harness that the response conforms, so violations are caught (and can trigger a
-repair) instead of silently flowing through.
+the harness that the response conforms. Violations get caught, and can trigger a repair,
+instead of silently flowing through.
 
 ## The Concept
 
@@ -22,8 +22,8 @@ flowchart LR
   V -- "no" --> FIX["re-prompt with the violation"]
 ```
 
-The prompt states the contract; the harness enforces it. This is the structured-output
-idea (Phase 1 L7) generalized from JSON to any response shape.
+The prompt states the contract, and the harness enforces it. This is the structured-output
+idea (Phase 1 L7), generalized from JSON to any response shape.
 
 ## Build It
 
@@ -57,9 +57,9 @@ by your retry budget (Phase 14).
 
 ## Use It
 
-In **Claude Code / Codex** this maps to **output styles** (declare the response format
-once) plus your own verification when the response feeds a script. For human-facing chat,
-the prompt contract is usually enough; for machine-consumed output, add the check — and
+In **Claude Code / Codex** this maps to **output styles** — declare the response format
+once — plus your own verification when the response feeds a script. For human-facing chat,
+the prompt contract is usually enough. For machine-consumed output, add the check, and
 prefer tool-schema output (Phase 3 L7) when the shape is strict.
 
 ## Ship It

@@ -4,12 +4,12 @@
 
 ## TL;DR
 
-A **first principle** is something that must be true on its own terms — not because an
+A **first principle** is something that must be true on its own terms. Not because an
 authority said so, not because everyone does it that way, but because it can't be reduced
 any further without leaving reality. **First-principles thinking** is the discipline of
 deconstructing a problem down to those bedrock truths and reasoning back up from them,
 instead of **reasoning by analogy** (copying what already exists with small tweaks).
-Analogy is fast and usually right; first principles is slow and occasionally
+Analogy is fast and usually right. First principles is slow and occasionally
 *revolutionary*. The skill is knowing which one a situation deserves.
 
 > 🎯 **For the builder**
@@ -19,9 +19,9 @@ Analogy is fast and usually right; first principles is slow and occasionally
 > nature. If you can't tell which constraints are real and which are merely conventional,
 > you can't tell which ones you're allowed to break.
 >
-> **What it changes in your decisions** — You stop asking "what do competitors do?" as the
-> *first* question and start asking "what is actually true here, and what does that
-> permit?" — which is the only path to a non-consensus, non-obvious answer.
+> **What it changes in your decisions** — Stop asking "what do competitors do?" as the
+> *first* question. Start asking "what is actually true here, and what does that permit?"
+> That's the only path to a non-consensus, non-obvious answer.
 >
 > **Ask yourself** — *"Is this constraint a law of physics, or just a habit nobody has
 > re-derived?"*
@@ -42,8 +42,8 @@ flowchart TB
 
 Almost all everyday reasoning is **reasoning by analogy**: this new thing is *like* that
 known thing, so treat it the same way. It's a brilliant shortcut. You don't re-derive how
-a door works at every doorway; you pattern-match "door → handle → push/pull." Civilization
-runs on analogy, and most of the time you should too — re-deriving everything from scratch
+a door works at every doorway. You pattern-match "door → handle → push/pull." Civilization
+runs on analogy, and most of the time you should too. Re-deriving everything from scratch
 is paralyzing and arrogant.
 
 **Reasoning from first principles** is the opposite move. You refuse to accept the
@@ -57,10 +57,10 @@ known." The modern shorthand is owed to Elon Musk's often-quoted framing:
 
 The classic worked example is battery cost. The analogy argument says: *battery packs cost
 ~$600/kWh and always have, so they always will.* The first-principles argument asks: *what
-is a battery actually made of?* — cobalt, nickel, aluminum, carbon, some polymers, a steel
+is a battery actually made of?* Cobalt, nickel, aluminum, carbon, some polymers, a steel
 can. Price those raw materials on the commodity market and the floor is a small fraction of
-$600/kWh. The gap between the material floor and the market price is not a law of nature —
-it's an **opportunity**, but only visible to someone who decomposed the thing instead of
+$600/kWh. The gap between the material floor and the market price is not a law of nature.
+It's an **opportunity**, but only visible to someone who decomposed the thing instead of
 quoting its current price.
 
 ## What counts as a "fundamental"?
@@ -85,8 +85,8 @@ the bedrock from the borrowed.
 
 If first principles produces better answers, why doesn't everyone do it all the time?
 
-- **It's expensive.** Decomposition is slow and effortful; analogy is nearly free. Under
-  time pressure, the brain defaults to the cheap operation. (See
+- **It's expensive.** Decomposition is slow and effortful, while analogy is nearly free.
+  Under time pressure, the brain defaults to the cheap operation. (See
   [learning how to learn](./learning-how-to-learn.md) on why effort feels like failure.)
 - **It's socially risky.** Re-deriving a "settled" question looks like arrogance or
   naïveté until you're proven right. Most people would rather be conventionally wrong than
@@ -95,7 +95,7 @@ If first principles produces better answers, why doesn't everyone do it all the 
   obeying. Inherited assumptions feel like reality, not like choices. The whole next
   lesson, [the method](./the-method.md), is machinery for *surfacing* them.
 
-That cost is exactly why first-principles reasoning is a source of edge: **the answer
+That cost is exactly why first-principles reasoning is a source of edge. **The answer
 everyone copies is, by definition, available to everyone.** A genuinely better answer
 almost always requires going back to something more fundamental than the thing being
 copied.
@@ -111,7 +111,7 @@ its own failure mode (the subject of [traps & limits](./traps-and-limits.md)):
 - When you **lack the fundamentals** to decompose honestly, "first principles" becomes a
   license to ignore hard-won expertise — confident reinvention of a worse wheel.
 
-The decision itself is a tradeoff, which is why this module sits next to
+The decision itself is a tradeoff. That's why this module sits next to
 [Module 06 · Strategy & Tradeoffs](../content/06-strategy-tradeoffs/README.md): *how much to
 decompose* is a cost/benefit call, not a virtue.
 
@@ -127,19 +127,19 @@ decompose* is a cost/benefit call, not a virtue.
 
 > **📦 Mini-case — the battery pack.** The famous version: electric-car batteries "cost
 > $600/kWh, always have." Deconstructed to the commodity prices of the raw materials —
-> nickel, cobalt, aluminum, steel — the floor was closer to $80/kWh; everything above
-> it was manufacturing convention, not physics. The consensus number was an *inherited*
-> constraint. Reasoning by analogy said "batteries are expensive"; reasoning from first
+> nickel, cobalt, aluminum, steel — the floor was closer to $80/kWh. Everything above it
+> was manufacturing convention, not physics. The consensus number was an *inherited*
+> constraint. Reasoning by analogy said "batteries are expensive." Reasoning from first
 > principles said "batteries are expensive *the way we currently make them*" — a
 > different claim with a different roadmap.
 
 ## Failure modes
 
-- **Analogy in disguise** — you *think* you decomposed, but you stopped at someone else's
+- **Analogy in disguise** — You *think* you decomposed, but you stopped at someone else's
   conclusion and called it a fundamental ("the API has to be REST"). Pseudo-decomposition.
-- **Bottomless decomposition** — refusing to accept any premise, so you never get to act.
+- **Bottomless decomposition** — You refuse to accept any premise, so you never get to act.
   First principles needs a *floor*; pick one and build.
-- **Ignoring real expertise** — treating decades of accumulated knowledge as "just
+- **Ignoring real expertise** — Decades of accumulated knowledge get treated as "just
   convention" to be cleared away. Sometimes the convention *is* the hard-won first
   principle.
 

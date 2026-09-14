@@ -1,8 +1,8 @@
 # Boundary events: catching errors on an activity
 
-> **Motto** — A boundary event is a listener pinned to a box: while the activity runs,
-> it waits; when its error fires, the token abandons the box and takes the boundary's
-> path instead.
+> **Motto** — A boundary event is a listener pinned to a box. While the activity
+> runs, it waits. When its error fires, the token abandons the box and takes the
+> boundary's path instead.
 
 *Part of Phase 04 — Service integration & error handling. Concept reading:
 [lesson 03 — two failure planes](../../03-bpmn-errors-vs-technical/docs/en.md).*
@@ -10,11 +10,11 @@
 ## The Problem
 
 Lesson 03 established the contract: business failures are `BpmnError`s the model
-routes. But *how* does a diagram say "if the bureau call raises `NO_BUREAU_RECORD`, go
-to manual pull instead"? You can't draw a sequence flow out of a failure — flows leave
-completed activities. You need a construct that sits *on* an activity, subscribes to a
-failure, and owns its own outgoing path. That's the boundary event, and once you've
-built its dispatch logic by hand, the XML is obvious.
+routes. But how does a diagram say "if the bureau call raises `NO_BUREAU_RECORD`, go
+to manual pull instead"? You can't draw a sequence flow out of a failure — flows
+leave completed activities. You need a construct that sits *on* an activity,
+subscribes to a failure, and owns its own outgoing path. That's the boundary event.
+Once you've built its dispatch logic by hand, the XML is obvious.
 
 ## The Concept
 
@@ -30,14 +30,14 @@ Execution semantics, precisely:
 
 1. The token enters `bureau call`. The boundary event is now *armed*.
 2. The activity completes normally → boundary disarms, token takes the normal flow.
-3. The activity raises `NO_BUREAU_RECORD` → the activity is **aborted** (an
-   interrupting boundary), and the token continues from the boundary event's outgoing
-   flow. This is *token movement*, not rollback: the error path commits like any
-   other progress.
-4. Matching is **by error code, innermost scope first**: a boundary with the exact
-   code beats a catch-all (no code) boundary; if the activity has no catcher, the
+3. The activity raises `NO_BUREAU_RECORD`. The activity is **aborted** (an
+   interrupting boundary), and the token continues from the boundary event's
+   outgoing flow. This is *token movement*, not rollback — the error path commits
+   like any other progress.
+4. Matching is **by error code, innermost scope first**. A boundary with the exact
+   code beats a catch-all (no code) boundary. If the activity has no catcher, the
    engine walks outward — enclosing subprocess boundaries, then error event
-   subprocesses — and only an error uncaught *everywhere* kills the instance.
+   subprocesses. Only an error uncaught *everywhere* kills the instance.
 
 Boundary events aren't only for errors — the same pin-on-a-box shape carries timers
 ("escalate if this task sits 4 hours" — Phase 7) and messages ("cancel if the customer
@@ -45,8 +45,9 @@ withdraws"). Error boundaries are the ones you'll write first and most.
 
 ## Build It
 
-[`code/error_boundary.py`](../code/error_boundary.py) adds a `boundaries` table to the
-process — `activity → {error_code: target}` — and one dispatch function. The heart:
+[`code/error_boundary.py`](../code/error_boundary.py) adds a `boundaries` table to
+the process — `activity → {error_code: target}` — and one dispatch function. Here's
+the heart of it:
 
 ```python
 def execute(inst, node):
@@ -76,9 +77,9 @@ technical   -> incident: technical failure at bureau: bureau timed out
 uncaught    -> incident: uncaught BpmnError LIMIT_EXCEEDED at bureau (modelling bug)
 ```
 
-Note the asymmetry you built: the `BpmnError` case *advanced state* (token now waits
-at a user task); the technical case *froze* it (a real engine rolls back and retries).
-One `except` clause each — but opposite directions.
+Note the asymmetry you built. The `BpmnError` case *advanced state* — the token now
+waits at a user task. The technical case *froze* it — a real engine rolls back and
+retries. One `except` clause each, but opposite directions.
 
 ## Use It
 
@@ -94,17 +95,17 @@ The same catch in BPMN XML — you already deployed one in
 <sequenceFlow sourceRef="noRecord" targetRef="manualPull"/>
 ```
 
-A catch-all is the same element with no `errorRef`. For "any of these five tasks can
-raise `KYC_MISMATCH`", don't pin five boundaries — wrap the tasks in a subprocess and
-pin one boundary on it, or use an **error event subprocess** inside the scope; that's
-the outward-walking scope chain from the Concept working for you.
+A catch-all is the same element with no `errorRef`. Say any of five tasks can raise
+`KYC_MISMATCH`. Don't pin five boundaries — wrap the tasks in a subprocess and pin
+one boundary on it, or use an **error event subprocess** inside the scope. That's the
+outward-walking scope chain from the Concept working for you.
 
 ## Ship It
 
 This lesson ships the boundary-aware engine as a module:
-[`code/error_boundary.py`](../code/error_boundary.py) — the toy lineage's final form:
-tokens (1.01), gateways (1.02), persistence (2.01), jobs (2.04), and now failure
-routing.
+[`code/error_boundary.py`](../code/error_boundary.py). It's the toy lineage's final
+form: tokens (1.01), gateways (1.02), persistence (2.01), jobs (2.04), and now
+failure routing.
 
 ## Check Yourself
 
@@ -116,7 +117,7 @@ outgoing flow…
 - C) executes after the boundary path completes
 - D) causes a deadlock
 
-<details><summary>Answer</summary>B — "interrupting" means the activity is dead; the
+<details><summary>Answer</summary>B — "interrupting" means the activity is dead. The
 boundary path replaces its continuation entirely.</details>
 
 **Q2.** A task can raise `KYC_MISMATCH`, and both a `KYC_MISMATCH` boundary and a
@@ -141,10 +142,10 @@ instead of a boundary target?
 <details><summary>Answer</summary>B — this is lesson 03's whole point encoded in the
 dispatch: the two planes leave `execute` in opposite directions.</details>
 
-**Challenge.** Add *non-interrupting* boundaries to the toy engine: the boundary path
+**Challenge.** Add *non-interrupting* boundaries to the toy engine. The boundary path
 spawns an **extra** token while the activity keeps running (you'll need the gateway
 lesson's multi-token handling). Then explain why error boundaries are always
-interrupting but timer boundaries come in both flavours — what would a
+interrupting, but timer boundaries come in both flavours. What would a
 non-interrupting error even mean?
 
 ## Related

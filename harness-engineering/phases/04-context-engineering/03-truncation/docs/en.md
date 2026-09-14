@@ -7,9 +7,9 @@
 ## The Problem
 
 When history exceeds budget, the obvious fix is to drop the oldest messages. But a coding
-agent's history is full of `tool_use`/`tool_result` pairs, and the API rejects a
-conversation where a `tool_use` has no matching `tool_result` (Phase 2 lesson 04). Naive
-truncation produces exactly that invalid state. Trimming must respect pairing.
+agent's history is full of `tool_use`/`tool_result` pairs. The API rejects a conversation
+where a `tool_use` has no matching `tool_result` (Phase 2 lesson 04). Naive truncation
+produces exactly that invalid state, so trimming must respect pairing.
 
 ## The Concept
 

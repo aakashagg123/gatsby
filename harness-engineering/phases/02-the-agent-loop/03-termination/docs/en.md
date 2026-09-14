@@ -7,10 +7,10 @@
 
 ## The Problem
 
-The loop calls the model, runs tools, calls again. What makes it *stop*? "When the model
-stops asking for tools" is one answer — but a confused model can ask forever, repeat the
-same call, or never emit a final answer. Without explicit ceilings, a single request can
-run 40 steps and spend real money. Termination is not an afterthought; it's the
+The loop calls the model, runs tools, and calls again. What makes it *stop*? "When the
+model stops asking for tools" is one answer, but a confused model can ask forever, repeat
+the same call, or never emit a final answer. Without explicit ceilings, a single request
+can run 40 steps and spend real money. Termination is not an afterthought. It's the
 difference between an agent and a runaway bill.
 
 ## The Concept
@@ -73,14 +73,14 @@ def run(query, model, run_calls):
     return "stopped: step budget exhausted"
 ```
 
-The policy is separate from the loop, so termination rules are testable in isolation and
-reusable across agents.
+The policy is separate from the loop. That keeps termination rules testable in isolation
+and reusable across agents.
 
 ## Use It
 
-The SDK gives you `stop_reason` (`"end_turn"`, `"tool_use"`, `"max_tokens"`) — that
+The SDK gives you `stop_reason` (`"end_turn"`, `"tool_use"`, `"max_tokens"`). That
 covers *natural* and *token* termination. The **step**, **loop**, and **cost** ceilings
-are yours to add; no SDK enforces them for you. That's the whole point of owning the
+are yours to add — no SDK enforces them for you. That's the whole point of owning the
 loop: the provider stops a single call, but only your harness stops a *runaway agent*.
 
 ## Ship It

@@ -6,11 +6,11 @@
 
 ## The Problem
 
-A reviewer subagent doesn't need to write files or run shell commands; a doc-summarizer
-doesn't need network access. Granting every agent every capability maximizes blast radius:
+A reviewer subagent doesn't need to write files or run shell commands. A doc-summarizer
+doesn't need network access. Granting every agent every capability maximizes blast radius —
 one confused or hijacked agent can do anything. Least privilege scopes each agent to a
-capability set matched to its role — the security counterpart of the bounded-roles context
-rule from Phase 10.
+capability set matched to its role. It's the security counterpart of the bounded-roles
+context rule from Phase 10.
 
 ## The Concept
 
@@ -21,7 +21,7 @@ flowchart TB
   X["any other tool"] --> DENY["denied for this role"]
 ```
 
-Capabilities compose with the tool registry (Phase 3 L8): a role sees and can call only its
+Capabilities compose with the tool registry (Phase 3 L8). A role sees and can call only its
 granted tools.
 
 ## Build It
@@ -54,16 +54,16 @@ print(rev.call("read", {}))      # ran read
 print(rev.call("write", {}))     # denied: role lacks capability 'write'
 ```
 
-A reviewer literally cannot write or run shell — not by instruction, but by capability. That
-makes "the reviewer modified the code it was reviewing" impossible.
+A reviewer literally cannot write or run shell — not by instruction, but by capability.
+That makes it impossible for the reviewer to modify the code it's reviewing.
 
 ## Use It
 
-In Claude Code / Codex this maps to per-subagent tool allowlists (you specify which tools a
-spawned subagent may use) and to the `permissions` scoping in `settings.json`. When you
-define a custom subagent, grant it the minimum: an Explore agent gets read/search only; a
-fixer gets edit/bash. Least privilege + bounded context (Phase 10) is the full isolation
-story.
+In Claude Code / Codex this maps to per-subagent tool allowlists, where you specify which
+tools a spawned subagent may use, and to the `permissions` scoping in `settings.json`. When
+you define a custom subagent, grant it the minimum: an Explore agent gets read/search only,
+and a fixer gets edit/bash. Least privilege plus bounded context (Phase 10) is the full
+isolation story.
 
 ## Ship It
 
@@ -93,7 +93,7 @@ permission.</details>
 scoping.</details>
 
 **Challenge.** Add a `network` capability and scope it so only a dedicated "fetcher" role
-can make outbound calls (ties to Phase 7 egress).
+can make outbound calls. This ties to Phase 7 egress.
 
 ## Related
 

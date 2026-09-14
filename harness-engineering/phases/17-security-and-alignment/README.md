@@ -1,6 +1,6 @@
 # Phase 17 — Security & alignment
 
-> The agent reads untrusted data — assume it's hostile. Injection defense, output-as-data,
+> The agent reads untrusted data. Assume it's hostile. Injection defense, output-as-data,
 > exfiltration guards, secret redaction, and tenant isolation.
 
 | # | Lesson | Type | Lang | Ships |

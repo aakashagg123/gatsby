@@ -24,8 +24,8 @@ flowchart TB
 ```
 
 Lead with the action verb, name the trigger conditions explicitly, and spell out argument
-formats (units, allowed values, examples). Anti-pattern: a noun phrase ("Weather tool")
-that tells the model nothing about when to reach for it.
+formats: units, allowed values, examples. Avoid the anti-pattern of a noun phrase
+("Weather tool") that tells the model nothing about when to reach for it.
 
 ## Build It (a description rubric)
 
@@ -38,14 +38,15 @@ The artifact is a written rubric plus before/after examples. `outputs/tool-descr
   `unit`: 'c' or 'f'."
 - **Returns** — "A short string like 'Paris: 18°C, clear.'"
 
-Before: `"Weather."` → After: the four-part version above. The model now knows exactly when
+Before: `"Weather."` After: the four-part version above. The model now knows exactly when
 and how to call it.
 
 ## Use It
 
-These strings populate the `description` field of each tool schema (lesson 01) sent to the
-model. When an eval (Phase 15) shows the model misusing a tool, the first fix is usually the
-description — not the model, and not the prompt (principle: patch the harness).
+These strings populate the `description` field of each tool schema (lesson 01) sent to
+the model. When an eval (Phase 15) shows the model misusing a tool, the first fix is
+usually the description — not the model, and not the prompt. The principle: patch the
+harness.
 
 ## Ship It
 

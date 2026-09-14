@@ -44,12 +44,13 @@ Every element cites its lesson:
 
 Three composition decisions worth defending in review:
 
-1. **The bureau task is async** (`flowable:async="true"`): a third-party call must
-   not hold the start transaction hostage, and retries come free (Phase 2's rules).
-   Its *error* path is a designed fallback, not an incident.
-2. **KYC gate before the decision task** — no point pricing a file that fails KYC;
-   ordering checks by cost/kill-probability is process design, not engine mechanics.
-3. **Offer validity is a variable**, not a literal `P30D` — the value can migrate
+1. **The bureau task is async** (`flowable:async="true"`). A third-party call must
+   not hold the start transaction hostage, and retries come free (Phase 2's
+   rules). Its *error* path is a designed fallback, not an incident.
+2. **KYC gate before the decision task.** There's no point pricing a file that
+   fails KYC. Ordering checks by cost and kill-probability is process design,
+   not engine mechanics.
+3. **Offer validity is a variable**, not a literal `P30D`. The value can migrate
    into the DMN table later without touching the model (Phase 5's governance
    boundary).
 

@@ -8,9 +8,9 @@
 
 A coding agent resends a large, mostly-identical prefix on every turn: the system prompt,
 tool definitions, project context. Reprocessing those tokens every call is slow and
-expensive. Prompt caching lets the provider reuse the computation for an unchanged prefix —
-but only if your harness lays the context out so the stable part comes first and is marked
-cacheable. Lay it out wrong and you get zero cache hits.
+expensive. Prompt caching lets the provider reuse the computation for an unchanged prefix.
+But this only works if your harness lays out the context so the stable part comes first
+and is marked cacheable. Lay it out wrong and you get zero cache hits.
 
 ## The Concept
 
@@ -93,4 +93,5 @@ then hit.
 - Builds on: [Tokens & the context window](../../02-tokens-and-context-window/docs/en.md)
 - Deepens in: Phase 4 — Context Engineering, Phase 16 — Observability & Cost
 - Phase complete → next: Phase 3 — [Tool Engineering](../../../../ROADMAP.md)
+- Other tracks: [Prompt vs. semantic caching](../../../../../content/01-inference-internals/prompt-vs-semantic-caching.md) · [KV cache management](../../../../../content/01-inference-internals/kv-cache-management.md) — the inference-side view of what you cache and why.
 - [Roadmap](../../../../ROADMAP.md)

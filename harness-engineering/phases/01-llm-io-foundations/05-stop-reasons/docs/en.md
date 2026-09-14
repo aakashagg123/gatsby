@@ -6,10 +6,10 @@
 
 ## The Problem
 
-Every response carries a `stop_reason`. Treat them all the same and you'll return a
-half-finished answer to the user (truncated at `max_tokens`), or fail to run the tools the
-model asked for. The harness's next action is a function of the stop reason — so make that
-mapping explicit.
+Every response carries a `stop_reason`. Treat them all the same and you get problems: a
+half-finished answer sent to the user (truncated at `max_tokens`), or tools the model
+asked for that never run. The harness's next action depends on the stop reason, so make
+that mapping explicit.
 
 ## The Concept
 
@@ -67,7 +67,7 @@ answer and a mysterious cut-off.
 ## Use It
 
 `msg.stop_reason` drives your loop (you used it in Phase 2 lesson 05). For long outputs,
-either raise `max_tokens` or implement the continue pattern; for structured outputs,
+either raise `max_tokens` or implement the continue pattern. For structured outputs,
 configure a `stop_sequences` list so generation halts cleanly at a delimiter.
 
 ## Ship It

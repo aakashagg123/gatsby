@@ -6,11 +6,10 @@
 
 ## The Problem
 
-The Bash tool is the agent's most powerful and most dangerous capability — it can run
-tests, build, install, and also `rm -rf`. The first requirement is to run a command and
-capture its *full* result: stdout **and** stderr (errors often go to stderr) **and** the
-exit code (the only reliable success signal). An agent that only sees stdout will think a
-failing build succeeded.
+The Bash tool is the agent's most powerful and most dangerous capability. It can run tests,
+build, install, and also `rm -rf`. The first requirement is to run a command and capture its
+*full* result: stdout, stderr (errors often go there), and the exit code (the only reliable
+success signal). An agent that only sees stdout will think a failing build succeeded.
 
 ## The Concept
 
@@ -21,8 +20,8 @@ flowchart LR
   O & E & X --> M["one structured result → model"]
 ```
 
-Exit code 0 = success; nonzero = failure. The model needs all three to reason about what
-happened.
+Exit code 0 means success, and any nonzero code means failure. The model needs all three
+signals to reason about what happened.
 
 ## Build It
 
@@ -48,15 +47,15 @@ print(format_result(run("echo hello && echo oops 1>&2")))
 print(format_result(run("exit 3")))     # exit=3
 ```
 
-The result is one structured block the model reads — exit code first, so failure is obvious;
-output truncated (Phase 3 L3) so a noisy command can't blow the budget.
+The result is one structured block the model reads. Exit code comes first, so failure is
+obvious. Output is truncated (Phase 3 L3), so a noisy command can't blow the budget.
 
 ## Use It
 
-This is the **Bash** tool in Claude Code / Codex: it runs your command and returns combined
+This is the **Bash** tool in Claude Code / Codex. It runs your command and returns combined
 output with the exit status. Because the exit code is captured, the agent can tell a passing
-test run from a failing one — and you should phrase tasks so it *checks* exit codes ("run
-the tests and fix failures") rather than eyeballing stdout.
+test run from a failing one. Phrase tasks so the agent *checks* exit codes ("run the tests
+and fix failures") rather than eyeballing stdout.
 
 ## Ship It
 

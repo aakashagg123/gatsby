@@ -7,9 +7,9 @@
 ## The Problem
 
 The operable agent (project 02) still works alone, with only its built-in tools, and finds
-code by grep. Project 03 scales it: a **supervisor** spawns **subagents** (P10) for parallel
-sub-tasks, an **MCP client** (P12) adds external tools, and a **retrieval tool** (P13) lets it
-find code by meaning. This is the jump from "an agent" to "an agent system."
+code by grep. Project 03 scales it up. A **supervisor** spawns **subagents** (P10) for
+parallel sub-tasks, an **MCP client** (P12) adds external tools, and a **retrieval tool**
+(P13) lets it find code by meaning. This is the jump from "an agent" to "an agent system."
 
 ## The Concept
 
@@ -45,16 +45,16 @@ print(supervise("add and test a /health route",
                 search_code=lambda q: "routes.py:1"))
 ```
 
-The supervisor decomposes the goal, retrieves relevant code per sub-task, and dispatches
-isolated subagents in bounded batches — composing the orchestration, retrieval, and MCP
+The supervisor decomposes the goal, retrieves relevant code for each sub-task, and dispatches
+isolated subagents in bounded batches. This composes the orchestration, retrieval, and MCP
 layers onto the safe agent from project 02.
 
 ## Use It
 
-This is the agent-team pattern (Phase 10) on top of the coding agent, with retrieval and MCP
-making it effective in a large repo with external capabilities — the same shape as a Claude
-Code session that spawns subagents, uses MCP servers, and navigates the codebase. Project 03
-is the agent at full capability.
+This is the agent-team pattern (Phase 10) on top of the coding agent. Retrieval and MCP make
+it effective in a large repo with external capabilities — the same shape as a Claude Code
+session that spawns subagents, uses MCP servers, and navigates the codebase. Project 03 is
+the agent at full capability.
 
 ## Ship It
 

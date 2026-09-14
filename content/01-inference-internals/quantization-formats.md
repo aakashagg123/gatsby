@@ -4,12 +4,12 @@
 
 ## TL;DR
 
-Quantization stores numbers in fewer bits to shrink the model's memory footprint and
-move less data per [decode](./prefill-vs-decode.md) step — buying lower cost, more
+Quantization stores numbers in fewer bits. This shrinks the model's memory footprint
+and moves less data per [decode](./prefill-vs-decode.md) step, buying lower cost, more
 [KV/batch headroom](./kv-cache-management.md), and often lower latency. The format
-(**INT8, FP8, INT4**) sets the precision/range ceiling; the method (**AWQ, GPTQ**, and
+(**INT8, FP8, INT4**) sets the precision/range ceiling. The method (**AWQ, GPTQ**, and
 others) decides how cleverly you map full-precision weights into that budget. 8-bit is
-usually near-lossless; 4-bit is viable *with a good method*; below that, quality
+usually near-lossless. 4-bit is viable *with a good method*. Below that, quality
 typically collapses. Always confirm with [evals](../04-evals-observability/evals.md) —
 degradation is task-specific and invisible to the eye.
 
@@ -34,17 +34,17 @@ values onto a smaller set of levels:
   error.
 - **Float (FP8):** keep a floating layout (e.g. **E4M3** = 4 exponent + 3 mantissa
   bits, or **E5M2**). Floats preserve **dynamic range** far better than integers at the
-  same bit count, which matters for the large outlier values that show up in
+  same bit count. That matters for the large outlier values that show up in
   activations.
 
 What you quantize matters as much as the bit count:
 - **Weight-only** (most common for INT4) — weights are small precision, math often
   still done in FP16. Great memory win, modest compute win, lower quality risk.
-- **Weight + activation** (e.g. W8A8 INT8, or FP8 both) — also speeds up the matmuls,
-  but activations have **outliers** that are hard to quantize and are the usual source
-  of quality loss.
+- **Weight + activation** (e.g. W8A8 INT8, or FP8 both) — this also speeds up the
+  matmuls. But activations have **outliers** that are hard to quantize, and they are
+  the usual source of quality loss.
 - **KV-cache quantization** — store the [KV cache](./kv-cache-management.md) in FP8/INT8
-  to roughly double or quadruple concurrency; a separate, valuable lever.
+  to roughly double or quadruple concurrency. This is a separate, valuable lever.
 
 ## The formats
 
@@ -56,18 +56,18 @@ What you quantize matters as much as the bit count:
 | **INT3/INT2** | ≤3 | Very low | Research / extreme compression | Usually large degradation |
 
 FP8 vs INT8 at the same 8 bits: FP8's exponent gives it the **range** to absorb
-activation outliers, so it often quantizes activations more gracefully — handy on
-hardware with native FP8 support. INT8 has the widest software/hardware support.
+activation outliers, so it often quantizes activations more gracefully. This is handy
+on hardware with native FP8 support. INT8 has the widest software and hardware support.
 
 ## The methods (how to hit 4-bit without wrecking quality)
 
 Naive round-to-nearest at 4-bit loses too much. Smarter post-training quantization
 (PTQ) methods use a small **calibration** dataset to minimize error:
 
-- **GPTQ** — quantizes weights one column/group at a time, using approximate
+- **GPTQ** — quantizes weights one column or group at a time. It uses approximate
   **second-order (Hessian) information** to compensate remaining weights for the error
-  introduced, minimizing layer-wise output error. Strong 4-bit weight-only results;
-  calibration-set sensitive.
+  introduced, minimizing layer-wise output error. Results are strong for 4-bit
+  weight-only quantization, but the method is sensitive to the calibration set.
 - **AWQ (Activation-aware Weight Quantization)** — observes that a *small fraction* of
   weight channels (those multiplied by large activations) dominate quality. It scales
   to **protect those salient channels** and quantizes the rest aggressively. Robust at
@@ -77,15 +77,15 @@ Naive round-to-nearest at 4-bit loses too much. Smarter post-training quantizati
   (NF4/INT8 for QLoRA-style training and easy loading), and SpinQuant/QuaRot
   (rotations that make 4-bit activations tractable).
 
-Rule of thumb: **the format sets the ceiling, the method determines how close to it
+Rule of thumb: **the format sets the ceiling. The method determines how close to it
 you get.** "INT4" with AWQ/GPTQ ≫ "INT4" with naive rounding.
 
 ## When quantization *hurts*
 
 Degradation is not uniform — it concentrates in specific places:
 
-- **Lower bits, more risk** — INT8/FP8 usually safe; INT4 needs a good method; ≤3-bit
-  usually hurts.
+- **Lower bits, more risk** — INT8 and FP8 are usually safe. INT4 needs a good
+  method. 3-bit or lower usually hurts.
 - **Activation quantization** is riskier than weight-only because of outliers.
 - **Long-context / KV quantization** can accumulate small per-token errors over a long
   sequence.
@@ -100,7 +100,8 @@ Degradation is not uniform — it concentrates in specific places:
 
 Because it's task-specific, you cannot judge quantization by spot-checking a few
 prompts. You need a [task-representative eval set](../04-evals-observability/evals.md),
-ideally including adversarial and format-strict cases, run at each candidate bit-width.
+ideally including adversarial and format-strict cases. Run it at each candidate
+bit-width.
 
 ## Tradeoffs
 

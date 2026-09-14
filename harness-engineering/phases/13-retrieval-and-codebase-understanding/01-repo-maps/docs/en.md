@@ -6,10 +6,11 @@
 
 ## The Problem
 
-Grep (Phase 6) finds exact strings, but on a big repo the agent first needs *orientation*:
-what files exist, what functions/classes each defines. A **repo map** — a compact index of
-files and their top-level symbols — lets the agent jump to the right file fast, and lexical
-search over that map answers "where is `X` defined?" cheaply, before any semantic search.
+Grep (Phase 6) finds exact strings. But on a big repo, the agent first needs *orientation*:
+what files exist, and what functions or classes each one defines. A **repo map** is a
+compact index of files and their top-level symbols. It lets the agent jump to the right file
+fast, and lexical search over that map answers "where is `X` defined?" cheaply, before any
+semantic search.
 
 ## The Concept
 
@@ -56,15 +57,15 @@ m = build_map(d)
 print(search(m, "login"))      # [('.../auth.py', ['login', 'Session'])]
 ```
 
-The map is small (names, not bodies), so it fits in context as an overview, and lexical
-search over it points the agent at the right file to Read.
+The map is small — names, not bodies — so it fits in context as an overview. Lexical search
+over it points the agent at the right file to read.
 
 ## Use It
 
-This is the "understand the codebase" step coding agents do — Claude Code / Codex build an
-implicit map via Glob + Grep + reading key files (and tools like repo-map generators make it
-explicit). As a user, a good `CLAUDE.md` that names where things live (Phase 5) is a
-hand-written repo map that saves the agent the discovery cost.
+This is the "understand the codebase" step coding agents do. Claude Code and Codex build an
+implicit map through Glob, Grep, and reading key files, and tools like repo-map generators
+make it explicit. As a user, a good `CLAUDE.md` that names where things live (Phase 5) is a
+hand-written repo map. It saves the agent the discovery cost.
 
 ## Ship It
 

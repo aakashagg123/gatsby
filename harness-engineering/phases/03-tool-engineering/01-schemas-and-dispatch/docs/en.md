@@ -6,11 +6,11 @@
 
 ## The Problem
 
-The agent loop (Phase 2) dispatched tools from a hand-written dict. Real tools need more:
-the model has to *know they exist* and *how to call them*, which means each tool carries a
-**schema** (name, description, input shape). And dispatch has to map the model's chosen
-name+args to the right Python function. Get the schema wrong and the model calls tools
-incorrectly or not at all.
+The agent loop (Phase 2) dispatched tools from a hand-written dict. Real tools need more.
+The model has to *know they exist* and *how to call them*, so each tool carries a
+**schema**: name, description, input shape. Dispatch also has to map the model's chosen
+name and args to the right Python function. Get the schema wrong and the model calls
+tools incorrectly or not at all.
 
 ## The Concept
 
@@ -64,14 +64,14 @@ print(dispatch("add", {"a": 2, "b": 3})) # 5
 print(dispatch("nope", {}))              # error: unknown tool 'nope'
 ```
 
-The decorator keeps schema and implementation together, so they never drift apart — the
-#1 source of "the model calls the tool wrong" bugs.
+The decorator keeps schema and implementation together, so they never drift apart. That
+drift is the #1 source of "the model calls the tool wrong" bugs.
 
 ## Use It
 
 This list of schemas is exactly what you pass as `tools=` to `messages.create`. The model
-returns `tool_use` blocks naming a tool and its input; your `dispatch` runs it. You built
-the registry the SDK consumes.
+returns `tool_use` blocks naming a tool and its input, and your `dispatch` runs it. You
+built the registry the SDK consumes.
 
 ## Ship It
 

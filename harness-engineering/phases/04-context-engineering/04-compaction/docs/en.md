@@ -6,11 +6,12 @@
 
 ## The Problem
 
-Truncation (lesson 03) keeps the conversation valid but *loses* the dropped content — and
-sometimes the agent needed a decision made 30 turns ago. Compaction is the better move:
-summarize the old portion into a compact note (key decisions, open threads, file state)
-and keep that, so the agent remembers the gist without the full transcript. This is what
-"compacting conversation…" means in a long Claude Code / Codex session.
+Truncation (lesson 03) keeps the conversation valid, but it *loses* the dropped content.
+Sometimes the agent needed a decision made 30 turns ago. Compaction is the better move:
+summarize the old portion into a compact note that covers key decisions, open threads, and
+file state. Keep that note instead, so the agent remembers the gist without the full
+transcript. This is what "compacting conversation…" means in a long Claude Code / Codex
+session.
 
 ## The Concept
 
@@ -20,8 +21,8 @@ flowchart LR
   S --> N["history = [synopsis] + recent turns"]
 ```
 
-The synopsis must capture: decisions made, current goal/plan, files touched, and unresolved
-questions — the working state, not a blow-by-blow.
+The synopsis must capture decisions made, the current goal or plan, files touched, and
+unresolved questions. It should record the working state, not a blow-by-blow account.
 
 ## Build It
 
@@ -57,10 +58,10 @@ makes compaction lossy-but-useful instead of lossy-and-harmful.
 
 ## Use It
 
-This is exactly the auto-compaction in **Claude Code / Codex**: when the window fills,
+This is exactly the auto-compaction in **Claude Code / Codex**. When the window fills,
 the tool summarizes the earlier conversation and continues from the synopsis plus recent
-turns. Knowing this, you write your requests so important decisions are stated explicitly
-(they survive compaction) and you `/clear` or start fresh when switching tasks.
+turns. Knowing this, state important decisions explicitly so they survive compaction, and
+`/clear` or start fresh when you switch tasks.
 
 ## Ship It
 

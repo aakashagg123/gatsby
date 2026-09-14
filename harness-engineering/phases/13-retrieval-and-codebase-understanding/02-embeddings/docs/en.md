@@ -6,11 +6,11 @@
 
 ## The Problem
 
-Lexical search (lesson 01) fails when the query and the code use different words: search
-"authenticate user" and miss `def login()`. **Embeddings** map text to vectors where similar
-*meaning* lands nearby, so a semantic search retrieves `login` for "authenticate". Build the
-mechanics — embed, store, cosine-rank — with a toy embedder so the idea is concrete, then
-swap in a real model.
+Lexical search (lesson 01) fails when the query and the code use different words. Search
+"authenticate user" and you miss `def login()`. **Embeddings** map text to vectors where
+similar *meaning* lands nearby, so a semantic search retrieves `login` for "authenticate".
+Build the mechanics — embed, store, cosine-rank — with a toy embedder so the idea is
+concrete, then swap in a real model.
 
 ## The Concept
 
@@ -62,15 +62,15 @@ print(ix.search("authenticate user")[0])    # the login doc ranks first
 ```
 
 The pipeline — embed corpus, embed query, cosine top-k — is exactly what production vector
-search does; only `embed` changes (to a real embedding model) and the index gets an ANN
+search does. Only `embed` changes, to a real embedding model, and the index gets an ANN
 structure for scale.
 
 ## Use It
 
-Real code search (and RAG) uses an embedding model + a vector DB. For a coding agent, this
-powers "find code related to X" beyond exact strings. Note the cost/latency tradeoff: embed
-once, search cheaply — but keep the index fresh as code changes (stale embeddings retrieve
-deleted code).
+Real code search, and RAG, uses an embedding model plus a vector DB. For a coding agent,
+this powers "find code related to X" beyond exact strings. There's a cost/latency tradeoff
+here: you embed once and search cheaply, but you must keep the index fresh as code changes,
+or stale embeddings will retrieve deleted code.
 
 ## Ship It
 

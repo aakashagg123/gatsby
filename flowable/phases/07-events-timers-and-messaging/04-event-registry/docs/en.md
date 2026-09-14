@@ -9,12 +9,12 @@
 ## The Problem
 
 Lesson 02's webhook pattern assumed the world speaks HTTP to you. Increasingly it
-doesn't — it speaks **topics**: partner applications land on Kafka, payment
-confirmations on RabbitMQ, core-banking events on JMS. The hand-rolled answer is a
-consumer service per topic: deserialize, validate, map fields, find-or-start the
-process instance, handle redelivery. Multiply by every topic and you've built a glue
-layer nobody budgeted — with its own deploys, bugs, and drift from the models it
-feeds. Flowable's **event registry** deletes that layer: the mapping from broker
+doesn't — it speaks **topics**. Partner applications land on Kafka, payment
+confirmations on RabbitMQ, and core-banking events on JMS. The hand-rolled answer is
+a consumer service per topic: deserialize, validate, map fields, find-or-start the
+process instance, handle redelivery. Multiply that by every topic, and you've built
+a glue layer nobody budgeted, with its own deploys, bugs, and drift from the models
+it feeds. Flowable's **event registry** deletes that layer. The mapping from broker
 events to process actions becomes deployable configuration.
 
 ## The Concept
@@ -34,19 +34,19 @@ flowchart LR
 | **Event definition** | schema: payload fields + which of them are **correlation parameters** | the message contract |
 | **Model reference** | reaction: start a new instance, or wake a waiting catch | lesson 02, generalised |
 
-The registry rides on machinery you already own: an inbound event with correlation
-parameters behaves like lesson 02's message (find the one instance where
-`applicationId` matches); an event start creates instances the way message starts do.
+The registry rides on machinery you already own. An inbound event with correlation
+parameters behaves like lesson 02's message: it finds the one instance where
+`applicationId` matches. An event start creates instances the way message starts do.
 Outbound channels run the other way — a process step *publishes* an event instead of
 calling an API. What's genuinely new is **where the integration logic lives**: in
 deployable artifacts the same review/version pipeline covers, not in a sidecar
 service.
 
-The honest boundary: the registry does transport + schema + correlation. It does
-**not** do content-based transformation, enrichment, aggregation of three topics into
-one event, or ordering guarantees beyond the broker's. If the mapping needs logic,
-you still want a thin stream processor in front — the registry then consumes *its*
-clean output topic.
+Here is the honest boundary: the registry does transport, schema, and correlation.
+It does **not** do content-based transformation, enrichment, aggregation of three
+topics into one event, or ordering guarantees beyond the broker's. If the mapping
+needs logic, you still want a thin stream processor in front. The registry then
+consumes *its* clean output topic.
 
 ## Use It
 
@@ -92,8 +92,8 @@ And the reaction, in the BPMN model — a start event referencing the event type
 </startEvent>
 ```
 
-Deploy all three (Spring Boot: drop them in `src/main/resources/eventregistry/`;
-the Kafka connection itself is `spring.kafka.*` configuration), then publish a test
+Deploy all three — in Spring Boot, drop them in `src/main/resources/eventregistry/`;
+the Kafka connection itself is `spring.kafka.*` configuration. Then publish a test
 event with [`outputs/producer.py`](../outputs/producer.py):
 
 ```
@@ -122,7 +122,7 @@ event-driven front door.
 - D) the split is arbitrary
 
 <details><summary>Answer</summary>B — transport, contract, reaction. Each changes on
-a different cadence, which is why they're separate deployable files.</details>
+a different cadence. That's why they're separate deployable files.</details>
 
 **Q2.** An inbound event should *continue* a waiting instance rather than start one.
 What makes that work?
@@ -132,7 +132,7 @@ What makes that work?
 - C) the instance polls the topic
 - D) it can't; registry events only start instances
 
-<details><summary>Answer</summary>B — the registry is a transport adapter; the
+<details><summary>Answer</summary>B — the registry is a transport adapter. The
 find-the-one-instance semantics underneath is exactly the message correlation you
 built.</details>
 
@@ -148,11 +148,11 @@ does that logic go?
 transport, schema, correlation. Transformation is a job for code that can be
 tested as code.</details>
 
-**Challenge.** Design (on paper) the *outbound* half: a channel + event pair that
+**Challenge.** Design, on paper, the *outbound* half: a channel + event pair that
 publishes `decisionMade {applicationId, decision, rate}` after the capstone's DMN
-task, so downstream systems consume decisions from a topic instead of polling
-history. Decide which field is the Kafka record key and why that choice matters for
-consumers' ordering.
+task. Downstream systems then consume decisions from a topic instead of polling
+history. Decide which field is the Kafka record key, and why that choice matters
+for consumers' ordering.
 
 ## Related
 

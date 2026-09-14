@@ -7,10 +7,10 @@
 ## The Problem
 
 Model and tool calls fail transiently: rate limits (429), overloaded servers (503), network
-blips. Giving up on the first failure makes the agent flaky; retrying *immediately* and in
-lockstep with everyone else makes the overload worse. The fix is **exponential backoff with
-jitter**: wait longer after each failure, with randomness so concurrent clients don't retry
-in sync.
+blips. Giving up on the first failure makes the agent flaky. Retrying *immediately*, in
+lockstep with everyone else, makes the overload worse. The fix is **exponential backoff with
+jitter**: wait longer after each failure, and add randomness so concurrent clients don't
+retry in sync.
 
 ## The Concept
 
@@ -54,14 +54,14 @@ def flaky():
 print(retry(flaky, is_transient=lambda e: "503" in str(e)))   # ok (after 2 backoffs)
 ```
 
-The delay grows (`base·2ⁿ`) and adds jitter; a non-transient error or exhausted budget
-re-raises so the caller can fall back (lesson 03) instead of hanging.
+The delay grows (`base·2ⁿ`) and adds jitter. A non-transient error, or an exhausted retry
+budget, re-raises so the caller can fall back (lesson 03) instead of hanging.
 
 ## Use It
 
-The Anthropic SDK retries idempotent requests with backoff by default; you add retries
-around *your* tool calls and any non-SDK I/O. The rule that pairs with this: retried actions
-must be idempotent (Phase 3 lesson 04) — otherwise a retry double-acts. Backoff+jitter is the
+The Anthropic SDK retries idempotent requests with backoff by default. You add retries
+around *your* tool calls and any non-SDK I/O. One rule pairs with this: retried actions must
+be idempotent (Phase 3 lesson 04), or a retry will double-act. Backoff and jitter are the
 same discipline whether it's an API call or a flaky test.
 
 ## Ship It

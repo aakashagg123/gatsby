@@ -45,6 +45,6 @@ sources: the six probe signals (runtime) + two history queries. All counts are
 
 ## Non-goals
 
-CPU/heap/HTTP latency belong to the platform dashboard; DB health to lesson 05's
-runbook. This dashboard answers exactly one question: *is the business process
-moving?*
+CPU, heap, and HTTP latency belong to the platform dashboard. DB health belongs to
+lesson 05's runbook. This dashboard answers exactly one question: *is the
+business process moving?*

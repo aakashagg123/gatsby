@@ -1,9 +1,9 @@
 # Methodology — how the Flowable *from-scratch* track works
 
-This document defines the pedagogical framework for the **Flowable** track: the lesson
-shape, the two audience layers, and the way phases stack. The
+This document defines the pedagogical framework for the **Flowable** track. It covers the
+lesson shape, the two audience layers, and the way phases stack. The
 [`foundations/`](./foundations/process-automation-principles.md) doc gives the conceptual
-spine; the lessons make you build it.
+spine. The lessons make you build it.
 
 ---
 
@@ -11,16 +11,16 @@ spine; the lessons make you build it.
 
 Every lesson serves two readers at once:
 
-- The **PM / architect** reads Motto → Problem → Concept (and Ship It when the artifact
-  is a decision guide). These beats never require code. Together with the
-  `foundations/` spine they form a complete course in process automation architecture:
-  when BPMN, when CMMN, when DMN; when to embed the engine, when to run it standalone;
-  when Flowable is the right tool at all versus a state machine in your own tables or a
-  durable-execution runtime like Temporal.
-- The **engineer** additionally does Build It and Use It. Build It is always plain
-  Python standard library — no Java toolchain needed to understand the semantics. Use It
-  targets a real Flowable engine over REST (Docker image `flowable/flowable-rest`) or,
-  where the point *is* the embedding, a Spring Boot snippet.
+- The **PM / architect** reads Motto → Problem → Concept, and reads Ship It when the
+  artifact is a decision guide. These beats never require code. Together with the
+  `foundations/` spine, they form a complete course in process automation architecture.
+  It covers when to use BPMN, CMMN, or DMN. It covers when to embed the engine and when
+  to run it standalone. It also covers when Flowable is the right tool at all, versus a
+  state machine in your own tables or a durable-execution runtime like Temporal.
+- The **engineer** also does Build It and Use It. Build It always uses plain Python
+  standard library, so no Java toolchain is needed to understand the semantics. Use It
+  targets a real Flowable engine over REST, with the Docker image `flowable/flowable-rest`.
+  When the lesson is about embedding, Use It gives a Spring Boot snippet instead.
 
 ## 1. The thesis: *Build It, then Use It*
 
@@ -29,8 +29,8 @@ Every engine capability is learned twice:
 1. **Build It** — implement the semantics by hand: a token engine, a gateway evaluator,
    a persistent wait state, a job executor. Small, complete, runnable (~80–150 lines).
 2. **Use It** — run the same process through the real Flowable engine. Now the engine is
-   transparent: `runtimeService.startProcessInstanceByKey(...)` isn't magic, it's the
-   loop you wrote, with a database and twenty years of edge cases.
+   transparent. `runtimeService.startProcessInstanceByKey(...)` isn't magic — it's the
+   loop you wrote, backed by a database and twenty years of edge cases.
 
 You earn the right to trust an engine by building a toy version once. This is the single
 most important idea in the track.
@@ -63,7 +63,7 @@ Phases are arranged so lower layers are prerequisites for higher ones: the token
 engine state & transactions → human tasks → system integration → decisions (DMN) → cases
 (CMMN) → events → versioning → operations → architecture → **capstone**.
 
-The token model is the floor; a production loan-origination process is the roof. Skip
+The token model is the floor. A production loan-origination process is the roof. Skip
 ahead if you know a lower layer, but don't skip and then wonder why the top is breaking.
 
 ## 5. Same folder shape, everywhere
@@ -82,22 +82,23 @@ strict format (see [`AUTHORING.md`](./AUTHORING.md)).
 
 ## 6. Diagrams first, quizzes throughout
 
-- **Diagrams** lead the Concept beat — Mermaid for process flows and architecture,
-  tables for comparisons (BPMN vs CMMN vs DMN, Flowable vs Camunda vs Temporal).
-- **Quizzes** make it stick: each lesson ends with self-test questions, answers in
+- **Diagrams** lead the Concept beat. Use Mermaid for process flows and architecture,
+  and tables for comparisons — BPMN vs CMMN vs DMN, Flowable vs Camunda vs Temporal.
+- **Quizzes** make it stick. Each lesson ends with self-test questions, with answers in
   collapsed blocks.
 
 ## 7. Operating principles (the tone)
 
 - No vendor marketing. Trade-offs stated plainly, including when *not* to use Flowable.
 - Everything in Build It runs on your own laptop with plain Python.
-- Use It requires only Docker (`flowable/flowable-rest`); Java appears only where the
-  lesson is *about* embedding the engine.
+- Use It requires only Docker, with `flowable/flowable-rest`. Java appears only where
+  the lesson is *about* embedding the engine.
 - Fintech-flavoured examples throughout — loan origination, KYC, approvals — because
   that is where BPM engines earn their keep.
 
 ## 8. The capstone
 
-One end-to-end project: a loan origination process combining BPMN (the flow), DMN (the
-credit decision), user tasks (manual review), service tasks (bureau calls), timers
-(offer expiry), and error handling (bureau downtime) — deployed and driven over REST.
+One end-to-end project: a loan origination process. It combines BPMN for the flow, DMN
+for the credit decision, user tasks for manual review, service tasks for bureau calls,
+timers for offer expiry, and error handling for bureau downtime. It is deployed and
+driven over REST.

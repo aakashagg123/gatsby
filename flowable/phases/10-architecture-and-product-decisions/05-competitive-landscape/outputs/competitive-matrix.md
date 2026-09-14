@@ -22,16 +22,17 @@ Ask every candidate the course's questions; adjectives don't count as answers.
 
 ## Snapshot (2026 — reverify rows before deciding)
 
-- **Flowable OSS**: strong on all seven in your own RDBMS; UIs are yours to
+- **Flowable OSS**: strong on all seven in your own RDBMS. UIs are yours to
   build. This course is the evidence file.
-- **Flowable Work**: same engine answers; adds modelers/task/admin UIs + SLA.
-  Buy-the-edges decision (10.04).
-- **Camunda 8**: BPMN/DMN answers on its own Zeebe platform; ops story is
-  platform-shaped (exporters, Operate), embedding is gone; strongest at very
-  high throughput / SaaS preference.
-- **Temporal**: superb 1, 5-as-code, 3-as-code; 2 and 4 are DIY; 6 is worker
-  discipline (patching) rather than tooling. Right answer when no
-  non-engineer ever reads the flow.
+- **Flowable Work**: same engine answers. It adds modelers, task and admin UIs,
+  and an SLA. This is the buy-the-edges decision (10.04).
+- **Camunda 8**: BPMN/DMN answers on its own Zeebe platform. The ops story is
+  platform-shaped (exporters, Operate), and embedding is gone. It's strongest
+  at very high throughput or when you prefer SaaS.
+- **Temporal**: superb on question 1, and questions 5 and 3 are handled as
+  code. Questions 2 and 4 are DIY. Question 6 is worker discipline (patching)
+  rather than tooling. It's the right answer when no non-engineer ever reads
+  the flow.
 
 ## The two-week PoC script (run on any finalist)
 
@@ -44,5 +45,5 @@ Ask every candidate the course's questions; adjectives don't count as answers.
 6. Have a non-engineer read the flow artifact and explain it back (the author
    axis, Phase 0.04 — skip for Temporal-class tools and note why).
 
-Score each step 0–2. Anything under 9/12 that survives to contract is being
-bought for reasons outside this matrix — name them explicitly.
+Score each step 0-2. If anything scoring under 9/12 survives to contract, it's
+being bought for reasons outside this matrix. Name them explicitly.

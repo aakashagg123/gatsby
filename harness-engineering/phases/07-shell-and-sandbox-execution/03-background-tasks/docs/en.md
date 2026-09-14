@@ -7,10 +7,10 @@
 ## The Problem
 
 Some commands are *supposed* to run indefinitely: a dev server, a file watcher, a tail. You
-can't run these in the foreground (they'd block the loop) and you can't timeout-kill them
-(you want them alive). The bash tool needs a **background** mode: launch the process, return
-a handle immediately, stream its output to a log the agent can poll, and let the agent stop
-it later.
+can't run these in the foreground, because they'd block the loop. You also can't
+timeout-kill them, because you want them to stay alive. The bash tool needs a
+**background** mode: launch the process, return a handle immediately, stream its output to
+a log the agent can poll, and let the agent stop it later.
 
 ## The Concept
 
@@ -66,15 +66,15 @@ print(jobs.status(h["id"]), "|", jobs.output(h["id"]).split())
 jobs.stop(h["id"])
 ```
 
-The agent gets a handle instantly, polls the log to see progress, and stops the job when the
-task is done — without ever blocking the loop.
+The agent gets a handle instantly. It polls the log to see progress, and stops the job when
+the task is done, without ever blocking the loop.
 
 ## Use It
 
-This is the **Bash** tool's background mode in Claude Code / Codex (`run_in_background`):
-start a dev server, then keep editing while it runs, reading its log to check for errors,
-and killing it at the end. Pair it with the timeout runner (lesson 02) for foreground
-commands — deadline for short ones, background for long ones.
+This is the **Bash** tool's background mode in Claude Code / Codex (`run_in_background`).
+Start a dev server, then keep editing while it runs, read its log to check for errors, and
+kill it at the end. Pair it with the timeout runner (lesson 02): use a deadline for short
+commands and background mode for long ones.
 
 ## Ship It
 

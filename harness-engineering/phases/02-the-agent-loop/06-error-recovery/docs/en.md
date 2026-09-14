@@ -6,9 +6,9 @@
 
 ## The Problem
 
-Tools fail: a file doesn't exist, a command times out, an API returns 500, the model
-passes a bad argument. A naive loop lets the exception bubble up and the whole agent
-dies mid-task — the user sees a stack trace instead of a recovery. A robust loop treats
+Tools fail: a file doesn't exist, a command times out, an API returns 500, or the model
+passes a bad argument. A naive loop lets the exception bubble up, and the whole agent
+dies mid-task. The user sees a stack trace instead of a recovery. A robust loop treats
 every failure as information the model can act on: read the error, try a different path,
 or explain what went wrong. The skill is deciding *which* errors are recoverable and
 *how many times* to let the model try.
@@ -79,15 +79,15 @@ print(r.dispatch("flaky", {}, {"flaky": lambda: flaky()}))   # ok: True
 print(r.dispatch("nope",  {}, {"flaky": lambda: flaky()}))   # model-fixable: unknown tool
 ```
 
-The loop reads `fatal` to decide whether to abort, and `retry` to decide whether to
+The loop reads `fatal` to decide whether to abort. It reads `retry` to decide whether to
 re-dispatch without consuming a step. The model only ever sees clean messages.
 
 ## Use It
 
-In production the transient bucket becomes a real backoff policy (`anthropic` raises
-`APIStatusError` with `.status_code`; you retry 429/5xx with exponential backoff and
-jitter — Phase 14). The classification you wrote here is the decision layer that sits on
-top of any retry library.
+In production the transient bucket becomes a real backoff policy. The `anthropic` library
+raises `APIStatusError` with `.status_code`, and you retry 429/5xx errors with
+exponential backoff and jitter (Phase 14). The classification you wrote here is the
+decision layer that sits on top of any retry library.
 
 ## Ship It
 
