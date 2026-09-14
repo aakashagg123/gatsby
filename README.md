@@ -4,8 +4,8 @@
 
 <br/>
 
-![Tracks](https://img.shields.io/badge/tracks-9-D97757?style=flat-square&labelColor=1f1e1d)
-![Lessons](https://img.shields.io/badge/lessons-70%2B-D97757?style=flat-square&labelColor=1f1e1d)
+![Tracks](https://img.shields.io/badge/tracks-10-D97757?style=flat-square&labelColor=1f1e1d)
+![Lessons](https://img.shields.io/badge/lessons-77%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-2552%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
@@ -160,6 +160,7 @@ edition on the [live site](https://aakashagg123.github.io/gatsby/).
 | :-- | :-- | :-- |
 | [**Agentic AI**](./agentic-ai/README.md) | What agents actually are — the loop, tools, memory, planning — and the reliability, security, and economics that turn demos into products. Opens with a knowledge graph. | [What is an agent?](./agentic-ai/what-is-an-agent.md) |
 | [**Knowledge graphs**](./knowledge-graphs/README.md) | Treat what the company knows as a product — entities and ontologies, the construction pipeline, GraphRAG, governance, and the business case, in product-leader language. | [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md) |
+| [**RAG & vector databases**](./rag-vector-databases/README.md) 🆕 | Grounding models in your data — embeddings, vector databases, chunking, retrieval quality, and RAG vs. long-context vs. fine-tuning. First module of the [Generative AI family](./GENERATIVE_AI_ROADMAP.md). | [Why RAG?](./rag-vector-databases/why-rag.md) |
 | [**Harness engineering**](./harness-engineering/README.md) | Build a coding agent's harness from scratch — loop, tools, context, memory, evals — phase by phase, hands-on. | [Roadmap](./harness-engineering/ROADMAP.md) |
 | [**Flowable**](./flowable/README.md) | Process automation from scratch — build a token engine, wait states, and a job executor by hand, then run real BPMN on Flowable. Concept-first for PMs, build layer for engineers. | [Roadmap](./flowable/ROADMAP.md) |
 | [**Product sense**](./product-sense/README.md) | The five habits under great product judgment — behaviour, empathy, strategy, communication, domain — and how they bend for AI products. | [Motivation & behaviour](./product-sense/motivation-and-behaviour.md) |

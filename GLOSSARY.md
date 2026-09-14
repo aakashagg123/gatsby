@@ -59,6 +59,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [APIs & contracts](./technical-product-sense/apis-and-contracts.md).
 
+**Approximate nearest neighbour (ANN)** — The core vector-database trick: find almost-closest vectors much faster than checking every one, trading a sliver of accuracy for huge speed.
+
+*In plain terms.* Finding the truly closest vectors means comparing against all of them — too slow at millions of items. An ANN index organizes vectors so search can skip almost all of them and still usually find the nearest, returning in milliseconds. The price is a small chance of missing a true match — a dial you tune.
+
+*For example.* Searching 50 million passages returns the top matches in a few milliseconds because the index checks a tiny fraction, not all 50 million.
+
+*Where it shows up:* Understanding why vector search is fast at scale; Explaining an occasional 'why did it miss that?' retrieval; Reasoning about the speed/accuracy dial.
+
+*See:* [Vector databases](./rag-vector-databases/vector-databases.md).
+
 **Attribution** — Linking a generated claim back to the specific source passage that supports it.
 
 *In plain terms.* Attribution is showing your work: for each claim the model makes, pointing to the exact sentence in the exact source that backs it. It turns 'trust me' into 'here's why', which is what regulated and high-stakes products need.
@@ -268,6 +278,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Finding defensible product positions; Planning expansion and moats; Prioritising which workflow steps to own.
 
 *See:* [TPM for AI products](./technical-product-management/tpm-for-ai-products.md).
+
+**Cosine similarity** — The usual measure of how close two embeddings are — the angle between the vectors — used to rank passages by relevance.
+
+*In plain terms.* Once text is embedding vectors, you need a number for 'how similar'. Cosine similarity measures the angle between two vectors: point the same way (similar meaning) scores near 1, unrelated scores near 0. It's the yardstick semantic search uses to pick the nearest passages.
+
+*For example.* A query vector scores 0.86 against the right passage and 0.31 against an unrelated one, so the first is retrieved.
+
+*Where it shows up:* Understanding how 'relevance' is scored in retrieval; Reading vector-search results and thresholds; Explaining why 'similar' isn't the same as 'correct'.
+
+*See:* [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md).
 
 **Cost attribution** — Tracking AI spend per feature, workflow, tenant, and user journey — so you know what's actually expensive.
 
@@ -569,6 +589,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Inference internals](./content/01-inference-internals/README.md).
 
+**Ingestion pipeline** — The build-time process that turns raw data into retrievable passages: extract text, chunk, attach metadata, embed, and index — continuously.
+
+*In plain terms.* Before anything can be retrieved, your data has to be prepared: clean text pulled from messy sources, cut into chunks, tagged with metadata (source, date, permissions), embedded, and loaded into the index. It's not a one-time load — it must keep running as data changes, or the index goes stale.
+
+*For example.* A nightly job that re-ingests changed help articles — adding new chunks, updating edited ones, deleting removed ones — so retrieval stays current.
+
+*Where it shows up:* Budgeting RAG as ongoing work, not a one-off load; Diagnosing 'the answer is in our docs but it can't find it'; Designing the freshness/delete path.
+
+*See:* [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md).
+
 **INT4 / INT8** — 4-bit and 8-bit integer quantization of a model's weights (and sometimes activations).
 
 *In plain terms.* Two common precisions for shrinking a model. INT8 is a mild, safe cut; INT4 is aggressive — half the size again, but more quality risk. They're points on the cost-vs-accuracy dial you pick from.
@@ -688,6 +718,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Scaling evals cheaply; Grading open-ended outputs; Continuous quality monitoring (with human spot-checks).
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
+
+**Long-context** — Handing the model a very large amount of text in the prompt each call, instead of retrieving just the relevant bit.
+
+*In plain terms.* As context windows grew huge, one option is to skip retrieval and just paste everything in every time. Simple and always current, but you pay to re-read the whole pile on every request, latency grows, and quality can drop as the answer hides in a haystack ('lost in the middle'). It's a partner to RAG when the knowledge is small and static, not a wholesale replacement.
+
+*For example.* Pasting an entire 80-page handbook into every prompt (long-context) vs. retrieving the 2 relevant pages (RAG) — same answer, very different cost and speed.
+
+*Where it shows up:* Choosing between RAG, long-context, and fine-tuning; Explaining why bigger windows didn't kill RAG; Reasoning about cost that scales per call.
+
+*See:* [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md).
 
 **Loop budget** — A hard cap on how many reasoning/acting iterations an agent may take before it must stop or escalate.
 
@@ -1019,6 +1059,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prompt vs. semantic caching](./content/01-inference-internals/prompt-vs-semantic-caching.md).
 
+**Semantic search** — Searching by meaning rather than exact words, by comparing embedding vectors instead of matching strings.
+
+*In plain terms.* Keyword search matches the words you typed; semantic search matches what you meant. It turns your query and your documents into embeddings (numeric fingerprints of meaning) and returns the passages whose meaning is closest — so 'how do I cancel?' finds an article titled 'ending your subscription' with no shared words.
+
+*For example.* A help-center search that surfaces the right article even when the user's wording matches none of its text.
+
+*Where it shows up:* Powering the retrieval half of RAG; Building a search bar that understands intent; Deciding where you still also need keyword search.
+
+*See:* [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md).
+
 **Service-as-a-Software** — Selling the outcome of a workflow (the resolved ticket, the booked trip) rather than software the customer operates.
 
 *In plain terms.* Traditional SaaS sells a tool the customer uses; service-as-a-software sells the finished result and does the work for them via agents. You're paid for outcomes, not seats — a different business model AI makes possible.
@@ -1068,6 +1118,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Any feature where model output feeds another system; Designing validation and fallback behaviour; Estimating reliability of extraction/classification.
 
 *See:* [Structured output](./content/02-reliable-outputs/structured-output.md).
+
+**Structured retrieval** — Retrieving connected structure (a graph subgraph, a database query result) instead of similar text — for questions flat RAG can't answer.
+
+*In plain terms.* Flat RAG fetches passages that resemble the question, which fails when the answer is a chain across documents or a summary of the whole corpus. Structured retrieval instead pulls the relevant structure — a subgraph of connected entities, or the result of an actual query — so multi-hop and global questions become answerable.
+
+*For example.* 'Which customers are exposed to this supplier's recall?' — no passage says it; structured retrieval walks supplier→parts→products→contracts→customers.
+
+*Where it shows up:* Answering multi-hop and whole-corpus questions; Deciding when flat RAG isn't enough; Bridging RAG into knowledge graphs.
+
+*See:* [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md).
 
 **Subagent** — A focused agent spawned by an orchestrator to handle a bounded piece of a larger task, often with its own fresh context.
 
@@ -1148,6 +1208,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Controlling cost of expensive tools; Limiting risky actions; Complementing loop budgets.
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
+
+**Top-k retrieval** — How many passages retrieval hands the model — the 'k' most relevant. A key dial in the recall/precision tradeoff.
+
+*In plain terms.* Retrieval doesn't return everything; it returns the k best matches (say, the top 5). Raise k and you catch more of the answer but also more noise; lower it and you stay focused but risk missing something. Choosing k is choosing where you sit on the recall-vs-precision tradeoff.
+
+*For example.* A policy bot retrieves the top 5 passages; bumping to top 20 catches more but risks the model answering from a distractor.
+
+*Where it shows up:* Tuning how much context the model gets; Balancing recall vs. precision; Controlling retrieval cost and prompt size.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
 **Trace** — The end-to-end record of one request as it flows through every step of your pipeline.
 
