@@ -1162,6 +1162,44 @@ GLOSSARY = [
  "related":["generative-ai","hallucination","eval","guardrail"],
 },
 
+# ============================== LLMS (GenAI) =================================
+{
+ "k":"token","t":"Token","aliases":["tokens"],"cat":"LLMs",
+ "short":"The small piece of text — often smaller than a word — that a language model actually reads and writes, one at a time.",
+ "fp":"A model doesn't see words the way a person does. It breaks text into tokens, using a fixed vocabulary — a common short word might be one token, a longer or rarer word might split into two or three. Cost, context-window size, and some odd failures (like miscounting letters) all trace back to this one fact.",
+ "example":"'Generative' might split into 'Gener' and 'ative' — two tokens for one word — while 'the' is usually a single token on its own.",
+ "uses":["Understanding why cost is billed per token, not per word","Explaining why a model struggles with letter-level tasks like counting or spelling","Estimating how much of a context window a piece of text will use"],
+ "see":("What an LLM actually is","llms/what-is-an-llm.md"),
+ "related":["context-window","generative-ai","jagged-frontier"],
+},
+{
+ "k":"training","t":"Training","cat":"LLMs",
+ "short":"The one-time process of adjusting a model's internal numbers on huge amounts of data so its predictions improve, producing a frozen model.",
+ "fp":"Training happens once, before your product ever calls the model: the model reads enormous amounts of text and adjusts billions of internal numbers so its next-word guesses get better. Once training ends, the model is frozen — every later use of it is inference, not more training.",
+ "example":"A vendor spends months and a large budget training a model once; after that, millions of people can use the same frozen model for years.",
+ "uses":["Explaining why telling a model something once doesn't mean it 'remembers' it later","Separating the one-time cost of training from the recurring cost of inference","Understanding why fine-tuning (further training) is slower and costlier than prompting"],
+ "see":("What an LLM actually is","llms/what-is-an-llm.md"),
+ "related":["inference","finetuning","token"],
+},
+{
+ "k":"temperature","t":"Temperature","cat":"LLMs",
+ "short":"The dial that controls how adventurous a model's word choices are — low for steady, consistent output, high for varied, less predictable output.",
+ "fp":"A model doesn't pick one fixed next word; it samples from a list of likely candidates. Temperature controls how much that sampling favors the single most likely candidate versus giving less likely ones a real chance. It's the direct, adjustable cause of why the same prompt can produce a different answer each time.",
+ "example":"A support-reply feature set to low temperature gives consistent answers to the same common question; a brainstorming feature set higher gives more varied, sometimes surprising ideas.",
+ "uses":["Tuning consistency versus variety per feature, deliberately","Explaining why the same prompt gave two different answers","Deciding when a cache, not a temperature setting, is the real fix for needed consistency"],
+ "see":("Temperature, sampling & determinism","llms/temperature-sampling-and-determinism.md"),
+ "related":["probabilistic-output","generative-ai"],
+},
+{
+ "k":"open-weight-model","t":"Open-weight model","aliases":["open model","open-source model"],"cat":"LLMs",
+ "short":"A model whose trained numbers are released for anyone to download and run on their own infrastructure, instead of only being callable through a vendor's API.",
+ "fp":"A closed model lives behind a vendor's API: you send a request, they run it on their servers, and you never touch the model itself. An open-weight model's trained numbers are published, so you can run it yourself — trading the vendor's convenience and automatic updates for more control over cost at scale and where your data goes.",
+ "example":"A team with heavy, steady request volume runs an open-weight model on its own servers to control unit cost, while a team with light, unpredictable volume calls a closed vendor API instead.",
+ "uses":["Choosing between convenience and control when picking a model","Weighing infrastructure cost against per-request API cost at scale","Deciding where sensitive data is allowed to go"],
+ "see":("Choosing a model","llms/choosing-a-model.md"),
+ "related":["model-routing","cost-attribution"],
+},
+
 # ====================== RAG & VECTOR DATABASES (GenAI) ======================
 {
  "k":"semantic-search","t":"Semantic search","cat":"RAG & vector databases",
