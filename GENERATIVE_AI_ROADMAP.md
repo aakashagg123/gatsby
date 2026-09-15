@@ -7,8 +7,8 @@ search for — sitting alongside (not replacing) the existing tracks, which it
 cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
-> Module 1 (*Generative AI: the big picture*) is now built. Remaining nine modules are
-> batched in learning order.
+> Modules 1 (*Generative AI: the big picture*) and 2 (*LLMs*) are now built. Remaining
+> eight modules are batched in learning order.
 
 ## Decisions (locked)
 
@@ -33,9 +33,9 @@ The umbrella. What generative AI is and isn't, and how it reshapes the product s
 1. [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md) · 2. [The five modalities](./generative-ai/the-modalities.md) · 3. [Probabilistic software](./generative-ai/probabilistic-software.md) · 4. [The generative AI product stack](./generative-ai/the-genai-product-stack.md) · 5. [Build, buy, or fine-tune](./generative-ai/build-buy-or-fine-tune.md) · 6. [Where value is created and destroyed](./generative-ai/where-value-is-created-and-destroyed.md). → [Recap](./generative-ai/recap.md).
 *Spokes:* `content/00-foundations`, `content/01-inference-internals`, `content/06-strategy-tradeoffs`, `rag-vector-databases`, `agentic-ai`.
 
-### 2. 🧠 LLMs — *7 lessons*
+### 2. 🧠 LLMs — *7 lessons* — **BUILT**
 The engine most of the family runs on.
-1. What an LLM actually is (tokens, next-token prediction, training vs. inference) · 2. The context window & tokens · 3. Capabilities & the jagged frontier · 4. Prompting & in-context learning · 5. Temperature, sampling & (non-)determinism · 6. Choosing a model (size, cost, latency, open vs. closed) · 7. Fine-tuning vs. prompting vs. RAG. → Recap.
+1. [What an LLM actually is](./llms/what-is-an-llm.md) · 2. [The context window](./llms/the-context-window.md) · 3. [Capabilities & the jagged frontier](./llms/capabilities-and-the-jagged-frontier.md) · 4. [Prompting & in-context learning](./llms/prompting-and-in-context-learning.md) · 5. [Temperature, sampling & determinism](./llms/temperature-sampling-and-determinism.md) · 6. [Choosing a model](./llms/choosing-a-model.md) · 7. [Prompting vs. RAG vs. fine-tuning](./llms/prompting-vs-rag-vs-finetuning.md). → [Recap](./llms/recap.md).
 *Spokes:* `content/01-inference-internals/*`, `content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag`.
 
 ### 3. 🔗 APIs & integrations — *6 lessons*

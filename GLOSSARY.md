@@ -859,6 +859,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
 
+**Open-weight model** — A model whose trained numbers are released for anyone to download and run on their own infrastructure, instead of only being callable through a vendor's API.
+
+*In plain terms.* A closed model lives behind a vendor's API: you send a request, they run it on their servers, and you never touch the model itself. An open-weight model's trained numbers are published, so you can run it yourself — trading the vendor's convenience and automatic updates for more control over cost at scale and where your data goes.
+
+*For example.* A team with heavy, steady request volume runs an open-weight model on its own servers to control unit cost, while a team with light, unpredictable volume calls a closed vendor API instead.
+
+*Where it shows up:* Choosing between convenience and control when picking a model; Weighing infrastructure cost against per-request API cost at scale; Deciding where sensitive data is allowed to go.
+
+*See:* [Choosing a model](./llms/choosing-a-model.md).
+
 **Orchestration layer** — The cyclical process governing how an agent takes in information, reasons, and picks its next action — the loop plus its budgets and exits.
 
 *In plain terms.* Between the raw model and a working agent sits the orchestration layer: the code that runs the loop, keeps the running history, enforces step/cost limits, and decides when to stop or ask a human. It's where an 'agent' actually lives, beyond the model itself.
@@ -1209,6 +1219,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Tech debt & estimation](./technical-product-sense/tech-debt-and-estimation.md).
 
+**Temperature** — The dial that controls how adventurous a model's word choices are — low for steady, consistent output, high for varied, less predictable output.
+
+*In plain terms.* A model doesn't pick one fixed next word; it samples from a list of likely candidates. Temperature controls how much that sampling favors the single most likely candidate versus giving less likely ones a real chance. It's the direct, adjustable cause of why the same prompt can produce a different answer each time.
+
+*For example.* A support-reply feature set to low temperature gives consistent answers to the same common question; a brainstorming feature set higher gives more varied, sometimes surprising ideas.
+
+*Where it shows up:* Tuning consistency versus variety per feature, deliberately; Explaining why the same prompt gave two different answers; Deciding when a cache, not a temperature setting, is the real fix for needed consistency.
+
+*See:* [Temperature, sampling & determinism](./llms/temperature-sampling-and-determinism.md).
+
 **Text-to-query** — A model translating a plain-language question into a database query (SQL/Cypher/SPARQL) that the database actually answers.
 
 *In plain terms.* For questions with exact numbers, you don't want the model to guess — you want the database to compute. Text-to-query has the model write the query from your English question; the database runs it and returns the real answer. The model translates; the data answers.
@@ -1228,6 +1248,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Assessing agent security architecture; Deciding which leg to remove for a given feature; Explaining zero-click AI exploits.
 
 *See:* [Safety, security & governance](./agentic-ai/safety-security-and-governance.md).
+
+**Token** — The small piece of text — often smaller than a word — that a language model actually reads and writes, one at a time.
+
+*In plain terms.* A model doesn't see words the way a person does. It breaks text into tokens, using a fixed vocabulary — a common short word might be one token, a longer or rarer word might split into two or three. Cost, context-window size, and some odd failures (like miscounting letters) all trace back to this one fact.
+
+*For example.* 'Generative' might split into 'Gener' and 'ative' — two tokens for one word — while 'the' is usually a single token on its own.
+
+*Where it shows up:* Understanding why cost is billed per token, not per word; Explaining why a model struggles with letter-level tasks like counting or spelling; Estimating how much of a context window a piece of text will use.
+
+*See:* [What an LLM actually is](./llms/what-is-an-llm.md).
 
 **Tool** — A capability you expose to a model — search, run code, call an API, write a file — that lets it act on the world.
 
@@ -1268,6 +1298,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Debugging latency and failures; Auditing what an agent did; The raw material for error analysis.
 
 *See:* [Observability](./content/04-evals-observability/observability.md).
+
+**Training** — The one-time process of adjusting a model's internal numbers on huge amounts of data so its predictions improve, producing a frozen model.
+
+*In plain terms.* Training happens once, before your product ever calls the model: the model reads enormous amounts of text and adjusts billions of internal numbers so its next-word guesses get better. Once training ends, the model is frozen — every later use of it is inference, not more training.
+
+*For example.* A vendor spends months and a large budget training a model once; after that, millions of people can use the same frozen model for years.
+
+*Where it shows up:* Explaining why telling a model something once doesn't mean it 'remembers' it later; Separating the one-time cost of training from the recurring cost of inference; Understanding why fine-tuning (further training) is slower and costlier than prompting.
+
+*See:* [What an LLM actually is](./llms/what-is-an-llm.md).
 
 **Trajectory eval** — Grading the path an agent took — tools chosen, steps used, no flailing — not just its final answer.
 

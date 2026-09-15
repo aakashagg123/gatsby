@@ -168,6 +168,18 @@ Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md
 5. [Build, buy, or fine-tune](./generative-ai/build-buy-or-fine-tune.md)
 6. [Where generative AI creates and destroys value](./generative-ai/where-value-is-created-and-destroyed.md) · [Recap](./generative-ai/recap.md)
 
+## [LLMs](./llms/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [What an LLM actually is](./llms/what-is-an-llm.md)
+2. [The context window](./llms/the-context-window.md)
+3. [Capabilities & the jagged frontier](./llms/capabilities-and-the-jagged-frontier.md)
+4. [Prompting & in-context learning](./llms/prompting-and-in-context-learning.md)
+5. [Temperature, sampling & determinism](./llms/temperature-sampling-and-determinism.md)
+6. [Choosing a model](./llms/choosing-a-model.md)
+7. [Prompting vs. RAG vs. fine-tuning](./llms/prompting-vs-rag-vs-finetuning.md) · [Recap](./llms/recap.md)
+
 ## [RAG & vector databases](./rag-vector-databases/README.md)
 
 Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
