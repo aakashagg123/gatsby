@@ -180,6 +180,17 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 6. [Choosing a model](./llms/choosing-a-model.md)
 7. [Prompting vs. RAG vs. fine-tuning](./llms/prompting-vs-rag-vs-finetuning.md) · [Recap](./llms/recap.md)
 
+## [APIs & integrations](./api-integrations/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [The request/response contract](./api-integrations/the-request-response-contract.md)
+2. [Calling an LLM API](./api-integrations/calling-an-llm-api.md)
+3. [Structured output & JSON mode](./api-integrations/structured-output-and-json-mode.md)
+4. [Webhooks & async patterns](./api-integrations/webhooks-and-async-patterns.md)
+5. [Integrating into existing systems](./api-integrations/integrating-into-existing-systems.md)
+6. [MCP & standard connectors](./api-integrations/mcp-and-standard-connectors.md) · [Recap](./api-integrations/recap.md)
+
 ## [RAG & vector databases](./rag-vector-databases/README.md)
 
 Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

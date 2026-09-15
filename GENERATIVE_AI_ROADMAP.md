@@ -7,8 +7,8 @@ search for — sitting alongside (not replacing) the existing tracks, which it
 cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
-> Modules 1 (*Generative AI: the big picture*) and 2 (*LLMs*) are now built. Remaining
-> eight modules are batched in learning order.
+> Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), and 3 (*APIs &
+> integrations*) are now built. Remaining seven modules are batched in learning order.
 
 ## Decisions (locked)
 
@@ -38,9 +38,9 @@ The engine most of the family runs on.
 1. [What an LLM actually is](./llms/what-is-an-llm.md) · 2. [The context window](./llms/the-context-window.md) · 3. [Capabilities & the jagged frontier](./llms/capabilities-and-the-jagged-frontier.md) · 4. [Prompting & in-context learning](./llms/prompting-and-in-context-learning.md) · 5. [Temperature, sampling & determinism](./llms/temperature-sampling-and-determinism.md) · 6. [Choosing a model](./llms/choosing-a-model.md) · 7. [Prompting vs. RAG vs. fine-tuning](./llms/prompting-vs-rag-vs-finetuning.md). → [Recap](./llms/recap.md).
 *Spokes:* `content/01-inference-internals/*`, `content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag`.
 
-### 3. 🔗 APIs & integrations — *6 lessons*
+### 3. 🔗 APIs & integrations — *6 lessons* — **BUILT**
 How the model reaches the rest of your system.
-1. What an API is & the request/response contract · 2. Calling an LLM API (auth, rate limits, streaming, retries) · 3. Structured output & JSON mode · 4. Webhooks & async patterns · 5. Integrating into existing systems (latency, idempotency, failure) · 6. MCP & standard connectors. → Recap.
+1. [The request/response contract](./api-integrations/the-request-response-contract.md) · 2. [Calling an LLM API](./api-integrations/calling-an-llm-api.md) · 3. [Structured output & JSON mode](./api-integrations/structured-output-and-json-mode.md) · 4. [Webhooks & async patterns](./api-integrations/webhooks-and-async-patterns.md) · 5. [Integrating into existing systems](./api-integrations/integrating-into-existing-systems.md) · 6. [MCP & standard connectors](./api-integrations/mcp-and-standard-connectors.md). → [Recap](./api-integrations/recap.md).
 *Spokes:* `technical-product-sense/apis-and-contracts`, `content/02-reliable-outputs/structured-output`, `agentic-ai/tools-and-function-calling`.
 
 ### 4. 🗂️ RAG & vector databases — *7 lessons* — **BUILT** (pilot)

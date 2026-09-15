@@ -34,6 +34,7 @@ AAI_HTML = os.path.join(ROOT, "agentic-ai-html")        # agentic AI
 KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
 GAI_HTML = os.path.join(ROOT, "generative-ai-html")     # Generative AI: the big picture (GenAI family)
 LLM_HTML = os.path.join(ROOT, "llms-html")              # LLMs (GenAI family, module 2)
+API_HTML = os.path.join(ROOT, "api-integrations-html")  # APIs & integrations (GenAI family, module 3)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -230,7 +231,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Thirteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Fourteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -299,6 +300,12 @@ LANDING = """<!doctype html>
       <h2>LLMs →</h2>
       <p>Tokens, the context window, the jagged frontier, prompting, sampling, choosing a
       model, and the order to reach for prompting, RAG, or fine-tuning.</p>
+    </a>
+    <a class="card" href="api-integrations/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>APIs &amp; integrations →</h2>
+      <p>The request/response contract, authentication, rate limits, streaming, retries,
+      structured output, webhooks, and fitting a model call into a real system.</p>
     </a>
     <a class="card" href="rag-vector-databases/index.html">
       <span class="tag">Generative AI</span>
@@ -487,11 +494,15 @@ def main():
     if os.path.isdir(LLM_HTML):
         shutil.copytree(LLM_HTML, os.path.join(SITE, "llms"))
 
-    # 1j. RAG & vector databases module (Generative AI family): copy its pages.
+    # 1j. APIs & integrations (Generative AI family, module 3): copy its pages.
+    if os.path.isdir(API_HTML):
+        shutil.copytree(API_HTML, os.path.join(SITE, "api-integrations"))
+
+    # 1k. RAG & vector databases module (Generative AI family): copy its pages.
     if os.path.isdir(RAG_HTML):
         shutil.copytree(RAG_HTML, os.path.join(SITE, "rag-vector-databases"))
 
-    # 1k. System design module: copy its pre-rendered pages.
+    # 1l. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
