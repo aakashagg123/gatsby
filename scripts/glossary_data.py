@@ -1312,4 +1312,24 @@ GLOSSARY = [
  "related":["graphrag","multi-hop","text-to-query","rag"],
 },
 
+# ====================== MEMORY & CONTEXT (GenAI) ======================
+{
+ "k":"organizational-memory","t":"Organizational memory","aliases":["shared memory","org memory"],"cat":"Memory & context",
+ "short":"Memory shared across everyone in a workspace or tenant, rather than private to one person — the shape where a leak or a bad edit affects everyone, not just its owner.",
+ "fp":"Session and user memory belong to one person. Organizational memory is a shared handbook: one person's contribution becomes something the whole team sees. That's the point of it, but it also means the boundary around who's 'inside' the org is the entire feature — get it wrong and you've built a leak, not a convenience.",
+ "example":"A support-bot workspace is taught once that a customer moved to a new plan, and every agent in that workspace sees the fact from then on — not just the one who typed it in.",
+ "uses":["Choosing which of the three memory shapes a feature actually needs","Scoping a memory boundary before writing any storage code","Explaining why shared memory needs the same isolation guarantees as any other tenant boundary"],
+ "see":("Session, user & organizational memory","memory-and-context/session-user-and-organizational-memory.md"),
+ "related":["multi-tenancy","memory-leakage"],
+},
+{
+ "k":"memory-leakage","t":"Memory leakage","cat":"Memory & context",
+ "short":"A remembered fact showing up somewhere it doesn't belong — a different user, a different tenant, or a context the person never agreed to.",
+ "fp":"A memory feature only works if what it remembers stays inside the boundary it was stored under. Leakage is that boundary failing — one user's or tenant's information reaching another — and it costs a memory feature more trust in one incident than its convenience ever earned, because it turns 'the AI understands me' into 'the AI can't be trusted with anything I tell it.'",
+ "example":"A detail one customer shared in a support chat resurfaces months later in a different customer's session, because the memory store didn't enforce the same boundary the rest of the product does.",
+ "uses":["Auditing a memory feature for the failure mode users notice fastest and trust the least","Explaining why memory needs the same tenant-isolation testing as any other shared store","Reviewing a memory design for boundary bugs before launch"],
+ "see":("When memory goes wrong","memory-and-context/when-memory-goes-wrong.md"),
+ "related":["organizational-memory","multi-tenancy"],
+},
+
 ]

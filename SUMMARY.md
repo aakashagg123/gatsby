@@ -203,6 +203,15 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 6. [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
 7. [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md) · [Recap](./rag-vector-databases/recap.md)
 
+## [Memory & context](./memory-and-context/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md)
+2. [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md)
+3. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md)
+4. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md) · [Recap](./memory-and-context/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

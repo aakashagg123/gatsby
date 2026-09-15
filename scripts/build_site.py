@@ -35,6 +35,7 @@ KG_HTML = os.path.join(ROOT, "knowledge-graphs-html")   # knowledge graphs
 GAI_HTML = os.path.join(ROOT, "generative-ai-html")     # Generative AI: the big picture (GenAI family)
 LLM_HTML = os.path.join(ROOT, "llms-html")              # LLMs (GenAI family, module 2)
 API_HTML = os.path.join(ROOT, "api-integrations-html")  # APIs & integrations (GenAI family, module 3)
+MEM_HTML = os.path.join(ROOT, "memory-and-context-html")  # Memory & context (GenAI family, module 5)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -231,7 +232,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Fourteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Fifteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -312,6 +313,12 @@ LANDING = """<!doctype html>
       <h2>RAG &amp; vector databases →</h2>
       <p>Grounding models in your data — embeddings, vector databases, chunking, retrieval
       quality, and when to reach for long-context, fine-tuning, or a graph.</p>
+    </a>
+    <a class="card" href="memory-and-context/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>Memory &amp; context →</h2>
+      <p>Memory as a product decision, the three shapes it takes, retrieval as its most
+      common implementation, and the trust failures it has to be designed against.</p>
     </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
@@ -502,7 +509,11 @@ def main():
     if os.path.isdir(RAG_HTML):
         shutil.copytree(RAG_HTML, os.path.join(SITE, "rag-vector-databases"))
 
-    # 1l. System design module: copy its pre-rendered pages.
+    # 1l. Memory & context (Generative AI family, module 5): copy its pages.
+    if os.path.isdir(MEM_HTML):
+        shutil.copytree(MEM_HTML, os.path.join(SITE, "memory-and-context"))
+
+    # 1m. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
