@@ -189,6 +189,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Traps & limits](./first-principles/traps-and-limits.md).
 
+**Circuit breaker** — A safeguard that stops sending requests to a failing dependency for a while, instead of piling up failed calls against it.
+
+*In plain terms.* When a dependency starts failing, hammering it with more requests usually makes things worse, for you and for it. A circuit breaker 'trips' after enough failures, stops sending requests for a cooldown period, and tries again later — containing the damage instead of compounding it.
+
+*For example.* A model provider degrades; the circuit breaker stops sending new requests to it for two minutes and serves a fallback response instead, rather than queuing up thousands of doomed calls.
+
+*Where it shows up:* Containing a dependency's bad day to one feature instead of the whole product; Designing graceful degradation for AI-dependent flows; Avoiding making an already-struggling service worse.
+
+*See:* [Integrating into existing systems](./api-integrations/integrating-into-existing-systems.md).
+
 **Cognitive empathy** — Accurately modeling what your user thinks, knows, and feels — reasoning from inside their head, not yours.
 
 *In plain terms.* Cognitive empathy is the skill of genuinely simulating the user's mind: their goals, their gaps in knowledge, their context and frustrations — as they experience them, not as an expert imagines them. It's what separates products that 'get it' from products built for their own makers.
@@ -659,6 +669,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Motivation & behaviour](./product-sense/motivation-and-behaviour.md).
 
+**JSON mode** — A request-level feature that constrains a model's output to match a specific data shape, so the response reliably parses instead of just hopefully following a plain-language instruction.
+
+*In plain terms.* Asking a model in plain English to 'please respond in JSON' works most of the time, not all of the time. JSON mode is a stronger mechanism: you describe the exact shape you want, and the API constrains generation so the response matches it far more reliably — solving the shape problem, though the values inside still need checking.
+
+*For example.* A request specifies the exact fields wanted (name, date, amount); JSON mode reliably returns exactly those fields, rather than sometimes wrapping them in an explanatory sentence a parser would choke on.
+
+*Where it shows up:* Getting structured data back for anything code will parse; Reducing (not eliminating) the need for a repair loop on malformed output; Deciding when free-form output is the better choice instead.
+
+*See:* [Structured output & JSON mode](./api-integrations/structured-output-and-json-mode.md).
+
 **Knowledge graph** — Knowledge stored as explicit entities and typed relationships ('things, not strings'), queryable by traversal.
 
 *In plain terms.* Most company knowledge is scattered across systems that don't talk. A knowledge graph makes the connections explicit — customers linked to contracts linked to products linked to suppliers — so you can 'walk' from one thing to related things and answer questions that span systems.
@@ -1019,6 +1039,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
 
+**Rate limit** — A cap on how many requests, or how many tokens, you can send an API in a given window of time.
+
+*In plain terms.* Every API vendor caps how much you can call it, to protect their own systems from being overwhelmed. A rate limit is that cap. Cross it and requests get rejected or delayed until the window resets — which a fast-growing product can hit sooner than a team expects.
+
+*For example.* A feature that goes viral overnight suddenly sends far more requests than planned, hits the vendor's rate limit, and starts failing for new users right when demand is highest.
+
+*Where it shows up:* Checking expected traffic against vendor limits before launch; Designing graceful handling for the specific 'rate limited' error; Planning capacity ahead of a launch or a marketing push.
+
+*See:* [Calling an LLM API](./api-integrations/calling-an-llm-api.md).
+
 **ReAct** — A reasoning framework interleaving Thought, Action, and Observation — the default shape of an agent loop.
 
 *In plain terms.* ReAct makes the agent alternate between thinking out loud ('I should check the logs'), acting (calling a tool), and observing the result — then thinking again. Interleaving reasoning with action is what keeps the agent grounded in what it actually finds rather than guessing.
@@ -1158,6 +1188,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reducing latency without quality loss; Comparing acceleration techniques vs. quantization/distillation; Setting latency SLAs.
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
+
+**Streaming** — Receiving a model's output token by token, as it's generated, instead of waiting for the whole response to finish first.
+
+*In plain terms.* Because a model writes its answer one piece at a time, an API can send you each piece the moment it's ready, so a user sees the answer appear progressively — the now-familiar 'typing' effect in chat products — rather than staring at a blank screen until everything is done.
+
+*For example.* A chat interface shows words appearing as the model writes them, instead of a loading spinner that only resolves once the full reply is ready.
+
+*Where it shows up:* Making an interactive feature feel fast even when total generation time is unchanged; Deciding when the simpler full-response call is fine instead (background jobs, no one watching); Reducing perceived wait time for a user-facing feature.
+
+*See:* [Calling an LLM API](./api-integrations/calling-an-llm-api.md).
 
 **Structured output** — Making a model return data in a strict machine-readable shape (like JSON) that downstream systems can trust.
 
@@ -1358,6 +1398,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Modeling long-running, human-in-the-loop workflows; Understanding durability across restarts; Handling timers and external events.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Webhook** — A URL you register in advance that another service calls to deliver a result to you, instead of you repeatedly asking whether it's ready.
+
+*In plain terms.* For work that takes too long for a normal request-response call, a webhook flips who initiates the final step: you start the job, then the service calls a URL you provided the moment it's done, pushing the result to you rather than making you keep asking.
+
+*For example.* A long report-generation job returns a job ID immediately, then delivers the finished report to your webhook URL minutes later, once it's ready.
+
+*Where it shows up:* Handling AI work that takes minutes, not seconds, without blocking a user; Designing 'start now, notify later' features; Building a reliable endpoint that verifies, deduplicates, and responds quickly.
+
+*See:* [Webhooks & async patterns](./api-integrations/webhooks-and-async-patterns.md).
 
 **Workflow capture** — Owning an entire workflow end-to-end (not just a tool within it) — the strategy that erases adoption friction and compounds into a moat.
 

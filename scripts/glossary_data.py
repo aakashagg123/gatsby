@@ -1200,6 +1200,53 @@ GLOSSARY = [
  "related":["model-routing","cost-attribution"],
 },
 
+# ========================= API INTEGRATIONS (GenAI) ==========================
+{
+ "k":"rate-limit","t":"Rate limit","aliases":["rate limits","rate-limited"],"cat":"APIs & integrations",
+ "short":"A cap on how many requests, or how many tokens, you can send an API in a given window of time.",
+ "fp":"Every API vendor caps how much you can call it, to protect their own systems from being overwhelmed. A rate limit is that cap. Cross it and requests get rejected or delayed until the window resets — which a fast-growing product can hit sooner than a team expects.",
+ "example":"A feature that goes viral overnight suddenly sends far more requests than planned, hits the vendor's rate limit, and starts failing for new users right when demand is highest.",
+ "uses":["Checking expected traffic against vendor limits before launch","Designing graceful handling for the specific 'rate limited' error","Planning capacity ahead of a launch or a marketing push"],
+ "see":("Calling an LLM API","api-integrations/calling-an-llm-api.md"),
+ "related":["api-contract","model-routing"],
+},
+{
+ "k":"streaming-response","t":"Streaming","aliases":["streamed response"],"cat":"APIs & integrations",
+ "short":"Receiving a model's output token by token, as it's generated, instead of waiting for the whole response to finish first.",
+ "fp":"Because a model writes its answer one piece at a time, an API can send you each piece the moment it's ready, so a user sees the answer appear progressively — the now-familiar 'typing' effect in chat products — rather than staring at a blank screen until everything is done.",
+ "example":"A chat interface shows words appearing as the model writes them, instead of a loading spinner that only resolves once the full reply is ready.",
+ "uses":["Making an interactive feature feel fast even when total generation time is unchanged","Deciding when the simpler full-response call is fine instead (background jobs, no one watching)","Reducing perceived wait time for a user-facing feature"],
+ "see":("Calling an LLM API","api-integrations/calling-an-llm-api.md"),
+ "related":["token","probabilistic-output"],
+},
+{
+ "k":"webhook","t":"Webhook","cat":"APIs & integrations",
+ "short":"A URL you register in advance that another service calls to deliver a result to you, instead of you repeatedly asking whether it's ready.",
+ "fp":"For work that takes too long for a normal request-response call, a webhook flips who initiates the final step: you start the job, then the service calls a URL you provided the moment it's done, pushing the result to you rather than making you keep asking.",
+ "example":"A long report-generation job returns a job ID immediately, then delivers the finished report to your webhook URL minutes later, once it's ready.",
+ "uses":["Handling AI work that takes minutes, not seconds, without blocking a user","Designing 'start now, notify later' features","Building a reliable endpoint that verifies, deduplicates, and responds quickly"],
+ "see":("Webhooks & async patterns","api-integrations/webhooks-and-async-patterns.md"),
+ "related":["idempotency","tool"],
+},
+{
+ "k":"circuit-breaker","t":"Circuit breaker","cat":"APIs & integrations",
+ "short":"A safeguard that stops sending requests to a failing dependency for a while, instead of piling up failed calls against it.",
+ "fp":"When a dependency starts failing, hammering it with more requests usually makes things worse, for you and for it. A circuit breaker 'trips' after enough failures, stops sending requests for a cooldown period, and tries again later — containing the damage instead of compounding it.",
+ "example":"A model provider degrades; the circuit breaker stops sending new requests to it for two minutes and serves a fallback response instead, rather than queuing up thousands of doomed calls.",
+ "uses":["Containing a dependency's bad day to one feature instead of the whole product","Designing graceful degradation for AI-dependent flows","Avoiding making an already-struggling service worse"],
+ "see":("Integrating into existing systems","api-integrations/integrating-into-existing-systems.md"),
+ "related":["idempotency","blast-radius"],
+},
+{
+ "k":"json-mode","t":"JSON mode","aliases":["schema-constrained generation"],"cat":"APIs & integrations",
+ "short":"A request-level feature that constrains a model's output to match a specific data shape, so the response reliably parses instead of just hopefully following a plain-language instruction.",
+ "fp":"Asking a model in plain English to 'please respond in JSON' works most of the time, not all of the time. JSON mode is a stronger mechanism: you describe the exact shape you want, and the API constrains generation so the response matches it far more reliably — solving the shape problem, though the values inside still need checking.",
+ "example":"A request specifies the exact fields wanted (name, date, amount); JSON mode reliably returns exactly those fields, rather than sometimes wrapping them in an explanatory sentence a parser would choke on.",
+ "uses":["Getting structured data back for anything code will parse","Reducing (not eliminating) the need for a repair loop on malformed output","Deciding when free-form output is the better choice instead"],
+ "see":("Structured output & JSON mode","api-integrations/structured-output-and-json-mode.md"),
+ "related":["structured-output","repair-loop"],
+},
+
 # ====================== RAG & VECTOR DATABASES (GenAI) ======================
 {
  "k":"semantic-search","t":"Semantic search","cat":"RAG & vector databases",
