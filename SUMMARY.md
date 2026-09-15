@@ -157,9 +157,20 @@ order below moves from thinking skills to product craft to agents.
 7. [Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md)
 8. [Knowledge graphs as a product](./knowledge-graphs/knowledge-graphs-as-a-product.md) · [Recap](./knowledge-graphs/recap.md)
 
+## [Generative AI: the big picture](./generative-ai/README.md)
+
+Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md)
+2. [The five modalities](./generative-ai/the-modalities.md)
+3. [Probabilistic software](./generative-ai/probabilistic-software.md)
+4. [The generative AI product stack](./generative-ai/the-genai-product-stack.md)
+5. [Build, buy, or fine-tune](./generative-ai/build-buy-or-fine-tune.md)
+6. [Where generative AI creates and destroys value](./generative-ai/where-value-is-created-and-destroyed.md) · [Recap](./generative-ai/recap.md)
+
 ## [RAG & vector databases](./rag-vector-databases/README.md)
 
-First module of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
 
 1. [Why RAG?](./rag-vector-databases/why-rag.md)
 2. [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md)

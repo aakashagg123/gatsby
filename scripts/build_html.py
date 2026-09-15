@@ -70,7 +70,7 @@ def rewrite_target(target, cur_mod):
     # flatten to one page per lesson; phased tracks (harness, flowable) keep their tree.
     FLAT = ("agentic-ai", "first-principles", "product-sense",
             "technical-product-sense", "technical-product-management", "knowledge-graphs",
-            "system-design")
+            "system-design", "rag-vector-databases", "generative-ai")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):

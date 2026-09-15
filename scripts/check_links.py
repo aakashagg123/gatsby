@@ -14,8 +14,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCAN_DIRS = [
     "content", "agentic-ai", "first-principles", "knowledge-graphs", "product-sense",
-    "rag-vector-databases", "technical-product-management", "technical-product-sense",
-    "system-design",
+    "generative-ai", "rag-vector-databases", "technical-product-management",
+    "technical-product-sense", "system-design",
     "harness-engineering", "flowable",
 ]
 ROOT_FILES = ["README.md", "SUMMARY.md", "GLOSSARY.md"]
