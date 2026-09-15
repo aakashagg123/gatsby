@@ -459,6 +459,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Function calling](./content/02-reliable-outputs/function-calling.md).
 
+**Generative AI** — AI that creates new content — text, image, audio, video, or code — instead of only scoring or ranking things that already exist.
+
+*In plain terms.* Older AI mostly judged things: is this spam, what's this worth, which item ranks first. Generative AI makes things: it writes a paragraph, draws an image, or writes a function that did not exist before the request. It is a different job from prediction, not a bigger version of it.
+
+*For example.* A spam filter judges an email that already exists. A writing assistant creates an email that did not exist a moment ago — that's the generative half.
+
+*Where it shows up:* Deciding whether a task needs a judgment or a creation; Scoping cost and risk correctly for a proposed feature; Explaining why generative and predictive models are priced and tested differently.
+
+*See:* [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md).
+
 **Golden set** — A curated, version-controlled set of inputs with known-good expected outputs — the backbone of regression testing.
 
 *In plain terms.* To know whether a change made things better or worse, you need a fixed exam with an answer key. The golden set is that exam: hand-picked examples with correct answers you rerun on every change, so quality becomes measurable instead of vibes.
@@ -769,6 +779,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
 
+**Modality** — The kind of content a generative model creates — text, image, audio, video, or code — each with its own maturity and failure pattern.
+
+*In plain terms.* Generative AI is not one capability; it is several, split by what comes out the other end. Text generation is mature and cheap. Video generation is new and expensive. Code generation can check itself by running. Treating all five as equally ready is how a roadmap misjudges cost and risk.
+
+*For example.* A team scopes a 'generate a product video' feature the same way it scoped a 'generate a product description' feature, and is surprised when the video feature costs ten times more and fails far more often.
+
+*Where it shows up:* Pricing and scheduling a feature by its real modality, not by the word 'AI'; Matching the review process to the modality (a listen, a look, a test run); Spotting a modality-specific risk, like consent for a cloned voice.
+
+*See:* [The five modalities](./generative-ai/the-modalities.md).
+
 **Model routing** — Sending each request to the cheapest model that can handle it, with fallback logic and a degraded-mode experience.
 
 *In plain terms.* Not every request needs your most powerful (and expensive) model. Routing sends easy requests to a small cheap model and hard ones to a big model, and defines what happens when a model is down or slow — so the product degrades gracefully instead of failing.
@@ -889,6 +909,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Specs, PRDs & RFCs](./technical-product-management/specs-prds-and-rfcs.md).
 
+**Predictive AI** — AI that scores, ranks, or classifies something that already exists, returning an answer from a fixed set of possibilities.
+
+*In plain terms.* A predictive model is a judge: given a case, it returns a verdict from a list decided in advance — fraud or not fraud, spam or not spam, rank 1 or rank 2. It never creates content that wasn't already implicit in its training. That makes it fast, cheap, and easy to test against a labeled answer key.
+
+*For example.* A model that scores a loan application as low, medium, or high risk is predictive — the three possible answers were fixed before the model ever ran.
+
+*Where it shows up:* Recognising when a cheaper predictive model would do the job of an expensive generative one; Setting realistic accuracy and testing expectations; Splitting a pipeline into judging steps and creating steps.
+
+*See:* [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md).
+
 **Prefill** — The phase that processes all input/prompt tokens in parallel to build the initial KV cache; compute-bound.
 
 *In plain terms.* Answering has two phases. Prefill is reading the whole prompt at once to 'understand' it — done in parallel, limited by raw compute. It sets up the cache the model then writes from. Long prompts make prefill the expensive part.
@@ -898,6 +928,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Explaining why long inputs cause a startup delay; Separating input cost (prefill) from output cost (decode); Reasoning about time-to-first-token.
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
+
+**Probabilistic output** — Output that can differ each time, even from the exact same input, because a generative model samples from a range of likely answers instead of computing one fixed result.
+
+*In plain terms.* Ordinary software is deterministic: the same input always gives the same output, and a bug can be reproduced on demand. A generative model instead leans toward likely answers without being locked to one — ask it the same question twice and you can get two different, both reasonable, replies. This is normal, not a bug, and it changes what testing and support have to do.
+
+*For example.* Two customers ask a support bot the identical question and receive two differently worded, both correct, answers — while the third gets a subtly wrong one, with no code having changed in between.
+
+*Where it shows up:* Shifting testing from a single pass/fail check to a measured pass rate; Explaining to support why a bug report might not reproduce on the next try; Deciding what fallback exists for the run that lands outside the expected range.
+
+*See:* [Probabilistic software](./generative-ai/probabilistic-software.md).
 
 **Process token** — A marker showing where execution currently is inside a running process — the 'you are here' pointer that moves along the flow.
 

@@ -6,8 +6,9 @@ product-leader / CPO lens and house style as the rest of the curriculum. It is t
 search for — sitting alongside (not replacing) the existing tracks, which it
 cross-links for extra depth.
 
-> **Status:** planning locked; building **pilot-first**. Pilot = *RAG & vector databases*.
-> Remaining modules are batched after pilot sign-off.
+> **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
+> Module 1 (*Generative AI: the big picture*) is now built. Remaining nine modules are
+> batched in learning order.
 
 ## Decisions (locked)
 
@@ -27,10 +28,10 @@ cross-links for extra depth.
 Each module is a standalone track folder (e.g. `rag-vector-databases/`) with a
 `README.md` (knowledge-graph opener), its lessons, and a `recap.md`.
 
-### 1. 🤖 Generative AI: the big picture — *6 lessons*
+### 1. 🤖 Generative AI: the big picture — *6 lessons* — **BUILT**
 The umbrella. What generative AI is and isn't, and how it reshapes the product surface.
-1. What generative AI is (vs. predictive/analytical AI) · 2. The modalities (text, image, audio, video, code) · 3. What changes for product: probabilistic, non-deterministic software · 4. The GenAI product stack (a map to the other ten modules) · 5. Build vs. buy vs. fine-tune, at altitude · 6. Where GenAI creates and destroys value. → Recap.
-*Spokes:* `product-sense/product-sense-for-ai`, `content/00-foundations`.
+1. [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md) · 2. [The five modalities](./generative-ai/the-modalities.md) · 3. [Probabilistic software](./generative-ai/probabilistic-software.md) · 4. [The generative AI product stack](./generative-ai/the-genai-product-stack.md) · 5. [Build, buy, or fine-tune](./generative-ai/build-buy-or-fine-tune.md) · 6. [Where value is created and destroyed](./generative-ai/where-value-is-created-and-destroyed.md). → [Recap](./generative-ai/recap.md).
+*Spokes:* `content/00-foundations`, `content/01-inference-internals`, `content/06-strategy-tradeoffs`, `rag-vector-databases`, `agentic-ai`.
 
 ### 2. 🧠 LLMs — *7 lessons*
 The engine most of the family runs on.
@@ -42,7 +43,7 @@ How the model reaches the rest of your system.
 1. What an API is & the request/response contract · 2. Calling an LLM API (auth, rate limits, streaming, retries) · 3. Structured output & JSON mode · 4. Webhooks & async patterns · 5. Integrating into existing systems (latency, idempotency, failure) · 6. MCP & standard connectors. → Recap.
 *Spokes:* `technical-product-sense/apis-and-contracts`, `content/02-reliable-outputs/structured-output`, `agentic-ai/tools-and-function-calling`.
 
-### 4. 🗂️ RAG & vector databases — *7 lessons* — **PILOT**
+### 4. 🗂️ RAG & vector databases — *7 lessons* — **BUILT** (pilot)
 Grounding models in your data — and proving they used it.
 1. Why RAG (grounding, freshness, private data, citations) · 2. Embeddings & semantic search · 3. Vector databases (indexing, ANN, filtering, scale) · 4. Chunking & ingestion pipelines · 5. Retrieval quality (hybrid search, reranking, recall/precision) · 6. RAG vs. long-context vs. fine-tuning · 7. Beyond flat RAG: GraphRAG & structured retrieval. → Recap.
 *Spokes:* `content/03-rag/*`, `knowledge-graphs/*`.

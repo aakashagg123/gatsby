@@ -1124,6 +1124,44 @@ GLOSSARY = [
  "related":["job-executor","idempotency","wait-state","blast-radius"],
 },
 
+# ==================== GENERATIVE AI: THE BIG PICTURE (GenAI) ================
+{
+ "k":"generative-ai","t":"Generative AI","aliases":["generative model"],"cat":"Generative AI",
+ "short":"AI that creates new content — text, image, audio, video, or code — instead of only scoring or ranking things that already exist.",
+ "fp":"Older AI mostly judged things: is this spam, what's this worth, which item ranks first. Generative AI makes things: it writes a paragraph, draws an image, or writes a function that did not exist before the request. It is a different job from prediction, not a bigger version of it.",
+ "example":"A spam filter judges an email that already exists. A writing assistant creates an email that did not exist a moment ago — that's the generative half.",
+ "uses":["Deciding whether a task needs a judgment or a creation","Scoping cost and risk correctly for a proposed feature","Explaining why generative and predictive models are priced and tested differently"],
+ "see":("What makes AI \"generative\"?","generative-ai/what-is-generative-ai.md"),
+ "related":["predictive-ai","modality","probabilistic-output","hallucination","jagged-frontier"],
+},
+{
+ "k":"predictive-ai","t":"Predictive AI","cat":"Generative AI",
+ "short":"AI that scores, ranks, or classifies something that already exists, returning an answer from a fixed set of possibilities.",
+ "fp":"A predictive model is a judge: given a case, it returns a verdict from a list decided in advance — fraud or not fraud, spam or not spam, rank 1 or rank 2. It never creates content that wasn't already implicit in its training. That makes it fast, cheap, and easy to test against a labeled answer key.",
+ "example":"A model that scores a loan application as low, medium, or high risk is predictive — the three possible answers were fixed before the model ever ran.",
+ "uses":["Recognising when a cheaper predictive model would do the job of an expensive generative one","Setting realistic accuracy and testing expectations","Splitting a pipeline into judging steps and creating steps"],
+ "see":("What makes AI \"generative\"?","generative-ai/what-is-generative-ai.md"),
+ "related":["generative-ai","recall-precision","eval"],
+},
+{
+ "k":"modality","t":"Modality","aliases":["modalities"],"cat":"Generative AI",
+ "short":"The kind of content a generative model creates — text, image, audio, video, or code — each with its own maturity and failure pattern.",
+ "fp":"Generative AI is not one capability; it is several, split by what comes out the other end. Text generation is mature and cheap. Video generation is new and expensive. Code generation can check itself by running. Treating all five as equally ready is how a roadmap misjudges cost and risk.",
+ "example":"A team scopes a 'generate a product video' feature the same way it scoped a 'generate a product description' feature, and is surprised when the video feature costs ten times more and fails far more often.",
+ "uses":["Pricing and scheduling a feature by its real modality, not by the word 'AI'","Matching the review process to the modality (a listen, a look, a test run)","Spotting a modality-specific risk, like consent for a cloned voice"],
+ "see":("The five modalities","generative-ai/the-modalities.md"),
+ "related":["generative-ai","probabilistic-output"],
+},
+{
+ "k":"probabilistic-output","t":"Probabilistic output","aliases":["probabilistic software","non-deterministic"],"cat":"Generative AI",
+ "short":"Output that can differ each time, even from the exact same input, because a generative model samples from a range of likely answers instead of computing one fixed result.",
+ "fp":"Ordinary software is deterministic: the same input always gives the same output, and a bug can be reproduced on demand. A generative model instead leans toward likely answers without being locked to one — ask it the same question twice and you can get two different, both reasonable, replies. This is normal, not a bug, and it changes what testing and support have to do.",
+ "example":"Two customers ask a support bot the identical question and receive two differently worded, both correct, answers — while the third gets a subtly wrong one, with no code having changed in between.",
+ "uses":["Shifting testing from a single pass/fail check to a measured pass rate","Explaining to support why a bug report might not reproduce on the next try","Deciding what fallback exists for the run that lands outside the expected range"],
+ "see":("Probabilistic software","generative-ai/probabilistic-software.md"),
+ "related":["generative-ai","hallucination","eval","guardrail"],
+},
+
 # ====================== RAG & VECTOR DATABASES (GenAI) ======================
 {
  "k":"semantic-search","t":"Semantic search","cat":"RAG & vector databases",
