@@ -36,6 +36,7 @@ GAI_HTML = os.path.join(ROOT, "generative-ai-html")     # Generative AI: the big
 LLM_HTML = os.path.join(ROOT, "llms-html")              # LLMs (GenAI family, module 2)
 API_HTML = os.path.join(ROOT, "api-integrations-html")  # APIs & integrations (GenAI family, module 3)
 MEM_HTML = os.path.join(ROOT, "memory-and-context-html")  # Memory & context (GenAI family, module 5)
+TOOL_HTML = os.path.join(ROOT, "tool-calling-html")     # Tool calling (GenAI family, module 6)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -232,7 +233,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Fifteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Sixteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -319,6 +320,12 @@ LANDING = """<!doctype html>
       <h2>Memory &amp; context →</h2>
       <p>Memory as a product decision, the three shapes it takes, retrieval as its most
       common implementation, and the trust failures it has to be designed against.</p>
+    </a>
+    <a class="card" href="tool-calling/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>Tool calling →</h2>
+      <p>The line where an AI product stops talking and starts doing: designing a tool
+      worth trusting, and keeping the permission boundary around it real.</p>
     </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
@@ -513,7 +520,11 @@ def main():
     if os.path.isdir(MEM_HTML):
         shutil.copytree(MEM_HTML, os.path.join(SITE, "memory-and-context"))
 
-    # 1m. System design module: copy its pre-rendered pages.
+    # 1m. Tool calling (Generative AI family, module 6): copy its pages.
+    if os.path.isdir(TOOL_HTML):
+        shutil.copytree(TOOL_HTML, os.path.join(SITE, "tool-calling"))
+
+    # 1n. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
