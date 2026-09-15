@@ -789,6 +789,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Tools & function calling](./agentic-ai/tools-and-function-calling.md).
 
+**Memory leakage** — A remembered fact showing up somewhere it doesn't belong — a different user, a different tenant, or a context the person never agreed to.
+
+*In plain terms.* A memory feature only works if what it remembers stays inside the boundary it was stored under. Leakage is that boundary failing — one user's or tenant's information reaching another — and it costs a memory feature more trust in one incident than its convenience ever earned, because it turns 'the AI understands me' into 'the AI can't be trusted with anything I tell it.'
+
+*For example.* A detail one customer shared in a support chat resurfaces months later in a different customer's session, because the memory store didn't enforce the same boundary the rest of the product does.
+
+*Where it shows up:* Auditing a memory feature for the failure mode users notice fastest and trust the least; Explaining why memory needs the same tenant-isolation testing as any other shared store; Reviewing a memory design for boundary bugs before launch.
+
+*See:* [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md).
+
 **Mental model / latticework** — A reusable thinking tool from some discipline; a 'latticework' is many of them, so you see a problem from multiple angles.
 
 *In plain terms.* A mental model is a compact way of understanding how something works (supply and demand, feedback loops, incentives). No single model captures reality, so you collect many across disciplines — a latticework — and view each problem through several, avoiding the 'to a hammer everything looks like a nail' trap.
@@ -898,6 +908,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding what a framework does (and doesn't); Locating budgets, exits, and state management; Comparing agent platforms.
 
 *See:* [What is an agent?](./agentic-ai/what-is-an-agent.md).
+
+**Organizational memory** — Memory shared across everyone in a workspace or tenant, rather than private to one person — the shape where a leak or a bad edit affects everyone, not just its owner.
+
+*In plain terms.* Session and user memory belong to one person. Organizational memory is a shared handbook: one person's contribution becomes something the whole team sees. That's the point of it, but it also means the boundary around who's 'inside' the org is the entire feature — get it wrong and you've built a leak, not a convenience.
+
+*For example.* A support-bot workspace is taught once that a customer moved to a new plan, and every agent in that workspace sees the fact from then on — not just the one who typed it in.
+
+*Where it shows up:* Choosing which of the three memory shapes a feature actually needs; Scoping a memory boundary before writing any storage code; Explaining why shared memory needs the same isolation guarantees as any other tenant boundary.
+
+*See:* [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md).
 
 **p99 / tail latency** — The slow end of the latency distribution — e.g. p99 is the time under which 99% of requests complete; the 1% worst is what users remember.
 

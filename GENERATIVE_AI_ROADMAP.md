@@ -7,8 +7,9 @@ search for — sitting alongside (not replacing) the existing tracks, which it
 cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
-> Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), and 3 (*APIs &
-> integrations*) are now built. Remaining seven modules are batched in learning order.
+> Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
+> integrations*), and 5 (*Memory & context*) are now built. Remaining six modules
+> are batched in learning order.
 
 ## Decisions (locked)
 
@@ -48,10 +49,20 @@ Grounding models in your data — and proving they used it.
 1. Why RAG (grounding, freshness, private data, citations) · 2. Embeddings & semantic search · 3. Vector databases (indexing, ANN, filtering, scale) · 4. Chunking & ingestion pipelines · 5. Retrieval quality (hybrid search, reranking, recall/precision) · 6. RAG vs. long-context vs. fine-tuning · 7. Beyond flat RAG: GraphRAG & structured retrieval. → Recap.
 *Spokes:* `content/03-rag/*`, `knowledge-graphs/*`.
 
-### 5. 💾 Memory & context — *6 lessons*
+### 5. 💾 Memory & context — *4 lessons* — **BUILT** (rescoped from 6 → 4)
 What the model can "see," and what it remembers.
-1. The context window as working memory · 2. Short-term vs. long-term memory · 3. Context engineering (curation, compaction, offloading) · 4. Memory architectures (episodic, semantic, profile) · 5. Retrieval as memory · 6. Failure modes (context rot, poisoning, staleness). → Recap.
-*Spokes:* `content/00-foundations/context-engineering`, `agentic-ai/context-and-memory`.
+1. [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md) · 2. [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md) · 3. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md) · 4. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md). → [Recap](./memory-and-context/recap.md).
+*Spokes:* `content/00-foundations/context-engineering`, `agentic-ai/context-and-memory`, `rag-vector-databases`, `content/05-safety-multitenancy/multi-tenant-isolation`.
+
+*Rescoping note:* the module was planned as 6 lessons ("the context window as working
+memory," "short-term vs. long-term memory," and "memory architectures" among them), but
+`content/00-foundations/context-engineering.md` and `agentic-ai/context-and-memory.md`
+already cover context-window mechanics, compaction, and the episodic/semantic/profile
+memory taxonomy in full engineering depth. Re-deriving that mechanics here would violate
+the hub-and-spoke dedup rule. The module was cut to the 4 lessons that are genuinely new
+at the product-leader altitude — treating memory as a scoped product decision, naming its
+three shapes, framing retrieval as its implementation, and the trust failures it produces
+— and spokes out to the two existing lessons for the mechanics.
 
 ### 6. 🛠️ Tool calling — *5 lessons*
 How a model acts on the world.
@@ -83,7 +94,7 @@ Making the economics work.
 1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
 *Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
 
-**Total:** ~70 lessons + 11 READMEs + 11 recaps.
+**Total:** ~68 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons).
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -97,7 +108,7 @@ Making the economics work.
 
 ## Build order after the pilot
 
-Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅ pilot, 5 Memory, 6 Tools)
+Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools)
 → Systems (7 Agents, 8 Workflows) → Operations (9 Evals, 10 Security, 11 Cost). Each module
 ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
 
