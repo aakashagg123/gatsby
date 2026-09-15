@@ -8,8 +8,8 @@ cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
 > Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
-> integrations*), and 5 (*Memory & context*) are now built. Remaining six modules
-> are batched in learning order.
+> integrations*), 5 (*Memory & context*), and 6 (*Tool calling*) are now built.
+> Remaining five modules are batched in learning order.
 
 ## Decisions (locked)
 
@@ -64,10 +64,26 @@ at the product-leader altitude — treating memory as a scoped product decision,
 three shapes, framing retrieval as its implementation, and the trust failures it produces
 — and spokes out to the two existing lessons for the mechanics.
 
-### 6. 🛠️ Tool calling — *5 lessons*
+### 6. 🛠️ Tool calling — *3 lessons* — **BUILT** (rescoped from 5 → 3)
 How a model acts on the world.
-1. What tool calling is · 2. Tool schemas & contracts · 3. Reliability (validation, repair, idempotency) · 4. Permissions & the blast radius of a tool · 5. MCP & tool ecosystems. → Recap.
-*Spokes:* `content/02-reliable-outputs/function-calling`, `agentic-ai/tools-and-function-calling`.
+1. [What tool calling is](./tool-calling/what-tool-calling-is.md) · 2. [Tool contracts & reliability](./tool-calling/tool-contracts-and-reliability.md) · 3. [Permissions, blast radius & the trust boundary](./tool-calling/permissions-blast-radius-and-the-trust-boundary.md). → [Recap](./tool-calling/recap.md).
+*Spokes:* `agentic-ai/tools-and-function-calling`, `content/02-reliable-outputs/function-calling`, `api-integrations/mcp-and-standard-connectors`, `agentic-ai/safety-security-and-governance`, `technical-product-sense/security-and-privacy`.
+
+*Rescoping note:* the module was planned as 5 lessons ("tool schemas & contracts,"
+"reliability," "permissions & blast radius," and "MCP & tool ecosystems" as separate
+lessons), but this topic turned out to have the densest existing coverage of any module
+built so far — `agentic-ai/tools-and-function-calling.md` already develops the full
+mechanics, tool-design craft, and containment discipline; `content/02-reliable-outputs/
+function-calling.md` already develops contracts, validation, idempotency, and
+authorization in full engineering depth; and `api-integrations/mcp-and-standard-
+connectors.md` already covers the MCP integration-economics question. Several core terms
+(`function-calling`/"tool calling", `tool`, `idempotency`, `mcp`, `least-privilege`,
+`blast-radius`) were also already glossary entries homed to those lessons. Re-deriving any
+of it would violate the hub-and-spoke dedup rule, so the module compresses to the 3
+lessons that are genuinely new at the product-decision altitude — what tool calling is as
+a product surface, the product decisions behind a tool's contract, and reviewing a toolbox
+for permissions and third-party trust — and adds no new glossary terms, since every key
+concept already had a home.
 
 ### 7. ⚙️ AI agents — *7 lessons*
 Software that decides its own next step.
@@ -94,7 +110,8 @@ Making the economics work.
 1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
 *Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
 
-**Total:** ~68 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons).
+**Total:** ~64 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
+module 6 rescoped from 5 to 3 lessons).
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -108,7 +125,7 @@ Making the economics work.
 
 ## Build order after the pilot
 
-Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools)
+Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
 → Systems (7 Agents, 8 Workflows) → Operations (9 Evals, 10 Security, 11 Cost). Each module
 ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
 

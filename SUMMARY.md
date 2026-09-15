@@ -212,6 +212,14 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 3. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md)
 4. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md) · [Recap](./memory-and-context/recap.md)
 
+## [Tool calling](./tool-calling/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [What tool calling is](./tool-calling/what-tool-calling-is.md)
+2. [Tool contracts & reliability](./tool-calling/tool-contracts-and-reliability.md)
+3. [Permissions, blast radius & the trust boundary](./tool-calling/permissions-blast-radius-and-the-trust-boundary.md) · [Recap](./tool-calling/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the
