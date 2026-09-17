@@ -220,6 +220,14 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 2. [Tool contracts & reliability](./tool-calling/tool-contracts-and-reliability.md)
 3. [Permissions, blast radius & the trust boundary](./tool-calling/permissions-blast-radius-and-the-trust-boundary.md) · [Recap](./tool-calling/recap.md)
 
+## [AI agents](./ai-agents/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md)
+2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md)
+3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md) · [Recap](./ai-agents/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

@@ -8,8 +8,8 @@ cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
 > Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
-> integrations*), 5 (*Memory & context*), and 6 (*Tool calling*) are now built.
-> Remaining five modules are batched in learning order.
+> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), and 7 (*AI agents*) are
+> now built. Remaining four modules are batched in learning order.
 
 ## Decisions (locked)
 
@@ -85,10 +85,29 @@ a product surface, the product decisions behind a tool's contract, and reviewing
 for permissions and third-party trust — and adds no new glossary terms, since every key
 concept already had a home.
 
-### 7. ⚙️ AI agents — *7 lessons*
+### 7. ⚙️ AI agents — *3 lessons* — **BUILT** (rescoped from 7 → 3)
 Software that decides its own next step.
-1. What an agent is (the loop) · 2. The autonomy spectrum · 3. Planning & reasoning · 4. Tools & the environment · 5. Memory & state across a run · 6. Single-agent reliability (compounding error) · 7. When *not* to build an agent. → Recap.
-*Spokes:* `agentic-ai/what-is-an-agent`, `agentic-ai/planning-and-reasoning`, `agentic-ai/reliability-and-evals`.
+1. [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) · 2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md) · 3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md). → [Recap](./ai-agents/recap.md).
+*Spokes:* `agentic-ai/what-is-an-agent`, `agentic-ai/planning-and-reasoning`,
+`agentic-ai/reliability-and-evals`, `agentic-ai/agentic-ai-as-a-product`,
+`tool-calling`, `memory-and-context`.
+
+*Rescoping note:* this module had the most overlap of any module built so far. The
+planned 7 lessons ("what an agent is," "the autonomy spectrum," "planning & reasoning,"
+"tools & the environment," "memory & state across a run," "single-agent reliability,"
+and "when not to build an agent") map almost one-to-one onto four existing, deeply
+developed lessons in `agentic-ai/` — `what-is-an-agent.md` already covers the loop *and*
+the autonomy spectrum as one of its own sections; `planning-and-reasoning.md` and
+`reliability-and-evals.md` cover reasoning patterns and the compounding-error math in
+full depth; and `agentic-ai-as-a-product.md` covers the build-or-not economics. Two of
+the planned lessons (tools, memory) are also already the dedicated subject of this
+family's own [Tool calling](./tool-calling/README.md) and
+[Memory & context](./memory-and-context/README.md) modules, which would have made a
+7-lesson AI agents module triple-duplicate itself against its own siblings. The module
+compresses to the 3 lessons that survive after accounting for both the deeper agentic-ai
+track and its sibling modules in this family, and adds no new glossary terms — every
+core term (`agent-loop`, `autonomy-spectrum`, `compounding-error`, `supervised-cost`,
+`reflection`) already exists and homes correctly to `agentic-ai/`.
 
 ### 8. 🔄 Agentic workflows — *6 lessons*
 Orchestrating many steps and many agents.
@@ -110,8 +129,8 @@ Making the economics work.
 1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
 *Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
 
-**Total:** ~64 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
-module 6 rescoped from 5 to 3 lessons).
+**Total:** ~60 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
+module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons).
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -126,7 +145,7 @@ module 6 rescoped from 5 to 3 lessons).
 ## Build order after the pilot
 
 Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
-→ Systems (7 Agents, 8 Workflows) → Operations (9 Evals, 10 Security, 11 Cost). Each module
+→ Systems (7 Agents ✅, 8 Workflows) → Operations (9 Evals, 10 Security, 11 Cost). Each module
 ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
 
 ## Wiring checklist per module (mirrors the existing tracks)
