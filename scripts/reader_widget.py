@@ -43,31 +43,31 @@ html[data-rm="w"] main{max-width:1120px !important}
 /* ---- the widget ---- */
 /* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
 #rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
-#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e4e0d5;background:#faf9f5;color:#1f1e1d;
+#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #d1d9e0;background:#ffffff;color:#1f2328;
   font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
-#rs-btn:hover{border-color:#d97757;color:#bd5d3a}
-#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#faf9f5;border:1px solid #e4e0d5;
-  border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
+#rs-btn:hover{border-color:#0969da;color:#0969da}
+#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#ffffff;border:1px solid #d1d9e0;
+  border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
 #rs-panel.open{display:block}
-#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8a8778;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#59636e;margin:10px 0 6px;font-weight:600}
 #rs-panel .rs-h:first-child{margin-top:0}
 .rs-fonts{display:flex;flex-direction:column;gap:4px}
 .rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
-  border:1px solid transparent;border-radius:8px;background:none;font-size:15px;color:#1f1e1d;cursor:pointer;text-align:left}
-.rs-fonts button:hover{background:#f2f0e9}
-.rs-fonts button.on{border-color:#d97757;background:#fbefe9}
-.rs-fonts button .rs-check{color:#bd5d3a;font-weight:700;visibility:hidden}
+  border:1px solid transparent;border-radius:6px;background:none;font-size:15px;color:#1f2328;cursor:pointer;text-align:left}
+.rs-fonts button:hover{background:#f6f8fa}
+.rs-fonts button.on{border-color:#0969da;background:#ddf4ff}
+.rs-fonts button .rs-check{color:#0969da;font-weight:700;visibility:hidden}
 .rs-fonts button.on .rs-check{visibility:visible}
 .rs-row{display:flex;align-items:center;gap:8px}
-.rs-row button{flex:1;padding:7px 0;border:1px solid #e4e0d5;border-radius:8px;background:#fff;
-  cursor:pointer;color:#1f1e1d;font-size:14px}
-.rs-row button:hover{border-color:#d97757}
-.rs-row button.on{border-color:#d97757;background:#fbefe9;font-weight:600}
-.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#8a8778;font-variant-numeric:tabular-nums}
+.rs-row button{flex:1;padding:7px 0;border:1px solid #d1d9e0;border-radius:6px;background:#fff;
+  cursor:pointer;color:#1f2328;font-size:14px}
+.rs-row button:hover{border-color:#0969da}
+.rs-row button.on{border-color:#0969da;background:#ddf4ff;font-weight:600}
+.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#59636e;font-variant-numeric:tabular-nums}
 #rs-sminus{font-size:13px}#rs-splus{font-size:17px}
-#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:8px;background:#f2f0e9;
-  color:#8a8778;font-size:13px;cursor:pointer}
-#rs-reset:hover{color:#bd5d3a}
+#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:6px;background:#f6f8fa;
+  color:#59636e;font-size:13px;cursor:pointer}
+#rs-reset:hover{color:#0969da}
 @media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
 @media print{#rs-root{display:none}}
 </style>
