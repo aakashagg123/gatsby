@@ -38,6 +38,7 @@ API_HTML = os.path.join(ROOT, "api-integrations-html")  # APIs & integrations (G
 MEM_HTML = os.path.join(ROOT, "memory-and-context-html")  # Memory & context (GenAI family, module 5)
 TOOL_HTML = os.path.join(ROOT, "tool-calling-html")     # Tool calling (GenAI family, module 6)
 AGENTS_HTML = os.path.join(ROOT, "ai-agents-html")      # AI agents (GenAI family, module 7)
+WORKFLOWS_HTML = os.path.join(ROOT, "agentic-workflows-html")  # Agentic workflows (GenAI family, module 8)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -234,7 +235,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Seventeen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Eighteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -333,6 +334,13 @@ LANDING = """<!doctype html>
       <h2>AI agents →</h2>
       <p>The loop behind every agent, how much autonomy a task needs, what keeps it
       reliable across many steps, and when not to build one at all.</p>
+    </a>
+    <a class="card" href="agentic-workflows/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>Agentic workflows →</h2>
+      <p>Orchestrating more than one agent when a single loop isn't enough, and what
+      it takes to make a workflow durable enough, and valuable enough, to own end to
+      end.</p>
     </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
@@ -535,7 +543,11 @@ def main():
     if os.path.isdir(AGENTS_HTML):
         shutil.copytree(AGENTS_HTML, os.path.join(SITE, "ai-agents"))
 
-    # 1o. System design module: copy its pre-rendered pages.
+    # 1o. Agentic workflows (Generative AI family, module 8): copy its pages.
+    if os.path.isdir(WORKFLOWS_HTML):
+        shutil.copytree(WORKFLOWS_HTML, os.path.join(SITE, "agentic-workflows"))
+
+    # 1p. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 
