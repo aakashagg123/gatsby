@@ -8,9 +8,9 @@ cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
 > Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
-> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), 7 (*AI agents*), and 8
-> (*Agentic workflows*) are now built. Remaining three modules are batched in learning
-> order.
+> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), 7 (*AI agents*), 8
+> (*Agentic workflows*), and 9 (*Evaluation & observability*) are now built. Remaining
+> two modules are batched in learning order.
 
 ## Decisions (locked)
 
@@ -131,10 +131,26 @@ every sibling module and the deeper agentic-ai track are accounted for, and adds
 glossary terms — `multi-agent`, `subagent`, `mcp`, `a2a`, `wait-state`, `job-executor`,
 and `workflow-capture` all already exist and correctly home elsewhere.
 
-### 9. 📊 Evaluation & observability — *7 lessons*
+### 9. 📊 Evaluation & observability — *2 lessons* — **BUILT** (rescoped from 7 → 2)
 You cannot operate what you cannot measure.
-1. Why eval is the job · 2. Evals (golden sets, LLM-as-judge, adversarial) · 3. Error analysis (open & axial coding) · 4. Observability (traces, spans, drift) · 5. Trajectory evals for agents · 6. Eval-driven development · 7. The eval stack in production. → Recap.
+1. [Why eval investment is the job](./evaluation-and-observability/why-eval-investment-is-the-job.md) · 2. [Building the eval stack in the right order](./evaluation-and-observability/building-the-eval-stack-in-the-right-order.md). → [Recap](./evaluation-and-observability/recap.md).
 *Spokes:* `content/04-evals-observability/*`, `agentic-ai/reliability-and-evals`, `technical-product-management/tpm-for-ai-products`.
+
+*Rescoping note:* this is the most exhaustively covered topic in the entire curriculum,
+not just this family. `content/04-evals-observability/evals.md` and `observability.md`
+already develop golden sets, regression tests, adversarial tests, LLM-as-judge, error
+analysis (open and axial coding), traces, spans, and drift detection in complete
+engineering depth, all in this same product-leader house style.
+`agentic-ai/reliability-and-evals.md` already develops trajectory evals for agents in
+full, and `technical-product-management/tpm-for-ai-products.md` already develops
+eval-driven development as an operating discipline. Every core term the planned 7
+lessons would have introduced — `eval`, `golden-set`, `llm-as-judge`, `error-analysis`,
+`open-coding`, `axial-coding`, `trace`, `span`, `drift`, `trajectory-eval`,
+`eval-driven-development` — is already a glossary entry homed to one of those four
+sources. The module compresses to the 2 lessons that are genuinely new: the case for why
+this investment is the job before a team feels ready for it, and the build order that
+turns reading real traces into a full eval and observability practice without
+over-building. No new glossary terms were added.
 
 ### 10. 🔐 AI security & guardrails — *7 lessons*
 Keeping the system, its data, and its tenants safe.
@@ -146,9 +162,9 @@ Making the economics work.
 1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
 *Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
 
-**Total:** ~56 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
+**Total:** ~51 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
 module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons; module 8
-rescoped from 6 to 2 lessons).
+rescoped from 6 to 2 lessons; module 9 rescoped from 7 to 2 lessons).
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -163,7 +179,7 @@ rescoped from 6 to 2 lessons).
 ## Build order after the pilot
 
 Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
-→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals, 10 Security, 11 Cost). Each module
+→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals ✅, 10 Security, 11 Cost). Each module
 ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
 
 ## Wiring checklist per module (mirrors the existing tracks)

@@ -235,6 +235,13 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 1. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md)
 2. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md) · [Recap](./agentic-workflows/recap.md)
 
+## [Evaluation & observability](./evaluation-and-observability/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [Why eval investment is the job](./evaluation-and-observability/why-eval-investment-is-the-job.md)
+2. [Building the eval stack in the right order](./evaluation-and-observability/building-the-eval-stack-in-the-right-order.md) · [Recap](./evaluation-and-observability/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the
