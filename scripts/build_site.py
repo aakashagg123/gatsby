@@ -208,7 +208,7 @@ LANDING = """<!doctype html>
   body{margin:0;background:var(--bg);color:var(--ink);
     font-family:Inter,system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.7;
     -webkit-font-smoothing:antialiased;letter-spacing:-0.005em;overflow-x:hidden}
-  .wrap{max-width:920px;margin:0 auto;padding:104px 24px 80px}
+  .wrap{max-width:1400px;margin:0 auto;padding:104px 32px 80px}
   .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.08em;
     text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
   h1{font-size:3.1rem;line-height:1.08;letter-spacing:-0.03em;font-weight:600;margin:0 0 .25em;max-width:14ch}
