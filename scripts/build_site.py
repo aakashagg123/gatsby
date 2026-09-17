@@ -39,6 +39,7 @@ MEM_HTML = os.path.join(ROOT, "memory-and-context-html")  # Memory & context (Ge
 TOOL_HTML = os.path.join(ROOT, "tool-calling-html")     # Tool calling (GenAI family, module 6)
 AGENTS_HTML = os.path.join(ROOT, "ai-agents-html")      # AI agents (GenAI family, module 7)
 WORKFLOWS_HTML = os.path.join(ROOT, "agentic-workflows-html")  # Agentic workflows (GenAI family, module 8)
+EVALOBS_HTML = os.path.join(ROOT, "evaluation-and-observability-html")  # Evaluation & observability (GenAI family, module 9)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -235,7 +236,7 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Eighteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
+  <p class="sub">Nineteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -341,6 +342,12 @@ LANDING = """<!doctype html>
       <p>Orchestrating more than one agent when a single loop isn't enough, and what
       it takes to make a workflow durable enough, and valuable enough, to own end to
       end.</p>
+    </a>
+    <a class="card" href="evaluation-and-observability/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>Evaluation &amp; observability →</h2>
+      <p>Why the eval set is the product spec for a non-deterministic system, and the
+      order to actually build the eval and observability stack in.</p>
     </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
@@ -547,7 +554,11 @@ def main():
     if os.path.isdir(WORKFLOWS_HTML):
         shutil.copytree(WORKFLOWS_HTML, os.path.join(SITE, "agentic-workflows"))
 
-    # 1p. System design module: copy its pre-rendered pages.
+    # 1p. Evaluation & observability (Generative AI family, module 9): copy its pages.
+    if os.path.isdir(EVALOBS_HTML):
+        shutil.copytree(EVALOBS_HTML, os.path.join(SITE, "evaluation-and-observability"))
+
+    # 1q. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
 

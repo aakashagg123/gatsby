@@ -4,8 +4,8 @@
 
 <br/>
 
-![Tracks](https://img.shields.io/badge/tracks-18-D97757?style=flat-square&labelColor=1f1e1d)
-![Lessons](https://img.shields.io/badge/lessons-116%2B-D97757?style=flat-square&labelColor=1f1e1d)
+![Tracks](https://img.shields.io/badge/tracks-19-D97757?style=flat-square&labelColor=1f1e1d)
+![Lessons](https://img.shields.io/badge/lessons-118%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-2692%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
@@ -151,7 +151,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## 🧭 Beyond AI Engineering — the craft tracks
 
-The AI Engineering modules above teach the *stack*. Seventeen further tracks teach the *craft*
+The AI Engineering modules above teach the *stack*. Eighteen further tracks teach the *craft*
 around it — each a standalone folder of cross-linked lessons in the same house style
 (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML
 edition on the [live site](https://aakashagg123.github.io/gatsby/).
@@ -167,7 +167,8 @@ edition on the [live site](https://aakashagg123.github.io/gatsby/).
 | [**Memory & context**](./memory-and-context/README.md) | Memory as a product decision, the three shapes it takes (session, user, organizational), retrieval as its most common implementation, and the trust failures it has to be designed against. | [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md) |
 | [**Tool calling**](./tool-calling/README.md) | The line where an AI product stops talking and starts doing: what tool calling is, designing a tool contract worth trusting, and keeping the permission and blast-radius boundary around it real. | [What tool calling is](./tool-calling/what-tool-calling-is.md) |
 | [**AI agents**](./ai-agents/README.md) | The loop behind every agent, how much autonomy a task actually needs, what keeps it reliable across many steps, and the economics that decide whether it's worth building at all. | [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) |
-| [**Agentic workflows**](./agentic-workflows/README.md) 🆕 | Orchestrating more than one agent when a single loop isn't enough, and what it takes to make a workflow durable enough, and valuable enough, to own end to end. | [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md) |
+| [**Agentic workflows**](./agentic-workflows/README.md) | Orchestrating more than one agent when a single loop isn't enough, and what it takes to make a workflow durable enough, and valuable enough, to own end to end. | [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md) |
+| [**Evaluation & observability**](./evaluation-and-observability/README.md) 🆕 | Why the eval set is the product spec for a non-deterministic system, and the order to actually build the eval and observability stack in. | [Why eval investment is the job](./evaluation-and-observability/why-eval-investment-is-the-job.md) |
 | [**System design**](./system-design/README.md) | How real systems are designed at scale — from rate limiters to stock exchanges — with the architecture, tradeoffs, and failure modes that shape product decisions. 28 systems across 8 lessons. | [Foundations & framework](./system-design/foundations-and-framework.md) |
 | [**Harness engineering**](./harness-engineering/README.md) | Build a coding agent's harness from scratch — loop, tools, context, memory, evals — phase by phase, hands-on. | [Roadmap](./harness-engineering/ROADMAP.md) |
 | [**Flowable**](./flowable/README.md) | Process automation from scratch — build a token engine, wait states, and a job executor by hand, then run real BPMN on Flowable. Concept-first for PMs, build layer for engineers. | [Roadmap](./flowable/ROADMAP.md) |
