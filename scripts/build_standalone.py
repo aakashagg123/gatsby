@@ -34,36 +34,36 @@ import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is 
 # close to fitting, and the card scrolls horizontally when the diagram is genuinely
 # wide — either way nothing ever bleeds outside the content column.
 MERMAID_CSS = (
-    "pre.mermaid{background:linear-gradient(180deg,#fdfcf9,#faf8f2);"
-    "border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;"
-    "text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}"
+    "pre.mermaid{background:#ffffff;"
+    "border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;"
+    "text-align:center;overflow-x:auto}"
     "pre.mermaid svg{max-width:100%;height:auto;display:inline-block}"
     ".mm-hint{position:sticky;left:8px;display:block;width:max-content;"
-    "font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;"
+    "font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;"
     "border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}"
 )
 MERMAID_SCRIPT = """<script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{
-    background:'#faf9f5',
-    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
-    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
-    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
-    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd',
-    edgeLabelBackground:'#faf9f5',
-    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
-    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
-    labelBoxBkgColor:'#f4f2ea', labelBoxBorderColor:'#e0dccd',
-    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
-    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
-    quadrant1Fill:'#fbefe9', quadrant2Fill:'#f6f4ed', quadrant3Fill:'#f4f2ea',
-    quadrant4Fill:'#fdf3ec', quadrantPointFill:'#bd5d3a', quadrantPointTextFill:'#1f1e1d',
-    quadrantXAxisTextFill:'#6b6a64', quadrantYAxisTextFill:'#6b6a64',
-    quadrantTitleFill:'#1f1e1d',
-    quadrantInternalBorderStrokeFill:'#e4e0d5', quadrantExternalBorderStrokeFill:'#e0dccd',
-    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'},
+    background:'#ffffff',
+    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
+    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
+    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
+    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
+    edgeLabelBackground:'#ffffff',
+    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
+    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
+    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
+    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
+    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
+    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
+    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
+    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
+    quadrantTitleFill:'#1f2328',
+    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
+    fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'14.5px'},
   flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
     nodeSpacing:36, rankSpacing:46, diagramPadding:12},
   sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
@@ -200,9 +200,6 @@ def _head(title):
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{htmllib.escape(title)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>{bh.CSS}{MERMAID_CSS}</style>
 </head>
 <body>"""

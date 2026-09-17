@@ -53,65 +53,59 @@ VIEWER = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} · {brand}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{{
-    --bg:#faf9f5;--surface:#ffffff;--ink:#181818;--muted:#6c6a60;
-    --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--code-bg:#1c1b18;--soft:#f2f0e9;
+    --bg:#ffffff;--surface:#ffffff;--ink:#1f2328;--muted:#59636e;
+    --accent:#0969da;--accent-deep:#0550ae;--line:#d1d9e0;--code-bg:#f6f8fa;--soft:#f6f8fa;
   }}
   *{{box-sizing:border-box}}
   html{{-webkit-text-size-adjust:100%;text-size-adjust:100%}}
   body{{margin:0;background:var(--bg);color:var(--ink);
-    font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em;overflow-x:hidden}}
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}}
   img,svg{{max-width:100%;height:auto}}
-  .top{{position:sticky;top:0;z-index:10;background:rgba(250,249,245,.85);backdrop-filter:blur(10px);
+  .top{{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:20px;font-size:.9rem}}
   .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
   .top a:hover{{color:var(--accent-deep)}}
   .top .brand{{color:var(--accent-deep);font-weight:600}}
   main{{max-width:760px;margin:0 auto;padding:48px 24px 64px}}
-  h1,h2,h3,h4{{line-height:1.2;letter-spacing:-0.02em;font-weight:600}}
-  h1{{font-size:2.4rem;margin:0 0 .6em}}
-  h2{{font-size:1.55rem;margin-top:2.2em;padding-bottom:.35em;border-bottom:1px solid var(--line)}}
-  h3{{font-size:1.2rem;margin-top:1.8em}}
-  a{{color:var(--accent-deep);text-decoration:none;text-underline-offset:3px}}
+  h1,h2,h3,h4{{line-height:1.25;letter-spacing:-0.01em;font-weight:600}}
+  h1{{font-size:2.2rem;margin:0 0 .6em}}
+  h2{{font-size:1.5rem;margin-top:2.2em;padding-bottom:.35em;border-bottom:1px solid var(--line)}}
+  h3{{font-size:1.18rem;margin-top:1.8em}}
+  a{{color:var(--accent);text-decoration:none;text-underline-offset:3px}}
   a:hover{{text-decoration:underline}}
-  p,li{{letter-spacing:-0.003em}}
-  code{{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--soft);
+  code{{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--soft);color:var(--ink);
     padding:.12em .4em;border-radius:5px;font-size:.86em}}
-  pre{{background:var(--code-bg);color:#f1efe8;padding:18px 20px;border-radius:12px;overflow:auto;
-    font-size:.86em;line-height:1.6}}
+  pre{{background:var(--code-bg);color:var(--ink);padding:16px 18px;border-radius:6px;overflow:auto;
+    font-size:.86em;line-height:1.55;border:1px solid var(--line)}}
   pre code{{background:none;color:inherit;padding:0;font-size:1em}}
-  pre.mermaid{{background:linear-gradient(180deg,#fdfcf9,#faf8f2);color:var(--ink);
-    border:1px solid #e7e3d8;border-radius:14px;padding:26px 20px;margin:26px 0;
-    text-align:center;overflow-x:auto;box-shadow:0 1px 3px rgba(26,25,21,.05)}}
+  pre.mermaid{{background:#ffffff;color:var(--ink);
+    border:1px solid var(--line);border-radius:6px;padding:26px 20px;margin:26px 0;
+    text-align:center;overflow-x:auto}}
   pre.mermaid svg{{max-width:100%;height:auto;display:inline-block}}
   .mm-hint{{position:sticky;left:8px;display:block;width:max-content;
-    font-size:11px;color:#8a8778;background:#f4f2ea;border:1px solid #e4e0d5;
+    font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;
     border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}}
   table{{border-collapse:collapse;width:100%;margin:1.4em 0;font-size:.92em}}
   th,td{{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}}
   th{{background:var(--soft);font-weight:600}}
-  tr:nth-child(even) td{{background:rgba(242,240,233,.4)}}
-  blockquote{{border-left:3px solid var(--accent);margin:1.4em 0;padding:.5em 1.2em;
-    color:var(--muted);background:var(--soft);border-radius:0 8px 8px 0}}
+  tr:nth-child(even) td{{background:var(--soft)}}
+  blockquote{{border-left:.25em solid var(--line);margin:1.4em 0;padding:0 1em;
+    color:var(--muted);background:none}}
   blockquote p{{margin:.3em 0}}
-  details{{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  details{{background:var(--surface);border:1px solid var(--line);border-radius:6px;
     padding:12px 18px;margin:.8em 0}}
-  details[open]{{box-shadow:0 1px 3px rgba(0,0,0,.04)}}
   summary{{cursor:pointer;font-weight:600;color:var(--accent-deep)}}
   hr{{border:none;border-top:1px solid var(--line);margin:2.4em 0}}
-  ::selection{{background:rgba(217,119,87,.22)}}
+  ::selection{{background:#ddf4ff}}
   .lessonnav{{max-width:760px;margin:8px auto 64px;padding:24px;
     display:flex;gap:14px;flex-wrap:wrap}}
   .lessonnav a{{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
-    border-radius:12px;padding:14px 16px;font-size:.92rem;font-weight:500;color:var(--ink);
-    transition:border-color .15s,transform .15s,box-shadow .15s}}
-  .lessonnav a:hover{{border-color:var(--accent);transform:translateY(-2px);
-    box-shadow:0 6px 20px rgba(217,119,87,.1);text-decoration:none}}
+    border-radius:6px;padding:14px 16px;font-size:.92rem;font-weight:500;color:var(--ink);
+    transition:border-color .15s}}
+  .lessonnav a:hover{{border-color:var(--accent);text-decoration:none}}
   .lessonnav .up{{flex:0 0 auto;text-align:center}}
   .lessonnav .nx{{text-align:right}}
   .lessonnav .lbl{{display:block;color:var(--muted);font-size:.72rem;font-weight:600;
@@ -144,17 +138,17 @@ VIEWER = """<!doctype html>
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({{startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{{
-    background:'#faf9f5',
-    primaryColor:'#fbefe9', primaryTextColor:'#1f1e1d', primaryBorderColor:'#e0b29e',
-    secondaryColor:'#f4f2ea', secondaryBorderColor:'#ddd8ca', secondaryTextColor:'#1f1e1d',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#e4e0d5', tertiaryTextColor:'#1f1e1d',
-    lineColor:'#a89f8d', textColor:'#3d3c37', nodeTextColor:'#1f1e1d',
-    clusterBkg:'#f6f4ed', clusterBorder:'#e0dccd', edgeLabelBackground:'#faf9f5',
-    actorBkg:'#fbefe9', actorBorder:'#d97757', actorTextColor:'#1f1e1d',
-    actorLineColor:'#c9c4b4', signalColor:'#57564f', signalTextColor:'#3d3c37',
-    noteBkgColor:'#f9f1dd', noteBorderColor:'#e5d9b8',
-    activationBkgColor:'#f4f2ea', activationBorderColor:'#d97757',
-    fontFamily:'Inter, system-ui, sans-serif', fontSize:'14.5px'}},
+    background:'#ffffff',
+    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
+    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
+    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
+    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
+    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0', edgeLabelBackground:'#ffffff',
+    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
+    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
+    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
+    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
+    fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'14.5px'}},
   flowchart:{{useMaxWidth:false, htmlLabels:true, curve:'basis',
     nodeSpacing:36, rankSpacing:46, diagramPadding:12}},
   sequence:{{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34}},
@@ -196,23 +190,20 @@ LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Engineering learning modules</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#faf9f5;--surface:#ffffff;--ink:#181818;--muted:#6c6a60;
-    --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--soft:#f2f0e9;
+    --bg:#ffffff;--surface:#ffffff;--ink:#1f2328;--muted:#59636e;
+    --accent:#0969da;--accent-deep:#0550ae;--line:#d1d9e0;--soft:#f6f8fa;
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:Inter,system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;letter-spacing:-0.005em;overflow-x:hidden}
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:1400px;margin:0 auto;padding:104px 32px 80px}
   .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.08em;
     text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
-  h1{font-size:3.1rem;line-height:1.08;letter-spacing:-0.03em;font-weight:600;margin:0 0 .25em;max-width:14ch}
+  h1{font-size:3rem;line-height:1.1;letter-spacing:-0.02em;font-weight:600;margin:0 0 .25em;max-width:14ch}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:22px;margin-top:52px}
   @media(max-width:680px){
@@ -220,18 +211,18 @@ LANDING = """<!doctype html>
     .cards{grid-template-columns:1fr;gap:16px;margin-top:36px}
     h1{font-size:2.2rem}
     p.sub{font-size:1.08rem}
-    a.card{padding:24px;border-radius:16px}
+    a.card{padding:24px;border-radius:6px}
   }
   a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--surface);
-    border:1px solid var(--line);border-radius:18px;padding:30px;
-    transition:border-color .15s,transform .15s,box-shadow .15s}
-  a.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 32px rgba(217,119,87,.12)}
+    border:1px solid var(--line);border-radius:6px;padding:30px;
+    transition:border-color .15s}
+  a.card:hover{border-color:var(--accent)}
   a.card .tag{display:inline-block;font-size:.74rem;color:var(--accent-deep);font-weight:600;
     letter-spacing:.06em;text-transform:uppercase}
-  a.card h2{margin:.5em 0 .35em;font-size:1.45rem;font-weight:600;letter-spacing:-0.02em}
+  a.card h2{margin:.5em 0 .35em;font-size:1.4rem;font-weight:600;letter-spacing:-0.01em}
   a.card p{color:var(--muted);margin:0;font-size:.98rem;line-height:1.6}
   footer{color:var(--muted);font-size:.85rem;margin-top:64px;border-top:1px solid var(--line);padding-top:24px}
-  ::selection{background:rgba(217,119,87,.22)}
+  ::selection{background:#ddf4ff}
 </style></head><body>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
@@ -356,7 +347,7 @@ LANDING = """<!doctype html>
       with the architecture, tradeoffs, and failure modes that shape product decisions.
       28 systems across 8 lessons, diagrams included.</p>
     </a>
-    <a class="card" href="graph/index.html" style="border-color:#d97757;background:linear-gradient(180deg,#fff,#fbefe9)">
+    <a class="card" href="graph/index.html" style="border-color:#0969da;background:#ddf4ff">
       <span class="tag">Explore</span>
       <h2>Knowledge graph →</h2>
       <p>Every page across all nine modules as one interactive map — __NODES__ pages,
@@ -372,7 +363,7 @@ GRAPH_BTN = (
     '<a href="{href}" title="Open the knowledge graph" aria-label="Open the knowledge graph" '
     'style="position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;'
     'justify-content:center;width:44px;height:44px;border-radius:50%;background:#ffffff;'
-    'border:1px solid #e8e6dd;box-shadow:0 4px 16px rgba(26,25,21,.10);color:#bd5d3a">'
+    'border:1px solid #d1d9e0;box-shadow:0 4px 16px rgba(31,35,40,.10);color:#0969da">'
     '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
     'stroke-width="1.6"><circle cx="5" cy="5" r="2.4"/><circle cx="15" cy="7" r="2.4"/>'
     '<circle cx="9" cy="15" r="2.4"/><path d="M7.2 6l5.5.7M6 7.2l2.2 5.6M13.8 9l-3.4 4.2"/>'

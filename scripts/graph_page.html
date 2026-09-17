@@ -2,41 +2,38 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Knowledge graph · Engineering learning modules</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#faf9f5;--surface:#ffffff;--ink:#1a1915;--ink2:#3d3b35;--muted:#6c6a60;
-    --accent:#d97757;--accent-deep:#bd5d3a;--line:#e8e6dd;--soft:#f2f0e9;
+    --bg:#ffffff;--surface:#ffffff;--ink:#1f2328;--ink2:#1f2328;--muted:#59636e;
+    --accent:#0969da;--accent-deep:#0550ae;--line:#d1d9e0;--soft:#f6f8fa;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);overflow:hidden;
-    font-family:Inter,system-ui,-apple-system,sans-serif;font-size:15px;
-    -webkit-font-smoothing:antialiased}
-  a{color:var(--accent-deep);text-decoration:none}
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+    font-size:15px;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
 
   .bar{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;
-    gap:16px;padding:12px 18px;background:rgba(250,249,245,.88);backdrop-filter:blur(10px);
+    gap:16px;padding:12px 18px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line)}
   .bar .back{font-weight:500;color:var(--ink);white-space:nowrap}
   .bar .back:hover{color:var(--accent-deep)}
   .bar .brand{font-weight:600;color:var(--accent-deep);white-space:nowrap}
   #search{flex:1;min-width:60px;max-width:340px;padding:7px 12px;border:1px solid var(--line);
-    border-radius:9px;background:var(--surface);font:inherit;font-size:14px;color:var(--ink)}
-  #search:focus{outline:2px solid rgba(217,119,87,.45);outline-offset:1px}
+    border-radius:6px;background:var(--surface);font:inherit;font-size:14px;color:var(--ink)}
+  #search:focus{outline:2px solid rgba(9,105,218,.45);outline-offset:1px}
   .tgl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;
     white-space:nowrap;cursor:pointer;user-select:none}
-  #listBtn{margin-left:auto;padding:7px 13px;border:1px solid var(--line);border-radius:9px;
+  #listBtn{margin-left:auto;padding:7px 13px;border:1px solid var(--line);border-radius:6px;
     background:var(--surface);font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);
     cursor:pointer}
   #listBtn:hover{border-color:var(--accent)}
 
   #legend{position:fixed;left:14px;bottom:14px;z-index:25;display:flex;flex-direction:column;
-    gap:3px;padding:12px 14px;background:rgba(255,255,255,.92);border:1px solid var(--line);
-    border-radius:13px;box-shadow:0 6px 24px rgba(26,25,21,.06);max-width:270px}
+    gap:3px;padding:12px 14px;background:rgba(255,255,255,.94);border:1px solid var(--line);
+    border-radius:8px;box-shadow:0 6px 24px rgba(31,35,40,.08);max-width:270px}
   #legend .lg-h{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
     color:var(--muted);margin-bottom:5px}
   .chip{display:flex;align-items:center;gap:8px;padding:3px 6px;margin:0 -6px;border:0;
@@ -53,13 +50,13 @@
   #cv.overnode{cursor:pointer}
 
   #tip{position:fixed;z-index:40;pointer-events:none;display:none;max-width:290px;
-    padding:8px 12px;background:var(--ink);color:#faf9f5;border-radius:9px;
-    font-size:13px;line-height:1.45;box-shadow:0 8px 24px rgba(26,25,21,.25)}
+    padding:8px 12px;background:var(--ink);color:#ffffff;border-radius:6px;
+    font-size:13px;line-height:1.45;box-shadow:0 8px 24px rgba(31,35,40,.25)}
   #tip .t-track{display:block;font-size:11px;opacity:.75;margin-top:2px}
 
   #card{position:fixed;right:14px;bottom:14px;z-index:25;width:300px;max-width:calc(100vw - 28px);
-    max-height:46vh;overflow:auto;padding:16px 18px;background:rgba(255,255,255,.95);
-    border:1px solid var(--line);border-radius:13px;box-shadow:0 6px 24px rgba(26,25,21,.08);
+    max-height:46vh;overflow:auto;padding:16px 18px;background:rgba(255,255,255,.97);
+    border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 24px rgba(31,35,40,.10);
     display:none}
   #card .c-track{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
   #card h2{margin:.25em 0 .4em;font-size:17px;line-height:1.3;letter-spacing:-.01em}
@@ -74,7 +71,7 @@
     font-size:17px;cursor:pointer;padding:0 0 4px 8px;font-family:inherit}
 
   #panel{position:fixed;top:0;right:0;bottom:0;z-index:35;width:360px;max-width:92vw;
-    background:var(--surface);border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(26,25,21,.08);
+    background:var(--surface);border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(31,35,40,.08);
     transform:translateX(105%);transition:transform .22s ease;overflow:auto;padding:18px 22px 40px}
   #panel.open{transform:none}
   #panel .p-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -89,8 +86,8 @@
   #panel li a:hover{color:var(--accent-deep)}
 
   #hint{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:20;
-    color:var(--muted);font-size:12.5px;background:rgba(250,249,245,.85);padding:4px 12px;
-    border-radius:999px;pointer-events:none;transition:opacity .5s;white-space:nowrap}
+    color:var(--muted);font-size:12.5px;background:rgba(255,255,255,.9);padding:4px 12px;
+    border:1px solid var(--line);border-radius:999px;pointer-events:none;transition:opacity .5s;white-space:nowrap}
 
   @media (max-width:720px){
     .bar{gap:10px;padding:10px 12px}
@@ -251,7 +248,7 @@ function draw() {
     if (hood) on = (e[0] === focusN.i || e[1] === focusN.i);
     else if (searchSet) on = searchSet.has(e[0]) || searchSet.has(e[1]);
     ctx.globalAlpha = on ? (link ? .5 : .3) : .06;
-    ctx.strokeStyle = hood && on ? "#bd5d3a" : "#a49e8f";
+    ctx.strokeStyle = hood && on ? "#0550ae" : "#8c959f";
     ctx.lineWidth = (link ? .8 + Math.min(4, e[2]) * .3 : .8) / view.k;
     ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
   }
@@ -264,7 +261,7 @@ function draw() {
     ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
     ctx.fillStyle = n.color; ctx.fill();
     ctx.lineWidth = ((focusN === n || selN === n) ? 2.2 : 1) / Math.max(view.k, .9);
-    ctx.strokeStyle = (focusN === n || selN === n) ? "#1a1915" : ringOf[n.track];
+    ctx.strokeStyle = (focusN === n || selN === n) ? "#1f2328" : ringOf[n.track];
     ctx.stroke();
   }
   ctx.globalAlpha = 1;                              // labels
@@ -278,12 +275,12 @@ function draw() {
     if (hood && !hood.has(n.i)) continue;
     if (!hood && searchSet && !searchSet.has(n.i)) continue;
     const fs = (n.kind === "track" ? 13 : 11.5) / Math.min(Math.max(view.k, .85), 2.2);
-    ctx.font = (n.kind === "lesson" ? "400 " : "600 ") + fs + "px Inter, sans-serif";
+    ctx.font = (n.kind === "lesson" ? "400 " : "600 ") + fs + "px -apple-system,BlinkMacSystemFont,sans-serif";
     const t = n.title.length > 42 ? n.title.slice(0, 40) + "…" : n.title;
     ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? .95 : .78;
-    ctx.lineWidth = 3.2 / view.k; ctx.strokeStyle = "rgba(250,249,245,.9)";
+    ctx.lineWidth = 3.2 / view.k; ctx.strokeStyle = "rgba(255,255,255,.9)";
     ctx.strokeText(t, n.x, n.y + n.r + 3 / view.k);
-    ctx.fillStyle = "#3d3b35";
+    ctx.fillStyle = "#1f2328";
     ctx.fillText(t, n.x, n.y + n.r + 3 / view.k);
   }
   ctx.globalAlpha = 1;
