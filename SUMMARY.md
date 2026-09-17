@@ -228,6 +228,13 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md)
 3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md) · [Recap](./ai-agents/recap.md)
 
+## [Agentic workflows](./agentic-workflows/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md)
+2. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md) · [Recap](./agentic-workflows/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

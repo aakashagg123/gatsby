@@ -8,8 +8,9 @@ cross-links for extra depth.
 
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
 > Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
-> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), and 7 (*AI agents*) are
-> now built. Remaining four modules are batched in learning order.
+> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), 7 (*AI agents*), and 8
+> (*Agentic workflows*) are now built. Remaining three modules are batched in learning
+> order.
 
 ## Decisions (locked)
 
@@ -109,10 +110,26 @@ track and its sibling modules in this family, and adds no new glossary terms —
 core term (`agent-loop`, `autonomy-spectrum`, `compounding-error`, `supervised-cost`,
 `reflection`) already exists and homes correctly to `agentic-ai/`.
 
-### 8. 🔄 Agentic workflows — *6 lessons*
+### 8. 🔄 Agentic workflows — *2 lessons* — **BUILT** (rescoped from 6 → 2)
 Orchestrating many steps and many agents.
-1. Workflows vs. agents (enumerable vs. open-ended) · 2. Orchestration patterns (chains, routers, parallel) · 3. Multi-agent systems & protocols · 4. Human-in-the-loop & approvals · 5. Durable execution & long-running work · 6. Workflow capture as product strategy. → Recap.
-*Spokes:* `agentic-ai/multi-agent-and-protocols`, `flowable/*`, `agentic-ai/agentic-ai-as-a-product`.
+1. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md) · 2. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md). → [Recap](./agentic-workflows/recap.md).
+*Spokes:* `agentic-ai/multi-agent-and-protocols`, `flowable/*`, `agentic-ai/agentic-ai-as-a-product`, `ai-agents`, `agentic-ai/safety-security-and-governance`.
+
+*Rescoping note:* this module had the densest overlap of any module in the family —
+denser even than AI agents. Of the planned 6 lessons, "workflows vs. agents" is already
+the subject of `ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md` (module 7,
+this same family); "orchestration patterns" and "multi-agent systems & protocols" are
+both already developed in full in `agentic-ai/multi-agent-and-protocols.md`;
+"human-in-the-loop & approvals" is already covered by `agentic-ai-as-a-product.md`'s
+agent-UX section and the `human-in-the-loop` glossary term, which homes to
+`agentic-ai/safety-security-and-governance.md` — itself the future spoke for this
+family's AI security & guardrails module; "durable execution" is the entire subject of
+the twelve-phase `flowable/` track; and "workflow capture as product strategy" is
+already a full section of, and an existing glossary term homed to,
+`agentic-ai-as-a-product.md`. The module compresses to the 2 lessons that survive once
+every sibling module and the deeper agentic-ai track are accounted for, and adds no new
+glossary terms — `multi-agent`, `subagent`, `mcp`, `a2a`, `wait-state`, `job-executor`,
+and `workflow-capture` all already exist and correctly home elsewhere.
 
 ### 9. 📊 Evaluation & observability — *7 lessons*
 You cannot operate what you cannot measure.
@@ -129,8 +146,9 @@ Making the economics work.
 1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
 *Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
 
-**Total:** ~60 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
-module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons).
+**Total:** ~56 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
+module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons; module 8
+rescoped from 6 to 2 lessons).
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -145,7 +163,7 @@ module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons).
 ## Build order after the pilot
 
 Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
-→ Systems (7 Agents ✅, 8 Workflows) → Operations (9 Evals, 10 Security, 11 Cost). Each module
+→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals, 10 Security, 11 Cost). Each module
 ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
 
 ## Wiring checklist per module (mirrors the existing tracks)

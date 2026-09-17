@@ -71,7 +71,8 @@ def rewrite_target(target, cur_mod):
     FLAT = ("agentic-ai", "first-principles", "product-sense",
             "technical-product-sense", "technical-product-management", "knowledge-graphs",
             "system-design", "rag-vector-databases", "generative-ai", "llms",
-            "api-integrations", "memory-and-context", "tool-calling", "ai-agents")
+            "api-integrations", "memory-and-context", "tool-calling", "ai-agents",
+            "agentic-workflows")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):
