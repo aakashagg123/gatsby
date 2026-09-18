@@ -1,9 +1,9 @@
 <style>
-.sd-chat{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
-  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
-  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-chat{background:#ffffff;border:1px solid #d1d9e0;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04);
+  margin:26px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 .sd-chat-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
-  color:#a39f90;font-weight:700;margin:0 0 18px}
+  color:#59636e;font-weight:700;margin:0 0 18px}
 .sd-chat-arch{position:relative}
 /* Main flow row */
 .sd-chat-flow{display:flex;align-items:center;gap:0;justify-content:center;
@@ -11,37 +11,37 @@
 .sd-chat-node{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;
   text-align:center;line-height:1.35;flex-shrink:0;position:relative}
 .sd-chat-node small{display:block;font-size:9.5px;font-weight:450;margin-top:2px}
-.sd-chat-client{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22;min-width:80px}
-.sd-chat-ws{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a;min-width:90px}
-.sd-chat-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
-.sd-chat-mq{background:#f4eee8;border:1px solid #e0d4c4;color:#6b5a44}
-.sd-chat-svc{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
+.sd-chat-client{background:#ddf4ff;border:1px solid #b6e3ff;color:#0969da;min-width:80px}
+.sd-chat-ws{background:#fbefff;border:1px solid #eecef7;color:#8250df;min-width:90px}
+.sd-chat-store{background:#dafbe1;border:1px solid #aceebb;color:#1a7f37}
+.sd-chat-mq{background:#f6f8fa;border:1px solid #f6f8fa;color:#1f2328}
+.sd-chat-svc{background:#f6f8fa;border:1px solid #d1d9e0;color:#1f2328}
 .sd-chat-arrow{flex:0 0 auto;padding:0 3px;display:flex;flex-direction:column;
   align-items:center;gap:1px}
-.sd-chat-arrow-char{color:#c9c4b4;font-size:14px;font-weight:700}
-.sd-chat-arrow-lbl{font-size:8px;color:#8a8778;font-weight:500;white-space:nowrap}
+.sd-chat-arrow-char{color:#8c959f;font-size:14px;font-weight:700}
+.sd-chat-arrow-lbl{font-size:8px;color:#59636e;font-weight:500;white-space:nowrap}
 /* Connection protocol badges */
 .sd-chat-badge{position:absolute;top:-8px;right:-6px;font-size:8px;font-weight:700;
-  border-radius:10px;padding:1px 7px;color:#fff;letter-spacing:.4px;white-space:nowrap}
-.sd-chat-badge-ws{background:#4a6fa5}
-.sd-chat-badge-http{background:#8a8778}
+  border-radius:10px;padding:1px 7px;color:#ffffff;letter-spacing:.4px;white-space:nowrap}
+.sd-chat-badge-ws{background:#8250df}
+.sd-chat-badge-http{background:#59636e}
 /* Service layer */
 .sd-chat-services{display:flex;gap:8px;justify-content:center;margin:0 0 14px;flex-wrap:wrap}
-.sd-chat-svc-card{background:#fff;border:1px solid #e4e0d5;border-radius:10px;
+.sd-chat-svc-card{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;
   padding:10px 14px;text-align:center;flex:0 1 auto;min-width:100px}
-.sd-chat-svc-name{font-size:11px;font-weight:650;color:#3d3c37;margin:0 0 2px}
-.sd-chat-svc-desc{font-size:9.5px;color:#8a8778;font-weight:450}
+.sd-chat-svc-name{font-size:11px;font-weight:650;color:#1f2328;margin:0 0 2px}
+.sd-chat-svc-desc{font-size:9.5px;color:#59636e;font-weight:450}
 /* Legend / patterns */
 .sd-chat-patterns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 0}
-.sd-chat-pattern{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px}
+.sd-chat-pattern{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:12px}
 .sd-chat-pattern-title{font-size:10px;font-weight:700;text-transform:uppercase;
   letter-spacing:.8px;margin:0 0 8px;display:flex;align-items:center;gap:6px}
 .sd-chat-pattern-title .dot{width:6px;height:6px;border-radius:50%}
-.sd-chat-pattern-title .dot-1to1{background:#4a6fa5}
-.sd-chat-pattern-title .dot-group{background:#bd5d3a}
-.sd-chat-pattern-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
-.sd-chat-pattern-flow strong{color:#3d3c37;font-weight:600}
-.sd-chat-pattern-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
+.sd-chat-pattern-title .dot-1to1{background:#8250df}
+.sd-chat-pattern-title .dot-group{background:#0969da}
+.sd-chat-pattern-flow{font-size:10.5px;color:#59636e;line-height:1.7}
+.sd-chat-pattern-flow strong{color:#1f2328;font-weight:600}
+.sd-chat-pattern-flow .arr{color:#8c959f;font-weight:700;margin:0 2px}
 @media (max-width:640px){
   .sd-chat{padding:18px 14px 16px}
   .sd-chat-flow{flex-direction:column;gap:4px;align-items:stretch}
@@ -120,7 +120,7 @@
       <div class="sd-chat-pattern">
         <div class="sd-chat-pattern-title">
           <span class="dot dot-1to1"></span>
-          <span style="color:#3d4a7a">1:1 Chat</span>
+          <span style="color:#8250df">1:1 Chat</span>
         </div>
         <div class="sd-chat-pattern-flow">
           <strong>A</strong> <span class="arr">→</span> WS server
@@ -133,7 +133,7 @@
       <div class="sd-chat-pattern">
         <div class="sd-chat-pattern-title">
           <span class="dot dot-group"></span>
-          <span style="color:#bd5d3a">Group Chat</span>
+          <span style="color:#0969da">Group Chat</span>
         </div>
         <div class="sd-chat-pattern-flow">
           <strong>A</strong> <span class="arr">→</span> WS server

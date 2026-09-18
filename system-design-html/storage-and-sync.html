@@ -335,56 +335,56 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <h3>The block server: splitting files into blocks</h3>
 <p>The core insight: don't upload entire files — split them into <strong>blocks</strong> (typically 4 MB), then hash, compress, and encrypt each block independently.</p>
 <style>
-.sd-drive{background:linear-gradient(180deg,#fdfcf9,#faf8f2);border:1px solid #e7e3d8;
-  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(26,25,21,.05);
-  margin:26px 0;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.sd-drive{background:#ffffff;border:1px solid #d1d9e0;
+  border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04);
+  margin:26px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 .sd-drive-title{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;
-  color:#a39f90;font-weight:700;margin:0 0 18px}
+  color:#59636e;font-weight:700;margin:0 0 18px}
 /* Upload pipeline */
-.sd-drive-pipeline{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+.sd-drive-pipeline{background:#ffffff;border:1px solid #d1d9e0;border-radius:12px;
   padding:16px;margin:0 0 12px;position:relative}
 .sd-drive-pipe-label{font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.8px;margin:0 0 12px;color:#6b6a64;display:flex;align-items:center;gap:6px}
+  letter-spacing:.8px;margin:0 0 12px;color:#59636e;display:flex;align-items:center;gap:6px}
 .sd-drive-pipe-label .tag{font-size:9px;font-weight:700;border-radius:20px;
-  padding:2px 10px;color:#fff;background:#bd5d3a;letter-spacing:.6px}
+  padding:2px 10px;color:#ffffff;background:#0969da;letter-spacing:.6px}
 .sd-drive-flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
 .sd-drive-node{border-radius:8px;padding:9px 12px;font-size:11.5px;font-weight:600;
   text-align:center;line-height:1.35;flex-shrink:0}
 .sd-drive-node small{display:block;font-size:9px;font-weight:450;margin-top:2px}
-.sd-drive-n-client{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
-.sd-drive-n-block{background:#fbefe9;border:1px solid #efd8ca;color:#4a2f22}
-.sd-drive-n-process{background:#e9edf8;border:1px solid #c0c9e2;color:#3d4a7a}
-.sd-drive-n-store{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
-.sd-drive-n-meta{background:#f4f2ea;border:1px solid #e0dccd;color:#45443c}
-.sd-drive-arr{flex:0 0 auto;color:#c9c4b4;font-size:13px;font-weight:700;
+.sd-drive-n-client{background:#f6f8fa;border:1px solid #d1d9e0;color:#1f2328}
+.sd-drive-n-block{background:#ddf4ff;border:1px solid #b6e3ff;color:#0969da}
+.sd-drive-n-process{background:#fbefff;border:1px solid #eecef7;color:#8250df}
+.sd-drive-n-store{background:#dafbe1;border:1px solid #aceebb;color:#1a7f37}
+.sd-drive-n-meta{background:#f6f8fa;border:1px solid #d1d9e0;color:#1f2328}
+.sd-drive-arr{flex:0 0 auto;color:#8c959f;font-size:13px;font-weight:700;
   padding:0 3px;display:flex;align-items:center}
 /* Block splitting visual */
-.sd-drive-blocks{background:#fff;border:1px solid #e4e0d5;border-radius:12px;
+.sd-drive-blocks{background:#ffffff;border:1px solid #d1d9e0;border-radius:12px;
   padding:16px;margin:0 0 12px}
 .sd-drive-blocks-label{font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.8px;margin:0 0 10px;color:#6b6a64;display:flex;align-items:center;gap:6px}
+  letter-spacing:.8px;margin:0 0 10px;color:#59636e;display:flex;align-items:center;gap:6px}
 .sd-drive-blocks-label .tag{font-size:9px;font-weight:700;border-radius:20px;
-  padding:2px 10px;color:#fff;background:#5a8a4a;letter-spacing:.6px}
+  padding:2px 10px;color:#ffffff;background:#1a7f37;letter-spacing:.6px}
 .sd-drive-block-row{display:flex;align-items:center;gap:6px;margin:6px 0}
-.sd-drive-block-file{font-size:11px;font-weight:600;color:#3d3c37;min-width:80px}
+.sd-drive-block-file{font-size:11px;font-weight:600;color:#1f2328;min-width:80px}
 .sd-drive-block-chunks{display:flex;gap:2px;flex:1}
 .sd-drive-chunk{height:28px;border-radius:4px;display:flex;align-items:center;
   justify-content:center;font-size:8.5px;font-weight:600;flex:1;max-width:80px}
-.sd-drive-chunk-same{background:#e8f0e4;border:1px solid #c8dbc0;color:#3d5c34}
-.sd-drive-chunk-changed{background:#fbefe9;border:1.5px solid #d97757;color:#bd5d3a}
-.sd-drive-chunk-new{background:#e9edf8;border:1.5px solid #7a8fc0;color:#3d4a7a}
-.sd-drive-delta-label{font-size:9.5px;color:#8a8778;font-weight:500;margin-left:8px;
+.sd-drive-chunk-same{background:#dafbe1;border:1px solid #aceebb;color:#1a7f37}
+.sd-drive-chunk-changed{background:#ddf4ff;border:1.5px solid #0969da;color:#0969da}
+.sd-drive-chunk-new{background:#fbefff;border:1.5px solid #8250df;color:#8250df}
+.sd-drive-delta-label{font-size:9.5px;color:#59636e;font-weight:500;margin-left:8px;
   white-space:nowrap}
 /* Notification + conflict */
 .sd-drive-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
-.sd-drive-card{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px}
+.sd-drive-card{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:12px}
 .sd-drive-card-title{font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.8px;color:#a39f90;margin:0 0 8px}
-.sd-drive-card-flow{font-size:10.5px;color:#6b6a64;line-height:1.7}
-.sd-drive-card-flow strong{color:#3d3c37;font-weight:600}
-.sd-drive-card-flow .arr{color:#c9c4b4;font-weight:700;margin:0 2px}
-.sd-drive-card-flow .highlight{background:#fbefe9;border:1px solid #efd8ca;
-  border-radius:4px;padding:0 5px;font-size:10px;font-weight:600;color:#4a2f22}
+  letter-spacing:.8px;color:#59636e;margin:0 0 8px}
+.sd-drive-card-flow{font-size:10.5px;color:#59636e;line-height:1.7}
+.sd-drive-card-flow strong{color:#1f2328;font-weight:600}
+.sd-drive-card-flow .arr{color:#8c959f;font-weight:700;margin:0 2px}
+.sd-drive-card-flow .highlight{background:#ddf4ff;border:1px solid #b6e3ff;
+  border-radius:4px;padding:0 5px;font-size:10px;font-weight:600;color:#0969da}
 @media (max-width:640px){
   .sd-drive{padding:18px 14px 16px}
   .sd-drive-flow{flex-direction:column;gap:4px;align-items:stretch}
@@ -437,7 +437,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
       </div>
       <div class="sd-drive-delta-label">16 MB file</div>
     </div>
-    <div style="text-align:center;color:#c9c4b4;font-size:10px;padding:2px 0 2px 86px">▼ user edits middle section</div>
+    <div style="text-align:center;color:#8c959f;font-size:10px;padding:2px 0 2px 86px">▼ user edits middle section</div>
     <div class="sd-drive-block-row">
       <div class="sd-drive-block-file">Modified:</div>
       <div class="sd-drive-block-chunks">
@@ -446,7 +446,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
         <div class="sd-drive-chunk sd-drive-chunk-same">Block 2</div>
         <div class="sd-drive-chunk sd-drive-chunk-same">Block 3</div>
       </div>
-      <div class="sd-drive-delta-label" style="color:#bd5d3a;font-weight:600">Upload 4 MB only</div>
+      <div class="sd-drive-delta-label" style="color:#0969da;font-weight:600">Upload 4 MB only</div>
     </div>
   </div>
 
