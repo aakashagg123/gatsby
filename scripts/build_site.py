@@ -41,6 +41,7 @@ AGENTS_HTML = os.path.join(ROOT, "ai-agents-html")      # AI agents (GenAI famil
 WORKFLOWS_HTML = os.path.join(ROOT, "agentic-workflows-html")  # Agentic workflows (GenAI family, module 8)
 EVALOBS_HTML = os.path.join(ROOT, "evaluation-and-observability-html")  # Evaluation & observability (GenAI family, module 9)
 SECURITY_HTML = os.path.join(ROOT, "ai-security-and-guardrails-html")  # AI security & guardrails (GenAI family, module 10)
+COST_HTML = os.path.join(ROOT, "cost-optimization-html")  # Cost optimization (GenAI family, module 11)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -348,6 +349,13 @@ LANDING = """<!doctype html>
       and why governance only counts once it becomes compliance evidence a regulator
       or buyer can check.</p>
     </a>
+    <a class="card" href="cost-optimization/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>Cost optimization →</h2>
+      <p>Which lever fixes which cost driver, the build-vs-buy breakeven done as
+      arithmetic, and the FinOps practice that turns attribution into governance
+      before the invoice, not after.</p>
+    </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
       <h2>System design →</h2>
@@ -560,6 +568,10 @@ def main():
     # 1p2. AI security & guardrails (Generative AI family, module 10): copy its pages.
     if os.path.isdir(SECURITY_HTML):
         shutil.copytree(SECURITY_HTML, os.path.join(SITE, "ai-security-and-guardrails"))
+
+    # 1p3. Cost optimization (Generative AI family, module 11): copy its pages.
+    if os.path.isdir(COST_HTML):
+        shutil.copytree(COST_HTML, os.path.join(SITE, "cost-optimization"))
 
     # 1q. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):

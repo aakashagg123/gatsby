@@ -249,6 +249,13 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md)
 2. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md) · [Recap](./ai-security-and-guardrails/recap.md)
 
+## [Cost optimization](./cost-optimization/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [The cost stack, and the build-vs-buy breakeven](./cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.md)
+2. [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md) · [Recap](./cost-optimization/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

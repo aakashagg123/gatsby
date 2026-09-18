@@ -6,11 +6,12 @@ product-leader / CPO lens and house style as the rest of the curriculum. It is t
 search for — sitting alongside (not replacing) the existing tracks, which it
 cross-links for extra depth.
 
-> **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
-> Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
-> integrations*), 5 (*Memory & context*), 6 (*Tool calling*), 7 (*AI agents*), 8
-> (*Agentic workflows*), 9 (*Evaluation & observability*), and 10 (*AI security &
-> guardrails*) are now built. One module remains.
+> **Status:** all eleven modules are now built. Pilot shipped (*RAG & vector
+> databases*, module 4), sign-off received; modules 1 (*Generative AI: the big
+> picture*), 2 (*LLMs*), 3 (*APIs & integrations*), 5 (*Memory & context*), 6
+> (*Tool calling*), 7 (*AI agents*), 8 (*Agentic workflows*), 9 (*Evaluation &
+> observability*), 10 (*AI security & guardrails*), and 11 (*Cost optimization*)
+> followed. The Generative AI family is complete.
 
 ## Decisions (locked)
 
@@ -175,14 +176,35 @@ red-teaming, model cards — none of which existed anywhere in the curriculum be
 module). Four new glossary terms were added: `jailbreak`, `red-teaming`, `soc-2`,
 `eu-ai-act`.
 
-### 11. 💰 Cost optimization — *6 lessons*
+### 11. 💰 Cost optimization — *2 lessons* — **BUILT** (rescoped from 6 → 2)
 Making the economics work.
-1. Where AI cost comes from (tokens & inference) · 2. Cost attribution per feature, tenant & journey · 3. Model routing & the cheap path · 4. Caching (prompt & semantic) · 5. Controlling context & retrieval cost · 6. Unit economics & the supervised-cost view. → Recap.
-*Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `agentic-ai/agentic-ai-as-a-product`.
+1. [The cost stack, and the build-vs-buy breakeven](./cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.md) · 2. [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md). → [Recap](./cost-optimization/recap.md).
+*Spokes:* `content/04-evals-observability/cost-attribution`, `content/02-reliable-outputs/model-routing`, `content/01-inference-internals/prompt-vs-semantic-caching`, `content/01-inference-internals/prefill-vs-decode`, `content/01-inference-internals/batching-and-paged-attention`, `agentic-ai/agentic-ai-as-a-product`, `technical-product-sense/economics-of-infrastructure`.
 
-**Total:** ~51 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
+*Rescoping note:* this topic turned out to be the most densely pre-covered module in
+the entire family, on a mechanics basis — denser even than module 9 or 10. All six
+planned lessons map onto existing, full-depth, product-leader-altitude treatments:
+`content/01-inference-internals/prefill-vs-decode.md` and
+`batching-and-paged-attention.md` already develop token economics (why input and
+output tokens are priced and computed differently, and why serving efficiency sets the
+real marginal cost per token); `prompt-vs-semantic-caching.md`,
+`content/02-reliable-outputs/model-routing.md`, and
+`content/04-evals-observability/cost-attribution.md` already develop caching, routing,
+and instrumentation in full; `content/00-foundations/context-engineering.md` and
+`rag-vector-databases/rag-vs-long-context-vs-finetuning.md` already frame context and
+retrieval as a cost decision; and `agentic-ai/agentic-ai-as-a-product.md` plus
+`technical-product-sense/economics-of-infrastructure.md` already develop unit
+economics and the general cost napkin in full. The module compresses to the 2 lessons
+that are genuinely new: a synthesis map of which lever fixes which cost driver, paired
+with the build-vs-buy self-hosting breakeven (never priced anywhere in the curriculum);
+and FinOps as an organizational practice — enforced budgets, chargeback/showback,
+forecasting, and a recurring cost review — which existed nowhere before this module.
+Two new glossary terms: `finops`, `chargeback`.
+
+**Total:** ~43 lessons + 11 READMEs + 11 recaps (module 5 rescoped from 6 to 4 lessons;
 module 6 rescoped from 5 to 3 lessons; module 7 rescoped from 7 to 3 lessons; module 8
-rescoped from 6 to 2 lessons; module 9 rescoped from 7 to 2 lessons).
+rescoped from 6 to 2 lessons; module 9 rescoped from 7 to 2 lessons; module 10 rescoped
+from 7 to 2 lessons; module 11 rescoped from 6 to 2 lessons). The family is complete.
 
 ## Cross-link discipline (hub-and-spoke)
 
@@ -197,9 +219,9 @@ rescoped from 6 to 2 lessons; module 9 rescoped from 7 to 2 lessons).
 ## Build order after the pilot
 
 Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
-→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals ✅, 10 Security ✅, 11 Cost). Each
-module ships complete (content + HTML + glossary + graph + Key-terms) before the next
-begins.
+→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals ✅, 10 Security ✅, 11 Cost ✅).
+All eleven modules are built. Each shipped complete (content + HTML + glossary + graph +
+Key-terms) before the next began.
 
 ## Wiring checklist per module (mirrors the existing tracks)
 

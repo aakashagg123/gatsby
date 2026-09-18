@@ -169,6 +169,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md).
 
+**Chargeback** — Routing attributed AI cost back to the team that generated it — chargeback actually debits their budget, showback only makes the number visible — a choice with real incentive tradeoffs.
+
+*In plain terms.* Both practices answer 'whose spend is this,' but they differ in consequence. Chargeback makes the cost real money out of a team's own budget, which sharpens incentives fast — a team that pays for its own tokens starts asking whether every feature needs the biggest model. Showback only shows the number, with no financial bite, which is lower-friction but relies on a team caring about a figure that doesn't touch their P&L.
+
+*For example.* A team on showback ignores a growing AI line item for two quarters; the same team moved to chargeback starts optimizing model choice within weeks.
+
+*Where it shows up:* Deciding which practice fits an organization's cost-maturity stage; Explaining why visibility alone often fails to change engineering behavior; Scoping the billing-dispute friction chargeback introduces for shared services.
+
+*See:* [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md).
+
 **Chunking** — Splitting documents into passages small enough to embed and retrieve precisely — a quietly decisive design choice.
 
 *In plain terms.* You can't retrieve a whole 100-page manual into a prompt, so you cut documents into passages ('chunks'). Too big and retrieval is imprecise and wasteful; too small and you lose the surrounding meaning. How you chunk silently determines what can ever be found.
@@ -448,6 +458,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing fine-tune vs. RAG vs. prompting; Locking in tone/format/domain language; Reducing prompt length for a repeated task.
 
 *See:* [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md).
+
+**FinOps** — The operating discipline that turns cost attribution into governance — enforced budgets, chargeback or showback, and a recurring cost review — deciding where spend goes next instead of only reporting where it went.
+
+*In plain terms.* Attribution tells you where the money went, after the fact. FinOps is what a team does with that information before the next invoice: caps that actually stop a runaway spend automatically, a routing of cost back to the team that generated it, and a standing review that catches drift the way a postmortem catches an incident.
+
+*For example.* A per-tenant budget throttles a runaway agent loop automatically at 100% of its cap, instead of the team finding out from next month's bill.
+
+*Where it shows up:* Deciding whether a budget needs to enforce or only alert; Choosing between chargeback and showback for a given team's AI spend; Structuring a recurring cost review with owned action items.
+
+*See:* [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md).
 
 **First-principles thinking** — Reasoning up from what you know to be fundamentally true, instead of reasoning by analogy to what others do.
 
