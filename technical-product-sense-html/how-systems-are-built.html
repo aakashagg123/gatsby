@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>How systems are built</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Almost every product is a <strong>client</strong> talking to a <strong>server</strong>. The server is rarely one
 thing — it's a chain: a CDN and load balancer at the edge, an API layer, one or more
 <strong>services</strong> holding business logic, and behind them <strong>datastores</strong>, <strong>caches</strong>, and
@@ -333,7 +348,7 @@ through, and which one is doing the expensive work?"</em></p>
 <p><strong>Risk if ignored</strong> — You promise a feature, and its architecture turns out slow, costly,
 or fragile. You find out only after engineering starts.</p>
 </blockquote>
-<h2>The path of a request</h2>
+<h2 id="the-path-of-a-request">The path of a request</h2>
 <p>When a user does something, a request travels through several layers. Each layer has its own
 job, cost, and failure mode:</p>
 <pre class="mermaid">flowchart LR
@@ -365,7 +380,7 @@ job, cost, and failure mode:</p>
   report, calling a slow model. The request returns immediately, and a worker does the job
   <strong>asynchronously</strong>.</li>
 </ul>
-<h2>Synchronous vs. asynchronous — the key product lever</h2>
+<h2 id="synchronous-vs-asynchronous-the-key-product-lever">Synchronous vs. asynchronous — the key product lever</h2>
 <p>The single most useful distinction here: does the user <strong>wait</strong> for this work, or not?</p>
 <ul>
 <li><strong>Synchronous</strong> (in the request path) — the user stares at a spinner until the work is done.
@@ -376,13 +391,13 @@ job, cost, and failure mode:</p>
 </ul>
 <p>Choosing sync vs. async <em>is</em> a product decision. It shapes the UX (spinner vs. "we'll email
 you"), the perceived speed, and the system's resilience.</p>
-<h2>Monolith vs. services</h2>
+<h2 id="monolith-vs-services">Monolith vs. services</h2>
 <p>Early products are often a <strong>monolith</strong> — one codebase, one deploy. This is simple and fast
 to build. As teams and load grow, systems split into <strong>services</strong> so parts can scale and ship
 independently. Neither approach is "right" — the trade-off is <strong>simplicity vs. independence</strong>.
 As a PM, you don't pick the architecture. But knowing which one you're in explains why some
 changes are a one-line tweak, and others touch five teams.</p>
-<h2>A worked pass: "add PDF export"</h2>
+<h2 id="a-worked-pass-add-pdf-export">A worked pass: "add PDF export"</h2>
 <p>Watch the request path turn a one-line feature request into an architecture decision.
 "Users can export their report as a PDF" sounds like a button. Walk through it: the click
 hits the API layer, and the service gathers the report's data (several database reads). It
@@ -397,7 +412,7 @@ Now you need a jobs queue, a status surface ("preparing your export…"), retry 
 failed renders, and an expiry policy for stored files. None of that appeared in the one-line
 request. All of it was implied by <em>where the work sits on the path</em>. That's the skill this
 lesson builds — hearing "add a button" and seeing the queue behind it.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Assuming one box</strong> — you treat "the backend" as a single thing, so you can't reason about
   where slowness or failure comes from.</li>
@@ -408,7 +423,7 @@ lesson builds — hearing "add a button" and seeing the queue behind it.</p>
 <li><strong>Ignoring the async tax</strong> — you choose async without designing the "pending / ready /
   failed" states the UX now needs.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I draw the boxes a request for my feature passes through?</li>
 <li class="task todo">Do I know which box does the expensive work?</li>
@@ -417,14 +432,33 @@ lesson builds — hearing "add a button" and seeing the queue behind it.</p>
 <li class="task todo">Where is data read from — the database (fresh, slower) or a cache (fast, maybe stale)?</li>
 <li class="task todo">Do I know whether I'm changing a monolith or a service others depend on?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="apis-and-contracts.html">APIs &amp; contracts</a></li>
 <li><a href="latency-scale-performance.html">Latency, scale &amp; performance</a></li>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="apis-and-contracts.html"><span class="lbl">→ Next</span><span class="ttl">APIs &amp; contracts</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-path-of-a-request">The path of a request</a><a class="h2" href="#synchronous-vs-asynchronous-the-key-product-lever">Synchronous vs. asynchronous — the key product lever</a><a class="h2" href="#monolith-vs-services">Monolith vs. services</a><a class="h2" href="#a-worked-pass-add-pdf-export">A worked pass: &quot;add PDF export&quot;</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

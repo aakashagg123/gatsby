@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>RAG &amp; vector databases</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink active" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink active" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 07</span>
     <h1>Beyond flat RAG: GraphRAG &amp; structured retrieval</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Plain ("flat") RAG retrieves the text chunks most <em>similar</em> to a question — which is
 perfect when the answer sits in a passage somewhere, and useless when the answer is a
 <em>connection</em> no single passage states, or a <em>summary</em> of the whole corpus. Two question
@@ -339,7 +354,7 @@ whole-corpus summaries — or is our flat RAG just tuned badly?"</em></p>
 that matter most, or an expensive graph-indexing pipeline built for questions that were
 95% simple passage lookups.</p>
 </blockquote>
-<h2>The mental model: passages, chains, and summaries</h2>
+<h2 id="the-mental-model-passages-chains-and-summaries">The mental model: passages, chains, and summaries</h2>
 <p>Three question shapes, three retrieval needs:</p>
 <pre class="mermaid">flowchart TB
   Q{&quot;What shape is the question?&quot;}
@@ -353,7 +368,7 @@ that matter most, or an expensive graph-indexing pipeline built for questions th
   class FLAT flat</pre>
 <p>Flat RAG is the right and cheapest tool for the first shape — most questions. The other two
 are where you graduate to structure.</p>
-<h2>Why flat RAG breaks on these</h2>
+<h2 id="why-flat-rag-breaks-on-these">Why flat RAG breaks on these</h2>
 <ul>
 <li><strong>Multi-hop.</strong> The answer requires <em>joining</em> facts across several documents:
   customer → contract → product → component → supplier. No single chunk contains the chain,
@@ -366,7 +381,7 @@ are where you graduate to structure.</p>
   handful of chunks and the model summarizes <em>those</em>, giving a confident answer based on a
   biased sliver.</li>
 </ul>
-<h2>The structured approaches</h2>
+<h2 id="the-structured-approaches">The structured approaches</h2>
 <ul>
 <li><strong>GraphRAG.</strong> Build a <a href="../knowledge-graphs/what-is-a-knowledge-graph.html">knowledge graph</a>
   from your corpus (entities and typed relationships), then retrieve <em>connected subgraphs</em>
@@ -387,7 +402,7 @@ are where you graduate to structure.</p>
 <p>The full treatment of graphs and their marriage with LLMs is the
 <a href="../knowledge-graphs/index.html">Knowledge graphs</a> track — this lesson is the bridge from
 RAG to it.</p>
-<h2>How to decide</h2>
+<h2 id="how-to-decide">How to decide</h2>
 <ol>
 <li><strong>Classify your questions.</strong> Sample the real (or expected) questions and bucket them:
    passage-level, multi-hop, global, quantitative. The mix tells you what you need.</li>
@@ -400,7 +415,7 @@ RAG to it.</p>
 <li><strong>Cost the freshness.</strong> A graph or structured index is a second thing to keep current;
    budget that before committing.</li>
 </ol>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>GraphRAG as fashion</strong> — building an expensive graph-indexing pipeline for a workload
   that was overwhelmingly simple passage lookups; complexity and cost with no payoff.</li>
@@ -413,7 +428,7 @@ RAG to it.</p>
 <li><strong>Unmeasured escalation</strong> — jumping to GraphRAG on a hunch without an eval showing flat
   RAG actually fails the questions that matter.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we classified our real questions into passage-level / multi-hop / global /
       quantitative?</li>
@@ -426,7 +441,7 @@ RAG to it.</p>
 <li class="task todo">Do we route by question type (keep flat RAG for the majority) rather than forcing one
       architecture to do everything?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="retrieval-quality.html">Retrieval quality</a> — get flat RAG genuinely good before adding
   structure.</li>
@@ -438,7 +453,26 @@ RAG to it.</p>
   axis of the retrieval decision.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="rag-vs-long-context-vs-finetuning.html"><span class="lbl">← Previous</span><span class="ttl">RAG vs. long-context vs. fine-tuning</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-passages-chains-and-summaries">The mental model: passages, chains, and summaries</a><a class="h2" href="#why-flat-rag-breaks-on-these">Why flat RAG breaks on these</a><a class="h2" href="#the-structured-approaches">The structured approaches</a><a class="h2" href="#how-to-decide">How to decide</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

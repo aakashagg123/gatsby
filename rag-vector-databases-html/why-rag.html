@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>RAG &amp; vector databases</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>Why RAG?</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A language model knows only what it absorbed at training time: generic, frozen, and
 impossible to trace to a source. That's fatal for most real products, which need answers
 about <em>your</em> data — this customer, this policy, today's inventory — with a citation you can
@@ -338,7 +353,7 @@ and is that source current and ours?"</em></p>
 policies, stale prices, leaked or fabricated facts — each one a support ticket, a
 cancelled contract, or a compliance finding.</p>
 </blockquote>
-<h2>The mental model: open-book, not closed-book</h2>
+<h2 id="the-mental-model-open-book-not-closed-book">The mental model: open-book, not closed-book</h2>
 <p>A bare model answering from training is a student sitting a <strong>closed-book</strong> exam from
 memory — fluent, but frozen and prone to confabulation on anything it half-remembers. RAG
 turns it into an <strong>open-book</strong> exam: the student still writes the answer, but first gets to
@@ -357,7 +372,7 @@ plus synthesis</em> — a task it's far better and safer at.</p>
 feature can be told "answer only from the passages; if they don't contain the answer, say
 so." That single instruction, made possible by retrieval, converts a confident guesser into
 a system that knows the edge of its knowledge.</p>
-<h2>The four jobs RAG does</h2>
+<h2 id="the-four-jobs-rag-does">The four jobs RAG does</h2>
 <table>
 <thead>
 <tr>
@@ -394,7 +409,7 @@ helper leans on freshness and private (your codebase). A research tool lives or 
 attribution. Naming which jobs <em>your</em> feature needs tells you how hard to invest in
 retrieval quality — and whether RAG is even the right tool
 (<a href="rag-vs-long-context-vs-finetuning.html">lesson 6</a>).</p>
-<h2>What RAG is <em>not</em></h2>
+<h2 id="what-rag-is-not">What RAG is <em>not</em></h2>
 <ul>
 <li><strong>Not fine-tuning.</strong> Fine-tuning bakes <em>behaviour and style</em> into the model's weights and
   is poor at facts (they go stale and can't be cited). RAG supplies <em>facts</em> at query time.
@@ -407,7 +422,7 @@ retrieval quality — and whether RAG is even the right tool
   <a href="retrieval-quality.html">retrieval quality</a> and <a href="../ai/03-rag.html#retrieval-evals">evals</a>
   are the real work, not the model call.</li>
 </ul>
-<h2>The test: do you actually need RAG?</h2>
+<h2 id="the-test-do-you-actually-need-rag">The test: do you actually need RAG?</h2>
 <p>You need retrieval when the answer depends on knowledge that is any of:</p>
 <ol>
 <li><strong>Private</strong> — your customers, contracts, code, tickets; never in a training set.</li>
@@ -419,7 +434,7 @@ retrieval quality — and whether RAG is even the right tool
 <p>If none hold — the knowledge is public, static, small, and needs no citation — a bare model
 (or a fine-tuned one for style) may be simpler. If any hold, you're in RAG territory, and
 the rest of this module is how to do it well.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Closed-book shipping</strong> — trusting the model's memory for facts about your business;
   discovered when a customer screenshots an invented policy.</li>
@@ -433,7 +448,7 @@ the rest of this module is how to do it well.</p>
 <li><strong>RAG where fine-tuning or long-context fits better</strong> — reaching for the default without
   checking the alternatives (<a href="rag-vs-long-context-vs-finetuning.html">lesson 6</a>).</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Which of the four jobs (grounding, freshness, private, citable) does this feature
       actually need — and does that justify retrieval?</li>
@@ -444,7 +459,7 @@ the rest of this module is how to do it well.</p>
 <li class="task todo">Is retrieval quality — not just prompt wording — on the roadmap as the thing to
       measure and improve?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="embeddings-and-semantic-search.html">Embeddings &amp; semantic search</a> — how retrieval finds
   the right passages.</li>
@@ -454,7 +469,26 @@ the rest of this module is how to do it well.</p>
 <li><a href="../ai/03-rag.html#retrieval-evals">Retrieval evals</a> — proving the model used the data.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="embeddings-and-semantic-search.html"><span class="lbl">→ Next</span><span class="ttl">Embeddings &amp; semantic search</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-open-book-not-closed-book">The mental model: open-book, not closed-book</a><a class="h2" href="#the-four-jobs-rag-does">The four jobs RAG does</a><a class="h2" href="#what-rag-is-not">What RAG is not</a><a class="h2" href="#the-test-do-you-actually-need-rag">The test: do you actually need RAG?</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

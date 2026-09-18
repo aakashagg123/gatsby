@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -326,7 +341,7 @@ multiply — multi-agent systems and the real protocol landscape. And it covers 
 disciplines that separate shipped agents from viral demos: <strong>reliability, security, and
 unit economics</strong>. Every lesson ships a diagram. The module opens with a <strong>knowledge
 graph</strong> so you can see how the pieces connect before you study them one at a time.</p>
-<h2>The knowledge graph</h2>
+<h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>Agentic AI isn't a layer cake — it's a loop with disciplines attached. Everything in this
 module hangs off this picture:</p>
 <style>
@@ -450,7 +465,7 @@ Multi-agent patterns run many cycles at once. <strong>The disciplines:</strong> 
 trace. Error analysis turns traces into evaluators. Guardrails police the loop inline,
 while evals gate it offline. Security bounds every tool. A human approves the
 irreversible. Economics decides whether any of it is a business.</p>
-<h2>The lessons</h2>
+<h2 id="the-lessons">The lessons</h2>
 <ul>
 <li><a href="what-is-an-agent.html"><strong>What is an agent?</strong></a> — the loop, the autonomy spectrum from
   workflow to agent, and when <em>not</em> to build one.</li>
@@ -473,7 +488,7 @@ irreversible. Economics decides whether any of it is a business.</p>
 the concept should change, and the question it should make you ask. Each lesson also has
 a diagram to make it concrete. Builders who want to go deeper than concepts can construct
 this machinery hands-on in the <a href="../harness/index.html">Harness engineering track</a>.</p>
-<h2>Connects to other tracks</h2>
+<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
 <ul>
 <li><a href="../ai/02-reliable-outputs.html#function-calling">Tools &amp; function calling reliability</a> — the contract layer under the agent's tool calls.</li>
 <li><a href="../knowledge-graphs/knowledge-graphs-and-llms.html">Knowledge graphs &amp; LLMs</a> — GraphRAG as durable agent memory.</li>

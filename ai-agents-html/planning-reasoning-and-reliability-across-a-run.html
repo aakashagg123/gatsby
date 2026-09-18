@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>AI agents</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-an-agent-is-and-how-much-autonomy-it-needs.html">1 · What an agent is, and how much autonomy it needs</a><a class="modlink active" href="planning-reasoning-and-reliability-across-a-run.html">2 · Planning, reasoning &amp; reliability across a run</a><a class="modlink" href="when-not-to-build-an-agent.html">3 · When not to build an agent</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-an-agent-is-and-how-much-autonomy-it-needs.html">1 · What an agent is, and how much autonomy it needs</a><a class="modlink active" href="planning-reasoning-and-reliability-across-a-run.html">2 · Planning, reasoning &amp; reliability across a run</a><a class="modlink" href="when-not-to-build-an-agent.html">3 · When not to build an agent</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Planning, reasoning &amp; reliability across a run</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Once an agent is looping, two things decide whether it actually finishes the job: how it
 reasons about what to do next, and whether small mistakes survive long enough to compound
 into a failed task. Reasoning isn't a separate module bolted onto the model — it's the
@@ -338,7 +353,7 @@ hoping for?"</em></p>
 autonomously, ships something that behaves like a coin flip, and finds out from
 customer complaints instead of from a dashboard.</p>
 </blockquote>
-<h2>The mental model: errors compound faster than intuition expects</h2>
+<h2 id="the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</h2>
 <pre class="mermaid">flowchart TB
   S1[&quot;Step 1&lt;br/&gt;95% reliable&quot;] --&gt; S2[&quot;Step 2&lt;br/&gt;95% reliable&quot;]
   S2 --&gt; S3[&quot;...&quot;]
@@ -353,7 +368,7 @@ smarter model. The full math, the recovery ladder (retry, revise, restart, escal
 the eval and tracing discipline that makes an agent's failures knowable instead of
 mysterious are developed in depth in
 <a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a>.</p>
-<h2>How an agent reasons, at a glance</h2>
+<h2 id="how-an-agent-reasons-at-a-glance">How an agent reasons, at a glance</h2>
 <p>An agent's "thinking" is the model working through one of a small number of patterns, not
 a separate cognitive layer. Interleaving a thought with each action lets the agent adjust
 one step at a time, which suits tasks where each result should shape the next, like
@@ -366,7 +381,7 @@ check than at grading their own unverifiable claims. Which pattern fits, and how
 the model's newer "extended thinking" budget a given task deserves, is a cost and latency
 decision as much as a quality one — developed in full in
 <a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; reasoning</a>.</p>
-<h2>Why the environment matters more than the model</h2>
+<h2 id="why-the-environment-matters-more-than-the-model">Why the environment matters more than the model</h2>
 <p>The single strongest lever on how well an agent performs isn't which pattern it follows or
 how long it's allowed to think — it's the quality of the feedback it gets back from
 whatever it's acting on. An agent that can see a failing test, a clear error message, or a
@@ -375,7 +390,7 @@ whether the last step actually worked — drifts confidently in the wrong direct
 matter how capable the underlying model is. Before reaching for a smarter model or a more
 elaborate reasoning pattern, the higher-leverage question is almost always what the agent
 would actually see if it got something wrong.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Demo-horizon thinking</strong> — judging an agent's reliability on a hand-picked three-step
   task, then deploying it on the thirty-step version of the same job the compounding math
@@ -388,7 +403,7 @@ would actually see if it got something wrong.</p>
 <li><strong>Deliberation as decoration</strong> — maximum reasoning effort spent on every request because
   it made a demo look smarter, regardless of whether the task needed it.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For this task's typical length: what does the compounding math predict end to end,
       given our actual measured per-step success rate?</li>
@@ -397,7 +412,7 @@ would actually see if it got something wrong.</p>
 <li class="task todo">Is there a real recovery ladder (retry, revise, restart, escalate), or does every
       failure get handled the same way?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is, and how much autonomy it needs</a>
   — the loop this lesson's reasoning and reliability concerns run inside.</li>
@@ -409,7 +424,26 @@ would actually see if it got something wrong.</p>
   compounding math, recovery, and the eval and tracing discipline behind it.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-an-agent-is-and-how-much-autonomy-it-needs.html"><span class="lbl">← Previous</span><span class="ttl">What an agent is, and how much autonomy it needs</span></a><a class="navcard next" href="when-not-to-build-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">When not to build an agent</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</a><a class="h2" href="#how-an-agent-reasons-at-a-glance">How an agent reasons, at a glance</a><a class="h2" href="#why-the-environment-matters-more-than-the-model">Why the environment matters more than the model</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>LLMs</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink active" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink active" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
     <h1>Choosing a model</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>There is no single best model, only the best model for a specific job, at a specific
 price, at a specific speed. Four dimensions do most of the work in that choice. <strong>Size and
 capability</strong> — bigger, more capable models handle harder reasoning and nuance better, at a
@@ -339,7 +354,7 @@ cheaper one would handle just as well?"</em></p>
 gets questioned, because nobody ever asked whether every request actually needed the
 model currently answering it.</p>
 </blockquote>
-<h2>The mental model: hiring for a task, not for a title</h2>
+<h2 id="the-mental-model-hiring-for-a-task-not-for-a-title">The mental model: hiring for a task, not for a title</h2>
 <p>Choosing a model is like staffing a task, not filling one permanent role. A simple,
 well-defined task doesn't need your most senior, most expensive person; a genuinely hard,
 ambiguous one does. A product with many different AI-powered features is really staffing
@@ -351,7 +366,7 @@ everything."</p>
   Q --&gt;|&quot;complex reasoning,&lt;br/&gt;nuance, high stakes&quot;| BIG[&quot;Larger, more capable,&lt;br/&gt;costlier model&quot;]
   SMALL --&gt; COST1[&quot;Lower cost,&lt;br/&gt;lower latency&quot;]
   BIG --&gt; COST2[&quot;Higher cost,&lt;br/&gt;higher latency,&lt;br/&gt;better on hard cases&quot;]</pre>
-<h2>The four dimensions</h2>
+<h2 id="the-four-dimensions">The four dimensions</h2>
 <ul>
 <li><strong>Size and capability.</strong> Larger models generally handle ambiguity, nuance, and multi-step
   reasoning better. This is not a straight line — the <a href="capabilities-and-the-jagged-frontier.html">jagged frontier</a>
@@ -369,7 +384,7 @@ everything."</p>
   infrastructure: more control over cost at scale and over your data's path, at the cost of
   running and maintaining that infrastructure yourself.</li>
 </ul>
-<h2>Model routing: the practical answer to "which one?"</h2>
+<h2 id="model-routing-the-practical-answer-to-which-one">Model routing: the practical answer to "which one?"</h2>
 <p>The strongest teams do not pick one model for a whole product. They route different
 request types to different models based on how hard each one actually is — a pattern
 called model routing. A simple classification step goes to a small, cheap, fast model. A
@@ -378,14 +393,14 @@ choice from a single, static decision into a per-request routing rule, and it is
 where the largest, least painful cost savings in an AI product are found — because most
 products send far more simple requests than hard ones, and were paying premium prices for
 all of them.</p>
-<h2>Choosing without chasing every release</h2>
+<h2 id="choosing-without-chasing-every-release">Choosing without chasing every release</h2>
 <p>New models arrive often, and each one claims to beat the last on some benchmark. Chasing
 every release is its own cost, in engineering time and in the testing debt of re-verifying
 a feature against a model that changed. A more sustainable habit: revisit model choice on a
 deliberate cadence, evaluate a new option against your own <a href="capabilities-and-the-jagged-frontier.html">tested tasks</a>,
 not against its benchmark score, and switch only when the improvement is real for your
 product, not just real in the abstract.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>One model for everything</strong> — routing every request, simple or hard, through the same
   expensive, capable model, and paying a premium on the simple majority.</li>
@@ -396,7 +411,7 @@ product, not just real in the abstract.</p>
 <li><strong>Ignoring latency until launch</strong> — discovering only after shipping that a highly capable
   model is too slow for an interactive feature that needed a fast response.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we split our product's AI requests by how hard each type actually is, rather
       than sending everything to the same model?</li>
@@ -406,7 +421,7 @@ product, not just real in the abstract.</p>
       switching on benchmark scores alone?</li>
 <li class="task todo">Is latency budgeted per feature, based on whether a user is actively waiting or not?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="capabilities-and-the-jagged-frontier.html">Capabilities &amp; the jagged frontier</a> — why
   "more capable" doesn't mean uniformly better at everything.</li>
@@ -416,7 +431,26 @@ product, not just real in the abstract.</p>
   what each model choice actually costs, per feature.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="temperature-sampling-and-determinism.html"><span class="lbl">← Previous</span><span class="ttl">Temperature, sampling &amp; determinism</span></a><a class="navcard next" href="prompting-vs-rag-vs-finetuning.html"><span class="lbl">→ Next</span><span class="ttl">Prompting vs. RAG vs. fine-tuning</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-hiring-for-a-task-not-for-a-title">The mental model: hiring for a task, not for a title</a><a class="h2" href="#the-four-dimensions">The four dimensions</a><a class="h2" href="#model-routing-the-practical-answer-to-which-one">Model routing: the practical answer to &quot;which one?&quot;</a><a class="h2" href="#choosing-without-chasing-every-release">Choosing without chasing every release</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

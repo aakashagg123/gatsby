@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>First principles</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink active" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink active" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 05</span>
     <h1>Learning how to learn</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Breadth is only affordable if you learn <em>efficiently</em>, and most people learn with methods
 that feel productive but barely work: re-reading, highlighting, cramming. The
 evidence-backed engine is small. <strong>Retrieval practice</strong> means testing yourself instead of
@@ -336,7 +351,7 @@ produces it?"</em></p>
 because you've seen it, and you discover at the worst moment that you can't actually
 retrieve or use it.</p>
 </blockquote>
-<h2>The core illusion: fluency ≠ mastery</h2>
+<h2 id="the-core-illusion-fluency-mastery">The core illusion: fluency ≠ mastery</h2>
 <pre class="mermaid">flowchart TB
   RE[&quot;Re-reading &amp; highlighting&lt;br/&gt;(feels productive)&quot;] --&gt;|&quot;fluency illusion&quot;| FORGET[&quot;Fast forgetting&quot;]
   RP[&quot;Retrieval practice&lt;br/&gt;(test yourself)&quot;] --&gt; DUR[&quot;Durable memory&quot;]
@@ -357,26 +372,26 @@ the moment usually make it stronger and more durable.</strong> Struggling to ret
 things out far enough that you've half-forgotten, mixing problem types so you can't
 autopilot — all of these feel worse and work better. If your studying is comfortable, be
 suspicious.</p>
-<h2>The high-leverage techniques</h2>
-<h3>Retrieval practice — test, don't review</h3>
+<h2 id="the-high-leverage-techniques">The high-leverage techniques</h2>
+<h3 id="retrieval-practice-test-dont-review">Retrieval practice — test, don't review</h3>
 <p>Trying to <em>pull</em> information out of memory strengthens it far more than putting it back in
 by re-reading. This is the <strong>testing effect</strong>, one of the most replicated findings in the
 field. Practically: close the book and write what you remember. Use flashcards that force
 production. Answer questions before checking. The <em>effort of retrieval</em> is the
 mechanism — which is why looking at the answer too soon destroys the benefit.</p>
-<h3>Spacing — revisit over expanding intervals</h3>
+<h3 id="spacing-revisit-over-expanding-intervals">Spacing — revisit over expanding intervals</h3>
 <p>Cramming loads material into short-term memory, where it decays within days. <strong>Spaced
 repetition</strong> means reviewing at growing intervals — a day, then three, then a week, then a
 month. It interrupts forgetting right at the edge, and each effortful recall resets the
 decay clock further out. The same total study time, <em>spaced</em>, produces dramatically more
 retention than <em>massed</em>. Tools like Anki automate the scheduling, but the principle works
 on paper.</p>
-<h3>Interleaving — mix it up</h3>
+<h3 id="interleaving-mix-it-up">Interleaving — mix it up</h3>
 <p>Studying one topic to exhaustion before the next (<strong>blocking</strong>) feels orderly and performs
 worse than <strong>interleaving</strong>: mixing related topics or problem types in a session.
 Interleaving forces your brain to <em>choose</em> the right approach each time instead of running
 on autopilot — exactly the skill you need when problems arrive unlabeled in real life.</p>
-<h3>The Feynman technique — explain it to a child</h3>
+<h3 id="the-feynman-technique-explain-it-to-a-child">The Feynman technique — explain it to a child</h3>
 <p>Named for Richard Feynman's habit of reducing any concept to a plain explanation. The loop:</p>
 <ol>
 <li>Pick a concept and explain it, out loud or written, in <strong>simple language</strong> — as if to a
@@ -391,7 +406,7 @@ can't. The technique doubles as retrieval practice (you're producing, not review
 is the fastest way to reach the "working fluency" bar that
 <a href="becoming-a-polymath.html">polymathy</a> needs. Teaching a thing is how you find out you
 don't yet know it.</p>
-<h3>Deliberate practice — work the edge, with feedback</h3>
+<h3 id="deliberate-practice-work-the-edge-with-feedback">Deliberate practice — work the edge, with feedback</h3>
 <p>From Anders Ericsson's research on expertise: improvement doesn't come from <em>doing</em> an
 activity, where you plateau at "good enough." It comes from <strong>deliberate practice</strong>:
 targeting the specific sub-skill just beyond your current ability, with tight feedback,
@@ -399,7 +414,7 @@ repeatedly. The ingredients are a well-defined stretch goal, full focus, immedia
 feedback, and relentless work on weaknesses rather than replaying strengths. Ten years of
 casual driving makes no one an expert driver. It's the <em>structure</em> of the practice, not
 the hours, that builds skill.</p>
-<h2>Putting it together</h2>
+<h2 id="putting-it-together">Putting it together</h2>
 <table>
 <thead>
 <tr>
@@ -440,7 +455,7 @@ the hours, that builds skill.</p>
 and explain it (Feynman + retrieval) → note the gaps → mix today's topic with last week's
 (interleaving) → revisit on an expanding schedule (spacing).</strong> It feels slower than
 binge-reading. It is several times more durable.</p>
-<h2>How this powers the rest of the module</h2>
+<h2 id="how-this-powers-the-rest-of-the-module">How this powers the rest of the module</h2>
 <p>This lesson is the <strong>engine</strong> under the other five. The
 <a href="mental-models-latticework.html">latticework</a> demands you learn many models to <em>fluency</em>,
 not familiarity — that's retrieval, spacing, and Feynman.
@@ -457,7 +472,7 @@ three times. Fluency and learning move in opposite directions. Re-reading maximi
 feeling; retrieval maximizes the retention. Every technique in this lesson is that
 finding, generalized: if studying feels smooth, it probably isn't working.</p>
 </blockquote>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Mistaking familiarity for mastery</strong> — The fluency illusion, the headline trap.</li>
 <li><strong>Passive review</strong> — Re-reading and highlighting feel productive and barely move
@@ -469,7 +484,7 @@ finding, generalized: if studying feels smooth, it probably isn't working.</p>
 <li><strong>Avoiding the discomfort</strong> — Quitting a method <em>because</em> it feels hard, which is
   exactly the signal it's working.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Am I <strong>testing myself</strong> (retrieval) more than I'm re-reading?</li>
 <li class="task todo">Are my reviews <strong>spaced</strong> over expanding intervals rather than massed?</li>
@@ -477,7 +492,7 @@ finding, generalized: if studying feels smooth, it probably isn't working.</p>
 <li class="task todo">Is my practice aimed at the <strong>edge</strong> of my ability, with real feedback?</li>
 <li class="task todo">Am I treating <em>discomfort</em> as a signal of learning, not a reason to stop?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="mental-models-latticework.html">A latticework of mental models</a></li>
 <li><a href="becoming-a-polymath.html">Becoming a polymath</a></li>
@@ -485,7 +500,26 @@ finding, generalized: if studying feels smooth, it probably isn't working.</p>
 <li><a href="traps-and-limits.html">Traps &amp; limits</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="becoming-a-polymath.html"><span class="lbl">← Previous</span><span class="ttl">Becoming a polymath</span></a><a class="navcard next" href="traps-and-limits.html"><span class="lbl">→ Next</span><span class="ttl">Traps &amp; limits</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-core-illusion-fluency-mastery">The core illusion: fluency ≠ mastery</a><a class="h2" href="#the-high-leverage-techniques">The high-leverage techniques</a><a class="h3" href="#retrieval-practice-test-dont-review">Retrieval practice — test, don&#x27;t review</a><a class="h3" href="#spacing-revisit-over-expanding-intervals">Spacing — revisit over expanding intervals</a><a class="h3" href="#interleaving-mix-it-up">Interleaving — mix it up</a><a class="h3" href="#the-feynman-technique-explain-it-to-a-child">The Feynman technique — explain it to a child</a><a class="h3" href="#deliberate-practice-work-the-edge-with-feedback">Deliberate practice — work the edge, with feedback</a><a class="h2" href="#putting-it-together">Putting it together</a><a class="h2" href="#how-this-powers-the-rest-of-the-module">How this powers the rest of the module</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

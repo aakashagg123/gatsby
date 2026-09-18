@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink active" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink active" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
     <h1>Location &amp; geo services</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Location-aware systems face a fundamental challenge: mapping the continuous, curved surface of the Earth onto discrete, queryable data structures. <strong>Proximity search</strong> (find businesses near me) uses geohashing to convert 2D coordinates into sortable 1D strings. This enables efficient range queries on standard databases. <strong>Nearby friends</strong> (real-time location sharing) adds the streaming dimension — 334K location updates per second flowing through WebSocket servers and Redis pub/sub channels. <strong>Google Maps</strong> stacks multiple geospatial problems: tiling the planet into a hierarchy of pre-rendered images, routing through continent-scale road graphs, and computing adaptive ETAs from live traffic. The common thread: spatial indexing is the bottleneck. The choice of index structure — geohash, quadtree, S2 cells — determines every downstream tradeoff.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,8 +337,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — Your "find nearby" feature scans every record in the database, your real-time location sharing drains phone batteries, or your routing engine gives ETAs that are 30% off because it ignores live traffic.</p>
 </blockquote>
 <hr />
-<h2>Proximity service</h2>
-<h3>Scale and requirements</h3>
+<h2 id="proximity-service">Proximity service</h2>
+<h3 id="scale-and-requirements">Scale and requirements</h3>
 <ul>
 <li>100M daily active users</li>
 <li>200M businesses in the database</li>
@@ -331,10 +346,10 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Read-heavy: business data changes infrequently; searches happen constantly</li>
 <li>Latency target: results in under 200ms</li>
 </ul>
-<h3>The spatial indexing problem</h3>
+<h3 id="the-spatial-indexing-problem">The spatial indexing problem</h3>
 <p>The naive approach — scan all 200M businesses, compute the distance to the user, filter by radius — is O(n) per query. At 100M DAU, that's unacceptable.</p>
 <p>The problem is that standard database indexes (B-trees) work on one dimension. Latitude and longitude are two dimensions. You need a way to convert 2D spatial proximity into something a 1D index can handle.</p>
-<h3>Approaches compared</h3>
+<h3 id="approaches-compared">Approaches compared</h3>
 <table>
 <thead>
 <tr>
@@ -378,7 +393,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p><strong>Geohash is the standard choice</strong> for most proximity services: it's simple, works with any database that supports range queries, and handles the common case well.</p>
-<h3>How geohashing works</h3>
+<h3 id="how-geohashing-works">How geohashing works</h3>
 <p>Geohash recursively bisects the world, alternating between longitude and latitude, encoding each decision as a bit. The bits are then encoded as a base-32 string:</p>
 <style>
 .sd-geo{background:#ffffff;border:1px solid #d1d9e0;
@@ -604,7 +619,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<h3>The boundary problem and 8-neighbor lookup</h3>
+<h3 id="the-boundary-problem-and-8-neighbor-lookup">The boundary problem and 8-neighbor lookup</h3>
 <p>Geohash has a well-known edge case: two points on opposite sides of a cell boundary can be very close geographically but have completely different geohash prefixes.</p>
 <p>The solution: query the target cell <strong>and all 8 neighboring cells</strong>:</p>
 <pre class="mermaid">flowchart TB
@@ -615,7 +630,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
     SW[&quot;SW neighbor&quot;] --- S[&quot;S neighbor&quot;] --- SE[&quot;SE neighbor&quot;]
   end</pre>
 <p>This guarantees coverage: any point within the search radius falls within one of these 9 cells (assuming the cell size is chosen to match the search radius). The query becomes 9 prefix lookups — still fast on an indexed column.</p>
-<h3>Caching with Redis</h3>
+<h3 id="caching-with-redis">Caching with Redis</h3>
 <p>Business data changes slowly (new restaurant listings, address updates), but searches are extremely frequent. Cache businesses by geohash key in Redis:</p>
 <ul>
 <li><strong>Key:</strong> <code>geohash:{precision}:{geohash_value}</code> (e.g., <code>geohash:6:9q8yyk</code>)</li>
@@ -624,7 +639,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Invalidation:</strong> when a business is added/updated/removed, recompute its geohash and update the relevant key</li>
 </ul>
 <p>A search query resolves to 9 Redis lookups (the target cell + 8 neighbors), each returning a list of business IDs. Client-side or API-side filtering then computes exact distances and applies the radius filter.</p>
-<h3>Architecture</h3>
+<h3 id="architecture">Architecture</h3>
 <pre class="mermaid">flowchart LR
   C[Client] --&gt; LB[Load balancer]
   LB --&gt; API[API servers]
@@ -633,8 +648,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   BG[Background worker] --&gt;|&quot;Rebuild cache&lt;br/&gt;on business changes&quot;| RC
   DB --&gt;|&quot;Change stream&quot;| BG</pre>
 <hr />
-<h2>Nearby friends</h2>
-<h3>Scale and requirements</h3>
+<h2 id="nearby-friends">Nearby friends</h2>
+<h3 id="scale-and-requirements_1">Scale and requirements</h3>
 <ul>
 <li>1 billion total users, 10% concurrent (~100M online at any time)</li>
 <li>10M actively sharing location simultaneously</li>
@@ -643,7 +658,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Show friends within 5 miles, refresh every 30 seconds</li>
 <li>Average user has 400 friends, ~10% are nearby at any time</li>
 </ul>
-<h3>Why HTTP polling fails</h3>
+<h3 id="why-http-polling-fails">Why HTTP polling fails</h3>
 <p>At 334K updates/sec, if each update requires:</p>
 <ol>
 <li>Client sends location to server (HTTP request)</li>
@@ -651,7 +666,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Server returns nearby friends list</li>
 </ol>
 <p>This is request-heavy, latency-heavy, and wasteful — most updates won't change the nearby-friends list.</p>
-<h3>WebSocket servers (stateful)</h3>
+<h3 id="websocket-servers-stateful">WebSocket servers (stateful)</h3>
 <p>The solution: <strong>persistent WebSocket connections</strong> between each client and a WebSocket server. The server holds in-memory state mapping user_id to their connection:</p>
 <pre class="mermaid">flowchart TD
   subgraph &quot;WebSocket server 1&quot;
@@ -671,7 +686,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>If yes, it pushes User A's new location to the friend's WebSocket connection.</li>
 </ol>
 <p>The problem: User A's friends may be connected to <em>different</em> WebSocket servers. You need a way for Server 1 to notify Server 2 that User A moved.</p>
-<h3>Redis pub/sub for cross-server communication</h3>
+<h3 id="redis-pubsub-for-cross-server-communication">Redis pub/sub for cross-server communication</h3>
 <p>Each user gets a <strong>Redis pub/sub channel</strong> named after their user_id. When User A comes online:</p>
 <ul>
 <li>User A's WebSocket server subscribes to the channels of all of User A's friends.</li>
@@ -688,7 +703,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   B-&gt;&gt;R: Publish to channel:user_b (lat, lng, ts)
   R-&gt;&gt;A: Receive User B&#x27;s location
   A-&gt;&gt;A: Compute distance, push to User A if nearby</pre>
-<h3>Scaling Redis pub/sub</h3>
+<h3 id="scaling-redis-pubsub">Scaling Redis pub/sub</h3>
 <p>With 10M concurrent users each subscribing to ~400 friend channels, the total subscription count is 4 billion. A single Redis instance cannot handle this.</p>
 <p><strong>Consistent hashing</strong> distributes users across a Redis pub/sub cluster:</p>
 <ul>
@@ -696,7 +711,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>When a new Redis node is added, only ~1/N of channels need to migrate.</li>
 <li>The WebSocket server maintains connections to multiple Redis nodes (one per friend's assigned node).</li>
 </ul>
-<h3>Redis location cache</h3>
+<h3 id="redis-location-cache">Redis location cache</h3>
 <p>Separate from the pub/sub layer, a <strong>Redis location cache</strong> stores the latest known position of every active user:</p>
 <ul>
 <li><strong>Key:</strong> <code>loc:{user_id}</code></li>
@@ -708,7 +723,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>When a user first comes online, it bootstraps their nearby-friends list without waiting for individual friend updates.</li>
 <li>It provides a fallback when pub/sub messages are lost.</li>
 </ol>
-<h3>Alternative: Erlang distributed processes</h3>
+<h3 id="alternative-erlang-distributed-processes">Alternative: Erlang distributed processes</h3>
 <p>An alternative architecture uses Erlang/Elixir (or similar actor-model systems) where each user is a lightweight process:</p>
 <ul>
 <li>Each user process holds their state (location, friend list, subscriptions).</li>
@@ -718,8 +733,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <p>This eliminates the Redis layer but couples you to the Erlang ecosystem. WhatsApp famously used this approach to handle 2M connections per server.</p>
 <hr />
-<h2>Google Maps</h2>
-<h3>Scale and requirements</h3>
+<h2 id="google-maps">Google Maps</h2>
+<h3 id="scale-and-requirements_2">Scale and requirements</h3>
 <ul>
 <li>1 billion daily active users</li>
 <li>Global coverage: roads, transit, walking, cycling</li>
@@ -727,7 +742,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Sub-second tile loading</li>
 <li>Real-time traffic-aware routing and ETA</li>
 </ul>
-<h3>Web Mercator projection</h3>
+<h3 id="web-mercator-projection">Web Mercator projection</h3>
 <p>Maps display a spherical planet on a flat screen. <strong>Web Mercator</strong> (EPSG:3857) projects the sphere onto a cylinder, then unrolls it:</p>
 <ul>
 <li>The world becomes a square at zoom level 0.</li>
@@ -736,13 +751,13 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Zoom 0 = 1 tile (whole world). Zoom 21 = ~4 trillion tiles (building-level detail).</li>
 </ul>
 <p>The projection distorts area near the poles (Greenland looks enormous) but preserves angles and shapes locally, which is what navigation needs.</p>
-<h3>Geohashing for tile addressing</h3>
+<h3 id="geohashing-for-tile-addressing">Geohashing for tile addressing</h3>
 <p>Each tile is addressed by (zoom_level, x, y), but the system uses geohashing principles for spatial indexing:</p>
 <ul>
 <li>A tile's geohash-like address enables efficient CDN caching (nearby tiles share prefixes, enabling prefix-based cache grouping).</li>
 <li>Tile requests are the dominant read pattern — pre-render and cache aggressively.</li>
 </ul>
-<h3>Static pre-rendered tiles + CDN</h3>
+<h3 id="static-pre-rendered-tiles-cdn">Static pre-rendered tiles + CDN</h3>
 <p>Map tiles are <strong>pre-rendered</strong> at all zoom levels and served as static images from a CDN:</p>
 <pre class="mermaid">flowchart LR
   C[Client] --&gt;|&quot;tile request:&lt;br/&gt;zoom/x/y.png&quot;| CDN[CDN edge server]
@@ -755,7 +770,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Remote areas are rarely accessed → cache misses are rare and acceptable.</li>
 <li>Tiles change infrequently (road networks update weekly/monthly) → long TTLs.</li>
 </ul>
-<h3>Hierarchical routing tiles</h3>
+<h3 id="hierarchical-routing-tiles">Hierarchical routing tiles</h3>
 <p>Road network routing at global scale cannot use a single graph — the full graph has billions of nodes. Instead, the road network is partitioned into <strong>routing tiles</strong> at multiple hierarchy levels:</p>
 <pre class="mermaid">flowchart TD
   L0[&quot;Level 0: Local roads&lt;br/&gt;Small tiles, full detail&quot;]
@@ -770,14 +785,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Route locally from highway to destination (Level 0).</li>
 </ol>
 <p>This hierarchical decomposition reduces the search space from billions of nodes to thousands per query.</p>
-<h3>A* shortest path</h3>
+<h3 id="a-shortest-path">A* shortest path</h3>
 <p>Within each routing tile, the system uses <strong>A* search</strong> — a variant of Dijkstra's algorithm that uses a heuristic (straight-line distance to destination) to prioritize exploring nodes in the direction of the goal:</p>
 <ul>
 <li><strong>Edge weights</strong> incorporate distance, speed limit, road type, and real-time traffic.</li>
 <li><strong>Pre-computed contractions</strong> (Contraction Hierarchies) shortcut through low-importance nodes, reducing the graph size by 10-100x.</li>
 <li>The combination of hierarchical tiles + A* + contraction hierarchies makes continent-scale routing possible in milliseconds.</li>
 </ul>
-<h3>Client-side GPS batching</h3>
+<h3 id="client-side-gps-batching">Client-side GPS batching</h3>
 <p>Mobile clients send GPS coordinates, but not every reading:</p>
 <ul>
 <li>GPS readings arrive at 1 Hz (once per second).</li>
@@ -785,7 +800,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>The client <strong>batches</strong> readings and sends them every 15-30 seconds, or when significant movement is detected.</li>
 <li>The batch includes timestamps for each reading, enabling the server to reconstruct the path.</li>
 </ul>
-<h3>Adaptive ETA via tile-based traffic tracking</h3>
+<h3 id="adaptive-eta-via-tile-based-traffic-tracking">Adaptive ETA via tile-based traffic tracking</h3>
 <p>Real-time ETA depends on current traffic conditions, computed from the aggregate behavior of all map users:</p>
 <ol>
 <li>Every active navigation client reports its (tile, speed, timestamp) via GPS batches.</li>
@@ -801,7 +816,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   GRAPH --&gt; ETA[&quot;ETA computation&lt;br/&gt;for new route requests&quot;]</pre>
 <p>The feedback loop is powerful: the more users navigate with the system, the better the traffic data, the more accurate the ETAs, the more users trust and use the system.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Geohash boundary misses</strong> — a business 50m away sits across a geohash boundary and is missed because only the center cell was queried. Always query 8 neighbors.</li>
 <li><strong>WebSocket server failure</strong> — a server crash disconnects thousands of users. They must reconnect (to a different server), re-subscribe to all friend channels, and re-bootstrap their nearby list. Design for fast reconnection.</li>
@@ -811,7 +826,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Tile rendering backlog</strong> — when map data updates, millions of tiles need re-rendering. If the render pipeline can't keep up, users see stale map tiles for days or weeks.</li>
 <li><strong>Hot geohash cells</strong> — Times Square, Shibuya Crossing, or a stadium during an event creates extreme load on one geohash cell. The Redis key for that cell becomes a hotspot. Mitigation: split hot cells into sub-cells or replicate the key.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have you chosen a spatial index (geohash, quadtree, S2) and justified the choice against your data distribution and query pattern?</li>
 <li class="task todo">For geohash: are you querying 8 neighbors plus the target cell to avoid boundary misses?</li>
@@ -823,7 +838,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Is there a traffic aggregation feedback loop for adaptive ETA?</li>
 <li class="task todo">Have you tested behavior under GPS drift, stale data, and pub/sub message loss?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="core-building-blocks.html">Core building blocks</a> — consistent hashing for distributing Redis pub/sub channels; key-value stores for the location cache</li>
 <li><a href="real-time-systems.html">Real-time systems</a> — WebSocket connection management patterns from the chat system design</li>
@@ -831,7 +846,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="storage-and-sync.html">Storage &amp; sync</a> — notification via long polling as an alternative to WebSockets</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="storage-and-sync.html"><span class="lbl">← Previous</span><span class="ttl">Storage &amp; sync</span></a><a class="navcard next" href="data-infrastructure.html"><span class="lbl">→ Next</span><span class="ttl">Data infrastructure</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#proximity-service">Proximity service</a><a class="h3" href="#scale-and-requirements">Scale and requirements</a><a class="h3" href="#the-spatial-indexing-problem">The spatial indexing problem</a><a class="h3" href="#approaches-compared">Approaches compared</a><a class="h3" href="#how-geohashing-works">How geohashing works</a><a class="h3" href="#the-boundary-problem-and-8-neighbor-lookup">The boundary problem and 8-neighbor lookup</a><a class="h3" href="#caching-with-redis">Caching with Redis</a><a class="h3" href="#architecture">Architecture</a><a class="h2" href="#nearby-friends">Nearby friends</a><a class="h3" href="#scale-and-requirements_1">Scale and requirements</a><a class="h3" href="#why-http-polling-fails">Why HTTP polling fails</a><a class="h3" href="#websocket-servers-stateful">WebSocket servers (stateful)</a><a class="h3" href="#redis-pubsub-for-cross-server-communication">Redis pub/sub for cross-server communication</a><a class="h3" href="#scaling-redis-pubsub">Scaling Redis pub/sub</a><a class="h3" href="#redis-location-cache">Redis location cache</a><a class="h3" href="#alternative-erlang-distributed-processes">Alternative: Erlang distributed processes</a><a class="h2" href="#google-maps">Google Maps</a><a class="h3" href="#scale-and-requirements_2">Scale and requirements</a><a class="h3" href="#web-mercator-projection">Web Mercator projection</a><a class="h3" href="#geohashing-for-tile-addressing">Geohashing for tile addressing</a><a class="h3" href="#static-pre-rendered-tiles-cdn">Static pre-rendered tiles + CDN</a><a class="h3" href="#hierarchical-routing-tiles">Hierarchical routing tiles</a><a class="h3" href="#a-shortest-path">A* shortest path</a><a class="h3" href="#client-side-gps-batching">Client-side GPS batching</a><a class="h3" href="#adaptive-eta-via-tile-based-traffic-tracking">Adaptive ETA via tile-based traffic tracking</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

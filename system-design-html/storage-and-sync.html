@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink active" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink active" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 05</span>
     <h1>Storage &amp; sync</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Cloud storage systems solve two distinct problems. <strong>File sync</strong> (Google Drive) keeps user files consistent across devices. It splits them into content-addressed blocks, syncs only deltas, and resolves conflicts. <strong>Object storage</strong> (S3) stores immutable blobs at planetary scale, with extreme durability guarantees through replication or erasure coding. Both split metadata from data, but for different reasons: file sync needs fast tree traversal and conflict detection, while object storage needs petabyte-scale durability at minimal overhead. Understanding the boundary between these two models determines whether your product stores files that users edit or objects that services consume.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,8 +337,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — You promise "Google Drive-like sync" but deliver a dumb upload/download API, or you replicate 3x when erasure coding would halve your storage bill at higher durability.</p>
 </blockquote>
 <hr />
-<h2>Google Drive: cloud file storage</h2>
-<h3>Scale and requirements</h3>
+<h2 id="google-drive-cloud-file-storage">Google Drive: cloud file storage</h2>
+<h3 id="scale-and-requirements">Scale and requirements</h3>
 <ul>
 <li>50M registered users, 10M DAU</li>
 <li>10 GB free space per user</li>
@@ -332,7 +347,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>File history and conflict resolution required</li>
 <li>Mobile and desktop clients, web interface</li>
 </ul>
-<h3>The block server: splitting files into blocks</h3>
+<h3 id="the-block-server-splitting-files-into-blocks">The block server: splitting files into blocks</h3>
 <p>The core insight: don't upload entire files — split them into <strong>blocks</strong> (typically 4 MB), then hash, compress, and encrypt each block independently.</p>
 <style>
 .sd-drive{background:#ffffff;border:1px solid #d1d9e0;
@@ -479,7 +494,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Resumable uploads</strong> — if the connection drops mid-upload, resume from the last unfinished block, not from the beginning.</li>
 <li><strong>Bandwidth optimization</strong> — compress before encrypt, because encrypted data is incompressible. Typical savings: 30-50% on text-heavy files.</li>
 </ul>
-<h3>Metadata vs. data: the separation principle</h3>
+<h3 id="metadata-vs-data-the-separation-principle">Metadata vs. data: the separation principle</h3>
 <p>The system separates <strong>metadata</strong> (file names, versions, block lists, sharing permissions, user info) from <strong>data</strong> (the actual block bytes). They live in different stores with different consistency requirements:</p>
 <table>
 <thead>
@@ -518,7 +533,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>The metadata database schema centers on a <strong>file_versions</strong> table that maps each file version to an ordered list of block hashes, plus a <strong>blocks</strong> table that maps hashes to storage locations.</p>
-<h3>Upload flow</h3>
+<h3 id="upload-flow">Upload flow</h3>
 <pre class="mermaid">sequenceDiagram
   participant C as Client
   participant API as API servers
@@ -542,7 +557,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Pre-signed URLs</strong> — the API server generates time-limited, signed URLs for direct client-to-storage upload, keeping block data off the API servers.</li>
 <li><strong>Two-phase commit</strong> — the file entry is created as "pending" before upload begins, then flipped to "uploaded" after all blocks land. If the client disappears mid-upload, a background job cleans up orphaned pending entries.</li>
 </ul>
-<h3>Download and sync flow</h3>
+<h3 id="download-and-sync-flow">Download and sync flow</h3>
 <p>When a client comes online (or receives a push notification), it:</p>
 <ol>
 <li>Asks the metadata service: "What's changed since my last sync checkpoint?"</li>
@@ -551,7 +566,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Downloads only the blocks it doesn't already have.</li>
 <li>Reassembles files locally: decrypt, decompress, concatenate blocks in order.</li>
 </ol>
-<h3>Conflict resolution</h3>
+<h3 id="conflict-resolution">Conflict resolution</h3>
 <p>When two users (or two devices) edit the same file concurrently:</p>
 <ul>
 <li><strong>First-processed wins</strong> — the first upload to reach the metadata service becomes the canonical version.</li>
@@ -559,7 +574,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>The user resolves the conflict manually.</li>
 </ul>
 <p>This is deliberately simple. More sophisticated strategies (operational transforms for Google Docs, CRDTs for collaborative editing) are layered on top for specific file types but not built into the storage layer.</p>
-<h3>Notification service: long polling</h3>
+<h3 id="notification-service-long-polling">Notification service: long polling</h3>
 <p>Devices need to know when files change. The notification service uses <strong>long polling</strong> rather than WebSockets:</p>
 <ul>
 <li>Client opens a connection and holds it open.</li>
@@ -572,7 +587,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Long polling works through corporate proxies and firewalls that block WebSockets.</li>
 <li>Lower server resource consumption — no persistent connection state for millions of idle clients.</li>
 </ul>
-<h3>Storage tiering</h3>
+<h3 id="storage-tiering">Storage tiering</h3>
 <p>Not all data is equally hot:</p>
 <pre class="mermaid">flowchart TD
   HOT[&quot;Hot storage&lt;br/&gt;(SSD, fast access)&lt;br/&gt;Recently modified files&quot;]
@@ -583,8 +598,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   COLD --&gt;|&quot;User accesses file&quot;| HOT</pre>
 <p>Cold storage is 5-10x cheaper per GB than hot storage. For a system with 50M users and 10 GB each, the difference between storing everything hot (500 PB at hot prices) vs. tiering (with 80% of data cold) is enormous.</p>
 <hr />
-<h2>S3-like object storage</h2>
-<h3>Scale and requirements</h3>
+<h2 id="s3-like-object-storage">S3-like object storage</h2>
+<h3 id="scale-and-requirements_1">Scale and requirements</h3>
 <ul>
 <li><strong>100 PB</strong> of data</li>
 <li><strong>6 nines durability</strong> (99.9999%) — lose at most 1 object per million per year</li>
@@ -593,7 +608,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Immutable: write-once, read-many (no in-place updates)</li>
 <li>Support for versioning and lifecycle policies</li>
 </ul>
-<h3>Core data model: buckets and objects</h3>
+<h3 id="core-data-model-buckets-and-objects">Core data model: buckets and objects</h3>
 <p>An object store is flat — no directories, no hierarchy. The "path" is just a key string:</p>
 <pre><code>s3://my-bucket/photos/2024/vacation/IMG_0042.jpg
         ^           ^
@@ -605,7 +620,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Data</strong> — the byte payload (immutable once written)</li>
 <li><strong>Metadata</strong> — system metadata (size, content-type, creation time) plus user-defined key-value pairs</li>
 </ul>
-<h3>Architecture: metadata store + data store</h3>
+<h3 id="architecture-metadata-store-data-store">Architecture: metadata store + data store</h3>
 <pre class="mermaid">flowchart TB
   subgraph &quot;Control plane&quot;
     API[API service]
@@ -627,7 +642,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Does NOT store object data — only pointers to data nodes</li>
 </ul>
 <p><strong>Data store</strong> — a distributed cluster of storage nodes that hold the actual bytes. Each node manages local disks and reports health/capacity to a placement service.</p>
-<h3>The small-file problem and WAL-style merging</h3>
+<h3 id="the-small-file-problem-and-wal-style-merging">The small-file problem and WAL-style merging</h3>
 <p>Object storage is optimized for large objects, but real workloads include many small files (1-100 KB). Writing each small object as a separate file on the data node wastes:</p>
 <ul>
 <li>Disk seeks (one per file)</li>
@@ -648,7 +663,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   O2 --&gt; W
   O3 --&gt; W</pre>
 <p>The metadata store records (WAL_file_id, offset, length) for each object. Reads seek to the exact offset in the WAL file. This converts random writes to sequential appends — the fastest I/O pattern on both HDD and SSD.</p>
-<h3>Durability: replication vs. erasure coding</h3>
+<h3 id="durability-replication-vs-erasure-coding">Durability: replication vs. erasure coding</h3>
 <p>The two approaches to surviving disk and node failures:</p>
 <p><strong>3x Replication:</strong></p>
 <ul>
@@ -709,7 +724,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>At 100 PB scale, the storage cost difference is staggering: replication needs 300 PB of raw storage, erasure coding needs 150 PB. That difference is millions of dollars annually.</p>
-<h3>Multipart upload</h3>
+<h3 id="multipart-upload">Multipart upload</h3>
 <p>Large objects (&gt;100 MB) are uploaded in parts:</p>
 <ol>
 <li>Client initiates a multipart upload, receives an upload_id.</li>
@@ -725,7 +740,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Memory efficiency</strong> — the client and server never need to hold the entire object in memory.</li>
 </ul>
 <p>If the client never sends "complete" (crashed, abandoned), a lifecycle policy garbage-collects the orphaned parts after a configurable timeout.</p>
-<h3>Garbage collection and compaction</h3>
+<h3 id="garbage-collection-and-compaction">Garbage collection and compaction</h3>
 <p>Objects are never truly deleted in place (the data is immutable). Instead:</p>
 <ol>
 <li>A delete request marks the object as deleted in the metadata store (tombstone).</li>
@@ -734,7 +749,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>The old WAL file is reclaimed only after all references to it are updated in the metadata store.</li>
 </ol>
 <p>This is the same compaction model used by LSM-tree databases (LevelDB, RocksDB) — a pattern that appears repeatedly in systems that favor write throughput.</p>
-<h3>Object versioning and lifecycle</h3>
+<h3 id="object-versioning-and-lifecycle">Object versioning and lifecycle</h3>
 <p>Versioning stores every version of every object:</p>
 <ul>
 <li>Each PUT creates a new version with a unique version_id.</li>
@@ -748,7 +763,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Abort incomplete multipart uploads after N days.</li>
 </ul>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Split-brain in file sync</strong> — two devices both believe they have the latest version, producing irreconcilable changes. The conflict-copy approach is safe but creates user friction.</li>
 <li><strong>Block server hash collision</strong> — astronomically unlikely with SHA-256 but catastrophic if it happens (two different blocks treated as identical). Mitigation: verify on read, use strong hash functions.</li>
@@ -758,7 +773,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>WAL file corruption</strong> — a corrupted WAL file affects multiple objects. Mitigation: per-object checksums verified on every read, plus replication/erasure coding of the WAL files themselves.</li>
 <li><strong>Notification service overload</strong> — a bulk operation (e.g., restoring 10,000 files) can flood the notification service and delay sync for all users. Mitigation: batch notifications, rate-limit per-user event generation.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have you determined whether your workload needs mutable file semantics or immutable object semantics?</li>
 <li class="task todo">Is the metadata store sharded and replicated independently from the data store?</li>
@@ -770,7 +785,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Have you defined storage tiering policies and tested cold-to-hot retrieval latency?</li>
 <li class="task todo">Are checksums verified on both write and read paths?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="core-building-blocks.html">Core building blocks</a> — consistent hashing for shard distribution, which both the metadata store and data node placement use</li>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — back-of-envelope estimation for storage at petabyte scale</li>
@@ -778,7 +793,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="web-scale-services.html">Web-scale services</a> — notification patterns (long polling, push) from the notification system design</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="real-time-systems.html"><span class="lbl">← Previous</span><span class="ttl">Real-time systems</span></a><a class="navcard next" href="location-and-geo-services.html"><span class="lbl">→ Next</span><span class="ttl">Location &amp; geo services</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#google-drive-cloud-file-storage">Google Drive: cloud file storage</a><a class="h3" href="#scale-and-requirements">Scale and requirements</a><a class="h3" href="#the-block-server-splitting-files-into-blocks">The block server: splitting files into blocks</a><a class="h3" href="#metadata-vs-data-the-separation-principle">Metadata vs. data: the separation principle</a><a class="h3" href="#upload-flow">Upload flow</a><a class="h3" href="#download-and-sync-flow">Download and sync flow</a><a class="h3" href="#conflict-resolution">Conflict resolution</a><a class="h3" href="#notification-service-long-polling">Notification service: long polling</a><a class="h3" href="#storage-tiering">Storage tiering</a><a class="h2" href="#s3-like-object-storage">S3-like object storage</a><a class="h3" href="#scale-and-requirements_1">Scale and requirements</a><a class="h3" href="#core-data-model-buckets-and-objects">Core data model: buckets and objects</a><a class="h3" href="#architecture-metadata-store-data-store">Architecture: metadata store + data store</a><a class="h3" href="#the-small-file-problem-and-wal-style-merging">The small-file problem and WAL-style merging</a><a class="h3" href="#durability-replication-vs-erasure-coding">Durability: replication vs. erasure coding</a><a class="h3" href="#multipart-upload">Multipart upload</a><a class="h3" href="#garbage-collection-and-compaction">Garbage collection and compaction</a><a class="h3" href="#object-versioning-and-lifecycle">Object versioning and lifecycle</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

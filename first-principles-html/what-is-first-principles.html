@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>First principles</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>What first-principles thinking actually is</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A <strong>first principle</strong> is something that must be true on its own terms. Not because an
 authority said so, not because everyone does it that way, but because it can't be reduced
 any further without leaving reality. <strong>First-principles thinking</strong> is the discipline of
@@ -334,7 +349,7 @@ re-derived?"</em></p>
 <p><strong>Risk if ignored</strong> — You inherit other people's ceilings. Every conclusion you reach is
 a slightly-worse copy of the conclusion you copied it from.</p>
 </blockquote>
-<h2>Two ways to reason</h2>
+<h2 id="two-ways-to-reason">Two ways to reason</h2>
 <pre class="mermaid">flowchart TB
   P[&quot;Problem&quot;] --&gt; A[&quot;Reason by ANALOGY&lt;br/&gt;copy what exists, tweak&quot;]
   P --&gt; FP[&quot;Reason from FIRST PRINCIPLES&lt;br/&gt;deconstruct to bedrock truths&quot;]
@@ -362,7 +377,7 @@ can. Price those raw materials on the commodity market and the floor is a small 
 $600/kWh. The gap between the material floor and the market price is not a law of nature.
 It's an <strong>opportunity</strong>, but only visible to someone who decomposed the thing instead of
 quoting its current price.</p>
-<h2>What counts as a "fundamental"?</h2>
+<h2 id="what-counts-as-a-fundamental">What counts as a "fundamental"?</h2>
 <p>A first principle is a claim you can't dissolve further by asking "why is <em>that</em> true?"
 without bottoming out in:</p>
 <ul>
@@ -378,7 +393,7 @@ without bottoming out in:</p>
 architecture, the price something currently sells for — is a <strong>derived</strong> claim. It was true
 for some context that may not be yours. The work of first-principles thinking is sorting
 the bedrock from the borrowed.</p>
-<h2>Why it's rare (and therefore valuable)</h2>
+<h2 id="why-its-rare-and-therefore-valuable">Why it's rare (and therefore valuable)</h2>
 <p>If first principles produces better answers, why doesn't everyone do it all the time?</p>
 <ul>
 <li><strong>It's expensive.</strong> Decomposition is slow and effortful, while analogy is nearly free.
@@ -395,7 +410,7 @@ the bedrock from the borrowed.</p>
 everyone copies is, by definition, available to everyone.</strong> A genuinely better answer
 almost always requires going back to something more fundamental than the thing being
 copied.</p>
-<h2>When NOT to use it</h2>
+<h2 id="when-not-to-use-it">When NOT to use it</h2>
 <p>First-principles thinking is a power tool, not a personality. Reaching for it everywhere is
 its own failure mode (the subject of <a href="traps-and-limits.html">traps &amp; limits</a>):</p>
 <ul>
@@ -408,7 +423,7 @@ its own failure mode (the subject of <a href="traps-and-limits.html">traps &amp;
 <p>The decision itself is a tradeoff. That's why this module sits next to
 <a href="../ai/06-strategy-tradeoffs.html">Module 06 · Strategy &amp; Tradeoffs</a>: <em>how much to
 decompose</em> is a cost/benefit call, not a virtue.</p>
-<h2>Analogy vs. first principles, side by side</h2>
+<h2 id="analogy-vs-first-principles-side-by-side">Analogy vs. first principles, side by side</h2>
 <table>
 <thead>
 <tr>
@@ -454,7 +469,7 @@ constraint. Reasoning by analogy said "batteries are expensive." Reasoning from 
 principles said "batteries are expensive <em>the way we currently make them</em>" — a
 different claim with a different roadmap.</p>
 </blockquote>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Analogy in disguise</strong> — You <em>think</em> you decomposed, but you stopped at someone else's
   conclusion and called it a fundamental ("the API has to be REST"). Pseudo-decomposition.</li>
@@ -464,7 +479,7 @@ different claim with a different roadmap.</p>
   convention" to be cleared away. Sometimes the convention <em>is</em> the hard-won first
   principle.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For the claim in front of you, can you name <em>why</em> it's true — and does the "why"
       bottom out in physics, arithmetic, a chosen goal, or observed fact?</li>
@@ -475,7 +490,7 @@ different claim with a different roadmap.</p>
 <li class="task todo">If you're decomposing, have you committed to a floor — premises you'll treat as
       bedrock — so you can reason back <em>up</em>?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-method.html">The method: deconstruct, challenge, reconstruct</a></li>
 <li><a href="mental-models-latticework.html">A latticework of mental models</a></li>
@@ -483,7 +498,26 @@ different claim with a different roadmap.</p>
 <li><a href="../ai/06-strategy-tradeoffs.html">Strategy &amp; tradeoffs</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="the-method.html"><span class="lbl">→ Next</span><span class="ttl">The method: deconstruct, challenge, reconstruct</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#two-ways-to-reason">Two ways to reason</a><a class="h2" href="#what-counts-as-a-fundamental">What counts as a &quot;fundamental&quot;?</a><a class="h2" href="#why-its-rare-and-therefore-valuable">Why it&#x27;s rare (and therefore valuable)</a><a class="h2" href="#when-not-to-use-it">When NOT to use it</a><a class="h2" href="#analogy-vs-first-principles-side-by-side">Analogy vs. first principles, side by side</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

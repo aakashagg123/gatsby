@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink active" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink active" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 08</span>
     <h1>The economics of infrastructure</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every feature has a <strong>cost of goods sold</strong> hiding in the infrastructure: compute,
 storage, network egress, third-party APIs, and — for AI features — tokens. Most
 software costs are invisible at demo scale and decisive at real scale, because they
@@ -337,7 +352,7 @@ and does our pricing recover it at p95 usage, not just at the average?"</em></p>
 user deepens the loss, and the emergency isn't technical. It's a repricing you do
 in public.</p>
 </blockquote>
-<h2>Where the money goes</h2>
+<h2 id="where-the-money-goes">Where the money goes</h2>
 <pre class="mermaid">flowchart TB
   F[&quot;A feature in production&quot;] --&gt; C[&quot;Compute&lt;br/&gt;servers · containers ·&lt;br/&gt;autoscaling&quot;]
   F --&gt; S[&quot;Storage&lt;br/&gt;databases · object storage ·&lt;br/&gt;backups &amp; retention&quot;]
@@ -359,7 +374,7 @@ in public.</p>
 <li><strong>Third parties</strong> — payments, maps, messaging, models — price per action. This is
   the easiest cost to attribute, and the most likely to dominate an AI feature's bill.</li>
 </ul>
-<h2>The curves matter more than the totals</h2>
+<h2 id="the-curves-matter-more-than-the-totals">The curves matter more than the totals</h2>
 <p>Two features with the same bill today can be different businesses tomorrow. Classify
 each cost by its curve:</p>
 <ul>
@@ -380,7 +395,7 @@ on a schedule. And caching changes an AI feature's economics more than any other
 single lever —
 <a href="../ai/01-inference-internals.html#prompt-vs-semantic-caching">prompt caching</a> can
 cut input cost by an order of magnitude when the prompt is engineered for reuse.</p>
-<h2>The napkin every feature deserves</h2>
+<h2 id="the-napkin-every-feature-deserves">The napkin every feature deserves</h2>
 <p>Before a feature enters the roadmap, four lines:</p>
 <ol>
 <li><strong>Cost per action</strong> — the expensive path, priced at p95 (heavy users define your
@@ -395,7 +410,7 @@ design constraint: add a usage tier, batch the work, cache the common case, rout
 cases to the <a href="../ai/02-reliable-outputs.html#model-routing">cheap path</a>, or price
 the feature as the premium it actually is. The one unacceptable outcome is discovering
 the napkin's answer on the invoice.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The success disaster</strong> — Flat pricing sits on linearly-scaling costs. Growth
   arrives, and each new customer deepens the loss.</li>
@@ -409,7 +424,7 @@ the napkin's answer on the invoice.</p>
   API is 80% of the bill (the twin of the
   <a href="latency-scale-performance.html">latency-budget mistake</a>).</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For my top three features: what does one incremental action cost, and which
       cost family dominates?</li>
@@ -419,7 +434,7 @@ the napkin's answer on the invoice.</p>
 <li class="task todo">For AI features: what's the cache-hit assumption in the cost model, and is it
       measured or hoped?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="latency-scale-performance.html">Latency, scale &amp; performance</a></li>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
@@ -427,7 +442,26 @@ the napkin's answer on the invoice.</p>
 <li><a href="../agentic-ai/agentic-ai-as-a-product.html">Agentic AI as a product</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="security-and-privacy.html"><span class="lbl">← Previous</span><span class="ttl">Security &amp; privacy sense</span></a><a class="navcard next" href="technical-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Technical sense for AI systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#where-the-money-goes">Where the money goes</a><a class="h2" href="#the-curves-matter-more-than-the-totals">The curves matter more than the totals</a><a class="h2" href="#the-napkin-every-feature-deserves">The napkin every feature deserves</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

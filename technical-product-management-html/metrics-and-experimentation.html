@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink active" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink active" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
     <h1>Metrics &amp; experimentation</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>If you can't measure it, you shipped an opinion. The measurement stack has three layers.
 A <strong>metric tree</strong> connects one north-star outcome to the input metrics teams can
 actually move. <strong>Instrumentation</strong> gets written into the spec, so the events exist when
@@ -337,7 +352,7 @@ dashboard would move, and how long until a human noticed?"</em></p>
 <p><strong>Risk if ignored</strong> — Quality drifts for weeks behind green dashboards, and the first
 detector is a customer thread going viral.</p>
 </blockquote>
-<h2>The metric tree</h2>
+<h2 id="the-metric-tree">The metric tree</h2>
 <p>A north-star metric alone is a scoreboard, not a strategy — no team can directly move
 "weekly active teams." The tree makes it actionable:</p>
 <pre class="mermaid">flowchart TB
@@ -364,7 +379,7 @@ detector is a customer thread going viral.</p>
 <p>Beware <strong>Goodhart's law</strong>: any metric made a target gets gamed, usually innocently.
 "Answers delivered" as a target produces more answers, not better ones. Pair every
 target metric with a quality counterweight.</p>
-<h2>Instrumentation is a requirement, not a favour</h2>
+<h2 id="instrumentation-is-a-requirement-not-a-favour">Instrumentation is a requirement, not a favour</h2>
 <p>The events you'll need to answer "did it work?" must be in the spec —
 <a href="specs-prds-and-rfcs.html">the PRD</a> — before build, because retrofitting analytics after
 launch means weeks of blindness followed by data you only half trust. The PM's
@@ -372,7 +387,7 @@ instrumentation pass: for each success metric, <em>which event, with which prope
 fired from where, proves it?</em> If you can't name the event, you can't have the metric.
 Then check the funnel: every step a user takes toward value should emit something, or
 your drop-off analysis will have holes exactly where the mystery is.</p>
-<h2>Experiments without self-deception</h2>
+<h2 id="experiments-without-self-deception">Experiments without self-deception</h2>
 <p>An A/B test randomly splits users, shows each group a variant, and compares. The
 mechanics are a solved problem. The discipline isn't:</p>
 <ul>
@@ -399,7 +414,7 @@ the humbler tools: pre/post with the seasonality caveat stated out loud, a long-
 <strong>holdout</strong> (5% who don't get the new experience for a quarter), or staged
 rollout-as-natural-experiment (<a href="launches-rollouts-and-migrations.html">next lesson</a>).
 Weaker evidence honestly labelled beats strong claims from weak designs.</p>
-<h2>The AI quality layer</h2>
+<h2 id="the-ai-quality-layer">The AI quality layer</h2>
 <p>For model-powered features, wire <em>offline</em> and <em>online</em> measurement together:</p>
 <ul>
 <li><strong>Offline: eval scores</strong> — the graded example set from your
@@ -413,7 +428,7 @@ Weaker evidence honestly labelled beats strong claims from weak designs.</p>
   eval set, so the offline suite keeps resembling reality. That loop is the
   <a href="tpm-for-ai-products.html">data flywheel</a>, and it's the capstone's subject.</li>
 </ul>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Vanity dashboards</strong> — big cumulative numbers ("10M answers served!") that only go
   up and inform nothing. If no decision changes when the number changes, it's decoration.</li>
@@ -426,7 +441,7 @@ Weaker evidence honestly labelled beats strong claims from weak designs.</p>
 <li><strong>Green-dashboard blindness</strong> (AI-specific) — infrastructure metrics healthy, no
   quality signal wired, drift discovered by customers.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I draw my product's metric tree — north star, the 3–5 inputs, the guardrails —
       from memory?</li>
@@ -436,7 +451,7 @@ Weaker evidence honestly labelled beats strong claims from weak designs.</p>
       and do failures flow back into the eval set?</li>
 <li class="task todo">Which metric on my dashboard would I delete tomorrow for informing no decisions?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
@@ -444,7 +459,26 @@ Weaker evidence honestly labelled beats strong claims from weak designs.</p>
 <li><a href="../product-sense/motivation-and-behaviour.html">Product sense: motivation &amp; behaviour</a> — the behaviour your metrics are trying to move</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="working-with-engineering.html"><span class="lbl">← Previous</span><span class="ttl">Working with engineering</span></a><a class="navcard next" href="launches-rollouts-and-migrations.html"><span class="lbl">→ Next</span><span class="ttl">Launches, rollouts &amp; migrations</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-metric-tree">The metric tree</a><a class="h2" href="#instrumentation-is-a-requirement-not-a-favour">Instrumentation is a requirement, not a favour</a><a class="h2" href="#experiments-without-self-deception">Experiments without self-deception</a><a class="h2" href="#the-ai-quality-layer">The AI quality layer</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

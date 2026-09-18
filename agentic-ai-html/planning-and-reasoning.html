@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic AI</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink active" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink active" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Planning &amp; reasoning</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>"Cognition" in an agent is not a module you install. It's the model, prompted and
 orchestrated into <strong>patterns</strong>. The big four: <strong>ReAct</strong> (interleave thinking and acting,
 one step at a time), <strong>plan-and-execute</strong> (draft the whole plan first, then work it,
@@ -339,7 +354,7 @@ and how much have we spent by the time it finds out?"</em></p>
 over a FAQ answer. Or one that executes a flawed plan at full speed, because nothing
 in the loop ever checked the plan.</p>
 </blockquote>
-<h2>The patterns</h2>
+<h2 id="the-patterns">The patterns</h2>
 <pre class="mermaid">flowchart TB
   subgraph REACT[&quot;ReAct — think, act, observe, repeat&quot;]
     R1[&quot;Thought: I need the Q3 numbers&quot;] --&gt; R2[&quot;Act: query warehouse&quot;]
@@ -392,7 +407,7 @@ you'll read.</p>
 reflects against tests, and decomposes big work. Frameworks mostly package these
 patterns with plumbing — evaluate them on the plumbing, because the patterns themselves
 are a page of prompting.</p>
-<h2>Test-time compute: thinking as a budget</h2>
+<h2 id="test-time-compute-thinking-as-a-budget">Test-time compute: thinking as a budget</h2>
 <p>Reasoning models (o-series, Claude's extended thinking, R1, Gemini thinking) generate
 internal chains of thought before answering. Accuracy on hard problems climbs with
 thinking time — a new scaling axis that happens at <em>inference</em>, on your bill, per
@@ -413,7 +428,7 @@ constraint-juggling, multi-hop logic. It does not add knowledge the model lacks 
 <a href="context-and-memory.html">retrieval</a>), and it doesn't reliably fix hallucination — a
 model can reason beautifully from a false premise. Diagnose which failure you have
 before buying thinking tokens.</p>
-<h2>Feedback beats brilliance</h2>
+<h2 id="feedback-beats-brilliance">Feedback beats brilliance</h2>
 <p>The strongest single lever on agent intelligence isn't the pattern or the budget. It's
 the <strong>quality of the feedback the environment returns</strong>. An agent with tests,
 validators, error messages that teach, and checkable intermediate results converges. An
@@ -422,7 +437,7 @@ verifiable" — add a checker tool, define acceptance criteria the agent can run
 <a href="tools-and-function-calling.html">errors that explain</a> — routinely beats "make the
 model think harder" as an investment. When someone proposes upgrading the model, first
 ask what the agent would <em>see</em> if it were wrong.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Deliberation as decoration</strong> — maximum thinking budget on every request because the
   demo looked smarter. The invoice and the latency graph disagree.</li>
@@ -435,7 +450,7 @@ ask what the agent would <em>see</em> if it were wrong.</p>
 <li><strong>Pattern cargo-culting</strong> — adopting a framework's five-agent planner-critic-executor
   architecture for a task a single well-prompted loop handles better and cheaper.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For each task tier: which pattern, what thinking budget, and what latency does
       the user experience?</li>
@@ -446,7 +461,7 @@ ask what the agent would <em>see</em> if it were wrong.</p>
 <li class="task todo">When the agent is uncertain, does it ask — or deliberate expensively toward a
       guess?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-is-an-agent.html">What is an agent?</a></li>
 <li><a href="reliability-and-evals.html">Reliability &amp; evals</a></li>
@@ -454,7 +469,26 @@ ask what the agent would <em>see</em> if it were wrong.</p>
 <li><a href="../first-principles/the-method.html">First principles: the method</a> — the human version of decompose, challenge, rebuild</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="context-and-memory.html"><span class="lbl">← Previous</span><span class="ttl">Context &amp; memory</span></a><a class="navcard next" href="multi-agent-and-protocols.html"><span class="lbl">→ Next</span><span class="ttl">Multi-agent systems &amp; protocols</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-patterns">The patterns</a><a class="h2" href="#test-time-compute-thinking-as-a-budget">Test-time compute: thinking as a budget</a><a class="h2" href="#feedback-beats-brilliance">Feedback beats brilliance</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

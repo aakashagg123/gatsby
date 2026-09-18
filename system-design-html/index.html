@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -347,13 +362,13 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Practitioner checklist</strong> — what to verify before you ship or bet on this architecture.</li>
 </ul>
 <p>This track covers <strong>28 real-world systems</strong> across eight lessons, grouped by the kind of problem they solve.</p>
-<h2>Connects to other tracks</h2>
+<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
 <ul>
 <li>The <a href="../technical-product-sense/index.html">technical product sense</a> track teaches you how to <em>read</em> systems. This track teaches you how they're <em>designed</em>.</li>
 <li>The <a href="../ai/00-foundations.html">AI engineering</a> modules show what's different when LLMs are in the loop — caching, isolation, cost. This track shows the distributed-systems foundations everything rests on.</li>
 <li>The <a href="../agentic-ai/index.html">agentic AI</a> track uses message queues, event sourcing, and state machines from this track as agent infrastructure.</li>
 </ul>
-<h2>The lessons</h2>
+<h2 id="the-lessons">The lessons</h2>
 <ul>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — scaling from zero to millions, back-of-envelope estimation, and the four-step system design framework</li>
 <li><a href="core-building-blocks.html">Core building blocks</a> — rate limiting, consistent hashing, distributed key-value stores, and unique ID generation</li>

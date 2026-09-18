@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Generative AI</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink active" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink active" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 06</span>
     <h1>Where generative AI creates and destroys value</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Generative AI has produced real wins and real write-offs, often inside the same company,
 sometimes on the same team. The pattern behind the split is consistent enough to name.
 Value gets created where the task has three properties: a human doing it today is slow or
@@ -336,7 +351,7 @@ or a front-page problem — and have we actually checked which?"</em></p>
 roadmap slide and returns almost nothing, because nobody checked whether the underlying
 task actually fit the technology.</p>
 </blockquote>
-<h2>The mental model: three gates, not one</h2>
+<h2 id="the-mental-model-three-gates-not-one">The mental model: three gates, not one</h2>
 <p>Picture every candidate use case walking through three gates. It only creates real value if
 it clears all three. Fail any one gate, and the honest answer is not "add more AI." It is
 "this was never a good fit."</p>
@@ -348,7 +363,7 @@ it clears all three. Fail any one gate, and the honest answer is not "add more A
   G2 --&gt;|&quot;yes&quot;| G3{&quot;Gate 3&lt;br/&gt;Is being wrong&lt;br/&gt;sometimes acceptable?&quot;}
   G3 --&gt;|&quot;no&quot;| DESTROY3[&quot;Value destroyed:&lt;br/&gt;one bad output&lt;br/&gt;outweighs every good one&quot;]
   G3 --&gt;|&quot;yes&quot;| CREATE[&quot;Value created:&lt;br/&gt;a real, funded win&quot;]</pre>
-<h2>Where the wins cluster</h2>
+<h2 id="where-the-wins-cluster">Where the wins cluster</h2>
 <p>Look at the generative AI deployments that actually returned value, and they share a
 shape. <strong>Drafting, not deciding</strong> — a first draft of an email, a summary, or a block of
 code, which a human reviews before it matters. The task was slow by hand, the draft is easy
@@ -359,7 +374,7 @@ cheaper than the manual alternative, and spot-checking catches the pattern of er
 <strong>Search and synthesis over your own data</strong> — finding and summarizing information a person
 would otherwise dig for manually, where the source is right there to check the answer
 against.</p>
-<h2>Where the write-offs cluster</h2>
+<h2 id="where-the-write-offs-cluster">Where the write-offs cluster</h2>
 <p>The failures share a shape too, and it is the mirror image of the wins. <strong>Unsupervised
 decisions with real consequences</strong> — letting a model approve a loan, finalize a diagnosis,
 or send an irreversible message with no human check, where gate three fails outright.
@@ -369,7 +384,7 @@ which means gate two never really clears. <strong>Tasks that were never actually
 expensive</strong> — automating something a simple form or a short script already handled well,
 where gate one was never true, and the "AI feature" replaced a five-minute task with an
 unpredictable one.</p>
-<h2>Running the filter honestly</h2>
+<h2 id="running-the-filter-honestly">Running the filter honestly</h2>
 <p>The filter only works if you are honest about each gate, not optimistic. "Can the output
 be checked cheaply?" is not answered by "a person could review it." It is answered by
 "reviewing it takes meaningfully less time and skill than doing the task from scratch." If
@@ -378,7 +393,7 @@ same discipline applies to gate three: "acceptable to be wrong sometimes" needs 
 number and an actual cost, not a shrug. What follows in this family — evaluation to measure
 the error rate, and security to bound the damage of the worst case — exists to make that
 number real instead of a guess.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Skipping gate one</strong> — building a generative feature for a task that was never actually
   slow or expensive, because it seemed like an obvious place to "add AI."</li>
@@ -389,7 +404,7 @@ number real instead of a guess.</p>
 <li><strong>Funding by excitement, not by filter</strong> — greenlighting the use case with the best demo,
   instead of the one that actually clears all three gates.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For this use case, is doing it by hand today genuinely slow or expensive — with a
       real number, not an assumption?</li>
@@ -400,7 +415,7 @@ number real instead of a guess.</p>
 <li class="task todo">Have we run this filter before funding the project, not after it has already missed
       its numbers?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-is-generative-ai.html">What makes AI "generative"?</a> — the capability this filter
   applies to.</li>
@@ -409,7 +424,26 @@ number real instead of a guess.</p>
   — the engineering-depth view of what happens when a use case clears the filter poorly.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="build-buy-or-fine-tune.html"><span class="lbl">← Previous</span><span class="ttl">Build, buy, or fine-tune</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-gates-not-one">The mental model: three gates, not one</a><a class="h2" href="#where-the-wins-cluster">Where the wins cluster</a><a class="h2" href="#where-the-write-offs-cluster">Where the write-offs cluster</a><a class="h2" href="#running-the-filter-honestly">Running the filter honestly</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

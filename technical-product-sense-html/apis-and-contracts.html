@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink active" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink active" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>APIs &amp; contracts</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>An <strong>API</strong> is the contract by which one piece of software talks to another: your app to your
 server, your server to a payment provider, your product to a model. The contract defines the
 <em>request</em> (what you send), the <em>response</em> (what you get), and the promises around it:
@@ -333,7 +348,7 @@ is it safe?"</em></p>
 <p><strong>Risk if ignored</strong> — Duplicate charges, double-sent messages, or a feature that falls over
 the first time an upstream API returns an error you didn't plan for.</p>
 </blockquote>
-<h2>A request, end to end</h2>
+<h2 id="a-request-end-to-end">A request, end to end</h2>
 <p>The clearest way to see an API is to follow one call between components:</p>
 <pre class="mermaid">sequenceDiagram
   participant C as Client
@@ -351,7 +366,7 @@ the first time an upstream API returns an error you didn't plan for.</p>
 <p>Each arrow is a promise. The client promises a well-formed request with auth. The API
 promises to validate, do the work, and return a <strong>status code</strong> (2xx success, 4xx "you
 messed up," 5xx "we messed up") plus a body.</p>
-<h2>The parts of the contract</h2>
+<h2 id="the-parts-of-the-contract">The parts of the contract</h2>
 <ul>
 <li><strong>Endpoint &amp; method</strong> — <em>what</em> you're doing: <code>GET</code> (read), <code>POST</code> (create), <code>PUT</code>/<code>PATCH</code>
   (update), <code>DELETE</code>. Reads should be safe; writes change state.</li>
@@ -363,26 +378,26 @@ messed up," 5xx "we messed up") plus a body.</p>
 <li><strong>Auth &amp; rate limits</strong> — who may call, how often. Exceed the limit and you get throttled
   (429) — a real constraint on a feature's throughput.</li>
 </ul>
-<h2>Idempotency — the retry-safety promise</h2>
+<h2 id="idempotency-the-retry-safety-promise">Idempotency — the retry-safety promise</h2>
 <p>Networks fail mid-request, so clients <strong>retry</strong>. If a retried "create payment" runs twice, the
 user is charged twice. <strong>Idempotency</strong> means <em>doing the same operation twice has the same
 effect as doing it once</em> — usually through an idempotency key the server remembers. Reads are
 naturally idempotent; writes are the danger. Whenever a duplicate would be harmful — payments,
 messages, actions — the contract must be idempotent. This is one of the highest-leverage
 technical questions a PM can ask.</p>
-<h2>Versioning — changing without breaking</h2>
+<h2 id="versioning-changing-without-breaking">Versioning — changing without breaking</h2>
 <p>Once others call your API, you can't freely change it — a rename breaks their code. Teams
 handle change with <strong>versioning</strong> (<code>/v1/</code>, <code>/v2/</code>) and by making only <strong>backward-compatible</strong>
 changes to a live version: add optional fields, and never remove or repurpose existing ones.
 The product consequence is that <strong>API changes are slow and deliberate</strong>, because every caller
 is a dependency. Design the contract as if you'll live with it for years, because you will.</p>
-<h2>Webhooks — the API that calls you</h2>
+<h2 id="webhooks-the-api-that-calls-you">Webhooks — the API that calls you</h2>
 <p>Sometimes you need to know when something happens elsewhere: a payment cleared, a job
 finished. Polling ("is it done yet?") is wasteful, so a <strong>webhook</strong> flips it — the other
 system <code>POST</code>s to <em>your</em> endpoint when the event occurs. Webhooks power most integrations, and
 they bring their own contract concerns. They can arrive out of order, arrive more than once
 (idempotency again), or not arrive at all — so you still need a reconciliation fallback.</p>
-<h2>A worked pass: the double charge</h2>
+<h2 id="a-worked-pass-the-double-charge">A worked pass: the double charge</h2>
 <p>Here is the classic contract failure, end to end. A user taps "Pay," and the request reaches
 the payment service. The charge succeeds, but the response is lost to a network blip. The app
 sees a timeout and retries. Without idempotency, the second request is a second charge: the
@@ -398,7 +413,7 @@ breaking. <em>How does the other side learn something happened?</em> That's webh
 what happens when the webhook receiver is down. <em>What are the rate limits, and what do we do
 when we hit them?</em> You don't need to design the wire format to ask all five. Every one of them
 is a user-visible product behavior wearing an engineering costume.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>No retry plan</strong> — the feature assumes every call succeeds, so the first upstream 500 takes
   it down.</li>
@@ -408,7 +423,7 @@ is a user-visible product behavior wearing an engineering costume.</p>
 <li><strong>Ignoring rate limits</strong> — you design a feature that needs more calls than the upstream API
   allows.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For each integrated call, do I know the success <em>and</em> error behaviours?</li>
 <li class="task todo">Are state-changing operations idempotent where a duplicate would harm the user?</li>
@@ -416,14 +431,33 @@ is a user-visible product behavior wearing an engineering costume.</p>
 <li class="task todo">Do I know the rate limits and timeouts of any upstream API my feature depends on?</li>
 <li class="task todo">For event-driven flows, do webhooks have an idempotency and reconciliation plan?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="how-systems-are-built.html">How systems are built</a></li>
 <li><a href="reliability-and-failure.html">Reliability &amp; failure</a></li>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="how-systems-are-built.html"><span class="lbl">← Previous</span><span class="ttl">How systems are built</span></a><a class="navcard next" href="data-and-the-data-model.html"><span class="lbl">→ Next</span><span class="ttl">Data &amp; the data model</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#a-request-end-to-end">A request, end to end</a><a class="h2" href="#the-parts-of-the-contract">The parts of the contract</a><a class="h2" href="#idempotency-the-retry-safety-promise">Idempotency — the retry-safety promise</a><a class="h2" href="#versioning-changing-without-breaking">Versioning — changing without breaking</a><a class="h2" href="#webhooks-the-api-that-calls-you">Webhooks — the API that calls you</a><a class="h2" href="#a-worked-pass-the-double-charge">A worked pass: the double charge</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

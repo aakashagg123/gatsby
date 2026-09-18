@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>RAG &amp; vector databases</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink active" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-rag.html">1 · Why RAG?</a><a class="modlink" href="embeddings-and-semantic-search.html">2 · Embeddings &amp; semantic search</a><a class="modlink active" href="vector-databases.html">3 · Vector databases</a><a class="modlink" href="chunking-and-ingestion.html">4 · Chunking &amp; ingestion</a><a class="modlink" href="retrieval-quality.html">5 · Retrieval quality</a><a class="modlink" href="rag-vs-long-context-vs-finetuning.html">6 · RAG vs. long-context vs. fine-tuning</a><a class="modlink" href="graphrag-and-structured-retrieval.html">7 · Beyond flat RAG: GraphRAG &amp; structured retrieval</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Vector databases</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Once your data is a pile of <a href="embeddings-and-semantic-search.html">embedding vectors</a>, you
 need somewhere to keep millions of them and, given a query vector, find the nearest ones in
 milliseconds. That's a <strong>vector database</strong>. Its one hard trick is <strong>approximate nearest
@@ -340,7 +355,7 @@ check whether what we already run is enough before buying a new database?"</em><
 need one, or the reverse: a naïve store that can't filter by tenant and leaks one
 customer's passages into another's answers.</p>
 </blockquote>
-<h2>The mental model: a librarian for meaning</h2>
+<h2 id="the-mental-model-a-librarian-for-meaning">The mental model: a librarian for meaning</h2>
 <p>A normal database finds rows by exact match on a key ("give me order #4411"). A vector
 database finds rows by <em>closeness in meaning</em> ("give me the 5 passages most like this
 question"). Picture a librarian who, instead of fetching the book you named, fetches the
@@ -359,7 +374,7 @@ similar books sit together.</p>
   classDef idx fill:#fbefe9,stroke:#e0b29e
   class IDX idx</pre>
 <p>That pre-organizing is the index; the "don't read every book" is the <em>approximate</em> in ANN.</p>
-<h2>Exact vs. approximate: the one tradeoff that matters</h2>
+<h2 id="exact-vs-approximate-the-one-tradeoff-that-matters">Exact vs. approximate: the one tradeoff that matters</h2>
 <p>The naïve way to find nearest neighbours is <em>brute force</em>: compare the query to every
 vector. It's perfectly accurate and perfectly unscalable — fine for 10,000 vectors,
 hopeless for 100 million. <strong>ANN indexes</strong> (you'll hear names like HNSW and IVF) organize
@@ -371,7 +386,7 @@ memory, and vice-versa. For product work this is a dial, not a worry: the miss r
 tiny, and <a href="retrieval-quality.html">reranking</a> and hybrid search cover the gap. What matters
 is knowing the dial exists, because "why did it miss that obvious document?" sometimes
 traces here.</p>
-<h2>What actually differentiates the options</h2>
+<h2 id="what-actually-differentiates-the-options">What actually differentiates the options</h2>
 <p>The nearest-neighbour math is commoditized; these surrounding capabilities are where the
 real product decisions live:</p>
 <table>
@@ -410,7 +425,7 @@ million vectors; <strong>dedicated vector databases</strong> (Pinecone, Weaviate
 kin) — built for scale, rich filtering and hybrid, at the cost of another system to run;
 and <strong>search engines with vectors</strong> (Elasticsearch/OpenSearch) — strong when you already
 run them for keyword search and want hybrid in one place.</p>
-<h2>How to choose without the vendor fog</h2>
+<h2 id="how-to-choose-without-the-vendor-fog">How to choose without the vendor fog</h2>
 <ol>
 <li><strong>Write the query shape down.</strong> Vector count, filters you need (tenant, ACL, recency,
    language), latency budget, freshness (how often data changes), and whether it's in a
@@ -424,7 +439,7 @@ run them for keyword search and want hybrid in one place.</p>
    <a href="../technical-product-sense/economics-of-infrastructure.html">lock-in discipline</a> as any
    infrastructure choice.</li>
 </ol>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Bake-off theatre</strong> — months comparing vector DBs on synthetic recall while chunking and
   retrieval quality (the real levers) go untouched.</li>
@@ -439,7 +454,7 @@ run them for keyword search and want hybrid in one place.</p>
   answer was wrong because the <a href="chunking-and-ingestion.html">chunks</a> or
   <a href="retrieval-quality.html">reranking</a> were wrong. Look upstream first.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do we have the query-shape page (count, filters, latency, freshness) before any
       vendor conversation?</li>
@@ -450,7 +465,7 @@ run them for keyword search and want hybrid in one place.</p>
 <li class="task todo">Is ingestion store-neutral and are sources replayable, so we're not married to one
       vector DB?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="embeddings-and-semantic-search.html">Embeddings &amp; semantic search</a> — what the vectors
   are and how closeness is measured.</li>
@@ -462,7 +477,26 @@ run them for keyword search and want hybrid in one place.</p>
   — the build/buy/lock-in instincts applied here.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="embeddings-and-semantic-search.html"><span class="lbl">← Previous</span><span class="ttl">Embeddings &amp; semantic search</span></a><a class="navcard next" href="chunking-and-ingestion.html"><span class="lbl">→ Next</span><span class="ttl">Chunking &amp; ingestion</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-librarian-for-meaning">The mental model: a librarian for meaning</a><a class="h2" href="#exact-vs-approximate-the-one-tradeoff-that-matters">Exact vs. approximate: the one tradeoff that matters</a><a class="h2" href="#what-actually-differentiates-the-options">What actually differentiates the options</a><a class="h2" href="#how-to-choose-without-the-vendor-fog">How to choose without the vendor fog</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

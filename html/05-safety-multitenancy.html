@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -354,7 +369,7 @@ whole <a href="00-foundations.html#harness-engineering">harness</a> is built.</p
 <p class="iw-note" style="margin-top:0"><strong>Bonus — cache safety.</strong> A semantic cache keyed only on the query text leaks answers across tenants.</p>
 <label class="iw-toggle"><input type="checkbox" id="lt-k" checked> Cache key includes tenant&nbsp;+&nbsp;permission scope</label>
 <div class="iw-out" style="margin-top:10px"><div class="iw-verdict" id="lt-kv"></div></div></div></section>
-  <section class="lesson" id="safety-engineering"><div class="lesson-head"><span class="lesson-num">05.1</span><h2>Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="safety-engineering"><div class="lesson-head"><span class="lesson-num">05.1</span><h2>Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</h2></div><h2 id="tldr">TL;DR</h2>
 <p>An LLM mixes trusted instructions and untrusted data in the <em>same</em>
 channel — natural language. So any text it reads, whether a user message, a
 retrieved document, a tool result, or a web page, can try to <em>become</em> an
@@ -371,7 +386,7 @@ security boundary.</p>
 <p><strong>Ask your eng team</strong> — <em>"If a malicious document enters our knowledge base, can it make the AI leak data or take an action?"</em></p>
 <p><strong>Product risk if ignored</strong> — An indirect injection exfiltrates customer data, causing a breach, a headline, and a collapse in trust.</p>
 </blockquote>
-<h2>The core problem: no instruction/data separation</h2>
+<h2 id="the-core-problem-no-instructiondata-separation">The core problem: no instruction/data separation</h2>
 <p>In a normal program, code and input are different channels. In an LLM, the
 system prompt, the user's request, retrieved chunks, and tool outputs are
 all just <em>tokens</em>. The model has no reliable way to know that text inside a
@@ -383,7 +398,7 @@ structural, not a bug you can patch with better wording.</p>
 [ retrieved doc: untrusted ] │
 [ tool result: untrusted ]   ┘
 </code></pre>
-<h2>Prompt injection</h2>
+<h2 id="prompt-injection">Prompt injection</h2>
 <ul>
 <li><strong>Direct injection</strong> — the user tells the model to ignore its rules,
   reveal its prompt, or misbehave.</li>
@@ -398,7 +413,7 @@ untrusted content, (2) has access to private or sensitive data, and (3) can
 communicate externally — send email, make web requests, write somewhere
 reachable. Combine all three, and an indirect injection can exfiltrate
 data. Breaking <em>any one leg</em> defuses it.</p>
-<h3>Defenses (layered — none sufficient alone)</h3>
+<h3 id="defenses-layered-none-sufficient-alone">Defenses (layered — none sufficient alone)</h3>
 <ul>
 <li><strong>Don't grant the model authority it can be tricked into misusing.</strong> The
   single most effective control is to enforce permissions in
@@ -419,7 +434,7 @@ data. Breaking <em>any one leg</em> defuses it.</p>
 <li><strong>Constrain capability to the task</strong> — a summarizer doesn't need outbound
   network or write tools.</li>
 </ul>
-<h2>Data leakage prevention</h2>
+<h2 id="data-leakage-prevention">Data leakage prevention</h2>
 <p>Here are the ways private data escapes, and the controls for each:</p>
 <ul>
 <li><strong>Through outputs</strong> — the model reveals secrets from its context, such as
@@ -439,7 +454,7 @@ data. Breaking <em>any one leg</em> defuses it.</p>
   Control: clean typed errors and
   <a href="02-reliable-outputs.html#model-routing">degraded-mode UX</a>.</li>
 </ul>
-<h2>Permission boundaries — the load-bearing principle</h2>
+<h2 id="permission-boundaries-the-load-bearing-principle">Permission boundaries — the load-bearing principle</h2>
 <blockquote>
 <p>The model may <em>propose</em> anything; what <em>happens</em> is decided by code that enforces the
 real user's permissions.</p>
@@ -453,7 +468,7 @@ real user's permissions.</p>
 <li>This is what makes everything else safe: even a fully hijacked model
   can't exceed the authority your boundaries grant it.</li>
 </ul>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -492,7 +507,7 @@ real user's permissions.</p>
 </table>
 <p>Security is layered: assume each layer can fail, and make sure the
 <em>boundary</em> (permissions) still holds.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Indirect injection → exfiltration</strong> — a poisoned retrieved doc makes an
   agent send private data out; the trifecta realized.</li>
@@ -506,7 +521,7 @@ real user's permissions.</p>
 </ul>
 <p>Test all of these as <a href="04-evals-observability.html#evals">adversarial evals</a>
 that run in CI, not as one-off manual checks.</p>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is all model output treated as untrusted (never executed/trusted as control flow)?</li>
 <li class="task todo">Is authorization enforced in tools on the real session — never on model claims?</li>
@@ -517,14 +532,14 @@ that run in CI, not as one-off manual checks.</p>
 <li class="task todo">Do injection/jailbreak/exfiltration cases run as adversarial regression evals?</li>
 <li class="task todo">Does every component run with least privilege scoped to its task?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="02-reliable-outputs.html#function-calling">Function calling &amp; idempotency</a></li>
 <li><a href="#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="04-evals-observability.html#evals">Evals (adversarial tests)</a></li>
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="multi-tenant-isolation"><div class="lesson-head"><span class="lesson-num">05.2</span><h2>Multi-tenant isolation, cache safety, and cross-user context contamination prevention</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="multi-tenant-isolation"><div class="lesson-head"><span class="lesson-num">05.2</span><h2>Multi-tenant isolation, cache safety, and cross-user context contamination prevention</h2></div><h2 id="tldr">TL;DR</h2>
 <p>When many customers (tenants) and users share the same LLM infrastructure,
 the failure that ends companies is <strong>one tenant's data appearing in
 another's results</strong>. LLM systems add new leak paths that traditional
@@ -542,7 +557,7 @@ this tenant" everywhere.</p>
 <p><strong>Ask your eng team</strong> — <em>"Are our caches and our retrieval scoped per tenant, or could one customer ever see another's data?"</em></p>
 <p><strong>Product risk if ignored</strong> — A cross-tenant leak is the single most damaging, deal-ending incident in multi-tenant AI.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Every place where computation or data is <strong>shared or reused</strong> across
 requests is a potential cross-tenant channel. Enumerate them and put a
 tenant boundary on each:</p>
@@ -556,8 +571,8 @@ tenant boundary on each:</p>
 </code></pre>
 <p>The default for anything shared must be <strong>deny / scope to tenant</strong>, not
 "share unless we remember to isolate."</p>
-<h2>The leak paths</h2>
-<h3>1. Semantic cache contamination (the classic)</h3>
+<h2 id="the-leak-paths">The leak paths</h2>
+<h3 id="1-semantic-cache-contamination-the-classic">1. Semantic cache contamination (the classic)</h3>
 <p>A <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic cache</a>
 returns a prior <em>response</em> for a similar query. If the key is just the
 query text, <strong>User B can receive User A's answer</strong>, which may contain A's
@@ -569,7 +584,7 @@ private data, or simply be wrong for B's permissions or tenant.</p>
 <li>Cache <em>personalized or authorization-dependent</em> responses per scope, or
   not at all.</li>
 </ul>
-<h3>2. Retrieval cross-tenant leakage</h3>
+<h3 id="2-retrieval-cross-tenant-leakage">2. Retrieval cross-tenant leakage</h3>
 <p>A shared vector index without a tenant filter can surface Tenant A's
 documents to Tenant B, a <a href="03-rag.html#rag-architecture">RAG</a> isolation
 failure.</p>
@@ -579,7 +594,7 @@ failure.</p>
   signal. Prefer per-tenant namespaces or indexes for strong isolation
   where feasible.</li>
 </ul>
-<h3>3. Context / conversation contamination</h3>
+<h3 id="3-context-conversation-contamination">3. Context / conversation contamination</h3>
 <p>Memory or history from one user or session bleeds into another. This is
 usually a state-management or cache-key bug — a shared session store, or
 mis-scoped memory.</p>
@@ -587,7 +602,7 @@ mis-scoped memory.</p>
 <li><strong>Fix:</strong> scope all memory and history strictly to the (tenant, user,
   session). Never use a global or loosely-keyed store.</li>
 </ul>
-<h3>4. KV / prompt-cache reuse across trust boundaries</h3>
+<h3 id="4-kv-prompt-cache-reuse-across-trust-boundaries">4. KV / prompt-cache reuse across trust boundaries</h3>
 <p><a href="01-inference-internals.html#kv-cache-management">Prefix/KV cache reuse</a>
 is great for cost, but reusing a <em>tenant-specific</em> prefix's KV for another
 tenant could expose data.</p>
@@ -597,7 +612,7 @@ tenant could expose data.</p>
   cross-tenant reusable. Scope cache pools by tenant where the threat model
   demands it.</li>
 </ul>
-<h3>5. Logs, traces, and training data</h3>
+<h3 id="5-logs-traces-and-training-data">5. Logs, traces, and training data</h3>
 <p><a href="04-evals-observability.html#observability">Observability</a> stores and any
 fine-tuning pipeline can pool tenant data.</p>
 <ul>
@@ -605,7 +620,7 @@ fine-tuning pipeline can pool tenant data.</p>
   train on one tenant's data and serve another without explicit consent and
   isolation.</li>
 </ul>
-<h2>Defense principles</h2>
+<h2 id="defense-principles">Defense principles</h2>
 <ul>
 <li><strong>Tenant context is non-negotiable on every request.</strong> Plumb an
   authenticated tenant/user identity through the whole pipeline. Every
@@ -620,7 +635,7 @@ fine-tuning pipeline can pool tenant data.</p>
   <a href="04-evals-observability.html#evals">evals</a> in CI that specifically try
   to retrieve or cache across tenants.</li>
 </ul>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -656,7 +671,7 @@ fine-tuning pipeline can pool tenant data.</p>
 Resolve it by sharing only what is provably non-sensitive and scoping
 everything else. Price the isolation in, because a single cross-tenant leak
 costs more than years of the savings.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Query-only semantic cache key</strong> — one user's answer is served to
   another. This is the most common and most damaging failure.</li>
@@ -667,7 +682,7 @@ costs more than years of the savings.</p>
 <li><strong>"It works in single-tenant testing"</strong> — isolation bugs only appear
   under concurrent multi-tenant load, so test that explicitly.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does an authenticated tenant/user identity flow through every stage?</li>
 <li class="task todo">Do <strong>all</strong> cache keys include tenant (and permission scope), never query-only?</li>
@@ -677,7 +692,7 @@ costs more than years of the savings.</p>
 <li class="task todo">Are traces/logs tenant-tagged, access-controlled, and PII-redacted?</li>
 <li class="task todo">Do adversarial cross-tenant retrieval/cache tests run in CI under concurrency?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#safety-engineering">Safety engineering</a></li>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
@@ -685,7 +700,7 @@ costs more than years of the savings.</p>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>The ChatGPT Redis bug (March 2023).</strong> A caching bug in an async library
 let some users briefly see <strong>other users' chat titles</strong>, and exposed
 limited payment-related info for a small number of subscribers. OpenAI took
@@ -708,7 +723,7 @@ let into the context and where it can go.</em></p>
 and jailbreaks turned public-facing bots into liabilities. 🎯 <em>PM takeaway:</em>
 injection isn't theoretical. It's a launch blocker that
 <a href="04-evals-observability.html#evals">adversarial evals</a> must cover.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>What is a knowledge graph?</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A knowledge graph stores knowledge as <strong>things and the relationships between them</strong> —
 <code>(Acme Corp) —supplies→ (Widget X)</code>, <code>(Widget X) —part of→ (Product Y)</code> — instead of as
 rows in disconnected tables or words in disconnected documents. Each fact is a small,
@@ -342,7 +357,7 @@ today because the answer lives in more than one system?"</em></p>
 attached. Or you dismiss the idea entirely, and a competitor answers in one hop what
 takes your team a week of spreadsheet archaeology.</p>
 </blockquote>
-<h2>Things, not strings</h2>
+<h2 id="things-not-strings">Things, not strings</h2>
 <p>Search for "jaguar" in a text index and you get documents containing the string. A
 knowledge graph instead knows there are three <em>things</em> — an animal, a car brand, a
 sports team — each with its own identity, properties, and relationships. Google's 2012
@@ -376,7 +391,7 @@ every fact to it:</p>
 <p>Every arrow is a stored fact. The question on the left is unanswerable in any single
 source system. Once the arrows exist, it answers in milliseconds. That's the product
 argument for knowledge graphs, in one picture.</p>
-<h2>The anatomy: entities, relationships, triples</h2>
+<h2 id="the-anatomy-entities-relationships-triples">The anatomy: entities, relationships, triples</h2>
 <p>Strip away vendor vocabulary and there are only four parts:</p>
 <ul>
 <li><strong>Entities (nodes)</strong> — the things: customers, products, people, suppliers, documents,
@@ -398,7 +413,7 @@ A table schema answers only the questions its designer anticipated. <strong>The 
 bends.</strong> Adding a new relationship type ("is regulated by") doesn't require migrating
 tables — you just start drawing new arrows. That flexibility is a gift and a hazard,
 which is why the <a href="ontologies-and-data-modeling.html">ontology lesson</a> comes next.</p>
-<h2>What a knowledge graph is <em>not</em></h2>
+<h2 id="what-a-knowledge-graph-is-not">What a knowledge graph is <em>not</em></h2>
 <p>The fastest way to sharpen the concept is to name its neighbours:</p>
 <table>
 <thead>
@@ -440,7 +455,7 @@ which is why the <a href="ontologies-and-data-modeling.html">ontology lesson</a>
 replacement for any of them. It typically sits <strong>across</strong> your systems of record as a
 connective layer. That's exactly why identity resolution
 (<a href="building-the-graph.html">lesson 3</a>) is the hard part.</p>
-<h2>The test: do you actually need one?</h2>
+<h2 id="the-test-do-you-actually-need-one">The test: do you actually need one?</h2>
 <p>Three signals say yes. Their absence says no.</p>
 <ol>
 <li><strong>Your valuable questions are multi-hop.</strong> "Which customers are exposed to this
@@ -458,7 +473,7 @@ connective layer. That's exactly why identity resolution
 one system of record covers the domain — a knowledge graph is a solution seeking a
 problem. The <a href="knowledge-graphs-as-a-product.html">capstone lesson</a> will tell you to
 spend the money elsewhere.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The rebranded database</strong> — a team relabels an existing schema "our knowledge graph"
   for the strategy deck. No shared identity, no traversal, no new questions answerable.</li>
@@ -472,7 +487,7 @@ spend the money elsewhere.</p>
 <li><strong>Ignoring the maintenance tail</strong> — a graph is a living asset. A snapshot built once
   and never refreshed decays into a liability (<a href="governance-quality-and-trust.html">lesson 7</a>).</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I name three high-value questions that are genuinely multi-hop across systems —
       with the business owner who'd pay for each answer?</li>
@@ -484,7 +499,7 @@ spend the money elsewhere.</p>
 <li class="task todo">If a vendor says "knowledge graph," can I get them to show me entities,
       relationship types, and one traversal query — not just a diagram?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="ontologies-and-data-modeling.html">Ontologies &amp; data modeling</a> — deciding what the
   things and arrows <em>mean</em>.</li>
@@ -494,7 +509,26 @@ spend the money elsewhere.</p>
   relational instincts this lesson builds on.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="ontologies-and-data-modeling.html"><span class="lbl">→ Next</span><span class="ttl">Ontologies &amp; data modeling</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#things-not-strings">Things, not strings</a><a class="h2" href="#the-anatomy-entities-relationships-triples">The anatomy: entities, relationships, triples</a><a class="h2" href="#what-a-knowledge-graph-is-not">What a knowledge graph is not</a><a class="h2" href="#the-test-do-you-actually-need-one">The test: do you actually need one?</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>Recap &amp; real-world examples</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>This track covered <strong>28 real-world systems</strong> across eight lessons, from single-server scaling patterns to microsecond-latency stock exchanges. The systems span six categories: web-scale services, real-time communication, storage, geospatial, data infrastructure, and financial/transactional. But the same dozen patterns appear again and again. This recap maps every system at a glance. It names the recurring patterns that connect them, and distills the practitioner-level takeaways that cut across all 28 designs.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,7 +337,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — You reinvent solutions to problems that were solved a decade ago. You miss failure modes that are well-documented in existing designs, and make avoidable tradeoff mistakes.</p>
 </blockquote>
 <hr />
-<h2>The systems at a glance</h2>
+<h2 id="the-systems-at-a-glance">The systems at a glance</h2>
 <table>
 <thead>
 <tr>
@@ -562,9 +577,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <hr />
-<h2>Recurring patterns</h2>
+<h2 id="recurring-patterns">Recurring patterns</h2>
 <p>These patterns appear across many of the 28 systems. Recognizing them lets you transfer understanding from one system to another.</p>
-<h3>1. Separate metadata from data</h3>
+<h3 id="1-separate-metadata-from-data">1. Separate metadata from data</h3>
 <p>The most universal pattern: store the catalog of what exists (metadata) separately from the content itself (data), because they have different consistency, access, and scaling requirements.</p>
 <table>
 <thead>
@@ -597,7 +612,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<h3>2. Append-only logs (WAL)</h3>
+<h3 id="2-append-only-logs-wal">2. Append-only logs (WAL)</h3>
 <p>Write-ahead logs appear as the foundational data structure in systems that prize write throughput and durability:</p>
 <ul>
 <li><strong>Kafka</strong> — partitions are append-only logs on disk.</li>
@@ -607,7 +622,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Key-value store</strong> — LSM trees use WALs for crash recovery.</li>
 </ul>
 <p>The pattern: convert random writes to sequential appends, gain throughput, and accept the cost of background compaction.</p>
-<h3>3. Idempotency keys</h3>
+<h3 id="3-idempotency-keys">3. Idempotency keys</h3>
 <p>Every system where a retry is possible (which is every system that uses a network) must make writes idempotent:</p>
 <ul>
 <li><strong>Hotel reservation</strong> — <code>reservation_id</code> as unique constraint.</li>
@@ -616,7 +631,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Notification system</strong> — deduplication of push notifications by event ID.</li>
 </ul>
 <p>The pattern: the client generates a unique key before the first attempt. The server uses it to detect and suppress duplicates.</p>
-<h3>4. Consistent hashing for shard distribution</h3>
+<h3 id="4-consistent-hashing-for-shard-distribution">4. Consistent hashing for shard distribution</h3>
 <p>Consistent hashing distributes data across nodes while minimizing reshuffling when nodes join or leave:</p>
 <ul>
 <li><strong>Key-value store</strong> — partition keys across storage nodes.</li>
@@ -625,7 +640,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Digital wallet</strong> — shard user balances across database instances.</li>
 <li><strong>Message queue</strong> — assign partitions to brokers.</li>
 </ul>
-<h3>5. Event sourcing for auditability</h3>
+<h3 id="5-event-sourcing-for-auditability">5. Event sourcing for auditability</h3>
 <p>When correctness and history matter more than raw performance, systems store events rather than state:</p>
 <ul>
 <li><strong>Stock exchange</strong> — deterministic replay of every order for disaster recovery.</li>
@@ -634,7 +649,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Payment system</strong> — double-entry ledger entries are effectively events.</li>
 </ul>
 <p>The cost: replaying billions of events is slow without periodic snapshots, and the storage footprint grows indefinitely.</p>
-<h3>6. Pub/sub for fan-out</h3>
+<h3 id="6-pubsub-for-fan-out">6. Pub/sub for fan-out</h3>
 <p>When one event must reach many consumers, pub/sub decouples the producer from the consumer count:</p>
 <ul>
 <li><strong>Nearby friends</strong> — Redis pub/sub channels per user.</li>
@@ -643,7 +658,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Stock exchange</strong> — UDP multicast for market data distribution.</li>
 <li><strong>Notification system</strong> — event bus to APNs/FCM/SMS/email channels.</li>
 </ul>
-<h3>7. Tiered storage (hot/warm/cold)</h3>
+<h3 id="7-tiered-storage-hotwarmcold">7. Tiered storage (hot/warm/cold)</h3>
 <p>Not all data is equally accessed. Tiering reduces cost without sacrificing access to recent data:</p>
 <ul>
 <li><strong>Google Drive</strong> — SSD for recent files, HDD for older, archival for 90+ day dormant.</li>
@@ -651,14 +666,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Metrics monitoring</strong> — full resolution for 7 days, down-sampled for months/years.</li>
 <li><strong>Message queue</strong> — retention policy moves old segments off primary storage.</li>
 </ul>
-<h3>8. Geospatial indexing</h3>
+<h3 id="8-geospatial-indexing">8. Geospatial indexing</h3>
 <p>Converting 2D coordinates to 1D sortable keys enables spatial queries on standard indexes:</p>
 <ul>
 <li><strong>Proximity service</strong> — geohash prefix queries.</li>
 <li><strong>Google Maps</strong> — tile addressing by zoom/x/y (geohash-like hierarchy).</li>
 <li><strong>Nearby friends</strong> — location cache keyed by geohash for bootstrapping.</li>
 </ul>
-<h3>9. Real-time via persistent connections</h3>
+<h3 id="9-real-time-via-persistent-connections">9. Real-time via persistent connections</h3>
 <p>When latency matters more than resource efficiency, persistent connections (WebSocket, long polling) replace HTTP polling:</p>
 <ul>
 <li><strong>Chat system</strong> — WebSocket for message delivery.</li>
@@ -666,7 +681,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Google Drive</strong> — long polling for sync notifications.</li>
 <li><strong>Search autocomplete</strong> — persistent connection for keystroke-level latency.</li>
 </ul>
-<h3>10. Exactly-once via idempotent processing</h3>
+<h3 id="10-exactly-once-via-idempotent-processing">10. Exactly-once via idempotent processing</h3>
 <p>Exactly-once delivery is impossible in a distributed system, but exactly-once <em>processing</em> is achievable by combining at-least-once delivery with idempotent consumers:</p>
 <ul>
 <li><strong>Kafka</strong> — idempotent producer + transactional consumer.</li>
@@ -675,26 +690,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Hotel reservation</strong> — unique constraint on <code>reservation_id</code>.</li>
 </ul>
 <hr />
-<h2>The practitioner's takeaway</h2>
-<h3>Start with the constraints, not the technology</h3>
+<h2 id="the-practitioners-takeaway">The practitioner's takeaway</h2>
+<h3 id="start-with-the-constraints-not-the-technology">Start with the constraints, not the technology</h3>
 <p>Every system in this track began with the same questions: What's the QPS? What's the storage? What's the latency budget? What's the consistency requirement? The answers — not the latest database trend — drive the architecture. A hotel reservation system at 3 TPS doesn't need Kafka. A stock exchange at 100K orders/sec doesn't need Kubernetes.</p>
-<h3>Correctness and performance are in tension — pick explicitly</h3>
+<h3 id="correctness-and-performance-are-in-tension-pick-explicitly">Correctness and performance are in tension — pick explicitly</h3>
 <p>The systems divide cleanly into two camps:</p>
 <ul>
 <li><strong>Correctness-first</strong> (payments, wallets, exchanges, reservations): accept higher latency and lower throughput for ACID, idempotency, and double-entry guarantees.</li>
 <li><strong>Throughput-first</strong> (metrics, click aggregation, crawlers, news feed): accept eventual consistency and tolerate occasional duplicates or losses.</li>
 </ul>
 <p>The worst designs are the ones that don't choose — they promise both and deliver neither.</p>
-<h3>The metadata store is always the critical path</h3>
+<h3 id="the-metadata-store-is-always-the-critical-path">The metadata store is always the critical path</h3>
 <p>Across Google Drive, S3, email, video streaming, and the stock exchange, the metadata store is the single most critical component. Data can be replicated and reconstructed. Metadata loss means the system doesn't know what it has. Invest disproportionately in metadata store durability, replication, and backup.</p>
-<h3>Every retry is a potential duplicate</h3>
+<h3 id="every-retry-is-a-potential-duplicate">Every retry is a potential duplicate</h3>
 <p>The moment you add a network between two components, you accept that operations may execute more than once. If you haven't made every write operation idempotent, you haven't designed a production system — you've designed a demo.</p>
-<h3>Scaling is a sequence, not a choice</h3>
+<h3 id="scaling-is-a-sequence-not-a-choice">Scaling is a sequence, not a choice</h3>
 <p>The <a href="foundations-and-framework.html">foundations lesson</a> laid out the scaling sequence: separate compute from storage, add load balancing, add replication, add caching, add sharding. Every system in this track follows some prefix of this sequence. The art is knowing where to stop. Most systems don't need the full sequence, and jumping ahead — sharding before you've cached, caching before you've indexed — creates avoidable complexity.</p>
-<h3>The gap between "works" and "works correctly at scale" is where careers are made</h3>
+<h3 id="the-gap-between-works-and-works-correctly-at-scale-is-where-careers-are-made">The gap between "works" and "works correctly at scale" is where careers are made</h3>
 <p>A URL shortener, a chat system, or a payment flow can be built in a weekend hackathon. Making it handle 100M users, survive node failures, reconcile every transaction, and maintain sub-200ms latency — that's the work this track is about. The designs here aren't clever algorithms. They're decades of production experience encoded as patterns and checklists.</p>
 <hr />
-<h2>The full track</h2>
+<h2 id="the-full-track">The full track</h2>
 <ol>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — scaling, estimation, and the four-step design process</li>
 <li><a href="core-building-blocks.html">Core building blocks</a> — rate limiting, consistent hashing, key-value stores, unique ID generation</li>
@@ -706,7 +721,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="transactional-and-financial.html">Transactional &amp; financial systems</a> — hotel reservation, leaderboard, payments, digital wallet, stock exchange</li>
 </ol>
   <div class="pagenav"><a class="navcard prev" href="transactional-and-financial.html"><span class="lbl">← Previous</span><span class="ttl">Transactional &amp; financial systems</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-systems-at-a-glance">The systems at a glance</a><a class="h2" href="#recurring-patterns">Recurring patterns</a><a class="h3" href="#1-separate-metadata-from-data">1. Separate metadata from data</a><a class="h3" href="#2-append-only-logs-wal">2. Append-only logs (WAL)</a><a class="h3" href="#3-idempotency-keys">3. Idempotency keys</a><a class="h3" href="#4-consistent-hashing-for-shard-distribution">4. Consistent hashing for shard distribution</a><a class="h3" href="#5-event-sourcing-for-auditability">5. Event sourcing for auditability</a><a class="h3" href="#6-pubsub-for-fan-out">6. Pub/sub for fan-out</a><a class="h3" href="#7-tiered-storage-hotwarmcold">7. Tiered storage (hot/warm/cold)</a><a class="h3" href="#8-geospatial-indexing">8. Geospatial indexing</a><a class="h3" href="#9-real-time-via-persistent-connections">9. Real-time via persistent connections</a><a class="h3" href="#10-exactly-once-via-idempotent-processing">10. Exactly-once via idempotent processing</a><a class="h2" href="#the-practitioners-takeaway">The practitioner&#x27;s takeaway</a><a class="h3" href="#start-with-the-constraints-not-the-technology">Start with the constraints, not the technology</a><a class="h3" href="#correctness-and-performance-are-in-tension-pick-explicitly">Correctness and performance are in tension — pick explicitly</a><a class="h3" href="#the-metadata-store-is-always-the-critical-path">The metadata store is always the critical path</a><a class="h3" href="#every-retry-is-a-potential-duplicate">Every retry is a potential duplicate</a><a class="h3" href="#scaling-is-a-sequence-not-a-choice">Scaling is a sequence, not a choice</a><a class="h3" href="#the-gap-between-works-and-works-correctly-at-scale-is-where-careers-are-made">The gap between &quot;works&quot; and &quot;works correctly at scale&quot; is where careers are made</a><a class="h2" href="#the-full-track">The full track</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ---- */
 html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}

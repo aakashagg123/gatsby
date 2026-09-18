@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink active" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink active" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 08</span>
     <h1>Incidents &amp; postmortems</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Owning a product includes owning its worst hour. An <strong>incident</strong> is any unplanned event
 degrading what users depend on. The discipline around it has three phases with
 different tempos: <strong>respond</strong> (stop the bleeding — mitigation before diagnosis, one
@@ -338,7 +353,7 @@ would we know, who would decide to pull it, and what would users see instead?"</
 into front-page ones — and a team that repeats its incidents because nothing was
 ever truly learned.</p>
 </blockquote>
-<h2>The lifecycle</h2>
+<h2 id="the-lifecycle">The lifecycle</h2>
 <pre class="mermaid">flowchart LR
   DET[&quot;DETECT&lt;br/&gt;alerts · user reports ·&lt;br/&gt;eval-score drop&quot;] --&gt; TRI[&quot;TRIAGE&lt;br/&gt;severity · impact ·&lt;br/&gt;incident commander&quot;]
   TRI --&gt; MIT[&quot;MITIGATE&lt;br/&gt;rollback · kill switch ·&lt;br/&gt;degraded mode&quot;]
@@ -354,7 +369,7 @@ diagnose</strong> (rollback first, root-cause later — which is why
 <a href="launches-rollouts-and-migrations.html">rollback-ready releases</a> are an incident tool,
 not just a launch tool), and <strong>one incident commander</strong> — a single person directing,
 so ten helpful engineers don't make eleven uncoordinated changes.</p>
-<h2>The PM's job while it burns</h2>
+<h2 id="the-pms-job-while-it-burns">The PM's job while it burns</h2>
 <p>Not the keyboard — the blast radius:</p>
 <ul>
 <li><strong>Size the user impact</strong> — who is affected, how badly, and is it getting worse?
@@ -370,7 +385,7 @@ so ten helpful engineers don't make eleven uncoordinated changes.</p>
 <li><strong>Keep the timeline</strong> — someone should be logging what happened when. It's the raw
   material of the postmortem, and it's never reconstructible afterward.</li>
 </ul>
-<h2>Blameless postmortems — learning as an artifact</h2>
+<h2 id="blameless-postmortems-learning-as-an-artifact">Blameless postmortems — learning as an artifact</h2>
 <p>The postmortem's premise: people acted reasonably on the information they had. The
 <em>system</em> let them down. Blamelessness isn't kindness — it's instrumentation: the
 moment a postmortem can hurt someone, it stops hearing the truth.</p>
@@ -383,7 +398,7 @@ die: track them like features, review them monthly, and treat a repeat incident 
 an unshipped action item as the process failure it is. The best input to
 <a href="prioritization-and-roadmaps.html">prioritizing reliability work</a> is a stack of
 postmortems all pointing at the same subsystem.</p>
-<h2>The AI extension</h2>
+<h2 id="the-ai-extension">The AI extension</h2>
 <ul>
 <li><strong>Quality incidents are incidents.</strong> Define them: eval score below bar in
   production sampling, override/rejection spike, a
@@ -403,7 +418,7 @@ postmortems all pointing at the same subsystem.</p>
   and feed it to the <a href="tpm-for-ai-products.html">eval suite</a> so it can never ship
   again unnoticed.</li>
 </ul>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Diagnosis before mitigation</strong> — an hour of root-causing while the rollback
   button waits. Users pay for the team's curiosity.</li>
@@ -416,7 +431,7 @@ postmortems all pointing at the same subsystem.</p>
 <li><strong>Availability-only monitoring</strong> — the AI feature is "up" while its quality is
   quietly on fire. No error, no page, no idea.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is there a severity ladder, and does everyone know who commands a SEV1?</li>
 <li class="task todo">For each critical feature: what's the rollback, and when was it last exercised?</li>
@@ -427,7 +442,7 @@ postmortems all pointing at the same subsystem.</p>
 <li class="task todo">For AI features: is a quality drop pageable, is there a kill switch, and is
       the degraded mode a decision rather than an accident?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
 <li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
@@ -435,7 +450,26 @@ postmortems all pointing at the same subsystem.</p>
 <li><a href="../technical-product-sense/reliability-and-failure.html">Reliability &amp; failure</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="launches-rollouts-and-migrations.html"><span class="lbl">← Previous</span><span class="ttl">Launches, rollouts &amp; migrations</span></a><a class="navcard next" href="tpm-for-ai-products.html"><span class="lbl">→ Next</span><span class="ttl">Technical product management for AI</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-lifecycle">The lifecycle</a><a class="h2" href="#the-pms-job-while-it-burns">The PM&#x27;s job while it burns</a><a class="h2" href="#blameless-postmortems-learning-as-an-artifact">Blameless postmortems — learning as an artifact</a><a class="h2" href="#the-ai-extension">The AI extension</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

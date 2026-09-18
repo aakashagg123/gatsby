@@ -181,7 +181,7 @@ def convert(md, callout):
         return f"\n\nMERMAIDBLOCK{len(mermaids)-1}ENDBLOCK\n\n"
     md = re.sub(r"```mermaid[ \t]*\n(.*?)```", _stash, md, flags=re.DOTALL)
     body = markdown.markdown(
-        md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"])
+        md, extensions=["tables", "fenced_code", "sane_lists", "attr_list", "toc"])
     body = re.sub(rf"<blockquote>(.*?{re.escape(callout)}.*?)</blockquote>",
                   r'<blockquote class="pm-callout">\1</blockquote>', body, flags=re.DOTALL)
     body = re.sub(r"<li>\[ \]\s*", '<li class="task todo">', body)
@@ -300,11 +300,12 @@ def build_track(cfg):
             raw = f.read()
         t = bh.lesson_title(raw)
         body = apply_diagram_overrides(convert(raw, callout), src, key)
+        outline_html, has_outline = bh.render_outline(bh.extract_outline(body))
         prev, nxt = prevnext(key)
         chip = f"Lesson {num:02d}" if num else "Recap"
         page = _head(f"{t} — {brand}")
         page += _topbar(brand, tagline)
-        page += '<div class="layout">'
+        page += f'<div class="layout{" has-outline" if has_outline else ""}">'
         page += _sidebar(key, nav)
         page += f"""<main class="content" id="top">
   <div class="hero">
@@ -313,7 +314,7 @@ def build_track(cfg):
   </div>
   {body}
   {_footer(prev, nxt)}
-  </main></div></body></html>"""
+  </main>{outline_html}</div>{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:
             f.write(reader_widget.inject(_inject_mermaid(page)))
 

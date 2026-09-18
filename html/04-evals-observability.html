@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -354,7 +369,7 @@ retrieval" step in <a href="03-rag.html">RAG</a>, and every quality claim about
  <div><div style="font-size:12px;color:var(--mut)">Tokens in/out</div><div class="mv" id="tr-tok"></div></div>
  <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--mut)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
 </div></div></section>
-  <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="evals"><div class="lesson-head"><span class="lesson-num">04.1</span><h2>Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Evals are the test suite for a non-deterministic system. You can't assert exact
 equality, so you build different tools instead. <strong>Golden sets</strong> are curated inputs with
 known-good outputs. <strong>Regression tests</strong> run those golden sets in CI to block quality
@@ -370,7 +385,7 @@ flip, and regressions ship silently.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's our regression eval, and does it run before every model or prompt change ships?"</em></p>
 <p><strong>Product risk if ignored</strong> — A model update silently regresses 5% of cases and you hear about it from users, not from CI.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Traditional tests assert <code>f(x) == expected</code>. LLM outputs are variable and open-ended,
 so exact-match doesn't work. Instead you grade <strong>quality over a representative
 distribution</strong>:</p>
@@ -381,7 +396,7 @@ distribution</strong>:</p>
   (model or human). Track <em>aggregate</em> scores and <em>regressions</em>, not single outputs.</li>
 </ul>
 <p>Evals turn "it feels better" into a number you can gate on.</p>
-<h2>Error analysis — look at your traces first</h2>
+<h2 id="error-analysis-look-at-your-traces-first">Error analysis — look at your traces first</h2>
 <p>Before you choose metrics or build graders, practice <strong>error analysis</strong>. This
 discipline, borrowed from qualitative research, turns raw production behavior into an
 eval suite that measures <em>your</em> failures, not generic ones:</p>
@@ -401,7 +416,7 @@ eval suite that measures <em>your</em> failures, not generic ones:</p>
 and notes beats a metrics dashboard you haven't validated. Most teams over-invest in
 scoring infrastructure and under-invest in the hours of reading traces that tell you
 what's worth scoring.</p>
-<h2>Golden sets — the backbone</h2>
+<h2 id="golden-sets-the-backbone">Golden sets — the backbone</h2>
 <p>A golden set is a curated, <strong>version-controlled</strong> collection of inputs paired with
 known-good outputs or acceptance criteria.</p>
 <ul>
@@ -414,7 +429,7 @@ known-good outputs or acceptance criteria.</p>
 <li><strong>Stratified.</strong> Tag cases by capability (math, extraction, refusal, multi-hop) so you
   see <em>where</em> quality moves, not just an aggregate.</li>
 </ul>
-<h2>Regression tests — gate every change</h2>
+<h2 id="regression-tests-gate-every-change">Regression tests — gate every change</h2>
 <p>Run the golden set automatically before prompt, model, retrieval, or infra changes
 ship, and block the change on score drops.</p>
 <ul>
@@ -428,7 +443,7 @@ ship, and block the change on score drops.</p>
   <a href="03-rag.html#retrieval-evals">retrieval evals</a>,
   <a href="02-reliable-outputs.html#model-routing">routing</a> portability).</li>
 </ul>
-<h2>Adversarial tests — break it on purpose</h2>
+<h2 id="adversarial-tests-break-it-on-purpose">Adversarial tests — break it on purpose</h2>
 <p>Beyond "does it work," test "how does it fail":</p>
 <ul>
 <li><strong>Prompt injection / jailbreaks</strong> — does retrieved or user content hijack behavior?
@@ -441,7 +456,7 @@ ship, and block the change on score drops.</p>
 <li><strong>Tool misuse</strong> — does it call dangerous tools when goaded?
 Adversarial cases join the golden set and run in regression.</li>
 </ul>
-<h2>LLM-as-judge — scoring at scale</h2>
+<h2 id="llm-as-judge-scoring-at-scale">LLM-as-judge — scoring at scale</h2>
 <p>Use a model to grade outputs against a rubric — correctness, grounding, helpfulness,
 style. It's powerful, but it has failure modes you must control:</p>
 <ul>
@@ -456,7 +471,7 @@ style. It's powerful, but it has failure modes you must control:</p>
   judge avoids blind spots.</li>
 <li>The judge is itself a system to evaluate — its accuracy is a metric you monitor.</li>
 </ul>
-<h2>Human evals — the ground truth</h2>
+<h2 id="human-evals-the-ground-truth">Human evals — the ground truth</h2>
 <p>The anchor everything else calibrates to.</p>
 <ul>
 <li><strong>Use for:</strong> establishing rubrics, calibrating judges, ambiguous/subjective quality,
@@ -476,7 +491,7 @@ serious teams treat them as market signals and run <em>private</em> evals (this 
 real gate. On the observability side, <strong>OpenTelemetry's GenAI semantic conventions</strong>
 are standardizing trace formats. That means eval and observability tooling is becoming
 portable across vendors, not a lock-in decision.</p>
-<h2>Grading choices that keep evals honest</h2>
+<h2 id="grading-choices-that-keep-evals-honest">Grading choices that keep evals honest</h2>
 <ul>
 <li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales. Forced decisions
   are more consistent across annotators, easy to aggregate, and map directly to a
@@ -495,12 +510,12 @@ portable across vendors, not a lock-in decision.</p>
   interface (render the trace intelligently, keyboard shortcuts, cluster/filter) pays
   for itself in review throughput.</li>
 </ul>
-<h2>How the layers fit</h2>
+<h2 id="how-the-layers-fit">How the layers fit</h2>
 <pre><code>human evals ──calibrate──▶ LLM-as-judge ──scores──▶ golden set ──runs in──▶ regression CI gate
      ▲                                                   ▲
      └──────────── production sampling &amp; incidents ──────┘  (adversarial cases added here)
 </code></pre>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -537,7 +552,7 @@ portable across vendors, not a lock-in decision.</p>
 </tr>
 </tbody>
 </table>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>No regression gate</strong> — silent quality drop after a model/prompt change.</li>
 <li><strong>Unrepresentative golden set</strong> — green evals, unhappy users. The set doesn't match
@@ -547,7 +562,7 @@ portable across vendors, not a lock-in decision.</p>
   catch it.</li>
 <li><strong>Stale evals</strong> — the set rots as the product evolves. Prune and grow it.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is there a version-controlled, representative, stratified golden set?</li>
 <li class="task todo">Do regression evals gate prompt/model/retrieval/infra changes in CI?</li>
@@ -556,14 +571,14 @@ portable across vendors, not a lock-in decision.</p>
 <li class="task todo">Do incidents and bugs get added back as permanent eval cases?</li>
 <li class="task todo">Do you report per-capability deltas, not just one average?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#observability">Observability</a></li>
 <li><a href="03-rag.html#retrieval-evals">Retrieval evals</a></li>
 <li><a href="02-reliable-outputs.html#structured-output">Structured output</a></li>
 <li><a href="01-inference-internals.html#quantization-formats">Quantization formats</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="observability"><div class="lesson-head"><span class="lesson-num">04.2</span><h2>LLM observability: traces, spans, tokens, latency, errors, and drift</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="observability"><div class="lesson-head"><span class="lesson-num">04.2</span><h2>LLM observability: traces, spans, tokens, latency, errors, and drift</h2></div><h2 id="tldr">TL;DR</h2>
 <p><a href="#evals">Evals</a> tell you if the system is correct <em>before</em> you ship. Observability
 tells you what it's doing <em>in production</em>. LLM observability is a first-class
 discipline because these systems fail silently and non-deterministically. You need
@@ -578,7 +593,7 @@ replay exactly what happened on a bad request, you can't fix it.</p>
 <p><strong>Ask your eng team</strong> — <em>"Can we pull up exactly what happened on a specific bad request?"</em></p>
 <p><strong>Product risk if ignored</strong> — Quality drifts down for weeks with no alarm, you can't debug complaints, and you're flying blind.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>A single LLM request is a distributed transaction across many components: retrieval,
 rerank, model calls, tools, validation, repair. Borrow distributed-tracing ideas, but
 add the LLM-specific dimensions:</p>
@@ -593,8 +608,8 @@ add the LLM-specific dimensions:</p>
 TOTAL 1.05s   $0.0046   status=ok
 </code></pre>
 <p>The trace is the unit of debugging. The span is the unit of measurement.</p>
-<h2>What to capture</h2>
-<h3>Traces &amp; spans</h3>
+<h2 id="what-to-capture">What to capture</h2>
+<h3 id="traces-spans">Traces &amp; spans</h3>
 <ul>
 <li>One trace per request, and one span per meaningful step: retrieve, rerank, each model
   call, each tool, validate, repair, route decision.</li>
@@ -604,7 +619,7 @@ TOTAL 1.05s   $0.0046   status=ok
 <li>Capture the <em>decisions</em>: which model/route was chosen, why fallback fired, which
   budget terminated an <a href="02-reliable-outputs.html#agent-guardrails">agent</a>.</li>
 </ul>
-<h3>Tokens</h3>
+<h3 id="tokens">Tokens</h3>
 <ul>
 <li>Input vs. output tokens per call. They cost differently and behave differently — see
   <a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>.</li>
@@ -612,7 +627,7 @@ TOTAL 1.05s   $0.0046   status=ok
   <a href="01-inference-internals.html#prompt-vs-semantic-caching">caching</a>).</li>
 <li>Tokens are the raw material for <a href="#cost-attribution">cost attribution</a>.</li>
 </ul>
-<h3>Latency</h3>
+<h3 id="latency">Latency</h3>
 <ul>
 <li><strong>Split it.</strong> Track TTFT (≈ prefill) and TPOT/inter-token (≈ decode) separately. A
   single "latency" number hides which phase is slow.</li>
@@ -620,7 +635,7 @@ TOTAL 1.05s   $0.0046   status=ok
 <li>Report <strong>distributions (p50/p95/p99)</strong>, never just the mean. Tails are where SLOs and
   <a href="01-inference-internals.html#kv-cache-management">preemption spikes</a> live.</li>
 </ul>
-<h3>Errors</h3>
+<h3 id="errors">Errors</h3>
 <ul>
 <li>Provider errors (timeout, rate-limit, 5xx), validation/parse failures, repair
   exhaustion, tool failures, budget terminations, refusals.</li>
@@ -628,7 +643,7 @@ TOTAL 1.05s   $0.0046   status=ok
   Approximate quality online with proxy signals: validation pass rate, grounding
   spot-checks, <a href="#evals">judge</a> sampling, and user thumbs/edits/retries.</li>
 </ul>
-<h3>Drift</h3>
+<h3 id="drift">Drift</h3>
 <p>The regression that no deploy caused:</p>
 <ul>
 <li><strong>Input drift</strong> — query mix, length, language, new topics shift over time.</li>
@@ -641,7 +656,7 @@ TOTAL 1.05s   $0.0046   status=ok
 Detect drift by tracking these distributions over time and alerting on shifts. Also
 <strong>re-run evals on a schedule</strong>, not only at deploy.</li>
 </ul>
-<h2>From signals to operations</h2>
+<h2 id="from-signals-to-operations">From signals to operations</h2>
 <ul>
 <li><strong>Dashboards &amp; SLOs:</strong> latency (p95/p99 TTFT/TPOT), error rate, token/cost per
   request, cache-hit rate, eval scores — per feature and tenant.</li>
@@ -652,7 +667,7 @@ Detect drift by tracking these distributions over time and alerting on shifts. A
   observed failures become <a href="#evals">adversarial tests</a>. Observability and evals form
   a cycle, not two silos.</li>
 </ul>
-<h2>Guardrails vs. evaluators</h2>
+<h2 id="guardrails-vs-evaluators">Guardrails vs. evaluators</h2>
 <p>Two production roles that get conflated because both "check outputs":</p>
 <ul>
 <li><strong>Guardrails</strong> run <strong>inline</strong>, per request, and can <em>block</em> the output. They check
@@ -669,7 +684,7 @@ path is usually too crude to be your quality measurement. Using an evaluator to
 auto-<em>correct</em> outputs in production — grade, then regenerate on failure — is possible,
 but it pays latency and cost on every retry. Reserve it for high-stakes surfaces, and
 log every correction as an eval case.</p>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -703,7 +718,7 @@ log every correction as an eval case.</p>
 </table>
 <p>Sample intelligently: trace everything cheaply (metrics), retain full payloads for a
 sample + all errors, and judge-score a representative slice.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Mean-only latency</strong> — hides a terrible p99; users feel the tail.</li>
 <li><strong>No silent-error signal</strong> — hallucinations and quality drops invisible until users
@@ -714,7 +729,7 @@ sample + all errors, and judge-score a representative slice.</p>
 <li><strong>Untagged traces</strong> — can't slice by feature/tenant, so you can't localize a problem
   or attribute cost.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is every request a trace with per-step spans (retrieve, model, tool, validate)?</li>
 <li class="task todo">Do you record input/output tokens, cache hits, TTFT, TPOT, cost per call?</li>
@@ -725,14 +740,14 @@ sample + all errors, and judge-score a representative slice.</p>
 <li class="task todo">Are traces tagged by feature and tenant, with PII redaction?</li>
 <li class="task todo">Do production traces feed back into the eval set?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#evals">Evals</a></li>
 <li><a href="#cost-attribution">Cost attribution</a></li>
 <li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="02-reliable-outputs.html#agent-guardrails">Agent guardrails</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="cost-attribution"><div class="lesson-head"><span class="lesson-num">04.3</span><h2>Cost attribution per feature, workflow, tenant, and user journey — not just per model</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="cost-attribution"><div class="lesson-head"><span class="lesson-num">04.3</span><h2>Cost attribution per feature, workflow, tenant, and user journey — not just per model</h2></div><h2 id="tldr">TL;DR</h2>
 <p>"Our LLM bill is $80k/month" is not an actionable number. To optimize, control, and
 price an AI product, you must attribute cost along the dimensions you make decisions on:
 <strong>which feature, which workflow, which tenant, which user journey</strong> is spending the
@@ -746,7 +761,7 @@ business capability, not just a finance line item.</p>
 <p><strong>Ask your eng team</strong> — <em>"Can we see cost per feature and per tenant — not just the total bill?"</em></p>
 <p><strong>Product risk if ignored</strong> — You price blind, a few power users quietly destroy margin, and you can't tell which feature to fix.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Tokens are the currency, and every token is generated <em>for a reason</em>: a feature
 serving a workflow for a tenant during a user journey. If your <a href="#observability">traces</a>
 carry those tags, cost rolls up along any of them:</p>
@@ -758,7 +773,7 @@ carry those tags, cost rolls up along any of them:</p>
  └─ by model/route   (what the invoice shows)
 </code></pre>
 <p>The provider gives you only the last row. You have to build the rest.</p>
-<h2>Why per-model is not enough</h2>
+<h2 id="why-per-model-is-not-enough">Why per-model is not enough</h2>
 <ul>
 <li><strong>You can't optimize what you can't localize.</strong> A 30% cost cut might hide in <em>which</em>
   feature's prompt is bloated, or <em>which</em> workflow loops too much. Neither is visible
@@ -772,7 +787,7 @@ carry those tags, cost rolls up along any of them:</p>
   a <a href="01-inference-internals.html#prompt-vs-semantic-caching">cache-busting prefix</a> shows
   up as a feature/tenant cost spike, but only if cost is sliced that way.</li>
 </ul>
-<h2>What to capture (per call, then roll up)</h2>
+<h2 id="what-to-capture-per-call-then-roll-up">What to capture (per call, then roll up)</h2>
 <p>On every model/tool span, record:</p>
 <ul>
 <li><strong>Tokens:</strong> input and output <strong>separately</strong> (priced differently), plus
@@ -785,7 +800,7 @@ carry those tags, cost rolls up along any of them:</p>
 </ul>
 <p>These are the same <a href="#observability">tags on your traces</a>. Cost attribution is an
 aggregation over instrumented spans, not a separate system.</p>
-<h2>Dimensions that matter</h2>
+<h2 id="dimensions-that-matter">Dimensions that matter</h2>
 <table>
 <thead>
 <tr>
@@ -822,7 +837,7 @@ aggregation over instrumented spans, not a separate system.</p>
 </tr>
 </tbody>
 </table>
-<h2>From attribution to control</h2>
+<h2 id="from-attribution-to-control">From attribution to control</h2>
 <p>Attribution is the input. Control is the point:</p>
 <ul>
 <li><strong>Budgets &amp; quotas</strong> per tenant/feature; alert and throttle on breach (ties to
@@ -843,7 +858,7 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><strong>Pricing &amp; packaging.</strong> Set plan limits and prices from real unit economics, not
   guesses.</li>
 </ul>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <ul>
 <li><strong>Tag granularity vs. overhead</strong> — more dimensions mean richer slicing but more
   instrumentation and cardinality cost. Tag the dimensions you actually <em>decide</em> on.</li>
@@ -853,7 +868,7 @@ aggregation over instrumented spans, not a separate system.</p>
   Attribution lets you optimize cost <em>within</em> quality/latency SLOs, the theme of
   <a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack tradeoffs</a>.</li>
 </ul>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Flat bill, no slices</strong> — a cost spike, no idea which feature/tenant caused it.</li>
 <li><strong>Ignoring cache-read pricing</strong> — over-reporting cost or missing the value of caching.</li>
@@ -862,7 +877,7 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><strong>No per-tenant view</strong> — unprofitable accounts hide; pricing is guesswork.</li>
 <li><strong>Attribution without action</strong> — pretty dashboards, no budgets/routing changes.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do spans record input/output (and cache-read/write) tokens separately?</li>
 <li class="task todo">Is every call tagged with feature, workflow, tenant, and journey?</li>
@@ -872,7 +887,7 @@ aggregation over instrumented spans, not a separate system.</p>
 <li class="task todo">Is prompt-cache hit rate tracked as a cost metric?</li>
 <li class="task todo">Does attribution actually drive routing/caching/pricing decisions?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#observability">Observability</a></li>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
@@ -880,7 +895,7 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>Klarna's AI assistant (2024).</strong> Klarna reported its OpenAI-powered assistant handled
 <strong>~two-thirds of customer-service chats</strong> within months — work it equated to hundreds of
 full-time agents. 🎯 <em>PM takeaway:</em> at that volume you cannot operate on vibes.
@@ -896,7 +911,7 @@ golden set find out from CI. Teams without one find out from churn.</p>
 Braintrust, and others turned <a href="#observability">traces, spans, token/cost accounting, and eval runs</a>
 into a standard tooling layer. 🎯 <em>PM takeaway:</em> this is no longer exotic. "We have no
 tracing or evals" is now a visible maturity gap, not a defensible default.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

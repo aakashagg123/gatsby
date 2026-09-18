@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic AI</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink active" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink active" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 08</span>
     <h1>Agentic AI as a product</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>After seven lessons, you can mostly build an agent. The real question is
 "<strong>where does an agent pay?</strong>" The economics are unusual. Marginal cost per task is
 real and it varies — it depends on tokens, steps, and thinking time. Reliability sets
@@ -339,7 +354,7 @@ checking it cost, and what did the old way cost — all-in?"</em></p>
 <p><strong>Risk if ignored</strong> — An impressive agent with negative unit economics at scale. Or
 one parked on a task where a single failure erases a year of savings.</p>
 </blockquote>
-<h2>Where agents pay</h2>
+<h2 id="where-agents-pay">Where agents pay</h2>
 <style>
 .qd-fig{background:#ffffff;border:1px solid #d1d9e0;
   border-radius:16px;padding:28px 30px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04);
@@ -422,7 +437,7 @@ amortize over repetition. A task done twice a month rarely repays them.</p>
 Build up <a href="reliability-and-evals.html">eval evidence</a> and trust. Then <em>earn</em> autonomy
 tier by tier. Do it in the reverse order — launch autonomous, add oversight after the
 incident — and you pay for it in trust you don't get back.</p>
-<h2>Unit economics</h2>
+<h2 id="unit-economics">Unit economics</h2>
 <p>The napkin model every agent feature deserves before it enters the
 <a href="../technical-product-management/prioritization-and-roadmaps.html">roadmap</a>:</p>
 <p><strong>Cost per task</strong> = steps × (context size × token price) + thinking budget + tool/infra
@@ -446,7 +461,7 @@ with tasks. Outcome-based pricing — per resolved ticket, per completed job —
 direction agent pricing is drifting, because it prices what the customer actually
 buys. It also shifts reliability risk onto <em>you</em>: price outcomes only when your
 completion rate is boringly stable.</p>
-<h2>Service-as-a-Software: selling the work itself</h2>
+<h2 id="service-as-a-software-selling-the-work-itself">Service-as-a-Software: selling the work itself</h2>
 <p>The strategy frame around these economics comes from platform thinking — Sangeet Paul
 Choudary's Enterprise AI playbook. Work is a bundle of tasks. Software long ago ate
 the rote ones. But two kinds of human glue still held every workflow together:
@@ -478,7 +493,7 @@ play.</p>
   against a target of 20–50. If the service isn't <em>progressively</em> absorbed into
   software, there is no software business. Track absorption, not annualized run rate.</li>
 </ul>
-<h2>Agent UX: designing for trust</h2>
+<h2 id="agent-ux-designing-for-trust">Agent UX: designing for trust</h2>
 <p>Users don't experience your architecture. They experience a colleague whose thinking
 they can't see. These patterns make delegation feel safe:</p>
 <ul>
@@ -500,7 +515,7 @@ they can't see. These patterns make delegation feel safe:</p>
 your replies for approval" delights at 90% quality. "Handles your inbox" disappoints at
 98%. Most "agent failed" stories are really "agent was oversold" stories — the
 marketing wrote a check the compounding law couldn't cash.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Subsidized-demo economics</strong> — Unit costs were never modeled. Scale arrives, and
   every new customer deepens the loss.</li>
@@ -513,7 +528,7 @@ marketing wrote a check the compounding law couldn't cash.</p>
 <li><strong>Static pricing on falling costs</strong> — Competitors reprice on every model-price drop.
   Your margin story assumed 2024 token prices would last forever.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have I placed each agent task on stakes × verifiability × volume — and does its
       autonomy tier match?</li>
@@ -523,7 +538,7 @@ marketing wrote a check the compounding law couldn't cash.</p>
 <li class="task todo">When token prices next drop 5×, which tasks that are uneconomic today flip — and
       are we positioned to catch them?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="reliability-and-evals.html">Reliability &amp; evals</a></li>
 <li><a href="safety-security-and-governance.html">Safety, security &amp; governance</a></li>
@@ -531,7 +546,26 @@ marketing wrote a check the compounding law couldn't cash.</p>
 <li><a href="../product-sense/product-sense-for-ai.html">Product sense for AI products</a> — the taste and trust judgment that agent UX under non-determinism demands.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="safety-security-and-governance.html"><span class="lbl">← Previous</span><span class="ttl">Safety, security &amp; governance</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#where-agents-pay">Where agents pay</a><a class="h2" href="#unit-economics">Unit economics</a><a class="h2" href="#service-as-a-software-selling-the-work-itself">Service-as-a-Software: selling the work itself</a><a class="h2" href="#agent-ux-designing-for-trust">Agent UX: designing for trust</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ---- */
 html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Evaluation &amp; observability</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-eval-investment-is-the-job.html">1 · Why eval investment is the job</a><a class="modlink active" href="building-the-eval-stack-in-the-right-order.html">2 · Building the eval stack in the right order</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="why-eval-investment-is-the-job.html">1 · Why eval investment is the job</a><a class="modlink active" href="building-the-eval-stack-in-the-right-order.html">2 · Building the eval stack in the right order</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Building the eval stack in the right order</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>The full eval and observability stack — golden sets, regression gates, calibrated
 LLM-as-judge grading, full production tracing, drift detection, trajectory evals for
 agents — is a lot to build at once, and trying to build all of it before shipping
@@ -337,7 +352,7 @@ end, or did we go straight to building a scoring pipeline?"</em></p>
 the wrong things, because nobody did the unglamorous work of reading real failures
 before deciding what to score.</p>
 </blockquote>
-<h2>The mental model: each stage earns the next</h2>
+<h2 id="the-mental-model-each-stage-earns-the-next">The mental model: each stage earns the next</h2>
 <pre class="mermaid">flowchart TB
   READ[&quot;Read real traces —&lt;br/&gt;label failures in your own words&quot;] --&gt; CLUSTER[&quot;Cluster into a small,&lt;br/&gt;named set of failure modes&quot;]
   CLUSTER --&gt; GOLDEN[&quot;Build a golden set from&lt;br/&gt;the modes that recur&quot;]
@@ -351,7 +366,7 @@ A calibrated judge built before a golden set has nothing representative to calib
 against. Full production observability, built before anyone has a working regression
 gate, produces a beautiful dashboard tracking a system nobody can yet tell is regressing
 or improving. The order is the discipline — not any single stage in isolation.</p>
-<h2>Where to actually start: reading, not scoring</h2>
+<h2 id="where-to-actually-start-reading-not-scoring">Where to actually start: reading, not scoring</h2>
 <p>The first real step is qualitative, not a metrics project: pull real traces — a random
 sample, plus anything a user flagged — and read them one by one, labeling what went wrong
 in plain language, in the team's own words, without forcing the labels into a taxonomy
@@ -361,7 +376,7 @@ tells a team what's actually worth building an automated evaluator for, and it's
 step most commonly skipped in the rush to have a dashboard to show. The full method —
 what the discipline calls open coding and axial coding — is developed in complete depth
 in <a href="../ai/04-evals-observability.html#evals">Evals</a>.</p>
-<h2>Growing from a golden set to a full production practice</h2>
+<h2 id="growing-from-a-golden-set-to-a-full-production-practice">Growing from a golden set to a full production practice</h2>
 <p>Once a handful of recurring failure modes are named, they become a small, version-
 controlled golden set: real inputs, paired with what a good output looks like, that a
 team can run before every change ships and gate the release on. From there, the stack
@@ -378,7 +393,7 @@ complete engineering depth in
 where no change ships without a score, because the eval set has effectively become the
 spec — is the operating discipline developed in
 <a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a>.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Dashboards before reading</strong> — investing in scoring infrastructure before anyone spent
   the hours reading real traces that would have revealed what to measure.</li>
@@ -389,7 +404,7 @@ spec — is the operating discipline developed in
 <li><strong>Trajectory evals skipped on an agentic system</strong> — grading only a long-running agent's
   final answer, missing the early step that actually caused the failure.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Has the team read real production traces and labeled failures in plain language,
       before building anything to score them automatically?</li>
@@ -400,7 +415,7 @@ spec — is the operating discipline developed in
 <li class="task todo">If the system is agentic, does anything grade the path a run took, not just
       whether it reached the right answer?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="why-eval-investment-is-the-job.html">Why eval investment is the job</a> — the case for
   making this investment before a team feels ready for it.</li>
@@ -412,7 +427,26 @@ spec — is the operating discipline developed in
   trajectory evals for agents.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="why-eval-investment-is-the-job.html"><span class="lbl">← Previous</span><span class="ttl">Why eval investment is the job</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-each-stage-earns-the-next">The mental model: each stage earns the next</a><a class="h2" href="#where-to-actually-start-reading-not-scoring">Where to actually start: reading, not scoring</a><a class="h2" href="#growing-from-a-golden-set-to-a-full-production-practice">Growing from a golden set to a full production practice</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

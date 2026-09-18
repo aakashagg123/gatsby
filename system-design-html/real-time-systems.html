@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink active" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink active" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Real-time systems</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Three systems where latency is the product. A <strong>chat system</strong> serves 50 million daily users through WebSocket connections to stateful chat servers. It uses a key-value store for message history and heartbeat-based presence detection. A <strong>search autocomplete</strong> system responds in under 100ms at 48,000 peak QPS. It pre-computes top-k results at every node of a trie data structure, rebuilt weekly in batch and sharded by prefix range. And a <strong>video streaming platform</strong> at YouTube scale (5 billion daily views) parallelizes upload and transcoding through a DAG-based processing pipeline. It serves popular content from CDN edge nodes, and streams via adaptive bitrate protocols (MPEG-DASH, HLS) that adjust quality to the viewer's bandwidth in real time.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,9 +337,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — Chat that feels sluggish compared to competitors. Autocomplete that returns stale or irrelevant suggestions because the trie update cycle is too slow. Video that buffers on mobile because the CDN strategy doesn't account for the long tail of content.</p>
 </blockquote>
 <hr />
-<h2>Chat system</h2>
+<h2 id="chat-system">Chat system</h2>
 <p>The product: real-time messaging for 50 million daily active users. 1:1 chats, group chats (up to 500 members), online presence indicators, and message history. The fundamental challenge: HTTP is request-response, but chat requires the server to <em>push</em> messages to the client the instant they arrive.</p>
-<h3>Connection strategy: polling, long polling, WebSocket</h3>
+<h3 id="connection-strategy-polling-long-polling-websocket">Connection strategy: polling, long polling, WebSocket</h3>
 <p>Three approaches to server-to-client communication, with very different resource profiles:</p>
 <p><strong>Polling</strong> — The client sends a request every few seconds asking "any new messages?" The server responds immediately with either new messages or an empty response.</p>
 <ul>
@@ -490,7 +505,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
 </div>
 
-<h3>Architecture: stateless + stateful tiers</h3>
+<h3 id="architecture-stateless-stateful-tiers">Architecture: stateless + stateful tiers</h3>
 <p>The chat system separates stateless services from stateful chat servers:</p>
 <pre class="mermaid">flowchart TD
   Client[Client apps] &lt;--&gt;|WebSocket| CS[Chat Servers&lt;br/&gt;stateful]
@@ -503,7 +518,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Stateless services</strong> — Authentication, user profile, group management, and all non-chat API calls. These are standard HTTP services behind a load balancer, horizontally scalable, using a relational database.</p>
 <p><strong>Stateful chat servers</strong> — Each client maintains a WebSocket connection to one chat server. The server tracks which clients are connected and routes messages accordingly. Because connections are stateful, you can't arbitrarily load-balance them. A client must reconnect to a specific server, or to any server if there's a shared presence layer.</p>
 <p><strong>Service discovery (Zookeeper)</strong> — When a client connects, the service discovery layer assigns it to a chat server based on server load, geographic proximity, and available capacity. Zookeeper maintains the registry of available chat servers and their current connection counts.</p>
-<h3>Chat storage: why not RDBMS</h3>
+<h3 id="chat-storage-why-not-rdbms">Chat storage: why not RDBMS</h3>
 <p>Message history has a distinctive access pattern:</p>
 <ul>
 <li><strong>Recent messages</strong> are read frequently (opening a chat loads the last 20-50 messages)</li>
@@ -518,7 +533,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Access pattern:</strong> range scan on message_id within a channel (fetch latest N messages)</li>
 </ul>
 <p>The time-ordered key ensures that recent messages are physically co-located on disk, making the dominant query (latest messages) a fast sequential read.</p>
-<h3>Message flow: 1:1 chat</h3>
+<h3 id="message-flow-11-chat">Message flow: 1:1 chat</h3>
 <ol>
 <li>User A sends a message via their WebSocket connection to Chat Server 1</li>
 <li>Chat Server 1 generates a message ID (time-ordered) and stores the message in the KV store</li>
@@ -527,7 +542,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Chat Server 2 pushes the message to User B over their WebSocket connection</li>
 <li>If User B is offline, the message is stored and a push notification is sent via the <a href="web-scale-services.html">notification system</a></li>
 </ol>
-<h3>Message flow: group chat</h3>
+<h3 id="message-flow-group-chat">Message flow: group chat</h3>
 <p>Group messages use a <strong>per-recipient inbox</strong> model. When a message is sent to a group of 500 members:</p>
 <ol>
 <li>The message is stored once in the KV store</li>
@@ -536,7 +551,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Offline members receive it from their inbox when they reconnect</li>
 </ol>
 <p>This is essentially fanout-on-write at the message level — similar to the <a href="web-scale-services.html">news feed</a> pattern. For small groups (under 500), the fanout cost is acceptable. For broadcast channels with millions of subscribers, you'd switch to fanout-on-read.</p>
-<h3>Message sync</h3>
+<h3 id="message-sync">Message sync</h3>
 <p>When a client reconnects (after a network switch, app background/foreground, or server failover), it needs to catch up on missed messages. The client tracks <code>cur_max_message_id</code> — the ID of the last message it received. On reconnection:</p>
 <ol>
 <li>Client sends <code>cur_max_message_id</code> to the chat server</li>
@@ -544,7 +559,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Server pushes the delta to the client</li>
 </ol>
 <p>This is efficient because message IDs are time-ordered — the query is a simple range scan.</p>
-<h3>Online presence</h3>
+<h3 id="online-presence">Online presence</h3>
 <p>Presence (online/offline/away status) seems simple but is surprisingly expensive at scale. With 50M daily users, presence changes are frequent (phone locks, network switches, app backgrounding).</p>
 <p><strong>Heartbeat model:</strong></p>
 <ol>
@@ -560,9 +575,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   PubSub --&gt; F2[Friend 2&#x27;s chat server]
   PubSub --&gt; FN[Friend N&#x27;s chat server]</pre>
 <hr />
-<h2>Search autocomplete</h2>
+<h2 id="search-autocomplete">Search autocomplete</h2>
 <p>The product: as a user types in a search box, show the top 5 most relevant completions in under 100ms. With 10 million daily active users, each typing an average of 5 queries with 6 characters each, that's 300 million keystrokes per day — about 3,500 QPS average, 48,000 at peak (roughly 14x average, accounting for time-of-day concentration).</p>
-<h3>The trie data structure</h3>
+<h3 id="the-trie-data-structure">The trie data structure</h3>
 <p>A <strong>trie</strong> (prefix tree) is the natural data structure for prefix matching. Each node represents a character, and the path from root to a node represents a prefix. Searching for "din" walks root → d → i → n in O(L) time, where L is the prefix length.</p>
 <p>The naive approach — walk to the prefix node, then enumerate all descendants to find completions — is too slow. A subtree might contain millions of terms. Instead, <strong>cache the top-k results at every node</strong>:</p>
 <pre class="mermaid">flowchart TD
@@ -573,7 +588,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   DIN --&gt; DINN[&quot;dinn&lt;br/&gt;top-5: dinner, dinnerware, dinning, ...&quot;]
   DIN --&gt; DINO[&quot;dino&lt;br/&gt;top-5: dinosaur, dino, dinosaurs, ...&quot;]</pre>
 <p>With top-k cached at each node, the query is a single trie traversal — O(L) to reach the prefix node, then O(1) to return the cached results. The tradeoff: updating cached results on every query is expensive, so the trie is rebuilt periodically.</p>
-<h3>Two-service architecture</h3>
+<h3 id="two-service-architecture">Two-service architecture</h3>
 <p>The system splits into a <strong>Data Gathering Service</strong> (offline, batch) and a <strong>Query Service</strong> (online, real-time):</p>
 <pre class="mermaid">flowchart TD
   subgraph &quot;Data Gathering Service (offline)&quot;
@@ -590,12 +605,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   end</pre>
 <p><strong>Data Gathering Service:</strong> Runs weekly (or more frequently for trending queries). Aggregates query logs, computes frequency-weighted rankings, builds a new trie with top-k cached at every node, and stores the trie snapshot in object storage (S3). The weekly cadence is intentional — daily rebuilds rarely change the results for established queries, and the batch processing cost is non-trivial. For trending/breaking topics, a separate real-time pipeline can inject hot queries into the trie between rebuilds.</p>
 <p><strong>Query Service:</strong> Trie servers load the latest snapshot into memory. On a user keystroke, the API server routes the prefix to the appropriate trie server, which returns the cached top-k in microseconds. If the trie is too large for a single server's memory, it's sharded.</p>
-<h3>Trie sharding</h3>
+<h3 id="trie-sharding">Trie sharding</h3>
 <p>Two strategies for distributing the trie across multiple servers:</p>
 <p><strong>By prefix range</strong> — Server 1 handles a-f, Server 2 handles g-m, etc. Simple, but uneven — prefixes starting with 's' or 'c' have far more entries than 'x' or 'z'. Adjust ranges based on measured query distribution rather than alphabet position.</p>
 <p><strong>By hash</strong> — Hash the prefix and route to a server. Even distribution, but a single query can't be answered by a single server if prefixes of different lengths hash to different servers. Less practical for tries.</p>
 <p>Prefix-range sharding with uneven splits (based on empirical query volume) is the standard approach.</p>
-<h3>Client-side optimization</h3>
+<h3 id="client-side-optimization">Client-side optimization</h3>
 <p>The client plays a crucial role in keeping latency low and reducing server load:</p>
 <ul>
 <li><strong>Debounce</strong> — Don't send a request on every keystroke. Wait 50-100ms after the user stops typing before sending the query. This eliminates requests for intermediate characters.</li>
@@ -604,7 +619,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Abort previous requests</strong> — If the user types "d", then "di" before the "d" response returns, abort the "d" request. The browser's AbortController API handles this.</li>
 </ul>
 <p>These optimizations can reduce actual server QPS by 80%+ compared to naive per-keystroke requests.</p>
-<h3>Data freshness vs. cost</h3>
+<h3 id="data-freshness-vs-cost">Data freshness vs. cost</h3>
 <p>The weekly batch rebuild means truly trending queries (breaking news, viral events) won't appear in autocomplete for up to a week. Options:</p>
 <ul>
 <li><strong>Accept the lag</strong> — for most products, a 1-week delay is fine. Users still find what they need via full search.</li>
@@ -612,9 +627,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Hybrid</strong> — the trie servers maintain a small "hot terms" overlay that's updated hourly, merged with the weekly-built base trie at query time.</li>
 </ul>
 <hr />
-<h2>YouTube / video streaming platform</h2>
+<h2 id="youtube-video-streaming-platform">YouTube / video streaming platform</h2>
 <p>The product: a video platform at YouTube scale — 5 billion videos watched per day, hundreds of hours of video uploaded every minute. The system must handle video upload, processing (transcoding into multiple formats and resolutions), storage, and streaming — each with distinct scaling challenges.</p>
-<h3>Upload flow: parallel processing</h3>
+<h3 id="upload-flow-parallel-processing">Upload flow: parallel processing</h3>
 <p>Video upload is split into two parallel streams that proceed independently:</p>
 <pre class="mermaid">flowchart TD
   User[Creator uploads] --&gt; UP[Upload Service]
@@ -630,7 +645,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Metadata</strong> — title, description, tags, thumbnail are stored in a relational database and cache immediately</li>
 </ol>
 <p>The metadata path completes quickly (the video page can be "live" with a "processing" status). The video processing path is the slow, compute-intensive part.</p>
-<h3>Transcoding: DAG-based pipeline</h3>
+<h3 id="transcoding-dag-based-pipeline">Transcoding: DAG-based pipeline</h3>
 <p>Video transcoding (converting a raw upload into multiple formats, resolutions, and bitrates) is not a single operation — it's a directed acyclic graph (DAG) of dependent tasks:</p>
 <pre class="mermaid">flowchart TD
   Raw[Original video] --&gt; PP[Preprocessor&lt;br/&gt;split into GOPs]
@@ -657,7 +672,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Resource Manager</strong> — Allocates CPU/GPU workers to tasks. GPU-intensive tasks (H.265 encoding, 4K) get GPU workers. Lighter tasks (thumbnail generation) get CPU workers.</li>
 <li><strong>Task Workers</strong> — Execute individual encoding tasks. Horizontally scaled, stateless — they pull tasks from a queue, process the GOP, and write the output to storage.</li>
 </ol>
-<h3>Streaming: adaptive bitrate</h3>
+<h3 id="streaming-adaptive-bitrate">Streaming: adaptive bitrate</h3>
 <p>Users watch videos on devices ranging from 4K TVs on fiber to phones on 3G. Serving a single bitrate is wasteful (too high for slow connections, too low for fast ones). <strong>Adaptive bitrate streaming</strong> solves this:</p>
 <p>The video is pre-encoded at multiple quality levels. Each quality level is split into small segments (2-10 seconds). The player downloads segments one at a time, choosing the quality level that matches its current bandwidth. If bandwidth drops (the viewer enters a tunnel), the player switches to a lower quality for the next segment — seamlessly, without rebuffering.</p>
 <p>Two dominant protocols:</p>
@@ -686,7 +701,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>Both work the same way: a manifest file lists available quality levels and segment URLs. The player downloads the manifest, then fetches segments at the appropriate quality. All delivery happens over standard HTTP/HTTPS — no special streaming servers needed.</p>
-<h3>CDN strategy: popular vs. long-tail</h3>
+<h3 id="cdn-strategy-popular-vs-long-tail">CDN strategy: popular vs. long-tail</h3>
 <p>Video storage and delivery have a distinctive distribution: a small percentage of videos account for the vast majority of views (head), while millions of videos are watched rarely (long tail).</p>
 <pre class="mermaid">flowchart LR
   subgraph &quot;Popular content (head)&quot;
@@ -700,7 +715,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   Origin --&gt;|on first request| CDN</pre>
 <p><strong>Popular videos</strong> are pushed to CDN edge servers worldwide. The CDN caches them close to viewers, reducing latency and origin load. For a viral video, the CDN absorbs &gt;99% of the traffic.</p>
 <p><strong>Long-tail videos</strong> stay on origin servers. Serving them from CDN would be wasteful — the CDN storage cost exceeds the benefit for a video watched once a month. If a long-tail video suddenly becomes popular (someone shares it on social media), the CDN pulls it on the first request and caches it, transitioning it from origin to edge automatically.</p>
-<h3>Upload security: pre-signed URLs</h3>
+<h3 id="upload-security-pre-signed-urls">Upload security: pre-signed URLs</h3>
 <p>Users upload videos directly to object storage (S3), bypassing the application servers. This avoids using application-server bandwidth for large file transfers. The flow:</p>
 <ol>
 <li>Client requests an upload URL from the API server</li>
@@ -709,7 +724,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Storage notifies the transcoding pipeline via an event (S3 event notification, or a message queue)</li>
 </ol>
 <p>Pre-signed URLs are secure: they expire (typically in 15-60 minutes), they're scoped to a specific path, and they can't be reused. The client never receives storage credentials.</p>
-<h3>Cost optimization</h3>
+<h3 id="cost-optimization">Cost optimization</h3>
 <p>Video infrastructure is expensive. Key optimizations:</p>
 <ul>
 <li><strong>Encode only what's needed</strong> — Don't encode 4K for a 360p upload. Detect the source resolution and encode only at that level and below.</li>
@@ -719,7 +734,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Tiered storage</strong> — Move old, rarely-accessed transcoded files to cold storage (S3 Glacier). Keep only the original and the most popular resolutions in hot storage.</li>
 </ul>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>WebSocket server restart</strong> — All clients connected to a chat server lose their connection simultaneously. Without graceful drain (migrating connections before shutdown), thousands of clients reconnect at once, potentially overwhelming other servers. Implement connection draining: stop accepting new connections, notify clients to reconnect to a different server, wait for transfer before shutting down.</li>
 <li><strong>Chat message ordering</strong> — Messages routed through different servers or queue partitions can arrive out of order. Time-ordered message IDs (Snowflake) provide global ordering, but displaying order should be based on server-assigned IDs, not client timestamps (which can be wrong).</li>
@@ -730,7 +745,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>CDN cache miss storm</strong> — A popular video's CDN cache expires across all edge servers simultaneously. Thousands of viewers hit the origin at once. Use staggered TTLs (jitter) or cache-lock (only one edge server fetches from origin; others wait for the cached copy).</li>
 <li><strong>Video playback buffering</strong> — Adaptive bitrate switching is too aggressive — the player oscillates between quality levels, causing visible quality changes every few seconds. Implement hysteresis: require bandwidth to be consistently higher/lower for several segments before switching.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is the chat system using WebSocket for real-time messaging, with HTTP fallback for environments that block WebSocket?</li>
 <li class="task todo">Is chat history stored in a KV store with time-ordered keys for efficient range queries?</li>
@@ -745,7 +760,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Is adaptive bitrate streaming implemented with hysteresis to prevent quality oscillation?</li>
 <li class="task todo">What is the P99 message delivery latency for 1:1 chat, group chat, and presence updates?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="core-building-blocks.html">Core building blocks</a> — the Snowflake ID generator used for time-ordered message IDs, and the consistent hashing used for chat server assignment</li>
 <li><a href="web-scale-services.html">Web-scale services</a> — the notification system that handles offline message delivery, and the news feed fanout pattern used in group chat</li>
@@ -753,7 +768,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="data-infrastructure.html">Data infrastructure</a> — the distributed message queues that connect chat servers and the event pipelines that feed autocomplete trie rebuilds</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="web-scale-services.html"><span class="lbl">← Previous</span><span class="ttl">Web-scale services</span></a><a class="navcard next" href="storage-and-sync.html"><span class="lbl">→ Next</span><span class="ttl">Storage &amp; sync</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#chat-system">Chat system</a><a class="h3" href="#connection-strategy-polling-long-polling-websocket">Connection strategy: polling, long polling, WebSocket</a><a class="h3" href="#architecture-stateless-stateful-tiers">Architecture: stateless + stateful tiers</a><a class="h3" href="#chat-storage-why-not-rdbms">Chat storage: why not RDBMS</a><a class="h3" href="#message-flow-11-chat">Message flow: 1:1 chat</a><a class="h3" href="#message-flow-group-chat">Message flow: group chat</a><a class="h3" href="#message-sync">Message sync</a><a class="h3" href="#online-presence">Online presence</a><a class="h2" href="#search-autocomplete">Search autocomplete</a><a class="h3" href="#the-trie-data-structure">The trie data structure</a><a class="h3" href="#two-service-architecture">Two-service architecture</a><a class="h3" href="#trie-sharding">Trie sharding</a><a class="h3" href="#client-side-optimization">Client-side optimization</a><a class="h3" href="#data-freshness-vs-cost">Data freshness vs. cost</a><a class="h2" href="#youtube-video-streaming-platform">YouTube / video streaming platform</a><a class="h3" href="#upload-flow-parallel-processing">Upload flow: parallel processing</a><a class="h3" href="#transcoding-dag-based-pipeline">Transcoding: DAG-based pipeline</a><a class="h3" href="#streaming-adaptive-bitrate">Streaming: adaptive bitrate</a><a class="h3" href="#cdn-strategy-popular-vs-long-tail">CDN strategy: popular vs. long-tail</a><a class="h3" href="#upload-security-pre-signed-urls">Upload security: pre-signed URLs</a><a class="h3" href="#cost-optimization">Cost optimization</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink active" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink active" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 08</span>
     <h1>Transactional &amp; financial systems</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Financial and transactional systems are where distributed systems meet zero tolerance for error. A <strong>hotel reservation</strong> system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A <strong>gaming leaderboard</strong> exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A <strong>payment system</strong> orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A <strong>digital wallet</strong> evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A <strong>stock exchange</strong> pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability. The cost of a bug is measured in dollars, not just user frustration.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,8 +337,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — You double-book hotel rooms during peak season, double-charge customers during payment retries, or discover that your ledger is off by $2M during the quarterly audit.</p>
 </blockquote>
 <hr />
-<h2>Hotel reservation system</h2>
-<h3>Scale and requirements</h3>
+<h2 id="hotel-reservation-system">Hotel reservation system</h2>
+<h3 id="scale-and-requirements">Scale and requirements</h3>
 <ul>
 <li>5,000 hotels, 1 million rooms total</li>
 <li>~3 TPS average reservation rate (modest write load)</li>
@@ -331,7 +346,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Zero tolerance for double-booking</li>
 <li>Support for concurrent booking of the same room type</li>
 </ul>
-<h3>Data model: reserve roomTypeID, not roomID</h3>
+<h3 id="data-model-reserve-roomtypeid-not-roomid">Data model: reserve roomTypeID, not roomID</h3>
 <p>A critical design insight: <strong>guests reserve a room type, not a specific room</strong>. Room assignment happens at check-in, not at booking time.</p>
 <style>
 .sd-fin{background:#ffffff;border:1px solid #d1d9e0;
@@ -537,7 +552,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </div>
 
 <p>This simplification means the availability check is a count query (<code>SELECT available_count FROM inventory WHERE hotel_id=X AND room_type='KNG' AND date BETWEEN ...</code>), not a scan of individual room status.</p>
-<h3>Double-booking prevention</h3>
+<h3 id="double-booking-prevention">Double-booking prevention</h3>
 <p>Three approaches, with increasing sophistication:</p>
 <p><strong>Pessimistic locking:</strong></p>
 <pre><code>SELECT ... FOR UPDATE WHERE hotel_id=X AND room_type='KNG' AND date='2024-10-15'
@@ -563,7 +578,7 @@ UPDATE inventory SET available_count = available_count - 1
 -- DB rejects if available_count would go negative
 </code></pre>
 <p>The database enforces the invariant. No application-level locking logic. The simplest correct solution for this scale.</p>
-<h3>Idempotency via reservationID</h3>
+<h3 id="idempotency-via-reservationid">Idempotency via reservationID</h3>
 <p>Network failures cause retries. Without idempotency, a retry creates a duplicate reservation:</p>
 <ol>
 <li>Client generates a unique <code>reservation_id</code> (UUID) before sending the request.</li>
@@ -571,7 +586,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>If the same <code>reservation_id</code> arrives twice, the second INSERT is rejected (duplicate key) and the server returns the existing reservation.</li>
 </ol>
 <p>This pattern is universal in financial systems — it appears in every design in this lesson.</p>
-<h3>Why MySQL (ACID) at this scale</h3>
+<h3 id="why-mysql-acid-at-this-scale">Why MySQL (ACID) at this scale</h3>
 <p>At ~3 TPS, there is no need for distributed databases. A single MySQL instance with replication handles this comfortably:</p>
 <ul>
 <li><strong>ACID transactions</strong> guarantee that availability checks and reservation writes are atomic.</li>
@@ -581,8 +596,8 @@ UPDATE inventory SET available_count = available_count - 1
 </ul>
 <p>The lesson: don't reach for distributed databases when a well-tuned RDBMS solves the problem.</p>
 <hr />
-<h2>Gaming leaderboard</h2>
-<h3>Scale and requirements</h3>
+<h2 id="gaming-leaderboard">Gaming leaderboard</h2>
+<h3 id="scale-and-requirements_1">Scale and requirements</h3>
 <ul>
 <li>5M daily active users, 25M total registered</li>
 <li>Real-time leaderboard: show a player's rank and the top N players</li>
@@ -590,7 +605,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>Monthly/weekly/all-time leaderboards</li>
 <li>Latency: rank lookup in under 50ms</li>
 </ul>
-<h3>Redis sorted sets</h3>
+<h3 id="redis-sorted-sets">Redis sorted sets</h3>
 <p>Redis sorted sets are purpose-built for this:</p>
 <ul>
 <li><strong>ZINCRBY</strong> <code>leaderboard:2024-10</code> <code>player_123</code> <code>50</code> — increment player_123's score by 50. O(log N).</li>
@@ -602,7 +617,7 @@ UPDATE inventory SET available_count = available_count - 1
   CLIENT[Client] --&gt;|&quot;ZREVRANK&lt;br/&gt;my rank?&quot;| REDIS
   CLIENT --&gt;|&quot;ZREVRANGE 0 9&lt;br/&gt;top 10?&quot;| REDIS</pre>
 <p>All three core operations — increment, rank lookup, and top-N — are O(log N). At 25M members, that means about 25 comparisons — sub-millisecond on Redis.</p>
-<h3>Monthly keys and TTL</h3>
+<h3 id="monthly-keys-and-ttl">Monthly keys and TTL</h3>
 <p>Each time period gets its own sorted set key:</p>
 <ul>
 <li><code>leaderboard:2024-10</code> — October 2024</li>
@@ -610,7 +625,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li><code>leaderboard:alltime</code> — never expires</li>
 </ul>
 <p>Monthly keys get a TTL (e.g., 90 days after the month ends). This avoids unbounded memory growth.</p>
-<h3>Scaling beyond a single Redis instance</h3>
+<h3 id="scaling-beyond-a-single-redis-instance">Scaling beyond a single Redis instance</h3>
 <p>A single Redis instance holds the sorted set in memory. For 25M members with 8-byte scores and ~20-byte member names, that's ~700 MB — well within a single instance's capacity.</p>
 <p>But if the player base grows to hundreds of millions, or if there are thousands of concurrent leaderboards:</p>
 <p><strong>Range partitioning</strong> — split the score range across Redis instances:</p>
@@ -628,8 +643,8 @@ UPDATE inventory SET available_count = available_count - 1
 </ul>
 <p>For most games (under 100M players), a single beefy Redis instance is sufficient and simpler.</p>
 <hr />
-<h2>Payment system</h2>
-<h3>Scale and requirements</h3>
+<h2 id="payment-system">Payment system</h2>
+<h3 id="scale-and-requirements_2">Scale and requirements</h3>
 <ul>
 <li>Millions of transactions per day</li>
 <li>Integration with Payment Service Providers (PSPs): Stripe, Braintree, Adyen</li>
@@ -637,7 +652,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>Exactly-once payment execution</li>
 <li>Nightly reconciliation against PSP and bank records</li>
 </ul>
-<h3>PSP integration and hosted payment page</h3>
+<h3 id="psp-integration-and-hosted-payment-page">PSP integration and hosted payment page</h3>
 <p>The payment system does <strong>not</strong> handle raw credit card numbers. Instead:</p>
 <ol>
 <li>The client loads a <strong>hosted payment page</strong> from the PSP (Stripe Checkout, Braintree Drop-in).</li>
@@ -660,7 +675,7 @@ UPDATE inventory SET available_count = available_count - 1
   PSP--&gt;&gt;M: Payment result (success/failure)
   M--&gt;&gt;C: Order confirmation</pre>
 <p>This keeps the merchant out of PCI scope — they never see, store, or transmit card numbers.</p>
-<h3>Double-entry ledger</h3>
+<h3 id="double-entry-ledger">Double-entry ledger</h3>
 <p>Every money movement is recorded as <strong>two entries</strong> that sum to zero:</p>
 <table>
 <thead>
@@ -699,7 +714,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>Errors are detectable (the books don't balance).</li>
 <li>Auditing is straightforward (follow the chain of entries).</li>
 </ul>
-<h3>Idempotency via payment_order_id</h3>
+<h3 id="idempotency-via-payment_order_id">Idempotency via payment_order_id</h3>
 <p>The most dangerous failure in payments: a network timeout after the PSP charges the card but before the merchant records the success. The merchant retries, and the customer is charged twice.</p>
 <p>Prevention:</p>
 <ol>
@@ -708,7 +723,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>If the PSP receives the same idempotency_key twice, it returns the original result without re-executing.</li>
 <li>The merchant's own database uses <code>payment_order_id</code> as a unique key.</li>
 </ol>
-<h3>Retry queue and dead-letter queue</h3>
+<h3 id="retry-queue-and-dead-letter-queue">Retry queue and dead-letter queue</h3>
 <p>Failed payment attempts follow a structured retry path:</p>
 <pre class="mermaid">flowchart LR
   PAY[Payment request] --&gt; EXEC[Execute via PSP]
@@ -722,7 +737,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>After max retries (typically 3-5), the payment moves to the <strong>dead-letter queue</strong> for manual investigation.</li>
 <li><strong>Permanent failures</strong> (card declined, insufficient funds) are not retried.</li>
 </ul>
-<h3>Nightly reconciliation</h3>
+<h3 id="nightly-reconciliation">Nightly reconciliation</h3>
 <p>The payment system, PSP, and bank each have their own record of every transaction. <strong>Reconciliation</strong> verifies that all three agree:</p>
 <ol>
 <li>Download the PSP's settlement report (all charges, refunds, fees for the day).</li>
@@ -732,15 +747,15 @@ UPDATE inventory SET available_count = available_count - 1
 </ol>
 <p>Discrepancies happen more often than you'd expect: timezone differences, currency rounding, PSP processing delays, partial refunds. A robust reconciliation pipeline is not optional — it's how you catch errors before the quarterly audit.</p>
 <hr />
-<h2>Digital wallet</h2>
-<h3>Scale and requirements</h3>
+<h2 id="digital-wallet">Digital wallet</h2>
+<h3 id="scale-and-requirements_3">Scale and requirements</h3>
 <ul>
 <li>1 million transactions per second (TPS) at peak</li>
 <li>Balance correctness: no cent lost, no cent created</li>
 <li>Auditability: complete history of every balance change</li>
 <li>Low latency: balance check in under 10ms</li>
 </ul>
-<h3>Evolution of the architecture</h3>
+<h3 id="evolution-of-the-architecture">Evolution of the architecture</h3>
 <p>The architecture evolves through four stages as TPS requirements grow:</p>
 <p><strong>Stage 1: Redis (simple but fragile)</strong></p>
 <p>Store balances in Redis as key-value pairs. INCR/DECR for transfers. Fast but no durability guarantee — a Redis crash loses uncommitted transactions.</p>
@@ -775,7 +790,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>If the leader fails, a follower is elected within milliseconds.</li>
 <li>The event log <em>is</em> the Raft log — no separate replication mechanism.</li>
 </ul>
-<h3>Why event sourcing for wallets</h3>
+<h3 id="why-event-sourcing-for-wallets">Why event sourcing for wallets</h3>
 <p>Event sourcing is not just an implementation choice — it's a regulatory requirement:</p>
 <ul>
 <li><strong>Auditability:</strong> the event log is a complete, immutable record of every transaction. Regulators can request it.</li>
@@ -784,8 +799,8 @@ UPDATE inventory SET available_count = available_count - 1
 <li><strong>Analytics:</strong> replay events through different projections to answer business questions.</li>
 </ul>
 <hr />
-<h2>Stock exchange</h2>
-<h3>Scale and requirements</h3>
+<h2 id="stock-exchange">Stock exchange</h2>
+<h3 id="scale-and-requirements_4">Scale and requirements</h3>
 <ul>
 <li>1 billion orders per day (~30K orders/sec sustained, 100K+ peak)</li>
 <li>Matching latency: microseconds (not milliseconds)</li>
@@ -793,7 +808,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>Zero message loss in the critical path</li>
 <li>Market data disseminated to thousands of subscribers in real time</li>
 </ul>
-<h3>Single-server architecture with mmap</h3>
+<h3 id="single-server-architecture-with-mmap">Single-server architecture with mmap</h3>
 <p>The most surprising design choice: the matching engine runs on a <strong>single server</strong>, not a distributed cluster.</p>
 <p>Why single-server:</p>
 <ul>
@@ -813,7 +828,7 @@ UPDATE inventory SET available_count = available_count - 1
   GW[&quot;Gateway&lt;br/&gt;(network I/O)&quot;] --&gt; SEQ
   REPORT --&gt; MD[&quot;Market data&lt;br/&gt;publisher&quot;]</pre>
 <p>mmap allows multiple processes to share a memory region without serialization/deserialization overhead. The sequencer writes an order to shared memory. The matching engine reads it directly — zero copy.</p>
-<h3>Custom sequencer (not Kafka)</h3>
+<h3 id="custom-sequencer-not-kafka">Custom sequencer (not Kafka)</h3>
 <p>A stock exchange cannot use Kafka as a sequencer because:</p>
 <ul>
 <li>Kafka's latency is milliseconds; the exchange needs microseconds.</li>
@@ -827,7 +842,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>Writes the sequenced order to the mmap'd ring buffer.</li>
 <li>The matching engine consumes from the ring buffer in sequence order.</li>
 </ol>
-<h3>Order book: doubly-linked list + hash map</h3>
+<h3 id="order-book-doubly-linked-list-hash-map">Order book: doubly-linked list + hash map</h3>
 <p>The <strong>order book</strong> tracks all outstanding buy and sell orders for a symbol, sorted by price-time priority:</p>
 <pre class="mermaid">flowchart TB
   subgraph &quot;Order book for AAPL&quot;
@@ -851,7 +866,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li><strong>Match (execute trade):</strong> walk the best bid/ask price levels. O(1) for a simple match; O(K) for a fill across K price levels.</li>
 </ul>
 <p>Why not a tree? Trees have O(log N) operations. At microsecond latency targets, the constant factor of hash map + linked list beats tree traversal. Cache locality matters — the linked list at each price level keeps related orders contiguous in memory.</p>
-<h3>Event sourcing + Raft for durability</h3>
+<h3 id="event-sourcing-raft-for-durability">Event sourcing + Raft for durability</h3>
 <p>The exchange uses <strong>event sourcing</strong>: every order, cancellation, and trade is an event in an append-only log. The order book state is a deterministic projection of this log.</p>
 <p>For disaster recovery, the event log is replicated via <strong>Raft consensus</strong> to standby servers:</p>
 <ul>
@@ -859,7 +874,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li>If the primary fails, a follower replays the log and becomes the new primary.</li>
 <li>Because the log is deterministic, the follower's order book state is identical to the primary's at any given sequence number.</li>
 </ul>
-<h3>Reliable UDP multicast for market data</h3>
+<h3 id="reliable-udp-multicast-for-market-data">Reliable UDP multicast for market data</h3>
 <p>Market data (price updates, trade executions) must reach thousands of subscribers simultaneously. TCP unicast doesn't scale — one connection per subscriber, with TCP's congestion control adding latency.</p>
 <p><strong>Reliable UDP multicast:</strong></p>
 <ul>
@@ -870,7 +885,7 @@ UPDATE inventory SET available_count = available_count - 1
 </ul>
 <p>The tradeoff: UDP multicast requires network infrastructure support (IGMP, switches with multicast routing). It works within a datacenter or across connected exchanges, not over the public internet.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Double-booking despite locking</strong> — optimistic locking retries can succeed if the retry window is too wide and availability changes between retries. DB constraints are the safest fallback.</li>
 <li><strong>Redis sorted set memory exhaustion</strong> — an all-time leaderboard for a game with 100M players uses significant memory. Monitor memory; archive old data.</li>
@@ -881,7 +896,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li><strong>Event sourcing replay time</strong> — rebuilding a wallet's balance from billions of events is slow. Periodic snapshots (checkpoints) reduce replay time but add complexity.</li>
 <li><strong>Market data multicast gap storm</strong> — if many subscribers miss the same packet, they all request retransmission simultaneously, overwhelming the retransmit server. Mitigation: stagger retransmission requests with jitter.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is every write operation in the financial path idempotent, with a client-generated unique key?</li>
 <li class="task todo">For reservations: is double-booking prevented by a database constraint, not just application logic?</li>
@@ -894,7 +909,7 @@ UPDATE inventory SET available_count = available_count - 1
 <li class="task todo">Have you tested the failure of every component in the critical payment/trading path?</li>
 <li class="task todo">Are compensating transactions defined for every operation that can partially succeed?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="data-infrastructure.html">Data infrastructure</a> — exactly-once delivery semantics in Kafka, which underpins payment event processing</li>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — back-of-envelope estimation for TPS, storage, and latency budgets</li>
@@ -902,7 +917,26 @@ UPDATE inventory SET available_count = available_count - 1
 <li><a href="real-time-systems.html">Real-time systems</a> — low-latency pub/sub patterns from chat and streaming that inform market data distribution</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="data-infrastructure.html"><span class="lbl">← Previous</span><span class="ttl">Data infrastructure</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#hotel-reservation-system">Hotel reservation system</a><a class="h3" href="#scale-and-requirements">Scale and requirements</a><a class="h3" href="#data-model-reserve-roomtypeid-not-roomid">Data model: reserve roomTypeID, not roomID</a><a class="h3" href="#double-booking-prevention">Double-booking prevention</a><a class="h3" href="#idempotency-via-reservationid">Idempotency via reservationID</a><a class="h3" href="#why-mysql-acid-at-this-scale">Why MySQL (ACID) at this scale</a><a class="h2" href="#gaming-leaderboard">Gaming leaderboard</a><a class="h3" href="#scale-and-requirements_1">Scale and requirements</a><a class="h3" href="#redis-sorted-sets">Redis sorted sets</a><a class="h3" href="#monthly-keys-and-ttl">Monthly keys and TTL</a><a class="h3" href="#scaling-beyond-a-single-redis-instance">Scaling beyond a single Redis instance</a><a class="h2" href="#payment-system">Payment system</a><a class="h3" href="#scale-and-requirements_2">Scale and requirements</a><a class="h3" href="#psp-integration-and-hosted-payment-page">PSP integration and hosted payment page</a><a class="h3" href="#double-entry-ledger">Double-entry ledger</a><a class="h3" href="#idempotency-via-payment_order_id">Idempotency via payment_order_id</a><a class="h3" href="#retry-queue-and-dead-letter-queue">Retry queue and dead-letter queue</a><a class="h3" href="#nightly-reconciliation">Nightly reconciliation</a><a class="h2" href="#digital-wallet">Digital wallet</a><a class="h3" href="#scale-and-requirements_3">Scale and requirements</a><a class="h3" href="#evolution-of-the-architecture">Evolution of the architecture</a><a class="h3" href="#why-event-sourcing-for-wallets">Why event sourcing for wallets</a><a class="h2" href="#stock-exchange">Stock exchange</a><a class="h3" href="#scale-and-requirements_4">Scale and requirements</a><a class="h3" href="#single-server-architecture-with-mmap">Single-server architecture with mmap</a><a class="h3" href="#custom-sequencer-not-kafka">Custom sequencer (not Kafka)</a><a class="h3" href="#order-book-doubly-linked-list-hash-map">Order book: doubly-linked list + hash map</a><a class="h3" href="#event-sourcing-raft-for-durability">Event sourcing + Raft for durability</a><a class="h3" href="#reliable-udp-multicast-for-market-data">Reliable UDP multicast for market data</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

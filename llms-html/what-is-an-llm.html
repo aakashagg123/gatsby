@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>LLMs</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>What an LLM actually is</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A large language model does one thing: given some text, it predicts the most likely next
 small piece of text, called a <strong>token</strong>. It does this once, appends the result, and does it
 again, and again, until it decides to stop. A sentence, a paragraph, a whole essay is built
@@ -337,7 +352,7 @@ because we've been thinking of it as a database instead of a predictor?"</em></p
 it was told once, or "knows" something outside its training, and discovers the failure
 only after a customer does.</p>
 </blockquote>
-<h2>The mental model: an extremely well-read guesser</h2>
+<h2 id="the-mental-model-an-extremely-well-read-guesser">The mental model: an extremely well-read guesser</h2>
 <p>Picture someone who has read a meaningful share of the internet, every book they could get,
 and millions of conversations, and who has one skill, honed to an extraordinary degree:
 given the start of a sentence, guess the next word. Do that guess over and over, feeding
@@ -357,7 +372,7 @@ still a guess, weighted toward what is likely, not verified against what is true
     LOOP --&gt; OUT[&quot;The full response&quot;]
   end
   MODEL -.-&gt;|&quot;used, unchanged,&lt;br/&gt;on every request&quot;| IN</pre>
-<h2>Tokens: the model's actual unit of text</h2>
+<h2 id="tokens-the-models-actual-unit-of-text">Tokens: the model's actual unit of text</h2>
 <p>A model does not see words the way you do. It sees <strong>tokens</strong> — pieces of text, often
 smaller than a word, that a fixed vocabulary breaks language into. "Generative" might split
 into "Gener," "ative." A short, common word like "the" is usually one token on its own.
@@ -367,7 +382,7 @@ line item. <strong>The context window</strong>, covered in the next lesson, is m
 words or characters. <strong>Some tasks that look easy to a human are hard for a model precisely
 because of tokens</strong> — counting the letters in a word is awkward for a model that never sees
 individual letters, only token chunks that may not align with them.</p>
-<h2>Training versus inference: two very different costs</h2>
+<h2 id="training-versus-inference-two-very-different-costs">Training versus inference: two very different costs</h2>
 <p>Training happens once, on a huge amount of computing power, and produces the frozen model.
 This is why a vendor can spend months and a large budget building a model, then let
 millions of people use it. Inference happens every single time your product calls the
@@ -377,7 +392,7 @@ mistakes: teams sometimes think "teaching" the model a new fact by mentioning it
 the model has learned it permanently, when in fact nothing changes in the frozen model at
 all. What changed is only the text you sent for that one request. The next request starts
 from the same frozen model, knowing nothing extra unless you send it again.</p>
-<h2>Why this mechanism explains so much</h2>
+<h2 id="why-this-mechanism-explains-so-much">Why this mechanism explains so much</h2>
 <p>Next-token prediction, alone, explains three things that otherwise look mysterious.
 <strong>Fluency without guaranteed truth</strong> — the model is optimized to produce likely-sounding
 continuations, not verified facts, which is why confident and wrong answers are a normal
@@ -387,7 +402,7 @@ specific to your business has to be supplied at request time, which is the entir
 of retrieval, covered in the <a href="../rag-vector-databases/index.html">RAG &amp; vector databases module</a>.
 <strong>Why longer generation costs more</strong> — every additional token is another prediction step,
 so a longer answer is not a flat fee, it is proportionally more work.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Treating the model like a database</strong> — expecting it to "know" a fact it was never
   trained on or told this request, instead of recognizing it can only guess.</li>
@@ -399,7 +414,7 @@ so a longer answer is not a flat fee, it is proportionally more work.</p>
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does our team describe the model as a predictor, not a database, in planning
       conversations?</li>
@@ -409,7 +424,7 @@ so a longer answer is not a flat fee, it is proportionally more work.</p>
 <li class="task todo">For any task involving exact counting, spelling, or character-level detail, have we
       tested it directly instead of assuming the model handles it like a human would?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-context-window.html">The context window</a> — the limit that follows directly from
   how prediction works.</li>
@@ -419,7 +434,26 @@ so a longer answer is not a flat fee, it is proportionally more work.</p>
   depth behind prefill, decode, and the cost of each token.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="the-context-window.html"><span class="lbl">→ Next</span><span class="ttl">The context window</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-an-extremely-well-read-guesser">The mental model: an extremely well-read guesser</a><a class="h2" href="#tokens-the-models-actual-unit-of-text">Tokens: the model&#x27;s actual unit of text</a><a class="h2" href="#training-versus-inference-two-very-different-costs">Training versus inference: two very different costs</a><a class="h2" href="#why-this-mechanism-explains-so-much">Why this mechanism explains so much</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{
