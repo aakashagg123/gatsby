@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink" href="retrieval-as-memory.html">3 · Retrieval as memory</a><a class="modlink active" href="when-memory-goes-wrong.html">4 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink" href="retrieval-as-memory.html">3 · Retrieval as memory</a><a class="modlink active" href="when-memory-goes-wrong.html">4 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>When memory goes wrong</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A memory feature fails in three specific, predictable ways, and every one of them is a
 trust problem before it's a technical one. <strong>Staleness</strong> — a stored fact that used to be
 true isn't anymore, and the product confidently acts on the outdated version. <strong>Leakage</strong>
@@ -341,7 +356,7 @@ own monitoring, or from the user telling us?"</em></p>
 then fails in exactly one of these three ways in front of a real user — the failure mode
 a launch checklist should have caught before anyone outside the company saw it.</p>
 </blockquote>
-<h2>The mental model: three ways a filing system betrays its owner</h2>
+<h2 id="the-mental-model-three-ways-a-filing-system-betrays-its-owner">The mental model: three ways a filing system betrays its owner</h2>
 <p>A memory store is a filing system, and filing systems fail in three classic ways: a file
 goes out of date and nobody updates it (staleness), a file ends up in the wrong person's
 folder (leakage), and the person the file is about has no way to open the drawer and fix
@@ -356,7 +371,7 @@ deliberately.</p>
   LEAK --&gt;|&quot;yes&quot;| EXPOSED[&quot;One user&#x27;s or tenant&#x27;s&lt;br/&gt;data reaches another&quot;]
   MEM --&gt; CORRECT{&quot;User can see,&lt;br/&gt;fix, or delete it?&quot;}
   CORRECT --&gt;|&quot;no&quot;| STUCK[&quot;A wrong or unwanted&lt;br/&gt;memory persists&lt;br/&gt;indefinitely&quot;]</pre>
-<h2>Staleness: acting confidently on what used to be true</h2>
+<h2 id="staleness-acting-confidently-on-what-used-to-be-true">Staleness: acting confidently on what used to be true</h2>
 <p>Information stored once and never revisited drifts out of date — a preference changes, a
 fact becomes false, a policy is updated. The danger isn't that the model has stale
 information; it's that it presents outdated information with exactly the same confidence
@@ -364,7 +379,7 @@ as current information, giving a user no signal that what they're hearing might 
 outdated. The mitigation is structural, not a matter of trying harder: give stored facts
 an explicit freshness — a "last confirmed" marker, an expiry, or a periodic re-check —
 rather than treating memory as permanently and silently true once written.</p>
-<h2>Leakage: the boundary that mattered most</h2>
+<h2 id="leakage-the-boundary-that-mattered-most">Leakage: the boundary that mattered most</h2>
 <p>This is the single most damaging memory failure, and it maps directly onto the boundary
 question from <a href="session-user-and-organizational-memory.html">session, user &amp; organizational memory</a>:
 one user's personal information reaching another user, or one tenant's data reaching a
@@ -375,7 +390,7 @@ me" into "the AI can't be trusted with anything I tell it." The mitigation is th
 discipline that protects any shared system: enforce the boundary at the system level,
 test it adversarially before launch, and never rely on the model itself to respect a
 boundary it was never actually prevented from crossing.</p>
-<h2>No path to correction or deletion: an ordinary mistake becomes permanent</h2>
+<h2 id="no-path-to-correction-or-deletion-an-ordinary-mistake-becomes-permanent">No path to correction or deletion: an ordinary mistake becomes permanent</h2>
 <p>Every memory system will eventually store something wrong — a misheard preference, an
 outdated fact, information a user wishes they hadn't shared. That's not itself
 catastrophic. What turns it into a real problem is a product with no way for the person
@@ -384,14 +399,14 @@ just good practice — many privacy regimes now recognize something close to a r
 forgotten, and a memory feature with no deletion path is a compliance gap as much as a
 trust one. The practical bar: a user should be able to ask "what do you remember about
 me" and get a true, specific, actionable answer, not a shrug.</p>
-<h2>Building the checklist these three failures deserve</h2>
+<h2 id="building-the-checklist-these-three-failures-deserve">Building the checklist these three failures deserve</h2>
 <p>Each failure mode has a concrete test that belongs in a memory feature's launch review,
 not a general assurance. For staleness: does every stored fact have an age or an expiry a
 person could inspect? For leakage: has the tenant or user boundary been tested
 adversarially, by someone actively trying to cross it, not just assumed to hold? For
 correction and deletion: can a real user, through the actual product, see, correct, and
 delete what's stored about them, today — not in a hypothetical future release?</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <p><em>(This lesson's own subject is failure modes; the three above are developed in depth
 throughout. Here is where they compound.)</em></p>
 <ul>
@@ -405,7 +420,7 @@ throughout. Here is where they compound.)</em></p>
 <li><strong>A deletion request with no real mechanism behind it</strong> — a privacy policy that promises
   deletion, backed by no actual, working path to fulfill it.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does every stored memory carry an age, a freshness signal, or an expiry a person
       could inspect?</li>
@@ -416,7 +431,7 @@ throughout. Here is where they compound.)</em></p>
 <li class="task todo">Is each of these three failure modes owned and tested separately, rather than
       folded into one generic privacy review?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="memory-as-a-product-decision.html">Memory as a product decision</a> — the promise this
   lesson's failures each break.</li>
@@ -426,7 +441,26 @@ throughout. Here is where they compound.)</em></p>
   broader privacy instincts this lesson applies specifically to memory.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="retrieval-as-memory.html"><span class="lbl">← Previous</span><span class="ttl">Retrieval as memory</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-ways-a-filing-system-betrays-its-owner">The mental model: three ways a filing system betrays its owner</a><a class="h2" href="#staleness-acting-confidently-on-what-used-to-be-true">Staleness: acting confidently on what used to be true</a><a class="h2" href="#leakage-the-boundary-that-mattered-most">Leakage: the boundary that mattered most</a><a class="h2" href="#no-path-to-correction-or-deletion-an-ordinary-mistake-becomes-permanent">No path to correction or deletion: an ordinary mistake becomes permanent</a><a class="h2" href="#building-the-checklist-these-three-failures-deserve">Building the checklist these three failures deserve</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

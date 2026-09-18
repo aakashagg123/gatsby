@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Generative AI</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink active" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink active" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>The generative AI product stack</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A generative AI feature is never just a model. The model is one layer inside a stack that
 runs from raw request to shipped answer, and most of a product team's engineering work
 happens in the layers above and below the model, not inside it. Four layers make up the
@@ -339,7 +354,7 @@ separately?"</em></p>
 action, and operations were never scoped, and the feature cannot go live without months
 of work nobody planned for.</p>
 </blockquote>
-<h2>The mental model: an engine is not a car</h2>
+<h2 id="the-mental-model-an-engine-is-not-a-car">The mental model: an engine is not a car</h2>
 <p>A model is an engine. An engine alone cannot take you anywhere — it needs fuel lines, a
 chassis, a steering system, and a dashboard before it becomes a car. The model in a
 generative AI product is the same. It needs a way to get real facts (grounding), a way to
@@ -368,7 +383,7 @@ product.</p>
   LLM --&gt; TOOL --&gt; AGENT
   AGENT -.-&gt;|&quot;every run is watched by&quot;| L4
   LLM -.-&gt;|&quot;every run is watched by&quot;| L4</pre>
-<h2>The four layers, and where to go deeper</h2>
+<h2 id="the-four-layers-and-where-to-go-deeper">The four layers, and where to go deeper</h2>
 <table>
 <thead>
 <tr>
@@ -406,13 +421,13 @@ layer to catch bad output. A customer-facing support agent needs all four layers
 with real care, because it must know real facts, take real actions, and be watched closely
 once it is live. Scoping a feature means deciding how much of each layer it actually needs,
 not assuming every feature needs the same four-layer weight.</p>
-<h2>Why teams under-price this stack</h2>
+<h2 id="why-teams-under-price-this-stack">Why teams under-price this stack</h2>
 <p>Vendor demos show the model layer, because that is the layer a vendor sells and controls.
 Grounding, action, and operations are almost always work your own team does, on your own
 data, inside your own systems — which makes them invisible in a demo and easy to leave out
 of an early estimate. The fix is structural: price a generative AI feature as four
 line items, not one, before you commit to a date.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>One-line budgeting</strong> — pricing a feature as "the model API cost" and missing the
   engineering cost of grounding, action, and operations entirely.</li>
@@ -425,7 +440,7 @@ line items, not one, before you commit to a date.</p>
 <li><strong>Confusing a vendor's demo scope with your product's scope</strong> — believing a polished
   demo of the model layer means the rest of the stack is already solved.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we named, for this specific feature, how much of each of the four layers it
       actually needs?</li>
@@ -436,7 +451,7 @@ line items, not one, before you commit to a date.</p>
 <li class="task todo">Have we avoided adding an action layer to a feature that only needed a model and
       some grounding?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="build-buy-or-fine-tune.html">Build, buy, or fine-tune</a> — the decision that follows once
   you know what each layer needs.</li>
@@ -445,7 +460,26 @@ line items, not one, before you commit to a date.</p>
 <li><a href="../agentic-ai/index.html">Agentic AI</a> — the action layer in full depth.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="probabilistic-software.html"><span class="lbl">← Previous</span><span class="ttl">Probabilistic software</span></a><a class="navcard next" href="build-buy-or-fine-tune.html"><span class="lbl">→ Next</span><span class="ttl">Build, buy, or fine-tune</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-an-engine-is-not-a-car">The mental model: an engine is not a car</a><a class="h2" href="#the-four-layers-and-where-to-go-deeper">The four layers, and where to go deeper</a><a class="h2" href="#why-teams-under-price-this-stack">Why teams under-price this stack</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

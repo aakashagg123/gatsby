@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>Technical product sense — recap &amp; real-world examples</h1>
   </div>
-  <h2>Real-world examples &amp; war stories</h2>
+  <h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>The duplicate-charge outage.</strong> A payment request times out. The client retries. Without
 <a href="apis-and-contracts.html">idempotency</a>, the customer gets charged twice. One missing
 idempotency key turns into a support-and-refund fire drill. 🎯 <em>Takeaway:</em> "what happens on
@@ -337,7 +352,7 @@ model version, or the data could all be the cause. 🎯 <em>Takeaway:</em>
 <a href="technical-sense-for-ai.html">evals and observability</a> <em>are</em> the reliability of an AI feature.
 The <a href="tech-debt-and-estimation.html">debt</a> of skipping them comes due exactly when you can
 least afford it.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>
@@ -396,7 +411,7 @@ the slow hop, the failure paths — and if there's a model in it, is the product
 machinery around the model, not the model itself?"</em></p>
 </blockquote>
 <hr />
-<h2>Test yourself</h2>
+<h2 id="test-yourself">Test yourself</h2>
 <ol>
 <li>
 <p><strong>"It's slow" and "it falls over under load" — why must you never conflate them?</strong>
@@ -426,7 +441,26 @@ machinery around the model, not the model itself?"</em></p>
 </li>
 </ol>
   <div class="pagenav"><a class="navcard prev" href="technical-sense-for-ai.html"><span class="lbl">← Previous</span><span class="ttl">Technical sense for AI systems</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ---- */
 html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}

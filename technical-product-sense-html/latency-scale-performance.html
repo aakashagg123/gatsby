@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink active" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="how-systems-are-built.html">1 · How systems are built</a><a class="modlink" href="apis-and-contracts.html">2 · APIs &amp; contracts</a><a class="modlink" href="data-and-the-data-model.html">3 · Data &amp; the data model</a><a class="modlink active" href="latency-scale-performance.html">4 · Latency, scale &amp; performance</a><a class="modlink" href="reliability-and-failure.html">5 · Reliability &amp; failure</a><a class="modlink" href="tech-debt-and-estimation.html">6 · Tech debt &amp; estimation</a><a class="modlink" href="security-and-privacy.html">7 · Security &amp; privacy sense</a><a class="modlink" href="economics-of-infrastructure.html">8 · The economics of infrastructure</a><a class="modlink" href="technical-sense-for-ai.html">9 · Technical sense for AI systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Latency, scale &amp; performance</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p><strong>Latency</strong> is how long one request takes. <strong>Throughput/scale</strong> is how many requests the
 system can handle at once. They're different problems with different fixes. Latency is a
 <em>budget</em> — the total is the sum of every hop. You speed it up by finding the slow hop, usually
@@ -333,7 +348,7 @@ of it?"</em></p>
 <p><strong>Risk if ignored</strong> — A feature that's delightful in the demo turns out unusably slow or
 unaffordable at real scale.</p>
 </blockquote>
-<h2>Latency is a budget</h2>
+<h2 id="latency-is-a-budget">Latency is a budget</h2>
 <p>Total latency is the sum of every hop the request makes. Set a target — "feels instant" is
 under ~200 ms, "acceptable" is under ~1 s — and you're spending against a budget:</p>
 <pre class="mermaid">flowchart LR
@@ -347,7 +362,7 @@ under ~200 ms, "acceptable" is under ~1 s — and you're spending against a budg
 external call sits next to it is wasted effort. <strong>Find the biggest bar first.</strong> The usual
 culprits are database reads (fix with indexes or caching), external API calls (cache, or move
 async), and work done serially that could run in parallel.</p>
-<h2>The main latency levers</h2>
+<h2 id="the-main-latency-levers">The main latency levers</h2>
 <ul>
 <li><strong>Caching</strong> — keep a fast copy of a slow result. This is the highest-leverage lever, at the
   cost of possible staleness.</li>
@@ -358,7 +373,7 @@ async), and work done serially that could run in parallel.</p>
 <li><strong>Stream</strong> — show partial results as they arrive so <em>perceived</em> latency drops even if total
   time doesn't. This is exactly why chat UIs stream tokens.</li>
 </ul>
-<h2>Scale is a different axis</h2>
+<h2 id="scale-is-a-different-axis">Scale is a different axis</h2>
 <p>Making one request fast (latency) is separate from handling a million requests (scale). There
 are two ways to scale:</p>
 <ul>
@@ -369,12 +384,12 @@ are two ways to scale:</p>
 </ul>
 <p>The usual scale bottleneck is the <strong>database</strong>, because it's the one thing all those instances
 share. "It doesn't scale" almost always means "something shared is saturated."</p>
-<h2>Measure the tail, not the average</h2>
+<h2 id="measure-the-tail-not-the-average">Measure the tail, not the average</h2>
 <p>Averages lie. Say the average response is 200 ms, but the <strong>p95</strong> — the slowest 5% of
 requests — is 4 seconds. One user in twenty has a terrible time, and it's often your
 highest-value power users with the most data. Always ask for <strong>percentiles (p95, p99)</strong>, not
 the mean. A good average with a bad tail is a common, invisible failure.</p>
-<h2>A worked pass: the search box that "feels slow"</h2>
+<h2 id="a-worked-pass-the-search-box-that-feels-slow">A worked pass: the search box that "feels slow"</h2>
 <p>Users say search feels slow. The team proposes "optimize the search service." Budget it
 instead. The target is results within 500 ms of the typing pause. The measured p95 is
 1,900 ms. Where does it go? Client debounce 300 ms · network 80 ms · API layer 20 ms ·
@@ -388,7 +403,7 @@ are now cheap. The new p95 is about 600 ms, and it took an afternoon of work —
 proposed month of tuning a component that was never the problem. The discipline
 generalizes: <em>never accept "X is slow" without the hop-by-hop budget</em>. Intuition reliably
 points at the famous component, while the milliseconds hide in the boring one.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Optimizing the wrong hop</strong> — you shave milliseconds off a fast step while a slow one
   dominates.</li>
@@ -398,7 +413,7 @@ points at the famous component, while the milliseconds hide in the boring one.</
 <li><strong>Synchronous heavy work</strong> — you block the user on something that should have been async or
   streamed.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do I have a latency <em>target</em> for this interaction, and do I know which hop dominates?</li>
 <li class="task todo">Have I reached for the right lever (cache / precompute / parallelize / async / stream)?</li>
@@ -406,7 +421,7 @@ points at the famous component, while the milliseconds hide in the boring one.</
 <li class="task todo">Am I looking at p95/p99, not just the average?</li>
 <li class="task todo">For an AI feature, do I know the cost <em>and</em> latency per call at expected volume?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="how-systems-are-built.html">How systems are built</a></li>
 <li><a href="reliability-and-failure.html">Reliability &amp; failure</a></li>
@@ -414,7 +429,26 @@ points at the famous component, while the milliseconds hide in the boring one.</
 <li><a href="../agentic-ai/agentic-ai-as-a-product.html">Agentic AI: unit economics</a> — latency and cost as the agent's business model</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="data-and-the-data-model.html"><span class="lbl">← Previous</span><span class="ttl">Data &amp; the data model</span></a><a class="navcard next" href="reliability-and-failure.html"><span class="lbl">→ Next</span><span class="ttl">Reliability &amp; failure</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#latency-is-a-budget">Latency is a budget</a><a class="h2" href="#the-main-latency-levers">The main latency levers</a><a class="h2" href="#scale-is-a-different-axis">Scale is a different axis</a><a class="h2" href="#measure-the-tail-not-the-average">Measure the tail, not the average</a><a class="h2" href="#a-worked-pass-the-search-box-that-feels-slow">A worked pass: the search box that &quot;feels slow&quot;</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

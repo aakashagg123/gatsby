@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -349,7 +364,7 @@ middle.</strong> Engineer it like one.</p>
 </div>
 <div class="iw-stages" id="hz-stages"></div>
 <div class="iw-out"><div class="iw-verdict" id="hz-verdict">Ready.</div><div class="iw-note" id="hz-detail">Pick a scenario above.</div></div></div></section>
-  <section class="lesson" id="harness-engineering"><div class="lesson-head"><span class="lesson-num">00.1</span><h2>Harness engineering, not just prompt engineering</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="harness-engineering"><div class="lesson-head"><span class="lesson-num">00.1</span><h2>Harness engineering, not just prompt engineering</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Prompt engineering optimizes the <em>string</em> you send the model. Harness engineering
 optimizes the <em>system</em> that sends it: retries, validators, tool wiring, budgets,
 fallbacks, caching, and observability. In production, the harness is where most of
@@ -362,7 +377,7 @@ naive harness is fragile. An average prompt inside a strong harness ships.</p>
 <p><strong>Ask your eng team</strong> — <em>"If the model returns garbage on a single call, what does the user actually see?"</em></p>
 <p><strong>Product risk if ignored</strong> — You ship a dazzling demo, then burn quarters firefighting reliability you never put on the roadmap.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Think of the model as a single, fast, unreliable, stateless function call:</p>
 <pre><code>output = model(context)   // non-deterministic, occasionally wrong, no memory
 </code></pre>
@@ -379,7 +394,7 @@ naive harness is fragile. An average prompt inside a strong harness ships.</p>
 <p>Each of those lines is a lesson elsewhere in this repo. The point of <em>this</em> lesson
 is that they are <strong>one discipline</strong>, and that discipline — not prompt wording — is
 what separates a demo from a service.</p>
-<h2>Why the harness dominates in production</h2>
+<h2 id="why-the-harness-dominates-in-production">Why the harness dominates in production</h2>
 <ul>
 <li><strong>Models are stochastic.</strong> The same input can produce a valid result once and a
   malformed one the next time. Only the harness can make the <em>system</em> deterministic
@@ -396,7 +411,7 @@ what separates a demo from a service.</p>
   <a href="01-inference-internals.html#prompt-vs-semantic-caching">caching</a>, and
   <a href="01-inference-internals.html#batching-and-paged-attention">batching</a> — all harness.</li>
 </ul>
-<h2>What lives in a serious harness</h2>
+<h2 id="what-lives-in-a-serious-harness">What lives in a serious harness</h2>
 <table>
 <thead>
 <tr>
@@ -453,7 +468,7 @@ what separates a demo from a service.</p>
 </tr>
 </tbody>
 </table>
-<h2>Failure modes (when teams over-invest in prompts and under-invest in harness)</h2>
+<h2 id="failure-modes-when-teams-over-invest-in-prompts-and-under-invest-in-harness">Failure modes (when teams over-invest in prompts and under-invest in harness)</h2>
 <ul>
 <li><strong>"It worked yesterday."</strong> No regression evals, so a prompt tweak or model update
   silently breaks 5% of cases. Fix: <a href="04-evals-observability.html#evals">golden sets + CI gates</a>.</li>
@@ -468,7 +483,7 @@ what separates a demo from a service.</p>
   model output as control flow. Fix:
   <a href="05-safety-multitenancy.html#safety-engineering">permission boundaries</a>.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can your system survive the model returning garbage on any single call?</li>
 <li class="task todo">Is every side-effecting tool call idempotent and validated?</li>
@@ -479,13 +494,13 @@ what separates a demo from a service.</p>
 </ul>
 <p>If the answer to any of these is "no," your reliability gap is in the harness, not
 the prompt.</p>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#context-engineering">Context engineering, not just long prompts</a></li>
 <li><a href="#infra-not-demos">Shipping LLM systems as infrastructure, not demos</a></li>
 <li><a href="02-reliable-outputs.html#agent-guardrails">Agent guardrails</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="context-engineering"><div class="lesson-head"><span class="lesson-num">00.2</span><h2>Context engineering, not just long prompts</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="context-engineering"><div class="lesson-head"><span class="lesson-num">00.2</span><h2>Context engineering, not just long prompts</h2></div><h2 id="tldr">TL;DR</h2>
 <p>The context window is a scarce, expensive, and <em>quality-sensitive</em> resource. Context
 engineering is the discipline of deciding <strong>what</strong> goes into it, <strong>in what order</strong>,
 <strong>in what form</strong>, and <strong>what gets left out</strong> — on every single call. "Just stuff in
@@ -498,7 +513,7 @@ makes answers <em>worse</em>, not better.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's actually in the context window on a typical request, and what does each part cost us?"</em></p>
 <p><strong>Product risk if ignored</strong> — Prompt creep quietly triples unit cost and <em>lowers</em> quality. It stays invisible until the invoice or the churn shows up.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Treat the context window like a working set in a memory hierarchy, not a junk
 drawer. The model can only attend to what is in front of it. Its effective
 attention is <strong>non-uniform</strong>: information at the start and end of the window is used
@@ -510,7 +525,7 @@ context engineering optimizes three things at once:</p>
 <li><strong>Signal-to-noise</strong> — is it <em>crowded out</em> by irrelevant tokens?</li>
 <li><strong>Position &amp; format</strong> — is it placed and shaped so the model actually uses it?</li>
 </ol>
-<h2>From data-first to context-first</h2>
+<h2 id="from-data-first-to-context-first">From data-first to context-first</h2>
 <p>Two era-framings from the PM side of this discipline are worth knowing. First, the
 data-first playbook ("collect, clean, analyze; more data wins") is giving way to a
 <strong>context-first</strong> one. The question is no longer <em>"what data do we have?"</em> It is
@@ -534,7 +549,7 @@ dazzles in a demo and fails as a system, for three structural reasons:</p>
 carry what the user is <em>entitled to</em>, what policy dictates, and when to escalate —
 CRM data, legal guardrails, strategic goals — assembled systematically on every
 request. That pipeline is this lesson's subject. The prompt is just its last mile.</p>
-<h2>Why more tokens is not more quality</h2>
+<h2 id="why-more-tokens-is-not-more-quality">Why more tokens is not more quality</h2>
 <ul>
 <li><strong>Distraction.</strong> Irrelevant retrieved chunks pull attention away from the answer.
   Precision often matters more than recall once you have <em>enough</em> signal — see
@@ -548,7 +563,7 @@ request. That pipeline is this lesson's subject. The prompt is just its last mil
   turns) is a potential <a href="05-safety-multitenancy.html#safety-engineering">prompt-injection</a>
   vector. More context = larger attack surface.</li>
 </ul>
-<h2>The components of a well-engineered context</h2>
+<h2 id="the-components-of-a-well-engineered-context">The components of a well-engineered context</h2>
 <p>A typical context is assembled from layered sources, each with its own budget:</p>
 <pre><code>[ system / role + policy ]      ← stable, cache-friendly prefix
 [ tool definitions / contracts ] ← stable
@@ -571,7 +586,7 @@ request. That pipeline is this lesson's subject. The prompt is just its last mil
   model can produce <a href="03-rag.html#retrieval-evals">citations</a> and so you can defend
   against <a href="05-safety-multitenancy.html#safety-engineering">injection</a>.</li>
 </ul>
-<h2>Tradeoffs &amp; decisions</h2>
+<h2 id="tradeoffs-decisions">Tradeoffs &amp; decisions</h2>
 <table>
 <thead>
 <tr>
@@ -605,7 +620,7 @@ request. That pipeline is this lesson's subject. The prompt is just its last mil
 </table>
 <p>The recurring tension is <strong>recall vs. precision vs. budget</strong>. Context engineering is
 the art of spending your token budget where it moves the answer.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Prompt bloat creep.</strong> Every incident adds "also, never do X" to the system
   prompt until it is 4,000 tokens of contradictory rules. Treat the system prompt
@@ -617,7 +632,7 @@ the art of spending your token budget where it moves the answer.</p>
   cost growth and lost-in-the-middle degradation.</li>
 <li><strong>Unbounded retrieval.</strong> "Top-k = 20" with no reranking buries the answer in noise.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is your context assembled from explicit, budgeted layers — not string concat?</li>
 <li class="task todo">Is the stable prefix actually stable (cache-friendly)?</li>
@@ -626,14 +641,14 @@ the art of spending your token budget where it moves the answer.</p>
 <li class="task todo">Is every external chunk tagged with provenance and treated as untrusted?</li>
 <li class="task todo">Have you measured whether <em>adding</em> context improves your evals, or just cost?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#harness-engineering">Harness engineering</a></li>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt caching vs. semantic caching</a></li>
 <li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="infra-not-demos"><div class="lesson-head"><span class="lesson-num">00.3</span><h2>Shipping LLM systems as infrastructure, not demos</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="infra-not-demos"><div class="lesson-head"><span class="lesson-num">00.3</span><h2>Shipping LLM systems as infrastructure, not demos</h2></div><h2 id="tldr">TL;DR</h2>
 <p>A demo proves the model <em>can</em> do the task once. Infrastructure makes it do the task
 correctly, observably, affordably, and safely. It must work for every user, every
 tenant, at p99, indefinitely. The gap between the two is almost entirely engineering:
@@ -646,7 +661,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <p><strong>Ask your eng team</strong> — <em>"What would it take to operate this for a year without it surprising us?"</em></p>
 <p><strong>Product risk if ignored</strong> — Friday-demo, Monday-outage: you green-light a launch that was never operationally real.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Ask of every LLM feature the same questions you'd ask of any production service:</p>
 <ul>
 <li><strong>How do I know it's working?</strong> → <a href="04-evals-observability.html#observability">observability</a></li>
@@ -657,7 +672,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <li><strong>Can it leak one customer's data to another?</strong> → <a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant isolation</a></li>
 </ul>
 <p>If you can't answer these, you have a demo.</p>
-<h2>The demo-to-infrastructure gap</h2>
+<h2 id="the-demo-to-infrastructure-gap">The demo-to-infrastructure gap</h2>
 <table>
 <thead>
 <tr>
@@ -709,7 +724,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 </tr>
 </tbody>
 </table>
-<h2>Why LLM systems are <em>harder</em> to operationalize than typical services</h2>
+<h2 id="why-llm-systems-are-harder-to-operationalize-than-typical-services">Why LLM systems are <em>harder</em> to operationalize than typical services</h2>
 <ul>
 <li><strong>Non-determinism</strong> breaks "write a test that asserts equality." You need
   distribution-level and rubric-based evaluation, not exact-match unit tests.</li>
@@ -724,7 +739,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <li><strong>Unbounded cost and latency.</strong> Token usage — and therefore dollars and seconds —
   depends on inputs and on how many times an <a href="02-reliable-outputs.html#agent-guardrails">agent loops</a>.</li>
 </ul>
-<h2>The operational baseline (minimum bar to call it "shipped")</h2>
+<h2 id="the-operational-baseline-minimum-bar-to-call-it-shipped">The operational baseline (minimum bar to call it "shipped")</h2>
 <ol>
 <li><strong>A golden eval set</strong> that runs in CI and blocks regressions —
    <a href="04-evals-observability.html#evals">Evals</a>.</li>
@@ -741,7 +756,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <li><strong>Safety boundaries</strong> for injection and data leakage —
    <a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a>.</li>
 </ol>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The "Friday demo, Monday outage" pattern</strong> — impressive launch, then a long tail
   of edge cases nobody measured.</li>
@@ -750,7 +765,7 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <li><strong>Silent regression</strong> — quality drops after a model upgrade and no one notices for
   three weeks because there were no evals.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Could you operate this feature for a year without it surprising you?</li>
 <li class="task todo">Do you measure correctness with numbers, not vibes?</li>
@@ -758,14 +773,14 @@ judged by their best case. Infrastructure is judged by its worst case.</p>
 <li class="task todo">Can you attribute every dollar of spend to a feature and tenant?</li>
 <li class="task todo">Would a malicious document in your retrieval corpus be contained?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#harness-engineering">Harness engineering</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>Samsung's source-code leak (2023).</strong> Within weeks of allowing ChatGPT, Samsung
 engineers pasted confidential source code and internal meeting notes into it to debug
 and summarize. That data left the company's control, so Samsung restricted the tool.
@@ -782,7 +797,7 @@ proof-of-concepts never reach production. The demo works. The <em>operational</e
 evals, guardrails, monitoring, cost control — is where projects stall. 🎯 <em>PM takeaway:</em>
 the demo-to-prod gap is mostly <a href="#infra-not-demos">harness and ops</a> work. Budget for
 it explicitly, or you'll relaunch the same demo three times.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

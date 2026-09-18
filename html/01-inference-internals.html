@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -363,7 +378,7 @@ explain almost everything about LLM serving economics:</p>
   <div class="iw-note" id="lc-note"></div>
 </div>
 <div class="iw-note">Illustrative model: ~60&nbsp;ms per 1k input tokens (prefill), 12&nbsp;ms per output token (decode), $3 / $15 per Mtok in/out, cached input at 10% price. Your real numbers vary by model &amp; hardware — the <em>shape</em> is the lesson.</div></div></section>
-  <section class="lesson" id="prompt-vs-semantic-caching"><div class="lesson-head"><span class="lesson-num">01.1</span><h2>Prompt caching vs. semantic caching</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="prompt-vs-semantic-caching"><div class="lesson-head"><span class="lesson-num">01.1</span><h2>Prompt caching vs. semantic caching</h2></div><h2 id="tldr">TL;DR</h2>
 <p>They share the word "caching" and almost nothing else. <strong>Prompt caching</strong>
 reuses the model's internal computation (the
 <a href="#kv-cache-management">KV cache</a>) for an <em>exact</em> shared prefix. It is
@@ -379,7 +394,7 @@ gamble you must validate.</p>
 <p><strong>Ask your eng team</strong> — <em>"Are we caching responses across users, and how do we know we're not serving the wrong one?"</em></p>
 <p><strong>Product risk if ignored</strong> — A loosely-tuned cache serves one user's answer to another — a privacy incident dressed up as an optimization.</p>
 </blockquote>
-<h2>The two are not the same layer</h2>
+<h2 id="the-two-are-not-the-same-layer">The two are not the same layer</h2>
 <pre><code>                      ┌─────────────────────────────────────────┐
    request ──────────▶│ semantic cache?  (embed query, ANN match)│──hit──▶ stored response
                       └─────────────────────────────────────────┘         (NO model call)
@@ -390,7 +405,7 @@ gamble you must validate.</p>
                       │ the matching prompt *prefix*             │
                       └─────────────────────────────────────────┘
 </code></pre>
-<h2>Prompt (prefix / KV) caching</h2>
+<h2 id="prompt-prefix-kv-caching">Prompt (prefix / KV) caching</h2>
 <p><strong>What it reuses:</strong> the computed key/value tensors for a prompt <em>prefix</em> that
 is byte-for-byte identical to one seen before. The
 <a href="#prefill-vs-decode">prefill</a> phase for that prefix is skipped; decode
@@ -422,7 +437,7 @@ after the first.</p>
   let cache <em>reuse</em> cross a trust boundary in a way that exposes data. See
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant cache safety</a>.</li>
 </ul>
-<h2>Semantic caching</h2>
+<h2 id="semantic-caching">Semantic caching</h2>
 <p><strong>What it reuses:</strong> a <em>final response</em>. The system embeds the query. If its
 nearest neighbor in a vector store falls within a similarity threshold, the
 system returns the stored answer and never calls the model.</p>
@@ -445,7 +460,7 @@ questions like FAQs and common support queries.</p>
 <li><strong>Threshold tuning is a precision/recall problem.</strong> Too loose, and you
   serve wrong answers confidently. Too tight, and you get almost no hits.</li>
 </ul>
-<h2>Tradeoffs at a glance</h2>
+<h2 id="tradeoffs-at-a-glance">Tradeoffs at a glance</h2>
 <table>
 <thead>
 <tr>
@@ -487,7 +502,7 @@ questions like FAQs and common support queries.</p>
 </tr>
 </tbody>
 </table>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Silent prefix busting</strong> — a logging timestamp injected at the top of the
   system prompt drops your prompt-cache hit rate to near zero and triples
@@ -502,7 +517,7 @@ questions like FAQs and common support queries.</p>
 <li><strong>Stale semantic cache</strong> — yesterday's price served today. Add TTLs and
   event-based invalidation.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is your prompt prefix stable enough to actually hit the prompt cache?</li>
 <li class="task todo">Do you measure prompt-cache hit rate as a first-class metric?</li>
@@ -510,14 +525,14 @@ questions like FAQs and common support queries.</p>
 <li class="task todo">Do semantically cached entries have TTLs and invalidation hooks?</li>
 <li class="task todo">Have you evaluated semantic-cache false-hit rate on a labeled set?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#kv-cache-management">KV cache management</a></li>
 <li><a href="#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation &amp; cache safety</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="kv-cache-management"><div class="lesson-head"><span class="lesson-num">01.2</span><h2>KV cache management: eviction, reuse, and memory pressure at scale</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="kv-cache-management"><div class="lesson-head"><span class="lesson-num">01.2</span><h2>KV cache management: eviction, reuse, and memory pressure at scale</h2></div><h2 id="tldr">TL;DR</h2>
 <p>During generation, the model caches the key and value tensors of every token it has
 already processed. This way attention doesn't recompute the whole sequence at each
 step. This <strong>KV cache</strong> is what makes <a href="#prefill-vs-decode">decode</a> fast. It is
@@ -531,7 +546,7 @@ of LLM serving.</p>
 <p><strong>Ask your eng team</strong> — <em>"What does doubling our max context length do to our cost and our capacity?"</em></p>
 <p><strong>Product risk if ignored</strong> — You promise long-context or high-concurrency features. They quietly blow up cost or fall over at scale.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <p>Attention at step <em>t</em> needs the keys and values of all tokens <code>0..t-1</code>.
 Recomputing them every step would make generation quadratic. Instead, the
 server stores them:</p>
@@ -550,14 +565,14 @@ server stores them:</p>
 <p>A long-context, high-concurrency workload can need <em>more memory for KV than for the
 model weights.</em> That's why KV cache — not FLOPs — limits your batch size and
 throughput.</p>
-<h2>The levers</h2>
-<h3>1. Reuse</h3>
+<h2 id="the-levers">The levers</h2>
+<h3 id="1-reuse">1. Reuse</h3>
 <p>Identical prefixes can share KV entries. This is exactly what
 <a href="#prompt-vs-semantic-caching">prompt/prefix caching</a> exploits. A stable system
 prompt shared across requests is computed once and reused. This saves both
 prefill compute and memory. Reuse requires the entries to still be resident,
 which ties reuse to eviction policy.</p>
-<h3>2. Eviction</h3>
+<h3 id="2-eviction">2. Eviction</h3>
 <p>When memory fills, something must go. Here are the policies and their costs:</p>
 <ul>
 <li><strong>By completion</strong> — free a sequence's KV when it finishes (the baseline).</li>
@@ -569,14 +584,14 @@ which ties reuse to eviction policy.</p>
   to CPU/host memory and back. Recompute trades compute for memory. Swapping
   trades PCIe bandwidth for memory. Both add tail latency.</li>
 </ul>
-<h3>3. Memory pressure &amp; fragmentation</h3>
+<h3 id="3-memory-pressure-fragmentation">3. Memory pressure &amp; fragmentation</h3>
 <p>Naively, each sequence reserves a contiguous block sized for its <em>maximum</em>
 possible length. This wastes memory for short outputs and fragments the pool.
 <strong>Paged attention</strong> solves this by allocating the KV cache in fixed-size
 blocks that need not be contiguous — OS-style virtual memory for the cache.
 It nearly eliminates fragmentation and enables much higher concurrency. See
 <a href="#batching-and-paged-attention">paged attention</a>.</p>
-<h3>4. Compression</h3>
+<h3 id="4-compression">4. Compression</h3>
 <ul>
 <li><strong>Smaller dtype</strong> — storing KV in FP8/INT8 halves or quarters cache size (a
   quality/memory tradeoff; see <a href="#quantization-formats">quantization formats</a>).</li>
@@ -585,14 +600,14 @@ It nearly eliminates fragmentation and enables much higher concurrency. See
   exactly this reason.</li>
 <li><strong>Sliding-window / local attention</strong> — bound the cache to the last <em>N</em> tokens.</li>
 </ul>
-<h2>Why this is the throughput story</h2>
+<h2 id="why-this-is-the-throughput-story">Why this is the throughput story</h2>
 <p>Concurrency — how many requests you batch together — is capped by how much KV
 cache fits. More memory headroom means bigger batches, which means higher GPU
 utilization, which means lower cost-per-token. So every KV optimization
 (paging, GQA, FP8 KV, eviction policy) is really a <strong>throughput and cost</strong>
 optimization. This is the mechanism behind
 <a href="#batching-and-paged-attention">continuous batching</a>.</p>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -629,7 +644,7 @@ optimization. This is the mechanism behind
 </tr>
 </tbody>
 </table>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>OOM under load</strong> — concurrency times context exceeded HBM, so requests get
   rejected or the server crashes. Mitigate with admission control and
@@ -644,7 +659,7 @@ optimization. This is the mechanism behind
   data if it isn't carefully scoped. See
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant cache safety</a>.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have you computed KV memory for your max context × target concurrency?</li>
 <li class="task todo">Does your model use GQA/MQA (and could FP8 KV buy headroom)?</li>
@@ -652,14 +667,14 @@ optimization. This is the mechanism behind
 <li class="task todo">Do you monitor preemption/swap rate and its effect on p99?</li>
 <li class="task todo">Are shared prefixes scoped so reuse never crosses a tenant boundary?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="#batching-and-paged-attention">Continuous batching &amp; paged attention</a></li>
 <li><a href="#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="#quantization-formats">Quantization formats</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation &amp; cache safety</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="prefill-vs-decode"><div class="lesson-head"><span class="lesson-num">01.3</span><h2>Prefill vs. decode latency</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="prefill-vs-decode"><div class="lesson-head"><span class="lesson-num">01.3</span><h2>Prefill vs. decode latency</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Generation has two phases with opposite hardware profiles. <strong>Prefill</strong>
 processes the entire prompt in parallel to build the
 <a href="#kv-cache-management">KV cache</a>. It is <strong>compute-bound</strong>, and its cost
@@ -675,7 +690,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
 <p><strong>Ask your eng team</strong> — <em>"Is our latency problem time-to-first-token, or tokens-per-second?"</em></p>
 <p><strong>Product risk if ignored</strong> — You fund the wrong latency fix and the number you promised the exec doesn't move.</p>
 </blockquote>
-<h2>Mental model</h2>
+<h2 id="mental-model">Mental model</h2>
 <pre><code>PREFILL  (process N prompt tokens together)        DECODE (generate one token at a time)
   ─ one big parallel matmul over all input          ─ T sequential steps
   ─ saturates the GPU's compute (FLOPs)             ─ each step: load weights + KV, do tiny matmul
@@ -690,7 +705,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
   time. Model size, memory bandwidth, and batch dynamics dominate it.</li>
 </ul>
 <p>Total latency ≈ <code>TTFT + (num_output_tokens × TPOT)</code>.</p>
-<h2>Why they're bound by different limits</h2>
+<h2 id="why-theyre-bound-by-different-limits">Why they're bound by different limits</h2>
 <ul>
 <li><strong>Prefill is compute-bound</strong> because the server processes all prompt tokens
   at once: large, dense matrix multiplies that keep the GPU's compute units
@@ -705,7 +720,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
   which is exactly why <a href="#batching-and-paged-attention">batching</a> helps
   decode so much — more sequences share each weight read.</li>
 </ul>
-<h2>How this changes what you optimize</h2>
+<h2 id="how-this-changes-what-you-optimize">How this changes what you optimize</h2>
 <table>
 <thead>
 <tr>
@@ -747,7 +762,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
   decode, so a giant prompt doesn't stall everyone else's token stream. It's
   a scheduling fix for the prefill/decode interference problem.</li>
 </ul>
-<h2>Workload shape matters</h2>
+<h2 id="workload-shape-matters">Workload shape matters</h2>
 <ul>
 <li><strong>Long input, short output</strong> — classification, extraction, a RAG answer
   over a big context — is <strong>prefill-dominated</strong>. Prompt caching and input
@@ -760,7 +775,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
   <a href="04-evals-observability.html#observability">observability</a> — a single
   "latency" number hides which phase is the problem.</li>
 </ul>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Optimizing the wrong phase</strong> — adding speculative decoding to fix
   latency that is actually 90% prefill of a 30k-token prompt.</li>
@@ -769,7 +784,7 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
 <li><strong>Reporting only average latency</strong> — this hides that TTFT is fine but TPOT
   is terrible, or the reverse. Always split the two.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do you measure TTFT and TPOT as separate metrics?</li>
 <li class="task todo">Do you know whether your workload is prefill- or decode-dominated?</li>
@@ -777,13 +792,13 @@ techniques. Mix them up and you'll optimize the wrong thing.</p>
 <li class="task todo">Are decode-side wins (spec decoding, batching) applied where output is long?</li>
 <li class="task todo">Does a large prompt from one user degrade others' token stream?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#kv-cache-management">KV cache management</a></li>
 <li><a href="#batching-and-paged-attention">Continuous batching &amp; paged attention</a></li>
 <li><a href="#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="batching-and-paged-attention"><div class="lesson-head"><span class="lesson-num">01.4</span><h2>Continuous batching &amp; paged attention</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="batching-and-paged-attention"><div class="lesson-head"><span class="lesson-num">01.4</span><h2>Continuous batching &amp; paged attention</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Two innovations made modern LLM serving economical. <strong>Continuous batching</strong> keeps the
 GPU full by adding and removing requests at the <em>token</em> level instead of waiting for
 a whole batch to finish. <strong>Paged attention</strong> manages the <a href="#kv-cache-management">KV cache</a>
@@ -798,7 +813,7 @@ high-throughput one.</p>
 <p><strong>Ask your eng team</strong> — <em>"What's our cost per token at our latency target, and how much does relaxing latency a little save us?"</em></p>
 <p><strong>Product risk if ignored</strong> — The margins assumed in your business case never materialize because the serving stack was never tuned.</p>
 </blockquote>
-<h2>The problem they solve</h2>
+<h2 id="the-problem-they-solve">The problem they solve</h2>
 <p>Decode is <strong>memory-bandwidth-bound</strong>: each step streams the whole model through the
 compute units to produce one token, leaving compute units idle. The cure is
 <strong>batching</strong> — process many sequences per weight read so each expensive byte-movement
@@ -811,7 +826,7 @@ serves many users. But two things get in the way:</p>
    memory (most outputs are short) and fragments the pool, capping how many sequences
    fit.</li>
 </ol>
-<h2>Continuous (in-flight) batching</h2>
+<h2 id="continuous-in-flight-batching">Continuous (in-flight) batching</h2>
 <p>Instead of "form batch → run to completion → form next batch," the scheduler operates
 per decoding step:</p>
 <pre><code>every step:
@@ -831,7 +846,7 @@ per decoding step:</p>
 decode (a TTFT-vs-TPOT tension). <strong>Chunked prefill</strong> mitigates this. It slices big
 prefills and interleaves them with decode steps, so no single large prompt stalls the
 token stream.</p>
-<h2>Paged attention</h2>
+<h2 id="paged-attention">Paged attention</h2>
 <p>Borrowing virtual-memory ideas from operating systems: divide the KV cache into
 fixed-size <strong>blocks (pages)</strong>. A sequence's KV is a <em>list of blocks</em> that need not be
 contiguous. A block table maps logical positions to physical blocks.</p>
@@ -847,13 +862,13 @@ contiguous. A block table maps logical positions to physical blocks.</p>
 <li><strong>Clean eviction/swap units.</strong> Blocks are natural granules to evict or swap to host
   memory under <a href="#kv-cache-management">memory pressure</a>.</li>
 </ul>
-<h2>How they reinforce each other</h2>
+<h2 id="how-they-reinforce-each-other">How they reinforce each other</h2>
 <p>Paged attention raises how many sequences fit in memory. Continuous batching turns
 that headroom into sustained GPU utilization. The product is dramatically higher
 throughput — and therefore lower <strong>cost per token</strong> — at comparable latency. This is
 the core reason a well-configured open-source server (vLLM, TGI, TensorRT-LLM, SGLang)
 can serve far more traffic per GPU than a naive loop.</p>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -888,7 +903,7 @@ can serve far more traffic per GPU than a naive loop.</p>
 <p>There is no free lunch: pushing batch size up improves cost and throughput but can
 raise tail latency for individual requests. The right operating point is an
 <a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">SLO decision</a>, not a default.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Throughput tuned, latency forgotten</strong> — batch sizes cranked for cost, p99 TPOT
   quietly blows the SLO. Track both.</li>
@@ -897,7 +912,7 @@ raise tail latency for individual requests. The right operating point is an
 <li><strong>KV exhaustion</strong> — high concurrency × long context overruns the block pool →
   preemption/swap and tail-latency spikes (see <a href="#kv-cache-management">KV management</a>).</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Are you on a server that does continuous batching + paged attention?</li>
 <li class="task todo">Have you set a max batch size / max-num-seqs tied to an SLO, not just "max"?</li>
@@ -905,13 +920,13 @@ raise tail latency for individual requests. The right operating point is an
 <li class="task todo">Do you alert on KV-pool utilization and preemption rate?</li>
 <li class="task todo">Do you track throughput <em>and</em> p99 TTFT/TPOT together?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#kv-cache-management">KV cache management</a></li>
 <li><a href="#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="speculative-quantization-distillation"><div class="lesson-head"><span class="lesson-num">01.5</span><h2>Speculative decoding vs. quantization vs. distillation</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="speculative-quantization-distillation"><div class="lesson-head"><span class="lesson-num">01.5</span><h2>Speculative decoding vs. quantization vs. distillation</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Three ways to make inference faster or cheaper, with very different risk
 profiles. <strong>Speculative decoding</strong> speeds up <a href="#prefill-vs-decode">decode</a>
 with <em>zero quality change</em> — the output distribution is provably preserved.
@@ -929,8 +944,8 @@ how much quality risk you can carry.</p>
 <p><strong>Ask your eng team</strong> — <em>"Which of these are we using, and did quality hold on our eval set after we turned it on?"</em></p>
 <p><strong>Product risk if ignored</strong> — A cost-cutting change quietly degrades the experience and no one's eval catches it.</p>
 </blockquote>
-<h2>The three techniques</h2>
-<h3>Speculative decoding — <em>free speed, same answer</em></h3>
+<h2 id="the-three-techniques">The three techniques</h2>
+<h3 id="speculative-decoding-free-speed-same-answer">Speculative decoding — <em>free speed, same answer</em></h3>
 <p>A small, fast <strong>draft</strong> model proposes the next <em>k</em> tokens. The large
 <strong>target</strong> model verifies all <em>k</em> in a single forward pass — parallel
 verification is cheap because the target is bandwidth-bound, not
@@ -949,7 +964,7 @@ plain decode.</p>
 <li><strong>Variants:</strong> separate draft model, Medusa-style extra heads, n-gram or
   lookahead decoding, EAGLE.</li>
 </ul>
-<h3>Quantization — <em>smaller model, bounded quality risk</em></h3>
+<h3 id="quantization-smaller-model-bounded-quality-risk">Quantization — <em>smaller model, bounded quality risk</em></h3>
 <p>Store, and sometimes compute, weights and activations in fewer bits — FP16
 to INT8, FP8, or INT4. Moving less data directly helps the bandwidth-bound
 decode phase and frees <a href="#kv-cache-management">KV/memory headroom</a> for
@@ -964,7 +979,7 @@ bigger batches.</p>
 <li><strong>Reversibility:</strong> high. It's a post-training transform you can dial back.</li>
 <li>Full detail and method comparison: <a href="#quantization-formats">Quantization formats</a>.</li>
 </ul>
-<h3>Distillation — <em>a new, smaller model</em></h3>
+<h3 id="distillation-a-new-smaller-model">Distillation — <em>a new, smaller model</em></h3>
 <p>Train a small <strong>student</strong> to imitate a large <strong>teacher</strong>, matching its
 outputs or output distributions. The result is a permanently smaller,
 cheaper, faster model specialized to your task distribution.</p>
@@ -977,7 +992,7 @@ cheaper, faster model specialized to your task distribution.</p>
 <li><strong>Reversibility:</strong> low. You've trained an artifact and built a pipeline
   around it.</li>
 </ul>
-<h2>Choosing between them</h2>
+<h2 id="choosing-between-them">Choosing between them</h2>
 <table>
 <thead>
 <tr>
@@ -1030,7 +1045,7 @@ cheaper, faster model specialized to your task distribution.</p>
 served with <em>speculative decoding</em>, and for a hot narrow task, a <em>distilled</em>
 student that is itself quantized. They attack different resources, so
 stacking compounds the wins.</p>
-<h2>Decision guide</h2>
+<h2 id="decision-guide">Decision guide</h2>
 <ol>
 <li><strong>Latency-bound, output-heavy, can't touch quality?</strong> Reach for
    speculative decoding first.</li>
@@ -1044,7 +1059,7 @@ stacking compounds the wins.</p>
    shouldn't move evals at all — that's a red flag if it does. Quantization
    and distillation <em>will</em> move evals, so you must measure by how much.</li>
 </ol>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Speculative decoding with a bad draft</strong> — a low acceptance rate makes
   it net-neutral or slower. Measure acceptance rate, not just "it's
@@ -1056,7 +1071,7 @@ stacking compounds the wins.</p>
   offline but fails on the long tail of real traffic it wasn't distilled
   for.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Are you short on latency, memory, or steady-state cost? (picks the technique)</li>
 <li class="task todo">For spec decoding: do you monitor draft acceptance rate?</li>
@@ -1064,14 +1079,14 @@ stacking compounds the wins.</p>
 <li class="task todo">For distillation: does the student's eval set reflect <em>production</em> traffic?</li>
 <li class="task todo">Are all three gated by regression evals before rollout?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#quantization-formats">Quantization formats: INT8, INT4, FP8, AWQ, GPTQ</a></li>
 <li><a href="#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="quantization-formats"><div class="lesson-head"><span class="lesson-num">01.6</span><h2>Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="quantization-formats"><div class="lesson-head"><span class="lesson-num">01.6</span><h2>Quantization formats: INT8, INT4, FP8, AWQ, GPTQ — and when it hurts</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Quantization stores numbers in fewer bits. This shrinks the model's memory footprint
 and moves less data per <a href="#prefill-vs-decode">decode</a> step, buying lower cost, more
 <a href="#kv-cache-management">KV/batch headroom</a>, and often lower latency. The format
@@ -1087,7 +1102,7 @@ degradation is task-specific and invisible to the eye.</p>
 <p><strong>Ask your eng team</strong> — <em>"At what bit-width did our evals start to slip, and on which task types?"</em></p>
 <p><strong>Product risk if ignored</strong> — You bank the savings and inherit a subtle quality cliff on your highest-value workflows.</p>
 </blockquote>
-<h2>What "quantize" actually means</h2>
+<h2 id="what-quantize-actually-means">What "quantize" actually means</h2>
 <p>A full-precision weight is FP16/BF16 (16 bits). Quantization maps ranges of those
 values onto a smaller set of levels:</p>
 <ul>
@@ -1109,7 +1124,7 @@ values onto a smaller set of levels:</p>
 <li><strong>KV-cache quantization</strong> — store the <a href="#kv-cache-management">KV cache</a> in FP8/INT8
   to roughly double or quadruple concurrency. This is a separate, valuable lever.</li>
 </ul>
-<h2>The formats</h2>
+<h2 id="the-formats">The formats</h2>
 <table>
 <thead>
 <tr>
@@ -1154,7 +1169,7 @@ values onto a smaller set of levels:</p>
 <p>FP8 vs INT8 at the same 8 bits: FP8's exponent gives it the <strong>range</strong> to absorb
 activation outliers, so it often quantizes activations more gracefully. This is handy
 on hardware with native FP8 support. INT8 has the widest software and hardware support.</p>
-<h2>The methods (how to hit 4-bit without wrecking quality)</h2>
+<h2 id="the-methods-how-to-hit-4-bit-without-wrecking-quality">The methods (how to hit 4-bit without wrecking quality)</h2>
 <p>Naive round-to-nearest at 4-bit loses too much. Smarter post-training quantization
 (PTQ) methods use a small <strong>calibration</strong> dataset to minimize error:</p>
 <ul>
@@ -1173,7 +1188,7 @@ on hardware with native FP8 support. INT8 has the widest software and hardware s
 </ul>
 <p>Rule of thumb: <strong>the format sets the ceiling. The method determines how close to it
 you get.</strong> "INT4" with AWQ/GPTQ ≫ "INT4" with naive rounding.</p>
-<h2>When quantization <em>hurts</em></h2>
+<h2 id="when-quantization-hurts">When quantization <em>hurts</em></h2>
 <p>Degradation is not uniform — it concentrates in specific places:</p>
 <ul>
 <li><strong>Lower bits, more risk</strong> — INT8 and FP8 are usually safe. INT4 needs a good
@@ -1194,7 +1209,7 @@ you get.</strong> "INT4" with AWQ/GPTQ ≫ "INT4" with naive rounding.</p>
 prompts. You need a <a href="04-evals-observability.html#evals">task-representative eval set</a>,
 ideally including adversarial and format-strict cases. Run it at each candidate
 bit-width.</p>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -1226,7 +1241,7 @@ bit-width.</p>
 </tr>
 </tbody>
 </table>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Start at INT8/FP8; only go INT4 if evals hold.</li>
 <li class="task todo">Use AWQ or GPTQ (not naive rounding) for 4-bit.</li>
@@ -1236,7 +1251,7 @@ bit-width.</p>
 <li class="task todo">Consider KV-cache quantization as a separate concurrency lever.</li>
 <li class="task todo">Confirm your hardware actually accelerates the chosen format (e.g. FP8 on Hopper+).</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
 <li><a href="#kv-cache-management">KV cache management</a></li>
@@ -1244,7 +1259,7 @@ bit-width.</p>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="02-reliable-outputs.html#structured-output">Structured output</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>PagedAttention / vLLM (UC Berkeley, 2023).</strong> By managing the
 <a href="#kv-cache-management">KV cache</a> in non-contiguous "pages" instead of one
 big reserved block, the PagedAttention paper reported up to <strong>~24× higher
@@ -1272,7 +1287,7 @@ found 4-bit quality slipping on <em>math, code, and strict JSON</em>, while
 summarization barely notices. 🎯 <em>PM takeaway:</em> "we quantized to save
 money" is a margin decision with a quality blast radius. Gate it on evals.
 See <a href="#quantization-formats">quantization formats</a>.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

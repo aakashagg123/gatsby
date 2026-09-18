@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink" href="retrieval-as-memory.html">3 · Retrieval as memory</a><a class="modlink" href="when-memory-goes-wrong.html">4 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink" href="retrieval-as-memory.html">3 · Retrieval as memory</a><a class="modlink" href="when-memory-goes-wrong.html">4 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>Memory as a product decision</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A model has no memory of its own. Every time it seems to remember something — what you
 said five minutes ago, a preference from your last visit — your product engineered that
 by putting the relevant information back in front of it. Memory, in an AI product, is
@@ -337,7 +352,7 @@ me, and for how long,' could we give them a true, specific answer today?"</em></
 reasonably expected it to keep, or unsettles them by remembering things they assumed
 were forgotten — and nobody on the team can say which behavior was actually intended.</p>
 </blockquote>
-<h2>The mental model: a promise, not a switch</h2>
+<h2 id="the-mental-model-a-promise-not-a-switch">The mental model: a promise, not a switch</h2>
 <p>"Memory" is not a single feature you turn on. It's closer to a set of specific promises:
 <em>this</em> detail will carry forward within a conversation, <em>that</em> detail will carry forward
 across visits, <em>this other</em> detail never leaves the current session. Each promise has a
@@ -351,7 +366,7 @@ a vague feature request into something a team can actually design and test.</p>
   D --&gt;|&quot;yes — for this user&quot;| STORE[&quot;Stored as a promise:&lt;br/&gt;what, for how long,&lt;br/&gt;visible to whom&quot;]
   STORE --&gt; DELIVER[&quot;Retrieved and&lt;br/&gt;re-supplied on&lt;br/&gt;future requests&quot;]
   DELIVER -.-&gt;|&quot;the user should be&lt;br/&gt;able to see, correct,&lt;br/&gt;or delete this&quot;| STORE</pre>
-<h2>Why this needs a deliberate answer, not a default</h2>
+<h2 id="why-this-needs-a-deliberate-answer-not-a-default">Why this needs a deliberate answer, not a default</h2>
 <p>Two default failure patterns show up constantly, and both trace back to memory being
 treated as an afterthought rather than a spec. <strong>The goldfish product</strong> — nothing is ever
 remembered, so a user re-explains their situation every single time, and a feature that
@@ -361,7 +376,7 @@ would never have expected to persist, and the first time that surfaces at the wr
 moment, the trust cost is far larger than the convenience the memory ever bought. Neither
 extreme is a technical failure. Both are the predictable result of nobody deciding, on
 purpose, what should be remembered.</p>
-<h2>The question that actually scopes the feature</h2>
+<h2 id="the-question-that-actually-scopes-the-feature">The question that actually scopes the feature</h2>
 <p>Before any engineering work starts, a memory feature needs an honest answer to four parts
 of one question: <strong>what</strong> specifically gets remembered (a preference, a fact, a whole
 transcript), <strong>for whom</strong> (this user only, everyone on their team, no one — session only),
@@ -370,7 +385,7 @@ see or edit it</strong> (only the user, an admin, nobody but the system). A feat
 answer all four specifically is ready to build. A feature where the answer to any of them
 is "we'll figure that out later" is not — and "we'll figure it out later" is exactly how
 oversharing and goldfish products both get built.</p>
-<h2>Why users notice this more than most AI behavior</h2>
+<h2 id="why-users-notice-this-more-than-most-ai-behavior">Why users notice this more than most AI behavior</h2>
 <p>Most AI quality problems are graded on a curve — a slightly awkward summary or an
 imperfect answer is forgiven as "the AI being the AI." Memory failures are graded
 differently, because they read as personal. Being remembered correctly feels like being
@@ -380,7 +395,7 @@ rigor per feature than most AI capabilities get, even though the underlying engi
 covered in full in <a href="../ai/00-foundations.html#context-engineering">Context engineering</a>
 and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — is the same discipline
 behind any AI feature's context management.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>No decision, by default</strong> — shipping a feature where memory behavior emerged from
   implementation details, with no one able to state what was actually promised to users.</li>
@@ -391,7 +406,7 @@ behind any AI feature's context management.</p>
 <li><strong>A promise with no owner</strong> — a memory feature that exists in the product but has no one
   accountable for what it stores, how long, or whether it's still accurate.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For each AI feature: can we state specifically what it remembers, for whom, for how
       long, and who can see or edit it?</li>
@@ -402,7 +417,7 @@ behind any AI feature's context management.</p>
 <li class="task todo">Have we deliberately chosen where on the spectrum — nothing remembered, everything
       remembered — each feature sits, rather than inheriting a default?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="session-user-and-organizational-memory.html">Session, user &amp; organizational memory</a> —
   the three shapes this decision actually takes.</li>
@@ -412,7 +427,26 @@ behind any AI feature's context management.</p>
   is skipped.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="session-user-and-organizational-memory.html"><span class="lbl">→ Next</span><span class="ttl">Session, user &amp; organizational memory</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-promise-not-a-switch">The mental model: a promise, not a switch</a><a class="h2" href="#why-this-needs-a-deliberate-answer-not-a-default">Why this needs a deliberate answer, not a default</a><a class="h2" href="#the-question-that-actually-scopes-the-feature">The question that actually scopes the feature</a><a class="h2" href="#why-users-notice-this-more-than-most-ai-behavior">Why users notice this more than most AI behavior</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

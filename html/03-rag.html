@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -350,7 +365,7 @@ then prove it works.</p>
  <div class="iw-note" id="rg-note"></div>
 </div>
 <div class="iw-legend"><span><i style="background:#0969DA"></i>relevant</span><span><i style="background:#EAEEF2"></i>noise</span><span><i style="background:#fff;outline:2px solid #1F2328"></i>kept after rerank</span></div></div></section>
-  <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="rag-architecture"><div class="lesson-head"><span class="lesson-num">03.1</span><h2>RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness</h2></div><h2 id="tldr">TL;DR</h2>
 <p>RAG is a pipeline, and quality is bounded by its weakest stage. <strong>Chunking</strong>
 decides what a retrievable unit <em>is</em>. <strong>Embeddings</strong> decide how meaning is
 matched. <strong>Hybrid search</strong> combines keyword and vector recall. <strong>Reranking</strong>
@@ -365,7 +380,7 @@ first, generation second.</p>
 <p><strong>Ask your eng team</strong> — <em>"When an answer is wrong, is it because we never retrieved the right source in the first place?"</em></p>
 <p><strong>Product risk if ignored</strong> — You blame the model and tune prompts for months while the real defect — retrieval — goes unfixed.</p>
 </blockquote>
-<h2>The pipeline</h2>
+<h2 id="the-pipeline">The pipeline</h2>
 <pre><code>INDEX TIME:   documents ──▶ chunk ──▶ embed ──▶ vector store (+ keyword index)
                                   └──▶ keep fresh (re-index on change)
 
@@ -374,7 +389,7 @@ QUERY TIME:   query ──▶ (rewrite) ──▶ hybrid search (dense + lexical
 </code></pre>
 <p>This is <a href="00-foundations.html#context-engineering">context engineering</a> in
 motion: retrieval is <em>how the right information gets into the window</em>.</p>
-<h2>Chunking — define the retrievable unit</h2>
+<h2 id="chunking-define-the-retrievable-unit">Chunking — define the retrievable unit</h2>
 <ul>
 <li><strong>Why it matters:</strong> chunks that are too big dilute relevance and waste
   tokens; chunks that are too small lose the context needed to answer.
@@ -395,7 +410,7 @@ motion: retrieval is <em>how the right information gets into the window</em>.</p
 <li><strong>Tabular/structured data</strong> often shouldn't be free-text chunked at all.
   Consider text-to-SQL or structured retrieval instead.</li>
 </ul>
-<h2>Embeddings — how meaning is matched</h2>
+<h2 id="embeddings-how-meaning-is-matched">Embeddings — how meaning is matched</h2>
 <ul>
 <li>Embeddings map text to vectors, so semantic nearness equals vector
   nearness. The choice of model sets your semantic ceiling.</li>
@@ -409,7 +424,7 @@ motion: retrieval is <em>how the right information gets into the window</em>.</p
   quality against storage and query speed. Re-embedding the whole corpus on
   a model change is a real migration cost, so version your embeddings.</li>
 </ul>
-<h2>Hybrid search — recall from two angles</h2>
+<h2 id="hybrid-search-recall-from-two-angles">Hybrid search — recall from two angles</h2>
 <p>Dense (vector) search captures <em>meaning</em> but can miss exact terms — IDs,
 error codes, rare names, acronyms. Lexical search (BM25/keyword) nails
 exact matches but misses paraphrase. <strong>Hybrid</strong> search runs both and fuses
@@ -421,7 +436,7 @@ the results, for example with Reciprocal Rank Fusion or weighted scores.</p>
   constraints <em>before</em> ranking. This helps both relevance and
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation/security</a>.</li>
 </ul>
-<h2>Reranking — precision before the prompt</h2>
+<h2 id="reranking-precision-before-the-prompt">Reranking — precision before the prompt</h2>
 <p>First-stage retrieval optimizes recall by casting a wide net, say the top</p>
 <ol start="50">
 <li>A <strong>cross-encoder reranker</strong> then scores each (query, chunk) pair
@@ -437,7 +452,7 @@ jointly for true relevance and keeps the top few.</li>
 <li><strong>Cost:</strong> an extra model call and latency, but on a small candidate set.
   It often lets you <em>shrink</em> the context you send, paying for itself.</li>
 </ul>
-<h2>Freshness — keep the index honest</h2>
+<h2 id="freshness-keep-the-index-honest">Freshness — keep the index honest</h2>
 <p>A retrieval index is a cache of your data, and it goes stale the moment the
 source changes.</p>
 <ul>
@@ -451,7 +466,7 @@ source changes.</p>
   <a href="01-inference-internals.html#prompt-vs-semantic-caching">semantic-cache staleness</a>:
   a confident answer from outdated data.</li>
 </ul>
-<h2>Generation &amp; attribution</h2>
+<h2 id="generation-attribution">Generation &amp; attribution</h2>
 <ul>
 <li>Pass reranked, trimmed chunks <strong>with source tags</strong> and instruct the model
   to answer <em>from the context</em> and <strong>cite</strong> sources. This enables
@@ -460,7 +475,7 @@ source changes.</p>
   doesn't know rather than fill the gap from parametric memory — a
   hallucination guard.</li>
 </ul>
-<h2>Tradeoffs</h2>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <table>
 <thead>
 <tr>
@@ -497,7 +512,7 @@ source changes.</p>
 </tr>
 </tbody>
 </table>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Right answer never retrieved</strong> — a chunking, embedding, or recall
   problem. No prompt fix helps. Measure
@@ -511,7 +526,7 @@ source changes.</p>
   customer's docs. See
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">isolation</a>.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is chunking structure-aware with rich metadata (source, time, tenant, ACL)?</li>
 <li class="task todo">Do query and document embeddings share a model/space, fit to your domain?</li>
@@ -521,14 +536,14 @@ source changes.</p>
 <li class="task todo">Does the prompt enforce cite-from-context and "say I don't know"?</li>
 <li class="task todo">Do you measure retrieval quality separately from answer quality?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#retrieval-evals">Retrieval evals</a></li>
 <li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
 <li><a href="01-inference-internals.html#prompt-vs-semantic-caching">Prompt vs. semantic caching</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. ICL vs. RAG vs. distillation</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval evals: recall, precision, grounding, attribution, and citation quality</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="retrieval-evals"><div class="lesson-head"><span class="lesson-num">03.2</span><h2>Retrieval evals: recall, precision, grounding, attribution, and citation quality</h2></div><h2 id="tldr">TL;DR</h2>
 <p>A <a href="#rag-architecture">RAG system</a> has two failure surfaces: <em>did we
 retrieve the right thing?</em> and <em>did the model use it faithfully?</em> You must
 measure them <strong>separately</strong>, or you'll tune the prompt to fix a retrieval
@@ -543,7 +558,7 @@ End-to-end answer quality alone hides which half is broken.</p>
 <p><strong>Ask your eng team</strong> — <em>"How do we measure that answers are actually supported by sources, instead of plausibly made up?"</em></p>
 <p><strong>Product risk if ignored</strong> — You market accuracy you can't substantiate; hallucinated citations become a credibility — and legal — problem.</p>
 </blockquote>
-<h2>Why split the evaluation</h2>
+<h2 id="why-split-the-evaluation">Why split the evaluation</h2>
 <pre><code>query ──▶ [ retriever ] ──chunks──▶ [ generator ] ──▶ answer
             measure here:                measure here:
             recall, precision            grounding, attribution, citations
@@ -559,7 +574,7 @@ retraining, or is permissioned per user, retrieval is how freshness, access
 control, and cost control happen. What the question <em>should</em> prompt is
 exactly this lesson: measure your retrieval separately, so you know what
 it's contributing.)</p>
-<h2>Retrieval metrics</h2>
+<h2 id="retrieval-metrics">Retrieval metrics</h2>
 <p>You need labeled data: queries paired with the documents or chunks that
 <em>should</em> be retrieved — a <a href="04-evals-observability.html#evals">golden set</a>
 for retrieval.</p>
@@ -582,7 +597,7 @@ for retrieval.</p>
 </ul>
 <p>Use these to tune chunk size, k, hybrid weighting, and reranking directly —
 each metric points at a specific stage.</p>
-<h2>Generation-over-retrieval metrics</h2>
+<h2 id="generation-over-retrieval-metrics">Generation-over-retrieval metrics</h2>
 <p>Even with perfect retrieval, the model can ignore or misuse the context.</p>
 <ul>
 <li><strong>Grounding / faithfulness</strong> — is every claim in the answer <em>supported by
@@ -604,7 +619,7 @@ each metric points at a specific stage.</p>
 <p>A useful framing is the "RAG triad": <strong>context relevance</strong> (retrieval),
 <strong>groundedness</strong> (answer ⊆ context), and <strong>answer relevance</strong> (answer ⊆
 question). All three must hold.</p>
-<h2>How to actually run these</h2>
+<h2 id="how-to-actually-run-these">How to actually run these</h2>
 <ol>
 <li><strong>Build a retrieval golden set</strong> — representative queries with labeled
    relevant chunks. Include hard cases: exact-identifier lookups,
@@ -621,7 +636,7 @@ question). All three must hold.</p>
 <li><strong>Gate changes in CI</strong> so a chunking tweak that quietly drops recall
    can't ship.</li>
 </ol>
-<h2>Tradeoffs &amp; what each metric pushes</h2>
+<h2 id="tradeoffs-what-each-metric-pushes">Tradeoffs &amp; what each metric pushes</h2>
 <table>
 <thead>
 <tr>
@@ -660,7 +675,7 @@ question). All three must hold.</p>
 </table>
 <p>Don't chase recall to 100%. Beyond "enough," extra chunks hurt precision,
 grounding, and cost. The objective is the <em>right</em> context, not the <em>most</em>.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Grading only end-to-end</strong> — you can't tell whether retrieval or
   generation is the problem, so you fix the wrong one.</li>
@@ -674,7 +689,7 @@ grounding, and cost. The objective is the <em>right</em> context, not the <em>mo
 <li><strong>Untrusted judge</strong> — an uncalibrated LLM judge for grounding gives false
   confidence.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do you measure retrieval (recall/precision/nDCG) <em>separately</em> from answers?</li>
 <li class="task todo">Is there a labeled retrieval golden set, including "answer not in corpus"?</li>
@@ -684,7 +699,7 @@ grounding, and cost. The objective is the <em>right</em> context, not the <em>mo
 <li class="task todo">Do retrieval evals gate index/chunking/embedding/reranker changes in CI?</li>
 <li class="task todo">Do time-sensitive queries guard against freshness regressions?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="#rag-architecture">RAG architecture</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
@@ -692,7 +707,7 @@ grounding, and cost. The objective is the <em>right</em> context, not the <em>mo
 <li><a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>Air Canada's invented refund policy (2024).</strong> This is the canonical
 grounding failure: the bot answered from "imagination" instead of the
 airline's actual, current policy, and a tribunal made the company honor the
@@ -717,7 +732,7 @@ over-stuffing context is why dumping your top-50 chunks <em>hurts</em>: the answ
 gets buried. 🎯 <em>PM takeaway:</em> <strong>reranking down to a few great chunks</strong>
 beats retrieving many mediocre ones. You get better answers <em>and</em> lower
 <a href="04-evals-observability.html#cost-attribution">token cost</a>.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

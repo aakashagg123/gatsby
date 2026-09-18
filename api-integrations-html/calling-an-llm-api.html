@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>APIs &amp; integrations</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-request-response-contract.html">1 · The request/response contract</a><a class="modlink active" href="calling-an-llm-api.html">2 · Calling an LLM API</a><a class="modlink" href="structured-output-and-json-mode.html">3 · Structured output &amp; JSON mode</a><a class="modlink" href="webhooks-and-async-patterns.html">4 · Webhooks &amp; async patterns</a><a class="modlink" href="integrating-into-existing-systems.html">5 · Integrating into existing systems</a><a class="modlink" href="mcp-and-standard-connectors.html">6 · MCP &amp; standard connectors</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-request-response-contract.html">1 · The request/response contract</a><a class="modlink active" href="calling-an-llm-api.html">2 · Calling an LLM API</a><a class="modlink" href="structured-output-and-json-mode.html">3 · Structured output &amp; JSON mode</a><a class="modlink" href="webhooks-and-async-patterns.html">4 · Webhooks &amp; async patterns</a><a class="modlink" href="integrating-into-existing-systems.html">5 · Integrating into existing systems</a><a class="modlink" href="mcp-and-standard-connectors.html">6 · MCP &amp; standard connectors</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Calling an LLM API</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Four mechanics decide whether calling a model's API works reliably in production, and
 none of them are exotic — they're the same practical concerns behind any external API call,
 now applied to a dependency that is slower and pricier per call than most.
@@ -340,7 +355,7 @@ our users actually experience?"</em></p>
 traffic, gets rate-limited, and either fails visibly or, worse, silently serves broken
 responses nobody notices until a customer complains.</p>
 </blockquote>
-<h2>The mental model: four things any serious integration needs</h2>
+<h2 id="the-mental-model-four-things-any-serious-integration-needs">The mental model: four things any serious integration needs</h2>
 <p>None of these four ideas are unique to AI. They're the standard checklist for any
 external dependency your product leans on — a payment processor, a shipping-rate API, a
 weather service. What's different is how often you'll hit each one, because a model call
@@ -356,13 +371,13 @@ is slower and more variable than most APIs a team has integrated before.</p>
   STREAM --&gt; DONE[&quot;Response complete&quot;]
   WHOLE --&gt; DONE
   DONE -.-&gt;|&quot;if it failed&lt;br/&gt;or timed out&quot;| RETRY[&quot;Retry logic decides:&lt;br/&gt;try again, or give up&lt;br/&gt;and fall back&quot;]</pre>
-<h2>Authentication: proving who's calling, and what they're allowed to spend</h2>
+<h2 id="authentication-proving-whos-calling-and-what-theyre-allowed-to-spend">Authentication: proving who's calling, and what they're allowed to spend</h2>
 <p>A model API call carries credentials, the same as any authenticated API. What's worth a
 product leader's specific attention is the spending control that usually rides alongside
 authentication: most vendors let you set usage caps or budgets per credential, so a bug or
 a runaway loop can't silently spend an unbounded amount before anyone notices. Treat that
 cap as a real safety control to configure deliberately, not a default to leave untouched.</p>
-<h2>Rate limits: how much, how fast</h2>
+<h2 id="rate-limits-how-much-how-fast">Rate limits: how much, how fast</h2>
 <p>A rate limit caps how many requests, or how many tokens, you can send in a given window of
 time. Every vendor has one, and a product growing faster than expected will hit it sooner
 than the team planned for. Two practical consequences follow. First, a feature's expected
@@ -371,7 +386,7 @@ launch. Second, when a limit is hit, the response is usually a specific, recogni
 error — and a product that doesn't handle that error gracefully will show a broken
 experience to users during exactly the moments of highest demand, which is the worst time
 for it to happen.</p>
-<h2>Streaming: showing tokens as they're generated</h2>
+<h2 id="streaming-showing-tokens-as-theyre-generated">Streaming: showing tokens as they're generated</h2>
 <p>Because a model writes its answer one token at a time, an API can either wait for the whole
 answer and send it all at once, or <strong>stream</strong> it — sending each token to your product the
 moment it's generated, so a user sees the answer appear progressively instead of staring at
@@ -380,7 +395,7 @@ is close to a required choice, not a nice-to-have: the perceived wait for the fi
 token arriving is far shorter than the wait for the entire response, even when the total
 generation time is the same. For a background job with no one watching, the simpler
 full-response call is usually the better engineering choice.</p>
-<h2>Retries: surviving a call that fails</h2>
+<h2 id="retries-surviving-a-call-that-fails">Retries: surviving a call that fails</h2>
 <p>A model call fails or times out more often than most APIs a team is used to working with,
 simply because generating a response is slower and more variable work than a typical
 database lookup. A retry policy decides what happens next: try again immediately, wait and
@@ -390,7 +405,7 @@ than hammering a struggling service immediately — gives the underlying issue a
 clear instead of making it worse. <strong>Making the retried action safe to repeat</strong> — covered in
 depth in the next lesson under idempotency — matters especially when the call being retried
 might otherwise trigger a real-world action twice.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>No spending cap configured</strong> — leaving a credential's usage limit unset, so a bug or a
   loop can run up an unbounded bill before anyone notices.</li>
@@ -402,7 +417,7 @@ might otherwise trigger a real-world action twice.</p>
 <li><strong>Retrying without backoff or a safe-to-repeat action</strong> — hammering a struggling service
   immediately, or retrying an action that isn't safe to run twice.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is a spending cap configured on our model API credentials, not left at an unbounded
       default?</li>
@@ -412,7 +427,7 @@ might otherwise trigger a real-world action twice.</p>
 <li class="task todo">Does our retry logic back off between attempts, and only retry actions that are safe
       to repeat?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-request-response-contract.html">The request/response contract</a> — what's actually
   inside the call this lesson covers making reliably.</li>
@@ -422,7 +437,26 @@ might otherwise trigger a real-world action twice.</p>
   usage data into a tracked, attributed cost.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="the-request-response-contract.html"><span class="lbl">← Previous</span><span class="ttl">The request/response contract</span></a><a class="navcard next" href="structured-output-and-json-mode.html"><span class="lbl">→ Next</span><span class="ttl">Structured output &amp; JSON mode</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-four-things-any-serious-integration-needs">The mental model: four things any serious integration needs</a><a class="h2" href="#authentication-proving-whos-calling-and-what-theyre-allowed-to-spend">Authentication: proving who&#x27;s calling, and what they&#x27;re allowed to spend</a><a class="h2" href="#rate-limits-how-much-how-fast">Rate limits: how much, how fast</a><a class="h2" href="#streaming-showing-tokens-as-theyre-generated">Streaming: showing tokens as they&#x27;re generated</a><a class="h2" href="#retries-surviving-a-call-that-fails">Retries: surviving a call that fails</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

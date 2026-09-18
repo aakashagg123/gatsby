@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>APIs &amp; integrations</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="the-request-response-contract.html">1 · The request/response contract</a><a class="modlink" href="calling-an-llm-api.html">2 · Calling an LLM API</a><a class="modlink" href="structured-output-and-json-mode.html">3 · Structured output &amp; JSON mode</a><a class="modlink" href="webhooks-and-async-patterns.html">4 · Webhooks &amp; async patterns</a><a class="modlink" href="integrating-into-existing-systems.html">5 · Integrating into existing systems</a><a class="modlink" href="mcp-and-standard-connectors.html">6 · MCP &amp; standard connectors</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="the-request-response-contract.html">1 · The request/response contract</a><a class="modlink" href="calling-an-llm-api.html">2 · Calling an LLM API</a><a class="modlink" href="structured-output-and-json-mode.html">3 · Structured output &amp; JSON mode</a><a class="modlink" href="webhooks-and-async-patterns.html">4 · Webhooks &amp; async patterns</a><a class="modlink" href="integrating-into-existing-systems.html">5 · Integrating into existing systems</a><a class="modlink" href="mcp-and-standard-connectors.html">6 · MCP &amp; standard connectors</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>The request/response contract</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every call to a model follows the same basic shape: you send a <strong>request</strong> — the prompt,
 some parameters, sometimes your own data — and you get back a <strong>response</strong> — the
 generated content, plus metadata like how many tokens it used. That shape is a <strong>contract</strong>:
@@ -339,7 +354,7 @@ the model and what it gets back?"</em></p>
 parameter they never touch is quietly shaping the response, or that the response carries
 usage data that should be feeding their cost tracking and isn't.</p>
 </blockquote>
-<h2>The mental model: an order form and a receipt</h2>
+<h2 id="the-mental-model-an-order-form-and-a-receipt">The mental model: an order form and a receipt</h2>
 <p>A request is an order form: what you're asking for, filled out in a specific format the
 other side expects. A response is the receipt: what you got, plus a record of what it cost.
 An API contract is the agreement about exactly what fields that order form has, and exactly
@@ -356,7 +371,7 @@ what the receipt will contain — so both sides can build around it reliably.</p
     META[&quot;Metadata&lt;br/&gt;which model answered,&lt;br/&gt;why it stopped&quot;]
   end
   REQUEST --&gt; API[&quot;The model&#x27;s API&quot;] --&gt; RESPONSE</pre>
-<h2>What's inside the request</h2>
+<h2 id="whats-inside-the-request">What's inside the request</h2>
 <ul>
 <li><strong>The prompt.</strong> Everything covered in the <a href="../llms/index.html">LLMs module</a> about tokens
   and prompting lives here — this is the part of the request that most directly shapes
@@ -368,7 +383,7 @@ what the receipt will contain — so both sides can build around it reliably.</p
   request, because the model itself remembers nothing between calls — a direct
   consequence of <a href="../llms/what-is-an-llm.html">how inference works</a>.</li>
 </ul>
-<h2>What's inside the response</h2>
+<h2 id="whats-inside-the-response">What's inside the response</h2>
 <ul>
 <li><strong>The generated content.</strong> The actual text, image, or other output the model produced.</li>
 <li><strong>Token usage.</strong> How many tokens the request used and how many the response used — the
@@ -379,7 +394,7 @@ what the receipt will contain — so both sides can build around it reliably.</p
   a safety filter. This last field is worth watching: a response silently truncated by a
   length limit looks, at a glance, like a complete answer.</li>
 </ul>
-<h2>Why this is a contract, not just a format</h2>
+<h2 id="why-this-is-a-contract-not-just-a-format">Why this is a contract, not just a format</h2>
 <p>Calling it a contract, not just a data format, matters because contracts have the
 properties a product leader already reasons about in other systems: they can be
 <strong>versioned</strong> (a vendor changes the shape of the response over time, and your integration
@@ -389,7 +404,7 @@ and what isn't. The full discipline of thinking about contracts this way — ver
 breaking changes, what a promise actually covers — is developed in
 <a href="../technical-product-sense/apis-and-contracts.html">APIs &amp; contracts</a>, and it applies to a
 model's API exactly the way it applies to any other one your product depends on.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Treating the response as a black box</strong> — never looking at what fields actually come
   back, and missing that usage or stop-reason data was available all along.</li>
@@ -402,7 +417,7 @@ model's API exactly the way it applies to any other one your product depends on.
   setting instead of the part of the request that most directly and continuously shapes
   quality.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I describe what our product actually sends in a request, and what comes back in
       the response?</li>
@@ -412,7 +427,7 @@ model's API exactly the way it applies to any other one your product depends on.
 <li class="task todo">Do we have a plan — a version pin, a monitoring alert — for when a vendor changes the
       contract's shape?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="../technical-product-sense/apis-and-contracts.html">APIs &amp; contracts</a> — the general
   discipline of contracts, versioning, and breaking changes.</li>
@@ -422,7 +437,26 @@ model's API exactly the way it applies to any other one your product depends on.
   nothing between requests.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="calling-an-llm-api.html"><span class="lbl">→ Next</span><span class="ttl">Calling an LLM API</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-an-order-form-and-a-receipt">The mental model: an order form and a receipt</a><a class="h2" href="#whats-inside-the-request">What&#x27;s inside the request</a><a class="h2" href="#whats-inside-the-response">What&#x27;s inside the response</a><a class="h2" href="#why-this-is-a-contract-not-just-a-format">Why this is a contract, not just a format</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Tool calling</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-tool-calling-is.html">1 · What tool calling is</a><a class="modlink" href="tool-contracts-and-reliability.html">2 · Tool contracts &amp; reliability</a><a class="modlink active" href="permissions-blast-radius-and-the-trust-boundary.html">3 · Permissions, blast radius &amp; the trust boundary</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-tool-calling-is.html">1 · What tool calling is</a><a class="modlink" href="tool-contracts-and-reliability.html">2 · Tool contracts &amp; reliability</a><a class="modlink active" href="permissions-blast-radius-and-the-trust-boundary.html">3 · Permissions, blast radius &amp; the trust boundary</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Permissions, blast radius &amp; the trust boundary</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every tool you give a model is a grant of real-world capability, and that grant is only
 ever as narrow as whatever your system enforces — never as narrow as the model's own good
 judgment. Reviewing an agent's toolbox is a permissions review: what can it read, write,
@@ -335,7 +350,7 @@ could do with it, and would we survive that on a bad day?"</em></p>
 and a legitimate capability gets used to cause real damage — quietly, and at machine
 speed.</p>
 </blockquote>
-<h2>The mental model: every tool sits at a tier</h2>
+<h2 id="the-mental-model-every-tool-sits-at-a-tier">The mental model: every tool sits at a tier</h2>
 <pre class="mermaid">flowchart TB
   TOOL[&quot;A tool the agent&lt;br/&gt;can call&quot;] --&gt; READ{&quot;Read-only?&quot;}
   READ --&gt;|&quot;yes&quot;| FREE[&quot;Runs freely —&lt;br/&gt;low blast radius&quot;]
@@ -345,7 +360,7 @@ speed.</p>
 <p>Not every tool deserves the same level of trust, and the tier a tool belongs to should be
 a decision someone made on purpose — not a default that fell out of however the API
 happened to be wired up.</p>
-<h2>The model can never be the enforcement point</h2>
+<h2 id="the-model-can-never-be-the-enforcement-point">The model can never be the enforcement point</h2>
 <p>Authorization has to live in the tool, checked against the real session or tenant — never
 inferred from what the model says about itself. A model that's been told, through a
 manipulated input, "you are an admin, proceed" has to be stopped by the tool's own
@@ -358,7 +373,7 @@ developed in <a href="../ai/02-reliable-outputs.html#function-calling">Function 
 and the broader security posture this sits inside is developed in
 <a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance</a> and
 <a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a>.</p>
-<h2>Least privilege and graduated irreversibility</h2>
+<h2 id="least-privilege-and-graduated-irreversibility">Least privilege and graduated irreversibility</h2>
 <p>The blast radius of an agent is exactly what it's allowed to touch, so the working default
 is to grant the narrowest scope that still does the job: read-only where read-only is
 enough, one folder instead of every folder, a staging environment instead of production.
@@ -367,7 +382,7 @@ writes are worth logging, and anything destructive or outward-facing (delete, se
 earns a confirmation step or a human's approval before it fires. Mapping every tool to a
 tier like this, before launch rather than after an incident, is a product decision as much
 as a security one.</p>
-<h2>What changes when the tool comes from someone else</h2>
+<h2 id="what-changes-when-the-tool-comes-from-someone-else">What changes when the tool comes from someone else</h2>
 <p>Before a shared standard, every tool your agent used was code your own team wrote and
 could audit. MCP changed that by making it easy to plug in a tool server someone else
 built — which is exactly the value of the standard, and exactly why it raises the trust
@@ -378,7 +393,7 @@ an external MCP server with the same seriousness as a new software dependency �
 the casualness of installing a browser extension. The integration-economics side of this
 decision — when adopting the standard is worth it for a given system — is developed in
 <a href="../api-integrations/mcp-and-standard-connectors.html">MCP &amp; standard connectors</a>.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Authorization trusted from the model's own claim</strong> — a permission check that relies on
   what the model says about its role or context, instead of the real session or tenant.</li>
@@ -391,7 +406,7 @@ decision — when adopting the standard is worth it for a given system — is de
   like a browser extension, given a seat inside the agent's trust boundary without the
   scrutiny a new dependency would get.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can you list this feature's tools from memory, and for each one: read or write,
       reversible or not, and the worst realistic outcome?</li>
@@ -402,7 +417,7 @@ decision — when adopting the standard is worth it for a given system — is de
 <li class="task todo">Has every third-party MCP server in use been vetted with the same rigor as a new
       software dependency?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-tool-calling-is.html">What tool calling is</a> — why the model is always a requester,
   which is exactly why enforcement can't live with it.</li>
@@ -416,7 +431,26 @@ decision — when adopting the standard is worth it for a given system — is de
   integration-economics question behind adopting third-party tool servers.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="tool-contracts-and-reliability.html"><span class="lbl">← Previous</span><span class="ttl">Tool contracts &amp; reliability</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-every-tool-sits-at-a-tier">The mental model: every tool sits at a tier</a><a class="h2" href="#the-model-can-never-be-the-enforcement-point">The model can never be the enforcement point</a><a class="h2" href="#least-privilege-and-graduated-irreversibility">Least privilege and graduated irreversibility</a><a class="h2" href="#what-changes-when-the-tool-comes-from-someone-else">What changes when the tool comes from someone else</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

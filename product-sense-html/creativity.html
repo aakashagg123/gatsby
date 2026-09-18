@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink active" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink active" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Creativity: from strategic thinking to creative execution</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Creativity in product management has two halves. <strong>Strategic thinking</strong> decides <em>where</em> the
 product plays: positioning, segmentation, differentiation, and a focused core strategy —
 being clear on what you will and won't do. <strong>Creative execution</strong> is the day-to-day
@@ -334,7 +349,7 @@ our product the one users choose?"</em></p>
 <p><strong>Risk if ignored</strong> — A pile of undifferentiated AI features chasing the trend, none tied to
 a segment that cares.</p>
 </blockquote>
-<h2>Strategic thinking</h2>
+<h2 id="strategic-thinking">Strategic thinking</h2>
 <pre class="mermaid">flowchart TB
   ST[&quot;STRATEGY — where to play&lt;br/&gt;positioning · segmentation · differentiation&quot;] --&gt; GR[&quot;Focused guardrails:&lt;br/&gt;what we will and won&#x27;t do&quot;]
   GR --&gt; CE[&quot;EXECUTION — novel solutions inside the rails&lt;br/&gt;brainstorms · sprints · SCAMPER · analogy&quot;]
@@ -364,7 +379,7 @@ it offers, and <em>how</em> it wins.</p>
 <p>Tie it together with goals (OKRs), so quarterly execution follows the strategy rather than
 chasing shiny objects. Validate the strategy against reality — is the chosen segment
 responding? — and adjust as you learn.</p>
-<h2>Creative execution</h2>
+<h2 id="creative-execution">Creative execution</h2>
 <p>Even the best strategy falters without the day-to-day creativity to realize it.</p>
 <p><strong>Mindset.</strong> Creativity starts with <strong>psychological safety</strong> and a <strong>growth mindset</strong>.
 People must feel safe proposing wild ideas and asking "stupid" questions. Model it:
@@ -415,7 +430,7 @@ ideation early. Each lens seeds ideas no silo reaches alone.</p>
 </tbody>
 </table>
 <p>Not every idea will be good — the point is to generate range, then filter against strategy.</p>
-<h2>Actionable steps</h2>
+<h2 id="actionable-steps">Actionable steps</h2>
 <ul>
 <li><strong>Protect creative time</strong> — a recurring slot for experiments, treated like sprint planning.</li>
 <li><strong>Run a creativity workshop</strong> with a clear goal ("ideas to improve week-1 retention") and a
@@ -434,7 +449,7 @@ Focus was the creative act. The test for your own roadmap: can you name the last
 good idea you shelved because it didn't strengthen a pillar? If not, you have a
 backlog, not a strategy.</p>
 </blockquote>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>"Add AI" as strategy</strong> — a capability with no segment, positioning, or differentiation
   behind it.</li>
@@ -442,7 +457,7 @@ backlog, not a strategy.</p>
 <li><strong>No focus</strong> — a strategy that never says "no," so effort scatters.</li>
 <li><strong>Ideation theatre</strong> — brainstorms that generate stickies but never prototype or ship.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I state the product's positioning in the "for [who] who [need]…unlike…" form?</li>
 <li class="task todo">Are my segments defined by need/behaviour, not just demographics?</li>
@@ -451,7 +466,7 @@ backlog, not a strategy.</p>
 <li class="task todo">When stuck, do I reach for a technique (SCAMPER, analogy, constraints) instead of
       grinding the same angle?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="communication.html">Communication</a></li>
@@ -459,7 +474,26 @@ backlog, not a strategy.</p>
 <li><a href="../first-principles/the-method.html">First principles: the method</a> — deconstruction as the sharpest ideation technique</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="user-research.html"><span class="lbl">← Previous</span><span class="ttl">User research: the craft of finding out</span></a><a class="navcard next" href="communication.html"><span class="lbl">→ Next</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#strategic-thinking">Strategic thinking</a><a class="h2" href="#creative-execution">Creative execution</a><a class="h2" href="#actionable-steps">Actionable steps</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

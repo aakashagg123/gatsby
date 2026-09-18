@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink active" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink active" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Building the graph</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A knowledge graph is not installed. It is <strong>manufactured</strong> — continuously, from your
 messiest raw material. The factory has four stations. <strong>Ingest</strong> knowledge from
 sources: databases, documents, events, people. <strong>Extract</strong> entities and relationships
@@ -342,7 +357,7 @@ rollout, then eighteen months of entity-resolution whack-a-mole. The graph ships
 duplicate customers. The first executive demo shows Acme twice with different
 revenue, and trust — the only currency a knowledge product has — never recovers.</p>
 </blockquote>
-<h2>The pipeline</h2>
+<h2 id="the-pipeline">The pipeline</h2>
 <pre class="mermaid">flowchart LR
   subgraph SRC[&quot;1 · SOURCES&quot;]
     DB[&quot;Systems of record&lt;br/&gt;CRM, ERP, billing&quot;]
@@ -382,7 +397,7 @@ economics</strong>. Structured mapping is cheap and nearly perfect. Text extract
 per-document cost with real error rates. Entity resolution is quadratic-shaped work
 that blocking makes tractable. Curation is salaried humans. Knowing which station
 dominates <em>your</em> domain is the difference between a real estimate and a hopeful one.</p>
-<h2>Station by station</h2>
+<h2 id="station-by-station">Station by station</h2>
 <p><strong>Sources.</strong> Rank them by value density, not availability. A CRM export is easy and
 thin. The contract repository is painful and rich. The classic mistake is ingesting
 whatever has an API first — the graph fills with low-value facts while the killer
@@ -420,7 +435,7 @@ tooling makes stewards fast, and every decision becomes training data that shrin
 tomorrow's queue. The non-negotiable: stewards must sit in the <em>domain</em> (sales ops for
 customers, procurement for suppliers), not in a generic data team. Recognizing that two
 suppliers are the same company is domain knowledge, not data hygiene.</p>
-<h2>Cold start vs. steady state</h2>
+<h2 id="cold-start-vs-steady-state">Cold start vs. steady state</h2>
 <p>Plan them as different projects. The <strong>cold start</strong> is a bounded backfill: one domain,
 its sources, an intense resolution-and-curation push. It takes weeks to months, and is
 the right place for consultants or a services-heavy vendor. The <strong>steady state</strong> is a
@@ -428,7 +443,7 @@ product team's forever job: incremental ingestion, drift monitoring, ontology
 evolution, queue management. Teams that staff only for the cold start ship a graph that
 is accurate on launch day and misleading by the next quarter. A misleading graph is
 worse than none, because <a href="governance-quality-and-trust.html">people act on it</a>.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Pilot-to-production cliff</strong> — the pilot ran on 5,000 hand-cleaned records;
   production has 4 million dirty ones. Extraction accuracy and match rates do not
@@ -442,7 +457,7 @@ worse than none, because <a href="governance-quality-and-trust.html">people act 
 <li><strong>One-shot build</strong> — the backfill ships, the team disbands, and the graph becomes a
   snapshot of last year wearing this year's dashboard.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For the first domain: sources ranked by value density, with the free-text fraction
       and per-source extraction accuracy estimated from <em>real samples</em>?</li>
@@ -456,7 +471,7 @@ worse than none, because <a href="governance-quality-and-trust.html">people act 
 <li class="task todo">Does every extracted fact carry confidence + source, so downstream features can
       choose their own quality bar?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="ontologies-and-data-modeling.html">Ontologies &amp; data modeling</a> — the template the
   pipeline fills.</li>
@@ -466,7 +481,26 @@ worse than none, because <a href="governance-quality-and-trust.html">people act 
   tell you the factory is working.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="ontologies-and-data-modeling.html"><span class="lbl">← Previous</span><span class="ttl">Ontologies &amp; data modeling</span></a><a class="navcard next" href="storage-and-querying.html"><span class="lbl">→ Next</span><span class="ttl">Storage &amp; querying</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-pipeline">The pipeline</a><a class="h2" href="#station-by-station">Station by station</a><a class="h2" href="#cold-start-vs-steady-state">Cold start vs. steady state</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

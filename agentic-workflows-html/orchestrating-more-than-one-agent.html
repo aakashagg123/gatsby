@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic workflows</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="orchestrating-more-than-one-agent.html">1 · Orchestrating more than one agent</a><a class="modlink" href="making-a-workflow-durable-and-worth-owning.html">2 · Making a workflow durable, and worth owning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="orchestrating-more-than-one-agent.html">1 · Orchestrating more than one agent</a><a class="modlink" href="making-a-workflow-durable-and-worth-owning.html">2 · Making a workflow durable, and worth owning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>Orchestrating more than one agent</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Most tasks are better off as one well-built agent. But sometimes one loop genuinely isn't
 enough — the work is too big for one context window, has independent threads that could
 run in parallel, or needs specialists with different tools and permissions. When that's
@@ -338,7 +353,7 @@ and have we actually tried that first?"</em></p>
 debug than the single agent it replaced, built because the architecture diagram looked
 like progress.</p>
 </blockquote>
-<h2>The mental model: three shapes, one shared cost</h2>
+<h2 id="the-mental-model-three-shapes-one-shared-cost">The mental model: three shapes, one shared cost</h2>
 <pre class="mermaid">flowchart TB
   subgraph ORCH[&quot;Orchestrator - subagents&quot;]
     O[&quot;Orchestrator&quot;] --&gt; S1[&quot;Subagent A&quot;]
@@ -362,7 +377,7 @@ context, to one that specializes in it. All three are developed in full — incl
 protocol landscape (MCP for tools, A2A for agent-to-agent handoffs, and which of the rest
 of the acronym soup is real versus speculative) — in
 <a href="../agentic-ai/multi-agent-and-protocols.html">Multi-agent systems &amp; protocols</a>.</p>
-<h2>The discipline that keeps any shape from collapsing</h2>
+<h2 id="the-discipline-that-keeps-any-shape-from-collapsing">The discipline that keeps any shape from collapsing</h2>
 <p>Two things separate a multi-agent system that works from one that quietly produces
 fragments that don't compose. <strong>Handoffs need to be structured artifacts, not vibes</strong> — a
 brief in, a defined deliverable out, with an explicit format and constraints — because
@@ -370,7 +385,7 @@ most multi-agent failures turn out to be specification failures at exactly these
 <strong>Someone has to own the whole</strong> — an orchestrator or a human accountable for the
 integrated result — or a system can produce work where every individual piece was done
 well and the combination is nonsense.</p>
-<h2>A decision rule that survives contact with a vendor pitch</h2>
+<h2 id="a-decision-rule-that-survives-contact-with-a-vendor-pitch">A decision rule that survives contact with a vendor pitch</h2>
 <p>Start with one agent, and fix most "we need more agents" symptoms with better tools, a
 tighter prompt, and cleaner context first — that alone resolves more of these situations
 than adding a second agent would. Add a subagent only once a bottleneck has an actual
@@ -379,7 +394,7 @@ need for different tools or permissions (a deploy-capable agent that only the de
 ever touches is a security decision as much as an architecture one). Stop adding agents
 the moment coordination cost starts showing up — in the token bill, in added latency, or
 in debugging sessions that now span several transcripts instead of one.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Org-chart architecture</strong> — a multi-agent design that mirrors the team's own structure
   rather than the task's actual structure, importing the coordination overhead of a
@@ -391,7 +406,7 @@ in debugging sessions that now span several transcripts instead of one.</p>
 <li><strong>Protocol-driven roadmaps</strong> — betting a plan on a still-speculative "agent internet"
   standard instead of shipping on what's actually adopted today.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For every agent in this design, which named bottleneck — context, parallelism, or
       specialization — justifies its existence?</li>
@@ -401,7 +416,7 @@ in debugging sessions that now span several transcripts instead of one.</p>
 <li class="task todo">Has a single, better-built agent actually been tried before reaching for a second
       one?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="making-a-workflow-durable-and-worth-owning.html">Making a workflow durable, and worth owning</a>
   — what has to be true once this orchestration shape needs to run reliably over real
@@ -413,7 +428,26 @@ in debugging sessions that now span several transcripts instead of one.</p>
   multi-agent.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="making-a-workflow-durable-and-worth-owning.html"><span class="lbl">→ Next</span><span class="ttl">Making a workflow durable, and worth owning</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-shapes-one-shared-cost">The mental model: three shapes, one shared cost</a><a class="h2" href="#the-discipline-that-keeps-any-shape-from-collapsing">The discipline that keeps any shape from collapsing</a><a class="h2" href="#a-decision-rule-that-survives-contact-with-a-vendor-pitch">A decision rule that survives contact with a vendor pitch</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

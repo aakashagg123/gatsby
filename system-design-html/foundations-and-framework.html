@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>Foundations &amp; framework</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every system starts as one server. It grows by separating concerns: compute from storage, reads from writes, hot data from cold. <strong>Scaling</strong> is the art of adding capacity without redesigning. It uses load balancers, replication, caching, CDNs, message queues, and sharding. Before you design anything, <strong>back-of-envelope estimation</strong> forces you to confront the numbers: QPS, storage, bandwidth, cost. The <strong>four-step framework</strong> — scope, high-level design, deep dive, wrap-up — keeps you from getting lost in detail before you've agreed on what you're building.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,7 +337,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — You ship a system that works at demo scale and breaks at launch scale, or you over-provision by 10× because nobody ran the numbers.</p>
 </blockquote>
 <hr />
-<h2>Scaling: from one server to millions of users</h2>
+<h2 id="scaling-from-one-server-to-millions-of-users">Scaling: from one server to millions of users</h2>
 <p>The evolution follows a predictable path. Each step solves one bottleneck and introduces the next:</p>
 <style>
 .sd-fig{background:#ffffff;border:1px solid #d1d9e0;
@@ -417,16 +432,16 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
 </div>
 
-<h3>Single server to separated tiers</h3>
+<h3 id="single-server-to-separated-tiers">Single server to separated tiers</h3>
 <p>Everything starts on one machine: web server, database, cache, static files. The first split separates <strong>compute</strong> (web/application servers) from <strong>storage</strong> (database). They scale differently: compute is stateless and horizontally scalable, while storage needs replication and consistency guarantees.</p>
-<h3>Load balancing and replication</h3>
+<h3 id="load-balancing-and-replication">Load balancing and replication</h3>
 <p>A <strong>load balancer</strong> sits in front of web servers and distributes requests. Users hit the LB's public IP. Individual servers keep private IPs, hidden from clients. This enables horizontal scaling (add servers behind the LB) and eliminates single points of failure.</p>
 <p><strong>Database replication</strong> follows, typically master-slave: writes go to the master, reads fan out across replicas. If the master fails, a slave is promoted. If a slave fails, reads redirect to others. The tradeoff: replication lag means reads can be stale. That's acceptable for most features, but dangerous for financial transactions.</p>
-<h3>Caching, CDN, and statelessness</h3>
+<h3 id="caching-cdn-and-statelessness">Caching, CDN, and statelessness</h3>
 <p>A <strong>cache tier</strong> (Redis, Memcached) sits between the web tier and the database. Read-through caching: check cache first, fall back to DB, populate cache for next read. Critical decisions: expiration policy, eviction strategy (LRU is the default), and how to handle cache-DB inconsistency during writes.</p>
 <p>A <strong>CDN</strong> pushes static assets to edge servers near users. CDN cost is proportional to traffic, so cache expiration tuning matters — too short wastes origin bandwidth, too long serves stale content.</p>
 <p><strong>Statelessness</strong> means moving session data out of individual web servers into a shared store (Redis, or a dedicated session DB). This lets any request go to any server. That's what makes auto-scaling and multi-datacenter deployments possible.</p>
-<h3>Sharding: the final frontier</h3>
+<h3 id="sharding-the-final-frontier">Sharding: the final frontier</h3>
 <p>When the database itself becomes the bottleneck, you <strong>shard</strong> — partition data across multiple database instances. The key decision is the <strong>shard key</strong>: it must distribute data evenly and support your most common queries without cross-shard joins.</p>
 <p>Sharding introduces three hard problems:</p>
 <ul>
@@ -435,9 +450,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Join and denormalization</strong> — cross-shard joins are expensive or impossible. You denormalize, trading storage for query simplicity.</li>
 </ul>
 <hr />
-<h2>Back-of-envelope estimation</h2>
+<h2 id="back-of-envelope-estimation">Back-of-envelope estimation</h2>
 <p>Jeff Dean's philosophy: "back-of-the-envelope calculations are estimates you create using a combination of thought experiments and common performance numbers." The goal isn't precision — it's sanity-checking whether a design is feasible.</p>
-<h3>The numbers you need to know</h3>
+<h3 id="the-numbers-you-need-to-know">The numbers you need to know</h3>
 <table>
 <thead>
 <tr>
@@ -485,7 +500,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p><strong>Key insight:</strong> memory is fast, disk is slow, network is expensive. Compress data before sending it over the network. Avoid disk seeks whenever possible.</p>
-<h3>Availability in nines</h3>
+<h3 id="availability-in-nines">Availability in nines</h3>
 <table>
 <thead>
 <tr>
@@ -517,7 +532,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<h3>Worked example: Twitter-scale estimation</h3>
+<h3 id="worked-example-twitter-scale-estimation">Worked example: Twitter-scale estimation</h3>
 <ul>
 <li>300M monthly active users, 50% daily → 150M DAU</li>
 <li>Each user tweets 2/day on average → 300M tweets/day</li>
@@ -527,7 +542,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <p>The point isn't the exact number — it's knowing whether you need terabytes or petabytes, hundreds of QPS or hundreds of thousands.</p>
 <hr />
-<h2>The four-step system design framework</h2>
+<h2 id="the-four-step-system-design-framework">The four-step system design framework</h2>
 <p>A structured approach that prevents you from diving into implementation before agreeing on scope:</p>
 <style>
 .sd-fw{background:#ffffff;border:1px solid #d1d9e0;
@@ -611,16 +626,16 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
 </div>
 
-<h3>Step 1: Understand the problem and establish scope</h3>
+<h3 id="step-1-understand-the-problem-and-establish-scope">Step 1: Understand the problem and establish scope</h3>
 <p>Ask clarifying questions. Document assumptions. Determine the scale (users, QPS, storage, latency requirements). Identify the most important features. You can't design everything in 45 minutes, so scope decides what to detail and what to sketch.</p>
-<h3>Step 2: Propose high-level design and get buy-in</h3>
+<h3 id="step-2-propose-high-level-design-and-get-buy-in">Step 2: Propose high-level design and get buy-in</h3>
 <p>Draw the box diagram: clients, load balancers, web servers, caches, databases, message queues, CDNs. Walk through the main use cases against the diagram. Do a quick back-of-envelope check. Get agreement before going deeper.</p>
-<h3>Step 3: Design deep dive</h3>
+<h3 id="step-3-design-deep-dive">Step 3: Design deep dive</h3>
 <p>Prioritize the 2–3 most critical or interesting components. This is where you discuss algorithms, data models, API contracts, consistency models, and failure handling. Balance depth with breadth — a thorough treatment of one component is better than a shallow pass across everything.</p>
-<h3>Step 4: Wrap-up</h3>
+<h3 id="step-4-wrap-up">Step 4: Wrap-up</h3>
 <p>Summarize the design. Name the bottlenecks you didn't address. Propose what you'd improve next: error handling, scaling the next bottleneck, metrics and monitoring. This is where you show you understand the system's limits, not just its capabilities.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Premature optimization</strong> — sharding before you've exhausted replication; caching before you've indexed properly.</li>
 <li><strong>Estimation without units</strong> — "we need a lot of storage" is not an estimate. Label everything: QPS, GB/day, ms latency.</li>
@@ -628,7 +643,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Stateful web tier</strong> — session affinity (sticky sessions) prevents horizontal scaling and makes failover dangerous.</li>
 <li><strong>Single points of failure</strong> — any component without redundancy is a system-wide outage waiting to happen.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can you estimate the QPS, storage, and bandwidth for the system from first principles?</li>
 <li class="task todo">Have you identified the read/write ratio and designed the architecture accordingly?</li>
@@ -638,7 +653,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Do you know which tier will hit its scaling limit first?</li>
 <li class="task todo">Is the shard key chosen to distribute data evenly and support your primary queries?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="core-building-blocks.html">Core building blocks</a> — the primitives (consistent hashing, rate limiting) that the scaling path relies on</li>
 <li><a href="../technical-product-sense/latency-scale-performance.html">Latency, scale &amp; performance</a> — the product-sense view of the same scaling concerns</li>
@@ -646,7 +661,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="../ai/06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a> — how these patterns fail when LLMs are in the loop</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="core-building-blocks.html"><span class="lbl">→ Next</span><span class="ttl">Core building blocks</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#scaling-from-one-server-to-millions-of-users">Scaling: from one server to millions of users</a><a class="h3" href="#single-server-to-separated-tiers">Single server to separated tiers</a><a class="h3" href="#load-balancing-and-replication">Load balancing and replication</a><a class="h3" href="#caching-cdn-and-statelessness">Caching, CDN, and statelessness</a><a class="h3" href="#sharding-the-final-frontier">Sharding: the final frontier</a><a class="h2" href="#back-of-envelope-estimation">Back-of-envelope estimation</a><a class="h3" href="#the-numbers-you-need-to-know">The numbers you need to know</a><a class="h3" href="#availability-in-nines">Availability in nines</a><a class="h3" href="#worked-example-twitter-scale-estimation">Worked example: Twitter-scale estimation</a><a class="h2" href="#the-four-step-system-design-framework">The four-step system design framework</a><a class="h3" href="#step-1-understand-the-problem-and-establish-scope">Step 1: Understand the problem and establish scope</a><a class="h3" href="#step-2-propose-high-level-design-and-get-buy-in">Step 2: Propose high-level design and get buy-in</a><a class="h3" href="#step-3-design-deep-dive">Step 3: Design deep dive</a><a class="h3" href="#step-4-wrap-up">Step 4: Wrap-up</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ---- */
 html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink active" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink active" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Web-scale services</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Four systems that define "internet scale." A <strong>URL shortener</strong> maps 100 million new short links per day, using a distributed ID generator and Base62 encoding. It chooses between 301 redirects (faster, cached) and 302 redirects (trackable, measurable). A <strong>web crawler</strong> systematically downloads billions of pages, using BFS traversal, a URL frontier with politeness and priority queues, and deduplication at every layer. A <strong>notification system</strong> routes 16 million daily notifications across push (APNS/FCM), SMS (Twilio), and email (SendGrid). Each channel gets its own message queue, with templating, rate limiting, and retry logic. And a <strong>news feed system</strong> serves a personalized timeline by combining fanout-on-write for normal users with fanout-on-read for celebrities, backed by a five-layer cache architecture.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,14 +337,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — Short URLs that can't be tracked because you chose the wrong redirect code. A crawler that gets IP-banned from target sites within hours. Notifications that arrive minutes late because a celebrity mention flooded the queue. A news feed where new posts take 30 seconds to appear for users following popular accounts.</p>
 </blockquote>
 <hr />
-<h2>URL shortener</h2>
+<h2 id="url-shortener">URL shortener</h2>
 <p>The product: given a long URL, produce a short one (e.g., <code>tinyurl.com/abc123</code>). Given the short URL, redirect to the original. At 100 million new URLs per day with a 10:1 read-to-write ratio, that's 1 billion redirects per day — roughly 11,600 reads/second average, 23,000+ at peak.</p>
-<h3>The encoding decision</h3>
+<h3 id="the-encoding-decision">The encoding decision</h3>
 <p>Two approaches to generating the short code:</p>
 <p><strong>Hash + collision resolution</strong> — Hash the long URL (e.g., CRC32 or MD5), take the first 7 characters. If there's a collision (another URL already mapped to that code), append a predefined string and re-hash. Problem: checking for collisions requires a database query on every write, and the collision rate grows as the table fills.</p>
 <p><strong>Distributed ID generator + Base62</strong> — Generate a unique numeric ID (using the Snowflake approach from <a href="core-building-blocks.html">lesson 2</a>), then encode it in Base62 (a-z, A-Z, 0-9). A 7-character Base62 string supports 62^7 = 3.5 trillion unique URLs. No collision checking needed — the ID is guaranteed unique.</p>
 <p>The Base62 approach wins for high-throughput systems because it eliminates collision resolution and the database lookup on every write.</p>
-<h3>The redirect decision</h3>
+<h3 id="the-redirect-decision">The redirect decision</h3>
 <p>This seemingly minor HTTP choice has major product implications:</p>
 <table>
 <thead>
@@ -356,7 +371,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>If click tracking and analytics are part of your product (they usually are), use 302. If pure redirect speed matters and you have no analytics requirement, use 301.</p>
-<h3>System architecture</h3>
+<h3 id="system-architecture">System architecture</h3>
 <style>
 .sd-url{background:#ffffff;border:1px solid #d1d9e0;
   border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04);
@@ -484,14 +499,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 
 <p><strong>Write flow:</strong> Client submits a long URL. The system generates a unique ID via the distributed ID generator and converts it to Base62. It stores the <code>(shortCode, longURL)</code> mapping in the database and returns the short URL.</p>
 <p><strong>Read flow:</strong> Client visits a short URL. The system checks the cache (Redis) first. On a cache hit, it issues a 302 redirect immediately. On a cache miss, it queries the database, populates the cache, then redirects. Given the 10:1 read-to-write ratio, the cache hit rate should be high — popular short links will stay hot in cache.</p>
-<h3>Storage estimation</h3>
+<h3 id="storage-estimation">Storage estimation</h3>
 <p>At 100M new URLs/day for 10 years: 365 billion records. Each record is ~100 bytes (short code + long URL + metadata). Total: ~36 TB. This is within the range of a sharded relational database or a distributed KV store partitioned via consistent hashing.</p>
 <hr />
-<h2>Web crawler</h2>
+<h2 id="web-crawler">Web crawler</h2>
 <p>A web crawler systematically browses the web by downloading pages, extracting links, and following them. At scale (billions of pages), the challenge isn't downloading — it's doing so politely, efficiently, and without getting stuck in loops or traps.</p>
-<h3>Traversal strategy</h3>
+<h3 id="traversal-strategy">Traversal strategy</h3>
 <p><strong>BFS is preferred</strong> over DFS because DFS can get trapped in deep link chains on a single domain (forums, paginated archives, infinite calendars). BFS explores breadth-first, discovering more domains and more diverse content early.</p>
-<h3>URL frontier architecture</h3>
+<h3 id="url-frontier-architecture">URL frontier architecture</h3>
 <p>The URL frontier is the heart of the crawler — a sophisticated queue that manages which URLs to crawl next, balancing politeness, priority, and freshness.</p>
 <pre class="mermaid">flowchart TD
   Seeds[Seed URLs] --&gt; Frontier[URL Frontier]
@@ -509,7 +524,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   Filter --&gt; Seen{URL seen?}
   Seen --&gt;|No| Frontier
   Seen --&gt;|Yes| Discard[Discard]</pre>
-<h3>Priority</h3>
+<h3 id="priority">Priority</h3>
 <p>Not all URLs are equal. The frontier maintains <strong>priority queues</strong> that rank URLs by:</p>
 <ul>
 <li><strong>PageRank</strong> — pages linked to by many other pages are more important</li>
@@ -518,7 +533,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Depth</strong> — pages discovered earlier in the BFS tend to be more important</li>
 </ul>
 <p>A <strong>prioritizer</strong> assigns each URL a priority score and routes it to the appropriate queue. The front-end selector picks from higher-priority queues more frequently.</p>
-<h3>Politeness</h3>
+<h3 id="politeness">Politeness</h3>
 <p>Hammering a single domain will get you blocked. The politeness layer ensures:</p>
 <ul>
 <li><strong>Per-host queues</strong> — all URLs for the same host go into the same queue, processed sequentially</li>
@@ -526,7 +541,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>robots.txt compliance</strong> — the crawler checks and caches each site's robots.txt before crawling</li>
 </ul>
 <p>This means the crawler maintains hundreds of thousands of per-host queues. A queue-router maps each URL's hostname to its queue, and worker threads pull from different host queues in parallel.</p>
-<h3>Deduplication</h3>
+<h3 id="deduplication">Deduplication</h3>
 <p>Deduplication happens at two levels:</p>
 <ol>
 <li>
@@ -536,7 +551,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Content dedup</strong> — different URLs can serve identical content (mirrors, syndication, URL parameters). Compute a content hash (or simhash for near-duplicate detection) and skip pages whose content matches a previously crawled page.</p>
 </li>
 </ol>
-<h3>Robustness</h3>
+<h3 id="robustness">Robustness</h3>
 <p>Production crawlers handle dozens of edge cases:</p>
 <ul>
 <li><strong>Spider traps</strong> — URLs that generate infinite content (e.g., <code>/calendar/2025/01</code>, <code>/calendar/2025/02</code>, ...). Set a maximum URL depth or detect pattern repetition.</li>
@@ -546,9 +561,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Distributed coordination</strong> — multiple crawler instances must partition the URL space (by domain hash) to avoid duplicate work.</li>
 </ul>
 <hr />
-<h2>Notification system</h2>
+<h2 id="notification-system">Notification system</h2>
 <p>The product: deliver 10 million mobile push notifications, 1 million SMS messages, and 5 million emails per day — 16 million total, across three channels with different providers, latency expectations, and failure modes.</p>
-<h3>Provider landscape</h3>
+<h3 id="provider-landscape">Provider landscape</h3>
 <p>Each channel has its own delivery infrastructure:</p>
 <table>
 <thead>
@@ -586,7 +601,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<h3>Architecture: per-channel message queues</h3>
+<h3 id="architecture-per-channel-message-queues">Architecture: per-channel message queues</h3>
 <p>The critical design insight: <strong>each channel gets its own message queue and worker pool</strong>. This prevents a slow channel (SMS, which depends on carrier networks) from blocking a fast channel (push, which is near-instant).</p>
 <pre class="mermaid">flowchart TD
   Svc[Service / Trigger] --&gt; NS[Notification Service]
@@ -601,13 +616,13 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   PW --&gt; Track[Event Tracking]
   SW --&gt; Track
   EW --&gt; Track</pre>
-<h3>Notification templates</h3>
+<h3 id="notification-templates">Notification templates</h3>
 <p>At 16M notifications/day, you don't craft individual messages. Templates define the structure:</p>
 <pre><code>Hello {{user.first_name}}, your order {{order.id}} has shipped!
 Tracking: {{tracking.url}}
 </code></pre>
 <p>Templates are stored, versioned, and cached. The notification service merges the template with user-specific data at send time. This enables A/B testing (different templates for different cohorts), localization (language-specific templates), and rapid iteration without code deployments.</p>
-<h3>Rate limiting</h3>
+<h3 id="rate-limiting">Rate limiting</h3>
 <p>Without rate limiting, a bug or misconfigured campaign can blast millions of users with duplicate notifications — the fastest way to destroy app engagement. The notification system applies rate limits at multiple levels:</p>
 <ul>
 <li><strong>Per-user</strong> — no more than <em>n</em> notifications per channel per hour (e.g., max 3 push per hour)</li>
@@ -615,7 +630,7 @@ Tracking: {{tracking.url}}
 <li><strong>Per-channel</strong> — respect provider rate limits (APNS throttles per-device, SendGrid has hourly sending limits)</li>
 </ul>
 <p>The rate limiter uses the same algorithms from <a href="core-building-blocks.html">lesson 2</a> — typically sliding window counter backed by Redis.</p>
-<h3>Retry and failure handling</h3>
+<h3 id="retry-and-failure-handling">Retry and failure handling</h3>
 <p>Notifications fail: APNS returns an invalid token, Twilio gets a carrier error, SendGrid bounces an email. The system must:</p>
 <ol>
 <li><strong>Retry with exponential backoff</strong> — first retry after 1s, then 2s, 4s, 8s, up to a maximum (e.g., 1 hour)</li>
@@ -623,7 +638,7 @@ Tracking: {{tracking.url}}
 <li><strong>Token invalidation</strong> — if APNS returns "invalid token," remove the device token from the user's record to stop future failures</li>
 <li><strong>Bounce handling</strong> — hard email bounces (invalid address) should permanently suppress the address; soft bounces (mailbox full) can be retried</li>
 </ol>
-<h3>Event tracking</h3>
+<h3 id="event-tracking">Event tracking</h3>
 <p>The notification system tracks the full lifecycle:</p>
 <ul>
 <li><strong>Created</strong> — notification request received</li>
@@ -635,9 +650,9 @@ Tracking: {{tracking.url}}
 </ul>
 <p>This data feeds analytics dashboards and enables product decisions: which notification types drive engagement, which channels perform best for which user segments, when to send for maximum open rates.</p>
 <hr />
-<h2>News feed system</h2>
+<h2 id="news-feed-system">News feed system</h2>
 <p>The product: show each user a personalized timeline of posts from people they follow. Facebook's news feed, Twitter's timeline, Instagram's feed. The core challenge: when a user with 10 million followers posts, how do you make that post appear in all 10 million feeds quickly?</p>
-<h3>The fanout problem</h3>
+<h3 id="the-fanout-problem">The fanout problem</h3>
 <p>Two fundamental approaches:</p>
 <p><strong>Fanout on write (push model)</strong> — When a user publishes a post, immediately write it to every follower's feed cache. The feed is pre-computed. Reading is instant — just fetch the cache.</p>
 <ul>
@@ -665,7 +680,7 @@ Tracking: {{tracking.url}}
     Fetch --&gt; CP[Celebrity posts store]
     Fetch --&gt; Merge[Merge with cached feed]
   end</pre>
-<h3>Feed publishing flow</h3>
+<h3 id="feed-publishing-flow">Feed publishing flow</h3>
 <ol>
 <li>User creates a post via the API</li>
 <li>Post is stored in the <strong>post database</strong> and the <strong>post cache</strong></li>
@@ -673,7 +688,7 @@ Tracking: {{tracking.url}}
 <li>For each follower, the post ID is inserted into their <strong>feed cache</strong> (a sorted set in Redis, ordered by timestamp or ranking score)</li>
 <li>If the poster is a celebrity (follower count above threshold), skip fanout — the post stays only in the post store</li>
 </ol>
-<h3>Feed retrieval flow</h3>
+<h3 id="feed-retrieval-flow">Feed retrieval flow</h3>
 <ol>
 <li>User opens their feed</li>
 <li>The system reads the user's <strong>feed cache</strong> (pre-computed post IDs)</li>
@@ -682,7 +697,7 @@ Tracking: {{tracking.url}}
 <li>Rank (by time, engagement, ML model) and return the top <em>N</em> posts</li>
 <li>For each post ID, hydrate the full content from the <strong>post cache</strong> and <strong>user cache</strong> (author name, avatar)</li>
 </ol>
-<h3>The five-layer cache</h3>
+<h3 id="the-five-layer-cache">The five-layer cache</h3>
 <p>Feed performance depends entirely on cache architecture. Production news feed systems use five distinct cache layers:</p>
 <table>
 <thead>
@@ -721,10 +736,10 @@ Tracking: {{tracking.url}}
 </tbody>
 </table>
 <p>Each layer has its own cluster, eviction policy, and TTL. Mixing them in a single cache would cause hot data (counters) to evict warm data (social graph), degrading overall hit rates.</p>
-<h3>Social graph cache</h3>
+<h3 id="social-graph-cache">Social graph cache</h3>
 <p>The social graph (who follows whom) is read on every fanout and every feed fetch. It changes rarely (follows/unfollows are infrequent compared to posts and reads). Storing it in a dedicated cache with long TTLs and lazy invalidation keeps fanout latency low. The data structure is typically a hash map: <code>user_id → set of follower_ids</code>.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>URL shortener hash collision</strong> — If using hash+collision resolution, high write rates increase collision frequency, degrading write latency. Monitor collision rate; switch to ID-based encoding if it exceeds 1%.</li>
 <li><strong>URL shortener cache stampede</strong> — A popular short URL expires from cache, and thousands of concurrent redirects hit the database simultaneously. Use cache warming or probabilistic early expiration.</li>
@@ -735,7 +750,7 @@ Tracking: {{tracking.url}}
 <li><strong>News feed celebrity bottleneck</strong> — A celebrity with 50M followers posts during peak hours. Even with the hybrid approach, the fan-on-read merge at read time can spike latency. Pre-compute celebrity feeds on a schedule rather than on-demand.</li>
 <li><strong>News feed stale cache</strong> — A user unfollows someone, but the social graph cache hasn't been invalidated. The unfollowed user's posts continue appearing in the feed until the cache expires.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does your URL shortener use 301 or 302 redirects, and does the product team understand the analytics implications?</li>
 <li class="task todo">Is the short-code generation collision-free (ID-based), or does it require collision resolution?</li>
@@ -748,7 +763,7 @@ Tracking: {{tracking.url}}
 <li class="task todo">Can you name all five cache layers and their eviction strategies?</li>
 <li class="task todo">What's the P99 latency for feed retrieval, and is it within your product SLA?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="core-building-blocks.html">Core building blocks</a> — the rate limiter, consistent hashing, and ID generator that these services are built on</li>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — the estimation and scaling techniques used to size these systems</li>
@@ -756,7 +771,26 @@ Tracking: {{tracking.url}}
 <li><a href="data-infrastructure.html">Data infrastructure</a> — distributed message queues that underpin the notification and feed architectures</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="core-building-blocks.html"><span class="lbl">← Previous</span><span class="ttl">Core building blocks</span></a><a class="navcard next" href="real-time-systems.html"><span class="lbl">→ Next</span><span class="ttl">Real-time systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#url-shortener">URL shortener</a><a class="h3" href="#the-encoding-decision">The encoding decision</a><a class="h3" href="#the-redirect-decision">The redirect decision</a><a class="h3" href="#system-architecture">System architecture</a><a class="h3" href="#storage-estimation">Storage estimation</a><a class="h2" href="#web-crawler">Web crawler</a><a class="h3" href="#traversal-strategy">Traversal strategy</a><a class="h3" href="#url-frontier-architecture">URL frontier architecture</a><a class="h3" href="#priority">Priority</a><a class="h3" href="#politeness">Politeness</a><a class="h3" href="#deduplication">Deduplication</a><a class="h3" href="#robustness">Robustness</a><a class="h2" href="#notification-system">Notification system</a><a class="h3" href="#provider-landscape">Provider landscape</a><a class="h3" href="#architecture-per-channel-message-queues">Architecture: per-channel message queues</a><a class="h3" href="#notification-templates">Notification templates</a><a class="h3" href="#rate-limiting">Rate limiting</a><a class="h3" href="#retry-and-failure-handling">Retry and failure handling</a><a class="h3" href="#event-tracking">Event tracking</a><a class="h2" href="#news-feed-system">News feed system</a><a class="h3" href="#the-fanout-problem">The fanout problem</a><a class="h3" href="#feed-publishing-flow">Feed publishing flow</a><a class="h3" href="#feed-retrieval-flow">Feed retrieval flow</a><a class="h3" href="#the-five-layer-cache">The five-layer cache</a><a class="h3" href="#social-graph-cache">Social graph cache</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

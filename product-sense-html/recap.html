@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>Product sense — recap &amp; real-world examples</h1>
   </div>
-  <h2>Real-world examples &amp; war stories</h2>
+  <h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>Slack's behavioural segmentation.</strong> Rather than "team communication for everyone," Slack
 targeted engineering teams already chatting in IRC — a segment defined by <em>behaviour</em>, not
 demographics. It won a beachhead that then expanded. 🎯 <em>Takeaway:</em> the sharp
@@ -345,7 +360,7 @@ they <em>are</em> the user shows up everywhere from EMRs to developer tools. �
 <a href="domain-expertise.html">domain expertise</a> is a turbocharger only if paired with the outsider
 question "why is it done this way at all?" — the same humility that keeps an AI PM validating
 instead of trusting the model's (or their own) confidence.</p>
-<h2>Field notes from working PMs</h2>
+<h2 id="field-notes-from-working-pms">Field notes from working PMs</h2>
 <p>Three durable heuristics from PM-interview collections (Carl Shan's <em>Product Manager
 Handbook</em> interviews with PMs at Google, Twitter, Facebook, Yammer):</p>
 <p><strong>"What is the user's goal — and how hard does this product make it?"</strong> (Jason Shah,
@@ -362,7 +377,7 @@ dissect what makes something good and what makes something not good — is how
 pattern-matching intuition is trained. 🎯 <em>Takeaway:</em> pairs with the
 <a href="cognitive-empathy.html">talk-to-your-users</a> mechanism: exposure supplies the patterns,
 deliberate dissection compresses them into taste.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>
@@ -415,7 +430,7 @@ achieve — and if I'm reaching for a model, does it genuinely serve that job be
 simpler, more predictable solution?"</em></p>
 </blockquote>
 <hr />
-<h2>Test yourself</h2>
+<h2 id="test-yourself">Test yourself</h2>
 <p>Five questions; answers fold out. If one stumps you, the link takes you back.</p>
 <ol>
 <li>
@@ -446,7 +461,26 @@ simpler, more predictable solution?"</em></p>
 </li>
 </ol>
   <div class="pagenav"><a class="navcard prev" href="product-sense-for-ai.html"><span class="lbl">← Previous</span><span class="ttl">Product sense for AI products</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#field-notes-from-working-pms">Field notes from working PMs</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ---- */
 html[data-rf="charter"]{--rs-font:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif}

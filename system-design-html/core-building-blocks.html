@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink active" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink active" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Core building blocks</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every large-scale system assembles from a small set of reusable primitives. <strong>Rate limiters</strong> protect services from being overwhelmed by users, by bugs, or by attacks. They use algorithms that trade precision for memory and latency. <strong>Consistent hashing</strong> distributes data across a changing set of servers without triggering full re-mappings. Virtual nodes smooth out the inevitable hot spots. <strong>Distributed key-value stores</strong> force you to choose between consistency and availability (the CAP theorem). They then give you dials — quorum parameters, vector clocks, gossip protocols — to fine-tune that choice. <strong>Unique ID generators</strong> seem trivial until you need 10,000 IDs per second across five datacenters with no coordination. Twitter's Snowflake shows how a 64-bit integer can encode time, location, and sequence without a single network call.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,9 +337,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — Rate limits that either block legitimate traffic or fail to stop abuse. Storage rebalancing that takes the system offline. Stale reads that corrupt business logic because nobody checked the quorum configuration.</p>
 </blockquote>
 <hr />
-<h2>Rate limiter</h2>
+<h2 id="rate-limiter">Rate limiter</h2>
 <p>A rate limiter controls the rate of traffic a client can send to a system. It sits in the request path — usually as middleware or at the API gateway — and rejects requests that exceed a defined threshold. Without it, a single misbehaving client (or a DDoS attack, or a retry storm from a buggy mobile app) can saturate a service and take down everything behind it.</p>
-<h3>Where to place it</h3>
+<h3 id="where-to-place-it">Where to place it</h3>
 <p>Three options, each with tradeoffs:</p>
 <table>
 <thead>
@@ -353,7 +368,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>In practice, most production systems use middleware or a dedicated API gateway (AWS API Gateway, Kong, Envoy) that applies rate limiting before traffic reaches application servers. If you already have an API gateway, put rate limiting there rather than building a second layer.</p>
-<h3>Algorithms</h3>
+<h3 id="algorithms">Algorithms</h3>
 <p>Five algorithms dominate production use. Each trades off memory, precision, and burst tolerance:</p>
 <style>
 .sd-bb{background:#ffffff;border:1px solid #d1d9e0;
@@ -567,7 +582,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Fixed window counter</strong> — Divide time into windows (e.g., 60-second intervals). Maintain a counter per window. Increment on each request. Reject when the counter exceeds the threshold. Simple, low memory (one counter per window). Problem: a burst at the boundary between two windows can allow 2x the intended rate. 100 requests in the last 500ms of window 1, plus 100 requests in the first 500ms of window 2, gives 200 requests in a one-second span — despite a 100/minute limit.</p>
 <p><strong>Sliding window log</strong> — Keep a sorted set of timestamps for each request. When a new request arrives, remove all timestamps older than the window. If the remaining count exceeds the threshold, reject. Precise, but memory-intensive — every request is logged.</p>
 <p><strong>Sliding window counter</strong> — A hybrid: take the weighted count from the previous window and add the current window's count. If the previous window had 70 requests, and the current window is 30% elapsed, the weighted count is <code>70 * 0.70 + current_count</code>. Only two counters per window, near-zero memory, and the boundary spike problem is smoothed. This is the most common choice in production.</p>
-<h3>Distributed rate limiting with Redis</h3>
+<h3 id="distributed-rate-limiting-with-redis">Distributed rate limiting with Redis</h3>
 <p>In a distributed system, rate limit counters must be shared across all application instances. Redis is the standard choice: its <code>INCR</code> and <code>EXPIRE</code> commands are atomic, fast, and cluster-friendly.</p>
 <pre class="mermaid">flowchart TD
   C1[Client request] --&gt; GW[API Gateway / Middleware]
@@ -581,7 +596,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Read-then-write race</strong> — Two processes read the same counter, both see it below the limit, both increment. Fix: use Redis's atomic <code>INCR</code> or a Lua script that reads, checks, and increments in a single operation.</li>
 <li><strong>Synchronization across rate-limiter instances</strong> — If you run multiple rate-limiter nodes, each with its own Redis connection, they may disagree on the current count during network partitions. Fix: use a single Redis cluster as the source of truth, or accept slight over-admission during brief partitions.</li>
 </ol>
-<h3>Response headers</h3>
+<h3 id="response-headers">Response headers</h3>
 <p>Clients need to know their rate-limit status. Standard headers returned with every response:</p>
 <ul>
 <li><code>X-Ratelimit-Remaining</code> — allowed requests left in the current window</li>
@@ -590,10 +605,10 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <p>These headers are essential for well-behaved clients to implement backoff. Without them, clients either retry blindly (making the overload worse) or give up entirely (degrading user experience unnecessarily).</p>
 <hr />
-<h2>Consistent hashing</h2>
+<h2 id="consistent-hashing">Consistent hashing</h2>
 <p>When you have <em>n</em> servers and need to decide which server stores a given key, the naive approach is <code>hash(key) % n</code>. This works until you add or remove a server. Then <em>n</em> changes, and almost every key maps to a different server. In a cache layer, that means a mass cache miss. In a database, it means a full data migration.</p>
 <p>Consistent hashing solves this: when a server is added or removed, only <code>k/n</code> keys need to move (where <em>k</em> is the total number of keys), rather than nearly all of them.</p>
-<h3>The hash ring</h3>
+<h3 id="the-hash-ring">The hash ring</h3>
 <p>Imagine the output space of a hash function (SHA-1 gives 0 to 2^160) bent into a circle — a ring. Both servers and keys are hashed onto this ring. To find which server owns a key, start at the key's position and walk clockwise until you hit a server.</p>
 <pre class="mermaid">flowchart TD
   subgraph &quot;Hash Ring&quot;
@@ -607,12 +622,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   end</pre>
 <p><strong>Adding a server:</strong> Only keys between the new server and its counter-clockwise neighbor need to move. Everything else stays put.</p>
 <p><strong>Removing a server:</strong> Only that server's keys move — they walk clockwise to the next server. The rest of the ring is undisturbed.</p>
-<h3>The problem with basic consistent hashing</h3>
+<h3 id="the-problem-with-basic-consistent-hashing">The problem with basic consistent hashing</h3>
 <p>With a small number of servers, the ring can be badly unbalanced. Three servers won't divide a ring into three equal arcs — their hash positions are effectively random. One server might own 60% of the key space while another owns 10%. Worse, when a server is removed, its entire load transfers to a single neighbor, potentially doubling that neighbor's traffic.</p>
-<h3>Virtual nodes</h3>
+<h3 id="virtual-nodes">Virtual nodes</h3>
 <p>The fix: map each physical server to multiple positions on the ring. Server A gets <code>hash("A-0")</code>, <code>hash("A-1")</code>, ... <code>hash("A-199")</code>. With 200 virtual nodes per physical server, the distribution becomes nearly uniform. Removing a server spreads its load across many neighbors rather than one.</p>
 <p>The tradeoff is space: you need to store the mapping from virtual node to physical server. With 200 virtual nodes per server and 1,000 servers, that's 200,000 ring entries — trivially small.</p>
-<h3>Where it's used</h3>
+<h3 id="where-its-used">Where it's used</h3>
 <p>Consistent hashing is everywhere in distributed infrastructure:</p>
 <ul>
 <li><strong>Amazon DynamoDB</strong> — partitions data across storage nodes</li>
@@ -622,9 +637,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Maglev (Google)</strong> — load balancing with consistent hashing for connection affinity</li>
 </ul>
 <hr />
-<h2>Distributed key-value store</h2>
+<h2 id="distributed-key-value-store">Distributed key-value store</h2>
 <p>A key-value store maps keys to values — <code>put(key, value)</code> and <code>get(key)</code>. At small scale, this is a hash map in memory. At large scale, it's a distributed system that must handle node failures, network partitions, and concurrent writes. That forces you into the most fundamental tradeoff in distributed computing.</p>
-<h3>CAP theorem</h3>
+<h3 id="cap-theorem">CAP theorem</h3>
 <p>The CAP theorem (Brewer, 2000) states that a distributed system can deliver at most two of three guarantees simultaneously:</p>
 <ul>
 <li><strong>Consistency</strong> — every read returns the most recent write</li>
@@ -657,11 +672,11 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>This isn't a one-time architectural decision — many systems let you choose per-operation or per-table.</p>
-<h3>Data partitioning</h3>
+<h3 id="data-partitioning">Data partitioning</h3>
 <p>Data is distributed across nodes using consistent hashing with virtual nodes (see above). Each key hashes to a position on the ring and is stored on the first <em>N</em> nodes encountered clockwise.</p>
-<h3>Data replication</h3>
+<h3 id="data-replication">Data replication</h3>
 <p>For durability, each key is replicated across <em>N</em> nodes. After hashing a key to its position on the ring, the system walks clockwise and places replicas on the next <em>N-1</em> distinct physical servers (skipping virtual nodes that map to the same physical machine).</p>
-<h3>Consistency: quorum consensus</h3>
+<h3 id="consistency-quorum-consensus">Consistency: quorum consensus</h3>
 <p>Three parameters control the consistency-availability tradeoff:</p>
 <ul>
 <li><strong>N</strong> — number of replicas</li>
@@ -700,7 +715,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<h3>Conflict resolution with vector clocks</h3>
+<h3 id="conflict-resolution-with-vector-clocks">Conflict resolution with vector clocks</h3>
 <p>When two replicas accept concurrent writes to the same key, you have a conflict. <strong>Vector clocks</strong> track causality: each replica maintains a vector of <code>[server, version]</code> pairs. When vectors are ordered (one is a strict superset), the superset wins. When they're concurrent (neither is a superset), the system presents both versions to the application for resolution.</p>
 <pre class="mermaid">flowchart TD
   D0[&quot;D([S1,1]) — initial write&quot;] --&gt; D1[&quot;D([S1,1],[S2,1]) — S2 modifies&quot;]
@@ -709,14 +724,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   D2 --&gt; D3
   D3 --&gt; D4[&quot;Application resolves (e.g., last-writer-wins or merge)&quot;]</pre>
 <p>Vector clocks grow in size as more servers handle writes. In practice, a clock-truncation threshold removes the oldest entries when the vector exceeds a limit — a rare source of reconciliation errors, but unavoidable for bounded memory.</p>
-<h3>Failure detection: gossip protocol</h3>
+<h3 id="failure-detection-gossip-protocol">Failure detection: gossip protocol</h3>
 <p>How does the system know when a node is down? Heartbeats to a central monitor create a single point of failure. Instead, distributed KV stores use the <strong>gossip protocol</strong>:</p>
 <p>Each node maintains a membership list with heartbeat counters. Periodically, each node increments its own counter and sends its list to a random subset of peers. If a node's counter hasn't increased for a configurable period, it's considered offline. The protocol converges quickly — information spreads exponentially, like gossip in a social network.</p>
-<h3>Handling temporary failures</h3>
+<h3 id="handling-temporary-failures">Handling temporary failures</h3>
 <p><strong>Sloppy quorum</strong> — when a node in the designated replica set is unreachable, the system temporarily routes writes to the next healthy node on the hash ring. This node holds the data in a <strong>hinted handoff</strong> — when the original node recovers, the temporary holder ships the data back and deletes its copy.</p>
-<h3>Permanent failure recovery: Merkle trees</h3>
+<h3 id="permanent-failure-recovery-merkle-trees">Permanent failure recovery: Merkle trees</h3>
 <p>When a replica comes back after a prolonged outage, how do you know which keys are out of date? Comparing every key is expensive. <strong>Merkle trees</strong> (hash trees) solve this: each node maintains a tree where leaves are hashes of key ranges and parent nodes are hashes of children. Two replicas compare their root hashes. If they match, the data is identical. If not, they recurse down the tree, comparing children until they find the divergent key ranges. This reduces the data transferred during synchronization from <em>O(n)</em> to <em>O(log n)</em>.</p>
-<h3>Write and read paths</h3>
+<h3 id="write-and-read-paths">Write and read paths</h3>
 <p>The internal storage engine follows the <strong>LSM-tree</strong> (Log-Structured Merge-Tree) pattern:</p>
 <p><strong>Write path:</strong></p>
 <ol>
@@ -745,7 +760,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   end</pre>
 <p>This design optimizes for write throughput: writes are always sequential (append to log, then sequential flush). Reads may require checking multiple SSTables, but Bloom filters and compaction (periodically merging SSTables) keep read amplification manageable.</p>
 <hr />
-<h2>Unique ID generator</h2>
+<h2 id="unique-id-generator">Unique ID generator</h2>
 <p>Generating unique IDs seems trivial — <code>auto_increment</code> in a single database does the job. But at scale, you need IDs that are:</p>
 <ul>
 <li><strong>Globally unique</strong> across all servers, datacenters, and time</li>
@@ -754,19 +769,19 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Generated at high throughput</strong> (10,000+ IDs/second) without coordination</li>
 </ul>
 <p>No single approach satisfies all requirements. Here are the options and their tradeoffs:</p>
-<h3>Multi-master replication</h3>
+<h3 id="multi-master-replication">Multi-master replication</h3>
 <p>Use the database's <code>auto_increment</code>, but with a step size equal to the number of servers. With 3 servers: server 1 generates 1, 4, 7, 10...; server 2 generates 2, 5, 8, 11...; server 3 generates 3, 6, 9, 12...</p>
 <p><strong>Pros:</strong> Simple, uses existing infrastructure.
 <strong>Cons:</strong> Does not scale with multiple datacenters. IDs don't sort by time across servers (server 1's ID 7 may be generated after server 2's ID 8). Adding or removing servers requires changing the step on all nodes — operationally dangerous.</p>
-<h3>UUID</h3>
+<h3 id="uuid">UUID</h3>
 <p>A 128-bit universally unique identifier. Generated independently on any server with near-zero collision probability (2^122 random bits in v4). No coordination needed.</p>
 <p><strong>Pros:</strong> Simple, no coordination, scales to any number of servers.
 <strong>Cons:</strong> 128 bits, not 64. Not sortable by time. Not numeric — bad for database index performance. The string representation (<code>550e8400-e29b-41d4-a716-446655440000</code>) is 36 characters, wasteful in URLs and logs.</p>
-<h3>Ticket server</h3>
+<h3 id="ticket-server">Ticket server</h3>
 <p>A centralized service (Flickr's approach) that hands out IDs from a single <code>auto_increment</code> counter. Simple, numeric, sequential.</p>
 <p><strong>Pros:</strong> Numeric, easy to implement, IDs are ordered.
 <strong>Cons:</strong> Single point of failure. If you run two ticket servers with even/odd allocation, you lose global ordering. Becomes a throughput bottleneck at high scale.</p>
-<h3>Twitter Snowflake (the winner for most use cases)</h3>
+<h3 id="twitter-snowflake-the-winner-for-most-use-cases">Twitter Snowflake (the winner for most use cases)</h3>
 <p>A 64-bit ID with a structured layout that encodes time, location, and sequence:</p>
 <pre class="mermaid">flowchart LR
   subgraph &quot;64-bit Snowflake ID&quot;
@@ -788,7 +803,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Why this wins:</strong> IDs are 64-bit (database-friendly), sortable by time (the timestamp is the most significant bits after the sign), globally unique (datacenter + machine + sequence), and generated with zero coordination (each machine generates independently). The custom epoch can be set to your system's launch date to maximize the 69-year range.</p>
 <p><strong>The clock dependency:</strong> Snowflake IDs assume clocks are roughly synchronized (NTP). If a machine's clock goes backward (NTP correction), it could generate duplicate IDs. Production implementations refuse to generate IDs when the clock moves backward, and alert operations.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Rate limiter bypassed by client IP rotation</strong> — IP-based rate limiting fails against distributed attacks. Combine with user-ID, API-key, and behavioral-pattern limiting.</li>
 <li><strong>Rate limiter as a bottleneck</strong> — If the rate limiter (or its Redis backend) fails, you must choose: fail open (allow all traffic, losing protection) or fail closed (reject all traffic, causing an outage). Neither is safe by default — this must be an explicit design decision.</li>
@@ -798,7 +813,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Snowflake clock skew</strong> — NTP corrections or leap seconds can cause a machine's clock to jump backward, producing duplicate or out-of-order IDs. Monitor clock drift; halt ID generation if the clock moves backward.</li>
 <li><strong>Quorum misconfiguration</strong> — Setting W=1, R=1 with N=3 gives you speed but no consistency guarantee. If the product requires read-your-writes consistency, this configuration will produce bugs that are almost impossible to reproduce.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is your rate limiter algorithm matched to your traffic pattern? (Bursty traffic needs token bucket; smooth output needs leaking bucket.)</li>
 <li class="task todo">Are rate-limit counters shared across all application instances via a central store (Redis)?</li>
@@ -810,7 +825,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Is your unique ID generator resilient to clock skew? What happens when NTP corrects the clock?</li>
 <li class="task todo">Can your ID generator sustain the peak throughput you estimated in <a href="foundations-and-framework.html">lesson 1</a>?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — the scaling path and estimation techniques these building blocks support</li>
 <li><a href="web-scale-services.html">Web-scale services</a> — URL shortener, web crawler, and news feed that use these primitives directly</li>
@@ -818,7 +833,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="transactional-and-financial.html">Transactional &amp; financial systems</a> — payment systems where quorum configuration is a business-critical decision</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="foundations-and-framework.html"><span class="lbl">← Previous</span><span class="ttl">Foundations &amp; framework</span></a><a class="navcard next" href="web-scale-services.html"><span class="lbl">→ Next</span><span class="ttl">Web-scale services</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#rate-limiter">Rate limiter</a><a class="h3" href="#where-to-place-it">Where to place it</a><a class="h3" href="#algorithms">Algorithms</a><a class="h3" href="#distributed-rate-limiting-with-redis">Distributed rate limiting with Redis</a><a class="h3" href="#response-headers">Response headers</a><a class="h2" href="#consistent-hashing">Consistent hashing</a><a class="h3" href="#the-hash-ring">The hash ring</a><a class="h3" href="#the-problem-with-basic-consistent-hashing">The problem with basic consistent hashing</a><a class="h3" href="#virtual-nodes">Virtual nodes</a><a class="h3" href="#where-its-used">Where it&#x27;s used</a><a class="h2" href="#distributed-key-value-store">Distributed key-value store</a><a class="h3" href="#cap-theorem">CAP theorem</a><a class="h3" href="#data-partitioning">Data partitioning</a><a class="h3" href="#data-replication">Data replication</a><a class="h3" href="#consistency-quorum-consensus">Consistency: quorum consensus</a><a class="h3" href="#conflict-resolution-with-vector-clocks">Conflict resolution with vector clocks</a><a class="h3" href="#failure-detection-gossip-protocol">Failure detection: gossip protocol</a><a class="h3" href="#handling-temporary-failures">Handling temporary failures</a><a class="h3" href="#permanent-failure-recovery-merkle-trees">Permanent failure recovery: Merkle trees</a><a class="h3" href="#write-and-read-paths">Write and read paths</a><a class="h2" href="#unique-id-generator">Unique ID generator</a><a class="h3" href="#multi-master-replication">Multi-master replication</a><a class="h3" href="#uuid">UUID</a><a class="h3" href="#ticket-server">Ticket server</a><a class="h3" href="#twitter-snowflake-the-winner-for-most-use-cases">Twitter Snowflake (the winner for most use cases)</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

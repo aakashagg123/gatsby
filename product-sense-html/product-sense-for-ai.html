@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Product sense</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="motivation-and-behaviour.html">1 · Motivation theory: friction, satisfaction, and nudges</a><a class="modlink" href="cognitive-empathy.html">2 · Cognitive empathy: anticipating unvoiced needs</a><a class="modlink" href="user-research.html">3 · User research: the craft of finding out</a><a class="modlink" href="creativity.html">4 · Creativity: from strategic thinking to creative execution</a><a class="modlink" href="communication.html">5 · Communication: artifacts, influence, and interviews</a><a class="modlink" href="domain-expertise.html">6 · Domain expertise: turning knowledge into intuition</a><a class="modlink active" href="product-sense-for-ai.html">7 · Product sense for AI products</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 07</span>
     <h1>Product sense for AI products</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Everything in this module still applies when your product is powered by a model. But the
 <em>material</em> changes, and product sense has to adapt. A model is <strong>probabilistic,
 non-stationary, and confidently wrong sometimes</strong>. That reshapes five instincts. Quality
@@ -334,7 +349,7 @@ feature — and if it does, how will the product stay trustworthy when the model
 <p><strong>Risk if ignored</strong> — Shipping the demo, not the product: a magical first impression that
 can't be trusted, measured, or afforded at scale.</p>
 </blockquote>
-<h2>Taste becomes evals</h2>
+<h2 id="taste-becomes-evals">Taste becomes evals</h2>
 <pre class="mermaid">flowchart LR
   subgraph OLD[&quot;Deterministic product&quot;]
     O1[&quot;Look at it —&lt;br/&gt;you can see &#x27;right&#x27;&quot;]
@@ -364,7 +379,7 @@ here</em>.</p>
 moved upstream into the model's outputs. (The engineering of this — golden sets,
 LLM-as-judge, regression gates — is the subject of the AI Engineering track's
 <a href="../ai/04-evals-observability.html#evals">evals lesson</a>.)</p>
-<h2>Trust under non-determinism</h2>
+<h2 id="trust-under-non-determinism">Trust under non-determinism</h2>
 <p>A confidently-wrong answer is worse than a visibly-broken feature, because the user can't
 tell. Product sense for AI is largely <strong>trust design</strong>:</p>
 <ul>
@@ -379,7 +394,7 @@ tell. Product sense for AI is largely <strong>trust design</strong>:</p>
 <p>The <a href="cognitive-empathy.html">cognitive-empathy</a> tools matter more here: simulate the user
 who trusts a wrong answer, and the one who's been burned once and now distrusts every
 answer.</p>
-<h2>Latency and cost are UX</h2>
+<h2 id="latency-and-cost-are-ux">Latency and cost are UX</h2>
 <p>For a deterministic feature, latency and cost are engineering concerns. For an AI feature
 they're <strong>product</strong> concerns, because they trade directly against quality:</p>
 <table>
@@ -419,7 +434,7 @@ mechanics of these trade-offs are the AI Engineering track's
 <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
 <a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
 that squanders the model's value.</p>
-<h2>The jagged frontier — scoping as product sense</h2>
+<h2 id="the-jagged-frontier-scoping-as-product-sense">The jagged frontier — scoping as product sense</h2>
 <p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
 a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
 the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
@@ -435,7 +450,7 @@ a diagnosis, a payment. The way in is not to wait for a perfect model. Instead, 
 jobs of modest complexity in low-tolerance domains and <em>wrap service checks around
 them</em>: verification steps, human gates, escalation paths. The frontier then shifts
 outward with the model, but the scoping discipline is what got you in the room.</p>
-<h2>AI-enabled vs. AI-native</h2>
+<h2 id="ai-enabled-vs-ai-native">AI-enabled vs. AI-native</h2>
 <p>A distinction sharpens scoping conversations: an <strong>AI-enabled</strong> product bolts a
 model onto an existing product — the photo editor that grows an "AI-enhance" button. An
 <strong>AI-native</strong> product is built around the model — the generative image platform where,
@@ -447,7 +462,7 @@ changes the question you start from. It's not <em>"how can AI enhance this featu
 <em>"if intelligence were the core material, how would we solve this problem from
 scratch?"</em> That reframing makes the eval, the failure UX, and the cost curve the
 product itself, not accessories to it.</p>
-<h2>The patterns users now expect</h2>
+<h2 id="the-patterns-users-now-expect">The patterns users now expect</h2>
 <p>Product sense includes knowing the reference points users bring, and 2025 reset them.
 Four patterns became the standard candles every AI product gets compared against:</p>
 <ul>
@@ -467,7 +482,7 @@ Four patterns became the standard candles every AI product gets compared against
 <p>None of these obligates you to build all four. But every user who's touched a 2025-era
 assistant now carries them as priors, and your product is scored against those priors
 whether you like it or not.</p>
-<h2>Feedback is a flywheel you design</h2>
+<h2 id="feedback-is-a-flywheel-you-design">Feedback is a flywheel you design</h2>
 <p>AI products get better with use — but only if you build the loop. Every correction,
 thumbs-down, and edit is signal. The <a href="motivation-and-behaviour.html">Hook model's investment phase</a>
 becomes literal: user effort improves the product's data, which improves outputs, which
@@ -480,14 +495,14 @@ share of the training signal) and filter bubbles. Design the <strong>balancing l
 alongside the flywheel: monitoring for skew, ethical checks on what the loop optimizes,
 and a metric of success that rewards long-term user value rather than whatever spins
 fastest.</p>
-<h2>Keep a human in the loop where it counts</h2>
+<h2 id="keep-a-human-in-the-loop-where-it-counts">Keep a human in the loop where it counts</h2>
 <p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
 merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
 financial transaction). The former can be fully automated. The latter needs a human
 checkpoint, clear provenance, and an audit trail. Matching the level of autonomy to the
 <strong>cost of being wrong</strong> in this domain is one of the sharpest expressions of AI product
 sense.</p>
-<h2>Actionable steps</h2>
+<h2 id="actionable-steps">Actionable steps</h2>
 <ul>
 <li><strong>Write the eval before the feature</strong> — define, in cases, what "good" means for this job.</li>
 <li><strong>Design the wrong-answer path</strong> — grounding, "I don't know," easy correction, undo.</li>
@@ -509,7 +524,7 @@ caught policy hallucination, and a failure whose cost was legal and reputational
 not technical. The fix — answer only from real policy documents, with citations —
 was a <em>product</em> decision available the whole time.</p>
 </blockquote>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Demo-driven development</strong> — a great first impression that can't be measured, trusted, or
   afforded at scale.</li>
@@ -521,7 +536,7 @@ was a <em>product</em> decision available the whole time.</p>
 <li><strong>Ignoring cost/latency until launch</strong> — a delightful feature that's unaffordable or too slow
   in production.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have I defined "good" as an eval, grounded in real product taste?</li>
 <li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
@@ -530,7 +545,7 @@ was a <em>product</em> decision available the whole time.</p>
 <li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
 <li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="motivation-and-behaviour.html">Motivation theory</a></li>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
@@ -540,7 +555,26 @@ was a <em>product</em> decision available the whole time.</p>
 <li><a href="../harness/phases/15-evals-and-testing-the-harness/README.html">Evals &amp; testing the harness</a> — where product taste for AI becomes an executable eval suite.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#taste-becomes-evals">Taste becomes evals</a><a class="h2" href="#trust-under-non-determinism">Trust under non-determinism</a><a class="h2" href="#latency-and-cost-are-ux">Latency and cost are UX</a><a class="h2" href="#the-jagged-frontier-scoping-as-product-sense">The jagged frontier — scoping as product sense</a><a class="h2" href="#ai-enabled-vs-ai-native">AI-enabled vs. AI-native</a><a class="h2" href="#the-patterns-users-now-expect">The patterns users now expect</a><a class="h2" href="#feedback-is-a-flywheel-you-design">Feedback is a flywheel you design</a><a class="h2" href="#keep-a-human-in-the-loop-where-it-counts">Keep a human in the loop where it counts</a><a class="h2" href="#actionable-steps">Actionable steps</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

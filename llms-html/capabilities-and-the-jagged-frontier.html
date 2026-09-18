@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>LLMs</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink active" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink active" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>Capabilities &amp; the jagged frontier</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A model's skill has no clean edge. It can write a subtle, well-argued essay and then
 miscount the words in it. It can pass a hard professional exam and fail a simple logic
 puzzle a child would get right. This uneven boundary is called the <strong>jagged frontier</strong>, and
@@ -337,7 +352,7 @@ real inputs, or are we assuming it can do it because it did something that felt 
 <p><strong>Risk if ignored</strong> — A team commits a launch date to a capability the model only appears
 to have, discovers the gap in testing or, worse, in production, and has no fallback plan.</p>
 </blockquote>
-<h2>The mental model: a mountain range, not a smooth hill</h2>
+<h2 id="the-mental-model-a-mountain-range-not-a-smooth-hill">The mental model: a mountain range, not a smooth hill</h2>
 <p>Picture model capability as a mountain range instead of a smooth, rising hill. A smooth
 hill would mean "harder tasks are uniformly harder for the model, easier tasks are
 uniformly easier" — which would make capability predictable from difficulty alone. A
@@ -356,7 +371,7 @@ coming.</p>
     LOW3[&quot;Valley: a task that looks&lt;br/&gt;familiar but has a&lt;br/&gt;subtle, unusual twist&quot;]
   end
   TEST[&quot;Real test on your task&quot;] --&gt;|&quot;the only reliable way&lt;br/&gt;to find your product&#x27;s&lt;br/&gt;actual frontier&quot;| FRONTIER</pre>
-<h2>Why the frontier is jagged, not smooth</h2>
+<h2 id="why-the-frontier-is-jagged-not-smooth">Why the frontier is jagged, not smooth</h2>
 <p>The mechanism traces straight back to how the model was trained. Its skill comes from
 patterns in enormous amounts of text, and those patterns are not evenly distributed across
 every possible task. Writing fluent prose is extremely well represented in training text,
@@ -366,14 +381,14 @@ too. A task's real-world difficulty for a human has no necessary relationship to
 represented it was in the model's training data — which is exactly why intuition about
 "this seems easy" or "this seems hard" fails as a guide to what the model will actually do
 well.</p>
-<h2>Why benchmarks don't settle it for you</h2>
+<h2 id="why-benchmarks-dont-settle-it-for-you">Why benchmarks don't settle it for you</h2>
 <p>Vendor benchmarks measure performance on a fixed, public set of tasks, and models are often
 specifically improved against exactly those tasks. A high benchmark score is real evidence
 of capability on tasks like the benchmark's — it is not evidence about your task, which
 almost certainly differs in its data, its edge cases, and its stakes. Two products built on
 the same model, doing tasks that sound similar from a distance, can land in very different
 places on the frontier. The only test that transfers is a test on your own task.</p>
-<h2>The product skill this creates: scoping</h2>
+<h2 id="the-product-skill-this-creates-scoping">The product skill this creates: scoping</h2>
 <p>Because the frontier can't be predicted from outside, the product leader's real skill is
 <strong>scoping</strong>: pointing the model at the jobs it demonstrably does well, and building
 deterministic checks, human review, or a different tool entirely around the jobs where it
@@ -381,7 +396,7 @@ doesn't. This is the same instinct that separates a durable AI feature from a fr
 <a href="../product-sense/product-sense-for-ai.html">covered from the product-strategy side in Product sense for AI</a>
 — and it starts with the same discipline every time: test the actual task before betting
 the roadmap on an assumption.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Trusting a benchmark as a promise</strong> — assuming a high published score means the model
   will handle your specific task well, without testing your task directly.</li>
@@ -393,7 +408,7 @@ the roadmap on an assumption.</p>
 <li><strong>One test, called done</strong> — testing a handful of easy examples, calling the capability
   confirmed, and missing the edge cases where the frontier actually dips.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we tested this exact task, with real examples from our own data, rather than
       relying on a benchmark or a general impression?</li>
@@ -404,7 +419,7 @@ the roadmap on an assumption.</p>
 <li class="task todo">Have we retested after a model update, instead of assuming the frontier hasn't
       shifted?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-is-an-llm.html">What an LLM actually is</a> — the training mechanism that produces
   the jagged frontier in the first place.</li>
@@ -414,7 +429,26 @@ the roadmap on an assumption.</p>
   repeatable, measured practice.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="the-context-window.html"><span class="lbl">← Previous</span><span class="ttl">The context window</span></a><a class="navcard next" href="prompting-and-in-context-learning.html"><span class="lbl">→ Next</span><span class="ttl">Prompting &amp; in-context learning</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-mountain-range-not-a-smooth-hill">The mental model: a mountain range, not a smooth hill</a><a class="h2" href="#why-the-frontier-is-jagged-not-smooth">Why the frontier is jagged, not smooth</a><a class="h2" href="#why-benchmarks-dont-settle-it-for-you">Why benchmarks don&#x27;t settle it for you</a><a class="h2" href="#the-product-skill-this-creates-scoping">The product skill this creates: scoping</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

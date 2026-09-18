@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>LLMs</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink active" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink active" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>The context window</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A model can only consider a fixed amount of text at once, measured in tokens. This is its
 <strong>context window</strong>. Everything the model needs for a given request — your instructions, the
 conversation so far, any documents you supply — has to fit inside that one window,
@@ -343,7 +358,7 @@ the bill?"</em></p>
 need "to be safe," and discovers months later that the feature is both expensive and less
 accurate than a leaner version would have been.</p>
 </blockquote>
-<h2>The mental model: a desk, not a filing cabinet</h2>
+<h2 id="the-mental-model-a-desk-not-a-filing-cabinet">The mental model: a desk, not a filing cabinet</h2>
 <p>A context window is a desk, not a filing cabinet. A filing cabinet can hold as much as you
 own; you just walk over and pull out what you need. A desk has a fixed surface. Whatever
 does not fit on the desk right now is not part of the current work, no matter how relevant
@@ -359,7 +374,7 @@ currently laid out.</p>
   end
   WINDOW --&gt; MODEL[&quot;The model predicts&lt;br/&gt;the next token, using&lt;br/&gt;only what&#x27;s on the desk&quot;]
   OUT[&quot;Anything outside&lt;br/&gt;the window&quot;] -.-&gt;|&quot;invisible to&lt;br/&gt;this request&quot;| MODEL</pre>
-<h2>Why the limit exists at all</h2>
+<h2 id="why-the-limit-exists-at-all">Why the limit exists at all</h2>
 <p>Inside a model, every token is compared against every other token in the window to decide
 what matters for predicting the next one. Double the number of tokens, and that comparison
 work grows faster than double — which is why context windows did not simply start at
@@ -368,7 +383,7 @@ The deep mechanics of that cost — attention, memory, and the tricks that make 
 windows practical — live in <a href="../ai/01-inference-internals.html">Inference internals</a>.
 The product-relevant fact is simpler: a bigger window is not free, and someone chose its
 size for real, physical reasons.</p>
-<h2>Bigger windows solved one problem and revealed another</h2>
+<h2 id="bigger-windows-solved-one-problem-and-revealed-another">Bigger windows solved one problem and revealed another</h2>
 <p>Early models held a few thousand tokens, barely a few pages. Modern windows can hold
 hundreds of thousands, enough for a whole codebase or a long report. That growth genuinely
 unlocked new products: reading a full document instead of a fragment, holding a long
@@ -378,7 +393,7 @@ it equally well. Information placed at the very start or the very end tends to g
 reliable attention than information buried in the middle of a long stuffed prompt. A window
 technically large enough to fit everything is not the same as a window that will use
 everything equally well.</p>
-<h2>The product consequence: window size is a budget, not a target</h2>
+<h2 id="the-product-consequence-window-size-is-a-budget-not-a-target">The product consequence: window size is a budget, not a target</h2>
 <p>Treat the window the way you'd treat any limited, costed resource: a budget to spend
 deliberately, not a target to fill because it's available. A lean, well-chosen set of
 instructions and the specific, relevant passages a task needs will often outperform a
@@ -386,7 +401,7 @@ window stuffed with everything that might be relevant, at lower cost and lower l
 This reframes a common instinct — "the model supports 200,000 tokens, so let's use them" —
 into the sharper, more useful question: "what does this specific request actually need to
 see, and does adding more help or quietly hurt?"</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Filling the window "to be safe"</strong> — pasting in every document that might be relevant,
   paying for tokens the model barely uses well, and sometimes getting a worse answer for
@@ -401,7 +416,7 @@ see, and does adding more help or quietly hurt?"</p>
   advertises a bigger window, without testing whether the feature actually needs it or
   performs better because of it.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do we know, in tokens, how much of the context window our busiest feature actually
       uses?</li>
@@ -412,7 +427,7 @@ see, and does adding more help or quietly hurt?"</p>
 <li class="task todo">When we picked a model partly for its window size, did we verify our feature actually
       benefits from that size?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-is-an-llm.html">What an LLM actually is</a> — why the window is measured in tokens,
   not words.</li>
@@ -422,7 +437,26 @@ see, and does adding more help or quietly hurt?"</p>
   managing a window across a long-running task.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-is-an-llm.html"><span class="lbl">← Previous</span><span class="ttl">What an LLM actually is</span></a><a class="navcard next" href="capabilities-and-the-jagged-frontier.html"><span class="lbl">→ Next</span><span class="ttl">Capabilities &amp; the jagged frontier</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-desk-not-a-filing-cabinet">The mental model: a desk, not a filing cabinet</a><a class="h2" href="#why-the-limit-exists-at-all">Why the limit exists at all</a><a class="h2" href="#bigger-windows-solved-one-problem-and-revealed-another">Bigger windows solved one problem and revealed another</a><a class="h2" href="#the-product-consequence-window-size-is-a-budget-not-a-target">The product consequence: window size is a budget, not a target</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

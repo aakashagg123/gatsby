@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>First principles</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink active" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-first-principles.html">1 · What first-principles thinking actually is</a><a class="modlink" href="the-method.html">2 · The method: deconstruct, challenge, reconstruct</a><a class="modlink active" href="mental-models-latticework.html">3 · A latticework of mental models</a><a class="modlink" href="becoming-a-polymath.html">4 · Becoming a polymath</a><a class="modlink" href="learning-how-to-learn.html">5 · Learning how to learn</a><a class="modlink" href="traps-and-limits.html">6 · Traps &amp; limits</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 03</span>
     <h1>A latticework of mental models</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A <strong>mental model</strong> is a compressed, reusable idea about how some part of the world works —
 <em>opportunity cost</em>, <em>feedback loops</em>, <em>natural selection</em>, <em>margin of safety</em>. The
 <strong>latticework</strong> idea, owed to Charlie Munger, says you want a few dozen big models drawn
@@ -333,7 +348,7 @@ problem, and what did it learn?"</em></p>
 <p><strong>Risk if ignored</strong> — You reinvent, badly, models that another field perfected a century
 ago. You misread situations your single toolkit has no name for.</p>
 </blockquote>
-<h2>Why one discipline isn't enough</h2>
+<h2 id="why-one-discipline-isnt-enough">Why one discipline isn't enough</h2>
 <pre class="mermaid">flowchart TB
   P[&quot;New problem:&lt;br/&gt;&#x27;our growth stalled&#x27;&quot;]
   P --&gt; M1[&quot;Feedback loops&lt;br/&gt;(biology / control theory)&quot;]
@@ -358,7 +373,7 @@ has characteristic blind spots. Economics underweights psychology. Psychology un
 incentives. Engineering underweights human behavior. A model from one field routinely
 catches the mistake another field's model would have made. The lattice isn't just more
 tools. It's a system of mutual checks.</p>
-<h2>A starter set worth carrying</h2>
+<h2 id="a-starter-set-worth-carrying">A starter set worth carrying</h2>
 <p>You don't need hundreds. Munger estimated <strong>80–90 big models</strong> carry most of the freight.
 A high-leverage starter set, by origin discipline:</p>
 <table>
@@ -443,20 +458,20 @@ A high-leverage starter set, by origin discipline:</p>
 </tbody>
 </table>
 <p>Two of these deserve a closer look because they recur constantly in real decisions.</p>
-<h3>Inversion</h3>
+<h3 id="inversion">Inversion</h3>
 <p>Most problems are easier solved backward. Instead of "how do I build a great team?" ask
 "how would I reliably build a <em>miserable</em> team?" The avoid-list writes itself. Inverting
 turns a vague aspiration into a concrete list of failure modes to design against. It's the
 same move as the <a href="the-method.html">5 Whys'</a> hunt for root causes, pointed at the future
 instead of the past.</p>
-<h3>Second-order effects</h3>
+<h3 id="second-order-effects">Second-order effects</h3>
 <p>First-order thinking stops at the immediate result. Second-order thinking asks <em>"and then
 what?"</em> You cut prices → sales rise (first order) → competitors cut deeper and the category
 commoditizes (second order). Almost every "obvious" decision that ages badly was a
 first-order decision in a second-order world. This is the conceptual cousin of the
 <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">tradeoff reasoning</a> in
 Module 06: every choice has consequences you have to chase past the first one.</p>
-<h2>How the lattice powers first principles</h2>
+<h2 id="how-the-lattice-powers-first-principles">How the lattice powers first principles</h2>
 <p>The two halves of this module fit together precisely:</p>
 <ul>
 <li><strong><a href="the-method.html">First-principles method</a></strong> is the <em>operation</em> — deconstruct,
@@ -471,7 +486,7 @@ break?), <em>bottlenecks</em> (is one stage capping throughput?), <em>incentives
 wrong behavior?), and <em>second-order effects</em> (did last quarter's win cause this quarter's
 stall?). Same problem, far richer decomposition — and that's exactly what the
 <a href="becoming-a-polymath.html">polymath posture</a> is built to supply.</p>
-<h2>Building your own lattice</h2>
+<h2 id="building-your-own-lattice">Building your own lattice</h2>
 <ul>
 <li><strong>Learn the <em>big</em> idea of each major field, not the field.</strong> You don't need to be an
   economist. You need opportunity cost, incentives, and supply/demand — the 20% of each
@@ -494,7 +509,7 @@ accounts. <em>Second-order</em> — last year's discount campaign had pulled in 
 accounts. Three models, three fixes, none of them a price change. One discipline saw one
 lever; the lattice saw the system.</p>
 </blockquote>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Man-with-a-hammer syndrome</strong> — Forcing every problem into your favorite model.
   Diagnostic: if you reach for the same model every time, you have one model, not a
@@ -506,7 +521,7 @@ lever; the lattice saw the system.</p>
 <li><strong>Single-discipline lattice</strong> — Fifty models all from one field share that field's blind
   spots. The error-correction benefit is gone.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I name the <em>origin discipline</em> of my favorite models — and is it more than one?</li>
 <li class="task todo">For the problem in front of me, did I check it against <em>several</em> models, not just the
@@ -516,7 +531,7 @@ lever; the lattice saw the system.</p>
       effect?</li>
 <li class="task todo">Have I seen this model in more than one field, or do I only half-know it?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-method.html">The method: deconstruct, challenge, reconstruct</a></li>
 <li><a href="becoming-a-polymath.html">Becoming a polymath</a></li>
@@ -526,7 +541,26 @@ lever; the lattice saw the system.</p>
 <li><a href="../knowledge-graphs/ontologies-and-data-modeling.html">Ontologies &amp; data modeling</a> — turning a fuzzy domain into crisp entities is model-building in practice.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="the-method.html"><span class="lbl">← Previous</span><span class="ttl">The method: deconstruct, challenge, reconstruct</span></a><a class="navcard next" href="becoming-a-polymath.html"><span class="lbl">→ Next</span><span class="ttl">Becoming a polymath</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#why-one-discipline-isnt-enough">Why one discipline isn&#x27;t enough</a><a class="h2" href="#a-starter-set-worth-carrying">A starter set worth carrying</a><a class="h3" href="#inversion">Inversion</a><a class="h3" href="#second-order-effects">Second-order effects</a><a class="h2" href="#how-the-lattice-powers-first-principles">How the lattice powers first principles</a><a class="h2" href="#building-your-own-lattice">Building your own lattice</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

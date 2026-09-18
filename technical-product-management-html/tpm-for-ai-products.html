@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink active" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink active" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 09</span>
     <h1>Technical product management for AI</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Everything in this module still applies to AI products. Every practice bends the
 same way, for the same root cause: <strong>behaviour is probabilistic and quality is
 discovered, not designed</strong>. So the operating loop reorganizes around evidence.
@@ -337,7 +352,7 @@ team have a same-day, evidence-based answer to 'should we upgrade?' — or a deb
 silently, and can never be safely improved — because nobody can tell whether any
 change makes it better or worse.</p>
 </blockquote>
-<h2>The operating loop</h2>
+<h2 id="the-operating-loop">The operating loop</h2>
 <pre class="mermaid">flowchart TB
   SPEC[&quot;Spec with graded examples&lt;br/&gt;quality bar, budgets, bounds&quot;] --&gt; EV[&quot;Eval suite&lt;br/&gt;the executable spec&quot;]
   EV --&gt; BUILD[&quot;Build &amp; iterate&lt;br/&gt;prompts, retrieval, models&quot;]
@@ -351,7 +366,7 @@ retrieval, or model change lands without a score. The <strong>release loop</stro
 production) is weekly-to-monthly: quality gates the ramp. The <strong>outer loop</strong> (production
 → spec) is quarterly: what users actually do reshapes what "good" means. Your leverage
 as PM is making sure all three arrows back into the eval suite actually exist.</p>
-<h2>Eval-driven development</h2>
+<h2 id="eval-driven-development">Eval-driven development</h2>
 <p>The eval suite is to an AI feature what the test suite is to code — except the PM
 co-owns it, because it encodes <em>product judgment</em>:</p>
 <ul>
@@ -378,7 +393,7 @@ co-owns it, because it encodes <em>product judgment</em>:</p>
 <p>Once the suite exists, hard conversations get easy. "Can we ship?" is a score. "Did the
 new model help?" is a diff. "Which of these two prompts is better?" takes an afternoon,
 not a meeting.</p>
-<h2>What each discipline gains</h2>
+<h2 id="what-each-discipline-gains">What each discipline gains</h2>
 <ul>
 <li><strong>Discovery</strong> (<a href="discovery-to-delivery.html">lesson 2</a>) — feasibility is a spike with
   scores, run <em>before</em> the bet enters delivery. Add two AI-specific viability checks:
@@ -405,7 +420,7 @@ not a meeting.</p>
   with quality gates → instant rollback (which for AI is usually just re-pinning the
   old model/prompt version — cheap, <em>if</em> you versioned them).</li>
 </ul>
-<h2>The data flywheel</h2>
+<h2 id="the-data-flywheel">The data flywheel</h2>
 <p>The compounding asset of an AI product isn't the model — everyone can rent the same
 model. It's the loop: <strong>usage → captured feedback → better evals (and sometimes
 fine-tuning data) → safer, faster iteration → better product → more usage</strong>. Two PM jobs
@@ -423,7 +438,7 @@ enterprise context that makes the next one easier to win), and a broader bundle 
 you cross-subsidize any component a point-solution competitor tries to commoditize.
 When you evaluate an adjacent workflow, the deciding question is directional: <em>if
 another player captured it, would they integrate into us, or we into them?</em></p>
-<h2>The long game: models age, debt compounds</h2>
+<h2 id="the-long-game-models-age-debt-compounds">The long game: models age, debt compounds</h2>
 <p>Three roadmap truths that only bite in the product's second year, so budget for them in
 its first:</p>
 <ul>
@@ -442,7 +457,7 @@ its first:</p>
   instrumentation every future feature rides on. When the roadmap fight comes, the
   flywheel's plumbing is usually the highest-leverage thing on the list.</li>
 </ul>
-<h2>Vibe coding: the prototype is the new spec</h2>
+<h2 id="vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</h2>
 <p>The 2025 shift with the biggest day-to-day impact on the PM craft: AI coding tools
 (Claude Code, Cursor-class editors) made working software cheap enough that PMs build
 it themselves — "vibe coding," Karpathy's February 2025 coinage that ended the year as
@@ -466,7 +481,7 @@ discussions, clustering and prioritizing bug reports, critiquing a UX flow, draf
 first pass of a PRD or stakeholder mail. It's the cheapest training available in where
 models shine and where they quietly fail — and that intuition is exactly what the
 eval bar and scoping decisions above run on.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Demo-driven development</strong> — the team iterates until the demo impresses, ships, and
   discovers real inputs are nothing like the demo script. The eval suite exists to make
@@ -480,7 +495,7 @@ eval bar and scoping decisions above run on.</p>
 <li><strong>Treating the model as the moat</strong> — betting differentiation on model choice while a
   competitor with an identical model out-loops you on data and iteration speed.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does every AI feature I own have an eval suite with a PM-set bar — and does every
       prompt/model change get scored against it before shipping?</li>
@@ -491,7 +506,7 @@ eval bar and scoping decisions above run on.</p>
 <li class="task todo">Can I sketch this lesson's loop for my product and point to the arrow that's
       currently broken?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
@@ -499,7 +514,26 @@ eval bar and scoping decisions above run on.</p>
 <li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="incidents-and-postmortems.html"><span class="lbl">← Previous</span><span class="ttl">Incidents &amp; postmortems</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-operating-loop">The operating loop</a><a class="h2" href="#eval-driven-development">Eval-driven development</a><a class="h2" href="#what-each-discipline-gains">What each discipline gains</a><a class="h2" href="#the-data-flywheel">The data flywheel</a><a class="h2" href="#the-long-game-models-age-debt-compounds">The long game: models age, debt compounds</a><a class="h2" href="#vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Technical product management</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="the-technical-pm-role.html">1 · The technical PM role</a><a class="modlink" href="discovery-to-delivery.html">2 · Discovery to delivery</a><a class="modlink" href="specs-prds-and-rfcs.html">3 · Specs, PRDs &amp; RFCs</a><a class="modlink" href="prioritization-and-roadmaps.html">4 · Prioritization &amp; roadmaps</a><a class="modlink" href="working-with-engineering.html">5 · Working with engineering</a><a class="modlink" href="metrics-and-experimentation.html">6 · Metrics &amp; experimentation</a><a class="modlink" href="launches-rollouts-and-migrations.html">7 · Launches, rollouts &amp; migrations</a><a class="modlink" href="incidents-and-postmortems.html">8 · Incidents &amp; postmortems</a><a class="modlink" href="tpm-for-ai-products.html">9 · Technical product management for AI</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>The technical PM role</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A technical product manager owns the same thing every PM owns: <strong>outcomes</strong>. But they earn
 those outcomes on products where the hard decisions are technical — platforms, APIs,
 infrastructure, data products, and AI features. The role sits at the intersection of
@@ -334,7 +349,7 @@ and mine to stay out of — and does my engineering counterpart agree with that 
 <p><strong>Risk if ignored</strong> — You drift into being a ticket-writer for engineering's ideas, or a
 backseat architect they route around. Both destroy the role's leverage.</p>
 </blockquote>
-<h2>What the role actually is</h2>
+<h2 id="what-the-role-actually-is">What the role actually is</h2>
 <p>Every strong PM works three questions at once. The <em>technical</em> PM's distinction is that on
 their product, the third question dominates the other two:</p>
 <pre class="mermaid">flowchart TB
@@ -358,7 +373,7 @@ their product, the third question dominates the other two:</p>
 <li><strong>You stay out of:</strong> code review, individual task assignment, and performance
   management. The fastest way to lose an engineering team is to do their jobs badly.</li>
 </ul>
-<h2>The PM ↔ TPM ↔ EM spectrum</h2>
+<h2 id="the-pm-tpm-em-spectrum">The PM ↔ TPM ↔ EM spectrum</h2>
 <p>Titles vary wildly across companies. The underlying spectrum doesn't:</p>
 <table>
 <thead>
@@ -401,7 +416,7 @@ program manager</em> — an execution and dependency-management role, not a prod
 role. Ask what the letters mean before you interview. Second, platform and API products
 invert the empathy problem: your "user" is another engineer, so <em>developer experience</em> —
 docs, error messages, versioning, time-to-first-call — becomes your UX surface.</p>
-<h2>Where the leverage comes from</h2>
+<h2 id="where-the-leverage-comes-from">Where the leverage comes from</h2>
 <p>You have no direct authority over the people who build the product. Your leverage is:</p>
 <ul>
 <li><strong>Context</strong> — you know things the team can't see from inside the sprint: what customers
@@ -417,7 +432,7 @@ docs, error messages, versioning, time-to-first-call — becomes your UX surface
 <p>A useful mental model: the PM is the team's <strong>API to the rest of the company</strong>. Requests
 come to you in business language. You translate them into a prioritized, unambiguous
 contract. The team's work flows back out through you as narrative the company understands.</p>
-<h2>The buck stops with you</h2>
+<h2 id="the-buck-stops-with-you">The buck stops with you</h2>
 <p>One responsibility doesn't delegate: you are the <strong>arbiter of completeness</strong>. You were
 hired to notice incomplete work — your own and everyone else's — because nobody
 downstream necessarily knows the right questions to ask. The tell is familiar: you hit
@@ -426,7 +441,7 @@ arrives ten minutes later. As a one-off, it's laziness. As a habit, it's how A�
 ship: you know in your heart it's an A−, nobody else calls it, and it launches as
 exactly that. Guard against it structurally. Before anything leaves your hands, ask
 what question the recipient will ask next, and answer it in the same artifact.</p>
-<h2>A week in the role</h2>
+<h2 id="a-week-in-the-role">A week in the role</h2>
 <p>Not a schedule — a portfolio. Strong technical PMs spend roughly:</p>
 <ul>
 <li><strong>~40% on now</strong> — unblocking the current build: answering spec questions, making scope
@@ -438,7 +453,7 @@ what question the recipient will ask next, and answer it in the same artifact.</
 </ul>
 <p>If "now" eats the whole week for more than a sprint or two, the next build starts without
 definition and the cycle worsens. Guarding the discovery time <em>is</em> the job.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The backseat architect</strong> — overruling technical designs you half-understand. Engineers
   stop bringing you real options and start managing you instead.</li>
@@ -449,7 +464,7 @@ definition and the cycle worsens. Guarding the discovery time <em>is</em> the jo
 <li><strong>The hero translator</strong> — hoarding context so all information flows through you. It feels
   like leverage. It's really a bottleneck and a bus-factor of one.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I state, in one sentence each, the outcome my product owes the business and the
       problem it solves for users?</li>
@@ -460,14 +475,33 @@ definition and the cycle worsens. Guarding the discovery time <em>is</em> the jo
 <li class="task todo">Am I spending real weekly time on <em>next</em> and <em>later</em>, or is <em>now</em> consuming me?</li>
 <li class="task todo">When did I last change my mind because an engineer showed me a better option?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="discovery-to-delivery.html">Discovery to delivery</a></li>
 <li><a href="working-with-engineering.html">Working with engineering</a></li>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="discovery-to-delivery.html"><span class="lbl">→ Next</span><span class="ttl">Discovery to delivery</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#what-the-role-actually-is">What the role actually is</a><a class="h2" href="#the-pm-tpm-em-spectrum">The PM ↔ TPM ↔ EM spectrum</a><a class="h2" href="#where-the-leverage-comes-from">Where the leverage comes from</a><a class="h2" href="#the-buck-stops-with-you">The buck stops with you</a><a class="h2" href="#a-week-in-the-role">A week in the role</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

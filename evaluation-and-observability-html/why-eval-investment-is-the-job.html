@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Evaluation &amp; observability</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="why-eval-investment-is-the-job.html">1 · Why eval investment is the job</a><a class="modlink" href="building-the-eval-stack-in-the-right-order.html">2 · Building the eval stack in the right order</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="why-eval-investment-is-the-job.html">1 · Why eval investment is the job</a><a class="modlink" href="building-the-eval-stack-in-the-right-order.html">2 · Building the eval stack in the right order</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>Why eval investment is the job</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Ordinary software has a spec you can check against: given this input, the function
 returns that output, exactly. An AI feature doesn't have that — its outputs vary, and
 "correct" is often a matter of degree, not an exact match. Evals exist to solve exactly
@@ -337,7 +352,7 @@ would we find out from a dashboard, or from a customer?"</em></p>
 silently regresses part of the feature, and the team learns about it from churn instead
 of from the system that was supposed to catch it.</p>
 </blockquote>
-<h2>The mental model: a spec for a system with no exact answer</h2>
+<h2 id="the-mental-model-a-spec-for-a-system-with-no-exact-answer">The mental model: a spec for a system with no exact answer</h2>
 <pre class="mermaid">flowchart LR
   INPUT[&quot;A realistic input&quot;] --&gt; OUTPUT[&quot;The system&#x27;s&lt;br/&gt;actual output&quot;]
   OUTPUT --&gt; GRADE{&quot;Graded against&lt;br/&gt;a rubric or&lt;br/&gt;known-good answer&quot;}
@@ -351,7 +366,7 @@ or worse" stops being a feeling and becomes a number a team can gate a release o
 full mechanics of building that — golden sets, regression tests, adversarial cases, and
 calibrated LLM-as-judge grading — are developed in complete depth in
 <a href="../ai/04-evals-observability.html#evals">Evals</a>.</p>
-<h2>What skipping this actually costs</h2>
+<h2 id="what-skipping-this-actually-costs">What skipping this actually costs</h2>
 <p>A team that ships without a real eval set isn't skipping overhead — it's giving up the
 ability to know, in any reliable way, whether its own changes are improvements. Every
 prompt edit, every model upgrade, every retrieval or infrastructure change becomes a bet
@@ -361,7 +376,7 @@ quality drift nobody can point to a cause for, or as a single sharp regression t
 demo-sized manual check would never have caught. By the time it's visible to users, it's
 already an incident — the eval set that would have caught it in a code review didn't
 exist yet.</p>
-<h2>The minimum viable version is smaller than most teams assume</h2>
+<h2 id="the-minimum-viable-version-is-smaller-than-most-teams-assume">The minimum viable version is smaller than most teams assume</h2>
 <p>The bar for starting is much lower than "build a metrics dashboard." A spreadsheet of
 real production traces, a pass/fail label on each one, and a note on why it failed
 already beats a scoring infrastructure nobody has validated against real behavior yet.
@@ -370,7 +385,7 @@ them automatically — most teams over-invest in scoring tooling and under-inves
 hours of looking at real transcripts that reveal what's actually worth measuring. That
 sequencing question — what to build first, and in what order to grow it — is the subject
 of the next lesson in this module.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>"We'll add evals once it's working"</strong> — treating measurement as a post-launch nicety,
   when the eval set is the only reliable way to know whether the feature is actually
@@ -382,7 +397,7 @@ of the next lesson in this module.</p>
 <li><strong>No regression gate</strong> — evals exist, but nothing stops a change from shipping when the
   score drops, which makes them a report instead of a safeguard.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is there an eval set a team can point to as "the spec" for this AI feature's
       quality, or is quality still a matter of individual judgment?</li>
@@ -392,7 +407,7 @@ of the next lesson in this module.</p>
       grading pipeline?</li>
 <li class="task todo">Do evals gate the release, or are they a report that gets checked after the fact?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="building-the-eval-stack-in-the-right-order.html">Building the eval stack in the right order</a>
   — the sequence for turning this investment into a real practice without over-building.</li>
@@ -402,7 +417,26 @@ of the next lesson in this module.</p>
   operating discipline this lesson's argument leads to at full maturity.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="building-the-eval-stack-in-the-right-order.html"><span class="lbl">→ Next</span><span class="ttl">Building the eval stack in the right order</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-spec-for-a-system-with-no-exact-answer">The mental model: a spec for a system with no exact answer</a><a class="h2" href="#what-skipping-this-actually-costs">What skipping this actually costs</a><a class="h2" href="#the-minimum-viable-version-is-smaller-than-most-teams-assume">The minimum viable version is smaller than most teams assume</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic AI</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink active" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-agent.html">1 · What is an agent?</a><a class="modlink active" href="tools-and-function-calling.html">2 · Tools &amp; function calling</a><a class="modlink" href="context-and-memory.html">3 · Context &amp; memory</a><a class="modlink" href="planning-and-reasoning.html">4 · Planning &amp; reasoning</a><a class="modlink" href="multi-agent-and-protocols.html">5 · Multi-agent systems &amp; protocols</a><a class="modlink" href="reliability-and-evals.html">6 · Reliability &amp; evals</a><a class="modlink" href="safety-security-and-governance.html">7 · Safety, security &amp; governance</a><a class="modlink" href="agentic-ai-as-a-product.html">8 · Agentic AI as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Tools &amp; function calling</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Tools are how a model stops being a text generator and starts being an actor. The
 mechanics are simple. You describe functions to the model: name, purpose, typed
 parameters. The model replies "call this one, with these arguments." <strong>Your code</strong>
@@ -337,7 +352,7 @@ do with it, and would we survive that on a bad day?"</em></p>
 (<a href="safety-security-and-governance.html">prompt injection</a>) or its own confusion. It then
 uses a legitimate tool to do something catastrophic — politely, and at machine speed.</p>
 </blockquote>
-<h2>The mechanics</h2>
+<h2 id="the-mechanics">The mechanics</h2>
 <pre class="mermaid">sequenceDiagram
     participant U as User
     participant H as Harness (your code)
@@ -386,7 +401,7 @@ universal power tool — a Python sandbox turns "things the model can describe" 
 "things the model can do"); file and document operations; business APIs (CRM, calendar,
 payments); and computer/browser use, where the model drives real UIs by looking at the
 screen. Computer use is powerful, slower, and the most fragile of the family.</p>
-<h2>Tool design is UX design (for a model)</h2>
+<h2 id="tool-design-is-ux-design-for-a-model">Tool design is UX design (for a model)</h2>
 <p>Models use tools well when the toolbox is designed for a <em>reader</em>, not a machine:</p>
 <ul>
 <li><strong>Few and distinct beats many and overlapping.</strong> Given 40 near-duplicate tools, models
@@ -405,7 +420,7 @@ screen. Computer use is powerful, slower, and the most fragile of the family.</p
   context per call bloats cost and drowns signal
   (<a href="context-and-memory.html">context &amp; memory</a>). Summarize, paginate, truncate.</li>
 </ul>
-<h2>Integration and containment</h2>
+<h2 id="integration-and-containment">Integration and containment</h2>
 <p><strong>MCP (Model Context Protocol)</strong> standardized the boring, valuable part. Instead of
 every app hand-wiring every integration, a tool provider ships one MCP server exposing
 tools with schemas, and any MCP-capable agent can use it. Think "USB for tools." It's
@@ -426,7 +441,7 @@ like dependencies, not like plugins.</p>
   <a href="safety-security-and-governance.html">human's approval</a>. Map every tool to a tier
   <em>before</em> launch.</li>
 </ul>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The kitchen-sink toolbox</strong> — 60 auto-generated API wrappers. The agent spends its
   intelligence navigating your plumbing and still picks wrong.</li>
@@ -439,7 +454,7 @@ like dependencies, not like plugins.</p>
 <li><strong>Unvetted MCP servers</strong> — installing community tool servers like browser extensions,
   and granting each one a seat inside your agent's trust boundary.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Can I list my agent's tools from memory, and for each: read or write? reversible?
       max blast radius?</li>
@@ -450,14 +465,33 @@ like dependencies, not like plugins.</p>
 <li class="task todo">Which tool calls require human approval, and did a product decision (not a
       default) draw that line?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-is-an-agent.html">What is an agent?</a></li>
 <li><a href="safety-security-and-governance.html">Safety, security &amp; governance</a></li>
 <li><a href="multi-agent-and-protocols.html">Multi-agent systems &amp; protocols</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-is-an-agent.html"><span class="lbl">← Previous</span><span class="ttl">What is an agent?</span></a><a class="navcard next" href="context-and-memory.html"><span class="lbl">→ Next</span><span class="ttl">Context &amp; memory</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mechanics">The mechanics</a><a class="h2" href="#tool-design-is-ux-design-for-a-model">Tool design is UX design (for a model)</a><a class="h2" href="#integration-and-containment">Integration and containment</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

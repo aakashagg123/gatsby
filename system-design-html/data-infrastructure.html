@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>System Design</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink active" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="core-building-blocks.html">2 · Core building blocks</a><a class="modlink" href="web-scale-services.html">3 · Web-scale services</a><a class="modlink" href="real-time-systems.html">4 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">5 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">6 · Location &amp; geo services</a><a class="modlink active" href="data-infrastructure.html">7 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">8 · Transactional &amp; financial systems</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 07</span>
     <h1>Data infrastructure</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Data infrastructure is the plumbing beneath every system in this track. <strong>Distributed message queues</strong> (Kafka) decouple producers from consumers, using append-only logs, partitioned topics, and consumer groups. This same pattern appears as a building block in metrics, ad aggregation, email, and a dozen other designs. <strong>Metrics monitoring</strong> combines pull-based collection (Prometheus) with time-series databases and down-sampling, to track 10M metrics without drowning in data. <strong>Ad click aggregation</strong> applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. <strong>Distributed email</strong> handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
@@ -322,8 +337,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Risk if ignored</strong> — You double-bill advertisers because the click pipeline has at-least-once semantics, or you miss a production outage because your metrics pipeline silently dropped data during a traffic spike.</p>
 </blockquote>
 <hr />
-<h2>Distributed message queue</h2>
-<h3>Scale and requirements</h3>
+<h2 id="distributed-message-queue">Distributed message queue</h2>
+<h3 id="scale-and-requirements">Scale and requirements</h3>
 <ul>
 <li>Kafka-like system handling millions of messages per second</li>
 <li>Messages are durable (persisted to disk, replicated)</li>
@@ -331,7 +346,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Consumer groups for parallel processing</li>
 <li>Retention: days to weeks, not ephemeral</li>
 </ul>
-<h3>Core concepts</h3>
+<h3 id="core-concepts">Core concepts</h3>
 <style>
 .sd-mq{background:#ffffff;border:1px solid #d1d9e0;
   border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04);
@@ -508,7 +523,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Topics</strong> — named streams of messages (e.g., "user-events", "order-updates"). Each topic is divided into <strong>partitions</strong>.</p>
 <p><strong>Partitions</strong> — the unit of parallelism. Each partition is an ordered, append-only log. Messages within a partition are assigned a monotonically increasing <strong>offset</strong>. Ordering is guaranteed within a partition but not across partitions.</p>
 <p><strong>Consumer groups</strong> — a set of consumers that cooperate to consume a topic. Each partition is assigned to exactly one consumer in the group. This guarantees that each message is processed once per group, enabling parallel consumption.</p>
-<h3>WAL: the append-only log</h3>
+<h3 id="wal-the-append-only-log">WAL: the append-only log</h3>
 <p>Each partition is backed by a <strong>write-ahead log</strong> on disk:</p>
 <pre class="mermaid">flowchart LR
   subgraph &quot;Partition 0 on disk&quot;
@@ -524,7 +539,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>The log is segmented into files (e.g., 1 GB each) for easier retention management.</li>
 <li>Disk throughput matters more than disk latency — Kafka is designed around sequential I/O, achieving hundreds of MB/s on commodity disks.</li>
 </ul>
-<h3>Pull model vs. push model</h3>
+<h3 id="pull-model-vs-push-model">Pull model vs. push model</h3>
 <p>Kafka uses a <strong>pull model</strong>: consumers request messages from brokers at their own pace.</p>
 <table>
 <thead>
@@ -558,7 +573,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>The pull model's killer feature is <strong>offset replay</strong>: a consumer can reset its offset to any point in the log and reprocess messages. This enables recovery from bugs, backfilling new features, and exactly-once semantics via idempotent reprocessing.</p>
-<h3>ISR replication</h3>
+<h3 id="isr-replication">ISR replication</h3>
 <p>Each partition has one <strong>leader</strong> and N-1 <strong>followers</strong>. The <strong>In-Sync Replica set (ISR)</strong> is the set of followers that have caught up to the leader within a configurable lag threshold:</p>
 <ul>
 <li><strong>ACK=all</strong> — the producer waits for all ISR replicas to confirm. Strongest durability, highest latency.</li>
@@ -566,7 +581,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>ACK=0</strong> — fire and forget. Fastest, least durable.</li>
 </ul>
 <p>If a follower falls too far behind, it's removed from the ISR. If the leader fails, a new leader is elected from the ISR.</p>
-<h3>Consumer rebalancing</h3>
+<h3 id="consumer-rebalancing">Consumer rebalancing</h3>
 <p>When consumers join or leave a group, partitions are <strong>rebalanced</strong> — reassigned across the remaining consumers. This is necessary but disruptive:</p>
 <ul>
 <li>During rebalancing, the affected partitions are paused (no messages processed).</li>
@@ -574,7 +589,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Cooperative rebalancing</strong> (incremental) only revokes the partitions that need to move — less disruption, more complexity.</li>
 <li>Frequent rebalancing (e.g., flapping consumers) degrades throughput. Configure health check intervals and session timeouts carefully.</li>
 </ul>
-<h3>Delivery semantics</h3>
+<h3 id="delivery-semantics">Delivery semantics</h3>
 <table>
 <thead>
 <tr>
@@ -608,8 +623,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Downstream systems must be idempotent — if the consumer crashes and retries, the side effect must be safe to repeat.</li>
 </ol>
 <hr />
-<h2>Metrics monitoring</h2>
-<h3>Scale and requirements</h3>
+<h2 id="metrics-monitoring">Metrics monitoring</h2>
+<h3 id="scale-and-requirements_1">Scale and requirements</h3>
 <ul>
 <li>10M active metrics (CPU, memory, request count, error rate, custom business metrics)</li>
 <li>100M data points per minute at peak</li>
@@ -617,7 +632,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Alert latency: detect anomalies within 1-2 minutes</li>
 <li>Data retention: full resolution for 7 days, down-sampled for years</li>
 </ul>
-<h3>Collection: pull vs. push</h3>
+<h3 id="collection-pull-vs-push">Collection: pull vs. push</h3>
 <pre class="mermaid">flowchart LR
   subgraph &quot;Pull model (Prometheus)&quot;
     PROM[Prometheus server] --&gt;|&quot;HTTP scrape&lt;br/&gt;every 15-60s&quot;| T1[Target /metrics]
@@ -666,7 +681,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>Most production systems use a <strong>hybrid</strong>: Prometheus pull for long-lived services, push gateways for batch jobs and lambdas.</p>
-<h3>Kafka as a buffer</h3>
+<h3 id="kafka-as-a-buffer">Kafka as a buffer</h3>
 <p>Between collectors and the time-series database, a <strong>Kafka buffer</strong> absorbs traffic spikes:</p>
 <pre class="mermaid">flowchart LR
   COLLECT[Metric collectors] --&gt; KAFKA[Kafka&lt;br/&gt;metrics topic]
@@ -674,7 +689,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   WRITE --&gt; TSDB[(Time-series DB&lt;br/&gt;e.g., InfluxDB, Thanos)]
   KAFKA --&gt; ALERT[Alert evaluator]</pre>
 <p>Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.</p>
-<h3>Time-series storage: down-sampling and encoding</h3>
+<h3 id="time-series-storage-down-sampling-and-encoding">Time-series storage: down-sampling and encoding</h3>
 <p>Raw metrics at 10-second intervals generate enormous data volumes. <strong>Down-sampling</strong> reduces older data:</p>
 <table>
 <thead>
@@ -713,7 +728,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Values often change slowly. Store the XOR of consecutive values (leading/trailing zeros compress well).</li>
 <li>Result: 16 bytes per data point compressed to ~1.37 bits on average (Facebook's Gorilla paper).</li>
 </ul>
-<h3>Alert system</h3>
+<h3 id="alert-system">Alert system</h3>
 <pre class="mermaid">flowchart LR
   RULES[&quot;Alert rules&lt;br/&gt;(YAML config)&quot;]
   EVAL[&quot;Rule evaluator&lt;br/&gt;(every 30-60s)&quot;]
@@ -732,15 +747,15 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <p>Fired alerts go through Kafka (decoupling evaluation from notification) and fan out to configured channels. <strong>Alert fatigue</strong> is the biggest operational risk — too many alerts train teams to ignore them.</p>
 <hr />
-<h2>Ad click aggregation</h2>
-<h3>Scale and requirements</h3>
+<h2 id="ad-click-aggregation">Ad click aggregation</h2>
+<h3 id="scale-and-requirements_2">Scale and requirements</h3>
 <ul>
 <li>1 billion ad clicks per day (~11,600 clicks/sec average, ~30K peak)</li>
 <li>Aggregated counts used for <strong>billing</strong> — accuracy is non-negotiable</li>
 <li>Real-time dashboard for advertisers (counts within 1-2 minutes of click)</li>
 <li>Historical analytics queries (trends, A/B testing)</li>
 </ul>
-<h3>MapReduce aggregation</h3>
+<h3 id="mapreduce-aggregation">MapReduce aggregation</h3>
 <p>The click stream flows through a MapReduce-style pipeline:</p>
 <pre class="mermaid">flowchart LR
   RAW[&quot;Raw click events&lt;br/&gt;(Kafka)&quot;] --&gt; MAP[&quot;Map&lt;br/&gt;extract (ad_id, click)&quot;]
@@ -751,7 +766,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Map</strong> — extract the relevant fields from raw click events: ad_id, timestamp, user_id, device_id.</p>
 <p><strong>Aggregate</strong> — count clicks per ad_id per time window (e.g., per minute). This is the first reduction: billions of raw events become millions of (ad_id, window, count) tuples.</p>
 <p><strong>Reduce</strong> — merge partial counts from multiple aggregation nodes into final counts.</p>
-<h3>Kappa architecture</h3>
+<h3 id="kappa-architecture">Kappa architecture</h3>
 <p>Traditional Lambda architecture maintains two pipelines: a batch layer for accuracy and a speed layer for latency. <strong>Kappa architecture</strong> simplifies this to a single stream-processing pipeline:</p>
 <ul>
 <li>All data flows through Kafka.</li>
@@ -760,7 +775,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>No separate batch layer to maintain and reconcile.</li>
 </ul>
 <p>The tradeoff: replay for recomputation can be slow for large windows, but for click aggregation (daily/weekly windows), it's manageable.</p>
-<h3>Event time vs. processing time</h3>
+<h3 id="event-time-vs-processing-time">Event time vs. processing time</h3>
 <p>Clicks don't arrive in order. A click at 14:00:03 might arrive at the server at 14:00:07 due to network delays. Which timestamp matters?</p>
 <ul>
 <li><strong>Processing time</strong> — when the server receives the event. Simpler but inaccurate during traffic bursts or network issues.</li>
@@ -772,7 +787,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Events arriving after the watermark are either dropped or sent to a late-event side output.</li>
 <li>The watermark advances as events arrive, with a configurable lag tolerance (e.g., "wait 5 minutes for stragglers").</li>
 </ul>
-<h3>Windowing strategies</h3>
+<h3 id="windowing-strategies">Windowing strategies</h3>
 <table>
 <thead>
 <tr>
@@ -800,14 +815,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <p>For billing, <strong>tumbling windows</strong> are the standard: each click falls into exactly one window, guaranteeing no double-counting.</p>
-<h3>Exactly-once for billing</h3>
+<h3 id="exactly-once-for-billing">Exactly-once for billing</h3>
 <p>Billing demands exactly-once semantics. The pipeline achieves this through:</p>
 <ol>
 <li><strong>Kafka transactions</strong> — consume input, produce output, and commit offsets atomically.</li>
 <li><strong>Idempotent writes</strong> — each aggregation result carries a unique (ad_id, window_start) key. Duplicate writes overwrite with the same value.</li>
 <li><strong>Click deduplication</strong> — same user clicking the same ad within a short window (1 minute) is deduplicated using a Bloom filter or Redis set keyed on (ad_id, user_id, minute).</li>
 </ol>
-<h3>Star schema pre-aggregation</h3>
+<h3 id="star-schema-pre-aggregation">Star schema pre-aggregation</h3>
 <p>For analytics queries ("show me clicks by country, by device, by hour for campaign X"), raw events are pre-aggregated into a <strong>star schema</strong>:</p>
 <ul>
 <li><strong>Fact table:</strong> aggregated clicks (ad_id, timestamp_minute, count, click_cost)</li>
@@ -815,8 +830,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <p>Pre-aggregation reduces query-time computation: instead of scanning billions of raw events, the OLAP engine scans millions of pre-aggregated rows.</p>
 <hr />
-<h2>Distributed email service</h2>
-<h3>Scale and requirements</h3>
+<h2 id="distributed-email-service">Distributed email service</h2>
+<h3 id="scale-and-requirements_3">Scale and requirements</h3>
 <ul>
 <li>1 billion users</li>
 <li>100,000 emails sent/received per second</li>
@@ -825,7 +840,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>99.99% availability — email is mission-critical infrastructure</li>
 <li>Deliverability: emails must reach recipients' inboxes, not spam folders</li>
 </ul>
-<h3>Architecture overview</h3>
+<h3 id="architecture-overview">Architecture overview</h3>
 <pre class="mermaid">flowchart TB
   subgraph &quot;Inbound path&quot;
     SMTP_IN[&quot;Inbound SMTP&lt;br/&gt;workers&quot;] --&gt; MQ_IN[&quot;Message queue&lt;br/&gt;(inbound)&quot;]
@@ -853,14 +868,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   WEB --&gt; API
   MOBILE --&gt; API
   IMAP --&gt; META</pre>
-<h3>SMTP workers + message queues</h3>
+<h3 id="smtp-workers-message-queues">SMTP workers + message queues</h3>
 <p>Email processing is inherently asynchronous — the sender doesn't wait for the recipient to read it. Message queues decouple each stage:</p>
 <ul>
 <li><strong>Inbound:</strong> SMTP workers accept connections, parse MIME messages, and enqueue for processing. The queue absorbs bursts (email traffic is extremely spiky — marketing blasts, newsletters, holiday greetings).</li>
 <li><strong>Processing:</strong> spam filtering, virus scanning, routing rules, auto-reply triggers. Each is a consumer of the inbound queue.</li>
 <li><strong>Outbound:</strong> compose requests go to an outbound queue. SMTP workers dequeue, resolve MX records, establish TLS connections, and deliver. Failures go to a retry queue with exponential backoff.</li>
 </ul>
-<h3>Metadata storage: Cassandra-like store</h3>
+<h3 id="metadata-storage-cassandra-like-store">Metadata storage: Cassandra-like store</h3>
 <p>Email metadata (sender, recipients, subject, timestamp, folder, read/unread status, labels) is stored in a wide-column store (Cassandra, HBase) <strong>partitioned by user_id</strong>:</p>
 <table>
 <thead>
@@ -885,14 +900,14 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Horizontally scalable</strong> — add nodes as user count grows, with consistent hashing for partition assignment.</li>
 </ul>
 <p>Attachments are stored separately in blob storage (S3 or equivalent), with only a reference (blob_id, size, content_type) in the metadata row.</p>
-<h3>Elasticsearch for search</h3>
+<h3 id="elasticsearch-for-search">Elasticsearch for search</h3>
 <p>Full-text search across email bodies, subjects, and metadata is powered by Elasticsearch:</p>
 <ul>
 <li><strong>Indexing:</strong> when an email is stored, an async job indexes its text content, metadata, and attachment text (extracted via Tika or similar) into an Elasticsearch index sharded by user_id.</li>
 <li><strong>Querying:</strong> search queries are routed to the user's shard, supporting boolean queries, phrase matching, date ranges, and label filters.</li>
 <li><strong>Consistency:</strong> the search index is eventually consistent with the metadata store. A just-received email may take 1-5 seconds to appear in search results.</li>
 </ul>
-<h3>Deliverability: SPF, DKIM, and IP warm-up</h3>
+<h3 id="deliverability-spf-dkim-and-ip-warm-up">Deliverability: SPF, DKIM, and IP warm-up</h3>
 <p>Sending email is easy. Getting it delivered to inboxes (not spam folders) is hard:</p>
 <p><strong>SPF (Sender Policy Framework):</strong> a DNS TXT record listing the IP addresses authorized to send email for a domain. Receiving servers check the sending IP against this list.</p>
 <p><strong>DKIM (DomainKeys Identified Mail):</strong> the sending server signs each email with a private key. The receiving server verifies the signature using a public key published in DNS. This proves the email wasn't tampered with in transit.</p>
@@ -905,7 +920,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ol>
 <p><strong>DMARC</strong> ties SPF and DKIM together with a policy: "if an email fails both SPF and DKIM, reject it / quarantine it / let it through." This protects the domain from spoofing.</p>
 <hr />
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Consumer lag in Kafka</strong> — if consumers can't keep up with producers, the lag grows until retention expires and messages are lost. Monitor consumer lag as a first-class metric.</li>
 <li><strong>Alert storm</strong> — a widespread failure triggers thousands of alerts simultaneously, overwhelming the notification system and the on-call engineer. Mitigation: alert aggregation, deduplication, and escalation policies.</li>
@@ -916,7 +931,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>TSDB write amplification</strong> — down-sampling creates write amplification as data is rewritten at coarser granularities. During a spike, the TSDB may struggle with both ingestion and down-sampling simultaneously.</li>
 <li><strong>Kafka partition hotspot</strong> — if the partition key has skewed distribution (one ad_id gets 90% of clicks), one partition bears disproportionate load. Mitigation: add a random suffix to the key (sub-partitioning) and reaggregate downstream.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is your message queue configured for the right delivery guarantee (at-most/at-least/exactly-once) for each use case?</li>
 <li class="task todo">Are consumer group rebalancing events monitored and minimized?</li>
@@ -929,7 +944,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li class="task todo">Is the search index eventually consistent with the source of truth, and can it be rebuilt from it?</li>
 <li class="task todo">Are alert rules tuned to avoid fatigue (alert on symptoms, not causes)?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="storage-and-sync.html">Storage &amp; sync</a> — WAL-style append model that underpins both Kafka and object storage</li>
 <li><a href="core-building-blocks.html">Core building blocks</a> — consistent hashing for Kafka partition assignment and Cassandra ring membership</li>
@@ -937,7 +952,26 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><a href="transactional-and-financial.html">Transactional &amp; financial systems</a> — exactly-once semantics reappears in payment processing and double-entry ledgers</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="location-and-geo-services.html"><span class="lbl">← Previous</span><span class="ttl">Location &amp; geo services</span></a><a class="navcard next" href="transactional-and-financial.html"><span class="lbl">→ Next</span><span class="ttl">Transactional &amp; financial systems</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#distributed-message-queue">Distributed message queue</a><a class="h3" href="#scale-and-requirements">Scale and requirements</a><a class="h3" href="#core-concepts">Core concepts</a><a class="h3" href="#wal-the-append-only-log">WAL: the append-only log</a><a class="h3" href="#pull-model-vs-push-model">Pull model vs. push model</a><a class="h3" href="#isr-replication">ISR replication</a><a class="h3" href="#consumer-rebalancing">Consumer rebalancing</a><a class="h3" href="#delivery-semantics">Delivery semantics</a><a class="h2" href="#metrics-monitoring">Metrics monitoring</a><a class="h3" href="#scale-and-requirements_1">Scale and requirements</a><a class="h3" href="#collection-pull-vs-push">Collection: pull vs. push</a><a class="h3" href="#kafka-as-a-buffer">Kafka as a buffer</a><a class="h3" href="#time-series-storage-down-sampling-and-encoding">Time-series storage: down-sampling and encoding</a><a class="h3" href="#alert-system">Alert system</a><a class="h2" href="#ad-click-aggregation">Ad click aggregation</a><a class="h3" href="#scale-and-requirements_2">Scale and requirements</a><a class="h3" href="#mapreduce-aggregation">MapReduce aggregation</a><a class="h3" href="#kappa-architecture">Kappa architecture</a><a class="h3" href="#event-time-vs-processing-time">Event time vs. processing time</a><a class="h3" href="#windowing-strategies">Windowing strategies</a><a class="h3" href="#exactly-once-for-billing">Exactly-once for billing</a><a class="h3" href="#star-schema-pre-aggregation">Star schema pre-aggregation</a><a class="h2" href="#distributed-email-service">Distributed email service</a><a class="h3" href="#scale-and-requirements_3">Scale and requirements</a><a class="h3" href="#architecture-overview">Architecture overview</a><a class="h3" href="#smtp-workers-message-queues">SMTP workers + message queues</a><a class="h3" href="#metadata-storage-cassandra-like-store">Metadata storage: Cassandra-like store</a><a class="h3" href="#elasticsearch-for-search">Elasticsearch for search</a><a class="h3" href="#deliverability-spf-dkim-and-ip-warm-up">Deliverability: SPF, DKIM, and IP warm-up</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

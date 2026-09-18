@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -357,7 +372,7 @@ last, then revisit the others with the tradeoffs in mind.</p>
  <div class="iw-metric"><span class="ml">🛡 Reliability</span><span class="iw-track"><span class="iw-fill" id="fx-rel" style="background:#8250DF"></span></span><span class="mv" id="fx-relv"></span></div>
  <div class="iw-note" id="fx-note">Baseline. Toggle one or more levers above.</div>
 </div></div></section>
-  <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</h2></div><h2>TL;DR</h2>
+  <section class="lesson" id="finetune-vs-icl-vs-rag"><div class="lesson-head"><span class="lesson-num">06.1</span><h2>Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</h2></div><h2 id="tldr">TL;DR</h2>
 <p>These four are not competitors; they solve <em>different problems</em>.
 <strong>In-context learning (ICL)</strong> shapes behavior via the prompt. It needs zero
 infra and gives instant iteration, but it pays tokens on every call. <strong>RAG</strong>
@@ -374,7 +389,7 @@ problem (use RAG instead) or a <em>prompt</em> problem (use ICL instead).</p>
 <p><strong>Ask your eng team</strong> — <em>"Is this a knowledge problem (use RAG) or a behavior problem (maybe fine-tune)?"</em></p>
 <p><strong>Product risk if ignored</strong> — A quarter is spent fine-tuning a model that's already stale, when RAG would have been cheaper, fresher, and citeable.</p>
 </blockquote>
-<h2>The key distinction: knowledge vs. behavior</h2>
+<h2 id="the-key-distinction-knowledge-vs-behavior">The key distinction: knowledge vs. behavior</h2>
 <pre><code>Need the model to KNOW something it doesn't?      → RAG (or ICL for small/static facts)
 Need the model to BEHAVE a certain way reliably?  → Fine-tuning (or ICL if prompt suffices)
 Need a cheaper/faster model for ONE narrow task?  → Distillation
@@ -383,8 +398,8 @@ Just need to steer it, fast, with no infra?       → In-context learning
 <p>Most "should we fine-tune?" questions dissolve once you ask: <em>is this a
 knowledge gap or a behavior gap?</em> Fine-tuning teaches behavior, not facts.
 It's a poor and stale way to store knowledge that RAG handles live.</p>
-<h2>The four approaches</h2>
-<h3>In-context learning (ICL)</h3>
+<h2 id="the-four-approaches">The four approaches</h2>
+<h3 id="in-context-learning-icl">In-context learning (ICL)</h3>
 <p>Instructions and few-shot examples in the
 <a href="00-foundations.html#context-engineering">context</a>, with no weight
 changes.</p>
@@ -398,7 +413,7 @@ changes.</p>
   distill to amortize the cost), or you need knowledge that changes (use
   RAG).</li>
 </ul>
-<h3>RAG</h3>
+<h3 id="rag">RAG</h3>
 <p>Retrieve relevant data at query time and ground the answer in it
 (<a href="03-rag.html#rag-architecture">RAG architecture</a>).</p>
 <ul>
@@ -413,7 +428,7 @@ changes.</p>
   won't fix it), or the knowledge is tiny and static (just put it in the
   prompt).</li>
 </ul>
-<h3>Fine-tuning</h3>
+<h3 id="fine-tuning">Fine-tuning</h3>
 <p>Update weights, often with a parameter-efficient method like LoRA, on task
 examples.</p>
 <ul>
@@ -430,7 +445,7 @@ examples.</p>
   sufficed. Fine-tuning to "add knowledge" is the classic anti-pattern:
   stale, expensive, and unattributable.</li>
 </ul>
-<h3>Distillation</h3>
+<h3 id="distillation">Distillation</h3>
 <p>Train a small <strong>student</strong> to mimic a large <strong>teacher</strong>
 (<a href="01-inference-internals.html#speculative-quantization-distillation">details</a>).</p>
 <ul>
@@ -444,7 +459,7 @@ examples.</p>
   it), or you haven't yet nailed the task with a big model — distill
   <em>after</em> it works.</li>
 </ul>
-<h2>Decision guide</h2>
+<h2 id="decision-guide">Decision guide</h2>
 <ol>
 <li><strong>Start with ICL.</strong> It's the cheapest to try and often enough. Establish
    <a href="04-evals-observability.html#evals">evals</a> here.</li>
@@ -470,7 +485,7 @@ store — RAG applied to <em>behavior</em>, not just facts. And <strong>fine-tun
 trains on a corpus of tool-use examples before inference. It's a different
 problem with an identical decision structure: start in the prompt,
 retrieve when it must scale, train when it must be innate.</p>
-<h2>Comparison</h2>
+<h2 id="comparison">Comparison</h2>
 <table>
 <thead>
 <tr>
@@ -533,7 +548,7 @@ retrieve when it must scale, train when it must be innate.</p>
 </tr>
 </tbody>
 </table>
-<h2>Failure modes (using the wrong tool)</h2>
+<h2 id="failure-modes-using-the-wrong-tool">Failure modes (using the wrong tool)</h2>
 <ul>
 <li><strong>Fine-tuning for knowledge</strong> — stale, expensive, and uncited; this
   should have been RAG.</li>
@@ -548,7 +563,7 @@ retrieve when it must scale, train when it must be innate.</p>
 <li><strong>No evals first</strong> — you can't tell whether the new approach actually
   helped.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have you classified the problem as knowledge vs. behavior vs. cost?</li>
 <li class="task todo">Did you exhaust ICL (and honest prompt iteration) before training anything?</li>
@@ -557,14 +572,14 @@ retrieve when it must scale, train when it must be innate.</p>
 <li class="task todo">For fine-tune/distill: do you have a plan for drift and re-training?</li>
 <li class="task todo">Are you composing approaches per subproblem rather than picking one globally?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="03-rag.html#rag-architecture">RAG architecture</a></li>
 <li><a href="00-foundations.html#context-engineering">Context engineering</a></li>
 <li><a href="01-inference-internals.html#speculative-quantization-distillation">Speculative decoding vs. quantization vs. distillation</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, quality, cost, and reliability across the full inference stack</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="inference-stack-tradeoffs"><div class="lesson-head"><span class="lesson-num">06.2</span><h2>Latency, quality, cost, and reliability across the full inference stack</h2></div><h2 id="tldr">TL;DR</h2>
 <p>Almost every decision in an LLM system is a move in a four-way tradeoff
 between <strong>latency</strong>, <strong>quality</strong>, <strong>cost</strong>, and <strong>reliability</strong>. You
 rarely improve one without spending another. Mature AI engineering means
@@ -579,7 +594,7 @@ the axis it moves.</p>
 <p><strong>Ask your eng team</strong> — <em>"Which of latency / quality / cost / reliability are we choosing to trade here, and in exchange for what?"</em></p>
 <p><strong>Product risk if ignored</strong> — "Make it faster, cheaper, and better" with no target means the team can't tell when they're done or when they've gone too far.</p>
 </blockquote>
-<h2>The four axes</h2>
+<h2 id="the-four-axes">The four axes</h2>
 <ul>
 <li><strong>Latency</strong> — TTFT and TPOT
   (<a href="01-inference-internals.html#prefill-vs-decode">prefill vs. decode</a>),
@@ -594,7 +609,7 @@ the axis it moves.</p>
 </ul>
 <p>You cannot maximize all four. The job is to hit your <em>required</em> level on
 each and optimize the rest.</p>
-<h2>Same lever, different axis — the whole stack</h2>
+<h2 id="same-lever-different-axis-the-whole-stack">Same lever, different axis — the whole stack</h2>
 <p>Each technique elsewhere in this repo is a trade among the four:</p>
 <table>
 <thead>
@@ -694,7 +709,7 @@ each and optimize the rest.</p>
 </table>
 <p>Read this table as the unifying thread: there is no globally "best" configuration, only
 the best one <em>for a given SLO</em>.</p>
-<h2>The classic tensions</h2>
+<h2 id="the-classic-tensions">The classic tensions</h2>
 <ul>
 <li><strong>Latency ↔ Quality</strong> — a bigger model or more retrieval/reasoning is
   better but slower. Cascades and routing let you spend latency only on
@@ -709,7 +724,7 @@ the best one <em>for a given SLO</em>.</p>
   <em>available</em> than a routed multi-provider setup that's slightly weaker
   but never down.</li>
 </ul>
-<h2>How to make the tradeoff deliberately</h2>
+<h2 id="how-to-make-the-tradeoff-deliberately">How to make the tradeoff deliberately</h2>
 <ol>
 <li><strong>Set SLOs/budgets per use case.</strong> Interactive chat, an overnight batch
    job, and a safety-critical workflow are not the same. Define required
@@ -743,7 +758,7 @@ the best one <em>for a given SLO</em>.</p>
    since. Whole product categories that were "uneconomic" in 2024 stopped
    being so in one quarter.</li>
 </ol>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Optimizing one axis blindly</strong> — cost-cutting that quietly tanks
   quality, or a latency push that wrecks reliability.</li>
@@ -754,7 +769,7 @@ the best one <em>for a given SLO</em>.</p>
 <li><strong>Mean-driven decisions</strong> — tuning to averages while p99 latency and
   worst-case reliability, the things users actually feel, degrade.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do you have explicit latency, quality, cost, and reliability targets per use case?</li>
 <li class="task todo">Do you measure all four (evals + observability), at the tail, not just the mean?</li>
@@ -762,14 +777,14 @@ the best one <em>for a given SLO</em>.</p>
 <li class="task todo">Do you route/differentiate by request difficulty instead of one global config?</li>
 <li class="task todo">Do you re-evaluate the operating point as models, prices, and traffic change?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a></li>
 <li><a href="02-reliable-outputs.html#model-routing">Model routing</a></li>
 <li><a href="04-evals-observability.html#cost-attribution">Cost attribution</a></li>
 <li><a href="04-evals-observability.html#evals">Evals</a></li>
 <li><a href="#production-failure-modes">Production failure modes</a></li>
-</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production failure modes &amp; how to engineer around them</h2></div><h2>TL;DR</h2>
+</ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="production-failure-modes"><div class="lesson-head"><span class="lesson-num">06.3</span><h2>Production failure modes &amp; how to engineer around them</h2></div><h2 id="tldr">TL;DR</h2>
 <p>LLM systems fail in a recognizable handful of ways: <strong>hallucinated tool
 calls</strong>, <strong>malformed JSON</strong>, <strong>stale retrieval</strong>, <strong>runaway agents</strong>, and
 <strong>silent eval regressions</strong>, plus their cousins — cost spikes, cross-tenant
@@ -785,15 +800,15 @@ the integration test for everything else in the repository.</p>
 <p><strong>Ask your eng team</strong> — <em>"Which of these five failure modes can happen to us today, and what's our detection for each?"</em></p>
 <p><strong>Product risk if ignored</strong> — You learn the catalog the expensive way, one outage at a time.</p>
 </blockquote>
-<h2>Why LLM failures are different</h2>
+<h2 id="why-llm-failures-are-different">Why LLM failures are different</h2>
 <p>In a normal service, failures throw exceptions, 500s, timeouts. LLM
 failures often <strong>succeed loudly and are wrong quietly</strong> — a hallucination
 reads like a fact, a malformed plan parses far enough to act, a stale
 answer looks current. So the engineering response isn't just error
 handling; it's <strong>validation, bounding, grounding, and measurement</strong> that
 make silent failures <em>visible and contained</em>.</p>
-<h2>The catalog</h2>
-<h3>1. Hallucinated tool calls</h3>
+<h2 id="the-catalog">The catalog</h2>
+<h3 id="1-hallucinated-tool-calls">1. Hallucinated tool calls</h3>
 <ul>
 <li><strong>What:</strong> the model invents a tool, a parameter, or a plausible-but-fake
   argument — a non-existent id, an invalid enum — then "acts."</li>
@@ -809,7 +824,7 @@ make silent failures <em>visible and contained</em>.</p>
   <a href="02-reliable-outputs.html#function-calling">idempotency</a> so a
   bad-then-retried call is safe.</li>
 </ul>
-<h3>2. Malformed JSON / structured output</h3>
+<h3 id="2-malformed-json-structured-output">2. Malformed JSON / structured output</h3>
 <ul>
 <li><strong>What:</strong> output doesn't parse or violates the schema. A markdown fence,
   a trailing comma, or a missing field takes down a workflow.</li>
@@ -823,7 +838,7 @@ make silent failures <em>visible and contained</em>.</p>
   Never <code>JSON.parse</code> without a schema. Track validity after model or
   quantization changes.</li>
 </ul>
-<h3>3. Stale retrieval</h3>
+<h3 id="3-stale-retrieval">3. Stale retrieval</h3>
 <ul>
 <li><strong>What:</strong> RAG cites outdated, deleted, or superseded content, confidently
   wrong on facts that <em>changed</em>.</li>
@@ -838,7 +853,7 @@ make silent failures <em>visible and contained</em>.</p>
   recency ranking (<a href="03-rag.html#rag-architecture">RAG freshness</a>); cache
   TTLs and invalidation; "say I don't know" when context is absent.</li>
 </ul>
-<h3>4. Runaway agents</h3>
+<h3 id="4-runaway-agents">4. Runaway agents</h3>
 <ul>
 <li><strong>What:</strong> an agent loops, thrashes a tool, or fans out, burning time and
   money, often <em>circularly</em> rather than infinitely.</li>
@@ -851,7 +866,7 @@ make silent failures <em>visible and contained</em>.</p>
   <a href="02-reliable-outputs.html#agent-guardrails">loop, tool, token, cost, and time budgets, plus termination and no-progress detection</a>;
   idempotent tools; per-tenant cost alerts.</li>
 </ul>
-<h3>5. Silent eval regressions</h3>
+<h3 id="5-silent-eval-regressions">5. Silent eval regressions</h3>
 <ul>
 <li><strong>What:</strong> quality drops with <em>no code change</em> — a provider model update,
   a prompt tweak with side effects, or
@@ -865,7 +880,7 @@ make silent failures <em>visible and contained</em>.</p>
 <li><strong>Engineer around it:</strong> golden sets that gate every change; stratified
   reporting; production sampling that feeds back into evals.</li>
 </ul>
-<h2>The cousins (don't forget these)</h2>
+<h2 id="the-cousins-dont-forget-these">The cousins (don't forget these)</h2>
 <table>
 <thead>
 <tr>
@@ -912,7 +927,7 @@ make silent failures <em>visible and contained</em>.</p>
 </tr>
 </tbody>
 </table>
-<h2>The common cure</h2>
+<h2 id="the-common-cure">The common cure</h2>
 <p>Every mode above is defeated by the same four habits, the thesis of this
 whole repository:</p>
 <ol>
@@ -925,7 +940,7 @@ whole repository:</p>
    running, and feed incidents back into both.</li>
 </ol>
 <p>This is the difference between <a href="00-foundations.html#infra-not-demos">a demo and infrastructure</a>.</p>
-<h2>Practitioner checklist (pre-launch failure review)</h2>
+<h2 id="practitioner-checklist-pre-launch-failure-review">Practitioner checklist (pre-launch failure review)</h2>
 <ul>
 <li class="task todo">Are tool calls validated so a hallucinated call can't act?</li>
 <li class="task todo">Is every structured output schema-validated with bounded repair + fallback?</li>
@@ -935,7 +950,7 @@ whole repository:</p>
 <li class="task todo">Are cost, isolation, injection, outage, and latency-tail risks each covered?</li>
 <li class="task todo">Does every incident become a new permanent eval case?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="00-foundations.html#harness-engineering">Harness engineering</a></li>
 <li><a href="00-foundations.html#infra-not-demos">Shipping as infrastructure, not demos</a></li>
@@ -945,7 +960,7 @@ whole repository:</p>
 <li><a href="04-evals-observability.html#evals">Evals</a> · <a href="04-evals-observability.html#observability">Observability</a></li>
 <li><a href="#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
-  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2>Real-world examples &amp; war stories</h2>
+  <section class="recap" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>The "fine-tune our docs into the model" anti-pattern.</strong> This is a
 recurring industry story: a team fine-tunes a model to "teach it our
 knowledge base," ships something that's <strong>stale the day the docs change</strong>,
@@ -973,7 +988,7 @@ legal workflow optimizes reliability and quality over speed. 🎯 <em>PM
 takeaway:</em> there is no globally "best" config, only the best one for
 <em>your</em> SLO. See
 <a href="#inference-stack-tradeoffs">the four-axis tradeoff</a>.</p>
-<h2>Module recap</h2>
+<h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
 <tr>

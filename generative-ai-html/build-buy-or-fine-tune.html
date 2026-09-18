@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Generative AI</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink active" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-generative-ai.html">1 · What makes AI &quot;generative&quot;?</a><a class="modlink" href="the-modalities.html">2 · The five modalities</a><a class="modlink" href="probabilistic-software.html">3 · Probabilistic software</a><a class="modlink" href="the-genai-product-stack.html">4 · The generative AI product stack</a><a class="modlink active" href="build-buy-or-fine-tune.html">5 · Build, buy, or fine-tune</a><a class="modlink" href="where-value-is-created-and-destroyed.html">6 · Where generative AI creates and destroys value</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 05</span>
     <h1>Build, buy, or fine-tune</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Every generative AI product decision comes back to one question at the top: how much of
 this do we build ourselves, how much do we buy, and how much do we adjust through
 fine-tuning? <strong>Build</strong> means training or running your own model — rare, expensive, and
@@ -338,7 +353,7 @@ build around a model someone else already trained?"</em></p>
 ends up behind the next vendor release, while a competitor who bought the model and
 built the product around it shipped months earlier.</p>
 </blockquote>
-<h2>The mental model: the engine, the workshop, and the tune-up</h2>
+<h2 id="the-mental-model-the-engine-the-workshop-and-the-tune-up">The mental model: the engine, the workshop, and the tune-up</h2>
 <p>Buying a model is like buying a car engine from a manufacturer who has spent billions
 perfecting it. Building your own model is like building an engine from raw metal in your
 own workshop — possible, but only worth it if engines are your business. Fine-tuning is
@@ -350,7 +365,7 @@ driving conditions.</p>
   Q2 --&gt;|&quot;yes, and the adjustment&lt;br/&gt;is behavior or format&quot;| TUNE[&quot;Fine-tune&lt;br/&gt;adjust a vendor model&lt;br/&gt;on your own examples&quot;]
   Q2 --&gt;|&quot;no, or the gap is&lt;br/&gt;facts, not behavior&quot;| BUY[&quot;Buy&lt;br/&gt;call the vendor model,&lt;br/&gt;build the product around it&quot;]
   TUNE --&gt; BUY</pre>
-<h2>The three options, compared</h2>
+<h2 id="the-three-options-compared">The three options, compared</h2>
 <table>
 <thead>
 <tr>
@@ -393,7 +408,7 @@ driving conditions.</p>
 </tr>
 </tbody>
 </table>
-<h2>Why "buy" wins by default</h2>
+<h2 id="why-buy-wins-by-default">Why "buy" wins by default</h2>
 <p>Frontier model vendors spend enormous budgets and employ large research teams to make
 their models better every few months. A team training its own model is competing against
 that pace with a fraction of the resources, on a task — general-purpose generation — that
@@ -402,7 +417,7 @@ product solves, not for which model answers it. Buying the model and spending yo
 on grounding, action, and operations — the layers covered in the <a href="the-genai-product-stack.html">product stack
 lesson</a> — is almost always the better use of a limited
 budget.</p>
-<h2>When build or fine-tune actually make sense</h2>
+<h2 id="when-build-or-fine-tune-actually-make-sense">When build or fine-tune actually make sense</h2>
 <p>Build is justified when the model's behavior, cost structure, or data handling is the
 product itself — a company selling a specialized model to other companies, for example, or
 one bound by regulation to keep training data fully in-house. Fine-tune is justified when
@@ -410,7 +425,7 @@ a vendor model's default tone, format, or narrow skill does not fit your use cas
 enough, and you have enough well-labeled examples to teach the adjustment reliably. Both
 are real, valid choices. They are just not the default, and a team should be able to state
 plainly why this feature is the exception before committing the extra cost and time.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Building for control that buying already gives you</strong> — training a model because
   "we want to own our AI," when a vendor's terms already give you the control that
@@ -422,7 +437,7 @@ plainly why this feature is the exception before committing the extra cost and t
 <li><strong>Skipping the justification step</strong> — choosing build or fine-tune out of habit or
   preference, without a clear answer to why buy alone would not work.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we stated plainly why buy alone would not meet this feature's needs, before
       committing to build or fine-tune?</li>
@@ -433,7 +448,7 @@ plainly why this feature is the exception before committing the extra cost and t
 <li class="task todo">Do we have a fallback plan if our chosen vendor changes price, availability, or
       policy?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-genai-product-stack.html">The generative AI product stack</a> — where the real
   engineering effort goes once you have bought the model.</li>
@@ -443,7 +458,26 @@ plainly why this feature is the exception before committing the extra cost and t
   — the engineering-depth spoke on this tradeoff.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="the-genai-product-stack.html"><span class="lbl">← Previous</span><span class="ttl">The generative AI product stack</span></a><a class="navcard next" href="where-value-is-created-and-destroyed.html"><span class="lbl">→ Next</span><span class="ttl">Where generative AI creates and destroys value</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-the-engine-the-workshop-and-the-tune-up">The mental model: the engine, the workshop, and the tune-up</a><a class="h2" href="#the-three-options-compared">The three options, compared</a><a class="h2" href="#why-buy-wins-by-default">Why &quot;buy&quot; wins by default</a><a class="h2" href="#when-build-or-fine-tune-actually-make-sense">When build or fine-tune actually make sense</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink active" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink active" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 04</span>
     <h1>Storage &amp; querying</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>Once the graph exists, it has to live somewhere queryable. There are three honest
 options. A <strong>property graph database</strong> (Neo4j and kin, queried in Cypher/GQL) is the
 pragmatic default for product features. An <strong>RDF triple store</strong> (queried in SPARQL) is
@@ -343,7 +358,7 @@ inside which feature — and did we benchmark the boring option on that exact qu
 Or the inverse: a relationship-heavy feature built on SQL collapses at demo scale,
 taking the roadmap down with it.</p>
 </blockquote>
-<h2>The traversal-vs-join argument, honestly</h2>
+<h2 id="the-traversal-vs-join-argument-honestly">The traversal-vs-join argument, honestly</h2>
 <p>The core claim for graph databases: relationships are stored as direct pointers, so
 following an edge costs the same whether the graph holds a thousand nodes or a billion
 (<em>index-free adjacency</em>). Each relational join, by contrast, re-finds partners via
@@ -368,7 +383,7 @@ that shows up in team velocity:</p>
 <p>The variable-depth <code>*1..4</code> is the tell. The graph query <em>states the question</em>; the SQL
 <em>implements</em> it. When relationship questions are your product's daily bread, that gap
 compounds into feature velocity. When they're occasional, it's a curiosity.</p>
-<h2>The three families</h2>
+<h2 id="the-three-families">The three families</h2>
 <table>
 <thead>
 <tr>
@@ -415,7 +430,7 @@ compounds into feature velocity. When they're occasional, it's a curiosity.</p>
 graph-on-warehouse, managed offerings from every major cloud — but it's an
 engineering-owned decision. Your leverage comes earlier, in choosing the <em>family</em>,
 driven by query shapes and interoperability needs.</p>
-<h2>How to run the decision</h2>
+<h2 id="how-to-run-the-decision">How to run the decision</h2>
 <ol>
 <li><strong>Write the query shapes down.</strong> Top ten roadmap queries: hops, fan-out, latency
    budget, freshness, and whether they sit inside a user-facing request path or a
@@ -438,7 +453,7 @@ your OLTP systems</strong>. The graph is a connective layer over systems of reco
 still lives in billing. Teams that try to make the graph the system of record inherit
 transaction-processing problems graph databases are bad at. They also lose the ability
 to rebuild the graph from sources when — not if — the pipeline needs a redo.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Bake-off theater</strong> — six months comparing engines on synthetic benchmarks while the
   real risks (resolution quality, curation staffing) go unexamined.</li>
@@ -452,7 +467,7 @@ to rebuild the graph from sources when — not if — the pipeline needs a redo.
   timeout ships inside a user-facing endpoint. One dense node — every graph has a
   celebrity — times out the feature.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do we have the query-shapes page — hops, fan-out, latency, freshness — for the top
       ten roadmap queries?</li>
@@ -467,7 +482,7 @@ to rebuild the graph from sources when — not if — the pipeline needs a redo.
 <li class="task todo">Does the latency budget for graph-backed features trace back to a
       <a href="../technical-product-sense/latency-scale-performance.html">user-facing performance target</a>?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="reasoning-and-analytics.html">Reasoning &amp; analytics</a> — the algorithm libraries that
   come with (mostly property-) graph platforms.</li>
@@ -477,7 +492,26 @@ to rebuild the graph from sources when — not if — the pipeline needs a redo.
   the build/buy/lock-in instincts applied here.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="building-the-graph.html"><span class="lbl">← Previous</span><span class="ttl">Building the graph</span></a><a class="navcard next" href="reasoning-and-analytics.html"><span class="lbl">→ Next</span><span class="ttl">Reasoning &amp; analytics</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-traversal-vs-join-argument-honestly">The traversal-vs-join argument, honestly</a><a class="h2" href="#the-three-families">The three families</a><a class="h2" href="#how-to-run-the-decision">How to run the decision</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

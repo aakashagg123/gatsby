@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink active" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink active" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 07</span>
     <h1>Governance, quality &amp; trust</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A knowledge graph is a <strong>trust product</strong>. The moment one executive meeting catches it
 wrong — Acme listed twice, a dead subsidiary alive, revenue attached to the wrong
 parent — usage quietly collapses, and no amount of coverage wins it back. Trust is
@@ -345,7 +360,7 @@ drifting back to spreadsheets because the graph was wrong twice. Or the loud one
 re-identification or leakage finding, because nobody treated the <em>connections</em> as
 personal data.</p>
 </blockquote>
-<h2>Provenance: every fact shows its work</h2>
+<h2 id="provenance-every-fact-shows-its-work">Provenance: every fact shows its work</h2>
 <p>The unit of governance is not the dataset — it's the individual fact. Each edge carries
 its passport:</p>
 <pre class="mermaid">flowchart LR
@@ -367,7 +382,7 @@ every fact and <a href="reasoning-and-analytics.html">inference</a> downstream a
 drawn from them</em>. Without provenance, right-to-erasure over a graph is archaeology.
 Provenance is cheap at <a href="building-the-graph.html">construction time</a> and brutally
 expensive to retrofit. It goes in the pipeline from day one, or effectively never.</p>
-<h2>Quality: four numbers on a dashboard</h2>
+<h2 id="quality-four-numbers-on-a-dashboard">Quality: four numbers on a dashboard</h2>
 <p>"Is the graph good?" decomposes into four measurable questions, each with a different
 fix when it dips:</p>
 <table>
@@ -415,7 +430,7 @@ high-confidence tiers. This one mechanism lets exploration and rigor share a gra
 without either poisoning the other. <strong>Gate launches on the metric.</strong> A graph-backed
 feature ships when its domain hits the bar, which converts quality from aspiration into
 a schedule input.</p>
-<h2>Permissions: the graph aggregates risk</h2>
+<h2 id="permissions-the-graph-aggregates-risk">Permissions: the graph aggregates risk</h2>
 <p>The graph's superpower — connecting everything — is precisely its risk profile. Three
 problems are graph-specific, and standard database access control solves none of them:</p>
 <ul>
@@ -437,7 +452,7 @@ problems are graph-specific, and standard database access control solves none of
   <a href="../ai/05-safety-multitenancy.html#safety-engineering">leakage</a> with better
   tooling.</li>
 </ul>
-<h2>Ownership: the operating roles</h2>
+<h2 id="ownership-the-operating-roles">Ownership: the operating roles</h2>
 <p>Governance without names is a slideware ritual. The minimum viable cast: an <strong>ontology
 owner</strong> (arbitrates <a href="ontologies-and-data-modeling.html">meaning</a>, versions the
 contract), <strong>domain stewards</strong> (own correctness and the
@@ -448,7 +463,7 @@ as hats, not headcount. What matters is that each question — "what does this m
 "is this true?", "who may see it?" — has exactly one desk it lands on. It's the same
 lesson every <a href="../technical-product-sense/data-and-the-data-model.html">data platform</a>
 learns: assets without owners become swamps.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>The quiet death</strong> — no dashboard, no stewards. Two visible errors in front of the
   wrong audience, and the org routes back to spreadsheets without ever filing a ticket.</li>
@@ -463,7 +478,7 @@ learns: assets without owners become swamps.</p>
 <li><strong>Erasure that misses inferences</strong> — the record is deleted, but the conclusions
   built on it live on, citing a source that no longer exists.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does every fact carry source, method, timestamp, confidence, and reviewer — from
       the pipeline's first day?</li>
@@ -478,7 +493,7 @@ learns: assets without owners become swamps.</p>
 <li class="task todo">Can an erasure request propagate through provenance to derived facts — and has
       that path been <em>tested</em>, not just designed?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="building-the-graph.html">Building the graph</a> — where provenance and quality are
   manufactured (or forfeited).</li>
@@ -488,7 +503,26 @@ learns: assets without owners become swamps.</p>
   broader privacy instincts this lesson sharpens for graphs.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="knowledge-graphs-and-llms.html"><span class="lbl">← Previous</span><span class="ttl">Knowledge graphs &amp; LLMs</span></a><a class="navcard next" href="knowledge-graphs-as-a-product.html"><span class="lbl">→ Next</span><span class="ttl">Knowledge graphs as a product</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#provenance-every-fact-shows-its-work">Provenance: every fact shows its work</a><a class="h2" href="#quality-four-numbers-on-a-dashboard">Quality: four numbers on a dashboard</a><a class="h2" href="#permissions-the-graph-aggregates-risk">Permissions: the graph aggregates risk</a><a class="h2" href="#ownership-the-operating-roles">Ownership: the operating roles</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

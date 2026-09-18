@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Tool calling</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-tool-calling-is.html">1 · What tool calling is</a><a class="modlink active" href="tool-contracts-and-reliability.html">2 · Tool contracts &amp; reliability</a><a class="modlink" href="permissions-blast-radius-and-the-trust-boundary.html">3 · Permissions, blast radius &amp; the trust boundary</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-tool-calling-is.html">1 · What tool calling is</a><a class="modlink active" href="tool-contracts-and-reliability.html">2 · Tool contracts &amp; reliability</a><a class="modlink" href="permissions-blast-radius-and-the-trust-boundary.html">3 · Permissions, blast radius &amp; the trust boundary</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 02</span>
     <h1>Tool contracts &amp; reliability</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>A tool is only as trustworthy as the promise behind it: what it accepts, what it actually
 does, and whether calling it twice by accident is safe. Writing that promise down as a
 schema is engineering work, but the shape of the promise — how many tools to expose, how
@@ -333,7 +348,7 @@ the worst that happens?"</em></p>
 duplicate email — not because the model made a mistake, but because nobody decided
 whether the underlying action was safe to repeat.</p>
 </blockquote>
-<h2>The mental model: every tool call passes four checkpoints</h2>
+<h2 id="the-mental-model-every-tool-call-passes-four-checkpoints">The mental model: every tool call passes four checkpoints</h2>
 <pre class="mermaid">flowchart LR
   A[&quot;Name &amp; description&lt;br/&gt;(does the model know&lt;br/&gt;when to use it?)&quot;] --&gt; B[&quot;Schema&lt;br/&gt;(are the arguments&lt;br/&gt;well-typed and scoped?)&quot;]
   B --&gt; C[&quot;Idempotency&lt;br/&gt;(is a repeat call&lt;br/&gt;safe?)&quot;]
@@ -343,7 +358,7 @@ technical detail. A vague description is a product problem — the model can't t
 use the tool. A tool that isn't safely repeatable is a product problem — a retry becomes a
 silent double action. An opaque error is a product problem — it produces a model that gets
 stuck instead of one that recovers.</p>
-<h2>The granularity decision: how many tools, how big each one is</h2>
+<h2 id="the-granularity-decision-how-many-tools-how-big-each-one-is">The granularity decision: how many tools, how big each one is</h2>
 <p>A toolbox with dozens of thin, near-identical wrappers around individual API endpoints
 reliably confuses a model — it picks the plausible-sounding one, not the correct one. The
 fix isn't a smarter model; it's fewer, better-scoped tools that match how someone would
@@ -354,7 +369,7 @@ product call — what capability to expose, and at what altitude — even though
 the schema itself is engineering. The full craft of tool design, including how to write
 descriptions a model reads well, is developed in
 <a href="../agentic-ai/tools-and-function-calling.html">Tools &amp; function calling</a>.</p>
-<h2>Idempotency: a promise, not an implementation detail</h2>
+<h2 id="idempotency-a-promise-not-an-implementation-detail">Idempotency: a promise, not an implementation detail</h2>
 <p>Models retry. Networks fail and retry. Agents re-issue a call that looked like it didn't
 go through. None of that is a bug — it's normal operation — which means every tool with a
 real-world side effect needs an answer to one question before launch: <em>is calling this
@@ -365,7 +380,7 @@ attention specifically because it's invisible until it fails — a tool works pe
 every demo and only shows the gap the first time a real retry hits it in production. The
 engineering pattern (idempotency keys, separating reads from writes) is developed in full
 in <a href="../ai/02-reliable-outputs.html#function-calling">Function calling reliability</a>.</p>
-<h2>Errors are part of the product, not an engineering afterthought</h2>
+<h2 id="errors-are-part-of-the-product-not-an-engineering-afterthought">Errors are part of the product, not an engineering afterthought</h2>
 <p>A tool that fails with an opaque "error 500" produces a model that either gives up or
 retries the same broken call. A tool that fails with "date must be YYYY-MM-DD, e.g.
 2026-07-01" produces a model that corrects itself and moves on. The difference between
@@ -373,7 +388,7 @@ those two failure messages is a UX decision as real as any error message a human
 see — it just has an unusual reader. Reviewing a feature's tool errors the way you'd review
 its user-facing error copy catches this before the failure mode shows up as a stuck agent
 in production.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Kitchen-sink toolbox</strong> — dozens of overlapping, thinly-wrapped tools that the model
   routinely mispicks between, because no one made the granularity decision on purpose.</li>
@@ -386,7 +401,7 @@ in production.</p>
   underlying system actually accepts or returns, and nobody notices until calls start
   failing unpredictably.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Was the number and granularity of tools a deliberate product decision, or did it
       just accumulate one API wrapper at a time?</li>
@@ -397,7 +412,7 @@ in production.</p>
 <li class="task todo">Has anyone actually tested what happens when a network retry hits each
       side-effecting tool?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="what-tool-calling-is.html">What tool calling is</a> — why the model can only ever request
   a call, never guarantee its own correctness.</li>
@@ -410,7 +425,26 @@ in production.</p>
   craft behind the granularity decision.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-tool-calling-is.html"><span class="lbl">← Previous</span><span class="ttl">What tool calling is</span></a><a class="navcard next" href="permissions-blast-radius-and-the-trust-boundary.html"><span class="lbl">→ Next</span><span class="ttl">Permissions, blast radius &amp; the trust boundary</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-every-tool-call-passes-four-checkpoints">The mental model: every tool call passes four checkpoints</a><a class="h2" href="#the-granularity-decision-how-many-tools-how-big-each-one-is">The granularity decision: how many tools, how big each one is</a><a class="h2" href="#idempotency-a-promise-not-an-implementation-detail">Idempotency: a promise, not an implementation detail</a><a class="h2" href="#errors-are-part-of-the-product-not-an-engineering-afterthought">Errors are part of the product, not an engineering afterthought</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

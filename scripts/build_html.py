@@ -120,7 +120,7 @@ def convert_lesson(md, cur_mod):
     md = re.sub(r"\A\s*#\s+.*\n", "", md, count=1)
     md = ensure_blank_before_lists(md)
     body = markdown.markdown(
-        md, extensions=["tables", "fenced_code", "sane_lists", "attr_list"]
+        md, extensions=["tables", "fenced_code", "sane_lists", "attr_list", "toc"]
     )
     # PM callout: tag the blockquote that holds the PM briefing
     body = re.sub(
@@ -132,6 +132,49 @@ def convert_lesson(md, cur_mod):
     body = re.sub(r"<li>\[ \]\s*", '<li class="task todo">', body)
     body = re.sub(r"<li>\[x\]\s*", '<li class="task done">', body)
     return body
+
+# ---- "on this page" outline (right rail) --------------------------------------
+# The "toc" extension gives every h2/h3 a slugified id; pull those out to build a
+# sticky, scroll-spy outline of a single lesson page's own sections.
+_HEAD_RE = re.compile(r'<h([23])\s+id="([^"]+)"[^>]*>(.*?)</h\1>', re.DOTALL)
+
+def extract_outline(body_html):
+    heads = []
+    for level, hid, text in _HEAD_RE.findall(body_html):
+        heads.append((int(level), hid, re.sub(r"<[^>]+>", "", text).strip()))
+    return heads
+
+def render_outline(heads):
+    if len(heads) < 2:
+        return "", False
+    rows = "".join(
+        f'<a class="{"h3" if lvl == 3 else "h2"}" href="#{hid}">{htmllib.escape(t)}</a>'
+        for lvl, hid, t in heads
+    )
+    html = (f'<aside class="outline"><div class="sticky">'
+            f'<div class="outline-h">On this page</div>{rows}</div></aside>')
+    return html, True
+
+OUTLINE_SCRIPT = """<script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>"""
 
 def lesson_title(md):
     m = re.search(r"\A\s*#\s+(.*)", md)
@@ -379,6 +422,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -390,6 +434,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}

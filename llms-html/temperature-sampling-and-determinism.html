@@ -40,6 +40,7 @@ a:hover{text-decoration:underline}
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
   max-width:1240px;margin:0 auto}
+.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
 .sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
 .sticky{position:sticky;top:74px}
 .modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
@@ -51,6 +52,20 @@ a:hover{text-decoration:underline}
   border-left:1px solid var(--line);padding-left:12px}
 .sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
 .sub a:hover{color:var(--accent);text-decoration:none}
+
+/* "on this page" outline — right rail, wide screens only */
+.outline{display:none}
+@media (min-width:1280px){
+  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
+  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
+}
+.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);margin:0 0 10px 13px}
+.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
+  border-left:2px solid transparent}
+.outline a:hover{color:var(--ink);text-decoration:none}
+.outline a.h3{padding-left:25px;font-size:12px}
+.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
 
 /* content column */
 .content{padding:46px 56px 90px;max-width:880px}
@@ -307,12 +322,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>LLMs</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink active" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-an-llm.html">1 · What an LLM actually is</a><a class="modlink" href="the-context-window.html">2 · The context window</a><a class="modlink" href="capabilities-and-the-jagged-frontier.html">3 · Capabilities &amp; the jagged frontier</a><a class="modlink" href="prompting-and-in-context-learning.html">4 · Prompting &amp; in-context learning</a><a class="modlink active" href="temperature-sampling-and-determinism.html">5 · Temperature, sampling &amp; determinism</a><a class="modlink" href="choosing-a-model.html">6 · Choosing a model</a><a class="modlink" href="prompting-vs-rag-vs-finetuning.html">7 · Prompting vs. RAG vs. fine-tuning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 05</span>
     <h1>Temperature, sampling &amp; determinism</h1>
   </div>
-  <h2>TL;DR</h2>
+  <h2 id="tldr">TL;DR</h2>
 <p>When a model predicts the next token, it does not compute one fixed answer. It computes a
 list of candidate tokens, each with a likelihood, and then <strong>samples</strong> one — picks one,
 weighted by those likelihoods, sometimes choosing the most likely candidate and sometimes a
@@ -340,7 +355,7 @@ creative — and does our current temperature setting actually match that choice
 writing, and produces inconsistent answers to the same common question, or a brainstorming
 feature stays on a low, cautious setting and produces flat, repetitive ideas.</p>
 </blockquote>
-<h2>The mental model: a loaded die, with an adjustable weighting</h2>
+<h2 id="the-mental-model-a-loaded-die-with-an-adjustable-weighting">The mental model: a loaded die, with an adjustable weighting</h2>
 <p>Recall the <a href="../generative-ai/probabilistic-software.html">probabilistic software</a> idea of a
 loaded die instead of a switch. Temperature is the dial that adjusts how loaded the die is.
 Turn it down, and the die lands on the most likely face almost every time — close to a
@@ -353,7 +368,7 @@ so you see more variety, and more chances of an unusual result.</p>
   LOW --&gt; SAMPLE[&quot;Sample one token&quot;]
   HIGH --&gt; SAMPLE
   SAMPLE --&gt;|&quot;feed back in,&lt;br/&gt;repeat for next token&quot;| PRED</pre>
-<h2>Two related dials worth knowing by name</h2>
+<h2 id="two-related-dials-worth-knowing-by-name">Two related dials worth knowing by name</h2>
 <p>Temperature is the dial product leaders hear about most, but it usually works alongside a
 couple of others that shape the same sampling step. <strong>Top-p</strong> (also called nucleus
 sampling) narrows the candidate list to only the smallest set of tokens whose combined
@@ -363,7 +378,7 @@ long tail of very unlikely candidates entirely, rather than just discounting the
 candidates. You do not need to master the math behind either to use them well. The
 practical takeaway is the same for all three: they are levers that trade consistency for
 variety, and a sensible default for one feature can be the wrong default for another.</p>
-<h2>Setting the dial deliberately</h2>
+<h2 id="setting-the-dial-deliberately">Setting the dial deliberately</h2>
 <p>Different jobs want different points on this dial, and the right choice is a product
 decision, not a technical afterthought. <strong>Low temperature</strong> suits tasks where consistency
 and reliability matter more than variety: extracting a structured field from a document,
@@ -372,7 +387,7 @@ time. <strong>Higher temperature</strong> suits tasks where variety is the point
 drafting several different taglines to choose from, writing in a more exploratory,
 creative voice. A single default temperature applied to every feature in a product,
 regardless of what each feature actually needs, is a missed lever, not a neutral choice.</p>
-<h2>Determinism is a spectrum, not a switch</h2>
+<h2 id="determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</h2>
 <p>Even at the lowest possible temperature, a model is not guaranteed to be perfectly
 deterministic — some implementation details in how a request is processed can introduce
 tiny variations. Treat determinism as a spectrum you move along with the dial, not a
@@ -380,7 +395,7 @@ switch you can flip fully on. If your feature genuinely requires the exact same 
 the exact same input every time, the honest answer is usually a cache or a rule-based
 check layered on top of the model, not an assumption that temperature alone gets you all
 the way to zero variation.</p>
-<h2>Failure modes</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>One temperature for every feature</strong> — leaving every feature on the same default,
   regardless of whether that feature wants consistency or variety.</li>
@@ -393,7 +408,7 @@ the way to zero variation.</p>
   happened to use, without testing whether a different setting improves the specific
   feature.</li>
 </ul>
-<h2>Practitioner checklist</h2>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Have we set temperature deliberately, per feature, instead of leaving every feature
       on the same default?</li>
@@ -404,7 +419,7 @@ the way to zero variation.</p>
 <li class="task todo">If a feature needs guaranteed exact reproducibility, do we have a cache or a rule-based
       check, rather than relying on temperature alone?</li>
 </ul>
-<h2>Related lessons</h2>
+<h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="../generative-ai/probabilistic-software.html">Probabilistic software</a> — the product
   consequence of the mechanism this lesson explains.</li>
@@ -414,7 +429,26 @@ the way to zero variation.</p>
   many runs, given that no single run is guaranteed to represent the rest.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="prompting-and-in-context-learning.html"><span class="lbl">← Previous</span><span class="ttl">Prompting &amp; in-context learning</span></a><a class="navcard next" href="choosing-a-model.html"><span class="lbl">→ Next</span><span class="ttl">Choosing a model</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main></div><script type="module">
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-loaded-die-with-an-adjustable-weighting">The mental model: a loaded die, with an adjustable weighting</a><a class="h2" href="#two-related-dials-worth-knowing-by-name">Two related dials worth knowing by name</a><a class="h2" href="#setting-the-dial-deliberately">Setting the dial deliberately</a><a class="h2" href="#determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{
