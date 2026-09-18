@@ -40,6 +40,7 @@ TOOL_HTML = os.path.join(ROOT, "tool-calling-html")     # Tool calling (GenAI fa
 AGENTS_HTML = os.path.join(ROOT, "ai-agents-html")      # AI agents (GenAI family, module 7)
 WORKFLOWS_HTML = os.path.join(ROOT, "agentic-workflows-html")  # Agentic workflows (GenAI family, module 8)
 EVALOBS_HTML = os.path.join(ROOT, "evaluation-and-observability-html")  # Evaluation & observability (GenAI family, module 9)
+SECURITY_HTML = os.path.join(ROOT, "ai-security-and-guardrails-html")  # AI security & guardrails (GenAI family, module 10)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -340,6 +341,13 @@ LANDING = """<!doctype html>
       <p>Why the eval set is the product spec for a non-deterministic system, and the
       order to actually build the eval and observability stack in.</p>
     </a>
+    <a class="card" href="ai-security-and-guardrails/index.html">
+      <span class="tag">Generative AI</span>
+      <h2>AI security &amp; guardrails →</h2>
+      <p>Jailbreak, injection, extraction, and poisoning are four different attacks —
+      and why governance only counts once it becomes compliance evidence a regulator
+      or buyer can check.</p>
+    </a>
     <a class="card" href="system-design/index.html">
       <span class="tag">Module</span>
       <h2>System design →</h2>
@@ -548,6 +556,10 @@ def main():
     # 1p. Evaluation & observability (Generative AI family, module 9): copy its pages.
     if os.path.isdir(EVALOBS_HTML):
         shutil.copytree(EVALOBS_HTML, os.path.join(SITE, "evaluation-and-observability"))
+
+    # 1p2. AI security & guardrails (Generative AI family, module 10): copy its pages.
+    if os.path.isdir(SECURITY_HTML):
+        shutil.copytree(SECURITY_HTML, os.path.join(SITE, "ai-security-and-guardrails"))
 
     # 1q. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):

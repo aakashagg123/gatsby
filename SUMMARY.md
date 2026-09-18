@@ -242,6 +242,13 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 1. [Why eval investment is the job](./evaluation-and-observability/why-eval-investment-is-the-job.md)
 2. [Building the eval stack in the right order](./evaluation-and-observability/building-the-eval-stack-in-the-right-order.md) · [Recap](./evaluation-and-observability/recap.md)
 
+## [AI security & guardrails](./ai-security-and-guardrails/README.md)
+
+Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
+
+1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md)
+2. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md) · [Recap](./ai-security-and-guardrails/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the
