@@ -1370,4 +1370,24 @@ GLOSSARY = [
  "related":["soc-2","red-teaming"],
 },
 
+# ====================== COST OPTIMIZATION (GenAI) ======================
+{
+ "k":"finops","t":"FinOps","cat":"Generative AI",
+ "short":"The operating discipline that turns cost attribution into governance — enforced budgets, chargeback or showback, and a recurring cost review — deciding where spend goes next instead of only reporting where it went.",
+ "fp":"Attribution tells you where the money went, after the fact. FinOps is what a team does with that information before the next invoice: caps that actually stop a runaway spend automatically, a routing of cost back to the team that generated it, and a standing review that catches drift the way a postmortem catches an incident.",
+ "example":"A per-tenant budget throttles a runaway agent loop automatically at 100% of its cap, instead of the team finding out from next month's bill.",
+ "uses":["Deciding whether a budget needs to enforce or only alert","Choosing between chargeback and showback for a given team's AI spend","Structuring a recurring cost review with owned action items"],
+ "see":("FinOps for AI: budgets, forecasting & the cost review","cost-optimization/finops-budgets-forecasting-and-the-cost-review.md"),
+ "related":["chargeback","cost-attribution"],
+},
+{
+ "k":"chargeback","t":"Chargeback","aliases":["showback","chargeback vs showback"],"cat":"Generative AI",
+ "short":"Routing attributed AI cost back to the team that generated it — chargeback actually debits their budget, showback only makes the number visible — a choice with real incentive tradeoffs.",
+ "fp":"Both practices answer 'whose spend is this,' but they differ in consequence. Chargeback makes the cost real money out of a team's own budget, which sharpens incentives fast — a team that pays for its own tokens starts asking whether every feature needs the biggest model. Showback only shows the number, with no financial bite, which is lower-friction but relies on a team caring about a figure that doesn't touch their P&L.",
+ "example":"A team on showback ignores a growing AI line item for two quarters; the same team moved to chargeback starts optimizing model choice within weeks.",
+ "uses":["Deciding which practice fits an organization's cost-maturity stage","Explaining why visibility alone often fails to change engineering behavior","Scoping the billing-dispute friction chargeback introduces for shared services"],
+ "see":("FinOps for AI: budgets, forecasting & the cost review","cost-optimization/finops-budgets-forecasting-and-the-cost-review.md"),
+ "related":["finops","cost-attribution"],
+},
+
 ]

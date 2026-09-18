@@ -16,7 +16,7 @@ SCAN_DIRS = [
     "content", "agentic-ai", "first-principles", "knowledge-graphs", "product-sense",
     "generative-ai", "llms", "api-integrations", "rag-vector-databases",
     "memory-and-context", "tool-calling", "ai-agents", "agentic-workflows",
-    "evaluation-and-observability", "ai-security-and-guardrails",
+    "evaluation-and-observability", "ai-security-and-guardrails", "cost-optimization",
     "technical-product-management", "technical-product-sense",
     "system-design", "harness-engineering", "flowable",
 ]
