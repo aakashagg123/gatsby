@@ -36,8 +36,8 @@ each module ships.
 | `first-principles/` | ☑ | ☑ | ☑ | ☑ | Audited full module (6 lessons + recap). Already compliant with WRITER.md — thesis-first, sourced case studies (SpaceX, Wright brothers, Theranos, Munger, Ericsson) doing real work, sharp closes, no filler. No content gaps material enough to warrant a wave. No edits shipped. |
 | GenAI module 10 (AI security & guardrails) | ☑ | ☑ (written fresh) | n/a | ☑ | Shipped 2-lesson module in WRITER.md voice from the start, rescoped from a planned 7 lessons — see `GENERATIVE_AI_ROADMAP.md` for the rescoping rationale. |
 | GenAI module 11 (Cost optimization) | ☑ | ☑ (written fresh) | n/a | ☑ | Shipped 2-lesson module in WRITER.md voice from the start, rescoped from a planned 6 lessons. Completes the 11-module family. |
-| Phased-track nav infra (Workstream 2b) | ☐ | — | — | ☐ | `harness-engineering/`, `flowable/` |
-| Methodology/Authoring removal (Workstream 3) | — | — | — | ☐ | Delete 4 files, fix 6 link sites |
+| Phased-track nav infra (Workstream 2b) | ☑ | — | — | ☑ | Two-level Phase → Lesson left sidebar for `harness-engineering/`, `flowable/`. Active phase expands; others collapse to a link to their own README. |
+| Methodology/Authoring removal (Workstream 3) | — | — | — | ☑ | Deleted 4 files, fixed all reference sites. `check_links.py` confirms 0 broken links. |
 | GenAI module 1 (Generative AI: the big picture) | ☐ | ☐ | ☐ | ☐ | Retrofit |
 | GenAI module 2 (LLMs) | ☐ | ☐ | ☐ | ☐ | Retrofit |
 | GenAI module 3 (APIs & integrations) | ☐ | ☐ | ☐ | ☐ | Retrofit |

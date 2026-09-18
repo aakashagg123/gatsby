@@ -8,7 +8,7 @@ time — then use the real SDKs.** Every lesson ships a reusable artifact.
 ![Phases](https://img.shields.io/badge/phases-20-d97757?style=flat-square&labelColor=181818)
 ![Track](https://img.shields.io/badge/track-build%20it%20%2F%20use%20it-d97757?style=flat-square&labelColor=181818)
 
-**[🗺️ Roadmap](./ROADMAP.md)** · **[🧭 Methodology](./METHODOLOGY.md)** · **[✍️ Authoring](./AUTHORING.md)** · **[📐 Ten Principles](./foundations/harness-principles.md)**
+**[🗺️ Roadmap](./ROADMAP.md)** · **[📐 Ten Principles](./foundations/harness-principles.md)**
 
 </div>
 
@@ -28,7 +28,7 @@ shipped artifact installs directly into them.
 
 Each lesson runs the same six beats: **Motto → Problem → Concept → Build It → Use It →
 Ship It**, then a short self-quiz. You implement from the standard library first, then
-use the production SDK. See [`METHODOLOGY.md`](./METHODOLOGY.md).
+use the production SDK.
 
 ## Start here
 
