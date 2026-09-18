@@ -38,15 +38,15 @@ each module ships.
 | GenAI module 11 (Cost optimization) | ☑ | ☑ (written fresh) | n/a | ☑ | Shipped 2-lesson module in WRITER.md voice from the start, rescoped from a planned 6 lessons. Completes the 11-module family. |
 | Phased-track nav infra (Workstream 2b) | ☑ | — | — | ☑ | Two-level Phase → Lesson left sidebar for `harness-engineering/`, `flowable/`. Active phase expands; others collapse to a link to their own README. |
 | Methodology/Authoring removal (Workstream 3) | — | — | — | ☑ | Deleted 4 files, fixed all reference sites. `check_links.py` confirms 0 broken links. |
-| GenAI module 1 (Generative AI: the big picture) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 2 (LLMs) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 3 (APIs & integrations) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 4 (RAG & vector databases) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 5 (Memory & context) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 6 (Tool calling) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 7 (AI agents) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 8 (Agentic workflows) | ☐ | ☐ | ☐ | ☐ | Retrofit |
-| GenAI module 9 (Evaluation & observability) | ☐ | ☐ | ☐ | ☐ | Retrofit |
+| GenAI module 1 (Generative AI: the big picture) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already WRITER.md-compliant — thesis-first, one load-bearing analogy per lesson, sharp closes, zero hedging/filler hits. No material gaps. No edits shipped. |
+| GenAI module 2 (LLMs) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits (spot-checked "might be"/"leverage"/"unlocked" in context — all legitimate). No material gaps; deeper mechanics correctly deferred to inference-internals spokes. No edits shipped. |
+| GenAI module 3 (APIs & integrations) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. MCP history and recap examples verified accurate as of today. No material gaps. No edits shipped. |
+| GenAI module 4 (RAG & vector databases) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits (the one "leverage" hit is legitimate noun usage). Depth/breadth/accuracy solid; hub-and-spoke discipline followed correctly. No edits shipped. |
+| GenAI module 5 (Memory & context) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant — "might be"/"seems to" hits are all in-scope descriptions of memory's illusion/variability, not authorial hedging. No material gaps within its deliberately narrow scope. No edits shipped. |
+| GenAI module 6 (Tool calling) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. All 5 spoke links verified to resolve. No material gaps. No edits shipped. |
+| GenAI module 7 (AI agents) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits, no exclamation points. All spoke links to agentic-ai/ verified. No material gaps. No edits shipped. |
+| GenAI module 8 (Agentic workflows) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. Spoke links to agentic-ai/ and flowable/ verified. No material gaps. No edits shipped. |
+| GenAI module 9 (Evaluation & observability) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. All 4 spoke links verified. No material gaps. No edits shipped. |
 | `content/` (AI engineering, 7 modules) | ☐ | ☐ | ☐ | ☐ | |
 | `agentic-ai/` | ☐ | ☐ | ☐ | ☐ | |
 | `knowledge-graphs/` | ☐ | ☐ | ☐ | ☐ | |
