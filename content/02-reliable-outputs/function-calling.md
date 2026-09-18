@@ -140,3 +140,4 @@ The model must never be able to do something the *user* couldn't:
 - [Safety engineering](../05-safety-multitenancy/safety-engineering.md)
 - [Multi-tenant isolation](../05-safety-multitenancy/multi-tenant-isolation.md)
 - [Production failure modes](../06-strategy-tradeoffs/production-failure-modes.md)
+- [Tool calling: the product surface](../../tool-calling/what-tool-calling-is.md) — this contract, one level up, at product-decision altitude.

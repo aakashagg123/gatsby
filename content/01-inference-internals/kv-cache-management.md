@@ -79,6 +79,13 @@ It nearly eliminates fragmentation and enables much higher concurrency. See
 - **Grouped/Multi-Query Attention (GQA/MQA)** — fewer *KV* heads than query
   heads, so the cache shrinks proportionally. Most modern models use GQA for
   exactly this reason.
+- **Multi-head Latent Attention (MLA)** — a deeper compression than GQA: instead
+  of shrinking the *number* of KV heads, compress the KV representation itself
+  into a low-rank latent vector, then reconstruct it at attention time. DeepSeek-V2
+  and V3 made this the reference architecture for the technique. It buys a bigger
+  cache reduction than GQA alone, at the cost of a materially more complex
+  attention implementation — an architectural bet made at training time, not a
+  serving-time knob.
 - **Sliding-window / local attention** — bound the cache to the last *N* tokens.
 
 ## Why this is the throughput story
@@ -98,6 +105,7 @@ optimization. This is the mechanism behind
 | Aggressive eviction | Higher concurrency | Recompute/swap latency on the tail |
 | FP8/INT8 KV | ~2–4× more concurrency | Small quality risk on long contexts |
 | GQA/MQA | Big cache reduction | Baked into the model architecture |
+| MLA | Deeper cache reduction than GQA | More complex attention implementation; also baked in at training time |
 | Sliding window | Bounded memory | Forgets distant context |
 
 ## Failure modes

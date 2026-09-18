@@ -47,7 +47,7 @@ each module ships.
 | GenAI module 7 (AI agents) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits, no exclamation points. All spoke links to agentic-ai/ verified. No material gaps. No edits shipped. |
 | GenAI module 8 (Agentic workflows) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. Spoke links to agentic-ai/ and flowable/ verified. No material gaps. No edits shipped. |
 | GenAI module 9 (Evaluation & observability) | ☑ | ☑ | ☑ | ☑ | Audited (background agent). Already compliant, zero hedging/filler hits. All 4 spoke links verified. No material gaps. No edits shipped. |
-| `content/` (AI engineering, 7 modules) | ☐ | ☐ | ☐ | ☐ | |
+| `content/` (AI engineering, 7 modules) | n/a | ☑ | ☑ | ☑ | Audited (3 background agents, 37 files). Already WRITER.md-compliant, zero material voice issues. Two real gap classes found and fixed: (1) modules 02/03/05 predated the newer GenAI-family tracks and never backlinked to `tool-calling/`, `rag-vector-databases/`, `ai-security-and-guardrails/` — added 6 spoke links. (2) `01-inference-internals` was missing 3 genuinely current (2025-26) techniques: MLA (DeepSeek-V2/V3 KV compression), prefill/decode disaggregation as a production serving architecture, and FP4 (Blackwell-class quantization) — added to `kv-cache-management.md`, `batching-and-paged-attention.md`/`prefill-vs-decode.md`, and `quantization-formats.md` respectively. Nav (right-hand outline) already live from Workstream 2a. |
 | `agentic-ai/` | ☐ | ☐ | ☐ | ☐ | |
 | `knowledge-graphs/` | ☐ | ☐ | ☐ | ☐ | |
 | `harness-engineering/` | ☐ | ☐ | ☐ | ☐ | Needs Workstream 2b shipped first |

@@ -163,3 +163,4 @@ source changes.
 - [Prompt vs. semantic caching](../01-inference-internals/prompt-vs-semantic-caching.md)
 - [Multi-tenant isolation](../05-safety-multitenancy/multi-tenant-isolation.md)
 - [Fine-tuning vs. ICL vs. RAG vs. distillation](../06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md)
+- [Why RAG](../../rag-vector-databases/why-rag.md) — this same pipeline at product-decision altitude, plus vector-database indexing and retrieval-quality tuning in their own dedicated lessons.

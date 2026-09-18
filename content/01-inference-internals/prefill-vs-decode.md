@@ -79,7 +79,9 @@ Key consequences:
   TPOT.
 - **Chunked prefill** interleaves prefill of new requests with ongoing
   decode, so a giant prompt doesn't stall everyone else's token stream. It's
-  a scheduling fix for the prefill/decode interference problem.
+  a scheduling fix for the prefill/decode interference problem — for the more
+  aggressive fix, running prefill and decode on separate GPU pools entirely, see
+  [prefill/decode disaggregation](./batching-and-paged-attention.md#prefilldecode-disaggregation-separating-the-pools-entirely).
 
 ## Workload shape matters
 

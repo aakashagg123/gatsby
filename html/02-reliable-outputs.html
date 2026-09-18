@@ -348,6 +348,7 @@ Treat it as untrusted input to be validated, bounded, and made safe to act on. T
 is the <a href="00-foundations.html#harness-engineering">harness</a> doing its job.</p>
 <h2>Connects to other tracks</h2>
 <ul>
+<li><a href="../tool-calling/index.html">Tool calling</a> — the same contract discipline at product-decision altitude, plus permissions and blast radius.</li>
 <li><a href="../agentic-ai/tools-and-function-calling.html">Tools &amp; function calling</a> — the agent's view of the same tool contracts.</li>
 <li><a href="../harness/phases/03-tool-engineering/README.html">Tool engineering in the harness</a> — building reliable tools by hand.</li>
 <li><a href="../flowable/phases/04-service-integration-and-error-handling/README.html">Service integration &amp; error handling (Flowable)</a> — the same idempotency and retry discipline in a process engine.</li>
@@ -644,6 +645,7 @@ idempotent, a retry can double-charge a card or send two emails.</p>
 <li><a href="05-safety-multitenancy.html#safety-engineering">Safety engineering</a></li>
 <li><a href="05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></li>
 <li><a href="06-strategy-tradeoffs.html#production-failure-modes">Production failure modes</a></li>
+<li><a href="../tool-calling/what-tool-calling-is.html">Tool calling: the product surface</a> — this contract, one level up, at product-decision altitude.</li>
 </ul><a class="totop" href="#top">↑ back to top</a></section><section class="lesson" id="agent-guardrails"><div class="lesson-head"><span class="lesson-num">02.3</span><h2>Agent guardrails: loop budgets, tool budgets, and termination conditions</h2></div><h2 id="tldr">TL;DR</h2>
 <p>An agent is a loop: think, act, observe, repeat. Loops need brakes. Without
 explicit <strong>budgets</strong> — max iterations, max tool calls, max tokens, max

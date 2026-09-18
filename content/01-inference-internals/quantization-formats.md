@@ -52,12 +52,17 @@ What you quantize matters as much as the bit count:
 | --- | --- | --- | --- | --- |
 | **INT8** | 8 | Moderate | W8A8 serving, broad HW support | Usually near-lossless |
 | **FP8 (E4M3/E5M2)** | 8 | **Yes** (float) | Modern GPUs (Hopper+), weights+activations | Near-lossless, range-robust |
+| **FP4** | 4 | **Yes** (float) | Blackwell-class GPUs, weights+activations | Good *with a good method*, range-robust vs. INT4 |
 | **INT4** | 4 | Low | Weight-only, memory-constrained serving | Good *with AWQ/GPTQ*, risky naive |
 | **INT3/INT2** | ≤3 | Very low | Research / extreme compression | Usually large degradation |
 
 FP8 vs INT8 at the same 8 bits: FP8's exponent gives it the **range** to absorb
 activation outliers, so it often quantizes activations more gracefully. This is handy
 on hardware with native FP8 support. INT8 has the widest software and hardware support.
+The same relationship repeats one tier down: **FP4 vs. INT4** at 4 bits, FP4 keeps a
+float layout's dynamic range where INT4's fixed grid struggles most, and it's now
+natively accelerated on Blackwell-class GPUs. The rule doesn't change with the tier —
+confirm gains with evals, not intuition about the format's name.
 
 ## The methods (how to hit 4-bit without wrecking quality)
 
@@ -108,6 +113,7 @@ bit-width.
 | Choice | Buys | Costs |
 | --- | --- | --- |
 | INT8 / FP8 | ~2× memory, near-lossless | Minimal |
+| FP4 (Blackwell) | ~4× memory, better range than INT4 | Real but bounded quality risk; needs Blackwell-class hardware |
 | INT4 (AWQ/GPTQ) | ~4× memory, big $ win | Real but bounded quality risk |
 | KV-cache FP8/INT8 | More concurrency/throughput | Small long-context risk |
 | Weight+activation | Faster matmuls too | Activation-outlier degradation |
