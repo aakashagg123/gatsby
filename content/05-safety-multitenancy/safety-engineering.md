@@ -156,3 +156,4 @@ that run in CI, not as one-off manual checks.
 - [RAG architecture](../03-rag/rag-architecture.md)
 - [Evals (adversarial tests)](../04-evals-observability/evals.md)
 - [Observability](../04-evals-observability/observability.md)
+- [The threat model, and guardrails as architecture](../../ai-security-and-guardrails/the-threat-model-and-guardrails.md) — jailbreak, extraction, and poisoning named alongside the injection defenses developed here.

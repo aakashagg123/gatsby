@@ -20,6 +20,7 @@ is the [harness](../00-foundations/harness-engineering.md) doing its job.
 
 ## Connects to other tracks
 
+- [Tool calling](../../tool-calling/README.md) — the same contract discipline at product-decision altitude, plus permissions and blast radius.
 - [Tools & function calling](../../agentic-ai/tools-and-function-calling.md) — the agent's view of the same tool contracts.
 - [Tool engineering in the harness](../../harness-engineering/phases/03-tool-engineering/README.md) — building reliable tools by hand.
 - [Service integration & error handling (Flowable)](../../flowable/phases/04-service-integration-and-error-handling/README.md) — the same idempotency and retry discipline in a process engine.

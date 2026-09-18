@@ -86,6 +86,24 @@ throughput — and therefore lower **cost per token** — at comparable latency.
 the core reason a well-configured open-source server (vLLM, TGI, TensorRT-LLM, SGLang)
 can serve far more traffic per GPU than a naive loop.
 
+## Prefill/decode disaggregation — separating the pools entirely
+
+Chunked prefill mitigates prefill/decode interference on a *shared* pool of GPUs.
+The more aggressive fix removes the interference at the root: run prefill and
+decode on **separate GPU pools entirely**. A request's prefill runs on a
+compute-optimized pool, its KV cache transfers over a fast interconnect, and
+decode continues on a pool tuned for memory-bandwidth-bound work. Neither phase
+ever waits behind the other, because they were never sharing hardware to begin
+with.
+
+This is now a mainstream production serving architecture (DistServe, Mooncake,
+NVIDIA Dynamo), not a research curiosity. The tradeoff is operational complexity —
+two pools to provision, monitor, and keep balanced, plus a KV-transfer hop that
+adds its own latency — against a ceiling chunked prefill alone can't reach: at
+high enough concurrency, no scheduling trick fully hides one phase's footprint
+from the other on shared hardware. Disaggregation is the lever teams reach for
+once that ceiling is the actual bottleneck, not before.
+
 ## Tradeoffs
 
 | Lever | Buys you | Watch out for |
@@ -93,6 +111,7 @@ can serve far more traffic per GPU than a naive loop.
 | Bigger batches | Throughput, lower $/token | Higher per-user TPOT; more KV memory |
 | Continuous batching | Utilization + low queueing | Prefill/decode interference |
 | Chunked prefill | Smoother TPOT under mixed load | Slightly higher prefill latency |
+| Prefill/decode disaggregation | Removes the interference at the root | Two pools to operate; KV-transfer hop |
 | Paged KV blocks | Concurrency, prefix sharing | Small bookkeeping overhead |
 
 There is no free lunch: pushing batch size up improves cost and throughput but can

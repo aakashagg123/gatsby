@@ -18,6 +18,7 @@ then prove it works.
 
 ## Connects to other tracks
 
+- [RAG & vector databases](../../rag-vector-databases/README.md) — the same pipeline at product-decision altitude: embeddings, vector databases, chunking, retrieval quality, and when to reach for long-context or fine-tuning instead.
 - [What is a knowledge graph?](../../knowledge-graphs/what-is-a-knowledge-graph.md) — structured retrieval and GraphRAG.
 - [Retrieval & codebase understanding](../../harness-engineering/phases/13-retrieval-and-codebase-understanding/README.md) — the same retrieval stack at repo scale.
 - [Context & memory in agents](../../agentic-ai/context-and-memory.md) — retrieval as the agent's working memory.
