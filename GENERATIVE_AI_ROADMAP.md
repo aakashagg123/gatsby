@@ -9,8 +9,8 @@ cross-links for extra depth.
 > **Status:** pilot shipped (*RAG & vector databases*, module 4), sign-off received.
 > Modules 1 (*Generative AI: the big picture*), 2 (*LLMs*), 3 (*APIs &
 > integrations*), 5 (*Memory & context*), 6 (*Tool calling*), 7 (*AI agents*), 8
-> (*Agentic workflows*), and 9 (*Evaluation & observability*) are now built. Remaining
-> two modules are batched in learning order.
+> (*Agentic workflows*), 9 (*Evaluation & observability*), and 10 (*AI security &
+> guardrails*) are now built. One module remains.
 
 ## Decisions (locked)
 
@@ -152,10 +152,28 @@ this investment is the job before a team feels ready for it, and the build order
 turns reading real traces into a full eval and observability practice without
 over-building. No new glossary terms were added.
 
-### 10. 🔐 AI security & guardrails — *7 lessons*
+### 10. 🔐 AI security & guardrails — *2 lessons* — **BUILT** (rescoped from 7 → 2)
 Keeping the system, its data, and its tenants safe.
-1. The threat model (prompt injection, jailbreaks, leakage) · 2. The lethal trifecta · 3. Guardrails (input/output, runtime, fail-closed) · 4. Least privilege & permissions · 5. Multi-tenant isolation · 6. Human-in-the-loop & audit trails · 7. Governance & compliance. → Recap.
+1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md) · 2. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md). → [Recap](./ai-security-and-guardrails/recap.md).
 *Spokes:* `content/05-safety-multitenancy/*`, `agentic-ai/safety-security-and-governance`.
+
+*Rescoping note:* this topic is as densely pre-covered as module 9 was, for the same
+reason. `content/05-safety-multitenancy/safety-engineering.md` and
+`multi-tenant-isolation.md` already develop prompt injection, the lethal trifecta, data
+leakage prevention, permission boundaries, and cross-tenant isolation in full engineering
+depth; `agentic-ai/safety-security-and-governance.md` already develops least privilege,
+sandboxing, human-in-the-loop approval gates, audit trails, and organizational
+governance (registry, identity, policy, accountable owner) in full. Every core term the
+planned 7 lessons would have introduced for those topics — `prompt-injection`,
+`lethal-trifecta`, `least-privilege`, `human-in-the-loop`, `multi-tenancy`,
+`guardrail` — already exists and homes correctly to those sources. The module compresses
+to the 2 lessons that are genuinely new: the full four-part threat taxonomy (jailbreak,
+injection, extraction, poisoning — jailbreak specifically had no existing home) and
+guardrails as a fail-closed architecture; and turning internal governance into external
+compliance evidence (SOC 2, GDPR's automated-decision rules, the EU AI Act's risk tiers,
+red-teaming, model cards — none of which existed anywhere in the curriculum before this
+module). Four new glossary terms were added: `jailbreak`, `red-teaming`, `soc-2`,
+`eu-ai-act`.
 
 ### 11. 💰 Cost optimization — *6 lessons*
 Making the economics work.
@@ -179,8 +197,9 @@ rescoped from 6 to 2 lessons; module 9 rescoped from 7 to 2 lessons).
 ## Build order after the pilot
 
 Foundations (1 GenAI, 2 LLMs, 3 APIs) → Building blocks (4 RAG ✅, 5 Memory ✅, 6 Tools ✅)
-→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals ✅, 10 Security, 11 Cost). Each module
-ships complete (content + HTML + glossary + graph + Key-terms) before the next begins.
+→ Systems (7 Agents ✅, 8 Workflows ✅) → Operations (9 Evals ✅, 10 Security ✅, 11 Cost). Each
+module ships complete (content + HTML + glossary + graph + Key-terms) before the next
+begins.
 
 ## Wiring checklist per module (mirrors the existing tracks)
 
