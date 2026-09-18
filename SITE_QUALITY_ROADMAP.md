@@ -29,11 +29,11 @@ each module ships.
 
 | Track | Nav | Voice pass | Gap analysis | Shipped | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Right-hand outline nav infra (Workstream 2a) | — | — | — | ☐ | Generic infra: `content/` + all 16 flat tracks |
-| `product-sense/` | ☐ | ☐ | ☐ | ☐ | |
-| `technical-product-sense/` | ☐ | ☐ | ☐ | ☐ | |
-| `technical-product-management/` | ☐ | ☐ | ☐ | ☐ | |
-| `first-principles/` | ☐ | ☐ | ☐ | ☐ | |
+| Right-hand outline nav infra (Workstream 2a) | — | — | — | ☑ | Generic infra: `content/` + all 16 flat tracks. Shipped PR #71. |
+| `product-sense/` | ☑ | ☑ | ☑ | ☑ | Audited full module against WRITER.md and the 4 axes. Already compliant — thesis-first, active voice, no hedging/filler, mini-cases doing real work, sharp closes. No content gaps material enough to warrant a wave: prioritization/metrics frameworks are deliberately out of scope here and already cross-linked to `technical-product-management/`. No edits shipped. |
+| `technical-product-sense/` | ☑ | ☑ | ☑ | ☑ | Audited full module (9 lessons + recap). Already compliant with WRITER.md — thesis-first TL;DRs, worked-pass mini-cases with real mechanism (idempotency key, retry storm, p95 budget breakdown, unit-economics napkin), sharp closes, no hedging or filler. No content gaps material enough to warrant a wave. No edits shipped. |
+| `technical-product-management/` | ☑ | ☑ | ☑ | ☑ | Audited full module (9 lessons + recap). Already compliant with WRITER.md — thesis-first, evidence-driven (Knight Capital, expand/migrate/contract), sharp closes, no filler. No content gaps material enough to warrant a wave. No edits shipped. |
+| `first-principles/` | ☑ | ☑ | ☑ | ☑ | Audited full module (6 lessons + recap). Already compliant with WRITER.md — thesis-first, sourced case studies (SpaceX, Wright brothers, Theranos, Munger, Ericsson) doing real work, sharp closes, no filler. No content gaps material enough to warrant a wave. No edits shipped. |
 | GenAI module 10 (AI security & guardrails) | ☐ | n/a (written fresh) | n/a | ☐ | |
 | GenAI module 11 (Cost optimization) | ☐ | n/a (written fresh) | n/a | ☐ | Completes the 11-module family |
 | Phased-track nav infra (Workstream 2b) | ☐ | — | — | ☐ | `harness-engineering/`, `flowable/` |
