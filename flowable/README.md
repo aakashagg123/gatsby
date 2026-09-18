@@ -9,7 +9,7 @@ technical build layer for engineers.
 ![Phases](https://img.shields.io/badge/phases-12-d97757?style=flat-square&labelColor=181818)
 ![Track](https://img.shields.io/badge/track-build%20it%20%2F%20use%20it-d97757?style=flat-square&labelColor=181818)
 
-**[🗺️ Roadmap](./ROADMAP.md)** · **[🧭 Methodology](./METHODOLOGY.md)** · **[✍️ Authoring](./AUTHORING.md)** · **[📐 Ten Principles](./foundations/process-automation-principles.md)**
+**[🗺️ Roadmap](./ROADMAP.md)** · **[📐 Ten Principles](./foundations/process-automation-principles.md)**
 
 </div>
 
@@ -36,7 +36,7 @@ and you can reason about the engine's behaviour from first principles.
 ## How it works
 
 Each lesson runs the same six beats: **Motto → Problem → Concept → Build It → Use It →
-Ship It**, then a short self-quiz. See [`METHODOLOGY.md`](./METHODOLOGY.md).
+Ship It**, then a short self-quiz.
 
 ## Start here
 

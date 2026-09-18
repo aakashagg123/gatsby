@@ -285,6 +285,3 @@ flowchart TB
 ### Totals (planned)
 
 20 phases · ~120 lessons · Python + TypeScript · every lesson ships an artifact.
-
-See [`METHODOLOGY.md`](./METHODOLOGY.md) for the framework and
-[`AUTHORING.md`](./AUTHORING.md) for how to write a lesson.

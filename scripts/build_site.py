@@ -15,6 +15,7 @@ viewer per markdown doc — so it never fails on a missing dependency.
 
 Run:  python3 scripts/build_site.py
 """
+import html as htmllib
 import os
 import shutil
 import reader_widget
@@ -71,7 +72,31 @@ VIEWER = """<!doctype html>
   .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
   .top a:hover{{color:var(--accent-deep)}}
   .top .brand{{color:var(--accent-deep);font-weight:600}}
+  .layout{{display:grid;grid-template-columns:268px minmax(0,1fr)}}
+  .layout.no-sidebar{{grid-template-columns:minmax(0,1fr)}}
+  .sidebar{{border-right:1px solid var(--line);padding:26px 16px 60px;font-size:.86rem;
+    max-height:calc(100vh - 49px);overflow-y:auto;position:sticky;top:49px;align-self:start}}
+  .sidebar .sb-top{{display:block;color:var(--muted);font-weight:600;font-size:.78rem;
+    text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;margin-bottom:8px}}
+  .sb-phase{{margin-bottom:2px}}
+  .sb-phase-title{{display:block;padding:7px 10px;border-radius:6px;color:var(--ink);
+    font-weight:500;line-height:1.35}}
+  .sb-phase-title:hover{{background:var(--soft);text-decoration:none}}
+  .sb-phase.active > .sb-phase-title{{color:var(--accent-deep);font-weight:600;background:var(--soft)}}
+  .sb-lessons{{display:flex;flex-direction:column;margin:2px 0 10px;padding-left:10px;
+    border-left:1px solid var(--line)}}
+  .sb-lesson{{display:block;padding:6px 12px;border-radius:6px;color:var(--muted);
+    font-size:.85rem;line-height:1.35}}
+  .sb-lesson:hover{{background:var(--soft);color:var(--ink);text-decoration:none}}
+  .sb-lesson.current{{color:var(--accent-deep);font-weight:600;background:#ddf4ff}}
   main{{max-width:760px;margin:0 auto;padding:48px 24px 64px}}
+  .layout main{{margin:0}}
+  .layout .lessonnav{{margin:8px 0 64px;max-width:760px}}
+  @media (max-width:880px){{
+    .layout{{grid-template-columns:minmax(0,1fr)}}
+    .sidebar{{display:none}}
+    .layout main{{padding:32px 20px 40px}}
+  }}
   h1,h2,h3,h4{{line-height:1.25;letter-spacing:-0.01em;font-weight:600}}
   h1{{font-size:2.2rem;margin:0 0 .6em}}
   h2{{font-size:1.5rem;margin-top:2.2em;padding-bottom:.35em;border-bottom:1px solid var(--line)}}
@@ -133,8 +158,12 @@ VIEWER = """<!doctype html>
   }}
 </style></head><body>
 <div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{track_root}index.html">{brand}</a></div>
-<main id="content">Loading…</main>
+<div class="layout{layout_cls}">
+{sidebar}
+<div><main id="content">Loading…</main>
 {nav}
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -477,7 +506,67 @@ def lesson_order(dst_harness):
 
 def _title_of(md_path):
     with open(md_path) as f:
-        return f.readline().lstrip("# ").strip()
+        for line in f:
+            line = line.strip()
+            if line.startswith("#"):
+                return line.lstrip("# ").strip()
+        return os.path.splitext(os.path.basename(md_path))[0]
+
+
+def phase_tree(dst_track):
+    """Phase -> lessons tree: [{title, readme (en.md path), lessons: [(title, en.md path)]}].
+
+    Mirrors lesson_order()'s walk (phase dir, then lesson dir, both sorted) so the
+    tree and the prev/next sequence always agree on lesson order.
+    """
+    tree = []
+    phases_dir = os.path.join(dst_track, "phases")
+    if not os.path.isdir(phases_dir):
+        return tree
+    for phase in sorted(os.listdir(phases_dir)):
+        pdir = os.path.join(phases_dir, phase)
+        if not os.path.isdir(pdir):
+            continue
+        readme = os.path.join(pdir, "README.md")
+        lessons = []
+        for lesson in sorted(os.listdir(pdir)):
+            en = os.path.join(pdir, lesson, "docs", "en.md")
+            if os.path.exists(en):
+                lessons.append((_title_of(en), en))
+        tree.append({
+            "dir": pdir,
+            "title": _title_of(readme) if os.path.exists(readme) else phase,
+            "readme": readme if os.path.exists(readme) else None,
+            "lessons": lessons,
+        })
+    return tree
+
+
+def sidebar_html(md_path, tree, top_href):
+    """Two-level Phase -> Lesson sidebar. The phase containing md_path (if any) is
+    expanded with its lesson links; every other phase collapses to a single link to
+    its own README. Links are relative to md_path's own directory.
+    """
+    if not tree:
+        return ""
+    here_dir = os.path.dirname(md_path)
+    rows = [f'<a class="sb-top" href="{top_href}">← Track overview</a>']
+    for phase in tree:
+        active = md_path == phase["readme"] or any(md_path == en for _, en in phase["lessons"])
+        readme_href = (os.path.relpath(phase["readme"][:-3] + ".html", here_dir)
+                        if phase["readme"] else "#")
+        cls = "sb-phase active" if active else "sb-phase"
+        rows.append(f'<div class="{cls}"><a class="sb-phase-title" href="{readme_href}">'
+                    f'{htmllib.escape(phase["title"])}</a>')
+        if active and phase["lessons"]:
+            rows.append('<div class="sb-lessons">')
+            for title, en in phase["lessons"]:
+                href = os.path.relpath(en[:-3] + ".html", here_dir)
+                lcls = "sb-lesson current" if en == md_path else "sb-lesson"
+                rows.append(f'<a class="{lcls}" href="{href}">{htmllib.escape(title)}</a>')
+            rows.append('</div>')
+        rows.append('</div>')
+    return '<nav class="sidebar">' + "".join(rows) + "</nav>"
 
 
 def nav_html(md_path, prev_md, next_md):
@@ -591,6 +680,9 @@ def main():
             prev_next[md] = (lessons[i - 1] if i > 0 else None,
                              lessons[i + 1] if i < len(lessons) - 1 else None)
 
+        # 3b. Phase -> lesson tree for the two-level left sidebar (Workstream 2b).
+        tree = phase_tree(dst_track)
+
         # 4. Render a viewer next to every markdown file (sources stay browsable).
         for dp, _, files in os.walk(dst_track):
             for fn in files:
@@ -608,6 +700,8 @@ def main():
                 if is_lesson(md_path):
                     p, n = prev_next.get(md_path, (None, None))
                     nav = nav_html(md_path, p, n)
+                sidebar = sidebar_html(md_path, tree, (root or "./") + "index.html")
+                layout_cls = "" if sidebar else " no-sidebar"
                 with open(html_path, "w") as f:
                     f.write(reader_widget.inject(VIEWER.format(
                         title=title,
@@ -616,6 +710,8 @@ def main():
                         root="../" + root if root else "../",   # _site/ root
                         track_root=root or "./",
                         nav=nav,
+                        sidebar=sidebar,
+                        layout_cls=layout_cls,
                     )))
                 pages += 1
 
