@@ -387,7 +387,10 @@ retrieving <em>structure</em>:</p>
   <a href="reasoning-and-analytics.html">communities</a> so "themes across the corpus" becomes
   retrievable. The honest caveat: it adds an indexing stage that costs real money and
   must be <a href="governance-quality-and-trust.html">kept fresh</a>. Reach for it when multi-hop
-  and global questions are actually on your roadmap, not because the acronym is warm.</li>
+  and global questions are actually on your roadmap, not because the acronym is warm.
+  For the retrieval-engineering side of this same pattern — chunking, indexing, and
+  where GraphRAG beats flat RAG on a cost/quality basis — see
+  <a href="../rag-vector-databases/graphrag-and-structured-retrieval.html">Beyond flat RAG: GraphRAG &amp; structured retrieval</a>.</li>
 <li><strong>Text-to-query</strong> — the model writes Cypher/SPARQL; the database executes it. The
   numbers come from the <em>store</em>, not the model's imagination — the right pattern for
   anything quantitative ("how many contracts renew in Q3?"). Constrain it to the
@@ -505,6 +508,8 @@ types — multi-hop, quantitative, global — justify each graph investment in o
 <ul>
 <li><a href="../ai/03-rag.html#rag-architecture">RAG architecture</a> — the baseline this lesson
   extends.</li>
+<li><a href="../rag-vector-databases/graphrag-and-structured-retrieval.html">Beyond flat RAG: GraphRAG &amp; structured retrieval</a>
+  — the retrieval-engineering depth behind the GraphRAG pattern named above.</li>
 <li><a href="building-the-graph.html">Building the graph</a> — the pipeline LLM extraction plugs
   into.</li>
 <li><a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the agent-side view of

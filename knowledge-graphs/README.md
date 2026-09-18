@@ -99,6 +99,7 @@ directly to [RAG & retrieval](../content/03-rag/README.md) and the
 
 ## Connects to other tracks
 
+- [RAG & vector databases: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md) — the retrieval-engineering depth behind this module's GraphRAG lesson.
 - [Evals & observability](../content/04-evals-observability/evals.md) — grounding and citation checks are eval problems.
 - [Retrieval & codebase understanding](../harness-engineering/phases/13-retrieval-and-codebase-understanding/README.md) — the same retrieval machinery at repo scale.
 - [Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) — sequencing a graph program as a product bet.

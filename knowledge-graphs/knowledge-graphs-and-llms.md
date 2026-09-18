@@ -73,6 +73,9 @@ Three patterns to know by name:
   retrievable. The honest caveat: it adds an indexing stage that costs real money and
   must be [kept fresh](./governance-quality-and-trust.md). Reach for it when multi-hop
   and global questions are actually on your roadmap, not because the acronym is warm.
+  For the retrieval-engineering side of this same pattern — chunking, indexing, and
+  where GraphRAG beats flat RAG on a cost/quality basis — see
+  [Beyond flat RAG: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md).
 - **Text-to-query** — the model writes Cypher/SPARQL; the database executes it. The
   numbers come from the *store*, not the model's imagination — the right pattern for
   anything quantitative ("how many contracts renew in Q3?"). Constrain it to the
@@ -166,6 +169,8 @@ types — multi-hop, quantitative, global — justify each graph investment in o
 
 - [RAG architecture](../content/03-rag/rag-architecture.md) — the baseline this lesson
   extends.
+- [Beyond flat RAG: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md)
+  — the retrieval-engineering depth behind the GraphRAG pattern named above.
 - [Building the graph](./building-the-graph.md) — the pipeline LLM extraction plugs
   into.
 - [Context & memory](../agentic-ai/context-and-memory.md) — the agent-side view of
