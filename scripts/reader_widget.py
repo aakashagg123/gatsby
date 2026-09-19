@@ -40,6 +40,13 @@ html[data-rs] main pre{font-size:.85em !important}
 /* ---- margins / column width (only active when data-rm is set) ---- */
 html[data-rm="n"] main{max-width:620px !important}
 html[data-rm="w"] main{max-width:1120px !important}
+/* below this, main is already narrower than either max-width above, so the
+   narrow/wide buttons would otherwise do nothing — map them to side padding */
+@media (max-width:680px){
+  html[data-rm="n"] main{padding-left:12px !important;padding-right:12px !important}
+  html:not([data-rm]) main{padding-left:20px !important;padding-right:20px !important}
+  html[data-rm="w"] main{padding-left:32px !important;padding-right:32px !important}
+}
 /* ---- the widget ---- */
 /* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
 #rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}

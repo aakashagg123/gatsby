@@ -72,6 +72,13 @@ VIEWER = """<!doctype html>
   .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
   .top a:hover{{color:var(--accent-deep)}}
   .top .brand{{color:var(--accent-deep);font-weight:600}}
+  .menu-btn{{display:none;width:44px;height:44px;align-items:center;justify-content:center;
+    border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);
+    font-size:18px;line-height:1;cursor:pointer;flex:0 0 auto;padding:0}}
+  .menu-btn:hover{{border-color:var(--accent)}}
+  #sb-scrim{{position:fixed;inset:0;background:rgba(31,35,40,.30);opacity:0;visibility:hidden;
+    transition:opacity .2s;z-index:34}}
+  #sb-scrim.open{{opacity:1;visibility:visible}}
   .layout{{display:grid;grid-template-columns:268px minmax(0,1fr)}}
   .layout.no-sidebar{{grid-template-columns:minmax(0,1fr)}}
   .sidebar{{border-right:1px solid var(--line);padding:26px 16px 60px;font-size:.86rem;
@@ -94,7 +101,13 @@ VIEWER = """<!doctype html>
   .layout .lessonnav{{margin:8px 0 64px;max-width:760px}}
   @media (max-width:880px){{
     .layout{{grid-template-columns:minmax(0,1fr)}}
-    .sidebar{{display:none}}
+    .menu-btn{{display:inline-flex}}
+    .sidebar{{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;
+      width:280px;max-width:86vw;background:var(--bg);
+      box-shadow:12px 0 40px rgba(31,35,40,.16);
+      transform:translateX(-100%);transition:transform .22s ease;
+      max-height:100%;padding:26px 16px 60px}}
+    .sidebar.open{{transform:translateX(0)}}
     .layout main{{padding:32px 20px 40px}}
   }}
   h1,h2,h3,h4{{line-height:1.25;letter-spacing:-0.01em;font-weight:600}}
@@ -157,13 +170,27 @@ VIEWER = """<!doctype html>
     .lessonnav .nx{{text-align:left}}
   }}
 </style></head><body>
-<div class="top"><a href="{root}index.html">← All courses</a><a class="brand" href="{track_root}index.html">{brand}</a></div>
+<div class="top">{menu_btn}<a href="{root}index.html">← All courses</a><a class="brand" href="{track_root}index.html">{brand}</a></div>
+<div id="sb-scrim"></div>
 <div class="layout{layout_cls}">
 {sidebar}
 <div><main id="content">Loading…</main>
 {nav}
 </div>
 </div>
+<script>
+(function(){{
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){{nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}}
+  function close(){{nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}}
+  btn.addEventListener('click',function(){{nav.classList.contains('open')?close():open()}});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){{if(e.key==='Escape')close()}});
+  nav.addEventListener('click',function(e){{if(e.target.closest('a'))close()}});
+}})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -607,7 +634,7 @@ def sidebar_html(md_path, tree, top_href):
                 rows.append(f'<a class="{lcls}" href="{href}">{htmllib.escape(title)}</a>')
             rows.append('</div>')
         rows.append('</div>')
-    return '<nav class="sidebar">' + "".join(rows) + "</nav>"
+    return '<nav class="sidebar" id="sbNav">' + "".join(rows) + "</nav>"
 
 
 def nav_html(md_path, prev_md, next_md):
@@ -743,6 +770,9 @@ def main():
                     nav = nav_html(md_path, p, n)
                 sidebar = sidebar_html(md_path, tree, (root or "./") + "index.html")
                 layout_cls = "" if sidebar else " no-sidebar"
+                menu_btn = ('<button class="menu-btn" id="sbToggle" aria-expanded="false" '
+                            'aria-controls="sbNav" aria-label="Open lesson menu">☰</button>'
+                            if sidebar else "")
                 with open(html_path, "w") as f:
                     f.write(reader_widget.inject(VIEWER.format(
                         title=title,
@@ -753,6 +783,7 @@ def main():
                         nav=nav,
                         sidebar=sidebar,
                         layout_cls=layout_cls,
+                        menu_btn=menu_btn,
                     )))
                 pages += 1
 

@@ -195,14 +195,17 @@ def head(title, depth_note=""):
 </head>
 <body>"""
 
-def topbar():
+def topbar(with_menu=False):
     links = "".join(
         f'<a href="{SLUG_TO_PAGE[s]}">{num}</a>' for (s, num, *_ ) in MODULES
     )
+    menu_btn = ('<button class="menu-btn" id="sbToggle" aria-expanded="false" '
+                'aria-controls="sbNav" aria-label="Open module menu">☰</button>') if with_menu else ""
+    scrim = '<div id="sb-scrim"></div>' if with_menu else ""
     return f"""<header class="topbar">
-  <a class="brand" href="index.html">{SPARK}<span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
+  {menu_btn}<a class="brand" href="index.html">{SPARK}<span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
   <nav class="topnav">{links}</nav>
-</header>"""
+</header>{scrim}"""
 
 def sidebar(cur_mod, nav_items):
     items = []
@@ -218,7 +221,21 @@ def sidebar(cur_mod, nav_items):
             f'<a class="modlink{active}" href="{SLUG_TO_PAGE[slug]}">'
             f'<span class="num">{num}</span>{htmllib.escape(title)}</a>{sub}'
         )
-    return f'<aside class="sidebar"><div class="sticky">{"".join(items)}</div></aside>'
+    return f'<aside class="sidebar" id="sbNav"><div class="sticky">{"".join(items)}</div></aside>'
+
+SIDEBAR_TOGGLE_JS = """<script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script>"""
 
 def footer(prev_mod, next_mod):
     def card(mod, dir_):
@@ -308,7 +325,7 @@ def build_module(idx):
         toc_rows += '<a href="#recap"><span>📌</span>Recap &amp; real-world examples</a>'
 
     page = head(f"{num} · {title} — AI engineering for PMs")
-    page += topbar()
+    page += topbar(with_menu=True)
     page += '<div class="layout">'
     page += sidebar(slug, nav_items)
     page += f"""<main class="content" id="top">
@@ -325,7 +342,7 @@ def build_module(idx):
   {''.join(sections)}
   {recap_html}
   {footer(prev_mod, next_mod)}
-  </main></div>{iw_js}</body></html>"""
+  </main></div>{SIDEBAR_TOGGLE_JS}{iw_js}</body></html>"""
     with open(os.path.join(OUT, SLUG_TO_PAGE[slug]), "w") as f:
         f.write(reader_widget.inject(page))
 
@@ -418,6 +435,13 @@ a:hover{text-decoration:underline}
 .topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
   padding:5px 10px;border-radius:8px}
 .topnav a:hover{background:var(--bg2);color:var(--accent);text-decoration:none}
+.menu-btn{display:none;width:44px;height:44px;align-items:center;justify-content:center;
+  border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);
+  font-size:18px;line-height:1;cursor:pointer;flex:0 0 auto;padding:0;margin-right:4px}
+.menu-btn:hover{border-color:var(--accent)}
+#sb-scrim{position:fixed;inset:0;background:rgba(31,35,40,.30);opacity:0;visibility:hidden;
+  transition:opacity .2s;z-index:34}
+#sb-scrim.open{opacity:1;visibility:visible}
 
 /* layout */
 .layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
@@ -590,7 +614,14 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 @media (max-width:880px){
   .layout{grid-template-columns:minmax(0,1fr)}
   .content{min-width:0;padding:32px 22px 70px}
-  .sidebar{display:none}
+  .menu-btn{display:inline-flex}
+  .sidebar{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;
+    width:280px;max-width:86vw;background:var(--bg);border-right:none;
+    box-shadow:12px 0 40px rgba(31,35,40,.16);
+    transform:translateX(-100%);transition:transform .22s ease;
+    max-height:100%;overflow-y:auto;padding:0}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar .sticky{position:static;padding:20px 14px 40px}
   .hero h1{font-size:34px}.index-hero h1{font-size:38px}
   .topnav{display:none}
   .iw-field input[type=range]{width:160px}
