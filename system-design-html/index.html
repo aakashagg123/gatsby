@@ -331,18 +331,18 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
   <div class="intro"><p>How real systems are designed at scale — from rate limiters to stock exchanges. This track covers the architecture, tradeoffs, and failure modes that shape product decisions.</p>
 <pre class="mermaid">flowchart LR
-  subgraph Foundations
+  subgraph F[&quot;Foundations&quot;]
     F1[Scaling]
     F2[Estimation]
     F3[Framework]
   end
-  subgraph Building Blocks
+  subgraph B[&quot;Building Blocks&quot;]
     B1[Rate limiting]
     B2[Consistent hashing]
     B3[KV stores]
     B4[Unique IDs]
   end
-  subgraph Systems
+  subgraph S[&quot;Systems&quot;]
     S1[Web-scale]
     S2[Real-time]
     S3[Storage]
@@ -350,7 +350,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
     S5[Data infra]
     S6[Transactional]
   end
-  Foundations --&gt; Building Blocks --&gt; Systems</pre>
+  F --&gt; B --&gt; S</pre>
 <p>Every lesson in this track follows the same shape:</p>
 <ul>
 <li><strong>TL;DR</strong> — the system in a paragraph, the core tradeoff, the scale.</li>
