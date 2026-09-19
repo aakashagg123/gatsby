@@ -267,13 +267,13 @@ LANDING = """<!doctype html>
   .wrap{max-width:1400px;margin:0 auto;padding:104px 32px 80px}
   .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.02em;
     color:var(--accent-deep);margin-bottom:16px}
-  h1{font-size:3rem;line-height:1.1;letter-spacing:-0.02em;font-weight:600;margin:0 0 .25em;max-width:14ch}
+  h1{font-size:clamp(1.15rem,calc(6.8vw - 2.5px),3rem);line-height:1.1;letter-spacing:-0.02em;
+    font-weight:600;margin:0 0 .3em;white-space:nowrap}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:22px;margin-top:52px}
   @media(max-width:680px){
     .wrap{padding:64px 18px 64px}
     .cards{grid-template-columns:1fr;gap:16px;margin-top:36px}
-    h1{font-size:2.2rem}
     p.sub{font-size:1.08rem}
     a.card{padding:24px;border-radius:6px}
   }
@@ -290,6 +290,7 @@ LANDING = """<!doctype html>
 </style></head><body>
 <div class="wrap">
   <h1>Supercharge your AI learning</h1>
+  <p class="sub">Hands-on tracks for PMs and engineers moving into AI — from first principles to production.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
