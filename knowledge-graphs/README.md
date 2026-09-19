@@ -14,7 +14,7 @@ graph actually is, and when a plain database is honestly fine. It shows why the 
 is a product decision disguised as a technical one. It shows where the real cost hides:
 construction and curation, not storage. It covers what becomes computable once knowledge
 is connected, and how graphs and LLMs fix each other's weaknesses — grounding on one
-side, extraction at scale on the other. It closes with the capstone every CPO needs: the
+side, extraction at scale on the other. It closes with the capstone every product leader needs: the
 business case, the sequencing, and the honest list of reasons *not* to build one.
 
 ## The knowledge graph (about knowledge graphs)

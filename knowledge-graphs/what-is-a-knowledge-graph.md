@@ -67,7 +67,7 @@ flowchart LR
     ACME -->|"raised"| T
     T -->|"about"| W
   end
-  Q["CPO question:<br/>'Which renewals are at risk<br/>because of Supplia's recall?'"]:::q
+  Q["Product leader's question:<br/>'Which renewals are at risk<br/>because of Supplia's recall?'"]:::q
   Q -.->|"one traversal:<br/>Supplia → widgets → products<br/>→ contracts → customers"| G
   classDef ent fill:#fbefe9,stroke:#e0b29e
   classDef doc fill:#f4f2ea,stroke:#ddd8ca

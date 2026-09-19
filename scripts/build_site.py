@@ -345,7 +345,7 @@ LANDING = """<!doctype html>
       <span class="tag">Module</span>
       <h2>Knowledge graphs →</h2>
       <p>Treat what the company knows as a product — entities and ontologies, the
-      construction pipeline, GraphRAG, governance, and the business case, in CPO language.</p>
+      construction pipeline, GraphRAG, governance, and the business case, in product leader language.</p>
     </a>
     <a class="card" href="generative-ai/index.html">
       <span class="tag">Generative AI</span>
