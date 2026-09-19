@@ -41,9 +41,8 @@ use the production SDK.
 
 ## Status
 
-Phases **2 (The Agent Loop)** and **10 (Subagents & Orchestration)** are complete. The
-rest are scaffolded in the [Roadmap](./ROADMAP.md). Quiz yourself per phase with
-`/check-understanding <phase>`.
+All 20 phases are complete — see the [Roadmap](./ROADMAP.md) for the full phase-by-phase
+breakdown. Quiz yourself per phase with `/check-understanding <phase>`.
 
 ## Run the code
 
@@ -56,10 +55,14 @@ python3 harness-engineering/phases/02-the-agent-loop/01-agent-loop/code/agent_lo
 You build the harness here. These tracks frame the same problems from other altitudes.
 
 - [What is an agent?](../agentic-ai/what-is-an-agent.md) — the conceptual view of the loop you build by hand in Phase 2.
+- [Tool calling](../tool-calling/README.md) — the product-decision altitude of Phase 3's tool contracts and Phase 12's MCP integrations.
 - [Context engineering](../content/00-foundations/context-engineering.md) — the discipline behind Phases 4 & 9 (context and memory).
 - [RAG architecture](../content/03-rag/rag-architecture.md) — the retrieval stack under Phase 13's codebase understanding.
 - [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) — the platform-layer version of Phase 17's tenant safety.
+- [AI security & guardrails](../ai-security-and-guardrails/README.md) — the threat taxonomy and compliance layer above Phase 8's permission gating and Phase 17's security work.
 - [Evals: golden sets, adversarial, LLM-as-judge](../content/04-evals-observability/evals.md) — the eval stack behind Phase 15's harness tests.
+- [Evaluation & observability](../evaluation-and-observability/README.md) — the product-leader case for the eval investment Phase 15 and 16 build by hand.
+- [Cost optimization](../cost-optimization/README.md) — the product-decision layer above Phase 16's cost tracking.
 - [Reliability & failure](../technical-product-sense/reliability-and-failure.md) — the PM-altitude frame for Phase 14's failure modes.
 - [The method: deconstruct, challenge, reconstruct](../first-principles/the-method.md) — the reasoning move behind building an engine from scratch.
 
