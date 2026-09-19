@@ -75,6 +75,7 @@ A process engine is infrastructure. These tracks frame the same decisions and fa
 - [Function calling, tool contracts, idempotency](../content/02-reliable-outputs/function-calling.md) — the same idempotency and retry discipline as service tasks and boundary events (Phase 4).
 - [Governance, quality & trust](../knowledge-graphs/governance-quality-and-trust.md) — decisions-as-data governance mirrors DMN decision governance (Phase 5).
 - [Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) — the operating discipline behind process versioning & migration (Phase 8).
+- [Technical product management for AI](../technical-product-management/tpm-for-ai-products.md) — "model upgrades as migrations," made concrete by Phase 8's instance-migration mechanics.
 - [Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md) — orchestration by a shared engine vs. by autonomous agents.
 - [The method: deconstruct, challenge, reconstruct](../first-principles/the-method.md) — decomposing a workflow into tokens is first-principles thinking applied.
 
