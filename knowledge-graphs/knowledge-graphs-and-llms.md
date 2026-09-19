@@ -23,7 +23,7 @@ downstream answer with a straight face.
 > 🎯 **For the product leader**
 >
 > **Why it matters** — This intersection is why knowledge graphs left the semantic-web
-> ghetto and landed on CPO roadmaps. "Our assistant answers from *our* facts, with
+> ghetto and landed on product leaders' roadmaps. "Our assistant answers from *our* facts, with
 > citations, respecting *our* permissions" is a product claim vector-only RAG makes
 > weakly and a graph makes strongly. Your enterprise buyers can tell the difference in
 > the security review.

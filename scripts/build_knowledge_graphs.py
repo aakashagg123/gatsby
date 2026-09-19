@@ -18,7 +18,7 @@ CFG = {
     "tagline": "a standalone module",
     "title": "Knowledge graphs for the product leader",
     "lede": "Treat what the company knows as a product — entities, relationships, "
-            "ontologies, GraphRAG, governance, and the business case, in CPO language.",
+            "ontologies, GraphRAG, governance, and the business case, in product leader language.",
     "meta": ["8 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
