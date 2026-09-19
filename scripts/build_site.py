@@ -262,7 +262,6 @@ LANDING = """<!doctype html>
   ::selection{background:#ddf4ff}
 </style></head><body>
 <div class="wrap">
-  <span class="eyebrow">From scratch</span>
   <h1>Supercharge your AI learning</h1>
   <div class="cards">
     <a class="card" href="ai/index.html">
