@@ -49,7 +49,7 @@ html[data-rm="w"] main{max-width:1120px !important}
 #rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#ffffff;border:1px solid #d1d9e0;
   border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
 #rs-panel.open{display:block}
-#rs-panel .rs-h{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#59636e;margin:10px 0 6px;font-weight:600}
+#rs-panel .rs-h{font-size:11px;letter-spacing:.3px;color:#59636e;margin:10px 0 6px;font-weight:600}
 #rs-panel .rs-h:first-child{margin-top:0}
 .rs-fonts{display:flex;flex-direction:column;gap:4px}
 .rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;

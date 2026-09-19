@@ -40,7 +40,7 @@ Ship It**, then a short self-quiz.
 
 ## Start here
 
-- **Read the spine first:** [The Ten Principles of Process Automation](./foundations/process-automation-principles.md).
+- **Read the spine first:** [The ten principles of process automation](./foundations/process-automation-principles.md).
 - **First worked lessons:**
   - [Tokens & sequence flow: a process engine in 100 lines](./phases/01-bpmn-and-the-token-model/01-tokens-and-sequence-flow/docs/en.md)
   - [Wait states & persistence: why the engine sleeps](./phases/02-the-engine-state-and-transactions/01-wait-states-and-persistence/docs/en.md)

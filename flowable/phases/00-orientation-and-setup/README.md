@@ -11,5 +11,5 @@
 | 04 | [The landscape: Flowable vs Camunda 7/8 vs Temporal vs DIY](./04-landscape/docs/en.md) ✅ | Concept | — | comparison table |
 
 Concept reading:
-[The Ten Principles of Process Automation](../../foundations/process-automation-principles.md).
+[The ten principles of process automation](../../foundations/process-automation-principles.md).
 Full plan: [`ROADMAP.md`](../../ROADMAP.md).
