@@ -1,4 +1,4 @@
-# Forward Deployed Engineering — the module plan
+# Forward deployed engineering — the module plan
 
 A plan for a new standalone module on the **Forward Deployed Engineer (FDE)** — the role
 that makes AI work in production, not just in demos. Written for the product leader who

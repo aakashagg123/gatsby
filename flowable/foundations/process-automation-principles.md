@@ -1,4 +1,4 @@
-# The Ten Principles of Process Automation
+# The ten principles of process automation
 
 The conceptual spine of the Flowable track. Every lesson's Concept beat links back to
 one of these. Read this first — it is the whole course at PM/architect altitude. The

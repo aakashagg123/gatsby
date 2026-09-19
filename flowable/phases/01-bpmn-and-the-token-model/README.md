@@ -12,5 +12,5 @@
 | 05 | [User tasks vs service tasks: where humans and systems meet](./05-human-and-service-tasks/docs/en.md) ✅ | Concept | — | decision guide |
 
 Concept reading:
-[The Ten Principles of Process Automation](../../foundations/process-automation-principles.md)
+[The ten principles of process automation](../../foundations/process-automation-principles.md)
 (principles 1–2). Full plan: [`ROADMAP.md`](../../ROADMAP.md).

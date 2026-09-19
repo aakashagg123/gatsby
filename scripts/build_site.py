@@ -77,7 +77,7 @@ VIEWER = """<!doctype html>
   .sidebar{{border-right:1px solid var(--line);padding:26px 16px 60px;font-size:.86rem;
     max-height:calc(100vh - 49px);overflow-y:auto;position:sticky;top:49px;align-self:start}}
   .sidebar .sb-top{{display:block;color:var(--muted);font-weight:600;font-size:.78rem;
-    text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;margin-bottom:8px}}
+    letter-spacing:.02em;padding:6px 10px;margin-bottom:8px}}
   .sb-phase{{margin-bottom:2px}}
   .sb-phase-title{{display:block;padding:7px 10px;border-radius:6px;color:var(--ink);
     font-weight:500;line-height:1.35}}
@@ -136,7 +136,7 @@ VIEWER = """<!doctype html>
   .lessonnav .up{{flex:0 0 auto;text-align:center}}
   .lessonnav .nx{{text-align:right}}
   .lessonnav .lbl{{display:block;color:var(--muted);font-size:.72rem;font-weight:600;
-    text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}}
+    letter-spacing:.03em;margin-bottom:3px}}
   /* phone-first: high readability on iPhone-class widths */
   @media (max-width:600px){{
     body{{font-size:16.5px;line-height:1.72}}
@@ -228,12 +228,18 @@ LANDING = """<!doctype html>
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);
+  body{margin:0;color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
-    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background:
+      radial-gradient(1000px 620px at 40px 10px, rgba(1,106,151,.40), transparent 60%),
+      radial-gradient(900px 560px at calc(100% - 60px) 0px, rgba(1,132,152,.34), transparent 58%),
+      radial-gradient(950px 560px at 50% 340px, rgba(197,152,1,.28), transparent 62%),
+      var(--bg);
+    background-repeat:no-repeat}
   .wrap{max-width:1400px;margin:0 auto;padding:104px 32px 80px}
-  .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.02em;
+    color:var(--accent-deep);margin-bottom:16px}
   h1{font-size:3rem;line-height:1.1;letter-spacing:-0.02em;font-weight:600;margin:0 0 .25em;max-width:14ch}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:22px;margin-top:52px}
@@ -249,7 +255,7 @@ LANDING = """<!doctype html>
     transition:border-color .15s}
   a.card:hover{border-color:var(--accent)}
   a.card .tag{display:inline-block;font-size:.74rem;color:var(--accent-deep);font-weight:600;
-    letter-spacing:.06em;text-transform:uppercase}
+    letter-spacing:.02em}
   a.card h2{margin:.5em 0 .35em;font-size:1.4rem;font-weight:600;letter-spacing:-0.01em}
   a.card p{color:var(--muted);margin:0;font-size:.98rem;line-height:1.6}
   footer{color:var(--muted);font-size:.85rem;margin-top:64px;border-top:1px solid var(--line);padding-top:24px}
@@ -258,7 +264,6 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
   <h1>Engineering learning modules</h1>
-  <p class="sub">Nineteen separate, hands-on curricula — build each system from first principles, then use it for real.</p>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -392,7 +397,7 @@ LANDING = """<!doctype html>
       with the architecture, tradeoffs, and failure modes that shape product decisions.
       28 systems across 8 lessons, diagrams included.</p>
     </a>
-    <a class="card" href="graph/index.html" style="border-color:#0969da;background:#ddf4ff">
+    <a class="card" href="graph/index.html" style="border-color:#0d8fa5;background:linear-gradient(135deg,#e6f4f6 0%,#fdf3d9 100%)">
       <span class="tag">Explore</span>
       <h2>Knowledge graph →</h2>
       <p>Every page across all nine modules as one interactive map — __NODES__ pages,

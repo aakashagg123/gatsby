@@ -12,5 +12,5 @@
 | 05 | [Use It: the embedded engine in Spring Boot](./05-embedded-engine-spring-boot/docs/en.md) ✅ | Use | Java | starter |
 
 Concept reading:
-[The Ten Principles of Process Automation](../../foundations/process-automation-principles.md)
+[The ten principles of process automation](../../foundations/process-automation-principles.md)
 (principles 3–5). Full plan: [`ROADMAP.md`](../../ROADMAP.md).
