@@ -48,6 +48,7 @@
   #cv{position:fixed;inset:0;display:block;cursor:grab;touch-action:none}
   #cv.dragging{cursor:grabbing}
   #cv.overnode{cursor:pointer}
+  #cv3d{position:fixed;inset:0;display:none}
 
   #tip{position:fixed;z-index:40;pointer-events:none;display:none;max-width:290px;
     padding:8px 12px;background:var(--ink);color:#ffffff;border-radius:6px;
@@ -93,10 +94,14 @@
     .bar{gap:10px;padding:10px 12px}
     .bar .brand{display:none}
     .tgl span{display:none}
-    #legend{left:10px;bottom:10px;padding:9px 11px;max-width:200px}
-    .chip{font-size:12px}
-    #card{right:10px;bottom:10px;width:calc(100vw - 20px);max-height:38vh}
     #hint{display:none}
+    /* legend + card become full-width bottom sheets on phones, for either renderer */
+    #legend{left:0;right:0;bottom:0;top:auto;max-width:100%;width:100%;
+      border-radius:14px 14px 0 0;border-left:0;border-right:0;border-bottom:0;
+      max-height:34vh;overflow:auto;flex-direction:row;flex-wrap:wrap;gap:6px 14px}
+    #legend .lg-h{width:100%;margin-bottom:2px}
+    #card{left:0;right:0;bottom:0;top:auto;width:100%;max-width:100%;
+      border-radius:14px 14px 0 0;border-left:0;border-right:0;border-bottom:0;max-height:52vh}
   }
 </style></head>
 <body>
@@ -109,18 +114,19 @@
 </header>
 
 <canvas id="cv" aria-label="Interactive knowledge graph of all lessons"></canvas>
+<div id="cv3d" aria-label="Interactive 3D knowledge graph of all lessons"></div>
 
 <div id="legend" role="group" aria-label="Tracks"><div class="lg-h">Tracks — click to toggle</div></div>
 <div id="tip" role="status"></div>
 <div id="card"></div>
 <aside id="panel" aria-label="All pages, as a list"></aside>
-<div id="hint">scroll to zoom · drag to pan · click a node to open its page · double-click to re-fit</div>
+<div id="hint"></div>
 
 <script>
 "use strict";
 const DATA = /*__GRAPH_DATA__*/null;
 
-/* ---------- data prep ---------- */
+/* ---------- data prep (shared by both renderers) ---------- */
 const nodes = DATA.nodes, edges = DATA.edges;
 const trackOf = {}; DATA.tracks.forEach(t => trackOf[t.id] = t);
 const N = nodes.length;
@@ -131,7 +137,7 @@ for (const [a, b, w, kind] of edges) {
   if (kind === "link") { linkDeg[a] += Math.min(w, 3); linkDeg[b] += Math.min(w, 3); }
 }
 nodes.forEach((n, i) => {
-  n.i = i; n.color = trackOf[n.track].color;
+  n.i = i; n.id = n.key; n.color = trackOf[n.track].color;
   n.r = n.kind === "track" ? 13 : n.kind === "module" ? 5.5 + Math.min(6, Math.sqrt(linkDeg[i])) :
         3.2 + Math.min(9, 1.15 * Math.sqrt(linkDeg[i]));
   n.vx = 0; n.vy = 0; n.fixed = false;
@@ -141,9 +147,15 @@ const darken = h => {  // ring stroke: same hue, ~25% darker
     f = c => Math.round(c * .68).toString(16).padStart(2, "0");
   return "#" + f(v >> 16 & 255) + f(v >> 8 & 255) + f(v & 255);
 };
+const fade = h => {  // desaturated/lightened variant, used to dim non-matches in 3D search
+  const v = parseInt(h.slice(1), 16),
+    f = c => Math.round(c * .28 + 205 * .72).toString(16).padStart(2, "0");
+  return "#" + f(v >> 16 & 255) + f(v >> 8 & 255) + f(v & 255);
+};
 const ringOf = {}; DATA.tracks.forEach(t => ringOf[t.id] = darken(t.color));
 
-/* seed positions in per-track wedges so layout converges into clusters */
+/* seed positions in per-track wedges so layout converges into clusters (also
+   gives the 3D force sim a head start on x/y; it adds its own z spread) */
 {
   const byTrack = {};
   nodes.forEach(n => (byTrack[n.track] = byTrack[n.track] || []).push(n));
@@ -158,73 +170,13 @@ const ringOf = {}; DATA.tracks.forEach(t => ringOf[t.id] = darken(t.color));
   });
 }
 
-/* ---------- state ---------- */
+/* ---------- shared state (read/written by both renderers + the UI chrome) ---------- */
 const hidden = new Set();        // hidden track ids
 let showStruct = true;
-let hoverN = null, selN = null;  // node objects
+let selN = null;                 // selected node object (drives #card)
 let searchSet = null;            // Set of matching indices, or null
-let alpha = 1;
 const visN = n => !hidden.has(n.track);
 const visE = e => (e[3] === "link" || showStruct) && visN(nodes[e[0]]) && visN(nodes[e[1]]);
-
-/* ---------- physics ---------- */
-function tick() {
-  const act = nodes.filter(visN);
-  const cent = {};      // per-track centroid for mild cluster gravity
-  for (const n of act) {
-    const c = cent[n.track] || (cent[n.track] = {x: 0, y: 0, k: 0});
-    c.x += n.x; c.y += n.y; c.k++;
-  }
-  for (const t in cent) { cent[t].x /= cent[t].k; cent[t].y /= cent[t].k; }
-  for (let i = 0; i < act.length; i++) {           // repulsion
-    const a = act[i];
-    for (let j = i + 1; j < act.length; j++) {
-      const b = act[j];
-      let dx = a.x - b.x, dy = a.y - b.y;
-      let d2 = dx * dx + dy * dy;
-      if (d2 > 32400) continue;                     // > 180px: ignore
-      if (d2 < 1) { dx = Math.random() - .5; dy = Math.random() - .5; d2 = 1; }
-      const f = alpha * 640 * (a.r + b.r) * .11 / d2;
-      dx *= f; dy *= f;
-      a.vx += dx; a.vy += dy; b.vx -= dx; b.vy -= dy;
-    }
-  }
-  for (const e of edges) {                          // springs
-    if (!visE(e)) continue;
-    const a = nodes[e[0]], b = nodes[e[1]], link = e[3] === "link";
-    const L = (link ? 46 : 62) + a.r + b.r;
-    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1;
-    const s = alpha * (link ? .028 * Math.min(2, .6 + e[2] * .35) : .012) * (d - L) / d;
-    a.vx += dx * s; a.vy += dy * s; b.vx -= dx * s; b.vy -= dy * s;
-  }
-  for (const n of act) {                            // gravity + integrate
-    n.vx += (0 - n.x) * .00045 * alpha * (deg[n.i] + 2);
-    n.vy += (0 - n.y) * .00045 * alpha * (deg[n.i] + 2);
-    const c = cent[n.track];
-    n.vx += (c.x - n.x) * .010 * alpha;
-    n.vy += (c.y - n.y) * .010 * alpha;
-    if (!n.fixed) {
-      n.x += n.vx = Math.max(-14, Math.min(14, n.vx * .82));
-      n.y += n.vy = Math.max(-14, Math.min(14, n.vy * .82));
-    } else { n.vx = n.vy = 0; }
-  }
-  alpha = Math.max(.015, alpha * .988);
-}
-const reheat = v => { alpha = Math.max(alpha, v); };
-
-/* ---------- canvas & view ---------- */
-const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
-let W = 0, H = 0, DPR = 1;
-const view = {k: 1, x: 0, y: 0};
-function resize() {
-  DPR = window.devicePixelRatio || 1;
-  W = window.innerWidth; H = window.innerHeight;
-  cv.width = W * DPR; cv.height = H * DPR;
-}
-window.addEventListener("resize", resize); resize();
-view.x = W / 2; view.y = H / 2 + 14;
-const toWorld = (sx, sy) => [(sx - view.x) / view.k, (sy - view.y) / view.k];
-
 function neighborhood(n) {
   const s = new Set([n.i]);
   for (const e of edges) {
@@ -233,181 +185,15 @@ function neighborhood(n) {
   }
   return s;
 }
-
-function draw() {
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  ctx.clearRect(0, 0, W, H);
-  ctx.setTransform(DPR * view.k, 0, 0, DPR * view.k, DPR * view.x, DPR * view.y);
-  const focusN = hoverN || selN;
-  const hood = focusN ? neighborhood(focusN) : null;
-
-  for (const e of edges) {                          // edges
-    if (!visE(e)) continue;
-    const a = nodes[e[0]], b = nodes[e[1]], link = e[3] === "link";
-    let on = true;
-    if (hood) on = (e[0] === focusN.i || e[1] === focusN.i);
-    else if (searchSet) on = searchSet.has(e[0]) || searchSet.has(e[1]);
-    ctx.globalAlpha = on ? (link ? .5 : .3) : .06;
-    ctx.strokeStyle = hood && on ? "#0550ae" : "#8c959f";
-    ctx.lineWidth = (link ? .8 + Math.min(4, e[2]) * .3 : .8) / view.k;
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-  }
-  for (const n of nodes) {                          // nodes
-    if (!visN(n)) continue;
-    let on = true;
-    if (hood) on = hood.has(n.i);
-    else if (searchSet) on = searchSet.has(n.i);
-    ctx.globalAlpha = on ? 1 : .13;
-    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
-    ctx.fillStyle = n.color; ctx.fill();
-    ctx.lineWidth = ((focusN === n || selN === n) ? 2.2 : 1) / Math.max(view.k, .9);
-    ctx.strokeStyle = (focusN === n || selN === n) ? "#1f2328" : ringOf[n.track];
-    ctx.stroke();
-  }
-  ctx.globalAlpha = 1;                              // labels
-  const showAll = view.k > 1.55;
-  ctx.textAlign = "center"; ctx.textBaseline = "top";
-  for (const n of nodes) {
-    if (!visN(n)) continue;
-    const focusLbl = hood ? hood.has(n.i) : searchSet ? searchSet.has(n.i) : false;
-    const big = n.kind !== "lesson";
-    if (!(focusLbl || big || showAll)) continue;
-    if (hood && !hood.has(n.i)) continue;
-    if (!hood && searchSet && !searchSet.has(n.i)) continue;
-    const fs = (n.kind === "track" ? 13 : 11.5) / Math.min(Math.max(view.k, .85), 2.2);
-    ctx.font = (n.kind === "lesson" ? "400 " : "600 ") + fs + "px -apple-system,BlinkMacSystemFont,sans-serif";
-    const t = n.title.length > 42 ? n.title.slice(0, 40) + "…" : n.title;
-    ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? .95 : .78;
-    ctx.lineWidth = 3.2 / view.k; ctx.strokeStyle = "rgba(255,255,255,.9)";
-    ctx.strokeText(t, n.x, n.y + n.r + 3 / view.k);
-    ctx.fillStyle = "#1f2328";
-    ctx.fillText(t, n.x, n.y + n.r + 3 / view.k);
-  }
-  ctx.globalAlpha = 1;
-}
-
-let raf = null;
-function loop() {
-  if (alpha > .016) tick();
-  draw();
-  raf = requestAnimationFrame(loop);
-}
-
-/* ---------- interaction ---------- */
-const tip = document.getElementById("tip");
-function nodeAt(sx, sy) {
-  const [wx, wy] = toWorld(sx, sy);
-  let best = null, bd = Infinity;
-  for (const n of nodes) {
-    if (!visN(n)) continue;
-    const d = Math.hypot(n.x - wx, n.y - wy);
-    if (d < n.r + 5 / view.k && d < bd) { best = n; bd = d; }
-  }
-  return best;
-}
-const pointers = new Map();
-let dragNode = null, panning = false, moved = false, pinchD = 0;
-let last = {x: 0, y: 0};
-
-cv.addEventListener("pointerdown", e => {
-  cv.setPointerCapture(e.pointerId);
-  pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
-  moved = false;
-  if (pointers.size === 2) {
-    const [p, q] = [...pointers.values()];
-    pinchD = Math.hypot(p.x - q.x, p.y - q.y);
-    dragNode = null; panning = false;
-    return;
-  }
-  last = {x: e.clientX, y: e.clientY};
-  dragNode = nodeAt(e.clientX, e.clientY);
-  if (dragNode) { dragNode.fixed = true; }
-  else panning = true;
-  cv.classList.add("dragging");
-});
-cv.addEventListener("pointermove", e => {
-  if (pointers.has(e.pointerId)) pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
-  if (pointers.size === 2) {                        // pinch zoom
-    const [p, q] = [...pointers.values()];
-    const d = Math.hypot(p.x - q.x, p.y - q.y), mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
-    if (pinchD > 0) zoomAt(mx, my, d / pinchD);
-    pinchD = d;
-    return;
-  }
-  const dx = e.clientX - last.x, dy = e.clientY - last.y;
-  if (Math.abs(e.clientX - last.x) + Math.abs(e.clientY - last.y) > 0 &&
-      (dragNode || panning)) {
-    if (Math.hypot(dx, dy) > 2) moved = true;
-    if (dragNode) {
-      const [wx, wy] = toWorld(e.clientX, e.clientY);
-      dragNode.x = wx; dragNode.y = wy; reheat(.28);
-    } else if (panning) { view.x += dx; view.y += dy; }
-    last = {x: e.clientX, y: e.clientY};
-  } else if (!pointers.size) {                      // hover
-    const n = nodeAt(e.clientX, e.clientY);
-    if (n !== hoverN) { hoverN = n; }
-    cv.classList.toggle("overnode", !!n);
-    if (n && e.pointerType !== "touch") {
-      tip.style.display = "block";
-      tip.innerHTML = esc(n.title) +
-        '<span class="t-track">' +
-        esc(trackOf[n.track].label) + " · " + deg[n.i] + " connections</span>";
-      const tw = tip.offsetWidth;
-      tip.style.left = Math.min(W - tw - 10, e.clientX + 14) + "px";
-      tip.style.top = (e.clientY + 16) + "px";
-    } else tip.style.display = "none";
-  }
-});
-function endPointer(e) {
-  pointers.delete(e.pointerId);
-  cv.classList.remove("dragging");
-  if (pointers.size < 2) pinchD = 0;
-  const n = dragNode;
-  if (n) n.fixed = false;
-  if (!moved && e.type === "pointerup") {           // click / tap
-    const hit = n || nodeAt(e.clientX, e.clientY);
-    if (hit) {
-      if (e.pointerType === "touch" && selN !== hit) select(hit);   // tap: select first
-      else window.location.href = "../" + hit.url;                  // click / 2nd tap: open
-    } else { select(null); }
-  }
-  dragNode = null; panning = false;
-}
-cv.addEventListener("pointerup", endPointer);
-cv.addEventListener("pointercancel", endPointer);
-cv.addEventListener("pointerleave", () => { hoverN = null; tip.style.display = "none"; });
-
-function zoomAt(sx, sy, f) {
-  const k = Math.max(.18, Math.min(6, view.k * f));
-  const r = k / view.k;
-  view.x = sx - (sx - view.x) * r; view.y = sy - (sy - view.y) * r;
-  view.k = k;
-}
-cv.addEventListener("wheel", e => {
-  e.preventDefault();
-  zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * .0016));
-}, {passive: false});
-
-function fit() {
-  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-  for (const n of nodes) {
-    if (!visN(n)) continue;
-    x0 = Math.min(x0, n.x); x1 = Math.max(x1, n.x);
-    y0 = Math.min(y0, n.y); y1 = Math.max(y1, n.y);
-  }
-  if (x0 > x1) return;
-  const pad = 70, top = 58;
-  const k = Math.max(.2, Math.min(1.4,
-    Math.min((W - pad * 2) / (x1 - x0 + 1), (H - top - pad * 2) / (y1 - y0 + 1))));
-  view.k = k;
-  view.x = W / 2 - (x0 + x1) / 2 * k;
-  view.y = top + (H - top) / 2 - (y0 + y1) / 2 * k;
-}
-cv.addEventListener("dblclick", e => { if (!nodeAt(e.clientX, e.clientY)) fit(); });
-
-/* ---------- selection card ---------- */
-const card = document.getElementById("card");
 const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+// Hooks the active renderer overrides so legend/search/struct-toggle stay
+// renderer-agnostic. Defaults are no-ops (safe if called before boot finishes).
+let onFilterChange = () => {};   // hidden-set or showStruct changed
+let onSearchChange = () => {};   // searchSet changed
+
+/* ---------- selection card (shared) ---------- */
+const card = document.getElementById("card");
 function select(n) {
   selN = n;
   if (!n) { card.style.display = "none"; return; }
@@ -428,7 +214,7 @@ function select(n) {
   card.querySelector(".c-close").onclick = () => select(null);
 }
 
-/* ---------- legend ---------- */
+/* ---------- legend (shared) ---------- */
 const legend = document.getElementById("legend");
 DATA.tracks.forEach(t => {
   const count = nodes.filter(n => n.track === t.id).length;
@@ -442,34 +228,33 @@ DATA.tracks.forEach(t => {
     b.classList.toggle("off", hidden.has(t.id));
     b.setAttribute("aria-pressed", String(!hidden.has(t.id)));
     if (selN && !visN(selN)) select(null);
-    reheat(.5);
+    onFilterChange();
   };
   legend.appendChild(b);
 });
 
-/* ---------- search ---------- */
+/* ---------- search (shared) ---------- */
 const search = document.getElementById("search");
 search.placeholder = "Search " + N + " pages…";
 search.addEventListener("input", () => {
-  hoverN = null; tip.style.display = "none";      // search highlight wins over a resting cursor
   const q = search.value.trim().toLowerCase();
-  if (!q) { searchSet = null; return; }
-  searchSet = new Set(nodes.filter(n => n.title.toLowerCase().includes(q) ||
-                                        n.key.toLowerCase().includes(q)).map(n => n.i));
+  searchSet = q ? new Set(nodes.filter(n => n.title.toLowerCase().includes(q) ||
+                                        n.key.toLowerCase().includes(q)).map(n => n.i)) : null;
+  onSearchChange();
 });
 search.addEventListener("keydown", e => {
   if (e.key === "Enter" && searchSet && searchSet.size) {
     const first = nodes[[...searchSet][0]];
     window.location.href = "../" + first.url;
   }
-  if (e.key === "Escape") { search.value = ""; searchSet = null; search.blur(); }
+  if (e.key === "Escape") { search.value = ""; searchSet = null; search.blur(); onSearchChange(); }
 });
 
 document.getElementById("structToggle").addEventListener("change", e => {
-  showStruct = e.target.checked; reheat(.4);
+  showStruct = e.target.checked; onFilterChange();
 });
 
-/* ---------- list panel (accessible fallback) ---------- */
+/* ---------- list panel: accessible, renderer-independent fallback view ---------- */
 const panel = document.getElementById("panel");
 {
   let html = '<div class="p-head"><h2>All pages</h2>' +
@@ -486,18 +271,391 @@ const panel = document.getElementById("panel");
 }
 document.getElementById("listBtn").onclick = () => panel.classList.toggle("open");
 
-/* ---------- boot: warm layout, honor ?focus= ---------- */
-for (let i = 0; i < 220; i++) tick();
-fit();
 const focusKey = new URLSearchParams(location.search).get("focus");
-if (focusKey) {
-  const n = nodes.find(x => x.key === focusKey);
-  if (n) {
-    select(n);
-    view.k = 1.6; view.x = W / 2 - n.x * view.k; view.y = H / 2 - n.y * view.k;
+const focusNode = focusKey ? nodes.find(x => x.key === focusKey) : null;
+const hintEl = document.getElementById("hint");
+
+/* =====================================================================
+   2D canvas renderer — the original, unmodified implementation. This is
+   the permanent fallback: every 3D failure path (no WebGL, reduced-motion,
+   low-power heuristic, blocked/failed CDN, a poor live frame-rate) lands
+   here, so this code path must never change behavior.
+   ===================================================================== */
+function boot2D() {
+  let alpha = 1, hoverN = null;
+  const reheat = v => { alpha = Math.max(alpha, v); };
+  onFilterChange = () => reheat(.5);
+  onSearchChange = () => {};  // draw() runs every frame regardless; nothing to trigger
+
+  function tick() {
+    const act = nodes.filter(visN);
+    const cent = {};      // per-track centroid for mild cluster gravity
+    for (const n of act) {
+      const c = cent[n.track] || (cent[n.track] = {x: 0, y: 0, k: 0});
+      c.x += n.x; c.y += n.y; c.k++;
+    }
+    for (const t in cent) { cent[t].x /= cent[t].k; cent[t].y /= cent[t].k; }
+    for (let i = 0; i < act.length; i++) {           // repulsion
+      const a = act[i];
+      for (let j = i + 1; j < act.length; j++) {
+        const b = act[j];
+        let dx = a.x - b.x, dy = a.y - b.y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 > 32400) continue;                     // > 180px: ignore
+        if (d2 < 1) { dx = Math.random() - .5; dy = Math.random() - .5; d2 = 1; }
+        const f = alpha * 640 * (a.r + b.r) * .11 / d2;
+        dx *= f; dy *= f;
+        a.vx += dx; a.vy += dy; b.vx -= dx; b.vy -= dy;
+      }
+    }
+    for (const e of edges) {                          // springs
+      if (!visE(e)) continue;
+      const a = nodes[e[0]], b = nodes[e[1]], link = e[3] === "link";
+      const L = (link ? 46 : 62) + a.r + b.r;
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1;
+      const s = alpha * (link ? .028 * Math.min(2, .6 + e[2] * .35) : .012) * (d - L) / d;
+      a.vx += dx * s; a.vy += dy * s; b.vx -= dx * s; b.vy -= dy * s;
+    }
+    for (const n of act) {                            // gravity + integrate
+      n.vx += (0 - n.x) * .00045 * alpha * (deg[n.i] + 2);
+      n.vy += (0 - n.y) * .00045 * alpha * (deg[n.i] + 2);
+      const c = cent[n.track];
+      n.vx += (c.x - n.x) * .010 * alpha;
+      n.vy += (c.y - n.y) * .010 * alpha;
+      if (!n.fixed) {
+        n.x += n.vx = Math.max(-14, Math.min(14, n.vx * .82));
+        n.y += n.vy = Math.max(-14, Math.min(14, n.vy * .82));
+      } else { n.vx = n.vy = 0; }
+    }
+    alpha = Math.max(.015, alpha * .988);
   }
+
+  const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  cv.style.display = "block";
+  let W = 0, H = 0, DPR = 1;
+  const view = {k: 1, x: 0, y: 0};
+  function resize() {
+    DPR = window.devicePixelRatio || 1;
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+  }
+  window.addEventListener("resize", resize); resize();
+  view.x = W / 2; view.y = H / 2 + 14;
+  const toWorld = (sx, sy) => [(sx - view.x) / view.k, (sy - view.y) / view.k];
+
+  function draw() {
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.setTransform(DPR * view.k, 0, 0, DPR * view.k, DPR * view.x, DPR * view.y);
+    const focusN = hoverN || selN;
+    const hood = focusN ? neighborhood(focusN) : null;
+
+    for (const e of edges) {                          // edges
+      if (!visE(e)) continue;
+      const a = nodes[e[0]], b = nodes[e[1]], link = e[3] === "link";
+      let on = true;
+      if (hood) on = (e[0] === focusN.i || e[1] === focusN.i);
+      else if (searchSet) on = searchSet.has(e[0]) || searchSet.has(e[1]);
+      ctx.globalAlpha = on ? (link ? .5 : .3) : .06;
+      ctx.strokeStyle = hood && on ? "#0550ae" : "#8c959f";
+      ctx.lineWidth = (link ? .8 + Math.min(4, e[2]) * .3 : .8) / view.k;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    }
+    for (const n of nodes) {                          // nodes
+      if (!visN(n)) continue;
+      let on = true;
+      if (hood) on = hood.has(n.i);
+      else if (searchSet) on = searchSet.has(n.i);
+      ctx.globalAlpha = on ? 1 : .13;
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
+      ctx.fillStyle = n.color; ctx.fill();
+      ctx.lineWidth = ((focusN === n || selN === n) ? 2.2 : 1) / Math.max(view.k, .9);
+      ctx.strokeStyle = (focusN === n || selN === n) ? "#1f2328" : ringOf[n.track];
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;                              // labels
+    const showAll = view.k > 1.55;
+    ctx.textAlign = "center"; ctx.textBaseline = "top";
+    for (const n of nodes) {
+      if (!visN(n)) continue;
+      const focusLbl = hood ? hood.has(n.i) : searchSet ? searchSet.has(n.i) : false;
+      const big = n.kind !== "lesson";
+      if (!(focusLbl || big || showAll)) continue;
+      if (hood && !hood.has(n.i)) continue;
+      if (!hood && searchSet && !searchSet.has(n.i)) continue;
+      const fs = (n.kind === "track" ? 13 : 11.5) / Math.min(Math.max(view.k, .85), 2.2);
+      ctx.font = (n.kind === "lesson" ? "400 " : "600 ") + fs + "px -apple-system,BlinkMacSystemFont,sans-serif";
+      const t = n.title.length > 42 ? n.title.slice(0, 40) + "…" : n.title;
+      ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? .95 : .78;
+      ctx.lineWidth = 3.2 / view.k; ctx.strokeStyle = "rgba(255,255,255,.9)";
+      ctx.strokeText(t, n.x, n.y + n.r + 3 / view.k);
+      ctx.fillStyle = "#1f2328";
+      ctx.fillText(t, n.x, n.y + n.r + 3 / view.k);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  let raf = null;
+  function loop() {
+    if (alpha > .016) tick();
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+
+  const tip = document.getElementById("tip");
+  function nodeAt(sx, sy) {
+    const [wx, wy] = toWorld(sx, sy);
+    let best = null, bd = Infinity;
+    for (const n of nodes) {
+      if (!visN(n)) continue;
+      const d = Math.hypot(n.x - wx, n.y - wy);
+      if (d < n.r + 5 / view.k && d < bd) { best = n; bd = d; }
+    }
+    return best;
+  }
+  const pointers = new Map();
+  let dragNode = null, panning = false, moved = false, pinchD = 0;
+  let last = {x: 0, y: 0};
+
+  cv.addEventListener("pointerdown", e => {
+    cv.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
+    moved = false;
+    if (pointers.size === 2) {
+      const [p, q] = [...pointers.values()];
+      pinchD = Math.hypot(p.x - q.x, p.y - q.y);
+      dragNode = null; panning = false;
+      return;
+    }
+    last = {x: e.clientX, y: e.clientY};
+    dragNode = nodeAt(e.clientX, e.clientY);
+    if (dragNode) { dragNode.fixed = true; }
+    else panning = true;
+    cv.classList.add("dragging");
+  });
+  cv.addEventListener("pointermove", e => {
+    if (pointers.has(e.pointerId)) pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
+    if (pointers.size === 2) {                        // pinch zoom
+      const [p, q] = [...pointers.values()];
+      const d = Math.hypot(p.x - q.x, p.y - q.y), mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
+      if (pinchD > 0) zoomAt(mx, my, d / pinchD);
+      pinchD = d;
+      return;
+    }
+    const dx = e.clientX - last.x, dy = e.clientY - last.y;
+    if (Math.abs(e.clientX - last.x) + Math.abs(e.clientY - last.y) > 0 &&
+        (dragNode || panning)) {
+      if (Math.hypot(dx, dy) > 2) moved = true;
+      if (dragNode) {
+        const [wx, wy] = toWorld(e.clientX, e.clientY);
+        dragNode.x = wx; dragNode.y = wy; reheat(.28);
+      } else if (panning) { view.x += dx; view.y += dy; }
+      last = {x: e.clientX, y: e.clientY};
+    } else if (!pointers.size) {                      // hover
+      const n = nodeAt(e.clientX, e.clientY);
+      if (n !== hoverN) { hoverN = n; }
+      cv.classList.toggle("overnode", !!n);
+      if (n && e.pointerType !== "touch") {
+        tip.style.display = "block";
+        tip.innerHTML = esc(n.title) +
+          '<span class="t-track">' +
+          esc(trackOf[n.track].label) + " · " + deg[n.i] + " connections</span>";
+        const tw = tip.offsetWidth;
+        tip.style.left = Math.min(W - tw - 10, e.clientX + 14) + "px";
+        tip.style.top = (e.clientY + 16) + "px";
+      } else tip.style.display = "none";
+    }
+  });
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    cv.classList.remove("dragging");
+    if (pointers.size < 2) pinchD = 0;
+    const n = dragNode;
+    if (n) n.fixed = false;
+    if (!moved && e.type === "pointerup") {           // click / tap
+      const hit = n || nodeAt(e.clientX, e.clientY);
+      if (hit) {
+        if (e.pointerType === "touch" && selN !== hit) select(hit);   // tap: select first
+        else window.location.href = "../" + hit.url;                  // click / 2nd tap: open
+      } else { select(null); }
+    }
+    dragNode = null; panning = false;
+  }
+  cv.addEventListener("pointerup", endPointer);
+  cv.addEventListener("pointercancel", endPointer);
+  cv.addEventListener("pointerleave", () => { hoverN = null; tip.style.display = "none"; });
+
+  function zoomAt(sx, sy, f) {
+    const k = Math.max(.18, Math.min(6, view.k * f));
+    const r = k / view.k;
+    view.x = sx - (sx - view.x) * r; view.y = sy - (sy - view.y) * r;
+    view.k = k;
+  }
+  cv.addEventListener("wheel", e => {
+    e.preventDefault();
+    zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * .0016));
+  }, {passive: false});
+
+  function fit() {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const n of nodes) {
+      if (!visN(n)) continue;
+      x0 = Math.min(x0, n.x); x1 = Math.max(x1, n.x);
+      y0 = Math.min(y0, n.y); y1 = Math.max(y1, n.y);
+    }
+    if (x0 > x1) return;
+    const pad = 70, top = 58;
+    const k = Math.max(.2, Math.min(1.4,
+      Math.min((W - pad * 2) / (x1 - x0 + 1), (H - top - pad * 2) / (y1 - y0 + 1))));
+    view.k = k;
+    view.x = W / 2 - (x0 + x1) / 2 * k;
+    view.y = top + (H - top) / 2 - (y0 + y1) / 2 * k;
+  }
+  cv.addEventListener("dblclick", e => { if (!nodeAt(e.clientX, e.clientY)) fit(); });
+
+  /* boot: warm layout, honor ?focus= */
+  for (let i = 0; i < 220; i++) tick();
+  fit();
+  if (focusNode) {
+    select(focusNode);
+    view.k = 1.6; view.x = W / 2 - focusNode.x * view.k; view.y = H / 2 - focusNode.y * view.k;
+  }
+  hintEl.textContent = "scroll to zoom · drag to pan · click a node to open its page · double-click to re-fit";
+  setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
+  loop();
 }
-setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 6000);
-loop();
+
+/* =====================================================================
+   3D renderer — real spatial depth via the 3d-force-graph library
+   (three.js + d3-force-3d), loaded from a CDN. Everything here is
+   additive: if any part of this fails, the dispatcher below falls back
+   to the untouched boot2D() above.
+   ===================================================================== */
+function boot3D() {
+  const el = document.getElementById("cv3d");
+  document.getElementById("cv").style.display = "none";
+  el.style.display = "block";
+
+  function buildNodes() { return nodes.filter(visN); }
+  function buildLinks() {
+    const out = [];
+    for (const e of edges) {
+      if (!visE(e)) continue;
+      out.push({source: nodes[e[0]], target: nodes[e[1]], weight: e[2], kind: e[3]});
+    }
+    return out;
+  }
+  function nodeColor(n) {
+    return searchSet && !searchSet.has(n.i) ? fade(n.color) : n.color;
+  }
+  function linkColor(l) {
+    const dim = searchSet && !(searchSet.has(l.source.i) || searchSet.has(l.target.i));
+    return dim ? "rgba(140,149,159,.15)" : (l.kind === "link" ? "#8c959f" : "#aab1b8");
+  }
+
+  const Graph = ForceGraph3D()(el)
+    .graphData({nodes: buildNodes(), links: buildLinks()})
+    .width(window.innerWidth)
+    .height(window.innerHeight)
+    .backgroundColor("#ffffff")
+    .showNavInfo(false)
+    .nodeId("id")
+    .nodeColor(nodeColor)
+    .nodeVal(n => n.r)
+    .nodeLabel(n => esc(n.title) +
+      '<span class="t-track">' + esc(trackOf[n.track].label) + " · " + deg[n.i] + " connections</span>")
+    .linkColor(linkColor)
+    .linkWidth(l => l.kind === "link" ? .8 + Math.min(4, l.weight) * .3 : .8)
+    .linkOpacity(.35)
+    .onNodeClick(n => select(n));
+
+  window.addEventListener("resize", () => {
+    Graph.width(window.innerWidth).height(window.innerHeight);
+  });
+
+  onFilterChange = () => {
+    if (selN && !visN(selN)) select(null);
+    Graph.graphData({nodes: buildNodes(), links: buildLinks()});
+  };
+  onSearchChange = () => { Graph.refresh(); };
+
+  if (focusNode) {
+    select(focusNode);
+    Graph.onEngineStop(() => {
+      Graph.cameraPosition({x: focusNode.x, y: focusNode.y, z: (focusNode.z || 0) + 160}, focusNode, 1000);
+    });
+  } else {
+    Graph.onEngineStop(() => { Graph.zoomToFit(600, 60); });
+  }
+  hintEl.textContent = "drag to rotate · scroll to zoom · two fingers to pan · tap a node to open its card";
+  setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
+
+  // Live performance safety net: a device that can't sustain a reasonable
+  // frame rate once 3D is actually running falls back to 2D, rather than
+  // being stuck with a stuttering view. No pre-show trial (the library
+  // documents no teardown/destructor for a discarded probe instance), so
+  // this checks the real, visible instance shortly after boot instead.
+  let last = performance.now(), samples = [];
+  function sample(t) {
+    samples.push(t - last); last = t;
+    if (samples.length < 90) { requestAnimationFrame(sample); return; }
+    const avg = samples.slice(20).reduce((a, b) => a + b, 0) / (samples.length - 20);
+    if (avg > 55) {  // sustained < ~18fps: this device can't keep up
+      el.style.display = "none";
+      el.innerHTML = "";
+      document.getElementById("cv").style.display = "block";
+      onFilterChange = () => {}; onSearchChange = () => {};
+      boot2D();
+    }
+  }
+  requestAnimationFrame(sample);
+}
+
+/* ---------- capability detection + dispatcher ---------- */
+function webglOK() {
+  try {
+    const c = document.createElement("canvas");
+    return !!(window.WebGLRenderingContext &&
+      (c.getContext("webgl") || c.getContext("experimental-webgl")));
+  } catch (e) { return false; }
+}
+function reducedMotion() {
+  return window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function lowPowerMobile() {
+  const narrow = window.matchMedia && matchMedia("(max-width:820px)").matches;
+  const fewCores = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency < 4;
+  const lowMem = typeof navigator.deviceMemory === "number" && navigator.deviceMemory < 4;
+  return narrow && (fewCores || lowMem);
+}
+function canTry3D() { return webglOK() && !reducedMotion() && !lowPowerMobile(); }
+
+function loadScript(src, timeoutMs) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    let done = false;
+    const t = setTimeout(() => { if (!done) { done = true; reject(new Error("timeout")); } }, timeoutMs);
+    s.src = src;
+    s.onload = () => { if (!done) { done = true; clearTimeout(t); resolve(); } };
+    s.onerror = () => { if (!done) { done = true; clearTimeout(t); reject(new Error("load error")); } };
+    document.head.appendChild(s);
+  });
+}
+
+(async function boot() {
+  if (!canTry3D()) { boot2D(); return; }
+  try {
+    await loadScript("https://unpkg.com/3d-force-graph@1", 4000);
+    if (typeof window.ForceGraph3D !== "function") throw new Error("3d-force-graph global missing");
+    boot3D();
+  } catch (e) {
+    // boot3D() may have partially run (e.g. hidden #cv before a later chained
+    // call threw) — reset both containers to a clean slate before falling back.
+    const el = document.getElementById("cv3d");
+    el.style.display = "none"; el.innerHTML = "";
+    document.getElementById("cv").style.display = "block";
+    boot2D();
+  }
+})();
 </script>
 </body></html>
