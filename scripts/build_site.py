@@ -220,7 +220,7 @@ document.querySelectorAll('pre.mermaid svg').forEach(s=>{{
 LANDING = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Engineering learning modules</title>
+<title>Supercharge your AI learning</title>
 <style>
   :root{
     --bg:#ffffff;--surface:#ffffff;--ink:#1f2328;--muted:#59636e;
@@ -263,7 +263,7 @@ LANDING = """<!doctype html>
 </style></head><body>
 <div class="wrap">
   <span class="eyebrow">From scratch</span>
-  <h1>Engineering learning modules</h1>
+  <h1>Supercharge your AI learning</h1>
   <div class="cards">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
@@ -477,6 +477,43 @@ def inject_glossary(site):
             root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
             root = "" if root == "." else root + "/"
             tags = glossary_widget.head_tags(root, rel)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text[:pos] + tags + text[pos:])
+            injected += 1
+    return injected
+
+
+FAVICON_SRC_DIR = os.path.join(ROOT, "assets", "favicon")
+
+
+def inject_favicon(site):
+    """Ship the sitewide favicon and reference it from every page (landing
+    pages included, unlike inject_glossary), with a per-page relative root so
+    it resolves at any depth."""
+    assets = os.path.join(site, "assets")
+    os.makedirs(assets, exist_ok=True)
+    shutil.copy(os.path.join(FAVICON_SRC_DIR, "favicon-32.png"),
+                os.path.join(assets, "favicon-32.png"))
+    shutil.copy(os.path.join(FAVICON_SRC_DIR, "favicon-180.png"),
+                os.path.join(assets, "favicon-180.png"))
+    injected = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            pos = text.find("<head>")
+            if pos == -1 or "rel=\"icon\"" in text:
+                continue
+            pos += len("<head>")
+            root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
+            root = "" if root == "." else root + "/"
+            tags = (
+                f'<link rel="icon" type="image/png" sizes="32x32" href="{root}assets/favicon-32.png">'
+                f'<link rel="apple-touch-icon" sizes="180x180" href="{root}assets/favicon-180.png">'
+            )
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text[:pos] + tags + text[pos:])
             injected += 1
@@ -744,10 +781,14 @@ def main():
     # 8. Clickable glossary terms + explainer sidebar on every content page.
     gloss = inject_glossary(SITE)
 
+    # 9. Sitewide favicon, every page including both landing pages.
+    fav = inject_favicon(SITE)
+
     print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "
           f"graph ({len(data['nodes'])} nodes, {n_links} links, "
           f"{injected} pages linked) + glossary "
-          f"({len(build_glossary.site_entries())} terms, {gloss} pages)")
+          f"({len(build_glossary.site_entries())} terms, {gloss} pages) + "
+          f"favicon ({fav} pages)")
 
 
 if __name__ == "__main__":

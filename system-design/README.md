@@ -4,18 +4,18 @@ How real systems are designed at scale — from rate limiters to stock exchanges
 
 ```mermaid
 flowchart LR
-  subgraph Foundations
+  subgraph F["Foundations"]
     F1[Scaling]
     F2[Estimation]
     F3[Framework]
   end
-  subgraph Building Blocks
+  subgraph B["Building Blocks"]
     B1[Rate limiting]
     B2[Consistent hashing]
     B3[KV stores]
     B4[Unique IDs]
   end
-  subgraph Systems
+  subgraph S["Systems"]
     S1[Web-scale]
     S2[Real-time]
     S3[Storage]
@@ -23,7 +23,7 @@ flowchart LR
     S5[Data infra]
     S6[Transactional]
   end
-  Foundations --> Building Blocks --> Systems
+  F --> B --> S
 ```
 
 Every lesson in this track follows the same shape:
