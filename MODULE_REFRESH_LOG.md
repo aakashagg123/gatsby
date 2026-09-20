@@ -12,7 +12,7 @@ something to fix, so the rotation always moves forward.
 
 | id | path | build script | last_refreshed |
 |---|---|---|---|
-| ai-engineering | content/ | scripts/build_html.py | never |
+| ai-engineering | content/ | scripts/build_html.py | 2026-09-20 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | never |
 | flowable | flowable/ | scripts/build_site.py | never |
 | first-principles | first-principles/ | scripts/build_first_principles.py | never |
@@ -39,3 +39,13 @@ something to fix, so the rotation always moves forward.
 (The daily job appends one line per run below, oldest first: date, module,
 outcome — "fixed: <short description>" or "verified, no changes needed" —
 and a link to the merged PR.)
+
+- 2026-09-20 — ai-engineering — verified, no changes needed. Checked the
+  one genuinely time-sensitive, verifiable claim in the module
+  (`content/02-reliable-outputs/model-routing.md`'s description of GPT-5's
+  real-time router shipping as the default architecture, August 2025)
+  against a live web search — accurate as stated. No pricing figures,
+  benchmark numbers, or fragile superlatives elsewhere in the module's 28
+  lesson files to go stale; historical/technical references (DeepSeek-V2's
+  MLA, the "DeepSeek moment," the GPT-4 drift debates) are correctly
+  framed as dated history, not current-state claims.
