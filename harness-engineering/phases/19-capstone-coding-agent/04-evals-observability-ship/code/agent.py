@@ -49,7 +49,7 @@ def run_observed(task, agent, budget, tracer, cost):
         if budget.exceeded():
             return {"status": "degraded", "reason": "budget"}
         out = agent(task)
-        cost.record("claude-opus-4-8", 1000, 200, tag="capstone")
+        cost.record("claude-opus-5", 1000, 200, tag="capstone")
         return {"status": "complete", "result": out,
                 "spans": len(tracer.spans), "cost": cost.report()}
 

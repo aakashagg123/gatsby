@@ -1,7 +1,7 @@
 """Cache-aware request layout: stable prefix marked cacheable, volatile turn last.
 
 Requires the `anthropic` package + ANTHROPIC_API_KEY to run live.
-Defaults to Claude Opus 4.8 (claude-opus-4-8).
+Defaults to Claude Opus 5 (claude-opus-5).
 """
 import anthropic
 
@@ -18,7 +18,7 @@ SYSTEM = [
 
 def ask(user_text, tools):
     return client.messages.create(
-        model="claude-opus-4-8",
+        model="claude-opus-5",
         max_tokens=1024,
         system=SYSTEM,                                    # stable, cached
         tools=tools,                                      # stable, place before volatile

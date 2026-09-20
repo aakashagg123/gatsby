@@ -29,7 +29,7 @@ rate. Attribution tags each cost with who or what it was for.
 
 ```python
 PRICES = {  # USD per 1M tokens (illustrative — verify current pricing)
-    "claude-opus-4-8": {"in": 5.0, "out": 25.0},
+    "claude-opus-5": {"in": 5.0, "out": 25.0},
     "claude-haiku-4-5-20251001": {"in": 0.8, "out": 4.0},
 }
 
@@ -49,7 +49,7 @@ class CostMeter:
 
 ```python
 m = CostMeter()
-m.record("claude-opus-4-8", 10_000, 2_000, tag="feature:refactor")
+m.record("claude-opus-5", 10_000, 2_000, tag="feature:refactor")
 m.record("claude-haiku-4-5-20251001", 50_000, 5_000, tag="feature:search")
 print(m.report())     # cost attributed per feature
 ```

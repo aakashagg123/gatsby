@@ -45,7 +45,7 @@ def flag_enabled(name, unit_id, percent):
 
 ```python
 cfg = load_config({"model": "haiku", "max_steps": 10},
-                  {"model": "claude-opus-4-8"})        # env override
+                  {"model": "claude-opus-5"})        # env override
 print(cfg["model"], cfg["max_steps"])                  # opus, 10
 
 # enable a feature for ~30% of users, stably

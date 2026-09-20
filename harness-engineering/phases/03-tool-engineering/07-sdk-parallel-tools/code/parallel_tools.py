@@ -1,7 +1,7 @@
 """SDK tool loop with parallel dispatch, composing this phase's pieces.
 
 Requires the `anthropic` package + ANTHROPIC_API_KEY to run live.
-Defaults to Claude Opus 4.8 (claude-opus-4-8). This is illustrative wiring; the
+Defaults to Claude Opus 5 (claude-opus-5). This is illustrative wiring; the
 validate()/ok()/err()/dispatch() helpers are the ones built earlier in the phase.
 """
 import anthropic
@@ -47,7 +47,7 @@ def run_call(call):
 
 
 def step(messages):
-    msg = client.messages.create(model="claude-opus-4-8", max_tokens=1024,
+    msg = client.messages.create(model="claude-opus-5", max_tokens=1024,
                                  tools=TOOLS, messages=messages)
     messages.append({"role": "assistant", "content": msg.content})
     calls = [b for b in msg.content if b.type == "tool_use"]

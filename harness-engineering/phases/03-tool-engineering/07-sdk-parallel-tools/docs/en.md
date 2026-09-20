@@ -26,7 +26,7 @@ All results for a turn go back together in a single user message, each paired by
 
 ## Build It (wire the phase together)
 
-`code/parallel_tools.py` — defaults to **Claude Opus 4.8**, composes this phase's pieces:
+`code/parallel_tools.py` — defaults to **Claude Opus 5**, composes this phase's pieces:
 
 ```python
 import anthropic
@@ -44,7 +44,7 @@ def run_call(call):
         return err(call.id, str(e))
 
 def step(messages, tools):
-    msg = client.messages.create(model="claude-opus-4-8", max_tokens=1024,
+    msg = client.messages.create(model="claude-opus-5", max_tokens=1024,
                                  tools=tools, messages=messages)
     messages.append({"role": "assistant", "content": msg.content})
     calls = [b for b in msg.content if b.type == "tool_use"]

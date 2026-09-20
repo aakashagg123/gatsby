@@ -33,7 +33,7 @@ Rules of thumb:
 
 Caching is a provider feature, so this is a **Use It** lesson — but the *layout* is yours.
 `code/cache_layout.py` shows how to construct a request with a cached prefix (SDK
-`cache_control`), defaulting to **Claude Opus 4.8**:
+`cache_control`), defaulting to **Claude Opus 5**:
 
 ```python
 import anthropic
@@ -46,7 +46,7 @@ SYSTEM = [
 
 def ask(user_text, tools):
     return client.messages.create(
-        model="claude-opus-4-8", max_tokens=1024,
+        model="claude-opus-5", max_tokens=1024,
         system=SYSTEM,                                   # stable, cached
         tools=tools,                                     # stable, cached (place before volatile)
         messages=[{"role": "user", "content": user_text}],  # volatile, last

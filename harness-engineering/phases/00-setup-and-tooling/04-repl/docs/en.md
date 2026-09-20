@@ -32,7 +32,7 @@ reply, so the model always sees the full conversation.
 import anthropic
 client = anthropic.Anthropic()
 
-def repl(model="claude-opus-4-8"):
+def repl(model="claude-opus-5"):
     history = []
     print("Talk to the model (type 'exit' to quit).")
     while True:

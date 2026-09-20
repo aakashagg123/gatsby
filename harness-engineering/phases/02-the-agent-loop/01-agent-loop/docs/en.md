@@ -96,8 +96,8 @@ course is a better tool, a better history, or a better stopping rule.
 
 Now swap the fake model for the real one. The Anthropic SDK speaks the same
 `messages -> message` shape. Tool calls arrive as `tool_use` content blocks, and you
-return `tool_result` blocks. We default to the latest model, **Claude Opus 4.8**
-(`claude-opus-4-8`). `code/agent_loop_sdk.py`:
+return `tool_result` blocks. We default to the latest model, **Claude Opus 5**
+(`claude-opus-5`). `code/agent_loop_sdk.py`:
 
 ```python
 import anthropic
@@ -115,7 +115,7 @@ def run(query):
     history = [{"role": "user", "content": query}]
     for _ in range(MAX_STEPS):
         msg = client.messages.create(
-            model="claude-opus-4-8", max_tokens=1024, tools=tools, messages=history)
+            model="claude-opus-5", max_tokens=1024, tools=tools, messages=history)
         history.append({"role": "assistant", "content": msg.content})
         calls = [b for b in msg.content if b.type == "tool_use"]
         if msg.stop_reason != "tool_use" or not calls:

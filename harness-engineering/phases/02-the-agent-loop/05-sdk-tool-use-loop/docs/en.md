@@ -34,8 +34,8 @@ The mapping from your scratch version:
 
 ## Build It (wire it up)
 
-`code/sdk_loop.py` — defaults to the latest model, **Claude Opus 4.8**
-(`claude-opus-4-8`). Requires `pip install anthropic` and `ANTHROPIC_API_KEY`.
+`code/sdk_loop.py` — defaults to the latest model, **Claude Opus 5**
+(`claude-opus-5`). Requires `pip install anthropic` and `ANTHROPIC_API_KEY`.
 
 ```python
 import anthropic
@@ -54,7 +54,7 @@ def run(query):
     messages = [{"role": "user", "content": query}]
     for _ in range(MAX_STEPS):
         msg = client.messages.create(
-            model="claude-opus-4-8", max_tokens=1024, tools=SCHEMA, messages=messages)
+            model="claude-opus-5", max_tokens=1024, tools=SCHEMA, messages=messages)
         messages.append({"role": "assistant", "content": msg.content})
         calls = [b for b in msg.content if b.type == "tool_use"]
         if msg.stop_reason != "tool_use" or not calls:           # termination

@@ -34,7 +34,7 @@ The response JSON has a `content` array of blocks. For plain text, read
 ```python
 import json, os, urllib.request
 
-def call(prompt, model="claude-opus-4-8", max_tokens=256):
+def call(prompt, model="claude-opus-5", max_tokens=256):
     body = json.dumps({
         "model": model, "max_tokens": max_tokens,
         "messages": [{"role": "user", "content": prompt}],

@@ -50,7 +50,7 @@ upgraded each time. The check at the end tells you whether your key is visible.
 
 Every later lesson assumes this environment: `source .venv/bin/activate`, key in
 `ANTHROPIC_API_KEY`. The Use-It code throughout the course defaults to the latest model,
-**Claude Opus 4.8** (`claude-opus-4-8`).
+**Claude Opus 5** (`claude-opus-5`).
 
 ## Ship It
 

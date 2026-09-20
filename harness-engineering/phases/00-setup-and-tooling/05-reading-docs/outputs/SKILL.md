@@ -26,8 +26,8 @@ pricing, deprecations), do not answer from memory.
 
 ## Defaults (verify before relying on them)
 
-- Prefer the latest, most capable models. Current ids: **Fable 5** (`claude-fable-5`);
-  **Opus 4.8** (`claude-opus-4-8`), **Sonnet 4.6** (`claude-sonnet-4-6`),
+- Prefer the latest, most capable models. Current ids: **Fable 5.1** (`claude-fable-5-1`);
+  **Opus 5** (`claude-opus-5`), **Sonnet 5** (`claude-sonnet-5`),
   **Haiku 4.5** (`claude-haiku-4-5-20251001`).
 - If unsure whether an id or parameter is current, say so and check before using it.
 
