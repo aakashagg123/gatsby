@@ -259,6 +259,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & evals](./agentic-ai/reliability-and-evals.md).
 
+**Context contract** — A spec section naming what an AI feature must know, remember, and retrieve to be trustworthy — next to its eval bar.
+
+*In plain terms.* A behavior-only spec says what a feature should do and how it's graded, but skips the layer in between: what does the model need to see? A context contract fills that gap by naming, up front, the instructions, retrieved facts, memory, and live state a decision requires — so context sourcing is a scoped build item, not a guess made during implementation.
+
+*For example.* A renewal-risk assistant's context contract names the CS-approved 'at risk' definition, daily-refreshed usage data, the rep's carried-forward notes, and live contract status from the CRM — each with an owner.
+
+*Where it shows up:* Writing AI feature specs that don't skip a layer; Assigning ownership for context sourcing before a build starts; Diagnosing why an edge case wasn't handled.
+
+*See:* [Context as a spec-able requirement](./context-engineering/context-as-a-spec-able-requirement.md).
+
 **Context engineering** — Deliberately deciding what information occupies the model's limited context window, in what order, and in what form.
 
 *In plain terms.* A model can only 'see' a fixed amount of text at once (its context window). Context engineering is the craft of choosing what goes into that window for each request — which instructions, which history, which retrieved facts — because what the model can't see, it can't use, and irrelevant clutter actively hurts.
@@ -278,6 +288,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding token limits and why long sessions degrade; Sizing how much history/retrieval you can afford per call; Justifying memory and compaction features.
 
 *See:* [Context engineering](./content/00-foundations/context-engineering.md).
+
+**Context-first (vs. data-first)** — Asking 'what does this decision need to see?' instead of 'what data do we have?' — the AI-era shift in the default product question.
+
+*In plain terms.* Data-first thinking collects everything, warehouses it, and lets a human filter it at read time. AI features break that pattern: the model already has more raw text than any team could read, and volume was never the constraint. Context-first thinking asks what a specific decision needs, assembled fresh for that one moment, instead of what's been collected over time.
+
+*For example.* Instead of piping an entire customer history into a support bot's prompt, a context-first team retrieves the three most relevant tickets and the current account status for this specific question.
+
+*Where it shows up:* Diagnosing an AI feature that has plenty of data but still answers poorly; Reframing a 'give it more data' request into a scoped context requirement; Explaining why bigger prompts and newer models don't fix every quality miss.
+
+*See:* [What is context engineering, for a product leader?](./context-engineering/what-is-context-engineering.md).
 
 **Continuous batching** — Adding and removing requests from a running inference batch at the token level instead of waiting for a whole batch to finish.
 

@@ -45,6 +45,7 @@ SECURITY_HTML = os.path.join(ROOT, "ai-security-and-guardrails-html")  # AI secu
 COST_HTML = os.path.join(ROOT, "cost-optimization-html")  # Cost optimization (GenAI family, module 11)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
+CE_HTML = os.path.join(ROOT, "context-engineering-html")  # context engineering
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -424,6 +425,13 @@ LANDING = """<!doctype html>
       with the architecture, tradeoffs, and failure modes that shape product decisions.
       28 systems across 8 lessons, diagrams included.</p>
     </a>
+    <a class="card" href="context-engineering/index.html">
+      <span class="tag">Module</span>
+      <h2>Context engineering →</h2>
+      <p>Treat what the model gets to see as a product decision — instructions,
+      retrieval, memory, and live state, spec'd, governed, and evaluated with the same
+      rigor as the output it produces.</p>
+    </a>
     <a class="card" href="graph/index.html" style="border-color:#0d8fa5;background:linear-gradient(135deg,#e6f4f6 0%,#fdf3d9 100%)">
       <span class="tag">Explore</span>
       <h2>Knowledge graph →</h2>
@@ -734,6 +742,10 @@ def main():
     # 1q. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
+
+    # 1r. Context engineering module: copy its pre-rendered pages.
+    if os.path.isdir(CE_HTML):
+        shutil.copytree(CE_HTML, os.path.join(SITE, "context-engineering"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.

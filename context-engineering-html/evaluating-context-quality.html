@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Memory &amp; context for the product leader</title>
+<title>Evaluating context quality — Context engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,91 +354,135 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Memory &amp; context for the product leader</h1>
-    <p class="lede">Memory as a product decision, the three shapes it takes, retrieval as its most common implementation, and the trust failures it has to be designed against.</p>
-    <div class="index-meta"><span>4 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-is-context-engineering.html">1 · What is context engineering, for a product leader?</a><a class="modlink" href="why-prompt-engineering-doesnt-scale.html">2 · Why prompt engineering doesn&#x27;t scale</a><a class="modlink" href="the-anatomy-of-a-context-pipeline.html">3 · The anatomy of a context pipeline</a><a class="modlink" href="context-as-a-spec-able-requirement.html">4 · Context as a spec-able requirement</a><a class="modlink" href="context-governance-at-scale.html">5 · Context governance at scale</a><a class="modlink active" href="evaluating-context-quality.html">6 · Evaluating context quality</a><a class="modlink" href="context-across-the-product-lifecycle.html">7 · Context engineering across the product lifecycle</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 06</span>
+    <h1>Evaluating context quality</h1>
   </div>
-  <div class="intro"><p>A model remembers nothing between calls. Anything it appears to "remember" — the earlier
-turns of a chat, a preference from last week, a company's house style — was put back in
-front of it, deliberately, by your product. Whether and how to do that is one of the
-highest-leverage product decisions in any AI feature, and it is easy to get backwards:
-teams either build no memory at all, forcing users to repeat themselves forever, or build
-memory carelessly, and end up with a feature that resurfaces something a user assumed was
-forgotten, in front of the wrong audience.</p>
-<p><strong>A note on scope.</strong> The engineering mechanics of context and memory — the context window
-as a scarce resource, compaction, offloading, tool-result hygiene, the full memory
-hierarchy — are already developed in real depth in two places in this curriculum:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> and
-<a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>. Rebuilding that ground here
-would only restate it. This module exists instead to answer the question those two
-lessons don't lead with: <strong>memory as a product decision</strong> — what to promise a user, what
-it costs in trust, and where it fails as a business risk, not just an engineering one.
-It's shorter than most modules in this family for exactly that reason: four lessons, not
-six, because the honest amount of genuinely new ground is four lessons' worth. For the
-broader strategic argument — context engineering as an operating discipline beyond
-memory specifically, including specs, governance, and evals — see
-<a href="../context-engineering/index.html">Context engineering for the product leader</a>.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Memory is a set of promises your product makes about what it will and won't carry
-forward. Every lesson in this module hangs off this picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph PROMISE[&quot;THE PROMISE — lesson 1&quot;]
-    DECIDE[&quot;Memory is a feature&lt;br/&gt;you choose to build,&lt;br/&gt;not free infrastructure&quot;]
-  end
-  subgraph SCOPE[&quot;THE SCOPE — lesson 2&quot;]
-    SESSION[&quot;Session memory&lt;br/&gt;this conversation only&quot;]
-    USER[&quot;User memory&lt;br/&gt;across sessions,&lt;br/&gt;one person&quot;]
-    ORG[&quot;Organizational memory&lt;br/&gt;shared across&lt;br/&gt;a whole team&quot;]
-  end
-  subgraph SOURCE[&quot;WHERE IT COMES FROM — lesson 3&quot;]
-    RETRIEVE[&quot;Retrieval&lt;br/&gt;(RAG) as one way&lt;br/&gt;to implement memory&quot;]
-  end
-  subgraph RISK[&quot;WHEN IT BREAKS — lesson 4&quot;]
-    STALE[&quot;Stale or wrong&lt;br/&gt;memories&quot;]
-    LEAK[&quot;Memory that crosses&lt;br/&gt;a boundary it shouldn&#x27;t&quot;]
-    NODELETE[&quot;No way for a user&lt;br/&gt;to see, correct, or&lt;br/&gt;delete what&#x27;s remembered&quot;]
-  end
-  DECIDE --&gt; SESSION &amp; USER &amp; ORG
-  RETRIEVE --&gt;|&quot;one implementation&lt;br/&gt;of user &amp; org memory&quot;| USER
-  RETRIEVE --&gt; ORG
-  SESSION -.-&gt;|&quot;can decay into&quot;| STALE
-  USER -.-&gt;|&quot;can decay into&quot;| LEAK
-  ORG -.-&gt;|&quot;can decay into&quot;| NODELETE</pre>
-<p>Read it in three passes. <strong>The promise</strong>: memory is something your product decides to
-offer, with a cost and a risk attached, not a default a model gives you for free. <strong>The
-scope</strong>: memory comes in different shapes — one conversation, one person, one whole
-organization — and each shape carries a different product and privacy contract.
-<strong>The risk</strong>: every one of those shapes fails in a specific, predictable way, and the
-failure is almost always a trust problem before it's a technical one.</p>
-<h2 id="the-lessons">The lessons</h2>
+  <h2 id="tldr">TL;DR</h2>
+<p><a href="../technical-product-management/tpm-for-ai-products.html">Eval-driven development</a> grades
+whether an AI feature's <em>output</em> is good. That's necessary and not sufficient: a failing
+output score doesn't tell you whether the model reasoned badly or was simply never shown
+what it needed. <strong>Context evals</strong> answer the narrower, faster question — did the pipeline
+supply the right instructions, the right retrieved facts, the right memory, the right
+live state — <em>before</em> you spend a debugging session blaming the model. Separating "was
+the context right?" from "was the answer right?" turns a vague quality regression into a
+five-minute check instead of a week of prompt archaeology.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Most AI debugging time is spent re-reading model output looking
+for a pattern, when the faster diagnostic is checking what the model was shown. A
+context eval turns that check into a repeatable score instead of a guess.</p>
+<p><strong>What it changes in your decisions</strong> — You ask "did retrieval find the right
+document?" as a separate, gradable question from "was the final answer good?" — and you
+fund whichever one is actually failing, instead of tuning the prompt for a retrieval
+problem.</p>
+<p><strong>Ask yourself</strong> — <em>"The last time this feature failed, did we check whether the
+context was right before we started rewriting the prompt?"</em></p>
+<p><strong>Risk if ignored</strong> — Weeks spent tuning a prompt against a retrieval bug, because
+nobody separated the two questions before debugging started.</p>
+</blockquote>
+<h2 id="the-mental-model-two-separate-scores-not-one">The mental model: two separate scores, not one</h2>
+<pre class="mermaid">flowchart LR
+  CTX[&quot;Context eval:&lt;br/&gt;was the RIGHT input&lt;br/&gt;assembled?&quot;] --&gt; MODEL[&quot;Model call&quot;]
+  MODEL --&gt; OUT[&quot;Output eval:&lt;br/&gt;was the ANSWER good?&quot;]
+  CTX -.-&gt;|&quot;fails here&quot;| DIAG1[&quot;Fix retrieval, memory,&lt;br/&gt;or instructions&quot;]
+  OUT -.-&gt;|&quot;fails here, context passed&quot;| DIAG2[&quot;Fix the model, prompt,&lt;br/&gt;or reasoning&quot;]</pre>
+<p>A failing output score with a passing context score points at the model and the prompt.
+A failing output score with a <em>failing</em> context score points upstream, at retrieval,
+memory, or instructions — and no amount of prompt tuning fixes an upstream miss.</p>
+<h2 id="building-a-context-eval-set">Building a context eval set</h2>
+<p>Reuse the sourcing discipline from
+<a href="../technical-product-management/tpm-for-ai-products.html">eval-driven development</a>, aimed
+one layer earlier:</p>
 <ul>
-<li><a href="memory-as-a-product-decision.html"><strong>Memory as a product decision</strong></a> — why offering
-  memory at all is a choice with a cost and a promise attached, not free infrastructure.</li>
-<li><a href="session-user-and-organizational-memory.html"><strong>Session, user &amp; organizational memory</strong></a>
-  — the three shapes memory takes, and why each one needs its own answer to "who can see
-  this, and for how long."</li>
-<li><a href="retrieval-as-memory.html"><strong>Retrieval as memory</strong></a> — the bridge between this module and
-  <a href="../rag-vector-databases/index.html">RAG &amp; vector databases</a>: fetching relevant knowledge
-  at the moment it's needed is one of the most common ways memory actually gets built.</li>
-<li><a href="when-memory-goes-wrong.html"><strong>When memory goes wrong</strong></a> — staleness, leakage, and the
-  right to be forgotten: the trust failures a memory feature has to be designed against
-  from day one.</li>
+<li><strong>Retrieval precision/recall</strong> — for a graded set of real queries, did the retrieval
+  step return the document that actually answers it? Grade this independently of what
+  the model does with it. (Full retrieval-quality mechanics in
+  <a href="../ai/03-rag.html#rag-architecture">RAG architecture</a>.)</li>
+<li><strong>Memory correctness</strong> — for a graded set of returning-user scenarios, did the right
+  prior fact get surfaced, and only to the right audience? See
+  <a href="../memory-and-context/index.html">Memory &amp; context</a> for what "right" means per memory
+  type.</li>
+<li><strong>Instruction currency</strong> — spot-check, on a schedule, whether the encoded policy
+  matches the <em>current</em> real policy — not whether it matches what was true when the
+  prompt was written.</li>
+<li><strong>Live-state freshness</strong> — for time-sensitive answers, check the age of the tool data
+  behind a sample of real responses, not just whether the tool call succeeded.</li>
 </ul>
-<p>Each lesson pairs the product framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram. For the engineering depth behind every mechanic mentioned here,
-follow the spokes into <a href="../ai/00-foundations.html#context-engineering">Context engineering</a>
-and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="memory-as-a-product-decision.html"><span class="card-num">01</span><h3>Memory as a product decision</h3><span class="card-go">Read lesson →</span></a><a class="card" href="session-user-and-organizational-memory.html"><span class="card-num">02</span><h3>Session, user &amp; organizational memory</h3><span class="card-go">Read lesson →</span></a><a class="card" href="retrieval-as-memory.html"><span class="card-num">03</span><h3>Retrieval as memory</h3><span class="card-go">Read lesson →</span></a><a class="card" href="when-memory-goes-wrong.html"><span class="card-num">04</span><h3>When memory goes wrong</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<p>A feature that passes all four context checks but still fails its output eval has a
+model or prompt problem, isolated and provable. A feature that fails any of the four has
+found its actual bug, before a single line of the prompt gets touched.</p>
+<h2 id="the-five-minute-triage">The five-minute triage</h2>
+<p>When a specific answer is wrong, before touching the prompt:</p>
+<ol>
+<li>Pull the exact context the model was given for that call (see
+   <a href="the-anatomy-of-a-context-pipeline.html">the pipeline audit</a>).</li>
+<li>Ask: was the needed fact actually in there? If no — it's a retrieval or memory miss,
+   not a model miss.</li>
+<li>Ask: was it in there, but the model ignored or misused it? Only <em>then</em> is it a
+   model/prompt problem worth iterating on.</li>
+</ol>
+<p>Skipping step 1 is the single most common reason prompt-tuning sessions run long without
+progress.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Output-only evals</strong> — grading only the final answer, so a retrieval regression and a
+  model regression look identical and get debugged the same (slow) way.</li>
+<li><strong>Debugging by rewriting the prompt first</strong> — reaching for prompt changes before
+  checking whether the context was even right, burning cycles on the wrong layer.</li>
+<li><strong>A context eval that's never rerun</strong> — building the four checks once at launch, then
+  letting them go stale exactly like the pipeline they were meant to catch drifting.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do we grade context quality (retrieval, memory, instructions, live state)
+      separately from output quality, or only the final answer?</li>
+<li class="task todo">For our last major "the AI got worse" incident, did we check context quality
+      before assuming a model or prompt regression?</li>
+<li class="task todo">Are context evals rerun on a schedule, the same way output evals are?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="the-anatomy-of-a-context-pipeline.html">The anatomy of a context pipeline</a></li>
+<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products (eval-driven development)</a></li>
+<li><a href="context-as-a-spec-able-requirement.html">Context as a spec-able requirement</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="context-governance-at-scale.html"><span class="lbl">← Previous</span><span class="ttl">Context governance at scale</span></a><a class="navcard next" href="context-across-the-product-lifecycle.html"><span class="lbl">→ Next</span><span class="ttl">Context engineering across the product lifecycle</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-two-separate-scores-not-one">The mental model: two separate scores, not one</a><a class="h2" href="#building-a-context-eval-set">Building a context eval set</a><a class="h2" href="#the-five-minute-triage">The five-minute triage</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{
