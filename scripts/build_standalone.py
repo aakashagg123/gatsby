@@ -204,18 +204,21 @@ def _head(title):
 </head>
 <body>"""
 
-def _topbar(brand, tagline):
+def _topbar(brand, tagline, with_menu=False):
+    menu_btn = ('<button class="menu-btn" id="sbToggle" aria-expanded="false" '
+                'aria-controls="sbNav" aria-label="Open lesson menu">☰</button>') if with_menu else ""
+    scrim = '<div id="sb-scrim"></div>' if with_menu else ""
     return f"""<header class="topbar">
-  <a class="brand" href="index.html">{bh.SPARK}<span>{htmllib.escape(brand)}</span><em>{htmllib.escape(tagline)}</em></a>
+  {menu_btn}<a class="brand" href="index.html">{bh.SPARK}<span>{htmllib.escape(brand)}</span><em>{htmllib.escape(tagline)}</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header>"""
+</header>{scrim}"""
 
 def _sidebar(active, nav):
     items = []
     for href, label, key in nav:
         cls = "modlink active" if key == active else "modlink"
         items.append(f'<a class="{cls}" href="{href}">{htmllib.escape(label)}</a>')
-    return f'<aside class="sidebar"><div class="sticky">{"".join(items)}</div></aside>'
+    return f'<aside class="sidebar" id="sbNav"><div class="sticky">{"".join(items)}</div></aside>'
 
 def _footer(prev, nxt):
     def card(item, dir_):
@@ -304,7 +307,7 @@ def build_track(cfg):
         prev, nxt = prevnext(key)
         chip = f"Lesson {num:02d}" if num else "Recap"
         page = _head(f"{t} — {brand}")
-        page += _topbar(brand, tagline)
+        page += _topbar(brand, tagline, with_menu=True)
         page += f'<div class="layout{" has-outline" if has_outline else ""}">'
         page += _sidebar(key, nav)
         page += f"""<main class="content" id="top">
@@ -314,7 +317,7 @@ def build_track(cfg):
   </div>
   {body}
   {_footer(prev, nxt)}
-  </main>{outline_html}</div>{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
+  </main>{outline_html}</div>{bh.SIDEBAR_TOGGLE_JS}{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:
             f.write(reader_widget.inject(_inject_mermaid(page)))
 

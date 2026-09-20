@@ -41,10 +41,13 @@ html[data-rs] main pre{font-size:.85em !important}
 html[data-rm="n"] main{max-width:620px !important}
 html[data-rm="w"] main{max-width:1120px !important}
 /* below this, main is already narrower than either max-width above, so the
-   narrow/wide buttons would otherwise do nothing — map them to side padding */
+   narrow/wide buttons would otherwise do nothing — map them to side padding.
+   The default (no data-rm) state is intentionally left alone here: each
+   template already tunes its own default mobile padding per breakpoint,
+   and overriding it flattened that down to one generic value for every
+   visitor who hasn't touched the reader-settings widget — a regression. */
 @media (max-width:680px){
   html[data-rm="n"] main{padding-left:12px !important;padding-right:12px !important}
-  html:not([data-rm]) main{padding-left:20px !important;padding-right:20px !important}
   html[data-rm="w"] main{padding-left:32px !important;padding-right:32px !important}
 }
 /* ---- the widget ---- */

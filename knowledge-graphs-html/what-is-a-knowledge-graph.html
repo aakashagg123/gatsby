@@ -214,6 +214,11 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 /* tablet: collapse to a single column */
 @media (max-width:880px){
   .layout{grid-template-columns:minmax(0,1fr)}
+  /* .layout.has-outline's unconditional rule below (2 classes) outranks the
+     plain .layout rule above (1 class) on specificity regardless of this
+     media query, so it needs its own same-specificity override here to
+     actually collapse on mobile */
+  .layout.has-outline{grid-template-columns:minmax(0,1fr)}
   .content{min-width:0;padding:32px 22px 70px}
   .menu-btn{display:inline-flex}
   .sidebar{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;
@@ -349,9 +354,9 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Knowledge graphs</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div class="layout has-outline"><aside class="sidebar"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-a-knowledge-graph.html">1 · What is a knowledge graph?</a><a class="modlink" href="ontologies-and-data-modeling.html">2 · Ontologies &amp; data modeling</a><a class="modlink" href="building-the-graph.html">3 · Building the graph</a><a class="modlink" href="storage-and-querying.html">4 · Storage &amp; querying</a><a class="modlink" href="reasoning-and-analytics.html">5 · Reasoning &amp; analytics</a><a class="modlink" href="knowledge-graphs-and-llms.html">6 · Knowledge graphs &amp; LLMs</a><a class="modlink" href="governance-quality-and-trust.html">7 · Governance, quality &amp; trust</a><a class="modlink" href="knowledge-graphs-as-a-product.html">8 · Knowledge graphs as a product</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Lesson 01</span>
     <h1>What is a knowledge graph?</h1>
@@ -540,6 +545,18 @@ spend the money elsewhere.</p>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="ontologies-and-data-modeling.html"><span class="lbl">→ Next</span><span class="ttl">Ontologies &amp; data modeling</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#things-not-strings">Things, not strings</a><a class="h2" href="#the-anatomy-entities-relationships-triples">The anatomy: entities, relationships, triples</a><a class="h2" href="#what-a-knowledge-graph-is-not">What a knowledge graph is not</a><a class="h2" href="#the-test-do-you-actually-need-one">The test: do you actually need one?</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
   var links = document.querySelectorAll('.outline a');
   if(!links.length) return;
   var heads = [];
@@ -623,10 +640,13 @@ html[data-rs] main pre{font-size:.85em !important}
 html[data-rm="n"] main{max-width:620px !important}
 html[data-rm="w"] main{max-width:1120px !important}
 /* below this, main is already narrower than either max-width above, so the
-   narrow/wide buttons would otherwise do nothing — map them to side padding */
+   narrow/wide buttons would otherwise do nothing — map them to side padding.
+   The default (no data-rm) state is intentionally left alone here: each
+   template already tunes its own default mobile padding per breakpoint,
+   and overriding it flattened that down to one generic value for every
+   visitor who hasn't touched the reader-settings widget — a regression. */
 @media (max-width:680px){
   html[data-rm="n"] main{padding-left:12px !important;padding-right:12px !important}
-  html:not([data-rm]) main{padding-left:20px !important;padding-right:20px !important}
   html[data-rm="w"] main{padding-left:32px !important;padding-right:32px !important}
 }
 /* ---- the widget ---- */
