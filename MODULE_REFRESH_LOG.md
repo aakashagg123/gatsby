@@ -13,7 +13,7 @@ something to fix, so the rotation always moves forward.
 | id | path | build script | last_refreshed |
 |---|---|---|---|
 | ai-engineering | content/ | scripts/build_html.py | 2026-09-20 |
-| harness-engineering | harness-engineering/ | scripts/build_site.py | never |
+| harness-engineering | harness-engineering/ | scripts/build_site.py | 2026-09-20 |
 | flowable | flowable/ | scripts/build_site.py | never |
 | first-principles | first-principles/ | scripts/build_first_principles.py | never |
 | product-sense | product-sense/ | scripts/build_product_sense.py | never |
@@ -49,3 +49,14 @@ and a link to the merged PR.)
   lesson files to go stale; historical/technical references (DeepSeek-V2's
   MLA, the "DeepSeek moment," the GPT-4 drift debates) are correctly
   framed as dated history, not current-state claims.
+- 2026-09-20 — harness-engineering — fixed: the course's "defaults to the
+  latest model" claim was stale across 24 files (prose + runnable code
+  examples). Every reference to Claude Opus 4.8 (`claude-opus-4-8`) as
+  "the latest model" updated to Opus 5 (`claude-opus-5`); the two files
+  framing a model-family overview ("the Claude 4.x family") updated to
+  "the Claude 5 family," including Sonnet 4.6 -> Sonnet 5 and
+  Fable 5 -> Fable 5.1. Haiku 4.5 references left as-is — that generation
+  is still current. Scope: `phases/00-setup-and-tooling/`,
+  `01-llm-io-foundations/`, `02-the-agent-loop/`, `03-tool-engineering/`,
+  `04-context-engineering/`, `16-observability-and-cost/`,
+  `18-production-and-deployment/`, `19-capstone-coding-agent/`.

@@ -26,7 +26,7 @@ authoritative file and quote it.
 
 A skill that encodes the habit so any agent applies it. `outputs/SKILL.md` triggers on
 LLM/API questions and forces a docs check before answering. It defaults to the latest
-models (Fable 5; the Claude 4.x family — Opus 4.8 `claude-opus-4-8`, Sonnet 4.6, Haiku
+models (Fable 5.1; the Claude 5 family — Opus 5 `claude-opus-5`, Sonnet 5, Haiku
 4.5).
 
 ## Use It

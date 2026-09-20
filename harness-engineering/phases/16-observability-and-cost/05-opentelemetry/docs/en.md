@@ -40,7 +40,7 @@ def run(query):
         run_span.set_attribute("query", query)
         with tracer.start_as_current_span("model.call") as s:
             s.set_attribute("gen_ai.usage.input_tokens", 120)   # semantic conventions
-            s.set_attribute("gen_ai.request.model", "claude-opus-4-8")
+            s.set_attribute("gen_ai.request.model", "claude-opus-5")
         with tracer.start_as_current_span("tool.call") as s:
             s.set_attribute("tool.name", "bash")
 ```

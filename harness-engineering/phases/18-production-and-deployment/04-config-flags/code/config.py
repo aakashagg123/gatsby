@@ -17,6 +17,6 @@ def flag_enabled(name, unit_id, percent):
 
 if __name__ == "__main__":
     cfg = load_config({"model": "haiku", "max_steps": 10},
-                      {"model": "claude-opus-4-8"})
+                      {"model": "claude-opus-5"})
     print(cfg["model"], cfg["max_steps"])
     print([flag_enabled("new_planner", u, 30) for u in ["u1", "u2", "u3", "u4"]])

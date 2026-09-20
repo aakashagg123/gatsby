@@ -29,7 +29,7 @@ files last, with a **cache breakpoint** after the stable prefix.
 
 Caching is a provider feature, so this is **Use It** — but the layout is the payoff of
 everything you built. `code/cache_aware.py` composes the phase's pieces and marks the
-breakpoint, defaulting to **Claude Opus 4.8**:
+breakpoint, defaulting to **Claude Opus 5**:
 
 ```python
 import anthropic
@@ -45,7 +45,7 @@ def build_request(memory, tools, history, files, user_msg):
     if files:
         messages.append({"role": "user", "content": files})  # this-turn, wrapped (lesson 05)
     messages.append({"role": "user", "content": user_msg})
-    return dict(model="claude-opus-4-8", max_tokens=1024,
+    return dict(model="claude-opus-5", max_tokens=1024,
                 system=system, tools=tools, messages=messages)
 ```
 

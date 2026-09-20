@@ -3,7 +3,7 @@
 Requires:  pip install anthropic   and   ANTHROPIC_API_KEY in the environment.
 Run:       python3 sdk_loop.py
 
-Defaults to the latest model, Claude Opus 4.8 (claude-opus-4-8).
+Defaults to the latest model, Claude Opus 5 (claude-opus-5).
 """
 import anthropic
 
@@ -26,7 +26,7 @@ def run(query):
     messages = [{"role": "user", "content": query}]
     for _ in range(MAX_STEPS):
         msg = client.messages.create(
-            model="claude-opus-4-8", max_tokens=1024, tools=SCHEMA, messages=messages)
+            model="claude-opus-5", max_tokens=1024, tools=SCHEMA, messages=messages)
         messages.append({"role": "assistant", "content": msg.content})
         calls = [b for b in msg.content if b.type == "tool_use"]
         if msg.stop_reason != "tool_use" or not calls:            # termination

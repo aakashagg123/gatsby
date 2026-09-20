@@ -1,14 +1,14 @@
 """A minimal conversational REPL over the model — the smallest useful harness.
 
 Requires ANTHROPIC_API_KEY and the `anthropic` package. Run:  python3 repl.py
-Type 'exit' to quit. Defaults to Claude Opus 4.8 (claude-opus-4-8).
+Type 'exit' to quit. Defaults to Claude Opus 5 (claude-opus-5).
 """
 import anthropic
 
 client = anthropic.Anthropic()
 
 
-def repl(model="claude-opus-4-8"):
+def repl(model="claude-opus-5"):
     history = []
     print("Talk to the model (type 'exit' to quit).")
     while True:
