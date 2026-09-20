@@ -613,6 +613,11 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 /* tablet: collapse to a single column */
 @media (max-width:880px){
   .layout{grid-template-columns:minmax(0,1fr)}
+  /* .layout.has-outline's unconditional rule below (2 classes) outranks the
+     plain .layout rule above (1 class) on specificity regardless of this
+     media query, so it needs its own same-specificity override here to
+     actually collapse on mobile */
+  .layout.has-outline{grid-template-columns:minmax(0,1fr)}
   .content{min-width:0;padding:32px 22px 70px}
   .menu-btn{display:inline-flex}
   .sidebar{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;

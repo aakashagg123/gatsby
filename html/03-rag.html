@@ -214,6 +214,11 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 /* tablet: collapse to a single column */
 @media (max-width:880px){
   .layout{grid-template-columns:minmax(0,1fr)}
+  /* .layout.has-outline's unconditional rule below (2 classes) outranks the
+     plain .layout rule above (1 class) on specificity regardless of this
+     media query, so it needs its own same-specificity override here to
+     actually collapse on mobile */
+  .layout.has-outline{grid-template-columns:minmax(0,1fr)}
   .content{min-width:0;padding:32px 22px 70px}
   .menu-btn{display:inline-flex}
   .sidebar{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;
@@ -853,10 +858,13 @@ html[data-rs] main pre{font-size:.85em !important}
 html[data-rm="n"] main{max-width:620px !important}
 html[data-rm="w"] main{max-width:1120px !important}
 /* below this, main is already narrower than either max-width above, so the
-   narrow/wide buttons would otherwise do nothing — map them to side padding */
+   narrow/wide buttons would otherwise do nothing — map them to side padding.
+   The default (no data-rm) state is intentionally left alone here: each
+   template already tunes its own default mobile padding per breakpoint,
+   and overriding it flattened that down to one generic value for every
+   visitor who hasn't touched the reader-settings widget — a regression. */
 @media (max-width:680px){
   html[data-rm="n"] main{padding-left:12px !important;padding-right:12px !important}
-  html:not([data-rm]) main{padding-left:20px !important;padding-right:20px !important}
   html[data-rm="w"] main{padding-left:32px !important;padding-right:32px !important}
 }
 /* ---- the widget ---- */
