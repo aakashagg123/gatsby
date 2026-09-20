@@ -707,7 +707,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Framing problems around user progress; Avoiding feature-factory thinking; Finding non-obvious competitors and solutions.
 
-*See:* [Motivation & behaviour](./product-sense/motivation-and-behaviour.md).
+*See:* [User research: the craft of finding out](./product-sense/user-research.md).
 
 **JSON mode** — A request-level feature that constrains a model's output to match a specific data shape, so the response reliably parses instead of just hopefully following a plain-language instruction.
 
@@ -908,6 +908,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Aligning a team on what matters; Avoiding vanity-metric traps; Framing goals and roadmaps.
 
 *See:* [Metrics & experimentation](./technical-product-management/metrics-and-experimentation.md).
+
+**OKR** — Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.
+
+*In plain terms.* An OKR translates strategy into something a team can act on this quarter: the Objective restates the strategic bet in outcome language, and the Key Results are the numbers that prove it's working. OKRs should be set BY strategy, not used as a substitute for having one — a Key Result that doesn't trace back to a strategic choice is a number in search of a reason.
+
+*For example.* Objective: 'become the default choice for solo freelancers.' Key Results: '40% of new signups come from referral,' 'time-to-first-invoice under 3 minutes.'
+
+*Where it shows up:* Cascading strategy into quarterly execution; Testing whether a proposed goal actually traces back to strategy; Aligning a team around a small number of measurable bets.
+
+*See:* [Prioritization & roadmaps](./technical-product-management/prioritization-and-roadmaps.md).
 
 **Ontology** — A knowledge graph's data model: the agreed entity types, allowed relationships, and rules — a product contract for what the graph can ever answer.
 

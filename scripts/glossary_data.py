@@ -824,7 +824,7 @@ GLOSSARY = [
  "fp":"Users don't want your feature; they want a job done. 'Jobs to be done' reframes the product around the progress the user is trying to make and the circumstances they're in, so you build for the underlying need rather than the surface request.",
  "example":"People don't want a quarter-inch drill; they want a quarter-inch hole — and really, a shelf on the wall. Design for the shelf.",
  "uses":["Framing problems around user progress","Avoiding feature-factory thinking","Finding non-obvious competitors and solutions"],
- "see":("Motivation & behaviour","product-sense/motivation-and-behaviour.md"),
+ "see":("User research: the craft of finding out","product-sense/user-research.md"),
  "related":["cognitive-empathy","behaviour-equation","north-star"],
 },
 {
@@ -955,7 +955,16 @@ GLOSSARY = [
  "example":"For a messaging app, 'messages sent between people who know each other' beats 'signups' — it tracks real value, not vanity.",
  "uses":["Aligning a team on what matters","Avoiding vanity-metric traps","Framing goals and roadmaps"],
  "see":("Metrics & experimentation","technical-product-management/metrics-and-experimentation.md"),
- "related":["data-flywheel","jobs-to-be-done","prd"],
+ "related":["data-flywheel","jobs-to-be-done","prd","okr"],
+},
+{
+ "k":"okr","t":"OKR","aliases":["Objectives and Key Results","OKRs"],"cs":True,"cat":"Technical product management",
+ "short":"Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.",
+ "fp":"An OKR translates strategy into something a team can act on this quarter: the Objective restates the strategic bet in outcome language, and the Key Results are the numbers that prove it's working. OKRs should be set BY strategy, not used as a substitute for having one — a Key Result that doesn't trace back to a strategic choice is a number in search of a reason.",
+ "example":"Objective: 'become the default choice for solo freelancers.' Key Results: '40% of new signups come from referral,' 'time-to-first-invoice under 3 minutes.'",
+ "uses":["Cascading strategy into quarterly execution","Testing whether a proposed goal actually traces back to strategy","Aligning a team around a small number of measurable bets"],
+ "see":("Prioritization & roadmaps","technical-product-management/prioritization-and-roadmaps.md"),
+ "related":["north-star","prd","control-point"],
 },
 {
  "k":"canary","t":"Canary release","aliases":["canary"],"cat":"Technical product management",
