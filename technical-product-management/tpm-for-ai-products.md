@@ -109,42 +109,15 @@ not a meeting.
 
 ## Context engineering: the PM's real lever over quality
 
-For a decade, "what data do we have?" was the right question — dashboards, KPIs, and
-analytics rewarded whoever collected the most. An AI feature breaks that assumption: the
-model already has more raw data than any team could organize by hand. What it lacks is
-*framing* — the right slice of memory, retrieved documents, tool output, and user state,
-assembled for the decision in front of it. The question that actually predicts quality
-is "what context does the model need to make this decision meaningful?", not "what data
-do we have?"
-
-Prompt engineering — a clever instruction string — looks like the answer, and it's the
-fastest way to a working demo. It doesn't survive contact with production, for three
-reasons that show up as separate failure patterns:
-
-- **Fragility.** A prompt tuned on "how do I request a refund?" breaks on "can I get my
-  money back if I cancel mid-cycle?" — same intent, different words, no output. Real
-  inputs are never as clean as the five examples a prompt was tuned against.
-- **No scale across use cases.** Every new scenario — a PRD draft, a competitor summary,
-  a niche support question — gets its own bespoke prompt. The team ends up maintaining a
-  library of brittle strings instead of one adaptive system, and that library is
-  operational debt with a PM's name on it.
-- **No memory.** A prompt answers in isolation unless something else carries context
-  forward. Without it, an AI roadmap assistant can recommend the SMB segment on Monday
-  and enterprise-only on Tuesday, because nothing told it what was decided last week.
-
-**Context engineering** is the discipline that survives contact with production:
-architecting the system around the model call — retrieval, memory, tool state,
-guardrails — so the model reliably has what it needs, instead of hoping the wording
-carries it. This is exactly the "prompt assembly" box in the
-[AI-feature pipeline](../technical-product-sense/technical-sense-for-ai.md) and the AI
-Engineering track's
-[context engineering](../content/00-foundations/context-engineering.md) lesson. The
-PM's job isn't to write the prompt — it's to **specify what context the decision
-requires**, the same way [specs](./specs-prds-and-rfcs.md) specify an eval threshold:
-what must the system know, remember, and retrieve for this feature to be trustworthy,
-and where does that context come from at query time? Put that requirement in the spec
-next to the eval bar, and "the prompt doesn't work for this edge case" stops being an
-engineering surprise and starts being a context gap you scoped for.
+The question that actually predicts an AI feature's quality is "what context does the
+model need to make this decision meaningful?", not "what data do we have?" — and a
+clever prompt, on its own, answers that question badly: it's fragile to rephrasing,
+doesn't scale across use cases, and carries no memory forward between calls. The PM's
+job isn't to write the prompt — it's to specify what context a decision requires, the
+same way [specs](./specs-prds-and-rfcs.md) specify an eval threshold. This is developed
+in full in [Context engineering for the product leader](../context-engineering/README.md) —
+the paradigm shift, the diagnostic for prompt-vs-context failures, and how to write a
+context requirement into a spec.
 
 ## The data flywheel
 
@@ -246,3 +219,4 @@ eval bar and scoping decisions above run on.
 - [Metrics & experimentation](./metrics-and-experimentation.md)
 - [Launches, rollouts & migrations](./launches-rollouts-and-migrations.md)
 - [Technical sense for AI systems](../technical-product-sense/technical-sense-for-ai.md)
+- [Context engineering for the product leader](../context-engineering/README.md)

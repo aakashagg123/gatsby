@@ -455,41 +455,15 @@ not a meeting.</p>
   old model/prompt version — cheap, <em>if</em> you versioned them).</li>
 </ul>
 <h2 id="context-engineering-the-pms-real-lever-over-quality">Context engineering: the PM's real lever over quality</h2>
-<p>For a decade, "what data do we have?" was the right question — dashboards, KPIs, and
-analytics rewarded whoever collected the most. An AI feature breaks that assumption: the
-model already has more raw data than any team could organize by hand. What it lacks is
-<em>framing</em> — the right slice of memory, retrieved documents, tool output, and user state,
-assembled for the decision in front of it. The question that actually predicts quality
-is "what context does the model need to make this decision meaningful?", not "what data
-do we have?"</p>
-<p>Prompt engineering — a clever instruction string — looks like the answer, and it's the
-fastest way to a working demo. It doesn't survive contact with production, for three
-reasons that show up as separate failure patterns:</p>
-<ul>
-<li><strong>Fragility.</strong> A prompt tuned on "how do I request a refund?" breaks on "can I get my
-  money back if I cancel mid-cycle?" — same intent, different words, no output. Real
-  inputs are never as clean as the five examples a prompt was tuned against.</li>
-<li><strong>No scale across use cases.</strong> Every new scenario — a PRD draft, a competitor summary,
-  a niche support question — gets its own bespoke prompt. The team ends up maintaining a
-  library of brittle strings instead of one adaptive system, and that library is
-  operational debt with a PM's name on it.</li>
-<li><strong>No memory.</strong> A prompt answers in isolation unless something else carries context
-  forward. Without it, an AI roadmap assistant can recommend the SMB segment on Monday
-  and enterprise-only on Tuesday, because nothing told it what was decided last week.</li>
-</ul>
-<p><strong>Context engineering</strong> is the discipline that survives contact with production:
-architecting the system around the model call — retrieval, memory, tool state,
-guardrails — so the model reliably has what it needs, instead of hoping the wording
-carries it. This is exactly the "prompt assembly" box in the
-<a href="../technical-product-sense/technical-sense-for-ai.html">AI-feature pipeline</a> and the AI
-Engineering track's
-<a href="../ai/00-foundations.html#context-engineering">context engineering</a> lesson. The
-PM's job isn't to write the prompt — it's to <strong>specify what context the decision
-requires</strong>, the same way <a href="specs-prds-and-rfcs.html">specs</a> specify an eval threshold:
-what must the system know, remember, and retrieve for this feature to be trustworthy,
-and where does that context come from at query time? Put that requirement in the spec
-next to the eval bar, and "the prompt doesn't work for this edge case" stops being an
-engineering surprise and starts being a context gap you scoped for.</p>
+<p>The question that actually predicts an AI feature's quality is "what context does the
+model need to make this decision meaningful?", not "what data do we have?" — and a
+clever prompt, on its own, answers that question badly: it's fragile to rephrasing,
+doesn't scale across use cases, and carries no memory forward between calls. The PM's
+job isn't to write the prompt — it's to specify what context a decision requires, the
+same way <a href="specs-prds-and-rfcs.html">specs</a> specify an eval threshold. This is developed
+in full in <a href="../context-engineering/index.html">Context engineering for the product leader</a> —
+the paradigm shift, the diagnostic for prompt-vs-context failures, and how to write a
+context requirement into a spec.</p>
 <h2 id="the-data-flywheel">The data flywheel</h2>
 <p>The compounding asset of an AI product isn't the model — everyone can rent the same
 model. It's the loop: <strong>usage → captured feedback → better evals (and sometimes
@@ -584,6 +558,7 @@ eval bar and scoping decisions above run on.</p>
 <li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
 <li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a></li>
+<li><a href="../context-engineering/index.html">Context engineering for the product leader</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="incidents-and-postmortems.html"><span class="lbl">← Previous</span><span class="ttl">Incidents &amp; postmortems</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-operating-loop">The operating loop</a><a class="h2" href="#eval-driven-development">Eval-driven development</a><a class="h2" href="#what-each-discipline-gains">What each discipline gains</a><a class="h2" href="#context-engineering-the-pms-real-lever-over-quality">Context engineering: the PM&#x27;s real lever over quality</a><a class="h2" href="#the-data-flywheel">The data flywheel</a><a class="h2" href="#the-long-game-models-age-debt-compounds">The long game: models age, debt compounds</a><a class="h2" href="#vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>

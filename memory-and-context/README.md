@@ -19,7 +19,10 @@ would only restate it. This module exists instead to answer the question those t
 lessons don't lead with: **memory as a product decision** — what to promise a user, what
 it costs in trust, and where it fails as a business risk, not just an engineering one.
 It's shorter than most modules in this family for exactly that reason: four lessons, not
-six, because the honest amount of genuinely new ground is four lessons' worth.
+six, because the honest amount of genuinely new ground is four lessons' worth. For the
+broader strategic argument — context engineering as an operating discipline beyond
+memory specifically, including specs, governance, and evals — see
+[Context engineering for the product leader](../context-engineering/README.md).
 
 ## The knowledge graph
 

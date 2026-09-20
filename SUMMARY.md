@@ -270,6 +270,20 @@ architecture, tradeoffs, and failure modes that shape product decisions.
 7. [Data infrastructure](./system-design/data-infrastructure.md)
 8. [Transactional & financial systems](./system-design/transactional-and-financial.md) · [Recap](./system-design/recap.md)
 
+## [Context engineering](./context-engineering/README.md)
+
+Treat what the model gets to see as a product decision — instructions, retrieval,
+memory, and live state, spec'd, governed, and evaluated with the same rigor as the
+output it produces.
+
+1. [What is context engineering, for a product leader?](./context-engineering/what-is-context-engineering.md)
+2. [Why prompt engineering doesn't scale](./context-engineering/why-prompt-engineering-doesnt-scale.md)
+3. [The anatomy of a context pipeline](./context-engineering/the-anatomy-of-a-context-pipeline.md)
+4. [Context as a spec-able requirement](./context-engineering/context-as-a-spec-able-requirement.md)
+5. [Context governance at scale](./context-engineering/context-governance-at-scale.md)
+6. [Evaluating context quality](./context-engineering/evaluating-context-quality.md)
+7. [Context engineering across the product lifecycle](./context-engineering/context-across-the-product-lifecycle.md) · [Recap](./context-engineering/recap.md)
+
 ## [Harness engineering](./harness-engineering/README.md)
 
 The hands-on build track: construct a coding agent's harness phase by phase. Start with

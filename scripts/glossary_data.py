@@ -45,7 +45,7 @@ GLOSSARY = [
  "example":"Instead of pasting a customer's entire 200-page history, you retrieve the 3 most relevant tickets, add the account status, and put the task instruction last where the model attends most.",
  "uses":["Explaining why 'just give it more data' degrades quality","Prioritising what retrieval and memory should surface","Debugging why the model 'ignored' something you provided"],
  "see":("Context engineering","content/00-foundations/context-engineering.md"),
- "related":["context-window","rag","compaction","prompt-caching"],
+ "related":["context-window","rag","compaction","prompt-caching","context-first","context-contract"],
 },
 {
  "k":"context-window","t":"Context window","cat":"AI engineering",
@@ -992,6 +992,26 @@ GLOSSARY = [
  "uses":["Learning from incidents systematically","Building a reliability culture","Turning failures into durable fixes"],
  "see":("Incidents & postmortems","technical-product-management/incidents-and-postmortems.md"),
  "related":["blast-radius","canary","sla-slo"],
+},
+
+# =========================== CONTEXT ENGINEERING ============================
+{
+ "k":"context-contract","t":"Context contract","cat":"Context engineering",
+ "short":"A spec section naming what an AI feature must know, remember, and retrieve to be trustworthy — next to its eval bar.",
+ "fp":"A behavior-only spec says what a feature should do and how it's graded, but skips the layer in between: what does the model need to see? A context contract fills that gap by naming, up front, the instructions, retrieved facts, memory, and live state a decision requires — so context sourcing is a scoped build item, not a guess made during implementation.",
+ "example":"A renewal-risk assistant's context contract names the CS-approved 'at risk' definition, daily-refreshed usage data, the rep's carried-forward notes, and live contract status from the CRM — each with an owner.",
+ "uses":["Writing AI feature specs that don't skip a layer","Assigning ownership for context sourcing before a build starts","Diagnosing why an edge case wasn't handled"],
+ "see":("Context as a spec-able requirement","context-engineering/context-as-a-spec-able-requirement.md"),
+ "related":["context-engineering","prd","eval-driven-development"],
+},
+{
+ "k":"context-first","t":"Context-first (vs. data-first)","aliases":["context-first product management"],"cat":"Context engineering",
+ "short":"Asking 'what does this decision need to see?' instead of 'what data do we have?' — the AI-era shift in the default product question.",
+ "fp":"Data-first thinking collects everything, warehouses it, and lets a human filter it at read time. AI features break that pattern: the model already has more raw text than any team could read, and volume was never the constraint. Context-first thinking asks what a specific decision needs, assembled fresh for that one moment, instead of what's been collected over time.",
+ "example":"Instead of piping an entire customer history into a support bot's prompt, a context-first team retrieves the three most relevant tickets and the current account status for this specific question.",
+ "uses":["Diagnosing an AI feature that has plenty of data but still answers poorly","Reframing a 'give it more data' request into a scoped context requirement","Explaining why bigger prompts and newer models don't fix every quality miss"],
+ "see":("What is context engineering, for a product leader?","context-engineering/what-is-context-engineering.md"),
+ "related":["context-engineering","context-contract","rag"],
 },
 
 # ============================= FIRST PRINCIPLES ============================

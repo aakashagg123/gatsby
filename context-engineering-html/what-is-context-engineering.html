@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Memory &amp; context for the product leader</title>
+<title>What is context engineering, for a product leader? — Context engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,91 +354,149 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Memory &amp; context for the product leader</h1>
-    <p class="lede">Memory as a product decision, the three shapes it takes, retrieval as its most common implementation, and the trust failures it has to be designed against.</p>
-    <div class="index-meta"><span>4 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-is-context-engineering.html">1 · What is context engineering, for a product leader?</a><a class="modlink" href="why-prompt-engineering-doesnt-scale.html">2 · Why prompt engineering doesn&#x27;t scale</a><a class="modlink" href="the-anatomy-of-a-context-pipeline.html">3 · The anatomy of a context pipeline</a><a class="modlink" href="context-as-a-spec-able-requirement.html">4 · Context as a spec-able requirement</a><a class="modlink" href="context-governance-at-scale.html">5 · Context governance at scale</a><a class="modlink" href="evaluating-context-quality.html">6 · Evaluating context quality</a><a class="modlink" href="context-across-the-product-lifecycle.html">7 · Context engineering across the product lifecycle</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 01</span>
+    <h1>What is context engineering, for a product leader?</h1>
   </div>
-  <div class="intro"><p>A model remembers nothing between calls. Anything it appears to "remember" — the earlier
-turns of a chat, a preference from last week, a company's house style — was put back in
-front of it, deliberately, by your product. Whether and how to do that is one of the
-highest-leverage product decisions in any AI feature, and it is easy to get backwards:
-teams either build no memory at all, forcing users to repeat themselves forever, or build
-memory carelessly, and end up with a feature that resurfaces something a user assumed was
-forgotten, in front of the wrong audience.</p>
-<p><strong>A note on scope.</strong> The engineering mechanics of context and memory — the context window
-as a scarce resource, compaction, offloading, tool-result hygiene, the full memory
-hierarchy — are already developed in real depth in two places in this curriculum:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> and
-<a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>. Rebuilding that ground here
-would only restate it. This module exists instead to answer the question those two
-lessons don't lead with: <strong>memory as a product decision</strong> — what to promise a user, what
-it costs in trust, and where it fails as a business risk, not just an engineering one.
-It's shorter than most modules in this family for exactly that reason: four lessons, not
-six, because the honest amount of genuinely new ground is four lessons' worth. For the
-broader strategic argument — context engineering as an operating discipline beyond
-memory specifically, including specs, governance, and evals — see
-<a href="../context-engineering/index.html">Context engineering for the product leader</a>.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Memory is a set of promises your product makes about what it will and won't carry
-forward. Every lesson in this module hangs off this picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph PROMISE[&quot;THE PROMISE — lesson 1&quot;]
-    DECIDE[&quot;Memory is a feature&lt;br/&gt;you choose to build,&lt;br/&gt;not free infrastructure&quot;]
+  <h2 id="tldr">TL;DR</h2>
+<p>For a decade, the default product question was "what data do we have?" — collect it,
+clean it, put it on a dashboard, let a human decide. AI features break that pattern: the
+model already has access to more raw text than any team could read, and it still gets
+the decision wrong. What it lacked wasn't data. It was the right slice of it, assembled
+for the moment. <strong>Context engineering</strong> is the discipline of deciding what a model sees
+at the instant it has to act — instructions, retrieved facts, memory of what happened
+before, live state from tools — so the decision is grounded, not just fluent. The
+sharper question a product leader asks isn't "what data do we have," it's <strong>"what does
+the model need to know, right now, to make this specific decision meaningful?"</strong></p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Every AI feature that "hallucinates," contradicts itself, or gives
+a technically-fluent-but-wrong answer is usually a context failure wearing a model
+failure's clothes. Fixing the model rarely helps; fixing what it was shown does.</p>
+<p><strong>What it changes in your decisions</strong> — You stop asking engineering to "make the model
+smarter" and start asking what context a decision actually requires — the same rigor
+you'd apply to a feature spec, not an afterthought you leave to whoever wrote the
+prompt.</p>
+<p><strong>Ask yourself</strong> — <em>"For our riskiest AI feature, could I list — right now, off the top
+of my head — everything the model is shown before it answers?"</em></p>
+<p><strong>Risk if ignored</strong> — A team ships bigger prompts and newer models chasing a quality
+problem that was never about either one, while the actual fix — better context — sits
+unbuilt.</p>
+</blockquote>
+<h2 id="a-note-on-scope">A note on scope</h2>
+<p>This curriculum already covers context in real engineering depth in two places:
+<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
+window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
+(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
+covers memory specifically as a product-trust decision. This module sits one level up
+from all three: it's the <strong>strategic and operating argument</strong> for context engineering as
+a product leader's discipline — not the mechanics of fitting things in a window, and not
+memory specifically, but the full question of what any AI decision needs to see, how you
+spec that requirement, and how you know when it's missing. Follow the spokes into those
+three lessons for the engineering depth behind every mechanic this module names.</p>
+<h2 id="the-mental-model-data-first-vs-context-first">The mental model: data-first vs. context-first</h2>
+<pre class="mermaid">flowchart LR
+  subgraph OLD[&quot;DATA-FIRST (pre-AI default)&quot;]
+    D1[&quot;Collect everything&quot;] --&gt; D2[&quot;Clean &amp; warehouse it&quot;] --&gt; D3[&quot;Human reads a dashboard&quot;] --&gt; D4[&quot;Human decides&quot;]
   end
-  subgraph SCOPE[&quot;THE SCOPE — lesson 2&quot;]
-    SESSION[&quot;Session memory&lt;br/&gt;this conversation only&quot;]
-    USER[&quot;User memory&lt;br/&gt;across sessions,&lt;br/&gt;one person&quot;]
-    ORG[&quot;Organizational memory&lt;br/&gt;shared across&lt;br/&gt;a whole team&quot;]
-  end
-  subgraph SOURCE[&quot;WHERE IT COMES FROM — lesson 3&quot;]
-    RETRIEVE[&quot;Retrieval&lt;br/&gt;(RAG) as one way&lt;br/&gt;to implement memory&quot;]
-  end
-  subgraph RISK[&quot;WHEN IT BREAKS — lesson 4&quot;]
-    STALE[&quot;Stale or wrong&lt;br/&gt;memories&quot;]
-    LEAK[&quot;Memory that crosses&lt;br/&gt;a boundary it shouldn&#x27;t&quot;]
-    NODELETE[&quot;No way for a user&lt;br/&gt;to see, correct, or&lt;br/&gt;delete what&#x27;s remembered&quot;]
-  end
-  DECIDE --&gt; SESSION &amp; USER &amp; ORG
-  RETRIEVE --&gt;|&quot;one implementation&lt;br/&gt;of user &amp; org memory&quot;| USER
-  RETRIEVE --&gt; ORG
-  SESSION -.-&gt;|&quot;can decay into&quot;| STALE
-  USER -.-&gt;|&quot;can decay into&quot;| LEAK
-  ORG -.-&gt;|&quot;can decay into&quot;| NODELETE</pre>
-<p>Read it in three passes. <strong>The promise</strong>: memory is something your product decides to
-offer, with a cost and a risk attached, not a default a model gives you for free. <strong>The
-scope</strong>: memory comes in different shapes — one conversation, one person, one whole
-organization — and each shape carries a different product and privacy contract.
-<strong>The risk</strong>: every one of those shapes fails in a specific, predictable way, and the
-failure is almost always a trust problem before it's a technical one.</p>
-<h2 id="the-lessons">The lessons</h2>
+  subgraph NEW[&quot;CONTEXT-FIRST (AI-era)&quot;]
+    C1[&quot;Ask: what does THIS decision need?&quot;] --&gt; C2[&quot;Assemble instructions + retrieval +&lt;br/&gt;memory + live state, per request&quot;] --&gt; C3[&quot;Model decides&quot;]
+  end</pre>
+<p>Data-first optimizes for <em>volume, collected once</em>: gather as much as you can, store it,
+let a human filter at read time. Context-first optimizes for <em>relevance, assembled every
+time</em>: a model makes a fresh decision on every call, so the filtering has to happen
+<em>before</em> the call, on purpose, by something — usually your product, not the model. The
+volume of data your company holds stopped being the constraint. What's scarce now is the
+judgment about which slice of it belongs in front of the model for this one decision.</p>
+<h2 id="the-four-things-context-actually-means">The four things "context" actually means</h2>
+<p>When a PM says "give the model more context," it's rarely obvious which of four
+different things they mean:</p>
 <ul>
-<li><a href="memory-as-a-product-decision.html"><strong>Memory as a product decision</strong></a> — why offering
-  memory at all is a choice with a cost and a promise attached, not free infrastructure.</li>
-<li><a href="session-user-and-organizational-memory.html"><strong>Session, user &amp; organizational memory</strong></a>
-  — the three shapes memory takes, and why each one needs its own answer to "who can see
-  this, and for how long."</li>
-<li><a href="retrieval-as-memory.html"><strong>Retrieval as memory</strong></a> — the bridge between this module and
-  <a href="../rag-vector-databases/index.html">RAG &amp; vector databases</a>: fetching relevant knowledge
-  at the moment it's needed is one of the most common ways memory actually gets built.</li>
-<li><a href="when-memory-goes-wrong.html"><strong>When memory goes wrong</strong></a> — staleness, leakage, and the
-  right to be forgotten: the trust failures a memory feature has to be designed against
-  from day one.</li>
+<li><strong>Instructions &amp; policy</strong> — what the model is told to do and the constraints it
+  operates under. Static per feature, but still a product decision: whose voice, which
+  guardrails, what's out of scope.</li>
+<li><strong>Retrieved knowledge</strong> — facts fetched at the moment of the request, usually via
+  <a href="../ai/03-rag.html#rag-architecture">RAG</a>: documents, records, prior tickets. This
+  is where "the model doesn't know our data" actually gets fixed.</li>
+<li><strong>Memory</strong> — what's carried forward from earlier in this session, from this user's
+  history, or from the organization. Scoped in full in
+  <a href="../memory-and-context/index.html">Memory &amp; context</a>.</li>
+<li><strong>Live tool &amp; environment state</strong> — what's true <em>right now</em>: an account balance, a
+  calendar, a system status, another tool's output. Stale live state produces
+  confidently wrong answers about the present.</li>
 </ul>
-<p>Each lesson pairs the product framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram. For the engineering depth behind every mechanic mentioned here,
-follow the spokes into <a href="../ai/00-foundations.html#context-engineering">Context engineering</a>
-and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="memory-as-a-product-decision.html"><span class="card-num">01</span><h3>Memory as a product decision</h3><span class="card-go">Read lesson →</span></a><a class="card" href="session-user-and-organizational-memory.html"><span class="card-num">02</span><h3>Session, user &amp; organizational memory</h3><span class="card-go">Read lesson →</span></a><a class="card" href="retrieval-as-memory.html"><span class="card-num">03</span><h3>Retrieval as memory</h3><span class="card-go">Read lesson →</span></a><a class="card" href="when-memory-goes-wrong.html"><span class="card-num">04</span><h3>When memory goes wrong</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<p>Naming which of the four is missing turns a vague "the AI seems dumb" complaint into a
+specific, buildable fix. Most quality escalations are exactly one of these four things,
+mislabeled as a model problem.</p>
+<h2 id="why-this-needed-a-name-at-all">Why this needed a name at all</h2>
+<p>Before this discipline had a name, teams reached for <strong>prompt engineering</strong>: write a
+clever instruction, ship it, move on. It's fast, and it's the right first move for a
+prototype — but it conflates all four inputs above into one string, decided once, and it
+breaks down at exactly the moment a product has to survive contact with real users and
+real scale. <a href="why-prompt-engineering-doesnt-scale.html">The next lesson</a> is the diagnostic
+for exactly how and where it breaks.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>The bigger-model reflex</strong> — treating every quality miss as a reason to upgrade the
+  model, when the model was never shown what it needed to answer correctly.</li>
+<li><strong>Data-first hangover</strong> — building a beautiful analytics pipeline for humans, then
+  wiring the same warehouse straight into a prompt with no filtering, and calling that
+  "giving the model context."</li>
+<li><strong>The unnamed input</strong> — a team that can't say which of the four context types a
+  feature depends on, so nobody notices when one of them silently breaks.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">For my highest-stakes AI feature, can I name what instructions, retrieval, memory,
+      and live state it depends on — separately?</li>
+<li class="task todo">The last time this feature gave a wrong answer, did we check what it was shown
+      before assuming the model was at fault?</li>
+<li class="task todo">Have I asked "what does this decision need to see?" instead of "what data do we
+      have?" in the last planning conversation about this feature?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="why-prompt-engineering-doesnt-scale.html">Why prompt engineering doesn't scale</a></li>
+<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a></li>
+<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a></li>
+<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="why-prompt-engineering-doesnt-scale.html"><span class="lbl">→ Next</span><span class="ttl">Why prompt engineering doesn&#x27;t scale</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#a-note-on-scope">A note on scope</a><a class="h2" href="#the-mental-model-data-first-vs-context-first">The mental model: data-first vs. context-first</a><a class="h2" href="#the-four-things-context-actually-means">The four things &quot;context&quot; actually means</a><a class="h2" href="#why-this-needed-a-name-at-all">Why this needed a name at all</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{
