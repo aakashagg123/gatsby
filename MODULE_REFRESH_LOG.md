@@ -84,3 +84,57 @@ and a link to the merged PR.)
   code-first workflow model; the OMG BPMN 2.0.2 / DMN 1.5 / CMMN 1.1
   specification pages confirming no newer ratified major version has
   superseded them.
+- 2026-09-20 — ai-engineering — re-verified under the stricter two-pass
+  methodology (retroactive; the original run above used Pass A fragile-fact
+  grep only). Pass B picked 3 load-bearing substantive claims and
+  researched each independently, seeking disconfirming evidence: (1)
+  `model-routing.md`'s GPT-5-router claim — still accurate; GPT-5's router
+  architecture is documented as shipped in its August 2025 system card,
+  and the claim is correctly framed as a past-tense historical fact, not
+  a "current latest" claim, even though GPT-5.5/5.6 have since shipped.
+  (2) `inference-stack-tradeoffs.md`'s "DeepSeek moment" open-weight-wave
+  framing (R1, Qwen3, Kimi K2 "kept frontier-adjacent capability within
+  reach ... ever since") — the named models are now a superseded
+  generation (Kimi K3, Qwen3.8, DeepSeek V4, GLM-5.3 have since shipped),
+  but the claim itself — that this wave marked open-weight models
+  becoming commodity-budget-competitive — is still true and, if anything,
+  more true today; left unchanged as a correctly-dated historical
+  reference, not a "current SOTA" claim. (3)
+  `finetune-vs-icl-vs-rag.md`'s citation of Google's *Agents* whitepaper
+  "targeted learning" taxonomy (in-context learning / retrieval-based ICL
+  / fine-tuning) — confirmed accurate against the whitepaper's actual
+  content. No changes needed. Sources checked (8): OpenAI's GPT-5 system
+  card (openai.com/index/gpt-5-system-card); Wikipedia's GPT-5.5 entry;
+  a Sept 2026 GPT-5 overview (botpress.com/blog/everything-you-should-know-about-gpt-5);
+  a 2026 open-weight-model comparison (wavect.io/blog/open-weight-llm-comparison-2026);
+  a Kimi K2/DeepSeek-R1/Qwen3/GLM-4.5 2026 guide (turingpost.com/p/chinesemodels);
+  Artificial Analysis's tracker of recent open-weight launches
+  (artificialanalysis.ai/articles/recent-open-weights-model-launches);
+  a summary of Google's *Agents* whitepaper (hyperbolic.ai/blog/summary-of-google-ai-white-paper-agents);
+  and a second independent summary of the same whitepaper
+  (medium.com/@sayantann7 — "Unpacking Google's Vision for AI Agents").
+- 2026-09-20 — harness-engineering — re-verified under the stricter
+  two-pass methodology beyond the model-name fix already shipped above
+  (retroactive). Pass A: grepped for pricing/context-window/benchmark
+  numbers beyond model ids — found only two pre-hedged "illustrative —
+  verify current pricing" placeholders in the cost-accounting lesson,
+  already correctly caveated. Pass B: checked whether Phase 12 (MCP &
+  extensibility) teaches anything affected by MCP's real 2026-07-28 spec
+  revision — the largest since the protocol launched, deprecating Roots,
+  Sampling, Logging, and Dynamic Client Registration (DCR to CIMD).
+  Confirmed none of those four deprecated capabilities are covered by the
+  course's MCP lessons, which teach only the wire protocol fundamentals,
+  tools/resources/prompts, servers/clients, skills, and plugins — so the
+  deprecations don't affect this module's content. Also checked Phase 8's
+  permission-modes lesson and Phase 11's plan-mode lesson against current
+  product behavior descriptions — both are from-scratch conceptual
+  implementations (not claims about a specific product's current UI), so
+  nothing to update. No further changes needed. Sources checked (6): the
+  MCP spec blog's 2026-07-28 release announcement
+  (blog.modelcontextprotocol.io/posts/2026-07-28); the MCP 2026 roadmap
+  post (blog.modelcontextprotocol.io/posts/2026-mcp-roadmap); Wikipedia's
+  Model Context Protocol entry; a 2026 MCP adoption/update report
+  (tech-insider.org/ie/model-context-protocol-mcp-update-2026); an MCP
+  spec version-timeline reference (hidekazu-konishi.com/entry/mcp_specification_version_timeline);
+  and a Claude Code features/settings reference for 2026
+  (hidekazu-konishi.com/entry/claude_code_features_settings_reference_2026).
