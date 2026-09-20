@@ -31,6 +31,30 @@ valuable sentence a PM produces.
 > **Risk if ignored** — A roadmap of impressive-sounding AI bets, none de-risked, all
 > late — while the boring fix that users actually begged for waits another quarter.
 
+## Strategy first: OKRs are the translation layer
+
+A roadmap answers "in what order," but that question only has a stable answer once
+something upstream has already decided "toward what." That's **product strategy**: not
+a template filled out once, but an ongoing set of choices about which customer problems
+you'll go deep on and which you'll deliberately ignore. Good product strategy sounds
+like a stand — "we go deep on X, and we will not chase Y even though a customer asked
+for it" — a real choice with a cost, not an ambitious mission statement. It also
+operates at more than one altitude: company strategy sets which markets and bets the
+business plays, and product strategy inside it decides which problems your product
+specifically goes after. The two need to visibly connect, or a team optimizes a product
+strategy the company strategy doesn't actually reward.
+
+**OKRs are how that strategy becomes decidable at the roadmap level.** The Objective
+restates the strategic bet in outcome language ("become the default choice for X"); the
+Key Results are the measurable proof the bet is paying off. Teams get the sequencing
+backward more often than not: OKR cycles should be *set by* strategy, not the place
+strategy gets decided. If your quarterly OKR-setting ritual is where the real strategic
+calls happen, you don't have a strategy — you have a quarterly negotiation. Set strategy
+on its own, longer cycle, revisited only when the market or evidence genuinely changes,
+and let OKRs cascade from it every quarter. When a proposed Key Result doesn't trace
+back to a strategic choice you can name out loud, that's the signal to cut it from the
+roadmap — regardless of how well it scores on RICE.
+
 ## Frameworks: engines for arguments, not answers
 
 - **RICE** — score = (Reach × Impact × Confidence) / Effort. Its real value is the
@@ -121,6 +145,9 @@ the cut. The craft:
   confidence never revisited after the applause.
 - **Loudest-voice allocation** — priority by stakeholder volume. A framework's real
   political function is giving you something to point at that isn't a person.
+- **OKR theater** — Key Results invented each quarter to fill a template, disconnected
+  from any strategic choice you could defend. The roadmap ends up organized by whichever
+  KR sounds most measurable, not by what the strategy actually needs to be true.
 
 ## Practitioner checklist
 
@@ -131,9 +158,12 @@ the cut. The craft:
 - [ ] Does the roadmap encode certainty honestly (now/next/later) — and has debt/eval
       capacity been reserved off the top?
 - [ ] Can I name the last significant thing I said no to, and does the requester know why?
+- [ ] Can I trace each roadmap Key Result back to a specific strategic choice I could
+      defend out loud — not just an ambitious number?
 
 ## Related lessons
 
 - [Discovery to delivery](./discovery-to-delivery.md)
 - [Specs, PRDs & RFCs](./specs-prds-and-rfcs.md)
 - [Metrics & experimentation](./metrics-and-experimentation.md)
+- [Creativity: strategy, focus, and constraint](../product-sense/creativity.md)

@@ -81,6 +81,33 @@ Usability testing is interviewing's behavioural twin: give a task, watch, and na
 nothing. The moment you explain the interface, the test is over — you won't ship
 yourself alongside the product to explain it to everyone else.
 
+## Jobs-to-be-done: turning interviews into a hireable job
+
+Interviews and usability tests produce a pile of individual stories. **Jobs-to-be-done**
+(JTBD) is the framework that turns that pile into something you can build against: a
+customer didn't buy your product, they *hired* it to make progress on a job, in a
+specific circumstance — "when I ___, I want to ___, so I can ___." The job stays stable
+even when the product category around it doesn't; people have hired a milkshake, a
+newspaper subscription, and a podcast for the same commute-boredom job at different
+points in time. That stability is the payoff: solutions come and go with the
+competition, but the job survives your redesign, your pivot, and your competitor's
+launch.
+
+Surfacing a job takes a different interview than a features interview: ask about the
+**moment of first thought** ("what were you doing right before you started looking for
+a solution?"), the **struggle** that made the status quo intolerable, and what else the
+customer considered — including doing nothing, or a workaround with no software in it
+at all. JTBD interviews fail the same way ordinary interviews fail: they drift into
+feature requests instead of staying with the circumstance. Anchor every answer back to
+*when this happened* and *what was true in that moment*, not what the customer wishes
+existed.
+
+A job stated well does two things a persona or feature request can't: it explains why
+customers switch (their circumstance changed, or a competitor now does the job better
+in that same circumstance), and it defines your real competitive set — whatever else
+gets hired for that job, sometimes a spreadsheet, sometimes doing nothing, not just the
+other products in your category.
+
 ## Researching AI products
 
 Three questions classic research rarely asks, and AI products live or die on:
@@ -108,6 +135,10 @@ Three questions classic research rarely asks, and AI products live or die on:
   research as pitch rehearsal.
 - **Demo-glow validation** — testing only the happy path of an AI feature; users
   meet the unhappy path in production instead.
+- **Solution-shaped jobs** — writing the job statement as a feature in disguise ("I
+  want a faster search bar") instead of the underlying progress ("I want to feel
+  confident I found the best price"). A real job statement survives a total redesign
+  of the solution; a solution-shaped one doesn't.
 - **Research theatre** — a big annual study that's stale before it's summarized,
   instead of small continuous contact.
 - **Cohorts-and-percentages drift** — consuming only aggregated findings until users
@@ -123,10 +154,13 @@ Three questions classic research rarely asks, and AI products live or die on:
 - [ ] For AI features: have I tested the wrong-answer experience on purpose?
 - [ ] Are edits/retries/abandonments instrumented and sampled as research, not just
       as metrics?
+- [ ] Can I state the job my product is hired for as "when ___, I want to ___, so I
+      can ___" — and do I know what else gets hired for it?
 
 ## Related lessons
 
 - [Cognitive empathy](./cognitive-empathy.md)
 - [Motivation & behaviour](./motivation-and-behaviour.md)
 - [Product sense for AI products](./product-sense-for-ai.md)
+- [Creativity: positioning and focus](./creativity.md)
 - [Metrics & experimentation](../technical-product-management/metrics-and-experimentation.md)
