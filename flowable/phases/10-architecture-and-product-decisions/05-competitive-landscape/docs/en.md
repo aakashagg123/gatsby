@@ -30,7 +30,7 @@ The course's seven questions, asked of all four:
 | **Decisions?** (Ph. 5) | DMN engine, independent deploys | + decision modeler UI | DMN supported | none — rules are code or an external service |
 | **Time & correlation?** (Ph. 7) | timers/messages/event registry | same + UI | timers/messages native | first-class timers & signals in code — genuinely excellent |
 | **In-flight versioning?** (Ph. 8) | pin + migrate, as taught | same + tooling | version pinning; migration tooling | workers must keep old code paths alive (patching/worker versioning) — the hardest part of Temporal at scale |
-| **Ops surface?** (Ph. 9) | your probe on your DB | + admin UIs | Operate app; exporter pipeline for history | its own cluster metrics; history is replay fuel, not SQL |
+| **Ops surface?** (Ph. 9) | your probe on your DB | + admin UIs | Operate app; unified Orchestration Cluster with internal history (since 8.8, no separate exporter pipeline) | its own cluster metrics; history is replay fuel, not SQL |
 
 Reading the columns like an owner:
 
@@ -40,9 +40,9 @@ Reading the columns like an owner:
    by counting UI users, not by engine features.
 2. **Camunda 8 is the same *language*, different *physics*.** BPMN semantics
    you already know, but state moves from your RDBMS to Zeebe. Phase 2's and
-   Phase 9's chapters get rewritten — exporters instead of ACT_HI_ SQL,
-   platform ops instead of DB ops. Choose it for genuine throughput ceilings or
-   its SaaS, not as "newer Camunda 7."
+   Phase 9's chapters get rewritten — the Orchestration Cluster's built-in
+   history instead of ACT_HI_ SQL, platform ops instead of DB ops. Choose it
+   for genuine throughput ceilings or its SaaS, not as "newer Camunda 7."
 3. **Temporal's column is consistent, and consistently code.** It has superb
    durable execution and real timers and signals, but humans, decisions, and
    diagrams are all DIY. Its versioning row deserves special respect: "old code

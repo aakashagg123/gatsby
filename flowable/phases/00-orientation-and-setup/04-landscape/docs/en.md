@@ -29,7 +29,7 @@ quadrantChart
     quadrant-3 Durable execution embedded
     quadrant-4 Embeddable BPM
     "Flowable OSS": [0.72, 0.30]
-    "Camunda 7 (EOL path)": [0.68, 0.35]
+    "Camunda 7 (CE: EOL)": [0.68, 0.35]
     "Camunda 8": [0.78, 0.80]
     "Temporal": [0.15, 0.72]
     "DIY status+queue": [0.08, 0.15]
@@ -40,8 +40,8 @@ The five, honestly:
 | | Model | State | Its home turf | Its tax |
 | :-- | :-- | :-- | :-- | :-- |
 | **Flowable OSS** | BPMN/CMMN/DMN, business-readable | your RDBMS, embedded or standalone (Ph. 2, 10) | JVM shops wanting full BPM + audit in their own DB, no license | you operate it; UIs are commercial (Work) or yours |
-| **Camunda 7** | BPMN/DMN | your RDBMS, embedded | same niche as Flowable — shared Activiti ancestry | end-of-life path; new work steers to 8 |
-| **Camunda 8** | BPMN/DMN | **Zeebe** — its own log-based platform, SaaS or self-hosted cluster | high-throughput orchestration with BPMN visibility | separate stateful platform to run/rent; no embedded mode; exporter-based history |
+| **Camunda 7** | BPMN/DMN | your RDBMS, embedded | same niche as Flowable — shared Activiti ancestry | Community Edition EOL'd Oct 2025 (no more updates); Enterprise on LTS to 2030 — new work steers to 8 |
+| **Camunda 8** | BPMN/DMN | **Zeebe** — its own log-based platform, SaaS or self-hosted cluster | high-throughput orchestration with BPMN visibility | separate stateful platform to run/rent; no embedded mode; since 8.8, a unified Orchestration Cluster with internal (no longer pluggable-exporter) history |
 | **Temporal** | none — workflows *are* code (Java/Go/TS/Python) | its own cluster/cloud | engineer-only orchestration: sagas, retries, infra workflows, polyglot teams | no business-facing artifact: no diagram to review, no DMN, human-task layer is DIY |
 | **DIY** | none | your tables | 3-state flows that never change | every Phase 2–9 concern, rebuilt badly, later |
 
