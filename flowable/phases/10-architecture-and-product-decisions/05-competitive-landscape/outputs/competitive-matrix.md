@@ -27,8 +27,9 @@ Ask every candidate the course's questions; adjectives don't count as answers.
 - **Flowable Work**: same engine answers. It adds modelers, task and admin UIs,
   and an SLA. This is the buy-the-edges decision (10.04).
 - **Camunda 8**: BPMN/DMN answers on its own Zeebe platform. The ops story is
-  platform-shaped (exporters, Operate), and embedding is gone. It's strongest
-  at very high throughput or when you prefer SaaS.
+  platform-shaped — a unified Orchestration Cluster with built-in history
+  since 8.8 (no separate exporter pipeline), and Operate — and embedding is
+  gone. It's strongest at very high throughput or when you prefer SaaS.
 - **Temporal**: superb on question 1, and questions 5 and 3 are handled as
   code. Questions 2 and 4 are DIY. Question 6 is worker discipline (patching)
   rather than tooling. It's the right answer when no non-engineer ever reads

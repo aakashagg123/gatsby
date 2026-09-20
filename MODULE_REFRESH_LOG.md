@@ -14,7 +14,7 @@ something to fix, so the rotation always moves forward.
 |---|---|---|---|
 | ai-engineering | content/ | scripts/build_html.py | 2026-09-20 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 2026-09-20 |
-| flowable | flowable/ | scripts/build_site.py | never |
+| flowable | flowable/ | scripts/build_site.py | 2026-09-20 |
 | first-principles | first-principles/ | scripts/build_first_principles.py | never |
 | product-sense | product-sense/ | scripts/build_product_sense.py | never |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | never |
@@ -60,3 +60,27 @@ and a link to the merged PR.)
   `01-llm-io-foundations/`, `02-the-agent-loop/`, `03-tool-engineering/`,
   `04-context-engineering/`, `16-observability-and-cost/`,
   `18-production-and-deployment/`, `19-capstone-coding-agent/`.
+- 2026-09-20 — flowable — fixed: two Camunda references were stale.
+  (1) Camunda 7's landscape-table "tax" said only "end-of-life path," but
+  Camunda 7 Community Edition is now fully EOL (no more updates since
+  October 2025; Enterprise stays on LTS support to 2030) — updated in
+  Phase 0's landscape lesson and its quadrant-chart label. (2) Camunda 8's
+  "exporter-based history" description is outdated since the 8.8 release
+  unified history into the Orchestration Cluster (no more separate,
+  pluggable exporter pipeline) — updated in Phase 0's landscape lesson,
+  Phase 10's competitive-landscape rematch lesson, and its
+  `competitive-matrix.md` output. Left unchanged after verification:
+  Flowable's `asyncLeave` "6.7+" version-floor claim (still a valid
+  minimum, not a "latest version" claim), Temporal's "no business-facing
+  artifact" characterization, and BPMN 2.0/DMN/CMMN spec-currency claims.
+  Sources checked (8): Camunda's Feb 2025 Camunda 7 Enterprise EOL-extension
+  announcement (camunda.com/blog/2025/02/camunda-7-enterprise-end-of-life-extension);
+  Camunda's Nov 2025 "What's different: Orchestration Cluster in Camunda 8.8"
+  post (camunda.com/blog/2025/11/whats-different-orchestration-cluster-camunda-88);
+  Camunda 8.8 release notes and docs on the Orchestration Cluster
+  architecture; Camunda's official product lifecycle/EOL policy page;
+  Camunda 7 vs 8 migration guidance docs; Flowable's GitHub releases/changelog
+  for the 6.7+ `asyncLeave` flag; Temporal's public docs on its
+  code-first workflow model; the OMG BPMN 2.0.2 / DMN 1.5 / CMMN 1.1
+  specification pages confirming no newer ratified major version has
+  superseded them.
