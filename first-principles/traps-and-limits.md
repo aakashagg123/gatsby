@@ -43,9 +43,12 @@ method that trusts your judgment.
   silently drops for what you like and rises for what you don't.
 - **Anchoring** — The first number or framing you saw quietly sets the range for
   everything after, including your "from scratch" estimate.
-- **Dunning–Kruger** — The less you know about a field, the *more* confident you feel
-  decomposing it, because you can't see what you're missing. The most dangerous moment
-  for first-principles thinking is a little knowledge.
+- **Overconfidence from thin knowledge** (popularly "Dunning–Kruger," though
+  researchers now dispute how much of the original effect is a distinct cognitive bias
+  versus a statistical artifact of noisy self-assessment) — the less you know about a
+  field, the *more* confident you can feel decomposing it, because you can't see what
+  you're missing. Whatever the underlying mechanism, the practical trap holds: the most
+  dangerous moment for first-principles thinking is a little knowledge.
 
 The defense is structural, not willpower. Invert the question ("what would prove me
 *wrong*?"), seek the strongest opposing case, and use the
