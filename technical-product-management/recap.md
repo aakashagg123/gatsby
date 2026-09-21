@@ -24,7 +24,7 @@ the number — the number is data, and haggling it just corrupts your instrument
 **Knight Capital's 45 minutes (2012).** A trading firm deploys new code to only seven of
 eight servers. A repurposed feature flag activates dead code on the eighth, and with
 [no rehearsed rollback](./launches-rollouts-and-migrations.md) the firm loses ~$440 million
-in 45 minutes — more than its market cap. 🎯 *Takeaway:* deploy/release discipline, flag
+in 45 minutes — roughly two-thirds of its market cap. 🎯 *Takeaway:* deploy/release discipline, flag
 hygiene, and a rehearsed rollback aren't process overhead. They're the difference between an
 incident and an obituary.
 

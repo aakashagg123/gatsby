@@ -69,8 +69,11 @@ roadmap — regardless of how well it scores on RICE.
   "do the quick valuable things first."
 - **Kano** — separates *basic* features (absence infuriates, presence goes unnoticed),
   *performance* features (more is linearly better), and *delighters* (unexpected joy).
-  Its lesson: a product of pure delighters with a missing basic still fails. Check your
-  top ten for uncovered basics before celebrating the delighters.
+  The original model adds two more: *indifferent* (the user doesn't care either way — a
+  signal to cut) and *reverse* (the feature actively annoys a segment — a signal to
+  gate or remove). Its lesson: a product of pure delighters with a missing basic still
+  fails. Check your top ten for uncovered basics before celebrating the delighters, and
+  check for reverse features before assuming more is better.
 
 All of them share failure math: garbage estimates in, confident-looking garbage out. The
 discipline isn't the arithmetic. It's writing your assumptions down where someone can

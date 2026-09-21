@@ -418,7 +418,10 @@ customer's workflow ships to 100% in one step, and the rollback path turns out t
   step. Costs and tail latencies that looked fine at 5% have opinions at 50%.</li>
 <li><strong>GA and cleanup</strong> — the flag comes <em>out</em>. A codebase of permanent flags is
   <a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt</a> with a countdown
-  attached.</li>
+  attached. Set a cleanup date at the same time you create the flag — two sprints after
+  full ramp is a healthy default. Track live flags like an inventory: each one has an
+  owner, a purpose, and a removal date. A flag audit that finds stale entries nobody
+  can explain is a sign the release process is drifting from discipline to habit.</li>
 </ul>
 <p><strong>Rollback is a product requirement you own.</strong> Before any stage: what's the one action
 that restores yesterday's behaviour, who can take it, and does data written by the new
