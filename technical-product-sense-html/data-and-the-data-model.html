@@ -430,6 +430,21 @@ needs <em>new</em> data, not just a new query.</p>
 <p>Data flows from transactional to warehouse on a delay of minutes to hours. That lag is why
 "the number in the dashboard" and "the number in the app" can differ. It's also why an ML
 feature trained on the warehouse is working from slightly stale reality.</p>
+<h2 id="consistency-is-a-spectrum-not-a-given">Consistency is a spectrum, not a given</h2>
+<p>The OLTP-to-warehouse lag above is one instance of a bigger pattern: distributed data
+doesn't update everywhere at once. A write to one system can take anywhere from
+milliseconds to minutes to become visible somewhere else that reads it — a replica, a
+search index, another region. This is <strong>eventual consistency</strong>, and the tradeoff behind
+it (the <strong>CAP theorem</strong>: a distributed system under a network partition must choose
+between staying available with possibly-stale data, or staying strictly correct by
+refusing to answer) shows up as ordinary-looking product bugs: a user saves a profile
+edit and refreshes to see the old version, or a search result lags a database write by a
+few seconds. Neither is a malfunction — it's the system's actual consistency guarantee,
+which is a design decision, not an accident. The product question is knowing <em>which</em>
+parts of your feature need to read their own writes immediately (a payment status) and
+which can tolerate a short, bounded lag (a follower count) — see
+<a href="../system-design/core-building-blocks.html">System design: core building blocks</a> for the
+full mechanics of how systems actually implement that tradeoff.</p>
 <h2 id="permissions-are-part-of-the-model">Permissions are part of the model</h2>
 <p>Who is <em>allowed</em> to see each row is not an afterthought. It's part of the data model —
 tenant IDs, ACLs, sharing rules. For any feature that surfaces data — search, feeds, and
@@ -462,6 +477,10 @@ jobs.</p>
   search runs over data that should have been structured.</li>
 <li><strong>Stale-analytics surprises</strong> — Warehouse numbers get treated as live, or a model trains on
   data that lags reality.</li>
+<li><strong>Assumed immediate consistency</strong> — A feature promises "your change is saved" without
+  checking whether the read path (a replica, a search index, a cache) can actually see
+  it yet, so users hit a save-then-refresh-and-it's-gone bug that's really a consistency
+  lag, not a data-loss bug.</li>
 <li><strong>Ignoring permissions</strong> — Retrieval or aggregation crosses rows a user shouldn't see.</li>
 </ul>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
@@ -471,16 +490,20 @@ jobs.</p>
 <li class="task todo">Is this structured (relational) or unstructured (documents / vectors) data?</li>
 <li class="task todo">Am I reading live (transactional) or reporting (analytical) data — and does the freshness
       match the promise?</li>
+<li class="task todo">For any read right after a write, do I know whether that path is guaranteed
+      consistent or only eventually so?</li>
 <li class="task todo">Are permission relationships enforced everywhere this data is surfaced?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="how-systems-are-built.html">How systems are built</a></li>
 <li><a href="apis-and-contracts.html">APIs &amp; contracts</a></li>
+<li><a href="../system-design/core-building-blocks.html">System design: core building blocks</a> — the
+  CAP theorem and consistency models in full mechanical depth</li>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="apis-and-contracts.html"><span class="lbl">← Previous</span><span class="ttl">APIs &amp; contracts</span></a><a class="navcard next" href="latency-scale-performance.html"><span class="lbl">→ Next</span><span class="ttl">Latency, scale &amp; performance</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#entities-and-relationships">Entities and relationships</a><a class="h2" href="#structured-vs-unstructured">Structured vs. unstructured</a><a class="h2" href="#transactional-vs-analytical-oltp-vs-olap">Transactional vs. analytical (OLTP vs. OLAP)</a><a class="h2" href="#permissions-are-part-of-the-model">Permissions are part of the model</a><a class="h2" href="#a-worked-pass-show-sellers-their-repeat-customers">A worked pass: &quot;show sellers their repeat customers&quot;</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#entities-and-relationships">Entities and relationships</a><a class="h2" href="#structured-vs-unstructured">Structured vs. unstructured</a><a class="h2" href="#transactional-vs-analytical-oltp-vs-olap">Transactional vs. analytical (OLTP vs. OLAP)</a><a class="h2" href="#consistency-is-a-spectrum-not-a-given">Consistency is a spectrum, not a given</a><a class="h2" href="#permissions-are-part-of-the-model">Permissions are part of the model</a><a class="h2" href="#a-worked-pass-show-sellers-their-repeat-customers">A worked pass: &quot;show sellers their repeat customers&quot;</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');
