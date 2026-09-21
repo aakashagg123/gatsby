@@ -68,7 +68,10 @@ Each stage exists to catch a different class of problem:
   step. Costs and tail latencies that looked fine at 5% have opinions at 50%.
 - **GA and cleanup** — the flag comes *out*. A codebase of permanent flags is
   [tech debt](../technical-product-sense/tech-debt-and-estimation.md) with a countdown
-  attached.
+  attached. Set a cleanup date at the same time you create the flag — two sprints after
+  full ramp is a healthy default. Track live flags like an inventory: each one has an
+  owner, a purpose, and a removal date. A flag audit that finds stale entries nobody
+  can explain is a sign the release process is drifting from discipline to habit.
 
 **Rollback is a product requirement you own.** Before any stage: what's the one action
 that restores yesterday's behaviour, who can take it, and does data written by the new

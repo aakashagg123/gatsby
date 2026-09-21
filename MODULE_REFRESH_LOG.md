@@ -23,7 +23,7 @@ always moves forward.
 | first-principles | first-principles/ | scripts/build_first_principles.py | 2026-09-21 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 2026-09-21 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 2026-09-21 |
-| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | never |
+| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 2026-09-21 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | never |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | never |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | never |
@@ -265,3 +265,32 @@ and a link to the merged PR.)
   `ai-security-and-guardrails/governance-audit-and-compliance.md`,
   cross-checked to confirm no duplication and to source the flagged
   finding above.
+- 2026-09-21 — technical-product-management — fixed: 2 accuracy corrections
+  and 3 comprehensiveness fills, all within existing lessons. Read all 9
+  lessons plus README and recap in full before researching. (1) Accuracy:
+  `recap.md`'s Knight Capital war story claimed the ~$440M loss was "more
+  than its market cap" — Knight's pre-incident market cap was ~$681M, so
+  the loss was roughly two-thirds, not more; corrected. (2) Accuracy:
+  `prioritization-and-roadmaps.md`'s Kano description listed only 3 of
+  the original model's 5 categories — added the missing "indifferent" and
+  "reverse" categories. (3) Comprehensiveness: `working-with-engineering.md`
+  never mentioned velocity or throughput — core agile execution vocabulary
+  a PM needs; added a section explaining both, the difference between
+  them, and why they're diagnostic not motivational. (4) Comprehensiveness:
+  `metrics-and-experimentation.md` didn't distinguish data-informed from
+  data-driven decision-making — a standard PM concept; added the
+  distinction with guidance on when to use each mode. (5) Comprehensiveness:
+  `launches-rollouts-and-migrations.md`'s feature-flag cleanup bullet was
+  thin on governance; expanded with flag lifecycle management (cleanup
+  dates, inventory tracking, audits). Left unchanged after verification:
+  RICE formula (confirmed as Intercom's standard formulation), WSJF
+  (confirmed as Reinertsen/SAFe's cost-of-delay/duration), Cagan's four
+  risks (confirmed accurate to SVPG/Inspired), "vibe coding" coinage
+  (confirmed Karpathy Feb 2 2025, Collins word of the year 2025), and 5
+  Whys attribution. Sources checked (6): SEC Knight Capital enforcement
+  action and 10-K filing (~$461M pre-tax loss, market cap ~$681M);
+  Forbes's Knight Capital reporting; Kano's original model documentation
+  (5 categories: must-be, one-dimensional, attractive, indifferent,
+  reverse); Intercom's RICE framework documentation; Reinertsen's
+  "Principles of Product Development Flow" WSJF formulation; SAFe's
+  official WSJF guidance.

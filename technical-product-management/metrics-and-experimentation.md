@@ -64,6 +64,15 @@ Beware **Goodhart's law**: any metric made a target gets gamed, usually innocent
 "Answers delivered" as a target produces more answers, not better ones. Pair every
 target metric with a quality counterweight.
 
+A distinction worth keeping: **data-informed** means data is one input alongside user
+research, domain judgment, and strategic intent — and the PM can overrule a metric with
+a reasoned argument. **Data-driven** means the number decides: ship the winner, kill
+the loser, no exceptions. Most product decisions should be data-informed. A/B test
+gates on the primary metric should be data-driven. Mixing up which mode you're in
+causes either paralysis ("but the data says…" blocking a strategic bet) or recklessness
+("I know better" overriding a clear quality regression). Name the mode before the
+conversation starts.
+
 ## Instrumentation is a requirement, not a favour
 
 The events you'll need to answer "did it work?" must be in the spec —

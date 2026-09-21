@@ -72,6 +72,26 @@ through WIP limits — strongest for interrupt-heavy or flow-shaped work (platfo
 support-heavy products, ops). Many teams blend them. Your concern isn't the methodology
 name. It's that priorities enter cleanly and feedback exits regularly.
 
+## Velocity and throughput — what the numbers actually tell you
+
+Teams measure how much they get done. Two flavours, same purpose:
+
+- **Velocity** (Scrum) — story points completed per sprint, averaged over several
+  sprints. It's a *planning* tool: if the team reliably averages 30, and the backlog
+  ahead totals 90, that's roughly three sprints. It's not a performance metric, not
+  comparable between teams (team A's "5" is team B's "13"), and not improvable by
+  pressure — inflating point estimates moves the number without moving the software.
+- **Throughput** (Kanban) — items completed per unit time, regardless of size. Paired
+  with **cycle time** (how long one item spends in flight), it tells you whether the
+  system is getting faster, slower, or stuck.
+
+Both numbers are diagnostic, not motivational. A PM who reports velocity to leadership
+as a productivity score will find the engineers scoring higher and shipping the same
+amount. The question worth asking is *trend*: is velocity stable (predictable), rising
+(team gaining leverage from past investment), or falling (growing overhead, unclear
+scope, mounting debt)? A sustained dip is the earliest signal that something structural
+needs attention.
+
 ## Estimates and the trust economy
 
 Estimation mechanics — story points, ranges, the cone of uncertainty — are covered in
