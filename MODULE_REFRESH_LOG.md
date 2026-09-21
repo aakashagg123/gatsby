@@ -15,7 +15,7 @@ something to fix, so the rotation always moves forward.
 | ai-engineering | content/ | scripts/build_html.py | 2026-09-20 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 2026-09-20 |
 | flowable | flowable/ | scripts/build_site.py | 2026-09-20 |
-| first-principles | first-principles/ | scripts/build_first_principles.py | never |
+| first-principles | first-principles/ | scripts/build_first_principles.py | 2026-09-21 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | never |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | never |
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | never |
@@ -138,3 +138,38 @@ and a link to the merged PR.)
   spec version-timeline reference (hidekazu-konishi.com/entry/mcp_specification_version_timeline);
   and a Claude Code features/settings reference for 2026
   (hidekazu-konishi.com/entry/claude_code_features_settings_reference_2026).
+- 2026-09-21 — first-principles — fixed: one substantive-content issue found
+  after checking 4 load-bearing claims. `traps-and-limits.md`'s
+  Dunning-Kruger bullet stated the effect as settled fact ("the less you
+  know... the more confident you feel"), but a real, ongoing academic
+  dispute (Gignac & Zajenkowski 2020; Blair Fix's 2022 autocorrelation
+  critique; continuing through 2024-2025 replication work) argues the
+  original effect is substantially a statistical artifact of noisy
+  self-assessment rather than a distinct cognitive bias. Reframed the
+  bullet as "Overconfidence from thin knowledge (popularly Dunning-Kruger)"
+  with an honest note on the dispute, keeping the practical teaching point
+  intact — the underlying caution (a little knowledge is dangerous for
+  first-principles thinking) holds regardless of the statistical mechanism.
+  Left unchanged after verification: the SpaceX "~2% of price is raw
+  materials" figure (`what-is-first-principles.md`, `recap.md`) — widely
+  and consistently corroborated; the "10,000 hours" correction
+  (`recap.md`) — already correctly hedges toward Ericsson's actual
+  "deliberate practice, not raw hours" finding, consistent with current
+  scholarship; Charlie Munger's "80-90 important models" quote
+  (`mental-models-latticework.md`) — verified as an accurate quotation.
+  Sources checked (8): Blair Fix's "The Dunning-Kruger effect is
+  autocorrelation" (myhub.ai/items/the-dunning-kruger-effect-is-autocorrelation-economics-from-the-top-down);
+  Gignac & Zajenkowski (2020), "The Dunning-Kruger effect is (mostly) a
+  statistical artefact" (researchgate.net/publication/340361120); a 2024
+  discussion of the ongoing statistical debate
+  (benjamintseng.com/2024/03/nope-the-dunning-kruger-effect-is-just-bad-statistics);
+  a philosophy-of-science discussion of the dispute, including Kruger's own
+  2002 rebuttal (dailynous.com/2022/04/25/dunning-kruger-discussion); a
+  breakdown of Musk's SpaceX raw-material-cost analysis
+  (medium.com/@ahmet_celebi's "Elon Musk's First Principles in the
+  Factory"); a sourced list of Charlie Munger's mental models confirming
+  the "80 or 90" quote (sourcesofinsight.com/charlie-munger-mental-models);
+  Scott Young's 2024 "The 10,000-Hour Rule Is a Myth"
+  (scotthyoung.com/blog/2024/01/23/10000-hr-rule-myth); and a retrospective
+  on Ericsson's own objections to the popularized rule
+  (davidepstein.com/father-of-the-10000-hours-rule-passes-away).
