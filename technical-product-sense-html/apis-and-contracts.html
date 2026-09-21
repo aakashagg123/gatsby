@@ -425,6 +425,27 @@ handle change with <strong>versioning</strong> (<code>/v1/</code>, <code>/v2/</c
 changes to a live version: add optional fields, and never remove or repurpose existing ones.
 The product consequence is that <strong>API changes are slow and deliberate</strong>, because every caller
 is a dependency. Design the contract as if you'll live with it for years, because you will.</p>
+<h2 id="rest-isnt-the-only-shape">REST isn't the only shape</h2>
+<p>Everything above describes REST — a resource per URL, one call per round trip — because
+it's still the default: it powers the large majority of public APIs, and it's what most
+third-party integrations speak. But two other shapes come up often enough in real
+engineering conversations that recognizing them by name matters:</p>
+<ul>
+<li><strong>GraphQL</strong> — the client asks for exactly the fields it needs, in one call, instead of
+  triggering several REST round trips to assemble a screen. It shines for
+  complex, multi-source UIs (a mobile app pulling from a dozen backend services); it's
+  a heavier operational lift than REST, which is why teams adopt it selectively rather
+  than as a wholesale replacement.</li>
+<li><strong>gRPC</strong> — a faster, strongly-typed contract built for service-to-service calls
+  <em>inside</em> your own infrastructure, not for the public internet. When an eng lead says
+  "we moved the internal calls to gRPC," the product-facing question is unchanged —
+  request, response, failure behavior, idempotency — the wire format underneath doesn't
+  change what you, as the PM, need to ask about it.</li>
+</ul>
+<p>The product-sense takeaway isn't picking the protocol — engineering does that. It's
+recognizing that "the contract" question (what's sent, what's returned, what happens on
+failure) applies identically regardless of which of the three you're looking at, so a
+GraphQL or gRPC conversation doesn't need a different mental model than a REST one.</p>
 <h2 id="webhooks-the-api-that-calls-you">Webhooks — the API that calls you</h2>
 <p>Sometimes you need to know when something happens elsewhere: a payment cleared, a job
 finished. Polling ("is it done yet?") is wasteful, so a <strong>webhook</strong> flips it — the other
@@ -472,7 +493,7 @@ is a user-visible product behavior wearing an engineering costume.</p>
 <li><a href="technical-sense-for-ai.html">Technical sense for AI systems</a></li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="how-systems-are-built.html"><span class="lbl">← Previous</span><span class="ttl">How systems are built</span></a><a class="navcard next" href="data-and-the-data-model.html"><span class="lbl">→ Next</span><span class="ttl">Data &amp; the data model</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#a-request-end-to-end">A request, end to end</a><a class="h2" href="#the-parts-of-the-contract">The parts of the contract</a><a class="h2" href="#idempotency-the-retry-safety-promise">Idempotency — the retry-safety promise</a><a class="h2" href="#versioning-changing-without-breaking">Versioning — changing without breaking</a><a class="h2" href="#webhooks-the-api-that-calls-you">Webhooks — the API that calls you</a><a class="h2" href="#a-worked-pass-the-double-charge">A worked pass: the double charge</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#a-request-end-to-end">A request, end to end</a><a class="h2" href="#the-parts-of-the-contract">The parts of the contract</a><a class="h2" href="#idempotency-the-retry-safety-promise">Idempotency — the retry-safety promise</a><a class="h2" href="#versioning-changing-without-breaking">Versioning — changing without breaking</a><a class="h2" href="#rest-isnt-the-only-shape">REST isn&#x27;t the only shape</a><a class="h2" href="#webhooks-the-api-that-calls-you">Webhooks — the API that calls you</a><a class="h2" href="#a-worked-pass-the-double-charge">A worked pass: the double charge</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

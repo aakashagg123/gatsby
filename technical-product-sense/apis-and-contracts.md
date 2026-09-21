@@ -81,6 +81,29 @@ changes to a live version: add optional fields, and never remove or repurpose ex
 The product consequence is that **API changes are slow and deliberate**, because every caller
 is a dependency. Design the contract as if you'll live with it for years, because you will.
 
+## REST isn't the only shape
+
+Everything above describes REST — a resource per URL, one call per round trip — because
+it's still the default: it powers the large majority of public APIs, and it's what most
+third-party integrations speak. But two other shapes come up often enough in real
+engineering conversations that recognizing them by name matters:
+
+- **GraphQL** — the client asks for exactly the fields it needs, in one call, instead of
+  triggering several REST round trips to assemble a screen. It shines for
+  complex, multi-source UIs (a mobile app pulling from a dozen backend services); it's
+  a heavier operational lift than REST, which is why teams adopt it selectively rather
+  than as a wholesale replacement.
+- **gRPC** — a faster, strongly-typed contract built for service-to-service calls
+  *inside* your own infrastructure, not for the public internet. When an eng lead says
+  "we moved the internal calls to gRPC," the product-facing question is unchanged —
+  request, response, failure behavior, idempotency — the wire format underneath doesn't
+  change what you, as the PM, need to ask about it.
+
+The product-sense takeaway isn't picking the protocol — engineering does that. It's
+recognizing that "the contract" question (what's sent, what's returned, what happens on
+failure) applies identically regardless of which of the three you're looking at, so a
+GraphQL or gRPC conversation doesn't need a different mental model than a REST one.
+
 ## Webhooks — the API that calls you
 
 Sometimes you need to know when something happens elsewhere: a payment cleared, a job

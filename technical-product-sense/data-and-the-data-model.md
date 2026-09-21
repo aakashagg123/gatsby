@@ -85,6 +85,23 @@ Data flows from transactional to warehouse on a delay of minutes to hours. That 
 "the number in the dashboard" and "the number in the app" can differ. It's also why an ML
 feature trained on the warehouse is working from slightly stale reality.
 
+## Consistency is a spectrum, not a given
+
+The OLTP-to-warehouse lag above is one instance of a bigger pattern: distributed data
+doesn't update everywhere at once. A write to one system can take anywhere from
+milliseconds to minutes to become visible somewhere else that reads it — a replica, a
+search index, another region. This is **eventual consistency**, and the tradeoff behind
+it (the **CAP theorem**: a distributed system under a network partition must choose
+between staying available with possibly-stale data, or staying strictly correct by
+refusing to answer) shows up as ordinary-looking product bugs: a user saves a profile
+edit and refreshes to see the old version, or a search result lags a database write by a
+few seconds. Neither is a malfunction — it's the system's actual consistency guarantee,
+which is a design decision, not an accident. The product question is knowing *which*
+parts of your feature need to read their own writes immediately (a payment status) and
+which can tolerate a short, bounded lag (a follower count) — see
+[System design: core building blocks](../system-design/core-building-blocks.md) for the
+full mechanics of how systems actually implement that tradeoff.
+
 ## Permissions are part of the model
 
 Who is *allowed* to see each row is not an afterthought. It's part of the data model —
@@ -122,6 +139,10 @@ jobs.
   search runs over data that should have been structured.
 - **Stale-analytics surprises** — Warehouse numbers get treated as live, or a model trains on
   data that lags reality.
+- **Assumed immediate consistency** — A feature promises "your change is saved" without
+  checking whether the read path (a replica, a search index, a cache) can actually see
+  it yet, so users hit a save-then-refresh-and-it's-gone bug that's really a consistency
+  lag, not a data-loss bug.
 - **Ignoring permissions** — Retrieval or aggregation crosses rows a user shouldn't see.
 
 ## Practitioner checklist
@@ -131,10 +152,14 @@ jobs.
 - [ ] Is this structured (relational) or unstructured (documents / vectors) data?
 - [ ] Am I reading live (transactional) or reporting (analytical) data — and does the freshness
       match the promise?
+- [ ] For any read right after a write, do I know whether that path is guaranteed
+      consistent or only eventually so?
 - [ ] Are permission relationships enforced everywhere this data is surfaced?
 
 ## Related lessons
 
 - [How systems are built](./how-systems-are-built.md)
 - [APIs & contracts](./apis-and-contracts.md)
+- [System design: core building blocks](../system-design/core-building-blocks.md) — the
+  CAP theorem and consistency models in full mechanical depth
 - [Technical sense for AI systems](./technical-sense-for-ai.md)

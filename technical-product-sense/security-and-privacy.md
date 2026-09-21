@@ -87,6 +87,14 @@ The PM owns more of it than any other discipline:
   location each carry regimes (HIPAA, PCI, GDPR/DPDP-class laws) with real teeth. You
   don't need to be a lawyer. You need the reflex that says *this data class means we
   call one*.
+- **AI-specific regulation is now its own category.** The EU AI Act's transparency and
+  general-purpose-AI obligations reached active enforcement in August 2026, and its
+  high-risk-system tier (risk management, data governance, technical documentation,
+  human oversight) is phased in through 2027–2028 for anyone whose product touches EU
+  users. This sits *alongside* GDPR-class privacy law, not instead of it — a feature can
+  clear a privacy review and still owe an AI Act risk classification. The reflex to add:
+  *does this feature's risk tier and jurisdiction mean we call counsel about the AI Act
+  specifically, not just privacy?*
 
 ## What changes with a model in the system
 
@@ -136,3 +144,4 @@ The AI-specific deltas, briefly — each expanded in the
 - [Technical sense for AI systems](./technical-sense-for-ai.md)
 - [Safety engineering](../content/05-safety-multitenancy/safety-engineering.md)
 - [Agent safety, security & governance](../agentic-ai/safety-security-and-governance.md)
+- [Governance, audit & compliance](../ai-security-and-guardrails/governance-audit-and-compliance.md) — the full EU AI Act risk-tier breakdown and a compliance-artifact checklist
