@@ -16,7 +16,7 @@ something to fix, so the rotation always moves forward.
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 2026-09-20 |
 | flowable | flowable/ | scripts/build_site.py | 2026-09-20 |
 | first-principles | first-principles/ | scripts/build_first_principles.py | 2026-09-21 |
-| product-sense | product-sense/ | scripts/build_product_sense.py | never |
+| product-sense | product-sense/ | scripts/build_product_sense.py | 2026-09-21 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | never |
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | never |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | never |
@@ -173,3 +173,36 @@ and a link to the merged PR.)
   (scotthyoung.com/blog/2024/01/23/10000-hr-rule-myth); and a retrospective
   on Ericsson's own objections to the popularized rule
   (davidepstein.com/father-of-the-10000-hours-rule-passes-away).
+- 2026-09-21 — product-sense — fixed: `product-sense-for-ai.md`'s "patterns
+  users now expect" section named ChatGPT's "Pulse" morning-digest feature
+  as a live example of proactive AI — OpenAI sunset Pulse on June 17, 2026,
+  folding the capability into general-purpose "scheduled tasks." Updated
+  the parenthetical to note the rename/sunset explicitly, keeping the
+  underlying teaching point (proactive AI needs consent and restraint)
+  intact, since the pattern itself didn't go away, only the branded
+  feature name did. Left unchanged after verification: the broader "2025
+  reset [user reference points]" framing and its four named patterns
+  (deep-research modes, proactive AI, persistent memory, visible
+  thinking) — all four are still the current standard as of 2026, per
+  live research, and "2025" is correctly used as a historical origin
+  point, not a "current state" claim; the Air Canada chatbot
+  refund-policy incident (`recap.md`) — verified accurate down to the
+  ruling date (Feb 14, 2024) and refund amount (CAD $650.88); the PM
+  Handbook interview attributions naming PMs' employers as "Google,
+  Twitter, Facebook, Yammer" (`recap.md`) — correctly reflects where
+  those interviewees worked *at the time*, not a claim about current
+  company names (Twitter/X, Facebook/Meta) that needs updating; and
+  `communication.md`'s "60% of 200 surveyed users" figure — a labeled
+  illustrative example, not a live statistic. Sources checked (7): OpenAI
+  ChatGPT Pulse launch coverage (techcrunch.com/2025/09/25/openai-launches-chatgpt-pulse-to-proactively-write-you-morning-briefs);
+  a 2026 report on Pulse's sunset into scheduled tasks
+  (justinmckelvey.com/blog/chatgpt-pulse); a 2026 AI-agent-memory research
+  survey (mem0.ai/blog/state-of-ai-agent-memory-2026); a roundup of 2026
+  personal-AI-assistant memory products (vellum.ai/blog/best-personal-ai-assistants-with-memory);
+  a 2026 UX design-trends report confirming transparency/multimodal as
+  *additional* trends, not a replacement for the four named patterns
+  (designlab.com/blog/ai-in-ux-product-design-trends-2026); the American
+  Bar Association's analysis of the Air Canada tribunal ruling
+  (americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot);
+  and The Hill's report confirming the CAD $650.88 refund figure
+  (thehill.com/business/4476307-air-canada-must-pay-refund-promised-by-ai-chatbot-tribunal-rules).

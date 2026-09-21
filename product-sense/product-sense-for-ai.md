@@ -143,8 +143,10 @@ Four patterns became the standard candles every AI product gets compared against
 - **Deep-research modes** — async, minutes-long jobs that return a *report*, not a
   chat reply. They taught users that waiting is acceptable when the output is worth
   it — and reset expectations for what "an answer" can be.
-- **Proactive AI** — briefings and suggestions that arrive *unprompted* (the
-  Pulse-style morning digest). The pattern's product sense is consent and restraint:
+- **Proactive AI** — briefings and suggestions that arrive *unprompted* (ChatGPT's
+  Pulse-style morning digest, which shipped in 2025 and was folded into general-purpose
+  scheduled tasks in 2026 — the branded feature came and went, but the pattern it taught
+  users to expect didn't). The pattern's product sense is consent and restraint:
   proactivity delights precisely until it presumes.
 - **Persistent memory as a headline feature** — "it remembers me" moved from silent
   personalization to a marketed, user-visible, user-editable surface. Products that
