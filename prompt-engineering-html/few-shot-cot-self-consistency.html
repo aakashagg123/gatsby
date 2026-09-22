@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Context engineering for the product leader</title>
+<title>Few-shot, chain-of-thought, and self-consistency — Prompt engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,116 +354,208 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Prompt engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Context engineering for the product leader</h1>
-    <p class="lede">Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec&#x27;d, governed, and evaluated with the same rigor as the output it produces.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-prompt-engineering-actually-is.html">1 · What prompt engineering actually is</a><a class="modlink" href="the-anatomy-of-a-prompt.html">2 · The anatomy of a prompt</a><a class="modlink" href="everyday-productivity-patterns.html">3 · Everyday productivity patterns</a><a class="modlink" href="structured-prompting.html">4 · Structured prompting: XML, delimiters, scaffolds</a><a class="modlink active" href="few-shot-cot-self-consistency.html">5 · Few-shot, chain-of-thought, and self-consistency</a><a class="modlink" href="prompt-chaining-and-workflows.html">6 · Prompt chaining and multi-step workflows</a><a class="modlink" href="prompting-for-tools-and-agents.html">7 · Prompting for tools and agents</a><a class="modlink" href="prompting-inside-coding-agents.html">8 · Prompting inside coding agents</a><a class="modlink" href="when-prompts-fail.html">9 · When prompts fail: the diagnostic playbook</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 05</span>
+    <h1>Few-shot, chain-of-thought, and self-consistency</h1>
   </div>
-  <div class="intro"><p>For a decade, the default product question was "what data do we have?" AI features break
-that pattern: the model already has access to more raw text than any team could ever
-read manually, and it still gets decisions wrong. What it lacked was never data. It was
-the right slice of it, assembled for the moment — instructions, retrieved facts, memory
-of what happened before, live state from tools. <strong>Context engineering</strong> is the
-discipline of deciding what a model sees at the instant it has to act. Get it right, and
-an AI feature reasons over grounded, current, relevant information. Get it wrong, and the
-same feature reasons fluently over nothing in particular — and the failure reads as "the
-model is bad" when the model never had a chance.</p>
-<p><strong>A note on scope.</strong> This curriculum already covers context in real engineering depth:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
-window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
-(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
-covers memory specifically as a product-trust decision. This module is the layer above
-all three: the strategic argument for context engineering as a product leader's
-discipline, how to spec it, audit it, govern it at scale, and evaluate it — not the
-mechanics of fitting things in a token budget, and not memory alone. Every lesson spokes
-out to the deeper engineering treatment behind the mechanic it names, rather than
-re-deriving it.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Every lesson in this module hangs off one picture: the four things "context" actually
-means, and where the discipline sits at each stage of a product's life.</p>
+  <h2 id="tldr">TL;DR</h2>
+<p>Three techniques from the research literature reliably lift model quality on tasks
+that are harder than "reword this paragraph." <strong>Few-shot</strong> — showing the model a few
+worked input-output pairs before the real input — lifts consistency on classification,
+extraction, and any task with a house style words can't fully describe.
+<strong>Chain-of-thought</strong> (CoT), from Wei et al. 2022, asks the model to reason step by
+step before answering, and lifts accuracy on math, logic, and multi-hop reasoning.
+<strong>Self-consistency</strong>, from Wang et al. 2022, samples several answers and takes the
+majority, at the cost of running the same prompt several times. Each has a specific
+job, a specific cost, and a specific failure mode. Beginner-level prompts often work
+without them. Anything harder than pattern-matching against training data usually
+needs one.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM (or coding-agent user)</strong></p>
+<p><strong>Why it matters</strong> — Modern models often do CoT internally on hard problems (the
+reasoning-model class does it by default), but you still need to know when the
+technique earns its cost — and when few-shot gives you a bigger lift than a bigger
+model.</p>
+<p><strong>What it changes in your decisions</strong> — Before you upgrade to a more expensive
+model, you first try three worked examples and step-by-step reasoning. Cheaper,
+faster, often enough.</p>
+<p><strong>Ask yourself</strong> — <em>"Have I actually shown this model what the right answer looks
+like, or have I only described it in words?"</em></p>
+<p><strong>Risk if ignored</strong> — You pay for a bigger model to solve a problem a smaller model
+with three examples would have handled. Or you ship a reasoning-heavy feature that
+silently fabricates answers when a two-line "think step by step" would have caught
+the error.</p>
+</blockquote>
+<h2 id="the-three-techniques">The three techniques</h2>
 <pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
-  end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
-  end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
-  end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
-  end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
-<p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
-changed from "what data do we have" to "what does this decision need," and prompt
-engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
-context sources feed every decision, each spec-able, each governable, each testable on
-its own. <strong>The loop:</strong> real usage becomes the raw material for better context on the
-next feature — the same compounding logic as any flywheel, aimed at what the model sees
-rather than just what it does.</p>
-<h2 id="the-lessons">The lessons</h2>
+  BASE[&quot;Baseline prompt&lt;br/&gt;instructions only&quot;] --&gt; FS[&quot;Few-shot&lt;br/&gt;+ 1-5 worked examples&quot;]
+  BASE --&gt; COT[&quot;Chain-of-thought&lt;br/&gt;+ &#x27;think step by step&#x27;&quot;]
+  FS &amp; COT --&gt; SC[&quot;Self-consistency&lt;br/&gt;sample N times,&lt;br/&gt;take majority answer&quot;]
+  BASE -.-&gt;|&quot;harder problem&quot;| FS
+  FS -.-&gt;|&quot;multi-step reasoning&quot;| COT
+  COT -.-&gt;|&quot;stakes justify N calls&quot;| SC</pre>
+<p>Read the diagram as a decision ladder. Start with the baseline prompt. When
+consistency slips, add few-shot examples. When the problem involves multi-step
+reasoning, add chain-of-thought. When the stakes justify running the same call
+several times, add self-consistency on top.</p>
+<h2 id="few-shot-show-dont-tell">Few-shot: show, don't tell</h2>
+<p>The pattern is simple. Put 1-5 worked examples between the instructions and the
+input, each labeled clearly:</p>
+<pre><code>&lt;examples&gt;
+&lt;example&gt;
+&lt;input&gt;Meeting notes: &quot;Team agreed to ship v2 by Q3. Anna will draft the plan by Friday.&quot;&lt;/input&gt;
+&lt;output&gt;{&quot;action_items&quot;: [{&quot;owner&quot;: &quot;Anna&quot;, &quot;task&quot;: &quot;draft the plan&quot;, &quot;due&quot;: &quot;Friday&quot;}]}&lt;/output&gt;
+&lt;/example&gt;
+&lt;example&gt;
+&lt;input&gt;Meeting notes: &quot;We discussed the roadmap. No decisions.&quot;&lt;/input&gt;
+&lt;output&gt;{&quot;action_items&quot;: []}&lt;/output&gt;
+&lt;/example&gt;
+&lt;/examples&gt;
+
+&lt;input&gt;{{USER_INPUT}}&lt;/input&gt;
+</code></pre>
+<p>Three lessons from a decade of use:</p>
 <ul>
-<li><a href="what-is-context-engineering.html"><strong>What is context engineering, for a product leader?</strong></a>
-  — the data-first-to-context-first shift, and the four things "context" actually means.</li>
-<li><a href="why-prompt-engineering-doesnt-scale.html"><strong>Why prompt engineering doesn't scale</strong></a> —
-  fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.</li>
-<li><a href="the-anatomy-of-a-context-pipeline.html"><strong>The anatomy of a context pipeline</strong></a> —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.</li>
-<li><a href="context-as-a-spec-able-requirement.html"><strong>Context as a spec-able requirement</strong></a> — the
-  context contract: what a PRD should name before an engineer has to guess.</li>
-<li><a href="context-governance-at-scale.html"><strong>Context governance at scale</strong></a> — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.</li>
-<li><a href="evaluating-context-quality.html"><strong>Evaluating context quality</strong></a> — grading whether the
-  context was right, separately and faster than grading whether the answer was good.</li>
-<li><a href="context-across-the-product-lifecycle.html"><strong>Context engineering across the product lifecycle</strong></a>
-  — the different job context work does at discovery, delivery, and launch.</li>
+<li><strong>Cover the edges.</strong> One example of the happy path, one of a common edge case
+  (empty result, malformed input), one of a case you'd otherwise expect the model to
+  get wrong. Three well-chosen examples usually beat ten random ones.</li>
+<li><strong>Match the format exactly.</strong> If the output should be JSON, the example outputs
+  are JSON. If it should be a paragraph, they're paragraphs. Format drift in
+  examples produces format drift in outputs.</li>
+<li><strong>More is not always better.</strong> Beyond ~5 examples, most tasks stop improving, and
+  you're spending tokens. Some tasks improve up to ~20; test to find the knee.</li>
 </ul>
-<p>Each lesson pairs the strategic framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram, and spokes out to the engineering-depth lesson behind every
-mechanic it names.</p>
-<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
+<p>Few-shot works because it's a shorthand for a specification that would be tedious to
+write. The model interpolates between the examples. The right examples define the
+right interpolation.</p>
+<h2 id="chain-of-thought-reason-step-by-step">Chain-of-thought: reason step by step</h2>
+<p>Wei et al. showed in 2022 that appending "let's think step by step" to a prompt
+lifted the model's performance on math word problems by tens of percentage points.
+The mechanism, roughly: the model is a next-token predictor. When it commits to an
+answer first, it has no way to backtrack. When it commits to reasoning first, each
+step in the reasoning constrains the next, and the final answer inherits the
+constraint.</p>
+<p>Two flavours:</p>
 <ul>
-<li><a href="../prompt-engineering/index.html">Prompt engineering</a> — the craft layer inside
-  context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.</li>
-<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a>
-  and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the mechanics behind
-  every context source this module names.</li>
-<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a> — the
-  product-trust treatment of memory specifically, one of this module's four context types.</li>
+<li><strong>Zero-shot CoT.</strong> Add "think step by step before answering" to the prompt. No
+  examples needed. Works on many tasks; often not enough on the hardest ones.</li>
+<li><strong>Few-shot CoT.</strong> Provide examples where the <em>output</em> itself shows step-by-step
+  reasoning ending in the answer. Stronger; requires the effort of writing worked
+  reasoning traces.</li>
+</ul>
+<p>A concrete shape:</p>
+<blockquote>
+<p>Think step by step. Show your reasoning. Then give the final answer inside
+<code>&lt;answer&gt;...&lt;/answer&gt;</code>.</p>
+</blockquote>
+<p>The <code>&lt;answer&gt;</code> tag lets the calling code parse just the answer while the reasoning
+trace is available for debugging and evaluation.</p>
+<p><strong>A note on reasoning models.</strong> Modern reasoning-tuned models (the OpenAI o-series,
+Claude's extended-thinking mode, DeepSeek-R1-class open models) do chain-of-thought
+internally by default. Explicit CoT prompts are less necessary — sometimes
+counterproductive, since the model has already been trained to reason. The
+technique still applies to non-reasoning models and to cases where you need the
+reasoning trace visible.</p>
+<h2 id="self-consistency-sample-and-vote">Self-consistency: sample and vote</h2>
+<p>Wang et al. (2022) showed that on reasoning tasks, running the same prompt N times
+with a nonzero temperature, then taking the majority answer, beats a single call —
+even a single call at the same total token cost. The intuition: the model's
+"single answer" is one sample from a distribution. Sampling several and voting
+approximates the mode of the distribution, which is often closer to correct than
+any one sample.</p>
+<p>The cost is real: N calls instead of 1. Reserve self-consistency for:</p>
+<ul>
+<li>High-stakes decisions where a wrong answer is expensive.</li>
+<li>Structured problems (math, code, extraction) where "majority" is well-defined.</li>
+<li>Cases where you can't verify the answer another way.</li>
+</ul>
+<p>Don't reach for it on open-ended generation (essays, creative writing) — there's no
+majority to vote on.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<ul>
+<li><strong>Few-shot vs. bigger model.</strong> Three good examples often lift a smaller model
+  above a bigger one, at a fraction of the cost. Always try few-shot before you
+  upgrade tiers.</li>
+<li><strong>CoT vs. latency.</strong> Chain-of-thought lengthens outputs. If your product has a
+  strict latency budget and the reasoning trace isn't needed, use a reasoning-tuned
+  model that thinks internally instead of prompting for visible steps.</li>
+<li><strong>Self-consistency vs. cost.</strong> N× the calls is N× the token bill. Fine for a batch
+  overnight; painful for a real-time feature at scale.</li>
+<li><strong>Explicit CoT vs. reasoning models.</strong> With a reasoning-tuned model, extra
+  "think step by step" prompting sometimes hurts. Test both.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Examples that don't represent the input distribution.</strong> Three cheerful,
+  well-formed examples produce a model that fails on the first messy real input.
+  Draw examples from real user inputs, not synthetic ones.</li>
+<li><strong>Format drift in few-shot.</strong> Your examples end in a period, the real output
+  doesn't. The one you didn't notice contaminated the rest.</li>
+<li><strong>CoT that hallucinates the reasoning.</strong> The model produces plausible-looking
+  steps that don't actually support the answer. Chain-of-thought is more legible,
+  not more truthful. Verify the answer, not the trace.</li>
+<li><strong>Self-consistency on the wrong task.</strong> Voting on an essay doesn't make it
+  better. It makes it more expensive.</li>
+<li><strong>Few-shot that leaks answers.</strong> Your example inputs happen to be from your eval
+  set. You are now measuring memorization, not generalization.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">For any task the model handles inconsistently: have I tried 3-5 worked
+      examples before assuming the model can't do it?</li>
+<li class="task todo">For reasoning-heavy tasks: does my prompt ask for step-by-step reasoning, or
+      am I using a reasoning-tuned model where the trace is internal?</li>
+<li class="task todo">For high-stakes decisions: is self-consistency (N samples, majority vote)
+      worth the cost, or am I gambling on one call?</li>
+<li class="task todo">Do my few-shot examples cover the edges (empty result, malformed input, hard
+      case) — not just three variants of the happy path?</li>
+<li class="task todo">Are my few-shot inputs drawn from real user data, and disjoint from my
+      evaluation set?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="the-anatomy-of-a-prompt.html">The anatomy of a prompt</a></li>
+<li><a href="structured-prompting.html">Structured prompting: XML, delimiters, scaffolds</a></li>
+<li><a href="prompt-chaining-and-workflows.html">Prompt chaining and multi-step workflows</a></li>
 <li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — the
-  eval-driven operating loop and data flywheel this module's context evals and lifecycle
-  lesson connect to.</li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
-  — the full request pipeline this module's audit lesson is aimed at.</li>
-<li><a href="../knowledge-graphs/index.html">Knowledge graphs</a> — a structured, governed knowledge
-  asset is one of the richest possible retrieval sources a context pipeline can draw on.</li>
+  eval-driven discipline that decides whether a technique earned its cost.</li>
 </ul>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+  <div class="pagenav"><a class="navcard prev" href="structured-prompting.html"><span class="lbl">← Previous</span><span class="ttl">Structured prompting: XML, delimiters, scaffolds</span></a><a class="navcard next" href="prompt-chaining-and-workflows.html"><span class="lbl">→ Next</span><span class="ttl">Prompt chaining and multi-step workflows</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-three-techniques">The three techniques</a><a class="h2" href="#few-shot-show-dont-tell">Few-shot: show, don&#x27;t tell</a><a class="h2" href="#chain-of-thought-reason-step-by-step">Chain-of-thought: reason step by step</a><a class="h2" href="#self-consistency-sample-and-vote">Self-consistency: sample and vote</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

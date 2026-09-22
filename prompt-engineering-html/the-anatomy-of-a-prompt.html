@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Context engineering for the product leader</title>
+<title>The anatomy of a prompt — Prompt engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,116 +354,179 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Prompt engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Context engineering for the product leader</h1>
-    <p class="lede">Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec&#x27;d, governed, and evaluated with the same rigor as the output it produces.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-prompt-engineering-actually-is.html">1 · What prompt engineering actually is</a><a class="modlink active" href="the-anatomy-of-a-prompt.html">2 · The anatomy of a prompt</a><a class="modlink" href="everyday-productivity-patterns.html">3 · Everyday productivity patterns</a><a class="modlink" href="structured-prompting.html">4 · Structured prompting: XML, delimiters, scaffolds</a><a class="modlink" href="few-shot-cot-self-consistency.html">5 · Few-shot, chain-of-thought, and self-consistency</a><a class="modlink" href="prompt-chaining-and-workflows.html">6 · Prompt chaining and multi-step workflows</a><a class="modlink" href="prompting-for-tools-and-agents.html">7 · Prompting for tools and agents</a><a class="modlink" href="prompting-inside-coding-agents.html">8 · Prompting inside coding agents</a><a class="modlink" href="when-prompts-fail.html">9 · When prompts fail: the diagnostic playbook</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 02</span>
+    <h1>The anatomy of a prompt</h1>
   </div>
-  <div class="intro"><p>For a decade, the default product question was "what data do we have?" AI features break
-that pattern: the model already has access to more raw text than any team could ever
-read manually, and it still gets decisions wrong. What it lacked was never data. It was
-the right slice of it, assembled for the moment — instructions, retrieved facts, memory
-of what happened before, live state from tools. <strong>Context engineering</strong> is the
-discipline of deciding what a model sees at the instant it has to act. Get it right, and
-an AI feature reasons over grounded, current, relevant information. Get it wrong, and the
-same feature reasons fluently over nothing in particular — and the failure reads as "the
-model is bad" when the model never had a chance.</p>
-<p><strong>A note on scope.</strong> This curriculum already covers context in real engineering depth:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
-window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
-(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
-covers memory specifically as a product-trust decision. This module is the layer above
-all three: the strategic argument for context engineering as a product leader's
-discipline, how to spec it, audit it, govern it at scale, and evaluate it — not the
-mechanics of fitting things in a token budget, and not memory alone. Every lesson spokes
-out to the deeper engineering treatment behind the mechanic it names, rather than
-re-deriving it.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Every lesson in this module hangs off one picture: the four things "context" actually
-means, and where the discipline sits at each stage of a product's life.</p>
+  <h2 id="tldr">TL;DR</h2>
+<p>A prompt that works reliably is not one clever sentence — it names six things on
+purpose. <strong>Role</strong> (who the model is playing), <strong>task</strong> (what to do), <strong>context</strong> (the
+material to work from), <strong>constraints</strong> (what to avoid), <strong>format</strong> (what the output
+should look like), and <strong>examples</strong> (what "good" looks like when you can show it).
+Beginner prompts tend to have one or two of these, implicit and mixed. The upgrade to
+"power-user" is not a longer prompt — it is a prompt that hits each of the six on
+purpose, in an order the model can follow. Anthropic's own prompt engineering guide
+organizes its advice around exactly these dimensions, and every technique in the rest
+of this module — few-shot, chain-of-thought, tool use — is a specialized way of
+filling one of them.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM (or coding-agent user)</strong></p>
+<p><strong>Why it matters</strong> — Prompts fail one of these six ways more often than they fail
+for lack of cleverness. Naming the missing part is faster than rewriting the whole
+thing.</p>
+<p><strong>What it changes in your decisions</strong> — You treat any prompt template your team
+ships as a checklist against these six parts. You review prompts the way you review
+a PRD — is the role explicit, is the format specified, are examples present.</p>
+<p><strong>Ask yourself</strong> — <em>"Which of the six parts is this prompt leaving to the model to
+guess?"</em></p>
+<p><strong>Risk if ignored</strong> — A prompt that "worked in the demo" ships to production and
+drifts wildly, because the parts you left implicit got interpreted differently at
+scale.</p>
+</blockquote>
+<h2 id="the-mental-model">The mental model</h2>
 <pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
-  end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
-  end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
-  end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
-  end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
-<p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
-changed from "what data do we have" to "what does this decision need," and prompt
-engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
-context sources feed every decision, each spec-able, each governable, each testable on
-its own. <strong>The loop:</strong> real usage becomes the raw material for better context on the
-next feature — the same compounding logic as any flywheel, aimed at what the model sees
-rather than just what it does.</p>
-<h2 id="the-lessons">The lessons</h2>
+  ROLE[&quot;ROLE&lt;br/&gt;who is the model?&quot;]
+  TASK[&quot;TASK&lt;br/&gt;what to do&quot;]
+  CTX[&quot;CONTEXT&lt;br/&gt;material to work from&quot;]
+  CONS[&quot;CONSTRAINTS&lt;br/&gt;what to avoid&quot;]
+  FMT[&quot;FORMAT&lt;br/&gt;what the output looks like&quot;]
+  EX[&quot;EXAMPLES&lt;br/&gt;what &#x27;good&#x27; looks like&quot;]
+  ROLE --&gt; TASK
+  TASK --&gt; CTX
+  CTX --&gt; CONS
+  CONS --&gt; FMT
+  FMT --&gt; EX
+  EX --&gt; OUT[&quot;Output&quot;]
+  style OUT fill:#f5f5f5,stroke:#333</pre>
+<p>The order matters. Role first, so every later instruction inherits its framing. Task
+next, so the model knows what to do before it hears what to avoid. Context after
+that, so the material sits in the model's working memory when it starts. Constraints
+before format, so the format spec is scoped by what's allowed. Examples last —
+because examples are the strongest signal, and they anchor everything above them.</p>
+<h2 id="the-six-parts-one-line-each">The six parts, one line each</h2>
 <ul>
-<li><a href="what-is-context-engineering.html"><strong>What is context engineering, for a product leader?</strong></a>
-  — the data-first-to-context-first shift, and the four things "context" actually means.</li>
-<li><a href="why-prompt-engineering-doesnt-scale.html"><strong>Why prompt engineering doesn't scale</strong></a> —
-  fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.</li>
-<li><a href="the-anatomy-of-a-context-pipeline.html"><strong>The anatomy of a context pipeline</strong></a> —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.</li>
-<li><a href="context-as-a-spec-able-requirement.html"><strong>Context as a spec-able requirement</strong></a> — the
-  context contract: what a PRD should name before an engineer has to guess.</li>
-<li><a href="context-governance-at-scale.html"><strong>Context governance at scale</strong></a> — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.</li>
-<li><a href="evaluating-context-quality.html"><strong>Evaluating context quality</strong></a> — grading whether the
-  context was right, separately and faster than grading whether the answer was good.</li>
-<li><a href="context-across-the-product-lifecycle.html"><strong>Context engineering across the product lifecycle</strong></a>
-  — the different job context work does at discovery, delivery, and launch.</li>
+<li><strong>Role</strong> — "You are a copy editor for a financial newsletter." Sets the register,
+  the vocabulary, the implied expertise. A role is not fluff. It compresses a whole
+  paragraph of tone instructions into one sentence.</li>
+<li><strong>Task</strong> — "Rewrite the paragraph below to be shorter, keeping the numbers exact."
+  One verb, one object, one modifier. If the task has two verbs, it's two prompts.</li>
+<li><strong>Context</strong> — the material the task operates on: the email to reply to, the code
+  to review, the document to summarize. In Anthropic's guides this often lives inside
+  an XML tag like <code>&lt;document&gt;...&lt;/document&gt;</code> — see the <a href="structured-prompting.html">structured prompting
+  lesson</a> for why.</li>
+<li><strong>Constraints</strong> — the negative space. "Do not add facts I did not give you." "Do
+  not use bullet points." Constraints are what stops the model from doing the
+  reasonable-but-wrong thing.</li>
+<li><strong>Format</strong> — the shape of the output. "Reply as a JSON object with keys <code>subject</code>
+  and <code>body</code>." "Reply in one paragraph, under 80 words." Format specs cut more
+  variance than any single trick.</li>
+<li><strong>Examples</strong> — one to five worked cases of input → ideal output. Examples are the
+  most expensive part of a prompt to write and the highest-leverage. Lesson 5 covers
+  how few-shot examples work mechanically.</li>
 </ul>
-<p>Each lesson pairs the strategic framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram, and spokes out to the engineering-depth lesson behind every
-mechanic it names.</p>
-<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
+<h2 id="a-worked-pass-from-one-liner-to-production-prompt">A worked pass: from one-liner to production prompt</h2>
+<p>The one-liner:</p>
+<blockquote>
+<p>Summarize this article for me.</p>
+</blockquote>
+<p>What's missing: role (whose lens?), task (what kind of summary — TL;DR? key points?
+counter-arguments?), constraints (what to leave out?), format (bullets? paragraph?
+JSON?), examples (what does "good" look like?).</p>
+<p>The upgrade:</p>
+<blockquote>
+<p>You are a research assistant to a senior product manager. Read the article inside
+<code>&lt;article&gt;...&lt;/article&gt;</code> and produce a summary the PM can skim in 30 seconds.</p>
+<p>Constraints: do not add facts not in the article. Do not soften the article's
+claims.</p>
+<p>Format: three sections — <em>what it argues</em> (1 sentence), <em>the strongest evidence</em>
+(2-3 bullets), <em>what the PM should do about it</em> (1 sentence).</p>
+<p>Example: <code>&lt;example&gt;</code> [one worked case here] <code>&lt;/example&gt;</code></p>
+</blockquote>
+<p>The upgraded prompt is longer. It's also <em>repeatable</em>. The one-liner gets a good
+output on a good day. The upgraded prompt gets the same shape of output every day,
+by every user, until the shape itself needs to change.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <ul>
-<li><a href="../prompt-engineering/index.html">Prompt engineering</a> — the craft layer inside
-  context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.</li>
-<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a>
-  and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the mechanics behind
-  every context source this module names.</li>
-<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a> — the
-  product-trust treatment of memory specifically, one of this module's four context types.</li>
-<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — the
-  eval-driven operating loop and data flywheel this module's context evals and lifecycle
-  lesson connect to.</li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
-  — the full request pipeline this module's audit lesson is aimed at.</li>
-<li><a href="../knowledge-graphs/index.html">Knowledge graphs</a> — a structured, governed knowledge
-  asset is one of the richest possible retrieval sources a context pipeline can draw on.</li>
+<li><strong>Length vs. rigidity.</strong> Longer prompts constrain more, and also cost more tokens
+  and take longer to read. The right length is the shortest prompt that hits all six
+  parts unambiguously.</li>
+<li><strong>Role vs. task specificity.</strong> A very specific task ("rewrite this in the second
+  person, past tense, under 60 words") sometimes lets you drop the role. A very
+  strong role ("you are a court reporter") sometimes carries the format implicitly.
+  Don't repeat information the other part already carries.</li>
+<li><strong>Examples cost effort up front.</strong> They also become the most reusable asset. If a
+  prompt will run a thousand times, one hour writing three good examples is the
+  cheapest possible investment.</li>
 </ul>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>The role is missing.</strong> The model defaults to a generic helpful assistant. Tone
+  and register drift with every call.</li>
+<li><strong>Two tasks in one prompt.</strong> "Summarize this article and email the summary to
+  legal." The model does neither well. Split into two prompts, or chain them (see
+  <a href="prompt-chaining-and-workflows.html">prompt chaining</a>).</li>
+<li><strong>Constraints in the wrong place.</strong> A constraint that arrives after the format
+  spec often gets ignored, because the model has already committed to the format's
+  shape.</li>
+<li><strong>Format specified as prose.</strong> "Reply concisely, in a friendly tone." Concise and
+  friendly are subjective. Word counts and named sections are not.</li>
+<li><strong>No examples where they were the only thing that would have worked.</strong> Some tasks
+  — extraction into a specific JSON shape, matching a house voice, following a rare
+  convention — cannot be specified in words. They can only be demonstrated.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Can I point to the role, task, context, constraints, format, and examples in
+      my current prompt — or is at least one missing?</li>
+<li class="task todo">Is the task one verb, or has it quietly become two?</li>
+<li class="task todo">Are my constraints stated as things to avoid, not as things to prefer?</li>
+<li class="task todo">Does my format spec use numbers and structure, not adjectives?</li>
+<li class="task todo">If the task has a "house style" a description can't capture, do I have at
+      least one worked example?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="what-prompt-engineering-actually-is.html">What prompt engineering actually is</a></li>
+<li><a href="everyday-productivity-patterns.html">Everyday productivity patterns</a></li>
+<li><a href="structured-prompting.html">Structured prompting: XML, delimiters, scaffolds</a></li>
+<li><a href="few-shot-cot-self-consistency.html">Few-shot, chain-of-thought, and self-consistency</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="what-prompt-engineering-actually-is.html"><span class="lbl">← Previous</span><span class="ttl">What prompt engineering actually is</span></a><a class="navcard next" href="everyday-productivity-patterns.html"><span class="lbl">→ Next</span><span class="ttl">Everyday productivity patterns</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model">The mental model</a><a class="h2" href="#the-six-parts-one-line-each">The six parts, one line each</a><a class="h2" href="#a-worked-pass-from-one-liner-to-production-prompt">A worked pass: from one-liner to production prompt</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

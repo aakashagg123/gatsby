@@ -169,6 +169,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md).
 
+**Chain-of-thought (CoT)** — Asking the model to reason step by step before committing to an answer — Wei et al. 2022's technique for multi-step reasoning tasks.
+
+*In plain terms.* Language models are next-token predictors. Committing to an answer first leaves no room to backtrack; committing to reasoning first constrains each step by the last. On math, logic, and multi-hop reasoning, appending 'think step by step' lifts accuracy by tens of percentage points. Modern reasoning-tuned models do this internally by default.
+
+*For example.* For a scheduling question with three constraints, the model lists each constraint, checks each candidate slot against them, then names the winner — instead of guessing the winner and back-rationalizing.
+
+*Where it shows up:* Multi-step math, logic, and planning tasks; Getting a reasoning trace you can audit; Improving quality on hard tasks before upgrading models.
+
+*See:* [Few-shot, chain-of-thought, and self-consistency](./prompt-engineering/few-shot-cot-self-consistency.md).
+
 **Chargeback** — Routing attributed AI cost back to the team that generated it — chargeback actually debits their budget, showback only makes the number visible — a choice with real incentive tradeoffs.
 
 *In plain terms.* Both practices answer 'whose spend is this,' but they differ in consequence. Chargeback makes the cost real money out of a team's own budget, which sharpens incentives fast — a team that pays for its own tokens starts asking whether every feature needs the biggest model. Showback only shows the number, with no financial bite, which is lower-friction but relies on a team caring about a figure that doesn't touch their P&L.
@@ -468,6 +478,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Sizing markets and opportunities fast; Sanity-checking someone's numbers; Making decisions without perfect data.
 
 *See:* [The method](./first-principles/the-method.md).
+
+**Few-shot prompting** — Including 1-5 worked input-output examples in the prompt so the model interpolates between them — showing, not telling, what 'good' looks like.
+
+*In plain terms.* Instructions describe. Examples demonstrate. On tasks with a house style, a rare format, or an implicit rule words can't fully capture, examples are the strongest lever. Three well-chosen ones — one happy path, one edge case, one hard case — usually beat ten random ones and often beat a bigger model.
+
+*For example.* An action-item extractor: two labeled examples of meeting notes → JSON action items, then the real transcript. The model matches the shape of the examples on the first try instead of inventing a variant.
+
+*Where it shows up:* Lifting quality without paying for a bigger model; Locking output format when JSON mode isn't available; Encoding a house voice that can't be described in words.
+
+*See:* [Few-shot, chain-of-thought, and self-consistency](./prompt-engineering/few-shot-cot-self-consistency.md).
 
 **Fine-tuning** — Further-training a base model on your examples to bake in a style, format, or narrow skill.
 
@@ -1079,6 +1099,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prompt vs. semantic caching](./content/01-inference-internals/prompt-vs-semantic-caching.md).
 
+**Prompt chaining** — Breaking a task into a sequence of smaller prompts, each doing one thing, with each step's output feeding the next.
+
+*In plain terms.* One prompt with two verbs does neither well. A chain separates them, lets each step use its best technique, and produces intermediates you can inspect and validate. Trades one call for several in exchange for higher quality and clearer failure modes.
+
+*For example.* Extract action items → classify by urgency → draft outreach emails, as three prompts. Each prompt is short and focused. A failure in extraction is caught before it poisons the draft.
+
+*Where it shows up:* Complex tasks that fail as a single prompt; Pipelines where intermediates need review; Mixing cheap models for extraction with expensive ones for generation.
+
+*See:* [Prompt chaining and multi-step workflows](./prompt-engineering/prompt-chaining-and-workflows.md).
+
+**Prompt engineering** — The craft of writing input a language model will reliably act on — repeatable, versioned, and steerable, not one lucky sentence.
+
+*In plain terms.* A language model is a probabilistic system that samples the next likely token given the ones so far. The prompt is what conditions that distribution. Writing prompts as versioned artifacts with role, task, constraints, format, and examples turns lucky outputs into reliable ones.
+
+*For example.* A support team's saved prompt scaffold — role, task, XML-tagged input, three worked examples, output shape — produces the same quality reply every time, from every teammate, instead of one good draft when the phrasing lands right.
+
+*Where it shows up:* Getting daily productivity out of ChatGPT or Claude; Shipping AI features whose outputs behave consistently; Debugging model outputs against known failure modes.
+
+*See:* [What prompt engineering actually is](./prompt-engineering/what-prompt-engineering-actually-is.md).
+
 **Prompt injection** — Adversarial instructions smuggled into model input (directly or via retrieved/tool content) to override intended behaviour.
 
 *In plain terms.* To a model, everything in its context is just text it might follow — including malicious text hidden in a web page, email, or document it reads. Prompt injection exploits this: an attacker plants 'ignore your rules and do X' where the model will encounter it, hijacking the agent.
@@ -1088,6 +1128,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Assessing security of any agent that reads external content; Justifying least privilege and output guardrails; Reviewing tool permissions.
 
 *See:* [Safety engineering](./content/05-safety-multitenancy/safety-engineering.md).
+
+**Prompt scaffold** — A reusable prompt template with named slots — one good prompt turned into a platform, not a one-off keystroke.
+
+*In plain terms.* Ad-hoc prompts vary by author and by phrasing. A scaffold names the fixed parts (role, format, constraints, examples) and leaves slots for the variable parts (the document, the question). Every future use inherits the fixed structure; every A/B test edits one section, not the whole prompt.
+
+*For example.* A document-Q&A scaffold: <instructions>, <document>{{DOC}}</document>, <question>{{Q}}</question>. Product code fills the slots; the shape never changes.
+
+*Where it shows up:* Turning one good prompt into a product feature; Enabling prompt A/B tests without rewriting; Reducing quality drift across a team.
+
+*See:* [Structured prompting: XML, delimiters, scaffolds](./prompt-engineering/structured-prompting.md).
 
 **Property graph** — The pragmatic knowledge-graph data model — nodes and edges carrying properties, queried in Cypher/GQL — vs. RDF triple stores (SPARQL), the standards-based alternative.
 
@@ -1228,6 +1278,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Avoiding decisions that backfire later; Anticipating unintended consequences; Evaluating incentives and metrics.
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**Self-consistency** — Sampling the same prompt several times and taking the majority answer — Wang et al. 2022's trick for reasoning tasks, at N× the cost.
+
+*In plain terms.* A single model call is one draw from a distribution. Sampling several and voting approximates the mode of the distribution, which is often closer to correct than any one draw — especially on structured tasks where 'majority' is well-defined. Reserve for high-stakes decisions or cases where verification is impossible.
+
+*For example.* Running a math word problem five times at temperature 0.7 and taking the majority answer; four out of five say 47, one says 43. Answer: 47.
+
+*Where it shows up:* High-stakes reasoning where a wrong answer is expensive; Batch jobs where N× cost is affordable; Structured problems with a well-defined answer to vote on.
+
+*See:* [Few-shot, chain-of-thought, and self-consistency](./prompt-engineering/few-shot-cot-self-consistency.md).
 
 **Semantic caching** — Returning a cached response when a new query is similar in meaning (by embedding distance) to a previous one.
 
@@ -1528,3 +1588,13 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Finding defensible AI product positions; Planning expansion from a beachhead; Building moats via owned workflows.
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
+
+**XML tags (in prompts)** — Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.
+
+*In plain terms.* Anthropic's Claude was trained on a lot of XML-marked-up text and treats tags as strong boundary signals. Tags nest cleanly, prevent instructions from bleeding into content, and defend against prompt injection through unlabeled user input. In practice: any production prompt over a paragraph benefits.
+
+*For example.* <instructions>Summarize the article.</instructions><article>{{TEXT}}</article> — the model knows the article is content, not an instruction, even if the article contains directive-looking sentences.
+
+*Where it shows up:* Making production prompts robust to input variation; Defending against prompt injection; Building reusable scaffolds where sections are named.
+
+*See:* [Structured prompting: XML, delimiters, scaffolds](./prompt-engineering/structured-prompting.md).

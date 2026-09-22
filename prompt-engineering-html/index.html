@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Context engineering for the product leader</title>
+<title>Prompt engineering, from productivity to coding agents</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,114 +354,109 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Prompt engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
 </header><main class="content index" id="top">
   <div class="index-hero">
     <span class="chip">A standalone module</span>
-    <h1>Context engineering for the product leader</h1>
-    <p class="lede">Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec&#x27;d, governed, and evaluated with the same rigor as the output it produces.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+    <h1>Prompt engineering, from productivity to coding agents</h1>
+    <p class="lede">The craft of writing input a model will reliably act on — from ChatGPT productivity patterns, through the classical techniques power users depend on, into the prompts that drive Claude Code, Cursor, and other coding agents.</p>
+    <div class="index-meta"><span>9 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
   </div>
-  <div class="intro"><p>For a decade, the default product question was "what data do we have?" AI features break
-that pattern: the model already has access to more raw text than any team could ever
-read manually, and it still gets decisions wrong. What it lacked was never data. It was
-the right slice of it, assembled for the moment — instructions, retrieved facts, memory
-of what happened before, live state from tools. <strong>Context engineering</strong> is the
-discipline of deciding what a model sees at the instant it has to act. Get it right, and
-an AI feature reasons over grounded, current, relevant information. Get it wrong, and the
-same feature reasons fluently over nothing in particular — and the failure reads as "the
-model is bad" when the model never had a chance.</p>
-<p><strong>A note on scope.</strong> This curriculum already covers context in real engineering depth:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
-window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
-(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
-covers memory specifically as a product-trust decision. This module is the layer above
-all three: the strategic argument for context engineering as a product leader's
-discipline, how to spec it, audit it, govern it at scale, and evaluate it — not the
-mechanics of fitting things in a token budget, and not memory alone. Every lesson spokes
-out to the deeper engineering treatment behind the mechanic it names, rather than
-re-deriving it.</p>
+  <div class="intro"><p>Prompt engineering is the craft of writing input a language model will <em>reliably</em> act
+on. At the beginner end, that means turning ChatGPT or Claude from a novelty into a
+productivity tool — drafting emails, summarizing meetings, translating a rough idea
+into a first draft. In the middle, it means the techniques power users reach for when
+consistency starts to matter: structured prompts, few-shot examples, chain-of-thought,
+prompt chaining. At the far end, it means the patterns developers use to drive coding
+agents like Claude Code and Cursor — where the prompt is a spec, and the model is
+writing the code that ships. This module walks the full arc, one lesson per layer, so a
+reader picks up the mental model on lesson 1 and lands with real advanced patterns by
+lesson 9.</p>
+<p><strong>A note on scope.</strong> This is the <em>technique</em> module — the how of writing a prompt. Two
+adjacent modules deepen it in different directions. <a href="../context-engineering/index.html">Context engineering</a>
+argues that the <em>inputs to the prompt</em> (instructions, retrieval, memory, tool state)
+are the real quality lever at scale — prompt engineering is one layer inside that
+picture. <a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a>
+covers how you <em>evaluate</em> whether a prompt works. This module stays on the craft
+itself: what to write, why, and how it fails.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Every lesson in this module hangs off one picture: the four things "context" actually
-means, and where the discipline sits at each stage of a product's life.</p>
+<p>Every lesson sits on one arc — from the person typing into a chat box, through the
+techniques that make outputs reliable, to the patterns that let coding agents ship
+production code:</p>
 <pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
+  subgraph BEG[&quot;BEGINNER — lessons 1-3&quot;]
+    L1[&quot;What prompt engineering&lt;br/&gt;actually is&quot;]
+    L2[&quot;The anatomy of&lt;br/&gt;a prompt&quot;]
+    L3[&quot;Everyday productivity&lt;br/&gt;patterns&quot;]
   end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
+  subgraph INT[&quot;INTERMEDIATE — lessons 4-6&quot;]
+    L4[&quot;Structured prompting&lt;br/&gt;XML, delimiters,&lt;br/&gt;scaffolds&quot;]
+    L5[&quot;Few-shot, chain-of-thought,&lt;br/&gt;self-consistency&quot;]
+    L6[&quot;Prompt chaining &amp;&lt;br/&gt;multi-step workflows&quot;]
   end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
+  subgraph ADV[&quot;ADVANCED — lessons 7-8&quot;]
+    L7[&quot;Prompting for tools&lt;br/&gt;and agents&quot;]
+    L8[&quot;Prompting inside&lt;br/&gt;coding agents&lt;br/&gt;(Claude Code, Cursor)&quot;]
   end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
+  subgraph META[&quot;THE META LESSON — 9&quot;]
+    L9[&quot;When prompts fail:&lt;br/&gt;the diagnostic playbook&quot;]
   end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
-<p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
-changed from "what data do we have" to "what does this decision need," and prompt
-engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
-context sources feed every decision, each spec-able, each governable, each testable on
-its own. <strong>The loop:</strong> real usage becomes the raw material for better context on the
-next feature — the same compounding logic as any flywheel, aimed at what the model sees
-rather than just what it does.</p>
+  L1 --&gt; L2 --&gt; L3 --&gt; L4 --&gt; L5 --&gt; L6 --&gt; L7 --&gt; L8
+  L9 -.-&gt;|&quot;applies at every layer&quot;| BEG &amp; INT &amp; ADV</pre>
+<p>Read it in three passes. <strong>Beginner:</strong> the mental model, the six parts of a prompt,
+and the everyday patterns that turn an LLM into a productivity tool. <strong>Intermediate:</strong>
+the techniques power users use to make outputs consistent — structure, worked examples,
+step-by-step reasoning, multi-step chains. <strong>Advanced:</strong> how prompts change shape when
+the model can <em>act</em> — call tools, run code, edit files — and the specific patterns of
+prompting inside coding agents.</p>
 <h2 id="the-lessons">The lessons</h2>
 <ul>
-<li><a href="what-is-context-engineering.html"><strong>What is context engineering, for a product leader?</strong></a>
-  — the data-first-to-context-first shift, and the four things "context" actually means.</li>
-<li><a href="why-prompt-engineering-doesnt-scale.html"><strong>Why prompt engineering doesn't scale</strong></a> —
-  fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.</li>
-<li><a href="the-anatomy-of-a-context-pipeline.html"><strong>The anatomy of a context pipeline</strong></a> —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.</li>
-<li><a href="context-as-a-spec-able-requirement.html"><strong>Context as a spec-able requirement</strong></a> — the
-  context contract: what a PRD should name before an engineer has to guess.</li>
-<li><a href="context-governance-at-scale.html"><strong>Context governance at scale</strong></a> — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.</li>
-<li><a href="evaluating-context-quality.html"><strong>Evaluating context quality</strong></a> — grading whether the
-  context was right, separately and faster than grading whether the answer was good.</li>
-<li><a href="context-across-the-product-lifecycle.html"><strong>Context engineering across the product lifecycle</strong></a>
-  — the different job context work does at discovery, delivery, and launch.</li>
+<li><a href="what-prompt-engineering-actually-is.html"><strong>What prompt engineering actually is</strong></a> —
+  the mental model shift from "asking questions" to "engineering the input a
+  probabilistic system needs."</li>
+<li><a href="the-anatomy-of-a-prompt.html"><strong>The anatomy of a prompt</strong></a> — role, task, context,
+  format, examples, constraints: the six parts a good prompt names on purpose.</li>
+<li><a href="everyday-productivity-patterns.html"><strong>Everyday productivity patterns</strong></a> — the
+  handful of moves that get 80% of the value out of ChatGPT or Claude for real work.</li>
+<li><a href="structured-prompting.html"><strong>Structured prompting: XML, delimiters, scaffolds</strong></a> —
+  what changes when consistency starts to matter and the prompt gets reused.</li>
+<li><a href="few-shot-cot-self-consistency.html"><strong>Few-shot, chain-of-thought, and self-consistency</strong></a>
+  — the classical techniques that reliably improve reasoning quality, and when each
+  earns its cost.</li>
+<li><a href="prompt-chaining-and-workflows.html"><strong>Prompt chaining and multi-step workflows</strong></a> —
+  breaking a task into sub-prompts, passing outputs between steps, and why one prompt
+  stops being enough.</li>
+<li><a href="prompting-for-tools-and-agents.html"><strong>Prompting for tools and agents</strong></a> — how the
+  prompt changes shape when the model can call tools, and the ReAct pattern that runs
+  underneath most agent scaffolds.</li>
+<li><a href="prompting-inside-coding-agents.html"><strong>Prompting inside coding agents</strong></a> — how
+  Claude Code, Cursor, and Aider prompts differ from chat prompts, and the "prompt as
+  spec" pattern that runs modern agent-assisted development.</li>
+<li><a href="when-prompts-fail.html"><strong>When prompts fail: the diagnostic playbook</strong></a> — the
+  short list of things that actually go wrong, and how to tell which one bit you.</li>
 </ul>
-<p>Each lesson pairs the strategic framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram, and spokes out to the engineering-depth lesson behind every
-mechanic it names.</p>
+<p>Each lesson pairs the technique with a <strong>🎯 For the AI PM (or coding-agent user)</strong>
+briefing — why it matters, the decision it changes, the question to ask your team or
+yourself, and the risk if ignored — plus one diagram that makes the mechanic concrete.</p>
 <h2 id="connects-to-other-tracks">Connects to other tracks</h2>
 <ul>
-<li><a href="../prompt-engineering/index.html">Prompt engineering</a> — the craft layer inside
-  context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.</li>
-<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a>
-  and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the mechanics behind
-  every context source this module names.</li>
-<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a> — the
-  product-trust treatment of memory specifically, one of this module's four context types.</li>
-<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — the
-  eval-driven operating loop and data flywheel this module's context evals and lifecycle
-  lesson connect to.</li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
-  — the full request pipeline this module's audit lesson is aimed at.</li>
-<li><a href="../knowledge-graphs/index.html">Knowledge graphs</a> — a structured, governed knowledge
-  asset is one of the richest possible retrieval sources a context pipeline can draw on.</li>
+<li><a href="../context-engineering/index.html">Context engineering</a> — the strategic layer above
+  prompt engineering: instructions, retrieval, memory, and tool state as the real
+  quality lever, with the prompt as one component inside them.</li>
+<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> —
+  eval-driven development, the discipline that decides whether a prompt is good
+  enough to ship.</li>
+<li><a href="../ai-agents/index.html">AI agents</a> — the scaffolds this module's lesson 7 prompts
+  drive.</li>
+<li><a href="../agentic-workflows/index.html">Agentic workflows</a> — the multi-step orchestration
+  patterns this module's lesson 6 chains fit inside.</li>
+<li><a href="../tool-calling/index.html">Tool calling</a> — the function-schema mechanics this
+  module's lesson 7 sits on top of.</li>
 </ul>
 <p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
   <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
+  <div class="cards"><a class="card" href="what-prompt-engineering-actually-is.html"><span class="card-num">01</span><h3>What prompt engineering actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-prompt.html"><span class="card-num">02</span><h3>The anatomy of a prompt</h3><span class="card-go">Read lesson →</span></a><a class="card" href="everyday-productivity-patterns.html"><span class="card-num">03</span><h3>Everyday productivity patterns</h3><span class="card-go">Read lesson →</span></a><a class="card" href="structured-prompting.html"><span class="card-num">04</span><h3>Structured prompting: XML, delimiters, scaffolds</h3><span class="card-go">Read lesson →</span></a><a class="card" href="few-shot-cot-self-consistency.html"><span class="card-num">05</span><h3>Few-shot, chain-of-thought, and self-consistency</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prompt-chaining-and-workflows.html"><span class="card-num">06</span><h3>Prompt chaining and multi-step workflows</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prompting-for-tools-and-agents.html"><span class="card-num">07</span><h3>Prompting for tools and agents</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prompting-inside-coding-agents.html"><span class="card-num">08</span><h3>Prompting inside coding agents</h3><span class="card-go">Read lesson →</span></a><a class="card" href="when-prompts-fail.html"><span class="card-num">09</span><h3>When prompts fail: the diagnostic playbook</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

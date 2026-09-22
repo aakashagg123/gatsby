@@ -89,6 +89,9 @@ mechanic it names.
 
 ## Connects to other tracks
 
+- [Prompt engineering](../prompt-engineering/README.md) — the craft layer inside
+  context engineering. The prompt is one component of the context; that module covers
+  how to write it, from ChatGPT productivity through Claude Code agentic patterns.
 - [Context engineering (engineering depth)](../content/00-foundations/context-engineering.md)
   and [Context & memory](../agentic-ai/context-and-memory.md) — the mechanics behind
   every context source this module names.
