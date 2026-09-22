@@ -284,6 +284,22 @@ output it produces.
 6. [Evaluating context quality](./context-engineering/evaluating-context-quality.md)
 7. [Context engineering across the product lifecycle](./context-engineering/context-across-the-product-lifecycle.md) · [Recap](./context-engineering/recap.md)
 
+## [Prompt engineering](./prompt-engineering/README.md)
+
+The craft of writing input a model will reliably act on — from ChatGPT productivity
+patterns, through structured prompting, few-shot, and chain-of-thought, into the
+prompts that drive Claude Code, Cursor, and other coding agents.
+
+1. [What prompt engineering actually is](./prompt-engineering/what-prompt-engineering-actually-is.md)
+2. [The anatomy of a prompt](./prompt-engineering/the-anatomy-of-a-prompt.md)
+3. [Everyday productivity patterns](./prompt-engineering/everyday-productivity-patterns.md)
+4. [Structured prompting: XML, delimiters, scaffolds](./prompt-engineering/structured-prompting.md)
+5. [Few-shot, chain-of-thought, and self-consistency](./prompt-engineering/few-shot-cot-self-consistency.md)
+6. [Prompt chaining and multi-step workflows](./prompt-engineering/prompt-chaining-and-workflows.md)
+7. [Prompting for tools and agents](./prompt-engineering/prompting-for-tools-and-agents.md)
+8. [Prompting inside coding agents](./prompt-engineering/prompting-inside-coding-agents.md)
+9. [When prompts fail: the diagnostic playbook](./prompt-engineering/when-prompts-fail.md) · [Recap](./prompt-engineering/recap.md)
+
 ## [Harness engineering](./harness-engineering/README.md)
 
 The hands-on build track: construct a coding agent's harness phase by phase. Start with

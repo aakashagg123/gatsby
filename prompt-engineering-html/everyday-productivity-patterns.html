@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Context engineering for the product leader</title>
+<title>Everyday productivity patterns — Prompt engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,116 +354,209 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Prompt engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Context engineering for the product leader</h1>
-    <p class="lede">Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec&#x27;d, governed, and evaluated with the same rigor as the output it produces.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-prompt-engineering-actually-is.html">1 · What prompt engineering actually is</a><a class="modlink" href="the-anatomy-of-a-prompt.html">2 · The anatomy of a prompt</a><a class="modlink active" href="everyday-productivity-patterns.html">3 · Everyday productivity patterns</a><a class="modlink" href="structured-prompting.html">4 · Structured prompting: XML, delimiters, scaffolds</a><a class="modlink" href="few-shot-cot-self-consistency.html">5 · Few-shot, chain-of-thought, and self-consistency</a><a class="modlink" href="prompt-chaining-and-workflows.html">6 · Prompt chaining and multi-step workflows</a><a class="modlink" href="prompting-for-tools-and-agents.html">7 · Prompting for tools and agents</a><a class="modlink" href="prompting-inside-coding-agents.html">8 · Prompting inside coding agents</a><a class="modlink" href="when-prompts-fail.html">9 · When prompts fail: the diagnostic playbook</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 03</span>
+    <h1>Everyday productivity patterns</h1>
   </div>
-  <div class="intro"><p>For a decade, the default product question was "what data do we have?" AI features break
-that pattern: the model already has access to more raw text than any team could ever
-read manually, and it still gets decisions wrong. What it lacked was never data. It was
-the right slice of it, assembled for the moment — instructions, retrieved facts, memory
-of what happened before, live state from tools. <strong>Context engineering</strong> is the
-discipline of deciding what a model sees at the instant it has to act. Get it right, and
-an AI feature reasons over grounded, current, relevant information. Get it wrong, and the
-same feature reasons fluently over nothing in particular — and the failure reads as "the
-model is bad" when the model never had a chance.</p>
-<p><strong>A note on scope.</strong> This curriculum already covers context in real engineering depth:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
-window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
-(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
-covers memory specifically as a product-trust decision. This module is the layer above
-all three: the strategic argument for context engineering as a product leader's
-discipline, how to spec it, audit it, govern it at scale, and evaluate it — not the
-mechanics of fitting things in a token budget, and not memory alone. Every lesson spokes
-out to the deeper engineering treatment behind the mechanic it names, rather than
-re-deriving it.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Every lesson in this module hangs off one picture: the four things "context" actually
-means, and where the discipline sits at each stage of a product's life.</p>
+  <h2 id="tldr">TL;DR</h2>
+<p>Most of the value people get out of ChatGPT or Claude comes from a small handful of
+patterns applied to real work: drafting the first version of something you'll edit,
+compressing a long thing into a shorter thing, translating between formats and
+languages, extracting structured facts out of unstructured text, and getting a
+critique before you send. None of these are exotic. Each has a shape that works and
+a shape that doesn't. This lesson names the six patterns, gives each one a canonical
+prompt shape, and shows the small edits that turn a mediocre output into a useful
+one. If you are new to prompt engineering, this is the lesson where you get most of
+the productivity lift — long before you need XML tags or chain-of-thought.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM (or coding-agent user)</strong></p>
+<p><strong>Why it matters</strong> — Your intuition for where a model shines and where it quietly
+fails is built from doing this daily, not from reading benchmarks. This is the
+cheapest possible training.</p>
+<p><strong>What it changes in your decisions</strong> — You start noticing which of your team's
+workflows shorten by 40% with one good prompt, which shorten by 90%, and which
+break because the model was the wrong tool for the job. That map is your
+intuition-in-progress.</p>
+<p><strong>Ask yourself</strong> — <em>"Which of the six patterns matches the task I'm about to do —
+and am I using its canonical shape?"</em></p>
+<p><strong>Risk if ignored</strong> — You either under-use models (a slow, manual habit for a task
+a prompt would collapse in seconds) or over-use them (asking a model to do a job
+it has no way of doing well).</p>
+</blockquote>
+<h2 id="the-six-patterns">The six patterns</h2>
 <pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
-  end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
-  end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
-  end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
-  end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
-<p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
-changed from "what data do we have" to "what does this decision need," and prompt
-engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
-context sources feed every decision, each spec-able, each governable, each testable on
-its own. <strong>The loop:</strong> real usage becomes the raw material for better context on the
-next feature — the same compounding logic as any flywheel, aimed at what the model sees
-rather than just what it does.</p>
-<h2 id="the-lessons">The lessons</h2>
+  T[&quot;A task&lt;br/&gt;on your desk&quot;] --&gt; Q[&quot;Which pattern?&quot;]
+  Q --&gt; D[&quot;1. Draft-then-edit&lt;br/&gt;(the model writes v0)&quot;]
+  Q --&gt; S[&quot;2. Summarize&lt;br/&gt;(long → short)&quot;]
+  Q --&gt; X[&quot;3. Translate&lt;br/&gt;(format, tone, language)&quot;]
+  Q --&gt; E[&quot;4. Extract&lt;br/&gt;(unstructured → structured)&quot;]
+  Q --&gt; C[&quot;5. Critique&lt;br/&gt;(get it torn apart)&quot;]
+  Q --&gt; B[&quot;6. Brainstorm&lt;br/&gt;(divergent options)&quot;]</pre>
+<p>Almost every everyday LLM use fits one of these six. Naming the pattern before you
+start typing is the difference between a prompt that lands and one that wanders.</p>
+<h2 id="pattern-1-draft-then-edit">Pattern 1 — Draft-then-edit</h2>
+<p>The model writes a version zero. You edit it. This works because writing from a blank
+page is the slow part of most communication tasks, and the model is very good at
+producing a competent, unremarkable first draft. Your editing turns it into your
+voice.</p>
+<p>The shape:</p>
+<blockquote>
+<p>Draft a [thing] for [audience]. Purpose: [what you want them to do after reading].
+Tone: [describe or name it]. Length: [under N words]. Keep the facts below exact:
+[the facts].</p>
+</blockquote>
+<p>The move: never accept the model's draft as the final version. It reads as a middling
+version of every draft in its training data, because that's what it is. The draft
+saves you the empty-page cost. The edit is what makes it yours.</p>
+<h2 id="pattern-2-summarize">Pattern 2 — Summarize</h2>
+<p>Long thing in, short thing out. The model is very good at this until the "long thing"
+is longer than its context window or contains reasoning it can't verify.</p>
+<p>The shape:</p>
+<blockquote>
+<p>Summarize the [document / meeting transcript / thread] below for [audience]. Length:
+[under N words / N bullets]. Include: [what must not get cut]. Exclude: [what does
+not matter].</p>
+<p>[Content]</p>
+</blockquote>
+<p>The moves: always name the audience (a summary for your CEO is different from one for
+your engineers), always name what must not get cut (numbers, decisions, action
+items), and always cap the length or you'll get a "summary" almost as long as the
+original.</p>
+<h2 id="pattern-3-translate">Pattern 3 — Translate</h2>
+<p>Between languages, between formats (Markdown to slack, JSON to CSV, paragraph to
+bullet list), or between registers (formal to casual, technical to plain-language).
+Very reliable — this is close to what the model was trained on.</p>
+<p>The shape:</p>
+<blockquote>
+<p>Convert the [input format] below to [output format]. Keep: [what must stay].
+Change: [what to translate].</p>
+<p>[Content]</p>
+</blockquote>
+<p>The move: explicitly name what stays and what changes. A "casual version" of a
+technical email can quietly lose the technical precision that made it useful. State
+which of tone, structure, or content is up for change and which is fixed.</p>
+<h2 id="pattern-4-extract">Pattern 4 — Extract</h2>
+<p>Pull structured data out of unstructured text: entities, dates, sentiment, action
+items, decisions, contact details, prices. The extraction is often the whole point —
+you feed the output into a spreadsheet or a database.</p>
+<p>The shape:</p>
+<blockquote>
+<p>Extract the following fields from the text below, returning JSON with exactly these
+keys: <code>[key1, key2, key3]</code>. If a field is not present, use <code>null</code>. Do not add
+fields I did not ask for.</p>
+<p>[Content]</p>
+</blockquote>
+<p>The moves: name the exact keys, name the type (<code>null</code> when missing, not "N/A" or "not
+found"), and forbid extra fields. Without the last constraint the model will
+helpfully add <code>notes</code> or <code>confidence</code> fields you didn't ask for and your parser
+didn't expect.</p>
+<h2 id="pattern-5-critique">Pattern 5 — Critique</h2>
+<p>Ask the model to tear a thing apart. This is the most under-used pattern, because
+most people default to asking the model to praise or improve. Critique is faster and
+more useful.</p>
+<p>The shape:</p>
+<blockquote>
+<p>You are a skeptical [expert role]. Read the [document / plan / argument] below and
+list the strongest reasons it is wrong or weak. Do not offer improvements. Do not
+soften your language. Order by severity.</p>
+<p>[Content]</p>
+</blockquote>
+<p>The move: block softening explicitly ("do not offer improvements," "do not soften").
+Left alone, the model will hedge every criticism with a compliment and a suggestion.
+Stripped of the softening, the same output is far more useful.</p>
+<h2 id="pattern-6-brainstorm">Pattern 6 — Brainstorm</h2>
+<p>Divergent options, not one recommended answer. Useful when you want to see the space
+of possibilities before you commit.</p>
+<p>The shape:</p>
+<blockquote>
+<p>Generate [N] distinct [things]. Each should [criterion]. Cover a range from
+[conservative option] to [ambitious option]. Do not repeat variations of the same
+idea in different words.</p>
+<p>[Optional context]</p>
+</blockquote>
+<p>The move: force diversity ("cover a range from X to Y") and forbid rewording ("do not
+repeat variations"). Without those, the model gives you N phrasings of one idea.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
 <ul>
-<li><a href="what-is-context-engineering.html"><strong>What is context engineering, for a product leader?</strong></a>
-  — the data-first-to-context-first shift, and the four things "context" actually means.</li>
-<li><a href="why-prompt-engineering-doesnt-scale.html"><strong>Why prompt engineering doesn't scale</strong></a> —
-  fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.</li>
-<li><a href="the-anatomy-of-a-context-pipeline.html"><strong>The anatomy of a context pipeline</strong></a> —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.</li>
-<li><a href="context-as-a-spec-able-requirement.html"><strong>Context as a spec-able requirement</strong></a> — the
-  context contract: what a PRD should name before an engineer has to guess.</li>
-<li><a href="context-governance-at-scale.html"><strong>Context governance at scale</strong></a> — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.</li>
-<li><a href="evaluating-context-quality.html"><strong>Evaluating context quality</strong></a> — grading whether the
-  context was right, separately and faster than grading whether the answer was good.</li>
-<li><a href="context-across-the-product-lifecycle.html"><strong>Context engineering across the product lifecycle</strong></a>
-  — the different job context work does at discovery, delivery, and launch.</li>
+<li><strong>Speed vs. quality.</strong> These patterns are optimized for productivity — the model
+  gets you 80% there in 5 seconds, and you spend a minute editing. If the stakes are
+  high enough that the last 20% has to be perfect, iterate the prompt or move up to
+  the intermediate techniques in later lessons.</li>
+<li><strong>Trust vs. verification.</strong> Extract and translate are highly reliable and lightly
+  verified. Summarize needs a spot-check for accuracy. Critique is opinion, not fact.
+  Match your verification effort to which pattern you used.</li>
+<li><strong>Chat vs. saved template.</strong> A one-off draft belongs in the chat. Anything you do
+  weekly should become a saved prompt in a text file. Losing five minutes to typing
+  the same prompt shape every week is losing five minutes forever.</li>
 </ul>
-<p>Each lesson pairs the strategic framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram, and spokes out to the engineering-depth lesson behind every
-mechanic it names.</p>
-<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
+<h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><a href="../prompt-engineering/index.html">Prompt engineering</a> — the craft layer inside
-  context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.</li>
-<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a>
-  and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the mechanics behind
-  every context source this module names.</li>
-<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a> — the
-  product-trust treatment of memory specifically, one of this module's four context types.</li>
-<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — the
-  eval-driven operating loop and data flywheel this module's context evals and lifecycle
-  lesson connect to.</li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
-  — the full request pipeline this module's audit lesson is aimed at.</li>
-<li><a href="../knowledge-graphs/index.html">Knowledge graphs</a> — a structured, governed knowledge
-  asset is one of the richest possible retrieval sources a context pipeline can draw on.</li>
+<li><strong>Prompt as query.</strong> "Summarize this" instead of the shape above. The output is a
+  summary of the wrong thing at the wrong length for the wrong audience.</li>
+<li><strong>Skipping the audience.</strong> Every one of the six patterns has an implicit audience.
+  Unnamed, the model picks its default one — usually the average reader on the
+  internet, which is nobody.</li>
+<li><strong>Praise-mode by default.</strong> Asking "what do you think of this?" gets you a
+  reassurance. Ask for critique when you want critique.</li>
+<li><strong>No cap on length.</strong> A summary or a brainstorm without a length spec turns into a
+  scroll of prose. The cap is the discipline.</li>
+<li><strong>Fabrication in extraction.</strong> The model fills in a missing field with a
+  plausible-sounding value instead of <code>null</code>. State the null contract or you'll
+  poison your spreadsheet.</li>
 </ul>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">For today's tasks: can I name which of the six patterns each one is?</li>
+<li class="task todo">Am I using the canonical shape for that pattern, or improvising each time?</li>
+<li class="task todo">Do the prompts I run weekly live in a text file I can grab, or am I retyping
+      them?</li>
+<li class="task todo">For summaries and extractions: did I state the audience, the length, and (for
+      extraction) the null contract?</li>
+<li class="task todo">When I want criticism, am I asking for it — with the softening explicitly
+      blocked?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="the-anatomy-of-a-prompt.html">The anatomy of a prompt</a></li>
+<li><a href="structured-prompting.html">Structured prompting: XML, delimiters, scaffolds</a></li>
+<li><a href="when-prompts-fail.html">When prompts fail: the diagnostic playbook</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="the-anatomy-of-a-prompt.html"><span class="lbl">← Previous</span><span class="ttl">The anatomy of a prompt</span></a><a class="navcard next" href="structured-prompting.html"><span class="lbl">→ Next</span><span class="ttl">Structured prompting: XML, delimiters, scaffolds</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-six-patterns">The six patterns</a><a class="h2" href="#pattern-1-draft-then-edit">Pattern 1 — Draft-then-edit</a><a class="h2" href="#pattern-2-summarize">Pattern 2 — Summarize</a><a class="h2" href="#pattern-3-translate">Pattern 3 — Translate</a><a class="h2" href="#pattern-4-extract">Pattern 4 — Extract</a><a class="h2" href="#pattern-5-critique">Pattern 5 — Critique</a><a class="h2" href="#pattern-6-brainstorm">Pattern 6 — Brainstorm</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

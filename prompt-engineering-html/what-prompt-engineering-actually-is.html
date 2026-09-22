@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Context engineering for the product leader</title>
+<title>What prompt engineering actually is — Prompt engineering</title>
 <style>
 :root{
   --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
@@ -354,116 +354,145 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Context engineering</span><em>a standalone module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Prompt engineering</span><em>a standalone module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><main class="content index" id="top">
-  <div class="index-hero">
-    <span class="chip">A standalone module</span>
-    <h1>Context engineering for the product leader</h1>
-    <p class="lede">Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec&#x27;d, governed, and evaluated with the same rigor as the output it produces.</p>
-    <div class="index-meta"><span>7 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="what-prompt-engineering-actually-is.html">1 · What prompt engineering actually is</a><a class="modlink" href="the-anatomy-of-a-prompt.html">2 · The anatomy of a prompt</a><a class="modlink" href="everyday-productivity-patterns.html">3 · Everyday productivity patterns</a><a class="modlink" href="structured-prompting.html">4 · Structured prompting: XML, delimiters, scaffolds</a><a class="modlink" href="few-shot-cot-self-consistency.html">5 · Few-shot, chain-of-thought, and self-consistency</a><a class="modlink" href="prompt-chaining-and-workflows.html">6 · Prompt chaining and multi-step workflows</a><a class="modlink" href="prompting-for-tools-and-agents.html">7 · Prompting for tools and agents</a><a class="modlink" href="prompting-inside-coding-agents.html">8 · Prompting inside coding agents</a><a class="modlink" href="when-prompts-fail.html">9 · When prompts fail: the diagnostic playbook</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="chip">Lesson 01</span>
+    <h1>What prompt engineering actually is</h1>
   </div>
-  <div class="intro"><p>For a decade, the default product question was "what data do we have?" AI features break
-that pattern: the model already has access to more raw text than any team could ever
-read manually, and it still gets decisions wrong. What it lacked was never data. It was
-the right slice of it, assembled for the moment — instructions, retrieved facts, memory
-of what happened before, live state from tools. <strong>Context engineering</strong> is the
-discipline of deciding what a model sees at the instant it has to act. Get it right, and
-an AI feature reasons over grounded, current, relevant information. Get it wrong, and the
-same feature reasons fluently over nothing in particular — and the failure reads as "the
-model is bad" when the model never had a chance.</p>
-<p><strong>A note on scope.</strong> This curriculum already covers context in real engineering depth:
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> (the context
-window as a scarce, ordered resource) and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>
-(an agent's working-memory hierarchy). <a href="../memory-and-context/index.html">Memory &amp; context</a>
-covers memory specifically as a product-trust decision. This module is the layer above
-all three: the strategic argument for context engineering as a product leader's
-discipline, how to spec it, audit it, govern it at scale, and evaluate it — not the
-mechanics of fitting things in a token budget, and not memory alone. Every lesson spokes
-out to the deeper engineering treatment behind the mechanic it names, rather than
-re-deriving it.</p>
-<h2 id="the-knowledge-graph">The knowledge graph</h2>
-<p>Every lesson in this module hangs off one picture: the four things "context" actually
-means, and where the discipline sits at each stage of a product's life.</p>
-<pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
-  end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
-  end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
-  end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
-  end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
-<p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
-changed from "what data do we have" to "what does this decision need," and prompt
-engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
-context sources feed every decision, each spec-able, each governable, each testable on
-its own. <strong>The loop:</strong> real usage becomes the raw material for better context on the
-next feature — the same compounding logic as any flywheel, aimed at what the model sees
-rather than just what it does.</p>
-<h2 id="the-lessons">The lessons</h2>
+  <h2 id="tldr">TL;DR</h2>
+<p><strong>Prompt engineering is the craft of writing input a language model will reliably act
+on.</strong> It's not a magic incantation and it's not "asking clearly." It sits somewhere
+between programming and technical writing. A language model is a probabilistic system
+that generates the next likely token given the ones so far. Your prompt is the input
+that steers the probability distribution — small changes in wording shift the output
+in ways a search engine never would. The mental model to hold: you are not talking to
+a person, and you are not calling an API with a fixed contract. You are conditioning a
+statistical process. That framing changes what you write, why you rewrite it, and how
+you know it worked.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the AI PM (or coding-agent user)</strong></p>
+<p><strong>Why it matters</strong> — Whether the model returns useful output or plausible-sounding
+nonsense depends on the input you gave it, more than the model you picked. Treating
+prompt writing as an afterthought is treating your product's quality as an
+afterthought.</p>
+<p><strong>What it changes in your decisions</strong> — You stop debating models before you have
+debated prompts. You treat prompt iteration as real design work with a version
+history, not a one-off keystroke.</p>
+<p><strong>Ask yourself</strong> — <em>"If someone else wrote this prompt tomorrow, would they get the
+same output — and do I know why?"</em></p>
+<p><strong>Risk if ignored</strong> — You blame the model for a prompt problem, swap providers
+looking for relief, and rediscover the same failures with a different logo.</p>
+</blockquote>
+<h2 id="the-mental-model">The mental model</h2>
+<pre class="mermaid">flowchart LR
+  U[&quot;Your intent&lt;br/&gt;(what you want)&quot;] --&gt; P[&quot;Prompt&lt;br/&gt;(what you type)&quot;]
+  P --&gt; M[&quot;Language model&lt;br/&gt;(probability over next token)&quot;]
+  M --&gt; O[&quot;Output&lt;br/&gt;(one sample from that distribution)&quot;]
+  O -.-&gt;|&quot;reread, rewrite,&lt;br/&gt;steer the distribution&quot;| P
+  style M fill:#f5f5f5,stroke:#333</pre>
+<p>The gap between the first box and the last box is where prompt engineering lives.
+Your intent is clear in your head. The prompt is a lossy translation. The model is a
+sampler over possible continuations, not a search engine looking up the right answer.
+The output is one draw from that distribution. Every arrow in the diagram is a place
+you can lose quality, and every one is a place you can steer it back.</p>
+<h2 id="three-habits-that-separate-a-good-prompt-from-a-lucky-one">Three habits that separate a good prompt from a lucky one</h2>
 <ul>
-<li><a href="what-is-context-engineering.html"><strong>What is context engineering, for a product leader?</strong></a>
-  — the data-first-to-context-first shift, and the four things "context" actually means.</li>
-<li><a href="why-prompt-engineering-doesnt-scale.html"><strong>Why prompt engineering doesn't scale</strong></a> —
-  fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.</li>
-<li><a href="the-anatomy-of-a-context-pipeline.html"><strong>The anatomy of a context pipeline</strong></a> —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.</li>
-<li><a href="context-as-a-spec-able-requirement.html"><strong>Context as a spec-able requirement</strong></a> — the
-  context contract: what a PRD should name before an engineer has to guess.</li>
-<li><a href="context-governance-at-scale.html"><strong>Context governance at scale</strong></a> — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.</li>
-<li><a href="evaluating-context-quality.html"><strong>Evaluating context quality</strong></a> — grading whether the
-  context was right, separately and faster than grading whether the answer was good.</li>
-<li><a href="context-across-the-product-lifecycle.html"><strong>Context engineering across the product lifecycle</strong></a>
-  — the different job context work does at discovery, delivery, and launch.</li>
+<li><strong>Write intent, not questions.</strong> A prompt is closer to a brief than a query. "Draft
+  a two-paragraph reply to the email below, matching its tone, ending with a proposed
+  time" beats "reply to this." The first prompt names the format, the length, the
+  register, and the ending. The second one leaves the model to guess.</li>
+<li><strong>Iterate the prompt, not the output.</strong> The temptation is to edit the model's
+  output by hand until it's right. Do that once and you have a good response. Do it
+  on a prompt template and every future use gets that lift for free. The unit of work
+  is the prompt.</li>
+<li><strong>Read what came back on its own terms.</strong> If the output missed the mark, the
+  question is not "did the model fail?" but "which sentence in my prompt failed to
+  constrain it?" That reframe turns a bad output into a diagnostic signal.</li>
 </ul>
-<p>Each lesson pairs the strategic framing with a <strong>🎯 For the product leader</strong> briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram, and spokes out to the engineering-depth lesson behind every
-mechanic it names.</p>
-<h2 id="connects-to-other-tracks">Connects to other tracks</h2>
+<h2 id="what-engineering-actually-adds">What "engineering" actually adds</h2>
+<p>Three things distinguish engineering from typing:</p>
 <ul>
-<li><a href="../prompt-engineering/index.html">Prompt engineering</a> — the craft layer inside
-  context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.</li>
-<li><a href="../ai/00-foundations.html#context-engineering">Context engineering (engineering depth)</a>
-  and <a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the mechanics behind
-  every context source this module names.</li>
-<li><a href="../memory-and-context/index.html">Memory &amp; context for the product leader</a> — the
-  product-trust treatment of memory specifically, one of this module's four context types.</li>
-<li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — the
-  eval-driven operating loop and data flywheel this module's context evals and lifecycle
-  lesson connect to.</li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
-  — the full request pipeline this module's audit lesson is aimed at.</li>
-<li><a href="../knowledge-graphs/index.html">Knowledge graphs</a> — a structured, governed knowledge
-  asset is one of the richest possible retrieval sources a context pipeline can draw on.</li>
+<li><strong>Repeatability.</strong> A good prompt behaves the same way tomorrow, and behaves the
+  same way when a colleague uses it. Ad-hoc prompts fail this test the moment
+  something in the model, the context, or the phrasing changes.</li>
+<li><strong>Version control.</strong> Every prompt that ships in a product or automates a workflow
+  needs the same treatment as code: named, dated, changed only through review. A
+  prompt that lives only in someone's ChatGPT sidebar is a single point of failure.</li>
+<li><strong>Evaluation.</strong> The only way to know a prompt is better than the last one is to run
+  both against the same set of examples and compare. This is the
+  <a href="../technical-product-management/tpm-for-ai-products.html">eval-driven development</a>
+  discipline the AI PM track builds on.</li>
 </ul>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
-  <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
+<p>The rest of this module is the specific craft. Lesson 2 breaks a prompt into its six
+named parts. Lessons 3 through 6 climb the ladder from everyday productivity into
+techniques power users depend on. Lessons 7 and 8 cover what changes when the model
+can act — call tools, run code, edit files. Lesson 9 is the diagnostic playbook when
+something goes wrong.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>The one-shot fallacy.</strong> You write a prompt, judge the model on its first output,
+  and give up when it's mediocre. The output <em>should</em> be mediocre. Iteration is the
+  job, not a sign of failure.</li>
+<li><strong>The "just ask clearly" trap.</strong> Clarity is necessary and not sufficient. A clear
+  prompt with no examples, no format spec, and no role often still under-delivers.</li>
+<li><strong>Chasing model changes.</strong> You blame the model for a failure that a two-sentence
+  prompt edit would fix, then spend a week evaluating alternatives.</li>
+<li><strong>Prompts as folklore.</strong> Every teammate has their own copy of the "good" prompt for
+  a shared task, and none of them are versioned. Quality drifts sideways across the
+  team.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do I have a clear picture of what I want the model to output, before I start
+      typing?</li>
+<li class="task todo">Am I editing the prompt when the output is wrong, or editing the output by
+      hand?</li>
+<li class="task todo">For any prompt I reuse: is it saved somewhere versioned, and would a colleague
+      get the same result running it cold?</li>
+<li class="task todo">When a prompt underperforms, can I name which sentence in it failed to
+      constrain the model?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="the-anatomy-of-a-prompt.html">The anatomy of a prompt</a></li>
+<li><a href="when-prompts-fail.html">When prompts fail: the diagnostic playbook</a></li>
+<li><a href="../context-engineering/why-prompt-engineering-doesnt-scale.html">Context engineering — why prompt engineering doesn't scale alone</a></li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="the-anatomy-of-a-prompt.html"><span class="lbl">→ Next</span><span class="ttl">The anatomy of a prompt</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model">The mental model</a><a class="h2" href="#three-habits-that-separate-a-good-prompt-from-a-lucky-one">Three habits that separate a good prompt from a lucky one</a><a class="h2" href="#what-engineering-actually-adds">What &quot;engineering&quot; actually adds</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
   themeVariables:{

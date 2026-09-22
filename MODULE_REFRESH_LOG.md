@@ -38,6 +38,7 @@ always moves forward.
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | never |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | never |
 | system-design | system-design/ | scripts/build_system_design.py | never |
+| prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
 
 ## Run history
 
