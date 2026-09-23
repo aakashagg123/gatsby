@@ -1,0 +1,38 @@
+<style>
+.dgm-kb{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-kb-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-kb h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-kb-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-kb-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-kb-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-kb-n.kafka{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-kb-arr{color:#8c959f;font-size:12px}
+.dgm-kb-branches{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.dgm-kb-b{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;font-size:10px;color:#8a3d20}
+.dgm-kb-note{margin-top:12px;padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:10.5px;color:#1f2328;line-height:1.4}
+@media (max-width:640px){.dgm-kb{padding:20px 16px 18px}.dgm-kb-row{flex-direction:column}.dgm-kb-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kb">
+  <span class="dgm-kb-chip">Kafka as a buffer</span>
+  <h4>Absorbs traffic spikes between collectors and the time-series database</h4>
+  <p class="dgm-kb-sub">Without the buffer, a spike overwhelms the write path exactly when you need metrics most.</p>
+
+  <div class="dgm-kb-row">
+    <div class="dgm-kb-n">Metric collectors</div>
+    <span class="dgm-kb-arr">→</span>
+    <div class="dgm-kb-n kafka">Kafka — metrics topic</div>
+  </div>
+
+  <div class="dgm-kb-branches">
+    <div class="dgm-kb-b">→ TSDB writer pool → Time-series DB (InfluxDB, Thanos)</div>
+    <div class="dgm-kb-b">→ Alert evaluator</div>
+  </div>
+
+  <div class="dgm-kb-note">Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.</div>
+</div>

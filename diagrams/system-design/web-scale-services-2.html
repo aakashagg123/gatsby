@@ -1,0 +1,41 @@
+<style>
+.dgm-notif{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-notif-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-notif h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-notif-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-notif-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-notif-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 10px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-notif-arr{color:#8c959f;font-size:11px}
+.dgm-notif-channels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px}
+.dgm-notif-ch{background:#faece5;border:1.5px solid #e8b39a;border-radius:10px;padding:9px 9px;text-align:center}
+.dgm-notif-ch .q{font-size:9.5px;font-weight:700;color:#8a3d20}
+.dgm-notif-ch .w{font-size:9px;color:#59636e;margin-top:3px}
+.dgm-notif-track{text-align:center;font-size:10px;color:#59636e;margin-top:6px}
+@media (max-width:640px){.dgm-notif{padding:20px 16px 18px}.dgm-notif-row{flex-direction:column}.dgm-notif-channels{grid-template-columns:1fr}}
+</style>
+<div class="dgm-notif">
+  <span class="dgm-notif-chip">Per-channel message queues</span>
+  <h4>A slow channel never blocks a fast one</h4>
+  <p class="dgm-notif-sub">SMS depends on carrier networks; push is near-instant — each gets its own queue and workers.</p>
+
+  <div class="dgm-notif-row">
+    <div class="dgm-notif-n">Service / Trigger</div>
+    <span class="dgm-notif-arr">→</span>
+    <div class="dgm-notif-n">Notification Service — validation, templating</div>
+    <span class="dgm-notif-arr">→</span>
+    <div class="dgm-notif-n">User preference cache</div>
+  </div>
+
+  <div class="dgm-notif-channels">
+    <div class="dgm-notif-ch"><div class="q">Push Queue</div><div class="w">Push Workers — APNS / FCM</div></div>
+    <div class="dgm-notif-ch"><div class="q">SMS Queue</div><div class="w">SMS Workers — Twilio</div></div>
+    <div class="dgm-notif-ch"><div class="q">Email Queue</div><div class="w">Email Workers — SendGrid</div></div>
+  </div>
+
+  <div class="dgm-notif-track">All three workers → Event Tracking</div>
+</div>

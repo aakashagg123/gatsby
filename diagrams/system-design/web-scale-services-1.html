@@ -1,0 +1,39 @@
+<style>
+.dgm-crawl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-crawl-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-crawl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-crawl-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-crawl-chain{display:flex;flex-direction:column;gap:2px}
+.dgm-crawl-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 14px;
+  font-weight:700;font-size:10.5px;color:#1f2328}
+.dgm-crawl-node.front{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-crawl-arr{display:flex;justify-content:center;color:#8c959f;padding:1px 0;font-size:9.5px}
+.dgm-crawl-loop{margin-top:8px;padding:9px 14px;background:#faece5;border:1px dashed #e8b39a;border-radius:10px;
+  font-size:10px;color:#8a3d20;line-height:1.4;text-align:center}
+@media (max-width:640px){.dgm-crawl{padding:20px 16px 18px}}
+</style>
+<div class="dgm-crawl">
+  <span class="dgm-crawl-chip">The URL frontier</span>
+  <h4>Priority queues + per-host politeness scheduling</h4>
+  <p class="dgm-crawl-sub">Not all URLs are equal, and hammering one host gets you blocked.</p>
+
+  <div class="dgm-crawl-chain">
+    <div class="dgm-crawl-node">Seed URLs</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node front">URL Frontier — Priority Queues (PageRank, freshness) → Politeness Scheduler (per-host delay)</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">Downloader — DNS cache, timeouts</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">HTML Parser</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">Content Dedup — checksums/simhash</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">URL Extractor → URL Filter (robots.txt, blocklist)</div>
+  </div>
+
+  <div class="dgm-crawl-loop">URL seen? No → back to the Frontier · Yes → discard</div>
+</div>

@@ -1,0 +1,40 @@
+<style>
+.dgm-al{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-al-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-al h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-al-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-al-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-al-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 10px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-al-n.kafka{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-al-arr{color:#8c959f;font-size:12px}
+.dgm-al-channels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-al-ch{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+@media (max-width:640px){.dgm-al{padding:20px 16px 18px}.dgm-al-row{flex-direction:column}.dgm-al-channels{grid-template-columns:1fr}}
+</style>
+<div class="dgm-al">
+  <span class="dgm-al-chip">The alert system</span>
+  <h4>Evaluation decoupled from notification via Kafka</h4>
+  <p class="dgm-al-sub">Alert fatigue is the biggest operational risk — too many alerts train teams to ignore them.</p>
+
+  <div class="dgm-al-row">
+    <div class="dgm-al-n">Alert rules — YAML config</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n">Rule evaluator — every 30–60s</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n kafka">Kafka — alert events</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n">Notification channels</div>
+  </div>
+
+  <div class="dgm-al-channels">
+    <div class="dgm-al-ch">Email</div>
+    <div class="dgm-al-ch">PagerDuty</div>
+    <div class="dgm-al-ch">Slack</div>
+  </div>
+</div>

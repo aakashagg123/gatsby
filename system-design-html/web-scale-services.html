@@ -548,22 +548,46 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>BFS is preferred</strong> over DFS because DFS can get trapped in deep link chains on a single domain (forums, paginated archives, infinite calendars). BFS explores breadth-first, discovering more domains and more diverse content early.</p>
 <h3 id="url-frontier-architecture">URL frontier architecture</h3>
 <p>The URL frontier is the heart of the crawler — a sophisticated queue that manages which URLs to crawl next, balancing politeness, priority, and freshness.</p>
-<pre class="mermaid">flowchart TD
-  Seeds[Seed URLs] --&gt; Frontier[URL Frontier]
+<style>
+.dgm-crawl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-crawl-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-crawl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-crawl-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-crawl-chain{display:flex;flex-direction:column;gap:2px}
+.dgm-crawl-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 14px;
+  font-weight:700;font-size:10.5px;color:#1f2328}
+.dgm-crawl-node.front{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-crawl-arr{display:flex;justify-content:center;color:#8c959f;padding:1px 0;font-size:9.5px}
+.dgm-crawl-loop{margin-top:8px;padding:9px 14px;background:#faece5;border:1px dashed #e8b39a;border-radius:10px;
+  font-size:10px;color:#8a3d20;line-height:1.4;text-align:center}
+@media (max-width:640px){.dgm-crawl{padding:20px 16px 18px}}
+</style>
+<div class="dgm-crawl">
+  <span class="dgm-crawl-chip">The URL frontier</span>
+  <h4>Priority queues + per-host politeness scheduling</h4>
+  <p class="dgm-crawl-sub">Not all URLs are equal, and hammering one host gets you blocked.</p>
 
-  subgraph Frontier
-    PQ[Priority Queues&lt;br/&gt;PageRank, freshness, type]
-    PQ --&gt; PS[Politeness Scheduler&lt;br/&gt;Per-host queues with delay]
-  end
+  <div class="dgm-crawl-chain">
+    <div class="dgm-crawl-node">Seed URLs</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node front">URL Frontier — Priority Queues (PageRank, freshness) → Politeness Scheduler (per-host delay)</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">Downloader — DNS cache, timeouts</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">HTML Parser</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">Content Dedup — checksums/simhash</div>
+    <div class="dgm-crawl-arr">↓</div>
+    <div class="dgm-crawl-node">URL Extractor → URL Filter (robots.txt, blocklist)</div>
+  </div>
 
-  Frontier --&gt; DL[Downloader&lt;br/&gt;DNS cache, timeouts]
-  DL --&gt; Parser[HTML Parser]
-  Parser --&gt; Dedup[Content Dedup&lt;br/&gt;Checksums/simhash]
-  Dedup --&gt; Extract[URL Extractor]
-  Extract --&gt; Filter[URL Filter&lt;br/&gt;robots.txt, blocklist]
-  Filter --&gt; Seen{URL seen?}
-  Seen --&gt;|No| Frontier
-  Seen --&gt;|Yes| Discard[Discard]</pre>
+  <div class="dgm-crawl-loop">URL seen? No → back to the Frontier · Yes → discard</div>
+</div>
+
 <h3 id="priority">Priority</h3>
 <p>Not all URLs are equal. The frontier maintains <strong>priority queues</strong> that rank URLs by:</p>
 <ul>
@@ -643,19 +667,48 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </table>
 <h3 id="architecture-per-channel-message-queues">Architecture: per-channel message queues</h3>
 <p>The critical design insight: <strong>each channel gets its own message queue and worker pool</strong>. This prevents a slow channel (SMS, which depends on carrier networks) from blocking a fast channel (push, which is near-instant).</p>
-<pre class="mermaid">flowchart TD
-  Svc[Service / Trigger] --&gt; NS[Notification Service]
-  NS --&gt; Valid[Validation &amp; templating]
-  Valid --&gt; Cache[User preference cache]
-  Cache --&gt; MQ1[Push Queue]
-  Cache --&gt; MQ2[SMS Queue]
-  Cache --&gt; MQ3[Email Queue]
-  MQ1 --&gt; PW[Push Workers&lt;br/&gt;APNS / FCM]
-  MQ2 --&gt; SW[SMS Workers&lt;br/&gt;Twilio]
-  MQ3 --&gt; EW[Email Workers&lt;br/&gt;SendGrid]
-  PW --&gt; Track[Event Tracking]
-  SW --&gt; Track
-  EW --&gt; Track</pre>
+<style>
+.dgm-notif{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-notif-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-notif h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-notif-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-notif-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-notif-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 10px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-notif-arr{color:#8c959f;font-size:11px}
+.dgm-notif-channels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px}
+.dgm-notif-ch{background:#faece5;border:1.5px solid #e8b39a;border-radius:10px;padding:9px 9px;text-align:center}
+.dgm-notif-ch .q{font-size:9.5px;font-weight:700;color:#8a3d20}
+.dgm-notif-ch .w{font-size:9px;color:#59636e;margin-top:3px}
+.dgm-notif-track{text-align:center;font-size:10px;color:#59636e;margin-top:6px}
+@media (max-width:640px){.dgm-notif{padding:20px 16px 18px}.dgm-notif-row{flex-direction:column}.dgm-notif-channels{grid-template-columns:1fr}}
+</style>
+<div class="dgm-notif">
+  <span class="dgm-notif-chip">Per-channel message queues</span>
+  <h4>A slow channel never blocks a fast one</h4>
+  <p class="dgm-notif-sub">SMS depends on carrier networks; push is near-instant — each gets its own queue and workers.</p>
+
+  <div class="dgm-notif-row">
+    <div class="dgm-notif-n">Service / Trigger</div>
+    <span class="dgm-notif-arr">→</span>
+    <div class="dgm-notif-n">Notification Service — validation, templating</div>
+    <span class="dgm-notif-arr">→</span>
+    <div class="dgm-notif-n">User preference cache</div>
+  </div>
+
+  <div class="dgm-notif-channels">
+    <div class="dgm-notif-ch"><div class="q">Push Queue</div><div class="w">Push Workers — APNS / FCM</div></div>
+    <div class="dgm-notif-ch"><div class="q">SMS Queue</div><div class="w">SMS Workers — Twilio</div></div>
+    <div class="dgm-notif-ch"><div class="q">Email Queue</div><div class="w">Email Workers — SendGrid</div></div>
+  </div>
+
+  <div class="dgm-notif-track">All three workers → Event Tracking</div>
+</div>
+
 <h3 id="notification-templates">Notification templates</h3>
 <p>At 16M notifications/day, you don't craft individual messages. Templates define the structure:</p>
 <pre><code>Hello {{user.first_name}}, your order {{order.id}} has shipped!
@@ -705,21 +758,60 @@ Tracking: {{tracking.url}}
 <li><strong>Con:</strong> Feed reads are expensive — must fetch from many sources and merge. Slow for users following thousands of accounts.</li>
 </ul>
 <p><strong>Hybrid approach (the production answer):</strong> Use fanout-on-write for most users (fast reads for the common case). For users with massive followings (celebrities, verified accounts), use fanout-on-read — their posts are fetched and merged into the feed at read time rather than pushed to millions of caches.</p>
-<pre class="mermaid">flowchart TD
-  subgraph &quot;Fanout on Write (normal users)&quot;
-    P1[User posts] --&gt; FW[Fanout Service]
-    FW --&gt; SG[Social Graph&lt;br/&gt;get followers]
-    SG --&gt; FW
-    FW --&gt; FC1[Follower 1 feed cache]
-    FW --&gt; FC2[Follower 2 feed cache]
-    FW --&gt; FCN[Follower N feed cache]
-  end
+<style>
+.dgm-fan{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-fan-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-fan h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-fan-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-fan-col{border-radius:12px;padding:12px 13px;margin-bottom:10px;position:relative}
+.dgm-fan-col.write{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-fan-col.read{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-fan-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-fan-col.write .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-fan-col.read .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-fan-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dgm-fan-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:#1f2328}
+.dgm-fan-col.write .dgm-fan-n{border:1px solid #d4ecfa}
+.dgm-fan-col.read .dgm-fan-n{border:1px solid #f2d6c4}
+.dgm-fan-arr{color:#8c959f;font-size:10px}
+@media (max-width:640px){.dgm-fan{padding:20px 16px 18px}}
+</style>
+<div class="dgm-fan">
+  <span class="dgm-fan-chip">Fanout on write vs. fanout on read</span>
+  <h4>Hybrid: push for normal users, pull for celebrities</h4>
+  <p class="dgm-fan-sub">A user with 10M followers can't trigger 10M cache writes on every post.</p>
 
-  subgraph &quot;Fanout on Read (celebrities)&quot;
-    FR1[Feed request] --&gt; Fetch[Fetch Service]
-    Fetch --&gt; CP[Celebrity posts store]
-    Fetch --&gt; Merge[Merge with cached feed]
-  end</pre>
+  <div class="dgm-fan-col write">
+    <span class="tag">Fanout on write — normal users</span>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">User posts</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Fanout Service</div><span class="dgm-fan-arr">↔</span>
+      <div class="dgm-fan-n">Social Graph — get followers</div>
+    </div>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">Fanout Service →</div>
+      <div class="dgm-fan-n">Follower 1 feed cache</div>
+      <div class="dgm-fan-n">Follower 2 feed cache</div>
+      <div class="dgm-fan-n">Follower N feed cache</div>
+    </div>
+  </div>
+
+  <div class="dgm-fan-col read">
+    <span class="tag">Fanout on read — celebrities</span>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">Feed request</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Fetch Service</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Celebrity posts store</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Merge with cached feed</div>
+    </div>
+  </div>
+</div>
+
 <h3 id="feed-publishing-flow">Feed publishing flow</h3>
 <ol>
 <li>User creates a post via the API</li>
@@ -842,46 +934,6 @@ Tracking: {{tracking.url}}
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

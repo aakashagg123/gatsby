@@ -1,0 +1,38 @@
+<style>
+.dgm-pa2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pa2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-pa2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pa2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pa2-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-pa2-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 10px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-pa2-arr{color:#8c959f}
+.dgm-pa2-branch{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dgm-pa2-b{background:#faece5;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;
+  font-size:9.5px;color:#8a3d20}
+.dgm-pa2-bg{margin-top:8px;padding:9px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:10px;color:#1f2328;text-align:center}
+@media (max-width:640px){.dgm-pa2{padding:20px 16px 18px}.dgm-pa2-row{flex-direction:column}.dgm-pa2-branch{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pa2">
+  <span class="dgm-pa2-chip">Proximity service architecture</span>
+  <h4>Redis geohash cache in front of the business database</h4>
+  <p class="dgm-pa2-sub">A change stream keeps the cache in sync as businesses update.</p>
+
+  <div class="dgm-pa2-row">
+    <div class="dgm-pa2-n">Client</div><span class="dgm-pa2-arr">→</span>
+    <div class="dgm-pa2-n">Load balancer</div><span class="dgm-pa2-arr">→</span>
+    <div class="dgm-pa2-n">API servers</div>
+  </div>
+
+  <div class="dgm-pa2-branch">
+    <div class="dgm-pa2-b">Redis cache — geohash → business IDs</div>
+    <div class="dgm-pa2-b">Business DB — business details</div>
+  </div>
+
+  <div class="dgm-pa2-bg">Background worker — rebuilds cache on business changes, fed by the DB's change stream</div>
+</div>

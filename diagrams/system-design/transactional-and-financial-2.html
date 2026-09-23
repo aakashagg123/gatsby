@@ -1,0 +1,46 @@
+<style>
+.dgm-psp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-psp-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-psp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-psp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-psp-actors{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.dgm-psp-actor{border-radius:9px;padding:6px 5px;text-align:center;font-size:9px;font-weight:700}
+.dgm-psp-actor.u{background:#f6f8fa;border:1px solid #d1d9e0;color:#59636e}
+.dgm-psp-actor.c{background:#ddf4ff;border:1px solid #b6e3ff;color:#0550ae}
+.dgm-psp-actor.psp{background:#faece5;border:1px solid #e8b39a;color:#8a3d20}
+.dgm-psp-actor.m{background:#dafbe1;border:1px solid #aceebb;color:#1a614f}
+.dgm-psp-msgs{display:flex;flex-direction:column;gap:5px}
+.dgm-psp-msg{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:10px;
+  color:#1f2328;line-height:1.35;padding:6px 10px;border-radius:8px;background:#f6f8fa}
+.dgm-psp-msg .tag{font-size:9px;font-weight:700;color:#8c959f}
+.dgm-psp-note{margin-top:10px;padding:9px 14px;background:#dafbe1;border:1px dashed #aceebb;border-radius:10px;
+  font-size:10.5px;color:#1a614f;line-height:1.4}
+@media (max-width:640px){.dgm-psp{padding:20px 16px 18px}.dgm-psp-actors{grid-template-columns:1fr 1fr}}
+</style>
+<div class="dgm-psp">
+  <span class="dgm-psp-chip">PSP integration</span>
+  <h4>The merchant never sees a card number</h4>
+  <p class="dgm-psp-sub">The hosted payment page keeps you out of PCI scope entirely.</p>
+
+  <div class="dgm-psp-actors">
+    <div class="dgm-psp-actor u">User</div>
+    <div class="dgm-psp-actor c">Client app</div>
+    <div class="dgm-psp-actor psp">PSP — Stripe</div>
+    <div class="dgm-psp-actor m">Merchant backend</div>
+  </div>
+
+  <div class="dgm-psp-msgs">
+    <div class="dgm-psp-msg"><span class="tag">1</span><span>Client → PSP: load hosted payment page</span></div>
+    <div class="dgm-psp-msg"><span class="tag">2</span><span>User → PSP: enter card details</span></div>
+    <div class="dgm-psp-msg"><span class="tag">3</span><span>PSP → Client: payment token (tok_xxx)</span></div>
+    <div class="dgm-psp-msg"><span class="tag">4</span><span>Client → Merchant: submit order + token</span></div>
+    <div class="dgm-psp-msg"><span class="tag">5</span><span>Merchant → PSP: charge token (amount, idempotency_key)</span></div>
+    <div class="dgm-psp-msg"><span class="tag">6</span><span>PSP → Merchant → Client: payment result, order confirmation</span></div>
+  </div>
+
+  <div class="dgm-psp-note">This keeps the merchant out of PCI scope — they never see, store, or transmit card numbers.</div>
+</div>

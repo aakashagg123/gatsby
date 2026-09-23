@@ -1,0 +1,33 @@
+<style>
+.dgm-wal{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-wal-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-wal h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-wal-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wal-row{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
+.dgm-wal-seg{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:10px 12px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-wal-seg.active{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-wal-arr{color:#8c959f}
+.dgm-wal-note{margin-top:12px;padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:10.5px;color:#1f2328;line-height:1.4}
+@media (max-width:640px){.dgm-wal{padding:20px 16px 18px}.dgm-wal-row{flex-direction:column}}
+</style>
+<div class="dgm-wal">
+  <span class="dgm-wal-chip">The append-only log</span>
+  <h4>Sequential writes to the active segment — the fastest disk I/O pattern</h4>
+  <p class="dgm-wal-sub">Old segments are immutable and can be served from page cache.</p>
+
+  <div class="dgm-wal-row">
+    <div class="dgm-wal-seg">Segment 0<br/>offsets 0–999</div>
+    <span class="dgm-wal-arr">→</span>
+    <div class="dgm-wal-seg">Segment 1<br/>offsets 1000–1999</div>
+    <span class="dgm-wal-arr">→</span>
+    <div class="dgm-wal-seg active">Segment 2 (active)<br/>offsets 2000–2487</div>
+  </div>
+
+  <div class="dgm-wal-note">New messages append to the active segment only. The log is segmented into files (e.g., 1 GB each) for easier retention management.</div>
+</div>

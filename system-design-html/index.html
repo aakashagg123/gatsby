@@ -370,27 +370,67 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
     <div class="index-meta"><span>8 lessons</span><span>+ recap</span><span>28 systems</span><span>diagrams included</span></div>
   </div>
   <div class="intro"><p>How real systems are designed at scale — from rate limiters to stock exchanges. This track covers the architecture, tradeoffs, and failure modes that shape product decisions.</p>
-<pre class="mermaid">flowchart LR
-  subgraph F[&quot;Foundations&quot;]
-    F1[Scaling]
-    F2[Estimation]
-    F3[Framework]
-  end
-  subgraph B[&quot;Building Blocks&quot;]
-    B1[Rate limiting]
-    B2[Consistent hashing]
-    B3[KV stores]
-    B4[Unique IDs]
-  end
-  subgraph S[&quot;Systems&quot;]
-    S1[Web-scale]
-    S2[Real-time]
-    S3[Storage]
-    S4[Location]
-    S5[Data infra]
-    S6[Transactional]
-  end
-  F --&gt; B --&gt; S</pre>
+<style>
+.dgm-sd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sd-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-sd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sd-stage{background:#faece5;border:1.5px solid #e8b39a;border-radius:11px;padding:12px 14px;margin-bottom:8px}
+.dgm-sd-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#8a3d20;
+  text-align:center;margin-bottom:8px}
+.dgm-sd-row{display:grid;gap:6px}
+.dgm-sd-row.f{grid-template-columns:repeat(3,1fr)}
+.dgm-sd-row.b{grid-template-columns:repeat(4,1fr)}
+.dgm-sd-row.s{grid-template-columns:repeat(3,1fr)}
+.dgm-sd-n{background:#ffffff;border:1px solid #e8b39a;border-radius:8px;padding:7px 6px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#8a3d20}
+.dgm-sd-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-sd-arr svg{width:16px;height:16px}
+@media (max-width:640px){.dgm-sd{padding:20px 16px 18px}.dgm-sd-row.f,.dgm-sd-row.b,.dgm-sd-row.s{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-sd">
+  <span class="dgm-sd-chip">System design for the technical PM</span>
+  <h4>Foundations → building blocks → systems · 28 real-world systems across eight lessons</h4>
+  <p class="dgm-sd-sub">This track covers the architecture, tradeoffs, and failure modes that shape product decisions.</p>
+
+  <div class="dgm-sd-stage">
+    <div class="dgm-sd-lbl">Foundations</div>
+    <div class="dgm-sd-row f">
+      <div class="dgm-sd-n">Scaling</div>
+      <div class="dgm-sd-n">Estimation</div>
+      <div class="dgm-sd-n">Framework</div>
+    </div>
+  </div>
+  <div class="dgm-sd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sd-stage">
+    <div class="dgm-sd-lbl">Building blocks</div>
+    <div class="dgm-sd-row b">
+      <div class="dgm-sd-n">Rate limiting</div>
+      <div class="dgm-sd-n">Consistent hashing</div>
+      <div class="dgm-sd-n">KV stores</div>
+      <div class="dgm-sd-n">Unique IDs</div>
+    </div>
+  </div>
+  <div class="dgm-sd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sd-stage">
+    <div class="dgm-sd-lbl">Systems</div>
+    <div class="dgm-sd-row s">
+      <div class="dgm-sd-n">Web-scale</div>
+      <div class="dgm-sd-n">Real-time</div>
+      <div class="dgm-sd-n">Storage</div>
+      <div class="dgm-sd-n">Location</div>
+      <div class="dgm-sd-n">Data infra</div>
+      <div class="dgm-sd-n">Transactional</div>
+    </div>
+  </div>
+</div>
+
 <p>Every lesson in this track follows the same shape:</p>
 <ul>
 <li><strong>TL;DR</strong> — the system in a paragraph, the core tradeoff, the scale.</li>
@@ -423,47 +463,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="foundations-and-framework.html"><span class="card-num">01</span><h3>Foundations &amp; framework</h3><span class="card-go">Read lesson →</span></a><a class="card" href="core-building-blocks.html"><span class="card-num">02</span><h3>Core building blocks</h3><span class="card-go">Read lesson →</span></a><a class="card" href="web-scale-services.html"><span class="card-num">03</span><h3>Web-scale services</h3><span class="card-go">Read lesson →</span></a><a class="card" href="real-time-systems.html"><span class="card-num">04</span><h3>Real-time systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="storage-and-sync.html"><span class="card-num">05</span><h3>Storage &amp; sync</h3><span class="card-go">Read lesson →</span></a><a class="card" href="location-and-geo-services.html"><span class="card-num">06</span><h3>Location &amp; geo services</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-infrastructure.html"><span class="card-num">07</span><h3>Data infrastructure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="transactional-and-financial.html"><span class="card-num">08</span><h3>Transactional &amp; financial systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

@@ -1,0 +1,53 @@
+<style>
+.dgm-fan{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-fan-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-fan h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-fan-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-fan-col{border-radius:12px;padding:12px 13px;margin-bottom:10px;position:relative}
+.dgm-fan-col.write{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-fan-col.read{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-fan-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-fan-col.write .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-fan-col.read .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-fan-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dgm-fan-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:#1f2328}
+.dgm-fan-col.write .dgm-fan-n{border:1px solid #d4ecfa}
+.dgm-fan-col.read .dgm-fan-n{border:1px solid #f2d6c4}
+.dgm-fan-arr{color:#8c959f;font-size:10px}
+@media (max-width:640px){.dgm-fan{padding:20px 16px 18px}}
+</style>
+<div class="dgm-fan">
+  <span class="dgm-fan-chip">Fanout on write vs. fanout on read</span>
+  <h4>Hybrid: push for normal users, pull for celebrities</h4>
+  <p class="dgm-fan-sub">A user with 10M followers can't trigger 10M cache writes on every post.</p>
+
+  <div class="dgm-fan-col write">
+    <span class="tag">Fanout on write — normal users</span>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">User posts</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Fanout Service</div><span class="dgm-fan-arr">↔</span>
+      <div class="dgm-fan-n">Social Graph — get followers</div>
+    </div>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">Fanout Service →</div>
+      <div class="dgm-fan-n">Follower 1 feed cache</div>
+      <div class="dgm-fan-n">Follower 2 feed cache</div>
+      <div class="dgm-fan-n">Follower N feed cache</div>
+    </div>
+  </div>
+
+  <div class="dgm-fan-col read">
+    <span class="tag">Fanout on read — celebrities</span>
+    <div class="dgm-fan-row">
+      <div class="dgm-fan-n">Feed request</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Fetch Service</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Celebrity posts store</div><span class="dgm-fan-arr">→</span>
+      <div class="dgm-fan-n">Merge with cached feed</div>
+    </div>
+  </div>
+</div>

@@ -574,24 +574,52 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </table>
 <p>The metadata database schema centers on a <strong>file_versions</strong> table that maps each file version to an ordered list of block hashes, plus a <strong>blocks</strong> table that maps hashes to storage locations.</p>
 <h3 id="upload-flow">Upload flow</h3>
-<pre class="mermaid">sequenceDiagram
-  participant C as Client
-  participant API as API servers
-  participant BS as Block servers
-  participant CS as Cloud storage
-  participant MDB as Metadata DB
-  participant NS as Notification service
+<style>
+.dgm-ul{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ul-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ul h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ul-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ul-actors{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.dgm-ul-actor{border-radius:9px;padding:6px 4px;text-align:center;font-size:8.5px;font-weight:700}
+.dgm-ul-actor.c{background:#f6f8fa;border:1px solid #d1d9e0;color:#59636e}
+.dgm-ul-actor.api{background:#ddf4ff;border:1px solid #b6e3ff;color:#0550ae}
+.dgm-ul-actor.bs{background:#faece5;border:1px solid #e8b39a;color:#8a3d20}
+.dgm-ul-actor.cs{background:#dafbe1;border:1px solid #aceebb;color:#1a614f}
+.dgm-ul-actor.mdb{background:#eee7fa;border:1px solid #d3c5f0;color:#4b2996}
+.dgm-ul-msgs{display:flex;flex-direction:column;gap:5px}
+.dgm-ul-msg{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:10px;
+  color:#1f2328;line-height:1.35;padding:6px 10px;border-radius:8px;background:#f6f8fa}
+.dgm-ul-msg .tag{font-size:9px;font-weight:700;color:#8c959f}
+@media (max-width:640px){.dgm-ul{padding:20px 16px 18px}.dgm-ul-actors{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ul">
+  <span class="dgm-ul-chip">Upload flow</span>
+  <h4>Pre-signed URLs keep block data off the API servers</h4>
+  <p class="dgm-ul-sub">Two-phase commit: pending until all blocks land, then uploaded.</p>
 
-  C-&gt;&gt;API: Upload request (file metadata)
-  API-&gt;&gt;MDB: Create file entry, status=pending
-  API--&gt;&gt;C: Pre-signed upload URLs
-  C-&gt;&gt;BS: Upload modified blocks
-  BS-&gt;&gt;BS: Hash, compress, encrypt
-  BS-&gt;&gt;CS: Store blocks
-  BS-&gt;&gt;MDB: Update block references
-  BS-&gt;&gt;MDB: Set file status=uploaded
-  MDB-&gt;&gt;NS: Trigger sync notification
-  NS-&gt;&gt;C: Notify other devices</pre>
+  <div class="dgm-ul-actors">
+    <div class="dgm-ul-actor c">Client</div>
+    <div class="dgm-ul-actor api">API servers</div>
+    <div class="dgm-ul-actor bs">Block servers</div>
+    <div class="dgm-ul-actor cs">Cloud storage</div>
+    <div class="dgm-ul-actor mdb">Metadata DB</div>
+  </div>
+
+  <div class="dgm-ul-msgs">
+    <div class="dgm-ul-msg"><span class="tag">1</span><span>Client → API: upload request (file metadata)</span></div>
+    <div class="dgm-ul-msg"><span class="tag">2</span><span>API → Metadata DB: create file entry, status=pending</span></div>
+    <div class="dgm-ul-msg"><span class="tag">3</span><span>API → Client: pre-signed upload URLs</span></div>
+    <div class="dgm-ul-msg"><span class="tag">4</span><span>Client → Block servers: upload modified blocks</span></div>
+    <div class="dgm-ul-msg"><span class="tag">5</span><span>Block servers: hash, compress, encrypt → Cloud storage</span></div>
+    <div class="dgm-ul-msg"><span class="tag">6</span><span>Block servers → Metadata DB: update block refs, status=uploaded</span></div>
+    <div class="dgm-ul-msg"><span class="tag">7</span><span>Metadata DB → Notification service → other devices</span></div>
+  </div>
+</div>
+
 <p>Key design decisions in the upload path:</p>
 <ul>
 <li><strong>Pre-signed URLs</strong> — the API server generates time-limited, signed URLs for direct client-to-storage upload, keeping block data off the API servers.</li>
@@ -629,13 +657,45 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <h3 id="storage-tiering">Storage tiering</h3>
 <p>Not all data is equally hot:</p>
-<pre class="mermaid">flowchart TD
-  HOT[&quot;Hot storage&lt;br/&gt;(SSD, fast access)&lt;br/&gt;Recently modified files&quot;]
-  WARM[&quot;Warm storage&lt;br/&gt;(HDD, moderate access)&lt;br/&gt;Files accessed in last 30 days&quot;]
-  COLD[&quot;Cold storage&lt;br/&gt;(archival, slow retrieval)&lt;br/&gt;Files untouched 90+ days&quot;]
-  HOT --&gt;|&quot;Auto-tier after 30d inactivity&quot;| WARM
-  WARM --&gt;|&quot;Auto-tier after 90d inactivity&quot;| COLD
-  COLD --&gt;|&quot;User accesses file&quot;| HOT</pre>
+<style>
+.dgm-tier{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tier-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-tier h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tier-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tier-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.dgm-tier-n{border-radius:11px;padding:12px 14px;text-align:center;flex:1;min-width:140px}
+.dgm-tier-n.hot{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-tier-n.warm{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-tier-n.cold{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-tier-n h6{margin:0 0 4px;font-size:11px;font-weight:700}
+.dgm-tier-n.hot h6{color:#82061e}
+.dgm-tier-n.warm h6{color:#7a5300}
+.dgm-tier-n.cold h6{color:#0550ae}
+.dgm-tier-n p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3}
+.dgm-tier-arr{color:#8c959f;font-size:12px}
+.dgm-tier-back{text-align:center;font-size:9.5px;color:#8a3d20;font-style:italic;margin-top:8px}
+@media (max-width:640px){.dgm-tier{padding:20px 16px 18px}.dgm-tier-row{flex-direction:column}}
+</style>
+<div class="dgm-tier">
+  <span class="dgm-tier-chip">Storage tiering</span>
+  <h4>Cold storage is 5–10x cheaper per GB than hot</h4>
+  <p class="dgm-tier-sub">Not all data is equally hot — auto-tier by inactivity.</p>
+
+  <div class="dgm-tier-row">
+    <div class="dgm-tier-n hot"><h6>Hot — SSD</h6><p>Recently modified files</p></div>
+    <span class="dgm-tier-arr">→ 30d inactive →</span>
+    <div class="dgm-tier-n warm"><h6>Warm — HDD</h6><p>Accessed in last 30 days</p></div>
+    <span class="dgm-tier-arr">→ 90d inactive →</span>
+    <div class="dgm-tier-n cold"><h6>Cold — archival</h6><p>Untouched 90+ days</p></div>
+  </div>
+
+  <div class="dgm-tier-back">↩ User accesses a cold file → promoted back to hot</div>
+</div>
+
 <p>Cold storage is 5-10x cheaper per GB than hot storage. For a system with 50M users and 10 GB each, the difference between storing everything hot (500 PB at hot prices) vs. tiering (with 80% of data cold) is enormous.</p>
 <hr />
 <h2 id="s3-like-object-storage">S3-like object storage</h2>
@@ -661,20 +721,47 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Metadata</strong> — system metadata (size, content-type, creation time) plus user-defined key-value pairs</li>
 </ul>
 <h3 id="architecture-metadata-store-data-store">Architecture: metadata store + data store</h3>
-<pre class="mermaid">flowchart TB
-  subgraph &quot;Control plane&quot;
-    API[API service]
-    IAM[Identity &amp; access&lt;br/&gt;management]
-    META[Metadata store&lt;br/&gt;sharded relational DB]
-  end
-  subgraph &quot;Data plane&quot;
-    DS[Data store&lt;br/&gt;distributed storage nodes]
-    REP[Replication /&lt;br/&gt;erasure coding]
-  end
-  API --&gt; IAM
-  API --&gt; META
-  API --&gt; DS
-  DS --&gt; REP</pre>
+<style>
+.dgm-cp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cp-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-cp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cp-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-cp-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-cp-col.ctrl{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-cp-col.data{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-cp-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-cp-col.ctrl .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-cp-col.data .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-cp-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:10px;color:#1f2328;
+  margin-top:6px;text-align:center}
+@media (max-width:640px){.dgm-cp{padding:20px 16px 18px}.dgm-cp-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cp">
+  <span class="dgm-cp-chip">Control plane + data plane</span>
+  <h4>Metadata points to data — it never stores the bytes</h4>
+  <p class="dgm-cp-sub">A sharded relational DB for pointers; a distributed cluster for the actual bytes.</p>
+
+  <div class="dgm-cp-cols">
+    <div class="dgm-cp-col ctrl">
+      <span class="tag">Control plane</span>
+      <div class="dgm-cp-n">API service</div>
+      <div class="dgm-cp-n">Identity &amp; access management</div>
+      <div class="dgm-cp-n">Metadata store — sharded relational DB</div>
+    </div>
+    <div class="dgm-cp-col data">
+      <span class="tag">Data plane</span>
+      <div class="dgm-cp-n">Data store — distributed storage nodes</div>
+      <div class="dgm-cp-n">Replication / erasure coding</div>
+    </div>
+  </div>
+</div>
+
 <p><strong>Metadata store</strong> — a sharded relational database (sharded by bucket + object key hash). Stores:</p>
 <ul>
 <li>Bucket information (owner, ACLs, region, versioning config)</li>
@@ -690,18 +777,42 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Space due to filesystem block alignment</li>
 </ul>
 <p>The solution: <strong>WAL-style file merging</strong> (write-ahead log). Small objects are appended sequentially to a large "WAL file" on each data node:</p>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;Incoming objects&quot;
-    O1[&quot;obj-a&lt;br/&gt;2 KB&quot;]
-    O2[&quot;obj-b&lt;br/&gt;500 B&quot;]
-    O3[&quot;obj-c&lt;br/&gt;8 KB&quot;]
-  end
-  subgraph &quot;WAL file on data node&quot;
-    W[&quot;offset 0: obj-a (2 KB)&lt;br/&gt;offset 2048: obj-b (512 B)&lt;br/&gt;offset 2560: obj-c (8 KB)&quot;]
-  end
-  O1 --&gt; W
-  O2 --&gt; W
-  O3 --&gt; W</pre>
+<style>
+.dgm-walm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-walm-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-walm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-walm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-walm-in{display:flex;justify-content:center;gap:8px;margin-bottom:8px}
+.dgm-walm-o{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:8px;padding:8px 10px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-walm-arr{text-align:center;color:#8c959f;font-size:11px;margin-bottom:8px}
+.dgm-walm-file{background:#faece5;border:1.5px solid #e8b39a;border-radius:10px;padding:11px 14px;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:10px;color:#8a3d20;line-height:1.7}
+@media (max-width:640px){.dgm-walm{padding:20px 16px 18px}}
+</style>
+<div class="dgm-walm">
+  <span class="dgm-walm-chip">WAL-style file merging</span>
+  <h4>Random writes become sequential appends</h4>
+  <p class="dgm-walm-sub">Small objects share one large WAL file instead of one file each.</p>
+
+  <div class="dgm-walm-in">
+    <div class="dgm-walm-o">obj-a · 2 KB</div>
+    <div class="dgm-walm-o">obj-b · 500 B</div>
+    <div class="dgm-walm-o">obj-c · 8 KB</div>
+  </div>
+  <div class="dgm-walm-arr">↓ appended sequentially ↓</div>
+
+  <div class="dgm-walm-file">
+    offset 0: obj-a (2 KB)<br/>
+    offset 2048: obj-b (512 B)<br/>
+    offset 2560: obj-c (8 KB)
+  </div>
+</div>
+
 <p>The metadata store records (WAL_file_id, offset, length) for each object. Reads seek to the exact offset in the WAL file. This converts random writes to sequential appends — the fastest I/O pattern on both HDD and SSD.</p>
 <h3 id="durability-replication-vs-erasure-coding">Durability: replication vs. erasure coding</h3>
 <p>The two approaches to surviving disk and node failures:</p>
@@ -864,46 +975,6 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
