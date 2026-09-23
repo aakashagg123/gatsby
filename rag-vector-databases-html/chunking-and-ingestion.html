@@ -399,15 +399,67 @@ contain the claim.</p>
 index cards; a fact that gets split across two cards, or buried in a card about ten other
 things, is a fact your system can't cleanly retrieve. The model never sees your documents —
 it sees the cards retrieval hands it. <strong>Chunking is the act of deciding what's findable.</strong></p>
-<pre class="mermaid">flowchart LR
-  SRC[&quot;Raw sources&lt;br/&gt;PDFs, HTML, docs,&lt;br/&gt;tickets, tables&quot;] --&gt; EXT[&quot;Extract clean text&lt;br/&gt;strip nav, fix tables&quot;]
-  EXT --&gt; CH[&quot;Chunk&lt;br/&gt;split into passages&quot;]
-  CH --&gt; ME[&quot;Attach metadata&lt;br/&gt;source, date, ACL, section&quot;]
-  ME --&gt; EMB[&quot;Embed each chunk&quot;]
-  EMB --&gt; VDB[(&quot;Vector DB&quot;)]
-  UPD[&quot;Source changes&quot;] -.-&gt;|&quot;re-ingest&lt;br/&gt;add / update / delete&quot;| SRC
-  classDef store fill:#fbefe9,stroke:#e0b29e
-  class VDB store</pre>
+<style>
+.dgm-ch{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ch-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
+.dgm-ch h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ch-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ch-pipe{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr 20px 1fr;gap:6px;align-items:center;margin-bottom:14px}
+.dgm-ch-node{background:#ffffff;border:1px solid #d3c5f0;border-radius:9px;padding:9px 9px;text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
+.dgm-ch-node.store{background:#f6efdd;border:1.5px solid #e0d0a8}
+.dgm-ch-node .dgm-ch-ico{color:#7a4fd6;width:20px;height:20px}
+.dgm-ch-node.store .dgm-ch-ico{color:#8a6d3b}
+.dgm-ch-node h6{margin:0;font-size:10.5px;font-weight:700;color:#1f2328;letter-spacing:.02em;line-height:1.25}
+.dgm-ch-arr{text-align:center;color:#8c959f;font-weight:700;font-size:12px}
+.dgm-ch-loop{background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:11px;padding:11px 14px;margin-bottom:14px;
+  display:flex;gap:10px;align-items:center;font-size:11px;color:#1f2328;line-height:1.4}
+.dgm-ch-loop svg{width:20px;height:20px;color:#7a4fd6;flex:0 0 20px}
+.dgm-ch-loop strong{color:#4b2996}
+.dgm-ch-tradeoff{background:#eee7fa;border:1px solid #d3c5f0;border-radius:12px;padding:14px 16px}
+.dgm-ch-tradeoff h5{margin:0 0 10px;font-size:12px;font-weight:700;color:#4b2996;letter-spacing:.02em}
+.dgm-ch-scale{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.dgm-ch-end{background:#ffffff;border:1px solid #d3c5f0;border-radius:9px;padding:10px 12px}
+.dgm-ch-end h6{margin:0 0 4px;font-size:11px;font-weight:700;color:#4b2996;letter-spacing:.02em;text-transform:uppercase}
+.dgm-ch-end p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ch-mid{text-align:center;color:#8c959f;font-size:16px}
+@media (max-width:640px){.dgm-ch{padding:20px 16px 18px}.dgm-ch-pipe{grid-template-columns:1fr}.dgm-ch-arr{padding:2px 0}.dgm-ch-scale{grid-template-columns:1fr}.dgm-ch-mid{padding:4px 0}}
+</style>
+<div class="dgm-ch">
+  <span class="dgm-ch-chip">Chunking &amp; ingestion</span>
+  <h4>Five stages · raw source to searchable vector · plus the re-ingest loop</h4>
+  <p class="dgm-ch-sub">The unglamorous plumbing that determines whether retrieval has anything good to find.</p>
+
+  <div class="dgm-ch-pipe">
+    <div class="dgm-ch-node"><svg class="dgm-ch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><h6>Raw sources</h6></div>
+    <div class="dgm-ch-arr">→</div>
+    <div class="dgm-ch-node"><svg class="dgm-ch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 6-4 6M14 6h6M14 12h6M14 18h6"/></svg><h6>Extract clean text</h6></div>
+    <div class="dgm-ch-arr">→</div>
+    <div class="dgm-ch-node"><svg class="dgm-ch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="16"/><rect x="13" y="4" width="7" height="16"/></svg><h6>Chunk</h6></div>
+    <div class="dgm-ch-arr">→</div>
+    <div class="dgm-ch-node"><svg class="dgm-ch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h6"/></svg><h6>Attach metadata</h6></div>
+    <div class="dgm-ch-arr">→</div>
+    <div class="dgm-ch-node store"><svg class="dgm-ch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg><h6>Embed → Vector DB</h6></div>
+  </div>
+
+  <div class="dgm-ch-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>Source changes</strong> trigger re-ingestion — add, update, or delete — keeping the index from going stale.</span>
+  </div>
+
+  <div class="dgm-ch-tradeoff">
+    <h5>The chunking tradeoff · there's no universally right size</h5>
+    <div class="dgm-ch-scale">
+      <div class="dgm-ch-end"><h6>Chunk too big</h6><p>Diluted relevance · retrieval fetches noise alongside the answer</p></div>
+      <div class="dgm-ch-mid">⟷</div>
+      <div class="dgm-ch-end"><h6>Chunk too small</h6><p>Lost context · the answer's meaning depends on text outside the chunk</p></div>
+    </div>
+  </div>
+</div>
+
 <h2 id="the-chunking-tradeoff">The chunking tradeoff</h2>
 <p>There's no universally right chunk size — there's a tension you tune:</p>
 <table>
@@ -526,46 +578,6 @@ knowledge feature is worse than none, because people trust it.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
