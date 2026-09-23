@@ -1,0 +1,40 @@
+<style>
+.dgm-ws{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ws-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ws h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ws-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ws-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-ws-srv{background:#faece5;border:1.5px solid #e8b39a;border-radius:12px;padding:12px 13px;position:relative}
+.dgm-ws-srv .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid #e8b39a;
+  font-size:9px;font-weight:700;color:#8a3d20;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+.dgm-ws-conn{background:#ffffff;border:1px solid #f2d6c4;border-radius:8px;padding:7px 9px;font-size:10px;
+  color:#8a3d20;margin-top:6px;text-align:center}
+.dgm-ws-note{margin-top:12px;padding:10px 14px;background:#ffebe9;border:1px dashed #ffcecb;border-radius:10px;
+  font-size:10.5px;color:#82061e;line-height:1.4}
+@media (max-width:640px){.dgm-ws{padding:20px 16px 18px}.dgm-ws-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ws">
+  <span class="dgm-ws-chip">Stateful WebSocket servers</span>
+  <h4>Persistent connections replace request-heavy polling</h4>
+  <p class="dgm-ws-sub">Each server holds in-memory state mapping user_id to their connection.</p>
+
+  <div class="dgm-ws-row">
+    <div class="dgm-ws-srv">
+      <span class="tag">Server 1</span>
+      <div class="dgm-ws-conn">User A connection</div>
+      <div class="dgm-ws-conn">User B connection</div>
+      <div class="dgm-ws-conn">User C connection</div>
+    </div>
+    <div class="dgm-ws-srv">
+      <span class="tag">Server 2</span>
+      <div class="dgm-ws-conn">User D connection</div>
+      <div class="dgm-ws-conn">User E connection</div>
+    </div>
+  </div>
+
+  <div class="dgm-ws-note">User A's friends may connect to a <em>different</em> server — Server 1 needs a way to notify Server 2 that User A moved.</div>
+</div>

@@ -1,0 +1,42 @@
+<style>
+.dgm-ct2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ct2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ct2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ct2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ct2-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-ct2-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-ct2-n.state{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-ct2-arr{color:#8c959f}
+.dgm-ct2-tail{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.dgm-ct2-t{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;
+  font-size:10px;color:#8a3d20}
+@media (max-width:640px){.dgm-ct2{padding:20px 16px 18px}.dgm-ct2-row{flex-direction:column}.dgm-ct2-tail{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ct2">
+  <span class="dgm-ct2-chip">Stateless + stateful tiers</span>
+  <h4>Chat servers hold connections; everything else is a normal HTTP service</h4>
+  <p class="dgm-ct2-sub">Service discovery assigns each client to a chat server by load and proximity.</p>
+
+  <div class="dgm-ct2-row">
+    <div class="dgm-ct2-n">Client apps</div>
+    <span class="dgm-ct2-arr">↔ WebSocket</span>
+    <div class="dgm-ct2-n state">Chat Servers — stateful</div>
+  </div>
+  <div class="dgm-ct2-row">
+    <div class="dgm-ct2-n">Client apps</div>
+    <span class="dgm-ct2-arr">→ HTTP</span>
+    <div class="dgm-ct2-n">Stateless Services — auth, profile, group mgmt</div>
+    <span class="dgm-ct2-arr">→</span>
+    <div class="dgm-ct2-n">Relational DB</div>
+  </div>
+
+  <div class="dgm-ct2-tail">
+    <div class="dgm-ct2-t">Chat Servers → KV Store — chat history</div>
+    <div class="dgm-ct2-t">Service Discovery (Zookeeper) → assigns clients to Chat Servers</div>
+  </div>
+</div>

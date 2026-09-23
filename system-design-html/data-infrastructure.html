@@ -565,14 +565,40 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Consumer groups</strong> — a set of consumers that cooperate to consume a topic. Each partition is assigned to exactly one consumer in the group. This guarantees that each message is processed once per group, enabling parallel consumption.</p>
 <h3 id="wal-the-append-only-log">WAL: the append-only log</h3>
 <p>Each partition is backed by a <strong>write-ahead log</strong> on disk:</p>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;Partition 0 on disk&quot;
-    direction LR
-    S1[&quot;Segment 0&lt;br/&gt;offsets 0-999&quot;]
-    S2[&quot;Segment 1&lt;br/&gt;offsets 1000-1999&quot;]
-    S3[&quot;Segment 2 (active)&lt;br/&gt;offsets 2000-2487&quot;]
-  end
-  W[&quot;New message&quot;] --&gt; S3</pre>
+<style>
+.dgm-wal{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-wal-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-wal h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-wal-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wal-row{display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
+.dgm-wal-seg{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:10px 12px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-wal-seg.active{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-wal-arr{color:#8c959f}
+.dgm-wal-note{margin-top:12px;padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:10.5px;color:#1f2328;line-height:1.4}
+@media (max-width:640px){.dgm-wal{padding:20px 16px 18px}.dgm-wal-row{flex-direction:column}}
+</style>
+<div class="dgm-wal">
+  <span class="dgm-wal-chip">The append-only log</span>
+  <h4>Sequential writes to the active segment — the fastest disk I/O pattern</h4>
+  <p class="dgm-wal-sub">Old segments are immutable and can be served from page cache.</p>
+
+  <div class="dgm-wal-row">
+    <div class="dgm-wal-seg">Segment 0<br/>offsets 0–999</div>
+    <span class="dgm-wal-arr">→</span>
+    <div class="dgm-wal-seg">Segment 1<br/>offsets 1000–1999</div>
+    <span class="dgm-wal-arr">→</span>
+    <div class="dgm-wal-seg active">Segment 2 (active)<br/>offsets 2000–2487</div>
+  </div>
+
+  <div class="dgm-wal-note">New messages append to the active segment only. The log is segmented into files (e.g., 1 GB each) for easier retention management.</div>
+</div>
+
 <ul>
 <li>Messages are <strong>appended</strong> to the active segment — sequential writes, the fastest disk I/O pattern.</li>
 <li>Old segments are immutable and can be served from page cache.</li>
@@ -673,17 +699,53 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Data retention: full resolution for 7 days, down-sampled for years</li>
 </ul>
 <h3 id="collection-pull-vs-push">Collection: pull vs. push</h3>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;Pull model (Prometheus)&quot;
-    PROM[Prometheus server] --&gt;|&quot;HTTP scrape&lt;br/&gt;every 15-60s&quot;| T1[Target /metrics]
-    PROM --&gt; T2[Target /metrics]
-    PROM --&gt; T3[Target /metrics]
-  end
-  subgraph &quot;Push model (CloudWatch)&quot;
-    A1[Agent] --&gt;|&quot;Push metrics&lt;br/&gt;every 60s&quot;| GW[Gateway / aggregator]
-    A2[Agent] --&gt; GW
-    GW --&gt; CW[CloudWatch backend]
-  end</pre>
+<style>
+.dgm-pp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pp-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-pp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pp-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-pp-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-pp-col.pull{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-pp-col.push{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-pp-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-pp-col.pull .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-pp-col.push .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-pp-node{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:10px;color:#1f2328;
+  margin-top:6px;text-align:center}
+.dgm-pp-col.pull .dgm-pp-node{border:1px solid #f2d6c4}
+.dgm-pp-col.push .dgm-pp-node{border:1px solid #d4ecfa}
+.dgm-pp-arr{text-align:center;font-size:9px;color:#8c959f}
+@media (max-width:640px){.dgm-pp{padding:20px 16px 18px}.dgm-pp-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pp">
+  <span class="dgm-pp-chip">Collection: pull vs. push</span>
+  <h4>Most production systems use a hybrid of both</h4>
+  <p class="dgm-pp-sub">Prometheus pull for long-lived services, push gateways for batch jobs and lambdas.</p>
+
+  <div class="dgm-pp-cols">
+    <div class="dgm-pp-col pull">
+      <span class="tag">Pull — Prometheus</span>
+      <div class="dgm-pp-node">Prometheus server</div>
+      <div class="dgm-pp-arr">↓ HTTP scrape every 15–60s</div>
+      <div class="dgm-pp-node">Target /metrics ×N</div>
+    </div>
+    <div class="dgm-pp-col push">
+      <span class="tag">Push — CloudWatch</span>
+      <div class="dgm-pp-node">Agents ×N</div>
+      <div class="dgm-pp-arr">↓ push every 60s</div>
+      <div class="dgm-pp-node">Gateway / aggregator</div>
+      <div class="dgm-pp-arr">↓</div>
+      <div class="dgm-pp-node">CloudWatch backend</div>
+    </div>
+  </div>
+</div>
+
 <table>
 <thead>
 <tr>
@@ -723,11 +785,45 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>Most production systems use a <strong>hybrid</strong>: Prometheus pull for long-lived services, push gateways for batch jobs and lambdas.</p>
 <h3 id="kafka-as-a-buffer">Kafka as a buffer</h3>
 <p>Between collectors and the time-series database, a <strong>Kafka buffer</strong> absorbs traffic spikes:</p>
-<pre class="mermaid">flowchart LR
-  COLLECT[Metric collectors] --&gt; KAFKA[Kafka&lt;br/&gt;metrics topic]
-  KAFKA --&gt; WRITE[TSDB writer pool]
-  WRITE --&gt; TSDB[(Time-series DB&lt;br/&gt;e.g., InfluxDB, Thanos)]
-  KAFKA --&gt; ALERT[Alert evaluator]</pre>
+<style>
+.dgm-kb{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-kb-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-kb h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-kb-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-kb-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-kb-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-kb-n.kafka{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-kb-arr{color:#8c959f;font-size:12px}
+.dgm-kb-branches{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.dgm-kb-b{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;font-size:10px;color:#8a3d20}
+.dgm-kb-note{margin-top:12px;padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:10.5px;color:#1f2328;line-height:1.4}
+@media (max-width:640px){.dgm-kb{padding:20px 16px 18px}.dgm-kb-row{flex-direction:column}.dgm-kb-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kb">
+  <span class="dgm-kb-chip">Kafka as a buffer</span>
+  <h4>Absorbs traffic spikes between collectors and the time-series database</h4>
+  <p class="dgm-kb-sub">Without the buffer, a spike overwhelms the write path exactly when you need metrics most.</p>
+
+  <div class="dgm-kb-row">
+    <div class="dgm-kb-n">Metric collectors</div>
+    <span class="dgm-kb-arr">→</span>
+    <div class="dgm-kb-n kafka">Kafka — metrics topic</div>
+  </div>
+
+  <div class="dgm-kb-branches">
+    <div class="dgm-kb-b">→ TSDB writer pool → Time-series DB (InfluxDB, Thanos)</div>
+    <div class="dgm-kb-b">→ Alert evaluator</div>
+  </div>
+
+  <div class="dgm-kb-note">Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.</div>
+</div>
+
 <p>Without the buffer, a traffic spike (deployment, incident, Black Friday) overwhelms the TSDB write path, causing data loss exactly when you need metrics most. Kafka absorbs the burst. The TSDB writer pool processes at a sustainable rate.</p>
 <h3 id="time-series-storage-down-sampling-and-encoding">Time-series storage: down-sampling and encoding</h3>
 <p>Raw metrics at 10-second intervals generate enormous data volumes. <strong>Down-sampling</strong> reduces older data:</p>
@@ -769,17 +865,47 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Result: 16 bytes per data point compressed to ~1.37 bits on average (Facebook's Gorilla paper).</li>
 </ul>
 <h3 id="alert-system">Alert system</h3>
-<pre class="mermaid">flowchart LR
-  RULES[&quot;Alert rules&lt;br/&gt;(YAML config)&quot;]
-  EVAL[&quot;Rule evaluator&lt;br/&gt;(every 30-60s)&quot;]
-  KAFKA2[Kafka&lt;br/&gt;alert events]
-  NOTIFY[&quot;Notification&lt;br/&gt;channels&quot;]
-  RULES --&gt; EVAL
-  EVAL --&gt;|&quot;Rule fires&quot;| KAFKA2
-  KAFKA2 --&gt; NOTIFY
-  NOTIFY --&gt; EMAIL[Email]
-  NOTIFY --&gt; PD[PagerDuty]
-  NOTIFY --&gt; SLACK[Slack]</pre>
+<style>
+.dgm-al{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-al-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-al h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-al-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-al-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-al-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 10px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-al-n.kafka{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-al-arr{color:#8c959f;font-size:12px}
+.dgm-al-channels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-al-ch{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+@media (max-width:640px){.dgm-al{padding:20px 16px 18px}.dgm-al-row{flex-direction:column}.dgm-al-channels{grid-template-columns:1fr}}
+</style>
+<div class="dgm-al">
+  <span class="dgm-al-chip">The alert system</span>
+  <h4>Evaluation decoupled from notification via Kafka</h4>
+  <p class="dgm-al-sub">Alert fatigue is the biggest operational risk — too many alerts train teams to ignore them.</p>
+
+  <div class="dgm-al-row">
+    <div class="dgm-al-n">Alert rules — YAML config</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n">Rule evaluator — every 30–60s</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n kafka">Kafka — alert events</div>
+    <span class="dgm-al-arr">→</span>
+    <div class="dgm-al-n">Notification channels</div>
+  </div>
+
+  <div class="dgm-al-channels">
+    <div class="dgm-al-ch">Email</div>
+    <div class="dgm-al-ch">PagerDuty</div>
+    <div class="dgm-al-ch">Slack</div>
+  </div>
+</div>
+
 <p>Alert rules are evaluated continuously (every 30-60 seconds):</p>
 <ul>
 <li><code>avg(cpu_usage{service="api"}) &gt; 0.85 for 5m</code> — sustained high CPU.</li>
@@ -797,12 +923,46 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </ul>
 <h3 id="mapreduce-aggregation">MapReduce aggregation</h3>
 <p>The click stream flows through a MapReduce-style pipeline:</p>
-<pre class="mermaid">flowchart LR
-  RAW[&quot;Raw click events&lt;br/&gt;(Kafka)&quot;] --&gt; MAP[&quot;Map&lt;br/&gt;extract (ad_id, click)&quot;]
-  MAP --&gt; AGG[&quot;Aggregate&lt;br/&gt;count per ad_id&lt;br/&gt;per time window&quot;]
-  AGG --&gt; REDUCE[&quot;Reduce&lt;br/&gt;merge partial counts&quot;]
-  REDUCE --&gt; STORE[&quot;Aggregated store&lt;br/&gt;(real-time queries)&quot;]
-  REDUCE --&gt; OLAP[&quot;OLAP warehouse&lt;br/&gt;(historical analytics)&quot;]</pre>
+<style>
+.dgm-mr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-mr-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-mr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-mr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-mr-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:6px}
+.dgm-mr-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 7px;text-align:center;
+  font-size:9px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-mr-node.kafka{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-mr-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-mr-out{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dgm-mr-o{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:10px;color:#8a3d20}
+@media (max-width:640px){.dgm-mr{padding:20px 16px 18px}.dgm-mr-pipe{grid-template-columns:1fr}.dgm-mr-arr{transform:rotate(90deg)}.dgm-mr-out{grid-template-columns:1fr}}
+</style>
+<div class="dgm-mr">
+  <span class="dgm-mr-chip">MapReduce aggregation</span>
+  <h4>Billions of raw events become millions of counts, then final totals</h4>
+  <p class="dgm-mr-sub">The click stream flows through a MapReduce-style pipeline.</p>
+
+  <div class="dgm-mr-pipe">
+    <div class="dgm-mr-node kafka">Raw click events — Kafka</div>
+    <div class="dgm-mr-arr">→</div>
+    <div class="dgm-mr-node">Map — extract (ad_id, click)</div>
+    <div class="dgm-mr-arr">→</div>
+    <div class="dgm-mr-node">Aggregate — count per ad_id per window</div>
+    <div class="dgm-mr-arr">→</div>
+    <div class="dgm-mr-node">Reduce — merge partial counts</div>
+  </div>
+
+  <div class="dgm-mr-out">
+    <div class="dgm-mr-o">Aggregated store — real-time queries</div>
+    <div class="dgm-mr-o">OLAP warehouse — historical analytics</div>
+  </div>
+</div>
+
 <p><strong>Map</strong> — extract the relevant fields from raw click events: ad_id, timestamp, user_id, device_id.</p>
 <p><strong>Aggregate</strong> — count clicks per ad_id per time window (e.g., per minute). This is the first reduction: billions of raw events become millions of (ad_id, window, count) tuples.</p>
 <p><strong>Reduce</strong> — merge partial counts from multiple aggregation nodes into final counts.</p>
@@ -881,33 +1041,70 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>Deliverability: emails must reach recipients' inboxes, not spam folders</li>
 </ul>
 <h3 id="architecture-overview">Architecture overview</h3>
-<pre class="mermaid">flowchart TB
-  subgraph &quot;Inbound path&quot;
-    SMTP_IN[&quot;Inbound SMTP&lt;br/&gt;workers&quot;] --&gt; MQ_IN[&quot;Message queue&lt;br/&gt;(inbound)&quot;]
-    MQ_IN --&gt; PROC[&quot;Email processor&lt;br/&gt;(spam filter, virus scan)&quot;]
-    PROC --&gt; STORE[&quot;Write to storage&quot;]
-  end
-  subgraph &quot;Outbound path&quot;
-    API[&quot;API servers&lt;br/&gt;(compose, send)&quot;] --&gt; MQ_OUT[&quot;Message queue&lt;br/&gt;(outbound)&quot;]
-    MQ_OUT --&gt; SMTP_OUT[&quot;Outbound SMTP&lt;br/&gt;workers&quot;]
-    SMTP_OUT --&gt; EXT[&quot;External mail servers&quot;]
-  end
-  subgraph &quot;Storage layer&quot;
-    META[(Metadata store&lt;br/&gt;Cassandra-like)]
-    BLOB[Blob store&lt;br/&gt;attachments]
-    ES[&quot;Elasticsearch&lt;br/&gt;search index&quot;]
-    STORE --&gt; META
-    STORE --&gt; BLOB
-    STORE --&gt; ES
-  end
-  subgraph &quot;Client access&quot;
-    WEB[Web client]
-    MOBILE[Mobile client]
-    IMAP[&quot;IMAP/POP3&lt;br/&gt;server&quot;]
-  end
-  WEB --&gt; API
-  MOBILE --&gt; API
-  IMAP --&gt; META</pre>
+<style>
+.dgm-em{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-em-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-em h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-em-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-em-path{border-radius:11px;padding:11px 13px;margin-bottom:8px;position:relative}
+.dgm-em-path.in{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-em-path.out{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-em-path.store{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-em-path .tag{position:absolute;top:-9px;left:13px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-em-path.in .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-em-path.out .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-em-path.store .tag{color:#1a614f;border-color:#aceebb}
+.dgm-em-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px}
+.dgm-em-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:#1f2328}
+.dgm-em-path.in .dgm-em-n{border:1px solid #f2d6c4}
+.dgm-em-path.out .dgm-em-n{border:1px solid #d4ecfa}
+.dgm-em-path.store .dgm-em-n{border:1px solid #cdf0da}
+.dgm-em-arr{color:#8c959f;font-size:10px}
+.dgm-em-clients{display:flex;justify-content:center;gap:8px;font-size:9.5px;color:#59636e;margin-top:4px}
+@media (max-width:640px){.dgm-em{padding:20px 16px 18px}}
+</style>
+<div class="dgm-em">
+  <span class="dgm-em-chip">Architecture overview</span>
+  <h4>Inbound, outbound, and storage as separate, decoupled paths</h4>
+  <p class="dgm-em-sub">100,000 emails sent/received per second, 99.99% availability.</p>
+
+  <div class="dgm-em-path in">
+    <span class="tag">Inbound path</span>
+    <div class="dgm-em-row">
+      <div class="dgm-em-n">Inbound SMTP workers</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">Message queue</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">Email processor — spam, virus scan</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">Write to storage</div>
+    </div>
+  </div>
+
+  <div class="dgm-em-path out">
+    <span class="tag">Outbound path</span>
+    <div class="dgm-em-row">
+      <div class="dgm-em-n">API servers — compose, send</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">Message queue</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">Outbound SMTP workers</div><span class="dgm-em-arr">→</span>
+      <div class="dgm-em-n">External mail servers</div>
+    </div>
+  </div>
+
+  <div class="dgm-em-path store">
+    <span class="tag">Storage layer</span>
+    <div class="dgm-em-row">
+      <div class="dgm-em-n">Metadata store — Cassandra-like</div>
+      <div class="dgm-em-n">Blob store — attachments</div>
+      <div class="dgm-em-n">Elasticsearch — search index</div>
+    </div>
+  </div>
+
+  <div class="dgm-em-clients">Client access: Web · Mobile · IMAP/POP3 server → API / metadata store</div>
+</div>
+
 <h3 id="smtp-workers-message-queues">SMTP workers + message queues</h3>
 <p>Email processing is inherently asynchronous — the sender doesn't wait for the recipient to read it. Message queues decouple each stage:</p>
 <ul>
@@ -1023,46 +1220,6 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

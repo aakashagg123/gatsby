@@ -1,0 +1,37 @@
+<style>
+.dgm-rq{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-rq-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-rq h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-rq-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-rq-src{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 14px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;margin:0 auto 6px;max-width:200px}
+.dgm-rq-arr{text-align:center;color:#8c959f;font-size:11px;margin-bottom:6px}
+.dgm-rq-branches{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dgm-rq-b{border-radius:10px;padding:9px 10px;text-align:center;font-size:9.5px}
+.dgm-rq-b.ok{background:#dafbe1;border:1.5px solid #aceebb;color:#1a614f}
+.dgm-rq-b.retry{background:#fdf3d9;border:1.5px solid #eac54f;color:#7a5300}
+.dgm-rq-b.fail{background:#ffebe9;border:1.5px solid #ffcecb;color:#82061e}
+.dgm-rq-dlq{margin-top:8px;padding:8px 12px;background:#ffebe9;border:1px dashed #ffcecb;border-radius:9px;
+  font-size:10px;color:#82061e;text-align:center}
+@media (max-width:640px){.dgm-rq{padding:20px 16px 18px}.dgm-rq-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-rq">
+  <span class="dgm-rq-chip">Retry queue &amp; dead-letter queue</span>
+  <h4>Transient vs. permanent failures get different treatment</h4>
+  <p class="dgm-rq-sub">Card declined never retries. A timeout retries with exponential backoff.</p>
+
+  <div class="dgm-rq-src">Payment request → Execute via PSP</div>
+  <div class="dgm-rq-arr">↓</div>
+
+  <div class="dgm-rq-branches">
+    <div class="dgm-rq-b ok">Success → Record in ledger</div>
+    <div class="dgm-rq-b retry">Transient failure (timeout, 500) → Retry queue, backoff</div>
+    <div class="dgm-rq-b fail">Permanent failure (declined) → Mark failed</div>
+  </div>
+
+  <div class="dgm-rq-dlq">Retry queue → max retries exceeded → Dead-letter queue (manual investigation)</div>
+</div>

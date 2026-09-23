@@ -1,0 +1,47 @@
+<style>
+.dgm-dag{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-dag-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-dag h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-dag-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-dag-src{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 14px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;margin:0 auto 4px;max-width:180px}
+.dgm-dag-arr{text-align:center;color:#8c959f;font-size:11px;margin-bottom:4px}
+.dgm-dag-fan{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:4px}
+.dgm-dag-f{background:#faece5;border:1px solid #e8b39a;border-radius:8px;padding:7px 6px;text-align:center;
+  font-size:9px;font-weight:700;color:#8a3d20}
+.dgm-dag-merge{background:#ddf4ff;border:1px solid #b6e3ff;border-radius:9px;padding:8px 14px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#0550ae;margin:4px auto;max-width:220px}
+.dgm-dag-tail{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.dgm-dag-t{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:8px;padding:7px 6px;text-align:center;
+  font-size:9px;color:#1f2328}
+@media (max-width:640px){.dgm-dag{padding:20px 16px 18px}.dgm-dag-fan,.dgm-dag-tail{grid-template-columns:1fr 1fr}}
+</style>
+<div class="dgm-dag">
+  <span class="dgm-dag-chip">Transcoding: DAG-based pipeline</span>
+  <h4>Video and audio encode in parallel, then merge</h4>
+  <p class="dgm-dag-sub">GOPs (Group of Pictures) enable each resolution to encode independently.</p>
+
+  <div class="dgm-dag-src">Original video</div>
+  <div class="dgm-dag-arr">↓ Preprocessor — split into GOPs</div>
+
+  <div class="dgm-dag-fan">
+    <div class="dgm-dag-f">360p H.264</div>
+    <div class="dgm-dag-f">720p H.264</div>
+    <div class="dgm-dag-f">1080p H.264</div>
+    <div class="dgm-dag-f">4K H.265</div>
+    <div class="dgm-dag-f">Audio AAC</div>
+    <div class="dgm-dag-f">Audio Opus</div>
+  </div>
+
+  <div class="dgm-dag-merge">↓ Muxer — combine audio + video</div>
+
+  <div class="dgm-dag-tail">
+    <div class="dgm-dag-t">Thumbnail generation</div>
+    <div class="dgm-dag-t">Watermark / DRM</div>
+    <div class="dgm-dag-t">Quality check → Transcoded storage</div>
+  </div>
+</div>

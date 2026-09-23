@@ -1,0 +1,38 @@
+<style>
+.dgm-lb{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lb-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-lb h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lb-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-lb-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-lb-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-lb-n.redis{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-lb-arr{color:#8c959f}
+.dgm-lb-ops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.dgm-lb-op{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;color:#8a3d20;font-family:ui-monospace,'SF Mono',Consolas,monospace}
+@media (max-width:640px){.dgm-lb{padding:20px 16px 18px}.dgm-lb-row{flex-direction:column}.dgm-lb-ops{grid-template-columns:1fr}}
+</style>
+<div class="dgm-lb">
+  <span class="dgm-lb-chip">Redis sorted sets</span>
+  <h4>Increment, rank, and top-N — all O(log N)</h4>
+  <p class="dgm-lb-sub">At 25M members, that's ~25 comparisons — sub-millisecond on Redis.</p>
+
+  <div class="dgm-lb-row">
+    <div class="dgm-lb-n">Game server</div>
+    <span class="dgm-lb-arr">→</span>
+    <div class="dgm-lb-n redis">Redis sorted set — leaderboard:2024-10</div>
+    <span class="dgm-lb-arr">←</span>
+    <div class="dgm-lb-n">Client</div>
+  </div>
+
+  <div class="dgm-lb-ops">
+    <div class="dgm-lb-op">ZINCRBY +50 points</div>
+    <div class="dgm-lb-op">ZREVRANK — my rank?</div>
+    <div class="dgm-lb-op">ZREVRANGE 0 9 — top 10?</div>
+  </div>
+</div>

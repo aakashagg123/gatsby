@@ -1,0 +1,46 @@
+<style>
+.dgm-pp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pp-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-pp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pp-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-pp-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-pp-col.pull{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-pp-col.push{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-pp-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-pp-col.pull .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-pp-col.push .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-pp-node{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:10px;color:#1f2328;
+  margin-top:6px;text-align:center}
+.dgm-pp-col.pull .dgm-pp-node{border:1px solid #f2d6c4}
+.dgm-pp-col.push .dgm-pp-node{border:1px solid #d4ecfa}
+.dgm-pp-arr{text-align:center;font-size:9px;color:#8c959f}
+@media (max-width:640px){.dgm-pp{padding:20px 16px 18px}.dgm-pp-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pp">
+  <span class="dgm-pp-chip">Collection: pull vs. push</span>
+  <h4>Most production systems use a hybrid of both</h4>
+  <p class="dgm-pp-sub">Prometheus pull for long-lived services, push gateways for batch jobs and lambdas.</p>
+
+  <div class="dgm-pp-cols">
+    <div class="dgm-pp-col pull">
+      <span class="tag">Pull — Prometheus</span>
+      <div class="dgm-pp-node">Prometheus server</div>
+      <div class="dgm-pp-arr">↓ HTTP scrape every 15–60s</div>
+      <div class="dgm-pp-node">Target /metrics ×N</div>
+    </div>
+    <div class="dgm-pp-col push">
+      <span class="tag">Push — CloudWatch</span>
+      <div class="dgm-pp-node">Agents ×N</div>
+      <div class="dgm-pp-arr">↓ push every 60s</div>
+      <div class="dgm-pp-node">Gateway / aggregator</div>
+      <div class="dgm-pp-arr">↓</div>
+      <div class="dgm-pp-node">CloudWatch backend</div>
+    </div>
+  </div>
+</div>

@@ -624,13 +624,45 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>Sliding window counter</strong> — A hybrid: take the weighted count from the previous window and add the current window's count. If the previous window had 70 requests, and the current window is 30% elapsed, the weighted count is <code>70 * 0.70 + current_count</code>. Only two counters per window, near-zero memory, and the boundary spike problem is smoothed. This is the most common choice in production.</p>
 <h3 id="distributed-rate-limiting-with-redis">Distributed rate limiting with Redis</h3>
 <p>In a distributed system, rate limit counters must be shared across all application instances. Redis is the standard choice: its <code>INCR</code> and <code>EXPIRE</code> commands are atomic, fast, and cluster-friendly.</p>
-<pre class="mermaid">flowchart TD
-  C1[Client request] --&gt; GW[API Gateway / Middleware]
-  GW --&gt; R[Redis cluster]
-  R --&gt;|counter &lt; limit| GW
-  GW --&gt;|allow| APP[Application servers]
-  R --&gt;|counter &gt;= limit| GW
-  GW --&gt;|429 Too Many Requests| C1</pre>
+<style>
+.dgm-rl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-rl-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-rl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-rl-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-rl-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-rl-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 12px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328}
+.dgm-rl-n.redis{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-rl-arr{color:#8c959f;font-size:12px}
+.dgm-rl-branches{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgm-rl-b{border-radius:10px;padding:9px 12px;text-align:center;font-size:10.5px;font-weight:700}
+.dgm-rl-b.ok{background:#dafbe1;border:1.5px solid #aceebb;color:#1a614f}
+.dgm-rl-b.no{background:#ffebe9;border:1.5px solid #ffcecb;color:#82061e}
+@media (max-width:640px){.dgm-rl{padding:20px 16px 18px}.dgm-rl-row{flex-direction:column}}
+</style>
+<div class="dgm-rl">
+  <span class="dgm-rl-chip">Distributed rate limiting with Redis</span>
+  <h4>Counters must be shared across all application instances</h4>
+  <p class="dgm-rl-sub">Redis's atomic INCR and EXPIRE keep counters correct under concurrent requests.</p>
+
+  <div class="dgm-rl-row">
+    <div class="dgm-rl-n">Client request</div>
+    <span class="dgm-rl-arr">→</span>
+    <div class="dgm-rl-n">API Gateway / Middleware</div>
+    <span class="dgm-rl-arr">→</span>
+    <div class="dgm-rl-n redis">Redis cluster — atomic counter</div>
+  </div>
+
+  <div class="dgm-rl-branches">
+    <div class="dgm-rl-b ok">counter &lt; limit → allow → application servers</div>
+    <div class="dgm-rl-b no">counter ≥ limit → 429 Too Many Requests → client</div>
+  </div>
+</div>
+
 <p>Two race conditions emerge in distributed setups:</p>
 <ol>
 <li><strong>Read-then-write race</strong> — Two processes read the same counter, both see it below the limit, both increment. Fix: use Redis's atomic <code>INCR</code> or a Lua script that reads, checks, and increments in a single operation.</li>
@@ -650,16 +682,55 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>Consistent hashing solves this: when a server is added or removed, only <code>k/n</code> keys need to move (where <em>k</em> is the total number of keys), rather than nearly all of them.</p>
 <h3 id="the-hash-ring">The hash ring</h3>
 <p>Imagine the output space of a hash function (SHA-1 gives 0 to 2^160) bent into a circle — a ring. Both servers and keys are hashed onto this ring. To find which server owns a key, start at the key's position and walk clockwise until you hit a server.</p>
-<pre class="mermaid">flowchart TD
-  subgraph &quot;Hash Ring&quot;
-    direction TB
-    S0[&quot;Server A (hash: 0°)&quot;]
-    S1[&quot;Server B (hash: 90°)&quot;]
-    S2[&quot;Server C (hash: 210°)&quot;]
-    K1[&quot;Key 1 (hash: 45°) → Server B&quot;]
-    K2[&quot;Key 2 (hash: 130°) → Server C&quot;]
-    K3[&quot;Key 3 (hash: 330°) → Server A&quot;]
-  end</pre>
+<style>
+.dgm-hr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-hr-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-hr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-hr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-hr-ring{position:relative;width:220px;height:220px;margin:10px auto 14px;border:2px dashed #e8b39a;border-radius:50%}
+.dgm-hr-srv{position:absolute;width:34px;height:34px;border-radius:50%;background:#bd5d3a;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transform:translate(-50%,-50%)}
+.dgm-hr-key{position:absolute;width:22px;height:22px;border-radius:50%;background:#0969da;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;transform:translate(-50%,-50%);
+  border:2px solid #fff}
+.dgm-hr-legend{display:flex;justify-content:center;gap:16px;font-size:10px;color:#59636e;margin-bottom:10px}
+.dgm-hr-legend span{display:inline-flex;align-items:center;gap:5px}
+.dgm-hr-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dgm-hr-map{display:flex;flex-direction:column;gap:5px}
+.dgm-hr-row{display:flex;align-items:center;gap:8px;font-size:10.5px;color:#1f2328;background:#f6f8fa;
+  border:1px solid #d1d9e0;border-radius:8px;padding:7px 10px}
+.dgm-hr-row b{color:#0969da}
+@media (max-width:640px){.dgm-hr{padding:20px 16px 18px}.dgm-hr-ring{width:180px;height:180px}}
+</style>
+<div class="dgm-hr">
+  <span class="dgm-hr-chip">The hash ring</span>
+  <h4>Walk clockwise from the key's position until you hit a server</h4>
+  <p class="dgm-hr-sub">Only the keys between the changed server and its neighbor need to move.</p>
+
+  <div class="dgm-hr-ring">
+    <div class="dgm-hr-srv" style="top:0%;left:50%">A</div>
+    <div class="dgm-hr-srv" style="top:75%;left:93%">B</div>
+    <div class="dgm-hr-srv" style="top:83%;left:15%">C</div>
+    <div class="dgm-hr-key" style="top:12%;left:80%">K1</div>
+    <div class="dgm-hr-key" style="top:55%;left:97%">K2</div>
+    <div class="dgm-hr-key" style="top:35%;left:8%">K3</div>
+  </div>
+  <div class="dgm-hr-legend">
+    <span><i class="dgm-hr-dot" style="background:#bd5d3a"></i>Server</span>
+    <span><i class="dgm-hr-dot" style="background:#0969da"></i>Key</span>
+  </div>
+
+  <div class="dgm-hr-map">
+    <div class="dgm-hr-row">Key 1 (hash: 45°) → walks CW → <b>Server B</b></div>
+    <div class="dgm-hr-row">Key 2 (hash: 130°) → walks CW → <b>Server C</b></div>
+    <div class="dgm-hr-row">Key 3 (hash: 330°) → walks CW → <b>Server A</b></div>
+  </div>
+</div>
+
 <p><strong>Adding a server:</strong> Only keys between the new server and its counter-clockwise neighbor need to move. Everything else stays put.</p>
 <p><strong>Removing a server:</strong> Only that server's keys move — they walk clockwise to the next server. The rest of the ring is undisturbed.</p>
 <h3 id="the-problem-with-basic-consistent-hashing">The problem with basic consistent hashing</h3>
@@ -757,12 +828,47 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </table>
 <h3 id="conflict-resolution-with-vector-clocks">Conflict resolution with vector clocks</h3>
 <p>When two replicas accept concurrent writes to the same key, you have a conflict. <strong>Vector clocks</strong> track causality: each replica maintains a vector of <code>[server, version]</code> pairs. When vectors are ordered (one is a strict superset), the superset wins. When they're concurrent (neither is a superset), the system presents both versions to the application for resolution.</p>
-<pre class="mermaid">flowchart TD
-  D0[&quot;D([S1,1]) — initial write&quot;] --&gt; D1[&quot;D([S1,1],[S2,1]) — S2 modifies&quot;]
-  D0 --&gt; D2[&quot;D([S1,1],[S3,1]) — S3 modifies concurrently&quot;]
-  D1 --&gt; D3[&quot;Conflict: neither vector dominates&quot;]
-  D2 --&gt; D3
-  D3 --&gt; D4[&quot;Application resolves (e.g., last-writer-wins or merge)&quot;]</pre>
+<style>
+.dgm-vc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-vc-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-vc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-vc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-vc-root{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 14px;text-align:center;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:10px;color:#1f2328;margin:0 auto 8px;max-width:280px}
+.dgm-vc-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-vc-arr svg{width:16px;height:16px}
+.dgm-vc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.dgm-vc-n{background:#faece5;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:9.5px;color:#8a3d20}
+.dgm-vc-conf{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#82061e;font-weight:700;font-size:11px;margin:0 auto 8px;max-width:340px}
+.dgm-vc-res{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11px;margin:0 auto;max-width:340px}
+@media (max-width:640px){.dgm-vc{padding:20px 16px 18px}.dgm-vc-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-vc">
+  <span class="dgm-vc-chip">Vector clocks</span>
+  <h4>Track causality, not just time · concurrent writes need a human or a rule</h4>
+  <p class="dgm-vc-sub">When vectors are ordered, the superset wins. When they're concurrent, both versions surface.</p>
+
+  <div class="dgm-vc-root">D([S1,1]) — initial write</div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vc-row">
+    <div class="dgm-vc-n">D([S1,1],[S2,1]) — S2 modifies</div>
+    <div class="dgm-vc-n">D([S1,1],[S3,1]) — S3 modifies concurrently</div>
+  </div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vc-conf">Conflict — neither vector dominates</div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-vc-res">Application resolves — e.g. last-writer-wins or merge</div>
+</div>
+
 <p>Vector clocks grow in size as more servers handle writes. In practice, a clock-truncation threshold removes the oldest entries when the vector exceeds a limit — a rare source of reconciliation errors, but unavoidable for bounded memory.</p>
 <h3 id="failure-detection-gossip-protocol">Failure detection: gossip protocol</h3>
 <p>How does the system know when a node is down? Heartbeats to a central monitor create a single point of failure. Instead, distributed KV stores use the <strong>gossip protocol</strong>:</p>
@@ -785,19 +891,59 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>If not found, check a <strong>Bloom filter</strong> — a probabilistic data structure that tells you if a key is <em>definitely not</em> in an SSTable (avoiding disk reads for keys that don't exist)</li>
 <li>If the Bloom filter says "maybe," read the SSTable from disk</li>
 </ol>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;Write Path&quot;
-    W1[Client write] --&gt; W2[Commit log]
-    W2 --&gt; W3[Memtable]
-    W3 --&gt;|threshold exceeded| W4[Flush to SSTable]
-  end
-  subgraph &quot;Read Path&quot;
-    R1[Client read] --&gt; R2{In memtable?}
-    R2 --&gt;|Yes| R3[Return]
-    R2 --&gt;|No| R4{Bloom filter}
-    R4 --&gt;|Definitely not| R5[Key not found]
-    R4 --&gt;|Maybe| R6[Read SSTable]
-  end</pre>
+<style>
+.dgm-lsm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lsm-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-lsm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lsm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-lsm-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-lsm-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-lsm-col.w{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-lsm-col.r{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-lsm-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-lsm-col.w .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-lsm-col.r .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-lsm-step{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:10px;color:#1f2328;
+  margin-top:6px;line-height:1.35}
+.dgm-lsm-col.w .dgm-lsm-step{border:1px solid #f2d6c4}
+.dgm-lsm-col.r .dgm-lsm-step{border:1px solid #d4ecfa}
+.dgm-lsm-arr{text-align:center;font-size:9px;color:#8c959f}
+@media (max-width:640px){.dgm-lsm{padding:20px 16px 18px}.dgm-lsm-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-lsm">
+  <span class="dgm-lsm-chip">The LSM-tree write &amp; read path</span>
+  <h4>Writes are always sequential · reads check memory first, then disk</h4>
+  <p class="dgm-lsm-sub">Bloom filters avoid disk reads for keys that don't exist.</p>
+
+  <div class="dgm-lsm-cols">
+    <div class="dgm-lsm-col w">
+      <span class="tag">Write path</span>
+      <div class="dgm-lsm-step">Client write</div>
+      <div class="dgm-lsm-arr">↓</div>
+      <div class="dgm-lsm-step">Commit log — durability</div>
+      <div class="dgm-lsm-arr">↓</div>
+      <div class="dgm-lsm-step">Memtable — sorted, in-memory</div>
+      <div class="dgm-lsm-arr">↓ threshold exceeded</div>
+      <div class="dgm-lsm-step">Flush to SSTable — sorted, on disk</div>
+    </div>
+    <div class="dgm-lsm-col r">
+      <span class="tag">Read path</span>
+      <div class="dgm-lsm-step">Client read</div>
+      <div class="dgm-lsm-arr">↓</div>
+      <div class="dgm-lsm-step">In memtable? Yes → return</div>
+      <div class="dgm-lsm-arr">↓ no</div>
+      <div class="dgm-lsm-step">Bloom filter: definitely not → key not found</div>
+      <div class="dgm-lsm-arr">↓ maybe</div>
+      <div class="dgm-lsm-step">Read SSTable from disk</div>
+    </div>
+  </div>
+</div>
+
 <p>This design optimizes for write throughput: writes are always sequential (append to log, then sequential flush). Reads may require checking multiple SSTables, but Bloom filters and compaction (periodically merging SSTables) keep read amplification manageable.</p>
 <hr />
 <h2 id="unique-id-generator">Unique ID generator</h2>
@@ -823,15 +969,52 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <strong>Cons:</strong> Single point of failure. If you run two ticket servers with even/odd allocation, you lose global ordering. Becomes a throughput bottleneck at high scale.</p>
 <h3 id="twitter-snowflake-the-winner-for-most-use-cases">Twitter Snowflake (the winner for most use cases)</h3>
 <p>A 64-bit ID with a structured layout that encodes time, location, and sequence:</p>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;64-bit Snowflake ID&quot;
-    B0[&quot;0&lt;br/&gt;sign&lt;br/&gt;(1 bit)&quot;]
-    B1[&quot;Timestamp&lt;br/&gt;(41 bits)&lt;br/&gt;ms since epoch&quot;]
-    B2[&quot;Datacenter&lt;br/&gt;(5 bits)&lt;br/&gt;0–31&quot;]
-    B3[&quot;Machine&lt;br/&gt;(5 bits)&lt;br/&gt;0–31&quot;]
-    B4[&quot;Sequence&lt;br/&gt;(12 bits)&lt;br/&gt;0–4095&quot;]
-  end
-  B0 --- B1 --- B2 --- B3 --- B4</pre>
+<style>
+.dgm-sf2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sf2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-sf2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sf2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sf2-bits{display:flex;border-radius:8px;overflow:hidden;height:44px}
+.dgm-sf2-seg{display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;
+  color:#ffffff;text-align:center;line-height:1.2;padding:0 4px}
+.dgm-sf2-seg.sign{background:#59636e;flex:0 0 5%}
+.dgm-sf2-seg.ts{background:#bd5d3a;flex:0 0 55%}
+.dgm-sf2-seg.dc{background:#8a3d20;flex:0 0 12%}
+.dgm-sf2-seg.wk{background:#8a3d20;flex:0 0 12%}
+.dgm-sf2-seg.seq{background:#1f2328;flex:0 0 16%}
+.dgm-sf2-labels{display:flex;justify-content:space-between;font-size:9px;color:#59636e;margin-top:6px}
+.dgm-sf2-notes{margin-top:14px;display:flex;flex-direction:column;gap:5px}
+.dgm-sf2-note{font-size:10.5px;color:#1f2328;line-height:1.4;padding:7px 10px;background:#f6f8fa;
+  border:1px solid #d1d9e0;border-radius:8px}
+.dgm-sf2-note b{color:#8a3d20}
+@media (max-width:640px){.dgm-sf2{padding:20px 16px 18px}}
+</style>
+<div class="dgm-sf2">
+  <span class="dgm-sf2-chip">Twitter Snowflake — 64-bit layout</span>
+  <h4>Time, location, and sequence, zero coordination</h4>
+  <p class="dgm-sf2-sub">Sortable by time, globally unique, 4,096,000 IDs/second per machine.</p>
+
+  <div class="dgm-sf2-bits">
+    <div class="dgm-sf2-seg sign">0</div>
+    <div class="dgm-sf2-seg ts">Timestamp — 41 bits</div>
+    <div class="dgm-sf2-seg dc">DC — 5</div>
+    <div class="dgm-sf2-seg wk">Wk — 5</div>
+    <div class="dgm-sf2-seg seq">Sequence — 12</div>
+  </div>
+  <div class="dgm-sf2-labels"><span>1 bit</span><span>~69 years</span><span>0–31</span><span>0–31</span><span>0–4095</span></div>
+
+  <div class="dgm-sf2-notes">
+    <div class="dgm-sf2-note"><b>1 sign bit</b> — always 0 (unsigned)</div>
+    <div class="dgm-sf2-note"><b>41-bit timestamp</b> — ms since a custom epoch, ~69 years before wraparound</div>
+    <div class="dgm-sf2-note"><b>5+5 bits</b> — datacenter ID (32) and machine ID (32)</div>
+    <div class="dgm-sf2-note"><b>12-bit sequence</b> — 4,096 IDs per millisecond per machine, zero coordination</div>
+  </div>
+</div>
+
 <p><strong>How it works:</strong></p>
 <ul>
 <li><strong>1 sign bit</strong> — always 0 (unsigned)</li>
@@ -904,46 +1087,6 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

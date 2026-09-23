@@ -1,0 +1,38 @@
+<style>
+.dgm-pr4{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr4-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-pr4 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr4-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr4-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-pr4-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-pr4-n.pub{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-pr4-arr{color:#8c959f}
+.dgm-pr4-fanout{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-pr4-f{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;color:#8a3d20}
+@media (max-width:640px){.dgm-pr4{padding:20px 16px 18px}.dgm-pr4-row{flex-direction:column}.dgm-pr4-fanout{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pr4">
+  <span class="dgm-pr4-chip">Online presence</span>
+  <h4>Heartbeat every 5s · offline after 30s of silence</h4>
+  <p class="dgm-pr4-sub">A status change fans out to every online friend's chat server.</p>
+
+  <div class="dgm-pr4-row">
+    <div class="dgm-pr4-n">User Client</div>
+    <span class="dgm-pr4-arr">heartbeat every 5s →</span>
+    <div class="dgm-pr4-n">Presence Service</div>
+    <span class="dgm-pr4-arr">status change →</span>
+    <div class="dgm-pr4-n pub">Pub/Sub Channel</div>
+  </div>
+
+  <div class="dgm-pr4-fanout">
+    <div class="dgm-pr4-f">Friend 1's chat server</div>
+    <div class="dgm-pr4-f">Friend 2's chat server</div>
+    <div class="dgm-pr4-f">Friend N's chat server</div>
+  </div>
+</div>

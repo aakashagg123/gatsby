@@ -547,14 +547,49 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 
 <h3 id="architecture-stateless-stateful-tiers">Architecture: stateless + stateful tiers</h3>
 <p>The chat system separates stateless services from stateful chat servers:</p>
-<pre class="mermaid">flowchart TD
-  Client[Client apps] &lt;--&gt;|WebSocket| CS[Chat Servers&lt;br/&gt;stateful]
-  Client --&gt;|HTTP| SL[Stateless Services&lt;br/&gt;auth, profile, group mgmt]
-  SL --&gt; DB[(Relational DB)]
-  CS --&gt; KV[(KV Store&lt;br/&gt;chat history)]
-  CS --&gt; MQ[Message Queue]
-  SL --&gt; SD[Service Discovery&lt;br/&gt;Zookeeper]
-  SD --&gt; CS</pre>
+<style>
+.dgm-ct2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ct2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ct2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ct2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ct2-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-ct2-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-ct2-n.state{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-ct2-arr{color:#8c959f}
+.dgm-ct2-tail{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.dgm-ct2-t{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;
+  font-size:10px;color:#8a3d20}
+@media (max-width:640px){.dgm-ct2{padding:20px 16px 18px}.dgm-ct2-row{flex-direction:column}.dgm-ct2-tail{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ct2">
+  <span class="dgm-ct2-chip">Stateless + stateful tiers</span>
+  <h4>Chat servers hold connections; everything else is a normal HTTP service</h4>
+  <p class="dgm-ct2-sub">Service discovery assigns each client to a chat server by load and proximity.</p>
+
+  <div class="dgm-ct2-row">
+    <div class="dgm-ct2-n">Client apps</div>
+    <span class="dgm-ct2-arr">↔ WebSocket</span>
+    <div class="dgm-ct2-n state">Chat Servers — stateful</div>
+  </div>
+  <div class="dgm-ct2-row">
+    <div class="dgm-ct2-n">Client apps</div>
+    <span class="dgm-ct2-arr">→ HTTP</span>
+    <div class="dgm-ct2-n">Stateless Services — auth, profile, group mgmt</div>
+    <span class="dgm-ct2-arr">→</span>
+    <div class="dgm-ct2-n">Relational DB</div>
+  </div>
+
+  <div class="dgm-ct2-tail">
+    <div class="dgm-ct2-t">Chat Servers → KV Store — chat history</div>
+    <div class="dgm-ct2-t">Service Discovery (Zookeeper) → assigns clients to Chat Servers</div>
+  </div>
+</div>
+
 <p><strong>Stateless services</strong> — Authentication, user profile, group management, and all non-chat API calls. These are standard HTTP services behind a load balancer, horizontally scalable, using a relational database.</p>
 <p><strong>Stateful chat servers</strong> — Each client maintains a WebSocket connection to one chat server. The server tracks which clients are connected and routes messages accordingly. Because connections are stateful, you can't arbitrarily load-balance them. A client must reconnect to a specific server, or to any server if there's a shared presence layer.</p>
 <p><strong>Service discovery (Zookeeper)</strong> — When a client connects, the service discovery layer assigns it to a chat server based on server load, geographic proximity, and available capacity. Zookeeper maintains the registry of available chat servers and their current connection counts.</p>
@@ -608,41 +643,148 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li>When a user's status changes, the presence server publishes the update</li>
 </ol>
 <p><strong>Fanout for presence updates:</strong> If User A has 500 friends online, each status change triggers 500 push updates. This is manageable for 1:1 friend lists. For group chats, presence is fetched on-demand (when a user opens the group info) rather than pushed in real time.</p>
-<pre class="mermaid">flowchart TD
-  UC[User Client] --&gt;|heartbeat every 5s| PS[Presence Service]
-  PS --&gt;|status change| PubSub[Pub/Sub Channel]
-  PubSub --&gt; F1[Friend 1&#x27;s chat server]
-  PubSub --&gt; F2[Friend 2&#x27;s chat server]
-  PubSub --&gt; FN[Friend N&#x27;s chat server]</pre>
+<style>
+.dgm-pr4{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr4-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-pr4 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr4-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr4-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dgm-pr4-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-pr4-n.pub{background:#faece5;border-color:#e8b39a;color:#8a3d20}
+.dgm-pr4-arr{color:#8c959f}
+.dgm-pr4-fanout{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-pr4-f{background:#ffffff;border:1px solid #e8b39a;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;color:#8a3d20}
+@media (max-width:640px){.dgm-pr4{padding:20px 16px 18px}.dgm-pr4-row{flex-direction:column}.dgm-pr4-fanout{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pr4">
+  <span class="dgm-pr4-chip">Online presence</span>
+  <h4>Heartbeat every 5s · offline after 30s of silence</h4>
+  <p class="dgm-pr4-sub">A status change fans out to every online friend's chat server.</p>
+
+  <div class="dgm-pr4-row">
+    <div class="dgm-pr4-n">User Client</div>
+    <span class="dgm-pr4-arr">heartbeat every 5s →</span>
+    <div class="dgm-pr4-n">Presence Service</div>
+    <span class="dgm-pr4-arr">status change →</span>
+    <div class="dgm-pr4-n pub">Pub/Sub Channel</div>
+  </div>
+
+  <div class="dgm-pr4-fanout">
+    <div class="dgm-pr4-f">Friend 1's chat server</div>
+    <div class="dgm-pr4-f">Friend 2's chat server</div>
+    <div class="dgm-pr4-f">Friend N's chat server</div>
+  </div>
+</div>
+
 <hr />
 <h2 id="search-autocomplete">Search autocomplete</h2>
 <p>The product: as a user types in a search box, show the top 5 most relevant completions in under 100ms. With 10 million daily active users, each typing an average of 5 queries with 6 characters each, that's 300 million keystrokes per day — about 3,500 QPS average, 48,000 at peak (roughly 14x average, accounting for time-of-day concentration).</p>
 <h3 id="the-trie-data-structure">The trie data structure</h3>
 <p>A <strong>trie</strong> (prefix tree) is the natural data structure for prefix matching. Each node represents a character, and the path from root to a node represents a prefix. Searching for "din" walks root → d → i → n in O(L) time, where L is the prefix length.</p>
 <p>The naive approach — walk to the prefix node, then enumerate all descendants to find completions — is too slow. A subtree might contain millions of terms. Instead, <strong>cache the top-k results at every node</strong>:</p>
-<pre class="mermaid">flowchart TD
-  Root[&quot;(root)&quot;] --&gt; D[&quot;d&lt;br/&gt;top-5: dinner, disney, dinosaur, dine, direct&quot;]
-  D --&gt; DI[&quot;di&lt;br/&gt;top-5: dinner, disney, dinosaur, dine, direct&quot;]
-  DI --&gt; DIN[&quot;din&lt;br/&gt;top-5: dinner, dinosaur, dine, dining, dingo&quot;]
-  DI --&gt; DIS[&quot;dis&lt;br/&gt;top-5: disney, discover, discount, discuss, display&quot;]
-  DIN --&gt; DINN[&quot;dinn&lt;br/&gt;top-5: dinner, dinnerware, dinning, ...&quot;]
-  DIN --&gt; DINO[&quot;dino&lt;br/&gt;top-5: dinosaur, dino, dinosaurs, ...&quot;]</pre>
+<style>
+.dgm-tr2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tr2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-tr2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tr2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tr2-level{display:flex;justify-content:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.dgm-tr2-n{background:#faece5;border:1.5px solid #e8b39a;border-radius:9px;padding:8px 10px;text-align:center;
+  min-width:110px}
+.dgm-tr2-n b{display:block;font-size:11px;color:#8a3d20;margin-bottom:2px}
+.dgm-tr2-n span{font-size:8.5px;color:#59636e;line-height:1.3}
+.dgm-tr2-arr{text-align:center;color:#8c959f;font-size:11px}
+@media (max-width:640px){.dgm-tr2{padding:20px 16px 18px}}
+</style>
+<div class="dgm-tr2">
+  <span class="dgm-tr2-chip">Trie with cached top-k</span>
+  <h4>Query = one traversal, O(L) then O(1)</h4>
+  <p class="dgm-tr2-sub">Every node caches its top-5 completions, rebuilt periodically.</p>
+
+  <div class="dgm-tr2-level">
+    <div class="dgm-tr2-n"><b>(root)</b></div>
+  </div>
+  <div class="dgm-tr2-arr">↓</div>
+  <div class="dgm-tr2-level">
+    <div class="dgm-tr2-n"><b>d</b><span>dinner, disney, dinosaur, dine, direct</span></div>
+  </div>
+  <div class="dgm-tr2-arr">↓</div>
+  <div class="dgm-tr2-level">
+    <div class="dgm-tr2-n"><b>di</b><span>dinner, disney, dinosaur, dine, direct</span></div>
+  </div>
+  <div class="dgm-tr2-arr">↓</div>
+  <div class="dgm-tr2-level">
+    <div class="dgm-tr2-n"><b>din</b><span>dinner, dinosaur, dine, dining, dingo</span></div>
+    <div class="dgm-tr2-n"><b>dis</b><span>disney, discover, discount, discuss, display</span></div>
+  </div>
+  <div class="dgm-tr2-arr">↓</div>
+  <div class="dgm-tr2-level">
+    <div class="dgm-tr2-n"><b>dinn</b><span>dinner, dinnerware, dinning...</span></div>
+    <div class="dgm-tr2-n"><b>dino</b><span>dinosaur, dino, dinosaurs...</span></div>
+  </div>
+</div>
+
 <p>With top-k cached at each node, the query is a single trie traversal — O(L) to reach the prefix node, then O(1) to return the cached results. The tradeoff: updating cached results on every query is expensive, so the trie is rebuilt periodically.</p>
 <h3 id="two-service-architecture">Two-service architecture</h3>
 <p>The system splits into a <strong>Data Gathering Service</strong> (offline, batch) and a <strong>Query Service</strong> (online, real-time):</p>
-<pre class="mermaid">flowchart TD
-  subgraph &quot;Data Gathering Service (offline)&quot;
-    QL[Query Logs] --&gt; Agg[Aggregator&lt;br/&gt;weekly batch]
-    Agg --&gt; TB[Trie Builder]
-    TB --&gt; Snap[Trie Snapshot&lt;br/&gt;to object storage]
-  end
+<style>
+.dgm-tsv{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tsv-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-tsv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tsv-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tsv-path{border-radius:11px;padding:11px 13px;margin-bottom:8px;position:relative}
+.dgm-tsv-path.off{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-tsv-path.on{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-tsv-path .tag{position:absolute;top:-9px;left:13px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-tsv-path.off .tag{color:#59636e;border-color:#d1d9e0}
+.dgm-tsv-path.on .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-tsv-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px}
+.dgm-tsv-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:#1f2328}
+.dgm-tsv-path.off .dgm-tsv-n{border:1px solid #e2e8ee}
+.dgm-tsv-path.on .dgm-tsv-n{border:1px solid #f2d6c4}
+.dgm-tsv-arr{color:#8c959f;font-size:10px}
+@media (max-width:640px){.dgm-tsv{padding:20px 16px 18px}}
+</style>
+<div class="dgm-tsv">
+  <span class="dgm-tsv-chip">Two-service architecture</span>
+  <h4>Offline batch build, online microsecond serve</h4>
+  <p class="dgm-tsv-sub">Weekly rebuilds are intentional — established queries rarely change day to day.</p>
 
-  subgraph &quot;Query Service (online)&quot;
-    User[User keystroke] --&gt; API[API Server]
-    API --&gt; Cache[Browser/CDN cache]
-    Cache --&gt;|miss| TS[Trie Servers]
-    TS --&gt; Snap
-  end</pre>
+  <div class="dgm-tsv-path off">
+    <span class="tag">Data Gathering Service — offline</span>
+    <div class="dgm-tsv-row">
+      <div class="dgm-tsv-n">Query Logs</div><span class="dgm-tsv-arr">→</span>
+      <div class="dgm-tsv-n">Aggregator — weekly batch</div><span class="dgm-tsv-arr">→</span>
+      <div class="dgm-tsv-n">Trie Builder</div><span class="dgm-tsv-arr">→</span>
+      <div class="dgm-tsv-n">Trie Snapshot → object storage</div>
+    </div>
+  </div>
+
+  <div class="dgm-tsv-path on">
+    <span class="tag">Query Service — online</span>
+    <div class="dgm-tsv-row">
+      <div class="dgm-tsv-n">User keystroke</div><span class="dgm-tsv-arr">→</span>
+      <div class="dgm-tsv-n">API Server</div><span class="dgm-tsv-arr">→</span>
+      <div class="dgm-tsv-n">Browser/CDN cache</div><span class="dgm-tsv-arr">miss →</span>
+      <div class="dgm-tsv-n">Trie Servers — loaded from snapshot</div>
+    </div>
+  </div>
+</div>
+
 <p><strong>Data Gathering Service:</strong> Runs weekly (or more frequently for trending queries). Aggregates query logs, computes frequency-weighted rankings, builds a new trie with top-k cached at every node, and stores the trie snapshot in object storage (S3). The weekly cadence is intentional — daily rebuilds rarely change the results for established queries, and the batch processing cost is non-trivial. For trending/breaking topics, a separate real-time pipeline can inject hot queries into the trie between rebuilds.</p>
 <p><strong>Query Service:</strong> Trie servers load the latest snapshot into memory. On a user keystroke, the API server routes the prefix to the appropriate trie server, which returns the cached top-k in microseconds. If the trie is too large for a single server's memory, it's sharded.</p>
 <h3 id="trie-sharding">Trie sharding</h3>
@@ -671,15 +813,55 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>The product: a video platform at YouTube scale — 5 billion videos watched per day, hundreds of hours of video uploaded every minute. The system must handle video upload, processing (transcoding into multiple formats and resolutions), storage, and streaming — each with distinct scaling challenges.</p>
 <h3 id="upload-flow-parallel-processing">Upload flow: parallel processing</h3>
 <p>Video upload is split into two parallel streams that proceed independently:</p>
-<pre class="mermaid">flowchart TD
-  User[Creator uploads] --&gt; UP[Upload Service]
-  UP --&gt; VS[Video Storage&lt;br/&gt;original file]
-  UP --&gt; MD[Metadata Service]
-  MD --&gt; MDB[(Metadata DB&lt;br/&gt;title, description, tags)]
-  MD --&gt; MDC[Metadata Cache]
-  VS --&gt; TC[Transcoding Pipeline]
-  TC --&gt; TS[Transcoded Storage&lt;br/&gt;multiple resolutions]
-  TS --&gt; CDN[CDN Distribution]</pre>
+<style>
+.dgm-up2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-up2-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-up2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-up2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-up2-src{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11.5px;margin:0 auto 8px;max-width:220px}
+.dgm-up2-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-up2-arr svg{width:16px;height:16px}
+.dgm-up2-split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-up2-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-up2-col.meta{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-up2-col.vid{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-up2-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-up2-col.meta .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-up2-col.vid .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-up2-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:10px;color:#1f2328;
+  margin-top:6px;text-align:center}
+@media (max-width:640px){.dgm-up2{padding:20px 16px 18px}.dgm-up2-split{grid-template-columns:1fr}}
+</style>
+<div class="dgm-up2">
+  <span class="dgm-up2-chip">Upload flow: parallel processing</span>
+  <h4>Metadata is live in seconds; video processing is the slow part</h4>
+  <p class="dgm-up2-sub">The two streams proceed independently.</p>
+
+  <div class="dgm-up2-src">Creator uploads → Upload Service</div>
+  <div class="dgm-up2-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-up2-split">
+    <div class="dgm-up2-col meta">
+      <span class="tag">Metadata path — fast</span>
+      <div class="dgm-up2-n">Metadata Service</div>
+      <div class="dgm-up2-n">Metadata DB — title, description, tags</div>
+      <div class="dgm-up2-n">Metadata Cache</div>
+    </div>
+    <div class="dgm-up2-col vid">
+      <span class="tag">Video path — slow, compute-intensive</span>
+      <div class="dgm-up2-n">Video Storage — original file</div>
+      <div class="dgm-up2-n">Transcoding Pipeline</div>
+      <div class="dgm-up2-n">Transcoded Storage → CDN Distribution</div>
+    </div>
+  </div>
+</div>
+
 <ol>
 <li><strong>Video file</strong> — uploaded to a temporary storage location, then passed to the transcoding pipeline</li>
 <li><strong>Metadata</strong> — title, description, tags, thumbnail are stored in a relational database and cache immediately</li>
@@ -687,24 +869,54 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>The metadata path completes quickly (the video page can be "live" with a "processing" status). The video processing path is the slow, compute-intensive part.</p>
 <h3 id="transcoding-dag-based-pipeline">Transcoding: DAG-based pipeline</h3>
 <p>Video transcoding (converting a raw upload into multiple formats, resolutions, and bitrates) is not a single operation — it's a directed acyclic graph (DAG) of dependent tasks:</p>
-<pre class="mermaid">flowchart TD
-  Raw[Original video] --&gt; PP[Preprocessor&lt;br/&gt;split into GOPs]
-  PP --&gt; V1[Video encoding&lt;br/&gt;360p H.264]
-  PP --&gt; V2[Video encoding&lt;br/&gt;720p H.264]
-  PP --&gt; V3[Video encoding&lt;br/&gt;1080p H.264]
-  PP --&gt; V4[Video encoding&lt;br/&gt;4K H.265]
-  PP --&gt; A1[Audio encoding&lt;br/&gt;AAC]
-  PP --&gt; A2[Audio encoding&lt;br/&gt;Opus]
-  V1 --&gt; Merge[Muxer&lt;br/&gt;combine audio + video]
-  V2 --&gt; Merge
-  V3 --&gt; Merge
-  V4 --&gt; Merge
-  A1 --&gt; Merge
-  A2 --&gt; Merge
-  Merge --&gt; Thumb[Thumbnail generation]
-  Merge --&gt; WM[Watermark / DRM]
-  WM --&gt; QC[Quality check]
-  QC --&gt; Store[Transcoded storage]</pre>
+<style>
+.dgm-dag{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-dag-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-dag h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-dag-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-dag-src{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 14px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;margin:0 auto 4px;max-width:180px}
+.dgm-dag-arr{text-align:center;color:#8c959f;font-size:11px;margin-bottom:4px}
+.dgm-dag-fan{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:4px}
+.dgm-dag-f{background:#faece5;border:1px solid #e8b39a;border-radius:8px;padding:7px 6px;text-align:center;
+  font-size:9px;font-weight:700;color:#8a3d20}
+.dgm-dag-merge{background:#ddf4ff;border:1px solid #b6e3ff;border-radius:9px;padding:8px 14px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#0550ae;margin:4px auto;max-width:220px}
+.dgm-dag-tail{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.dgm-dag-t{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:8px;padding:7px 6px;text-align:center;
+  font-size:9px;color:#1f2328}
+@media (max-width:640px){.dgm-dag{padding:20px 16px 18px}.dgm-dag-fan,.dgm-dag-tail{grid-template-columns:1fr 1fr}}
+</style>
+<div class="dgm-dag">
+  <span class="dgm-dag-chip">Transcoding: DAG-based pipeline</span>
+  <h4>Video and audio encode in parallel, then merge</h4>
+  <p class="dgm-dag-sub">GOPs (Group of Pictures) enable each resolution to encode independently.</p>
+
+  <div class="dgm-dag-src">Original video</div>
+  <div class="dgm-dag-arr">↓ Preprocessor — split into GOPs</div>
+
+  <div class="dgm-dag-fan">
+    <div class="dgm-dag-f">360p H.264</div>
+    <div class="dgm-dag-f">720p H.264</div>
+    <div class="dgm-dag-f">1080p H.264</div>
+    <div class="dgm-dag-f">4K H.265</div>
+    <div class="dgm-dag-f">Audio AAC</div>
+    <div class="dgm-dag-f">Audio Opus</div>
+  </div>
+
+  <div class="dgm-dag-merge">↓ Muxer — combine audio + video</div>
+
+  <div class="dgm-dag-tail">
+    <div class="dgm-dag-t">Thumbnail generation</div>
+    <div class="dgm-dag-t">Watermark / DRM</div>
+    <div class="dgm-dag-t">Quality check → Transcoded storage</div>
+  </div>
+</div>
+
 <p>The pipeline has four components:</p>
 <ol>
 <li><strong>Preprocessor</strong> — Validates the video, splits it into GOPs (Group of Pictures — small, independently decodable segments). GOPs enable parallel encoding.</li>
@@ -743,16 +955,49 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>Both work the same way: a manifest file lists available quality levels and segment URLs. The player downloads the manifest, then fetches segments at the appropriate quality. All delivery happens over standard HTTP/HTTPS — no special streaming servers needed.</p>
 <h3 id="cdn-strategy-popular-vs-long-tail">CDN strategy: popular vs. long-tail</h3>
 <p>Video storage and delivery have a distinctive distribution: a small percentage of videos account for the vast majority of views (head), while millions of videos are watched rarely (long tail).</p>
-<pre class="mermaid">flowchart LR
-  subgraph &quot;Popular content (head)&quot;
-    CDN[CDN Edge Servers&lt;br/&gt;worldwide]
-  end
-  subgraph &quot;Long-tail content&quot;
-    Origin[Origin Servers&lt;br/&gt;centralized storage]
-  end
-  Viewer[Viewer] --&gt;|popular video| CDN
-  Viewer --&gt;|rare video| Origin
-  Origin --&gt;|on first request| CDN</pre>
+<style>
+.dgm-cdn{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cdn-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-cdn h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cdn-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cdn-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.dgm-cdn-col{border-radius:12px;padding:14px 14px;text-align:center;position:relative}
+.dgm-cdn-col.hot{background:#faece5;border:1.5px solid #e8b39a}
+.dgm-cdn-col.cold{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-cdn-col .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-cdn-col.hot .tag{color:#8a3d20;border-color:#e8b39a}
+.dgm-cdn-col.cold .tag{color:#59636e;border-color:#d1d9e0}
+.dgm-cdn-col h6{margin:8px 0 4px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-cdn-col p{margin:0;font-size:10px;color:#59636e;line-height:1.35}
+.dgm-cdn-promo{text-align:center;font-size:10px;color:#8a3d20;font-style:italic}
+@media (max-width:640px){.dgm-cdn{padding:20px 16px 18px}.dgm-cdn-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cdn">
+  <span class="dgm-cdn-chip">CDN strategy: popular vs. long-tail</span>
+  <h4>A small share of videos account for most views</h4>
+  <p class="dgm-cdn-sub">A viral video absorbs >99% of its traffic at the CDN edge.</p>
+
+  <div class="dgm-cdn-cols">
+    <div class="dgm-cdn-col hot">
+      <span class="tag">Popular content — head</span>
+      <h6>CDN Edge Servers, worldwide</h6>
+      <p>Viewer → popular video → CDN</p>
+    </div>
+    <div class="dgm-cdn-col cold">
+      <span class="tag">Long-tail content</span>
+      <h6>Origin Servers — centralized storage</h6>
+      <p>Viewer → rare video → Origin</p>
+    </div>
+  </div>
+
+  <p class="dgm-cdn-promo">Origin → on first request → CDN, promoting a suddenly-viral video from origin to edge automatically</p>
+</div>
+
 <p><strong>Popular videos</strong> are pushed to CDN edge servers worldwide. The CDN caches them close to viewers, reducing latency and origin load. For a viral video, the CDN absorbs &gt;99% of the traffic.</p>
 <p><strong>Long-tail videos</strong> stay on origin servers. Serving them from CDN would be wasteful — the CDN storage cost exceeds the benefit for a video watched once a month. If a long-tail video suddenly becomes popular (someone shares it on social media), the CDN pulls it on the first request and caches it, transitioning it from origin to edge automatically.</p>
 <h3 id="upload-security-pre-signed-urls">Upload security: pre-signed URLs</h3>
@@ -839,46 +1084,6 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

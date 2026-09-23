@@ -1,0 +1,40 @@
+<style>
+.dgm-vc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-vc-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-vc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-vc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-vc-root{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 14px;text-align:center;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:10px;color:#1f2328;margin:0 auto 8px;max-width:280px}
+.dgm-vc-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-vc-arr svg{width:16px;height:16px}
+.dgm-vc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.dgm-vc-n{background:#faece5;border:1px solid #e8b39a;border-radius:9px;padding:8px 9px;text-align:center;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:9.5px;color:#8a3d20}
+.dgm-vc-conf{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#82061e;font-weight:700;font-size:11px;margin:0 auto 8px;max-width:340px}
+.dgm-vc-res{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11px;margin:0 auto;max-width:340px}
+@media (max-width:640px){.dgm-vc{padding:20px 16px 18px}.dgm-vc-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-vc">
+  <span class="dgm-vc-chip">Vector clocks</span>
+  <h4>Track causality, not just time · concurrent writes need a human or a rule</h4>
+  <p class="dgm-vc-sub">When vectors are ordered, the superset wins. When they're concurrent, both versions surface.</p>
+
+  <div class="dgm-vc-root">D([S1,1]) — initial write</div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vc-row">
+    <div class="dgm-vc-n">D([S1,1],[S2,1]) — S2 modifies</div>
+    <div class="dgm-vc-n">D([S1,1],[S3,1]) — S3 modifies concurrently</div>
+  </div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vc-conf">Conflict — neither vector dominates</div>
+  <div class="dgm-vc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-vc-res">Application resolves — e.g. last-writer-wins or merge</div>
+</div>

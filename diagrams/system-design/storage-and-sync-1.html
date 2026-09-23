@@ -1,0 +1,45 @@
+<style>
+.dgm-ul{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ul-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ul h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ul-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ul-actors{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.dgm-ul-actor{border-radius:9px;padding:6px 4px;text-align:center;font-size:8.5px;font-weight:700}
+.dgm-ul-actor.c{background:#f6f8fa;border:1px solid #d1d9e0;color:#59636e}
+.dgm-ul-actor.api{background:#ddf4ff;border:1px solid #b6e3ff;color:#0550ae}
+.dgm-ul-actor.bs{background:#faece5;border:1px solid #e8b39a;color:#8a3d20}
+.dgm-ul-actor.cs{background:#dafbe1;border:1px solid #aceebb;color:#1a614f}
+.dgm-ul-actor.mdb{background:#eee7fa;border:1px solid #d3c5f0;color:#4b2996}
+.dgm-ul-msgs{display:flex;flex-direction:column;gap:5px}
+.dgm-ul-msg{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:10px;
+  color:#1f2328;line-height:1.35;padding:6px 10px;border-radius:8px;background:#f6f8fa}
+.dgm-ul-msg .tag{font-size:9px;font-weight:700;color:#8c959f}
+@media (max-width:640px){.dgm-ul{padding:20px 16px 18px}.dgm-ul-actors{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ul">
+  <span class="dgm-ul-chip">Upload flow</span>
+  <h4>Pre-signed URLs keep block data off the API servers</h4>
+  <p class="dgm-ul-sub">Two-phase commit: pending until all blocks land, then uploaded.</p>
+
+  <div class="dgm-ul-actors">
+    <div class="dgm-ul-actor c">Client</div>
+    <div class="dgm-ul-actor api">API servers</div>
+    <div class="dgm-ul-actor bs">Block servers</div>
+    <div class="dgm-ul-actor cs">Cloud storage</div>
+    <div class="dgm-ul-actor mdb">Metadata DB</div>
+  </div>
+
+  <div class="dgm-ul-msgs">
+    <div class="dgm-ul-msg"><span class="tag">1</span><span>Client → API: upload request (file metadata)</span></div>
+    <div class="dgm-ul-msg"><span class="tag">2</span><span>API → Metadata DB: create file entry, status=pending</span></div>
+    <div class="dgm-ul-msg"><span class="tag">3</span><span>API → Client: pre-signed upload URLs</span></div>
+    <div class="dgm-ul-msg"><span class="tag">4</span><span>Client → Block servers: upload modified blocks</span></div>
+    <div class="dgm-ul-msg"><span class="tag">5</span><span>Block servers: hash, compress, encrypt → Cloud storage</span></div>
+    <div class="dgm-ul-msg"><span class="tag">6</span><span>Block servers → Metadata DB: update block refs, status=uploaded</span></div>
+    <div class="dgm-ul-msg"><span class="tag">7</span><span>Metadata DB → Notification service → other devices</span></div>
+  </div>
+</div>

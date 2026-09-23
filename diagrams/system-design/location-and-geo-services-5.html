@@ -1,0 +1,34 @@
+<style>
+.dgm-ct{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ct-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
+.dgm-ct h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ct-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ct-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-ct-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-ct-arr{color:#8c959f}
+.dgm-ct-branch{display:flex;justify-content:center;gap:20px;margin-top:8px}
+.dgm-ct-b{font-size:10px;color:#59636e;text-align:center}
+.dgm-ct-b b{display:block;color:#8a3d20}
+@media (max-width:640px){.dgm-ct{padding:20px 16px 18px}.dgm-ct-row{flex-direction:column}}
+</style>
+<div class="dgm-ct">
+  <span class="dgm-ct-chip">Static pre-rendered tiles + CDN</span>
+  <h4>Tile requests are the dominant read pattern — pre-render and cache aggressively</h4>
+  <p class="dgm-ct-sub">Most users look at a few cities; those tiles are always cached at the edge.</p>
+
+  <div class="dgm-ct-row">
+    <div class="dgm-ct-n">Client — tile request: zoom/x/y.png</div>
+    <span class="dgm-ct-arr">→</span>
+    <div class="dgm-ct-n">CDN edge server</div>
+  </div>
+
+  <div class="dgm-ct-branch">
+    <div class="dgm-ct-b"><b>Cache hit</b>→ Client</div>
+    <div class="dgm-ct-b"><b>Cache miss</b>→ Tile render service → Map data store</div>
+  </div>
+</div>
