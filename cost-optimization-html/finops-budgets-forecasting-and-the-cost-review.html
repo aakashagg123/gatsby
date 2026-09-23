@@ -392,13 +392,151 @@ notices, or a forecast built on last month's per-token price is wrong by the tim
 quarter's board deck ships.</p>
 </blockquote>
 <h2 id="from-attribution-to-governance">From attribution to governance</h2>
-<pre class="mermaid">flowchart LR
-  ATTR[&quot;Cost attribution&lt;br/&gt;(where it went)&quot;] --&gt; BUDGET[&quot;Budgets &amp; quotas&lt;br/&gt;enforced, not just alerted&quot;]
-  ATTR --&gt; CHARGE[&quot;Chargeback / showback&lt;br/&gt;teams feel their own spend&quot;]
-  BUDGET --&gt; FCST[&quot;Forecast&lt;br/&gt;usage ↑ × price ↓&quot;]
-  CHARGE --&gt; FCST
-  FCST --&gt; REVIEW[&quot;The cost review —&lt;br/&gt;recurring, owned, actioned&quot;]
-  REVIEW --&gt;|&quot;findings become&lt;br/&gt;next quarter&#x27;s budget&quot;| BUDGET</pre>
+<!-- FinOps lesson — attribution → (budgets + chargeback) → forecast → cost review → loop.
+     Diagram type: RECURRING CIRCULAR FLOW with 5 stations. -->
+<style>
+.dgm-fo{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1a7f37;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-fo-chip{position:absolute;top:-11px;left:24px;background:#1a7f37;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(26,127,55,.28)}
+.dgm-fo-head{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-fo-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+
+.dgm-fo-flow{display:grid;grid-template-columns:1fr;gap:12px}
+.dgm-fo-row{display:grid;grid-template-columns:1fr;gap:8px;position:relative}
+.dgm-fo-cell{background:#ffffff;border:1px solid #d1d9e0;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:flex-start}
+.dgm-fo-cell.attr{background:#f6f8fa;border-color:#d1d9e0}
+.dgm-fo-cell.gov{background:#ddf4ff;border-color:#b6e3ff}
+.dgm-fo-cell.forecast{background:#fff8c5;border-color:#eac54f}
+.dgm-fo-cell.review{background:#dafbe1;border-color:#aceebb}
+.dgm-fo-cell .dgm-fo-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #d1d9e0;border-radius:8px;color:#1a7f37;flex:0 0 28px;margin-top:1px}
+.dgm-fo-cell.gov .dgm-fo-ico{color:#0969da}
+.dgm-fo-cell.forecast .dgm-fo-ico{color:#9a6700}
+.dgm-fo-cell.review .dgm-fo-ico{color:#1a7f37}
+.dgm-fo-cell h5{margin:0 0 3px;font-size:13px;font-weight:700;color:#1f2328;
+  display:flex;align-items:center;gap:8px}
+.dgm-fo-cell h5 .dgm-fo-num{background:#ffffff;border:1px solid #d1d9e0;color:#59636e;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;padding:2px 7px;border-radius:5px;
+  font-variant-numeric:tabular-nums;text-transform:uppercase}
+.dgm-fo-cell p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-fo-cell .dgm-fo-props{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
+.dgm-fo-cell .dgm-fo-prop{background:#ffffff;border:1px solid #d1d9e0;color:#1f2328;
+  font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px}
+.dgm-fo-cell.gov .dgm-fo-prop{border-color:#b6e3ff;color:#0550ae}
+.dgm-fo-cell.forecast .dgm-fo-prop{border-color:#eac54f;color:#9a6700}
+.dgm-fo-cell.review .dgm-fo-prop{border-color:#aceebb;color:#1a7f37}
+
+.dgm-fo-arrow{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-fo-arrow svg{width:18px;height:18px}
+.dgm-fo-split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgm-fo-split-arr{display:flex;justify-content:space-around;color:#8c959f;padding:2px 0}
+.dgm-fo-split-arr svg{width:18px;height:18px}
+.dgm-fo-merge{display:flex;justify-content:center;color:#8c959f;padding:2px 0;font-size:10.5px;
+  font-weight:600;letter-spacing:.4px;text-transform:uppercase;gap:8px;align-items:center}
+
+.dgm-fo-loop{margin-top:16px;padding:12px 16px;background:#f6f8fa;border:1.5px dashed #aceebb;
+  border-radius:12px;display:flex;align-items:center;gap:12px;color:#1a7f37;
+  font-size:11.5px;font-weight:600;letter-spacing:.02em;line-height:1.4}
+.dgm-fo-loop svg{width:22px;height:22px;flex:0 0 22px;color:#1a7f37}
+.dgm-fo-loop strong{color:#0d1117}
+
+@media (max-width:640px){
+  .dgm-fo{padding:20px 16px 18px}
+  .dgm-fo-split{grid-template-columns:1fr}
+  .dgm-fo-split-arr{justify-content:center}
+}
+</style>
+<div class="dgm-fo">
+  <span class="dgm-fo-chip">FinOps</span>
+
+  <h4 class="dgm-fo-head">The practice · attribution &rarr; enforcement &rarr; forecast &rarr; review</h4>
+  <p class="dgm-fo-sub">A dashboard is a scoreboard. FinOps is what makes the score change.</p>
+
+  <div class="dgm-fo-flow">
+
+    <div class="dgm-fo-cell attr">
+      <svg class="dgm-fo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <div>
+        <h5>Cost attribution <span class="dgm-fo-num">Input</span></h5>
+        <p>Where did the money actually go? Per tenant, per feature, per request.</p>
+      </div>
+    </div>
+
+    <div class="dgm-fo-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+    <div class="dgm-fo-split">
+      <div class="dgm-fo-cell gov">
+        <svg class="dgm-fo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        <div>
+          <h5>Budgets &amp; quotas <span class="dgm-fo-num">Step 1</span></h5>
+          <p>Enforced, not just alerted. A dashboard doesn't stop a runaway loop.</p>
+          <div class="dgm-fo-props">
+            <span class="dgm-fo-prop">Hard cap</span>
+            <span class="dgm-fo-prop">Soft + escalation</span>
+            <span class="dgm-fo-prop">Per-tenant</span>
+          </div>
+        </div>
+      </div>
+      <div class="dgm-fo-cell gov">
+        <svg class="dgm-fo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15"/></svg>
+        <div>
+          <h5>Chargeback / showback <span class="dgm-fo-num">Step 2</span></h5>
+          <p>Teams feel their own spend. Without it, cost is somebody else's problem.</p>
+          <div class="dgm-fo-props">
+            <span class="dgm-fo-prop">Ledger</span>
+            <span class="dgm-fo-prop">Cross-team view</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dgm-fo-split-arr">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+
+    <div class="dgm-fo-cell forecast">
+      <svg class="dgm-fo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/><path d="M14 6h7v7"/></svg>
+      <div>
+        <h5>Forecast <span class="dgm-fo-num">Step 3</span></h5>
+        <p>Two curves in opposite directions — <strong>usage &uarr;</strong> and <strong>unit price &darr;</strong>. The net decides the invoice.</p>
+        <div class="dgm-fo-props">
+          <span class="dgm-fo-prop">Usage growth</span>
+          <span class="dgm-fo-prop">Model repricing</span>
+          <span class="dgm-fo-prop">Cache hit-rate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dgm-fo-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+    <div class="dgm-fo-cell review">
+      <svg class="dgm-fo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/><path d="M9 15l2 2 4-4"/></svg>
+      <div>
+        <h5>Cost review <span class="dgm-fo-num">Step 4</span></h5>
+        <p>Recurring, owned, actioned. Not a status meeting — a decision meeting with findings that become tickets.</p>
+        <div class="dgm-fo-props">
+          <span class="dgm-fo-prop">Monthly</span>
+          <span class="dgm-fo-prop">Named owner</span>
+          <span class="dgm-fo-prop">Actioned deltas</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dgm-fo-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9 9 0 01-6.4-2.6L3 16"/><path d="M3 21v-5h5"/></svg>
+    <span><strong>Loop back.</strong> Every review's findings become next quarter's budget — before the invoice, not after.</span>
+  </div>
+</div>
+
 <h2 id="budgets-and-quotas-enforced-not-watched">Budgets and quotas — enforced, not watched</h2>
 <p>A dashboard that shows spend rising is attribution. A <strong>budget</strong> is attribution with
 teeth: a per-tenant or per-feature cap that does something automatically when it's hit —
@@ -541,46 +679,6 @@ surprised twice by the same conflated number.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

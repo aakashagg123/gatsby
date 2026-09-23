@@ -390,13 +390,151 @@ attacks which cost driver, the build-vs-buy breakeven done as arithmetic, and th
 practice — budgets, chargeback, forecasting, a recurring cost review — that turns
 attribution into governance. That is why this module is two lessons, not six.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<pre class="mermaid">flowchart TB
-  subgraph STACK[&quot;THE COST STACK — lesson 1&quot;]
-    TOK[&quot;Tokens&quot;] --&gt; CACHE[&quot;Caching&quot;] --&gt; ROUTE[&quot;Routing&quot;] --&gt; CTX[&quot;Context&quot;]
-  end
-  STACK --&gt; BUY[&quot;Build-vs-buy breakeven&quot;]
-  BUY --&gt; GOV[&quot;FinOps — lesson 2&lt;br/&gt;budgets · chargeback ·&lt;br/&gt;forecast · cost review&quot;]
-  GOV --&gt;|&quot;findings reshape&lt;br/&gt;next quarter&#x27;s budget&quot;| STACK</pre>
+<!-- Cost optimization — knowledge graph diagram.
+     Diagram type: THREE-STAGE FLOW (stack → decision → governance) with feedback loop.
+     Design language: dgm-* primitives (extends the existing kg-* pattern from
+     agentic-ai/system-design), track accent = money green (#1a7f37).
+     Icons: inline SVG, Lucide-style, 20px stroke, no external dep. -->
+<style>
+.dgm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1a7f37;
+  border-radius:16px;padding:28px 28px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-chip{position:absolute;top:-11px;left:24px;background:#1a7f37;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(26,127,55,.28)}
+.dgm-caption{font-size:11px;color:#59636e;letter-spacing:.4px;text-transform:uppercase;
+  font-weight:700;margin:0 0 12px}
+.dgm-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.dgm-lever{border:1px solid #d1d9e0;border-radius:12px;padding:14px 12px;background:#f6f8fa}
+.dgm-lever .dgm-ico{color:#1a7f37;margin-bottom:8px;display:block;width:22px;height:22px}
+.dgm-lever h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-lever p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+.dgm-arrow-down{display:flex;justify-content:center;color:#8c959f;margin:6px 0}
+.dgm-arrow-down svg{width:18px;height:18px}
+.dgm-conv{display:grid;grid-template-columns:1.1fr auto 1fr;gap:14px;align-items:center;
+  margin:8px 0 14px}
+.dgm-bill{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;
+  text-align:center;color:#1a7f37;font-weight:700;font-size:13.5px;letter-spacing:.02em;
+  display:flex;flex-direction:column;align-items:center;gap:4px}
+.dgm-bill .dgm-ico{color:#1a7f37;width:22px;height:22px}
+.dgm-diamond{position:relative;padding:16px 18px;background:#ffffff;border:1.5px solid #b6e3ff;
+  border-radius:12px;text-align:center;color:#0550ae;font-size:12.5px;font-weight:600;
+  line-height:1.35}
+.dgm-diamond .dgm-tag{display:inline-block;font-size:9.5px;text-transform:uppercase;
+  letter-spacing:.6px;color:#59636e;font-weight:700;margin-bottom:6px}
+.dgm-fork{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.dgm-outcome{border:1px solid #d1d9e0;border-radius:12px;padding:14px 14px 12px;background:#ffffff;
+  display:flex;gap:12px;align-items:flex-start}
+.dgm-outcome .dgm-ico{color:#0969da;width:22px;height:22px;flex:0 0 22px;margin-top:2px}
+.dgm-outcome h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-outcome p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+.dgm-outcome .dgm-verdict{font-size:10.5px;font-weight:700;color:#0969da;letter-spacing:.4px;
+  text-transform:uppercase;margin-top:6px;display:block}
+.dgm-gov{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:13px;padding:16px 18px;
+  position:relative}
+.dgm-gov h4{margin:0 0 4px;font-size:12.5px;font-weight:700;color:#1a7f37;letter-spacing:.02em}
+.dgm-gov .dgm-sub{font-size:11px;color:#59636e;margin:0 0 12px}
+.dgm-gov .dgm-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-govpill{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:8px 10px;
+  display:flex;flex-direction:column;gap:4px}
+.dgm-govpill .dgm-ico{color:#1a7f37;width:16px;height:16px}
+.dgm-govpill span{font-size:11px;font-weight:600;color:#1f2328;line-height:1.3}
+.dgm-loop{margin-top:14px;padding-top:14px;border-top:1.5px dashed #aceebb;
+  display:flex;align-items:center;justify-content:center;gap:10px;color:#1a7f37;
+  font-size:11px;font-weight:600;letter-spacing:.3px}
+.dgm-loop svg{width:16px;height:16px}
+@media (max-width:640px){
+  .dgm{padding:20px 16px 18px}
+  .dgm-stack,.dgm-gov .dgm-pills{grid-template-columns:repeat(2,1fr)}
+  .dgm-conv{grid-template-columns:1fr;gap:8px}
+  .dgm-fork{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm">
+  <span class="dgm-chip">Cost optimization</span>
+
+  <p class="dgm-caption">Lesson 1 · The cost stack — four levers with existing deep-dives</p>
+  <div class="dgm-stack">
+    <div class="dgm-lever">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 6v12M9 9h4.5a2 2 0 010 4h-3a2 2 0 000 4H15"/></svg>
+      <h5>Tokens</h5>
+      <p>Prefill vs. decode, priced differently</p>
+    </div>
+    <div class="dgm-lever">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+      <h5>Caching</h5>
+      <p>Prompt cache · semantic cache</p>
+    </div>
+    <div class="dgm-lever">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 6.5h1a3 3 0 013 3v0a3 3 0 003 3M8.5 17.5h1a3 3 0 003-3"/></svg>
+      <h5>Routing</h5>
+      <p>Cheap first · escalate on demand</p>
+    </div>
+    <div class="dgm-lever">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 4.5-9 4.5-9-4.5L12 3z"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5"/></svg>
+      <h5>Context</h5>
+      <p>Retrieval · RAG vs. long context</p>
+    </div>
+  </div>
+
+  <div class="dgm-arrow-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-conv">
+    <div class="dgm-bill">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      The bill
+    </div>
+    <div style="color:#8c959f;font-weight:700;text-align:center">→</div>
+    <div class="dgm-diamond">
+      <span class="dgm-tag">Build vs. buy — lesson 1</span>
+      Is volume high enough to re-run the math?
+    </div>
+  </div>
+
+  <div class="dgm-fork">
+    <div class="dgm-outcome">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 100-9 5.5 5.5 0 00-10.9-1 4 4 0 00-.6 8h11.5z"/></svg>
+      <div><h5>Stay metered</h5><p>API pricing wins at low-to-mid volume</p>
+      <span class="dgm-verdict">API</span></div>
+    </div>
+    <div class="dgm-outcome">
+      <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><circle cx="7" cy="7.5" r=".8" fill="currentColor"/><circle cx="7" cy="16.5" r=".8" fill="currentColor"/></svg>
+      <div><h5>Self-host or fine-tune</h5><p>Fixed cost amortizes at scale</p>
+      <span class="dgm-verdict">Self-hosted</span></div>
+    </div>
+  </div>
+
+  <div class="dgm-arrow-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gov">
+    <h4>Lesson 2 · FinOps — the practice, not the dashboard</h4>
+    <p class="dgm-sub">Attribution tells you where it went; FinOps decides where it goes next.</p>
+    <div class="dgm-pills">
+      <div class="dgm-govpill">
+        <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        <span>Budgets · enforced</span>
+      </div>
+      <div class="dgm-govpill">
+        <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15"/></svg>
+        <span>Chargeback · showback</span>
+      </div>
+      <div class="dgm-govpill">
+        <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/><path d="M14 6h7v7"/></svg>
+        <span>Forecast · usage × price</span>
+      </div>
+      <div class="dgm-govpill">
+        <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9 9 0 01-6.4-2.6L3 16"/><path d="M3 21v-5h5"/></svg>
+        <span>Cost review · recurring</span>
+      </div>
+    </div>
+    <div class="dgm-loop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+      Findings reshape next quarter's budget · loop back to the stack
+    </div>
+  </div>
+</div>
+
 <p>Read it as one argument in two parts. <strong>The cost stack</strong>: four levers, each with a full
 existing deep-dive, mapped onto one diagnosis so a cost complaint gets a specific fix
 instead of a vague mandate to "optimize" — plus the build-vs-buy math nobody had priced
@@ -424,47 +562,7 @@ follow the spokes into
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="the-cost-stack-and-the-build-vs-buy-breakeven.html"><span class="card-num">01</span><h3>The cost stack, and the build-vs-buy breakeven</h3><span class="card-go">Read lesson →</span></a><a class="card" href="finops-budgets-forecasting-and-the-cost-review.html"><span class="card-num">02</span><h3>FinOps for AI: budgets, forecasting &amp; the cost review</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every
