@@ -403,16 +403,114 @@ demand instead of trying to hold everything at once. Company documents go in one
 A user's own history — their past conversations, stated preferences, prior decisions — can
 go in another drawer of the exact same filing system. The mechanism fetching from either
 drawer is the same; only the contents differ.</p>
-<pre class="mermaid">flowchart TB
-  subgraph SYSTEM[&quot;One retrieval system, two drawers&quot;]
-    KNOW[&quot;Drawer 1: company knowledge&lt;br/&gt;docs, policies, product info&lt;br/&gt;— the RAG module&#x27;s usual subject&quot;]
-    HIST[&quot;Drawer 2: a user&#x27;s own history&lt;br/&gt;preferences, past requests,&lt;br/&gt;prior decisions — memory&quot;]
-  end
-  Q[&quot;A request comes in&quot;] --&gt; WHICH{&quot;What does&lt;br/&gt;it need?&quot;}
-  WHICH --&gt;|&quot;a fact about&lt;br/&gt;the business&quot;| KNOW
-  WHICH --&gt;|&quot;something about&lt;br/&gt;this specific person&quot;| HIST
-  KNOW --&gt; ANSWER[&quot;Relevant pieces&lt;br/&gt;fetched and added&lt;br/&gt;to the context window&quot;]
-  HIST --&gt; ANSWER</pre>
+<!-- Retrieval as memory — 2-drawer cabinet + request → routed to the right drawer → context. -->
+<style>
+.dgm-rm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-rm-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-rm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-rm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+
+.dgm-rm-cabinet{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:13px;padding:14px 16px;
+  margin-bottom:14px;position:relative}
+.dgm-rm-cabinet .dgm-rm-label{position:absolute;top:-9px;left:16px;background:#5d8aa8;color:#ffffff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
+  border-radius:5px}
+.dgm-rm-cabinet h5{margin:6px 0 10px;font-size:12.5px;font-weight:700;color:#375a75;letter-spacing:.02em}
+.dgm-rm-drawers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgm-rm-drawer{background:#ffffff;border:1.5px solid #c1d3e2;border-radius:11px;padding:12px 14px;
+  display:flex;gap:12px;align-items:flex-start;position:relative}
+.dgm-rm-drawer .dgm-rm-drawer-num{position:absolute;top:-9px;left:12px;background:#ffffff;
+  border:1px solid #c1d3e2;color:#375a75;font-size:9.5px;font-weight:700;letter-spacing:.6px;
+  padding:2px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-rm-drawer .dgm-rm-ico{width:28px;height:28px;padding:5px;background:#e8eff5;
+  border:1px solid #c1d3e2;border-radius:8px;color:#5d8aa8;flex:0 0 28px}
+.dgm-rm-drawer h6{margin:0 0 3px;font-size:12px;font-weight:700;color:#375a75;letter-spacing:.02em}
+.dgm-rm-drawer p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+
+.dgm-rm-req{background:#ffffff;border:1.5px solid #d1d9e0;border-radius:11px;padding:10px 14px;
+  text-align:center;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em;
+  margin-bottom:8px;max-width:280px;margin-left:auto;margin-right:auto;display:flex;
+  align-items:center;justify-content:center;gap:8px}
+.dgm-rm-req svg{width:20px;height:20px;color:#5d8aa8}
+.dgm-rm-router{background:#ffffff;border:1.5px dashed #c1d3e2;border-radius:11px;padding:10px 14px;
+  text-align:center;font-size:11.5px;font-weight:700;color:#375a75;letter-spacing:.02em;
+  max-width:280px;margin:8px auto 12px}
+.dgm-rm-route{display:grid;grid-template-columns:1fr 20px 1fr;gap:8px;align-items:center;
+  margin-bottom:12px}
+.dgm-rm-route-slot{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;
+  font-size:11px;color:#1f2328;line-height:1.35;text-align:center}
+.dgm-rm-route-slot .dgm-rm-route-lbl{font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#8c959f;display:block;margin-bottom:2px}
+.dgm-rm-route-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-rm-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-rm-arr svg{width:16px;height:16px}
+.dgm-rm-ctx{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:center}
+.dgm-rm-ctx svg{width:28px;height:28px;color:#1a7f37;flex:0 0 28px}
+.dgm-rm-ctx h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1a614f}
+.dgm-rm-ctx p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+@media (max-width:640px){
+  .dgm-rm{padding:20px 16px 18px}
+  .dgm-rm-drawers,.dgm-rm-route{grid-template-columns:1fr}
+  .dgm-rm-route-arr{padding:2px 0}
+}
+</style>
+<div class="dgm-rm">
+  <span class="dgm-rm-chip">Retrieval as memory</span>
+
+  <h4>One retrieval system · two drawers</h4>
+  <p class="dgm-rm-sub">RAG isn't just for company knowledge — a user's own history is a retrieval store too.</p>
+
+  <div class="dgm-rm-cabinet">
+    <span class="dgm-rm-label">The cabinet</span>
+    <h5>Same infrastructure · different content</h5>
+    <div class="dgm-rm-drawers">
+      <div class="dgm-rm-drawer">
+        <span class="dgm-rm-drawer-num">Drawer 1</span>
+        <svg class="dgm-rm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <div><h6>Company knowledge</h6><p>Docs · policies · product info — RAG's usual subject</p></div>
+      </div>
+      <div class="dgm-rm-drawer">
+        <span class="dgm-rm-drawer-num">Drawer 2</span>
+        <svg class="dgm-rm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg>
+        <div><h6>User history</h6><p>Preferences · past requests · prior decisions — memory</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-rm-req">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h.01M12 12h.01M16 12h.01"/><path d="M21 12a9 9 0 01-9 9c-2 0-3.9-.7-5.4-1.8L3 21l1.8-3.6A9 9 0 1121 12z"/></svg>
+    A request comes in
+  </div>
+
+  <div class="dgm-rm-router">What does it need?</div>
+
+  <div class="dgm-rm-route">
+    <div class="dgm-rm-route-slot">
+      <span class="dgm-rm-route-lbl">← Business fact</span>
+      Drawer 1
+    </div>
+    <div class="dgm-rm-route-arr">→ or ←</div>
+    <div class="dgm-rm-route-slot">
+      <span class="dgm-rm-route-lbl">This person →</span>
+      Drawer 2
+    </div>
+  </div>
+
+  <div class="dgm-rm-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-rm-ctx">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><path d="M17 4v16"/></svg>
+    <div><h5>Relevant pieces added to the context window</h5><p>Not everything — a focused, relevant subset · beats stuffing the whole history in the prompt</p></div>
+  </div>
+</div>
+
 <h2 id="why-retrieval-beats-trying-to-hold-everything-in-the-window">Why retrieval beats trying to hold everything in the window</h2>
 <p>The reasoning is identical to why RAG beats stuffing an entire knowledge base into a
 prompt, covered in <a href="../rag-vector-databases/rag-vs-long-context-vs-finetuning.html">RAG vs. long-context vs. fine-tuning</a>:
@@ -508,46 +606,6 @@ feature does.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

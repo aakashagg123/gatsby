@@ -1,0 +1,80 @@
+<!-- When memory breaks — 3 parallel failure branches (stale / leak / stuck) from one store. -->
+<style>
+.dgm-wm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-wm-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-wm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-wm-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+
+.dgm-wm-store{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:12px;padding:14px 18px;
+  display:flex;gap:12px;align-items:center;justify-content:center;margin:0 auto 12px;
+  max-width:280px;font-weight:700;color:#375a75;font-size:12.5px;letter-spacing:.02em}
+.dgm-wm-store svg{width:26px;height:26px;color:#5d8aa8}
+
+.dgm-wm-fan{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wm-fan svg{width:20px;height:20px}
+
+.dgm-wm-fails{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dgm-wm-fail{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:12px;padding:14px 14px;
+  display:flex;flex-direction:column;gap:8px;position:relative}
+.dgm-wm-fail .dgm-wm-q{position:absolute;top:-9px;left:12px;background:#ffffff;
+  border:1px solid #ffcecb;color:#82061e;font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-wm-fail .dgm-wm-ico{color:#d1242f;width:26px;height:26px}
+.dgm-wm-fail h5{margin:0;font-size:12px;font-weight:700;color:#82061e;letter-spacing:.02em;
+  text-transform:uppercase}
+.dgm-wm-fail .dgm-wm-body{background:#ffffff;border:1px solid #ffcecb;border-radius:8px;
+  padding:8px 10px;font-size:11px;color:#1f2328;line-height:1.4}
+.dgm-wm-fail .dgm-wm-fix{background:#ecf6f2;border:1px solid #aceebb;border-radius:8px;
+  padding:8px 10px;font-size:10.5px;color:#1a614f;line-height:1.35}
+.dgm-wm-fail .dgm-wm-fix strong{color:#0d5424}
+
+@media (max-width:640px){
+  .dgm-wm{padding:20px 16px 18px}
+  .dgm-wm-fails{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm-wm">
+  <span class="dgm-wm-chip">When it breaks</span>
+
+  <h4>Three parallel failures from one memory store · each with a specific mitigation</h4>
+  <p class="dgm-wm-sub">Not variants of "the model got it wrong" — each is a structural gap with a structural fix.</p>
+
+  <div class="dgm-wm-store">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg>
+    A memory store
+  </div>
+
+  <div class="dgm-wm-fan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wm-fails">
+    <div class="dgm-wm-fail">
+      <span class="dgm-wm-q">Q · Stale?</span>
+      <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <h5>Stale &amp; wrong</h5>
+      <div class="dgm-wm-body">Product acts confidently on outdated info · no signal that it's old</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> explicit freshness — last-confirmed date · expiry · periodic re-check</div>
+    </div>
+
+    <div class="dgm-wm-fail">
+      <span class="dgm-wm-q">Q · Crossed?</span>
+      <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16M8 4v16M16 4v16"/></svg>
+      <h5>Leaked</h5>
+      <div class="dgm-wm-body">One user's or tenant's data reaches another — the boundary that mattered most</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> tenant / user ID stamped on every write · checked at every read</div>
+    </div>
+
+    <div class="dgm-wm-fail">
+      <span class="dgm-wm-q">Q · Fixable?</span>
+      <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg>
+      <h5>Stuck</h5>
+      <div class="dgm-wm-body">User can't see, correct, or delete — a wrong memory persists indefinitely</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> user-facing "what does this product remember about me" surface</div>
+    </div>
+  </div>
+</div>

@@ -402,21 +402,104 @@ person, and that person has a reasonable expectation of control over what's in i
 Organizational memory is a <strong>shared handbook</strong> — everyone on the team can read from it,
 someone has to own keeping it accurate, and the question of who counts as "the team" is
 exactly the access-control question that matters most.</p>
-<pre class="mermaid">flowchart TB
-  subgraph SESSION[&quot;Session memory — a sticky note&quot;]
-    S1[&quot;Lives only&lt;br/&gt;within one conversation&quot;]
-    S2[&quot;Discarded when&lt;br/&gt;the session ends&quot;]
-  end
-  subgraph USER[&quot;User memory — a personal file&quot;]
-    U1[&quot;Persists across&lt;br/&gt;separate visits&quot;]
-    U2[&quot;About one&lt;br/&gt;specific person&quot;]
-    U3[&quot;Needs consent,&lt;br/&gt;visibility, edit,&lt;br/&gt;and delete&quot;]
-  end
-  subgraph ORG[&quot;Organizational memory — a shared handbook&quot;]
-    O1[&quot;Shared across&lt;br/&gt;a whole team&quot;]
-    O2[&quot;The &#x27;who&#x27;s inside&lt;br/&gt;the org&#x27; boundary&lt;br/&gt;is security-critical&quot;]
-    O3[&quot;Needs an owner&lt;br/&gt;keeping it accurate&quot;]
-  end</pre>
+<!-- Session/user/org memory — 3 side-by-side scope panels with their properties. -->
+<style>
+.dgm-so{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-so-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-so h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-so-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-so-scale{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.dgm-so-scope{border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;
+  position:relative}
+.dgm-so-scope.session{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-so-scope.user{background:#e8eff5;border:1.5px solid #c1d3e2}
+.dgm-so-scope.org{background:#efedfa;border:1.5px solid #cec8f0}
+.dgm-so-scope .dgm-so-metaphor{position:absolute;top:-9px;right:12px;background:#ffffff;
+  border:1px solid #d1d9e0;font-size:9px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#59636e;padding:2px 8px;border-radius:5px}
+.dgm-so-scope .dgm-so-ico{width:36px;height:36px;padding:6px;background:#ffffff;
+  border-radius:10px;flex:0 0 36px;display:flex;align-items:center;justify-content:center}
+.dgm-so-scope .dgm-so-ico svg{width:100%;height:100%}
+.dgm-so-scope.session .dgm-so-ico{border:1.5px solid #d1d9e0;color:#59636e}
+.dgm-so-scope.user .dgm-so-ico{border:1.5px solid #c1d3e2;color:#5d8aa8}
+.dgm-so-scope.org .dgm-so-ico{border:1.5px solid #cec8f0;color:#5a4fcf}
+.dgm-so-scope h5{margin:0;font-size:13px;font-weight:700;letter-spacing:.02em}
+.dgm-so-scope.session h5{color:#1f2328}
+.dgm-so-scope.user h5{color:#375a75}
+.dgm-so-scope.org h5{color:#3d3a95}
+.dgm-so-scope .dgm-so-tag{font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#8c959f;background:#ffffff;border:1px solid #d1d9e0;
+  padding:2px 7px;border-radius:5px;align-self:flex-start}
+.dgm-so-scope .dgm-so-props{display:flex;flex-direction:column;gap:5px}
+.dgm-so-scope .dgm-so-prop{font-size:11px;color:#1f2328;line-height:1.4;display:flex;
+  align-items:flex-start;gap:6px}
+.dgm-so-scope .dgm-so-prop::before{content:'·';color:#8c959f;font-weight:700}
+.dgm-so-scope .dgm-so-alert{font-size:10.5px;font-weight:600;color:#82061e;background:#ffebe9;
+  border:1px solid #ffcecb;border-radius:6px;padding:6px 8px;line-height:1.35;margin-top:4px}
+@media (max-width:640px){
+  .dgm-so{padding:20px 16px 18px}
+  .dgm-so-scale{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm-so">
+  <span class="dgm-so-chip">Three scopes</span>
+
+  <h4>Session · user · organizational · three metaphors, three risk levels</h4>
+  <p class="dgm-so-sub">The boundary of the memory is the boundary of the promise. Name it before you spec it.</p>
+
+  <div class="dgm-so-scale">
+
+    <div class="dgm-so-scope session">
+      <span class="dgm-so-metaphor">a sticky note</span>
+      <div class="dgm-so-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      </div>
+      <span class="dgm-so-tag">Session memory</span>
+      <h5>Just this conversation</h5>
+      <div class="dgm-so-props">
+        <div class="dgm-so-prop">Lives only within one thread</div>
+        <div class="dgm-so-prop">Discarded when the session ends</div>
+        <div class="dgm-so-prop">Lowest-risk shape · still worth naming</div>
+      </div>
+    </div>
+
+    <div class="dgm-so-scope user">
+      <span class="dgm-so-metaphor">a personal file</span>
+      <div class="dgm-so-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg>
+      </div>
+      <span class="dgm-so-tag">User memory</span>
+      <h5>Across sessions · one person</h5>
+      <div class="dgm-so-props">
+        <div class="dgm-so-prop">Persists across separate visits</div>
+        <div class="dgm-so-prop">Ties data to one specific person</div>
+        <div class="dgm-so-prop">Needs consent · visibility · edit · delete</div>
+      </div>
+    </div>
+
+    <div class="dgm-so-scope org">
+      <span class="dgm-so-metaphor">a shared handbook</span>
+      <div class="dgm-so-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20a5 5 0 0110 0M11 20a5 5 0 0110 0"/></svg>
+      </div>
+      <span class="dgm-so-tag">Org memory</span>
+      <h5>Shared across a whole team</h5>
+      <div class="dgm-so-props">
+        <div class="dgm-so-prop">Team-wide facts, preferences, decisions</div>
+        <div class="dgm-so-prop">Needs an owner keeping it accurate</div>
+      </div>
+      <div class="dgm-so-alert">"Who's inside the org" boundary is security-critical</div>
+    </div>
+
+  </div>
+</div>
+
 <h2 id="session-memory-the-lowest-risk-shape-still-worth-naming-explicitly">Session memory: the lowest-risk shape, still worth naming explicitly</h2>
 <p>Within one active conversation, carrying forward what was already said is close to a
 baseline user expectation — a chat assistant that forgets your name three messages after
@@ -515,46 +598,6 @@ cheapest safeguard available.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
