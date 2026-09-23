@@ -2,22 +2,28 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Knowledge graph · Engineering learning modules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#ffffff;--surface:#ffffff;--ink:#1f2328;--ink2:#1f2328;--muted:#59636e;
+    --bg:#fafbfc;--surface:#ffffff;--ink:#1f2328;--ink2:#1f2328;--muted:#59636e;
     --accent:#0969da;--accent-deep:#0550ae;--line:#d1d9e0;--soft:#f6f8fa;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);overflow:hidden;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
-    font-size:15px;-webkit-font-smoothing:antialiased}
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+    font-size:15px;font-feature-settings:"cv11","ss01","ss03";
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility}
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
 
   .bar{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;
-    gap:16px;padding:12px 18px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line)}
+    gap:16px;padding:12px 20px;background:rgba(255,255,255,.96);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 1px 0 rgba(31,35,40,.02),0 4px 16px rgba(31,35,40,.03)}
   .bar .back{font-weight:500;color:var(--ink);white-space:nowrap}
   .bar .back:hover{color:var(--accent-deep)}
   .bar .brand{font-weight:600;color:var(--accent-deep);white-space:nowrap}
@@ -32,8 +38,8 @@
   #listBtn:hover{border-color:var(--accent)}
 
   #legend{position:fixed;left:14px;bottom:14px;z-index:25;display:flex;flex-direction:column;
-    gap:3px;padding:12px 14px;background:rgba(255,255,255,.94);border:1px solid var(--line);
-    border-radius:8px;box-shadow:0 6px 24px rgba(31,35,40,.08);max-width:270px}
+    gap:3px;padding:14px 16px;background:rgba(255,255,255,.97);border:1px solid var(--line);
+    border-radius:10px;box-shadow:0 8px 28px rgba(31,35,40,.10),0 1px 3px rgba(31,35,40,.04);max-width:280px}
   #legend .lg-h{font-size:11px;font-weight:600;letter-spacing:.03em;
     color:var(--muted);margin-bottom:5px}
   .chip{display:flex;align-items:center;gap:8px;padding:3px 6px;margin:0 -6px;border:0;
@@ -55,9 +61,10 @@
     font-size:13px;line-height:1.45;box-shadow:0 8px 24px rgba(31,35,40,.25)}
   #tip .t-track{display:block;font-size:11px;opacity:.75;margin-top:2px}
 
-  #card{position:fixed;right:14px;bottom:14px;z-index:25;width:300px;max-width:calc(100vw - 28px);
-    max-height:46vh;overflow:auto;padding:16px 18px;background:rgba(255,255,255,.97);
-    border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 24px rgba(31,35,40,.10);
+  #card{position:fixed;right:14px;bottom:14px;z-index:25;width:320px;max-width:calc(100vw - 28px);
+    max-height:46vh;overflow:auto;padding:18px 20px;background:rgba(255,255,255,.98);
+    border:1px solid var(--line);border-radius:10px;
+    box-shadow:0 10px 32px rgba(31,35,40,.12),0 2px 6px rgba(31,35,40,.05);
     display:none}
   #card .c-track{font-size:11px;font-weight:600;letter-spacing:.02em}
   #card h2{margin:.25em 0 .4em;font-size:17px;line-height:1.3;letter-spacing:-.01em}
@@ -138,8 +145,9 @@ for (const [a, b, w, kind] of edges) {
 }
 nodes.forEach((n, i) => {
   n.i = i; n.id = n.key; n.color = trackOf[n.track].color;
-  n.r = n.kind === "track" ? 13 : n.kind === "module" ? 5.5 + Math.min(6, Math.sqrt(linkDeg[i])) :
-        3.2 + Math.min(9, 1.15 * Math.sqrt(linkDeg[i]));
+  // Bumped ~25-30% across kinds for a more premium, 2K-friendly presence.
+  n.r = n.kind === "track" ? 16 : n.kind === "module" ? 7 + Math.min(7, Math.sqrt(linkDeg[i])) :
+        4.2 + Math.min(11, 1.3 * Math.sqrt(linkDeg[i]));
   n.vx = 0; n.vy = 0; n.fixed = false;
 });
 const darken = h => {  // ring stroke: same hue, ~25% darker
@@ -330,14 +338,20 @@ function boot2D() {
     alpha = Math.max(.015, alpha * .988);
   }
 
-  const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  const cv = document.getElementById("cv"), ctx = cv.getContext("2d", {alpha: true, desynchronized: false});
   cv.style.display = "block";
   let W = 0, H = 0, DPR = 1;
   const view = {k: 1, x: 0, y: 0};
   function resize() {
-    DPR = window.devicePixelRatio || 1;
+    // Supersample on standard-DPR displays (typical 2K monitors report DPR=1
+    // in the browser even at 2560x1440 native): floor at 2 for crisp edges,
+    // cap at 3 so 4K + Retina combos don't tank the frame rate.
+    DPR = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
     W = window.innerWidth; H = window.innerHeight;
-    cv.width = W * DPR; cv.height = H * DPR;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    cv.style.width = W + "px"; cv.style.height = H + "px";
+    // Text-rendering hints reset on every resize (backing store recreated).
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
   }
   window.addEventListener("resize", resize); resize();
   view.x = W / 2; view.y = H / 2 + 14;
@@ -350,15 +364,17 @@ function boot2D() {
     const focusN = hoverN || selN;
     const hood = focusN ? neighborhood(focusN) : null;
 
+    ctx.lineCap = "round"; ctx.lineJoin = "round";   // sharper strokes at any zoom
+
     for (const e of edges) {                          // edges
       if (!visE(e)) continue;
       const a = nodes[e[0]], b = nodes[e[1]], link = e[3] === "link";
       let on = true;
       if (hood) on = (e[0] === focusN.i || e[1] === focusN.i);
       else if (searchSet) on = searchSet.has(e[0]) || searchSet.has(e[1]);
-      ctx.globalAlpha = on ? (link ? .5 : .3) : .06;
-      ctx.strokeStyle = hood && on ? "#0550ae" : "#8c959f";
-      ctx.lineWidth = (link ? .8 + Math.min(4, e[2]) * .3 : .8) / view.k;
+      ctx.globalAlpha = on ? (link ? .55 : .32) : .05;
+      ctx.strokeStyle = hood && on ? "#0550ae" : "#6b7280";
+      ctx.lineWidth = (link ? 1.1 + Math.min(4, e[2]) * .35 : 1.0) / view.k;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
     for (const n of nodes) {                          // nodes
@@ -366,15 +382,24 @@ function boot2D() {
       let on = true;
       if (hood) on = hood.has(n.i);
       else if (searchSet) on = searchSet.has(n.i);
-      ctx.globalAlpha = on ? 1 : .13;
+      const focused = (focusN === n || selN === n);
+      ctx.globalAlpha = on ? 1 : .12;
+      // Subtle glow on focused nodes for depth on 2K displays.
+      if (focused) {
+        ctx.shadowBlur = 14 / view.k;
+        ctx.shadowColor = "rgba(5,80,174,.42)";
+      } else {
+        ctx.shadowBlur = 0;
+      }
       ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
       ctx.fillStyle = n.color; ctx.fill();
-      ctx.lineWidth = ((focusN === n || selN === n) ? 2.2 : 1) / Math.max(view.k, .9);
-      ctx.strokeStyle = (focusN === n || selN === n) ? "#1f2328" : ringOf[n.track];
+      ctx.shadowBlur = 0;                             // reset so ring stroke is crisp
+      ctx.lineWidth = (focused ? 3.0 : 1.4) / Math.max(view.k, .9);
+      ctx.strokeStyle = focused ? "#0d1117" : ringOf[n.track];
       ctx.stroke();
     }
     ctx.globalAlpha = 1;                              // labels
-    const showAll = view.k > 1.55;
+    const showAll = view.k > 1.5;
     ctx.textAlign = "center"; ctx.textBaseline = "top";
     for (const n of nodes) {
       if (!visN(n)) continue;
@@ -383,14 +408,20 @@ function boot2D() {
       if (!(focusLbl || big || showAll)) continue;
       if (hood && !hood.has(n.i)) continue;
       if (!hood && searchSet && !searchSet.has(n.i)) continue;
-      const fs = (n.kind === "track" ? 13 : 11.5) / Math.min(Math.max(view.k, .85), 2.2);
-      ctx.font = (n.kind === "lesson" ? "400 " : "600 ") + fs + "px -apple-system,BlinkMacSystemFont,sans-serif";
+      // Slightly larger base sizes + bolder weights render sharper on 2K.
+      const fs = (n.kind === "track" ? 14.5 : n.kind === "module" ? 13 : 12.5)
+                 / Math.min(Math.max(view.k, .85), 2.2);
+      const weight = n.kind === "track" ? "700 " : n.kind === "module" ? "600 " : "500 ";
+      ctx.font = weight + fs + 'px Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
       const t = n.title.length > 42 ? n.title.slice(0, 40) + "…" : n.title;
-      ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? .95 : .78;
-      ctx.lineWidth = 3.2 / view.k; ctx.strokeStyle = "rgba(255,255,255,.9)";
-      ctx.strokeText(t, n.x, n.y + n.r + 3 / view.k);
-      ctx.fillStyle = "#1f2328";
-      ctx.fillText(t, n.x, n.y + n.r + 3 / view.k);
+      ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? 1 : .82;
+      // Halo stroke: wider + slightly more opaque, so labels stay crisp
+      // against colored nodes and denser edge crossings.
+      ctx.lineWidth = 3.8 / view.k;
+      ctx.strokeStyle = "rgba(250,251,252,.95)";
+      ctx.strokeText(t, n.x, n.y + n.r + 4 / view.k);
+      ctx.fillStyle = "#0d1117";
+      ctx.fillText(t, n.x, n.y + n.r + 4 / view.k);
     }
     ctx.globalAlpha = 1;
   }
@@ -557,17 +588,27 @@ function boot3D() {
     .graphData({nodes: buildNodes(), links: buildLinks()})
     .width(window.innerWidth)
     .height(window.innerHeight)
-    .backgroundColor("#ffffff")
+    .backgroundColor("#fafbfc")
     .showNavInfo(false)
     .nodeId("id")
     .nodeColor(nodeColor)
     .nodeVal(n => n.r)
+    .nodeResolution(24)                             // smoother spheres — cheap
+    .nodeOpacity(.98)
     .nodeLabel(n => esc(n.title) +
       '<span class="t-track">' + esc(trackOf[n.track].label) + " · " + deg[n.i] + " connections</span>")
     .linkColor(linkColor)
-    .linkWidth(l => l.kind === "link" ? .8 + Math.min(4, l.weight) * .3 : .8)
-    .linkOpacity(.35)
+    .linkWidth(l => l.kind === "link" ? 1.1 + Math.min(4, l.weight) * .35 : 1.0)
+    .linkOpacity(.42)
     .onNodeClick(n => select(n));
+
+  // Nudge three.js to render at real device-pixel density for a crisp 2K feel.
+  try {
+    const r = Graph.renderer && Graph.renderer();
+    if (r && typeof r.setPixelRatio === "function") {
+      r.setPixelRatio(Math.min(3, Math.max(2, window.devicePixelRatio || 1)));
+    }
+  } catch (e) { /* library minor version differences: no-op */ }
 
   window.addEventListener("resize", () => {
     Graph.width(window.innerWidth).height(window.innerHeight);
