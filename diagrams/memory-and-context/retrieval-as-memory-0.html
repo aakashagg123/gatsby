@@ -1,0 +1,107 @@
+<!-- Retrieval as memory — 2-drawer cabinet + request → routed to the right drawer → context. -->
+<style>
+.dgm-rm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-rm-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-rm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-rm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+
+.dgm-rm-cabinet{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:13px;padding:14px 16px;
+  margin-bottom:14px;position:relative}
+.dgm-rm-cabinet .dgm-rm-label{position:absolute;top:-9px;left:16px;background:#5d8aa8;color:#ffffff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
+  border-radius:5px}
+.dgm-rm-cabinet h5{margin:6px 0 10px;font-size:12.5px;font-weight:700;color:#375a75;letter-spacing:.02em}
+.dgm-rm-drawers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgm-rm-drawer{background:#ffffff;border:1.5px solid #c1d3e2;border-radius:11px;padding:12px 14px;
+  display:flex;gap:12px;align-items:flex-start;position:relative}
+.dgm-rm-drawer .dgm-rm-drawer-num{position:absolute;top:-9px;left:12px;background:#ffffff;
+  border:1px solid #c1d3e2;color:#375a75;font-size:9.5px;font-weight:700;letter-spacing:.6px;
+  padding:2px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-rm-drawer .dgm-rm-ico{width:28px;height:28px;padding:5px;background:#e8eff5;
+  border:1px solid #c1d3e2;border-radius:8px;color:#5d8aa8;flex:0 0 28px}
+.dgm-rm-drawer h6{margin:0 0 3px;font-size:12px;font-weight:700;color:#375a75;letter-spacing:.02em}
+.dgm-rm-drawer p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+
+.dgm-rm-req{background:#ffffff;border:1.5px solid #d1d9e0;border-radius:11px;padding:10px 14px;
+  text-align:center;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em;
+  margin-bottom:8px;max-width:280px;margin-left:auto;margin-right:auto;display:flex;
+  align-items:center;justify-content:center;gap:8px}
+.dgm-rm-req svg{width:20px;height:20px;color:#5d8aa8}
+.dgm-rm-router{background:#ffffff;border:1.5px dashed #c1d3e2;border-radius:11px;padding:10px 14px;
+  text-align:center;font-size:11.5px;font-weight:700;color:#375a75;letter-spacing:.02em;
+  max-width:280px;margin:8px auto 12px}
+.dgm-rm-route{display:grid;grid-template-columns:1fr 20px 1fr;gap:8px;align-items:center;
+  margin-bottom:12px}
+.dgm-rm-route-slot{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;
+  font-size:11px;color:#1f2328;line-height:1.35;text-align:center}
+.dgm-rm-route-slot .dgm-rm-route-lbl{font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:#8c959f;display:block;margin-bottom:2px}
+.dgm-rm-route-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-rm-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-rm-arr svg{width:16px;height:16px}
+.dgm-rm-ctx{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:center}
+.dgm-rm-ctx svg{width:28px;height:28px;color:#1a7f37;flex:0 0 28px}
+.dgm-rm-ctx h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1a614f}
+.dgm-rm-ctx p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+@media (max-width:640px){
+  .dgm-rm{padding:20px 16px 18px}
+  .dgm-rm-drawers,.dgm-rm-route{grid-template-columns:1fr}
+  .dgm-rm-route-arr{padding:2px 0}
+}
+</style>
+<div class="dgm-rm">
+  <span class="dgm-rm-chip">Retrieval as memory</span>
+
+  <h4>One retrieval system · two drawers</h4>
+  <p class="dgm-rm-sub">RAG isn't just for company knowledge — a user's own history is a retrieval store too.</p>
+
+  <div class="dgm-rm-cabinet">
+    <span class="dgm-rm-label">The cabinet</span>
+    <h5>Same infrastructure · different content</h5>
+    <div class="dgm-rm-drawers">
+      <div class="dgm-rm-drawer">
+        <span class="dgm-rm-drawer-num">Drawer 1</span>
+        <svg class="dgm-rm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <div><h6>Company knowledge</h6><p>Docs · policies · product info — RAG's usual subject</p></div>
+      </div>
+      <div class="dgm-rm-drawer">
+        <span class="dgm-rm-drawer-num">Drawer 2</span>
+        <svg class="dgm-rm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg>
+        <div><h6>User history</h6><p>Preferences · past requests · prior decisions — memory</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-rm-req">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h.01M12 12h.01M16 12h.01"/><path d="M21 12a9 9 0 01-9 9c-2 0-3.9-.7-5.4-1.8L3 21l1.8-3.6A9 9 0 1121 12z"/></svg>
+    A request comes in
+  </div>
+
+  <div class="dgm-rm-router">What does it need?</div>
+
+  <div class="dgm-rm-route">
+    <div class="dgm-rm-route-slot">
+      <span class="dgm-rm-route-lbl">← Business fact</span>
+      Drawer 1
+    </div>
+    <div class="dgm-rm-route-arr">→ or ←</div>
+    <div class="dgm-rm-route-slot">
+      <span class="dgm-rm-route-lbl">This person →</span>
+      Drawer 2
+    </div>
+  </div>
+
+  <div class="dgm-rm-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-rm-ctx">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><path d="M17 4v16"/></svg>
+    <div><h5>Relevant pieces added to the context window</h5><p>Not everything — a focused, relevant subset · beats stuffing the whole history in the prompt</p></div>
+  </div>
+</div>
