@@ -394,12 +394,93 @@ in-progress work on the first real restart, or a well-executed single step gets
 commoditized because a competitor captured the whole workflow around it.</p>
 </blockquote>
 <h2 id="the-mental-model-durability-first-then-the-business-case">The mental model: durability first, then the business case</h2>
-<pre class="mermaid">flowchart LR
-  RUN[&quot;A workflow&lt;br/&gt;in progress&quot;] --&gt; WAIT{&quot;Needs to pause?&lt;br/&gt;(approval, timer,&lt;br/&gt;external event)&quot;}
-  WAIT --&gt;|&quot;yes&quot;| PERSIST[&quot;Persists its state —&lt;br/&gt;survives a restart&quot;]
-  PERSIST --&gt; RESUME[&quot;Resumes exactly&lt;br/&gt;where it left off&quot;]
-  RESUME --&gt; DONE[&quot;Completes&quot;]
-  DONE -.-&gt;|&quot;if this reliably&lt;br/&gt;works end to end&quot;| CAPTURE[&quot;Worth owning the&lt;br/&gt;whole workflow, not&lt;br/&gt;just one step&quot;]</pre>
+<!-- Durability lesson — a workflow that pauses, persists, resumes → done → captures ownership.
+     Diagram type: LINEAR FLOW with wait-state decision + terminal "worth owning" outcome. -->
+<style>
+.dgm-dw{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-dw-chip{position:absolute;top:-11px;left:24px;background:#2f8f7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(47,143,122,.28)}
+.dgm-dw h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-dw-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-dw-track{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;gap:8px;
+  align-items:stretch;margin-bottom:14px}
+.dgm-dw-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:12px 12px;
+  display:flex;flex-direction:column;gap:6px}
+.dgm-dw-node.wait{background:#fff8c5;border-color:#eac54f}
+.dgm-dw-node.persist{background:#ecf6f2;border-color:#c7e4d9}
+.dgm-dw-node.done{background:#dafbe1;border-color:#aceebb}
+.dgm-dw-node .dgm-dw-ico{color:#2f8f7a;width:24px;height:24px}
+.dgm-dw-node.wait .dgm-dw-ico{color:#9a6700}
+.dgm-dw-node.done .dgm-dw-ico{color:#1a7f37}
+.dgm-dw-node h5{margin:0;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-dw-node p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-dw-node .dgm-dw-tag{font-size:9.5px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e;background:#ffffff;border:1px solid #d1d9e0;
+  padding:2px 6px;border-radius:4px;align-self:flex-start;margin-top:2px}
+.dgm-dw-arr{align-self:center;color:#8c959f;font-weight:700;text-align:center}
+.dgm-dw-conv{display:flex;justify-content:center;color:#8c959f;margin:6px 0}
+.dgm-dw-conv svg{width:18px;height:18px}
+.dgm-dw-conv-note{text-align:center;font-size:10.5px;color:#59636e;letter-spacing:.3px;
+  margin-bottom:8px;font-style:italic}
+.dgm-dw-outcome{background:#ecf6f2;border:1.5px solid #c7e4d9;border-radius:12px;
+  padding:16px 18px;display:flex;gap:14px;align-items:center}
+.dgm-dw-outcome .dgm-dw-ico{width:32px;height:32px;padding:6px;background:#ffffff;
+  border:1.5px solid #c7e4d9;border-radius:10px;color:#2f8f7a;flex:0 0 32px}
+.dgm-dw-outcome h5{margin:0 0 2px;font-size:13px;font-weight:700;color:#1a614f}
+.dgm-dw-outcome p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+@media (max-width:640px){
+  .dgm-dw{padding:20px 16px 18px}
+  .dgm-dw-track{grid-template-columns:1fr;gap:6px}
+  .dgm-dw-arr{padding:2px 0}
+}
+</style>
+<div class="dgm-dw">
+  <span class="dgm-dw-chip">Durability</span>
+
+  <h4>A workflow that survives real time · the precondition for ownership</h4>
+  <p class="dgm-dw-sub">Wait state → persistence → resume → done. Only then is "we own it end to end" a credible claim.</p>
+
+  <div class="dgm-dw-track">
+    <div class="dgm-dw-node">
+      <svg class="dgm-dw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l8 6-8 6zM12 6l8 6-8 6z"/></svg>
+      <h5>In progress</h5>
+      <p>A workflow is running</p>
+    </div>
+    <div class="dgm-dw-arr">→</div>
+    <div class="dgm-dw-node wait">
+      <svg class="dgm-dw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <h5>Wait state</h5>
+      <p>Approval · timer · external event</p>
+      <span class="dgm-dw-tag">Pause</span>
+    </div>
+    <div class="dgm-dw-arr">→</div>
+    <div class="dgm-dw-node persist">
+      <svg class="dgm-dw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M9 12l2 2 4-4"/></svg>
+      <h5>Persist state</h5>
+      <p>Survives a restart · sits idle safely</p>
+    </div>
+    <div class="dgm-dw-arr">→</div>
+    <div class="dgm-dw-node done">
+      <svg class="dgm-dw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+      <h5>Resume · complete</h5>
+      <p>Continues exactly where it left off</p>
+    </div>
+  </div>
+
+  <div class="dgm-dw-conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-dw-conv-note">if this reliably works end-to-end</div>
+
+  <div class="dgm-dw-outcome">
+    <svg class="dgm-dw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M12 8v4M12 15h.01"/></svg>
+    <div><h5>Worth owning the whole workflow</h5><p>Not just one step inside it — a process a business can bet on being there in three days.</p></div>
+  </div>
+</div>
+
 <p>The sequence matters. A workflow that can't reliably persist through a pause and resume
 correctly isn't ready to be the thing a business stakes a "we own this end to end" claim
 on — durability is the precondition, not a detail to fix later. Only once it's genuinely
@@ -495,46 +576,6 @@ interface, is developed in full in
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

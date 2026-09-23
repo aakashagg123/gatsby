@@ -1,0 +1,84 @@
+<!-- Agentic workflows — knowledge graph: two questions in sequence.
+     Orchestrating shape → Making it durable → Ownership as strategy. -->
+<style>
+.dgm-aw{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-aw-chip{position:absolute;top:-11px;left:24px;background:#2f8f7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(47,143,122,.28)}
+.dgm-aw h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-aw-sub{font-size:12px;color:#59636e;margin:0 0 12px}
+.dgm-aw-half{background:#ecf6f2;border:1px solid #c7e4d9;border-radius:13px;padding:16px 18px;
+  margin-bottom:12px}
+.dgm-aw-half h5{margin:0 0 6px;font-size:12px;font-weight:700;color:#1a614f;
+  letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.dgm-aw-half h5 .dgm-aw-tag{background:#ffffff;color:#2f8f7a;font-size:9.5px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;
+  border:1px solid #c7e4d9}
+.dgm-aw-shape{background:#ffffff;border:1px solid #c7e4d9;border-radius:10px;padding:10px 14px;
+  display:flex;gap:12px;align-items:center}
+.dgm-aw-shape .dgm-aw-ico{color:#2f8f7a;width:24px;height:24px;flex:0 0 24px}
+.dgm-aw-shape h6{margin:0 0 2px;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-aw-shape p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-aw-half.dur{background:#f6f8fa;border-color:#d1d9e0}
+.dgm-aw-half.dur h5{color:#1f2328}
+.dgm-aw-half.dur h5 .dgm-aw-tag{background:#ffffff;color:#59636e;border-color:#d1d9e0}
+.dgm-aw-rows{display:grid;grid-template-columns:1fr 24px 1fr;gap:8px;align-items:center}
+.dgm-aw-row{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;
+  display:flex;gap:10px;align-items:center}
+.dgm-aw-row .dgm-aw-ico{color:#2f8f7a;width:22px;height:22px;flex:0 0 22px}
+.dgm-aw-row h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-aw-row p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
+.dgm-aw-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-aw-band{margin-top:8px;padding:10px 14px;background:#dafbe1;border:1px dashed #aceebb;
+  border-radius:10px;font-size:11.5px;color:#1a7f37;font-weight:600;line-height:1.4;
+  display:flex;gap:10px;align-items:center}
+.dgm-aw-band svg{width:20px;height:20px;color:#1a7f37;flex:0 0 20px}
+.dgm-aw-link{display:flex;justify-content:center;padding:4px 0 8px}
+.dgm-aw-link .dgm-aw-note{font-size:10.5px;font-weight:600;letter-spacing:.3px;color:#59636e;
+  background:#ffffff;border:1px solid #d1d9e0;border-radius:20px;padding:4px 12px}
+@media (max-width:640px){
+  .dgm-aw{padding:20px 16px 18px}
+  .dgm-aw-rows{grid-template-columns:1fr}
+  .dgm-aw-arr{padding:2px 0}
+}
+</style>
+<div class="dgm-aw">
+  <span class="dgm-aw-chip">Agentic workflows</span>
+
+  <h4>Two questions asked in sequence</h4>
+  <p class="dgm-aw-sub">Once a single agent's loop isn't enough — what shape, and how does it survive real time?</p>
+
+  <div class="dgm-aw-half">
+    <h5><span class="dgm-aw-tag">Lesson 1</span>Orchestrating more than one agent</h5>
+    <div class="dgm-aw-shape">
+      <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 11l7-4M8.5 13l7 4"/></svg>
+      <div><h6>Chains, routers, multi-agent topologies</h6><p>The three recurring shapes work takes when one agent isn't the right unit.</p></div>
+    </div>
+  </div>
+
+  <div class="dgm-aw-link"><span class="dgm-aw-note">↓ once it works, it has to keep working</span></div>
+
+  <div class="dgm-aw-half dur">
+    <h5><span class="dgm-aw-tag">Lesson 2</span>Making it last</h5>
+    <div class="dgm-aw-rows">
+      <div class="dgm-aw-row">
+        <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><h6>Surviving pauses &amp; restarts</h6><p>Wait states · persistence · job executor</p></div>
+      </div>
+      <div class="dgm-aw-arr">→</div>
+      <div class="dgm-aw-row">
+        <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 10v10M14 10v10"/></svg>
+        <div><h6>Owning the whole workflow</h6><p>The moat — one step vs. end-to-end</p></div>
+      </div>
+    </div>
+
+    <div class="dgm-aw-band">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+      <span>Durability is what makes the ownership strategy credible.</span>
+    </div>
+  </div>
+</div>
