@@ -412,15 +412,57 @@ public-repo issue to walk an agent into leaking private-repo data through its ow
 legitimate tooling. Neither attack "broke" anything. Both simply placed words where an
 over-privileged agent would read them. When someone says injection is a lab curiosity,
 these are the two names to say back.</p>
-<pre class="mermaid">flowchart TB
-  ATK[&quot;Attacker plants instructions&lt;br/&gt;in content the agent will read&lt;br/&gt;(web page, email, doc, tool result)&quot;] --&gt; READ[&quot;Agent reads it&lt;br/&gt;as ordinary context&quot;]
-  READ --&gt; D1{&quot;Layer 1 — input handling:&lt;br/&gt;untrusted content marked,&lt;br/&gt;filtered, never auto-trusted&quot;}
-  D1 --&gt;|&quot;caught&quot;| SAFE1[&quot;Neutralized&quot;]
-  D1 --&gt;|&quot;slips through&quot;| D2{&quot;Layer 2 — least privilege:&lt;br/&gt;agent lacks access&lt;br/&gt;to what the attack wants&quot;}
-  D2 --&gt;|&quot;nothing to steal&quot;| SAFE2[&quot;Contained&quot;]
-  D2 --&gt;|&quot;has access&quot;| D3{&quot;Layer 3 — egress &amp; action gates:&lt;br/&gt;outbound comms restricted,&lt;br/&gt;destructive acts need approval&quot;}
-  D3 --&gt;|&quot;blocked / human says no&quot;| SAFE3[&quot;Stopped at the gate&quot;]
-  D3 --&gt;|&quot;approved wrongly&quot;| AUDIT[&quot;Layer 4 — audit trail:&lt;br/&gt;detect, investigate, revoke, learn&quot;]</pre>
+<style>
+.dgm-sg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-sg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sg-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sg-atk{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#82061e;font-weight:700;font-size:11.5px;margin-bottom:8px}
+.dgm-sg-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-sg-arr svg{width:16px;height:16px}
+.dgm-sg-layer{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center;margin-bottom:8px}
+.dgm-sg-l{background:#efeafb;border:1.5px solid #d3c6f5;border-radius:11px;padding:10px 14px;font-size:11px;
+  color:#3d2f8a;font-weight:700;line-height:1.35}
+.dgm-sg-safe{background:#dafbe1;border:1.5px solid #aceebb;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#1a614f}
+.dgm-sg-audit{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:11.5px;margin-top:4px}
+.dgm-sg-slip{font-size:9px;color:#c9432f;text-align:center;font-style:italic;margin:2px 0}
+@media (max-width:640px){.dgm-sg{padding:20px 16px 18px}.dgm-sg-layer{grid-template-columns:1fr}}
+</style>
+<div class="dgm-sg">
+  <span class="dgm-sg-chip">Defense in depth</span>
+  <h4>No single layer holds · the design assumption is some instructions get through</h4>
+  <p class="dgm-sg-sub">The layers decide the blast radius, not whether an attempt happens.</p>
+
+  <div class="dgm-sg-atk">Attacker plants instructions in content the agent will read — web page, email, doc, tool result</div>
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-sg-atk" style="background:#f6f8fa;border-color:#d1d9e0;color:#1f2328">Agent reads it as ordinary context</div>
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sg-layer">
+    <div class="dgm-sg-l">Layer 1 — input handling: untrusted content marked, filtered, never auto-trusted</div>
+    <div class="dgm-sg-safe">Caught → Neutralized</div>
+  </div>
+  <div class="dgm-sg-slip">↓ slips through ↓</div>
+  <div class="dgm-sg-layer">
+    <div class="dgm-sg-l">Layer 2 — least privilege: agent lacks access to what the attack wants</div>
+    <div class="dgm-sg-safe">Nothing to steal → Contained</div>
+  </div>
+  <div class="dgm-sg-slip">↓ has access ↓</div>
+  <div class="dgm-sg-layer">
+    <div class="dgm-sg-l">Layer 3 — egress &amp; action gates: outbound comms restricted, destructive acts need approval</div>
+    <div class="dgm-sg-safe">Blocked / no → Stopped</div>
+  </div>
+  <div class="dgm-sg-slip">↓ approved wrongly ↓</div>
+  <div class="dgm-sg-audit">Layer 4 — audit trail: detect, investigate, revoke, learn</div>
+</div>
+
 <p>No single layer holds. The design assumption is <em>some instructions will get through</em>.
 The layers behind it decide the blast radius: what the agent can reach, what it can
 send out, and what a human must approve. That's why the <strong>lethal trifecta</strong> framing is
@@ -530,46 +572,6 @@ product you install.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

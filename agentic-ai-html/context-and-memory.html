@@ -396,22 +396,64 @@ window — and what fell out?"</em></p>
 forgotten — in front of the wrong audience.</p>
 </blockquote>
 <h2 id="the-memory-hierarchy">The memory hierarchy</h2>
-<pre class="mermaid">flowchart TB
-  subgraph WINDOW[&quot;Context window — working memory (per step, paid every step)&quot;]
-    SYS[&quot;Instructions&lt;br/&gt;(system prompt)&quot;]
-    HIST[&quot;Recent turns &amp;&lt;br/&gt;tool results&quot;]
-    JIT[&quot;Retrieved snippets&lt;br/&gt;(just-in-time)&quot;]
-  end
-  subgraph EXT[&quot;External memory — big, cheap, durable&quot;]
-    CORP[&quot;Knowledge corpora&lt;br/&gt;docs, code, tickets&quot;]
-    NOTES[&quot;Agent notes &amp; scratchpads&lt;br/&gt;plans, progress files&quot;]
-    PROF[&quot;Persistent memory&lt;br/&gt;profiles, preferences,&lt;br/&gt;learned procedures&quot;]
-  end
-  CORP --&gt;|&quot;retrieval / search&quot;| JIT
-  NOTES --&gt;|&quot;reread when needed&quot;| HIST
-  PROF --&gt;|&quot;loaded at session start&quot;| SYS
-  HIST --&gt;|&quot;compaction: summarize,&lt;br/&gt;drop stale tool output&quot;| NOTES
-  HIST --&gt;|&quot;write-back: &#x27;remember this&#x27;&quot;| PROF</pre>
+<style>
+.dgm-cm3{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cm3-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-cm3 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cm3-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cm3-win{background:#efeafb;border:1.5px dashed #b8a3ee;border-radius:12px;padding:12px;margin-bottom:8px}
+.dgm-cm3-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#3d2f8a;
+  text-align:center;margin-bottom:8px}
+.dgm-cm3-items{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-cm3-item{background:#ffffff;border:1px solid #d3c6f5;border-radius:9px;padding:9px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#3d2f8a}
+.dgm-cm3-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-cm3-arr svg{width:16px;height:16px}
+.dgm-cm3-ext{background:#f6f8fa;border:1.5px solid #d1d9e0;border-radius:12px;padding:12px}
+.dgm-cm3-ext .dgm-cm3-lbl{color:#59636e}
+.dgm-cm3-ext .dgm-cm3-item{border-color:#d1d9e0;color:#1f2328}
+.dgm-cm3-flows{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.dgm-cm3-flow{display:flex;align-items:center;gap:8px;font-size:10px;color:#59636e;padding:6px 10px;
+  background:#ffffff;border:1px dashed #d1d9e0;border-radius:8px}
+.dgm-cm3-flow svg{width:14px;height:14px;color:#4a3aa7;flex:0 0 14px}
+@media (max-width:640px){.dgm-cm3{padding:20px 16px 18px}.dgm-cm3-items{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cm3">
+  <span class="dgm-cm3-chip">The memory hierarchy</span>
+  <h4>Context window as working memory · external memory as big, cheap, durable</h4>
+  <p class="dgm-cm3-sub">A big window is headroom, not a strategy — the craft is curating the smallest high-signal set per step.</p>
+
+  <div class="dgm-cm3-win">
+    <div class="dgm-cm3-lbl">Context window — working memory, paid every step</div>
+    <div class="dgm-cm3-items">
+      <div class="dgm-cm3-item">Instructions (system prompt)</div>
+      <div class="dgm-cm3-item">Recent turns &amp; tool results</div>
+      <div class="dgm-cm3-item">Retrieved snippets (just-in-time)</div>
+    </div>
+  </div>
+
+  <div class="dgm-cm3-ext">
+    <div class="dgm-cm3-lbl">External memory — big, cheap, durable</div>
+    <div class="dgm-cm3-items">
+      <div class="dgm-cm3-item">Knowledge corpora — docs, code, tickets</div>
+      <div class="dgm-cm3-item">Agent notes &amp; scratchpads — plans, progress</div>
+      <div class="dgm-cm3-item">Persistent memory — profiles, preferences, procedures</div>
+    </div>
+  </div>
+
+  <div class="dgm-cm3-flows">
+    <div class="dgm-cm3-flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Corpora → retrieval / search → just-in-time snippets</div>
+    <div class="dgm-cm3-flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Notes → reread when needed → recent turns</div>
+    <div class="dgm-cm3-flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Persistent memory → loaded at session start → instructions</div>
+    <div class="dgm-cm3-flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Recent turns → compaction: summarize, drop stale output → notes</div>
+    <div class="dgm-cm3-flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Recent turns → write-back: "remember this" → persistent memory</div>
+  </div>
+</div>
+
 <ul>
 <li><strong>Working memory (the window)</strong> — everything the model can "see" right now. Two hard
   truths follow. It's paid for on <em>every</em> step, so a bloated context multiplies cost
@@ -539,46 +581,6 @@ the model.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

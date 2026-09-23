@@ -1,0 +1,49 @@
+<style>
+.dgm-lp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lp-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-lp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-lp-chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.dgm-lp-node{background:#efeafb;border:1.5px solid #d3c6f5;border-radius:10px;padding:9px 11px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#3d2f8a;max-width:130px}
+.dgm-lp-arr{color:#8c959f;flex:0 0 auto}
+.dgm-lp-arr svg{width:14px;height:14px}
+.dgm-lp-check{background:#f6f8fa;border:1.5px dashed #d1d9e0;border-radius:10px;padding:9px 12px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;max-width:150px}
+.dgm-lp-outs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+.dgm-lp-out{border-radius:11px;padding:10px 12px;text-align:center;font-size:10.5px;font-weight:700}
+.dgm-lp-out.loop{background:#efeafb;border:1.5px solid #d3c6f5;color:#3d2f8a}
+.dgm-lp-out.esc{background:#fdf3d9;border:1.5px solid #eac54f;color:#7a5300}
+.dgm-lp-out.done{background:#dafbe1;border:1.5px solid #aceebb;color:#1a614f}
+.dgm-lp-out small{display:block;font-weight:400;color:#59636e;margin-top:3px;font-size:9.5px}
+@media (max-width:640px){.dgm-lp{padding:20px 16px 18px}.dgm-lp-outs{grid-template-columns:1fr}}
+</style>
+<div class="dgm-lp">
+  <span class="dgm-lp-chip">The agent loop</span>
+  <h4>Gather, decide, act, observe, check · everything else attaches to this loop</h4>
+  <p class="dgm-lp-sub">Strip away every framework and an agent is this cycle, with budgets and exits.</p>
+
+  <div class="dgm-lp-chain">
+    <div class="dgm-lp-node">Goal — user intent</div>
+    <span class="dgm-lp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-lp-node">Gather context — instructions, history, retrieved knowledge</div>
+    <span class="dgm-lp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-lp-node">Model decides next action</div>
+    <span class="dgm-lp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-lp-node">Act — search, run code, call an API, write</div>
+    <span class="dgm-lp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-lp-node">Observe result — append to context</div>
+    <span class="dgm-lp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-lp-check">Goal met? Budget left?</div>
+  </div>
+
+  <div class="dgm-lp-outs">
+    <div class="dgm-lp-out loop">No → loop<small>back to "model decides"</small></div>
+    <div class="dgm-lp-out esc">Stuck / risky → escalate<small>hand off to a human</small></div>
+    <div class="dgm-lp-out done">Yes → respond / deliver<small>the loop ends</small></div>
+  </div>
+</div>

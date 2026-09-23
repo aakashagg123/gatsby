@@ -395,24 +395,80 @@ over a FAQ answer. Or one that executes a flawed plan at full speed, because not
 in the loop ever checked the plan.</p>
 </blockquote>
 <h2 id="the-patterns">The patterns</h2>
-<pre class="mermaid">flowchart TB
-  subgraph REACT[&quot;ReAct — think, act, observe, repeat&quot;]
-    R1[&quot;Thought: I need the Q3 numbers&quot;] --&gt; R2[&quot;Act: query warehouse&quot;]
-    R2 --&gt; R3[&quot;Observe: rows returned&quot;]
-    R3 --&gt; R4[&quot;Thought: now compare to Q2...&quot;]
-    R4 --&gt; R2
-  end
-  subgraph PLANEX[&quot;Plan-and-execute&quot;]
-    P1[&quot;Draft full plan&lt;br/&gt;(steps 1–6)&quot;] --&gt; P2[&quot;Execute steps&quot;]
-    P2 --&gt; P3{&quot;Reality matches&lt;br/&gt;plan?&quot;}
-    P3 --&gt;|&quot;no&quot;| P1
-    P3 --&gt;|&quot;yes&quot;| P4[&quot;Done&quot;]
-  end
-  subgraph REFLECT[&quot;Reflection&quot;]
-    F1[&quot;Generate draft&quot;] --&gt; F2[&quot;Critique own draft&lt;br/&gt;(or run the tests)&quot;]
-    F2 --&gt;|&quot;issues found&quot;| F1
-    F2 --&gt;|&quot;passes&quot;| F3[&quot;Deliver&quot;]
-  end</pre>
+<style>
+.dgm-pr2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr2-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-pr2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr2-panels{display:flex;flex-direction:column;gap:12px}
+.dgm-pr2-panel{border-radius:12px;padding:12px 14px;position:relative}
+.dgm-pr2-panel.react{background:#efeafb;border:1.5px solid #d3c6f5}
+.dgm-pr2-panel.plan{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-pr2-panel.reflect{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-pr2-panel .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-pr2-panel.react .tag{color:#3d2f8a;border-color:#d3c6f5}
+.dgm-pr2-panel.plan .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-pr2-panel.reflect .tag{color:#1a614f;border-color:#aceebb}
+.dgm-pr2-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dgm-pr2-node{background:#ffffff;border-radius:8px;padding:7px 10px;font-size:10px;color:#1f2328;line-height:1.3}
+.dgm-pr2-panel.react .dgm-pr2-node{border:1px solid #e3d9f8}
+.dgm-pr2-panel.plan .dgm-pr2-node{border:1px solid #d4ecfa}
+.dgm-pr2-panel.reflect .dgm-pr2-node{border:1px solid #cdf0da}
+.dgm-pr2-arr{color:#8c959f;font-size:11px}
+.dgm-pr2-loop{font-size:9px;font-style:italic;color:#59636e}
+@media (max-width:640px){.dgm-pr2{padding:20px 16px 18px}}
+</style>
+<div class="dgm-pr2">
+  <span class="dgm-pr2-chip">Planning &amp; reasoning</span>
+  <h4>Three patterns, not a module · cognition is the model, prompted into shape</h4>
+  <p class="dgm-pr2-sub">Reasoning pays off in proportion to how checkable the work is.</p>
+
+  <div class="dgm-pr2-panels">
+    <div class="dgm-pr2-panel react">
+      <span class="tag">ReAct — think, act, observe, repeat</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Thought: need Q3 numbers</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Act: query warehouse</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Observe: rows returned</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Thought: compare to Q2…</div>
+        <span class="dgm-pr2-loop">↻ back to act</span>
+      </div>
+    </div>
+
+    <div class="dgm-pr2-panel plan">
+      <span class="tag">Plan-and-execute</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Draft full plan (steps 1–6)</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Execute steps</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Reality matches plan?</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">No: revise plan · Yes: done</div>
+      </div>
+    </div>
+
+    <div class="dgm-pr2-panel reflect">
+      <span class="tag">Reflection</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Generate draft</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Critique own draft (or run the tests)</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Issues found: retry · Passes: deliver</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <ul>
 <li><strong>ReAct</strong> — the default loop from <a href="what-is-an-agent.html">lesson 1</a>, with the thinking
   made explicit: reason about the situation, act, observe, reason again. It's strong when
@@ -540,46 +596,6 @@ ask what the agent would <em>see</em> if it were wrong.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

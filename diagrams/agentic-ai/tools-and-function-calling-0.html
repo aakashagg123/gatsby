@@ -1,0 +1,49 @@
+<style>
+.dgm-tf{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tf-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-tf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tf-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tf-actors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.dgm-tf-actor{border-radius:9px;padding:7px 6px;text-align:center;font-size:9.5px;font-weight:700}
+.dgm-tf-actor.u{background:#f6f8fa;border:1px solid #d1d9e0;color:#59636e}
+.dgm-tf-actor.h{background:#efeafb;border:1px solid #d3c6f5;color:#3d2f8a}
+.dgm-tf-actor.m{background:#ddf4ff;border:1px solid #b6e3ff;color:#0550ae}
+.dgm-tf-actor.t{background:#fdf3d9;border:1px solid #eac54f;color:#7a5300}
+.dgm-tf-msgs{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.dgm-tf-msg{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:10.5px;
+  color:#1f2328;line-height:1.35;padding:7px 10px;border-radius:8px;background:#f6f8fa}
+.dgm-tf-msg .tag{font-size:9px;font-weight:700;color:#8c959f}
+.dgm-tf-msg strong{color:#3d2f8a}
+.dgm-tf-note{padding:11px 14px;background:#efeafb;border:1px dashed #d3c6f5;border-radius:10px;
+  font-size:11px;color:#3d2f8a;line-height:1.4}
+@media (max-width:640px){.dgm-tf{padding:20px 16px 18px}.dgm-tf-actors{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-tf">
+  <span class="dgm-tf-chip">Tools &amp; function calling</span>
+  <h4>The model only ever requests — the harness executes and can refuse</h4>
+  <p class="dgm-tf-sub">Every control — allowlists, approval, rate limits, logging — attaches at the harness step.</p>
+
+  <div class="dgm-tf-actors">
+    <div class="dgm-tf-actor u">User</div>
+    <div class="dgm-tf-actor h">Harness (your code)</div>
+    <div class="dgm-tf-actor m">Model</div>
+    <div class="dgm-tf-actor t">Tool</div>
+  </div>
+
+  <div class="dgm-tf-msgs">
+    <div class="dgm-tf-msg"><span class="tag">1</span><span>User → Harness: "Find our three biggest churn drivers"</span></div>
+    <div class="dgm-tf-msg"><span class="tag">2</span><span>Harness → Model: prompt + tool definitions</span></div>
+    <div class="dgm-tf-msg"><span class="tag">3</span><span>Model → Harness: <strong>tool_call: query_warehouse(sql=…)</strong></span></div>
+    <div class="dgm-tf-msg"><span class="tag">4</span><span>Harness validates &amp; checks permissions</span></div>
+    <div class="dgm-tf-msg"><span class="tag">5</span><span>Harness → Tool: execute the call</span></div>
+    <div class="dgm-tf-msg"><span class="tag">6</span><span>Tool → Harness: result (rows / error)</span></div>
+    <div class="dgm-tf-msg"><span class="tag">7</span><span>Harness → Model: tool result appended to context — loop to step 3, or…</span></div>
+    <div class="dgm-tf-msg"><span class="tag">8</span><span>Model → Harness → User: final answer, with findings</span></div>
+  </div>
+
+  <div class="dgm-tf-note">Two arrows worth staring at: the model only ever <strong>requests</strong> a call, and the harness <strong>executes and can refuse</strong>. A model with tools is exactly as dangerous as the harness lets it be.</div>
+</div>
