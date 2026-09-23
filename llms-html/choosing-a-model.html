@@ -400,12 +400,77 @@ well-defined task doesn't need your most senior, most expensive person; a genuin
 ambiguous one does. A product with many different AI-powered features is really staffing
 many different tasks, and the efficient choice is rarely "use the most senior person for
 everything."</p>
-<pre class="mermaid">flowchart TB
-  REQ[&quot;A request&lt;br/&gt;comes in&quot;] --&gt; Q{&quot;How hard is&lt;br/&gt;this specific task?&quot;}
-  Q --&gt;|&quot;simple, well-defined&lt;br/&gt;(classify, extract, format)&quot;| SMALL[&quot;Smaller, cheaper,&lt;br/&gt;faster model&quot;]
-  Q --&gt;|&quot;complex reasoning,&lt;br/&gt;nuance, high stakes&quot;| BIG[&quot;Larger, more capable,&lt;br/&gt;costlier model&quot;]
-  SMALL --&gt; COST1[&quot;Lower cost,&lt;br/&gt;lower latency&quot;]
-  BIG --&gt; COST2[&quot;Higher cost,&lt;br/&gt;higher latency,&lt;br/&gt;better on hard cases&quot;]</pre>
+<style>
+.dgm-cm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cm-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-cm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cm-req{display:flex;align-items:center;justify-content:center;gap:9px;background:#f6f8fa;border:1px solid #d1d9e0;
+  border-radius:11px;padding:10px 16px;text-align:center;color:#1f2328;font-weight:700;font-size:12px;
+  margin:0 auto 8px;max-width:280px}
+.dgm-cm-req svg{width:18px;height:18px;color:#59636e}
+.dgm-cm-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-cm-arr svg{width:16px;height:16px}
+.dgm-cm-q{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:10px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:12px;margin:0 auto 12px;max-width:280px}
+.dgm-cm-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.dgm-cm-col{border-radius:13px;padding:14px 15px;position:relative}
+.dgm-cm-col.sm{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-cm-col.lg{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-cm-col .dgm-cm-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-cm-col.sm .dgm-cm-tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-cm-col.lg .dgm-cm-tag{color:#7a5300;border-color:#eac54f}
+.dgm-cm-col h6{margin:2px 0 4px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-cm-col p{margin:0 0 10px;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-cm-result{background:#ffffff;border-radius:9px;padding:8px 11px;font-size:10.5px;font-weight:700;text-align:center}
+.dgm-cm-col.sm .dgm-cm-result{color:#0550ae;border:1px solid #b6e3ff}
+.dgm-cm-col.lg .dgm-cm-result{color:#7a5300;border:1px solid #eac54f}
+.dgm-cm-dims{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-cm-dim{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:9px 8px;text-align:center}
+.dgm-cm-dim svg{width:18px;height:18px;color:#3f7d5c;margin-bottom:4px}
+.dgm-cm-dim span{display:block;font-size:9.5px;font-weight:700;color:#1f2328;line-height:1.25}
+@media (max-width:640px){.dgm-cm{padding:20px 16px 18px}.dgm-cm-cols{grid-template-columns:1fr}.dgm-cm-dims{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-cm">
+  <span class="dgm-cm-chip">Choosing a model</span>
+  <h4>Hiring for a task, not for a title · four dimensions, one request at a time</h4>
+  <p class="dgm-cm-sub">Most requests don't need your most senior, most expensive model — model routing sends each to the right size.</p>
+
+  <div class="dgm-cm-req">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg>
+    A request comes in
+  </div>
+  <div class="dgm-cm-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-cm-q">How hard is this specific task?</div>
+
+  <div class="dgm-cm-cols">
+    <div class="dgm-cm-col sm">
+      <span class="dgm-cm-tag">Simple, well-defined</span>
+      <h6>Smaller, cheaper, faster model</h6>
+      <p>Classify, extract, format</p>
+      <div class="dgm-cm-result">Lower cost, lower latency</div>
+    </div>
+    <div class="dgm-cm-col lg">
+      <span class="dgm-cm-tag">Complex, high stakes</span>
+      <h6>Larger, more capable, costlier model</h6>
+      <p>Ambiguity, nuance, multi-step reasoning</p>
+      <div class="dgm-cm-result">Higher cost — better on hard cases</div>
+    </div>
+  </div>
+
+  <div class="dgm-cm-dims">
+    <div class="dgm-cm-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="16" y="3" width="4" height="17"/></svg><span>Size &amp; capability</span></div>
+    <div class="dgm-cm-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Cost per token</span></div>
+    <div class="dgm-cm-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg><span>Latency</span></div>
+    <div class="dgm-cm-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="7" height="10" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg><span>Open vs. closed</span></div>
+  </div>
+</div>
+
 <h2 id="the-four-dimensions">The four dimensions</h2>
 <ul>
 <li><strong>Size and capability.</strong> Larger models generally handle ambiguity, nuance, and multi-step
@@ -502,46 +567,6 @@ product, not just real in the abstract.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

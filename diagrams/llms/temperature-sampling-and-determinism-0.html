@@ -1,0 +1,61 @@
+<style>
+.dgm-tm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tm-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-tm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tm-pred{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:400px}
+.dgm-tm-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tm-arr svg{width:16px;height:16px}
+.dgm-tm-dial{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.dgm-tm-dial-lbl{background:#e6f3ec;border:1.5px dashed #8fc4a8;color:#1f5c3f;font-weight:700;font-size:12px;
+  border-radius:20px;padding:6px 16px}
+.dgm-tm-branches{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.dgm-tm-branch{border-radius:12px;padding:13px 14px;position:relative}
+.dgm-tm-branch.low{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-tm-branch.high{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-tm-branch .dgm-tm-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-tm-branch.low .dgm-tm-tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-tm-branch.high .dgm-tm-tag{color:#7a5300;border-color:#eac54f}
+.dgm-tm-branch h6{margin:3px 0 4px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-tm-branch p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-tm-sample{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 14px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;gap:8px}
+.dgm-tm-sample svg{width:15px;height:15px;color:#3f7d5c}
+@media (max-width:640px){.dgm-tm{padding:20px 16px 18px}.dgm-tm-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tm">
+  <span class="dgm-tm-chip">Temperature, sampling &amp; determinism</span>
+  <h4>A loaded die, with an adjustable weighting · the dial behind repeat-question variation</h4>
+  <p class="dgm-tm-sub">Not a fixed answer — a list of candidates, sampled by likelihood, weighted by one dial.</p>
+
+  <div class="dgm-tm-pred">Model computes likelihoods for many candidate next tokens</div>
+  <div class="dgm-tm-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tm-dial">
+    <span class="dgm-tm-dial-lbl">🌡 Temperature dial</span>
+  </div>
+
+  <div class="dgm-tm-branches">
+    <div class="dgm-tm-branch low">
+      <span class="dgm-tm-tag">Low</span>
+      <h6>Heavily favors the most likely candidate</h6>
+      <p>→ steady, consistent output</p>
+    </div>
+    <div class="dgm-tm-branch high">
+      <span class="dgm-tm-tag">High</span>
+      <h6>Less likely candidates become competitive</h6>
+      <p>→ varied, sometimes surprising output</p>
+    </div>
+  </div>
+
+  <div class="dgm-tm-sample">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    Sample one token · feed it back in · repeat for the next token
+  </div>
+</div>

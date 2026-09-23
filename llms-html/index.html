@@ -386,32 +386,93 @@ is the map that tells you when to open which of those doors.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>An LLM is one idea, applied at scale, with consequences that ripple outward. Every lesson
 in this module hangs off this picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph CORE[&quot;THE CORE IDEA — lesson 1&quot;]
-    TOK[&quot;Tokens&lt;br/&gt;the model&#x27;s units of text&quot;]
-    PRED[&quot;Next-token prediction&lt;br/&gt;guess the most likely&lt;br/&gt;next piece, one at a time&quot;]
-    TOK --&gt; PRED
-  end
-  subgraph LIMIT[&quot;THE LIMITS — lessons 2–3&quot;]
-    CTX[&quot;Context window&lt;br/&gt;a fixed amount of text&lt;br/&gt;the model can see at once&quot;]
-    JAG[&quot;The jagged frontier&lt;br/&gt;uneven skill: strong here,&lt;br/&gt;weak there, no clean line&quot;]
-  end
-  subgraph TALK[&quot;TALKING TO IT — lessons 4–5&quot;]
-    PROMPT[&quot;Prompting &amp;&lt;br/&gt;in-context learning&quot;]
-    TEMP[&quot;Temperature &amp; sampling&lt;br/&gt;why the same question&lt;br/&gt;can get different answers&quot;]
-  end
-  subgraph CHOOSE[&quot;THE DECISIONS — lessons 6–7&quot;]
-    PICK[&quot;Choosing a model&lt;br/&gt;size, cost, latency,&lt;br/&gt;open vs. closed&quot;]
-    LEVER[&quot;Prompting vs. RAG&lt;br/&gt;vs. fine-tuning&lt;br/&gt;which lever, and when&quot;]
-  end
-  PRED --&gt; CTX
-  PRED --&gt; JAG
-  CTX --&gt; PROMPT
-  PRED --&gt; TEMP
-  JAG --&gt;|&quot;shapes what to trust it with&quot;| PICK
-  PROMPT --&gt; LEVER
-  TEMP -.-&gt;|&quot;a cost every layer inherits&quot;| LEVER
-  PICK --&gt; LEVER</pre>
+<style>
+.dgm-ov{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ov-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-ov h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ov-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-ov-stage{margin-bottom:6px}
+.dgm-ov-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-ov-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-ov-core{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+.dgm-ov-core .dgm-ov-node{background:#e6f3ec;border:1.5px solid #bfe0cd;border-radius:11px;
+  padding:11px 18px;text-align:center;color:#1f5c3f;font-weight:700;font-size:12.5px}
+.dgm-ov-core svg{width:16px;height:16px;color:#8c959f;flex:0 0 16px}
+.dgm-ov-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px}
+.dgm-ov-card{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start}
+.dgm-ov-card .dgm-ov-ico{width:22px;height:22px;flex:0 0 22px;margin-top:1px;color:#3f7d5c}
+.dgm-ov-card h6{margin:0 0 3px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-ov-card p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ov-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0 10px}
+.dgm-ov-arr svg{width:16px;height:16px}
+@media (max-width:640px){.dgm-ov{padding:20px 16px 18px}.dgm-ov-row{grid-template-columns:1fr}.dgm-ov-core{flex-direction:column}}
+</style>
+<div class="dgm-ov">
+  <span class="dgm-ov-chip">LLMs for the product leader</span>
+  <h4>One idea, four consequences · the shape of this module</h4>
+  <p class="dgm-ov-sub">Every lesson hangs off the same mechanism — next-token prediction — read top to bottom as one chain of consequences.</p>
+
+  <div class="dgm-ov-stage">
+    <div class="dgm-ov-lbl">The core idea · lesson 1</div>
+    <div class="dgm-ov-core">
+      <div class="dgm-ov-node">Tokens</div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <div class="dgm-ov-node">Next-token prediction</div>
+    </div>
+  </div>
+  <div class="dgm-ov-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ov-stage">
+    <div class="dgm-ov-lbl">The limits · lessons 2–3</div>
+    <div class="dgm-ov-row">
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+        <div><h6>Context window</h6><p>A fixed amount of text the model can see at once</p></div>
+      </div>
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l4-9 4 6 3-11 4 9 3-4"/></svg>
+        <div><h6>The jagged frontier</h6><p>Uneven skill — strong here, weak there, no clean line</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="dgm-ov-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ov-stage">
+    <div class="dgm-ov-lbl">Talking to it · lessons 4–5</div>
+    <div class="dgm-ov-row">
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg>
+        <div><h6>Prompting &amp; in-context learning</h6><p>How you talk to it, and how it learns a task on the spot</p></div>
+      </div>
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <div><h6>Temperature &amp; sampling</h6><p>Why the same question can get a different answer twice</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="dgm-ov-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ov-stage">
+    <div class="dgm-ov-lbl">The decisions · lessons 6–7</div>
+    <div class="dgm-ov-row">
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="16" y="3" width="4" height="17"/></svg>
+        <div><h6>Choosing a model</h6><p>Size, cost, latency, and open vs. closed, as one decision</p></div>
+      </div>
+      <div class="dgm-ov-card">
+        <svg class="dgm-ov-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h11M4 12h7M4 18h15M17 6l3 3-3 3"/></svg>
+        <div><h6>Prompting vs. RAG vs. fine-tuning</h6><p>Which lever to reach for, and in what order</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p>Read it in three passes. <strong>The core idea</strong>: an LLM does one thing — predict the next
 token — and everything else about it follows from that one mechanism. <strong>The limits</strong>:
 prediction only works over a fixed window of text, and the skill it produces is uneven in a
@@ -445,47 +506,7 @@ for the engineering-depth version of the final decision.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-an-llm.html"><span class="card-num">01</span><h3>What an LLM actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-context-window.html"><span class="card-num">02</span><h3>The context window</h3><span class="card-go">Read lesson →</span></a><a class="card" href="capabilities-and-the-jagged-frontier.html"><span class="card-num">03</span><h3>Capabilities &amp; the jagged frontier</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prompting-and-in-context-learning.html"><span class="card-num">04</span><h3>Prompting &amp; in-context learning</h3><span class="card-go">Read lesson →</span></a><a class="card" href="temperature-sampling-and-determinism.html"><span class="card-num">05</span><h3>Temperature, sampling &amp; determinism</h3><span class="card-go">Read lesson →</span></a><a class="card" href="choosing-a-model.html"><span class="card-num">06</span><h3>Choosing a model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prompting-vs-rag-vs-finetuning.html"><span class="card-num">07</span><h3>Prompting vs. RAG vs. fine-tuning</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

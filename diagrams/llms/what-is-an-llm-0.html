@@ -1,0 +1,66 @@
+<style>
+.dgm-ti{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ti-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-ti h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ti-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ti-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-ti-col{border-radius:13px;padding:14px 15px;position:relative}
+.dgm-ti-col.train{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-ti-col.infer{background:#e6f3ec;border:1.5px solid #bfe0cd}
+.dgm-ti-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-ti-col.train .dgm-ti-tag{color:#59636e;border-color:#d1d9e0}
+.dgm-ti-col.infer .dgm-ti-tag{color:#1f5c3f;border-color:#bfe0cd}
+.dgm-ti-col h5{margin:6px 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-ti-col .dgm-ti-freq{margin:0 0 12px;font-size:10.5px;color:#59636e;font-style:italic}
+.dgm-ti-steps{display:flex;flex-direction:column;gap:6px}
+.dgm-ti-step{background:#ffffff;border-radius:9px;padding:8px 10px;display:flex;gap:8px;align-items:flex-start;font-size:10.5px;color:#1f2328;line-height:1.35}
+.dgm-ti-col.train .dgm-ti-step{border:1px solid #e2e8ee}
+.dgm-ti-col.infer .dgm-ti-step{border:1px solid #d3ecdd}
+.dgm-ti-step svg{width:16px;height:16px;flex:0 0 16px;margin-top:1px}
+.dgm-ti-col.train .dgm-ti-step svg{color:#8c959f}
+.dgm-ti-col.infer .dgm-ti-step svg{color:#3f7d5c}
+.dgm-ti-loop{margin-top:6px;font-size:10px;color:#1f5c3f;font-weight:600;padding-left:24px}
+.dgm-ti-link{display:flex;justify-content:center;align-items:center;gap:8px;margin:12px 0 2px;
+  font-size:10.5px;color:#59636e;text-align:center}
+.dgm-ti-link svg{width:16px;height:16px;color:#8c959f}
+@media (max-width:640px){.dgm-ti{padding:20px 16px 18px}.dgm-ti-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ti">
+  <span class="dgm-ti-chip">Training vs. inference</span>
+  <h4>Two very different costs · one happens once, the other happens every time</h4>
+  <p class="dgm-ti-sub">The frozen model is the product of training. Every call your product makes afterward is inference.</p>
+
+  <div class="dgm-ti-cols">
+    <div class="dgm-ti-col train">
+      <span class="dgm-ti-tag">Once, in advance</span>
+      <h5>Training</h5>
+      <p class="dgm-ti-freq">Months, a large budget</p>
+      <div class="dgm-ti-steps">
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Enormous amounts of text</div>
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2-7 4 14 2-7h4"/></svg>Adjust billions of internal numbers</div>
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h.01M15 9h.01M9 14c.7 1 1.9 1.5 3 1.5s2.3-.5 3-1.5"/></svg>A frozen model, unchanged after this</div>
+      </div>
+    </div>
+    <div class="dgm-ti-col infer">
+      <span class="dgm-ti-tag">Every request</span>
+      <h5>Inference</h5>
+      <p class="dgm-ti-freq">Small per call — but constant, so it's the bill</p>
+      <div class="dgm-ti-steps">
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg>Your input text goes in</div>
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Predict, append, predict again</div>
+        <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>The full response, one token at a time</div>
+      </div>
+      <div class="dgm-ti-loop">↻ starts from the same frozen model every time</div>
+    </div>
+  </div>
+
+  <div class="dgm-ti-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 22v-6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg>
+    the frozen model is used, unchanged, on every inference call
+  </div>
+</div>
