@@ -1,0 +1,99 @@
+<!-- What tool calling is — the sequence diagram (Model → Harness → Tool → back). -->
+<style>
+.dgm-wt{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #8a6d3b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-wt-chip{position:absolute;top:-11px;left:24px;background:#8a6d3b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(138,109,59,.28)}
+.dgm-wt h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-wt-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wt-seq{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.dgm-wt-actor{background:#f6efdd;border:1.5px solid #e0d0a8;border-radius:11px;padding:8px 12px;
+  text-align:center;display:flex;flex-direction:column;gap:5px;align-items:center}
+.dgm-wt-actor .dgm-wt-ico{color:#8a6d3b;width:24px;height:24px}
+.dgm-wt-actor h5{margin:0;font-size:12px;font-weight:700;color:#5a4820;letter-spacing:.02em}
+.dgm-wt-actor .dgm-wt-role{font-size:10px;color:#59636e;letter-spacing:.02em}
+.dgm-wt-lanes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;position:relative;
+  padding:20px 0 12px}
+.dgm-wt-lanes::before,.dgm-wt-lanes::after{content:'';position:absolute;top:0;bottom:0;width:2px;
+  background:repeating-linear-gradient(to bottom,#e0d0a8 0 4px,transparent 4px 8px);
+  left:calc(16.66% + 1px)}
+.dgm-wt-lanes::after{left:auto;right:calc(16.66% + 1px)}
+.dgm-wt-msg{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
+  align-items:center}
+.dgm-wt-msg .dgm-wt-line{grid-column:span 2;border-radius:9px;padding:8px 12px;font-size:11px;
+  color:#5a4820;font-weight:600;text-align:left;position:relative;display:flex;
+  align-items:center;gap:8px}
+.dgm-wt-msg .dgm-wt-line.request{background:#efedfa;border:1px solid #cec8f0;color:#3d3a95}
+.dgm-wt-msg .dgm-wt-line.check{background:#fff8c5;border:1px solid #eac54f;color:#9a6700;grid-column:2 / 3}
+.dgm-wt-msg .dgm-wt-line.exec{background:#ecf6f2;border:1px solid #c7e4d9;color:#1a614f}
+.dgm-wt-msg .dgm-wt-line.result{background:#ddf4ff;border:1px solid #b6e3ff;color:#0550ae}
+.dgm-wt-msg .dgm-wt-line.spacer{visibility:hidden}
+.dgm-wt-msg .dgm-wt-line::before{content:'';display:block;width:14px;font-weight:700}
+.dgm-wt-msg .dgm-wt-line.forward::before{content:'→'}
+.dgm-wt-msg .dgm-wt-line.back::before{content:'←'}
+.dgm-wt-msg .dgm-wt-line.self::before{content:'↻'}
+.dgm-wt-msg .dgm-wt-line.exec.forward{grid-column:2 / 4}
+.dgm-wt-msg .dgm-wt-line.result.back{grid-column:2 / 4}
+.dgm-wt-msg .dgm-wt-line.request.forward{grid-column:1 / 3}
+.dgm-wt-msg .dgm-wt-line.result-back-to-model{grid-column:1 / 3}
+.dgm-wt-note{margin-top:14px;padding:12px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;
+  border-radius:10px;font-size:11.5px;color:#1f2328;line-height:1.4}
+.dgm-wt-note strong{color:#5a4820}
+@media (max-width:640px){
+  .dgm-wt{padding:20px 16px 18px}
+  .dgm-wt-lanes::before,.dgm-wt-lanes::after{display:none}
+  .dgm-wt-msg,.dgm-wt-seq{grid-template-columns:1fr}
+  .dgm-wt-msg .dgm-wt-line{grid-column:1 !important}
+}
+</style>
+<div class="dgm-wt">
+  <span class="dgm-wt-chip">The sequence</span>
+
+  <h4>Model → Harness → Tool · every control lives in the middle lane</h4>
+  <p class="dgm-wt-sub">Two easy-to-lose truths: the model never touches the tool, and every control has exactly one place to live.</p>
+
+  <div class="dgm-wt-seq">
+    <div class="dgm-wt-actor">
+      <svg class="dgm-wt-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/><path d="M9 18h6M10 21h4"/></svg>
+      <h5>Model</h5>
+      <span class="dgm-wt-role">proposes</span>
+    </div>
+    <div class="dgm-wt-actor">
+      <svg class="dgm-wt-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <h5>Your harness</h5>
+      <span class="dgm-wt-role">enforces</span>
+    </div>
+    <div class="dgm-wt-actor">
+      <svg class="dgm-wt-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg>
+      <h5>Tool</h5>
+      <span class="dgm-wt-role">acts</span>
+    </div>
+  </div>
+
+  <div class="dgm-wt-lanes">
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line request forward">"I'd like to call send_email(to=..., body=...)"</div>
+    </div>
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line check self">Validate the request · check permissions</div>
+    </div>
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line exec forward">Execute · only if it passed</div>
+    </div>
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line result back">Result · or a rejection</div>
+    </div>
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line result-back-to-model back">Result fed back into context</div>
+    </div>
+    <div class="dgm-wt-msg">
+      <div class="dgm-wt-line request forward">Next request · or a final answer</div>
+    </div>
+  </div>
+
+  <div class="dgm-wt-note"><strong>Where every control lives:</strong> allowlist, spend cap, rate limit, approval step, log entry — all sit in the harness's validation step. A model with tools is never more careful than the system between it and the tool.</div>
+</div>
