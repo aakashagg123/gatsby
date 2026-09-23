@@ -192,9 +192,22 @@ def head(title, depth_note=""):
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{htmllib.escape(title)}</title>
+{FONT_LINKS}
 <style>{CSS}</style>
 </head>
 <body>"""
+
+
+# Inter as the site's default sans, with the standard system-font fallback
+# chain preserved for offline / blocked-CDN cases. Loaded once per page via
+# Google Fonts; the reader-settings widget can override to Tahoma / Arial /
+# Verdana / Helvetica per reader preference.
+FONT_LINKS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link href="https://fonts.googleapis.com/css2?'
+    'family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">'
+)
 
 def topbar(with_menu=False):
     links = "".join(
@@ -410,8 +423,8 @@ CSS = r"""
   --ink:#1F2328; --ink2:#1F2328; --mut:#59636E; --accent:#0969DA; --accent-d:#0550AE;
   --accent-soft:#DDF4FF; --accent-border:#B6E3FF; --green:#1A7F37; --red:#D1242F;
   --red-soft:#FFEBE9; --radius:6px;
-  --serif:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
+  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
   --mono:ui-monospace,'SFMono-Regular','SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
 }
 *{box-sizing:border-box}

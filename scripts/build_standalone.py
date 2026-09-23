@@ -200,6 +200,7 @@ def _head(title):
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{htmllib.escape(title)}</title>
+{bh.FONT_LINKS}
 <style>{bh.CSS}{MERMAID_CSS}</style>
 </head>
 <body>"""
