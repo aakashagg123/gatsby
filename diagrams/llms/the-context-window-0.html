@@ -1,0 +1,49 @@
+<style>
+.dgm-cw{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cw-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-cw h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cw-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cw-desk{background:#e6f3ec;border:1.5px dashed #8fc4a8;border-radius:12px;padding:14px;margin-bottom:10px}
+.dgm-cw-desk-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#1f5c3f;margin-bottom:10px;text-align:center}
+.dgm-cw-items{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-cw-item{background:#ffffff;border:1px solid #bfe0cd;border-radius:9px;padding:9px 8px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.dgm-cw-item svg{width:18px;height:18px;color:#3f7d5c}
+.dgm-cw-item span{font-size:10px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-cw-arr{display:flex;justify-content:center;color:#8c959f;padding:6px 0}
+.dgm-cw-arr svg{width:16px;height:16px}
+.dgm-cw-model{background:#ffffff;border:1.5px solid #d1d9e0;border-radius:11px;padding:11px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12px;margin-bottom:10px}
+.dgm-cw-outside{display:flex;gap:10px;align-items:center;background:#ffebe9;border:1px dashed #ffcecb;
+  border-radius:10px;padding:10px 14px;font-size:10.5px;color:#82061e;line-height:1.4}
+.dgm-cw-outside svg{width:18px;height:18px;flex:0 0 18px}
+@media (max-width:640px){.dgm-cw{padding:20px 16px 18px}.dgm-cw-items{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-cw">
+  <span class="dgm-cw-chip">The context window</span>
+  <h4>A desk, not a filing cabinet · a fixed surface, laid out fresh each request</h4>
+  <p class="dgm-cw-sub">Whatever doesn't fit on the desk right now is not part of the current work, no matter how relevant.</p>
+
+  <div class="dgm-cw-desk">
+    <div class="dgm-cw-desk-lbl">The context window — a fixed size, in tokens</div>
+    <div class="dgm-cw-items">
+      <div class="dgm-cw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>System instructions</span></div>
+      <div class="dgm-cw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg><span>Conversation history</span></div>
+      <div class="dgm-cw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M13 3v5h5"/></svg><span>Documents / retrieved passages</span></div>
+      <div class="dgm-cw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>The current request</span></div>
+    </div>
+  </div>
+
+  <div class="dgm-cw-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-cw-model">The model predicts the next token, using only what's on the desk</div>
+
+  <div class="dgm-cw-outside">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 4.2A9.1 9.1 0 0112 4c5 0 9 4 10.5 8a11 11 0 01-2.3 3.6M6.7 6.7C4.7 8 3.2 9.9 1.5 12 3 16 7 20 12 20c1.4 0 2.7-.3 3.9-.8"/></svg>
+    <span>Anything outside the window is invisible to this request — no matter how relevant it might be.</span>
+  </div>
+</div>

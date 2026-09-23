@@ -401,15 +401,61 @@ business before and will forget everything the moment the task ends. A vague ins
 examples gets a result close to what an experienced employee would produce. The temp isn't
 getting smarter between these two cases. You are giving them more to work with, inside the
 one chance they have.</p>
-<pre class="mermaid">flowchart TB
-  subgraph WEAK[&quot;A vague prompt&quot;]
-    W1[&quot;&#x27;Summarize this.&#x27;&quot;] --&gt; W2[&quot;Model guesses length,&lt;br/&gt;tone, and focus&quot;]
-    W2 --&gt; W3[&quot;Inconsistent,&lt;br/&gt;sometimes off-target output&quot;]
-  end
-  subgraph STRONG[&quot;A specific prompt with examples&quot;]
-    S1[&quot;Clear instruction:&lt;br/&gt;audience, length, tone,&lt;br/&gt;plus 2 worked examples&quot;] --&gt; S2[&quot;Model matches the&lt;br/&gt;demonstrated pattern&quot;]
-    S2 --&gt; S3[&quot;Consistent output,&lt;br/&gt;closer to what you want&quot;]
-  end</pre>
+<style>
+.dgm-pr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-pr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-pr-col{border-radius:13px;padding:14px 15px;position:relative;display:flex;flex-direction:column;gap:8px}
+.dgm-pr-col.weak{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-pr-col.strong{background:#e6f3ec;border:1.5px solid #bfe0cd}
+.dgm-pr-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-pr-col.weak .dgm-pr-tag{color:#82061e;border-color:#ffcecb}
+.dgm-pr-col.strong .dgm-pr-tag{color:#1f5c3f;border-color:#bfe0cd}
+.dgm-pr-node{background:#ffffff;border-radius:9px;padding:9px 11px;font-size:10.5px;color:#1f2328;line-height:1.35;
+  display:flex;gap:8px;align-items:flex-start;margin-top:4px}
+.dgm-pr-col.weak .dgm-pr-node{border:1px solid #ffd8d5}
+.dgm-pr-col.strong .dgm-pr-node{border:1px solid #d3ecdd}
+.dgm-pr-node svg{width:16px;height:16px;flex:0 0 16px;margin-top:1px}
+.dgm-pr-col.weak .dgm-pr-node svg{color:#c9432f}
+.dgm-pr-col.strong .dgm-pr-node svg{color:#3f7d5c}
+.dgm-pr-arrow{text-align:center;color:#8c959f;font-size:12px}
+.dgm-pr-result{border-radius:9px;padding:9px 11px;font-weight:700;font-size:11px;text-align:center}
+.dgm-pr-col.weak .dgm-pr-result{background:#fff5f4;color:#82061e}
+.dgm-pr-col.strong .dgm-pr-result{background:#f1f9f4;color:#1f5c3f}
+@media (max-width:640px){.dgm-pr{padding:20px 16px 18px}.dgm-pr-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pr">
+  <span class="dgm-pr-chip">Prompting &amp; in-context learning</span>
+  <h4>Same model, same request budget · what you hand it decides the result</h4>
+  <p class="dgm-pr-sub">The temp isn't getting smarter between these two prompts — you're giving them more to work with.</p>
+
+  <div class="dgm-pr-cols">
+    <div class="dgm-pr-col weak">
+      <span class="dgm-pr-tag">A vague prompt</span>
+      <div class="dgm-pr-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg>"Summarize this."</div>
+      <div class="dgm-pr-arrow">↓</div>
+      <div class="dgm-pr-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16.5h.01"/></svg>Model guesses length, tone, and focus</div>
+      <div class="dgm-pr-arrow">↓</div>
+      <div class="dgm-pr-result">Inconsistent, sometimes off-target output</div>
+    </div>
+    <div class="dgm-pr-col strong">
+      <span class="dgm-pr-tag">A specific prompt with examples</span>
+      <div class="dgm-pr-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Clear audience, length, tone + 2 worked examples</div>
+      <div class="dgm-pr-arrow">↓</div>
+      <div class="dgm-pr-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h4l2-7 4 14 2-7h4" transform="translate(0 3)"/></svg>Model matches the demonstrated pattern</div>
+      <div class="dgm-pr-arrow">↓</div>
+      <div class="dgm-pr-result">Consistent output, closer to what you want</div>
+    </div>
+  </div>
+</div>
+
 <h2 id="in-context-learning-teaching-without-training">In-context learning: teaching without training</h2>
 <p>The model you call today is frozen; nothing you say changes its underlying weights.
 Yet it can still "learn" a task within a single request, by picking up the pattern from
@@ -509,46 +555,6 @@ no new infrastructure and no model change.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

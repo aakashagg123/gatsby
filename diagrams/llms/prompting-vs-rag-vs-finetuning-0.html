@@ -1,0 +1,67 @@
+<style>
+.dgm-lv{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lv-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
+.dgm-lv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lv-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-lv-gap{background:#e6f3ec;border:1.5px solid #bfe0cd;border-radius:12px;padding:11px 16px;text-align:center;
+  color:#1f5c3f;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:340px}
+.dgm-lv-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-lv-arr svg{width:16px;height:16px}
+.dgm-lv-q{background:#ffffff;border:1.5px dashed #d3c5f0;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:12px;margin-bottom:8px}
+.dgm-lv-loop{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:9px 14px;
+  background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-lv-loop svg{width:18px;height:18px;color:#3f7d5c;flex:0 0 18px}
+.dgm-lv-loop strong{color:#1f5c3f}
+.dgm-lv-q2{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:10px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:12px;margin:0 auto 10px;max-width:320px}
+.dgm-lv-levers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dgm-lv-lever{border-radius:12px;padding:13px 15px;position:relative}
+.dgm-lv-lever.rag{background:#f6efdd;border:1.5px solid #e0d0a8}
+.dgm-lv-lever.tune{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-lv-lever .dgm-lv-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-lv-lever.rag .dgm-lv-tag{color:#7a5300;border-color:#e0d0a8}
+.dgm-lv-lever.tune .dgm-lv-tag{color:#82061e;border-color:#ffcecb}
+.dgm-lv-lever .dgm-lv-ico{width:22px;height:22px;margin-bottom:6px}
+.dgm-lv-lever.rag .dgm-lv-ico{color:#8a6d3b}
+.dgm-lv-lever.tune .dgm-lv-ico{color:#c9432f}
+.dgm-lv-lever h6{margin:0 0 4px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-lv-lever p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+@media (max-width:640px){.dgm-lv{padding:20px 16px 18px}.dgm-lv-levers{grid-template-columns:1fr}}
+</style>
+<div class="dgm-lv">
+  <span class="dgm-lv-chip">Prompting vs. RAG vs. fine-tuning</span>
+  <h4>Three levers, three costs · cheapest and fastest first</h4>
+  <p class="dgm-lv-sub">Each step up this ladder costs more and locks in more — you only pay for it once the cheaper ones genuinely fall short.</p>
+
+  <div class="dgm-lv-gap">The model isn't doing what we need</div>
+  <div class="dgm-lv-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-lv-q">Q1 · Have we tried a genuinely specific, well-tested prompt?</div>
+  <div class="dgm-lv-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>Not yet →</strong> try prompting first — minutes to try, free to iterate, loop back and re-check.</span>
+  </div>
+
+  <div class="dgm-lv-q2">Q2 · yes, gap remains — is it about facts the model doesn't have?</div>
+
+  <div class="dgm-lv-levers">
+    <div class="dgm-lv-lever rag">
+      <span class="dgm-lv-tag">Yes — facts</span>
+      <svg class="dgm-lv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+      <h6>Reach for retrieval</h6>
+      <p>Hours to days · keeps facts current and citable</p>
+    </div>
+    <div class="dgm-lv-lever tune">
+      <span class="dgm-lv-tag">No — behavior</span>
+      <svg class="dgm-lv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/></svg>
+      <h6>Consider fine-tuning</h6>
+      <p>Days to weeks · most expensive, least reversible</p>
+    </div>
+  </div>
+</div>
