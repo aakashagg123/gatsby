@@ -1,0 +1,59 @@
+<style>
+.dgm-df{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-df-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-df h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-df-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-df-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dgm-df-col{border-radius:13px;padding:14px 15px;position:relative}
+.dgm-df-col.old{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-df-col.now{background:#fbe4e6;border:1.5px solid #f3bfc4}
+.dgm-df-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-df-col.old .dgm-df-tag{color:#59636e;border-color:#d1d9e0}
+.dgm-df-col.now .dgm-df-tag{color:#8f1a26;border-color:#f3bfc4}
+.dgm-df-col h6{margin:6px 0 8px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-df-steps{display:flex;flex-direction:column;gap:5px}
+.dgm-df-step{background:#ffffff;border-radius:9px;padding:8px 10px;font-size:10.5px;color:#1f2328;line-height:1.35;
+  display:flex;gap:7px;align-items:center}
+.dgm-df-col.old .dgm-df-step{border:1px solid #e2e8ee}
+.dgm-df-col.now .dgm-df-step{border:1px solid #f8d3d6}
+.dgm-df-step .n{width:16px;height:16px;flex:0 0 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700}
+.dgm-df-col.old .n{background:#e2e8ee;color:#59636e}
+.dgm-df-col.now .n{background:#f3bfc4;color:#8f1a26}
+.dgm-df-note{margin-top:12px;font-size:11px;color:#59636e;line-height:1.5;text-align:center}
+@media (max-width:640px){.dgm-df{padding:20px 16px 18px}.dgm-df-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-df">
+  <span class="dgm-df-chip">Data-first vs. context-first</span>
+  <h4>What changed · the question that predicts AI-feature quality</h4>
+  <p class="dgm-df-sub">Volume, collected once, gave way to relevance, assembled every time.</p>
+
+  <div class="dgm-df-cols">
+    <div class="dgm-df-col old">
+      <span class="dgm-df-tag">Data-first · pre-AI default</span>
+      <h6>Optimizes for volume, collected once</h6>
+      <div class="dgm-df-steps">
+        <div class="dgm-df-step"><span class="n">1</span>Collect everything</div>
+        <div class="dgm-df-step"><span class="n">2</span>Clean &amp; warehouse it</div>
+        <div class="dgm-df-step"><span class="n">3</span>Human reads a dashboard</div>
+        <div class="dgm-df-step"><span class="n">4</span>Human decides</div>
+      </div>
+    </div>
+    <div class="dgm-df-col now">
+      <span class="dgm-df-tag">Context-first · AI era</span>
+      <h6>Optimizes for relevance, assembled every time</h6>
+      <div class="dgm-df-steps">
+        <div class="dgm-df-step"><span class="n">1</span>Ask: what does THIS decision need?</div>
+        <div class="dgm-df-step"><span class="n">2</span>Assemble instructions + retrieval + memory + live state, per request</div>
+        <div class="dgm-df-step"><span class="n">3</span>Model decides</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="dgm-df-note">The volume of data your company holds stopped being the constraint. What's scarce now is the judgment about which slice belongs in front of the model for this one decision.</p>
+</div>

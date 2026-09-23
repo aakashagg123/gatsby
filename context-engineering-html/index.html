@@ -391,34 +391,76 @@ re-deriving it.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>Every lesson in this module hangs off one picture: the four things "context" actually
 means, and where the discipline sits at each stage of a product's life.</p>
-<pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lessons 1-2&quot;]
-    Q1[&quot;Data-first: what data&lt;br/&gt;do we have?&quot;] --&gt;|&quot;replaced by&quot;| Q2[&quot;Context-first: what does&lt;br/&gt;THIS decision need?&quot;]
-    Q2 --&gt; WHY[&quot;Why prompt engineering&lt;br/&gt;alone doesn&#x27;t survive&lt;br/&gt;production&quot;]
-  end
-  subgraph SOURCES[&quot;THE FOUR SOURCES — lesson 3&quot;]
-    I[&quot;Instructions&lt;br/&gt;&amp; policy&quot;]
-    R[&quot;Retrieval&quot;]
-    M[&quot;Memory&quot;]
-    T[&quot;Live tool state&quot;]
-  end
-  subgraph SPEC[&quot;OWNING IT — lessons 4-5&quot;]
-    CONTRACT[&quot;Context contract&lt;br/&gt;in the spec&quot;]
-    GOV[&quot;Governance across&lt;br/&gt;features &amp; teams&quot;]
-  end
-  subgraph PROVE[&quot;PROVING IT WORKS — lesson 6&quot;]
-    EVAL[&quot;Context evals,&lt;br/&gt;separate from&lt;br/&gt;output evals&quot;]
-  end
-  subgraph WHEN[&quot;WHEN IT HAPPENS — lesson 7&quot;]
-    LIFECYCLE[&quot;Discovery, delivery,&lt;br/&gt;launch — a different&lt;br/&gt;job at each stage&quot;]
-  end
-  Q2 --&gt; I &amp; R &amp; M &amp; T
-  I &amp; R &amp; M &amp; T --&gt; CONTRACT
-  CONTRACT --&gt; GOV
-  CONTRACT --&gt; EVAL
-  GOV --&gt; LIFECYCLE
-  EVAL --&gt; LIFECYCLE
-  LIFECYCLE -.-&gt;|&quot;real usage becomes&lt;br/&gt;the next feature&#x27;s context&quot;| SOURCES</pre>
+<style>
+.dgm-cg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cg-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-cg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cg-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-cg-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-cg-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-cg-shift{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:14px;flex-wrap:wrap}
+.dgm-cg-shift .node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 12px;
+  font-size:11px;font-weight:700;color:#1f2328;text-align:center}
+.dgm-cg-shift .node.now{background:#fbe4e6;border-color:#f3bfc4;color:#8f1a26}
+.dgm-cg-shift svg{width:15px;height:15px;color:#8c959f;flex:0 0 15px}
+.dgm-cg-sources{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.dgm-cg-src{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:10px;padding:10px 8px;text-align:center}
+.dgm-cg-src svg{width:19px;height:19px;color:#8f1a26;margin-bottom:4px}
+.dgm-cg-src span{display:block;font-size:10px;font-weight:700;color:#8f1a26;line-height:1.25}
+.dgm-cg-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-cg-arr svg{width:16px;height:16px}
+.dgm-cg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.dgm-cg-card{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;text-align:center;
+  font-size:11px;font-weight:700;color:#1f2328}
+.dgm-cg-loop{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fbe4e6;border:1px dashed #f3bfc4;
+  border-radius:10px;font-size:10.5px;color:#8f1a26;line-height:1.35}
+.dgm-cg-loop svg{width:18px;height:18px;flex:0 0 18px}
+@media (max-width:640px){.dgm-cg{padding:20px 16px 18px}.dgm-cg-sources{grid-template-columns:repeat(2,1fr)}.dgm-cg-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cg">
+  <span class="dgm-cg-chip">Context engineering for the product leader</span>
+  <h4>Four things "context" means · where the discipline sits at each stage</h4>
+  <p class="dgm-cg-sub">Real usage becomes the next feature's context — the same compounding loop as any flywheel, aimed at what the model sees.</p>
+
+  <div class="dgm-cg-lbl">The shift · lessons 1–2</div>
+  <div class="dgm-cg-shift">
+    <div class="node">Data-first: what data do we have?</div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    <div class="node now">Context-first: what does THIS decision need?</div>
+  </div>
+
+  <div class="dgm-cg-lbl">The four sources · lesson 3</div>
+  <div class="dgm-cg-sources">
+    <div class="dgm-cg-src"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Instructions &amp; policy</span></div>
+    <div class="dgm-cg-src"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg><span>Retrieval</span></div>
+    <div class="dgm-cg-src"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 3-2 4-2 7h-6c0-3-2-4-2-7a5 5 0 015-5z"/><path d="M9 21h6"/></svg><span>Memory</span></div>
+    <div class="dgm-cg-src"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Live tool state</span></div>
+  </div>
+  <div class="dgm-cg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-cg-lbl">Owning it · lessons 4–5</div>
+  <div class="dgm-cg-row">
+    <div class="dgm-cg-card">Context contract in the spec</div>
+    <div class="dgm-cg-card">Governance across features &amp; teams</div>
+  </div>
+
+  <div class="dgm-cg-lbl">Proving it · lesson 6, then when · lesson 7</div>
+  <div class="dgm-cg-row">
+    <div class="dgm-cg-card">Context evals, separate from output evals</div>
+    <div class="dgm-cg-card">Discovery, delivery, launch — different job each stage</div>
+  </div>
+
+  <div class="dgm-cg-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span>Real usage becomes the next feature's context — closing the loop back to the four sources.</span>
+  </div>
+</div>
+
 <p>Read it in three passes. <strong>The shift:</strong> the question that predicts AI-feature quality
 changed from "what data do we have" to "what does this decision need," and prompt
 engineering alone can't answer that question at scale. <strong>The system:</strong> four distinct
@@ -469,47 +511,7 @@ mechanic it names.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-context-engineering.html"><span class="card-num">01</span><h3>What is context engineering, for a product leader?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="why-prompt-engineering-doesnt-scale.html"><span class="card-num">02</span><h3>Why prompt engineering doesn&#x27;t scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-anatomy-of-a-context-pipeline.html"><span class="card-num">03</span><h3>The anatomy of a context pipeline</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-as-a-spec-able-requirement.html"><span class="card-num">04</span><h3>Context as a spec-able requirement</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-governance-at-scale.html"><span class="card-num">05</span><h3>Context governance at scale</h3><span class="card-go">Read lesson →</span></a><a class="card" href="evaluating-context-quality.html"><span class="card-num">06</span><h3>Evaluating context quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="context-across-the-product-lifecycle.html"><span class="card-num">07</span><h3>Context engineering across the product lifecycle</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

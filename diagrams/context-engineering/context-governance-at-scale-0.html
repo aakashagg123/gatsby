@@ -1,0 +1,42 @@
+<style>
+.dgm-gv{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-gv-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-gv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-gv-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-gv-src{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:11px;padding:11px 16px;text-align:center;
+  color:#8f1a26;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:320px}
+.dgm-gv-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-gv-arr svg{width:16px;height:16px}
+.dgm-gv-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.dgm-gv-feat{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:10px 10px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328}
+.dgm-gv-ver{display:flex;align-items:center;justify-content:center;gap:9px;background:#ffffff;border:1.5px dashed #d1d9e0;
+  border-radius:11px;padding:9px 16px;text-align:center;color:#59636e;font-weight:700;font-size:11.5px;margin-bottom:8px}
+.dgm-gv-ver svg{width:16px;height:16px}
+.dgm-gv-q{text-align:center;font-size:10.5px;color:#8f1a26;font-weight:600;font-style:italic}
+@media (max-width:640px){.dgm-gv{padding:20px 16px 18px}.dgm-gv-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-gv">
+  <span class="dgm-gv-chip">Context governance at scale</span>
+  <h4>One source, many consumers · governance answers "who re-syncs, and how do we know?"</h4>
+  <p class="dgm-gv-sub">Sources always eventually change. The failure is each consumer copying it at a different point in time.</p>
+
+  <div class="dgm-gv-src">One shared context source — policy doc, corpus, org memory</div>
+  <div class="dgm-gv-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gv-row">
+    <div class="dgm-gv-feat">Feature A's prompt</div>
+    <div class="dgm-gv-feat">Feature B's retrieval</div>
+    <div class="dgm-gv-feat">Feature C's instructions</div>
+  </div>
+
+  <div class="dgm-gv-ver">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    Source updated → version + changelog
+  </div>
+  <div class="dgm-gv-q">…who re-syncs each of the three features above — and how do we know when they haven't?</div>
+</div>

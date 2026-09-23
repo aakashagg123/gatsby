@@ -392,14 +392,62 @@ complaint while quietly breaking a case that used to work — the classic sign o
 string doing a system's job.</p>
 </blockquote>
 <h2 id="the-mental-model-three-ways-a-prompt-only-system-breaks">The mental model: three ways a prompt-only system breaks</h2>
-<pre class="mermaid">flowchart TB
-  P[&quot;One tuned prompt&quot;] --&gt; F{&quot;New real-world input&quot;}
-  F --&gt;|&quot;same intent,&lt;br/&gt;different phrasing&quot;| FRAGILE[&quot;Fragility:&lt;br/&gt;output collapses&quot;]
-  F --&gt;|&quot;a genuinely new&lt;br/&gt;scenario&quot;| SCALE[&quot;No scale:&lt;br/&gt;needs its own new prompt&quot;]
-  F --&gt;|&quot;depends on what&lt;br/&gt;happened earlier&quot;| MEMORY[&quot;No memory:&lt;br/&gt;context isn&#x27;t carried forward&quot;]
-  FRAGILE -.-&gt;|&quot;patched with&lt;br/&gt;one more example&quot;| P
-  SCALE -.-&gt;|&quot;patched with&lt;br/&gt;one more prompt&quot;| P
-  MEMORY -.-&gt;|&quot;patched with&lt;br/&gt;a workaround&quot;| P</pre>
+<style>
+.dgm-pl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pl-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-pl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pl-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pl-hub{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:240px}
+.dgm-pl-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-pl-arr svg{width:16px;height:16px}
+.dgm-pl-q{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin-bottom:12px}
+.dgm-pl-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.dgm-pl-branch{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:12px;padding:11px 12px;text-align:center;
+  display:flex;flex-direction:column;gap:6px}
+.dgm-pl-branch svg{width:20px;height:20px;color:#8f1a26;margin:0 auto}
+.dgm-pl-branch h6{margin:0;font-size:11.5px;font-weight:700;color:#8f1a26}
+.dgm-pl-branch p{margin:0;font-size:10px;color:#59636e;line-height:1.3}
+.dgm-pl-back{font-size:9px;color:#8f1a26;font-style:italic;display:flex;align-items:center;justify-content:center;gap:4px}
+.dgm-pl-back svg{width:12px;height:12px;margin:0}
+@media (max-width:640px){.dgm-pl{padding:20px 16px 18px}.dgm-pl-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pl">
+  <span class="dgm-pl-chip">Why prompt engineering doesn't scale</span>
+  <h4>Three ways a prompt-only system breaks · and loops right back to itself</h4>
+  <p class="dgm-pl-sub">Every patch loops into the same prompt — the loop is the tell that the underlying gap never closes.</p>
+
+  <div class="dgm-pl-hub">One tuned prompt</div>
+  <div class="dgm-pl-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-pl-q">New real-world input</div>
+
+  <div class="dgm-pl-row">
+    <div class="dgm-pl-branch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M4.9 19h14.2a1 1 0 00.87-1.5L12.87 4.5a1 1 0 00-1.74 0L4.03 17.5A1 1 0 004.9 19z"/></svg>
+      <h6>Fragility</h6>
+      <p>Same intent, different phrasing → output collapses</p>
+      <div class="dgm-pl-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>patched with one more example</div>
+    </div>
+    <div class="dgm-pl-branch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+      <h6>No scale</h6>
+      <p>A genuinely new scenario → needs its own new prompt</p>
+      <div class="dgm-pl-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>patched with one more prompt</div>
+    </div>
+    <div class="dgm-pl-branch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 3-2 4-2 7h-6c0-3-2-4-2-7a5 5 0 015-5z"/><path d="M9 21h6"/></svg>
+      <h6>No memory</h6>
+      <p>Depends on what happened earlier → not carried forward</p>
+      <div class="dgm-pl-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>patched with a workaround</div>
+    </div>
+  </div>
+</div>
+
 <p>Every patch loops back into the same prompt, and the loop is the tell: each fix makes
 the next fix more likely, because the underlying gap — no system, just a string — never
 closes.</p>
@@ -493,46 +541,6 @@ why rewording the prompt one more time so rarely holds.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

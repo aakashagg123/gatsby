@@ -1,0 +1,51 @@
+<style>
+.dgm-ap{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ap-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-ap h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ap-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ap-inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.dgm-ap-in{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 8px;text-align:center}
+.dgm-ap-in svg{width:18px;height:18px;color:#59636e;margin-bottom:4px}
+.dgm-ap-in span{display:block;font-size:9.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-ap-in small{display:block;font-size:8.5px;color:#8c959f;margin-top:2px}
+.dgm-ap-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ap-arr svg{width:16px;height:16px}
+.dgm-ap-mid{display:flex;flex-direction:column;gap:6px;align-items:center;margin-bottom:10px}
+.dgm-ap-node{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:10px;padding:9px 20px;text-align:center;
+  color:#8f1a26;font-weight:700;font-size:12px}
+.dgm-ap-node.val{background:#f6f8fa;border-color:#d1d9e0;color:#1f2328}
+.dgm-ap-seam{display:flex;gap:10px;align-items:center;padding:10px 14px;background:#ffffff;border:1px dashed #f3bfc4;
+  border-radius:10px;font-size:10.5px;color:#8f1a26;line-height:1.4}
+.dgm-ap-seam svg{width:18px;height:18px;flex:0 0 18px;color:#d62839}
+@media (max-width:640px){.dgm-ap{padding:20px 16px 18px}.dgm-ap-inputs{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ap">
+  <span class="dgm-ap-chip">The anatomy of a context pipeline</span>
+  <h4>An assembly line, not a black box · each box has an owner, the seams usually don't</h4>
+  <p class="dgm-ap-sub">A seam failure looks identical to a model failure from the outside — a wrong answer, every dashboard green.</p>
+
+  <div class="dgm-ap-inputs">
+    <div class="dgm-ap-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Instructions &amp; policy</span><small>owner: PM/policy</small></div>
+    <div class="dgm-ap-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg><span>Retrieval</span><small>owner: search/data</small></div>
+    <div class="dgm-ap-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 3-2 4-2 7h-6c0-3-2-4-2-7a5 5 0 015-5z"/><path d="M9 21h6"/></svg><span>Memory</span><small>owner: platform</small></div>
+    <div class="dgm-ap-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Live tool state</span><small>owner: integrations</small></div>
+  </div>
+  <div class="dgm-ap-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ap-mid">
+    <div class="dgm-ap-node">Assembly</div>
+    <div class="dgm-ap-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-ap-node">Model call</div>
+    <div class="dgm-ap-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-ap-node val">Validate output — owner: eng</div>
+  </div>
+
+  <div class="dgm-ap-seam">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>The seam:</strong> who notices when one box's input silently degrades? Validation loops back to all four sources — the seam, not the box, is where quality leaks.</span>
+  </div>
+</div>
