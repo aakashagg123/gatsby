@@ -37,7 +37,8 @@ MERMAID_CSS = (
     "pre.mermaid{background:#ffffff;"
     "border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;"
     "text-align:center;overflow-x:auto}"
-    "pre.mermaid svg{max-width:100%;height:auto;display:inline-block}"
+    "pre.mermaid svg{max-width:100%;height:auto;display:inline-block;"
+    "shape-rendering:geometricPrecision}"
     ".mm-hint{position:sticky;left:8px;display:block;width:max-content;"
     "font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;"
     "border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}"
@@ -63,7 +64,7 @@ mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
     quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
     quadrantTitleFill:'#1f2328',
     quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'14.5px'},
+    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
   flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
     nodeSpacing:36, rankSpacing:46, diagramPadding:12},
   sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
