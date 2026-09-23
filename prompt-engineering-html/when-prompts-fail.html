@@ -392,16 +392,53 @@ failed in — or do I rewrite from scratch on vibes?"</em></p>
 against the same failure, learning nothing, calling the model "unreliable."</p>
 </blockquote>
 <h2 id="the-mental-model">The mental model</h2>
-<pre class="mermaid">flowchart TB
-  BAD[&quot;Bad output&quot;] --&gt; Q[&quot;Which failure mode?&quot;]
-  Q --&gt; F1[&quot;Instruction conflict&quot;]
-  Q --&gt; F2[&quot;Length miscalibration&quot;]
-  Q --&gt; F3[&quot;Role collapse&quot;]
-  Q --&gt; F4[&quot;Scope creep&quot;]
-  Q --&gt; F5[&quot;Context bleed&quot;]
-  Q --&gt; F6[&quot;Hallucination in a slot&quot;]
-  Q --&gt; F7[&quot;Format drift&quot;]
-  F1 &amp; F2 &amp; F3 &amp; F4 &amp; F5 &amp; F6 &amp; F7 --&gt; FIX[&quot;Named fix&lt;br/&gt;(not rewrite)&quot;]</pre>
+<style>
+.dgm-wf{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-wf-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-wf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-wf-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wf-bad{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#82061e;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:200px}
+.dgm-wf-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wf-arr svg{width:16px;height:16px}
+.dgm-wf-q{background:#f6f8fa;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin:0 auto 10px;max-width:260px}
+.dgm-wf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
+.dgm-wf-n{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:9px;padding:7px 5px;text-align:center;
+  font-size:9px;font-weight:700;color:#5c2e00;line-height:1.25}
+.dgm-wf-arr2{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wf-arr2 svg{width:16px;height:16px}
+.dgm-wf-fix{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px;margin:0 auto;max-width:260px}
+@media (max-width:640px){.dgm-wf{padding:20px 16px 18px}.dgm-wf-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-wf">
+  <span class="dgm-wf-chip">The diagnostic playbook</span>
+  <h4>Every bad output has a shape · match it to one of seven modes</h4>
+  <p class="dgm-wf-sub">Naming the failure is faster than rewriting the prompt.</p>
+
+  <div class="dgm-wf-bad">Bad output</div>
+  <div class="dgm-wf-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-wf-q">Which failure mode?</div>
+
+  <div class="dgm-wf-grid">
+    <div class="dgm-wf-n">F1 Instruction conflict</div>
+    <div class="dgm-wf-n">F2 Length miscalibration</div>
+    <div class="dgm-wf-n">F3 Role collapse</div>
+    <div class="dgm-wf-n">F4 Scope creep</div>
+    <div class="dgm-wf-n">F5 Context bleed</div>
+    <div class="dgm-wf-n">F6 Hallucination in a slot</div>
+    <div class="dgm-wf-n">F7 Format drift</div>
+    <div class="dgm-wf-n" style="background:#fdf3d9;border-color:#eac54f;color:#7a5300">+ combinations</div>
+  </div>
+  <div class="dgm-wf-arr2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-wf-fix">Named fix — not a rewrite</div>
+</div>
+
 <p>Every bad output has a shape. That shape usually maps to one of the seven. Match
 the shape, apply the fix, re-run, and only rewrite from scratch if the same output
 appears against a <em>different</em> diagnosis than you thought.</p>
@@ -560,46 +597,6 @@ which technique to reach for.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

@@ -392,18 +392,54 @@ user-supplied "instruction" that was actually part of the document (prompt
 injection), or applies the wrong constraint to the wrong section.</p>
 </blockquote>
 <h2 id="the-mental-model">The mental model</h2>
-<pre class="mermaid">flowchart TB
-  subgraph BAD[&quot;Unstructured — one wall of text&quot;]
-    B1[&quot;You are a summariser.&lt;br/&gt;Summarise the following...&lt;br/&gt;The article says X, Y, Z.&lt;br/&gt;Please use bullets.&quot;]
-  end
-  subgraph GOOD[&quot;Structured — parts labeled&quot;]
-    G1[&quot;&amp;lt;role&amp;gt;You are a summariser&amp;lt;/role&amp;gt;&quot;]
-    G2[&quot;&amp;lt;task&amp;gt;Summarise the article&amp;lt;/task&amp;gt;&quot;]
-    G3[&quot;&amp;lt;article&amp;gt;X, Y, Z...&amp;lt;/article&amp;gt;&quot;]
-    G4[&quot;&amp;lt;format&amp;gt;bullets&amp;lt;/format&amp;gt;&quot;]
-    G1 --&gt; G2 --&gt; G3 --&gt; G4
-  end
-  BAD -.-&gt;|&quot;upgrade&quot;| GOOD</pre>
+<style>
+.dgm-sp2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sp2-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-sp2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sp2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sp2-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.dgm-sp2-col{border-radius:13px;padding:14px 15px;position:relative}
+.dgm-sp2-col.bad{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-sp2-col.good{background:#f5e9dc;border:1.5px solid #d9b48c}
+.dgm-sp2-col .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-sp2-col.bad .tag{color:#82061e;border-color:#ffcecb}
+.dgm-sp2-col.good .tag{color:#5c2e00;border-color:#d9b48c}
+.dgm-sp2-wall{background:#ffffff;border:1px solid #ffd8d5;border-radius:9px;padding:10px 11px;font-size:10px;
+  color:#59636e;line-height:1.5;margin-top:4px}
+.dgm-sp2-tags{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+.dgm-sp2-tag{background:#ffffff;border:1px solid #eddcc4;border-radius:7px;padding:6px 9px;font-family:ui-monospace,'SF Mono',Consolas,monospace;
+  font-size:9.5px;color:#5c2e00}
+.dgm-sp2-mid{text-align:center;color:#8c959f;font-weight:700;font-size:12px;margin:10px 0}
+@media (max-width:640px){.dgm-sp2{padding:20px 16px 18px}.dgm-sp2-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-sp2">
+  <span class="dgm-sp2-chip">Unstructured vs. structured</span>
+  <h4>Unambiguous boundaries — anything inside a tag is that thing, anything outside is not</h4>
+  <p class="dgm-sp2-sub">That single distinction is why structured prompts survive at scale.</p>
+
+  <div class="dgm-sp2-cols">
+    <div class="dgm-sp2-col bad">
+      <span class="tag">Unstructured</span>
+      <div class="dgm-sp2-wall">You are a summariser. Summarise the following... The article says X, Y, Z. Please use bullets.</div>
+    </div>
+    <div class="dgm-sp2-col good">
+      <span class="tag">Structured</span>
+      <div class="dgm-sp2-tags">
+        <div class="dgm-sp2-tag">&lt;role&gt;You are a summariser&lt;/role&gt;</div>
+        <div class="dgm-sp2-tag">&lt;task&gt;Summarise the article&lt;/task&gt;</div>
+        <div class="dgm-sp2-tag">&lt;article&gt;X, Y, Z...&lt;/article&gt;</div>
+        <div class="dgm-sp2-tag">&lt;format&gt;bullets&lt;/format&gt;</div>
+      </div>
+    </div>
+  </div>
+  <div class="dgm-sp2-mid">→ upgrade →</div>
+</div>
+
 <p>The unstructured version leans on paragraph breaks and vibes. The structured version
 gives the model unambiguous boundaries. Anything inside a tag is that thing. Anything
 outside is not. That single distinction is why structured prompts survive at scale.</p>
@@ -540,46 +576,6 @@ Less reliable than true prefill, but often enough.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

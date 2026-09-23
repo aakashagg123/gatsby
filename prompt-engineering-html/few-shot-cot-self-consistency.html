@@ -396,13 +396,42 @@ silently fabricates answers when a two-line "think step by step" would have caug
 the error.</p>
 </blockquote>
 <h2 id="the-three-techniques">The three techniques</h2>
-<pre class="mermaid">flowchart TB
-  BASE[&quot;Baseline prompt&lt;br/&gt;instructions only&quot;] --&gt; FS[&quot;Few-shot&lt;br/&gt;+ 1-5 worked examples&quot;]
-  BASE --&gt; COT[&quot;Chain-of-thought&lt;br/&gt;+ &#x27;think step by step&#x27;&quot;]
-  FS &amp; COT --&gt; SC[&quot;Self-consistency&lt;br/&gt;sample N times,&lt;br/&gt;take majority answer&quot;]
-  BASE -.-&gt;|&quot;harder problem&quot;| FS
-  FS -.-&gt;|&quot;multi-step reasoning&quot;| COT
-  COT -.-&gt;|&quot;stakes justify N calls&quot;| SC</pre>
+<style>
+.dgm-fc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-fc-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-fc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-fc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-fc-base{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11.5px;margin:0 auto 6px;max-width:260px}
+.dgm-fc-lbl{text-align:center;font-size:9.5px;color:#8c959f;font-style:italic;margin-bottom:6px}
+.dgm-fc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.dgm-fc-n{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:10px;padding:9px 10px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#5c2e00}
+.dgm-fc-lbl2{text-align:center;font-size:9.5px;color:#8c959f;font-style:italic;margin:6px 0}
+.dgm-fc-sc{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:11.5px;margin:0 auto;max-width:320px}
+@media (max-width:640px){.dgm-fc{padding:20px 16px 18px}.dgm-fc-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-fc">
+  <span class="dgm-fc-chip">The decision ladder</span>
+  <h4>Start baseline · add technique when the problem earns it</h4>
+  <p class="dgm-fc-sub">Each technique has a specific job, a specific cost, and a specific failure mode.</p>
+
+  <div class="dgm-fc-base">Baseline prompt — instructions only</div>
+  <div class="dgm-fc-lbl">↓ harder problem ↓</div>
+
+  <div class="dgm-fc-row">
+    <div class="dgm-fc-n">Few-shot<br/>+ 1–5 worked examples</div>
+    <div class="dgm-fc-n">Chain-of-thought<br/>+ "think step by step"</div>
+  </div>
+  <div class="dgm-fc-lbl2">↓ stakes justify N calls ↓</div>
+  <div class="dgm-fc-sc">Self-consistency — sample N times, take majority answer</div>
+</div>
+
 <p>Read the diagram as a decision ladder. Start with the baseline prompt. When
 consistency slips, add few-shot examples. When the problem involves multi-step
 reasoning, add chain-of-thought. When the stakes justify running the same call
@@ -561,46 +590,6 @@ majority to vote on.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

@@ -393,14 +393,47 @@ with wrong arguments, or loops until it hits the max-steps guardrail — all
 because the prompt described the tools instead of specifying them.</p>
 </blockquote>
 <h2 id="the-mental-model-the-react-loop">The mental model — the ReAct loop</h2>
-<pre class="mermaid">flowchart LR
-  P[&quot;System prompt&lt;br/&gt;+ tool schemas&lt;br/&gt;+ user goal&quot;] --&gt; R[&quot;THINK&lt;br/&gt;reason about next step&quot;]
-  R --&gt; A[&quot;ACT&lt;br/&gt;pick a tool + args&lt;br/&gt;or answer&quot;]
-  A --&gt;|&quot;tool call&quot;| T[&quot;Tool runs&quot;]
-  T --&gt; O[&quot;OBSERVE&lt;br/&gt;tool output&quot;]
-  O --&gt; R
-  A --&gt;|&quot;final answer&quot;| DONE[&quot;Done&quot;]
-  R -.-&gt;|&quot;stop condition met&quot;| DONE</pre>
+<style>
+.dgm-tg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tg-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-tg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tg-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tg-start{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11px;margin:0 auto 8px;max-width:300px}
+.dgm-tg-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tg-arr svg{width:16px;height:16px}
+.dgm-tg-loop{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+.dgm-tg-n{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:10px;padding:9px 12px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#5c2e00}
+.dgm-tg-circle{text-align:center;font-size:9.5px;color:#7b3f00;font-style:italic;margin-bottom:8px}
+.dgm-tg-done{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11px;margin:0 auto;max-width:200px}
+@media (max-width:640px){.dgm-tg{padding:20px 16px 18px}.dgm-tg-loop{flex-direction:column}}
+</style>
+<div class="dgm-tg">
+  <span class="dgm-tg-chip">The ReAct loop</span>
+  <h4>Think → act → observe → repeat</h4>
+  <p class="dgm-tg-sub">Every modern agent scaffold is a variant of this loop.</p>
+
+  <div class="dgm-tg-start">System prompt + tool schemas + user goal</div>
+  <div class="dgm-tg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tg-loop">
+    <div class="dgm-tg-n">THINK<br/>reason about next step</div>
+    <span style="color:#8c959f">→</span>
+    <div class="dgm-tg-n">ACT<br/>pick a tool + args</div>
+    <span style="color:#8c959f">→</span>
+    <div class="dgm-tg-n">OBSERVE<br/>tool output</div>
+  </div>
+  <div class="dgm-tg-circle">↺ observe feeds back into think, or a stop condition is met</div>
+
+  <div class="dgm-tg-done">Done — final answer</div>
+</div>
+
 <p>Read the loop as <em>think → act → observe → repeat</em>. The prompt sets it up: role,
 goal, available tools, termination rules. The model executes it. Each turn produces
 either a tool call or a final answer. Each tool output becomes new context for the
@@ -556,46 +589,6 @@ scaffold. But the ceiling on agent quality is set by that system prompt.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

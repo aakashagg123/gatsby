@@ -393,12 +393,42 @@ splitting it in half improve the output enough to justify the second call?"</em>
 on complex inputs, when a two-step chain would have failed 3% of the time.</p>
 </blockquote>
 <h2 id="the-mental-model">The mental model</h2>
-<pre class="mermaid">flowchart LR
-  IN[&quot;Input&quot;] --&gt; P1[&quot;Prompt 1&lt;br/&gt;extract concerns&quot;]
-  P1 --&gt; P2[&quot;Prompt 2&lt;br/&gt;draft response&lt;br/&gt;per concern&quot;]
-  P2 --&gt; P3[&quot;Prompt 3&lt;br/&gt;rewrite in&lt;br/&gt;house voice&quot;]
-  P3 --&gt; OUT[&quot;Final output&quot;]
-  P1 -.-&gt;|&quot;validated?&quot;| CHECK[&quot;Fail early&lt;br/&gt;if empty&quot;]</pre>
+<style>
+.dgm-pc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pc-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-pc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pc-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:8px}
+.dgm-pc-node{background:#f5e9dc;border:1px solid #d9b48c;border-radius:9px;padding:9px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#5c2e00;line-height:1.25}
+.dgm-pc-node.io{background:#f6f8fa;border-color:#d1d9e0;color:#1f2328}
+.dgm-pc-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-pc-check{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;padding:8px 14px;
+  background:#ffebe9;border:1px dashed #ffcecb;border-radius:10px;font-size:10px;color:#82061e;text-align:center}
+@media (max-width:640px){.dgm-pc{padding:20px 16px 18px}.dgm-pc-pipe{grid-template-columns:1fr}.dgm-pc-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-pc">
+  <span class="dgm-pc-chip">Breaking one task into several prompts</span>
+  <h4>Each box is one prompt, each arrow is a data handoff</h4>
+  <p class="dgm-pc-sub">A chain can check an intermediate output and fail early, rather than passing garbage forward.</p>
+
+  <div class="dgm-pc-pipe">
+    <div class="dgm-pc-node io">Input</div>
+    <div class="dgm-pc-arr">→</div>
+    <div class="dgm-pc-node">Prompt 1<br/>extract concerns</div>
+    <div class="dgm-pc-arr">→</div>
+    <div class="dgm-pc-node">Prompt 2<br/>draft response per concern</div>
+    <div class="dgm-pc-arr">→</div>
+    <div class="dgm-pc-node">Prompt 3<br/>rewrite in house voice</div>
+  </div>
+
+  <div class="dgm-pc-check">⚠ Validated? Fail early if empty — the underappreciated dotted arrow: a one-prompt version has no place to stop and check.</div>
+</div>
+
 <p>Each box is one prompt. Each arrow is a data handoff. The dotted arrow is the
 underappreciated part: a chain can <em>check</em> an intermediate output and fail early
 rather than passing garbage forward. A one-prompt version has to succeed at all
@@ -535,46 +565,6 @@ side.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

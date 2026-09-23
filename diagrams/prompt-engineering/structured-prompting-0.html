@@ -1,0 +1,47 @@
+<style>
+.dgm-sp2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sp2-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-sp2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sp2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sp2-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.dgm-sp2-col{border-radius:13px;padding:14px 15px;position:relative}
+.dgm-sp2-col.bad{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-sp2-col.good{background:#f5e9dc;border:1.5px solid #d9b48c}
+.dgm-sp2-col .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-sp2-col.bad .tag{color:#82061e;border-color:#ffcecb}
+.dgm-sp2-col.good .tag{color:#5c2e00;border-color:#d9b48c}
+.dgm-sp2-wall{background:#ffffff;border:1px solid #ffd8d5;border-radius:9px;padding:10px 11px;font-size:10px;
+  color:#59636e;line-height:1.5;margin-top:4px}
+.dgm-sp2-tags{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+.dgm-sp2-tag{background:#ffffff;border:1px solid #eddcc4;border-radius:7px;padding:6px 9px;font-family:ui-monospace,'SF Mono',Consolas,monospace;
+  font-size:9.5px;color:#5c2e00}
+.dgm-sp2-mid{text-align:center;color:#8c959f;font-weight:700;font-size:12px;margin:10px 0}
+@media (max-width:640px){.dgm-sp2{padding:20px 16px 18px}.dgm-sp2-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-sp2">
+  <span class="dgm-sp2-chip">Unstructured vs. structured</span>
+  <h4>Unambiguous boundaries — anything inside a tag is that thing, anything outside is not</h4>
+  <p class="dgm-sp2-sub">That single distinction is why structured prompts survive at scale.</p>
+
+  <div class="dgm-sp2-cols">
+    <div class="dgm-sp2-col bad">
+      <span class="tag">Unstructured</span>
+      <div class="dgm-sp2-wall">You are a summariser. Summarise the following... The article says X, Y, Z. Please use bullets.</div>
+    </div>
+    <div class="dgm-sp2-col good">
+      <span class="tag">Structured</span>
+      <div class="dgm-sp2-tags">
+        <div class="dgm-sp2-tag">&lt;role&gt;You are a summariser&lt;/role&gt;</div>
+        <div class="dgm-sp2-tag">&lt;task&gt;Summarise the article&lt;/task&gt;</div>
+        <div class="dgm-sp2-tag">&lt;article&gt;X, Y, Z...&lt;/article&gt;</div>
+        <div class="dgm-sp2-tag">&lt;format&gt;bullets&lt;/format&gt;</div>
+      </div>
+    </div>
+  </div>
+  <div class="dgm-sp2-mid">→ upgrade →</div>
+</div>

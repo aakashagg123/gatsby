@@ -393,20 +393,47 @@ drifts wildly, because the parts you left implicit got interpreted differently a
 scale.</p>
 </blockquote>
 <h2 id="the-mental-model">The mental model</h2>
-<pre class="mermaid">flowchart TB
-  ROLE[&quot;ROLE&lt;br/&gt;who is the model?&quot;]
-  TASK[&quot;TASK&lt;br/&gt;what to do&quot;]
-  CTX[&quot;CONTEXT&lt;br/&gt;material to work from&quot;]
-  CONS[&quot;CONSTRAINTS&lt;br/&gt;what to avoid&quot;]
-  FMT[&quot;FORMAT&lt;br/&gt;what the output looks like&quot;]
-  EX[&quot;EXAMPLES&lt;br/&gt;what &#x27;good&#x27; looks like&quot;]
-  ROLE --&gt; TASK
-  TASK --&gt; CTX
-  CTX --&gt; CONS
-  CONS --&gt; FMT
-  FMT --&gt; EX
-  EX --&gt; OUT[&quot;Output&quot;]
-  style OUT fill:#f5f5f5,stroke:#333</pre>
+<style>
+.dgm-aa{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-aa-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-aa h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-aa-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-aa-chain{display:flex;flex-direction:column;gap:2px}
+.dgm-aa-node{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:10px;padding:9px 16px;
+  font-weight:700;font-size:11.5px;color:#5c2e00;display:flex;align-items:baseline;gap:8px}
+.dgm-aa-node b{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;color:#7b3f00}
+.dgm-aa-arr{color:#8c959f;padding:1px 0 1px 8px}
+.dgm-aa-arr svg{width:14px;height:14px}
+.dgm-aa-out{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 16px;text-align:center;
+  font-weight:700;font-size:11.5px;color:#1f2328;margin-top:4px}
+@media (max-width:640px){.dgm-aa{padding:20px 16px 18px}}
+</style>
+<div class="dgm-aa">
+  <span class="dgm-aa-chip">The six parts, in order</span>
+  <h4>Role first, examples last · order matters, each part inherits from the one before</h4>
+  <p class="dgm-aa-sub">Every technique later in this module is a specialized way of filling one of these six.</p>
+
+  <div class="dgm-aa-chain">
+    <div class="dgm-aa-node"><b>Role</b> who is the model?</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-node"><b>Task</b> what to do</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-node"><b>Context</b> material to work from</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-node"><b>Constraints</b> what to avoid</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-node"><b>Format</b> what the output looks like</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-node"><b>Examples</b> what "good" looks like</div>
+    <div class="dgm-aa-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-aa-out">Output</div>
+  </div>
+</div>
+
 <p>The order matters. Role first, so every later instruction inherits its framing. Task
 next, so the model knows what to do before it hears what to avoid. Context after
 that, so the material sits in the model's working memory when it starts. Constraints
@@ -532,46 +559,6 @@ by every user, until the shape itself needs to change.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
