@@ -1,0 +1,75 @@
+<style>
+.dgm-vd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #b8860b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-vd-chip{position:absolute;top:-11px;left:24px;background:#b8860b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(184,134,11,.28)}
+.dgm-vd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-vd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-vd-idea{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:260px;display:flex;align-items:center;justify-content:center;gap:10px}
+.dgm-vd-idea svg{width:22px;height:22px;color:#b8860b}
+.dgm-vd-gates{display:flex;flex-direction:column;gap:6px}
+.dgm-vd-gate-row{display:grid;grid-template-columns:1fr 30px;gap:10px;align-items:center}
+.dgm-vd-q{background:#efedfa;border:1.5px solid #cec8f0;border-radius:11px;padding:11px 14px;
+  display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.dgm-vd-q .dgm-vd-badge{background:#5a4fcf;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  padding:3px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-vd-q h5{margin:0;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-vd-no-arr{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#82061e;
+  background:#ffebe9;border:1px solid #ffcecb;border-radius:6px;padding:6px 4px}
+.dgm-vd-destroy{margin:6px 0 6px 40px;padding:10px 14px;background:#ffebe9;border:1px solid #ffcecb;border-radius:11px;
+  display:flex;gap:9px;align-items:flex-start;font-size:11px;color:#82061e;line-height:1.35}
+.dgm-vd-destroy svg{width:20px;height:20px;color:#d1242f;flex:0 0 20px;margin-top:1px}
+.dgm-vd-destroy strong{color:#5a041a}
+.dgm-vd-create{margin-top:12px;background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:16px 18px;display:flex;gap:14px;align-items:center}
+.dgm-vd-create svg{width:32px;height:32px;padding:5px;background:#ffffff;border:1.5px solid #aceebb;border-radius:10px;color:#1a7f37;flex:0 0 32px}
+.dgm-vd-create h5{margin:0 0 2px;font-size:13px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-vd-create p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+@media (max-width:640px){.dgm-vd{padding:20px 16px 18px}.dgm-vd-gate-row{grid-template-columns:1fr}.dgm-vd-destroy{margin-left:0}}
+</style>
+<div class="dgm-vd">
+  <span class="dgm-vd-chip">Value gates</span>
+  <h4>Three gates · pass all three or the AI destroys value</h4>
+  <p class="dgm-vd-sub">Answering "no" to any of them means the return on the AI investment turns negative.</p>
+
+  <div class="dgm-vd-idea">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/><path d="M9 18h6M10 21h4"/></svg>
+    A proposed use case
+  </div>
+
+  <div class="dgm-vd-gates">
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G1</span><h5>Is doing this by hand slow or expensive today?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> You paid for AI to solve a problem that didn't exist.</div>
+    </div>
+
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G2</span><h5>Can the output be checked cheaply?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> Checking costs as much as doing it by hand.</div>
+    </div>
+
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G3</span><h5>Is being wrong sometimes acceptable?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> One bad output outweighs every good one.</div>
+    </div>
+  </div>
+
+  <div class="dgm-vd-create">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <div><h5>All three · Yes → value created</h5><p>A real, funded win — the shape most successful genAI features share.</p></div>
+  </div>
+</div>

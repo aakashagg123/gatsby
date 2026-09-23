@@ -401,28 +401,87 @@ generative AI product is the same. It needs a way to get real facts (grounding),
 act on the world (the action layer), and a way to be watched and controlled once it is
 running (operations). Skip any of these, and you have an engine on a workbench, not a
 product.</p>
-<pre class="mermaid">flowchart TB
-  subgraph L1[&quot;Layer 1 — The model&quot;]
-    LLM[&quot;Generates text, image,&lt;br/&gt;audio, video, or code&quot;]
-  end
-  subgraph L2[&quot;Layer 2 — Grounding &amp; memory&quot;]
-    RAG[&quot;Retrieval: real, current facts&lt;br/&gt;from your own data&quot;]
-    MEM[&quot;Memory: what the system&lt;br/&gt;remembers across a session&quot;]
-  end
-  subgraph L3[&quot;Layer 3 — Action&quot;]
-    TOOL[&quot;Tool calling: the model&lt;br/&gt;can trigger real actions&quot;]
-    AGENT[&quot;Agent loop: the system&lt;br/&gt;plans and acts in steps&quot;]
-  end
-  subgraph L4[&quot;Layer 4 — Operations&quot;]
-    EVAL[&quot;Evaluation: measuring&lt;br/&gt;whether it&#x27;s working&quot;]
-    SEC[&quot;Security: guardrails&lt;br/&gt;and permission limits&quot;]
-    COST[&quot;Cost: what each&lt;br/&gt;request actually costs&quot;]
-  end
-  RAG --&gt; LLM
-  MEM --&gt; LLM
-  LLM --&gt; TOOL --&gt; AGENT
-  AGENT -.-&gt;|&quot;every run is watched by&quot;| L4
-  LLM -.-&gt;|&quot;every run is watched by&quot;| L4</pre>
+<style>
+.dgm-st{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #b8860b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-st-chip{position:absolute;top:-11px;left:24px;background:#b8860b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(184,134,11,.28)}
+.dgm-st h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-st-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-st-tower{display:flex;flex-direction:column;gap:8px}
+.dgm-st-layer{border-radius:12px;padding:14px 16px;position:relative;display:flex;gap:12px;align-items:center}
+.dgm-st-layer.l1{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-st-layer.l2{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-st-layer.l3{background:#efedfa;border:1.5px solid #cec8f0}
+.dgm-st-layer.l4{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-st-layer .dgm-st-num{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;color:#1f2328;
+  font-size:10px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-st-layer.l1 .dgm-st-num{border-color:#eac54f;color:#7a5300}
+.dgm-st-layer.l2 .dgm-st-num{border-color:#b6e3ff;color:#0550ae}
+.dgm-st-layer.l3 .dgm-st-num{border-color:#cec8f0;color:#3d3a95}
+.dgm-st-layer.l4 .dgm-st-num{border-color:#d1d9e0;color:#59636e}
+.dgm-st-layer .dgm-st-ico{width:32px;height:32px;padding:5px;background:#ffffff;border:1px solid;border-radius:9px;flex:0 0 32px}
+.dgm-st-layer.l1 .dgm-st-ico{border-color:#eac54f;color:#b8860b}
+.dgm-st-layer.l2 .dgm-st-ico{border-color:#b6e3ff;color:#0969da}
+.dgm-st-layer.l3 .dgm-st-ico{border-color:#cec8f0;color:#5a4fcf}
+.dgm-st-layer.l4 .dgm-st-ico{border-color:#d1d9e0;color:#59636e}
+.dgm-st-layer .dgm-st-body{flex:1}
+.dgm-st-layer h5{margin:0 0 2px;font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.dgm-st-layer.l1 h5{color:#7a5300}
+.dgm-st-layer.l2 h5{color:#0550ae}
+.dgm-st-layer.l3 h5{color:#3d3a95}
+.dgm-st-layer.l4 h5{color:#1f2328}
+.dgm-st-layer p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-st-layer .dgm-st-sublist{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.dgm-st-layer .dgm-st-sub-item{background:#ffffff;border:1px solid #d1d9e0;font-size:10.5px;font-weight:600;color:#1f2328;padding:3px 8px;border-radius:5px;letter-spacing:.02em}
+@media (max-width:640px){.dgm-st{padding:20px 16px 18px}}
+</style>
+<div class="dgm-st">
+  <span class="dgm-st-chip">The stack</span>
+  <h4>Four layers · every real product wires all four</h4>
+  <p class="dgm-st-sub">The model is Layer 1. Skipping any of the other three ships a demo, not a product.</p>
+
+  <div class="dgm-st-tower">
+    <div class="dgm-st-layer l1">
+      <span class="dgm-st-num">Layer 1</span>
+      <svg class="dgm-st-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/><path d="M9 18h6M10 21h4"/></svg>
+      <div class="dgm-st-body">
+        <h5>The model</h5>
+        <p>Generates text · image · audio · video · code</p>
+      </div>
+    </div>
+    <div class="dgm-st-layer l2">
+      <span class="dgm-st-num">Layer 2</span>
+      <svg class="dgm-st-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg>
+      <div class="dgm-st-body">
+        <h5>Grounding &amp; memory</h5>
+        <p>Real facts from your own data · what the system remembers</p>
+        <div class="dgm-st-sublist"><span class="dgm-st-sub-item">RAG</span><span class="dgm-st-sub-item">Memory</span></div>
+      </div>
+    </div>
+    <div class="dgm-st-layer l3">
+      <span class="dgm-st-num">Layer 3</span>
+      <svg class="dgm-st-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <div class="dgm-st-body">
+        <h5>Action</h5>
+        <p>Trigger real effects · plan and act in steps</p>
+        <div class="dgm-st-sublist"><span class="dgm-st-sub-item">Tool calling</span><span class="dgm-st-sub-item">Agent loop</span></div>
+      </div>
+    </div>
+    <div class="dgm-st-layer l4">
+      <span class="dgm-st-num">Layer 4</span>
+      <svg class="dgm-st-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div class="dgm-st-body">
+        <h5>Operations</h5>
+        <p>Prove it's working · keep it safe · know what it costs</p>
+        <div class="dgm-st-sublist"><span class="dgm-st-sub-item">Evaluation</span><span class="dgm-st-sub-item">Security</span><span class="dgm-st-sub-item">Cost</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h2 id="the-four-layers-and-where-to-go-deeper">The four layers, and where to go deeper</h2>
 <table>
 <thead>
@@ -531,46 +590,6 @@ line items, not one, before you commit to a date.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
