@@ -408,17 +408,56 @@ single-chunk answer, because the answer is a <em>path</em> across systems. <stro
 questions ("what are the main themes in this quarter's tickets?") need a summary over
 everything, not any one retrievable passage. Graph-augmented retrieval answers both by
 retrieving <em>structure</em>:</p>
-<pre class="mermaid">flowchart TB
-  Q[&quot;User question&quot;] --&gt; R{&quot;Retrieval planner&quot;}
-  R --&gt;|&quot;similarity is enough&quot;| VEC[&quot;Vector search&lt;br/&gt;relevant text chunks&quot;]
-  R --&gt;|&quot;multi-hop / precise&quot;| GR[&quot;Graph retrieval&lt;br/&gt;entities + subgraph&lt;br/&gt;or text-to-Cypher&quot;]
-  R --&gt;|&quot;global / thematic&quot;| COMM[&quot;Community summaries&lt;br/&gt;(pre-built over graph clusters)&quot;]
-  VEC --&gt; CTX[&quot;Assembled context&lt;br/&gt;facts + passages + provenance&quot;]
-  GR --&gt; CTX
-  COMM --&gt; CTX
-  CTX --&gt; LLM[&quot;LLM generates answer&quot;]
-  LLM --&gt; ANS[&quot;Answer with citations:&lt;br/&gt;every claim → fact → source&quot;]
-  GR -.-&gt;|&quot;permissions applied&lt;br/&gt;at retrieval time&quot;| CTX</pre>
+<style>
+.dgm-kl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-kl-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-kl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-kl-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-kl-q{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11.5px;margin:0 auto 8px;max-width:220px}
+.dgm-kl-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-kl-arr svg{width:16px;height:16px}
+.dgm-kl-planner{background:#eee7fa;border:1.5px dashed #d3c5f0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:12px;margin-bottom:10px}
+.dgm-kl-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.dgm-kl-br{border-radius:11px;padding:10px 11px;text-align:center;font-size:10px}
+.dgm-kl-br.a{background:#ddf4ff;border:1.5px solid #b6e3ff;color:#0550ae}
+.dgm-kl-br.b{background:#e0f4f7;border:1.5px solid #a8dbe3;color:#005a68}
+.dgm-kl-br.c{background:#fdf3d9;border:1.5px solid #eac54f;color:#7a5300}
+.dgm-kl-br strong{display:block;font-size:11px;margin-bottom:3px}
+.dgm-kl-ctx{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11px;margin-bottom:8px}
+.dgm-kl-ans{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px}
+.dgm-kl-note{margin-top:10px;font-size:10px;color:#59636e;text-align:center;font-style:italic}
+@media (max-width:640px){.dgm-kl{padding:20px 16px 18px}.dgm-kl-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kl">
+  <span class="dgm-kl-chip">Graph-augmented retrieval</span>
+  <h4>Retrieving structure, not just similar text · answers both multi-hop and global questions</h4>
+  <p class="dgm-kl-sub">Permissions apply at retrieval — the assistant's knowledge shrinks to the asker's entitlements.</p>
+
+  <div class="dgm-kl-q">User question</div>
+  <div class="dgm-kl-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-kl-planner">Retrieval planner</div>
+
+  <div class="dgm-kl-row">
+    <div class="dgm-kl-br a"><strong>Similarity is enough</strong>Vector search — relevant text chunks</div>
+    <div class="dgm-kl-br b"><strong>Multi-hop / precise</strong>Graph retrieval — entities + subgraph, or text-to-Cypher</div>
+    <div class="dgm-kl-br c"><strong>Global / thematic</strong>Community summaries — pre-built over graph clusters</div>
+  </div>
+
+  <div class="dgm-kl-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-kl-ctx">Assembled context — facts + passages + provenance</div>
+  <div class="dgm-kl-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-kl-ans">Answer with citations — every claim → fact → source</div>
+  <p class="dgm-kl-note">Permissions are applied to graph retrieval before context assembly, not after.</p>
+</div>
+
 <p>Three patterns to know by name:</p>
 <ul>
 <li><strong>GraphRAG</strong> — resolve the question's entities, pull their neighborhood subgraph, and
@@ -587,46 +626,6 @@ types — multi-hop, quantitative, global — justify each graph investment in o
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

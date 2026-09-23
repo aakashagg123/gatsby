@@ -1,0 +1,60 @@
+<style>
+.dgm-ra{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ra-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-ra h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ra-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ra-kg{background:#e0f4f7;border:1.5px solid #a8dbe3;border-radius:20px;padding:9px 20px;text-align:center;
+  color:#005a68;font-weight:700;font-size:12px;margin:0 auto 10px;width:fit-content}
+.dgm-ra-groups{display:flex;flex-direction:column;gap:10px}
+.dgm-ra-group{border-radius:12px;padding:11px 13px;position:relative}
+.dgm-ra-group.det{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-ra-group.stat{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-ra-group.pred{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-ra-group .tag{position:absolute;top:-9px;left:13px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-ra-group.det .tag{color:#1a614f;border-color:#aceebb}
+.dgm-ra-group.stat .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-ra-group.pred .tag{color:#7a5300;border-color:#eac54f}
+.dgm-ra-fam{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.dgm-ra-f{background:#ffffff;border-radius:9px;padding:8px 10px;flex:1;min-width:150px}
+.dgm-ra-group.det .dgm-ra-f{border:1px solid #cdf0da}
+.dgm-ra-group.stat .dgm-ra-f{border:1px solid #d4ecfa}
+.dgm-ra-group.pred .dgm-ra-f{border:1px solid #f8e6b8}
+.dgm-ra-f h6{margin:0 0 3px;font-size:10.5px;font-weight:700;color:#1f2328}
+.dgm-ra-f p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3}
+@media (max-width:640px){.dgm-ra{padding:20px 16px 18px}.dgm-ra-fam{flex-direction:column}}
+</style>
+<div class="dgm-ra">
+  <span class="dgm-ra-chip">Five families, three trust levels</span>
+  <h4>What becomes computable · each family maps to a roadmap capability</h4>
+  <p class="dgm-ra-sub">Traversal and inference are explainable. Predictions are probabilistic and should ship as suggestions.</p>
+
+  <div class="dgm-ra-kg">The knowledge graph</div>
+
+  <div class="dgm-ra-groups">
+    <div class="dgm-ra-group det">
+      <span class="tag">Explainable — a path or a rule</span>
+      <div class="dgm-ra-fam">
+        <div class="dgm-ra-f"><h6>Traversal &amp; paths</h6><p>"How is A connected to B?" → risk exposure, lineage, 360° views</p></div>
+        <div class="dgm-ra-f"><h6>Rule-based inference</h6><p>"What follows from the facts?" → compliance screening, entitlements</p></div>
+      </div>
+    </div>
+    <div class="dgm-ra-group stat">
+      <span class="tag">Structural — a score over the whole graph</span>
+      <div class="dgm-ra-fam">
+        <div class="dgm-ra-f"><h6>Centrality</h6><p>"Which nodes matter most?" → key accounts, single points of failure</p></div>
+        <div class="dgm-ra-f"><h6>Community detection</h6><p>"What clusters exist?" → fraud rings, segmentation, duplicates</p></div>
+      </div>
+    </div>
+    <div class="dgm-ra-group pred">
+      <span class="tag">Predictive — a probability</span>
+      <div class="dgm-ra-fam">
+        <div class="dgm-ra-f"><h6>Link prediction &amp; embeddings</h6><p>"Which edge is missing / next?" → recommendations, next-best-action</p></div>
+      </div>
+    </div>
+  </div>
+</div>

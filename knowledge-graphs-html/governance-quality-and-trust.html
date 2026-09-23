@@ -403,16 +403,48 @@ personal data.</p>
 <h2 id="provenance-every-fact-shows-its-work">Provenance: every fact shows its work</h2>
 <p>The unit of governance is not the dataset — it's the individual fact. Each edge carries
 its passport:</p>
-<pre class="mermaid">flowchart LR
-  subgraph FACT[&quot;One fact, with its passport&quot;]
-    E[&quot;Acme Corp —supplied by→ Supplia GmbH&quot;]
-    P[&quot;source: contract #4411, §2.1&lt;br/&gt;method: LLM extraction v3&lt;br/&gt;ingested: 2026-06-14&lt;br/&gt;confidence: 0.93&lt;br/&gt;reviewed by: procurement steward&lt;br/&gt;valid: 2024-01 → present&quot;]
-    E --- P
-  end
-  FACT --&gt; USE1[&quot;AI answer cites it&lt;br/&gt;(claim → fact → source)&quot;]
-  FACT --&gt; USE2[&quot;Auditor traces it&lt;br/&gt;(who asserted, when, from what)&quot;]
-  FACT --&gt; USE3[&quot;Pipeline repairs it&lt;br/&gt;(source corrected →&lt;br/&gt;every derived fact re-derived)&quot;]
-  FACT --&gt; USE4[&quot;DPO deletes it&lt;br/&gt;(erasure propagates to&lt;br/&gt;inferences built on it)&quot;]</pre>
+<style>
+.dgm-gv2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-gv2-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-gv2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-gv2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-gv2-fact{background:#e0f4f7;border:1.5px solid #a8dbe3;border-radius:11px;padding:10px 14px;text-align:center;
+  color:#005a68;font-weight:700;font-size:11.5px;margin-bottom:6px}
+.dgm-gv2-passport{background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;padding:9px 12px;
+  font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:9.5px;color:#1f2328;line-height:1.6;margin-bottom:10px}
+.dgm-gv2-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-gv2-arr svg{width:16px;height:16px}
+.dgm-gv2-uses{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-gv2-use{background:#ffffff;border:1px solid #a8dbe3;border-radius:9px;padding:8px 7px;text-align:center;
+  font-size:9.5px;color:#005a68;font-weight:600;line-height:1.3}
+@media (max-width:640px){.dgm-gv2{padding:20px 16px 18px}.dgm-gv2-uses{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-gv2">
+  <span class="dgm-gv2-chip">Provenance: every fact's passport</span>
+  <h4>The unit of governance is the fact, not the dataset</h4>
+  <p class="dgm-gv2-sub">Cheap at construction time, brutally expensive to retrofit — it goes in the pipeline from day one.</p>
+
+  <div class="dgm-gv2-fact">Acme Corp —supplied by→ Supplia GmbH</div>
+  <div class="dgm-gv2-passport">source: contract #4411, §2.1
+method: LLM extraction v3
+ingested: 2026-06-14 · confidence: 0.93
+reviewed by: procurement steward
+valid: 2024-01 → present</div>
+
+  <div class="dgm-gv2-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gv2-uses">
+    <div class="dgm-gv2-use">AI answer cites it — claim → fact → source</div>
+    <div class="dgm-gv2-use">Auditor traces it — who asserted, when, from what</div>
+    <div class="dgm-gv2-use">Pipeline repairs it — source corrected → re-derive</div>
+    <div class="dgm-gv2-use">DPO deletes it — erasure propagates to inferences</div>
+  </div>
+</div>
+
 <p>Four consumers justify the cost. <strong>Citations</strong> — an
 <a href="knowledge-graphs-and-llms.html">AI feature</a> can ground every claim. <strong>Audit</strong> — in
 regulated domains, "how do you know this?" is a legal question with a deadline.
@@ -574,46 +606,6 @@ learns: assets without owners become swamps.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

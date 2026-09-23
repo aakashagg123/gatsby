@@ -398,37 +398,50 @@ duplicate customers. The first executive demo shows Acme twice with different
 revenue, and trust — the only currency a knowledge product has — never recovers.</p>
 </blockquote>
 <h2 id="the-pipeline">The pipeline</h2>
-<pre class="mermaid">flowchart LR
-  subgraph SRC[&quot;1 · SOURCES&quot;]
-    DB[&quot;Systems of record&lt;br/&gt;CRM, ERP, billing&quot;]
-    DOC[&quot;Documents&lt;br/&gt;contracts, tickets, wikis&quot;]
-    EV[&quot;Events &amp; logs&lt;br/&gt;usage, transactions&quot;]
-    HUM[&quot;People&lt;br/&gt;tribal knowledge&quot;]
-  end
-  subgraph EXT[&quot;2 · EXTRACTION&quot;]
-    MAP[&quot;Structured mapping&lt;br/&gt;columns → ontology&quot;]
-    NLP[&quot;Text extraction&lt;br/&gt;NER + relations,&lt;br/&gt;LLM-assisted&quot;]
-  end
-  subgraph ER[&quot;3 · ENTITY RESOLUTION&quot;]
-    BLK[&quot;Candidate matching&lt;br/&gt;blocking + similarity&quot;]
-    DEC[&quot;Match decisions&lt;br/&gt;rules · ML · thresholds&quot;]
-  end
-  subgraph CUR[&quot;4 · CURATION&quot;]
-    Q[&quot;Review queues&lt;br/&gt;low-confidence facts&quot;]
-    STW[&quot;Domain stewards&quot;]
-  end
-  KG((&quot;Knowledge&lt;br/&gt;graph&quot;))
-  DB --&gt; MAP
-  DOC --&gt; NLP
-  EV --&gt; MAP
-  HUM -.-&gt;|&quot;interviews, forms&quot;| Q
-  MAP --&gt; BLK
-  NLP --&gt; BLK
-  BLK --&gt; DEC
-  DEC --&gt;|&quot;confident&quot;| KG
-  DEC --&gt;|&quot;uncertain&quot;| Q
-  Q --&gt; STW --&gt; KG
-  KG -.-&gt;|&quot;feedback: corrections&lt;br/&gt;retrain matchers&quot;| DEC</pre>
+<style>
+.dgm-bg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-bg-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-bg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-bg-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-bg-pipe{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;align-items:center;gap:4px;margin-bottom:10px}
+.dgm-bg-stage{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 9px;text-align:center}
+.dgm-bg-stage .n{font-size:9px;font-weight:700;color:#00879e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.dgm-bg-stage span{display:block;font-size:9.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-bg-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-bg-kg{background:#e0f4f7;border:1.5px solid #a8dbe3;border-radius:20px;padding:9px 20px;text-align:center;
+  color:#005a68;font-weight:700;font-size:12px;margin:0 auto 10px;width:fit-content}
+.dgm-bg-loop{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#e0f4f7;border:1px dashed #a8dbe3;
+  border-radius:10px;font-size:10.5px;color:#005a68;line-height:1.35}
+.dgm-bg-loop svg{width:18px;height:18px;flex:0 0 18px}
+@media (max-width:640px){.dgm-bg{padding:20px 16px 18px}.dgm-bg-pipe{grid-template-columns:1fr}.dgm-bg-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-bg">
+  <span class="dgm-bg-chip">The construction pipeline</span>
+  <h4>Four stations, a loop not a line · where 80% of the money goes</h4>
+  <p class="dgm-bg-sub">Sources update, extractions get corrected, matchers retrain — budget for the loop, not a one-time build.</p>
+
+  <div class="dgm-bg-pipe">
+    <div class="dgm-bg-stage"><div class="n">1 · Sources</div><span>CRM, ERP, documents, events, people</span></div>
+    <div class="dgm-bg-arr">→</div>
+    <div class="dgm-bg-stage"><div class="n">2 · Extraction</div><span>Structured mapping + NLP/LLM extraction</span></div>
+    <div class="dgm-bg-arr">→</div>
+    <div class="dgm-bg-stage"><div class="n">3 · Entity resolution</div><span>Candidate matching + match decisions</span></div>
+    <div class="dgm-bg-arr">→</div>
+    <div class="dgm-bg-stage"><div class="n">4 · Curation</div><span>Review queues + domain stewards</span></div>
+  </div>
+
+  <div class="dgm-bg-kg">Knowledge graph</div>
+
+  <div class="dgm-bg-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>Feedback loop:</strong> curated corrections retrain the matchers, and uncertain matches route to review queues — this runs forever, not once.</span>
+  </div>
+</div>
+
 <p>Two structural truths about this picture. First, it's a <strong>loop, not a line</strong>. Sources
 update, extractions get corrected, and matchers retrain on steward decisions. Budget
 for the loop, or the graph starts decaying the day it launches
@@ -552,46 +565,6 @@ worse than none, because <a href="governance-quality-and-trust.html">people act 
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

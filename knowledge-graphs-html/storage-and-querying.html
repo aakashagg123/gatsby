@@ -408,18 +408,67 @@ is painful in SQL at hop four and trivial in Cypher. But for one- and two-hop lo
 aggregations, and reporting, a tuned relational store is equal or better, with
 operational maturity graphs still can't match. There is also a readability dividend
 that shows up in team velocity:</p>
-<pre class="mermaid">flowchart TB
-  Q[&quot;&#x27;Which customers are exposed to&lt;br/&gt;Supplia through any component chain?&#x27;&quot;]
-  subgraph GDB[&quot;Graph query — says what it means&quot;]
-    C[&quot;MATCH (s:Supplier {name:&#x27;Supplia&#x27;})&lt;br/&gt;-[:SUPPLIES]-&gt;(:Component)&lt;br/&gt;-[:PART_OF*1..4]-&gt;(:Product)&lt;br/&gt;&lt;-[:COVERS]-(:Contract)&lt;br/&gt;&lt;-[:HOLDS]-(c:Customer)&lt;br/&gt;RETURN DISTINCT c&quot;]
-  end
-  subgraph SQL[&quot;SQL — recursive CTE over join tables&quot;]
-    S[&quot;WITH RECURSIVE part_chain AS (&lt;br/&gt;&amp;nbsp;&amp;nbsp;SELECT ... FROM components ...&lt;br/&gt;&amp;nbsp;&amp;nbsp;UNION ALL&lt;br/&gt;&amp;nbsp;&amp;nbsp;SELECT ... JOIN part_chain ...)&lt;br/&gt;SELECT DISTINCT ... four more joins ...&quot;]
-  end
-  Q --&gt; GDB
-  Q --&gt; SQL
-  GDB --&gt; V[&quot;Variable-depth paths are native;&lt;br/&gt;new edge types need no migration&quot;]
-  SQL --&gt; W[&quot;Works — but depth is hand-rolled,&lt;br/&gt;every new relationship is a schema change&quot;]</pre>
+<style>
+.dgm-sq{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sq-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-sq h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sq-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sq-q{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:11.5px;margin:0 auto 12px;max-width:440px}
+.dgm-sq-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.dgm-sq-col{border-radius:12px;padding:12px 13px;position:relative}
+.dgm-sq-col.g{background:#e0f4f7;border:1.5px solid #a8dbe3}
+.dgm-sq-col.s{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-sq-col .tag{position:absolute;top:-9px;left:12px;background:#ffffff;border:1px solid;
+  font-size:9px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.dgm-sq-col.g .tag{color:#005a68;border-color:#a8dbe3}
+.dgm-sq-col.s .tag{color:#59636e;border-color:#d1d9e0}
+.dgm-sq-code{background:#1f2328;border-radius:8px;padding:9px 10px;font-family:ui-monospace,'SF Mono',Consolas,monospace;
+  font-size:9px;color:#d1d9e0;line-height:1.5;margin-top:6px;overflow-x:auto;white-space:pre}
+.dgm-sq-col.g .dgm-sq-code{color:#a8dbe3}
+.dgm-sq-out{margin-top:6px;font-size:9.5px;color:#59636e;line-height:1.35}
+.dgm-sq-tell{background:#fdf3d9;border:1px dashed #eac54f;border-radius:10px;padding:10px 14px;font-size:10.5px;
+  color:#7a5300;line-height:1.4;text-align:center}
+@media (max-width:640px){.dgm-sq{padding:20px 16px 18px}.dgm-sq-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-sq">
+  <span class="dgm-sq-chip">Traversal vs. join</span>
+  <h4>Says what it means, vs. implements what it means</h4>
+  <p class="dgm-sq-sub">The variable-depth query is the tell — it compounds into feature velocity when relationship questions are your daily bread.</p>
+
+  <div class="dgm-sq-q">"Which customers are exposed to Supplia through any component chain?"</div>
+
+  <div class="dgm-sq-cols">
+    <div class="dgm-sq-col g">
+      <span class="tag">Graph query</span>
+      <div class="dgm-sq-code">MATCH (s:Supplier {name:'Supplia'})
+-[:SUPPLIES]->(:Component)
+-[:PART_OF*1..4]->(:Product)
+&lt;-[:COVERS]-(:Contract)
+&lt;-[:HOLDS]-(c:Customer)
+RETURN DISTINCT c</div>
+      <div class="dgm-sq-out">Variable-depth paths are native; new edge types need no migration.</div>
+    </div>
+    <div class="dgm-sq-col s">
+      <span class="tag">SQL — recursive CTE</span>
+      <div class="dgm-sq-code">WITH RECURSIVE part_chain AS (
+  SELECT ... FROM components ...
+  UNION ALL
+  SELECT ... JOIN part_chain ...
+)
+SELECT DISTINCT ...
+  four more joins ...</div>
+      <div class="dgm-sq-out">Works — but depth is hand-rolled; every new relationship is a schema change.</div>
+    </div>
+  </div>
+
+  <div class="dgm-sq-tell">The graph query <em>states</em> the question. The SQL <em>implements</em> it. For one- and two-hop lookups, a tuned relational store is equal or better.</div>
+</div>
+
 <p>The variable-depth <code>*1..4</code> is the tell. The graph query <em>states the question</em>; the SQL
 <em>implements</em> it. When relationship questions are your product's daily bread, that gap
 compounds into feature velocity. When they're occasional, it's a curiosity.</p>
@@ -563,46 +612,6 @@ to rebuild the graph from sources when — not if — the pipeline needs a redo.
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

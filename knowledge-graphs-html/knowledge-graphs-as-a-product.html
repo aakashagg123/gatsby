@@ -425,15 +425,50 @@ are chosen adjacent (shared entities) and quality holds
 (<a href="governance-quality-and-trust.html">trust, once lost, un-compounds</a> faster than it
 built).</p>
 <h2 id="the-sequencing-playbook">The sequencing playbook</h2>
-<pre class="mermaid">flowchart TB
-  A[&quot;1 · Pick the killer query&lt;br/&gt;one domain, one question,&lt;br/&gt;one owner who&#x27;d pay&quot;] --&gt; B[&quot;2 · Model minimally&lt;br/&gt;only the types the query needs&quot;]
-  B --&gt; C[&quot;3 · Build the thin pipeline&lt;br/&gt;2–3 sources, resolution,&lt;br/&gt;named steward&quot;]
-  C --&gt; D[&quot;4 · Ship a visible feature&lt;br/&gt;inside an existing surface,&lt;br/&gt;quarter one or two&quot;]
-  D --&gt; E{&quot;Did it earn?&lt;br/&gt;usage + quality bar met&quot;}
-  E --&gt;|&quot;yes&quot;| F[&quot;5 · Fund the adjacent domain&lt;br/&gt;shares entities with the last one&quot;]
-  F --&gt; B
-  E --&gt;|&quot;no&quot;| G[&quot;Stop honestly&lt;br/&gt;write down why + the&lt;br/&gt;trigger to revisit&quot;]
-  D -.-&gt;|&quot;every loop&quot;| H[&quot;Steady-state ops:&lt;br/&gt;freshness, metrics,&lt;br/&gt;curation queue&quot;]</pre>
+<style>
+.dgm-kp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-kp-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-kp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-kp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-kp-chain{display:flex;flex-direction:column;align-items:center;gap:2px}
+.dgm-kp-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  font-weight:700;font-size:11px;color:#1f2328;width:min(420px,94%)}
+.dgm-kp-arr{color:#8c959f;padding:2px 0}
+.dgm-kp-arr svg{width:16px;height:16px}
+.dgm-kp-q{background:#eee7fa;border:1.5px dashed #d3c5f0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:11px;width:min(280px,90%);margin:2px 0}
+.dgm-kp-branches{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:6px}
+.dgm-kp-b{border-radius:11px;padding:10px 12px;text-align:center;font-size:10.5px}
+.dgm-kp-b.yes{background:#dafbe1;border:1.5px solid #aceebb;color:#1a614f}
+.dgm-kp-b.no{background:#ffebe9;border:1.5px solid #ffcecb;color:#82061e}
+@media (max-width:640px){.dgm-kp{padding:20px 16px 18px}.dgm-kp-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kp">
+  <span class="dgm-kp-chip">The sequencing playbook</span>
+  <h4>One killer query, one domain, then let each win fund the next</h4>
+  <p class="dgm-kp-sub">If the first visible feature is further out than a quarter or two, the scope is wrong, not the timeline.</p>
+
+  <div class="dgm-kp-chain">
+    <div class="dgm-kp-node">1 · Pick the killer query — one domain, one question, one owner who'd pay</div>
+    <div class="dgm-kp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-kp-node">2 · Model minimally — only the types the query needs</div>
+    <div class="dgm-kp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-kp-node">3 · Build the thin pipeline — 2–3 sources, resolution, named steward</div>
+    <div class="dgm-kp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-kp-node">4 · Ship a visible feature — inside an existing surface, quarter one or two</div>
+    <div class="dgm-kp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-kp-q">Did it earn? Usage + quality bar met</div>
+    <div class="dgm-kp-branches">
+      <div class="dgm-kp-b yes"><strong>Yes →</strong> fund the adjacent domain, sharing entities with the last one — loop to step 2</div>
+      <div class="dgm-kp-b no"><strong>No →</strong> stop honestly — write down why, and the trigger to revisit</div>
+    </div>
+  </div>
+</div>
+
 <p>The loop deserves three annotations. <strong>Ship inside an existing surface.</strong> The first
 graph feature should improve a screen people already use (the account view gains
 "supply-chain exposure"), not launch a "graph explorer" destination nobody visits.
@@ -569,46 +604,6 @@ failure rate crosses X") — is a strategy artifact worth as much as a build.</p
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

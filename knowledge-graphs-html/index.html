@@ -386,44 +386,73 @@ side, extraction at scale on the other. It closes with the capstone every produc
 business case, the sequencing, and the honest list of reasons <em>not</em> to build one.</p>
 <h2 id="the-knowledge-graph-about-knowledge-graphs">The knowledge graph (about knowledge graphs)</h2>
 <p>Fittingly, the module <em>is</em> one. Every lesson hangs off this picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph IDEA[&quot;THE IDEA — lesson 1&quot;]
-    KG[&quot;Knowledge graph&lt;br/&gt;entities + relationships,&lt;br/&gt;explicit &amp; queryable&quot;]
-  end
-  subgraph MODEL[&quot;THE CONTRACT — lesson 2&quot;]
-    ONT[&quot;Ontology&lt;br/&gt;what things mean:&lt;br/&gt;types, properties, rules&quot;]
-  end
-  subgraph BUILD[&quot;THE FACTORY — lesson 3&quot;]
-    SRC[&quot;Sources&lt;br/&gt;databases, documents,&lt;br/&gt;events, people&quot;]
-    EXT[&quot;Extraction&lt;br/&gt;structured mapping,&lt;br/&gt;NLP / LLM extraction&quot;]
-    ER[&quot;Entity resolution&lt;br/&gt;same thing, many spellings&quot;]
-    CUR[&quot;Human curation&lt;br/&gt;review queues, stewards&quot;]
-  end
-  subgraph RUN[&quot;THE MACHINE ROOM — lesson 4&quot;]
-    STORE[&quot;Storage &amp; querying&lt;br/&gt;property graph / RDF /&lt;br/&gt;graph layer on SQL&quot;]
-  end
-  subgraph VALUE[&quot;WHAT IT UNLOCKS — lessons 5–6&quot;]
-    REAS[&quot;Reasoning &amp; analytics&lt;br/&gt;multi-hop, rings,&lt;br/&gt;rankings, predictions&quot;]
-    LLM[&quot;Graphs × LLMs&lt;br/&gt;GraphRAG, grounding,&lt;br/&gt;agent memory&quot;]
-  end
-  subgraph TRUST[&quot;WHY IT&#x27;S TRUSTED — lesson 7&quot;]
-    GOV[&quot;Governance&lt;br/&gt;provenance, permissions,&lt;br/&gt;freshness, quality metrics&quot;]
-  end
-  subgraph BIZ[&quot;WHY IT PAYS — lesson 8&quot;]
-    PROD[&quot;KG as a product&lt;br/&gt;ROI, sequencing,&lt;br/&gt;build vs. buy, moat&quot;]
-  end
-  ONT --&gt;|&quot;defines the shape of&quot;| KG
-  SRC --&gt; EXT --&gt; ER --&gt; CUR --&gt;|&quot;feeds&quot;| KG
-  ONT --&gt;|&quot;constrains&quot;| EXT
-  KG --&gt; STORE
-  STORE --&gt; REAS
-  STORE --&gt; LLM
-  LLM --&gt;|&quot;LLMs also help build&quot;| EXT
-  GOV --&gt;|&quot;gates what enters&quot;| KG
-  GOV --&gt;|&quot;scopes who sees what&quot;| STORE
-  REAS --&gt; PROD
-  LLM --&gt; PROD
-  PROD --&gt;|&quot;funds the next domain&quot;| SRC</pre>
+<style>
+.dgm-kg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-kg-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
+.dgm-kg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-kg-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-kg-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-kg-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-kg-idea{background:#e0f4f7;border:1.5px solid #a8dbe3;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#005a68;font-weight:700;font-size:12px;margin:0 auto 6px;max-width:340px}
+.dgm-kg-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-kg-arr svg{width:16px;height:16px}
+.dgm-kg-pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.dgm-kg-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#1f2328}
+.dgm-kg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.dgm-kg-card{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328}
+.dgm-kg-loop{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#e0f4f7;border:1px dashed #a8dbe3;
+  border-radius:10px;font-size:10.5px;color:#005a68;line-height:1.35;margin-top:6px}
+.dgm-kg-loop svg{width:18px;height:18px;flex:0 0 18px}
+@media (max-width:640px){.dgm-kg{padding:20px 16px 18px}.dgm-kg-pipe{grid-template-columns:repeat(2,1fr)}.dgm-kg-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kg">
+  <span class="dgm-kg-chip">Knowledge graphs for the product leader</span>
+  <h4>The asset, the payoff, the flywheel · the module is one, fittingly</h4>
+  <p class="dgm-kg-sub">An ontology defines the shape; a pipeline fills it; storage makes it queryable; reasoning and LLMs unlock it; governance keeps it trusted; product wins fund the next domain.</p>
+
+  <div class="dgm-kg-lbl">The idea · lesson 1, constrained by the contract · lesson 2</div>
+  <div class="dgm-kg-idea">Knowledge graph — entities + relationships, explicit &amp; queryable, shaped by the ontology</div>
+  <div class="dgm-kg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-kg-lbl">The factory · lesson 3</div>
+  <div class="dgm-kg-pipe">
+    <div class="dgm-kg-node">Sources</div>
+    <div class="dgm-kg-node">Extraction</div>
+    <div class="dgm-kg-node">Entity resolution</div>
+    <div class="dgm-kg-node">Human curation</div>
+  </div>
+  <div class="dgm-kg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-kg-lbl">The machine room · lesson 4</div>
+  <div class="dgm-kg-idea" style="max-width:280px">Storage &amp; querying</div>
+  <div class="dgm-kg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-kg-lbl">What it unlocks · lessons 5–6</div>
+  <div class="dgm-kg-row">
+    <div class="dgm-kg-card">Reasoning &amp; analytics</div>
+    <div class="dgm-kg-card">Graphs × LLMs</div>
+  </div>
+
+  <div class="dgm-kg-lbl">Why it's trusted · lesson 7, and why it pays · lesson 8</div>
+  <div class="dgm-kg-row">
+    <div class="dgm-kg-card">Governance — gates what enters, scopes who sees what</div>
+    <div class="dgm-kg-card">KG as a product — ROI, sequencing, moat</div>
+  </div>
+
+  <div class="dgm-kg-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span>Product wins fund the next domain — the flywheel loops back into sources.</span>
+  </div>
+</div>
+
 <p>Read it in three passes. <strong>The asset:</strong> an ontology defines what things mean. A
 construction pipeline turns scattered sources into one connected graph. Storage makes it
 queryable. That pipeline, not the database, is where most of the money goes. <strong>The
@@ -469,47 +498,7 @@ directly to <a href="../ai/03-rag.html">RAG &amp; retrieval</a> and the
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-a-knowledge-graph.html"><span class="card-num">01</span><h3>What is a knowledge graph?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="ontologies-and-data-modeling.html"><span class="card-num">02</span><h3>Ontologies &amp; data modeling</h3><span class="card-go">Read lesson →</span></a><a class="card" href="building-the-graph.html"><span class="card-num">03</span><h3>Building the graph</h3><span class="card-go">Read lesson →</span></a><a class="card" href="storage-and-querying.html"><span class="card-num">04</span><h3>Storage &amp; querying</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reasoning-and-analytics.html"><span class="card-num">05</span><h3>Reasoning &amp; analytics</h3><span class="card-go">Read lesson →</span></a><a class="card" href="knowledge-graphs-and-llms.html"><span class="card-num">06</span><h3>Knowledge graphs &amp; LLMs</h3><span class="card-go">Read lesson →</span></a><a class="card" href="governance-quality-and-trust.html"><span class="card-num">07</span><h3>Governance, quality &amp; trust</h3><span class="card-go">Read lesson →</span></a><a class="card" href="knowledge-graphs-as-a-product.html"><span class="card-num">08</span><h3>Knowledge graphs as a product</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every
