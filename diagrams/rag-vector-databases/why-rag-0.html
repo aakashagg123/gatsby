@@ -1,0 +1,74 @@
+<style>
+.dgm-wr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-wr-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
+.dgm-wr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-wr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wr-q{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:12px 16px;text-align:center;color:#4b2996;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:340px}
+.dgm-wr-q em{font-style:italic;font-weight:600;color:#7a4fd6;display:block;font-size:11px;margin-top:2px}
+.dgm-wr-fan{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wr-fan svg{width:18px;height:18px}
+.dgm-wr-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.dgm-wr-path{border-radius:12px;padding:14px 14px;position:relative}
+.dgm-wr-path.rag{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-wr-path.bad{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-wr-path .dgm-wr-lbl{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-wr-path.rag .dgm-wr-lbl{color:#1a614f;border-color:#aceebb}
+.dgm-wr-path.bad .dgm-wr-lbl{color:#82061e;border-color:#ffcecb}
+.dgm-wr-path h5{margin:2px 0 8px;font-size:12px;font-weight:700;letter-spacing:.02em}
+.dgm-wr-path.rag h5{color:#1a614f}
+.dgm-wr-path.bad h5{color:#82061e}
+.dgm-wr-steps{display:flex;flex-direction:column;gap:5px}
+.dgm-wr-step{background:#ffffff;border:1px solid;border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-size:11px;color:#1f2328;font-weight:600;line-height:1.3}
+.dgm-wr-path.rag .dgm-wr-step{border-color:#aceebb}
+.dgm-wr-path.bad .dgm-wr-step{border-color:#ffcecb}
+.dgm-wr-step svg{width:18px;height:18px;flex:0 0 18px}
+.dgm-wr-path.rag .dgm-wr-step svg{color:#1a7f37}
+.dgm-wr-path.bad .dgm-wr-step svg{color:#d1242f}
+.dgm-wr-outcome{background:#ffffff;border-left:3px solid;border-radius:5px;padding:8px 11px;margin-top:6px;font-size:11px;font-weight:600;line-height:1.35}
+.dgm-wr-path.rag .dgm-wr-outcome{border-color:#1a7f37;color:#1a614f}
+.dgm-wr-path.bad .dgm-wr-outcome{border-color:#d1242f;color:#82061e}
+.dgm-wr-note{margin-top:8px;padding:11px 14px;background:#eee7fa;border:1px dashed #d3c5f0;border-radius:10px;font-size:11px;color:#4b2996;line-height:1.4;display:flex;gap:10px;align-items:center}
+.dgm-wr-note svg{width:20px;height:20px;color:#7a4fd6;flex:0 0 20px}
+.dgm-wr-note strong{color:#3a1f7a}
+@media (max-width:640px){.dgm-wr{padding:20px 16px 18px}.dgm-wr-two{grid-template-columns:1fr}}
+</style>
+<div class="dgm-wr">
+  <span class="dgm-wr-chip">Why RAG</span>
+  <h4>Bounded answers · closed book vs. open book</h4>
+  <p class="dgm-wr-sub">Retrieval doesn't just improve answers — it lets you tell the model to stop guessing.</p>
+
+  <div class="dgm-wr-q">User question<em>"What's our EU refund window?"</em></div>
+  <div class="dgm-wr-fan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-two">
+    <div class="dgm-wr-path bad">
+      <span class="dgm-wr-lbl">Closed book · no RAG</span>
+      <h5>Model guesses from training data</h5>
+      <div class="dgm-wr-steps">
+        <div class="dgm-wr-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/></svg>Guess plausibly</div>
+      </div>
+      <div class="dgm-wr-outcome">"30 days" · plausible, wrong, uncitable</div>
+    </div>
+
+    <div class="dgm-wr-path rag">
+      <span class="dgm-wr-lbl">Open book · RAG</span>
+      <h5>Model reads from your passages</h5>
+      <div class="dgm-wr-steps">
+        <div class="dgm-wr-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>Retrieve passages</div>
+        <div class="dgm-wr-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Assemble prompt + evidence</div>
+        <div class="dgm-wr-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Answer from passages only</div>
+      </div>
+      <div class="dgm-wr-outcome">"14 days (Policy §4.2)" · grounded &amp; citable</div>
+    </div>
+  </div>
+
+  <div class="dgm-wr-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+    <span>The extra sentence retrieval enables: <strong>"answer only from the passages; if they don't contain the answer, say so."</strong></span>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<style>
+.dgm-vd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-vd-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
+.dgm-vd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-vd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-vd-build{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:14px 16px;margin-bottom:12px;position:relative}
+.dgm-vd-build .dgm-vd-lbl{position:absolute;top:-9px;left:14px;background:#7a4fd6;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-vd-build h5{margin:2px 0 10px;font-size:12px;font-weight:700;color:#4b2996;letter-spacing:.02em}
+.dgm-vd-inputs{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center}
+.dgm-vd-in{background:#ffffff;border:1px solid #d3c5f0;border-radius:9px;padding:9px 10px;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.dgm-vd-in.idx{background:#f6efdd;border:1.5px solid #e0d0a8}
+.dgm-vd-in .dgm-vd-ico{color:#7a4fd6;width:22px;height:22px}
+.dgm-vd-in.idx .dgm-vd-ico{color:#8a6d3b}
+.dgm-vd-in h6{margin:0;font-size:11px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-vd-in p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3}
+.dgm-vd-plus{color:#8c959f;font-weight:700;font-size:18px;text-align:center}
+.dgm-vd-arr{color:#8c959f;font-weight:700;text-align:center}
+.dgm-vd-conn{display:flex;justify-content:center;color:#8c959f;padding:4px 0}
+.dgm-vd-conn svg{width:20px;height:20px}
+.dgm-vd-query{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch;margin-bottom:8px}
+.dgm-vd-qcell{background:#ffffff;border:1.5px solid #d3c5f0;border-radius:10px;padding:11px 12px;display:flex;gap:9px;align-items:center}
+.dgm-vd-qcell .dgm-vd-ico{color:#7a4fd6;width:22px;height:22px;flex:0 0 22px}
+.dgm-vd-qcell h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#4b2996}
+.dgm-vd-qcell p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
+.dgm-vd-out{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.dgm-vd-out .dgm-vd-ico{width:24px;height:24px;color:#1a7f37;flex:0 0 24px}
+.dgm-vd-out h5{margin:0 0 2px;font-size:12px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-vd-out p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+@media (max-width:640px){.dgm-vd{padding:20px 16px 18px}.dgm-vd-inputs,.dgm-vd-query{grid-template-columns:1fr}.dgm-vd-arr,.dgm-vd-plus{padding:2px 0}}
+</style>
+<div class="dgm-vd">
+  <span class="dgm-vd-chip">Vector database</span>
+  <h4>Pre-organize once · search fast · metadata filters bolt on</h4>
+  <p class="dgm-vd-sub">ANN index + filters is the whole architecture — read once, understand every vector DB.</p>
+
+  <div class="dgm-vd-build">
+    <span class="dgm-vd-lbl">Build the index · once, then incrementally</span>
+    <h5>Vectors + metadata combine into a searchable structure</h5>
+    <div class="dgm-vd-inputs">
+      <div class="dgm-vd-in"><svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg><h6>Passage vectors</h6><p>Millions of them</p></div>
+      <div class="dgm-vd-plus">+</div>
+      <div class="dgm-vd-in"><svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h6"/></svg><h6>Metadata</h6><p>tenant · date · lang · ACL</p></div>
+      <div class="dgm-vd-arr">→</div>
+      <div class="dgm-vd-in idx"><svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg><h6>ANN index</h6><p>Similar vectors cluster</p></div>
+    </div>
+  </div>
+
+  <div class="dgm-vd-conn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vd-query">
+    <div class="dgm-vd-qcell"><svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><div><h6>Query vector</h6><p>Embed the question</p></div></div>
+    <div class="dgm-vd-plus" style="align-self:center">+</div>
+    <div class="dgm-vd-qcell"><svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M9 15l2 2 4-4"/></svg><div><h6>Filters</h6><p>tenant=acme · expired=false</p></div></div>
+  </div>
+
+  <div class="dgm-vd-conn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-vd-out">
+    <svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+    <div><h5>Top-k nearest passages · approximate</h5><p>ANN trades a tiny bit of exactness for orders-of-magnitude speed</p></div>
+  </div>
+</div>
