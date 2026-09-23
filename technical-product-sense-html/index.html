@@ -382,17 +382,62 @@ redraw on a whiteboard.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>A system is a request path, plus the contracts and data it moves through, and the forces
 that degrade it. The AI capstone bolts a probabilistic component into the middle:</p>
-<pre class="mermaid">flowchart TB
-  REQ[&quot;THE REQUEST PATH&lt;br/&gt;client → edge → services → data&lt;br/&gt;(how systems are built)&quot;] --&gt; API[&quot;APIs &amp; contracts&lt;br/&gt;how components talk&quot;]
-  REQ --&gt; DATA[&quot;Data &amp; the data model&lt;br/&gt;where truth lives&quot;]
-  subgraph FORCES[&quot;THE FORCES THAT DEGRADE IT&quot;]
-    LAT[&quot;Latency &amp; scale&quot;]
-    REL[&quot;Reliability &amp; failure&quot;]
-    DEBT[&quot;Tech debt &amp; estimation&quot;]
-  end
-  REQ --- FORCES
-  API &amp; DATA &amp; FORCES --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;a model in the request path:&lt;br/&gt;cost &amp; latency as UX, evals,&lt;br/&gt;observability, tenant boundaries&quot;]
-  AI --&gt; CONV[&quot;Credible technical conversations&lt;br/&gt;and better product calls&quot;]</pre>
+<style>
+.dgm-tp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1baf7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tp-chip{position:absolute;top:-11px;left:24px;background:#1baf7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(27,175,122,.28)}
+.dgm-tp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tp-req{background:#e3f9ee;border:1.5px solid #a8e8c9;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#0e6b44;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:420px}
+.dgm-tp-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tp-arr svg{width:16px;height:16px}
+.dgm-tp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.dgm-tp-card{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;text-align:center;
+  font-size:11px;font-weight:700;color:#1f2328}
+.dgm-tp-forces{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:11px;padding:10px 14px;margin-bottom:8px}
+.dgm-tp-forces-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#7a5300;
+  text-align:center;margin-bottom:6px}
+.dgm-tp-forces-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.dgm-tp-f{background:#ffffff;border:1px solid #f8e6b8;border-radius:8px;padding:6px 6px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#7a5300}
+.dgm-tp-ai{background:#e3f9ee;border:1.5px solid #a8e8c9;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#0e6b44;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:480px;line-height:1.4}
+.dgm-tp-out{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin:0 auto;max-width:320px}
+@media (max-width:640px){.dgm-tp{padding:20px 16px 18px}.dgm-tp-row,.dgm-tp-forces-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tp">
+  <span class="dgm-tp-chip">Technical product sense for the AI PM</span>
+  <h4>A request path, plus the forces that degrade it · the AI capstone bolts in a probabilistic component</h4>
+  <p class="dgm-tp-sub">Each lesson ships a diagram you can redraw on a whiteboard.</p>
+
+  <div class="dgm-tp-req">The request path — client → edge → services → data</div>
+  <div class="dgm-tp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tp-row">
+    <div class="dgm-tp-card">APIs &amp; contracts — how components talk</div>
+    <div class="dgm-tp-card">Data &amp; the data model — where truth lives</div>
+  </div>
+
+  <div class="dgm-tp-forces">
+    <div class="dgm-tp-forces-lbl">The forces that degrade it</div>
+    <div class="dgm-tp-forces-row">
+      <div class="dgm-tp-f">Latency &amp; scale</div>
+      <div class="dgm-tp-f">Reliability &amp; failure</div>
+      <div class="dgm-tp-f">Tech debt &amp; estimation</div>
+    </div>
+  </div>
+  <div class="dgm-tp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tp-ai">The AI capstone — a model in the request path: cost &amp; latency as UX, evals, observability, tenant boundaries</div>
+  <div class="dgm-tp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-tp-out">Credible technical conversations and better product calls</div>
+</div>
+
 <ul>
 <li><a href="how-systems-are-built.html"><strong>How systems are built</strong></a> — clients, servers, services, and
   the path a request actually travels.</li>
@@ -426,47 +471,7 @@ concept matters when the system has a model in it, and includes a diagram to mak
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="how-systems-are-built.html"><span class="card-num">01</span><h3>How systems are built</h3><span class="card-go">Read lesson →</span></a><a class="card" href="apis-and-contracts.html"><span class="card-num">02</span><h3>APIs &amp; contracts</h3><span class="card-go">Read lesson →</span></a><a class="card" href="data-and-the-data-model.html"><span class="card-num">03</span><h3>Data &amp; the data model</h3><span class="card-go">Read lesson →</span></a><a class="card" href="latency-scale-performance.html"><span class="card-num">04</span><h3>Latency, scale &amp; performance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="reliability-and-failure.html"><span class="card-num">05</span><h3>Reliability &amp; failure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tech-debt-and-estimation.html"><span class="card-num">06</span><h3>Tech debt &amp; estimation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="security-and-privacy.html"><span class="card-num">07</span><h3>Security &amp; privacy sense</h3><span class="card-go">Read lesson →</span></a><a class="card" href="economics-of-infrastructure.html"><span class="card-num">08</span><h3>The economics of infrastructure</h3><span class="card-go">Read lesson →</span></a><a class="card" href="technical-sense-for-ai.html"><span class="card-num">09</span><h3>Technical sense for AI systems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

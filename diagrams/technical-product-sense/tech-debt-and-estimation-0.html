@@ -1,0 +1,55 @@
+<style>
+.dgm-td{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1baf7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-td-chip{position:absolute;top:-11px;left:24px;background:#1baf7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(27,175,122,.28)}
+.dgm-td h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-td-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-td-outer{display:grid;grid-template-columns:26px 1fr;grid-template-rows:1fr 26px;gap:8px}
+.dgm-td-y{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:space-between;
+  font-size:10.5px;color:#59636e;letter-spacing:.3px;padding:6px 0}
+.dgm-td-y b{color:#1f2328;font-weight:700}
+.dgm-td-x{grid-column:2;display:flex;justify-content:space-between;font-size:10.5px;color:#59636e;letter-spacing:.3px;padding:0 6px}
+.dgm-td-x b{color:#1f2328;font-weight:700}
+.dgm-td-plot{position:relative;height:340px;border-radius:12px;overflow:hidden;border:1px solid #d1d9e0;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.dgm-td-q{position:relative;padding:10px 12px}
+.dgm-td-q .l{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;font-weight:700;color:#59636e;position:absolute}
+.dgm-td-q1{background:#e3f9ee;border-right:1px dashed #d1d9e0;border-bottom:1px dashed #d1d9e0}
+.dgm-td-q1 .l{color:#0e6b44;top:10px;left:12px}
+.dgm-td-q1 .l::after{content:" ✦"}
+.dgm-td-q2{background:#f6f8fa;border-bottom:1px dashed #d1d9e0}
+.dgm-td-q2 .l{top:10px;right:12px}
+.dgm-td-q3{background:#f6f8fa;border-right:1px dashed #d1d9e0}
+.dgm-td-q3 .l{bottom:10px;left:12px}
+.dgm-td-q4{background:#ffebe9}
+.dgm-td-q4 .l{color:#82061e;bottom:10px;right:12px}
+.dgm-td-pt{position:absolute;transform:translate(-50%,50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2}
+.dgm-td-pt i{width:10px;height:10px;border-radius:50%;background:#1baf7a;border:2.5px solid #ffffff;box-shadow:0 1px 4px rgba(27,175,122,.35)}
+.dgm-td-pt span{font-size:10.5px;font-weight:600;color:#1f2328;background:rgba(255,255,255,.94);
+  border:1px solid rgba(209,217,224,.9);border-radius:16px;padding:2px 8px;white-space:nowrap;box-shadow:0 1px 2px rgba(31,35,40,.04)}
+.dgm-td-pt.up{flex-direction:column-reverse}
+@media (max-width:640px){.dgm-td-plot{height:440px}.dgm-td-pt span{font-size:9px;padding:2px 6px}}
+</style>
+<div class="dgm-td">
+  <span class="dgm-td-chip">Effort vs. impact</span>
+  <h4>Debt paydown belongs on the same map as features</h4>
+  <p class="dgm-td-sub">Quick wins go first. Big bets get planned deliberately. Time sinks get questioned hard.</p>
+  <div class="dgm-td-outer">
+    <div class="dgm-td-y"><span>low impact</span><b>high impact</b></div>
+    <div class="dgm-td-plot">
+      <div class="dgm-td-q dgm-td-q1"><span class="l">Quick wins</span></div>
+      <div class="dgm-td-q dgm-td-q2"><span class="l">Big bets</span></div>
+      <div class="dgm-td-q dgm-td-q3"><span class="l">Minor / fill-ins</span></div>
+      <div class="dgm-td-q dgm-td-q4"><span class="l">Time sinks</span></div>
+      <div class="dgm-td-pt up" style="left:25%;bottom:90%"><i></i><span>Fix flaky checkout</span></div>
+      <div class="dgm-td-pt up" style="left:90%;bottom:85%"><i></i><span>Re-platform billing</span></div>
+      <div class="dgm-td-pt" style="left:35%;bottom:80%"><i></i><span>Add evals to AI feature</span></div>
+      <div class="dgm-td-pt" style="left:15%;bottom:20%"><i></i><span>Rename a label</span></div>
+      <div class="dgm-td-pt" style="left:85%;bottom:35%"><i></i><span>Custom reporting engine</span></div>
+    </div>
+    <div class="dgm-td-x"><span>low effort</span><b>high effort</b></div>
+  </div>
+</div>
