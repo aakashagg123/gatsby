@@ -1,0 +1,102 @@
+<!-- Orchestrating lesson — 3 recurring topology shapes as visual mini-diagrams.
+     Diagram type: THREE-PANEL VISUAL GLOSSARY (orchestrator, pipeline, peer handoff). -->
+<style>
+.dgm-or{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-or-chip{position:absolute;top:-11px;left:24px;background:#2f8f7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(47,143,122,.28)}
+.dgm-or h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-or-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-or-shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dgm-or-shape{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 14px;
+  display:flex;flex-direction:column;gap:10px;position:relative}
+.dgm-or-shape .dgm-or-name{font-size:11.5px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-or-shape .dgm-or-badge{position:absolute;top:-9px;right:12px;background:#2f8f7a;color:#fff;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:5px;
+  text-transform:uppercase}
+.dgm-or-viz{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:14px 10px;
+  min-height:120px;display:flex;align-items:center;justify-content:center}
+.dgm-or-viz svg{width:100%;max-width:200px;height:auto}
+.dgm-or-shape p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+.dgm-or-shape .dgm-or-when{font-size:10.5px;font-weight:600;color:#2f8f7a;letter-spacing:.02em;
+  background:#ecf6f2;border:1px solid #c7e4d9;border-radius:6px;padding:5px 8px;line-height:1.35}
+@media (max-width:640px){
+  .dgm-or{padding:20px 16px 18px}
+  .dgm-or-shapes{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm-or">
+  <span class="dgm-or-chip">Topologies</span>
+
+  <h4>Three recurring shapes multi-agent work takes · each fits a different reason to split</h4>
+  <p class="dgm-or-sub">Pick the shape that fits the reason you split the work, not the other way around.</p>
+
+  <div class="dgm-or-shapes">
+
+    <div class="dgm-or-shape">
+      <span class="dgm-or-badge">Shape 1</span>
+      <span class="dgm-or-name">Orchestrator + subagents</span>
+      <div class="dgm-or-viz">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="30" r="18" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="100" y="34" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Orch</text>
+          <circle cx="50" cy="95" r="16" fill="#ffffff" stroke="#8c959f" stroke-width="1.2"/>
+          <text x="50" y="99" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#1f2328" text-anchor="middle">Sub A</text>
+          <circle cx="150" cy="95" r="16" fill="#ffffff" stroke="#8c959f" stroke-width="1.2"/>
+          <text x="150" y="99" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#1f2328" text-anchor="middle">Sub B</text>
+          <path d="M88 44 Q70 68 60 82" stroke="#2f8f7a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M112 44 Q130 68 140 82" stroke="#2f8f7a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M62 84 Q80 68 92 50" stroke="#8c959f" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/>
+          <path d="M138 84 Q120 68 108 50" stroke="#8c959f" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <p>An orchestrator delegates to subagents that report back.</p>
+      <div class="dgm-or-when"><strong>Fits:</strong> parallelizable threads · noisy subtasks whose detail shouldn't pollute the main agent's context.</div>
+    </div>
+
+    <div class="dgm-or-shape">
+      <span class="dgm-or-badge">Shape 2</span>
+      <span class="dgm-or-name">Pipeline · fixed stages</span>
+      <div class="dgm-or-viz">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="34" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Draft</text>
+          <rect x="74" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="100" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Review</text>
+          <rect x="140" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="166" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Finalize</text>
+          <path d="M62 65 L72 65" stroke="#2f8f7a" stroke-width="1.4" fill="none" stroke-linecap="round" marker-end="url(#arr)"/>
+          <path d="M128 65 L138 65" stroke="#2f8f7a" stroke-width="1.4" fill="none" stroke-linecap="round" marker-end="url(#arr)"/>
+          <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l8 5-8 5z" fill="#2f8f7a"/></marker></defs>
+        </svg>
+      </div>
+      <p>Stages known in advance, each independently checkable.</p>
+      <div class="dgm-or-when"><strong>Fits:</strong> when order is fixed and each stage produces a real artifact you can inspect.</div>
+    </div>
+
+    <div class="dgm-or-shape">
+      <span class="dgm-or-badge">Shape 3</span>
+      <span class="dgm-or-name">Peer handoff</span>
+      <div class="dgm-or-viz">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="55" cy="65" r="22" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="55" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Triage</text>
+          <circle cx="145" cy="65" r="22" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
+          <text x="145" y="63" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Special-</text>
+          <text x="145" y="74" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">ist</text>
+          <path d="M79 65 L119 65" stroke="#2f8f7a" stroke-width="1.6" fill="none" stroke-linecap="round" marker-end="url(#arr2)"/>
+          <text x="100" y="55" font-family="Inter,sans-serif" font-size="8" font-weight="600" fill="#59636e" text-anchor="middle">hand off</text>
+          <text x="100" y="85" font-family="Inter,sans-serif" font-size="8" fill="#8c959f" text-anchor="middle">(full context)</text>
+          <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l8 5-8 5z" fill="#2f8f7a"/></marker></defs>
+        </svg>
+      </div>
+      <p>An agent recognizes "not my job" and hands the request off with full context.</p>
+      <div class="dgm-or-when"><strong>Fits:</strong> triage-then-specialist flows · when the first agent's job is knowing who to route to.</div>
+    </div>
+
+  </div>
+</div>
