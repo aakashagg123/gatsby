@@ -1,0 +1,75 @@
+<!-- API integrations — 6-station knowledge graph across 4 lesson themes. -->
+<style>
+.dgm-ai{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #c2185b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ai-chip{position:absolute;top:-11px;left:24px;background:#c2185b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(194,24,91,.28)}
+.dgm-ai h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-ai-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-ai-band{background:#f9e1ec;border:1px solid #ecc3d5;border-radius:12px;padding:12px 14px;
+  margin-bottom:9px;position:relative}
+.dgm-ai-band .dgm-ai-badge{position:absolute;top:-9px;left:14px;background:#c2185b;color:#fff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
+  border-radius:5px}
+.dgm-ai-band h5{margin:2px 0 6px;font-size:12px;font-weight:700;color:#7a1140;letter-spacing:.02em}
+.dgm-ai-items{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.dgm-ai-items.two{grid-template-columns:repeat(2,1fr)}
+.dgm-ai-items.one{grid-template-columns:1fr}
+.dgm-ai-item{background:#ffffff;border:1px solid #ecc3d5;border-radius:8px;padding:8px 10px;
+  display:flex;gap:8px;align-items:center}
+.dgm-ai-item .dgm-ai-ico{color:#c2185b;width:18px;height:18px;flex:0 0 18px}
+.dgm-ai-item span{font-size:11px;font-weight:600;color:#1f2328;line-height:1.3}
+.dgm-ai-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ai-arr svg{width:16px;height:16px}
+@media (max-width:640px){.dgm-ai{padding:20px 16px 18px}.dgm-ai-items{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ai">
+  <span class="dgm-ai-chip">APIs &amp; integrations</span>
+  <h4>Four lesson themes · contract → call → structured output → async</h4>
+  <p class="dgm-ai-sub">Every AI-powered feature is one API call away from your product's existing systems.</p>
+
+  <div class="dgm-ai-band">
+    <span class="dgm-ai-badge">Lesson 1 · The contract</span>
+    <h5>Request &amp; response — the shape of every call</h5>
+    <div class="dgm-ai-items two">
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Request · prompt · params · data</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Response · content · usage · metadata</span></div>
+    </div>
+  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ai-band">
+    <span class="dgm-ai-badge">Lesson 2 · Making the call</span>
+    <h5>Four things that decide whether the call succeeds at all</h5>
+    <div class="dgm-ai-items">
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg><span>Auth</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Rate limits</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4M9 12h4M15 12h4"/></svg><span>Streaming</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg><span>Retries</span></div>
+    </div>
+  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ai-band">
+    <span class="dgm-ai-badge">Lesson 3 · Getting usable data back</span>
+    <h5>Structured output — a shape your code can trust</h5>
+    <div class="dgm-ai-items one">
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>JSON mode · schema-constrained generation</span></div>
+    </div>
+  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ai-band">
+    <span class="dgm-ai-badge">Lesson 4 · Not waiting around</span>
+    <h5>Async · MCP · integrating into existing flows</h5>
+    <div class="dgm-ai-items">
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Webhooks</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16"/></svg><span>MCP</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><span>Existing systems</span></div>
+      <div class="dgm-ai-item"><svg class="dgm-ai-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Latency budget</span></div>
+    </div>
+  </div>
+</div>

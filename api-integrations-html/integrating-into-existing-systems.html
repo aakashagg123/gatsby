@@ -402,17 +402,80 @@ the work to take (latency budget), what to do if that person is unavailable one 
 (failure isolation), and to make sure asking them twice by mistake doesn't cause a problem
 (idempotency). A new team member who ignores all three, however talented, makes the whole
 team slower and more fragile, not just their own piece of the work.</p>
-<pre class="mermaid">flowchart TB
-  FLOW[&quot;An existing system&lt;br/&gt;(checkout, support queue,&lt;br/&gt;a data pipeline)&quot;] --&gt; ADD[&quot;Add a model call&lt;br/&gt;as one step&quot;]
-  ADD --&gt; LAT{&quot;Latency budget&lt;br/&gt;set for this step?&quot;}
-  LAT --&gt;|&quot;no&quot;| SLOW[&quot;The AI call becomes&lt;br/&gt;the slowest, least&lt;br/&gt;predictable step&quot;]
-  LAT --&gt;|&quot;yes&quot;| OK1[&quot;The flow degrades&lt;br/&gt;gracefully if the AI&lt;br/&gt;step is slow&quot;]
-  ADD --&gt; IDEM{&quot;Safe to retry&lt;br/&gt;this call?&quot;}
-  IDEM --&gt;|&quot;no&quot;| DUP[&quot;A retry after a failure&lt;br/&gt;can cause a duplicate&lt;br/&gt;real-world effect&quot;]
-  IDEM --&gt;|&quot;yes&quot;| OK2[&quot;Retries are safe,&lt;br/&gt;no matter how many&lt;br/&gt;times they happen&quot;]
-  ADD --&gt; ISO{&quot;Failure isolated&lt;br/&gt;from the rest&lt;br/&gt;of the system?&quot;}
-  ISO --&gt;|&quot;no&quot;| CASCADE[&quot;The AI provider&#x27;s bad day&lt;br/&gt;takes down the whole flow&quot;]
-  ISO --&gt;|&quot;yes&quot;| OK3[&quot;The AI step degrades&lt;br/&gt;on its own, without&lt;br/&gt;sinking everything else&quot;]</pre>
+<!-- Integrating into existing systems — 3 parallel questions from one AI step insertion. -->
+<style>
+.dgm-in{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #c2185b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-in-chip{position:absolute;top:-11px;left:24px;background:#c2185b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(194,24,91,.28)}
+.dgm-in h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-in-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-in-existing{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:12px 16px;
+  display:flex;gap:12px;align-items:center;font-weight:700;color:#1f2328;font-size:12.5px;margin-bottom:8px}
+.dgm-in-existing svg{width:24px;height:24px;color:#59636e;flex:0 0 24px}
+.dgm-in-add{background:#f9e1ec;border:1.5px dashed #ecc3d5;border-radius:12px;padding:12px 16px;
+  display:flex;gap:12px;align-items:center;font-weight:700;color:#7a1140;font-size:12.5px;margin-bottom:14px}
+.dgm-in-add svg{width:24px;height:24px;color:#c2185b;flex:0 0 24px}
+.dgm-in-questions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.dgm-in-q{background:#efedfa;border:1.5px solid #cec8f0;border-radius:12px;padding:12px 14px;
+  display:flex;flex-direction:column;gap:8px;position:relative}
+.dgm-in-q .dgm-in-num{position:absolute;top:-9px;left:12px;background:#5a4fcf;color:#fff;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-in-q h5{margin:2px 0 4px;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-in-q .dgm-in-outcomes{display:flex;flex-direction:column;gap:5px}
+.dgm-in-outcome{background:#ffffff;border:1px solid;border-radius:8px;padding:7px 9px;font-size:10.5px;line-height:1.35;display:flex;gap:6px;align-items:flex-start}
+.dgm-in-outcome.no{border-color:#ffcecb;background:#ffebe9}
+.dgm-in-outcome.yes{border-color:#aceebb;background:#dafbe1}
+.dgm-in-outcome .dgm-in-mark{font-weight:700;font-size:10px;letter-spacing:.4px;text-transform:uppercase;flex:0 0 auto;padding:1px 5px;border-radius:4px;background:#ffffff;border:1px solid}
+.dgm-in-outcome.no .dgm-in-mark{color:#82061e;border-color:#ffcecb}
+.dgm-in-outcome.yes .dgm-in-mark{color:#1a614f;border-color:#aceebb}
+.dgm-in-outcome p{margin:0;color:#1f2328}
+@media (max-width:640px){.dgm-in{padding:20px 16px 18px}.dgm-in-questions{grid-template-columns:1fr}}
+</style>
+<div class="dgm-in">
+  <span class="dgm-in-chip">Integrating in</span>
+  <h4>Adding a model call to an existing flow · three questions to answer before shipping</h4>
+  <p class="dgm-in-sub">Latency, idempotency, isolation — each answered on purpose, not by accident.</p>
+
+  <div class="dgm-in-existing">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>
+    An existing system — checkout · support queue · data pipeline
+  </div>
+  <div class="dgm-in-add">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+    Add a model call as one step
+  </div>
+
+  <div class="dgm-in-questions">
+    <div class="dgm-in-q">
+      <span class="dgm-in-num">Q1</span>
+      <h5>Latency budget set?</h5>
+      <div class="dgm-in-outcomes">
+        <div class="dgm-in-outcome no"><span class="dgm-in-mark">No</span><p>AI becomes the slowest, least predictable step</p></div>
+        <div class="dgm-in-outcome yes"><span class="dgm-in-mark">Yes</span><p>Flow degrades gracefully when the AI step is slow</p></div>
+      </div>
+    </div>
+    <div class="dgm-in-q">
+      <span class="dgm-in-num">Q2</span>
+      <h5>Safe to retry?</h5>
+      <div class="dgm-in-outcomes">
+        <div class="dgm-in-outcome no"><span class="dgm-in-mark">No</span><p>A retry can cause a duplicate real-world effect</p></div>
+        <div class="dgm-in-outcome yes"><span class="dgm-in-mark">Yes</span><p>Retries safe · no matter how many</p></div>
+      </div>
+    </div>
+    <div class="dgm-in-q">
+      <span class="dgm-in-num">Q3</span>
+      <h5>Failure isolated?</h5>
+      <div class="dgm-in-outcomes">
+        <div class="dgm-in-outcome no"><span class="dgm-in-mark">No</span><p>Provider's bad day takes down the whole flow</p></div>
+        <div class="dgm-in-outcome yes"><span class="dgm-in-mark">Yes</span><p>AI degrades on its own, doesn't sink everything</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h2 id="latency-budgeting-deciding-how-much-time-is-allowed">Latency budgeting: deciding how much time is allowed</h2>
 <p>Every flow a user experiences has an implicit or explicit expectation for how long it
 should take. Adding a model call — one of the slower, more variable steps you can add to
@@ -505,46 +568,6 @@ failure is a degraded experience, not a blocked one.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
