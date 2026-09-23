@@ -1,0 +1,57 @@
+<style>
+.dgm-ur{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eda100;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ur-chip{position:absolute;top:-11px;left:24px;background:#eda100;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(237,161,0,.28)}
+.dgm-ur h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ur-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ur-q{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:220px}
+.dgm-ur-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ur-arr svg{width:16px;height:16px}
+.dgm-ur-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px}
+.dgm-ur-col{border-radius:13px;padding:13px 14px;position:relative;text-align:center}
+.dgm-ur-col.qual{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-ur-col.quant{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-ur-col .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-ur-col.qual .tag{color:#7a5300;border-color:#eac54f}
+.dgm-ur-col.quant .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-ur-col h6{margin:3px 0 4px;font-size:11.5px;font-weight:700;color:#1f2328}
+.dgm-ur-col p{margin:0;font-size:10px;color:#59636e;line-height:1.35}
+.dgm-ur-cross{text-align:center;font-size:10px;color:#59636e;font-style:italic;margin-bottom:10px}
+.dgm-ur-axes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgm-ur-ax{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:10px;padding:9px 12px;text-align:center;
+  font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ur-ax strong{color:#1f2328}
+@media (max-width:640px){.dgm-ur{padding:20px 16px 18px}.dgm-ur-cols,.dgm-ur-axes{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ur">
+  <span class="dgm-ur-chip">User research: the method map</span>
+  <h4>Two axes, one choice · match the method to the question</h4>
+  <p class="dgm-ur-sub">Qualitative finds the why. Quantitative finds how widely it holds. Research that stays on one side produces anecdotes or scale without explanation.</p>
+
+  <div class="dgm-ur-q">Your question</div>
+  <div class="dgm-ur-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ur-cols">
+    <div class="dgm-ur-col qual">
+      <span class="tag">Why — motives</span>
+      <h6>Qualitative</h6>
+      <p>Interviews · usability tests · field visits</p>
+    </div>
+    <div class="dgm-ur-col quant">
+      <span class="tag">How many — frequency</span>
+      <h6>Quantitative</h6>
+      <p>Analytics · surveys · A/B tests</p>
+    </div>
+  </div>
+  <div class="dgm-ur-cross">qual generates hypotheses → quant tests them at scale → quant finds anomalies → qual explains them</div>
+
+  <div class="dgm-ur-axes">
+    <div class="dgm-ur-ax"><strong>Attitudinal:</strong> what people SAY — weak for predictions, good for perceptions</div>
+    <div class="dgm-ur-ax"><strong>Behavioural:</strong> what people DO — the ground truth</div>
+  </div>
+</div>

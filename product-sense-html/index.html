@@ -381,15 +381,53 @@ around the five areas that compound into strong product sense. A sixth lesson th
 applies all of it to the specifics of building AI products.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>Five habits feed one judgment. That judgment then gets stress-tested by a new material:</p>
-<pre class="mermaid">flowchart TB
-  MOT[&quot;Motivation &amp; behaviour&lt;br/&gt;B = M × A × T&quot;] --&gt; PJ[&quot;PRODUCT JUDGMENT&lt;br/&gt;what to build, for whom, why&quot;]
-  EMP[&quot;Cognitive empathy&lt;br/&gt;simulate, then verify&quot;] --&gt; PJ
-  CRE[&quot;Creativity&lt;br/&gt;strategy guards execution&quot;] --&gt; PJ
-  COM[&quot;Communication&lt;br/&gt;judgment that can move a team&quot;] --&gt; PJ
-  DOM[&quot;Domain expertise&lt;br/&gt;the filter on decisions&quot;] --&gt; PJ
-  EMP &lt;--&gt;|&quot;talk to users —&lt;br/&gt;patterns → heuristics&quot;| DOM
-  PJ --&gt; AI[&quot;THE AI CAPSTONE&lt;br/&gt;probabilistic material:&lt;br/&gt;taste → evals · trust design ·&lt;br/&gt;latency &amp; cost as UX · scoping the jagged frontier&quot;]
-  AI --&gt; OUT[&quot;A trustworthy system&lt;br/&gt;around the model&quot;]</pre>
+<style>
+.dgm-ps{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eda100;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ps-chip{position:absolute;top:-11px;left:24px;background:#eda100;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(237,161,0,.28)}
+.dgm-ps h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ps-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-ps-habits{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:6px}
+.dgm-ps-hab{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:10px;padding:10px 7px;text-align:center}
+.dgm-ps-hab svg{width:18px;height:18px;color:#7a5300;margin-bottom:4px}
+.dgm-ps-hab span{display:block;font-size:9.5px;font-weight:700;color:#7a5300;line-height:1.25}
+.dgm-ps-link{text-align:center;font-size:9px;color:#8c959f;font-style:italic;margin-bottom:6px}
+.dgm-ps-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ps-arr svg{width:16px;height:16px}
+.dgm-ps-judg{background:#f6f8fa;border:1.5px solid #d1d9e0;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:400px}
+.dgm-ps-ai{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:460px;line-height:1.4}
+.dgm-ps-out{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin:0 auto;max-width:320px}
+@media (max-width:640px){.dgm-ps{padding:20px 16px 18px}.dgm-ps-habits{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ps">
+  <span class="dgm-ps-chip">Product sense for the AI PM</span>
+  <h4>Five habits feed one judgment · then a new material stress-tests it</h4>
+  <p class="dgm-ps-sub">A model is a new, probabilistic material — product sense tells you what to build with it, for whom, and why.</p>
+
+  <div class="dgm-ps-habits">
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg><span>Motivation &amp; behaviour</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a5 5 0 019-3 5 5 0 019 3c0 5-4 8-8 11z"/></svg><span>Cognitive empathy</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg><span>Creativity</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg><span>Communication</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V7z"/></svg><span>Domain expertise</span></div>
+  </div>
+  <div class="dgm-ps-link">↔ empathy and domain expertise compound together: talk to users, patterns become heuristics</div>
+
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ps-judg">Product judgment — what to build, for whom, why</div>
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ps-ai">The AI capstone — probabilistic material: taste → evals · trust design · latency &amp; cost as UX · scoping the jagged frontier</div>
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ps-out">A trustworthy system around the model</div>
+</div>
+
 <ul>
 <li><a href="motivation-and-behaviour.html"><strong>Motivation theory</strong></a> — the behaviour equation, friction,
   satisfaction, and ethical nudges: how to design experiences that move users to act.</li>
@@ -421,47 +459,7 @@ up in real products, plus the key takeaways.</p></div>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="motivation-and-behaviour.html"><span class="card-num">01</span><h3>Motivation theory: friction, satisfaction, and nudges</h3><span class="card-go">Read lesson →</span></a><a class="card" href="cognitive-empathy.html"><span class="card-num">02</span><h3>Cognitive empathy: anticipating unvoiced needs</h3><span class="card-go">Read lesson →</span></a><a class="card" href="user-research.html"><span class="card-num">03</span><h3>User research: the craft of finding out</h3><span class="card-go">Read lesson →</span></a><a class="card" href="creativity.html"><span class="card-num">04</span><h3>Creativity: from strategic thinking to creative execution</h3><span class="card-go">Read lesson →</span></a><a class="card" href="communication.html"><span class="card-num">05</span><h3>Communication: artifacts, influence, and interviews</h3><span class="card-go">Read lesson →</span></a><a class="card" href="domain-expertise.html"><span class="card-num">06</span><h3>Domain expertise: turning knowledge into intuition</h3><span class="card-go">Read lesson →</span></a><a class="card" href="product-sense-for-ai.html"><span class="card-num">07</span><h3>Product sense for AI products</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

@@ -1,0 +1,46 @@
+<style>
+.dgm-ps{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eda100;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ps-chip{position:absolute;top:-11px;left:24px;background:#eda100;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(237,161,0,.28)}
+.dgm-ps h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ps-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-ps-habits{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:6px}
+.dgm-ps-hab{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:10px;padding:10px 7px;text-align:center}
+.dgm-ps-hab svg{width:18px;height:18px;color:#7a5300;margin-bottom:4px}
+.dgm-ps-hab span{display:block;font-size:9.5px;font-weight:700;color:#7a5300;line-height:1.25}
+.dgm-ps-link{text-align:center;font-size:9px;color:#8c959f;font-style:italic;margin-bottom:6px}
+.dgm-ps-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ps-arr svg{width:16px;height:16px}
+.dgm-ps-judg{background:#f6f8fa;border:1.5px solid #d1d9e0;border-radius:11px;padding:10px 16px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:400px}
+.dgm-ps-ai{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:460px;line-height:1.4}
+.dgm-ps-out{background:#ffffff;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin:0 auto;max-width:320px}
+@media (max-width:640px){.dgm-ps{padding:20px 16px 18px}.dgm-ps-habits{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ps">
+  <span class="dgm-ps-chip">Product sense for the AI PM</span>
+  <h4>Five habits feed one judgment · then a new material stress-tests it</h4>
+  <p class="dgm-ps-sub">A model is a new, probabilistic material — product sense tells you what to build with it, for whom, and why.</p>
+
+  <div class="dgm-ps-habits">
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg><span>Motivation &amp; behaviour</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a5 5 0 019-3 5 5 0 019 3c0 5-4 8-8 11z"/></svg><span>Cognitive empathy</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg><span>Creativity</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg><span>Communication</span></div>
+    <div class="dgm-ps-hab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V7z"/></svg><span>Domain expertise</span></div>
+  </div>
+  <div class="dgm-ps-link">↔ empathy and domain expertise compound together: talk to users, patterns become heuristics</div>
+
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ps-judg">Product judgment — what to build, for whom, why</div>
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ps-ai">The AI capstone — probabilistic material: taste → evals · trust design · latency &amp; cost as UX · scoping the jagged frontier</div>
+  <div class="dgm-ps-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ps-out">A trustworthy system around the model</div>
+</div>
