@@ -394,11 +394,111 @@ autonomously, ships something that behaves like a coin flip, and finds out from
 customer complaints instead of from a dashboard.</p>
 </blockquote>
 <h2 id="the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</h2>
-<pre class="mermaid">flowchart TB
-  S1[&quot;Step 1&lt;br/&gt;95% reliable&quot;] --&gt; S2[&quot;Step 2&lt;br/&gt;95% reliable&quot;]
-  S2 --&gt; S3[&quot;...&quot;]
-  S3 --&gt; S20[&quot;Step 20&lt;br/&gt;95% reliable&quot;]
-  S20 --&gt; RESULT{&quot;End-to-end success:&lt;br/&gt;~36%, not 95%&quot;}</pre>
+<!-- Reliability lesson — the compound-error math visualized as a chain that degrades.
+     Diagram type: HORIZONTAL BAR CHAIN with mathematical terminal outcome. -->
+<style>
+.dgm-rl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-rl-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(90,79,207,.28)}
+.dgm-rl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-rl-sub{font-size:12px;color:#59636e;margin:0 0 20px}
+
+.dgm-rl-chain{display:flex;align-items:stretch;gap:2px;margin-bottom:8px}
+.dgm-rl-step{flex:1;background:#efedfa;border:1px solid #cec8f0;border-radius:0;
+  padding:14px 6px 10px;text-align:center;font-size:10.5px;font-weight:600;color:#3d3a95;
+  letter-spacing:.02em;position:relative}
+.dgm-rl-step:first-child{border-top-left-radius:8px;border-bottom-left-radius:8px}
+.dgm-rl-step:last-child{border-top-right-radius:8px;border-bottom-right-radius:8px}
+.dgm-rl-step .dgm-rl-pct{display:block;font-size:11.5px;font-weight:700;color:#5a4fcf;
+  font-variant-numeric:tabular-nums;margin-top:2px;letter-spacing:.5px}
+.dgm-rl-step.gap{flex:.4;background:#f6f8fa;border:1px dashed #d1d9e0;color:#8c959f;
+  border-radius:0;font-size:14px;font-weight:700}
+
+.dgm-rl-formula{margin:14px 0 12px;padding:14px 18px;background:#f6f8fa;border:1px solid #d1d9e0;
+  border-radius:12px;text-align:center;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:13.5px;color:#1f2328;line-height:1.5}
+.dgm-rl-formula .dgm-rl-eq{color:#5a4fcf;font-weight:700}
+.dgm-rl-formula .dgm-rl-result{color:#d1242f;font-weight:700;font-size:15px}
+
+.dgm-rl-outcome{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:12px;
+  padding:16px 18px;display:flex;gap:14px;align-items:center}
+.dgm-rl-outcome .dgm-rl-ico{width:32px;height:32px;padding:5px;background:#ffffff;
+  border:1.5px solid #ffcecb;border-radius:10px;color:#d1242f;flex:0 0 32px}
+.dgm-rl-outcome h5{margin:0 0 3px;font-size:13px;font-weight:700;color:#82061e;letter-spacing:.02em}
+.dgm-rl-outcome p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+
+.dgm-rl-recovery{margin-top:14px;background:#efedfa;border:1px solid #cec8f0;border-radius:12px;
+  padding:12px 14px}
+.dgm-rl-recovery h5{margin:0 0 8px;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-rl-ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.dgm-rl-rung{background:#ffffff;border:1px solid #cec8f0;border-radius:8px;padding:7px 9px;
+  text-align:center;font-size:11px;font-weight:600;color:#3d3a95;letter-spacing:.02em;
+  display:flex;flex-direction:column;gap:3px;align-items:center}
+.dgm-rl-rung .dgm-rl-rung-ico{color:#5a4fcf;width:16px;height:16px}
+.dgm-rl-rung .dgm-rl-rung-num{font-size:9px;color:#8c959f;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase}
+@media (max-width:640px){
+  .dgm-rl{padding:20px 16px 18px}
+  .dgm-rl-chain{flex-wrap:wrap}
+  .dgm-rl-step{min-width:60px;border-radius:8px !important}
+  .dgm-rl-ladder{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<div class="dgm-rl">
+  <span class="dgm-rl-chip">Reliability across a run</span>
+
+  <h4>The compound-error trap · why "95% reliable" isn't</h4>
+  <p class="dgm-rl-sub">A step that's right 19 in 20 times feels safe. Twenty of them multiplied together — barely a third of the time.</p>
+
+  <div class="dgm-rl-chain">
+    <div class="dgm-rl-step">Step 1<span class="dgm-rl-pct">95%</span></div>
+    <div class="dgm-rl-step">Step 2<span class="dgm-rl-pct">95%</span></div>
+    <div class="dgm-rl-step">Step 3<span class="dgm-rl-pct">95%</span></div>
+    <div class="dgm-rl-step gap">···</div>
+    <div class="dgm-rl-step">Step 20<span class="dgm-rl-pct">95%</span></div>
+  </div>
+
+  <div class="dgm-rl-formula">
+    0.95<sup>20</sup> <span class="dgm-rl-eq">=</span> <span class="dgm-rl-result">≈ 36%</span> end-to-end success
+  </div>
+
+  <div class="dgm-rl-outcome">
+    <svg class="dgm-rl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17.5h.01"/><path d="M10.3 3.9L2.5 17.5A2 2 0 004.2 20.5h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+    <div><h5>Where the demo-to-production gap lives</h5><p>Per-step rates <em>multiply</em>, not average. Chasing a smarter model doesn't fix this — shortening or catching the chain does.</p></div>
+  </div>
+
+  <div class="dgm-rl-recovery">
+    <h5>The recovery ladder · when a step fails, climb this in order</h5>
+    <div class="dgm-rl-ladder">
+      <div class="dgm-rl-rung">
+        <span class="dgm-rl-rung-num">01</span>
+        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8"/><path d="M21 3v5h-5"/></svg>
+        Retry
+      </div>
+      <div class="dgm-rl-rung">
+        <span class="dgm-rl-rung-num">02</span>
+        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/></svg>
+        Revise
+      </div>
+      <div class="dgm-rl-rung">
+        <span class="dgm-rl-rung-num">03</span>
+        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v13a2 2 0 002 2h12a2 2 0 002-2V6"/><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        Restart
+      </div>
+      <div class="dgm-rl-rung">
+        <span class="dgm-rl-rung-num">04</span>
+        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 12H8m0 0l3-3m-3 3l3 3"/><path d="M20 8v8M4 4h4v16H4z"/></svg>
+        Escalate
+      </div>
+    </div>
+  </div>
+</div>
+
 <p>A step that's right nineteen times out of twenty feels safe. Chain twenty of them together
 and the task succeeds roughly a third of the time, because the per-step rates multiply,
 not average. This single fact explains most of the gap between an agent's demo and its
@@ -495,46 +595,6 @@ would actually see if it got something wrong.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
