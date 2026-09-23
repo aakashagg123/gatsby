@@ -417,15 +417,20 @@ CSS = r"""
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
-  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"cv11","ss01","ss03";
+  overflow-x:hidden}
 img,svg,canvas{max-width:100%;height:auto}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* top bar */
 .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
-  padding:14px 26px;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line)}
+  padding:14px 26px;background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(31,35,40,.02),0 4px 16px rgba(31,35,40,.03)}
 .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
 .brand:hover{text-decoration:none}
 .brand span{font-size:16px;letter-spacing:.2px}
@@ -546,7 +551,7 @@ td code,th code{font-size:12.5px}
 
 /* code — GitHub markdown code blocks: light grey, no syntax colour */
 code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--ink);
-  padding:2px 6px;border-radius:6px}
+  padding:2px 6px;border-radius:6px;overflow-wrap:anywhere}
 pre{background:var(--bg2);color:var(--ink);border-radius:var(--radius);padding:16px 18px;
   overflow-x:auto;margin:18px 0;border:1px solid var(--line);line-height:1.55}
 pre code{background:none;color:inherit;padding:0;font-size:13px}
@@ -591,7 +596,7 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 .pm-band strong{color:var(--ink)}
 .sec{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--ink);
   text-align:center;margin:60px 0 26px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
 .card{position:relative;display:flex;flex-direction:column;background:var(--panel);
   border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 22px;color:var(--ink2)}
 .card:hover{border-color:var(--accent);text-decoration:none;transition:.15s}

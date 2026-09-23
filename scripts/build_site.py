@@ -67,9 +67,14 @@ VIEWER = """<!doctype html>
   html{{-webkit-text-size-adjust:100%;text-size-adjust:100%}}
   body{{margin:0;background:var(--bg);color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
-    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}}
+    font-size:16px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    font-feature-settings:"cv11","ss01","ss03";
+    overflow-x:hidden}}
   img,svg{{max-width:100%;height:auto}}
-  .top{{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
+  .top{{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);
+    box-shadow:0 1px 0 rgba(31,35,40,.02),0 4px 16px rgba(31,35,40,.03);
     border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:20px;font-size:.9rem}}
   .top a{{color:var(--ink);text-decoration:none;font-weight:500}}
   .top a:hover{{color:var(--accent-deep)}}
@@ -259,7 +264,11 @@ LANDING = """<!doctype html>
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{margin:0;color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
-    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    font-feature-settings:"cv11","ss01","ss03";
+    overflow-x:hidden;
     background:
       radial-gradient(1000px 620px at 40px 10px, rgba(1,106,151,.40), transparent 60%),
       radial-gradient(900px 560px at calc(100% - 60px) 0px, rgba(1,132,152,.34), transparent 58%),
