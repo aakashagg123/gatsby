@@ -1,0 +1,47 @@
+<style>
+.dgm-tr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tr-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-tr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tr-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.dgm-tr-in{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-tr-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tr-arr svg{width:16px;height:16px}
+.dgm-tr-own{background:#fdeadf;border:1.5px solid #f5c39d;border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.dgm-tr-own-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a3f0e;
+  text-align:center;margin-bottom:6px}
+.dgm-tr-own-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dgm-tr-own-n{background:#ffffff;border:1px solid #f5c39d;border-radius:9px;padding:8px 9px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#9a3f0e}
+.dgm-tr-how{background:#f6f8fa;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11px;line-height:1.4}
+@media (max-width:640px){.dgm-tr{padding:20px 16px 18px}.dgm-tr-inputs,.dgm-tr-own-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tr">
+  <span class="dgm-tr-chip">What the technical PM owns</span>
+  <h4>Business, users, engineering feed the what and why · how and who stay engineering's</h4>
+  <p class="dgm-tr-sub">You decide what gets built, why, in what order, and what "good" means.</p>
+
+  <div class="dgm-tr-inputs">
+    <div class="dgm-tr-in">Business — viability, pricing, strategy</div>
+    <div class="dgm-tr-in">Users — needs, workflows, trust</div>
+    <div class="dgm-tr-in">Engineering — feasibility, cost, risk</div>
+  </div>
+  <div class="dgm-tr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tr-own">
+    <div class="dgm-tr-own-lbl">What the technical PM owns</div>
+    <div class="dgm-tr-own-row">
+      <div class="dgm-tr-own-n">What &amp; why — problem, outcome, priority</div>
+      <div class="dgm-tr-own-n">What good means — requirements, acceptance, metrics</div>
+    </div>
+  </div>
+  <div class="dgm-tr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tr-how">How &amp; who — architecture, staffing, estimates<br/><em>owned by engineering, informed by the PM</em></div>
+</div>

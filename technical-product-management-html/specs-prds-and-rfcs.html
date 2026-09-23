@@ -393,14 +393,50 @@ without asking me?"</em></p>
 in week eleven.</p>
 </blockquote>
 <h2 id="the-document-stack">The document stack</h2>
-<pre class="mermaid">flowchart TB
-  V[&quot;Vision&lt;br/&gt;why we exist — years&quot;] --&gt; S[&quot;Strategy&lt;br/&gt;where we play &amp; win — year&quot;]
-  S --&gt; R[&quot;Roadmap&lt;br/&gt;ordered bets — quarters&quot;]
-  R --&gt; P[&quot;PRD&lt;br/&gt;one initiative: what &amp; why — weeks&quot;]
-  P --&gt; F[&quot;RFC / design doc&lt;br/&gt;how — written by engineering&quot;]
-  F --&gt; T[&quot;Tickets&lt;br/&gt;sliced, estimated work&quot;]
-  P -. &quot;acceptance criteria&lt;br/&gt;trace down&quot; .-&gt; T
-  F -. &quot;constraints &amp; risks&lt;br/&gt;feed back up&quot; .-&gt; P</pre>
+<style>
+.dgm-sf{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sf-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-sf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sf-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sf-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:3px;margin-bottom:10px}
+.dgm-sf-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 6px;text-align:center;
+  font-size:8.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-sf-node.pm{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-sf-arr{text-align:center;color:#8c959f;font-weight:700;font-size:11px}
+.dgm-sf-notes{display:flex;flex-direction:column;gap:6px}
+.dgm-sf-note{padding:9px 12px;background:#fdeadf;border:1px dashed #f5c39d;border-radius:9px;font-size:10px;
+  color:#9a3f0e;line-height:1.4}
+@media (max-width:640px){.dgm-sf{padding:20px 16px 18px}.dgm-sf-pipe{grid-template-columns:1fr}.dgm-sf-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-sf">
+  <span class="dgm-sf-chip">The document stack</span>
+  <h4>Each layer answers questions the layer below shouldn't re-litigate</h4>
+  <p class="dgm-sf-sub">Acceptance criteria trace down into tickets. Constraints and risks feed back up into the PRD.</p>
+
+  <div class="dgm-sf-pipe">
+    <div class="dgm-sf-node">Vision<br/>why — years</div>
+    <div class="dgm-sf-arr">→</div>
+    <div class="dgm-sf-node">Strategy<br/>where — year</div>
+    <div class="dgm-sf-arr">→</div>
+    <div class="dgm-sf-node">Roadmap<br/>ordered bets</div>
+    <div class="dgm-sf-arr">→</div>
+    <div class="dgm-sf-node pm">PRD<br/>what &amp; why — weeks</div>
+    <div class="dgm-sf-arr">→</div>
+    <div class="dgm-sf-node">RFC<br/>how — engineering</div>
+    <div class="dgm-sf-arr">→</div>
+    <div class="dgm-sf-node">Tickets<br/>sliced work</div>
+  </div>
+
+  <div class="dgm-sf-notes">
+    <div class="dgm-sf-note"><strong>↓ Acceptance criteria trace down</strong> — if a ticket can't be traced to a requirement, ask why it exists.</div>
+    <div class="dgm-sf-note"><strong>↑ Constraints &amp; risks feed back up</strong> — a design discovery ("that latency is impossible") must change the PRD, not get silently absorbed.</div>
+  </div>
+</div>
+
 <p>Two arrows matter most. Acceptance criteria written in the PRD should be traceable all the
 way into tickets — if a ticket can't be traced to a requirement, ask why it exists. And
 RFCs feed <em>back</em>: engineering's design work routinely uncovers a constraint ("that data
@@ -525,46 +561,6 @@ capstone builds on exactly this section.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

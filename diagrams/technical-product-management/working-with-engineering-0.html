@@ -1,0 +1,41 @@
+<style>
+.dgm-we{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-we-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-we h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-we-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-we-ring{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-bottom:8px}
+.dgm-we-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 10px;font-size:9.5px;
+  font-weight:700;color:#1f2328;text-align:center}
+.dgm-we-node.pm{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-we-arr{color:#8c959f;font-size:12px}
+.dgm-we-loop{text-align:center;font-size:9.5px;color:#59636e;font-style:italic;margin-bottom:8px}
+.dgm-we-branch{display:flex;align-items:center;justify-content:center;gap:8px;background:#fdeadf;border:1px dashed #f5c39d;
+  border-radius:10px;padding:9px 14px;font-size:10.5px;color:#9a3f0e;line-height:1.4}
+@media (max-width:640px){.dgm-we{padding:20px 16px 18px}.dgm-we-ring{flex-direction:column}}
+</style>
+<div class="dgm-we">
+  <span class="dgm-we-chip">The shape of a sprint</span>
+  <h4>Priorities enter cleanly, feedback exits regularly</h4>
+  <p class="dgm-we-sub">Rituals are where product intent physically enters the machine.</p>
+
+  <div class="dgm-we-ring">
+    <div class="dgm-we-node pm">Backlog — PM keeps ordered &amp; refined</div>
+    <span class="dgm-we-arr">→</span>
+    <div class="dgm-we-node pm">Sprint planning — PM brings the why</div>
+    <span class="dgm-we-arr">→</span>
+    <div class="dgm-we-node">Build days</div>
+    <span class="dgm-we-arr">→</span>
+    <div class="dgm-we-node">Daily standup — blockers surface</div>
+    <span class="dgm-we-arr">→</span>
+    <div class="dgm-we-node pm">Review / demo — PM judges vs. criteria</div>
+    <span class="dgm-we-arr">→</span>
+    <div class="dgm-we-node">Retrospective</div>
+  </div>
+  <div class="dgm-we-loop">↻ retro closes back into the backlog · standup loops with build days until the sprint ends</div>
+
+  <div class="dgm-we-branch">⚡ Scope question at standup → PM decision, in hours not days → back into build days</div>
+</div>

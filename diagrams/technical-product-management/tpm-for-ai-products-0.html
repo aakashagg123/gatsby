@@ -1,0 +1,50 @@
+<style>
+.dgm-tf2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tf2-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-tf2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tf2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tf2-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:6px}
+.dgm-tf2-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 7px;text-align:center;
+  font-size:9px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-tf2-node.eval{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-tf2-node.ship{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-tf2-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-tf2-prod{background:#ddf4ff;border:1.5px solid #b6e3ff;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#0550ae;font-weight:700;font-size:11.5px;margin:8px auto;max-width:240px}
+.dgm-tf2-loops{display:flex;flex-direction:column;gap:6px}
+.dgm-tf2-loop{padding:8px 12px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:9px;font-size:9.5px;
+  color:#59636e;line-height:1.4}
+.dgm-tf2-loop strong{color:#9a3f0e}
+@media (max-width:640px){.dgm-tf2{padding:20px 16px 18px}.dgm-tf2-pipe{grid-template-columns:1fr}.dgm-tf2-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-tf2">
+  <span class="dgm-tf2-chip">The operating loop</span>
+  <h4>Three connected loops · daily, monthly, quarterly</h4>
+  <p class="dgm-tf2-sub">Your leverage as PM is making sure all three arrows back into the eval suite actually exist.</p>
+
+  <div class="dgm-tf2-pipe">
+    <div class="dgm-tf2-node">Spec with graded examples</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node eval">Eval suite — the executable spec</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node">Build &amp; iterate</div>
+    <div class="dgm-tf2-arr">↻</div>
+  </div>
+  <div class="dgm-tf2-pipe" style="grid-template-columns:1fr 16px 1fr">
+    <div class="dgm-tf2-node ship">Staged rollout — quality-gated</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node">← from eval suite when it clears the bar</div>
+  </div>
+
+  <div class="dgm-tf2-prod">Production — online quality proxies</div>
+
+  <div class="dgm-tf2-loops">
+    <div class="dgm-tf2-loop"><strong>Inner loop (daily):</strong> build ↔ eval — no prompt, retrieval, or model change lands without a score.</div>
+    <div class="dgm-tf2-loop"><strong>Release loop (weekly–monthly):</strong> eval → rollout → production — quality gates the ramp.</div>
+    <div class="dgm-tf2-loop"><strong>Outer loop (quarterly):</strong> production → spec — edits, retries, and failures become new eval cases and reshape what "good" means.</div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<style>
+.dgm-lr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lr-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-lr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-lr-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:3px;margin-bottom:8px}
+.dgm-lr-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 5px;text-align:center;
+  font-size:8px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-lr-node.canary{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-lr-node.ga{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-lr-arr{text-align:center;color:#8c959f;font-weight:700;font-size:10px}
+.dgm-lr-back{text-align:center;font-size:9px;color:#c9432f;font-style:italic;margin-bottom:10px}
+.dgm-lr-note{margin-top:10px;padding:10px 14px;background:#fdeadf;border:1px dashed #f5c39d;border-radius:10px;
+  font-size:10.5px;color:#9a3f0e;line-height:1.4}
+@media (max-width:640px){.dgm-lr{padding:20px 16px 18px}.dgm-lr-pipe{grid-template-columns:1fr}.dgm-lr-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-lr">
+  <span class="dgm-lr-chip">Progressive delivery</span>
+  <h4>Each stage catches a different class of problem</h4>
+  <p class="dgm-lr-sub">Issues found at any stage flag back off — the fastest recovery is a flag-flip, not a fire drill.</p>
+
+  <div class="dgm-lr-pipe">
+    <div class="dgm-lr-node">Dark<br/>deployed behind flag</div>
+    <div class="dgm-lr-arr">→</div>
+    <div class="dgm-lr-node">Internal<br/>dogfood</div>
+    <div class="dgm-lr-arr">→</div>
+    <div class="dgm-lr-node">Beta<br/>opted-in users</div>
+    <div class="dgm-lr-arr">→</div>
+    <div class="dgm-lr-node canary">Canary<br/>1–5% traffic</div>
+    <div class="dgm-lr-arr">→</div>
+    <div class="dgm-lr-node">Ramp<br/>25→50→100%</div>
+    <div class="dgm-lr-arr">→</div>
+    <div class="dgm-lr-node ga">GA<br/>flag removed</div>
+  </div>
+  <div class="dgm-lr-back">↩ issue found at Internal, Beta, or Canary → flag off, back to Dark · regression at Ramp → back to Canary</div>
+
+  <div class="dgm-lr-note"><strong>Rollback is a product requirement:</strong> what's the one action that restores yesterday's behavior, who can take it, and does new data still work under the old version?</div>
+</div>
