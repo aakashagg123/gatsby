@@ -393,14 +393,57 @@ silently, and can never be safely improved — because nobody can tell whether a
 change makes it better or worse.</p>
 </blockquote>
 <h2 id="the-operating-loop">The operating loop</h2>
-<pre class="mermaid">flowchart TB
-  SPEC[&quot;Spec with graded examples&lt;br/&gt;quality bar, budgets, bounds&quot;] --&gt; EV[&quot;Eval suite&lt;br/&gt;the executable spec&quot;]
-  EV --&gt; BUILD[&quot;Build &amp; iterate&lt;br/&gt;prompts, retrieval, models&quot;]
-  BUILD --&gt;|&quot;every change scored&lt;br/&gt;against the suite&quot;| EV
-  EV --&gt;|&quot;clears the bar&quot;| SHIP[&quot;Staged rollout&lt;br/&gt;quality-gated ramp&quot;]
-  SHIP --&gt; PROD[&quot;Production&lt;br/&gt;online quality proxies&quot;]
-  PROD --&gt;|&quot;edits, retries, failures&lt;br/&gt;become new eval cases&quot;| EV
-  PROD --&gt;|&quot;telemetry &amp; insight&quot;| SPEC</pre>
+<style>
+.dgm-tf2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tf2-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-tf2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tf2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tf2-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:6px}
+.dgm-tf2-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 7px;text-align:center;
+  font-size:9px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-tf2-node.eval{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-tf2-node.ship{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-tf2-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-tf2-prod{background:#ddf4ff;border:1.5px solid #b6e3ff;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#0550ae;font-weight:700;font-size:11.5px;margin:8px auto;max-width:240px}
+.dgm-tf2-loops{display:flex;flex-direction:column;gap:6px}
+.dgm-tf2-loop{padding:8px 12px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:9px;font-size:9.5px;
+  color:#59636e;line-height:1.4}
+.dgm-tf2-loop strong{color:#9a3f0e}
+@media (max-width:640px){.dgm-tf2{padding:20px 16px 18px}.dgm-tf2-pipe{grid-template-columns:1fr}.dgm-tf2-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-tf2">
+  <span class="dgm-tf2-chip">The operating loop</span>
+  <h4>Three connected loops · daily, monthly, quarterly</h4>
+  <p class="dgm-tf2-sub">Your leverage as PM is making sure all three arrows back into the eval suite actually exist.</p>
+
+  <div class="dgm-tf2-pipe">
+    <div class="dgm-tf2-node">Spec with graded examples</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node eval">Eval suite — the executable spec</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node">Build &amp; iterate</div>
+    <div class="dgm-tf2-arr">↻</div>
+  </div>
+  <div class="dgm-tf2-pipe" style="grid-template-columns:1fr 16px 1fr">
+    <div class="dgm-tf2-node ship">Staged rollout — quality-gated</div>
+    <div class="dgm-tf2-arr">→</div>
+    <div class="dgm-tf2-node">← from eval suite when it clears the bar</div>
+  </div>
+
+  <div class="dgm-tf2-prod">Production — online quality proxies</div>
+
+  <div class="dgm-tf2-loops">
+    <div class="dgm-tf2-loop"><strong>Inner loop (daily):</strong> build ↔ eval — no prompt, retrieval, or model change lands without a score.</div>
+    <div class="dgm-tf2-loop"><strong>Release loop (weekly–monthly):</strong> eval → rollout → production — quality gates the ramp.</div>
+    <div class="dgm-tf2-loop"><strong>Outer loop (quarterly):</strong> production → spec — edits, retries, and failures become new eval cases and reshape what "good" means.</div>
+  </div>
+</div>
+
 <p>Read it as three connected loops. The <strong>inner loop</strong> (build ↔ eval) is daily: no prompt,
 retrieval, or model change lands without a score. The <strong>release loop</strong> (eval → rollout →
 production) is weekly-to-monthly: quality gates the ramp. The <strong>outer loop</strong> (production
@@ -598,46 +641,6 @@ eval bar and scoping decisions above run on.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

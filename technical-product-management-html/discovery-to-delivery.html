@@ -392,19 +392,66 @@ ceiling was discoverable in a week, or ships the demo-day version that collapses
 user inputs.</p>
 </blockquote>
 <h2 id="the-two-tracks">The two tracks</h2>
-<pre class="mermaid">flowchart LR
-  subgraph DISC[&quot;Discovery track — cheap to be wrong&quot;]
-    O[&quot;Opportunity&lt;br/&gt;signal, idea, problem&quot;] --&gt; A[&quot;Assess&lt;br/&gt;valuable? viable?&quot;]
-    A --&gt; P[&quot;Prototype &amp; test&lt;br/&gt;usable? feasible?&quot;]
-    P --&gt;|&quot;evidence weak&quot;| K[&quot;Kill or reshape&quot;]
-    K -.-&gt; O
-  end
-  subgraph DELV[&quot;Delivery track — expensive to be wrong&quot;]
-    S[&quot;Spec &amp; slice&quot;] --&gt; B[&quot;Build &amp; verify&quot;]
-    B --&gt; R[&quot;Release &amp; measure&quot;]
-  end
-  P --&gt;|&quot;evidence strong&quot;| S
-  R --&gt;|&quot;telemetry &amp; feedback&quot;| O</pre>
+<style>
+.dgm-dd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-dd-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-dd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-dd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-dd-track{border-radius:12px;padding:13px 14px;position:relative;margin-bottom:10px}
+.dgm-dd-track.disc{background:#fdeadf;border:1.5px solid #f5c39d}
+.dgm-dd-track.delv{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-dd-track .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-dd-track.disc .tag{color:#9a3f0e;border-color:#f5c39d}
+.dgm-dd-track.delv .tag{color:#59636e;border-color:#d1d9e0}
+.dgm-dd-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dgm-dd-node{background:#ffffff;border-radius:8px;padding:7px 10px;font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-dd-track.disc .dgm-dd-node{border:1px solid #f5c39d}
+.dgm-dd-track.delv .dgm-dd-node{border:1px solid #d1d9e0}
+.dgm-dd-arr{color:#8c959f;font-size:11px}
+.dgm-dd-kill{background:#ffebe9;border:1px solid #ffcecb;color:#82061e}
+.dgm-dd-link{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0;font-size:9.5px;
+  color:#59636e;text-align:center}
+@media (max-width:640px){.dgm-dd{padding:20px 16px 18px}}
+</style>
+<div class="dgm-dd">
+  <span class="dgm-dd-chip">The two tracks</span>
+  <h4>Discovery is cheap to be wrong · delivery is expensive to be wrong</h4>
+  <p class="dgm-dd-sub">The tracks run concurrently, not sequentially. Release feeds discovery — that's the loop.</p>
+
+  <div class="dgm-dd-track disc">
+    <span class="tag">Discovery — cheap to be wrong</span>
+    <div class="dgm-dd-row">
+      <div class="dgm-dd-node">Opportunity</div>
+      <span class="dgm-dd-arr">→</span>
+      <div class="dgm-dd-node">Assess — valuable? viable?</div>
+      <span class="dgm-dd-arr">→</span>
+      <div class="dgm-dd-node">Prototype &amp; test — usable? feasible?</div>
+      <span class="dgm-dd-arr">→</span>
+      <div class="dgm-dd-node dgm-dd-kill">Kill or reshape ↻</div>
+    </div>
+  </div>
+
+  <div class="dgm-dd-link">evidence strong ↓</div>
+
+  <div class="dgm-dd-track delv">
+    <span class="tag">Delivery — expensive to be wrong</span>
+    <div class="dgm-dd-row">
+      <div class="dgm-dd-node">Spec &amp; slice</div>
+      <span class="dgm-dd-arr">→</span>
+      <div class="dgm-dd-node">Build &amp; verify</div>
+      <span class="dgm-dd-arr">→</span>
+      <div class="dgm-dd-node">Release &amp; measure</div>
+    </div>
+  </div>
+
+  <div class="dgm-dd-link">↺ telemetry &amp; feedback loop back into the next opportunity</div>
+</div>
+
 <p>The tracks run <strong>concurrently, not sequentially</strong>. While engineering delivers this month's
 validated bet, you (with a designer and an engineer, part-time) are de-risking next
 month's. Delivery should never have to stop and wait for discovery to figure out what's
@@ -508,46 +555,6 @@ where next quarter's best discovery leads come from.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

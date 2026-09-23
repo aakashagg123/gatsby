@@ -394,13 +394,48 @@ into front-page ones — and a team that repeats its incidents because nothing w
 ever truly learned.</p>
 </blockquote>
 <h2 id="the-lifecycle">The lifecycle</h2>
-<pre class="mermaid">flowchart LR
-  DET[&quot;DETECT&lt;br/&gt;alerts · user reports ·&lt;br/&gt;eval-score drop&quot;] --&gt; TRI[&quot;TRIAGE&lt;br/&gt;severity · impact ·&lt;br/&gt;incident commander&quot;]
-  TRI --&gt; MIT[&quot;MITIGATE&lt;br/&gt;rollback · kill switch ·&lt;br/&gt;degraded mode&quot;]
-  MIT --&gt; COMM[&quot;COMMUNICATE&lt;br/&gt;status page · support ·&lt;br/&gt;stakeholders&quot;]
-  COMM --&gt; RES[&quot;RESOLVE&lt;br/&gt;root fix · verify ·&lt;br/&gt;all-clear&quot;]
-  RES --&gt; PM[&quot;POSTMORTEM&lt;br/&gt;blameless · systemic ·&lt;br/&gt;5 Whys&quot;]
-  PM --&gt;|&quot;action items with owners&lt;br/&gt;enter the roadmap&quot;| DET</pre>
+<style>
+.dgm-ip{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ip-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-ip h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ip-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ip-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:8px}
+.dgm-ip-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 6px;text-align:center;
+  font-size:8.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-ip-node.mit{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-ip-node.post{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-ip-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-ip-loop{text-align:center;font-size:9.5px;color:#9a3f0e;font-style:italic;margin-bottom:8px}
+.dgm-ip-note{padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;font-size:10.5px;
+  color:#1f2328;line-height:1.4}
+.dgm-ip-note strong{color:#9a3f0e}
+@media (max-width:640px){.dgm-ip{padding:20px 16px 18px}.dgm-ip-pipe{grid-template-columns:1fr}.dgm-ip-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-ip">
+  <span class="dgm-ip-chip">The incident lifecycle</span>
+  <h4>Mitigate before you diagnose · one incident commander</h4>
+  <p class="dgm-ip-sub">Action items with owners enter the roadmap — that's the loop back into detection.</p>
+
+  <div class="dgm-ip-pipe">
+    <div class="dgm-ip-node">Detect<br/>alerts, reports, eval drop</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node">Triage<br/>severity, commander</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node mit">Mitigate<br/>rollback, kill switch</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node">Communicate<br/>status, support</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node post">Resolve → Postmortem<br/>blameless, 5 Whys</div>
+  </div>
+  <div class="dgm-ip-loop">↻ action items with owners feed back into detection — better alerts, fewer repeats</div>
+
+  <div class="dgm-ip-note"><strong>Severity drives everything:</strong> a SEV1 gets a war room; a SEV3 gets a ticket. Agree on the ladder before you need it.</div>
+</div>
+
 <p>Severity drives everything: a <strong>SEV1</strong> (users broadly down, data at risk) gets a war
 room and executive updates. A <strong>SEV3</strong> (degraded corner case) gets a ticket. Agree on
 the ladder <em>before</em> you need it — arguing about severity during an incident is how
@@ -521,46 +556,6 @@ postmortems all pointing at the same subsystem.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

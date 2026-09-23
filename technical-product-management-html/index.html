@@ -385,16 +385,51 @@ can redraw on a whiteboard.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>The craft is a loop that runs every quarter — with the role at the center and the AI
 capstone bending every station:</p>
-<pre class="mermaid">flowchart TB
-  ROLE[&quot;THE ROLE&lt;br/&gt;context · clarity · trust&lt;br/&gt;(the team&#x27;s API to the company)&quot;]
-  DISC[&quot;Discovery&lt;br/&gt;find the right bet&quot;] --&gt; SPEC[&quot;Specs, PRDs &amp; RFCs&lt;br/&gt;make it unambiguous&quot;]
-  SPEC --&gt; PRI[&quot;Prioritization &amp; roadmaps&lt;br/&gt;sequence the bets&quot;]
-  PRI --&gt; ENG[&quot;Working with engineering&lt;br/&gt;build without friction&quot;]
-  ENG --&gt; MET[&quot;Metrics &amp; experimentation&lt;br/&gt;did it work?&quot;]
-  MET --&gt; LAUNCH[&quot;Launches, rollouts &amp; migrations&lt;br/&gt;ship without breaking trust&quot;]
-  LAUNCH --&gt;|&quot;production teaches&quot;| DISC
-  ROLE -.-&gt; DISC &amp; SPEC &amp; PRI &amp; ENG &amp; MET &amp; LAUNCH
-  AI[&quot;THE AI CAPSTONE — eval-driven development:&lt;br/&gt;the eval suite is the spec, the gate, and the flywheel&quot;] -.-&gt;|&quot;bends every station&quot;| SPEC &amp; MET &amp; LAUNCH</pre>
+<style>
+.dgm-tm2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tm2-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-tm2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tm2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tm2-role{background:#fdeadf;border:1.5px solid #f5c39d;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#9a3f0e;font-weight:700;font-size:11.5px;margin:0 auto 10px;max-width:400px}
+.dgm-tm2-loop{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-bottom:10px}
+.dgm-tm2-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 10px;font-size:9.5px;
+  font-weight:700;color:#1f2328;text-align:center}
+.dgm-tm2-arr{color:#8c959f;font-size:12px}
+.dgm-tm2-back{text-align:center;font-size:9.5px;color:#9a3f0e;font-style:italic;margin-bottom:10px}
+.dgm-tm2-ai{background:#fdeadf;border:1.5px solid #f5c39d;border-radius:12px;padding:10px 16px;text-align:center;
+  color:#9a3f0e;font-weight:700;font-size:11.5px;line-height:1.4}
+@media (max-width:640px){.dgm-tm2{padding:20px 16px 18px}.dgm-tm2-loop{flex-direction:column}}
+</style>
+<div class="dgm-tm2">
+  <span class="dgm-tm2-chip">Technical product management for the AI PM</span>
+  <h4>A loop that runs every quarter · the role at the center, the AI capstone bending every station</h4>
+  <p class="dgm-tm2-sub">Each lesson ships a diagram you can redraw on a whiteboard.</p>
+
+  <div class="dgm-tm2-role">The role — context · clarity · trust (the team's API to the company)</div>
+
+  <div class="dgm-tm2-loop">
+    <div class="dgm-tm2-node">Discovery — find the right bet</div>
+    <span class="dgm-tm2-arr">→</span>
+    <div class="dgm-tm2-node">Specs, PRDs &amp; RFCs</div>
+    <span class="dgm-tm2-arr">→</span>
+    <div class="dgm-tm2-node">Prioritization &amp; roadmaps</div>
+    <span class="dgm-tm2-arr">→</span>
+    <div class="dgm-tm2-node">Working with engineering</div>
+    <span class="dgm-tm2-arr">→</span>
+    <div class="dgm-tm2-node">Metrics &amp; experimentation</div>
+    <span class="dgm-tm2-arr">→</span>
+    <div class="dgm-tm2-node">Launches, rollouts &amp; migrations</div>
+  </div>
+  <div class="dgm-tm2-back">↻ production teaches — loops back into discovery</div>
+
+  <div class="dgm-tm2-ai">The AI capstone — eval-driven development: the eval suite is the spec, the gate, and the flywheel — bends specs, metrics, and launches</div>
+</div>
+
 <ul>
 <li><a href="the-technical-pm-role.html"><strong>The technical PM role</strong></a> — what a technical PM actually
   owns, the PM ↔ TPM ↔ EM spectrum, and where your leverage comes from.</li>
@@ -430,47 +465,7 @@ when the product has a model in it — and a diagram to make it concrete.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="the-technical-pm-role.html"><span class="card-num">01</span><h3>The technical PM role</h3><span class="card-go">Read lesson →</span></a><a class="card" href="discovery-to-delivery.html"><span class="card-num">02</span><h3>Discovery to delivery</h3><span class="card-go">Read lesson →</span></a><a class="card" href="specs-prds-and-rfcs.html"><span class="card-num">03</span><h3>Specs, PRDs &amp; RFCs</h3><span class="card-go">Read lesson →</span></a><a class="card" href="prioritization-and-roadmaps.html"><span class="card-num">04</span><h3>Prioritization &amp; roadmaps</h3><span class="card-go">Read lesson →</span></a><a class="card" href="working-with-engineering.html"><span class="card-num">05</span><h3>Working with engineering</h3><span class="card-go">Read lesson →</span></a><a class="card" href="metrics-and-experimentation.html"><span class="card-num">06</span><h3>Metrics &amp; experimentation</h3><span class="card-go">Read lesson →</span></a><a class="card" href="launches-rollouts-and-migrations.html"><span class="card-num">07</span><h3>Launches, rollouts &amp; migrations</h3><span class="card-go">Read lesson →</span></a><a class="card" href="incidents-and-postmortems.html"><span class="card-num">08</span><h3>Incidents &amp; postmortems</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tpm-for-ai-products.html"><span class="card-num">09</span><h3>Technical product management for AI</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

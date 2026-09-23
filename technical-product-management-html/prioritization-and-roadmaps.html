@@ -435,20 +435,66 @@ roadmap — regardless of how well it scores on RICE.</p>
 <p>All of them share failure math: garbage estimates in, confident-looking garbage out. The
 discipline isn't the arithmetic. It's writing your assumptions down where someone can
 tell you they're wrong.</p>
-<pre class="mermaid">quadrantChart
-    title Value vs. effort — where the roadmap fights happen
-    x-axis Low effort --&gt; High effort
-    y-axis Low value --&gt; High value
-    quadrant-1 Big bets - do few, de-risk first
-    quadrant-2 Quick wins - do now
-    quadrant-3 Time sinks - say no
-    quadrant-4 Fill-ins - batch when idle
-    &quot;Fix top support issue&quot;: [0.2, 0.85]
-    &quot;AI summarizer (post-spike)&quot;: [0.7, 0.9]
-    &quot;AI summarizer (pre-spike)&quot;: [0.45, 0.9]
-    &quot;New onboarding flow&quot;: [0.55, 0.6]
-    &quot;Admin CSV export&quot;: [0.25, 0.3]
-    &quot;Rewrite settings page&quot;: [0.8, 0.25]</pre>
+<style>
+.dgm-pr3{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr3-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-pr3 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr3-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr3-outer{display:grid;grid-template-columns:26px 1fr;grid-template-rows:1fr 26px;gap:8px}
+.dgm-pr3-y{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:space-between;
+  font-size:10.5px;color:#59636e;letter-spacing:.3px;padding:6px 0}
+.dgm-pr3-y b{color:#1f2328;font-weight:700}
+.dgm-pr3-x{grid-column:2;display:flex;justify-content:space-between;font-size:10.5px;color:#59636e;letter-spacing:.3px;padding:0 6px}
+.dgm-pr3-x b{color:#1f2328;font-weight:700}
+.dgm-pr3-plot{position:relative;height:340px;border-radius:12px;overflow:hidden;border:1px solid #d1d9e0;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.dgm-pr3-q{position:relative;padding:10px 12px}
+.dgm-pr3-q .l{font-size:9px;letter-spacing:.4px;text-transform:uppercase;font-weight:700;color:#59636e;position:absolute;line-height:1.3}
+.dgm-pr3-q1{background:#fdeadf;border-bottom:1px dashed #d1d9e0}
+.dgm-pr3-q1 .l{color:#9a3f0e;top:10px;right:12px;text-align:right}
+.dgm-pr3-q2{background:#e3f9ee;border-right:1px dashed #d1d9e0;border-bottom:1px dashed #d1d9e0}
+.dgm-pr3-q2 .l{color:#0e6b44;top:10px;left:12px}
+.dgm-pr3-q2 .l::after{content:" ✦"}
+.dgm-pr3-q3{background:#f6f8fa;border-right:1px dashed #d1d9e0}
+.dgm-pr3-q3 .l{bottom:10px;left:12px}
+.dgm-pr3-q4{background:#ffebe9}
+.dgm-pr3-q4 .l{color:#82061e;bottom:10px;right:12px;text-align:right}
+.dgm-pr3-pt{position:absolute;transform:translate(-50%,50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2}
+.dgm-pr3-pt i{width:10px;height:10px;border-radius:50%;background:#eb6834;border:2.5px solid #ffffff;box-shadow:0 1px 4px rgba(235,104,52,.35)}
+.dgm-pr3-pt span{font-size:9.5px;font-weight:600;color:#1f2328;background:rgba(255,255,255,.94);
+  border:1px solid rgba(209,217,224,.9);border-radius:16px;padding:2px 7px;white-space:nowrap;box-shadow:0 1px 2px rgba(31,35,40,.04)}
+.dgm-pr3-pt.up{flex-direction:column-reverse}
+.dgm-pr3-note{margin-top:10px;font-size:11px;color:#59636e;line-height:1.4}
+.dgm-pr3-note strong{color:#9a3f0e}
+@media (max-width:640px){.dgm-pr3-plot{height:440px}.dgm-pr3-pt span{font-size:8.5px;padding:2px 6px}}
+</style>
+<div class="dgm-pr3">
+  <span class="dgm-pr3-chip">Value vs. effort</span>
+  <h4>Where the roadmap fights happen · a feasibility spike moves the dot</h4>
+  <p class="dgm-pr3-sub">Cheap discovery work exists to reposition expensive bets before you commit.</p>
+  <div class="dgm-pr3-outer">
+    <div class="dgm-pr3-y"><span>low value</span><b>high value</b></div>
+    <div class="dgm-pr3-plot">
+      <div class="dgm-pr3-q dgm-pr3-q2"><span class="l">Quick wins<br/>do now</span></div>
+      <div class="dgm-pr3-q dgm-pr3-q1"><span class="l">Big bets<br/>do few, de-risk first</span></div>
+      <div class="dgm-pr3-q dgm-pr3-q3"><span class="l">Time sinks<br/>say no</span></div>
+      <div class="dgm-pr3-q dgm-pr3-q4"><span class="l">Fill-ins<br/>batch when idle</span></div>
+      <div class="dgm-pr3-pt up" style="left:20%;bottom:85%"><i></i><span>Fix top support issue</span></div>
+      <div class="dgm-pr3-pt up" style="left:70%;bottom:90%"><i></i><span>AI summarizer (post-spike)</span></div>
+      <div class="dgm-pr3-pt" style="left:45%;bottom:90%"><i></i><span>AI summarizer (pre-spike)</span></div>
+      <div class="dgm-pr3-pt" style="left:55%;bottom:60%"><i></i><span>New onboarding flow</span></div>
+      <div class="dgm-pr3-pt" style="left:25%;bottom:30%"><i></i><span>Admin CSV export</span></div>
+      <div class="dgm-pr3-pt" style="left:80%;bottom:25%"><i></i><span>Rewrite settings page</span></div>
+    </div>
+    <div class="dgm-pr3-x"><span>low effort</span><b>high effort</b></div>
+  </div>
+  <p class="dgm-pr3-note"><strong>Same feature, two dots:</strong> the AI summarizer's effort estimate tightens dramatically once a feasibility spike has actually been tried — cheap discovery repositions expensive bets before you commit.</p>
+</div>
+
 <p>Note the summarizer appearing twice. A feasibility spike doesn't just reduce risk — it
 <em>moves the dot</em>. Effort estimates tighten dramatically once someone has actually tried
 it. Cheap discovery work exists to reposition expensive bets before you commit.</p>
@@ -552,46 +598,6 @@ the cut. The craft:</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

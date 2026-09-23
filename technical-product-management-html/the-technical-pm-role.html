@@ -392,17 +392,54 @@ backseat architect they route around. Both destroy the role's leverage.</p>
 <h2 id="what-the-role-actually-is">What the role actually is</h2>
 <p>Every strong PM works three questions at once. The <em>technical</em> PM's distinction is that on
 their product, the third question dominates the other two:</p>
-<pre class="mermaid">flowchart TB
-  subgraph OWN[&quot;What the technical PM owns&quot;]
-    W[&quot;WHAT &amp; WHY&lt;br/&gt;problem, outcome, priority&quot;]
-    G[&quot;WHAT GOOD MEANS&lt;br/&gt;requirements, acceptance, metrics&quot;]
-  end
-  B[&quot;Business&lt;br/&gt;viability, pricing, strategy&quot;] --&gt; W
-  U[&quot;Users&lt;br/&gt;needs, workflows, trust&quot;] --&gt; W
-  E[&quot;Engineering&lt;br/&gt;feasibility, cost, risk&quot;] --&gt; W
-  W --&gt; G
-  G --&gt; HOW[&quot;HOW &amp; WHO&lt;br/&gt;architecture, staffing, estimates&quot;]
-  HOW -.-&gt;|&quot;owned by engineering,&lt;br/&gt;informed by the PM&quot;| E</pre>
+<style>
+.dgm-tr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tr-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-tr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tr-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.dgm-tr-in{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-tr-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tr-arr svg{width:16px;height:16px}
+.dgm-tr-own{background:#fdeadf;border:1.5px solid #f5c39d;border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.dgm-tr-own-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a3f0e;
+  text-align:center;margin-bottom:6px}
+.dgm-tr-own-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dgm-tr-own-n{background:#ffffff;border:1px solid #f5c39d;border-radius:9px;padding:8px 9px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#9a3f0e}
+.dgm-tr-how{background:#f6f8fa;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11px;line-height:1.4}
+@media (max-width:640px){.dgm-tr{padding:20px 16px 18px}.dgm-tr-inputs,.dgm-tr-own-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tr">
+  <span class="dgm-tr-chip">What the technical PM owns</span>
+  <h4>Business, users, engineering feed the what and why · how and who stay engineering's</h4>
+  <p class="dgm-tr-sub">You decide what gets built, why, in what order, and what "good" means.</p>
+
+  <div class="dgm-tr-inputs">
+    <div class="dgm-tr-in">Business — viability, pricing, strategy</div>
+    <div class="dgm-tr-in">Users — needs, workflows, trust</div>
+    <div class="dgm-tr-in">Engineering — feasibility, cost, risk</div>
+  </div>
+  <div class="dgm-tr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tr-own">
+    <div class="dgm-tr-own-lbl">What the technical PM owns</div>
+    <div class="dgm-tr-own-row">
+      <div class="dgm-tr-own-n">What &amp; why — problem, outcome, priority</div>
+      <div class="dgm-tr-own-n">What good means — requirements, acceptance, metrics</div>
+    </div>
+  </div>
+  <div class="dgm-tr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tr-how">How &amp; who — architecture, staffing, estimates<br/><em>owned by engineering, informed by the PM</em></div>
+</div>
+
 <ul>
 <li><strong>You own:</strong> the problem statement, the priority order, the requirements (including
   non-functional ones), the success metrics, the launch decision, and the communication
@@ -553,46 +590,6 @@ definition and the cycle worsens. Guarding the discovery time <em>is</em> the jo
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

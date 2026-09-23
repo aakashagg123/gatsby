@@ -1,0 +1,41 @@
+<style>
+.dgm-ip{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eb6834;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ip-chip{position:absolute;top:-11px;left:24px;background:#eb6834;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(235,104,52,.28)}
+.dgm-ip h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ip-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ip-pipe{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr;align-items:center;gap:4px;margin-bottom:8px}
+.dgm-ip-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 6px;text-align:center;
+  font-size:8.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-ip-node.mit{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-ip-node.post{background:#fdeadf;border-color:#f5c39d;color:#9a3f0e}
+.dgm-ip-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-ip-loop{text-align:center;font-size:9.5px;color:#9a3f0e;font-style:italic;margin-bottom:8px}
+.dgm-ip-note{padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;font-size:10.5px;
+  color:#1f2328;line-height:1.4}
+.dgm-ip-note strong{color:#9a3f0e}
+@media (max-width:640px){.dgm-ip{padding:20px 16px 18px}.dgm-ip-pipe{grid-template-columns:1fr}.dgm-ip-arr{transform:rotate(90deg)}}
+</style>
+<div class="dgm-ip">
+  <span class="dgm-ip-chip">The incident lifecycle</span>
+  <h4>Mitigate before you diagnose · one incident commander</h4>
+  <p class="dgm-ip-sub">Action items with owners enter the roadmap — that's the loop back into detection.</p>
+
+  <div class="dgm-ip-pipe">
+    <div class="dgm-ip-node">Detect<br/>alerts, reports, eval drop</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node">Triage<br/>severity, commander</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node mit">Mitigate<br/>rollback, kill switch</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node">Communicate<br/>status, support</div>
+    <div class="dgm-ip-arr">→</div>
+    <div class="dgm-ip-node post">Resolve → Postmortem<br/>blameless, 5 Whys</div>
+  </div>
+  <div class="dgm-ip-loop">↻ action items with owners feed back into detection — better alerts, fewer repeats</div>
+
+  <div class="dgm-ip-note"><strong>Severity drives everything:</strong> a SEV1 gets a war room; a SEV3 gets a ticket. Agree on the ladder before you need it.</div>
+</div>
