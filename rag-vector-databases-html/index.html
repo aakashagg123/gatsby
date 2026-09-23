@@ -387,38 +387,68 @@ and the <a href="../knowledge-graphs/index.html">Knowledge graphs</a> track.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>RAG isn't a product — it's a pipeline with a quality loop. Everything here hangs off this
 picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph INGEST[&quot;BUILD TIME — the ingestion pipeline&quot;]
-    SRC[&quot;Your data&lt;br/&gt;docs, tickets, wikis, DBs&quot;]
-    CHUNK[&quot;Chunking&lt;br/&gt;split into passages&quot;]
-    EMB1[&quot;Embed&lt;br/&gt;passage → vector&quot;]
-    VDB[(&quot;Vector database&lt;br/&gt;index + filters&quot;)]
-    SRC --&gt; CHUNK --&gt; EMB1 --&gt; VDB
-  end
-  subgraph QUERY[&quot;QUERY TIME — the retrieval pipeline&quot;]
-    Q[&quot;User question&quot;]
-    EMB2[&quot;Embed the query&quot;]
-    RET[&quot;Retrieve&lt;br/&gt;nearest neighbours (ANN)&quot;]
-    HYB[&quot;Hybrid + rerank&lt;br/&gt;keyword + vector, re-score&quot;]
-    CTX[&quot;Assemble context&lt;br/&gt;passages + citations&quot;]
-    LLM[&quot;LLM generates&lt;br/&gt;grounded answer&quot;]
-    ANS[&quot;Answer + citations&quot;]
-    Q --&gt; EMB2 --&gt; RET --&gt; HYB --&gt; CTX --&gt; LLM --&gt; ANS
-  end
-  VDB --&gt; RET
-  subgraph DECIDE[&quot;THE DECISIONS&quot;]
-    ALT[&quot;RAG vs long-context&lt;br/&gt;vs fine-tuning&quot;]
-    GRAPH[&quot;Flat RAG vs&lt;br/&gt;GraphRAG / structured&quot;]
-  end
-  subgraph TRUST[&quot;THE QUALITY LOOP&quot;]
-    EVAL[&quot;Retrieval evals&lt;br/&gt;recall · precision · grounding&quot;]
-  end
-  EVAL --&gt;|&quot;measures &amp; tunes&quot;| HYB
-  EVAL --&gt;|&quot;measures&quot;| CHUNK
-  ALT -.-&gt;|&quot;is RAG even the right tool?&quot;| INGEST
-  GRAPH -.-&gt;|&quot;when neighbours aren&#x27;t enough&quot;| RET
-  classDef store fill:#fbefe9,stroke:#e0b29e
-  class VDB store</pre>
+<style>
+.dgm-rg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-rg-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
+.dgm-rg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-rg-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-rg-half{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:13px;padding:14px 16px;margin-bottom:10px;position:relative}
+.dgm-rg-half .dgm-rg-lbl{position:absolute;top:-9px;left:14px;background:#7a4fd6;color:#fff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-rg-half h5{margin:2px 0 8px;font-size:12.5px;font-weight:700;color:#4b2996;letter-spacing:.02em}
+.dgm-rg-pipe{display:grid;grid-template-columns:repeat(4,1fr) auto 1fr;gap:6px;align-items:center}
+.dgm-rg-pipe.q{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr}
+.dgm-rg-node{background:#ffffff;border:1px solid #d3c5f0;border-radius:9px;padding:8px 9px;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.dgm-rg-node.store{background:#f6efdd;border:1.5px solid #e0d0a8}
+.dgm-rg-node .dgm-rg-ico{color:#7a4fd6;width:20px;height:20px}
+.dgm-rg-node.store .dgm-rg-ico{color:#8a6d3b}
+.dgm-rg-node span{font-size:10.5px;font-weight:700;color:#1f2328;letter-spacing:.02em;line-height:1.2}
+.dgm-rg-arr{text-align:center;color:#8c959f;font-weight:700;font-size:12px}
+.dgm-rg-conn{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-rg-conn svg{width:16px;height:16px}
+.dgm-rg-conn.wide{padding:6px 0}
+@media (max-width:640px){.dgm-rg{padding:20px 16px 18px}.dgm-rg-pipe,.dgm-rg-pipe.q{grid-template-columns:1fr;gap:4px}.dgm-rg-arr{padding:2px 0}}
+</style>
+<div class="dgm-rg">
+  <span class="dgm-rg-chip">RAG &amp; vector databases</span>
+  <h4>Two pipelines · build time and query time · same store in the middle</h4>
+  <p class="dgm-rg-sub">Ingest once (updates incrementally) · retrieve every request.</p>
+
+  <div class="dgm-rg-half">
+    <span class="dgm-rg-lbl">Build time · ingestion</span>
+    <h5>Data → chunks → vectors → indexed store</h5>
+    <div class="dgm-rg-pipe">
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Your data</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="16"/><rect x="13" y="4" width="7" height="16"/></svg><span>Chunk</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 5l-2 2M5 19l2-2M17 19l-2-2"/></svg><span>Embed</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node store"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg><span>Vector DB</span></div>
+    </div>
+  </div>
+
+  <div class="dgm-rg-conn wide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-rg-half">
+    <span class="dgm-rg-lbl">Query time · retrieval</span>
+    <h5>Question → nearest → rerank → grounded answer</h5>
+    <div class="dgm-rg-pipe q">
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 01-9 9c-2 0-3.9-.7-5.4-1.8L3 21l1.8-3.6A9 9 0 1121 12z"/><path d="M9.1 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span>Question</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg><span>Nearest neighbors</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg><span>Hybrid + rerank</span></div>
+      <div class="dgm-rg-arr">→</div>
+      <div class="dgm-rg-node"><svg class="dgm-rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Grounded answer + citations</span></div>
+    </div>
+  </div>
+</div>
+
 <p>Read it in three passes. <strong>The pipeline:</strong> at build time you chop your data into passages,
 turn each into a vector, and index it; at query time you turn the question into a vector,
 pull the nearest passages, sharpen them, and hand them to the model as grounded context.
@@ -453,47 +483,7 @@ the spokes into <a href="../ai/03-rag.html#rag-architecture">RAG architecture</a
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="why-rag.html"><span class="card-num">01</span><h3>Why RAG?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="embeddings-and-semantic-search.html"><span class="card-num">02</span><h3>Embeddings &amp; semantic search</h3><span class="card-go">Read lesson →</span></a><a class="card" href="vector-databases.html"><span class="card-num">03</span><h3>Vector databases</h3><span class="card-go">Read lesson →</span></a><a class="card" href="chunking-and-ingestion.html"><span class="card-num">04</span><h3>Chunking &amp; ingestion</h3><span class="card-go">Read lesson →</span></a><a class="card" href="retrieval-quality.html"><span class="card-num">05</span><h3>Retrieval quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="rag-vs-long-context-vs-finetuning.html"><span class="card-num">06</span><h3>RAG vs. long-context vs. fine-tuning</h3><span class="card-go">Read lesson →</span></a><a class="card" href="graphrag-and-structured-retrieval.html"><span class="card-num">07</span><h3>Beyond flat RAG: GraphRAG &amp; structured retrieval</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

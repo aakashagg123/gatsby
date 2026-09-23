@@ -1,0 +1,83 @@
+<style>
+.dgm-gr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-gr-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
+.dgm-gr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-gr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-gr-q{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:11px 16px;text-align:center;
+  color:#4b2996;font-weight:700;font-size:12.5px;margin:0 auto 10px;max-width:300px}
+.dgm-gr-shapes{display:flex;flex-direction:column;gap:8px}
+.dgm-gr-shape{border-radius:12px;padding:13px 15px;position:relative;display:flex;gap:12px;align-items:flex-start}
+.dgm-gr-shape.flat{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-gr-shape.hop{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-gr-shape.glob{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-gr-shape .dgm-gr-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-gr-shape.flat .dgm-gr-tag{color:#1a614f;border-color:#aceebb}
+.dgm-gr-shape.hop .dgm-gr-tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-gr-shape.glob .dgm-gr-tag{color:#7a5300;border-color:#eac54f}
+.dgm-gr-shape .dgm-gr-ico{width:26px;height:26px;flex:0 0 26px;margin-top:2px}
+.dgm-gr-shape.flat .dgm-gr-ico{color:#1a7f37}
+.dgm-gr-shape.hop .dgm-gr-ico{color:#0969da}
+.dgm-gr-shape.glob .dgm-gr-ico{color:#b8860b}
+.dgm-gr-shape h5{margin:2px 0 3px;font-size:12.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-gr-shape p{margin:0 0 6px;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-gr-shape .dgm-gr-example{background:#ffffff;border:1px solid;border-radius:8px;padding:7px 10px;
+  font-size:10.5px;color:#1f2328;line-height:1.4}
+.dgm-gr-shape.flat .dgm-gr-example{border-color:#aceebb}
+.dgm-gr-shape.hop .dgm-gr-example{border-color:#b6e3ff}
+.dgm-gr-shape.glob .dgm-gr-example{border-color:#eac54f}
+.dgm-gr-shape .dgm-gr-example em{font-style:italic;color:#59636e}
+.dgm-gr-note{margin-top:12px;padding:11px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:11px;color:#1f2328;line-height:1.4;display:flex;gap:10px;align-items:center}
+.dgm-gr-note svg{width:20px;height:20px;color:#7a4fd6;flex:0 0 20px}
+.dgm-gr-note strong{color:#4b2996}
+@media (max-width:640px){.dgm-gr{padding:20px 16px 18px}}
+</style>
+<div class="dgm-gr">
+  <span class="dgm-gr-chip">GraphRAG</span>
+  <h4>Three retrieval shapes · matched to what the question is actually asking</h4>
+  <p class="dgm-gr-sub">Flat RAG is the right default. Graduate to structure only when the question demands it.</p>
+
+  <div class="dgm-gr-q">What shape is the question?</div>
+
+  <div class="dgm-gr-shapes">
+    <div class="dgm-gr-shape flat">
+      <span class="dgm-gr-tag">Default · cheapest</span>
+      <svg class="dgm-gr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <div>
+        <h5>Flat RAG · answer sits in one passage</h5>
+        <p>Retrieve similar chunks — the right tool for most questions</p>
+        <div class="dgm-gr-example"><em>"What's our refund window?"</em> → one policy passage</div>
+      </div>
+    </div>
+
+    <div class="dgm-gr-shape hop">
+      <span class="dgm-gr-tag">Graph retrieval</span>
+      <svg class="dgm-gr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6.5h7M6.5 8.5v7M17.5 8.5v7M8.5 17.5h7"/></svg>
+      <div>
+        <h5>Hop · answer is a chain across entities</h5>
+        <p>Walk the connections between related records</p>
+        <div class="dgm-gr-example"><em>"Which customers depend on this failing supplier?"</em> → supplier→parts→products→contracts</div>
+      </div>
+    </div>
+
+    <div class="dgm-gr-shape glob">
+      <span class="dgm-gr-tag">Community summaries</span>
+      <svg class="dgm-gr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+      <div>
+        <h5>Global · answer summarizes the whole corpus</h5>
+        <p>Pre-built summaries over clusters, not a single record</p>
+        <div class="dgm-gr-example"><em>"Main themes in Q3 tickets?"</em> → summarize clusters, not one ticket</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-gr-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16.5h.01"/></svg>
+    <span><strong>Why flat RAG breaks on these:</strong> chunk-similarity search can't traverse relationships or summarize what it hasn't grouped — the other two shapes exist because flat RAG structurally can't answer them.</span>
+  </div>
+</div>
