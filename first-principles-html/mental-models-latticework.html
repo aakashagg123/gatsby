@@ -389,13 +389,59 @@ problem, and what did it learn?"</em></p>
 ago. You misread situations your single toolkit has no name for.</p>
 </blockquote>
 <h2 id="why-one-discipline-isnt-enough">Why one discipline isn't enough</h2>
-<pre class="mermaid">flowchart TB
-  P[&quot;New problem:&lt;br/&gt;&#x27;our growth stalled&#x27;&quot;]
-  P --&gt; M1[&quot;Feedback loops&lt;br/&gt;(biology / control theory)&quot;]
-  P --&gt; M2[&quot;Bottlenecks&lt;br/&gt;(operations)&quot;]
-  P --&gt; M3[&quot;Incentives&lt;br/&gt;(economics)&quot;]
-  P --&gt; M4[&quot;Second-order effects&lt;br/&gt;(systems thinking)&quot;]
-  M1 &amp; M2 &amp; M3 &amp; M4 --&gt; DX[&quot;Rich decomposition —&lt;br/&gt;each model checks the others&#x27; blind spots&quot;]</pre>
+<style>
+.dgm-ml{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #e87ba4;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ml-chip{position:absolute;top:-11px;left:24px;background:#e87ba4;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(232,123,164,.28)}
+.dgm-ml h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ml-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ml-problem{background:#fce4ec;border:1.5px solid #f4c2d4;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#a13d63;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:280px;display:flex;align-items:center;justify-content:center;gap:10px}
+.dgm-ml-problem svg{width:22px;height:22px;color:#e87ba4}
+.dgm-ml-fan{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ml-fan svg{width:18px;height:18px}
+.dgm-ml-models{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.dgm-ml-model{background:#efedfa;border:1.5px solid #cec8f0;border-radius:11px;padding:12px 12px;text-align:center;display:flex;flex-direction:column;gap:5px;align-items:center}
+.dgm-ml-model .dgm-ml-ico{color:#5a4fcf;width:24px;height:24px}
+.dgm-ml-model h5{margin:0;font-size:11px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-ml-model p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3;font-style:italic}
+.dgm-ml-conv{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ml-conv svg{width:20px;height:20px}
+.dgm-ml-outcome{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center}
+.dgm-ml-outcome svg{width:28px;height:28px;padding:5px;background:#ffffff;border:1.5px solid #aceebb;border-radius:9px;color:#1a7f37;flex:0 0 28px}
+.dgm-ml-outcome h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-ml-outcome p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+@media (max-width:640px){.dgm-ml{padding:20px 16px 18px}.dgm-ml-models{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ml">
+  <span class="dgm-ml-chip">Latticework</span>
+  <h4>Four models from four disciplines · each catches what the others miss</h4>
+  <p class="dgm-ml-sub">Munger's move: hang the problem on many models, not one.</p>
+
+  <div class="dgm-ml-problem">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+    "Our growth stalled"
+  </div>
+  <div class="dgm-ml-fan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ml-models">
+    <div class="dgm-ml-model"><svg class="dgm-ml-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5M21 12a9 9 0 01-9 9 9 9 0 01-6.4-2.6L3 16M3 21v-5h5"/></svg><h5>Feedback loops</h5><p>biology · control theory</p></div>
+    <div class="dgm-ml-model"><svg class="dgm-ml-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="4"/><rect x="9" y="14" width="6" height="4"/></svg><h5>Bottlenecks</h5><p>operations</p></div>
+    <div class="dgm-ml-model"><svg class="dgm-ml-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/></svg><h5>Incentives</h5><p>economics</p></div>
+    <div class="dgm-ml-model"><svg class="dgm-ml-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6.5h7M6.5 8.5v7M17.5 8.5v7M8.5 17.5h7"/></svg><h5>Second-order</h5><p>systems thinking</p></div>
+  </div>
+
+  <div class="dgm-ml-conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ml-outcome">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <div><h5>Rich decomposition</h5><p>Each model reveals a blind spot the others miss. One model reduces to one narrative — a latticework triangulates.</p></div>
+  </div>
+</div>
+
 <p>Munger's framing, from his talk <em>The Psychology of Human Misjudgment</em> and many since:</p>
 <blockquote>
 <p>"You've got to have models in your head, and you've got to array your experience — both
@@ -612,46 +658,6 @@ lever; the lattice saw the system.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

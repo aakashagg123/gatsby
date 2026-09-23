@@ -1,0 +1,80 @@
+<style>
+.dgm-pm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #e87ba4;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pm-chip{position:absolute;top:-11px;left:24px;background:#e87ba4;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(232,123,164,.28)}
+.dgm-pm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pm-two{display:grid;grid-template-columns:1fr 40px 1fr;gap:12px;align-items:stretch;margin-bottom:12px}
+.dgm-pm-shape{border-radius:13px;padding:14px 14px;position:relative}
+.dgm-pm-shape.t{background:#f6f8fa;border:1.5px solid #d1d9e0}
+.dgm-pm-shape.c{background:#fce4ec;border:1.5px solid #f4c2d4}
+.dgm-pm-shape .dgm-pm-lbl{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-pm-shape.t .dgm-pm-lbl{color:#1f2328;border-color:#d1d9e0}
+.dgm-pm-shape.c .dgm-pm-lbl{color:#a13d63;border-color:#f4c2d4}
+.dgm-pm-shape h5{margin:2px 0 8px;font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.dgm-pm-shape.t h5{color:#1f2328}
+.dgm-pm-shape.c h5{color:#a13d63}
+.dgm-pm-viz{background:#ffffff;border:1px solid;border-radius:10px;padding:12px 10px;min-height:140px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.dgm-pm-shape.t .dgm-pm-viz{border-color:#d1d9e0}
+.dgm-pm-shape.c .dgm-pm-viz{border-color:#f4c2d4}
+.dgm-pm-viz svg{max-width:100%;height:auto;width:100%}
+.dgm-pm-caption{font-size:10.5px;color:#59636e;line-height:1.35;text-align:center}
+.dgm-pm-arr{align-self:center;text-align:center;color:#8c959f;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:6px 4px}
+.dgm-pm-conv{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-pm-conv svg{width:20px;height:20px}
+.dgm-pm-edge{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center}
+.dgm-pm-edge svg{width:28px;height:28px;padding:5px;background:#ffffff;border:1.5px solid #aceebb;border-radius:9px;color:#1a7f37;flex:0 0 28px}
+.dgm-pm-edge h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-pm-edge p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+@media (max-width:640px){.dgm-pm{padding:20px 16px 18px}.dgm-pm-two{grid-template-columns:1fr}.dgm-pm-arr{width:fit-content;margin:6px auto;padding:4px 14px}}
+</style>
+<div class="dgm-pm">
+  <span class="dgm-pm-chip">Polymath</span>
+  <h4>T-shaped → Comb-shaped · the deliberate second (third…) spike</h4>
+  <p class="dgm-pm-sub">Specialists dominate stable environments · polymaths win when patterns don't repeat.</p>
+
+  <div class="dgm-pm-two">
+    <div class="dgm-pm-shape t">
+      <span class="dgm-pm-lbl">Stage 1</span>
+      <h5>T-shaped</h5>
+      <div class="dgm-pm-viz">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="160" height="18" rx="4" fill="#d1d9e0" stroke="#8c959f" stroke-width="1.2"/>
+          <text x="100" y="33" font-size="9" font-weight="700" fill="#1f2328" text-anchor="middle" font-family="Inter,sans-serif">Broad base · many fields</text>
+          <rect x="88" y="42" width="24" height="72" rx="4" fill="#f4c2d4" stroke="#e87ba4" stroke-width="1.4"/>
+          <text x="100" y="82" font-size="9" font-weight="700" fill="#a13d63" text-anchor="middle" font-family="Inter,sans-serif" transform="rotate(-90, 100, 82)">Deep spike</text>
+        </svg>
+      </div>
+      <div class="dgm-pm-caption">One deep spike · broad awareness</div>
+    </div>
+    <div class="dgm-pm-arr">→</div>
+    <div class="dgm-pm-shape c">
+      <span class="dgm-pm-lbl">Stage 2</span>
+      <h5>Comb-shaped</h5>
+      <div class="dgm-pm-viz">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="160" height="18" rx="4" fill="#f4c2d4" stroke="#e87ba4" stroke-width="1.2"/>
+          <text x="100" y="33" font-size="9" font-weight="700" fill="#a13d63" text-anchor="middle" font-family="Inter,sans-serif">Broad base</text>
+          <rect x="35" y="42" width="24" height="72" rx="4" fill="#f4c2d4" stroke="#e87ba4" stroke-width="1.4"/>
+          <text x="47" y="82" font-size="8" font-weight="700" fill="#a13d63" text-anchor="middle" font-family="Inter,sans-serif" transform="rotate(-90, 47, 82)">Spike 1</text>
+          <rect x="88" y="42" width="24" height="72" rx="4" fill="#f4c2d4" stroke="#e87ba4" stroke-width="1.4"/>
+          <text x="100" y="82" font-size="8" font-weight="700" fill="#a13d63" text-anchor="middle" font-family="Inter,sans-serif" transform="rotate(-90, 100, 82)">Spike 2</text>
+          <rect x="141" y="42" width="24" height="72" rx="4" fill="#f4c2d4" stroke="#e87ba4" stroke-width="1.4"/>
+          <text x="153" y="82" font-size="8" font-weight="700" fill="#a13d63" text-anchor="middle" font-family="Inter,sans-serif" transform="rotate(-90, 153, 82)">Spike 3</text>
+        </svg>
+      </div>
+      <div class="dgm-pm-caption">Multiple deep spikes · deliberate range</div>
+    </div>
+  </div>
+
+  <div class="dgm-pm-conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-pm-edge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
+    <div><h5>Transfer · the polymath edge</h5><p>Ideas move between spikes. Epstein's <em>Range</em>: in "wicked" environments, transfer beats depth.</p></div>
+  </div>
+</div>
