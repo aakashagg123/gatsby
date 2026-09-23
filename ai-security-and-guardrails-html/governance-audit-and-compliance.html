@@ -390,16 +390,129 @@ risk documentation tomorrow, what would we actually hand them?"</em></p>
 because nobody owned the evidence trail until someone outside the company asked for it.</p>
 </blockquote>
 <h2 id="from-governance-to-evidence">From governance to evidence</h2>
-<pre class="mermaid">flowchart LR
-  RT[&quot;Red-teaming&lt;br/&gt;(structured adversarial testing)&quot;] --&gt; FIND[&quot;Findings&quot;]
-  FIND --&gt;|&quot;fixes the system&quot;| GR[&quot;Guardrails&lt;br/&gt;(previous lesson)&quot;]
-  FIND --&gt;|&quot;feeds the trail&quot;| REG[&quot;Governance&lt;br/&gt;agent registry · identity · policy&quot;]
-  REG --&gt; ART[&quot;Compliance artifacts&quot;]
-  ART --&gt; SOC[&quot;SOC 2 report&lt;br/&gt;(vendor trust)&quot;]
-  ART --&gt; GDPR[&quot;Data processing records&lt;br/&gt;(GDPR / DPDP-class)&quot;]
-  ART --&gt; EUAI[&quot;EU AI Act risk file&lt;br/&gt;(model-specific risk)&quot;]
-  ART --&gt; CARD[&quot;Model / system card&lt;br/&gt;(what this model is and isn&#x27;t)&quot;]
-  SOC &amp; GDPR &amp; EUAI &amp; CARD --&gt; UNLOCK[&quot;Enterprise procurement clears.&lt;br/&gt;Regulatory exposure is bounded.&quot;]</pre>
+<!-- Governance lesson — red-teaming → findings split (fixes vs trail) → governance
+     produces compliance artifacts → four artifacts fan out → unlocks outcome.
+     Diagram type: SPLIT/MERGE FLOW with a 4-artifact fan-out. -->
+<style>
+.dgm-gv{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #a13d63;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-gv-chip{position:absolute;top:-11px;left:24px;background:#a13d63;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(161,61,99,.28)}
+.dgm-gv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-gv-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+
+.dgm-gv-head{background:#fff8c5;border:1px solid #eac54f;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.dgm-gv-head .dgm-gv-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #eac54f;border-radius:8px;color:#9a6700;flex:0 0 28px}
+.dgm-gv-head h5{margin:0 0 2px;font-size:13px;font-weight:700;color:#7a5300}
+.dgm-gv-head p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+
+.dgm-gv-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-gv-arr svg{width:18px;height:18px}
+.dgm-gv-findings{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;
+  padding:8px 14px;font-size:11.5px;font-weight:600;color:#1f2328;text-align:center;
+  margin:0 auto 8px;width:fit-content;letter-spacing:.02em}
+.dgm-gv-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.dgm-gv-branch{background:#ffffff;border:1px solid #d1d9e0;border-radius:12px;padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start}
+.dgm-gv-branch.fix{background:#ddf4ff;border-color:#b6e3ff}
+.dgm-gv-branch.trail{background:#f6e6ec;border-color:#e9c4d3}
+.dgm-gv-branch .dgm-gv-ico{width:24px;height:24px;flex:0 0 24px;margin-top:2px}
+.dgm-gv-branch.fix .dgm-gv-ico{color:#0969da}
+.dgm-gv-branch.trail .dgm-gv-ico{color:#a13d63}
+.dgm-gv-branch .dgm-gv-verdict{position:absolute}
+.dgm-gv-branch h5{margin:0 0 2px;font-size:12px;font-weight:700;color:#1f2328}
+.dgm-gv-branch p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+
+.dgm-gv-artifacts{background:#f6e6ec;border:1px solid #e9c4d3;border-radius:13px;
+  padding:14px 16px;margin-bottom:12px}
+.dgm-gv-artifacts h5{margin:0 0 4px;font-size:12.5px;font-weight:700;color:#a13d63;
+  letter-spacing:.02em}
+.dgm-gv-artifacts .dgm-gv-lead{font-size:11.5px;color:#59636e;margin:0 0 10px}
+.dgm-gv-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-gv-card{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:10px 10px}
+.dgm-gv-card .dgm-gv-ico{color:#a13d63;width:20px;height:20px;margin-bottom:6px}
+.dgm-gv-card h6{margin:0 0 2px;font-size:11px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-gv-card p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+
+.dgm-gv-outcome{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;
+  padding:14px 16px;display:flex;gap:12px;align-items:center;margin-top:8px}
+.dgm-gv-outcome .dgm-gv-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #aceebb;border-radius:8px;color:#1a7f37;flex:0 0 28px}
+.dgm-gv-outcome h5{margin:0 0 2px;font-size:13px;font-weight:700;color:#1a7f37}
+.dgm-gv-outcome p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+@media (max-width:640px){
+  .dgm-gv{padding:20px 16px 18px}
+  .dgm-gv-split{grid-template-columns:1fr}
+  .dgm-gv-cards{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<div class="dgm-gv">
+  <span class="dgm-gv-chip">Governance &amp; compliance</span>
+
+  <h4>Red-teaming produces evidence · governance turns it into artifacts an outsider can check</h4>
+  <p class="dgm-gv-sub">Compliance is the same control as governance — just made legible to a regulator or a buyer.</p>
+
+  <div class="dgm-gv-head">
+    <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6M11 8v6"/></svg>
+    <div><h5>Red-teaming</h5><p>Structured adversarial testing — produces findings on purpose, not by accident.</p></div>
+  </div>
+
+  <div class="dgm-gv-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gv-findings">Findings</div>
+
+  <div class="dgm-gv-split">
+    <div class="dgm-gv-branch fix">
+      <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/><path d="M12 9l3 3"/></svg>
+      <div><h5>→ Fixes the system</h5><p>Findings become guardrail improvements &amp; tickets</p></div>
+    </div>
+    <div class="dgm-gv-branch trail">
+      <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="14" height="16" rx="2"/><path d="M8 8h6M8 12h6M8 16h4"/><path d="M18 4l3 3-3 3"/></svg>
+      <div><h5>→ Feeds the trail</h5><p>Recorded in the agent registry &amp; policy log</p></div>
+    </div>
+  </div>
+
+  <div class="dgm-gv-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gv-artifacts">
+    <h5>Compliance artifacts · fan out from one governance discipline</h5>
+    <p class="dgm-gv-lead">Same evidence, four audiences.</p>
+    <div class="dgm-gv-cards">
+      <div class="dgm-gv-card">
+        <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        <h6>SOC 2</h6>
+        <p>Vendor trust · Type II preferred</p>
+      </div>
+      <div class="dgm-gv-card">
+        <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M9 15l2 2 4-4"/></svg>
+        <h6>GDPR / DPDP</h6>
+        <p>Data processing records</p>
+      </div>
+      <div class="dgm-gv-card">
+        <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18M3 12h18"/></svg>
+        <h6>EU AI Act</h6>
+        <p>Risk file · model-specific tier</p>
+      </div>
+      <div class="dgm-gv-card">
+        <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <h6>Model / system card</h6>
+        <p>What this model is · and isn't</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-gv-outcome">
+    <svg class="dgm-gv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <div><h5>Enterprise procurement clears</h5><p>Regulatory exposure is bounded. The internal control turned into external evidence.</p></div>
+  </div>
+</div>
+
 <p><a href="../agentic-ai/safety-security-and-governance.html">Governance</a> — an agent registry, agent
 identity, org-wide policy, and a named owner per agent — is the internal discipline that
 makes the rest of this stick at company scale. This lesson picks up exactly where that
@@ -542,46 +655,6 @@ that already has a signature pending.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

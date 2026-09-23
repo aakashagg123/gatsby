@@ -388,17 +388,110 @@ and poisoning are four different attacks, not one — and how governance becomes
 <strong>compliance evidence</strong> a regulator or an enterprise buyer can actually check. That is
 why this module is two lessons, not seven.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<pre class="mermaid">flowchart TB
-  subgraph THREAT[&quot;THE THREAT MODEL — lesson 1&quot;]
-    JB[&quot;Jailbreak&quot;]
-    PI[&quot;Injection&quot;]
-    EX[&quot;Extraction&quot;]
-    PO[&quot;Poisoning&quot;]
-  end
-  THREAT --&gt; GR[&quot;Guardrails —&lt;br/&gt;layered, fail-closed&quot;]
-  GR --&gt; RT[&quot;Red-teaming&lt;br/&gt;generates evidence on purpose&quot;]
-  RT --&gt; GOV[&quot;Governance &amp; compliance — lesson 2&lt;br/&gt;SOC 2 · GDPR/DPDP · EU AI Act · model cards&quot;]
-  GOV --&gt; OUT[&quot;Enterprise procurement clears.&lt;br/&gt;Regulatory exposure is bounded.&quot;]</pre>
+<!-- AI security & guardrails — knowledge graph.
+     Diagram type: THREAT MODEL → GUARDRAILS → RED-TEAMING → GOVERNANCE → OUTCOME.
+     Track accent = red-magenta (#a13d63). -->
+<style>
+.dgm-sg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #a13d63;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:#a13d63;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(161,61,99,.28)}
+.dgm-sg-caption{font-size:11px;color:#59636e;letter-spacing:.4px;text-transform:uppercase;
+  font-weight:700;margin:0 0 12px}
+.dgm-sg-threats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.dgm-sg-th{background:#ffebe9;border:1px solid #ffcecb;border-radius:11px;padding:12px 12px 10px;
+  display:flex;flex-direction:column;gap:6px}
+.dgm-sg-th .dgm-sg-ico{color:#d1242f;width:22px;height:22px}
+.dgm-sg-th h5{margin:0;font-size:12px;font-weight:700;color:#82061e;letter-spacing:.02em;
+  text-transform:uppercase}
+.dgm-sg-th p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-sg-arr{display:flex;justify-content:center;color:#8c959f;margin:2px 0 8px}
+.dgm-sg-arr svg{width:18px;height:18px}
+.dgm-sg-cell{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.dgm-sg-cell.wall{background:#ddf4ff;border-color:#b6e3ff}
+.dgm-sg-cell.evi{background:#fff8c5;border-color:#eac54f}
+.dgm-sg-cell.gov{background:#f6e6ec;border-color:#e9c4d3}
+.dgm-sg-cell.win{background:#dafbe1;border-color:#aceebb}
+.dgm-sg-cell .dgm-sg-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #d1d9e0;border-radius:8px;flex:0 0 28px;color:#0969da}
+.dgm-sg-cell.wall .dgm-sg-ico{color:#0969da}
+.dgm-sg-cell.evi .dgm-sg-ico{color:#9a6700}
+.dgm-sg-cell.gov .dgm-sg-ico{color:#a13d63}
+.dgm-sg-cell.win .dgm-sg-ico{color:#1a7f37}
+.dgm-sg-cell h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-sg-cell p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-sg-cell .dgm-sg-num{background:#ffffff;border:1px solid #d1d9e0;color:#59636e;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:5px;
+  text-transform:uppercase;margin-left:8px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .dgm-sg{padding:20px 16px 18px}
+  .dgm-sg-threats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<div class="dgm-sg">
+  <span class="dgm-sg-chip">AI security &amp; guardrails</span>
+
+  <p class="dgm-sg-caption">Lesson 1 · The threat model — four distinct attack shapes</p>
+  <div class="dgm-sg-threats">
+    <div class="dgm-sg-th">
+      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0"/><path d="M8 15l3 3M14 15l-3 3"/></svg>
+      <h5>Jailbreak</h5>
+      <p>Social-engineer the model out of its own refusals</p>
+    </div>
+    <div class="dgm-sg-th">
+      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M6 5l2 2M18 5l-2 2M4 12h3M17 12h3"/><path d="M8 12h8v8H8z"/><path d="M12 15v2"/></svg>
+      <h5>Injection</h5>
+      <p>Hide commands in data the model reads</p>
+    </div>
+    <div class="dgm-sg-th">
+      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M15 14l4-4M15 10l4 4"/></svg>
+      <h5>Extraction</h5>
+      <p>Pull training data, prompts, weights back out</p>
+    </div>
+    <div class="dgm-sg-th">
+      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/><circle cx="12" cy="12" r="2" fill="#82061e"/></svg>
+      <h5>Poisoning</h5>
+      <p>Corrupt what the model learns in the first place</p>
+    </div>
+  </div>
+
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sg-cell wall">
+    <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+    <div><h5>Guardrails · layered, fail-closed <span class="dgm-sg-num">Defense</span></h5>
+    <p>Each attack has its own countermeasure. When any layer is uncertain, block by default.</p></div>
+  </div>
+
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sg-cell evi">
+    <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6M11 8v6"/></svg>
+    <div><h5>Red-teaming <span class="dgm-sg-num">Evidence</span></h5>
+    <p>Structured adversarial testing that generates evidence on purpose.</p></div>
+  </div>
+
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sg-cell gov">
+    <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16M8 14h3M8 18h5M14 14h2M14 18h2"/></svg>
+    <div><h5>Governance &amp; compliance <span class="dgm-sg-num">Lesson 2</span></h5>
+    <p>SOC 2 · GDPR/DPDP · EU AI Act · model cards — evidence someone outside can check.</p></div>
+  </div>
+
+  <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-sg-cell win">
+    <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <div><h5>The outcome <span class="dgm-sg-num">Payoff</span></h5>
+    <p>Enterprise procurement clears. Regulatory exposure is bounded.</p></div>
+  </div>
+</div>
+
 <p>Read it as one argument in two parts. <strong>The threat model</strong>: "guardrails" is not one
 control, it's a layered defense against four distinct attacks, each of which needs its own
 countermeasure and fails in its own way. <strong>Governance &amp; compliance</strong>: the internal
@@ -425,47 +518,7 @@ follow the spokes into
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="the-threat-model-and-guardrails.html"><span class="card-num">01</span><h3>The threat model, and guardrails as architecture</h3><span class="card-go">Read lesson →</span></a><a class="card" href="governance-audit-and-compliance.html"><span class="card-num">02</span><h3>Governance, audit &amp; compliance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every
