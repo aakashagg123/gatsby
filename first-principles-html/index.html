@@ -401,23 +401,74 @@ ideas between them.</p>
 broad latticework of models is the <em>raw material</em> the method works on. A method with no
 material reasons in a vacuum. Material with no method just collects trivia.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<pre class="mermaid">flowchart TB
-  subgraph METHOD[&quot;THE METHOD&quot;]
-    LOOP[&quot;Deconstruct → Challenge → Reconstruct&quot;]
-    WHEN[&quot;When to use it —&lt;br/&gt;vs. reasoning by analogy&quot;]
-  end
-  subgraph MATERIAL[&quot;THE MATERIAL&quot;]
-    LAT[&quot;Latticework of mental models&lt;br/&gt;(many disciplines)&quot;]
-    POLY[&quot;Polymath range&lt;br/&gt;(T → comb-shaped)&quot;]
-    LEARN[&quot;Learning engine&lt;br/&gt;retrieval · spacing · Feynman&quot;]
-  end
-  LEARN --&gt; LAT
-  LEARN --&gt; POLY
-  POLY --&gt;|&quot;supplies models&quot;| LAT
-  LAT --&gt;|&quot;names the components&quot;| LOOP
-  WHEN --&gt; LOOP
-  TRAPS[&quot;Traps &amp; limits&lt;br/&gt;(the safety rail)&quot;] -.-&gt;|&quot;bounds&quot;| LOOP
-  LOOP --&gt; OUT[&quot;Decisions traced to bedrock —&lt;br/&gt;and the occasional consensus-beating move&quot;]</pre>
+<style>
+.dgm-fp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #e87ba4;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-fp-chip{position:absolute;top:-11px;left:24px;background:#e87ba4;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(232,123,164,.28)}
+.dgm-fp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-fp-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-fp-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.dgm-fp-panel{border-radius:13px;padding:14px 16px;position:relative}
+.dgm-fp-panel.method{background:#fce4ec;border:1.5px solid #f4c2d4}
+.dgm-fp-panel.material{background:#efedfa;border:1.5px solid #cec8f0}
+.dgm-fp-panel .dgm-fp-lbl{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-fp-panel.method .dgm-fp-lbl{color:#a13d63;border-color:#f4c2d4}
+.dgm-fp-panel.material .dgm-fp-lbl{color:#3d3a95;border-color:#cec8f0}
+.dgm-fp-panel h5{margin:2px 0 8px;font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.dgm-fp-panel.method h5{color:#a13d63}
+.dgm-fp-panel.material h5{color:#3d3a95}
+.dgm-fp-loop{background:#ffffff;border:1.5px dashed;border-radius:10px;padding:10px 12px;display:flex;gap:8px;align-items:center;
+  font-size:11.5px;font-weight:600;color:#1f2328;line-height:1.4;margin-bottom:8px}
+.dgm-fp-panel.method .dgm-fp-loop{border-color:#f4c2d4}
+.dgm-fp-panel.method .dgm-fp-loop svg{color:#e87ba4}
+.dgm-fp-loop svg{width:22px;height:22px;flex:0 0 22px}
+.dgm-fp-caption{font-size:10.5px;color:#59636e;line-height:1.35;font-style:italic}
+.dgm-fp-items{display:flex;flex-direction:column;gap:5px}
+.dgm-fp-item{background:#ffffff;border:1px solid #cec8f0;border-radius:8px;padding:7px 10px;
+  display:flex;gap:8px;align-items:center;font-size:11px;color:#1f2328;font-weight:600}
+.dgm-fp-item svg{width:16px;height:16px;color:#5a4fcf;flex:0 0 16px}
+.dgm-fp-safety{background:#fff8c5;border:1.5px dashed #eac54f;border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;
+  font-size:11.5px;color:#7a5300;line-height:1.4}
+.dgm-fp-safety svg{width:22px;height:22px;color:#9a6700;flex:0 0 22px}
+.dgm-fp-safety strong{color:#5a3d1a}
+@media (max-width:640px){.dgm-fp{padding:20px 16px 18px}.dgm-fp-two{grid-template-columns:1fr}}
+</style>
+<div class="dgm-fp">
+  <span class="dgm-fp-chip">First principles</span>
+  <h4>Method × Material · what to do and what to draw from</h4>
+  <p class="dgm-fp-sub">Every module lesson lives on one side of this split — how you reason, or what you reason with.</p>
+
+  <div class="dgm-fp-two">
+    <div class="dgm-fp-panel method">
+      <span class="dgm-fp-lbl">The method</span>
+      <h5>Deconstruct → Challenge → Reconstruct</h5>
+      <div class="dgm-fp-loop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+        A loop, not a line
+      </div>
+      <div class="dgm-fp-caption">When to use it — vs. reasoning by analogy</div>
+    </div>
+    <div class="dgm-fp-panel material">
+      <span class="dgm-fp-lbl">The material</span>
+      <h5>What you reason with</h5>
+      <div class="dgm-fp-items">
+        <div class="dgm-fp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Latticework of mental models</div>
+        <div class="dgm-fp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 4v16M18 4v16M2 8h20"/></svg>Polymath range · T → comb</div>
+        <div class="dgm-fp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/><path d="M9 18h6"/></svg>Learning engine · retrieval · spacing · Feynman</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-fp-safety">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L2.5 17.5A2 2 0 004.2 20.5h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17.5h.01"/></svg>
+    <span><strong>Traps &amp; limits · the safety rail.</strong> First principles is expensive · knowing when NOT to use it is the meta-skill.</span>
+  </div>
+</div>
+
 <h2 id="connects-to-other-tracks">Connects to other tracks</h2>
 <ul>
 <li><a href="../technical-product-sense/how-systems-are-built.html">How systems are built</a> — an engineer's model of the machine, a lattice to borrow from.</li>
@@ -431,47 +482,7 @@ reasoning showed up in real breakthroughs and real failures, plus the key takeaw
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-first-principles.html"><span class="card-num">01</span><h3>What first-principles thinking actually is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-method.html"><span class="card-num">02</span><h3>The method: deconstruct, challenge, reconstruct</h3><span class="card-go">Read lesson →</span></a><a class="card" href="mental-models-latticework.html"><span class="card-num">03</span><h3>A latticework of mental models</h3><span class="card-go">Read lesson →</span></a><a class="card" href="becoming-a-polymath.html"><span class="card-num">04</span><h3>Becoming a polymath</h3><span class="card-go">Read lesson →</span></a><a class="card" href="learning-how-to-learn.html"><span class="card-num">05</span><h3>Learning how to learn</h3><span class="card-go">Read lesson →</span></a><a class="card" href="traps-and-limits.html"><span class="card-num">06</span><h3>Traps &amp; limits</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

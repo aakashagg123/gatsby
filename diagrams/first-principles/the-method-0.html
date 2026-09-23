@@ -1,0 +1,56 @@
+<style>
+.dgm-tm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #e87ba4;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-tm-chip{position:absolute;top:-11px;left:24px;background:#e87ba4;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(232,123,164,.28)}
+.dgm-tm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-tm-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-tm-loop{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;gap:8px;align-items:stretch;margin-bottom:12px}
+.dgm-tm-step{background:#fce4ec;border:1.5px solid #f4c2d4;border-radius:12px;padding:14px 12px;position:relative;
+  display:flex;flex-direction:column;gap:6px;text-align:center}
+.dgm-tm-step .dgm-tm-num{position:absolute;top:-10px;left:12px;background:#e87ba4;color:#fff;font-size:9.5px;
+  font-weight:700;padding:2px 8px;border-radius:5px;letter-spacing:.5px;text-transform:uppercase}
+.dgm-tm-step .dgm-tm-ico{color:#e87ba4;width:26px;height:26px;align-self:center}
+.dgm-tm-step h5{margin:0;font-size:12px;font-weight:700;color:#a13d63;letter-spacing:.02em;text-transform:uppercase}
+.dgm-tm-step p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-tm-arr{align-self:center;color:#8c959f;font-weight:700;text-align:center}
+.dgm-tm-back{margin-top:8px;background:#fff8c5;border:1px dashed #eac54f;border-radius:10px;padding:10px 14px;
+  font-size:11px;color:#7a5300;line-height:1.35;display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.dgm-tm-back svg{width:20px;height:20px;color:#9a6700;flex:0 0 20px}
+.dgm-tm-tools{background:#efedfa;border:1px solid #cec8f0;border-radius:12px;padding:12px 14px}
+.dgm-tm-tools h5{margin:0 0 6px;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-tm-toolgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dgm-tm-tool{background:#ffffff;border:1px solid #cec8f0;border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center}
+.dgm-tm-tool svg{width:18px;height:18px;color:#5a4fcf;flex:0 0 18px}
+.dgm-tm-tool span{font-size:11px;font-weight:600;color:#1f2328;line-height:1.3}
+@media (max-width:640px){.dgm-tm{padding:20px 16px 18px}.dgm-tm-loop{grid-template-columns:1fr}.dgm-tm-arr{padding:2px 0}.dgm-tm-toolgrid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tm">
+  <span class="dgm-tm-chip">The method</span>
+  <h4>A loop, not a line · reconstruction usually exposes a claim you mislabeled</h4>
+  <p class="dgm-tm-sub">Deconstruct → challenge → reconstruct → repeat.</p>
+
+  <div class="dgm-tm-loop">
+    <div class="dgm-tm-step"><span class="dgm-tm-num">01</span><svg class="dgm-tm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg><h5>Deconstruct</h5><p>Split into component claims</p></div>
+    <div class="dgm-tm-arr">→</div>
+    <div class="dgm-tm-step"><span class="dgm-tm-num">02</span><svg class="dgm-tm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><h5>Challenge</h5><p>Bedrock or inherited?</p></div>
+    <div class="dgm-tm-arr">→</div>
+    <div class="dgm-tm-step"><span class="dgm-tm-num">03</span><svg class="dgm-tm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/></svg><h5>Reconstruct</h5><p>Rebuild from bedrock only</p></div>
+  </div>
+
+  <div class="dgm-tm-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>Loop back:</strong> new constraints from reconstruction expose claims to challenge again.</span>
+  </div>
+
+  <div class="dgm-tm-tools">
+    <h5>Tools that plug in at each step</h5>
+    <div class="dgm-tm-toolgrid">
+      <div class="dgm-tm-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 015.83 1c0 2-3 3-3 3"/></svg><span>Socratic questioning · challenge</span></div>
+      <div class="dgm-tm-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4M4 12L12 4M12 20L20 12"/></svg><span>5 Whys · challenge</span></div>
+      <div class="dgm-tm-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/></svg><span>Fermi estimation · reconstruct</span></div>
+    </div>
+  </div>
+</div>
