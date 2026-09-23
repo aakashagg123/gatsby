@@ -391,19 +391,107 @@ before a team feels ready for it, and in what order to actually build it. That i
 is two lessons, not seven — the honest amount of genuinely new ground, once four existing
 sources are accounted for, is two lessons' worth.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<pre class="mermaid">flowchart TB
-  subgraph WHY[&quot;WHY IT&#x27;S THE JOB — lesson 1&quot;]
-    SPEC[&quot;The eval set is the spec&lt;br/&gt;for a system with no exact answer&quot;]
-  end
-  subgraph ORDER[&quot;WHAT TO BUILD FIRST — lesson 2&quot;]
-    READ[&quot;Read traces first —&lt;br/&gt;error analysis&quot;]
-    GOLD[&quot;Then a golden set&lt;br/&gt;and a regression gate&quot;]
-    JUDGE[&quot;Then calibrated&lt;br/&gt;LLM-as-judge, at scale&quot;]
-    OBS[&quot;Then full observability —&lt;br/&gt;traces, spans, drift&quot;]
-  end
-  SPEC --&gt; READ
-  READ --&gt; GOLD --&gt; JUDGE --&gt; OBS
-  OBS -.-&gt;|&quot;the mature end state&quot;| GATE[&quot;Nothing ships&lt;br/&gt;without a score&quot;]</pre>
+<!-- Evaluation & observability — knowledge graph.
+     Two questions in sequence: WHY it's the job, WHAT to build first.
+     Track accent = brown-ochre (#9e6b3f). -->
+<style>
+.dgm-eo{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #9e6b3f;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-eo-chip{position:absolute;top:-11px;left:24px;background:#9e6b3f;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(158,107,63,.28)}
+.dgm-eo h4{margin:0 0 3px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-eo-sub{font-size:12px;color:#59636e;margin:0 0 12px}
+.dgm-eo-why{background:#f6efe6;border:1px solid #d9c9b6;border-radius:12px;padding:16px 18px;
+  display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.dgm-eo-why .dgm-eo-ico{width:36px;height:36px;padding:6px;background:#ffffff;
+  border:1.5px solid #d9c9b6;border-radius:10px;color:#9e6b3f;flex:0 0 36px}
+.dgm-eo-why-h{font-size:12px;font-weight:700;color:#7a5028;letter-spacing:.6px;
+  text-transform:uppercase;margin:0 0 3px}
+.dgm-eo-why-body{font-size:13px;color:#1f2328;line-height:1.4;font-weight:500}
+
+.dgm-eo-order-title{margin:14px 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-eo-order-sub{font-size:12px;color:#59636e;margin:0 0 12px}
+.dgm-eo-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-eo-step{background:#ffffff;border:1px solid #d1d9e0;border-radius:11px;padding:12px 12px;
+  position:relative;display:flex;flex-direction:column;gap:6px}
+.dgm-eo-step .dgm-eo-num{position:absolute;top:-10px;left:12px;background:#9e6b3f;color:#ffffff;
+  font-size:10px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;
+  text-transform:uppercase;box-shadow:0 2px 4px rgba(158,107,63,.24)}
+.dgm-eo-step .dgm-eo-ico{color:#9e6b3f;width:20px;height:20px;margin-top:4px}
+.dgm-eo-step h5{margin:0;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-eo-step p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-eo-connectors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:3px 0 3px}
+.dgm-eo-connectors span{text-align:right;padding-right:10px;color:#8c959f;font-weight:700}
+.dgm-eo-connectors span:last-child{opacity:0}
+
+.dgm-eo-mature{margin-top:14px;padding:14px 18px;background:#dafbe1;border:1.5px dashed #aceebb;
+  border-radius:12px;display:flex;gap:12px;align-items:center}
+.dgm-eo-mature .dgm-eo-ico{width:26px;height:26px;padding:4px;background:#ffffff;
+  border:1px solid #aceebb;border-radius:8px;color:#1a7f37;flex:0 0 26px}
+.dgm-eo-mature h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1a7f37;letter-spacing:.02em}
+.dgm-eo-mature p{margin:0;font-size:11.5px;color:#1f2328;line-height:1.4}
+
+@media (max-width:640px){
+  .dgm-eo{padding:20px 16px 18px}
+  .dgm-eo-steps,.dgm-eo-connectors{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<div class="dgm-eo">
+  <span class="dgm-eo-chip">Evaluation &amp; observability</span>
+
+  <h4>Lesson 1 · Why it's the job</h4>
+  <p class="dgm-eo-sub">Ordinary software gets a spec. AI software gets an eval set — that's what does the spec's job here.</p>
+
+  <div class="dgm-eo-why">
+    <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><circle cx="17" cy="17" r="3" fill="#dafbe1" stroke="#1a7f37"/><path d="M15.7 17l1 1 2-2" stroke="#1a7f37"/></svg>
+    <div>
+      <div class="dgm-eo-why-h">The eval set is the spec</div>
+      <div class="dgm-eo-why-body">For a system with no exact answer, the eval is what "acceptable" means.</div>
+    </div>
+  </div>
+
+  <h4 class="dgm-eo-order-title">Lesson 2 · Build in this order · each step needs the one before it</h4>
+  <p class="dgm-eo-order-sub">Skipping ahead is the most common way teams end up with a dashboard tracking a system nobody can tell is regressing.</p>
+
+  <div class="dgm-eo-steps">
+    <div class="dgm-eo-step">
+      <span class="dgm-eo-num">01</span>
+      <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M8 8h6M8 16h4"/></svg>
+      <h5>Read traces</h5>
+      <p>Label failures in your own words</p>
+    </div>
+    <div class="dgm-eo-step">
+      <span class="dgm-eo-num">02</span>
+      <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/></svg>
+      <h5>Golden set + gate</h5>
+      <p>Regression suite from recurring modes</p>
+    </div>
+    <div class="dgm-eo-step">
+      <span class="dgm-eo-num">03</span>
+      <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+      <h5>Calibrated LLM judge</h5>
+      <p>Grade at scale after human calibration</p>
+    </div>
+    <div class="dgm-eo-step">
+      <span class="dgm-eo-num">04</span>
+      <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/><path d="M14 6h7v7"/></svg>
+      <h5>Full observability</h5>
+      <p>Traces, spans, drift detection</p>
+    </div>
+  </div>
+  <div class="dgm-eo-connectors"><span>→</span><span>→</span><span>→</span><span></span></div>
+
+  <div class="dgm-eo-mature">
+    <svg class="dgm-eo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+    <div><h5>The mature end state</h5><p>Nothing ships without a score. Every change becomes a diff, not a debate.</p></div>
+  </div>
+</div>
+
 <p>Read it as two questions in sequence. <strong>Why</strong>: an AI system can't be spec'd the way
 ordinary software is, so the eval set has to do that job instead — which makes it a
 decision a product leader should insist on, not a technical nicety to negotiate away.
@@ -430,47 +518,7 @@ follow the spokes into
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="why-eval-investment-is-the-job.html"><span class="card-num">01</span><h3>Why eval investment is the job</h3><span class="card-go">Read lesson →</span></a><a class="card" href="building-the-eval-stack-in-the-right-order.html"><span class="card-num">02</span><h3>Building the eval stack in the right order</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

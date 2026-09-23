@@ -1,0 +1,98 @@
+<!-- why-eval lesson — linear "eval as replacement for f(x)==expected" flow with grade fork.
+     Diagram type: LINEAR PIPELINE with decision-fork terminals. -->
+<style>
+.dgm-we{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #9e6b3f;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+  font-family:inherit;text-align:left;position:relative}
+.dgm-we-chip{position:absolute;top:-11px;left:24px;background:#9e6b3f;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(158,107,63,.28)}
+.dgm-we h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-we-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+
+.dgm-we-flow{display:grid;grid-template-columns:1fr 24px 1fr 24px auto;gap:10px;
+  align-items:stretch;margin-bottom:16px}
+.dgm-we-cell{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 14px;
+  display:flex;flex-direction:column;gap:6px}
+.dgm-we-cell .dgm-we-ico{color:#9e6b3f;width:24px;height:24px}
+.dgm-we-cell.input{background:#f6efe6;border-color:#d9c9b6}
+.dgm-we-cell.output{background:#ddf4ff;border-color:#b6e3ff}
+.dgm-we-cell.output .dgm-we-ico{color:#0969da}
+.dgm-we-cell h5{margin:0;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-we-cell p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-we-arr{align-self:center;color:#8c959f;font-weight:700;font-size:16px;text-align:center}
+.dgm-we-grade{background:#ffffff;border:1.5px dashed #d9c9b6;border-radius:12px;padding:14px 14px;
+  display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
+.dgm-we-grade .dgm-we-ico{color:#9e6b3f;width:26px;height:26px}
+.dgm-we-grade h5{margin:0;font-size:12px;font-weight:700;color:#7a5028;letter-spacing:.02em}
+.dgm-we-grade p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+
+.dgm-we-arr-down{display:flex;justify-content:center;color:#8c959f;margin:6px 0}
+.dgm-we-arr-down svg{width:18px;height:18px}
+.dgm-we-fork{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dgm-we-outcome{border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;
+  position:relative}
+.dgm-we-outcome.pass{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-we-outcome.fail{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-we-outcome .dgm-we-badge{position:absolute;top:-10px;left:14px;background:#ffffff;
+  border:1px solid #d1d9e0;font-size:9.5px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;padding:2px 8px;border-radius:6px}
+.dgm-we-outcome.pass .dgm-we-badge{color:#1a7f37;border-color:#aceebb}
+.dgm-we-outcome.fail .dgm-we-badge{color:#0550ae;border-color:#b6e3ff}
+.dgm-we-outcome .dgm-we-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #d1d9e0;border-radius:8px;flex:0 0 28px}
+.dgm-we-outcome.pass .dgm-we-ico{color:#1a7f37;border-color:#aceebb}
+.dgm-we-outcome.fail .dgm-we-ico{color:#0550ae;border-color:#b6e3ff}
+.dgm-we-outcome h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-we-outcome p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+
+@media (max-width:640px){
+  .dgm-we{padding:20px 16px 18px}
+  .dgm-we-flow{grid-template-columns:1fr;gap:6px}
+  .dgm-we-arr{padding:2px 0}
+  .dgm-we-fork{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm-we">
+  <span class="dgm-we-chip">Why evals are the job</span>
+
+  <h4>The replacement for f(x) == expected · pipeline</h4>
+  <p class="dgm-we-sub">Open-ended outputs need a graded rubric, not exact equality.</p>
+
+  <div class="dgm-we-flow">
+    <div class="dgm-we-cell input">
+      <svg class="dgm-we-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <h5>A realistic input</h5>
+      <p>Drawn from actual user traffic</p>
+    </div>
+    <div class="dgm-we-arr">→</div>
+    <div class="dgm-we-cell output">
+      <svg class="dgm-we-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      <h5>System's actual output</h5>
+      <p>Whatever the model produces today</p>
+    </div>
+    <div class="dgm-we-arr">→</div>
+    <div class="dgm-we-grade">
+      <svg class="dgm-we-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+      <h5>Grade</h5>
+      <p>Rubric · known-good</p>
+    </div>
+  </div>
+
+  <div class="dgm-we-arr-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-we-fork">
+    <div class="dgm-we-outcome pass">
+      <span class="dgm-we-badge">Pass</span>
+      <svg class="dgm-we-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+      <div><h5>Safe to ship this behavior</h5><p>The change is a real improvement, provable against last quarter.</p></div>
+    </div>
+    <div class="dgm-we-outcome fail">
+      <span class="dgm-we-badge">Fail</span>
+      <svg class="dgm-we-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><h5>Caught before a user sees it</h5><p>The regression stays inside the team, not out in production.</p></div>
+    </div>
+  </div>
+</div>
