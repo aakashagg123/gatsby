@@ -1,0 +1,46 @@
+<style>
+.dgm-wf{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-wf-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-wf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-wf-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wf-bad{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#82061e;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:200px}
+.dgm-wf-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wf-arr svg{width:16px;height:16px}
+.dgm-wf-q{background:#f6f8fa;border:1.5px dashed #d1d9e0;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#59636e;font-weight:700;font-size:11.5px;margin:0 auto 10px;max-width:260px}
+.dgm-wf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
+.dgm-wf-n{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:9px;padding:7px 5px;text-align:center;
+  font-size:9px;font-weight:700;color:#5c2e00;line-height:1.25}
+.dgm-wf-arr2{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-wf-arr2 svg{width:16px;height:16px}
+.dgm-wf-fix{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px;margin:0 auto;max-width:260px}
+@media (max-width:640px){.dgm-wf{padding:20px 16px 18px}.dgm-wf-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-wf">
+  <span class="dgm-wf-chip">The diagnostic playbook</span>
+  <h4>Every bad output has a shape · match it to one of seven modes</h4>
+  <p class="dgm-wf-sub">Naming the failure is faster than rewriting the prompt.</p>
+
+  <div class="dgm-wf-bad">Bad output</div>
+  <div class="dgm-wf-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-wf-q">Which failure mode?</div>
+
+  <div class="dgm-wf-grid">
+    <div class="dgm-wf-n">F1 Instruction conflict</div>
+    <div class="dgm-wf-n">F2 Length miscalibration</div>
+    <div class="dgm-wf-n">F3 Role collapse</div>
+    <div class="dgm-wf-n">F4 Scope creep</div>
+    <div class="dgm-wf-n">F5 Context bleed</div>
+    <div class="dgm-wf-n">F6 Hallucination in a slot</div>
+    <div class="dgm-wf-n">F7 Format drift</div>
+    <div class="dgm-wf-n" style="background:#fdf3d9;border-color:#eac54f;color:#7a5300">+ combinations</div>
+  </div>
+  <div class="dgm-wf-arr2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-wf-fix">Named fix — not a rewrite</div>
+</div>
