@@ -391,17 +391,64 @@ or fragile. You find out only after engineering starts.</p>
 <h2 id="the-path-of-a-request">The path of a request</h2>
 <p>When a user does something, a request travels through several layers. Each layer has its own
 job, cost, and failure mode:</p>
-<pre class="mermaid">flowchart LR
-  U[&quot;User / client&quot;] --&gt; CDN[&quot;CDN / edge&quot;]
-  CDN --&gt; LB[&quot;Load balancer&quot;]
-  LB --&gt; API[&quot;API layer&quot;]
-  API --&gt; S1[&quot;Service A&lt;br/&gt;(business logic)&quot;]
-  API --&gt; S2[&quot;Service B&quot;]
-  S1 --&gt; DB[(&quot;Database&quot;)]
-  S1 --&gt; C[(&quot;Cache&quot;)]
-  S1 --&gt; Q[&quot;Queue&quot;]
-  Q --&gt; W[&quot;Worker&lt;br/&gt;(async jobs)&quot;]
-  W --&gt; DB</pre>
+<style>
+.dgm-hs{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1baf7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-hs-chip{position:absolute;top:-11px;left:24px;background:#1baf7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(27,175,122,.28)}
+.dgm-hs h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-hs-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-hs-pipe{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr 18px 1fr;align-items:center;gap:4px;margin-bottom:8px}
+.dgm-hs-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-hs-arr{text-align:center;color:#8c959f;font-weight:700}
+.dgm-hs-branch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:8px 0}
+.dgm-hs-b{background:#e3f9ee;border:1.5px solid #a8e8c9;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#0e6b44}
+.dgm-hs-tail{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.dgm-hs-tail .n{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:9px;padding:8px 12px;
+  font-size:9.5px;font-weight:700;color:#7a5300}
+.dgm-hs-note{margin-top:12px;padding:11px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;
+  font-size:11px;color:#1f2328;line-height:1.4}
+.dgm-hs-note strong{color:#0e6b44}
+@media (max-width:640px){.dgm-hs{padding:20px 16px 18px}.dgm-hs-pipe{grid-template-columns:1fr}.dgm-hs-arr{transform:rotate(90deg)}.dgm-hs-branch{grid-template-columns:1fr}}
+</style>
+<div class="dgm-hs">
+  <span class="dgm-hs-chip">The path of a request</span>
+  <h4>Client to database, five layers deep · each with its own job, cost, and failure mode</h4>
+  <p class="dgm-hs-sub">Understanding this path is the foundation of every other technical judgment.</p>
+
+  <div class="dgm-hs-pipe">
+    <div class="dgm-hs-node">User / client</div>
+    <div class="dgm-hs-arr">→</div>
+    <div class="dgm-hs-node">CDN / edge</div>
+    <div class="dgm-hs-arr">→</div>
+    <div class="dgm-hs-node">Load balancer</div>
+    <div class="dgm-hs-arr">→</div>
+    <div class="dgm-hs-node">API layer</div>
+  </div>
+  <div class="dgm-hs-arr" style="text-align:center">↓</div>
+  <div class="dgm-hs-branch">
+    <div class="dgm-hs-b">Service A — business logic</div>
+    <div class="dgm-hs-b">Service B</div>
+    <div></div>
+  </div>
+  <div class="dgm-hs-branch">
+    <div class="dgm-hs-b">Database</div>
+    <div class="dgm-hs-b">Cache</div>
+    <div class="dgm-hs-b">Queue</div>
+  </div>
+  <div class="dgm-hs-tail">
+    <span style="color:#8c959f">Queue →</span>
+    <div class="n">Worker — async jobs</div>
+    <span style="color:#8c959f">→ Database</span>
+  </div>
+
+  <div class="dgm-hs-note"><strong>The key product lever:</strong> does the user <em>wait</em> for this work (synchronous) or not (async, via a queue)? That choice shapes the UX, the perceived speed, and the system's resilience.</div>
+</div>
+
 <ul>
 <li><strong>Client</strong> — the browser or app. Work done here is free for your servers, but limited by the
   user's device and network.</li>
@@ -510,46 +557,6 @@ lesson builds — hearing "add a button" and seeing the queue behind it.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

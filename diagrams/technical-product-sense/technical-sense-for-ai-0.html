@@ -1,0 +1,44 @@
+<style>
+.dgm-ts{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1baf7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ts-chip{position:absolute;top:-11px;left:24px;background:#1baf7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(27,175,122,.28)}
+.dgm-ts h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ts-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ts-pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
+.dgm-ts-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 6px;text-align:center;
+  font-size:8.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-ts-node.model{background:#e3f9ee;border-color:#a8e8c9;color:#0e6b44}
+.dgm-ts-arrow-row{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;text-align:center;color:#8c959f;font-size:11px;margin-bottom:2px}
+.dgm-ts-loop{text-align:center;font-size:9px;color:#c9432f;font-style:italic;margin-bottom:8px}
+.dgm-ts-tail{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.dgm-ts-node2{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-ts-obs{background:#fdf3d9;border:1.5px dashed #eac54f;border-radius:10px;padding:9px 14px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:10.5px;line-height:1.4}
+@media (max-width:640px){.dgm-ts{padding:20px 16px 18px}.dgm-ts-pipe,.dgm-ts-arrow-row{grid-template-columns:1fr}.dgm-ts-tail{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ts">
+  <span class="dgm-ts-chip">The anatomy of an AI feature</span>
+  <h4>The model call is one box · the product lives in the boxes around it</h4>
+  <p class="dgm-ts-sub">Guardrails → retrieval → prompt → model → validate → tools — every step emits traces.</p>
+
+  <div class="dgm-ts-pipe">
+    <div class="dgm-ts-node">User input</div>
+    <div class="dgm-ts-node">Guardrails — input checks</div>
+    <div class="dgm-ts-node">Retrieval — fetch context</div>
+    <div class="dgm-ts-node">Prompt assembly</div>
+    <div class="dgm-ts-node model">Model call</div>
+    <div class="dgm-ts-node">Validate / parse</div>
+  </div>
+  <div class="dgm-ts-loop">↺ invalid output loops back to prompt assembly for repair</div>
+
+  <div class="dgm-ts-tail">
+    <div class="dgm-ts-node2">Tools / actions — valid output</div>
+    <div class="dgm-ts-node2">Response to user</div>
+  </div>
+
+  <div class="dgm-ts-obs">Observability + evals — traces, tokens, cost, and latency from the model call, validation, and tools, graded continuously. Without this, you are flying blind.</div>
+</div>

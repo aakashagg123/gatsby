@@ -390,18 +390,51 @@ unobservable, and unaffordable in production.</p>
 </blockquote>
 <h2 id="the-anatomy-of-an-ai-feature">The anatomy of an AI feature</h2>
 <p>The model call is one box in a pipeline. The product lives in the boxes around it:</p>
-<pre class="mermaid">flowchart LR
-  U[&quot;User input&quot;] --&gt; G[&quot;Guardrails&lt;br/&gt;(input checks)&quot;]
-  G --&gt; R[&quot;Retrieval&lt;br/&gt;(fetch context)&quot;]
-  R --&gt; P[&quot;Prompt assembly&quot;]
-  P --&gt; M[&quot;Model call&quot;]
-  M --&gt; V[&quot;Validate / parse&quot;]
-  V --&gt;|valid| T[&quot;Tools / actions&quot;]
-  V --&gt;|invalid| P
-  T --&gt; O[&quot;Response to user&quot;]
-  M -.-&gt;|traces, tokens, cost, latency| OBS[[&quot;Observability + evals&quot;]]
-  V -.-&gt; OBS
-  T -.-&gt; OBS</pre>
+<style>
+.dgm-ts{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1baf7a;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ts-chip{position:absolute;top:-11px;left:24px;background:#1baf7a;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(27,175,122,.28)}
+.dgm-ts h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ts-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ts-pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
+.dgm-ts-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 6px;text-align:center;
+  font-size:8.5px;font-weight:700;color:#1f2328;line-height:1.25}
+.dgm-ts-node.model{background:#e3f9ee;border-color:#a8e8c9;color:#0e6b44}
+.dgm-ts-arrow-row{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;text-align:center;color:#8c959f;font-size:11px;margin-bottom:2px}
+.dgm-ts-loop{text-align:center;font-size:9px;color:#c9432f;font-style:italic;margin-bottom:8px}
+.dgm-ts-tail{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.dgm-ts-node2{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:9.5px;font-weight:700;color:#1f2328}
+.dgm-ts-obs{background:#fdf3d9;border:1.5px dashed #eac54f;border-radius:10px;padding:9px 14px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:10.5px;line-height:1.4}
+@media (max-width:640px){.dgm-ts{padding:20px 16px 18px}.dgm-ts-pipe,.dgm-ts-arrow-row{grid-template-columns:1fr}.dgm-ts-tail{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ts">
+  <span class="dgm-ts-chip">The anatomy of an AI feature</span>
+  <h4>The model call is one box · the product lives in the boxes around it</h4>
+  <p class="dgm-ts-sub">Guardrails → retrieval → prompt → model → validate → tools — every step emits traces.</p>
+
+  <div class="dgm-ts-pipe">
+    <div class="dgm-ts-node">User input</div>
+    <div class="dgm-ts-node">Guardrails — input checks</div>
+    <div class="dgm-ts-node">Retrieval — fetch context</div>
+    <div class="dgm-ts-node">Prompt assembly</div>
+    <div class="dgm-ts-node model">Model call</div>
+    <div class="dgm-ts-node">Validate / parse</div>
+  </div>
+  <div class="dgm-ts-loop">↺ invalid output loops back to prompt assembly for repair</div>
+
+  <div class="dgm-ts-tail">
+    <div class="dgm-ts-node2">Tools / actions — valid output</div>
+    <div class="dgm-ts-node2">Response to user</div>
+  </div>
+
+  <div class="dgm-ts-obs">Observability + evals — traces, tokens, cost, and latency from the model call, validation, and tools, graded continuously. Without this, you are flying blind.</div>
+</div>
+
 <ul>
 <li><strong>Guardrails (in)</strong> — Check and sanitize input. Block prompt injection and
   out-of-scope requests before they reach the model.</li>
@@ -529,46 +562,6 @@ both are the PM's job.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
