@@ -391,11 +391,60 @@ context was right before we started rewriting the prompt?"</em></p>
 nobody separated the two questions before debugging started.</p>
 </blockquote>
 <h2 id="the-mental-model-two-separate-scores-not-one">The mental model: two separate scores, not one</h2>
-<pre class="mermaid">flowchart LR
-  CTX[&quot;Context eval:&lt;br/&gt;was the RIGHT input&lt;br/&gt;assembled?&quot;] --&gt; MODEL[&quot;Model call&quot;]
-  MODEL --&gt; OUT[&quot;Output eval:&lt;br/&gt;was the ANSWER good?&quot;]
-  CTX -.-&gt;|&quot;fails here&quot;| DIAG1[&quot;Fix retrieval, memory,&lt;br/&gt;or instructions&quot;]
-  OUT -.-&gt;|&quot;fails here, context passed&quot;| DIAG2[&quot;Fix the model, prompt,&lt;br/&gt;or reasoning&quot;]</pre>
+<style>
+.dgm-eq{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-eq-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-eq h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-eq-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-eq-flow{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr;align-items:center;gap:4px;margin-bottom:14px}
+.dgm-eq-node{border-radius:11px;padding:11px 12px;text-align:center;font-size:11px;font-weight:700;line-height:1.35}
+.dgm-eq-node.ctx{background:#fbe4e6;border:1.5px solid #f3bfc4;color:#8f1a26}
+.dgm-eq-node.model{background:#f6f8fa;border:1px solid #d1d9e0;color:#1f2328}
+.dgm-eq-node.out{background:#ddf4ff;border:1.5px solid #b6e3ff;color:#0550ae}
+.dgm-eq-arrh{text-align:center;color:#8c959f;font-size:14px}
+.dgm-eq-diag{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dgm-eq-d{border-radius:12px;padding:12px 14px;position:relative}
+.dgm-eq-d.a{background:#fbe4e6;border:1.5px solid #f3bfc4}
+.dgm-eq-d.b{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-eq-d .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-eq-d.a .tag{color:#8f1a26;border-color:#f3bfc4}
+.dgm-eq-d.b .tag{color:#1a614f;border-color:#aceebb}
+.dgm-eq-d h6{margin:3px 0 4px;font-size:11.5px;font-weight:700;color:#1f2328}
+.dgm-eq-d p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+@media (max-width:640px){.dgm-eq{padding:20px 16px 18px}.dgm-eq-flow{grid-template-columns:1fr}.dgm-eq-arrh{transform:rotate(90deg)}.dgm-eq-diag{grid-template-columns:1fr}}
+</style>
+<div class="dgm-eq">
+  <span class="dgm-eq-chip">Evaluating context quality</span>
+  <h4>Two separate scores, not one · was the RIGHT input assembled, vs. was the answer good</h4>
+  <p class="dgm-eq-sub">A failing output score with a passing context score points at the model. A failing context score points upstream.</p>
+
+  <div class="dgm-eq-flow">
+    <div class="dgm-eq-node ctx">Context eval:<br/>was the right input assembled?</div>
+    <div class="dgm-eq-arrh">→</div>
+    <div class="dgm-eq-node model">Model call</div>
+    <div class="dgm-eq-arrh">→</div>
+    <div class="dgm-eq-node out">Output eval:<br/>was the answer good?</div>
+  </div>
+
+  <div class="dgm-eq-diag">
+    <div class="dgm-eq-d a">
+      <span class="tag">Context fails</span>
+      <h6>Fix retrieval, memory, or instructions</h6>
+      <p>No amount of prompt tuning fixes an upstream miss.</p>
+    </div>
+    <div class="dgm-eq-d b">
+      <span class="tag">Context passes, output fails</span>
+      <h6>Fix the model, prompt, or reasoning</h6>
+      <p>An isolated, provable model or prompt problem.</p>
+    </div>
+  </div>
+</div>
+
 <p>A failing output score with a passing context score points at the model and the prompt.
 A failing output score with a <em>failing</em> context score points upstream, at retrieval,
 memory, or instructions — and no amount of prompt tuning fixes an upstream miss.</p>
@@ -488,46 +537,6 @@ progress.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

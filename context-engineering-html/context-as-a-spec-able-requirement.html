@@ -389,11 +389,55 @@ and retrieve — or does it stop at 'the AI will handle it'?"</em></p>
 cover, then fails on the first real case that needed context nobody wrote down.</p>
 </blockquote>
 <h2 id="the-mental-model-the-missing-layer-in-most-ai-specs">The mental model: the missing layer in most AI specs</h2>
-<pre class="mermaid">flowchart TB
-  PROB[&quot;Problem statement&quot;] --&gt; BEHAVE[&quot;Desired behavior&lt;br/&gt;(the usual spec)&quot;]
-  BEHAVE -.-&gt;|&quot;the missing step&quot;| CTX[&quot;Context contract:&lt;br/&gt;what must it know,&lt;br/&gt;remember, retrieve?&quot;]
-  CTX --&gt; EVAL[&quot;Eval bar&lt;br/&gt;(the usual spec)&quot;]
-  BEHAVE --&gt; EVAL</pre>
+<style>
+.dgm-sr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-sr-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-sr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-sr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-sr-chain{display:flex;flex-direction:column;align-items:center;gap:2px}
+.dgm-sr-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:10px 18px;text-align:center;
+  color:#1f2328;font-weight:700;font-size:12px;width:min(320px,90%)}
+.dgm-sr-arr{color:#8c959f;padding:2px 0}
+.dgm-sr-arr svg{width:16px;height:16px}
+.dgm-sr-missing{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0}
+.dgm-sr-missing-lbl{font-size:9.5px;font-weight:700;color:#8f1a26;text-transform:uppercase;letter-spacing:.5px}
+.dgm-sr-node.ctx{background:#fbe4e6;border:1.5px dashed #f3bfc4;color:#8f1a26;width:min(360px,92%)}
+.dgm-sr-node.eval{background:#f6f8fa;border-color:#d1d9e0}
+.dgm-sr-dims{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.dgm-sr-dim{background:#ffffff;border:1px solid #f3bfc4;border-radius:9px;padding:8px 7px;text-align:center}
+.dgm-sr-dim svg{width:16px;height:16px;color:#8f1a26;margin-bottom:3px}
+.dgm-sr-dim span{display:block;font-size:9px;font-weight:700;color:#1f2328;line-height:1.2}
+@media (max-width:640px){.dgm-sr{padding:20px 16px 18px}.dgm-sr-dims{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-sr">
+  <span class="dgm-sr-chip">Context as a spec-able requirement</span>
+  <h4>The missing layer in most AI specs · between "what it should do" and "how we'll grade it"</h4>
+  <p class="dgm-sr-sub">Writing the context contract down is the highest-leverage addition a PM can make to an AI spec.</p>
+
+  <div class="dgm-sr-chain">
+    <div class="dgm-sr-node">Problem statement</div>
+    <div class="dgm-sr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-sr-node">Desired behavior — the usual spec</div>
+    <div class="dgm-sr-missing">
+      <span class="dgm-sr-missing-lbl">↓ the missing step ↓</span>
+      <div class="dgm-sr-node ctx">Context contract: what must it know, remember, retrieve?</div>
+    </div>
+    <div class="dgm-sr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+    <div class="dgm-sr-node eval">Eval bar — the usual spec</div>
+  </div>
+
+  <div class="dgm-sr-dims">
+    <div class="dgm-sr-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Instructions &amp; policy</span></div>
+    <div class="dgm-sr-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg><span>Retrieval</span></div>
+    <div class="dgm-sr-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 3-2 4-2 7h-6c0-3-2-4-2-7a5 5 0 015-5z"/><path d="M9 21h6"/></svg><span>Memory</span></div>
+    <div class="dgm-sr-dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Live state</span></div>
+  </div>
+</div>
+
 <p>Most AI specs draw a straight line from "what it should do" to "how we'll grade it,"
 skipping the layer in the middle that actually makes the other two achievable. Writing
 that middle layer down is the single highest-leverage addition a PM can make to an AI
@@ -488,46 +532,6 @@ launch.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

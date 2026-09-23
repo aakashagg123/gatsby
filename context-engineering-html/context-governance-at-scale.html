@@ -392,14 +392,49 @@ about the same policy today, could we find out why within an hour?"</em></p>
 until a customer notices the contradiction before anyone internally does.</p>
 </blockquote>
 <h2 id="the-mental-model-one-source-many-consumers">The mental model: one source, many consumers</h2>
-<pre class="mermaid">flowchart TB
-  SRC[&quot;One shared context source&lt;br/&gt;(policy doc, corpus, org memory)&quot;] --&gt; F1[&quot;Feature A&#x27;s prompt&quot;]
-  SRC --&gt; F2[&quot;Feature B&#x27;s retrieval&quot;]
-  SRC --&gt; F3[&quot;Feature C&#x27;s instructions&quot;]
-  SRC -.-&gt;|&quot;updated&quot;| V[&quot;Version + changelog&quot;]
-  V -.-&gt;|&quot;who re-syncs?&quot;| F1
-  V -.-&gt;|&quot;who re-syncs?&quot;| F2
-  V -.-&gt;|&quot;who re-syncs?&quot;| F3</pre>
+<style>
+.dgm-gv{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-gv-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-gv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-gv-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-gv-src{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:11px;padding:11px 16px;text-align:center;
+  color:#8f1a26;font-weight:700;font-size:12px;margin:0 auto 8px;max-width:320px}
+.dgm-gv-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-gv-arr svg{width:16px;height:16px}
+.dgm-gv-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.dgm-gv-feat{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:10px 10px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328}
+.dgm-gv-ver{display:flex;align-items:center;justify-content:center;gap:9px;background:#ffffff;border:1.5px dashed #d1d9e0;
+  border-radius:11px;padding:9px 16px;text-align:center;color:#59636e;font-weight:700;font-size:11.5px;margin-bottom:8px}
+.dgm-gv-ver svg{width:16px;height:16px}
+.dgm-gv-q{text-align:center;font-size:10.5px;color:#8f1a26;font-weight:600;font-style:italic}
+@media (max-width:640px){.dgm-gv{padding:20px 16px 18px}.dgm-gv-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-gv">
+  <span class="dgm-gv-chip">Context governance at scale</span>
+  <h4>One source, many consumers · governance answers "who re-syncs, and how do we know?"</h4>
+  <p class="dgm-gv-sub">Sources always eventually change. The failure is each consumer copying it at a different point in time.</p>
+
+  <div class="dgm-gv-src">One shared context source — policy doc, corpus, org memory</div>
+  <div class="dgm-gv-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-gv-row">
+    <div class="dgm-gv-feat">Feature A's prompt</div>
+    <div class="dgm-gv-feat">Feature B's retrieval</div>
+    <div class="dgm-gv-feat">Feature C's instructions</div>
+  </div>
+
+  <div class="dgm-gv-ver">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    Source updated → version + changelog
+  </div>
+  <div class="dgm-gv-q">…who re-syncs each of the three features above — and how do we know when they haven't?</div>
+</div>
+
 <p>The failure isn't the source going stale — sources always eventually change. It's that
 each consumer copied the source at a different point in time, with no mechanism telling
 them a newer version exists. Governance is the answer to "who re-syncs, and how do we
@@ -485,46 +520,6 @@ structured knowledge graph specifically — is covered in
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

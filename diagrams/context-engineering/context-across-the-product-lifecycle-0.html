@@ -1,0 +1,51 @@
+<style>
+.dgm-lc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #d62839;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-lc-chip{position:absolute;top:-11px;left:24px;background:#d62839;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(214,40,57,.28)}
+.dgm-lc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-lc-sub{font-size:12px;color:#59636e;margin:0 0 18px}
+.dgm-lc-row{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;align-items:stretch;gap:4px;margin-bottom:12px}
+.dgm-lc-stage{background:#fbe4e6;border:1.5px solid #f3bfc4;border-radius:12px;padding:13px 12px;text-align:center}
+.dgm-lc-stage svg{width:22px;height:22px;color:#8f1a26;margin-bottom:6px}
+.dgm-lc-stage h6{margin:0 0 4px;font-size:11.5px;font-weight:700;color:#8f1a26;letter-spacing:.3px;text-transform:uppercase}
+.dgm-lc-stage p{margin:0;font-size:10px;color:#59636e;line-height:1.35}
+.dgm-lc-arrh{display:flex;align-items:center;justify-content:center;color:#8c959f}
+.dgm-lc-arrh svg{width:18px;height:18px}
+.dgm-lc-loop{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;
+  border-radius:10px;font-size:10.5px;color:#59636e;line-height:1.4}
+.dgm-lc-loop svg{width:18px;height:18px;flex:0 0 18px;color:#d62839}
+@media (max-width:640px){.dgm-lc{padding:20px 16px 18px}.dgm-lc-row{grid-template-columns:1fr}.dgm-lc-arrh svg{transform:rotate(90deg)}}
+</style>
+<div class="dgm-lc">
+  <span class="dgm-lc-chip">Context across the product lifecycle</span>
+  <h4>A different job at each stage · not one step done once, late</h4>
+  <p class="dgm-lc-sub">A context gap found in discovery costs a conversation. Found after launch, it costs a rebuild.</p>
+
+  <div class="dgm-lc-row">
+    <div class="dgm-lc-stage">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+      <h6>Discovery</h6>
+      <p>Audit what context exists &amp; is missing</p>
+    </div>
+    <div class="dgm-lc-arrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="dgm-lc-stage">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+      <h6>Delivery</h6>
+      <p>Build the four inputs alongside the model work</p>
+    </div>
+    <div class="dgm-lc-arrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="dgm-lc-stage">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>
+      <h6>Launch</h6>
+      <p>Instrument what gets captured</p>
+    </div>
+  </div>
+
+  <div class="dgm-lc-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span>Real usage becomes better retrieval, better memory — looping back into <strong>discovery for the next feature</strong>, not this one.</span>
+  </div>
+</div>
