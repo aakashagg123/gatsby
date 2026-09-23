@@ -1,0 +1,82 @@
+<!-- The request/response contract — two-panel envelope diagram with API in the middle. -->
+<style>
+.dgm-rc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #c2185b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-rc-chip{position:absolute;top:-11px;left:24px;background:#c2185b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(194,24,91,.28)}
+.dgm-rc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-rc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-rc-envelope{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+.dgm-rc-side{border-radius:12px;padding:14px 14px;display:flex;flex-direction:column;gap:8px;position:relative}
+.dgm-rc-side.req{background:#efedfa;border:1.5px solid #cec8f0}
+.dgm-rc-side.resp{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-rc-side .dgm-rc-lbl{position:absolute;top:-9px;left:14px;font-size:9.5px;font-weight:700;
+  letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px;background:#ffffff}
+.dgm-rc-side.req .dgm-rc-lbl{color:#3d3a95;border:1px solid #cec8f0}
+.dgm-rc-side.resp .dgm-rc-lbl{color:#1a614f;border:1px solid #aceebb}
+.dgm-rc-side h5{margin:4px 0 6px;font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.dgm-rc-side.req h5{color:#3d3a95}
+.dgm-rc-side.resp h5{color:#1a614f}
+.dgm-rc-part{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;
+  display:flex;gap:9px;align-items:flex-start}
+.dgm-rc-part.req{border-color:#cec8f0}
+.dgm-rc-part.resp{border-color:#aceebb}
+.dgm-rc-part .dgm-rc-ico{width:20px;height:20px;flex:0 0 20px;margin-top:1px}
+.dgm-rc-part.req .dgm-rc-ico{color:#5a4fcf}
+.dgm-rc-part.resp .dgm-rc-ico{color:#1a7f37}
+.dgm-rc-part h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-rc-part p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-rc-hub{align-self:center;background:#f9e1ec;border:1.5px solid #ecc3d5;border-radius:14px;
+  padding:22px 18px;text-align:center;color:#7a1140;font-weight:700;font-size:11.5px;letter-spacing:.02em;
+  display:flex;flex-direction:column;align-items:center;gap:6px;min-width:110px}
+.dgm-rc-hub svg{width:32px;height:32px;color:#c2185b}
+@media (max-width:640px){.dgm-rc{padding:20px 16px 18px}.dgm-rc-envelope{grid-template-columns:1fr}}
+</style>
+<div class="dgm-rc">
+  <span class="dgm-rc-chip">The contract</span>
+  <h4>Request &amp; response · the shape of every LLM API call</h4>
+  <p class="dgm-rc-sub">Both sides are contracts. Both sides have parts a product decision hides inside.</p>
+
+  <div class="dgm-rc-envelope">
+    <div class="dgm-rc-side req">
+      <span class="dgm-rc-lbl">Request · what you send</span>
+      <h5>Three parts</h5>
+      <div class="dgm-rc-part req">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h.01M12 12h.01M16 12h.01"/><path d="M21 12a9 9 0 01-9 9c-2 0-3.9-.7-5.4-1.8L3 21l1.8-3.6A9 9 0 1121 12z"/></svg>
+        <div><h6>The prompt</h6><p>Instructions + your data — most direct quality lever</p></div>
+      </div>
+      <div class="dgm-rc-part req">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="4" rx="2"/><circle cx="8" cy="12" r="3" fill="#5a4fcf"/></svg>
+        <div><h6>Parameters</h6><p>Temperature · max length · which model</p></div>
+      </div>
+      <div class="dgm-rc-part req">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 16h16"/></svg>
+        <div><h6>Conversation history</h6><p>If any — what you've already said</p></div>
+      </div>
+    </div>
+
+    <div class="dgm-rc-hub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h6M14 12h6M12 4v6M12 14v6"/><circle cx="12" cy="12" r="3"/></svg>
+      The model's API
+    </div>
+
+    <div class="dgm-rc-side resp">
+      <span class="dgm-rc-lbl">Response · what comes back</span>
+      <h5>Three parts</h5>
+      <div class="dgm-rc-part resp">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <div><h6>Generated content</h6><p>The actual answer</p></div>
+      </div>
+      <div class="dgm-rc-part resp">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/></svg>
+        <div><h6>Token usage</h6><p>Input + output count — your bill</p></div>
+      </div>
+      <div class="dgm-rc-part resp">
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></svg>
+        <div><h6>Metadata</h6><p>Which model · why it stopped</p></div>
+      </div>
+    </div>
+  </div>
+</div>
