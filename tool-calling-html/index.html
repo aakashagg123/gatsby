@@ -391,20 +391,97 @@ genuinely new ground at this altitude is three lessons' worth.</p>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <p>A tool call passes through the same three decision points on every single call, and this
 module is organized around them:</p>
-<pre class="mermaid">flowchart TB
-  subgraph WHAT[&quot;WHAT IT IS — lesson 1&quot;]
-    PROPOSE[&quot;Model proposes a call —&lt;br/&gt;a request, not a command&quot;]
-  end
-  subgraph DESIGN[&quot;HOW TO DESIGN IT WELL — lesson 2&quot;]
-    CONTRACT[&quot;Tool contract: schema,&lt;br/&gt;description, idempotency,&lt;br/&gt;error design&quot;]
-  end
-  subgraph SAFE[&quot;HOW TO KEEP IT SAFE — lesson 3&quot;]
-    PERM[&quot;Permission, blast radius,&lt;br/&gt;and trust in third-party tools&quot;]
-  end
-  PROPOSE --&gt; CONTRACT
-  CONTRACT --&gt; PERM
-  PERM --&gt;|&quot;validated, authorized,&lt;br/&gt;and executed&quot;| RESULT[&quot;A real-world effect&quot;]
-  PERM -.-&gt;|&quot;rejected&quot;| STOP[&quot;No effect — fails safe&quot;]</pre>
+<!-- Tool calling — knowledge graph as three-stage funnel with fail-safe fork. -->
+<style>
+.dgm-tc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #8a6d3b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-tc-chip{position:absolute;top:-11px;left:24px;background:#8a6d3b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(138,109,59,.28)}
+.dgm-tc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-tc-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-tc-cell{background:#f6efdd;border:1px solid #e0d0a8;border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:center;margin-bottom:9px;position:relative}
+.dgm-tc-cell .dgm-tc-badge{position:absolute;top:-9px;left:14px;background:#8a6d3b;color:#ffffff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
+  border-radius:5px}
+.dgm-tc-cell .dgm-tc-ico{width:28px;height:28px;padding:5px;background:#ffffff;
+  border:1px solid #e0d0a8;border-radius:8px;color:#8a6d3b;flex:0 0 28px}
+.dgm-tc-cell h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#5a4820;letter-spacing:.02em}
+.dgm-tc-cell p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-tc-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-tc-arr svg{width:18px;height:18px}
+.dgm-tc-fork{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;margin-top:12px}
+.dgm-tc-out{border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;
+  position:relative}
+.dgm-tc-out.pass{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-tc-out.fail{background:#f6f8fa;border:1px solid #d1d9e0}
+.dgm-tc-out .dgm-tc-badge2{position:absolute;top:-9px;left:14px;background:#ffffff;
+  border:1px solid #d1d9e0;font-size:9.5px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;padding:2px 8px;border-radius:6px}
+.dgm-tc-out.pass .dgm-tc-badge2{color:#1a7f37;border-color:#aceebb}
+.dgm-tc-out.fail .dgm-tc-badge2{color:#59636e}
+.dgm-tc-out .dgm-tc-ico{width:26px;height:26px;flex:0 0 26px;margin-top:1px}
+.dgm-tc-out.pass .dgm-tc-ico{color:#1a7f37}
+.dgm-tc-out.fail .dgm-tc-ico{color:#59636e}
+.dgm-tc-out h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1f2328}
+.dgm-tc-out.pass h5{color:#1a614f}
+.dgm-tc-out p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-tc-vs{align-self:center;text-align:center;color:#8c959f;font-size:11px;font-weight:700;
+  letter-spacing:.4px;text-transform:uppercase;background:#f6f8fa;border:1px solid #d1d9e0;
+  border-radius:20px;padding:6px 4px}
+@media (max-width:640px){
+  .dgm-tc{padding:20px 16px 18px}
+  .dgm-tc-fork{grid-template-columns:1fr}
+  .dgm-tc-vs{width:fit-content;margin:6px auto;padding:4px 14px}
+}
+</style>
+<div class="dgm-tc">
+  <span class="dgm-tc-chip">Tool calling</span>
+
+  <h4>A funnel · not a feature</h4>
+  <p class="dgm-tc-sub">The model asks; your system decides whether the request runs.</p>
+
+  <div class="dgm-tc-cell">
+    <span class="dgm-tc-badge">Lesson 1 · What it is</span>
+    <svg class="dgm-tc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 6l6 6-6 6"/></svg>
+    <div><h5>Model proposes a call · a request, not a command</h5><p>The model never touches the tool directly. Every control lives at the request-to-action seam.</p></div>
+  </div>
+
+  <div class="dgm-tc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tc-cell">
+    <span class="dgm-tc-badge">Lesson 2 · How to design it well</span>
+    <svg class="dgm-tc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+    <div><h5>The tool contract · schema · description · idempotency · error design</h5><p>Whether the request is interpretable and safe to retry depends on decisions made before the model sees the tool.</p></div>
+  </div>
+
+  <div class="dgm-tc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-tc-cell">
+    <span class="dgm-tc-badge">Lesson 3 · How to keep it safe</span>
+    <svg class="dgm-tc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+    <div><h5>Permission · blast radius · third-party trust</h5><p>Whether the request gets to act at all is a permission decision your harness enforces — never the model.</p></div>
+  </div>
+
+  <div class="dgm-tc-fork">
+    <div class="dgm-tc-out pass">
+      <span class="dgm-tc-badge2">Passed</span>
+      <svg class="dgm-tc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+      <div><h5>A real-world effect</h5><p>Validated, authorized, executed.</p></div>
+    </div>
+    <div class="dgm-tc-vs">or</div>
+    <div class="dgm-tc-out fail">
+      <span class="dgm-tc-badge2">Rejected</span>
+      <svg class="dgm-tc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><h5>No effect · fails safe</h5><p>The default when a check is uncertain.</p></div>
+    </div>
+  </div>
+</div>
+
 <p>Read it as a funnel. <strong>What it is</strong>: the model only ever asks; it never acts directly.
 <strong>How to design it well</strong>: whether that request is even interpretable and safe to retry
 depends on decisions made before the model ever sees the tool. <strong>How to keep it safe</strong>:
@@ -430,47 +507,7 @@ and <a href="../ai/02-reliable-outputs.html#function-calling">Function calling r
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-tool-calling-is.html"><span class="card-num">01</span><h3>What tool calling is</h3><span class="card-go">Read lesson →</span></a><a class="card" href="tool-contracts-and-reliability.html"><span class="card-num">02</span><h3>Tool contracts &amp; reliability</h3><span class="card-go">Read lesson →</span></a><a class="card" href="permissions-blast-radius-and-the-trust-boundary.html"><span class="card-num">03</span><h3>Permissions, blast radius &amp; the trust boundary</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

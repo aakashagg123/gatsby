@@ -1,0 +1,109 @@
+<!-- Tool contract — 4 checkpoints as a pipeline, each with the product-decision question. -->
+<style>
+.dgm-cn{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #8a6d3b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-cn-chip{position:absolute;top:-11px;left:24px;background:#8a6d3b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(138,109,59,.28)}
+.dgm-cn h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-cn-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cn-pipe{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;gap:6px;
+  align-items:stretch;margin-bottom:16px}
+.dgm-cn-node{background:#f6efdd;border:1.5px solid #e0d0a8;border-radius:12px;padding:12px 12px;
+  display:flex;flex-direction:column;gap:8px;position:relative}
+.dgm-cn-node .dgm-cn-num{position:absolute;top:-9px;left:12px;background:#8a6d3b;color:#ffffff;
+  font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;
+  text-transform:uppercase;font-variant-numeric:tabular-nums}
+.dgm-cn-node .dgm-cn-ico{color:#8a6d3b;width:24px;height:24px}
+.dgm-cn-node h5{margin:0;font-size:12px;font-weight:700;color:#5a4820;letter-spacing:.02em}
+.dgm-cn-node .dgm-cn-q{font-size:10.5px;color:#59636e;line-height:1.35;font-style:italic}
+.dgm-cn-arr{align-self:center;color:#8c959f;font-weight:700;text-align:center}
+.dgm-cn-callout{padding:14px 16px;background:#fff8c5;border:1px dashed #eac54f;border-radius:11px;
+  display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.dgm-cn-callout .dgm-cn-ico{width:24px;height:24px;color:#9a6700;flex:0 0 24px}
+.dgm-cn-callout p{margin:0;font-size:11.5px;color:#7a5028;line-height:1.4}
+.dgm-cn-callout strong{color:#5a3d1a}
+.dgm-cn-gran{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 16px}
+.dgm-cn-gran h5{margin:0 0 8px;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-cn-gran-cols{display:grid;grid-template-columns:1fr 24px 1fr;gap:8px;align-items:center}
+.dgm-cn-gran-panel{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;
+  display:flex;flex-direction:column;gap:6px}
+.dgm-cn-gran-panel.bad{border-color:#ffcecb;background:#ffebe9}
+.dgm-cn-gran-panel.good{border-color:#aceebb;background:#dafbe1}
+.dgm-cn-gran-panel h6{margin:0;font-size:11px;font-weight:700;letter-spacing:.02em}
+.dgm-cn-gran-panel.bad h6{color:#82061e}
+.dgm-cn-gran-panel.good h6{color:#1a614f}
+.dgm-cn-gran-panel code{background:#ffffff;border:1px solid #d1d9e0;border-radius:5px;
+  padding:2px 5px;font-size:10.5px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color:#1f2328;display:inline-block}
+.dgm-cn-gran-panel p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-cn-gran-vs{text-align:center;color:#8c959f;font-size:10.5px;font-weight:700;
+  letter-spacing:.4px;text-transform:uppercase}
+@media (max-width:640px){
+  .dgm-cn{padding:20px 16px 18px}
+  .dgm-cn-pipe{grid-template-columns:1fr;gap:6px}
+  .dgm-cn-arr{padding:2px 0}
+  .dgm-cn-gran-cols{grid-template-columns:1fr}
+}
+</style>
+<div class="dgm-cn">
+  <span class="dgm-cn-chip">Tool contract</span>
+
+  <h4>Four checkpoints · each a product decision hiding as a technical detail</h4>
+  <p class="dgm-cn-sub">A vague description, an unsafe repeat, an opaque error — each is a product bug wearing an engineering costume.</p>
+
+  <div class="dgm-cn-pipe">
+    <div class="dgm-cn-node">
+      <span class="dgm-cn-num">01</span>
+      <svg class="dgm-cn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      <h5>Name &amp; description</h5>
+      <span class="dgm-cn-q">Does the model know when to use it?</span>
+    </div>
+    <div class="dgm-cn-arr">→</div>
+    <div class="dgm-cn-node">
+      <span class="dgm-cn-num">02</span>
+      <svg class="dgm-cn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg>
+      <h5>Schema</h5>
+      <span class="dgm-cn-q">Are the arguments well-typed and scoped?</span>
+    </div>
+    <div class="dgm-cn-arr">→</div>
+    <div class="dgm-cn-node">
+      <span class="dgm-cn-num">03</span>
+      <svg class="dgm-cn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8"/><path d="M21 3v5h-5"/><path d="M12 8v5l3 2"/></svg>
+      <h5>Idempotency</h5>
+      <span class="dgm-cn-q">Is a repeat call safe?</span>
+    </div>
+    <div class="dgm-cn-arr">→</div>
+    <div class="dgm-cn-node">
+      <span class="dgm-cn-num">04</span>
+      <svg class="dgm-cn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></svg>
+      <h5>Error design</h5>
+      <span class="dgm-cn-q">Can the model recover from a failure?</span>
+    </div>
+  </div>
+
+  <div class="dgm-cn-gran">
+    <h5>The granularity decision · how many tools, how big each one is</h5>
+    <div class="dgm-cn-gran-cols">
+      <div class="dgm-cn-gran-panel bad">
+        <h6>❌ Thin wrappers</h6>
+        <p><code>list_calendars</code> → <code>get_availability</code> → <code>create_event</code> → <code>send_invite</code></p>
+        <p>Model picks a plausible-sounding call, not the correct one.</p>
+      </div>
+      <div class="dgm-cn-gran-vs">vs.</div>
+      <div class="dgm-cn-gran-panel good">
+        <h6>✓ Task-shaped tools</h6>
+        <p><code>book_meeting(person, topic, week)</code></p>
+        <p>Matches how someone would describe the task, not the API layout.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-cn-callout" style="margin-top:12px">
+    <svg class="dgm-cn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16.5h.01"/></svg>
+    <p><strong>Fewer, better-scoped tools</strong> beat many thin ones — every extra tool is a chance for the model to pick the wrong one under pressure.</p>
+  </div>
+</div>
