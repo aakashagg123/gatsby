@@ -1,0 +1,69 @@
+<style>
+.dgm-ma{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ma-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-ma h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ma-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ma-topo{border-radius:12px;padding:13px 14px;margin-bottom:10px;position:relative}
+.dgm-ma-topo.orch{background:#efeafb;border:1.5px solid #d3c6f5}
+.dgm-ma-topo.pipe{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-ma-topo.peer{background:#fdf3d9;border:1.5px solid #eac54f}
+.dgm-ma-topo .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-ma-topo.orch .tag{color:#3d2f8a;border-color:#d3c6f5}
+.dgm-ma-topo.pipe .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-ma-topo.peer .tag{color:#7a5300;border-color:#eac54f}
+.dgm-ma-hub{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+.dgm-ma-node{background:#ffffff;border-radius:9px;padding:8px 11px;font-size:10.5px;font-weight:700;color:#1f2328;text-align:center}
+.dgm-ma-topo.orch .dgm-ma-node{border:1px solid #e3d9f8}
+.dgm-ma-topo.pipe .dgm-ma-node{border:1px solid #d4ecfa}
+.dgm-ma-topo.peer .dgm-ma-node{border:1px solid #f8e6b8}
+.dgm-ma-center{background:#4a3aa7;color:#ffffff !important;border:none !important}
+.dgm-ma-spokes{display:flex;flex-direction:column;gap:6px}
+.dgm-ma-sub2{font-size:9.5px;color:#59636e;text-align:center;margin-top:6px}
+@media (max-width:640px){.dgm-ma{padding:20px 16px 18px}.dgm-ma-hub{flex-direction:column}}
+</style>
+<div class="dgm-ma">
+  <span class="dgm-ma-chip">Multi-agent topologies</span>
+  <h4>Context isolation and parallelism, paid for in coordination overhead</h4>
+  <p class="dgm-ma-sub">Split poorly, a crowd of agents underperforms one good loop at many times the cost.</p>
+
+  <div class="dgm-ma-topo orch">
+    <span class="tag">Orchestrator–subagents — the workhorse</span>
+    <div class="dgm-ma-hub">
+      <div class="dgm-ma-node dgm-ma-center">Orchestrator — owns the goal &amp; integrates</div>
+      <div class="dgm-ma-spokes">
+        <div class="dgm-ma-node">Subagent: research A (own context)</div>
+        <div class="dgm-ma-node">Subagent: research B (own context)</div>
+        <div class="dgm-ma-node">Subagent: verify claims</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dgm-ma-topo pipe">
+    <span class="tag">Pipeline of specialists</span>
+    <div class="dgm-ma-hub">
+      <div class="dgm-ma-node">Draft</div>
+      <span style="color:#8c959f">→</span>
+      <div class="dgm-ma-node">Review / critique</div>
+      <span style="color:#8c959f">→</span>
+      <div class="dgm-ma-node">Finalize</div>
+    </div>
+  </div>
+
+  <div class="dgm-ma-topo peer">
+    <span class="tag">Peer handoff</span>
+    <div class="dgm-ma-hub">
+      <div class="dgm-ma-node">Triage agent</div>
+      <span style="color:#8c959f">hands off →</span>
+      <div class="dgm-ma-node">Billing specialist</div>
+      <span style="color:#8c959f">or →</span>
+      <div class="dgm-ma-node">Tech-support specialist</div>
+    </div>
+  </div>
+
+  <p class="dgm-ma-sub2">Two disciplines keep any topology sane: structured handoffs (defined artifacts, not vibes), and someone owns the whole.</p>
+</div>

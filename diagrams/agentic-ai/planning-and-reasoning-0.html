@@ -1,0 +1,73 @@
+<style>
+.dgm-pr2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pr2-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
+.dgm-pr2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pr2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pr2-panels{display:flex;flex-direction:column;gap:12px}
+.dgm-pr2-panel{border-radius:12px;padding:12px 14px;position:relative}
+.dgm-pr2-panel.react{background:#efeafb;border:1.5px solid #d3c6f5}
+.dgm-pr2-panel.plan{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-pr2-panel.reflect{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-pr2-panel .tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-pr2-panel.react .tag{color:#3d2f8a;border-color:#d3c6f5}
+.dgm-pr2-panel.plan .tag{color:#0550ae;border-color:#b6e3ff}
+.dgm-pr2-panel.reflect .tag{color:#1a614f;border-color:#aceebb}
+.dgm-pr2-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dgm-pr2-node{background:#ffffff;border-radius:8px;padding:7px 10px;font-size:10px;color:#1f2328;line-height:1.3}
+.dgm-pr2-panel.react .dgm-pr2-node{border:1px solid #e3d9f8}
+.dgm-pr2-panel.plan .dgm-pr2-node{border:1px solid #d4ecfa}
+.dgm-pr2-panel.reflect .dgm-pr2-node{border:1px solid #cdf0da}
+.dgm-pr2-arr{color:#8c959f;font-size:11px}
+.dgm-pr2-loop{font-size:9px;font-style:italic;color:#59636e}
+@media (max-width:640px){.dgm-pr2{padding:20px 16px 18px}}
+</style>
+<div class="dgm-pr2">
+  <span class="dgm-pr2-chip">Planning &amp; reasoning</span>
+  <h4>Three patterns, not a module · cognition is the model, prompted into shape</h4>
+  <p class="dgm-pr2-sub">Reasoning pays off in proportion to how checkable the work is.</p>
+
+  <div class="dgm-pr2-panels">
+    <div class="dgm-pr2-panel react">
+      <span class="tag">ReAct — think, act, observe, repeat</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Thought: need Q3 numbers</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Act: query warehouse</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Observe: rows returned</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Thought: compare to Q2…</div>
+        <span class="dgm-pr2-loop">↻ back to act</span>
+      </div>
+    </div>
+
+    <div class="dgm-pr2-panel plan">
+      <span class="tag">Plan-and-execute</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Draft full plan (steps 1–6)</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Execute steps</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Reality matches plan?</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">No: revise plan · Yes: done</div>
+      </div>
+    </div>
+
+    <div class="dgm-pr2-panel reflect">
+      <span class="tag">Reflection</span>
+      <div class="dgm-pr2-row">
+        <div class="dgm-pr2-node">Generate draft</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Critique own draft (or run the tests)</div>
+        <span class="dgm-pr2-arr">→</span>
+        <div class="dgm-pr2-node">Issues found: retry · Passes: deliver</div>
+      </div>
+    </div>
+  </div>
+</div>
