@@ -1,0 +1,56 @@
+<style>
+.dgm-cm2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #eda100;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-cm2-chip{position:absolute;top:-11px;left:24px;background:#eda100;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(237,161,0,.28)}
+.dgm-cm2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-cm2-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-cm2-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.dgm-cm2-node{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:10px;padding:9px 13px;text-align:center;
+  font-size:11px;font-weight:700;color:#1f2328}
+.dgm-cm2-node.art{background:#fdf3d9;border-color:#eac54f;color:#7a5300}
+.dgm-cm2-arr{color:#8c959f}
+.dgm-cm2-arr svg{width:15px;height:15px}
+.dgm-cm2-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.dgm-cm2-in{background:#ffffff;border:1.5px dashed #eac54f;border-radius:9px;padding:8px 7px;text-align:center;
+  font-size:10px;font-weight:700;color:#7a5300}
+.dgm-cm2-arr2{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-cm2-arr2 svg{width:16px;height:16px}
+.dgm-cm2-stk{background:#ddf4ff;border:1.5px solid #b6e3ff;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#0550ae;font-weight:700;font-size:12px;margin-bottom:6px}
+.dgm-cm2-buy{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:12px;margin-bottom:8px}
+.dgm-cm2-loop{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f6f8fa;border:1px dashed #d1d9e0;
+  border-radius:10px;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-cm2-loop svg{width:18px;height:18px;flex:0 0 18px;color:#eda100}
+@media (max-width:640px){.dgm-cm2{padding:20px 16px 18px}.dgm-cm2-inputs{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cm2">
+  <span class="dgm-cm2-chip">Communication: artifacts, influence</span>
+  <h4>Product sense you can't communicate can't move a team</h4>
+  <p class="dgm-cm2-sub">Artifacts capture the thinking. Empathy, data, and narrative turn artifacts into alignment.</p>
+
+  <div class="dgm-cm2-row">
+    <div class="dgm-cm2-node">Your product sense — the thinking</div>
+    <span class="dgm-cm2-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div class="dgm-cm2-node art">Artifacts — vision · strategy · proposal</div>
+  </div>
+
+  <div class="dgm-cm2-inputs">
+    <div class="dgm-cm2-in">Empathy — their goals &amp; fears</div>
+    <div class="dgm-cm2-in">Data &amp; evidence</div>
+    <div class="dgm-cm2-in">Narrative / story</div>
+  </div>
+  <div class="dgm-cm2-arr2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-cm2-stk">Stakeholders</div>
+  <div class="dgm-cm2-arr2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-cm2-buy">Buy-in &amp; alignment</div>
+
+  <div class="dgm-cm2-loop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>
+    <span><strong>Chief repetition officer:</strong> alignment isn't permanent — say the "why" again, back to stakeholders.</span>
+  </div>
+</div>
