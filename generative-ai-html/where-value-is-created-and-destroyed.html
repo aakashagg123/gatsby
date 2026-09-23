@@ -395,14 +395,82 @@ task actually fit the technology.</p>
 <p>Picture every candidate use case walking through three gates. It only creates real value if
 it clears all three. Fail any one gate, and the honest answer is not "add more AI." It is
 "this was never a good fit."</p>
-<pre class="mermaid">flowchart LR
-  IDEA[&quot;A proposed&lt;br/&gt;use case&quot;] --&gt; G1{&quot;Gate 1&lt;br/&gt;Is doing this by hand&lt;br/&gt;slow or expensive today?&quot;}
-  G1 --&gt;|&quot;no&quot;| DESTROY1[&quot;Value destroyed:&lt;br/&gt;you paid for AI to solve&lt;br/&gt;a problem that didn&#x27;t exist&quot;]
-  G1 --&gt;|&quot;yes&quot;| G2{&quot;Gate 2&lt;br/&gt;Can the output be&lt;br/&gt;checked cheaply?&quot;}
-  G2 --&gt;|&quot;no&quot;| DESTROY2[&quot;Value destroyed:&lt;br/&gt;checking costs as much&lt;br/&gt;as doing it by hand&quot;]
-  G2 --&gt;|&quot;yes&quot;| G3{&quot;Gate 3&lt;br/&gt;Is being wrong&lt;br/&gt;sometimes acceptable?&quot;}
-  G3 --&gt;|&quot;no&quot;| DESTROY3[&quot;Value destroyed:&lt;br/&gt;one bad output&lt;br/&gt;outweighs every good one&quot;]
-  G3 --&gt;|&quot;yes&quot;| CREATE[&quot;Value created:&lt;br/&gt;a real, funded win&quot;]</pre>
+<style>
+.dgm-vd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #b8860b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-vd-chip{position:absolute;top:-11px;left:24px;background:#b8860b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(184,134,11,.28)}
+.dgm-vd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-vd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-vd-idea{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:260px;display:flex;align-items:center;justify-content:center;gap:10px}
+.dgm-vd-idea svg{width:22px;height:22px;color:#b8860b}
+.dgm-vd-gates{display:flex;flex-direction:column;gap:6px}
+.dgm-vd-gate-row{display:grid;grid-template-columns:1fr 30px;gap:10px;align-items:center}
+.dgm-vd-q{background:#efedfa;border:1.5px solid #cec8f0;border-radius:11px;padding:11px 14px;
+  display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.dgm-vd-q .dgm-vd-badge{background:#5a4fcf;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  padding:3px 8px;border-radius:5px;text-transform:uppercase}
+.dgm-vd-q h5{margin:0;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-vd-no-arr{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#82061e;
+  background:#ffebe9;border:1px solid #ffcecb;border-radius:6px;padding:6px 4px}
+.dgm-vd-destroy{margin:6px 0 6px 40px;padding:10px 14px;background:#ffebe9;border:1px solid #ffcecb;border-radius:11px;
+  display:flex;gap:9px;align-items:flex-start;font-size:11px;color:#82061e;line-height:1.35}
+.dgm-vd-destroy svg{width:20px;height:20px;color:#d1242f;flex:0 0 20px;margin-top:1px}
+.dgm-vd-destroy strong{color:#5a041a}
+.dgm-vd-create{margin-top:12px;background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:16px 18px;display:flex;gap:14px;align-items:center}
+.dgm-vd-create svg{width:32px;height:32px;padding:5px;background:#ffffff;border:1.5px solid #aceebb;border-radius:10px;color:#1a7f37;flex:0 0 32px}
+.dgm-vd-create h5{margin:0 0 2px;font-size:13px;font-weight:700;color:#1a614f;letter-spacing:.02em}
+.dgm-vd-create p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+@media (max-width:640px){.dgm-vd{padding:20px 16px 18px}.dgm-vd-gate-row{grid-template-columns:1fr}.dgm-vd-destroy{margin-left:0}}
+</style>
+<div class="dgm-vd">
+  <span class="dgm-vd-chip">Value gates</span>
+  <h4>Three gates · pass all three or the AI destroys value</h4>
+  <p class="dgm-vd-sub">Answering "no" to any of them means the return on the AI investment turns negative.</p>
+
+  <div class="dgm-vd-idea">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 013 9v3H9v-3a5 5 0 013-9z"/><path d="M9 18h6M10 21h4"/></svg>
+    A proposed use case
+  </div>
+
+  <div class="dgm-vd-gates">
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G1</span><h5>Is doing this by hand slow or expensive today?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> You paid for AI to solve a problem that didn't exist.</div>
+    </div>
+
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G2</span><h5>Can the output be checked cheaply?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> Checking costs as much as doing it by hand.</div>
+    </div>
+
+    <div class="dgm-vd-gate-row">
+      <div class="dgm-vd-q"><span class="dgm-vd-badge">G3</span><h5>Is being wrong sometimes acceptable?</h5></div>
+      <div class="dgm-vd-no-arr">no ↴</div>
+    </div>
+    <div class="dgm-vd-destroy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>
+      <div><strong>Value destroyed.</strong> One bad output outweighs every good one.</div>
+    </div>
+  </div>
+
+  <div class="dgm-vd-create">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <div><h5>All three · Yes → value created</h5><p>A real, funded win — the shape most successful genAI features share.</p></div>
+  </div>
+</div>
+
 <h2 id="where-the-wins-cluster">Where the wins cluster</h2>
 <p>Look at the generative AI deployments that actually returned value, and they share a
 shape. <strong>Drafting, not deciding</strong> — a first draft of an email, a summary, or a block of
@@ -495,46 +563,6 @@ number real instead of a guess.</p>
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
 </script>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----

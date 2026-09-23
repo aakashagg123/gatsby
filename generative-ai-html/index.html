@@ -384,44 +384,98 @@ at one piece of the picture this module draws first.</p>
 <p>Generative AI is not one technology. It is a shift in what software does, with
 consequences that spread through the whole stack. Every lesson in this module hangs off
 this picture:</p>
-<pre class="mermaid">flowchart TB
-  subgraph SHIFT[&quot;THE SHIFT — lesson 1&quot;]
-    PRED[&quot;Predictive AI&lt;br/&gt;scores, ranks, classifies&quot;]
-    GEN[&quot;Generative AI&lt;br/&gt;creates new content&quot;]
-    PRED --&gt;|&quot;a different job,&lt;br/&gt;not a bigger model&quot;| GEN
-  end
-  subgraph MODE[&quot;WHAT IT CREATES — lesson 2&quot;]
-    TXT[&quot;Text&quot;]
-    IMG[&quot;Image&quot;]
-    AUD[&quot;Audio&quot;]
-    VID[&quot;Video&quot;]
-    CODE[&quot;Code&quot;]
-  end
-  subgraph COST[&quot;WHAT IT COSTS — lesson 3&quot;]
-    PROB[&quot;Probabilistic output&lt;br/&gt;same input, different answers&quot;]
-    RISK[&quot;New failure shapes&lt;br/&gt;hallucination, drift, variance&quot;]
-    PROB --&gt; RISK
-  end
-  subgraph STACK[&quot;WHERE IT LIVES — lesson 4&quot;]
-    LLM[&quot;The model&lt;br/&gt;(LLMs module)&quot;]
-    DATA[&quot;Grounding &amp; memory&lt;br/&gt;(RAG, context modules)&quot;]
-    ACT[&quot;Action&lt;br/&gt;(tools, agents modules)&quot;]
-    OPS[&quot;Operating it&lt;br/&gt;(evals, security, cost modules)&quot;]
-  end
-  subgraph DECIDE[&quot;THE BUILD CALL — lesson 5&quot;]
-    BBF[&quot;Build, buy,&lt;br/&gt;or fine-tune&quot;]
-  end
-  subgraph VALUE[&quot;THE PAYOFF — lesson 6&quot;]
-    CREATE[&quot;Where it creates value&quot;]
-    DESTROY[&quot;Where it destroys value&quot;]
-  end
-  GEN --&gt; TXT &amp; IMG &amp; AUD &amp; VID &amp; CODE
-  GEN --&gt; PROB
-  RISK --&gt;|&quot;shapes every later choice&quot;| STACK
-  LLM --&gt; DATA --&gt; ACT --&gt; OPS
-  STACK --&gt; BBF
-  BBF --&gt; CREATE
-  RISK -.-&gt;|&quot;the same risk,&lt;br/&gt;unmanaged&quot;| DESTROY</pre>
+<style>
+.dgm-ga{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #b8860b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ga-chip{position:absolute;top:-11px;left:24px;background:#b8860b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(184,134,11,.28)}
+.dgm-ga h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ga-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-ga-lesson{background:#fdf3d9;border:1px solid #eac54f;border-radius:12px;padding:14px 16px;
+  margin-bottom:9px;position:relative}
+.dgm-ga-lesson .dgm-ga-badge{position:absolute;top:-9px;left:14px;background:#b8860b;color:#fff;
+  font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-ga-lesson h5{margin:2px 0 6px;font-size:12.5px;font-weight:700;color:#7a5300;letter-spacing:.02em}
+.dgm-ga-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ga-arr svg{width:16px;height:16px}
+.dgm-ga-row{display:grid;grid-template-columns:1fr 24px 1fr;gap:8px;align-items:center}
+.dgm-ga-cell{background:#ffffff;border:1px solid #eac54f;border-radius:9px;padding:9px 11px;display:flex;gap:8px;align-items:flex-start}
+.dgm-ga-cell .dgm-ga-ico{color:#b8860b;width:20px;height:20px;flex:0 0 20px;margin-top:1px}
+.dgm-ga-cell h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-ga-cell p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ga-vs{text-align:center;color:#8c959f;font-weight:700;font-size:11px}
+.dgm-ga-modes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.dgm-ga-mode{background:#ffffff;border:1px solid #eac54f;border-radius:9px;padding:8px 8px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center}
+.dgm-ga-mode .dgm-ga-ico{color:#b8860b;width:18px;height:18px}
+.dgm-ga-mode span{font-size:10.5px;font-weight:700;color:#7a5300;letter-spacing:.02em}
+.dgm-ga-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.dgm-ga-layer{background:#ffffff;border:1px solid #eac54f;border-radius:9px;padding:9px 9px;text-align:center;position:relative;font-size:10.5px;color:#1f2328;line-height:1.35}
+.dgm-ga-layer .dgm-ga-layer-num{position:absolute;top:-8px;left:9px;background:#b8860b;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;letter-spacing:.4px}
+.dgm-ga-layer strong{display:block;color:#7a5300;font-size:11px;font-weight:700;margin-bottom:2px}
+.dgm-ga-cta{background:#dafbe1;border:1.5px dashed #aceebb;border-radius:11px;padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:11.5px;color:#1a614f;font-weight:600;line-height:1.4}
+.dgm-ga-cta svg{width:20px;height:20px;color:#1a7f37;flex:0 0 20px}
+@media (max-width:640px){.dgm-ga{padding:20px 16px 18px}.dgm-ga-modes{grid-template-columns:repeat(2,1fr)}.dgm-ga-stack,.dgm-ga-row{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ga">
+  <span class="dgm-ga-chip">Generative AI</span>
+  <h4>Five lessons · shift → modalities → cost → stack → value</h4>
+  <p class="dgm-ga-sub">Predictive AI judges. Generative AI makes. The difference reshapes everything downstream.</p>
+
+  <div class="dgm-ga-lesson">
+    <span class="dgm-ga-badge">Lesson 1 · The shift</span>
+    <h5>Predictive vs generative — different jobs, not different sizes</h5>
+    <div class="dgm-ga-row">
+      <div class="dgm-ga-cell"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><div><h6>Predictive AI</h6><p>Scores · ranks · classifies</p></div></div>
+      <div class="dgm-ga-vs">→</div>
+      <div class="dgm-ga-cell"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/></svg><div><h6>Generative AI</h6><p>Creates new content</p></div></div>
+    </div>
+  </div>
+  <div class="dgm-ga-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ga-lesson">
+    <span class="dgm-ga-badge">Lesson 2 · What it creates</span>
+    <h5>Five modalities · each with its own cost, latency, risk shape</h5>
+    <div class="dgm-ga-modes">
+      <div class="dgm-ga-mode"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Text</span></div>
+      <div class="dgm-ga-mode"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M4 16l5-4 4 3 3-2 4 3"/></svg><span>Image</span></div>
+      <div class="dgm-ga-mode"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M8 8v8M4 11v2M16 8v8M20 11v2"/></svg><span>Audio</span></div>
+      <div class="dgm-ga-mode"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg><span>Video</span></div>
+      <div class="dgm-ga-mode"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6M14 4l-4 16"/></svg><span>Code</span></div>
+    </div>
+  </div>
+  <div class="dgm-ga-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ga-lesson">
+    <span class="dgm-ga-badge">Lesson 3 · What it costs</span>
+    <h5>Probabilistic software · same input, different answers</h5>
+    <div class="dgm-ga-row">
+      <div class="dgm-ga-cell"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18"/></svg><div><h6>Variance</h6><p>Output distribution, not one answer</p></div></div>
+      <div class="dgm-ga-vs">→</div>
+      <div class="dgm-ga-cell"><svg class="dgm-ga-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L2.5 17.5A2 2 0 004.2 20.5h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4"/></svg><div><h6>New failure shapes</h6><p>Hallucination · drift</p></div></div>
+    </div>
+  </div>
+  <div class="dgm-ga-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ga-lesson">
+    <span class="dgm-ga-badge">Lesson 4 · The stack</span>
+    <h5>Four layers · every real product wires all four</h5>
+    <div class="dgm-ga-stack">
+      <div class="dgm-ga-layer"><span class="dgm-ga-layer-num">L1</span><strong>Model</strong>Text · image · code</div>
+      <div class="dgm-ga-layer"><span class="dgm-ga-layer-num">L2</span><strong>Grounding</strong>RAG · memory</div>
+      <div class="dgm-ga-layer"><span class="dgm-ga-layer-num">L3</span><strong>Action</strong>Tools · agents</div>
+      <div class="dgm-ga-layer"><span class="dgm-ga-layer-num">L4</span><strong>Operations</strong>Eval · security · cost</div>
+    </div>
+  </div>
+  <div class="dgm-ga-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ga-cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+    <span><strong>Lesson 5 · Where value is created:</strong> slow by hand · cheap to check · being wrong sometimes is OK.</span>
+  </div>
+</div>
+
 <p>Read it in three passes. <strong>The shift</strong>: generative AI is a different job from predictive
 AI, not a bigger version of it. <strong>The cost</strong>: because output is probabilistic, every
 system built on it inherits a new class of failure — and that risk is what the rest of the
@@ -454,47 +508,7 @@ that turns a model into something that acts.</p>
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="what-is-generative-ai.html"><span class="card-num">01</span><h3>What makes AI &quot;generative&quot;?</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-modalities.html"><span class="card-num">02</span><h3>The five modalities</h3><span class="card-go">Read lesson →</span></a><a class="card" href="probabilistic-software.html"><span class="card-num">03</span><h3>Probabilistic software</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-genai-product-stack.html"><span class="card-num">04</span><h3>The generative AI product stack</h3><span class="card-go">Read lesson →</span></a><a class="card" href="build-buy-or-fine-tune.html"><span class="card-num">05</span><h3>Build, buy, or fine-tune</h3><span class="card-go">Read lesson →</span></a><a class="card" href="where-value-is-created-and-destroyed.html"><span class="card-num">06</span><h3>Where generative AI creates and destroys value</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='⟷ scroll';s.parentElement.insertBefore(h,s);}
-});
-</script>
+  </main>
 <style id="reader-css">
 /* ---- font choices (only active when data-rf is set) ----
    The default (no data-rf) is Inter, loaded once from Google Fonts by every

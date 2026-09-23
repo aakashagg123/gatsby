@@ -1,0 +1,86 @@
+<style>
+.dgm-mo{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #b8860b;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-mo-chip{position:absolute;top:-11px;left:24px;background:#b8860b;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(184,134,11,.28)}
+.dgm-mo h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-mo-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-mo-request{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:12px;padding:12px 16px;text-align:center;
+  color:#7a5300;font-weight:700;font-size:12.5px;margin:0 auto 8px;max-width:280px;display:flex;align-items:center;gap:10px;justify-content:center}
+.dgm-mo-request svg{width:22px;height:22px;color:#b8860b}
+.dgm-mo-router{background:#ffffff;border:1.5px dashed #eac54f;border-radius:11px;padding:10px 14px;
+  text-align:center;font-size:12px;font-weight:700;color:#7a5300;letter-spacing:.02em;margin:0 auto 12px;max-width:260px}
+.dgm-mo-factories{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.dgm-mo-fact{border-radius:11px;padding:12px 10px;display:flex;flex-direction:column;gap:5px;position:relative;text-align:center}
+.dgm-mo-fact.text{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-mo-fact.image{background:#ddf4ff;border:1.5px solid #b6e3ff}
+.dgm-mo-fact.audio{background:#efedfa;border:1.5px solid #cec8f0}
+.dgm-mo-fact.video{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-mo-fact.code{background:#e8eff5;border:1.5px solid #c1d3e2}
+.dgm-mo-fact .dgm-mo-ico{width:26px;height:26px;align-self:center}
+.dgm-mo-fact.text .dgm-mo-ico{color:#1a7f37}
+.dgm-mo-fact.image .dgm-mo-ico{color:#0969da}
+.dgm-mo-fact.audio .dgm-mo-ico{color:#5a4fcf}
+.dgm-mo-fact.video .dgm-mo-ico{color:#d1242f}
+.dgm-mo-fact.code .dgm-mo-ico{color:#5d8aa8}
+.dgm-mo-fact h5{margin:0;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-mo-fact p{margin:0;font-size:10px;color:#59636e;line-height:1.3}
+.dgm-mo-fact .dgm-mo-tag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#ffffff;border:1px solid;
+  font-size:8.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:1px 6px;border-radius:4px;white-space:nowrap}
+.dgm-mo-fact.text .dgm-mo-tag{color:#1a7f37;border-color:#aceebb}
+.dgm-mo-fact.image .dgm-mo-tag{color:#0969da;border-color:#b6e3ff}
+.dgm-mo-fact.audio .dgm-mo-tag{color:#5a4fcf;border-color:#cec8f0}
+.dgm-mo-fact.video .dgm-mo-tag{color:#d1242f;border-color:#ffcecb}
+.dgm-mo-fact.code .dgm-mo-tag{color:#5d8aa8;border-color:#c1d3e2}
+.dgm-mo-out{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:12px 14px;text-align:center;font-size:12px;color:#1f2328;font-weight:700;letter-spacing:.02em}
+@media (max-width:640px){.dgm-mo{padding:20px 16px 18px}.dgm-mo-factories{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-mo">
+  <span class="dgm-mo-chip">The modalities</span>
+  <h4>Five factories · each with its own cost, latency, and reliability profile</h4>
+  <p class="dgm-mo-sub">A request routes to the right factory — the "which factory?" decision is a product-level cost decision.</p>
+
+  <div class="dgm-mo-request">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    A generative request
+  </div>
+
+  <div class="dgm-mo-router">Which factory?</div>
+
+  <div class="dgm-mo-factories">
+    <div class="dgm-mo-fact text">
+      <span class="dgm-mo-tag">Cheapest</span>
+      <svg class="dgm-mo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <h5>Text</h5>
+      <p>Fastest · most mature</p>
+    </div>
+    <div class="dgm-mo-fact image">
+      <span class="dgm-mo-tag">Moderate</span>
+      <svg class="dgm-mo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M4 16l5-4 4 3 3-2 4 3"/></svg>
+      <h5>Image</h5>
+      <p>Style control is hard</p>
+    </div>
+    <div class="dgm-mo-fact audio">
+      <span class="dgm-mo-tag">Mixed</span>
+      <svg class="dgm-mo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M8 8v8M4 11v2M16 8v8M20 11v2"/></svg>
+      <h5>Audio</h5>
+      <p>Speech mature · music uneven</p>
+    </div>
+    <div class="dgm-mo-fact video">
+      <span class="dgm-mo-tag">Newest</span>
+      <svg class="dgm-mo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+      <h5>Video</h5>
+      <p>Priciest · shortest reliable output</p>
+    </div>
+    <div class="dgm-mo-fact code">
+      <span class="dgm-mo-tag">Checkable</span>
+      <svg class="dgm-mo-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6M14 4l-4 16"/></svg>
+      <h5>Code</h5>
+      <p>Run it · real risk drops</p>
+    </div>
+  </div>
+
+  <div class="dgm-mo-out">Output reaches a user or a system</div>
+</div>
