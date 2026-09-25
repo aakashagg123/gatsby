@@ -77,4 +77,4 @@ live, one module away in
 [Cost attribution](../content/04-evals-observability/cost-attribution.md) and
 [The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md).
 
-This closes out the eleven-module [Generative AI family](../GENERATIVE_AI_ROADMAP.md).
+This closes out the eleven-module Generative AI family.

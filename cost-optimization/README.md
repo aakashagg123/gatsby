@@ -1,6 +1,6 @@
 # Cost optimization for the product leader
 
-*Part of the [Generative AI family](../GENERATIVE_AI_ROADMAP.md).*
+*Part of the Generative AI family.*
 
 Every AI feature has a cost of goods sold hiding in the model call, and it's usually
 invisible at demo scale and decisive at production scale. Optimizing it looks, at first,
@@ -62,4 +62,4 @@ follow the spokes into
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md).
 
-This completes the eleven-module [Generative AI family](../GENERATIVE_AI_ROADMAP.md).
+This completes the eleven-module Generative AI family.

@@ -1,6 +1,6 @@
 # Generative AI: the big picture
 
-*The first module of the [Generative AI family](../GENERATIVE_AI_ROADMAP.md).*
+*The first module of the Generative AI family.*
 
 Generative AI is software that creates new content instead of only analyzing existing
 content. A traditional model scores, ranks, or sorts. A generative model writes an email,
