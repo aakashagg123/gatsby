@@ -679,6 +679,13 @@ function boot3D() {
 }
 
 /* ---------- capability detection + dispatcher ---------- */
+// 3D is the default experience for every visitor whose browser can run it.
+// The only automatic gate is a hard technical one (WebGL support) — there's
+// no autoplay motion in this view (no auto-rotate; every camera move is
+// user-driven), so it doesn't get soft-gated behind prefers-reduced-motion
+// or a "this might be a slow device" guess. The one true safety net is the
+// live frame-rate check inside boot3D(), which downgrades mid-session (with
+// an explanation) if a device genuinely can't sustain it.
 function webglOK() {
   try {
     const c = document.createElement("canvas");
@@ -686,16 +693,6 @@ function webglOK() {
       (c.getContext("webgl") || c.getContext("experimental-webgl")));
   } catch (e) { return false; }
 }
-function reducedMotion() {
-  return window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-function lowPowerMobile() {
-  const narrow = window.matchMedia && matchMedia("(max-width:820px)").matches;
-  const fewCores = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency < 4;
-  const lowMem = typeof navigator.deviceMemory === "number" && navigator.deviceMemory < 4;
-  return narrow && (fewCores || lowMem);
-}
-function canTry3D() { return webglOK() && !reducedMotion() && !lowPowerMobile(); }
 
 function loadScript(src, timeoutMs) {
   return new Promise((resolve, reject) => {
@@ -741,12 +738,13 @@ viewBtn.addEventListener("click", () => {
 });
 
 (async function boot() {
-  const forced3D = pref === "3d", forced2D = pref === "2d";
-  if (forced2D || (!forced3D && !canTry3D())) { setViewBtn(false); boot2D(); return; }
+  // 2D only happens by explicit user choice (pref === "2d") or a real
+  // technical blocker (no WebGL). Everyone else gets 3D by default.
+  if (pref === "2d" || !webglOK()) { setViewBtn(false); boot2D(); return; }
   try {
-    // Forced-on by the user gets a much longer runway than the silent
-    // automatic path — worth a real wait rather than a fast, quiet bail.
-    await loadForceGraph3D(forced3D ? 12000 : 6000);
+    // Generous, patient runway — this is the default path now, worth a
+    // real wait across two mirrors rather than a fast, quiet bail to 2D.
+    await loadForceGraph3D(9000);
     if (typeof window.ForceGraph3D !== "function") throw new Error("3d-force-graph global missing");
     setViewBtn(true);
     boot3D();
@@ -760,11 +758,9 @@ viewBtn.addEventListener("click", () => {
     boot2D();
     // boot2D() sets its own hint text as part of booting — override it
     // afterward so the reason for landing on 2D is visible, not silently lost.
-    if (forced3D) {
-      hintEl.textContent = "Couldn't load the 3D renderer (network or WebGL issue) — showing 2D instead.";
-      hintEl.style.opacity = "1";
-      setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
-    }
+    hintEl.textContent = "Couldn't load the 3D renderer (network or WebGL issue) — showing 2D instead.";
+    hintEl.style.opacity = "1";
+    setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
   }
 })();
 </script>
