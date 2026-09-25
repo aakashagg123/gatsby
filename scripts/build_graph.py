@@ -24,6 +24,7 @@ Run standalone for stats:  python3 scripts/build_graph.py
 import json
 import os
 import re
+import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -252,6 +253,13 @@ def write_graph_page(site_dir, data):
                         json.dumps(data, separators=(",", ":")))
     with open(os.path.join(gdir, "index.html"), "w", encoding="utf-8") as f:
         f.write(page)
+    # Vendored same-origin, not loaded from a CDN: unpkg/jsdelivr are
+    # commonly blocked by corporate firewalls, ad blockers, and privacy
+    # extensions, which silently strands visitors on the 2D fallback.
+    vendor_dir = os.path.join(site_dir, "assets", "vendor")
+    os.makedirs(vendor_dir, exist_ok=True)
+    shutil.copy(os.path.join(ROOT, "assets", "vendor", "3d-force-graph.min.js"),
+                os.path.join(vendor_dir, "3d-force-graph.min.js"))
 
 
 if __name__ == "__main__":

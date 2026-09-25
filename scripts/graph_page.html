@@ -705,18 +705,12 @@ function loadScript(src, timeoutMs) {
     document.head.appendChild(s);
   });
 }
-// Two mirrors, tried in order, so a single blocked/slow CDN doesn't force
-// everyone onto the 2D fallback.
-async function loadForceGraph3D(timeoutMs) {
-  const mirrors = [
-    "https://unpkg.com/3d-force-graph@1",
-    "https://cdn.jsdelivr.net/npm/3d-force-graph@1/dist/3d-force-graph.min.js",
-  ];
-  let lastErr;
-  for (const src of mirrors) {
-    try { await loadScript(src, timeoutMs); return; } catch (e) { lastErr = e; }
-  }
-  throw lastErr;
+// Vendored same-origin (see build_graph.py) rather than pulled from a CDN:
+// unpkg/jsdelivr are routinely blocked by corporate firewalls, ad blockers,
+// and privacy extensions, which was silently stranding visitors on 2D no
+// matter how patient the timeout was.
+function loadForceGraph3D(timeoutMs) {
+  return loadScript("../assets/vendor/3d-force-graph.min.js", timeoutMs);
 }
 
 /* ---------- 2D/3D preference: explicit user choice beats every heuristic ---------- */
@@ -742,9 +736,9 @@ viewBtn.addEventListener("click", () => {
   // technical blocker (no WebGL). Everyone else gets 3D by default.
   if (pref === "2d" || !webglOK()) { setViewBtn(false); boot2D(); return; }
   try {
-    // Generous, patient runway — this is the default path now, worth a
-    // real wait across two mirrors rather than a fast, quiet bail to 2D.
-    await loadForceGraph3D(9000);
+    // Same-origin file, not a cross-network fetch — still generous for a
+    // very slow connection, but no longer needs a CDN-outage-sized runway.
+    await loadForceGraph3D(8000);
     if (typeof window.ForceGraph3D !== "function") throw new Error("3d-force-graph global missing");
     setViewBtn(true);
     boot3D();
