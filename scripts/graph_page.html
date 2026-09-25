@@ -32,10 +32,12 @@
   #search:focus{outline:2px solid rgba(9,105,218,.45);outline-offset:1px}
   .tgl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;
     white-space:nowrap;cursor:pointer;user-select:none}
-  #listBtn{margin-left:auto;padding:7px 13px;border:1px solid var(--line);border-radius:6px;
+  #viewBtn,#listBtn{padding:7px 13px;border:1px solid var(--line);border-radius:6px;
     background:var(--surface);font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);
-    cursor:pointer}
-  #listBtn:hover{border-color:var(--accent)}
+    cursor:pointer;white-space:nowrap}
+  #viewBtn{margin-left:auto}
+  #viewBtn:hover,#listBtn:hover{border-color:var(--accent)}
+  #viewBtn.active{border-color:var(--accent);color:var(--accent-deep)}
 
   #legend{position:fixed;left:14px;bottom:14px;z-index:25;display:flex;flex-direction:column;
     gap:3px;padding:14px 16px;background:rgba(255,255,255,.97);border:1px solid var(--line);
@@ -117,6 +119,7 @@
   <span class="brand">Knowledge graph</span>
   <input id="search" type="search" placeholder="Search pages…" autocomplete="off">
   <label class="tgl"><input type="checkbox" id="structToggle" checked><span>curriculum links</span></label>
+  <button id="viewBtn" type="button" title="Force 3D or 2D rendering, remembered next visit">3D view</button>
   <button id="listBtn" type="button">List view</button>
 </header>
 
@@ -602,11 +605,28 @@ function boot3D() {
     .linkOpacity(.42)
     .onNodeClick(n => select(n));
 
-  // Nudge three.js to render at real device-pixel density for a crisp 2K feel.
+  // Nudge three.js to render at real device-pixel density for a crisp 4K feel.
   try {
     const r = Graph.renderer && Graph.renderer();
     if (r && typeof r.setPixelRatio === "function") {
       r.setPixelRatio(Math.min(3, Math.max(2, window.devicePixelRatio || 1)));
+    }
+  } catch (e) { /* library minor version differences: no-op */ }
+
+  // Smoother spheres — cheap at these node counts, sharper on large/4K displays.
+  try { Graph.nodeResolution(30); } catch (e) { /* no-op */ }
+
+  // Switch to damped orbit controls for the "gliding" feel: momentum on
+  // rotate/zoom/pan instead of the library's default 1:1 trackball response.
+  try {
+    Graph.controlType("orbit");
+    const ctrl = Graph.controls && Graph.controls();
+    if (ctrl) {
+      ctrl.enableDamping = true;
+      ctrl.dampingFactor = 0.12;
+      ctrl.rotateSpeed = 0.55;
+      ctrl.zoomSpeed = 0.85;
+      ctrl.panSpeed = 0.7;
     }
   } catch (e) { /* library minor version differences: no-op */ }
 
@@ -646,7 +666,13 @@ function boot3D() {
       el.innerHTML = "";
       document.getElementById("cv").style.display = "block";
       onFilterChange = () => {}; onSearchChange = () => {};
+      setViewBtn(false);
       boot2D();
+      // boot2D() sets its own hint text as part of booting — override it
+      // afterward so the reason for the switch is visible, not silently lost.
+      hintEl.textContent = "Switched to 2D — this device couldn't sustain a smooth 3D frame rate.";
+      hintEl.style.opacity = "1";
+      setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
     }
   }
   requestAnimationFrame(sample);
@@ -682,12 +708,47 @@ function loadScript(src, timeoutMs) {
     document.head.appendChild(s);
   });
 }
+// Two mirrors, tried in order, so a single blocked/slow CDN doesn't force
+// everyone onto the 2D fallback.
+async function loadForceGraph3D(timeoutMs) {
+  const mirrors = [
+    "https://unpkg.com/3d-force-graph@1",
+    "https://cdn.jsdelivr.net/npm/3d-force-graph@1/dist/3d-force-graph.min.js",
+  ];
+  let lastErr;
+  for (const src of mirrors) {
+    try { await loadScript(src, timeoutMs); return; } catch (e) { lastErr = e; }
+  }
+  throw lastErr;
+}
+
+/* ---------- 2D/3D preference: explicit user choice beats every heuristic ---------- */
+function readPref() { try { return localStorage.getItem("kg-view-pref"); } catch (e) { return null; } }
+function writePref(v) { try {
+  if (v) localStorage.setItem("kg-view-pref", v); else localStorage.removeItem("kg-view-pref");
+} catch (e) {} }
+const pref = readPref();
+const viewBtn = document.getElementById("viewBtn");
+function setViewBtn(is3D) {
+  const short = window.innerWidth < 480;
+  viewBtn.textContent = is3D ? (short ? "2D" : "Switch to 2D") : (short ? "3D" : "Try 3D view");
+  viewBtn.classList.toggle("active", is3D);
+}
+viewBtn.addEventListener("click", () => {
+  const is3D = document.getElementById("cv3d").style.display !== "none";
+  writePref(is3D ? "2d" : "3d");
+  location.reload();
+});
 
 (async function boot() {
-  if (!canTry3D()) { boot2D(); return; }
+  const forced3D = pref === "3d", forced2D = pref === "2d";
+  if (forced2D || (!forced3D && !canTry3D())) { setViewBtn(false); boot2D(); return; }
   try {
-    await loadScript("https://unpkg.com/3d-force-graph@1", 4000);
+    // Forced-on by the user gets a much longer runway than the silent
+    // automatic path — worth a real wait rather than a fast, quiet bail.
+    await loadForceGraph3D(forced3D ? 12000 : 6000);
     if (typeof window.ForceGraph3D !== "function") throw new Error("3d-force-graph global missing");
+    setViewBtn(true);
     boot3D();
   } catch (e) {
     // boot3D() may have partially run (e.g. hidden #cv before a later chained
@@ -695,7 +756,15 @@ function loadScript(src, timeoutMs) {
     const el = document.getElementById("cv3d");
     el.style.display = "none"; el.innerHTML = "";
     document.getElementById("cv").style.display = "block";
+    setViewBtn(false);
     boot2D();
+    // boot2D() sets its own hint text as part of booting — override it
+    // afterward so the reason for landing on 2D is visible, not silently lost.
+    if (forced3D) {
+      hintEl.textContent = "Couldn't load the 3D renderer (network or WebGL issue) — showing 2D instead.";
+      hintEl.style.opacity = "1";
+      setTimeout(() => { hintEl.style.opacity = "0"; }, 6000);
+    }
   }
 })();
 </script>
