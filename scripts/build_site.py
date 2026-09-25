@@ -17,6 +17,7 @@ Run:  python3 scripts/build_site.py
 """
 import html as htmllib
 import os
+import re
 import shutil
 import reader_widget
 
@@ -605,6 +606,50 @@ def lesson_order(dst_harness):
     return lessons
 
 
+MERMAID_FENCE_RE = re.compile(r"```mermaid\n.*?```", re.DOTALL)
+
+
+def apply_phased_diagram_overrides(dst_track, site_key):
+    """Swap raw mermaid fences in copied markdown for hand-crafted HTML overrides.
+
+    Runs once, right after the track is copied into _site/, so an override lands as
+    a plain HTML block with no mermaid fence left behind -- invisible to the
+    client-side marked/mermaid pipeline in the VIEWER template, no JS changes needed.
+    Overrides are keyed by lesson directory name for lesson docs (phases/*/*/docs/en.md,
+    unique across a track), or by filename for any other markdown file (e.g. a track-root
+    ROADMAP.md) -- 0-indexed per file: diagrams/<site_key>/<key>-<n>.html. Source files
+    under <track>/... are never touched -- only the copies inside _site/.
+    """
+    ddir = os.path.join(ROOT, "diagrams", site_key)
+    if not os.path.isdir(ddir):
+        return
+    for dp, _, files in os.walk(dst_track):
+        for fn in files:
+            if not fn.endswith(".md"):
+                continue
+            md_path = os.path.join(dp, fn)
+            if is_lesson(md_path):
+                key = os.path.basename(os.path.dirname(os.path.dirname(md_path)))
+            else:
+                key = os.path.splitext(fn)[0]
+            with open(md_path) as f:
+                text = f.read()
+            idx = [-1]
+
+            def _repl(m):
+                idx[0] += 1
+                p = os.path.join(ddir, f"{key}-{idx[0]}.html")
+                if os.path.exists(p):
+                    with open(p) as f:
+                        return f.read()
+                return m.group(0)
+
+            new_text = MERMAID_FENCE_RE.sub(_repl, text)
+            if new_text != text:
+                with open(md_path, "w") as f:
+                    f.write(new_text)
+
+
 def _title_of(md_path):
     with open(md_path) as f:
         for line in f:
@@ -781,6 +826,7 @@ def main():
     for src_dir, site_key, brand in MD_TRACKS:
         dst_track = os.path.join(SITE, site_key)
         shutil.copytree(os.path.join(ROOT, src_dir), dst_track)
+        apply_phased_diagram_overrides(dst_track, site_key)
 
         # 3. Lesson ordering for prev/next navigation.
         lessons = lesson_order(dst_track)
