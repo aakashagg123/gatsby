@@ -74,6 +74,17 @@ role. Ask what the letters mean before you interview. Second, platform and API p
 invert the empathy problem: your "user" is another engineer, so *developer experience* —
 docs, error messages, versioning, time-to-first-call — becomes your UX surface.
 
+A third thing worth noticing, newer than the other two: the "PM" title is fragmenting
+further under AI's push. Growth PM, Platform PM, and AI PM were already splitting off
+distinct scopes; 2025–2026 added two roles worth knowing the name of even if your own
+title doesn't say them. An **AI Product Owner** defines an AI feature's behaviour, eval
+bar, and human-in-the-loop boundaries — closer to the deployment pipeline than to
+strategy. A **Data-Informed PM** uses AI tooling to keep a continuous read on product
+health — behaviour, experiments, drift — feeding the roadmap in near-real-time instead of
+a quarterly metrics review. Titles will keep splitting faster than job descriptions catch
+up. What matters is knowing which of these scopes you actually hold today, and saying so
+plainly instead of letting "PM" cover work that's really three different jobs.
+
 ## Where the leverage comes from
 
 You have no direct authority over the people who build the product. Your leverage is:
@@ -117,6 +128,35 @@ Not a schedule — a portfolio. Strong technical PMs spend roughly:
 If "now" eats the whole week for more than a sprint or two, the next build starts without
 definition and the cycle worsens. Guarding the discovery time *is* the job.
 
+## Navigating the technical PM interview
+
+Technical PM interviews increasingly include a round product-sense interviews don't have:
+system design or API design, done from a PM's altitude rather than an engineer's. (See
+[product sense: navigating interviews](../product-sense/communication.md) for the
+general-PM interview craft this one specializes.) The format shows up at platform and
+developer-tool companies — Stripe, GitHub, Datadog, and similar — because it tests exactly
+what the role needs: can you reason about a system without needing to design it.
+
+**What's actually being evaluated.** Not architecture. An interviewer isn't grading
+whether you'd pick REST or gRPC — they're watching whether you ask what the data looks
+like, what scale you're operating at, and what you're optimizing for before you draw
+anything. The candidate who opens with clarifying questions (*"who calls this API, how
+often, and what happens if it's down?"*) is doing the job. The one who jumps straight to a
+diagram is auditioning to be an engineer, which isn't the seat available.
+
+**A frame that holds up:** state the goal and the users of the system → name the
+non-functional requirements that actually matter here (latency, consistency, who owns
+what data) → sketch the contract, not the implementation → name the trade-offs out loud,
+the same way you'd [read an RFC](./specs-prds-and-rfcs.md) — and connect every technical
+choice back to a product or business consequence. *"We'd need eventual consistency here,
+which means a user could briefly see a stale balance — is that acceptable for this
+product?"* is the sentence that separates a technical PM answer from an engineering one.
+
+**For AI-flavoured versions of this round**, the same frame applies to eval design,
+retrieval architecture, or model-serving trade-offs: reasoning about hallucination risk,
+latency-vs-quality budgets, and what happens when the model is wrong is now a standard
+layer on top of classic system design, at any company shipping an AI feature.
+
 ## Failure modes
 
 - **The backseat architect** — overruling technical designs you half-understand. Engineers
@@ -138,6 +178,8 @@ definition and the cycle worsens. Guarding the discovery time *is* the job.
       roadmap (a latency budget, a data boundary, a dependency)?
 - [ ] Am I spending real weekly time on *next* and *later*, or is *now* consuming me?
 - [ ] When did I last change my mind because an engineer showed me a better option?
+- [ ] In a technical-PM interview, do I default to clarifying questions and trade-offs, or
+      do I reach for a diagram before I know what I'm optimizing for?
 
 ## Related lessons
 

@@ -79,6 +79,33 @@ What a PRD should *not* contain: database schemas, API designs, technology choic
 solution disguised as a requirement. ("Build a Redis cache" is a design. "Repeat visits
 must load in under a second" is the requirement behind it.)
 
+## Reading an AI-drafted PRD
+
+A model can produce a structurally perfect PRD from a two-line prompt — problem statement,
+goals and non-goals, requirements, success metrics, all present, all readable. That speed
+changes the job. Writing the first draft used to be the hard part; now catching what the
+draft got wrong is. Read an AI draft the way the next section teaches you to read an RFC —
+as a skeptic, not a proofreader:
+
+- **Invented specificity** — a fabricated latency number, a "success metric" nobody agreed
+  on, an edge case named with total confidence and zero evidence behind it. Numbers with no
+  source are the tell.
+- **Missing non-goals** — models default to comprehensive-sounding scope, because "no"
+  isn't in the training signal the way "yes, and" is. The highest-leverage sentence in a
+  PRD is usually the one the draft never wrote.
+- **Silently dropped edge cases and cross-team dependencies** — the draft answers the
+  question you asked, not the ones you forgot to ask. A model has no way to know which
+  other team's roadmap this touches; you do.
+- **A plausible tone standing in for a real decision** — confident, well-formatted prose is
+  easy to mistake for a decision that was actually made. If you can't trace a requirement
+  back to real evidence — a user quote, a support-ticket count, a spike result — cut it or
+  mark it an open question.
+
+The upside is real: a model can turn "here's what I roughly mean" into a structured draft
+in minutes, freeing your time for the part that was always the actual job — deciding
+what's true and what's missing. Use it to draft faster. Don't use it to skip the review
+that makes the document yours.
+
 ## Reading an RFC like a PM
 
 The RFC (design doc) is where engineering proposes *how*. You won't judge the
@@ -127,6 +154,8 @@ capstone builds on exactly this section.
   inherits whatever the implementation happened to produce.
 - **Consensus-by-silence** — circulating a doc, hearing nothing, calling it alignment.
   Silence means *unread*. Review meetings exist for a reason.
+- **Rubber-stamped AI draft** — a fluent, structurally complete PRD shipped without
+  checking its specifics against real evidence. The format made it look reviewed.
 
 ## Practitioner checklist
 
@@ -137,6 +166,8 @@ capstone builds on exactly this section.
 - [ ] Have I read the RFC for my current build and traced each requirement into it?
 - [ ] For AI features: does the spec include graded examples and a "how good is good
       enough" threshold?
+- [ ] For any AI-drafted section of this PRD: have I traced its specific claims (metrics,
+      edge cases, non-goals) back to real evidence, not just fluent prose?
 
 ## Related lessons
 
