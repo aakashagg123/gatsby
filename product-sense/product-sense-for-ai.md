@@ -184,6 +184,19 @@ checkpoint, clear provenance, and an audit trail. Matching the level of autonomy
 **cost of being wrong** in this domain is one of the sharpest expressions of AI product
 sense.
 
+## The role is fragmenting too
+
+The same forces reshaping the product are reshaping the job title. "AI PM" is no longer
+one role — it's splitting into an **AI Product Owner** (who owns eval bars, model
+behaviour, and human-in-the-loop boundaries — the deployment-facing half of this lesson)
+and a **Data-Informed PM** (who uses AI tooling to keep a continuous read on the flywheel
+above, instead of waiting for a quarterly metrics review). ([The technical PM
+role](../technical-product-management/the-technical-pm-role.md) maps this split against
+the classic PM/TPM/EM spectrum.) Neither title obligates you to specialize today. But
+naming the split matters, because the failure mode isn't picking the wrong one — it's not
+noticing your job quietly became three jobs, and doing all three badly instead of one
+well.
+
 ## Actionable steps
 
 - **Write the eval before the feature** — define, in cases, what "good" means for this job.
@@ -225,6 +238,8 @@ sense.
 - [ ] Have I scoped the feature to the model's *reliable* frontier?
 - [ ] Is there a feedback loop that turns usage into improvement?
 - [ ] Does the level of autonomy match the cost of a wrong answer in this domain?
+- [ ] Can I name which slice of "AI PM" work I actually own today — and which I've
+      quietly absorbed without deciding to?
 
 ## Related lessons
 

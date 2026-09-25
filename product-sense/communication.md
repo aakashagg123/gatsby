@@ -60,6 +60,15 @@ words and become the team's reference.
   customer-centric, clarity-first viewpoint. However you format it, answer: *Who is it for?
   What problem? Why now? How do we know it's needed? What does success look like?* Keep it
   brief. Add a mock-up to make it concrete.
+- **Reviewing an AI-drafted artifact** — AI tools now write a plausible first draft of any
+  of the above in seconds. Reviewing one is a different skill than writing one: the risk
+  isn't bad prose, it's a confident draft that quietly skips a non-goal, invents a success
+  metric nobody defined, or states a stakeholder's motivation you never actually confirmed.
+  Read it the way you'd read an engineer's RFC — checking claims against evidence you
+  actually have, not evidence the draft asserts — before you circulate it as yours. A draft
+  you didn't interrogate is a draft you don't own, whoever's name is on it. ([The
+  technical-PM version of this discipline](../technical-product-management/specs-prds-and-rfcs.md)
+  — reading an AI-drafted PRD.)
 
 **Tips:** use plain language (a non-expert should get the gist), get feedback (*"does this
 vision excite you? is this clear?"*), and keep artifacts *living* — update them and let them
@@ -137,6 +146,9 @@ loud.
   problem.
 - **Over-selling** — hiding risks to win approval, then losing trust when reality lands.
 - **Assumed alignment** — believing people remember the vision; they don't, so repeat it.
+- **Rubber-stamping the AI draft** — circulating a fluent, structurally complete artifact
+  without checking its specifics against evidence. The same over-selling risk, wearing a
+  faster hat.
 
 ## Practitioner checklist
 
@@ -145,6 +157,8 @@ loud.
 - [ ] Am I candid about risks and unknowns, not just the upside?
 - [ ] Does the proposal answer who/what problem/why now/how we know/what success looks like?
 - [ ] Am I repeating the "why" often enough that the whole team can state it?
+- [ ] Did I interrogate my last AI-drafted artifact the way I'd interrogate an RFC, before
+      sending it out as mine?
 
 ## Related lessons
 
