@@ -32,12 +32,10 @@
   #search:focus{outline:2px solid rgba(9,105,218,.45);outline-offset:1px}
   .tgl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;
     white-space:nowrap;cursor:pointer;user-select:none}
-  #viewBtn,#listBtn{padding:7px 13px;border:1px solid var(--line);border-radius:6px;
+  #listBtn{margin-left:auto;padding:7px 13px;border:1px solid var(--line);border-radius:6px;
     background:var(--surface);font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);
     cursor:pointer;white-space:nowrap}
-  #viewBtn{margin-left:auto}
-  #viewBtn:hover,#listBtn:hover{border-color:var(--accent)}
-  #viewBtn.active{border-color:var(--accent);color:var(--accent-deep)}
+  #listBtn:hover{border-color:var(--accent)}
 
   #legend{position:fixed;left:14px;bottom:14px;z-index:25;display:flex;flex-direction:column;
     gap:3px;padding:14px 16px;background:rgba(255,255,255,.97);border:1px solid var(--line);
@@ -119,7 +117,6 @@
   <span class="brand">Knowledge graph</span>
   <input id="search" type="search" placeholder="Search pages…" autocomplete="off">
   <label class="tgl"><input type="checkbox" id="structToggle" checked><span>curriculum links</span></label>
-  <button id="viewBtn" type="button" title="Force 3D or 2D rendering, remembered next visit">3D view</button>
   <button id="listBtn" type="button">List view</button>
 </header>
 
@@ -666,7 +663,6 @@ function boot3D() {
       el.innerHTML = "";
       document.getElementById("cv").style.display = "block";
       onFilterChange = () => {}; onSearchChange = () => {};
-      setViewBtn(false);
       boot2D();
       // boot2D() sets its own hint text as part of booting — override it
       // afterward so the reason for the switch is visible, not silently lost.
@@ -713,34 +709,14 @@ function loadForceGraph3D(timeoutMs) {
   return loadScript("../assets/vendor/3d-force-graph.min.js", timeoutMs);
 }
 
-/* ---------- 2D/3D preference: explicit user choice beats every heuristic ---------- */
-function readPref() { try { return localStorage.getItem("kg-view-pref"); } catch (e) { return null; } }
-function writePref(v) { try {
-  if (v) localStorage.setItem("kg-view-pref", v); else localStorage.removeItem("kg-view-pref");
-} catch (e) {} }
-const pref = readPref();
-const viewBtn = document.getElementById("viewBtn");
-function setViewBtn(is3D) {
-  const short = window.innerWidth < 480;
-  viewBtn.textContent = is3D ? (short ? "2D" : "Switch to 2D") : (short ? "3D" : "Try 3D view");
-  viewBtn.classList.toggle("active", is3D);
-}
-viewBtn.addEventListener("click", () => {
-  const is3D = document.getElementById("cv3d").style.display !== "none";
-  writePref(is3D ? "2d" : "3d");
-  location.reload();
-});
-
 (async function boot() {
-  // 2D only happens by explicit user choice (pref === "2d") or a real
-  // technical blocker (no WebGL). Everyone else gets 3D by default.
-  if (pref === "2d" || !webglOK()) { setViewBtn(false); boot2D(); return; }
+  // 2D only happens for a real technical blocker (no WebGL) or a failed load.
+  if (!webglOK()) { boot2D(); return; }
   try {
     // Same-origin file, not a cross-network fetch — still generous for a
     // very slow connection, but no longer needs a CDN-outage-sized runway.
     await loadForceGraph3D(8000);
     if (typeof window.ForceGraph3D !== "function") throw new Error("3d-force-graph global missing");
-    setViewBtn(true);
     boot3D();
   } catch (e) {
     // boot3D() may have partially run (e.g. hidden #cv before a later chained
@@ -748,7 +724,6 @@ viewBtn.addEventListener("click", () => {
     const el = document.getElementById("cv3d");
     el.style.display = "none"; el.innerHTML = "";
     document.getElementById("cv").style.display = "block";
-    setViewBtn(false);
     boot2D();
     // boot2D() sets its own hint text as part of booting — override it
     // afterward so the reason for landing on 2D is visible, not silently lost.
