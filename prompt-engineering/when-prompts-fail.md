@@ -130,9 +130,10 @@ opening "Sure! Here is the JSON:" line that breaks parsers.
 **Diagnosis:** Format specified in words but not enforced; no examples of the
 exact output shape.
 
-**Fix:** Provide one or two few-shot examples in the exact format. Use structured
-output APIs (JSON mode, structured outputs) if available. On Claude, prefill the
-opening character of the expected shape to force it.
+**Fix:** Provide one or two few-shot examples in the exact format. Use a structured
+output API or a tool with a schema if one is available. Add "Respond directly without
+preamble." to remove lead-in lines. Do not rely on prefilled replies: Claude 4.6 and
+later models do not support them.
 
 ## Diagnosing before rewriting — the two-minute pass
 
@@ -146,11 +147,18 @@ When an output fails, before touching the prompt:
 4. **Re-run against the same input.** Confirm the specific failure is gone.
 5. **Re-run against different inputs.** Confirm the fix didn't create a new one.
 
-If step 2 doesn't match any of the seven, the failure is a rarer case — often
-either the model is genuinely wrong on the task (a capability limit, not a prompt
-problem), or the *context* the prompt operates on is bad, and you're in the
-territory of [context engineering](../context-engineering/README.md) rather than
-prompt engineering.
+If step 2 doesn't match any of the seven, the failure is a rarer case. Three causes
+are common:
+
+- The model is genuinely wrong on the task. That is a capability limit, not a prompt
+  problem.
+- The *context* the prompt operates on is bad. That is
+  [context engineering](../context-engineering/README.md), not prompt engineering.
+- The model changed. The prompt is unchanged and worked last quarter, but a new model
+  version reads it differently. Newer Claude models follow instructions more
+  literally and react more strongly to emphatic wording, so a prompt tuned for an
+  older model can over-trigger or under-deliver. The fix is a re-test against your
+  saved examples, covered in [Prompts in production](./prompts-in-production.md).
 
 ## What the module has been building toward
 
@@ -192,8 +200,8 @@ which technique to reach for.
       rewritten)?
 - [ ] Do I re-run the failing input first, then run different inputs to check
       for regression?
-- [ ] Have I ruled out that the failure is a context or capability problem, not
-      a prompt problem?
+- [ ] Have I ruled out that the failure is a context, capability, or model-version
+      problem, not a prompt problem?
 - [ ] Do I keep a log of failures and their fixes, so the seven-mode vocabulary
       becomes the team's shared debugging language?
 

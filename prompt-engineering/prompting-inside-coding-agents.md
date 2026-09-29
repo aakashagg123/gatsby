@@ -7,13 +7,12 @@
 Coding agents — Claude Code, Cursor, Aider, Windsurf, Continue — are agents whose
 tools are `read_file`, `edit_file`, `run_command`, `search_code`. Their prompts
 carry more weight than any other kind of prompt in daily use today, because the
-output isn't a chat reply — it's real code that ships. The prompt-engineering craft
-here has its own idioms: the **prompt is the spec** for the change; a project-level
-context file (Claude Code's `CLAUDE.md`, Cursor's `.cursorrules`, Aider's
-`CONVENTIONS.md`) supplies house rules to every session; **plan mode** or
-"propose-then-apply" separates thinking from acting on high-risk changes; and
-**sub-agents** or delegated tasks parallelize work while protecting the main
-context window. This lesson names the patterns, so a developer new to coding agents
+output isn't a chat reply — it's real code that ships. The craft here has four idioms.
+The **prompt is the spec** for the change. A project-level context file supplies house
+rules to every session: Claude Code's `CLAUDE.md`, Cursor's `.cursor/rules/` files or a
+shared `AGENTS.md`, or Aider's `CONVENTIONS.md`. **Plan mode**, or "propose-then-apply,"
+separates thinking from acting on high-risk changes. **Sub-agents** run delegated
+tasks in parallel and protect the main context window. This lesson names the patterns, so a developer new to coding agents
 gets the leverage on day one instead of stumbling into it over a month.
 
 > 🎯 **For the AI PM (or coding-agent user)**
@@ -75,16 +74,24 @@ A strong prompt:
 > - Do not touch any other file.
 
 Every line in the strong prompt is a constraint the agent will honor. The
-"do not touch any other file" line alone prevents 30% of accidental sprawl.
+"do not touch any other file" line does the most work. It stops the agent from
+"improving" code you did not ask about.
 
 The rule: prompt as if the agent will do exactly what you wrote and nothing you
 didn't. Because it will.
 
 ## Pattern 2 — the project context file is the always-on system prompt
 
-Claude Code reads `CLAUDE.md`. Cursor reads `.cursorrules`. Aider reads
-`CONVENTIONS.md`. All of them play the same role: a project-scoped file, checked
-into git, that ships to every session as part of the system prompt.
+Claude Code reads `CLAUDE.md`. Cursor reads Project Rules in `.cursor/rules/` and
+also reads `AGENTS.md`. Cursor's older single `.cursorrules` file is deprecated. Aider
+reads `CONVENTIONS.md`. All of them play the same role: a project-scoped file, checked
+into git, that ships to every session as part of the system prompt. Tool file names
+change often, so check your tool's current documentation before you copy a layout.
+
+Keep one limit in mind. These files are **guidance, not enforcement**. The agent
+usually follows them, but nothing forces it to. When a rule must never break, such as
+"never run a command that deletes data," enforce it with permissions or hooks, and use
+the context file to explain why.
 
 What to put in it:
 
@@ -109,9 +116,9 @@ project.
 ## Pattern 3 — plan mode and propose-then-apply
 
 For any change touching more than one file, or any change to unfamiliar code,
-run the agent in **plan mode** (Claude Code's `/plan`; Cursor's "Ask" mode before
-"Compose"; Aider's `/architect`). The agent proposes the change without applying
-it. You review the plan, redirect if needed, then approve.
+run the agent in **plan mode** (Claude Code's plan mode; Cursor's read-only Ask mode
+before its Agent mode; Aider's `/architect`). The agent proposes the change without
+applying it. Mode names change between versions, so check what your tool calls it. You review the plan, redirect if needed, then approve.
 
 The idiom:
 
@@ -150,6 +157,27 @@ equivalent of the acceptance criteria in a [PRD](../technical-product-management
 
 Without a verification clause, the agent judges its own work on vibes.
 
+## Pattern 6 — rule out the two habits of capable agents
+
+Strong coding models have two habits that a short prompt can prevent.
+
+- **Over-engineering.** The agent adds extra files, helper functions, and options you
+  did not ask for. Add a scope rule to the prompt or the context file: "Only make
+  changes that are directly requested. Do not refactor surrounding code, add
+  comments to code you did not change, or build in flexibility for hypothetical
+  future needs."
+- **Writing to the test.** The agent makes the tests pass by hard-coding the expected
+  values, or by writing a special case for the test inputs. Add: "Write a general
+  solution that works for all valid inputs, not only the test cases. If a test looks
+  wrong, or the task cannot be done, tell me instead of working around it."
+
+Both rules are fixes for behaviour seen on recent models. Re-test them when you change
+model, since a later model may need less of this.
+
+A third habit is a plus, not a problem. Agents often write small scratch files to test
+an idea. If you do not want leftovers, add: "Delete any temporary files you create
+before you finish."
+
 ## Tradeoffs
 
 - **Speed vs. safety.** Apply mode is fastest. Plan mode is safest. Match to
@@ -170,6 +198,11 @@ Without a verification clause, the agent judges its own work on vibes.
   fixing the guess as you would have fixing the bug.
 - **Missing `CLAUDE.md`.** Every session re-learns the project from scratch.
   Every session makes the same mistakes.
+- **A hard rule left as guidance.** "Never touch the production config" sits in the
+  context file, and one session ignores it. Enforce must-not rules with permissions or
+  hooks.
+- **Green tests, wrong code.** The agent hard-codes values so the suite passes. The
+  verification clause reports success. Read the diff, not only the test output.
 - **Skipping plan mode on a large change.** Agent commits to a wrong structure
   by the third file; unwinding costs more than proposing would have.
 - **No verification clause.** Agent reports "done"; you find the tests were never
@@ -193,6 +226,10 @@ Without a verification clause, the agent judges its own work on vibes.
       to sub-agents?
 - [ ] Does my prompt end with a verification clause — a test, a typecheck, a
       diff review — so "done" has evidence, not vibes?
+- [ ] Have I told the agent to keep changes minimal and to write general solutions,
+      not code that only passes the tests?
+- [ ] Is every "must never" rule enforced by permissions or hooks, not only written in
+      the context file?
 
 ## Related lessons
 

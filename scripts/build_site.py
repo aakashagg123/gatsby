@@ -459,7 +459,7 @@ LANDING = """<!doctype html>
       <h2>Prompt engineering →</h2>
       <p>The craft of writing input a model will reliably act on — from ChatGPT
       productivity patterns, through few-shot and chain-of-thought, into the prompts
-      that drive Claude Code and other coding agents. 9 lessons.</p>
+      that drive Claude Code and other coding agents. 10 lessons.</p>
     </a>
     <a class="card" href="graph/index.html" style="border-color:#0d8fa5;background:linear-gradient(135deg,#e6f4f6 0%,#fdf3d9 100%)">
       <span class="tag">Explore</span>

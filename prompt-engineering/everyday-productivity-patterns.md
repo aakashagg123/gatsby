@@ -5,10 +5,10 @@
 ## TL;DR
 
 Most of the value people get out of ChatGPT or Claude comes from a small handful of
-patterns applied to real work: drafting the first version of something you'll edit,
-compressing a long thing into a shorter thing, translating between formats and
-languages, extracting structured facts out of unstructured text, and getting a
-critique before you send. None of these are exotic. Each has a shape that works and
+patterns applied to real work. You draft the first version of something you'll edit.
+You compress a long thing into a shorter thing. You translate between formats and
+languages. You extract structured facts out of unstructured text. You get a critique
+before you send. None of these are exotic. Each has a shape that works and
 a shape that doesn't. This lesson names the six patterns, gives each one a canonical
 prompt shape, and shows the small edits that turn a mediocre output into a useful
 one. If you are new to prompt engineering, this is the lesson where you get most of

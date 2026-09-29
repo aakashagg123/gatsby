@@ -20,7 +20,7 @@ CFG = {
             "ChatGPT productivity patterns, through the classical techniques "
             "power users depend on, into the prompts that drive Claude Code, "
             "Cursor, and other coding agents.",
-    "meta": ["9 lessons", "+ recap", "knowledge graph", "diagrams included"],
+    "meta": ["10 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the AI PM (or coding-agent user)",
     "lessons": [
         "what-prompt-engineering-actually-is",
@@ -32,6 +32,7 @@ CFG = {
         "prompting-for-tools-and-agents",
         "prompting-inside-coding-agents",
         "when-prompts-fail",
+        "prompts-in-production",
     ],
 }
 

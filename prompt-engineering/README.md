@@ -9,7 +9,7 @@ prompt chaining. At the far end, it means the patterns developers use to drive c
 agents like Claude Code and Cursor — where the prompt is a spec, and the model is
 writing the code that ships. This module walks the full arc, one lesson per layer, so a
 reader picks up the mental model on lesson 1 and lands with real advanced patterns by
-lesson 9.
+lesson 10.
 
 **A note on scope.** This is the *technique* module — the how of writing a prompt. Two
 adjacent modules deepen it in different directions. [Context engineering](../context-engineering/README.md)
@@ -41,11 +41,13 @@ flowchart TB
     L7["Prompting for tools<br/>and agents"]
     L8["Prompting inside<br/>coding agents<br/>(Claude Code, Cursor)"]
   end
-  subgraph META["THE META LESSON — 9"]
+  subgraph META["THE META LESSONS — 9-10"]
     L9["When prompts fail:<br/>the diagnostic playbook"]
+    L10["Prompts in production:<br/>versioning, testing,<br/>model upgrades"]
   end
   L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7 --> L8
   L9 -.->|"applies at every layer"| BEG & INT & ADV
+  L10 -.->|"keeps every layer working<br/>as models change"| BEG & INT & ADV
 ```
 
 Read it in three passes. **Beginner:** the mental model, the six parts of a prompt,
@@ -53,7 +55,8 @@ and the everyday patterns that turn an LLM into a productivity tool. **Intermedi
 the techniques power users use to make outputs consistent — structure, worked examples,
 step-by-step reasoning, multi-step chains. **Advanced:** how prompts change shape when
 the model can *act* — call tools, run code, edit files — and the specific patterns of
-prompting inside coding agents.
+prompting inside coding agents. **The meta lessons:** how to diagnose a failing prompt,
+and how to run prompts in production, where models change under them.
 
 ## The lessons
 
@@ -80,6 +83,9 @@ prompting inside coding agents.
   spec" pattern that runs modern agent-assisted development.
 - [**When prompts fail: the diagnostic playbook**](./when-prompts-fail.md) — the
   short list of things that actually go wrong, and how to tell which one bit you.
+- [**Prompts in production**](./prompts-in-production.md) — versioning a prompt with its
+  model, testing it against saved real cases, surviving model upgrades, and laying it
+  out so the provider can cache it.
 
 Each lesson pairs the technique with a **🎯 For the AI PM (or coding-agent user)**
 briefing — why it matters, the decision it changes, the question to ask your team or
@@ -92,7 +98,7 @@ yourself, and the risk if ignored — plus one diagram that makes the mechanic c
   quality lever, with the prompt as one component inside them.
 - [TPM for AI products](../technical-product-management/tpm-for-ai-products.md) —
   eval-driven development, the discipline that decides whether a prompt is good
-  enough to ship.
+  enough to ship. Lesson 10 applies it to prompts.
 - [AI agents](../ai-agents/README.md) — the scaffolds this module's lesson 7 prompts
   drive.
 - [Agentic workflows](../agentic-workflows/README.md) — the multi-step orchestration

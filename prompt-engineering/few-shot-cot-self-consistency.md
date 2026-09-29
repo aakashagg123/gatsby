@@ -80,6 +80,10 @@ Three lessons from a decade of use:
 - **Match the format exactly.** If the output should be JSON, the example outputs
   are JSON. If it should be a paragraph, they're paragraphs. Format drift in
   examples produces format drift in outputs.
+- **Vary the examples on purpose.** If every example ends the same way or has the same
+  length, the model copies that accident. Change the length, the topic, and the
+  difficulty from one example to the next. Wrap each one in `<example>` tags so the
+  model can tell examples from instructions.
 - **More is not always better.** Beyond ~5 examples, most tasks stop improving, and
   you're spending tokens. Some tasks improve up to ~20; test to find the knee.
 
@@ -89,8 +93,11 @@ right interpolation.
 
 ## Chain-of-thought: reason step by step
 
-Wei et al. showed in 2022 that appending "let's think step by step" to a prompt
-lifted the model's performance on math word problems by tens of percentage points.
+Two 2022 papers set up this technique. Wei et al. showed that worked examples with
+visible reasoning steps lift accuracy on math and logic problems. Kojima et al. then
+showed that no examples are needed: appending "let's think step by step" to a prompt
+gave a large gain on the same kind of task.
+
 The mechanism, roughly: the model is a next-token predictor. When it commits to an
 answer first, it has no way to backtrack. When it commits to reasoning first, each
 step in the reasoning constrains the next, and the final answer inherits the
@@ -98,11 +105,12 @@ constraint.
 
 Two flavours:
 
-- **Zero-shot CoT.** Add "think step by step before answering" to the prompt. No
-  examples needed. Works on many tasks; often not enough on the hardest ones.
-- **Few-shot CoT.** Provide examples where the *output* itself shows step-by-step
-  reasoning ending in the answer. Stronger; requires the effort of writing worked
-  reasoning traces.
+- **Zero-shot CoT** (Kojima et al.). Add "think step by step before answering" to the
+  prompt. No examples needed. Works on many tasks; often not enough on the hardest
+  ones.
+- **Few-shot CoT** (Wei et al.). Provide examples where the *output* itself shows
+  step-by-step reasoning ending in the answer. Stronger; requires the effort of
+  writing worked reasoning traces.
 
 A concrete shape:
 
@@ -112,12 +120,25 @@ A concrete shape:
 The `<answer>` tag lets the calling code parse just the answer while the reasoning
 trace is available for debugging and evaluation.
 
-**A note on reasoning models.** Modern reasoning-tuned models (the OpenAI o-series,
-Claude's extended-thinking mode, DeepSeek-R1-class open models) do chain-of-thought
-internally by default. Explicit CoT prompts are less necessary — sometimes
-counterproductive, since the model has already been trained to reason. The
-technique still applies to non-reasoning models and to cases where you need the
-reasoning trace visible.
+**A note on reasoning models.** Modern reasoning-tuned models do chain-of-thought
+internally. That includes OpenAI's o-series, DeepSeek-R1-class open models, and
+Claude with thinking turned on. Explicit "think step by step" prompts are less
+necessary on these models, and sometimes counterproductive, since the model has
+already been trained to reason.
+
+On current Claude models, you steer thinking with settings, not with prompt phrases:
+
+- **Adaptive thinking.** The model decides when and how much to think. This replaces
+  the older manual thinking budget. On Claude 4.7 and later, setting `budget_tokens`
+  returns an error.
+- **The `effort` setting.** It controls how deep the model thinks. Lower it if
+  responses are slow or costly. Raise it for hard tasks.
+- **Prompt guidance for triggering.** If the model thinks more often than you want,
+  which can happen with large system prompts, you can add a sentence that tells it
+  to think only when a task needs multi-step reasoning.
+
+The technique still applies to non-reasoning models, and to cases where you need the
+reasoning trace visible in the output.
 
 ## Self-consistency: sample and vote
 
@@ -148,7 +169,8 @@ majority to vote on.
 - **Self-consistency vs. cost.** N× the calls is N× the token bill. Fine for a batch
   overnight; painful for a real-time feature at scale.
 - **Explicit CoT vs. reasoning models.** With a reasoning-tuned model, extra
-  "think step by step" prompting sometimes hurts. Test both.
+  "think step by step" prompting sometimes hurts. Test both. Then tune the effort
+  setting before you add more prompt text.
 
 ## Failure modes
 

@@ -298,7 +298,8 @@ prompts that drive Claude Code, Cursor, and other coding agents.
 6. [Prompt chaining and multi-step workflows](./prompt-engineering/prompt-chaining-and-workflows.md)
 7. [Prompting for tools and agents](./prompt-engineering/prompting-for-tools-and-agents.md)
 8. [Prompting inside coding agents](./prompt-engineering/prompting-inside-coding-agents.md)
-9. [When prompts fail: the diagnostic playbook](./prompt-engineering/when-prompts-fail.md) · [Recap](./prompt-engineering/recap.md)
+9. [When prompts fail: the diagnostic playbook](./prompt-engineering/when-prompts-fail.md)
+10. [Prompts in production: versioning, testing, and model upgrades](./prompt-engineering/prompts-in-production.md) · [Recap](./prompt-engineering/recap.md)
 
 ## [Harness engineering](./harness-engineering/README.md)
 

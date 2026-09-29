@@ -1,0 +1,46 @@
+<style>
+.dgm-pp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7b3f00;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-pp-chip{position:absolute;top:-11px;left:24px;background:#7b3f00;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(123,63,0,.28)}
+.dgm-pp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-pp-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-pp-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-pp-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-pp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.dgm-pp-n{background:#f5e9dc;border:1.5px solid #d9b48c;border-radius:10px;padding:9px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#5c2e00;line-height:1.3}
+.dgm-pp-row.up .dgm-pp-n{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-pp-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-pp-arr svg{width:16px;height:16px}
+.dgm-pp-ok{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+@media (max-width:640px){.dgm-pp{padding:20px 16px 18px}.dgm-pp-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-pp">
+  <span class="dgm-pp-chip">Prompts in production</span>
+  <h4>A prompt and a model are a pair · you version and upgrade them together</h4>
+  <p class="dgm-pp-sub">Four habits keep a prompt working while models change underneath it.</p>
+
+  <div class="dgm-pp-lbl">Every change</div>
+  <div class="dgm-pp-row">
+    <div class="dgm-pp-n">1 · Version<br>name, owner, pinned model</div>
+    <div class="dgm-pp-n">2 · Test<br>saved real cases</div>
+    <div class="dgm-pp-n">3 · Edit one thing</div>
+    <div class="dgm-pp-n">4 · Cache-friendly layout<br>stable first, question last</div>
+  </div>
+  <div class="dgm-pp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-pp-lbl">When a new model ships</div>
+  <div class="dgm-pp-row up">
+    <div class="dgm-pp-n">Run the suite on old and new</div>
+    <div class="dgm-pp-n">Read the differences</div>
+    <div class="dgm-pp-n">Re-tune, do not rewrite</div>
+    <div class="dgm-pp-n">Staged rollout, keep the old pair</div>
+  </div>
+  <div class="dgm-pp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-pp-ok">New failures become new test cases</div>
+</div>

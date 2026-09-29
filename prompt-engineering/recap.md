@@ -53,6 +53,24 @@ producing an answer, because nothing in the prompt said when to stop. The fix:
 *Takeaway:* termination is a prompt-engineering decision, not just a runtime cap.
 The runtime cap is the safety net; the prompt is the intent.
 
+**The upgrade that makes every tool fire (an illustration).** Picture an agent prompt
+that says "CRITICAL: you MUST call the search tool before answering." On an older
+model that ignored the tool, the line was needed. Anthropic's guidance warns that
+newer Claude models respond more strongly to the system prompt, so the same wording
+can make a model call the tool on every turn, greetings included. Nobody edited the
+prompt, yet behaviour changed. A saved test set shows the change on the first run. The
+fix is a calmer line: "Use search when the answer depends on current information."
+🎯 *Takeaway:* a prompt is written for one model. Re-test it on every model change,
+and remove emphasis you added for an older one.
+
+**The prefill that stops working (an illustration).** Picture an extraction service
+that forced JSON by starting the model's reply with `{`. Anthropic's documentation
+says prefilled replies are not supported from Claude 4.6 onward, so the same request
+fails on a newer model. The fix is a schema-constrained output, and a test that
+catches the break before launch. 🎯 *Takeaway:* format tricks belong to a model
+version. Prefer schema-enforced outputs, and treat any trick as something to re-test on
+upgrade.
+
 ## Module recap
 
 | Lesson | The one idea | The question it makes you ask |
@@ -66,10 +84,12 @@ The runtime cap is the safety net; the prompt is the intent.
 | [Prompting for tools and agents](./prompting-for-tools-and-agents.md) | Tool descriptions are API contracts; termination is a prompt decision | If two tools could plausibly serve, does the description say which one? |
 | [Prompting inside coding agents](./prompting-inside-coding-agents.md) | The prompt is the spec; the project context file is the always-on system prompt | Does this prompt read like a ticket or a text message? |
 | [When prompts fail: the diagnostic playbook](./when-prompts-fail.md) | Seven named failure modes with seven specific fixes | Which of the seven did this output fail into? |
+| [Prompts in production](./prompts-in-production.md) | A prompt is code written for one model: version it, test it, and re-test it on every upgrade | If the model changed tomorrow, could we say by tonight whether our prompts still work? |
 
 **The through-line:** prompt engineering is not a set of clever tricks. It's a
 craft with a small vocabulary — six prompt parts, six everyday patterns, three
-reasoning techniques, one loop, seven failure modes — and the leverage comes from
+reasoning techniques, one loop, seven failure modes, four production habits — and the
+leverage comes from
 knowing the vocabulary well enough to reach for the right piece under pressure. The
 beginner uses one part unconsciously and gets a lucky output. The intermediate uses
 all six on purpose. The advanced practitioner adds tools, chains, and coding agents,
@@ -82,8 +102,9 @@ the middle: the writing itself.
 
 > **Walk-away question:** *"For the most important prompt in my current work — is
 > it a versioned artifact I could hand a colleague cold, structured with named
-> boundaries, matched to the right technique for its task, and diagnosable against
-> the seven failure modes when it drifts?"*
+> boundaries, matched to the right technique for its task, diagnosable against
+> the seven failure modes when it drifts, and backed by a saved test set so I can
+> re-check it when the model changes?"*
 
 ---
 
@@ -101,3 +122,7 @@ the middle: the writing itself.
    <details><summary>Answer</summary>User-supplied text in production can contain instructions the model may follow. Tagged boundaries make the model treat that text as content, not as an instruction. Structure also prevents drift when input length grows. (<a href="./structured-prompting.md">Structured prompting</a>)</details>
 5. **When a prompt underperforms, what should you do before rewriting it?**
    <details><summary>Answer</summary>Diagnose which of the seven failure modes it hit. A targeted fix at the specific sentence that failed clears the failure without introducing a variant of the same problem in a rewrite. (<a href="./when-prompts-fail.md">When prompts fail</a>)</details>
+6. **Why can a prompt fail after a model upgrade when nobody edited it?**
+   <details><summary>Answer</summary>A prompt is tuned for one model. Newer models follow instructions more literally, react more strongly to emphatic wording, and may reject old format tricks such as prefilled replies. Re-run your saved test set on the old and new model, read the differences, and re-tune. (<a href="./prompts-in-production.md">Prompts in production</a>)</details>
+7. **How do you force a specific output shape on current Claude models?**
+   <details><summary>Answer</summary>Use structured outputs or a tool with a schema. Add a direct instruction such as "Respond directly without preamble", or ask for the answer inside a tag. Prefilled replies are not supported from Claude 4.6 onward. (<a href="./structured-prompting.md">Structured prompting</a>)</details>
