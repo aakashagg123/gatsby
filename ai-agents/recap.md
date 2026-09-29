@@ -5,12 +5,12 @@
 ## Real-world examples & war stories
 
 **A chatbot's invented refund policy, and who paid.** In November 2022 a customer asked Air
-Canada's website chatbot about bereavement fares. The chatbot said he could claim the
+Canada's website chatbot about bereavement fares. The chatbot said the customer could claim the
 discount after travel. The airline's policy did not allow that. In February 2024 the Civil
 Resolution Tribunal of British Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149) rejected
 the airline's suggestion that the chatbot was a separate entity. It held the company
 responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
-in total with interest and fees. This was a small-claims decision, not binding precedent.
+in total with interest and fees. This was a small-claims decision.
 🎯 *Takeaway:* if your agent says it, you said it. This is the case for
 [risk tiers and approval gates](./running-an-agent-in-production.md) on any action or
 statement that binds the company.
@@ -82,6 +82,18 @@ If yes, this is an agent worth running. If no, you know which lesson to reread.
    <details><summary>Answer</summary>It is fast, checked every step, available at run, agent, and global scope, owned by a named person, and tested on a schedule. (<a href="./running-an-agent-in-production.md">Lesson 4</a>)</details>
 7. **Why write the acceptance thresholds before you see the results, and run each case several times?**
    <details><summary>Answer</summary>Thresholds set after the results move to fit them. Agents are not deterministic, so one pass can be luck. Repeat runs show how often a case really passes. (<a href="./choosing-and-acceptance-testing-an-agent.md">Lesson 5</a>)</details>
+
+## Sources
+
+- *Moffatt v. Air Canada*, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia
+  (decision of 14 Feb 2024): chat in Nov 2022, CA$650.88 damages, CA$812.02 in total. See
+  [Choosing and acceptance-testing an agent](./choosing-and-acceptance-testing-an-agent.md#sources).
+- Gartner press release, 25 Jun 2025: over 40% of agentic AI projects cancelled by end of
+  2027, and the agent-washing estimate. See the same Sources list. Estimate, not measured.
+- METR, Mar 2025: the seven-month doubling over 2019-2025. See
+  [Planning, reasoning & reliability](./planning-reasoning-and-reliability-across-a-run.md#sources).
+- Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
+  (Dec 2024): ground truth from the environment, and stopping conditions.
 
 ---
 

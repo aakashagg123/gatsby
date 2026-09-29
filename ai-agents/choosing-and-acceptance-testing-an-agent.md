@@ -17,8 +17,8 @@ times, scored on outcome, path, and cost, against thresholds you agree before yo
 
 You own the result either way. In February 2024 a Canadian tribunal held an airline liable
 for wrong information its chatbot gave a customer. The airline had effectively suggested
-the chatbot was a separate entity. The tribunal disagreed. It was a small-claims decision,
-not binding precedent, but the point holds: if your agent says it, you said it.
+the chatbot was a separate entity. The tribunal disagreed. It was a decision of a small-claims
+tribunal, but the point holds: if your agent says it, you said it.
 
 > 🎯 **For the product leader**
 >
@@ -220,6 +220,6 @@ trajectory grading in depth.
   (Feb 2024): the tribunal held the airline responsible for its chatbot's misleading
   statement. The chat took place in November 2022. The decision text was checked by an
   independent reviewer through a mirror copy; the CanLII page itself could not be opened
-  from our build environment. A small-claims decision, not binding precedent.
+  from our build environment. The tribunal handles small claims.
 - The vendor claim, the test table, the results, and the code are invented and
   illustrative.
