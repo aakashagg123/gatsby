@@ -63,10 +63,21 @@ one layer earlier:
   prompt was written.
 - **Live-state freshness** — for time-sensitive answers, check the age of the tool data
   behind a sample of real responses, not just whether the tool call succeeded.
+- **Noise and size** — for the same graded queries, what share of the supplied context
+  was relevant, and how many tokens did the request carry? A context that contains the
+  right fact plus a great deal of irrelevant text can still fail, because the fact is
+  buried. It also costs more. Track relevant share and total size next to accuracy.
+- **Conflicts** — check whether two supplied sources disagree (an old policy page and a
+  new one). The model cannot know which one you meant.
 
-A feature that passes all four context checks but still fails its output eval has a
-model or prompt problem, isolated and provable. A feature that fails any of the four has
+A feature that passes every context check but still fails its output eval has a
+model or prompt problem, isolated and provable. A feature that fails any of them has
 found its actual bug, before a single line of the prompt gets touched.
+
+When you change the model, rerun both sets. A newer model may handle long context
+better or worse than the old one, and it may treat a noisy context differently. The
+upgrade steps are in
+[Prompts in production](../prompt-engineering/prompts-in-production.md).
 
 ## The five-minute triage
 
@@ -76,8 +87,9 @@ When a specific answer is wrong, before touching the prompt:
    [the pipeline audit](./the-anatomy-of-a-context-pipeline.md)).
 2. Ask: was the needed fact actually in there? If no — it's a retrieval or memory miss,
    not a model miss.
-3. Ask: was it in there, but the model ignored or misused it? Only *then* is it a
-   model/prompt problem worth iterating on.
+3. Ask: was it in there, but the model ignored or misused it? Check whether it was
+   buried among a lot of irrelevant text or contradicted by another source. Only if
+   the context was clean is it a model or prompt problem worth iterating on.
 
 Skipping step 1 is the single most common reason prompt-tuning sessions run long without
 progress.
@@ -88,7 +100,7 @@ progress.
   model regression look identical and get debugged the same (slow) way.
 - **Debugging by rewriting the prompt first** — reaching for prompt changes before
   checking whether the context was even right, burning cycles on the wrong layer.
-- **A context eval that's never rerun** — building the four checks once at launch, then
+- **A context eval that's never rerun** — building the checks once at launch, then
   letting them go stale exactly like the pipeline they were meant to catch drifting.
 
 ## Practitioner checklist
@@ -98,6 +110,8 @@ progress.
 - [ ] For our last major "the AI got worse" incident, did we check context quality
       before assuming a model or prompt regression?
 - [ ] Are context evals rerun on a schedule, the same way output evals are?
+- [ ] Do we measure how much of the supplied context was relevant, not only whether the
+      right fact was present?
 
 ## Related lessons
 

@@ -1013,6 +1013,15 @@ GLOSSARY = [
  "see":("What is context engineering, for a product leader?","context-engineering/what-is-context-engineering.md"),
  "related":["context-engineering","context-contract","rag"],
 },
+{
+ "k":"context-rot","t":"Context rot","cat":"Context engineering",
+ "short":"The drop in model quality that can come as more text is packed into a request — the reason to send the smallest high-signal context, not the most.",
+ "fp":"A model attends across everything in its context window, and Anthropic's engineering guidance describes context as a finite resource with diminishing returns. As a request grows, the useful fact can get buried among irrelevant text, and cost and latency rise too. The product rule is to find the smallest set of information that makes the decision right.",
+ "example":"A support bot that gets the whole policy handbook on every question answers worse and costs more than one that gets the three relevant paragraphs.",
+ "uses":["Explaining why 'just add more context' can make answers worse","Setting a context budget for an AI feature","Deciding what to drop when the window gets tight"],
+ "see":("What is context engineering, for a product leader?","context-engineering/what-is-context-engineering.md"),
+ "related":["context-engineering","context-window","compaction","context-first"],
+},
 
 # ============================= PROMPT ENGINEERING ==========================
 {
@@ -1044,8 +1053,8 @@ GLOSSARY = [
 },
 {
  "k":"chain-of-thought","t":"Chain-of-thought (CoT)","cat":"Prompt engineering",
- "short":"Asking the model to reason step by step before committing to an answer — Wei et al. 2022's technique for multi-step reasoning tasks.",
- "fp":"Language models are next-token predictors. Committing to an answer first leaves no room to backtrack; committing to reasoning first constrains each step by the last. On math, logic, and multi-hop reasoning, appending 'think step by step' lifts accuracy by tens of percentage points. Modern reasoning-tuned models do this internally by default.",
+ "short":"Asking the model to reason step by step before committing to an answer — from Wei et al. 2022 (worked examples) and Kojima et al. 2022 ('let's think step by step').",
+ "fp":"Language models are next-token predictors. Committing to an answer first leaves no room to backtrack; committing to reasoning first constrains each step by the last. On math, logic, and multi-hop reasoning, step-by-step prompting lifts accuracy substantially. Modern reasoning-tuned models do this internally, and on current Claude models you steer it with adaptive thinking and the effort setting.",
  "example":"For a scheduling question with three constraints, the model lists each constraint, checks each candidate slot against them, then names the winner — instead of guessing the winner and back-rationalizing.",
  "uses":["Multi-step math, logic, and planning tasks","Getting a reasoning trace you can audit","Improving quality on hard tasks before upgrading models"],
  "see":("Few-shot, chain-of-thought, and self-consistency","prompt-engineering/few-shot-cot-self-consistency.md"),
@@ -1072,8 +1081,8 @@ GLOSSARY = [
 {
  "k":"xml-tags","t":"XML tags (in prompts)","cat":"Prompt engineering",
  "short":"Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.",
- "fp":"Anthropic's Claude was trained on a lot of XML-marked-up text and treats tags as strong boundary signals. Tags nest cleanly, prevent instructions from bleeding into content, and defend against prompt injection through unlabeled user input. In practice: any production prompt over a paragraph benefits.",
- "example":"<instructions>Summarize the article.</instructions><article>{{TEXT}}</article> — the model knows the article is content, not an instruction, even if the article contains directive-looking sentences.",
+ "fp":"Anthropic recommends XML tags for Claude because they mark clear boundaries between instructions, examples, and inputs. Tags nest cleanly and stop instructions from bleeding into content. They lower the risk of prompt injection through unlabeled user input, but they do not remove it. In practice: any production prompt over a paragraph benefits.",
+ "example":"<instructions>Summarize the article.</instructions><article>{{TEXT}}</article> — the boundary makes it much less likely that the model treats directive-looking sentences inside the article as instructions.",
  "uses":["Making production prompts robust to input variation","Defending against prompt injection","Building reusable scaffolds where sections are named"],
  "see":("Structured prompting: XML, delimiters, scaffolds","prompt-engineering/structured-prompting.md"),
  "related":["prompt-scaffold","prompt-injection","prompt-engineering"],

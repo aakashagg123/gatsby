@@ -57,6 +57,13 @@ that, so the material sits in the model's working memory when it starts. Constra
 before format, so the format spec is scoped by what's allowed. Examples last —
 because examples are the strongest signal, and they anchor everything above them.
 
+One rule bends this order. When the context is long, put it first. Anthropic's
+guidance says to place long documents (roughly 20,000 tokens or more) at the top of
+the prompt, above the instructions, and to put the question at the end. Their tests
+show the closing question can improve response quality by up to 30 percent on
+complex, multi-document inputs. The six parts stay the same. Only the position of a
+large context block changes.
+
 ## The six parts, one line each
 
 - **Role** — "You are a copy editor for a financial newsletter." Sets the register,
@@ -105,6 +112,22 @@ The upgraded prompt is longer. It's also *repeatable*. The one-liner gets a good
 output on a good day. The upgraded prompt gets the same shape of output every day,
 by every user, until the shape itself needs to change.
 
+## What current models change
+
+Two behaviours of recent Claude models change how you write these parts.
+
+- **Models do what you wrote, not what you meant.** Earlier models often added extra
+  work on their own. Current models follow instructions more literally. If you want
+  extra depth, extra features, or "go beyond the basics," ask for it in the prompt.
+  If you leave it out, you will not get it.
+- **A reason works better than a rule.** Compare "Never use ellipses" with "Your reply
+  will be read aloud by a text-to-speech engine, so do not use ellipses, because the
+  engine cannot pronounce them." The second version gives the model the goal. The
+  model then applies the rule correctly in cases you did not list.
+
+A useful test for the whole prompt: give it to a colleague who has no context and ask
+them to follow it. If they would be confused, the model will be too.
+
 ## Tradeoffs
 
 - **Length vs. rigidity.** Longer prompts constrain more, and also cost more tokens
@@ -139,7 +162,9 @@ by every user, until the shape itself needs to change.
 - [ ] Can I point to the role, task, context, constraints, format, and examples in
       my current prompt — or is at least one missing?
 - [ ] Is the task one verb, or has it quietly become two?
-- [ ] Are my constraints stated as things to avoid, not as things to prefer?
+- [ ] For each constraint: have I said what to do instead, and why, and not only what
+      to avoid?
+- [ ] If my input is long, is the document at the top and the question at the end?
 - [ ] Does my format spec use numbers and structure, not adjectives?
 - [ ] If the task has a "house style" a description can't capture, do I have at
       least one worked example?

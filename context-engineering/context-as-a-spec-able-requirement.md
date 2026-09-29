@@ -47,8 +47,8 @@ spec, because it's the layer engineering otherwise has to guess at while buildin
 
 Add this alongside the eval thresholds in
 [specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md), answering
-four questions using the four context types from
-[the opening lesson](./what-is-context-engineering.md):
+one question for each of the four context types from
+[the opening lesson](./what-is-context-engineering.md), plus a fifth about size:
 
 - **Instructions & policy** — which rules, tone, and boundaries does this feature need
   encoded, and who owns updating them when policy changes?
@@ -60,8 +60,12 @@ four questions using the four context types from
   framing in [Memory & context](../memory-and-context/README.md).)
 - **Live state** — what must be true *right now* for a correct answer, and which tool
   supplies it?
+- **Budget and survival** — how much context can each request carry before cost or
+  latency becomes a problem, and what has priority when space runs out? For an agent,
+  also name what must survive compaction (for example, "the user's stated constraints
+  and the approval status"), so a summary cannot silently drop it.
 
-A feature whose spec can answer all four specifically is ready to build. A feature where
+A feature whose spec can answer all five specifically is ready to build. A feature where
 any answer is "we'll figure that out later" is the feature most likely to need a rewrite
 after the first week of real usage.
 
@@ -95,6 +99,7 @@ launch.
       as its own section, not folded into "acceptance criteria"?
 - [ ] For each of the four context types: is there a named owner, or does the answer
       default to "engineering decided"?
+- [ ] Does the contract state a size budget and, for agents, what compaction must keep?
 - [ ] When policy or data sources change, is there a step that updates the context
       contract, or does it silently go stale?
 

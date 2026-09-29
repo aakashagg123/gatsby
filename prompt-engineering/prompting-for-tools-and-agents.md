@@ -10,10 +10,11 @@ steering a loop: the model reasons about what to do, picks a tool from a schema 
 supplied, receives the tool's output, reasons again, and stops when the task is
 done. That loop has a name — **ReAct** (Yao et al., 2022) — and every modern agent
 scaffold is a variant of it. The prompt engineering that runs it is a specialization
-of everything from lessons 1-6, plus three new concerns: how to describe available
-tools so the model picks the right one, how to constrain the loop so it terminates
-cleanly, and how to handle tools that fail without derailing the whole run. This
-lesson is the bridge from "prompting a model" to "prompting an agent."
+of everything from lessons 1-6, plus four new concerns. First, how to describe tools so
+the model picks the right one. Second, how to constrain the loop so it terminates
+cleanly. Third, how to handle tools that fail without derailing the whole run. Fourth,
+how to set the right amount of emphasis. This lesson is the bridge from "prompting a
+model" to "prompting an agent."
 
 > 🎯 **For the AI PM (or coding-agent user)**
 >
@@ -50,7 +51,7 @@ goal, available tools, termination rules. The model executes it. Each turn produ
 either a tool call or a final answer. Each tool output becomes new context for the
 next turn. The whole run is one prompt, extended.
 
-## Three concerns unique to agent prompts
+## Four concerns unique to agent prompts
 
 ### Concern 1 — describe tools like APIs, not features
 
@@ -114,6 +115,24 @@ failed. The fix is explicit:
 > either retry once with a corrected argument, use a fallback tool if one exists,
 > or stop and tell the user what failed.
 
+### Concern 4 — calibrate emphasis, and ground the answer
+
+Two habits from older models now backfire.
+
+- **Loud wording over-triggers.** Teams once wrote "CRITICAL: You MUST use this tool
+  when..." to make a model call a tool it ignored. Current Claude models respond
+  strongly to the system prompt, so the same wording makes them call the tool too
+  often. Write "Use this tool when..." and raise the emphasis only if a test shows
+  the tool is still ignored. The same applies to "If in doubt, use the tool."
+- **Confident answers about things the agent never opened.** Add a grounding rule:
+  "Never state facts about a file, record, or page you have not read. If the user
+  names one, read it first." This cuts fabricated claims in agents that work over
+  files or documents.
+
+For independent calls, say so. A line like "If two tool calls do not depend on each
+other, make them at the same time" lets the model run them in parallel. That saves
+round trips, which cost the most latency in a loop.
+
 ## The system prompt for an agent
 
 Putting it together, a production agent system prompt tends to include:
@@ -159,6 +178,9 @@ scaffold. But the ceiling on agent quality is set by that system prompt.
 - **Loops that don't stop.** No explicit success or impossibility condition; agent
   keeps trying variants. Named termination criteria fix it.
 - **Runaway cost from too many tools.** The agent explores. Budget it explicitly.
+- **Over-triggering after a model upgrade.** Emphatic wording that fixed an ignored
+  tool on an old model now makes the new model call it on every turn. Re-test tool
+  prompts on each model change.
 
 ## Practitioner checklist
 
@@ -172,6 +194,8 @@ scaffold. But the ceiling on agent quality is set by that system prompt.
       empty?
 - [ ] Is there a step budget in the runtime *and* an intended step count in the
       prompt?
+- [ ] Have I removed emphatic wording (CRITICAL, MUST, "if in doubt") that was added
+      for an older model and may now over-trigger?
 
 ## Related lessons
 

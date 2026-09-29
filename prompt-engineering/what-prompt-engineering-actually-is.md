@@ -77,11 +77,18 @@ Three things distinguish engineering from typing:
   [eval-driven development](../technical-product-management/tpm-for-ai-products.md)
   discipline the AI PM track builds on.
 
+One more fact belongs in the mental model: **a prompt is written for a specific
+model.** Models change how literally they follow instructions, how eagerly they call
+tools, and how much they think. A prompt tuned on one version can misbehave on the next
+without a single word changing. This is why versioning and evaluation are not optional,
+and why lesson 10 exists.
+
 The rest of this module is the specific craft. Lesson 2 breaks a prompt into its six
 named parts. Lessons 3 through 6 climb the ladder from everyday productivity into
 techniques power users depend on. Lessons 7 and 8 cover what changes when the model
 can act — call tools, run code, edit files. Lesson 9 is the diagnostic playbook when
-something goes wrong.
+something goes wrong. Lesson 10 covers how to run prompts as production assets:
+versioning, testing, and surviving model upgrades.
 
 ## Failure modes
 
@@ -111,4 +118,5 @@ something goes wrong.
 
 - [The anatomy of a prompt](./the-anatomy-of-a-prompt.md)
 - [When prompts fail: the diagnostic playbook](./when-prompts-fail.md)
+- [Prompts in production](./prompts-in-production.md)
 - [Context engineering — why prompt engineering doesn't scale alone](../context-engineering/why-prompt-engineering-doesnt-scale.md)

@@ -8,8 +8,8 @@ Some tasks are too complex for one prompt to solve well. **Prompt chaining** bre
 task into a sequence of smaller prompts, each doing one thing, with the output of
 one feeding the input of the next. A chain that does "find the top three concerns in
 this document, draft an email addressing each, then rewrite in the CEO's voice" runs
-three prompts, not one — and each prompt does its one job better than any single
-prompt would do all three. Chaining trades one call for several, and one prompt to
+three prompts, not one. Each prompt does its one job better than a single prompt
+would do all three. Chaining trades one call for several, and one prompt to
 debug for several to debug, in exchange for higher-quality outputs and clearer
 failure modes. It's the last technique inside a single-user, single-thread workflow
 before you cross into the *agentic* territory of the next two lessons, where the
@@ -47,6 +47,18 @@ Each box is one prompt. Each arrow is a data handoff. The dotted arrow is the
 underappreciated part: a chain can *check* an intermediate output and fail early
 rather than passing garbage forward. A one-prompt version has to succeed at all
 three steps in one shot, with no place to stop and check.
+
+## Chain for control, not for capability
+
+Recent models handle more multi-step reasoning inside a single call. With adaptive
+thinking and sub-agents, the model often plans and checks its own work. So the reason
+to chain has shifted. You no longer chain because the model cannot think through five
+steps. You chain because you need to **inspect an intermediate result**, **enforce a
+fixed pipeline**, **branch on a check**, or **use a different model per step**.
+
+The most common chain is **self-correction**: generate a draft, ask the model to
+review it against stated criteria, then ask it to revise. Each step is its own call,
+so you can log it, score it, or stop it at any point.
 
 ## When to chain
 

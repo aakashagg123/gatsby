@@ -86,6 +86,30 @@ Naming which of the four is missing turns a vague "the AI seems dumb" complaint 
 specific, buildable fix. Most quality escalations are exactly one of these four things,
 mislabeled as a model problem.
 
+## More context is not better context
+
+The four sources tempt a team to add more of each. Resist it. Anthropic's engineering
+guidance on context treats context as a **finite resource with diminishing returns**.
+As the amount of text in a request grows, model performance can degrade, an effect
+they call *context rot*. Every extra token also costs money and time on every call.
+
+Their guiding principle is a good rule for a product leader: **find the smallest set of
+high-signal information that gives the model what it needs for this decision.**
+
+So context engineering has two jobs, not one:
+
+- **Add** what is missing: the fact, the rule, the history, the live state.
+- **Remove** what does not help: stale documents, contradictory sources, and the "just
+  in case" pages that bury the one paragraph that matters.
+
+This is a product decision because it trades quality against cost and latency. A
+pipeline that passes the whole handbook to the model on every request is not
+"well-grounded." It is expensive, slow, and often less accurate than one that passes
+three good paragraphs. The mechanics of budgeting a window are in
+[Context engineering (engineering depth)](../content/00-foundations/context-engineering.md)
+and [Context & memory](../agentic-ai/context-and-memory.md). Your job is to ask the
+question: *what is the smallest context that still makes this decision right?*
+
 ## Why this needed a name at all
 
 Before this discipline had a name, teams reached for **prompt engineering**: write a
@@ -104,6 +128,8 @@ for exactly how and where it breaks.
   "giving the model context."
 - **The unnamed input** — a team that can't say which of the four context types a
   feature depends on, so nobody notices when one of them silently breaks.
+- **The kitchen-sink context** — sending everything that might be relevant, so the
+  useful fact is buried, cost and latency rise, and answers get worse, not better.
 
 ## Practitioner checklist
 
@@ -113,6 +139,8 @@ for exactly how and where it breaks.
       before assuming the model was at fault?
 - [ ] Have I asked "what does this decision need to see?" instead of "what data do we
       have?" in the last planning conversation about this feature?
+- [ ] For each context source, can I say what we would remove if the window got tight —
+      and do we send only what the decision needs?
 
 ## Related lessons
 
