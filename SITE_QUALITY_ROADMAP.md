@@ -8,6 +8,14 @@ comprehensiveness) followed by content waves that close what's missing. "Authori
 file exists so the program's state survives context resets across sessions — update it as
 each module ships.
 
+> **Update (2026-09-29).** The status table below records the first audit, which used a
+> voice grep and a spoke-link check. That method could not find wrong facts or hard-to-read
+> prose, and later work found both (see `CONTENT_FRAMEWORK.md`, section 10). Treat "no
+> material gaps" below as "passed the first audit's checks". New passes follow
+> `CONTENT_FRAMEWORK.md` and are tracked in the "Framework-based passes" section at the
+> end of this file. Note: the `WRITER.md` file named below is not in the repository. The
+> style reference in the repository is `WRITING-STYLE.md`.
+
 ## How the work is scoped
 
 - **Voice pass**: rewrite every lesson against `WRITER.md` — thesis-first, active voice,
@@ -68,3 +76,41 @@ each module ships.
 See `/root/.claude/plans/humble-crunching-meadow.md` (session-local, not in the repo) for
 the full plan this roadmap was built from, including exploration findings on the
 `forward-deployed` repo's nav patterns and gatsby's current per-track-shape nav code.
+
+## Framework-based passes
+
+Each module is improved with the workflow in `CONTENT_FRAMEWORK.md` and scored with
+`python3 scripts/check_module.py <track>`. Baseline below was measured on 2026-09-29,
+before any framework-based pass. Verdicts are readability plus structure checks; WARN for
+a track without review stamps means it has not yet been onboarded to the full standard.
+
+| Track | Lessons | Avg sentence | >30w % | Flesch | Test yourself | Verdict |
+| --- | --- | --- | --- | --- | --- | --- |
+| `agentic-ai` | 8 | 15.1 | 5 | 52 | yes | WARN |
+| `agentic-workflows` | 2 | 28.5 | 35 | 41 | no | FAIL |
+| `ai-agents` | 3 | 26.6 | 40 | 48 | no | FAIL |
+| `ai-security-and-guardrails` | 2 | 24.4 | 28 | 42 | no | FAIL |
+| `api-integrations` | 6 | 25.9 | 31 | 46 | no | FAIL |
+| `context-engineering` | 7 | 19.5 | 13 | 55 | no | WARN |
+| `cost-optimization` | 2 | 26.1 | 32 | 44 | no | FAIL |
+| `evaluation-and-observability` | 2 | 26.7 | 29 | 47 | no | FAIL |
+| `first-principles` | 6 | 14.2 | 5 | 55 | yes | WARN |
+| `generative-ai` | 6 | 20.1 | 17 | 58 | no | WARN |
+| `knowledge-graphs` | 8 | 15.7 | 7 | 50 | no | WARN |
+| `llms` | 7 | 23.3 | 25 | 52 | no | FAIL |
+| `memory-and-context` | 4 | 27.0 | 34 | 34 | no | FAIL |
+| `product-sense` | 7 | 15.4 | 7 | 53 | yes | WARN |
+| `prompt-engineering` | 10 | 13.3 | 3 | 67 | yes | WARN |
+| `rag-vector-databases` | 7 | 20.7 | 17 | 52 | no | WARN |
+| `system-design` | 8 | 12.7 | 2 | 48 | no | WARN |
+| `technical-product-management` | 9 | 16.5 | 10 | 54 | yes | WARN |
+| `technical-product-sense` | 9 | 14.8 | 6 | 59 | yes | WARN |
+| `tool-calling` | 3 | 24.9 | 25 | 47 | no | FAIL |
+
+### Passes completed or in progress
+
+| Track | Status | Notes |
+| --- | --- | --- |
+| `prompt-engineering/` | Reviewed and fixed (PR #136), not yet onboarded | Fact-checked against Anthropic guidance. Prefill and CoT attribution errors fixed. Lesson 10 added. Still needs stamps, Under-the-hood sections and a Sources list to meet the full standard. |
+| `context-engineering/` | Reviewed and extended (PR #136), not yet onboarded | Added finite-context, agent, trust and noise coverage. Same follow-up as above. |
+| `ai-agents/` | First framework-based pass (in progress) | Weakest by readability among fast-moving tracks. |

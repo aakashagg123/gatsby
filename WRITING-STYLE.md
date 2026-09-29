@@ -32,6 +32,13 @@ the teaching useful.
 - **Numbers, code, commands, and named APIs stay exactly as they are.**
   Simplified English applies to explanatory prose, not to literal syntax.
 
+## Numeric targets
+
+The "20–25 words" aim is now measured. A module passes when its average sentence is
+20 words or fewer, at most 12% of its sentences run over 30 words, and its Flesch
+reading ease is 50 or higher. See `CONTENT_FRAMEWORK.md` (section 4) and run
+`python3 scripts/check_module.py <track>`.
+
 ## What this is not
 
 This is not literal ASD-STE100: no fixed ~900-word approved vocabulary, no
