@@ -368,16 +368,17 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
     <h1>AI agents — recap &amp; real-world examples</h1>
   </div>
   <h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>A chatbot's invented refund policy, and who paid.</strong> In 2024 a customer asked Air Canada's
-website chatbot about bereavement fares. The chatbot said he could claim the discount after
-travel. The airline's policy did not allow that. The Civil Resolution Tribunal of British
-Columbia (<em>Moffatt v. Air Canada</em>, 2024 BCCRT 149) rejected the airline's argument that the
-chatbot was a separate entity. It held the company responsible for the information on its
-website and awarded the customer the fare difference, about CA$812. 🎯 <em>Takeaway:</em> if your
-agent says it, you said it. This is the case for
+<p><strong>A chatbot's invented refund policy, and who paid.</strong> In November 2022 a customer asked Air
+Canada's website chatbot about bereavement fares. The chatbot said he could claim the
+discount after travel. The airline's policy did not allow that. In February 2024 the Civil
+Resolution Tribunal of British Columbia (<em>Moffatt v. Air Canada</em>, 2024 BCCRT 149) rejected
+the airline's suggestion that the chatbot was a separate entity. It held the company
+responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
+in total with interest and fees. This was a small-claims decision, not binding precedent.
+🎯 <em>Takeaway:</em> if your agent says it, you said it. This is the case for
 <a href="running-an-agent-in-production.html">risk tiers and approval gates</a> on any action or
 statement that binds the company.</p>
-<p><strong>Agent-washing, measured.</strong> In June 2025 Gartner predicted that over 40% of agentic AI
+<p><strong>Agent-washing, estimated.</strong> In June 2025 Gartner predicted that over 40% of agentic AI
 projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
 or weak risk controls. It also described "agent-washing": rebranding existing assistants,
 robotic process automation, and chatbots as agents, and it estimated that only about 130 of
@@ -385,14 +386,15 @@ the thousands of vendors were real. 🎯 <em>Takeaway:</em>
 <a href="choosing-and-acceptance-testing-an-agent.html">test the claim on your own cases</a> before you
 sign, and place any pitch on
 <a href="what-an-agent-is-and-how-much-autonomy-it-needs.html">the autonomy dial</a>.</p>
-<p><strong>Agents get better at short tasks first.</strong> The research group METR measures agents by how
-long a task, in human time, they can finish with 50% success. It reports that this length
-has doubled roughly every seven months, measured on software tasks. 🎯 <em>Takeaway:</em> progress
-is real, and a task that takes a person an hour can still be a coin flip.
+<p><strong>Agents get better at short tasks first.</strong> The research group Model Evaluation &amp; Threat Research (METR) measures agents by how
+long a task, in human time, they can finish with 50% success. In a March 2025 study, this
+length had doubled about every seven months since 2019, measured on software tasks. METR has
+reported a faster recent pace since. 🎯 <em>Takeaway:</em> progress is real, and success still falls
+as tasks get longer.
 <a href="planning-reasoning-and-reliability-across-a-run.html">Judge reliability at the real task length</a>,
 not on a three-step demo.</p>
 <p><strong>Feedback beats cleverness.</strong> Anthropic's guidance on building agents says an agent should
-get "ground truth from the environment" at each step, such as tool results or code
+gain "ground truth" from the environment at each step, such as tool results or code
 execution, and should have stopping conditions. 🎯 <em>Takeaway:</em> what an agent can see when it
 is wrong predicts its reliability better than how sophisticated its reasoning is.</p>
 <p><strong>The runaway loop (an illustration).</strong> Picture an agent that files tickets, and a supplier

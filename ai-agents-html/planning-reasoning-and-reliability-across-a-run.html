@@ -551,12 +551,14 @@ reliability matter more than they look.</p>
   that step, not the whole task. This turns one long chain into several short ones.</li>
 </ul>
 <h2 id="evidence-that-length-is-the-problem">Evidence that length is the problem</h2>
-<p>The pattern shows up in research on real agents. The research group METR measures agents by
-the length of task they can finish, where length is the time a skilled human needs. It
-reports that the task length an agent completes with 50% success has been doubling about
-every seven months. This is progress, and it is also a warning. A task that a person does
-in an hour is still a coin flip for many agents. The work was measured on software tasks.
-Do not assume the same numbers hold for your domain. Measure your own.</p>
+<p>The pattern shows up in research on real agents. The research group METR (Model Evaluation
+&amp; Threat Research) measures agents by the length of task they can finish, where length is
+the time a skilled human needs. In a March 2025 study, the task length an agent completed
+with 50% success had doubled about every seven months since 2019. METR has since reported a
+faster recent pace. Check its latest page before you quote a rate.</p>
+<p>Read this as progress, and as a reminder that success falls as tasks get longer. The work
+measured software tasks. Do not assume the same numbers hold for your domain. Measure your
+own.</p>
 <h2 id="how-an-agent-reasons-at-a-glance">How an agent reasons, at a glance</h2>
 <p>An agent's thinking is the model working through a small set of patterns.</p>
 <ul>
@@ -569,8 +571,8 @@ Do not assume the same numbers hold for your domain. Measure your own.</p>
   gains. Models respond well to a real check. They grade their own unverifiable claims
   poorly.</li>
 </ul>
-<p>How much the model should think is now a setting, not a prompt trick. On current Claude
-models, adaptive thinking lets the model decide when and how much to think. An <code>effort</code>
+<p>How much the model should think is now a setting, not a prompt trick. On Claude 4.6 and
+later models, adaptive thinking lets the model decide when and how much to think. An <code>effort</code>
 setting controls the depth. Lower effort is faster and cheaper. Higher effort helps on hard
 steps. This is a cost and latency decision as much as a quality one. Pattern choice is
 covered in <a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; reasoning</a>.</p>
@@ -578,9 +580,9 @@ covered in <a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; re
 <p>The strongest lever on an agent's performance is the feedback it gets from what it acts on.</p>
 <p>An agent that can see a failing test, a clear error message, or a validator's verdict
 corrects itself. An agent that acts into a void drifts in the wrong direction, however
-capable the model is. Anthropic's guidance says the same: at each step the agent should get
-"ground truth from the environment," such as tool results or code execution, and there
-should be stopping conditions, such as a maximum number of iterations.</p>
+capable the model is. Anthropic's guidance says the same: at each step the agent should gain "ground truth" from
+the environment, such as tool results or code execution, and there should be stopping
+conditions, such as a maximum number of iterations.</p>
 <p>Before you reach for a smarter model, ask a simpler question. What would the agent see if
 it got something wrong?</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
@@ -657,11 +659,11 @@ length.</p>
   (Dec 2024): ground truth from the environment each step, and stopping conditions.
   Checked 2026-09.</li>
 <li>Anthropic, <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>:
-  adaptive thinking and the <code>effort</code> setting on current Claude models. Checked 2026-09.</li>
-<li>METR, <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Measuring AI Ability to Complete Long Tasks</a>
-  (Mar 2025): the 50% time horizon and the roughly seven-month doubling, measured on
-  software tasks. Confirmed through search-result excerpts of the abstract; the page could
-  not be opened when this lesson was written.</li>
+  adaptive thinking and the <code>effort</code> setting on Claude 4.6 and later models. Checked 2026-09.</li>
+<li>METR, <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Measuring AI Ability to Complete Long Software Tasks</a>
+  (Mar 2025): the 50% time horizon and the roughly seven-month doubling over 2019-2025,
+  measured on software tasks. Later METR updates report a faster recent pace. Not verified
+  here: the page could not be opened, so this rests on search-result excerpts.</li>
 <li>The table is arithmetic: each cell is the per-step rate raised to the number of steps.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="what-an-agent-is-and-how-much-autonomy-it-needs.html"><span class="lbl">← Previous</span><span class="ttl">What an agent is, and how much autonomy it needs</span></a><a class="navcard next" href="when-not-to-build-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">When not to build an agent</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>

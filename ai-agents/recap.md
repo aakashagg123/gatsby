@@ -4,17 +4,18 @@
 
 ## Real-world examples & war stories
 
-**A chatbot's invented refund policy, and who paid.** In 2024 a customer asked Air Canada's
-website chatbot about bereavement fares. The chatbot said he could claim the discount after
-travel. The airline's policy did not allow that. The Civil Resolution Tribunal of British
-Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149) rejected the airline's argument that the
-chatbot was a separate entity. It held the company responsible for the information on its
-website and awarded the customer the fare difference, about CA$812. 🎯 *Takeaway:* if your
-agent says it, you said it. This is the case for
+**A chatbot's invented refund policy, and who paid.** In November 2022 a customer asked Air
+Canada's website chatbot about bereavement fares. The chatbot said he could claim the
+discount after travel. The airline's policy did not allow that. In February 2024 the Civil
+Resolution Tribunal of British Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149) rejected
+the airline's suggestion that the chatbot was a separate entity. It held the company
+responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
+in total with interest and fees. This was a small-claims decision, not binding precedent.
+🎯 *Takeaway:* if your agent says it, you said it. This is the case for
 [risk tiers and approval gates](./running-an-agent-in-production.md) on any action or
 statement that binds the company.
 
-**Agent-washing, measured.** In June 2025 Gartner predicted that over 40% of agentic AI
+**Agent-washing, estimated.** In June 2025 Gartner predicted that over 40% of agentic AI
 projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
 or weak risk controls. It also described "agent-washing": rebranding existing assistants,
 robotic process automation, and chatbots as agents, and it estimated that only about 130 of
@@ -23,15 +24,16 @@ the thousands of vendors were real. 🎯 *Takeaway:*
 sign, and place any pitch on
 [the autonomy dial](./what-an-agent-is-and-how-much-autonomy-it-needs.md).
 
-**Agents get better at short tasks first.** The research group METR measures agents by how
-long a task, in human time, they can finish with 50% success. It reports that this length
-has doubled roughly every seven months, measured on software tasks. 🎯 *Takeaway:* progress
-is real, and a task that takes a person an hour can still be a coin flip.
+**Agents get better at short tasks first.** The research group Model Evaluation & Threat Research (METR) measures agents by how
+long a task, in human time, they can finish with 50% success. In a March 2025 study, this
+length had doubled about every seven months since 2019, measured on software tasks. METR has
+reported a faster recent pace since. 🎯 *Takeaway:* progress is real, and success still falls
+as tasks get longer.
 [Judge reliability at the real task length](./planning-reasoning-and-reliability-across-a-run.md),
 not on a three-step demo.
 
 **Feedback beats cleverness.** Anthropic's guidance on building agents says an agent should
-get "ground truth from the environment" at each step, such as tool results or code
+gain "ground truth" from the environment at each step, such as tool results or code
 execution, and should have stopping conditions. 🎯 *Takeaway:* what an agent can see when it
 is wrong predicts its reliability better than how sophisticated its reasoning is.
 

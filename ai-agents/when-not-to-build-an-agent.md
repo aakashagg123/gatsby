@@ -116,8 +116,8 @@ verifiability, and volume before anyone sees it run.
 
 - **Autonomy vs. checking cost.** More autonomy saves doing and adds checking. The saving
   depends on how cheap the check is.
-- **Build now vs. wait.** Model prices keep falling. A task ruled out once may pass later.
-  Set a date to re-run the numbers.
+- **Build now vs. wait.** Prices, models, and tools change. A task ruled out once may pass
+  later. Set a date to re-run the numbers.
 - **Agent vs. workflow.** A workflow gives up flexibility for predictable cost. Choose it
   wherever an expert can write the steps.
 - **Human gate vs. throughput.** A gate is slow and costs staff time. It is the price of
@@ -132,8 +132,8 @@ verifiability, and volume before anyone sees it run.
   a full-time review desk. The promised saving never appears.
 - **Sunk-cost autonomy.** A workflow should replace a struggling agent. It does not,
   because the agent is already built and nobody wants to admit the first call was wrong.
-- **Static economics on falling costs.** A task is ruled out once and never revisited, while
-  the prices that ruled it out keep dropping.
+- **Static economics.** A task is ruled out once and never revisited, while the prices and
+  capabilities that ruled it out have moved.
 - **Agent-washing on the buy side.** A vendor sells a rebranded chatbot or script as an
   agent. See [Choosing and acceptance-testing an agent](./choosing-and-acceptance-testing-an-agent.md).
 

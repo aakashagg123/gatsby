@@ -193,6 +193,5 @@ each, read [multi-agent and protocols](../agentic-ai/multi-agent-and-protocols.m
   solution first. Checked 2026-09.
 - Anthropic, [Donating MCP to the Agentic AI Foundation](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation)
   (Dec 2025): the donation and MCP's description. Checked 2026-09.
-- Google Developers Blog, [Google Cloud donates A2A to Linux Foundation](https://developers.googleblog.com/en/google-cloud-donates-a2a-to-linux-foundation/)
-  (Jun 2025): the A2A donation. Confirmed through search-result excerpts and secondary
-  reports; the page itself could not be opened when this lesson was written.
+- Google Cloud, [Agent2Agent protocol is getting an upgrade](https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade)
+  (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-09.
