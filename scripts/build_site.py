@@ -411,7 +411,8 @@ LANDING = """<!doctype html>
       <span class="tag">Generative AI</span>
       <h2>AI agents →</h2>
       <p>The loop behind every agent, how much autonomy a task needs, what keeps it
-      reliable across many steps, and when not to build one at all.</p>
+      reliable across many steps, when not to build one, how to run one safely, and how to
+      choose one.</p>
     </a>
     <a class="card" href="agentic-workflows/index.html">
       <span class="tag">Generative AI</span>

@@ -4,66 +4,83 @@
 
 ## Real-world examples & war stories
 
-**Coding agents beating open-ended writing agents to reliability.** Across the industry,
-agents that work inside a codebase — where a failing test gives immediate, unambiguous
-feedback — improved faster and became trustworthy sooner than agents built for open-ended
-writing or research tasks, where "did this work?" has no clean answer. 🎯 *Takeaway:*
-[the environment's feedback quality](./planning-reasoning-and-reliability-across-a-run.md)
-predicts an agent's reliability better than the sophistication of its reasoning does.
+**A chatbot's invented refund policy, and who paid.** In 2024 a customer asked Air Canada's
+website chatbot about bereavement fares. The chatbot said he could claim the discount after
+travel. The airline's policy did not allow that. The Civil Resolution Tribunal of British
+Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149) rejected the airline's argument that the
+chatbot was a separate entity. It held the company responsible for the information on its
+website and awarded the customer the fare difference, about CA$812. 🎯 *Takeaway:* if your
+agent says it, you said it. This is the case for
+[risk tiers and approval gates](./running-an-agent-in-production.md) on any action or
+statement that binds the company.
 
-**A customer-service chatbot bound by a hallucinated policy.** A well-known incident saw
-an airline's support chatbot invent a refund policy that didn't exist; a tribunal later
-held the company to the promise the bot had made up. 🎯 *Takeaway:* this is exactly what
-[an unverifiable, high-stakes action with no human gate](./when-not-to-build-an-agent.md)
-looks like in production — the fix isn't a smarter model, it's not letting an
-unsupervised agent make binding, irreversible commitments in the first place.
+**Agent-washing, measured.** In June 2025 Gartner predicted that over 40% of agentic AI
+projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
+or weak risk controls. It also described "agent-washing": rebranding existing assistants,
+robotic process automation, and chatbots as agents, and it estimated that only about 130 of
+the thousands of vendors were real. 🎯 *Takeaway:*
+[test the claim on your own cases](./choosing-and-acceptance-testing-an-agent.md) before you
+sign, and place any pitch on
+[the autonomy dial](./what-an-agent-is-and-how-much-autonomy-it-needs.md).
 
-**"Agent-washing" in vendor pitches.** As agent hype grew, a recurring pattern of
-enterprise complaints emerged: products marketed as autonomous "agents" turned out, on
-inspection, to be fixed scripted workflows with a single model call inside them — or the
-reverse, genuinely open-ended systems marketed as predictable, scoped assistants. 🎯
-*Takeaway:* [placing a proposal honestly on the autonomy spectrum](./what-an-agent-is-and-how-much-autonomy-it-needs.md)
-before signing off on it catches a mismatch between what was promised and what was built.
+**Agents get better at short tasks first.** The research group METR measures agents by how
+long a task, in human time, they can finish with 50% success. It reports that this length
+has doubled roughly every seven months, measured on software tasks. 🎯 *Takeaway:* progress
+is real, and a task that takes a person an hour can still be a coin flip.
+[Judge reliability at the real task length](./planning-reasoning-and-reliability-across-a-run.md),
+not on a three-step demo.
 
-**Early coding-agent benchmarks that looked strong on short tasks and collapsed on long
-ones.** As agent benchmarks matured, a consistent pattern appeared: success rates that
-looked respectable on short, few-step tasks fell sharply as task length grew — the
-signature of compounding per-step error rather than any single dramatic failure. 🎯
-*Takeaway:* [demo-horizon thinking](./planning-reasoning-and-reliability-across-a-run.md)
-— judging a three-step demo as if it predicts thirty-step production performance — is one
-of the most consistent ways teams overestimate what an agent will do in the real world.
+**Feedback beats cleverness.** Anthropic's guidance on building agents says an agent should
+get "ground truth from the environment" at each step, such as tool results or code
+execution, and should have stopping conditions. 🎯 *Takeaway:* what an agent can see when it
+is wrong predicts its reliability better than how sophisticated its reasoning is.
 
-**"Overfunded BPO" concerns in early agent startups.** As service-as-a-software pitches
-proliferated, a recurring skeptical pattern emerged in due diligence: some AI services
-marketed as autonomous were, on closer inspection, staffed heavily by humans quietly doing
-the work behind the interface. 🎯 *Takeaway:*
-[the honest supervised cost](./when-not-to-build-an-agent.md), not the marketed autonomy
-level, is the number that reveals whether an agent economy is real or subsidized.
+**The runaway loop (an illustration).** Picture an agent that files tickets, and a supplier
+that changes an email format. A repeat cap stops the first loop within minutes, a per-agent
+kill switch limits the damage, and the audit trail shows the cause. 🎯 *Takeaway:* controls
+that live in code, tested before launch, are what turn an incident into a small one. See the
+[hour-by-hour example](./running-an-agent-in-production.md).
 
 ## Module recap
 
 | Lesson | The one idea | The question it makes you ask |
 | --- | --- | --- |
-| [What an agent is, and how much autonomy it needs](./what-an-agent-is-and-how-much-autonomy-it-needs.md) | An agent is a loop; the real design decision is how much autonomy the task needs | Could I draw this task as a flowchart — and if so, why pay for an agent to rediscover it? |
-| [Planning, reasoning & reliability across a run](./planning-reasoning-and-reliability-across-a-run.md) | Small per-step error rates compound into large end-to-end failure over long runs | What does the compounding math predict for this task's typical length, given our real per-step success rate? |
-| [When not to build an agent](./when-not-to-build-an-agent.md) | An agent only pays off where work is verifiable, low-stakes-if-wrong, and frequent enough | What's the supervised cost — including catching its mistakes — against the honest cost of the old way? |
+| [What an agent is, and how much autonomy it needs](./what-an-agent-is-and-how-much-autonomy-it-needs.md) | An agent is a loop. The real design choice is how much autonomy the task needs. | Could I draw this task as a flowchart? If so, why pay an agent to rediscover it? |
+| [Planning, reasoning & reliability across a run](./planning-reasoning-and-reliability-across-a-run.md) | Small per-step error rates compound into large end-to-end failure. | What does the compounding maths predict at this task's real length? |
+| [When not to build an agent](./when-not-to-build-an-agent.md) | An agent pays off only where work is cheap to check, survivable when wrong, and frequent. | What is the supervised cost, including catching its mistakes, against the old way? |
+| [Running an agent in production](./running-an-agent-in-production.md) | Limits and gates live in code, matched to the risk of each action. | If it started misbehaving now, how fast could we stop it? |
+| [Choosing and acceptance-testing an agent](./choosing-and-acceptance-testing-an-agent.md) | Agree the pass bar first, then test on your own cases, several times. | What pass rate, cost, and failure behaviour would we accept, in writing? |
 
-**The through-line:** the loop behind an agent is simple; almost everything that
-determines whether it succeeds is a decision made around it — how much autonomy it's
-given, how well it's set up to notice its own mistakes, and whether the task was ever a
-good economic fit for a loop in the first place. This module deliberately stayed at that
-decision altitude rather than re-deriving the mechanics already developed in full depth in
-[Agentic AI for the AI PM](../agentic-ai/README.md), and rather than repeating what
-[Tool calling](../tool-calling/README.md) and [Memory & context](../memory-and-context/README.md)
-already cover in this same family, because the mistakes that actually sink agent
-initiatives are rarely mechanical. They're a scope call made by demo appeal instead of
-economics, or a reliability bar set by a three-step test instead of the real thirty-step
-task.
+**The through-line:** the loop behind an agent is simple. Almost everything that decides
+whether it succeeds is a decision around the loop. How much autonomy does it get? How does
+it notice its own mistakes? Was the task ever a good fit? What limits and gates surround it?
+Was the claim tested before you paid? This module stays at that decision altitude and points
+to [Agentic AI for the AI PM](../agentic-ai/README.md) for the mechanics.
 
 > **Walk-away question:** *"For this agent proposal: have we placed it honestly on the
-> autonomy spectrum, do we know what our real per-step reliability implies at its actual
-> task length, and does the honest supervised cost beat what we're already doing today?"*
+> autonomy dial, do we know the reliability at its real task length, does the supervised cost
+> beat the old way, are the limits and gates enforced in code, and did it pass a test we
+> wrote before we saw the results?"*
 
-If yes, this is an agent worth building. If no, you now know exactly which lesson in this
-module to reread — and where the deeper engineering lives, one module away in
-[Agentic AI for the AI PM](../agentic-ai/README.md).
+If yes, this is an agent worth running. If no, you know which lesson to reread.
+
+## Test yourself
+
+1. **What is the difference between a workflow and an agent?**
+   <details><summary>Answer</summary>In a workflow your code defines the path, and the model works inside fixed steps. In an agent the model directs its own process and tool use. Autonomy is a dial between the two. (<a href="./what-an-agent-is-and-how-much-autonomy-it-needs.md">Lesson 1</a>)</details>
+2. **A step succeeds 95% of the time. Roughly how often does a 20-step task succeed?**
+   <details><summary>Answer</summary>About 36%, because per-step rates multiply (0.95 to the power of 20). At 99% per step the same task succeeds about 82% of the time. (<a href="./planning-reasoning-and-reliability-across-a-run.md">Lesson 2</a>)</details>
+3. **What is the "supervised cost," and why does it matter more than the cost of one run?**
+   <details><summary>Answer</summary>It is the cost of a run plus the cost of catching the runs that go wrong, compared with the old way. An agent that is cheap per run but needs full review can cost more than the old process. (<a href="./when-not-to-build-an-agent.md">Lesson 3</a>)</details>
+4. **Name the three questions that decide whether a task suits an autonomous agent.**
+   <details><summary>Answer</summary>Is the work cheap to check? Is a mistake reversible and low-cost? Does it happen often enough to repay the setup cost? (<a href="./when-not-to-build-an-agent.md">Lesson 3</a>)</details>
+5. **Why should limits such as a cost cap live in code and not in the prompt?**
+   <details><summary>Answer</summary>A prompt is a request. A confused or hijacked run can ignore it. Code enforces the limit whatever the model decides. (<a href="./running-an-agent-in-production.md">Lesson 4</a>)</details>
+6. **What makes a kill switch real and not decorative?**
+   <details><summary>Answer</summary>It is fast, checked every step, available at run, agent, and global scope, owned by a named person, and tested on a schedule. (<a href="./running-an-agent-in-production.md">Lesson 4</a>)</details>
+7. **Why write the acceptance thresholds before you see the results, and run each case several times?**
+   <details><summary>Answer</summary>Thresholds set after the results move to fit them. Agents are not deterministic, so one pass can be luck. Repeat runs show how often a case really passes. (<a href="./choosing-and-acceptance-testing-an-agent.md">Lesson 5</a>)</details>
+
+---
+
+← Back to [module overview](./README.md)
