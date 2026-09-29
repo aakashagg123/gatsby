@@ -74,6 +74,26 @@ structured knowledge graph specifically — is covered in
   quarterly, a retrieval corpus refreshed daily — and alert when a consumer falls behind
   its source's SLA, not just when the source itself goes untouched.
 
+## Trust and permissions: what may enter the context
+
+Governance also decides which content is allowed into the context, and how much the
+model may trust it. Two problems come with scale.
+
+- **Not all context is equally trusted.** Your own instructions are trusted. A retrieved
+  web page, a customer email, or a tool result is not. Any of them can contain text
+  written to look like an instruction. That is *indirect prompt injection*. Keep
+  untrusted content clearly separated from instructions, and never let it grant new
+  permissions. Delimiters help but do not solve it. The layered defence is in the
+  [security module](../ai-security-and-guardrails/the-threat-model-and-guardrails.md).
+- **Retrieval must respect access rules.** If the retrieval step can fetch a document
+  the current user may not read, the model can repeat it. Apply the user's permissions
+  when you *retrieve*, not after the model has answered. Shared corpora make this
+  harder, because one index may hold content for many audiences.
+
+Add both to the source registry. For each shared source, record who may read it and
+whether its content is trusted or untrusted. Then a review can ask a concrete question:
+*which untrusted sources reach which features, and what can those features do?*
+
 ## Failure modes
 
 - **Policy drift** — the same rule encoded independently in multiple features, updated
@@ -83,6 +103,10 @@ structured knowledge graph specifically — is covered in
 - **Governance theater** — a governance document exists, but no registry connects a
   shared source to the features that consume it, so the document can't actually be acted
   on when something changes.
+- **The over-permissive index** — retrieval searches everything and filters later, so a
+  user's question can surface a document they should never see.
+- **Untrusted text with authority** — a retrieved page or tool output is placed next to
+  the instructions with no separation, so text inside it is treated as a command.
 
 ## Practitioner checklist
 
@@ -92,6 +116,8 @@ structured knowledge graph specifically — is covered in
       feature, or does each team have to notice on its own?
 - [ ] Could we reconstruct, for a specific past model call, exactly what context it was
       given — for an audit, an incident review, or a legal request?
+- [ ] For each shared source: is it marked trusted or untrusted, and does retrieval apply
+      the current user's access rights before anything reaches the model?
 
 ## Related lessons
 

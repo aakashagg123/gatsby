@@ -68,6 +68,35 @@ Using the four context types from [the previous lesson](./what-is-context-engine
   silently — the model answers fluently about a system state that stopped being true an
   hour ago.
 
+## When the agent assembles its own context
+
+The assembly line above fits a feature that builds one request and gets one answer.
+An **agent** works differently. It runs many steps, and at each step it decides what to
+fetch, what to keep, and what to drop. The pipeline is no longer fixed. It is a loop.
+
+Three choices in that loop are product decisions, not only engineering ones. Anthropic's
+guidance on agent context names the techniques. The mechanics are in
+[Context & memory](../agentic-ai/context-and-memory.md). Your questions are these:
+
+- **Load up front, or fetch on demand?** Loading everything at the start is simple and
+  fast, but it fills the window. Keeping short references (a file path, a record ID)
+  and fetching the content only when needed keeps the window clean, but adds steps and
+  latency. *Which documents must always be present, and which can wait?*
+- **What survives compaction?** On long tasks, the system summarizes old turns to make
+  room. A summary can drop the user's stated constraint. *Who decided what the summary
+  must keep, and is it written down?*
+- **What goes in notes, and what goes to a sub-agent?** Notes give an agent a memory
+  that outlives one window. A sub-agent handles a messy side task in its own window and
+  returns a short result. *Which tasks should never run in the main window?*
+
+Tool definitions and tool results are context too. A long tool list, or two tools that
+overlap, adds noise on every step. See
+[Prompting for tools and agents](../prompt-engineering/prompting-for-tools-and-agents.md)
+for how to write tool descriptions that stay clear.
+
+For an agent, the audit questions below change slightly. "What did the model see?"
+becomes "What did it see at *step 14*, after two compactions?"
+
 ## Auditing a pipeline you didn't build
 
 You don't need to read the code to audit the pipeline. Three questions expose most gaps
@@ -92,6 +121,8 @@ in a working session with the engineering lead:
 - **Debugging the model first** — escalating to "is the model getting worse?" before
   checking what the model was actually shown, because the pipeline was never treated as
   auditable.
+- **The lossy summary** (agents) — compaction quietly drops a rule or a user
+  constraint, and the agent later acts as if it never existed.
 
 ## Practitioner checklist
 
@@ -101,6 +132,8 @@ in a working session with the engineering lead:
       final output?
 - [ ] Is there an alert for staleness on each context source, or would we only find out
       from a user complaint?
+- [ ] For an agent feature: do we know what is loaded up front, what is fetched on
+      demand, and what the compaction step is required to keep?
 
 ## Related lessons
 

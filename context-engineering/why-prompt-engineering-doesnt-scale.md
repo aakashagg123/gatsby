@@ -82,6 +82,27 @@ Before rewriting a prompt again, ask which of these it actually is:
 Most "prompt is broken" tickets are actually 1, 2, or 3, mislabeled — which is exactly
 why rewording the prompt one more time so rarely holds.
 
+## What prompt engineering still owns
+
+This lesson is not an argument against writing good prompts. The prompt is the part of
+the context you control most directly, and it still needs care. Anthropic's guidance
+puts it this way: the instructions should sit at the "right altitude." They should be
+specific enough to guide behaviour and flexible enough to give the model a strong rule
+of thumb. Two extremes fail. Hard-coded, brittle logic breaks on the first new case.
+Vague, high-level advice gives the model nothing to work with.
+
+The split is simple:
+
+- **The prompt owns wording, structure, and examples.** How to write it is in the
+  [prompt engineering module](../prompt-engineering/README.md).
+- **The pipeline owns what fills the prompt.** Retrieved facts, memory, and live state
+  are supplied by systems, not typed by a person.
+
+Current models also follow instructions more literally than older ones. That makes
+the prompt more predictable and can make missing context more visible. A model told to
+answer only from the documents can say that the answer is not there. Treat that reply as
+a signal that retrieval may have failed, not that the wording did.
+
 ## Failure modes
 
 - **Prompt spaghetti** — a growing, undocumented library of one-off prompts, each
@@ -100,10 +121,13 @@ why rewording the prompt one more time so rarely holds.
 - [ ] Do we have an inventory of every prompt in production, or does "how many prompts do
       we have" require asking an engineer to go look?
 - [ ] Is there a test suite that catches a prompt change breaking a previously-passing
-      case, or does regression get caught by users first?
+      case, or does regression get caught by users first? (Setup:
+      [Prompts in production](../prompt-engineering/prompts-in-production.md).)
 
 ## Related lessons
 
 - [What is context engineering, for a product leader?](./what-is-context-engineering.md)
 - [The anatomy of a context pipeline](./the-anatomy-of-a-context-pipeline.md)
 - [Memory & context for the product leader](../memory-and-context/README.md)
+- [Prompt engineering](../prompt-engineering/README.md) — the craft this lesson does
+  not replace.

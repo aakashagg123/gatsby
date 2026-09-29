@@ -68,15 +68,20 @@ rather than just what it does.
 ## The lessons
 
 - [**What is context engineering, for a product leader?**](./what-is-context-engineering.md)
-  — the data-first-to-context-first shift, and the four things "context" actually means.
+  — the data-first-to-context-first shift, the four things "context" actually means, and
+  why the goal is the smallest useful context, not the largest.
 - [**Why prompt engineering doesn't scale**](./why-prompt-engineering-doesnt-scale.md) —
   fragility, no reuse across use cases, and no memory, as a diagnostic, not a lecture.
+  Also what the prompt still owns.
 - [**The anatomy of a context pipeline**](./the-anatomy-of-a-context-pipeline.md) —
-  auditing who owns each stage, and the unowned seams where quality actually leaks.
+  auditing who owns each stage, the unowned seams where quality actually leaks, and what
+  changes when an agent assembles its own context.
 - [**Context as a spec-able requirement**](./context-as-a-spec-able-requirement.md) — the
-  context contract: what a PRD should name before an engineer has to guess.
+  context contract: what a PRD should name before an engineer has to guess, including a
+  size budget.
 - [**Context governance at scale**](./context-governance-at-scale.md) — keeping shared
-  policy, corpora, and org memory consistent across many features and teams.
+  policy, corpora, and org memory consistent across many features and teams, and deciding
+  which content is trusted and who may retrieve it.
 - [**Evaluating context quality**](./evaluating-context-quality.md) — grading whether the
   context was right, separately and faster than grading whether the answer was good.
 - [**Context engineering across the product lifecycle**](./context-across-the-product-lifecycle.md)
@@ -91,7 +96,8 @@ mechanic it names.
 
 - [Prompt engineering](../prompt-engineering/README.md) — the craft layer inside
   context engineering. The prompt is one component of the context; that module covers
-  how to write it, from ChatGPT productivity through Claude Code agentic patterns.
+  how to write it, from ChatGPT productivity through Claude Code agentic patterns, and
+  how to version and test it in production.
 - [Context engineering (engineering depth)](../content/00-foundations/context-engineering.md)
   and [Context & memory](../agentic-ai/context-and-memory.md) — the mechanics behind
   every context source this module names.

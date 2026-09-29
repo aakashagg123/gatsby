@@ -73,6 +73,16 @@ or the *next* iteration, distinct from the eval-and-model flywheel in
 flywheel improves the model's behavior over time; this one improves what the model gets
 shown.
 
+## After launch: re-audit when the model or the sources change
+
+Context assumptions expire. A retrieval corpus ages. A policy changes. A model upgrade
+changes how the model uses long context, and a new context window may tempt the team
+to send more than the feature needs. Put a re-audit on the calendar for each of these
+events: a model change, a major source change, and a new feature that shares a source.
+Rerun the context checks from
+[Evaluating context quality](./evaluating-context-quality.md) each time. A larger
+window is a reason to check your budget again, not a reason to fill it.
+
 ## Failure modes
 
 - **Context as an afterthought** — scoping behavior and the eval bar, then discovering
@@ -91,6 +101,8 @@ shown.
       work"?
 - [ ] Are we capturing which questions had no good context available, as a distinct
       signal from "did the user like the answer"?
+- [ ] Is there a scheduled context re-audit for a model change, a source change, or a new
+      feature that shares a source?
 
 ## Related lessons
 

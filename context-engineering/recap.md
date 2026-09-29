@@ -41,16 +41,25 @@ instead of alongside it. 🎯 *Takeaway:*
 [context work has a different job at each project phase](./context-across-the-product-lifecycle.md),
 and skipping the discovery-phase audit is how this happens.
 
+**The assistant that got worse when we gave it everything (an illustration).** Picture a
+team that fixes a wrong answer by adding the whole policy handbook to every request.
+Anthropic's engineering guidance warns that model quality can degrade as context grows,
+and that context has diminishing returns. So answers can get worse while cost and
+latency rise. The better fix is smaller: retrieve the relevant paragraphs and drop the
+rest. 🎯 *Takeaway:*
+[the goal is the smallest useful context](./what-is-context-engineering.md), not the
+largest one you can fit.
+
 ## Module recap
 
 | Lesson | The one idea | The question it makes you ask |
 | --- | --- | --- |
-| [What is context engineering, for a product leader?](./what-is-context-engineering.md) | The right question is "what does this decision need to see," not "what data do we have" | Could I name what our riskiest AI feature is shown before it answers? |
-| [Why prompt engineering doesn't scale](./why-prompt-engineering-doesnt-scale.md) | Fragility, no reuse, no memory are structural, not wording problems | Is our last "prompt fix" actually a retrieval, memory, or tool-state gap? |
-| [The anatomy of a context pipeline](./the-anatomy-of-a-context-pipeline.md) | Every stage has an owner; the seams between stages usually don't | Do I know which named stage to check first when this feature is wrong? |
-| [Context as a spec-able requirement](./context-as-a-spec-able-requirement.md) | Context needs its own section in the spec, next to the eval bar | Does our spec name what the model must know, remember, and retrieve? |
-| [Context governance at scale](./context-governance-at-scale.md) | Shared context sources need one version and a registry of consumers | Could two of our features contradict each other today, and would we know why? |
-| [Evaluating context quality](./evaluating-context-quality.md) | Grade whether the context was right, separately from whether the answer was good | Did we check the context before we started rewriting the prompt? |
+| [What is context engineering, for a product leader?](./what-is-context-engineering.md) | The right question is "what does this decision need to see," not "what data do we have" — and the answer is the smallest useful context | Could I name what our riskiest AI feature is shown before it answers, and what we could remove? |
+| [Why prompt engineering doesn't scale](./why-prompt-engineering-doesnt-scale.md) | Fragility, no reuse, no memory are structural, not wording problems. The prompt still owns wording | Is our last "prompt fix" actually a retrieval, memory, or tool-state gap? |
+| [The anatomy of a context pipeline](./the-anatomy-of-a-context-pipeline.md) | Every stage has an owner; the seams between stages usually don't. Agents rebuild their context at every step | Do I know which named stage to check first, and what compaction must keep? |
+| [Context as a spec-able requirement](./context-as-a-spec-able-requirement.md) | Context needs its own section in the spec, next to the eval bar, with a size budget | Does our spec name what the model must know, remember, and retrieve, and how much? |
+| [Context governance at scale](./context-governance-at-scale.md) | Shared sources need one version, a registry of consumers, a trust label, and access rules | Could two of our features contradict each other today, and could untrusted text reach one of them? |
+| [Evaluating context quality](./evaluating-context-quality.md) | Grade whether the context was right, clean, and conflict-free, separately from whether the answer was good | Did we check the context before we started rewriting the prompt? |
 | [Context across the product lifecycle](./context-across-the-product-lifecycle.md) | Context work has a different job at discovery, delivery, and launch | Did we audit context before scoping behavior, or discover the gaps after launch? |
 
 **The through-line:** almost every AI quality problem that gets escalated as "the model
@@ -60,7 +69,9 @@ the model, it was in what got assembled in front of it. Product leaders who inte
 this stop funding bigger models and cleverer prompts to solve problems that were never
 either one's to solve, and start funding the unglamorous, high-leverage work — retrieval
 quality, memory scoping, governance, and a spec that names context requirements out
-loud — that actually moves the number.
+loud — that actually moves the number. The same leaders also learn to remove context:
+more is not better, and the best context is the smallest set that makes the decision
+right.
 
 > **Walk-away question:** *"The next time an AI feature gives a wrong answer, will the
 > first question in the room be 'what did the model see?' — or will it be 'let's rewrite

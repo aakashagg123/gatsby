@@ -1013,6 +1013,15 @@ GLOSSARY = [
  "see":("What is context engineering, for a product leader?","context-engineering/what-is-context-engineering.md"),
  "related":["context-engineering","context-contract","rag"],
 },
+{
+ "k":"context-rot","t":"Context rot","cat":"Context engineering",
+ "short":"The drop in model quality that can come as more text is packed into a request — the reason to send the smallest high-signal context, not the most.",
+ "fp":"A model attends across everything in its context window, and Anthropic's engineering guidance describes context as a finite resource with diminishing returns. As a request grows, the useful fact can get buried among irrelevant text, and cost and latency rise too. The product rule is to find the smallest set of information that makes the decision right.",
+ "example":"A support bot that gets the whole policy handbook on every question answers worse and costs more than one that gets the three relevant paragraphs.",
+ "uses":["Explaining why 'just add more context' can make answers worse","Setting a context budget for an AI feature","Deciding what to drop when the window gets tight"],
+ "see":("What is context engineering, for a product leader?","context-engineering/what-is-context-engineering.md"),
+ "related":["context-engineering","context-window","compaction","context-first"],
+},
 
 # ============================= PROMPT ENGINEERING ==========================
 {
