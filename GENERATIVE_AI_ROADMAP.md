@@ -87,9 +87,9 @@ a product surface, the product decisions behind a tool's contract, and reviewing
 for permissions and third-party trust — and adds no new glossary terms, since every key
 concept already had a home.
 
-### 7. ⚙️ AI agents — *3 lessons* — **BUILT** (rescoped from 7 → 3)
+### 7. ⚙️ AI agents — *5 lessons* — **BUILT** (rescoped from 7 → 3, then extended to 5 in Sept 2026)
 Software that decides its own next step.
-1. [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) · 2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md) · 3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md). → [Recap](./ai-agents/recap.md).
+1. [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) · 2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md) · 3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md) · 4. [Running an agent in production](./ai-agents/running-an-agent-in-production.md) · 5. [Choosing and acceptance-testing an agent](./ai-agents/choosing-and-acceptance-testing-an-agent.md). → [Recap](./ai-agents/recap.md).
 *Spokes:* `agentic-ai/what-is-an-agent`, `agentic-ai/planning-and-reasoning`,
 `agentic-ai/reliability-and-evals`, `agentic-ai/agentic-ai-as-a-product`,
 `tool-calling`, `memory-and-context`.

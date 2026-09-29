@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Planning, reasoning &amp; reliability across a run — AI agents</title>
+<title>Choosing and acceptance-testing an agent — AI agents</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -362,312 +362,276 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>AI agents</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-an-agent-is-and-how-much-autonomy-it-needs.html">1 · What an agent is, and how much autonomy it needs</a><a class="modlink active" href="planning-reasoning-and-reliability-across-a-run.html">2 · Planning, reasoning &amp; reliability across a run</a><a class="modlink" href="when-not-to-build-an-agent.html">3 · When not to build an agent</a><a class="modlink" href="running-an-agent-in-production.html">4 · Running an agent in production</a><a class="modlink" href="choosing-and-acceptance-testing-an-agent.html">5 · Choosing and acceptance-testing an agent</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="what-an-agent-is-and-how-much-autonomy-it-needs.html">1 · What an agent is, and how much autonomy it needs</a><a class="modlink" href="planning-reasoning-and-reliability-across-a-run.html">2 · Planning, reasoning &amp; reliability across a run</a><a class="modlink" href="when-not-to-build-an-agent.html">3 · When not to build an agent</a><a class="modlink" href="running-an-agent-in-production.html">4 · Running an agent in production</a><a class="modlink active" href="choosing-and-acceptance-testing-an-agent.html">5 · Choosing and acceptance-testing an agent</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 02</span>
-    <h1>Planning, reasoning &amp; reliability across a run</h1>
+    <span class="chip">Lesson 05</span>
+    <h1>Choosing and acceptance-testing an agent</h1>
   </div>
   <p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>Once an agent is looping, two things decide whether it finishes the job. The first is how
-it reasons about the next step. The second is whether small mistakes survive long enough to
-add up to a failed task.</p>
-<p>Reasoning is not a separate module. It is the model, prompted or configured to think one
-step at a time, to draft a plan before acting, or to check and revise its own work. None of
-these patterns removes the harder problem underneath. A step that succeeds 95% of the time
-sounds reliable. Chain twenty of them and the task succeeds about a third of the time.</p>
-<p>This is why agents that shine on a three-step demo often disappoint on the thirty-step
-version of the same job. It is also why recovering well from an error matters more than
-never making one.</p>
+<p>Sooner or later you will be asked to buy an agent, or to sign off on one your team built.
+Two problems make this hard. The label "agent" is used loosely, so a product may not be what
+it says. And a demo cannot show how the agent behaves across many real cases.</p>
+<p>This lesson gives you two tools. The first is a short <strong>due-diligence checklist</strong> that
+separates a real agent from a rebranded one and surfaces the questions a vendor would
+rather skip. The second is an <strong>acceptance test</strong>: a fixed set of real cases, run many
+times, scored on outcome, path, and cost, against thresholds you agree before you sign.</p>
+<p>You own the result either way. In February 2024 a Canadian tribunal held an airline liable
+for wrong information its chatbot gave a customer. The airline had effectively suggested
+the chatbot was a separate entity. The tribunal disagreed. It was a decision of a small-claims
+tribunal, but the point holds: if your agent says it, you said it.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — This is the gap between "worked in the demo" and "works for
-customers." It sets the two numbers that make or break an agent's economics: how often
-it finishes, and how often a human must step in.</p>
-<p><strong>What it changes in your decisions</strong> — Spec reliability like any feature. Set a target
-completion rate per task type. Write down what happens when a step fails.</p>
-<p><strong>Ask yourself</strong> — <em>"How many things must go right in a row for this task to succeed?
-What is our measured success rate per step, not the one we hope for?"</em></p>
-<p><strong>Risk if ignored</strong> — A team promises an agent will handle a thirty-step task alone,
-ships something that behaves like a coin flip, and learns it from customer complaints
-instead of a dashboard.</p>
+<p><strong>Why it matters</strong> — Gartner predicted in June 2025 that over 40% of agentic AI projects
+will be cancelled by the end of 2027, because of rising costs, unclear value, or weak
+risk controls. Most of those problems can be seen before purchase, if you test for them.</p>
+<p><strong>What it changes in your decisions</strong> — You sign only against a written acceptance test.
+You run it on your own cases, not the vendor's demo cases.</p>
+<p><strong>Ask yourself</strong> — <em>"If we ran this agent on 200 of our own past cases tomorrow, what
+pass rate, cost, and failure behaviour would we accept, and have we written that down?"</em></p>
+<p><strong>Risk if ignored</strong> — You buy a demo. The agent works on the happy path and fails on your
+real inputs. The contract has no measure of "works," so you have no remedy.</p>
 </blockquote>
-<h2 id="the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</h2>
-<!-- Reliability lesson — the compound-error math visualized as a chain that degrades.
-     Diagram type: HORIZONTAL BAR CHAIN with mathematical terminal outcome. -->
+<h2 id="the-mental-model-claim-test-threshold">The mental model: claim, test, threshold</h2>
 <style>
-.dgm-rl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
-  text-align:left;position:relative}
-.dgm-rl-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
+.dgm-ai{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ai-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
   border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(90,79,207,.28)}
-.dgm-rl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-rl-sub{font-size:12px;color:#59636e;margin:0 0 20px}
-
-.dgm-rl-chain{display:flex;align-items:stretch;gap:2px;margin-bottom:8px}
-.dgm-rl-step{flex:1;background:#efedfa;border:1px solid #cec8f0;border-radius:0;
-  padding:14px 6px 10px;text-align:center;font-size:10.5px;font-weight:600;color:#3d3a95;
-  letter-spacing:.02em;position:relative}
-.dgm-rl-step:first-child{border-top-left-radius:8px;border-bottom-left-radius:8px}
-.dgm-rl-step:last-child{border-top-right-radius:8px;border-bottom-right-radius:8px}
-.dgm-rl-step .dgm-rl-pct{display:block;font-size:11.5px;font-weight:700;color:#5a4fcf;
-  font-variant-numeric:tabular-nums;margin-top:2px;letter-spacing:.5px}
-.dgm-rl-step.gap{flex:.4;background:#f6f8fa;border:1px dashed #d1d9e0;color:#8c959f;
-  border-radius:0;font-size:14px;font-weight:700}
-
-.dgm-rl-formula{margin:14px 0 12px;padding:14px 18px;background:#f6f8fa;border:1px solid #d1d9e0;
-  border-radius:12px;text-align:center;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  font-size:13.5px;color:#1f2328;line-height:1.5}
-.dgm-rl-formula .dgm-rl-eq{color:#5a4fcf;font-weight:700}
-.dgm-rl-formula .dgm-rl-result{color:#d1242f;font-weight:700;font-size:15px}
-
-.dgm-rl-outcome{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:12px;
-  padding:16px 18px;display:flex;gap:14px;align-items:center}
-.dgm-rl-outcome .dgm-rl-ico{width:32px;height:32px;padding:5px;background:#ffffff;
-  border:1.5px solid #ffcecb;border-radius:10px;color:#d1242f;flex:0 0 32px}
-.dgm-rl-outcome h5{margin:0 0 3px;font-size:13px;font-weight:700;color:#82061e;letter-spacing:.02em}
-.dgm-rl-outcome p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
-
-.dgm-rl-recovery{margin-top:14px;background:#efedfa;border:1px solid #cec8f0;border-radius:12px;
-  padding:12px 14px}
-.dgm-rl-recovery h5{margin:0 0 8px;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
-.dgm-rl-ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.dgm-rl-rung{background:#ffffff;border:1px solid #cec8f0;border-radius:8px;padding:7px 9px;
-  text-align:center;font-size:11px;font-weight:600;color:#3d3a95;letter-spacing:.02em;
-  display:flex;flex-direction:column;gap:3px;align-items:center}
-.dgm-rl-rung .dgm-rl-rung-ico{color:#5a4fcf;width:16px;height:16px}
-.dgm-rl-rung .dgm-rl-rung-num{font-size:9px;color:#8c959f;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase}
-@media (max-width:640px){
-  .dgm-rl{padding:20px 16px 18px}
-  .dgm-rl-chain{flex-wrap:wrap}
-  .dgm-rl-step{min-width:60px;border-radius:8px !important}
-  .dgm-rl-ladder{grid-template-columns:repeat(2,1fr)}
-}
+.dgm-ai h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ai-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ai-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-ai-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-ai-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.dgm-ai-n{background:#efedfa;border:1.5px solid #cec8f0;border-radius:10px;padding:9px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#3d3a95;line-height:1.3}
+.dgm-ai-row.up .dgm-ai-n{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-ai-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ai-arr svg{width:16px;height:16px}
+.dgm-ai-ok{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+@media (max-width:640px){.dgm-ai{padding:20px 16px 18px}.dgm-ai-row{grid-template-columns:repeat(2,1fr)}}
 </style>
-<div class="dgm-rl">
-  <span class="dgm-rl-chip">Reliability across a run</span>
+<div class="dgm-ai">
+  <span class="dgm-ai-chip">Choosing an agent</span>
+  <h4>Claim · test · threshold</h4>
+  <p class="dgm-ai-sub">Agree the pass bar before you see results.</p>
 
-  <h4>The compound-error trap · why "95% reliable" isn't</h4>
-  <p class="dgm-rl-sub">A step that's right 19 in 20 times feels safe. Twenty of them multiplied together — barely a third of the time.</p>
-
-  <div class="dgm-rl-chain">
-    <div class="dgm-rl-step">Step 1<span class="dgm-rl-pct">95%</span></div>
-    <div class="dgm-rl-step">Step 2<span class="dgm-rl-pct">95%</span></div>
-    <div class="dgm-rl-step">Step 3<span class="dgm-rl-pct">95%</span></div>
-    <div class="dgm-rl-step gap">···</div>
-    <div class="dgm-rl-step">Step 20<span class="dgm-rl-pct">95%</span></div>
+  <div class="dgm-ai-lbl">Due diligence</div>
+  <div class="dgm-ai-row">
+    <div class="dgm-ai-n">Where on the autonomy dial?</div>
+    <div class="dgm-ai-n">Success rate at real task length</div>
+    <div class="dgm-ai-n">Limits and human gates</div>
+    <div class="dgm-ai-n">Trace export and exit path</div>
   </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
-  <div class="dgm-rl-formula">
-    0.95<sup>20</sup> <span class="dgm-rl-eq">=</span> <span class="dgm-rl-result">≈ 36%</span> end-to-end success
+  <div class="dgm-ai-lbl">Acceptance test</div>
+  <div class="dgm-ai-row up">
+    <div class="dgm-ai-n">Your real cases<br>+ hostile cases</div>
+    <div class="dgm-ai-n">Run each 5 times</div>
+    <div class="dgm-ai-n">Score outcome · path · cost</div>
+    <div class="dgm-ai-n">Compare to agreed bar</div>
   </div>
-
-  <div class="dgm-rl-outcome">
-    <svg class="dgm-rl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17.5h.01"/><path d="M10.3 3.9L2.5 17.5A2 2 0 004.2 20.5h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-    <div><h5>Where the demo-to-production gap lives</h5><p>Per-step rates <em>multiply</em>, not average. Chasing a smarter model doesn't fix this — shortening or catching the chain does.</p></div>
-  </div>
-
-  <div class="dgm-rl-recovery">
-    <h5>The recovery ladder · when a step fails, climb this in order</h5>
-    <div class="dgm-rl-ladder">
-      <div class="dgm-rl-rung">
-        <span class="dgm-rl-rung-num">01</span>
-        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8"/><path d="M21 3v5h-5"/></svg>
-        Retry
-      </div>
-      <div class="dgm-rl-rung">
-        <span class="dgm-rl-rung-num">02</span>
-        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/></svg>
-        Revise
-      </div>
-      <div class="dgm-rl-rung">
-        <span class="dgm-rl-rung-num">03</span>
-        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v13a2 2 0 002 2h12a2 2 0 002-2V6"/><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
-        Restart
-      </div>
-      <div class="dgm-rl-rung">
-        <span class="dgm-rl-rung-num">04</span>
-        <svg class="dgm-rl-rung-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 12H8m0 0l3-3m-3 3l3 3"/><path d="M20 8v8M4 4h4v16H4z"/></svg>
-        Escalate
-      </div>
-    </div>
-  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ai-ok">Sign in stages, and re-test after every model update</div>
 </div>
 
-<p>A step that is right nineteen times in twenty feels safe. Chain twenty of them and the task
-succeeds about 36% of the time. The per-step rates multiply. They do not average.</p>
-<p>This one fact explains most of the gap between demo and production. It also shapes the
-toolkit: shorten the chain, catch errors mid-flight, and recover well. The toolkit does not
-depend on a slightly smarter model. The full maths, the recovery ladder (retry, revise,
-restart, escalate), and the eval and tracing habits are in
-<a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a>.</p>
-<h2 id="worked-example-how-length-and-reliability-interact">Worked example: how length and reliability interact</h2>
-<p>This is arithmetic, not a measurement. It multiplies the same per-step success rate across
-the steps of a task.</p>
+<p>The thresholds come first. Agree them before you see results. Otherwise the results set the
+bar, and the bar moves to meet them.</p>
+<h2 id="due-diligence-is-it-really-an-agent-and-can-you-rely-on-it">Due diligence: is it really an agent, and can you rely on it?</h2>
+<p><strong>Agent-washing</strong> is Gartner's term for rebranding existing products, such as AI
+assistants, robotic process automation, and chatbots, as agents without substantial agentic
+capability. Gartner estimated that only about 130 of the thousands of vendors claiming
+agentic products were real. Treat the label as a claim to check.</p>
+<p>Ask these questions. A good answer is specific and shows evidence.</p>
+<ol>
+<li><strong>Where does it sit on the autonomy dial?</strong> Ask which steps the model chooses and which
+   your code fixes. See <a href="what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is</a>.</li>
+<li><strong>What is the per-step and end-to-end success rate, on what tasks, measured how?</strong> Ask for
+   the task length. A three-step rate says little about a thirty-step task.</li>
+<li><strong>What does a run cost, at the 90th percentile and not only the average?</strong></li>
+<li><strong>What are the limits?</strong> Ask for step, time, cost, and repeat caps, and where they are
+   enforced. See <a href="running-an-agent-in-production.html">Running an agent in production</a>.</li>
+<li><strong>Which actions need a human, and who decides that?</strong></li>
+<li><strong>What happens when a tool fails or returns nothing?</strong> Ask them to show it.</li>
+<li><strong>Can we see a full trace of a run, and export it?</strong></li>
+<li><strong>How is it updated, and how do we know when behaviour changes?</strong> Model updates can change
+   behaviour without a code change.</li>
+<li><strong>Which of our data does it see, where does it go, and what is retained?</strong></li>
+<li><strong>What is the exit path?</strong> Ask how you get your data, traces, and configuration out.</li>
+</ol>
+<p>Two answers should worry you. One is "it just works" with no numbers. The other is a demo
+on cases the vendor chose.</p>
+<h2 id="acceptance-testing-design-the-test-before-the-deal">Acceptance testing: design the test before the deal</h2>
+<p>An acceptance test is a fixed, written procedure with pass thresholds. Build it in four
+parts.</p>
+<p><strong>1. The case set.</strong> Collect 100 to 300 real past cases. Include the routine ones, the
+messy ones, and the ones your people find hard. Add hostile cases: inputs that try to
+redirect the agent, and inputs that are missing or contradictory. Keep a hidden slice the
+vendor never sees.</p>
+<p><strong>2. Repeat runs.</strong> Agents are not deterministic. Run each case several times, at least
+five. A case that passes three times out of five is a finding, not a pass.</p>
+<p><strong>3. Three scores.</strong> Score every run on:</p>
+<ul>
+<li><strong>Outcome.</strong> Did it reach the right result? Use exact checks where you can, and a
+  rubric plus a human spot-check where you cannot.</li>
+<li><strong>Path.</strong> Did it take a sensible route? Check steps used, tools called, and whether it
+  stayed within its limits. A right answer reached by a risky path is a failure.</li>
+<li><strong>Cost.</strong> Tokens, tool spend, and time per run.</li>
+</ul>
+<p><strong>4. Thresholds and stop behaviour.</strong> Write the pass bar in advance. Include behaviour under
+failure: it must stop at its caps, escalate when unsure, and never invent a result after a
+tool error.</p>
+<h2 id="worked-example-an-acceptance-test-for-a-claim">Worked example: an acceptance test for a claim</h2>
+<p><em>This example is invented, to show the method. The vendor, numbers, and thresholds are
+illustrative.</em></p>
+<p>A vendor claims: "Our agent resolves 90% of tier-1 support tickets on its own."</p>
+<p>You turn the claim into a test.</p>
 <table>
 <thead>
 <tr>
-<th>Steps in the task</th>
-<th>95% per step</th>
-<th>99% per step</th>
+<th>Measure</th>
+<th>How you test it</th>
+<th>Agreed threshold</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>3</td>
-<td>86%</td>
-<td>97%</td>
+<td>Outcome on routine cases</td>
+<td>150 real tickets, 5 runs each, exact-match on resolution code</td>
+<td>At least 90% of cases pass on at least 4 of 5 runs</td>
 </tr>
 <tr>
-<td>10</td>
-<td>60%</td>
-<td>90%</td>
+<td>Outcome on hard cases</td>
+<td>50 tickets your staff marked difficult</td>
+<td>At least 60%, and the rest escalate, not guess</td>
 </tr>
 <tr>
-<td>20</td>
-<td>36%</td>
-<td>82%</td>
+<td>Hostile inputs</td>
+<td>20 tickets with embedded instructions or missing data</td>
+<td>0 unsafe actions. At least 95% escalate or refuse correctly</td>
 </tr>
 <tr>
-<td>30</td>
-<td>21%</td>
-<td>74%</td>
+<td>Path</td>
+<td>Trace review of 40 runs</td>
+<td>0 runs exceed step or cost caps. 0 tool calls outside the allowed set</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Cost per run across all runs</td>
+<td>Median under the agreed figure. 90th percentile under twice the median</td>
+</tr>
+<tr>
+<td>Failure behaviour</td>
+<td>Force 10 tool failures</td>
+<td>100% stop, retry once, or escalate. 0 invented results</td>
 </tr>
 </tbody>
 </table>
-<p>Read across the rows. A three-step demo looks fine at either rate. At thirty steps, a 95%
-agent finishes about one task in five. Now read down the columns. Moving from 95% to 99%
-per step turns a 36% task into an 82% task at twenty steps. Small gains in per-step
-reliability matter more than they look.</p>
-<p>Two design moves follow.</p>
-<ul>
-<li><strong>Shorten the chain.</strong> Fewer steps means fewer chances to fail. Merge steps, or move
-  routine steps into plain code.</li>
-<li><strong>Add checkpoints.</strong> After a risky step, verify the result. If the check fails, retry
-  that step, not the whole task. This turns one long chain into several short ones.</li>
-</ul>
-<h2 id="evidence-that-length-is-the-problem">Evidence that length is the problem</h2>
-<p>The pattern shows up in research on real agents. The research group METR (Model Evaluation
-&amp; Threat Research) measures agents by the length of task they can finish, where length is
-the time a skilled human needs. In a March 2025 study, the task length an agent completed
-with 50% success had doubled about every seven months since 2019. METR has since reported a
-faster recent pace. Check its latest page before you quote a rate.</p>
-<p>Read this as progress, and as a reminder that success falls as tasks get longer. The work
-measured software tasks. Do not assume the same numbers hold for your domain. Measure your
-own.</p>
-<h2 id="how-an-agent-reasons-at-a-glance">How an agent reasons, at a glance</h2>
-<p>An agent's thinking is the model working through a small set of patterns.</p>
-<ul>
-<li><strong>Think, act, observe.</strong> Add a thought before each action. The agent adjusts one step at
-  a time. This suits tasks where each result should shape the next, such as debugging.</li>
-<li><strong>Plan first.</strong> Draft the whole plan before acting. This suits long or multi-part work.
-  It also gives a human a place to approve the plan before anything costly or risky runs.</li>
-<li><strong>Draft, then check against something outside the model.</strong> Test the draft with a test, a
-  validator, or a checklist before delivering it. This pattern drives most real quality
-  gains. Models respond well to a real check. They grade their own unverifiable claims
-  poorly.</li>
-</ul>
-<p>How much the model should think is now a setting, not a prompt trick. On Claude 4.6 and
-later models, adaptive thinking lets the model decide when and how much to think. An <code>effort</code>
-setting controls the depth. Lower effort is faster and cheaper. Higher effort helps on hard
-steps. This is a cost and latency decision as much as a quality one. Pattern choice is
-covered in <a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; reasoning</a>.</p>
-<h2 id="why-the-environment-matters-more-than-the-model">Why the environment matters more than the model</h2>
-<p>The strongest lever on an agent's performance is the feedback it gets from what it acts on.</p>
-<p>An agent that can see a failing test, a clear error message, or a validator's verdict
-corrects itself. An agent that acts into a void drifts in the wrong direction, however
-capable the model is. Anthropic's guidance says the same: at each step the agent should gain "ground truth" from
-the environment, such as tool results or code execution, and there should be stopping
-conditions, such as a maximum number of iterations.</p>
-<p>Before you reach for a smarter model, ask a simpler question. What would the agent see if
-it got something wrong?</p>
+<p>Suppose results come back. Routine cases: 82% pass on at least 4 of 5 runs. Hard cases: 41%,
+with 30% invented answers. The vendor's 90% claim held only on their chosen demo set. The
+test found this before the contract, and the numbers give you a basis to renegotiate,
+narrow the scope, or walk away.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
-<li><strong>Short chains vs. flexibility.</strong> Fewer steps are more reliable. They also give the agent
-  less room to adapt.</li>
-<li><strong>Checkpoint cost.</strong> Each check adds time and cost. Put checks after risky steps, not
-  after every step.</li>
-<li><strong>Plan approval vs. speed.</strong> A human plan gate catches expensive mistakes early. It also
-  slows every run.</li>
-<li><strong>Thinking effort vs. cost.</strong> High effort on every step is slow and expensive. Reserve it
-  for the steps that need it.</li>
+<li><strong>Test size vs. cost.</strong> More cases and more runs give firmer numbers and cost more. Start
+  with 100 cases and five runs, and grow where results are close to the threshold.</li>
+<li><strong>Automated vs. human scoring.</strong> Automated scoring is cheap and can miss subtle errors.
+  Spot-check a sample by hand.</li>
+<li><strong>Vendor's data vs. yours.</strong> A vendor's benchmark shows what they optimised. Your cases
+  show what you need.</li>
+<li><strong>Contract flexibility vs. safety.</strong> Tie payment or scope to the acceptance result, and
+  keep the right to re-test after model updates.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>Demo-horizon thinking.</strong> An agent is judged on a hand-picked three-step task, then
-  deployed on the thirty-step version of the same job.</li>
-<li><strong>Self-grading inflation.</strong> The model says "I checked my work," and nothing outside the
-  model verifies it. That is confidence, not verification.</li>
-<li><strong>No recovery ladder.</strong> Every failure is handled the same way, usually a silent retry or
-  a silent ignore. There is no planned path from retry to revise to restart to a human.</li>
-<li><strong>Deliberation as decoration.</strong> Maximum thinking effort is spent on every request because
-  it made a demo look smart.</li>
+<li><strong>Testing the demo.</strong> The acceptance set is the vendor's showcase cases.</li>
+<li><strong>A moving bar.</strong> Thresholds are set after seeing results, so they match what the agent
+  already does.</li>
+<li><strong>One run per case.</strong> A lucky pass counts as a pass.</li>
+<li><strong>Outcome-only scoring.</strong> The agent reaches right answers by risky or costly paths, and
+  nobody looks at the trace.</li>
+<li><strong>Test once, trust forever.</strong> A model update changes behaviour, and no one re-runs the
+  test.</li>
+<li><strong>Agent-washed purchase.</strong> You buy a chatbot with an agent label, and pay agent prices.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
-<p>Two mechanisms make a long run survivable: saved state, and a log of every step.</p>
-<p><strong>Checkpointing.</strong> Save enough state after each step to resume from it. Then a failure at
-step 14 restarts at step 14, not step 1.</p>
-<pre><code class="language-python">def run_with_checkpoints(task, steps, store):
-    state = store.load(task.id) or {&quot;done&quot;: 0, &quot;outputs&quot;: []}
-    for i in range(state[&quot;done&quot;], len(steps)):
-        out = steps[i](state[&quot;outputs&quot;])          # one step
-        if not verify(out):                        # an external check, not the model's word
-            out = retry_once_or_escalate(steps[i], state, task)
-        state[&quot;outputs&quot;].append(out)
-        state[&quot;done&quot;] = i + 1
-        store.save(task.id, state)                 # resume point
-    return state[&quot;outputs&quot;]
+<p>An acceptance harness is a loop over cases and runs that records outcome, path, and cost.</p>
+<pre><code class="language-python">import statistics
+
+def acceptance(cases, agent, runs=5):
+    report = []
+    for case in cases:
+        results = []
+        for _ in range(runs):
+            trace = agent.run(case.input, limits=case.limits)     # full trace, not just the answer
+            results.append({
+                &quot;outcome&quot;: case.check(trace.answer),               # exact check or rubric
+                &quot;path_ok&quot;: trace.steps &lt;= case.limits.max_steps
+                           and set(trace.tools) &lt;= case.allowed_tools,
+                &quot;stopped_correctly&quot;: trace.stopped_reason in case.allowed_stops,
+                &quot;cost&quot;: trace.cost,
+            })
+        report.append({&quot;case&quot;: case.id, &quot;results&quot;: results})
+    return report
+
+def summarise(report, bar):
+    passed = sum(1 for r in report
+                 if sum(x[&quot;outcome&quot;] and x[&quot;path_ok&quot;] for x in r[&quot;results&quot;]) &gt;= bar.min_runs_passing)
+    costs = [x[&quot;cost&quot;] for r in report for x in r[&quot;results&quot;]]
+    return {
+        &quot;case_pass_rate&quot;: passed / len(report),
+        &quot;median_cost&quot;: statistics.median(costs),
+        &quot;p90_cost&quot;: statistics.quantiles(costs, n=10)[-1],
+    }
 </code></pre>
-<p><strong>Trajectory logging.</strong> Log the full sequence: each model decision, each tool call, each
-result, and the cost. Judge an agent by the path, not only the final answer. An answer can
-be right for the wrong reasons, and a wrong answer often traces to one bad step. See
-<a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a> for grading trajectories.</p>
-<p><strong>Measure your own per-step rate.</strong> Run the task many times. Count completed steps over
-attempted steps. Then use the table above to predict end-to-end success at the real task
-length.</p>
+<p>Store every trace. When a model update lands, run the same harness again and compare
+against the last accepted report. Treat any drop as a regression until proven otherwise.
+<a href="../prompt-engineering/prompts-in-production.html">Prompts in production</a> shows the same habit
+applied to prompts. <a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a> covers
+trajectory grading in depth.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
-<li class="task todo">For this task's typical length, what does the compounding maths predict, given our
-      measured per-step success rate?</li>
-<li class="task todo">Where does a human see the plan before costly or risky execution begins?</li>
-<li class="task todo">What does the agent observe when a step goes wrong? Would it notice?</li>
-<li class="task todo">Is there a recovery ladder (retry, revise, restart, escalate), or is every failure
-      handled the same way?</li>
-<li class="task todo">Can a failed run resume from a checkpoint instead of starting over?</li>
-<li class="task todo">Do we log the full trajectory, not only the final answer?</li>
+<li class="task todo">Have we placed the product on the autonomy dial, and does the vendor's claim match?</li>
+<li class="task todo">Are our acceptance thresholds written down before we see any results?</li>
+<li class="task todo">Does the case set use our real cases, hard cases, hostile cases, and a hidden slice?</li>
+<li class="task todo">Is each case run several times, and scored on outcome, path, and cost?</li>
+<li class="task todo">Do we test failure behaviour: tool errors, caps, and escalation?</li>
+<li class="task todo">Is the acceptance result tied to the contract, with the right to re-test after
+      model updates?</li>
+<li class="task todo">Do we know the exit path for our data and traces?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
-<li><a href="what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is, and how much autonomy it needs</a>
-  — the loop these concerns run inside.</li>
-<li><a href="when-not-to-build-an-agent.html">When not to build an agent</a> — what compounding error
-  does to an agent's economics.</li>
-<li><a href="running-an-agent-in-production.html">Running an agent in production</a> — budgets, gates,
-  and stopping a run that goes wrong.</li>
-<li><a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; reasoning</a> — reasoning patterns and
-  thinking effort in depth.</li>
-<li><a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a> — the compounding maths,
-  recovery, and trajectory evals in depth.</li>
+<li><a href="when-not-to-build-an-agent.html">When not to build an agent</a> — the economics to check
+  before you test.</li>
+<li><a href="running-an-agent-in-production.html">Running an agent in production</a> — the controls the
+  acceptance test should verify.</li>
+<li><a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a> — grading trajectories in
+  depth.</li>
+<li><a href="../agentic-ai/agentic-ai-as-a-product.html">Agentic AI as a product</a> — agent UX, unit
+  economics, and business models.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
-  (Dec 2024): ground truth from the environment each step, and stopping conditions.
-  Checked 2026-09.</li>
-<li>Anthropic, <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>:
-  adaptive thinking and the <code>effort</code> setting on Claude 4.6 and later models. Checked 2026-09.</li>
-<li>METR, <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Measuring AI Ability to Complete Long Software Tasks</a>
-  (Mar 2025): the 50% time horizon and the roughly seven-month doubling over 2019-2025,
-  measured on software tasks. Later METR updates report a faster recent pace. Not verified
-  here: the page could not be opened, so this rests on search-result excerpts.</li>
-<li>The table is arithmetic: each cell is the per-step rate raised to the number of steps.</li>
+<li>Gartner, <a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027">Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027</a>
+  (Jun 2025): the prediction, the definition of agent-washing, and the estimate of about 130
+  real vendors. Confirmed through search-result excerpts and secondary reports; the page
+  could not be opened when this lesson was written.</li>
+<li>Civil Resolution Tribunal of British Columbia, <a href="https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html">Moffatt v. Air Canada, 2024 BCCRT 149</a>
+  (Feb 2024): the tribunal held the airline responsible for its chatbot's misleading
+  statement. The chat took place in November 2022. The decision text was checked by an
+  independent reviewer through a mirror copy; the CanLII page itself could not be opened
+  from our build environment. The tribunal handles small claims.</li>
+<li>The vendor claim, the test table, the results, and the code are invented and
+  illustrative.</li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="what-an-agent-is-and-how-much-autonomy-it-needs.html"><span class="lbl">← Previous</span><span class="ttl">What an agent is, and how much autonomy it needs</span></a><a class="navcard next" href="when-not-to-build-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">When not to build an agent</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</a><a class="h2" href="#worked-example-how-length-and-reliability-interact">Worked example: how length and reliability interact</a><a class="h2" href="#evidence-that-length-is-the-problem">Evidence that length is the problem</a><a class="h2" href="#how-an-agent-reasons-at-a-glance">How an agent reasons, at a glance</a><a class="h2" href="#why-the-environment-matters-more-than-the-model">Why the environment matters more than the model</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="running-an-agent-in-production.html"><span class="lbl">← Previous</span><span class="ttl">Running an agent in production</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-claim-test-threshold">The mental model: claim, test, threshold</a><a class="h2" href="#due-diligence-is-it-really-an-agent-and-can-you-rely-on-it">Due diligence: is it really an agent, and can you rely on it?</a><a class="h2" href="#acceptance-testing-design-the-test-before-the-deal">Acceptance testing: design the test before the deal</a><a class="h2" href="#worked-example-an-acceptance-test-for-a-claim">Worked example: an acceptance test for a claim</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

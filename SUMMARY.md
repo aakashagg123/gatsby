@@ -226,7 +226,9 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 
 1. [What an agent is, and how much autonomy it needs](./ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md)
 2. [Planning, reasoning & reliability across a run](./ai-agents/planning-reasoning-and-reliability-across-a-run.md)
-3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md) · [Recap](./ai-agents/recap.md)
+3. [When not to build an agent](./ai-agents/when-not-to-build-an-agent.md)
+4. [Running an agent in production](./ai-agents/running-an-agent-in-production.md)
+5. [Choosing and acceptance-testing an agent](./ai-agents/choosing-and-acceptance-testing-an-agent.md) · [Recap](./ai-agents/recap.md)
 
 ## [Agentic workflows](./agentic-workflows/README.md)
 

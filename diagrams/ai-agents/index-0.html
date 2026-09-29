@@ -1,5 +1,5 @@
 <!-- AI agents — knowledge graph as decision funnel.
-     Three lessons in sequence, terminating in the "often the answer" workflow escape hatch. -->
+     Five lessons in sequence, terminating in the "often the answer" workflow escape hatch. -->
 <style>
 .dgm-ag{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
@@ -44,7 +44,7 @@
   <span class="dgm-ag-chip">AI agents</span>
 
   <h4>A decision funnel · not a feature list</h4>
-  <p class="dgm-ag-sub">Three questions to ask before writing a single line of agent code.</p>
+  <p class="dgm-ag-sub">Five lessons: what it is, how it runs, whether to build it, how to run it, and how to buy it.</p>
 
   <div class="dgm-ag-stage">
     <span class="dgm-ag-badge">Lesson 1 · What it is</span>
@@ -102,6 +102,42 @@
       <div class="dgm-ag-card">
         <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
         <div><h6>All three · yes</h6><p>The sweet spot for autonomy</p></div>
+      </div>
+    </div>
+  </div>
+
+<div class="dgm-ag-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ag-stage">
+    <span class="dgm-ag-badge">Lesson 4 · Running it</span>
+    <h5>A control layer around the loop</h5>
+    <p class="dgm-ag-lead">Limits live in code, not in the prompt. Decide them before launch.</p>
+    <div class="dgm-ag-cards">
+      <div class="dgm-ag-card">
+        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><h6>Budgets &amp; gates</h6><p>Steps, time, cost · review by risk tier</p></div>
+      </div>
+      <div class="dgm-ag-card">
+        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+        <div><h6>Kill switch &amp; rollback</h6><p>Fast, owned, and tested</p></div>
+      </div>
+    </div>
+  </div>
+
+<div class="dgm-ag-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ag-stage">
+    <span class="dgm-ag-badge">Lesson 5 · Choosing it</span>
+    <h5>Claim · test · threshold</h5>
+    <p class="dgm-ag-lead">Agree the pass bar first, then run your own cases several times.</p>
+    <div class="dgm-ag-cards">
+      <div class="dgm-ag-card">
+        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2h9"/></svg>
+        <div><h6>Due diligence</h6><p>Spot agent-washing</p></div>
+      </div>
+      <div class="dgm-ag-card">
+        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        <div><h6>Acceptance test</h6><p>Outcome · path · cost</p></div>
       </div>
     </div>
   </div>

@@ -1,0 +1,46 @@
+<style>
+.dgm-ai{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ai-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(90,79,207,.28)}
+.dgm-ai h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ai-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-ai-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8c959f;
+  display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dgm-ai-lbl::after{content:"";flex:1;height:1px;background:#e2e8ee}
+.dgm-ai-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.dgm-ai-n{background:#efedfa;border:1.5px solid #cec8f0;border-radius:10px;padding:9px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:#3d3a95;line-height:1.3}
+.dgm-ai-row.up .dgm-ai-n{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-ai-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ai-arr svg{width:16px;height:16px}
+.dgm-ai-ok{background:#dafbe1;border:1.5px solid #aceebb;border-radius:11px;padding:9px 16px;text-align:center;
+  color:#1a614f;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+@media (max-width:640px){.dgm-ai{padding:20px 16px 18px}.dgm-ai-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-ai">
+  <span class="dgm-ai-chip">Choosing an agent</span>
+  <h4>Claim · test · threshold</h4>
+  <p class="dgm-ai-sub">Agree the pass bar before you see results.</p>
+
+  <div class="dgm-ai-lbl">Due diligence</div>
+  <div class="dgm-ai-row">
+    <div class="dgm-ai-n">Where on the autonomy dial?</div>
+    <div class="dgm-ai-n">Success rate at real task length</div>
+    <div class="dgm-ai-n">Limits and human gates</div>
+    <div class="dgm-ai-n">Trace export and exit path</div>
+  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-ai-lbl">Acceptance test</div>
+  <div class="dgm-ai-row up">
+    <div class="dgm-ai-n">Your real cases<br>+ hostile cases</div>
+    <div class="dgm-ai-n">Run each 5 times</div>
+    <div class="dgm-ai-n">Score outcome · path · cost</div>
+    <div class="dgm-ai-n">Compare to agreed bar</div>
+  </div>
+  <div class="dgm-ai-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="dgm-ai-ok">Sign in stages, and re-test after every model update</div>
+</div>

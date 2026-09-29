@@ -109,6 +109,11 @@ Every lesson in every track follows the same shape:
   on it.
 - **Related lessons** — cross-links to other tracks, not just within-track.
 
+To improve or review a whole module, follow **`CONTENT_FRAMEWORK.md`**. It adds
+measurable readability targets, accuracy and sourcing rules, review stamps, an overlap
+gate for new lessons, and a required independent fact-check. Score a track with
+`python3 scripts/check_module.py <track>`.
+
 Read **`WRITING-STYLE.md`** before writing or editing any prose in this
 repo — it defines the Simplified-English-spirit rules (short sentences,
 one idea per sentence, active voice, plain consistent vocabulary) that all
@@ -144,5 +149,7 @@ live within a couple of minutes. Land changes through a PR from a
 - `python3 scripts/check_links.py` — must exit 0.
 - If you touched a flat track's markdown, re-run its `build_<track>.py`
   and commit the regenerated `<track>-html/` output.
+- If you edited a flat track's lessons, run `python3 scripts/check_module.py <track>`
+  and compare it to the baseline (see `CONTENT_FRAMEWORK.md`).
 - If you added or renamed a track, verify it shows up in
   `python3 scripts/build_graph.py`'s per-track node counts.
