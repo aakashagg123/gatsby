@@ -1,5 +1,5 @@
-<!-- Memory & context — knowledge graph across 4 lessons.
-     Promise (decide) → Scope (3 tiers) → Source (retrieval) → Risk (3 failures). -->
+<!-- Memory & context — knowledge graph across 5 lessons.
+     Promise (decide) → Scope (3 tiers) → Write path → Source (3 designs) → Risk (4 failures). -->
 <style>
 .dgm-mc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
@@ -29,7 +29,7 @@
 .dgm-mc-tier p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
 .dgm-mc-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
 .dgm-mc-arr svg{width:16px;height:16px}
-.dgm-mc-risks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dgm-mc-risks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .dgm-mc-risk{background:#ffebe9;border:1px solid #ffcecb;border-radius:9px;padding:9px 11px}
 .dgm-mc-risk .dgm-mc-ico{color:#d1242f;width:18px;height:18px;margin-bottom:4px}
 .dgm-mc-risk h6{margin:0 0 2px;font-size:11px;font-weight:700;color:#82061e;letter-spacing:.02em;
@@ -43,7 +43,7 @@
 <div class="dgm-mc">
   <span class="dgm-mc-chip">Memory &amp; context</span>
 
-  <h4>Four lessons · promise → scope → source → risk</h4>
+  <h4>Five lessons · promise → scope → write → read → risk</h4>
   <p class="dgm-mc-sub">Memory isn't free infrastructure — every step of it is a decision someone should make on purpose.</p>
 
   <div class="dgm-mc-section">
@@ -79,19 +79,30 @@
   <div class="dgm-mc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
   <div class="dgm-mc-section">
-    <span class="dgm-mc-badge">Lesson 3 · Where it comes from</span>
-    <h5>Retrieval is one implementation</h5>
+    <span class="dgm-mc-badge">Lesson 3 · The write path</span>
+    <h5>What is saved, when, and how it changes</h5>
+    <div class="dgm-mc-lead">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>
+      Worth saving? New or a conflict? When does it expire? Decide before the first write.
+    </div>
+  </div>
+
+  <div class="dgm-mc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-mc-section">
+    <span class="dgm-mc-badge">Lesson 4 · Where it comes from</span>
+    <h5>Three designs · load · retrieve · agent notes</h5>
     <div class="dgm-mc-lead">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M9 6v12"/></svg>
-      Same retrieval system, two drawers: company knowledge · user history.
+      Small and stable: load it. Large: search it. Long task: let the agent keep notes.
     </div>
   </div>
 
   <div class="dgm-mc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
   <div class="dgm-mc-section" style="background:#ffebe9;border-color:#ffcecb">
-    <span class="dgm-mc-badge" style="background:#a13d63">Lesson 4 · When it breaks</span>
-    <h5 style="color:#82061e">Three failure modes to check for by default</h5>
+    <span class="dgm-mc-badge" style="background:#a13d63">Lesson 5 · When it breaks</span>
+    <h5 style="color:#82061e">Four failure modes to test for by default</h5>
     <div class="dgm-mc-risks">
       <div class="dgm-mc-risk">
         <svg class="dgm-mc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -104,6 +115,10 @@
       <div class="dgm-mc-risk">
         <svg class="dgm-mc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg>
         <h6>Stuck</h6><p>User can't see, correct, or delete it</p>
+      </div>
+      <div class="dgm-mc-risk">
+        <svg class="dgm-mc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg>
+        <h6>Poisoned</h6><p>Planted instruction acts in later sessions</p>
       </div>
     </div>
   </div>

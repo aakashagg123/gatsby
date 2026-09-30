@@ -51,9 +51,9 @@ Grounding models in your data — and proving they used it.
 1. Why RAG (grounding, freshness, private data, citations) · 2. Embeddings & semantic search · 3. Vector databases (indexing, ANN, filtering, scale) · 4. Chunking & ingestion pipelines · 5. Retrieval quality (hybrid search, reranking, recall/precision) · 6. RAG vs. long-context vs. fine-tuning · 7. Beyond flat RAG: GraphRAG & structured retrieval. → Recap.
 *Spokes:* `content/03-rag/*`, `knowledge-graphs/*`.
 
-### 5. 💾 Memory & context — *4 lessons* — **BUILT** (rescoped from 6 → 4)
+### 5. 💾 Memory & context — *5 lessons* — **BUILT** (rescoped from 6 → 4, then 5 with the write path)
 What the model can "see," and what it remembers.
-1. [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md) · 2. [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md) · 3. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md) · 4. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md). → [Recap](./memory-and-context/recap.md).
+1. [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md) · 2. [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md) · 3. [Writing and maintaining memory](./memory-and-context/writing-and-maintaining-memory.md) · 4. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md) · 5. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md). → [Recap](./memory-and-context/recap.md).
 *Spokes:* `content/00-foundations/context-engineering`, `agentic-ai/context-and-memory`, `rag-vector-databases`, `content/05-safety-multitenancy/multi-tenant-isolation`.
 
 *Rescoping note:* the module was planned as 6 lessons ("the context window as working

@@ -398,8 +398,9 @@ LANDING = """<!doctype html>
     <a class="card" href="memory-and-context/index.html">
       <span class="tag">Generative AI</span>
       <h2>Memory &amp; context →</h2>
-      <p>Memory as a product decision, the three shapes it takes, retrieval as its most
-      common implementation, and the trust failures it has to be designed against.</p>
+      <p>Memory as a product decision, the three shapes it takes, how memories are written
+      and kept, the designs for reading them back, and the trust failures it has to be
+      designed against.</p>
     </a>
     <a class="card" href="tool-calling/index.html">
       <span class="tag">Generative AI</span>

@@ -209,8 +209,9 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 
 1. [Memory as a product decision](./memory-and-context/memory-as-a-product-decision.md)
 2. [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md)
-3. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md)
-4. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md) · [Recap](./memory-and-context/recap.md)
+3. [Writing and maintaining memory](./memory-and-context/writing-and-maintaining-memory.md)
+4. [Retrieval as memory](./memory-and-context/retrieval-as-memory.md)
+5. [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md) · [Recap](./memory-and-context/recap.md)
 
 ## [Tool calling](./tool-calling/README.md)
 

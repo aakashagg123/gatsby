@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Memory as a product decision — Memory &amp; context</title>
+<title>Writing and maintaining memory — Memory &amp; context</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -362,294 +362,339 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink" href="writing-and-maintaining-memory.html">3 · Writing and maintaining memory</a><a class="modlink" href="retrieval-as-memory.html">4 · Retrieval as memory</a><a class="modlink" href="when-memory-goes-wrong.html">5 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink active" href="writing-and-maintaining-memory.html">3 · Writing and maintaining memory</a><a class="modlink" href="retrieval-as-memory.html">4 · Retrieval as memory</a><a class="modlink" href="when-memory-goes-wrong.html">5 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 01</span>
-    <h1>Memory as a product decision</h1>
+    <span class="chip">Lesson 03</span>
+    <h1>Writing and maintaining memory</h1>
   </div>
   <p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>A model does not remember anything between calls. When a product seems to remember, your
-team built that. It saved something, then put it back in front of the model later.</p>
-<p>So memory is a feature, not a default. It costs engineering time and storage. It also
-makes a promise to the user about what the product will keep and for how long.</p>
-<p>This changes the first question to ask about any AI feature. Do not ask "does it have
-memory?" Ask "have we decided what it remembers, for whom, and for how long?"</p>
+<p>Most talk about memory is about reading: what to fetch and show. The write path decides
+whether the memory is worth reading. It answers four questions.</p>
+<ul>
+<li><strong>What</strong> is worth saving?</li>
+<li><strong>When</strong> does the product save it?</li>
+<li><strong>How</strong> does a new fact change an old one?</li>
+<li><strong>When</strong> does a memory expire or get reviewed?</li>
+</ul>
+<p>A store with no write policy fills with trivia, duplicates and stale facts. Retrieval then
+serves that mess back with full confidence. Most "the AI got me wrong" complaints trace to
+the write path, not to the model.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — When memory works, users call it magic. When it works in a way no
-one intended, users call it a breach of trust. The same mechanism causes both. Only the
-product decision around it differs.</p>
-<p><strong>What it changes in your decisions</strong> — You write memory down as a spec, with an owner.
-It is not a side effect of whatever engineering wired up.</p>
-<p><strong>Ask yourself</strong> — <em>"If a user asked 'what do you remember about me, and for how long?',
-could we give a true, specific answer today?"</em></p>
-<p><strong>Risk if ignored</strong> — The feature forgets things users expect it to keep. Or it
-remembers things users thought were gone. Nobody on the team can say which behaviour
-was intended.</p>
+<p><strong>Why it matters</strong> — Memory quality is set when a memory is written. A bad note saved
+today is a wrong answer next month.</p>
+<p><strong>What it changes in your decisions</strong> — You ask for a written policy for saving,
+updating and expiring memories. You decide who writes: the model, your code, or the
+user.</p>
+<p><strong>Ask yourself</strong> — <em>"If a user changes an important fact today, what happens to the old
+version in our store? Who would notice if it did not change?"</em></p>
+<p><strong>Risk if ignored</strong> — The store grows without limit. Old and new facts sit side by side.
+The assistant picks one, and the user sees a confident mistake.</p>
 </blockquote>
-<h2 id="the-mental-model-a-promise-not-a-switch">The mental model: a promise, not a switch</h2>
-<p>Memory is not one setting. It is a set of small promises.</p>
-<ul>
-<li>This detail carries on within a conversation.</li>
-<li>That detail carries on across visits.</li>
-<li>This other detail never leaves the current session.</li>
-</ul>
-<p>Each promise has a cost to build and keep accurate. Each has a risk: privacy exposure,
-stale facts, or the unease of being remembered too well. Thinking in promises turns a
-vague request into something a team can design and test.</p>
-<!-- Memory as decision — info → decision fork → gone/stored → user controls loop. -->
+<h2 id="the-mental-model-a-filter-before-the-store">The mental model: a filter before the store</h2>
+<p>Think of the write path as a gate in front of the store, not a pipe into it.</p>
+<!-- Writing and maintaining memory — the write path as a gate in front of the store. -->
 <style>
-.dgm-md{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+.dgm-wr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
   0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
   text-align:left;position:relative}
-.dgm-md-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+.dgm-wr-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
   border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
-.dgm-md h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+.dgm-wr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
   text-transform:uppercase;color:#59636e}
-.dgm-md-sub{font-size:12px;color:#59636e;margin:0 0 16px}
-
-.dgm-md-input{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:12px;padding:12px 16px;
-  display:flex;gap:12px;align-items:center;margin-bottom:8px}
-.dgm-md-input .dgm-md-ico{width:24px;height:24px;color:#5d8aa8;flex:0 0 24px}
-.dgm-md-input h5{margin:0;font-size:12.5px;font-weight:700;color:#375a75}
-.dgm-md-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
-.dgm-md-arr svg{width:16px;height:16px}
-.dgm-md-q{background:#ffffff;border:1.5px dashed #c1d3e2;border-radius:11px;padding:11px 16px;
-  color:#375a75;font-weight:700;font-size:12.5px;text-align:center;letter-spacing:.02em;
-  margin-bottom:8px}
-.dgm-md-fork{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.dgm-md-out{border-radius:11px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;
-  position:relative}
-.dgm-md-out.discard{background:#f6f8fa;border:1px solid #d1d9e0}
-.dgm-md-out.store{background:#e8eff5;border:1.5px solid #c1d3e2}
-.dgm-md-out .dgm-md-answer{position:absolute;top:-9px;left:12px;background:#ffffff;
-  border:1px solid #d1d9e0;font-size:9.5px;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase;padding:2px 8px;border-radius:5px}
-.dgm-md-out.discard .dgm-md-answer{color:#59636e}
-.dgm-md-out.store .dgm-md-answer{color:#375a75;border-color:#c1d3e2}
-.dgm-md-out .dgm-md-ico{width:22px;height:22px;flex:0 0 22px;margin-top:1px}
-.dgm-md-out.discard .dgm-md-ico{color:#59636e}
-.dgm-md-out.store .dgm-md-ico{color:#5d8aa8}
-.dgm-md-out h6{margin:0 0 2px;font-size:12px;font-weight:700;color:#1f2328}
-.dgm-md-out p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
-
-.dgm-md-loop{background:#ecf6f2;border:1.5px dashed #aceebb;border-radius:12px;padding:14px 16px;
-  margin-top:8px}
-.dgm-md-loop h5{margin:0 0 6px;font-size:12px;font-weight:700;color:#1a614f;letter-spacing:.02em;
-  display:flex;align-items:center;gap:8px}
-.dgm-md-loop h5 svg{width:18px;height:18px;color:#1a7f37}
-.dgm-md-loop-cells{display:grid;grid-template-columns:1fr 20px 1fr;gap:8px;align-items:center}
-.dgm-md-loop-cell{background:#ffffff;border:1px solid #aceebb;border-radius:9px;padding:9px 11px;
-  display:flex;gap:9px;align-items:center;font-size:11px;color:#1f2328;font-weight:600}
-.dgm-md-loop-cell svg{width:18px;height:18px;color:#1a7f37;flex:0 0 18px}
-.dgm-md-loop-arr{text-align:center;color:#8c959f;font-weight:700}
-.dgm-md-consent{margin-top:8px;font-size:10.5px;color:#1a614f;font-style:italic;text-align:center}
-
-@media (max-width:640px){
-  .dgm-md{padding:20px 16px 18px}
-  .dgm-md-fork,.dgm-md-loop-cells{grid-template-columns:1fr}
-  .dgm-md-loop-arr{padding:2px 0}
-}
+.dgm-wr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wr-in{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+.dgm-wr-arr{display:flex;justify-content:center;color:#8c959f;padding:3px 0}
+.dgm-wr-arr svg{width:16px;height:16px}
+.dgm-wr-gate{background:#fff8c5;border:1.5px solid #eac54f;border-radius:11px;padding:10px 14px;
+  text-align:center;color:#7d4e00;font-weight:700;font-size:11px;margin:0 auto;max-width:360px;line-height:1.4}
+.dgm-wr-gate small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+.dgm-wr-out{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-wr-o{border-radius:10px;padding:9px 8px;text-align:center;font-size:10px;line-height:1.35;
+  font-weight:700;border:1.5px solid}
+.dgm-wr-o small{display:block;font-weight:500;color:#59636e;margin-top:2px}
+.dgm-wr-o.drop{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-wr-o.add{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-wr-o.ref{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-wr-o.ask{background:#efedfa;border-color:#cec8f0;color:#3d3a95}
+.dgm-wr-store{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:360px}
+.dgm-wr-store small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+@media (max-width:640px){.dgm-wr{padding:20px 16px 18px}.dgm-wr-out{grid-template-columns:repeat(2,1fr)}}
 </style>
-<div class="dgm-md">
-  <span class="dgm-md-chip">The decision</span>
+<div class="dgm-wr">
+  <span class="dgm-wr-chip">The write path</span>
+  <h4>A gate in front of the store, not a pipe into it</h4>
+  <p class="dgm-wr-sub">Decide what gets in, how it changes, and when it leaves. Before the first write.</p>
 
-  <h4>Should this be remembered? · answer on purpose, not by default</h4>
-  <p class="dgm-md-sub">The user controls what's kept — every stored item is a promise the product now owes them.</p>
+  <div class="dgm-wr-in">Something said or observed</div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
-  <div class="dgm-md-input">
-    <svg class="dgm-md-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h.01M12 12h.01M16 12h.01"/><path d="M21 12a9 9 0 01-9 9c-2 0-3.9-.7-5.4-1.8L3 21l1.8-3.6A9 9 0 1121 12z"/></svg>
-    <h5>A user's information appears in a conversation</h5>
+  <div class="dgm-wr-gate">Worth keeping?<small>Durable · useful later · not held elsewhere · safe · from a trusted source</small></div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-out">
+    <div class="dgm-wr-o drop">Discard<small>fails a test</small></div>
+    <div class="dgm-wr-o add">Add<small>with source and expiry</small></div>
+    <div class="dgm-wr-o ref">Refresh<small>same fact again</small></div>
+    <div class="dgm-wr-o ask">Replace or ask<small>conflict: newer wins, or user decides</small></div>
   </div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
-  <div class="dgm-md-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
-
-  <div class="dgm-md-q">Should this be remembered?</div>
-
-  <div class="dgm-md-fork">
-    <div class="dgm-md-out discard">
-      <span class="dgm-md-answer">No · session only</span>
-      <svg class="dgm-md-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v13a2 2 0 002 2h12a2 2 0 002-2V6"/><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
-      <div><h6>Discarded at session end</h6><p>The default when nothing is decided</p></div>
-    </div>
-    <div class="dgm-md-out store">
-      <span class="dgm-md-answer">Yes · for this user</span>
-      <svg class="dgm-md-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg>
-      <div><h6>Stored as a promise</h6><p>What · how long · visible to whom</p></div>
-    </div>
-  </div>
-
-  <div class="dgm-md-loop">
-    <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.4 2.6L21 8M21 3v5h-5"/></svg>User controls the whole loop</h5>
-    <div class="dgm-md-loop-cells">
-      <div class="dgm-md-loop-cell">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-        See · retrieved on future requests
-      </div>
-      <div class="dgm-md-loop-arr">↔</div>
-      <div class="dgm-md-loop-cell">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3l3 3-9 9-4 1 1-4z"/></svg>
-        Correct · edit or delete
-      </div>
-    </div>
-    <p class="dgm-md-consent">Not visible = not consented.</p>
-  </div>
+  <div class="dgm-wr-store">Memory store<small>Reviewed on a schedule · expired items leave</small></div>
 </div>
 
-<h2 id="two-defaults-to-avoid">Two defaults to avoid</h2>
-<p>Both defaults come from nobody making the decision.</p>
-<ul>
-<li><strong>The goldfish product.</strong> It remembers nothing. Users explain their situation again
-  every time. A feature that could feel personal feels indifferent.</li>
-<li><strong>The oversharing product.</strong> It stores everything and brings it back without
-  judgement. One surprise at the wrong moment costs more trust than the memory ever won.</li>
-</ul>
-<p>Neither is a technical failure. Both are the result of skipping the decision.</p>
-<h2 id="the-four-part-question">The four-part question</h2>
-<p>Before any build starts, answer four things in writing.</p>
+<h2 id="what-is-worth-saving">What is worth saving</h2>
+<p>Save a fact only if it passes four tests.</p>
 <ol>
-<li><strong>What</strong> is remembered? A preference, a fact, or a whole transcript.</li>
-<li><strong>For whom?</strong> This user only, their whole team, or no one (session only).</li>
-<li><strong>For how long?</strong> Forever, until cleared, or on a rolling expiry.</li>
-<li><strong>Who can see or edit it?</strong> Only the user, an admin, or only the system.</li>
+<li><strong>Durable.</strong> It will still be true next week. "Prefers short answers" passes. "Is
+   running late today" fails.</li>
+<li><strong>Useful later.</strong> It would change a future answer. Trivia does not.</li>
+<li><strong>Not held elsewhere.</strong> If an account system already owns the true value, read it
+   live. A copy in memory will go stale.</li>
+<li><strong>Safe to keep.</strong> Health, financial and other sensitive details need an explicit
+   decision. The default should be "do not store".</li>
 </ol>
-<p>A feature that answers all four is ready to build. "We will decide later" on any one of
-them is how both bad defaults get shipped.</p>
-<h2 id="worked-example-scoping-a-support-assistant">Worked example: scoping a support assistant</h2>
-<p><em>This example is invented, to show the method.</em></p>
-<p>A team adds memory to a customer support assistant. The first draft says only "it
-remembers the customer." That is not a spec. The team fills in the four parts.</p>
+<p>Anthropic's docs note that Claude "usually refuses to write sensitive information to
+memory files," and advise validation code for stronger guarantees. Treat model behaviour
+as a helpful default, not a control.</p>
+<h2 id="when-memory-gets-written">When memory gets written</h2>
+<p>There are three common triggers. Each has a different cost and a different failure.</p>
 <table>
 <thead>
 <tr>
-<th>Detail</th>
-<th>What</th>
-<th>For whom</th>
-<th>How long</th>
-<th>Who can see or edit</th>
+<th>Trigger</th>
+<th>How it works</th>
+<th>Strength</th>
+<th>Weakness</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Preferred language</td>
-<td>A setting</td>
-<td>This customer</td>
-<td>Until changed</td>
-<td>Customer, in account settings</td>
+<td>The user asks</td>
+<td>"Remember that I prefer metric units."</td>
+<td>Clear consent. Easy to explain.</td>
+<td>Users forget to ask.</td>
 </tr>
 <tr>
-<td>Product owned and plan</td>
-<td>A fact from the account system</td>
-<td>This customer</td>
-<td>Always current, read live</td>
-<td>Customer and support staff</td>
+<td>End of session</td>
+<td>A step reads the transcript and extracts durable facts.</td>
+<td>Catches what users never think to say.</td>
+<td>Extra model cost. Can save wrong inferences.</td>
 </tr>
 <tr>
-<td>"Prefers short answers"</td>
-<td>A style preference</td>
-<td>This customer</td>
-<td>12 months since last use</td>
-<td>Customer, in a memory list</td>
-</tr>
-<tr>
-<td>Details of a past complaint</td>
-<td>A case summary</td>
-<td>Support team only</td>
-<td>24 months</td>
-<td>Support staff, not the assistant</td>
-</tr>
-<tr>
-<td>Health details mentioned in chat</td>
-<td>Do not store</td>
-<td>n/a</td>
-<td>Session only</td>
-<td>n/a</td>
+<td>During the task</td>
+<td>The agent writes its own notes as it works.</td>
+<td>Fits long tasks that outlast one context window.</td>
+<td>The model decides what matters, and may save trivia.</td>
 </tr>
 </tbody>
 </table>
-<p>Two decisions matter most. The plan is not stored as a memory at all, because the account
-system already holds the true value. And health details are session-only, because storing
-them adds risk and no value. The last row is the most useful row in the table.</p>
-<h2 id="why-users-notice-memory-more-than-other-ai-behaviour">Why users notice memory more than other AI behaviour</h2>
-<p>Most AI flaws are forgiven as "the AI being the AI". A clumsy summary is just a poor
-summary. Memory flaws feel personal. Being remembered correctly feels like being
-understood. Being remembered wrongly, or having something private resurface, feels like a
-violation.</p>
-<p>That is why memory needs more product care per feature than most AI capabilities. The
-engineering behind it is the same discipline as any context management. See
-<a href="../ai/00-foundations.html#context-engineering">Context engineering</a> and
-<a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a>.</p>
+<p>The third is the design behind the Claude memory tool. Anthropic's context-engineering
+guidance calls it structured note-taking: "The agent regularly writes notes persisted to
+memory outside of the context window." Pair it with guidance on what to save. The docs
+suggest prompts such as "Only write down information relevant to <topic> in your memory system."</p>
+<h2 id="updating-without-creating-a-mess">Updating without creating a mess</h2>
+<p>Facts change. When a new fact meets an old one, the store needs a rule. Pick one per
+kind of memory.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Example</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same fact again</td>
+<td>"I like short answers" (twice)</td>
+<td>Keep one record. Refresh its last-confirmed date.</td>
+</tr>
+<tr>
+<td>Newer replaces older</td>
+<td>"I moved to Pune" after "I live in Delhi"</td>
+<td>Replace, and keep the old value in history for audit.</td>
+</tr>
+<tr>
+<td>Ambiguous conflict</td>
+<td>"Send it to Sam" vs a saved "Send it to Sara"</td>
+<td>Ask the user. Do not guess.</td>
+</tr>
+<tr>
+<td>Sensitive change</td>
+<td>A new bank account</td>
+<td>Require confirmation through the product, not through chat text.</td>
+</tr>
+</tbody>
+</table>
+<p>Without a rule, an append-only store keeps both facts. Later retrieval may return the
+older one first.</p>
+<h2 id="expiry-and-review">Expiry and review</h2>
+<p>Every memory needs an end date or a review date. Anthropic's docs recommend that
+applications "periodically delete memory files that haven't been accessed in a long
+time." Good defaults:</p>
+<ul>
+<li>Expire preferences after a long idle period, such as 12 months without use.</li>
+<li>Expire case notes when the case's retention period ends.</li>
+<li>Show users their memories periodically and let them confirm or remove them.</li>
+</ul>
+<h2 id="worked-example-one-fact-changing-over-time">Worked example: one fact, changing over time</h2>
+<p><em>This example is invented, to show the method.</em></p>
+<p>A travel assistant serves a customer over several months.</p>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>What the user says</th>
+<th>Write decision</th>
+<th>Store after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jan</td>
+<td>"I'm vegetarian."</td>
+<td>Durable and useful. Add, source "chat, Jan".</td>
+<td>diet: vegetarian</td>
+</tr>
+<tr>
+<td>Mar</td>
+<td>"Book me the vegetarian option again."</td>
+<td>Same fact. Refresh date.</td>
+<td>diet: vegetarian (confirmed Mar)</td>
+</tr>
+<tr>
+<td>Jun</td>
+<td>"I've started eating fish."</td>
+<td>Conflict, newer wins. Replace. Keep old value in history.</td>
+<td>diet: pescatarian (Jun); history: vegetarian</td>
+</tr>
+<tr>
+<td>Jun</td>
+<td>"My card ends in 4412."</td>
+<td>Sensitive, and a payment system owns it. Do not store.</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>Nov</td>
+<td>(no mention for 5 months)</td>
+<td>Nothing written. At the 12-month review, ask: "Still pescatarian?"</td>
+<td>diet: pescatarian, pending review</td>
+</tr>
+</tbody>
+</table>
+<p>Without the policy, the store would hold "vegetarian" and "pescatarian" together. It would
+also hold a card fragment nobody wanted stored.</p>
+<h2 id="who-writes-the-model-or-your-code">Who writes: the model or your code</h2>
+<table>
+<thead>
+<tr>
+<th>Design</th>
+<th>Who decides what to save</th>
+<th>Good for</th>
+<th>Watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model-written notes</td>
+<td>The model, through a memory tool</td>
+<td>Long agent tasks, coding, research</td>
+<td>Trivia, clutter, saving untrusted text</td>
+</tr>
+<tr>
+<td>Pipeline extraction</td>
+<td>Your code runs an extraction step</td>
+<td>Consumer personalization, predictable rules</td>
+<td>Extra cost, wrong inferences</td>
+</tr>
+<tr>
+<td>User-authored</td>
+<td>The user, in a settings page</td>
+<td>Anything sensitive or high-stakes</td>
+<td>Low coverage</td>
+</tr>
+</tbody>
+</table>
+<p>Most products mix these. High-stakes items should use the last row.</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>No decision, by default.</strong> Memory behaviour comes from implementation details. No one
-  can state what users were promised.</li>
-<li><strong>The goldfish product.</strong> Nothing is remembered, and users repeat themselves.</li>
-<li><strong>The oversharing product.</strong> Everything is stored and resurfaced, with no boundary a
-  user could predict.</li>
-<li><strong>A promise with no owner.</strong> The feature exists, but no one answers for what it stores,
-  how long, or whether it is still accurate.</li>
+<li><strong>Trivia hoarding.</strong> Everything is saved. Retrieval buries the useful facts.</li>
+<li><strong>Silent overwrite.</strong> A wrong inference replaces a correct fact, and no history remains.</li>
+<li><strong>Duplicate drift.</strong> The same fact is stored five ways. The versions slowly disagree.</li>
+<li><strong>Saving untrusted text.</strong> The model writes content from a web page or email into
+  memory. That content may carry instructions. See
+  <a href="when-memory-goes-wrong.html">When memory goes wrong</a>.</li>
+<li><strong>No provenance.</strong> A memory has no source, so you cannot check it or delete what came
+  from it.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
-<p>The model is stateless. Each call sends the full input again. "Memory" is code that
-decides what to add to that input. The Claude API makes this explicit. Its memory tool
-runs on your side. Claude asks for a file operation and your application carries it out.
-In the docs' words, "Memory lives entirely in your application."</p>
-<p>That has two consequences for a product leader.</p>
-<ul>
-<li><strong>You own the store.</strong> Where it lives, who can read it, and when it is deleted are your
-  decisions, and your legal exposure.</li>
-<li><strong>The spec becomes code.</strong> The four-part question maps onto a small record per memory:</li>
-</ul>
-<pre><code class="language-python">from dataclasses import dataclass
-from datetime import datetime, timedelta
-
-@dataclass
-class Memory:
-    text: str                  # WHAT is remembered
-    subject_id: str            # FOR WHOM: one user, or an org id
-    scope: str                 # &quot;user&quot; | &quot;org&quot;  (session memory is never stored)
-    expires_at: datetime       # FOR HOW LONG
-    visible_to: tuple          # WHO can see or edit: (&quot;user&quot;,), (&quot;user&quot;, &quot;admin&quot;)
-    source: str                # where it came from, for audit and deletion
-    created_at: datetime
-
-def is_live(m: Memory, now: datetime) -&gt; bool:
-    return now &lt; m.expires_at
+<p>A write policy is a short function in front of the store. This sketch shows the shape.
+It is illustrative, not a library.</p>
+<pre><code class="language-python">def write_memory(store, candidate, caller, now):
+    if not passes_tests(candidate):                 # durable, useful, safe
+        return &quot;dropped&quot;
+    if candidate.source_is_untrusted:               # web page, inbound email, tool output
+        return queue_for_user_confirmation(candidate)
+    existing = store.find_similar(candidate, subject=caller.subject_id)
+    if existing is None:
+        store.add(candidate.with_expiry(now).with_source())
+        return &quot;added&quot;
+    if existing.text == candidate.text:
+        existing.last_confirmed = now
+        return &quot;refreshed&quot;
+    if candidate.is_newer_and_low_risk():
+        store.archive(existing)                     # keep history for audit
+        store.add(candidate.with_expiry(now).with_source())
+        return &quot;replaced&quot;
+    return ask_user(existing, candidate)            # ambiguous or sensitive
 </code></pre>
-<p>If a field on this record has no answer in your spec, the spec is not finished.</p>
+<p>If you use the Claude memory tool, your application handles six commands: <code>view</code>,
+<code>create</code>, <code>str_replace</code>, <code>insert</code>, <code>delete</code> and <code>rename</code>. Every one is a write-path
+decision you can wrap. Two rules from the docs matter most:</p>
+<ul>
+<li><strong>Validate every path.</strong> A path such as <code>/memories/../../secrets.env</code> must not reach
+  files outside the memory directory.</li>
+<li><strong>Cap file size and delete old files.</strong> Both are your job, not the model's.</li>
+</ul>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
-<li class="task todo">For each AI feature, can we say what it remembers, for whom, for how long, and who
-      can see or edit it?</li>
-<li class="task todo">Does the memory feature have a named owner, not only an implementer?</li>
-<li class="task todo">Have we tested what a user sees when they ask "what do you remember about me?"</li>
-<li class="task todo">Did we choose where the feature sits between "nothing" and "everything", instead of
-      inheriting a default?</li>
-<li class="task todo">Do we avoid copying facts that another system already holds as the source of truth?</li>
+<li class="task todo">Do we have a written rule for what is worth saving, including what is never saved?</li>
+<li class="task todo">Is it clear who writes: the model, our code, or the user?</li>
+<li class="task todo">What happens to an old fact when a new one contradicts it? Do we keep history?</li>
+<li class="task todo">Does every memory carry a source, a last-confirmed date and an expiry or review
+      date?</li>
+<li class="task todo">Are facts owned by another system read live instead of copied?</li>
+<li class="task todo">Is content from untrusted sources kept out of memory, or held for confirmation?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
-<li><a href="session-user-and-organizational-memory.html">Session, user &amp; organizational memory</a>
-  — the three shapes this decision takes.</li>
-<li><a href="writing-and-maintaining-memory.html">Writing and maintaining memory</a> — how a memory
-  is created, updated and expired.</li>
-<li><a href="when-memory-goes-wrong.html">When memory goes wrong</a> — what happens when this decision
-  is skipped.</li>
-<li><a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the engineering depth on the
-  memory hierarchy.</li>
+<li><a href="memory-as-a-product-decision.html">Memory as a product decision</a> — the four-part
+  question the write policy implements.</li>
+<li><a href="session-user-and-organizational-memory.html">Session, user &amp; organizational memory</a> —
+  which shape a new memory belongs to.</li>
+<li><a href="retrieval-as-memory.html">Retrieval as memory</a> — how stored memories get read back.</li>
+<li><a href="when-memory-goes-wrong.html">When memory goes wrong</a> — staleness, poisoning and
+  deletion.</li>
+<li><a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the memory hierarchy, and why
+  models left alone save trivia.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a>
-  (Claude API docs): the memory tool is client-side, and "memory lives entirely in your
-  application." Checked 2026-09.</li>
-<li>The support-assistant scenario and its table are invented and illustrative.</li>
+  (Claude API docs): the six commands, path validation, size caps, expiry, the sensitive
+  information note, and prompt guidance on what to write. Checked 2026-09.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>
+  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-09.</li>
+<li>The travel-assistant table and the write-policy code are invented and illustrative.</li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="session-user-and-organizational-memory.html"><span class="lbl">→ Next</span><span class="ttl">Session, user &amp; organizational memory</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-promise-not-a-switch">The mental model: a promise, not a switch</a><a class="h2" href="#two-defaults-to-avoid">Two defaults to avoid</a><a class="h2" href="#the-four-part-question">The four-part question</a><a class="h2" href="#worked-example-scoping-a-support-assistant">Worked example: scoping a support assistant</a><a class="h2" href="#why-users-notice-memory-more-than-other-ai-behaviour">Why users notice memory more than other AI behaviour</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="session-user-and-organizational-memory.html"><span class="lbl">← Previous</span><span class="ttl">Session, user &amp; organizational memory</span></a><a class="navcard next" href="retrieval-as-memory.html"><span class="lbl">→ Next</span><span class="ttl">Retrieval as memory</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-filter-before-the-store">The mental model: a filter before the store</a><a class="h2" href="#what-is-worth-saving">What is worth saving</a><a class="h2" href="#when-memory-gets-written">When memory gets written</a><a class="h2" href="#updating-without-creating-a-mess">Updating without creating a mess</a><a class="h2" href="#expiry-and-review">Expiry and review</a><a class="h2" href="#worked-example-one-fact-changing-over-time">Worked example: one fact, changing over time</a><a class="h2" href="#who-writes-the-model-or-your-code">Who writes: the model or your code</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

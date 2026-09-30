@@ -1,0 +1,53 @@
+<!-- Writing and maintaining memory — the write path as a gate in front of the store. -->
+<style>
+.dgm-wr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-wr-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-wr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-wr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wr-in{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+.dgm-wr-arr{display:flex;justify-content:center;color:#8c959f;padding:3px 0}
+.dgm-wr-arr svg{width:16px;height:16px}
+.dgm-wr-gate{background:#fff8c5;border:1.5px solid #eac54f;border-radius:11px;padding:10px 14px;
+  text-align:center;color:#7d4e00;font-weight:700;font-size:11px;margin:0 auto;max-width:360px;line-height:1.4}
+.dgm-wr-gate small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+.dgm-wr-out{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-wr-o{border-radius:10px;padding:9px 8px;text-align:center;font-size:10px;line-height:1.35;
+  font-weight:700;border:1.5px solid}
+.dgm-wr-o small{display:block;font-weight:500;color:#59636e;margin-top:2px}
+.dgm-wr-o.drop{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-wr-o.add{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-wr-o.ref{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-wr-o.ask{background:#efedfa;border-color:#cec8f0;color:#3d3a95}
+.dgm-wr-store{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:360px}
+.dgm-wr-store small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+@media (max-width:640px){.dgm-wr{padding:20px 16px 18px}.dgm-wr-out{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-wr">
+  <span class="dgm-wr-chip">The write path</span>
+  <h4>A gate in front of the store, not a pipe into it</h4>
+  <p class="dgm-wr-sub">Decide what gets in, how it changes, and when it leaves. Before the first write.</p>
+
+  <div class="dgm-wr-in">Something said or observed</div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-gate">Worth keeping?<small>Durable · useful later · not held elsewhere · safe · from a trusted source</small></div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-out">
+    <div class="dgm-wr-o drop">Discard<small>fails a test</small></div>
+    <div class="dgm-wr-o add">Add<small>with source and expiry</small></div>
+    <div class="dgm-wr-o ref">Refresh<small>same fact again</small></div>
+    <div class="dgm-wr-o ask">Replace or ask<small>conflict: newer wins, or user decides</small></div>
+  </div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-store">Memory store<small>Reviewed on a schedule · expired items leave</small></div>
+</div>
