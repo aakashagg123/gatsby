@@ -495,7 +495,7 @@ as a helpful default, not a control.</p>
 </tbody>
 </table>
 <p>The third is the design behind the Claude memory tool. Anthropic's context-engineering
-guidance calls it structured note-taking: "The agent regularly writes notes persisted to
+guidance calls it structured note-taking, where "the agent regularly writes notes persisted to
 memory outside of the context window." Pair it with guidance on what to save. The docs
 suggest prompts such as "Only write down information relevant to <topic> in your memory system."</p>
 <h2 id="updating-without-creating-a-mess">Updating without creating a mess</h2>
@@ -655,8 +655,8 @@ It is illustrative, not a library.</p>
     return ask_user(existing, candidate)            # ambiguous or sensitive
 </code></pre>
 <p>If you use the Claude memory tool, your application handles six commands: <code>view</code>,
-<code>create</code>, <code>str_replace</code>, <code>insert</code>, <code>delete</code> and <code>rename</code>. Every one is a write-path
-decision you can wrap. Two rules from the docs matter most:</p>
+<code>create</code>, <code>str_replace</code>, <code>insert</code>, <code>delete</code> and <code>rename</code>. Each command is a point
+where you can validate, log or block. Two rules from the docs matter most:</p>
 <ul>
 <li><strong>Validate every path.</strong> A path such as <code>/memories/../../secrets.env</code> must not reach
   files outside the memory directory.</li>

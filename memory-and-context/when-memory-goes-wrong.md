@@ -75,7 +75,8 @@ with what I tell it."
 Leaks do not need an attacker. On March 20, 2023, a bug in an open-source library used by
 ChatGPT let some users see other users' chat titles, and for a small share of ChatGPT Plus
 subscribers, some billing details. OpenAI took the service offline to fix it. The cause
-was a caching fault, not a memory feature. The lesson still applies: any shared cache or
+was a race-condition bug in a client library used to cache user data, not a memory
+feature. The lesson still applies: any shared cache or
 store can show one person's data to another when a boundary fails under load.
 
 The defence is the [multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md)
@@ -94,7 +95,9 @@ legal advice, so check the current text and take advice for your case.
   people often call the right to be forgotten. Controllers must erase personal data
   "without undue delay" when specific grounds apply.
 - **India: Digital Personal Data Protection Act, 2023, Section 12.** A right to
-  correction and erasure of personal data.
+  correction and erasure of personal data. The Act and its Rules were notified in
+  November 2025 and are being phased in. The rights of data principals are due to take
+  effect about 18 months later, around May 2027. Check the current status.
 - **California: California Consumer Privacy Act (CCPA).** A right to request deletion of
   personal information that a business collected.
 
@@ -116,10 +119,11 @@ Application Security Project (OWASP) lists this as its own risk for agentic appl
 poisoning. The key features are persistence, and a delay between the plant and the
 effect.
 
-Security researcher Johann Rehberger showed a version against ChatGPT in 2024. A crafted
+Security researcher Johann Rehberger showed a version against the ChatGPT macOS app in 2024. A crafted
 web page or document could get ChatGPT to save a hostile instruction into its long-term
 memory. The instruction told it to send later conversations to an outside server. OpenAI
-released a partial fix, and the research was published in September 2024.
+released a partial fix that closed the data-sending route, and the research was published
+in September 2024.
 
 The defences follow from the write path.
 
@@ -235,10 +239,11 @@ model, the store or the write policy changes.
   results and secondary summaries; the page could not be opened when this lesson was
   written.
 - Johann Rehberger, ChatGPT long-term memory prompt-injection research (disclosed Sep
-  2024, later presented at Black Hat). Confirmed through press coverage in search
+  2024, later presented at Black Hat Europe in December 2024, about the ChatGPT macOS app). Confirmed through press coverage in search
   results; the primary write-up could not be opened when this lesson was written.
 - Regulation (EU) 2016/679 (GDPR), Article 17; Digital Personal Data Protection Act, 2023
-  (India), Section 12; California Consumer Privacy Act, right to delete. Cited from
-  general knowledge of the texts. The official pages could not be opened when this lesson
+  (India), Section 12, with commencement of the rights about May 2027 per secondary
+  reports; California Consumer Privacy Act, right to delete (Cal. Civ. Code 1798.105).
+  Cited from general knowledge and secondary summaries. The official pages could not be opened when this lesson
   was written. Check the current text before relying on them.
 - The launch-day test run and the test code are invented and illustrative.

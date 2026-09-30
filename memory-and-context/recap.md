@@ -16,13 +16,13 @@ open-source library used by ChatGPT let some users see other users' chat titles.
 said a small share of ChatGPT Plus subscribers could also see some billing details. It
 took the service offline to fix it. 🎯 *Takeaway:* a leak needs no attacker. Any shared
 store can cross a boundary under load. Enforce the boundary in the system, and
-[test it directly](./when-memory-goes-wrong.md). This was a caching fault, not a memory
-feature. Details come from press coverage in search results.
+[test it directly](./when-memory-goes-wrong.md). This was a race-condition bug in a caching library, not a
+memory feature. Details come from press coverage in search results.
 
 **A planted memory that kept working (2024).** Security researcher Johann Rehberger showed
-that a crafted web page or document could get ChatGPT to save a hostile instruction in its
+that a crafted web page or document could get the ChatGPT macOS app to save a hostile instruction in its
 long-term memory. The instruction sent later conversations to an outside server. OpenAI
-released a partial fix, and the work was published in September 2024. 🎯 *Takeaway:* if a
+released a partial fix that closed the data-sending route, and the work was published in September 2024. 🎯 *Takeaway:* if a
 model can write to memory, an injection can outlive the session. Hold writes from
 untrusted content for confirmation. See
 [poisoning](./when-memory-goes-wrong.md#poisoning-a-planted-memory-that-keeps-working) and
@@ -93,8 +93,8 @@ lesson to reread.
   opened when this recap was written.
 - OpenAI, [March 20 ChatGPT outage: here's what happened](https://openai.com/index/march-20-chatgpt-outage/)
   (Mar 2023). Same status: search results only.
-- Johann Rehberger, ChatGPT long-term memory injection research (Sep 2024). Press coverage
-  in search results only.
+- Johann Rehberger, [ChatGPT macOS app persistent data exfiltration](https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/)
+  (Sep 2024). Press coverage in search results only; the page could not be opened.
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
   (Claude API docs). Checked 2026-09.
 - The stale-preference story is an invented illustration.

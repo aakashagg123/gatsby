@@ -78,7 +78,7 @@ There are three common triggers. Each has a different cost and a different failu
 | During the task | The agent writes its own notes as it works. | Fits long tasks that outlast one context window. | The model decides what matters, and may save trivia. |
 
 The third is the design behind the Claude memory tool. Anthropic's context-engineering
-guidance calls it structured note-taking: "The agent regularly writes notes persisted to
+guidance calls it structured note-taking, where "the agent regularly writes notes persisted to
 memory outside of the context window." Pair it with guidance on what to save. The docs
 suggest prompts such as "Only write down information relevant to <topic> in your memory system."
 
@@ -171,8 +171,8 @@ def write_memory(store, candidate, caller, now):
 ```
 
 If you use the Claude memory tool, your application handles six commands: `view`,
-`create`, `str_replace`, `insert`, `delete` and `rename`. Every one is a write-path
-decision you can wrap. Two rules from the docs matter most:
+`create`, `str_replace`, `insert`, `delete` and `rename`. Each command is a point
+where you can validate, log or block. Two rules from the docs matter most:
 
 - **Validate every path.** A path such as `/memories/../../secrets.env` must not reach
   files outside the memory directory.
