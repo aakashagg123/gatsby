@@ -150,8 +150,8 @@ Scrolling is native on purpose. iOS Safari scrolls on the compositor thread, and
 scroll smoother would fight it. So the site adds no scroll library and no scroll
 listeners. The rules that keep it smooth:
 
-- Shared overrides live in `scripts/smooth_scroll.py`. `build_site.py` writes them to
-  `assets/smooth.css` and links the file last in `<head>` of **every** page in `_site/`.
+- Shared overrides live in `scripts/smooth_scroll.py`. `build_site.py` inlines them as a
+  `<style>` last in `<head>` of **every** page in `_site/`.
   That is why the committed `<track>-html/` pages need no regeneration for scroll fixes.
 - Do not add per-scroll-event JS. Do not make sticky bars translucent. Do not use
   `100vh` for panels (use `100dvh` with a fallback). Give inner scrollers

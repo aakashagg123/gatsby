@@ -609,13 +609,11 @@ def inject_favicon(site):
 
 
 def inject_smooth_scroll(site):
-    """Ship the shared scroll-smoothness stylesheet and link it from every page,
-    landing pages and the graph included. It is linked just before </head> so it
-    loads after each page's own <style> and wins the cascade. See smooth_scroll.py."""
-    assets = os.path.join(site, "assets")
-    os.makedirs(assets, exist_ok=True)
-    with open(os.path.join(assets, "smooth.css"), "w", encoding="utf-8") as f:
-        f.write(smooth_scroll.CSS)
+    """Add the shared scroll-smoothness rules to every page, landing pages and the
+    graph included. They go in an inline <style> just before </head>, so they load
+    after each page's own <style> (and win the cascade) without an extra request.
+    See smooth_scroll.py."""
+    tag = '<style id="smooth-scroll">' + smooth_scroll.CSS.strip() + '</style>'
     injected = 0
     for dp, _, files in os.walk(site):
         for fn in files:
@@ -625,11 +623,8 @@ def inject_smooth_scroll(site):
             with open(path, encoding="utf-8") as f:
                 text = f.read()
             pos = text.find("</head>")
-            if pos == -1 or "assets/smooth.css" in text:
+            if pos == -1 or 'id="smooth-scroll"' in text:
                 continue
-            root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
-            root = "" if root == "." else root + "/"
-            tag = f'<link rel="stylesheet" href="{root}assets/smooth.css">'
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text[:pos] + tag + text[pos:])
             injected += 1

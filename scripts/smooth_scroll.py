@@ -7,8 +7,8 @@ copied verbatim into `_site/`. `build_site.py` already post-processes every page
 one change reaches the landing page, the AI pages, every flat track, both viewers and the
 graph page, with no need to regenerate the committed pages.
 
-The stylesheet is linked last in <head>, so it wins the cascade over each page's own
-<style> at equal specificity.
+The rules are inlined as a <style> last in <head> (no extra request), so they win the
+cascade over each page's own <style> at equal specificity.
 
 Design rules (iOS first):
   * Native scrolling only. iOS Safari scrolls on the compositor thread. A JS smoother
