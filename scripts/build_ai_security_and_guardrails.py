@@ -4,7 +4,7 @@ module 10).
 
 A thin config wrapper around build_standalone.build_track. Source is
 ai-security-and-guardrails/; output is ai-security-and-guardrails-html/.
-Deliberately 2 lessons, not 7 — see the module README for why: prompt injection, the
+Deliberately 3 lessons, not 7 — see the module README for why: prompt injection, the
 lethal trifecta, data leakage, multi-tenant isolation, least privilege, human-in-the-loop,
 and governance are already developed in full engineering depth across
 content/05-safety-multitenancy/safety-engineering.md,
@@ -24,12 +24,14 @@ CFG = {
     "tagline": "a Generative AI module",
     "title": "AI security & guardrails for the product leader",
     "lede": "Jailbreak, injection, extraction, and poisoning are four different attacks, "
-            "not one — and why governance only counts once it becomes compliance "
-            "evidence a regulator or an enterprise buyer can actually check.",
-    "meta": ["2 lessons", "+ recap", "knowledge graph", "diagrams included"],
+            "not one. A defense you have not attacked is a guess. And governance only "
+            "counts once it becomes compliance evidence a regulator or an enterprise buyer "
+            "can check.",
+    "meta": ["3 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
         "the-threat-model-and-guardrails",
+        "red-teaming-and-proving-your-defenses",
         "governance-audit-and-compliance",
     ],
 }

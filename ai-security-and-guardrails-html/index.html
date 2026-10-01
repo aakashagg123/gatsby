@@ -357,7 +357,7 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .iw-span .sn{min-width:0;flex:0 0 auto;text-align:left}
   .iw-spanbar-wrap{flex:1 1 100%;order:2}
 }
-pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent}pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>AI security &amp; guardrails</span><em>a Generative AI module</em></a>
@@ -366,27 +366,67 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   <div class="index-hero">
     <span class="chip">A standalone module</span>
     <h1>AI security &amp; guardrails for the product leader</h1>
-    <p class="lede">Jailbreak, injection, extraction, and poisoning are four different attacks, not one — and why governance only counts once it becomes compliance evidence a regulator or an enterprise buyer can actually check.</p>
-    <div class="index-meta"><span>2 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
+    <p class="lede">Jailbreak, injection, extraction, and poisoning are four different attacks, not one. A defense you have not attacked is a guess. And governance only counts once it becomes compliance evidence a regulator or an enterprise buyer can check.</p>
+    <div class="index-meta"><span>3 lessons</span><span>+ recap</span><span>knowledge graph</span><span>diagrams included</span></div>
   </div>
-  <div class="intro"><p>An LLM mixes trusted instructions and untrusted data in one channel, and it's usually
-serving more than one customer from shared infrastructure. That combination produces
-attacks that don't exist in ordinary software, and defending against them takes more than
-a filter — it takes an architecture, and a paper trail proving the architecture works.</p>
-<p><strong>A note on scope.</strong> This is one of the most exhaustively covered topics in the
-curriculum, for the same reason evaluation and observability was.
+  <div class="intro"><p>An LLM mixes trusted instructions and untrusted data in one channel. It often serves many
+customers from shared infrastructure. That combination creates attacks that ordinary
+software does not face. Defending against them takes more than a filter. It takes an
+architecture, a way to test it, and a paper trail that proves it works.</p>
+<p><strong>A note on scope.</strong> This topic is already covered in depth elsewhere in the curriculum.
 <a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a> and
 <a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a>
-already develop prompt injection, the lethal trifecta, data leakage, and cross-tenant
-isolation in full engineering depth.
+develop prompt injection, the lethal trifecta, data leakage and cross-tenant isolation.
 <a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>
-already develops least privilege, sandboxing, human-in-the-loop approval, audit trails,
-and organizational governance in full. Re-deriving any of that here would only restate it.
-This module exists to answer the two questions those deep-dive lessons don't lead with:
-the full <strong>threat taxonomy</strong> guardrails have to cover — jailbreak, injection, extraction,
-and poisoning are four different attacks, not one — and how governance becomes
-<strong>compliance evidence</strong> a regulator or an enterprise buyer can actually check. That is
-why this module is two lessons, not seven.</p>
+develops least privilege, sandboxing, human approval, audit trails and governance. This
+module does not repeat them. It answers three questions those lessons do not lead with.</p>
+<ol>
+<li>Which <strong>four attacks</strong> must guardrails cover? Jailbreak, injection, extraction and
+   poisoning are four different attacks, not one.</li>
+<li>How do you <strong>test</strong> the defenses, and measure the result?</li>
+<li>How does the work become <strong>compliance evidence</strong> that a regulator or an enterprise
+   buyer can check?</li>
+</ol>
+<h2 id="where-the-depth-lives">Where the depth lives</h2>
+<p>Each lesson here summarizes an idea and points to the lesson that covers it in full.</p>
+<table>
+<thead>
+<tr>
+<th>If you want the full depth on</th>
+<th>Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt injection, the lethal trifecta, permission boundaries</td>
+<td><a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a></td>
+</tr>
+<tr>
+<td>Keeping one tenant's data away from another's</td>
+<td><a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a></td>
+</tr>
+<tr>
+<td>Least privilege, sandboxing, human approval, agent governance</td>
+<td><a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a></td>
+</tr>
+<tr>
+<td>Limits, approval gates and the kill switch for a running agent</td>
+<td><a href="../ai-agents/running-an-agent-in-production.html">Running an agent in production</a></td>
+</tr>
+<tr>
+<td>Who may do what: roles, attributes, tokens and policy engines</td>
+<td><a href="../access-control/index.html">Access control</a></td>
+</tr>
+<tr>
+<td>The general eval practice that red-team suites build on</td>
+<td><a href="../evaluation-and-observability/index.html">Evaluation and observability</a></td>
+</tr>
+<tr>
+<td>The general privacy discipline</td>
+<td><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
 <!-- AI security & guardrails — knowledge graph.
      Diagram type: THREAT MODEL → GUARDRAILS → RED-TEAMING → GOVERNANCE → OUTCOME.
@@ -471,16 +511,16 @@ why this module is two lessons, not seven.</p>
 
   <div class="dgm-sg-cell evi">
     <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6M11 8v6"/></svg>
-    <div><h5>Red-teaming <span class="dgm-sg-num">Evidence</span></h5>
-    <p>Structured adversarial testing that generates evidence on purpose.</p></div>
+    <div><h5>Red-teaming <span class="dgm-sg-num">Lesson 2</span></h5>
+    <p>Attack your own system, measure the attack success rate, keep every finding.</p></div>
   </div>
 
   <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
   <div class="dgm-sg-cell gov">
     <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16M8 14h3M8 18h5M14 14h2M14 18h2"/></svg>
-    <div><h5>Governance &amp; compliance <span class="dgm-sg-num">Lesson 2</span></h5>
-    <p>SOC 2 · GDPR/DPDP · EU AI Act · model cards — evidence someone outside can check.</p></div>
+    <div><h5>Governance &amp; compliance <span class="dgm-sg-num">Lesson 3</span></h5>
+    <p>SOC 2 · GDPR · EU AI Act · model cards: evidence someone outside can check.</p></div>
   </div>
 
   <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
@@ -492,31 +532,30 @@ why this module is two lessons, not seven.</p>
   </div>
 </div>
 
-<p>Read it as one argument in two parts. <strong>The threat model</strong>: "guardrails" is not one
-control, it's a layered defense against four distinct attacks, each of which needs its own
-countermeasure and fails in its own way. <strong>Governance &amp; compliance</strong>: the internal
-discipline of controlling an AI system only pays off in the moments that matter — a
-security review, a regulator's request — if it produces evidence someone outside the
-company can actually check.</p>
+<p>Read it as one argument in three parts. <strong>The threat model:</strong> "guardrails" is a layered
+defense against four attacks. Each has its own countermeasure and fails in its own way.
+<strong>Red-teaming:</strong> a guardrail you have not attacked is a guess, so measure it and keep every
+finding. <strong>Governance and compliance:</strong> internal control pays off at the moments that
+matter, such as a security review or a regulator's request, only if it produces evidence
+that an outsider can check.</p>
 <h2 id="the-lessons">The lessons</h2>
 <ul>
 <li><a href="the-threat-model-and-guardrails.html"><strong>The threat model, and guardrails as architecture</strong></a>
-  — jailbreak vs. injection vs. extraction vs. poisoning, and why a guardrail system has to
-  fail closed.</li>
-<li><a href="governance-audit-and-compliance.html"><strong>Governance, audit &amp; compliance</strong></a> — SOC 2, the
-  EU AI Act's risk tiers, GDPR's automated-decision rules, and red-teaming as the practice
-  that generates proof before an incident does.</li>
+  — jailbreak, injection, extraction and poisoning, how they map to OWASP and NIST, and why
+  guardrails must fail closed.</li>
+<li><a href="red-teaming-and-proving-your-defenses.html"><strong>Red-teaming: testing your defenses</strong></a> — who
+  attacks, what to measure, and how to turn findings into a release gate.</li>
+<li><a href="governance-audit-and-compliance.html"><strong>Governance, audit &amp; compliance</strong></a> — SOC 2, GDPR's
+  automated-decision rules, the EU AI Act timeline after the 2026 Digital Omnibus, and the
+  evidence register.</li>
 </ul>
-<p>Each lesson pairs the product framing with a <strong>🎯 For the product leader</strong> briefing — why
-it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram. For the engineering depth behind every mechanic mentioned here,
-follow the spokes into
-<a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a>,
-<a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a>, and
-<a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>.</p>
-<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>.</p></div>
+<p>Each lesson has a <strong>🎯 For the product leader</strong> briefing, a labeled worked example, an "Under
+the hood" section for engineers, and a Sources list. Rules and dates in this area change
+fast, so every lesson carries a review date.</p>
+<p><strong>📌 Close out the module:</strong> <a href="recap.html">Recap &amp; real-world examples</a>, which ends with a
+self-test.</p></div>
   <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="the-threat-model-and-guardrails.html"><span class="card-num">01</span><h3>The threat model, and guardrails as architecture</h3><span class="card-go">Read lesson →</span></a><a class="card" href="governance-audit-and-compliance.html"><span class="card-num">02</span><h3>Governance, audit &amp; compliance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
+  <div class="cards"><a class="card" href="the-threat-model-and-guardrails.html"><span class="card-num">01</span><h3>The threat model, and guardrails as architecture</h3><span class="card-go">Read lesson →</span></a><a class="card" href="red-teaming-and-proving-your-defenses.html"><span class="card-num">02</span><h3>Red-teaming: testing your defenses</h3><span class="card-go">Read lesson →</span></a><a class="card" href="governance-audit-and-compliance.html"><span class="card-num">03</span><h3>Governance, audit &amp; compliance</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="card-num">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main>
 <style id="reader-css">

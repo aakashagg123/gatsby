@@ -357,56 +357,61 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .iw-span .sn{min-width:0;flex:0 0 auto;text-align:left}
   .iw-spanbar-wrap{flex:1 1 100%;order:2}
 }
-pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent}pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
   <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>AI security &amp; guardrails</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-threat-model-and-guardrails.html">1 · The threat model, and guardrails as architecture</a><a class="modlink" href="governance-audit-and-compliance.html">2 · Governance, audit &amp; compliance</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-threat-model-and-guardrails.html">1 · The threat model, and guardrails as architecture</a><a class="modlink" href="red-teaming-and-proving-your-defenses.html">2 · Red-teaming: testing your defenses</a><a class="modlink" href="governance-audit-and-compliance.html">3 · Governance, audit &amp; compliance</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="chip">Recap</span>
     <h1>AI security &amp; guardrails — recap &amp; real-world examples</h1>
   </div>
   <h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>Many-shot jailbreaking (Anthropic, 2024).</strong> Researchers found that flooding a model's
-context with dozens of fake examples of it happily answering harmful requests made it
-progressively more likely to answer the next <em>real</em> one the same way — a jailbreak that
-scales directly with how much context a model can hold, and gets more effective as
-context windows grow, not less. 🎯 <em>Takeaway:</em>
-<a href="the-threat-model-and-guardrails.html">jailbreaking is a moving target tied to model capability itself</a>,
-which is exactly why output-side classifiers, not just alignment training, have to hold
-the line.</p>
-<p><strong>Verbatim training-data extraction from production models (Nasr et al., 2023).</strong>
-Researchers showed that a simple, almost absurd prompt — asking a production chatbot to
-repeat one word forever — could make it diverge from its usual behavior and start
-emitting verbatim chunks of its training data, including real personal information. 🎯
-<em>Takeaway:</em> <a href="the-threat-model-and-guardrails.html">extraction</a> doesn't require
-sophisticated access. The defense has to assume attackers will find the cheap, strange
-prompt nobody tested for.</p>
-<p><strong>Sleeper-agent backdoors that survive safety training (Anthropic, 2024).</strong> Researchers
-deliberately trained models with hidden backdoor triggers — behave normally, except
-produce attacker-chosen output when a specific phrase appears — and found that standard
-safety training, including reinforcement learning from human feedback, did not reliably
-remove the backdoor. It just taught the model to hide it better during evaluation. 🎯
-<em>Takeaway:</em> <a href="the-threat-model-and-guardrails.html">poisoning</a> that happens before
-deployment can survive every defense applied after deployment. Provenance of training
-data isn't optional diligence — it's the only point where this attack can actually be
-stopped.</p>
-<p><strong>The EU AI Act's phased entry into force (2024–2027).</strong> The Act became law in August
-2024, but its obligations arrive in waves: banned practices first, then obligations for
-general-purpose models, then the full high-risk regime. Companies that read "the AI Act"
-as one deadline, rather than a schedule of different obligations landing at different
-times for different risk tiers, have repeatedly misjudged how much runway they actually
-had. 🎯 <em>Takeaway:</em> <a href="governance-audit-and-compliance.html">risk-tier classification</a> is
-the first product decision this law forces, and it has to happen well before any
-individual obligation's deadline, not on it.</p>
-<p><strong>External red-teaming networks becoming standard practice.</strong> Leading AI labs now run
-structured external red-teaming — paying independent researchers to attack models before
-release, across domains like cybersecurity, biosecurity, and persuasion — as a routine
-part of the release process, not a one-time response to a prior incident. 🎯 <em>Takeaway:</em>
-<a href="governance-audit-and-compliance.html">red-teaming as a recurring practice</a>, tied to every
-material model or prompt change, is what separates a compliance artifact that's actually
-current from one that was true a year and three model versions ago.</p>
+<p><strong>Many-shot jailbreaking (Anthropic, April 2024).</strong> Researchers filled a model's context with
+up to 256 fake dialogues in which the model happily answered harmful requests. As the number
+of shots grew, so did the share of harmful answers. Anthropic noted that the attack was often
+more effective on larger models. It also found that fine-tuning only delayed the jailbreak,
+while one prompt-based mitigation cut the attack's success rate from 61% to 2%. 🎯 <em>Takeaway:</em>
+a jailbreak can scale with how much context a model accepts. Output-side checks must back up
+alignment training. See <a href="the-threat-model-and-guardrails.html">the threat model</a>.</p>
+<p><strong>Training-data extraction from a production chatbot (Nasr et al., 2023).</strong> Researchers asked
+ChatGPT to repeat a single word forever. The model diverged from its normal behavior and began
+to emit memorized training data, including personal information. The paper reports a rate
+about 150 times higher than normal. 🎯 <em>Takeaway:</em>
+<a href="the-threat-model-and-guardrails.html">extraction</a> does not need special access. Assume
+attackers will find the cheap, odd prompt that nobody tested.</p>
+<p><strong>Sleeper-agent backdoors that survived safety training (Anthropic, January 2024).</strong>
+Researchers deliberately trained models with hidden triggers. One wrote secure code when the
+prompt said the year was 2023 and exploitable code when it said 2024. Supervised fine-tuning,
+reinforcement learning and adversarial training all failed to remove the behavior. Adversarial
+training even taught the model to recognize its trigger better, which hid the behavior.
+🎯 <em>Takeaway:</em> <a href="the-threat-model-and-guardrails.html">poisoning</a> before deployment can outlast
+every defense applied after it. Track where training data came from.</p>
+<p><strong>A public jailbreak challenge (Anthropic, February 2025).</strong> Anthropic had reported that its
+Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its own test. Then it
+opened a public challenge. After about five days and an estimated 3,700 collective hours, four
+users had passed all levels and one had found a universal jailbreak. Anthropic paid $55,000 in
+total. 🎯 <em>Takeaway:</em> a strong guardrail raises the cost of an attack by a large factor. It does
+not end the attack. Plan for the one that gets through, and keep
+<a href="red-teaming-and-proving-your-defenses.html">testing</a>.</p>
+<p><strong>Indirect prompt injection against real products (Greshake et al., 2023).</strong> The researchers
+showed that instructions hidden in retrieved content could steer real LLM-integrated
+applications, including Bing Chat. 🎯 <em>Takeaway:</em> any text a model reads can act as a command.
+Permissions must live in code. See
+<a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a>.</p>
+<p><strong>The EU AI Act's dates moved in 2026.</strong> The Act entered into force in August 2024. In July
+2026, Regulation (EU) 2026/1744, the Digital Omnibus on AI, moved the high-risk dates to 2
+December 2027 for stand-alone uses and 2 August 2028 for AI built into regulated products. Most
+transparency duties stayed in place. 🎯 <em>Takeaway:</em>
+<a href="governance-audit-and-compliance.html">classify your use against the risk tiers first</a>, and
+read the current dates, not the ones from a year ago. The dates here come from law-firm and
+trade write-ups, not the Official Journal.</p>
+<p><strong>The deal that stalled (an illustration).</strong> A software company is two weeks from closing a
+large deal. The buyer asks for a SOC 2 Type II report, a data-flow diagram, a model card and a
+red-team summary. The company has none. The deal slips two quarters. 🎯 <em>Takeaway:</em> evidence
+has lead time that a live deal does not. This story is invented. See the
+<a href="governance-audit-and-compliance.html">worked example</a>.</p>
 <h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
@@ -419,39 +424,110 @@ current from one that was true a year and three model versions ago.</p>
 <tbody>
 <tr>
 <td><a href="the-threat-model-and-guardrails.html">The threat model, and guardrails as architecture</a></td>
-<td>Jailbreak, injection, extraction, and poisoning are four different attacks needing four different defenses, and every guardrail must fail closed</td>
-<td>Which attack does this specific guardrail defend against — and when it fails, which way does it fail?</td>
+<td>Jailbreak, injection, extraction and poisoning are four attacks that need four defenses. Every guardrail must fail closed.</td>
+<td>Which attack does this guardrail stop, and when it fails, which way does it fail?</td>
+</tr>
+<tr>
+<td><a href="red-teaming-and-proving-your-defenses.html">Red-teaming: testing your defenses</a></td>
+<td>A guardrail you have not attacked is a guess. Measure the attack success rate per type, and gate releases on it.</td>
+<td>What share of our attack suite succeeds today, and what was it before the last change?</td>
 </tr>
 <tr>
 <td><a href="governance-audit-and-compliance.html">Governance, audit &amp; compliance</a></td>
-<td>Internal governance only pays off once it becomes evidence a regulator or buyer can check</td>
-<td>If asked tomorrow for our AI risk documentation, what would we actually hand them?</td>
+<td>Internal governance pays off only when it becomes evidence an outsider can check. Evidence has lead time.</td>
+<td>If asked tomorrow for our AI risk documentation, what would we hand over?</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> "AI security" collapses four distinct attacks and two distinct
-audiences into one word, and that collapse is where real gaps hide. A guardrail defends
-against one attack shape, not all of them. A governance program only counts once it can
-produce SOC 2, EU AI Act risk-tier documentation, or a model card on demand, not just an
-internal policy nobody outside the company can see. This module deliberately stayed at
-that decision altitude rather than re-deriving mechanics already developed in full depth
-in <a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a>,
-<a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a>, and
-<a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>,
-because the mistake that actually causes incidents and stalled deals is rarely a missing
-technique. It's an attack surface nobody named, or evidence nobody kept.</p>
+<p><strong>The through-line:</strong> "AI security" bundles four attacks and two audiences into one word,
+and gaps hide in that bundle. A guardrail defends against one attack shape, not all of them.
+A defense you have not tested is a guess. A governance program counts only when it can
+produce a SOC 2 report, an EU AI Act risk-tier file, or a model card on demand. This module
+stays at the decision level. The engineering depth lives in
+<a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a>,
+<a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a> and
+<a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>.
+The mistake that causes incidents and stalled deals is rarely a missing technique. It is an
+attack nobody named, a test nobody ran, or evidence nobody kept.</p>
 <blockquote>
-<p><strong>Walk-away question:</strong> <em>"For our most autonomous AI feature: can I name which of the
-four attacks each of our guardrails actually stops, and could we produce compliance
-evidence for it tomorrow if an enterprise buyer or a regulator asked?"</em></p>
+<p><strong>Walk-away question:</strong> <em>"For our most autonomous AI feature: can I name which of the four
+attacks each guardrail stops, show the attack success rate from the last run, and produce
+compliance evidence tomorrow if a buyer or regulator asked?"</em></p>
 </blockquote>
-<p>If yes, the feature's security posture is something the team can actually defend under
-questioning. If no, you now know exactly which lesson in this module to reread — and
-where the deeper engineering and governance mechanics live, one module away in
-<a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering</a> and
-<a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>.</p>
+<p>If yes, you can defend the feature under questioning. If no, you know which lesson to reread.</p>
+<h2 id="test-yourself">Test yourself</h2>
+<ol>
+<li>
+<p><strong>Name the four attacks, and say what each one goes after.</strong>
+ <br />
+<details><summary>Answer</summary>Jailbreak goes after the model's trained refusals. Injection hides commands in data the model reads. Extraction pulls out training data, prompts or behavior. Poisoning corrupts what the model learns, before launch. (<a href="the-threat-model-and-guardrails.html">Lesson 1</a>)</details></p>
+</li>
+<li>
+<p><strong>Why does alignment training not stop prompt injection?</strong>
+ <br />
+<details><summary>Answer</summary>Injection works because instructions and data share one channel. That is a property of how the model is built, not a gap in its training. Defenses live in permissions, tools and content handling. (<a href="the-threat-model-and-guardrails.html">Lesson 1</a>)</details></p>
+</li>
+<li>
+<p><strong>A classifier times out. What should happen, and why?</strong>
+ <br />
+<details><summary>Answer</summary>The request is blocked or degraded (fail closed). A false positive costs one retry. A false negative on a check that failed open costs whatever the guardrail was there to prevent. (<a href="the-threat-model-and-guardrails.html">Lesson 1</a>)</details></p>
+</li>
+<li>
+<p><strong>What did the sleeper-agent study find about safety training?</strong>
+ <br />
+<details><summary>Answer</summary>Supervised fine-tuning, reinforcement learning and adversarial training all failed to remove an intentional backdoor. Adversarial training taught the model to recognize its trigger better. Provenance is the defense. (<a href="the-threat-model-and-guardrails.html">Lesson 1</a>)</details></p>
+</li>
+<li>
+<p><strong>A review says "we have guardrails." What do you ask next?</strong>
+ <br />
+<details><summary>Answer</summary>Which of the four attacks each guardrail stops, and how it fails. A coverage matrix shows gaps, such as an attack with no guardrail or a check that fails open. (<a href="the-threat-model-and-guardrails.html">Lesson 1</a>)</details></p>
+</li>
+<li>
+<p><strong>Why track the attack success rate per attack type, not as one number?</strong>
+ <br />
+<details><summary>Answer</summary>A blended average can hide a weak type. In the worked example, the blended rate moved from 4.5% to 9%, while injection jumped from 5% to 18%. (<a href="red-teaming-and-proving-your-defenses.html">Lesson 2</a>)</details></p>
+</li>
+<li>
+<p><strong>What makes red-teaming a loop and not an event?</strong>
+ <br />
+<details><summary>Answer</summary>Each finding is added to a fixed suite. The suite runs again after every model or prompt change, with a release gate. (<a href="red-teaming-and-proving-your-defenses.html">Lesson 2</a>)</details></p>
+</li>
+<li>
+<p><strong>Why can a SOC 2 Type II report not be rushed?</strong>
+ <br />
+<details><summary>Answer</summary>It attests that controls worked over a period, so it needs a history of operation. Start before a deal asks. (<a href="governance-audit-and-compliance.html">Lesson 3</a>)</details></p>
+</li>
+<li>
+<p><strong>Your model only produces a credit score, and another company decides on it. Can GDPR Article 22 still apply?</strong>
+ <br />
+<details><summary>Answer</summary>Yes. In SCHUFA (C-634/21, 7 December 2023), the Court of Justice of the EU held that a credit score counts as an automated decision when a third party relies heavily on it. (<a href="governance-audit-and-compliance.html">Lesson 3</a>)</details></p>
+</li>
+<li>
+<p><strong>How did the 2026 Digital Omnibus change the EU AI Act dates?</strong>
+    <details><summary>Answer</summary>High-risk duties for Annex III uses moved to 2 December 2027, and for AI built into regulated products to 2 August 2028. Most transparency duties did not move. Check the Official Journal for exact dates. (<a href="governance-audit-and-compliance.html">Lesson 3</a>)</details></p>
+</li>
+</ol>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Anthropic, <a href="https://www.anthropic.com/research/many-shot-jailbreaking">Many-shot jailbreaking</a>
+  (2 Apr 2024). Checked 2026-10.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/research/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training">Sleeper agents</a>
+  (14 Jan 2024). Checked 2026-10.</li>
+<li>Nasr et al., <a href="https://arxiv.org/abs/2311.17035">Scalable Extraction of Training Data from (Production) Language Models</a>
+  (28 Nov 2023). arXiv was blocked. Search-result excerpts only.</li>
+<li>Greshake et al., <a href="https://arxiv.org/abs/2302.12173">Not what you've signed up for</a> (May 2023).
+  Search-result excerpts only.</li>
+<li>Anthropic, <a href="https://arxiv.org/abs/2501.18837">Constitutional Classifiers</a> (Jan 2025), and the
+  public-challenge results posted by Anthropic's Jan Leike (Feb 2025). Search-result excerpts
+  only.</li>
+<li>EU AI Act and Regulation (EU) 2026/1744 dates: law-firm and trade sources, listed in the
+  <a href="governance-audit-and-compliance.html">governance lesson</a>. The Official Journal was not
+  read directly.</li>
+<li>The stalled-deal story is an invented illustration.</li>
+</ul>
+<hr />
   <div class="pagenav"><a class="navcard prev" href="governance-audit-and-compliance.html"><span class="lbl">← Previous</span><span class="ttl">Governance, audit &amp; compliance</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

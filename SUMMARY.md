@@ -251,7 +251,8 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
 
 1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md)
-2. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md) · [Recap](./ai-security-and-guardrails/recap.md)
+2. [Red-teaming: testing your defenses](./ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md)
+3. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md) · [Recap](./ai-security-and-guardrails/recap.md)
 
 ## [Cost optimization](./cost-optimization/README.md)
 

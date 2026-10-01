@@ -1505,12 +1505,12 @@ GLOSSARY = [
  "fp":"Most testing checks that a system does what it's supposed to. Red-teaming inverts that: a dedicated team or outside researchers try, on purpose, to make it fail — jailbreak it, extract data from it, trick it into a harmful action. The findings do double duty: they fix real gaps, and the record of having run the exercise is itself evidence a regulator or enterprise buyer can check.",
  "example":"A model provider pays independent researchers to attempt jailbreaks, data extraction, and harmful-content generation before a new model ships, and publishes a summary of what they found.",
  "uses":["Generating adversarial eval cases before an incident does","Producing compliance evidence for enterprise security reviews","Deciding how often a model or prompt change should trigger a fresh round"],
- "see":("Governance, audit & compliance","ai-security-and-guardrails/governance-audit-and-compliance.md"),
- "related":["jailbreak","eval","guardrail"],
+ "see":("Red-teaming: testing your defenses","ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md"),
+ "related":["jailbreak","eval","guardrail","attack-success-rate"],
 },
 {
  "k":"soc-2","t":"SOC 2","aliases":["soc2","soc 2 type ii","soc 2 type i"],"cat":"Generative AI","cs":True,
- "short":"An audit against five Trust Services Criteria (security, availability, processing integrity, confidentiality, privacy) that's become the default first question in enterprise AI procurement — Type II, attesting controls worked over six to twelve months, is what buyers actually want.",
+ "short":"An audit against five Trust Services Criteria (security, availability, processing integrity, confidentiality, privacy) that's become the default first question in enterprise AI procurement — Type II, attesting controls worked over a period of time, is what buyers actually want.",
  "fp":"SOC 2 isn't AI-specific — it's a general vendor-trust audit — but it's become the near-universal opening move in enterprise security review, because a buyer has no faster way to check 'does this vendor take security seriously.' Type I attests controls exist at a point in time; Type II attests they operated effectively over a period, and it cannot be rushed, which makes it a lead-time problem, not a checkbox a team can clear in a sprint.",
  "example":"An enterprise deal stalls for two quarters because the vendor's SOC 2 Type II process only started once the buyer's security team asked for the report.",
  "uses":["Budgeting compliance certification as a roadmap item with real lead time","Understanding why enterprise deals stall in security review, not the demo","Scoping what an AI vendor's auditor will expect beyond the general controls (model change management)"],
@@ -1519,12 +1519,22 @@ GLOSSARY = [
 },
 {
  "k":"eu-ai-act","t":"EU AI Act","aliases":["ai act","the ai act"],"cat":"Generative AI","cs":True,
- "short":"The first horizontal law regulating AI models by risk tier (unacceptable / high / limited / minimal), in force since August 2024 with obligations phasing in through 2026–27, applying to any provider whose AI output reaches EU users regardless of where the company is based.",
+ "short":"The first horizontal law regulating AI models by risk tier (unacceptable / high / limited / minimal), in force since August 2024, with high-risk dates moved by the July 2026 Digital Omnibus to December 2027 and August 2028, applying to any provider whose AI output reaches EU users regardless of where the company is based.",
  "fp":"Most privacy law regulates data. The EU AI Act regulates the model and its use case directly, sorting every AI system into a risk tier with its own obligations — a hiring or credit-decision tool lands in 'high-risk' and owes a conformity assessment, logging, and human oversight, while a chatbot only owes a transparency disclosure. The reach is the part product teams miss: it applies based on where the output is used, not where the company is incorporated.",
  "example":"A US company's AI-powered resume screener is 'high-risk' under the Act the moment it screens candidates for a role based in the EU, obligations and all.",
  "uses":["Classifying an AI feature's risk tier before, not after, it ships","Scoping conformity-assessment and human-oversight requirements for high-risk use cases","Checking extraterritorial exposure for any feature with EU-reachable output"],
  "see":("Governance, audit & compliance","ai-security-and-guardrails/governance-audit-and-compliance.md"),
  "related":["soc-2","red-teaming"],
+},
+
+{
+ "k":"attack-success-rate","t":"Attack success rate (ASR)","aliases":["asr","attack success"],"cat":"Generative AI",
+ "short":"The share of attack attempts in a fixed test suite that reach the attacker's goal, tracked per attack type so a weak spot cannot hide in a blended average.",
+ "fp":"A red-team suite runs a fixed list of attacks against the real system. For each attack, a check written before the run says whether the attacker won. The ASR is wins divided by attempts. Tracking it per attack type, and again after every model or prompt change, turns 'we think we are safe' into a number with a trend and a release gate.",
+ "example":"Before a model upgrade, 4 of 80 injection attacks succeed (5%). After it, 14 of 80 succeed (18%). The release gate fails on injection, even though the blended rate across all attack types looks only a little worse.",
+ "uses":["Gating a model or prompt release on a per-attack-type threshold","Showing a buyer or regulator a dated, repeatable security result","Spotting that a model upgrade made one attack type worse"],
+ "see":("Red-teaming: testing your defenses","ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md"),
+ "related":["red-teaming","jailbreak","prompt-injection","guardrail"],
 },
 
 # ====================== COST OPTIMIZATION (GenAI) ======================
