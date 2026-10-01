@@ -488,9 +488,9 @@ own this end to end." Durability comes first. Only then is the ownership questio
 asking.</p>
 <h2 id="what-makes-a-workflow-durable">What makes a workflow durable</h2>
 <p><strong>State saved after every step.</strong> Write down enough to resume: which step is done, what
-each step returned, and what is next. A crash at step 14 then restarts at step 14. The
-Claude research system Anthropic described works this way. It saves progress so agents
-"can resume from where the agent was when the errors occurred" instead of starting over.</p>
+each step returned, and what is next. A crash at step 14 then restarts at step 14. Anthropic
+built its research system to resume "from where the agent was when the errors occurred"
+instead of starting over. Saving state after every step is the usual way to get that.</p>
 <p><strong>Wait states.</strong> A wait state is a point where the workflow safely pauses and saves
 itself. It can sit for days, waiting for a human approval, a timer, or an outside event.
 Then it wakes and continues.</p>
@@ -618,7 +618,7 @@ together. A system that owns the whole workflow removes that stitching. It also 
 move into nearby workflows from a position of trust and integration.</p>
 <p>A single step with a clear, measurable outcome is easy for a rival to price and copy. A
 lasting position usually comes from owning more of the workflow, not from doing one step
-exceptionally well.</p>
+exceptionally well. This is a strategic judgement, not a measured result.</p>
 <p>Only claim this if it is true. Track the share of steps a human still does behind the
 interface, and check that it falls over time. The economics, pricing and the strategic
 case are developed in
@@ -641,9 +641,9 @@ case are developed in
 <p>The saved state is a small record. Every step reads it first and writes it last.</p>
 <pre><code class="language-python">state = {
     &quot;workflow_id&quot;: &quot;refund-8841&quot;,
-    &quot;step&quot;: 4,                          # the last completed step
+    &quot;step&quot;: 3,                          # last completed step; now waiting at step 4
     &quot;status&quot;: &quot;waiting&quot;,               # running | waiting | failed | done
-    &quot;wait_until&quot;: &quot;2026-10-05T10:03Z&quot;, # timer for the wait state
+    &quot;wait_until&quot;: &quot;2026-10-08T10:03Z&quot;, # timer for the wait state (3 days)
     &quot;outputs&quot;: {&quot;reservation_id&quot;: &quot;rsv_912&quot;},
     &quot;attempts&quot;: {&quot;3&quot;: 1},              # retries so far, per step
 }
@@ -705,8 +705,8 @@ per completed workflow.</p>
   rainbow deployments. Checked 2026-09.</li>
 <li>Temporal, <a href="https://docs.temporal.io/encyclopedia/event-history">Event History</a>: a
   durable log of a workflow's events, replayed by a new worker to rebuild state. The page
-  could not be opened when this lesson was written. It is described from search-result
-  excerpts.</li>
+  itself was blocked when checked. The behaviour was confirmed from the same docs text in
+  Temporal's public documentation repository on GitHub.</li>
 <li>The refund workflow, its table, and the code sketch are invented and illustrative. The
   idempotency key, retry and compensation ideas are standard engineering practice, covered
   in the <a href="../flowable/index.html">Flowable</a> track.</li>

@@ -371,7 +371,8 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p><strong>A multi-agent system that won, and what it cost (2025).</strong> In June 2025 Anthropic
 described its multi-agent research system. A lead agent split a question and sent
 subagents to search in parallel. On Anthropic's internal research evaluation, it beat a
-single-agent Claude Opus 4 by 90.2%. It also used about 15 times the tokens of a chat,
+single-agent Claude Opus 4 by 90.2%, as of June 2025. The lead was Claude Opus 4 and the
+subagents were Claude Sonnet 4. It also used about 15 times the tokens of a chat,
 against about 4 times for a single agent. 🎯 <em>Takeaway:</em> parallel workers can win on broad
 research. They multiply cost. Estimate both before you
 <a href="orchestrating-more-than-one-agent.html">add an agent</a>.</p>
@@ -380,15 +381,17 @@ research. They multiply cost. Estimate both before you
 great at coordinating and delegating to other agents in real time." 🎯 <em>Takeaway:</em> the
 pattern depends on the task. Check how much of your work is truly independent. See
 <a href="choosing-a-workflow-pattern.html">choosing a pattern</a>.</p>
-<p><strong>The counter-view (2025).</strong> Cognition, which builds a coding agent, argued that running
-agents in parallel tends to create more problems than it solves. Its reasoning is that
-actions carry hidden decisions, and agents without shared context make conflicting ones.
-🎯 <em>Takeaway:</em> treat shared context as a design requirement for any multi-agent split. This
-summary comes from search-result excerpts. The original page could not be opened.</p>
+<p><strong>The counter-view, and its update (2025 and 2026).</strong> In June 2025 Cognition, which builds a
+coding agent, argued that agents working in parallel without shared context make
+conflicting decisions, because actions carry hidden decisions. In April 2026 it published a
+follow-up saying multi-agent setups now work in a narrow class of cases: the writes stay
+single-threaded, and the extra agents contribute intelligence rather than actions.
+🎯 <em>Takeaway:</em> treat shared context as a design requirement for any multi-agent split.
+These summaries come from search-result excerpts. The original pages could not be opened.</p>
 <p><strong>Vague delegation (2025).</strong> Anthropic reports that when its lead agent gave short,
 vague tasks, subagents "misinterpreted the task or performed the exact same searches as
 other agents." Clear briefs with an objective, an output format and boundaries fixed it.
-🎯 <em>Takeaway:</em> most multi-agent failures are
+🎯 <em>Takeaway:</em> many multi-agent failures start as
 <a href="orchestrating-more-than-one-agent.html">specification failures at the handoff</a>.</p>
 <p><strong>Updating a system that is never idle (2025).</strong> Anthropic's research agents run for long
 periods, so a code update can land in the middle of a run. It used "rainbow deployments,"
@@ -494,8 +497,8 @@ restart mid-run with nothing done twice?"</em></p>
   2026-09.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
   (Dec 2024): the five workflow patterns. Checked 2026-09.</li>
-<li>Cognition, "Don't Build Multi-Agents" (2025). Search-result excerpts only; the page could
-  not be opened.</li>
+<li>Cognition, "Don't Build Multi-Agents" (Jun 2025) and "Multi-Agents: What's Actually
+  Working" (Apr 2026). Search-result excerpts only; the pages could not be opened.</li>
 <li>The refund story is an invented illustration.</li>
 </ul>
 <hr />

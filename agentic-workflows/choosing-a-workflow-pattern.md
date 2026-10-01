@@ -16,8 +16,9 @@ model calls, and some plain code, joined in a shape. Five shapes cover most case
 5. **Evaluator-optimizer.** One call writes, another critiques, and they loop.
 
 The first three keep the path in your code. The fourth lets a model decide the path. The
-fifth adds a quality loop. As you move down the list, you gain flexibility and lose
-predictability, speed and cost control. Pick the first shape that does the job.
+fifth adds a quality loop. As a rule of thumb, moving down the list gains flexibility and
+usually costs predictability, speed and cost control. That ordering is this lesson's
+judgement, not a measured ranking. Pick the first shape that does the job.
 
 > 🎯 **For the product leader**
 >
@@ -33,13 +34,14 @@ predictability, speed and cost control. Pick the first shape that does the job.
 > the job?"*
 >
 > **Risk if ignored** — A feature that could have been a three-step chain ships as an
-> orchestrator with workers. It costs several times more, runs slower, and fails in ways
+> orchestrator with workers. It costs more, runs slower, and fails in ways
 > nobody can trace.
 
 ## The mental model: who decides the path
 
 The key question is who decides what happens next. In the first three patterns, your code
-decides. In the fourth, a model decides. In the fifth, a model decides when to stop.
+decides. In the fourth, a model decides. In the fifth, the critic decides when to stop, so
+set a round limit.
 
 ```mermaid
 flowchart TB
@@ -55,8 +57,9 @@ flowchart TB
   FIX -->|"more flexible,<br/>less predictable,<br/>costs more"| MODEL
 ```
 
-Anthropic's guidance on building agents draws the same line. It separates workflows, where
-code directs the model, from agents, where the model directs itself. It advises starting
+Anthropic separates workflows, where code directs the model, from agents, where the model
+directs itself. It lists all five patterns here as workflows. The split by who decides the
+path is this lesson's own framing. It advises starting
 with the simplest approach and adding complexity "only when simpler solutions fall short."
 For the autonomy question itself, see
 [What an agent is, and how much autonomy it needs](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md).
@@ -71,7 +74,7 @@ definitions follows Anthropic's.
 | **Prompt chaining** | Breaks a task into a sequence. Each call works on the last call's output. | The task splits cleanly into fixed steps. | Latency adds up, one call per step. | An early mistake flows through every later step. |
 | **Routing** | Classifies the input and sends it to a specialised follow-up. | There are distinct categories that need different handling. | One extra classification call. | Misrouted input gets the wrong handler, confidently. |
 | **Parallelization** | Runs calls at the same time and combines the results in code. | Subtasks are independent, or you want several views. | More tokens at once. Not slower. | Results disagree, with no rule to settle it. |
-| **Orchestrator-workers** | A lead model breaks the task down, delegates, and combines. | You cannot predict the subtasks in advance. | The highest token spend of the five. | The lead gives vague briefs, and workers duplicate effort. |
+| **Orchestrator-workers** | A lead model breaks the task down, delegates, and combines. | You cannot predict the subtasks in advance. | Usually the highest and least predictable spend. This is a rule of thumb. Anthropic does not rank the patterns. | The lead gives vague briefs, and workers duplicate effort. |
 | **Evaluator-optimizer** | One call generates. Another gives feedback. They loop. | You have clear criteria, and revision measurably helps. | Several calls per answer. | The loop runs on, or the critic is no better than the writer. |
 
 ## How to choose
@@ -93,14 +96,15 @@ last step. Keep each added layer justified by a measured gap.
 
 *This example is invented, to show the method. The numbers are illustrative.*
 
-A team wants to answer customer emails about orders. They compare patterns.
+A team wants to answer customer emails about orders. They compare patterns. Counts are
+model calls only. Lookups are plain code.
 
-| Pattern | How it would work here | Calls per email | Verdict |
+| Pattern | How it would work here | Model calls per email | Verdict |
 | --- | --- | --- | --- |
-| Chain | Extract order id, look it up, draft a reply. | 3 | Good first build. Predictable. |
-| Route + chain | Classify as refund, shipping or other. Use a chain per type. | 4 | Best fit. Types differ, and each path is short. |
-| Parallelize | Draft three tones at once, pick one. | 4 | Not needed. The tone does not vary enough to pay for. |
-| Orchestrator-workers | A lead plans, workers fetch data and draft. | 6 or more | Overkill. The steps are known. |
+| Chain | Extract order id, look it up (plain code), draft a reply. | 2 | Good first build. Predictable. |
+| Route + chain | Classify as refund, shipping or other. Use a chain per type. | 3 | Best fit. Types differ, and each path is short. |
+| Parallelize | Draft three tones at once, pick one by a rule in code. | 3 | Not needed. The tone does not vary enough to pay for. |
+| Orchestrator-workers | A lead plans, workers fetch data and draft. | 5 or more | Overkill. The steps are known. |
 | Add evaluator | A second call checks the reply against policy. | +1 or +2 | Worth it for refunds only, where a wrong reply costs money. |
 
 The team ships "route, then chain", with an evaluator on the refund path only. They do not
@@ -192,5 +196,7 @@ For prompt-level detail on chains, see
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
   (Dec 2024): the five workflow patterns and their definitions, the workflow-versus-agent
   distinction, and the advice to start simple. Checked 2026-09.
+- The cost and flexibility ordering of the patterns is this lesson's judgement. Anthropic
+  does not rank them.
 - The support-email comparison, its call counts and the code sketches are invented and
   illustrative.

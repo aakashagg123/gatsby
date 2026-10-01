@@ -68,8 +68,9 @@ This lesson stays on the decision: when is it worth it?
 Anthropic published results from its multi-agent research system in June 2025. Three
 findings matter to a product leader.
 
-- **It can win.** The multi-agent setup beat a single-agent Claude Opus 4 by 90.2% on
-  Anthropic's internal research evaluation. The tasks were breadth-first, such as
+- **It can win.** The multi-agent setup (a Claude Opus 4 lead with Claude Sonnet 4
+  subagents) beat a single-agent Claude Opus 4 by 90.2% on Anthropic's internal research
+  evaluation, as of June 2025. The tasks were breadth-first, such as
   gathering facts across many sources.
 - **It costs a lot.** Agents used about 4 times the tokens of a chat. Multi-agent systems
   used about 15 times the tokens of a chat.
@@ -79,20 +80,23 @@ findings matter to a product leader.
   fewer truly parallelizable tasks than research," and that agents are "not yet great at
   coordinating and delegating to other agents in real time."
 
-There is a sharper counter-view. Cognition, the maker of a coding agent, argued in 2025
-that running agents in parallel creates more problems than it solves. Its reasoning is
-that every action carries hidden decisions, and agents that do not share full context make
-conflicting ones. Treat it as a real objection, not a rebuttal of the Anthropic result.
-Both agree on one point: the answer depends on the task. Research that splits into
-independent searches suits parallel workers. Tightly coupled work does not.
+There is a sharper counter-view. Cognition, the maker of a coding agent, argued in June
+2025 that agents working in parallel without shared context make conflicting decisions,
+because every action carries hidden decisions. In April 2026 it published a follow-up,
+"Multi-Agents: What's Actually Working." It says multi-agent setups now work in a narrow
+class of cases: the writes stay single-threaded, and the extra agents contribute
+intelligence rather than actions. Treat this as a real objection and a refinement, not a
+rebuttal of the Anthropic result. Anthropic's own caveat about coding points the same way:
+tightly coupled work resists parallel agents. Research that splits into independent
+searches suits them better.
 
 ## The discipline that keeps any shape from collapsing
 
 Two habits separate a multi-agent system that works from one that produces fragments.
 
 - **Handoffs are written artifacts, not vibes.** The lead gives each worker a brief. The
-  worker returns a defined result. Most multi-agent failures are specification failures at
-  these seams. Anthropic reports that vague delegation led subagents to misread the task
+  worker returns a defined result. Many multi-agent failures start as specification
+  failures at these seams. Anthropic reports that vague delegation led subagents to misread the task
   or repeat the same searches as other agents.
 - **Someone owns the whole.** An orchestrator, or a human, answers for the combined
   result. Otherwise every piece can be good and the sum can be nonsense.
@@ -217,7 +221,9 @@ Three habits matter to an engineer.
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 13, 2025): the 90.2% internal result, the 4x and 15x token figures, the conditions
   where multi-agent fits and does not, and the vague-delegation failures. Checked 2026-09.
-- Cognition, "Don't Build Multi-Agents" (2025): the view that parallel agents without
-  shared context make conflicting decisions. The page could not be opened when this lesson
-  was written. It is summarised from search-result excerpts.
+- Cognition, "Don't Build Multi-Agents" (Jun 2025) and the follow-up "Multi-Agents:
+  What's Actually Working" (Apr 2026): the view that parallel agents without shared
+  context make conflicting decisions, and the later narrow class that works. Both pages
+  were blocked when this lesson was written. They are summarised from search-result
+  excerpts.
 - The payments research scenario and the brief template are invented and illustrative.

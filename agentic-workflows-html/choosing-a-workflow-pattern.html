@@ -379,8 +379,9 @@ model calls, and some plain code, joined in a shape. Five shapes cover most case
 <li><strong>Evaluator-optimizer.</strong> One call writes, another critiques, and they loop.</li>
 </ol>
 <p>The first three keep the path in your code. The fourth lets a model decide the path. The
-fifth adds a quality loop. As you move down the list, you gain flexibility and lose
-predictability, speed and cost control. Pick the first shape that does the job.</p>
+fifth adds a quality loop. As a rule of thumb, moving down the list gains flexibility and
+usually costs predictability, speed and cost control. That ordering is this lesson's
+judgement, not a measured ranking. Pick the first shape that does the job.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — The pattern sets your cost per task, your latency, and how hard
@@ -392,12 +393,13 @@ decision.</p>
 <p><strong>Ask yourself</strong> — <em>"Which of the five is this? Could the previous one on the list do
 the job?"</em></p>
 <p><strong>Risk if ignored</strong> — A feature that could have been a three-step chain ships as an
-orchestrator with workers. It costs several times more, runs slower, and fails in ways
+orchestrator with workers. It costs more, runs slower, and fails in ways
 nobody can trace.</p>
 </blockquote>
 <h2 id="the-mental-model-who-decides-the-path">The mental model: who decides the path</h2>
 <p>The key question is who decides what happens next. In the first three patterns, your code
-decides. In the fourth, a model decides. In the fifth, a model decides when to stop.</p>
+decides. In the fourth, a model decides. In the fifth, the critic decides when to stop, so
+set a round limit.</p>
 <!-- Choosing a workflow pattern — five patterns split by who decides the path. -->
 <style>
 .dgm-wp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
@@ -458,8 +460,9 @@ decides. In the fourth, a model decides. In the fifth, a model decides when to s
   </div>
 </div>
 
-<p>Anthropic's guidance on building agents draws the same line. It separates workflows, where
-code directs the model, from agents, where the model directs itself. It advises starting
+<p>Anthropic separates workflows, where code directs the model, from agents, where the model
+directs itself. It lists all five patterns here as workflows. The split by who decides the
+path is this lesson's own framing. It advises starting
 with the simplest approach and adding complexity "only when simpler solutions fall short."
 For the autonomy question itself, see
 <a href="../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is, and how much autonomy it needs</a>.</p>
@@ -502,7 +505,7 @@ definitions follows Anthropic's.</p>
 <td><strong>Orchestrator-workers</strong></td>
 <td>A lead model breaks the task down, delegates, and combines.</td>
 <td>You cannot predict the subtasks in advance.</td>
-<td>The highest token spend of the five.</td>
+<td>Usually the highest and least predictable spend. This is a rule of thumb. Anthropic does not rank the patterns.</td>
 <td>The lead gives vague briefs, and workers duplicate effort.</td>
 </tr>
 <tr>
@@ -550,39 +553,40 @@ definitions follows Anthropic's.</p>
 last step. Keep each added layer justified by a measured gap.</p>
 <h2 id="worked-example-one-support-email-five-ways">Worked example: one support email, five ways</h2>
 <p><em>This example is invented, to show the method. The numbers are illustrative.</em></p>
-<p>A team wants to answer customer emails about orders. They compare patterns.</p>
+<p>A team wants to answer customer emails about orders. They compare patterns. Counts are
+model calls only. Lookups are plain code.</p>
 <table>
 <thead>
 <tr>
 <th>Pattern</th>
 <th>How it would work here</th>
-<th>Calls per email</th>
+<th>Model calls per email</th>
 <th>Verdict</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Chain</td>
-<td>Extract order id, look it up, draft a reply.</td>
-<td>3</td>
+<td>Extract order id, look it up (plain code), draft a reply.</td>
+<td>2</td>
 <td>Good first build. Predictable.</td>
 </tr>
 <tr>
 <td>Route + chain</td>
 <td>Classify as refund, shipping or other. Use a chain per type.</td>
-<td>4</td>
+<td>3</td>
 <td>Best fit. Types differ, and each path is short.</td>
 </tr>
 <tr>
 <td>Parallelize</td>
-<td>Draft three tones at once, pick one.</td>
-<td>4</td>
+<td>Draft three tones at once, pick one by a rule in code.</td>
+<td>3</td>
 <td>Not needed. The tone does not vary enough to pay for.</td>
 </tr>
 <tr>
 <td>Orchestrator-workers</td>
 <td>A lead plans, workers fetch data and draft.</td>
-<td>6 or more</td>
+<td>5 or more</td>
 <td>Overkill. The steps are known.</td>
 </tr>
 <tr>
@@ -675,6 +679,8 @@ and briefs described in
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
   (Dec 2024): the five workflow patterns and their definitions, the workflow-versus-agent
   distinction, and the advice to start simple. Checked 2026-09.</li>
+<li>The cost and flexibility ordering of the patterns is this lesson's judgement. Anthropic
+  does not rank them.</li>
 <li>The support-email comparison, its call counts and the code sketches are invented and
   illustrative.</li>
 </ul>

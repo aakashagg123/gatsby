@@ -55,9 +55,9 @@ asking.
 ## What makes a workflow durable
 
 **State saved after every step.** Write down enough to resume: which step is done, what
-each step returned, and what is next. A crash at step 14 then restarts at step 14. The
-Claude research system Anthropic described works this way. It saves progress so agents
-"can resume from where the agent was when the errors occurred" instead of starting over.
+each step returned, and what is next. A crash at step 14 then restarts at step 14. Anthropic
+built its research system to resume "from where the agent was when the errors occurred"
+instead of starting over. Saving state after every step is the usual way to get that.
 
 **Wait states.** A wait state is a point where the workflow safely pauses and saves
 itself. It can sit for days, waiting for a human approval, a timer, or an outside event.
@@ -151,7 +151,7 @@ move into nearby workflows from a position of trust and integration.
 
 A single step with a clear, measurable outcome is easy for a rival to price and copy. A
 lasting position usually comes from owning more of the workflow, not from doing one step
-exceptionally well.
+exceptionally well. This is a strategic judgement, not a measured result.
 
 Only claim this if it is true. Track the share of steps a human still does behind the
 interface, and check that it falls over time. The economics, pricing and the strategic
@@ -179,9 +179,9 @@ The saved state is a small record. Every step reads it first and writes it last.
 ```python
 state = {
     "workflow_id": "refund-8841",
-    "step": 4,                          # the last completed step
+    "step": 3,                          # last completed step; now waiting at step 4
     "status": "waiting",               # running | waiting | failed | done
-    "wait_until": "2026-10-05T10:03Z", # timer for the wait state
+    "wait_until": "2026-10-08T10:03Z", # timer for the wait state (3 days)
     "outputs": {"reservation_id": "rsv_912"},
     "attempts": {"3": 1},              # retries so far, per step
 }
@@ -245,8 +245,8 @@ per completed workflow.
   rainbow deployments. Checked 2026-09.
 - Temporal, [Event History](https://docs.temporal.io/encyclopedia/event-history): a
   durable log of a workflow's events, replayed by a new worker to rebuild state. The page
-  could not be opened when this lesson was written. It is described from search-result
-  excerpts.
+  itself was blocked when checked. The behaviour was confirmed from the same docs text in
+  Temporal's public documentation repository on GitHub.
 - The refund workflow, its table, and the code sketch are invented and illustrative. The
   idempotency key, retry and compensation ideas are standard engineering practice, covered
   in the [Flowable](../flowable/README.md) track.
