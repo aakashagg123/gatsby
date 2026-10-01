@@ -1,0 +1,46 @@
+<!-- Access control: Eight lessons · the question, how it travels, a real system, a new caller -->
+<style>
+.dgm-ac{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2e6f9e;border-radius:16px;padding:28px 26px 22px;
+  box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ac-chip{position:absolute;top:-11px;left:24px;background:#2e6f9e;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(46,111,158,.28)}
+.dgm-ac h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ac-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-ac-box{background:#e9f1f8;border:1px solid #c5d9ea;border-radius:11px;padding:10px 12px}
+.dgm-ac-box b{display:block;font-size:11.5px;color:#1f2328;margin-bottom:2px}
+.dgm-ac-box i{font-style:normal;display:block;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ac-grid{display:grid;gap:8px}
+.dgm-ac-arr{display:flex;justify-content:center;align-items:center;color:#8c959f;font-size:10.5px;font-weight:600;padding:3px 0;gap:6px}
+.dgm-ac-ok{background:#dafbe1;border:1px solid #aceebb}
+.dgm-ac-no{background:#ffebe9;border:1px solid #ffcecb}
+.dgm-ac-warn{background:#fff8c5;border:1px solid #eac54f}
+.dgm-ac-warn b{color:#7d4e00}
+@media (max-width:640px){.dgm-ac{padding:20px 16px 18px}.dgm-ac-grid{grid-template-columns:1fr!important}}
+</style>
+<div class="dgm-ac">
+  <span class="dgm-ac-chip">Access control</span>
+  <h4>Eight lessons · the question, how it travels, a real system, a new caller</h4>
+  <p class="dgm-ac-sub">Every access decision has the same four inputs: who, what, on which object, under what conditions.</p>
+  <div class="dgm-ac-grid" style="grid-template-columns:1fr">
+    <div class="dgm-ac-box"><b>1 · The question and its model</b><i>Authentication vs authorization · enforcement, decision, information, administration points · deny by default</i></div>
+  </div>
+  <div class="dgm-ac-arr">↓ identity and permissions have to cross systems</div>
+  <div class="dgm-ac-grid" style="grid-template-columns:1fr">
+    <div class="dgm-ac-box"><b>2 · OAuth 2.0, OIDC and tokens</b><i>ID, access and refresh tokens · PKCE · what an API must validate</i></div>
+  </div>
+  <div class="dgm-ac-arr">↓ three ways to decide</div>
+  <div class="dgm-ac-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="dgm-ac-box"><b>3 · RBAC</b><i>Roles are jobs. Breaks on objects, grows without limit.</i></div>
+    <div class="dgm-ac-box"><b>4 · ABAC</b><i>Attributes of user, object, action, context.</i></div>
+    <div class="dgm-ac-box"><b>5 · ReBAC and policy engines</b><i>Sharing as a graph. Policy as code.</i></div>
+  </div>
+  <div class="dgm-ac-arr">↓ put it into a real identity server</div>
+  <div class="dgm-ac-grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="dgm-ac-box"><b>6 · Keycloak core</b><i>Realms, clients, roles, groups, tokens. Tested on 26.7.5.</i></div>
+    <div class="dgm-ac-box"><b>7 · Authorization Services</b><i>Resources, scopes, policies, permissions, strategy.</i></div>
+  </div>
+  <div class="dgm-ac-arr">↓ now a model is one of the callers</div>
+  <div class="dgm-ac-grid" style="grid-template-columns:1fr">
+    <div class="dgm-ac-box dgm-ac-warn"><b>8 · Access control for AI agents</b><i>The agent carries the user's authority, and no more.</i></div>
+  </div>
+</div>

@@ -46,6 +46,7 @@ SECURITY_HTML = os.path.join(ROOT, "ai-security-and-guardrails-html")  # AI secu
 COST_HTML = os.path.join(ROOT, "cost-optimization-html")  # Cost optimization (GenAI family, module 11)
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
+AC_HTML = os.path.join(ROOT, "access-control-html")     # access control (RBAC, ABAC, Keycloak)
 CE_HTML = os.path.join(ROOT, "context-engineering-html")  # context engineering
 PE_HTML = os.path.join(ROOT, "prompt-engineering-html")  # prompt engineering
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -245,7 +246,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|context-engineering|prompt-engineering)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -447,6 +448,13 @@ LANDING = """<!doctype html>
       <p>How real systems are designed at scale — from rate limiters to stock exchanges —
       with the architecture, tradeoffs, and failure modes that shape product decisions.
       28 systems across 8 lessons, diagrams included.</p>
+    </a>
+    <a class="card" href="access-control/index.html">
+      <span class="tag">Module</span>
+      <h2>Access control →</h2>
+      <p>Who may do what, and where that is decided: authentication vs authorization,
+      OAuth and tokens, RBAC, ABAC, relationship-based access, Keycloak, and access
+      control for AI agents. 8 lessons.</p>
     </a>
     <a class="card" href="context-engineering/index.html">
       <span class="tag">Module</span>
@@ -816,6 +824,10 @@ def main():
     # 1q. System design module: copy its pre-rendered pages.
     if os.path.isdir(SD_HTML):
         shutil.copytree(SD_HTML, os.path.join(SITE, "system-design"))
+
+    # 1q2. Access control module: copy its pre-rendered pages.
+    if os.path.isdir(AC_HTML):
+        shutil.copytree(AC_HTML, os.path.join(SITE, "access-control"))
 
     # 1r. Context engineering module: copy its pre-rendered pages.
     if os.path.isdir(CE_HTML):

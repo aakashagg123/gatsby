@@ -44,7 +44,7 @@ VOLATILITY = {
     "context-engineering": "fast", "memory-and-context": "fast",
     "rag-vector-databases": "medium", "evaluation-and-observability": "fast",
     "ai-security-and-guardrails": "fast", "cost-optimization": "fast",
-    "knowledge-graphs": "medium", "system-design": "stable",
+    "knowledge-graphs": "medium", "system-design": "stable", "access-control": "medium",
     "technical-product-management": "medium", "technical-product-sense": "stable",
     "product-sense": "medium", "first-principles": "stable",
 }

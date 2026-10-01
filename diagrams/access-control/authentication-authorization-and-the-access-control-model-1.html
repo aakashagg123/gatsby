@@ -1,0 +1,31 @@
+<!-- The four parts: Enforcement · decision · information · administration -->
+<style>
+.dgm-ac2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2e6f9e;border-radius:16px;padding:28px 26px 22px;
+  box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ac2-chip{position:absolute;top:-11px;left:24px;background:#2e6f9e;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(46,111,158,.28)}
+.dgm-ac2 h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-ac2-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-ac2-box{background:#e9f1f8;border:1px solid #c5d9ea;border-radius:11px;padding:10px 12px}
+.dgm-ac2-box b{display:block;font-size:11.5px;color:#1f2328;margin-bottom:2px}
+.dgm-ac2-box i{font-style:normal;display:block;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-ac2-grid{display:grid;gap:8px}
+.dgm-ac2-arr{display:flex;justify-content:center;align-items:center;color:#8c959f;font-size:10.5px;font-weight:600;padding:3px 0;gap:6px}
+.dgm-ac2-ok{background:#dafbe1;border:1px solid #aceebb}
+.dgm-ac2-no{background:#ffebe9;border:1px solid #ffcecb}
+.dgm-ac2-warn{background:#fff8c5;border:1px solid #eac54f}
+.dgm-ac2-warn b{color:#7d4e00}
+@media (max-width:640px){.dgm-ac2{padding:20px 16px 18px}.dgm-ac2-grid{grid-template-columns:1fr!important}}
+</style>
+<div class="dgm-ac2">
+  <span class="dgm-ac2-chip">The four parts</span>
+  <h4>Enforcement · decision · information · administration</h4>
+  <p class="dgm-ac2-sub">Each part has an owner and a failure mode.</p>
+  <div class="dgm-ac2-grid" style="grid-template-columns:1fr 1fr">
+    <div class="dgm-ac2-box"><b>PEP · Enforcement point</b><i>In the app or gateway. Asks, then obeys. Failure: missing on one endpoint.</i></div>
+    <div class="dgm-ac2-box dgm-ac2-warn"><b>PDP · Decision point</b><i>Evaluates the policy. Failure: slow, or fails open.</i></div>
+    <div class="dgm-ac2-box"><b>PIP · Information point</b><i>Supplies attributes and relationships. Failure: stale data.</i></div>
+    <div class="dgm-ac2-box"><b>PAP · Administration point</b><i>Where policy is written. Failure: edited without review.</i></div>
+  </div>
+  <div class="dgm-ac2-arr">PEP asks PDP "may Priya edit report 7?" · PDP asks PIP for facts · PAP supplies the rules</div>
+</div>

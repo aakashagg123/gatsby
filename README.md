@@ -151,7 +151,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## 🧭 Beyond AI Engineering — the craft tracks
 
-The AI Engineering modules above teach the *stack*. Eighteen further tracks teach the *craft*
+The AI Engineering modules above teach the *stack*. Nineteen further tracks teach the *craft*
 around it — each a standalone folder of cross-linked lessons in the same house style
 (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML
 edition on the [live site](https://aakashagg123.github.io/gatsby/).
@@ -173,6 +173,7 @@ edition on the [live site](https://aakashagg123.github.io/gatsby/).
 | [**Cost optimization**](./cost-optimization/README.md) 🆕 | Which lever fixes which cost driver, the build-vs-buy breakeven done as arithmetic, and the FinOps practice that turns attribution into governance before the invoice, not after. | [The cost stack, and the build-vs-buy breakeven](./cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.md) |
 | [**System design**](./system-design/README.md) | How real systems are designed at scale — from rate limiters to stock exchanges — with the architecture, tradeoffs, and failure modes that shape product decisions. 28 systems across 8 lessons. | [Foundations & framework](./system-design/foundations-and-framework.md) |
 | [**Context engineering**](./context-engineering/README.md) 🆕 | Treat what the model gets to see as a product decision — instructions, retrieval, memory, and live state, spec'd, governed, and evaluated with the same rigor as the output it produces. | [What is context engineering, for a product leader?](./context-engineering/what-is-context-engineering.md) |
+| [**Access control**](./access-control/README.md) 🆕 | Who may do what, and where that is decided: authentication vs authorization, OAuth and tokens, RBAC, ABAC, relationship-based access, Keycloak, and access control for AI agents. 8 lessons. | [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md) |
 | [**Prompt engineering**](./prompt-engineering/README.md) 🆕 | The craft of writing input a model will reliably act on — from ChatGPT productivity patterns, through few-shot and chain-of-thought, into the prompts that drive Claude Code and other coding agents. 10 lessons. | [What prompt engineering actually is](./prompt-engineering/what-prompt-engineering-actually-is.md) |
 | [**Harness engineering**](./harness-engineering/README.md) | Build a coding agent's harness from scratch — loop, tools, context, memory, evals — phase by phase, hands-on. | [Roadmap](./harness-engineering/ROADMAP.md) |
 | [**Flowable**](./flowable/README.md) | Process automation from scratch — build a token engine, wait states, and a job executor by hand, then run real BPMN on Flowable. Concept-first for PMs, build layer for engineers. | [Roadmap](./flowable/ROADMAP.md) |
