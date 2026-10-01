@@ -6,8 +6,8 @@
 
 ## TL;DR
 
-Most AI features that do real work are not one model call. They are a workflow: several
-model calls, and some plain code, joined in a shape. Five shapes cover most cases.
+Many AI features that do real work are not one model call. They are a workflow: several
+model calls, and some plain code, joined in a shape. Five shapes are common.
 
 1. **Prompt chaining.** Step one feeds step two, and so on.
 2. **Routing.** Classify the input, then send it to the right handler.
@@ -59,8 +59,9 @@ flowchart TB
 
 Anthropic separates workflows, where code directs the model, from agents, where the model
 directs itself. It lists all five patterns here as workflows. The split by who decides the
-path is this lesson's own framing. It advises starting
-with the simplest approach and adding complexity "only when simpler solutions fall short."
+path is this lesson's own framing. Anthropic also advises
+starting with the simplest approach, and adding multi-step agentic systems "only when
+simpler solutions fall short."
 For the autonomy question itself, see
 [What an agent is, and how much autonomy it needs](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md).
 
@@ -73,7 +74,7 @@ definitions follows Anthropic's.
 | --- | --- | --- | --- | --- |
 | **Prompt chaining** | Breaks a task into a sequence. Each call works on the last call's output. | The task splits cleanly into fixed steps. | Latency adds up, one call per step. | An early mistake flows through every later step. |
 | **Routing** | Classifies the input and sends it to a specialised follow-up. | There are distinct categories that need different handling. | One extra classification call. | Misrouted input gets the wrong handler, confidently. |
-| **Parallelization** | Runs calls at the same time and combines the results in code. | Subtasks are independent, or you want several views. | More tokens at once. Not slower. | Results disagree, with no rule to settle it. |
+| **Parallelization** | Runs calls at the same time and combines the results in code. | Subtasks are independent, or you want several views. | More tokens at once. Usually not slower than a chain. | Results disagree, with no rule to settle it. |
 | **Orchestrator-workers** | A lead model breaks the task down, delegates, and combines. | You cannot predict the subtasks in advance. | Usually the highest and least predictable spend. This is a rule of thumb. Anthropic does not rank the patterns. | The lead gives vague briefs, and workers duplicate effort. |
 | **Evaluator-optimizer** | One call generates. Another gives feedback. They loop. | You have clear criteria, and revision measurably helps. | Several calls per answer. | The loop runs on, or the critic is no better than the writer. |
 
@@ -105,7 +106,7 @@ model calls only. Lookups are plain code.
 | Route + chain | Classify as refund, shipping or other. Use a chain per type. | 3 | Best fit. Types differ, and each path is short. |
 | Parallelize | Draft three tones at once, pick one by a rule in code. | 3 | Not needed. The tone does not vary enough to pay for. |
 | Orchestrator-workers | A lead plans, workers fetch data and draft. | 5 or more | Overkill. The steps are known. |
-| Add evaluator | A second call checks the reply against policy. | +1 or +2 | Worth it for refunds only, where a wrong reply costs money. |
+| Add evaluator | A second call checks the reply against policy. | +1 per round with a model critic | Worth it for refunds only, where a wrong reply costs money. |
 
 The team ships "route, then chain", with an evaluator on the refund path only. They do not
 build the orchestrator. If a fourth email type appears with no fixed steps, they revisit

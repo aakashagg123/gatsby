@@ -50,13 +50,13 @@ state, a timer and an escalation path. See the
 
 | Lesson | The one idea | The question it makes you ask |
 | --- | --- | --- |
-| [Choosing a workflow pattern](./choosing-a-workflow-pattern.md) | Five patterns cover most work. Pick the first one that fits. | Which of the five is this, and could the one before it do the job? |
+| [Choosing a workflow pattern](./choosing-a-workflow-pattern.md) | Five common patterns. Pick the first one that fits. | Which of the five is this, and could the one before it do the job? |
 | [Orchestrating more than one agent](./orchestrating-more-than-one-agent.md) | Every extra agent needs a named bottleneck. The cost is large. | Would one better-built agent do this, and have we tried? |
 | [Making a workflow durable, and worth owning](./making-a-workflow-durable-and-worth-owning.md) | Durability comes first: saved state, waits, retries, safe repeats, undo. Ownership follows. | If we restarted mid-run, would every workflow resume with nothing done twice? |
 
 **The through-line:** the word "workflow" adds two things a single agent run does not face.
 One is choosing a shape for several steps or agents. The other is surviving the real time a
-long process takes. Most failures are not about the pattern chosen. They are an over-flexible
+long process takes. In this module's view, many failures are not about the pattern chosen. They are an over-flexible
 pattern bought by default, vague handoffs, or a durability gap found on the first restart.
 This module stays at the decision level. The engineering depth lives in
 [Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md),

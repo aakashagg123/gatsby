@@ -369,7 +369,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
   <p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>Most tasks do better with one well-built agent. Sometimes one loop is not enough. The
+<p>Start with one well-built agent. Sometimes one loop is not enough. The
 work may be too big for one context window. It may have independent threads that can run
 at once. It may need specialists with different tools and permissions.</p>
 <p>Then a lead agent can hand pieces to subagents and combine what they return. This is the
@@ -380,7 +380,7 @@ and parallel work. It costs one thing: coordination.</p>
 bottleneck that one loop cannot clear. A diagram with more boxes is not a case.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — Multi-agent designs are where token budgets grow fastest. Spend
+<p><strong>Why it matters</strong> — Multi-agent designs make token budgets grow quickly. Spend
 scales with the number of agents. Failures are emergent: each agent can behave and the
 system can still misbehave.</p>
 <p><strong>What it changes in your decisions</strong> — Every extra agent must name its bottleneck:
@@ -599,7 +599,7 @@ It spawns three subagents.</p>
 with a simple step. Each subagent has a stop rule, so cost is capped.</p>
 <h2 id="a-decision-rule-that-survives-a-vendor-pitch">A decision rule that survives a vendor pitch</h2>
 <ol>
-<li><strong>Start with one agent.</strong> Better tools, a tighter prompt and cleaner context fix most
+<li><strong>Start with one agent.</strong> Better tools, a tighter prompt and cleaner context often fix
    "we need more agents" symptoms.</li>
 <li><strong>Add a subagent only for a named bottleneck.</strong> The bottleneck may be context (isolate
    a messy subtask), parallelism (independent threads), or specialisation (different tools

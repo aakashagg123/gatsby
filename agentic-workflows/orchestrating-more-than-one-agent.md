@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-Most tasks do better with one well-built agent. Sometimes one loop is not enough. The
+Start with one well-built agent. Sometimes one loop is not enough. The
 work may be too big for one context window. It may have independent threads that can run
 at once. It may need specialists with different tools and permissions.
 
@@ -20,7 +20,7 @@ bottleneck that one loop cannot clear. A diagram with more boxes is not a case.
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — Multi-agent designs are where token budgets grow fastest. Spend
+> **Why it matters** — Multi-agent designs make token budgets grow quickly. Spend
 > scales with the number of agents. Failures are emergent: each agent can behave and the
 > system can still misbehave.
 >
@@ -131,7 +131,7 @@ with a simple step. Each subagent has a stop rule, so cost is capped.
 
 ## A decision rule that survives a vendor pitch
 
-1. **Start with one agent.** Better tools, a tighter prompt and cleaner context fix most
+1. **Start with one agent.** Better tools, a tighter prompt and cleaner context often fix
    "we need more agents" symptoms.
 2. **Add a subagent only for a named bottleneck.** The bottleneck may be context (isolate
    a messy subtask), parallelism (independent threads), or specialisation (different tools
