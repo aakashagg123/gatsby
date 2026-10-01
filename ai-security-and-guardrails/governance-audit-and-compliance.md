@@ -101,10 +101,11 @@ someone else acts on its output, and the duty can fall on the scorer. If your mo
 review.
 
 Do not assume other laws copy Article 22. India's Digital Personal Data Protection (DPDP)
-Rules were published in the Gazette on 13 November 2025 and announced on 14 November. Their
-main duties, such as notice and consent, apply from 13 May 2027, 18 months after
-publication. The EU also proposed GDPR changes in the November 2025 Digital Omnibus. I found
-no sign that the Article 22 changes were adopted, so check the current status. Check each
+Rules were notified in the Gazette (G.S.R. 846(E), dated 13 November 2025) and announced on
+14 November. Their main duties, such as notice and consent, apply from May 2027, 18 months
+after publication. The Commission also proposed GDPR changes, including to Article 22, in the November 2025
+Digital Omnibus. As of 1 October 2026 no amendment has been adopted that I could find, and
+the Council's working text reportedly dropped the Article 22 change. Check the current status. Check each
 law and each market with counsel.
 
 ## The EU AI Act: risk tiers, with a moving timeline
@@ -120,7 +121,7 @@ uses into **risk tiers**.
 - **Minimal risk** has no specific duty.
 
 The part product leaders miss is the reach. The Act applies to providers and deployers outside the EU if
-their AI system's output is used in the EU. Where your company sits does not matter.
+their AI system's output is used in the EU. Where your company sits does not decide it.
 
 The dates have moved. Regulation (EU) 2026/1744, the "Digital Omnibus on AI," was
 published on 24 July 2026 and entered into force on 27 July 2026. Here is the schedule as
@@ -263,7 +264,7 @@ Two habits keep it honest.
   From law-firm summaries ([A&O Shearman](https://www.aoshearman.com/en/insights/ao-shearman-on-data/cjeu-rules-that-a-credit-score-constitutes-automated-decision-making-under-the-gdpr)).
 - India, [DPDP Rules 2025](https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf):
   Gazette notification dated 13 Nov 2025 (PIB announcement 14 Nov), with phased
-  commencement and most duties 18 months after publication. Some sources give 14 May 2027.
+  commencement and most duties 18 months after publication. Sources give 13 or 14 May 2027.
   Dates from secondary summaries.
 - AICPA, [SOC suite of services](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2/):
   the 2017 Trust Services Criteria with revised points of focus (2022), five categories,
