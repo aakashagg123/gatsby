@@ -1,4 +1,4 @@
-<!-- When memory breaks — 3 parallel failure branches (stale / leak / stuck) from one store. -->
+<!-- When memory breaks — 4 parallel failure branches (stale / leak / stuck / poisoned) from one store. -->
 <style>
 .dgm-wm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
@@ -19,7 +19,7 @@
 .dgm-wm-fan{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
 .dgm-wm-fan svg{width:20px;height:20px}
 
-.dgm-wm-fails{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dgm-wm-fails{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .dgm-wm-fail{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:12px;padding:14px 14px;
   display:flex;flex-direction:column;gap:8px;position:relative}
 .dgm-wm-fail .dgm-wm-q{position:absolute;top:-9px;left:12px;background:#ffffff;
@@ -38,11 +38,14 @@
   .dgm-wm{padding:20px 16px 18px}
   .dgm-wm-fails{grid-template-columns:1fr}
 }
+@media (min-width:641px) and (max-width:900px){
+  .dgm-wm-fails{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 <div class="dgm-wm">
   <span class="dgm-wm-chip">When it breaks</span>
 
-  <h4>Three parallel failures from one memory store · each with a specific mitigation</h4>
+  <h4>Four parallel failures from one memory store · each with a specific test</h4>
   <p class="dgm-wm-sub">Not variants of "the model got it wrong" — each is a structural gap with a structural fix.</p>
 
   <div class="dgm-wm-store">
@@ -58,7 +61,7 @@
       <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
       <h5>Stale &amp; wrong</h5>
       <div class="dgm-wm-body">Product acts confidently on outdated info · no signal that it's old</div>
-      <div class="dgm-wm-fix"><strong>Fix:</strong> explicit freshness — last-confirmed date · expiry · periodic re-check</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> last-confirmed date · expiry · replace rule on the write path</div>
     </div>
 
     <div class="dgm-wm-fail">
@@ -66,7 +69,7 @@
       <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16M8 4v16M16 4v16"/></svg>
       <h5>Leaked</h5>
       <div class="dgm-wm-body">One user's or tenant's data reaches another — the boundary that mattered most</div>
-      <div class="dgm-wm-fix"><strong>Fix:</strong> tenant / user ID stamped on every write · checked at every read</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> user / tenant ID on every write · filter in the store before ranking</div>
     </div>
 
     <div class="dgm-wm-fail">
@@ -74,7 +77,15 @@
       <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg>
       <h5>Stuck</h5>
       <div class="dgm-wm-body">User can't see, correct, or delete — a wrong memory persists indefinitely</div>
-      <div class="dgm-wm-fix"><strong>Fix:</strong> user-facing "what does this product remember about me" surface</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> "what do you remember about me" screen · delete reaches summaries and indexes</div>
+    </div>
+
+    <div class="dgm-wm-fail">
+      <span class="dgm-wm-q">Q · Planted?</span>
+      <svg class="dgm-wm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg>
+      <h5>Poisoned</h5>
+      <div class="dgm-wm-body">Untrusted content writes a hostile instruction that acts in every later session</div>
+      <div class="dgm-wm-fix"><strong>Fix:</strong> hold untrusted writes for confirmation · show sources · user review</div>
     </div>
   </div>
 </div>

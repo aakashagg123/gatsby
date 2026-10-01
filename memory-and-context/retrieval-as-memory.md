@@ -2,54 +2,52 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
+*Last reviewed: 2026-09 · Volatility: fast*
+
 ## TL;DR
 
-One of the most common ways an AI product actually implements memory is a technique
-covered in full elsewhere in this curriculum: retrieval. Instead of trying to hold
-everything a user or an organization has ever said inside the model's limited context
-window, a product stores that information externally — in a searchable index — and fetches
-only the relevant pieces at the moment they're needed. This is the same mechanism behind
-[RAG](../rag-vector-databases/README.md), applied to a different kind of content: not just
-your company's documents, but a user's own history, preferences, and past interactions.
-Seen this way, "memory" and "retrieval" are not two separate capabilities a product team
-builds — user and organizational memory are very often just RAG, pointed at a different
-corpus. This lesson is the bridge: it doesn't re-teach retrieval mechanics, which the RAG
-module already covers in depth, but it makes explicit why retrieval is memory's most
-practical, most common implementation, and what changes when the "documents" being
-retrieved are a person's own history instead of a company's knowledge base.
+A model can only use what is in its context window right now. A user's full history will
+not fit, and would cost more with every visit. So products store memories outside the
+model and bring back the relevant few. That is retrieval, the same technique behind
+[RAG](../rag-vector-databases/README.md). Point it at a person's history instead of a
+company's documents, and you have memory.
+
+Retrieval is not the only way to build memory. There are three common designs.
+
+1. **Load it directly.** A small, stable set of facts goes into every request.
+2. **Retrieve on demand.** A large history is searched, and the best matches are added.
+3. **Let the agent keep notes.** The agent reads and writes its own files as it works.
+
+This lesson helps you pick between them. It does not re-teach retrieval mechanics. The RAG
+module covers those.
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — Teams often plan "add memory" and "add retrieval" as two separate
-> roadmap items with two separate budgets, when in practice they're frequently the same
-> underlying investment, aimed at different content.
+> **Why it matters** — Teams plan "add memory" and "add retrieval" as separate projects
+> with separate budgets. Often they are one investment aimed at different content. Other
+> times a much simpler design would do.
 >
-> **What it changes in your decisions** — You ask whether a proposed memory feature is
-> really a retrieval problem in disguise — and if so, you build it with the same
-> discipline (chunking, indexing, retrieval quality) the RAG module already covers, rather
-> than reinventing a lighter, less reliable version from scratch.
+> **What it changes in your decisions** — Before approving a memory build, you ask which
+> of the three designs fits the amount and kind of data. Then you reuse the retrieval
+> stack you already have.
 >
-> **Ask yourself** — *"Is this memory feature something we should retrieve on demand, or
-> does it genuinely need to be loaded into every request regardless of relevance?"*
+> **Ask yourself** — *"Is this memory small enough to load every time, large enough to
+> need search, or task progress an agent should note for itself?"*
 >
-> **Risk if ignored** — A team builds two separate, redundant systems — one for
-> "knowledge" and one for "memory" — that could have been one retrieval pipeline serving
-> two different corpora, doubling the engineering and operational cost for no real benefit.
+> **Risk if ignored** — You build a search pipeline for forty facts. Or you paste a huge
+> history into every call and pay for it, with worse answers.
 
-## The mental model: the same filing system, a different drawer
+## The mental model: one filing system, different drawers
 
-Retrieval, as covered in the [RAG module](../rag-vector-databases/README.md), is a
-general-purpose filing system: index a body of text, and fetch the relevant pieces on
-demand instead of trying to hold everything at once. Company documents go in one drawer.
-A user's own history — their past conversations, stated preferences, prior decisions — can
-go in another drawer of the exact same filing system. The mechanism fetching from either
-drawer is the same; only the contents differ.
+Retrieval is a general filing system. Index some text, then fetch the relevant pieces on
+demand. Company documents go in one drawer. A user's own history goes in another. The
+mechanism is the same. Only the content differs.
 
 ```mermaid
 flowchart TB
   subgraph SYSTEM["One retrieval system, two drawers"]
-    KNOW["Drawer 1: company knowledge<br/>docs, policies, product info<br/>— the RAG module's usual subject"]
-    HIST["Drawer 2: a user's own history<br/>preferences, past requests,<br/>prior decisions — memory"]
+    KNOW["Drawer 1: company knowledge<br/>docs, policies, product info<br/>(the RAG module's usual subject)"]
+    HIST["Drawer 2: a user's own history<br/>preferences, past requests,<br/>prior decisions (memory)"]
   end
   Q["A request comes in"] --> WHICH{"What does<br/>it need?"}
   WHICH -->|"a fact about<br/>the business"| KNOW
@@ -58,71 +56,132 @@ flowchart TB
   HIST --> ANSWER
 ```
 
-## Why retrieval beats trying to hold everything in the window
+## Why not hold everything in the window
 
-The reasoning is identical to why RAG beats stuffing an entire knowledge base into a
-prompt, covered in [RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md):
-a user's full history grows without bound over time, and pasting all of it into every
-request would eventually exceed the context window, cost more with every additional
-interaction, and — per the [lost-in-the-middle effect](../llms/the-context-window.md) —
-often produce worse answers than a focused, relevant subset would. Retrieval solves this
-exactly the way it solves the same problem for company knowledge: index everything, fetch
-only what's relevant to the current moment.
+The reasoning matches [RAG vs. long context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md).
+A history grows without limit. Pasting it all into each call soon exceeds the window and
+raises cost on every visit. Quality can also fall as the window fills. Anthropic calls
+this context rot: "as the number of tokens in the context window increases, the model's
+ability to accurately recall information from that context decreases." A focused subset
+usually beats the whole pile. See also the
+[lost-in-the-middle effect](../llms/the-context-window.md).
 
-## What's genuinely different when the corpus is a person's history
+## Choosing among the three designs
 
-Two things change when retrieval is pointed at memory instead of general knowledge, and
-both are worth deliberate attention rather than assuming the RAG playbook transfers
-unchanged. **Freshness matters differently.** A company policy document might be stable
-for months; a user's stated preference might change from one conversation to the next, so
-a memory-retrieval system needs a clearer way to update or override an older stored fact,
-not just add to a growing pile. **Consent and visibility are non-negotiable.** Retrieving
-from a company's knowledge base raises no personal-privacy question; retrieving from a
-person's own history is retrieving personal data, and the [user-memory
-obligations](./session-user-and-organizational-memory.md) — visibility, correction,
-deletion — apply in full.
+| Design | Use when | Cost | Main risk |
+| --- | --- | --- | --- |
+| Load directly | Facts are few, stable, and relevant to almost every request. A name, a plan, five preferences. | Small tokens on every call. No search step. | The set grows quietly and crowds the window. |
+| Retrieve on demand | History is large and only sometimes relevant. Past tickets, old chats, notes. | An index, a search step, and tuning. | Missed matches, and stale results ranked first. |
+| Agent-kept notes | A long task spans many contexts or sessions. The agent records progress and reads it back. | File storage, and a handler you must secure. | Clutter, wrong notes, and saved untrusted text. |
 
-## When memory should skip retrieval entirely
+Agent-kept notes suit work in progress. Anthropic's docs describe the memory tool as
+letting an agent record "what it learns in memory files" and read them "back on demand".
+It gives "just-in-time context retrieval" without a search index.
 
-Not everything worth remembering benefits from retrieval. A small, stable, always-relevant
-set of facts — a user's name, their subscription tier, a handful of core preferences — is
-often cheaper and more reliable to simply load into every request directly, rather than
-running a retrieval step to fetch something that was always going to be needed anyway.
-Reach for retrieval when the stored history is large and only occasionally relevant;
-load facts directly when they're small and consistently relevant to nearly everything the
-feature does.
+## Worked example: sizing the choice
+
+*This example is invented. The numbers are illustrative.*
+
+A tax-help assistant serves returning customers. The team lists what it might remember.
+
+| Item | Size | How often needed | Design |
+| --- | --- | --- | --- |
+| Name, filing status, country | About 40 words | Almost every request | Load directly |
+| Ten stated preferences | About 150 words | Most requests | Load directly |
+| Last three years of Q&A threads | About 60,000 words | Occasionally ("what did I do last year?") | Retrieve on demand |
+| Progress on a half-finished return | A few hundred words, changing | Only during that task | Agent-kept notes |
+
+Loading the first two rows costs a few hundred tokens per call, so no search step is
+needed. Loading the third row on every call would cost about 80,000 tokens each time. It
+would also bury the answer. Retrieval fetches the two threads that matter. The fourth row
+is a task record. The agent writes it and reads it back later.
+
+## What changes when the corpus is a person's history
+
+Two things differ from company knowledge. Both need deliberate attention.
+
+- **Freshness matters more.** A policy may hold for months. A preference can change
+  between chats. The store needs a way to replace an old fact, not only add to a pile.
+  See [Writing and maintaining memory](./writing-and-maintaining-memory.md).
+- **Consent and visibility are required.** Searching a company knowledge base raises no
+  personal privacy question. Searching a person's history retrieves personal data. The
+  duties from [Session, user & organizational memory](./session-user-and-organizational-memory.md)
+  apply in full.
+
+## Tradeoffs
+
+- **Two systems are sometimes right.** Company knowledge and personal history have
+  different owners, different freshness and different privacy rules. They can share
+  tooling and still live in separate indexes. Do not merge them just to save effort.
+- **Simple beats clever.** Loading five facts directly is more reliable than searching for
+  them. Add search when the data outgrows the window.
+- **Retrieval ranks by relevance, not truth.** A stale memory can match the query better
+  than the current one. Use dates as a signal.
 
 ## Failure modes
 
-- **Building two systems instead of one** — a separate, bespoke "memory" pipeline built
-  alongside a RAG pipeline, duplicating engineering effort that one well-designed
-  retrieval system could have served.
-- **Treating a user's history like a static document** — applying company-knowledge
-  freshness assumptions to memory that actually needs to be correctable and overridable in
-  real time.
-- **Skipping consent because it's "just retrieval"** — forgetting that retrieving personal
-  history is retrieving personal data, with the same obligations as any other user-memory
-  feature.
-- **Retrieving what should have been loaded directly** — running an unnecessary retrieval
-  step for a handful of small, always-relevant facts that would have been simpler to
-  include in every request outright.
+- **Building a search pipeline for a handful of facts.** Extra moving parts and missed
+  matches, for no gain.
+- **Treating history like a static document.** Old and new facts both retrieved, with no
+  way to tell which is current.
+- **Skipping consent because it is "just retrieval".** It is still personal data.
+- **One shared index with no filter.** A query from one user returns another user's
+  memories. See [When memory goes wrong](./when-memory-goes-wrong.md).
+
+## Under the hood
+
+A common pattern combines the first two designs. Load the small profile every time. Search
+the large history, but only inside the caller's own records.
+
+```python
+def build_memory_context(store, caller, user_message, k=4):
+    profile = store.get_profile(caller.user_id)             # small, always loaded
+    hits = store.search(
+        query=user_message,
+        filter={"subject_id": caller.user_id},              # scope BEFORE ranking
+        top_k=k * 3,
+    )
+    # Prefer newer memories when relevance is close.
+    hits.sort(key=lambda m: (m.score + 0.1 * m.recency_boost), reverse=True)
+    return {"profile": profile, "recalled": hits[:k]}       # placed in the prompt
+```
+
+Three engineering habits matter here.
+
+- **Filter first, then rank.** The user filter is part of the query, not a post-step.
+- **Show freshness to the ranker.** Store `last_confirmed`. Use it in scoring.
+- **Cap what you add.** Fix a token budget for recalled memories. More is not better.
+
+For chunking, embeddings and retrieval quality, use the RAG track:
+[Chunking & ingestion](../rag-vector-databases/chunking-and-ingestion.md) and
+[Retrieval quality](../rag-vector-databases/retrieval-quality.md).
 
 ## Practitioner checklist
 
-- [ ] Have we recognized when a proposed "memory" feature is really a retrieval problem,
-      and built it with the RAG module's discipline instead of a lighter, separate system?
-- [ ] Does our memory-retrieval system support correcting or overriding a stale stored
-      fact, not just appending to history indefinitely?
-- [ ] Do consent, visibility, and deletion apply to retrieved personal history the same
-      way they apply to any other user memory?
-- [ ] For small, stable, always-relevant facts, are we loading them directly instead of
-      running an unneeded retrieval step?
+- [ ] For each kind of memory, did we choose load directly, retrieve, or agent notes, and
+      write down why?
+- [ ] Are small, always-relevant facts loaded directly, not searched?
+- [ ] Can the store replace or expire an old fact, not only append?
+- [ ] Is the per-user filter part of the query, applied before ranking?
+- [ ] Do consent, visibility and deletion cover retrieved personal history?
+- [ ] Is there a token budget for recalled memories?
 
 ## Related lessons
 
-- [RAG & vector databases](../rag-vector-databases/README.md) — the full mechanics this
-  lesson bridges to.
+- [RAG & vector databases](../rag-vector-databases/README.md) — the full retrieval
+  mechanics.
+- [Writing and maintaining memory](./writing-and-maintaining-memory.md) — how memories
+  get into the store.
 - [Session, user & organizational memory](./session-user-and-organizational-memory.md) —
-  the obligations that apply once retrieval is pointed at personal history.
-- [Chunking & ingestion](../rag-vector-databases/chunking-and-ingestion.md) — the same
-  pipeline discipline, applied to a memory corpus instead of a knowledge base.
+  the duties that come with personal history.
+- [Context & memory](../agentic-ai/context-and-memory.md) — compaction and the memory
+  hierarchy in agents.
+
+## Sources
+
+- Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+  (Sep 29, 2025): the context rot quotation, and just-in-time retrieval. Checked 2026-09.
+- Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
+  (Claude API docs): agent-kept memory files and just-in-time context retrieval. Checked
+  2026-09.
+- The tax-assistant scenario, its sizes and the code sketch are invented and illustrative.

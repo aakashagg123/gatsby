@@ -4,75 +4,101 @@
 
 ## Real-world examples & war stories
 
-**ChatGPT's memory feature rollout (2024).** OpenAI introduced a persistent memory feature
-that let ChatGPT remember facts across separate conversations, shipped with a visible
-settings page showing exactly what was stored, an option to turn it off, and a way to
-delete individual memories. 🎯 *Takeaway:* [treating memory as a product decision](./memory-as-a-product-decision.md)
-means shipping the visibility and control alongside the capability, not as a follow-up
-feature — users trusted the capability faster because they could see and edit what it
-stored from day one.
+**ChatGPT memory shipped with controls (2024).** In February 2024 OpenAI began testing a
+memory feature for ChatGPT with a small share of users. Users could tell it to remember or
+forget something, view what it remembered, and turn memory off. 🎯 *Takeaway:* ship
+visibility and control with the capability, not after it. See
+[memory as a product decision](./memory-as-a-product-decision.md). The date and controls
+come from press coverage in search results. OpenAI's own page could not be opened.
 
-**Personalization that followed you to the wrong screen.** A recurring pattern across
-recommendation and assistant products: a preference or a browsing detail from one context
-— often assumed private or session-specific — resurfaces somewhere the user didn't expect,
-like a shared or family-visible screen, prompting public complaints about a product
-"knowing too much." 🎯 *Takeaway:* this is exactly the [boundary confusion](./session-user-and-organizational-memory.md)
-between what should be session memory and what became visible more broadly — the shape of
-the memory, not its existence, was the mistake.
+**A caching bug showed one user's data to another (2023).** On March 20, 2023, a bug in an
+open-source library used by ChatGPT let some users see other users' chat titles. OpenAI
+said a small share of ChatGPT Plus subscribers could also see some billing details. It
+took the service offline to fix it. 🎯 *Takeaway:* a leak needs no attacker. Any shared
+store can cross a boundary under load. Enforce the boundary in the system, and
+[test it directly](./when-memory-goes-wrong.md). This was a race-condition bug in a caching library, not a
+memory feature. Details come from press coverage in search results.
 
-**Enterprise AI assistants and the shared-knowledge boundary.** As companies rolled out AI
-assistants trained or grounded on internal documents, a recurring incident type emerged:
-an assistant surfaced information from one team's restricted documents to an employee in a
-different team, because the retrieval or memory boundary followed the technical
-architecture rather than the company's actual access-control policy. 🎯 *Takeaway:*
-[organizational memory's entire risk](./session-user-and-organizational-memory.md)
-concentrates in the boundary of who's "inside" it — and that boundary has to be enforced
-by the system, mirroring real permissions, not assumed from how the data happened to be
-indexed.
+**A planted memory that kept working (2024).** Security researcher Johann Rehberger showed
+that a crafted web page or document could get the ChatGPT macOS app to save a hostile instruction in its
+long-term memory. The instruction sent later conversations to an outside server. OpenAI
+released a partial fix that closed the data-sending route, and the work was published in September 2024. 🎯 *Takeaway:* if a
+model can write to memory, an injection can outlive the session. Hold writes from
+untrusted content for confirmation. See
+[poisoning](./when-memory-goes-wrong.md#poisoning-a-planted-memory-that-keeps-working) and
+[the write path](./writing-and-maintaining-memory.md). Details come from press coverage
+in search results.
 
-**"Right to be forgotten" meeting AI memory.** As privacy regulation matured, companies
-operating AI features with persistent memory faced a genuinely hard question their
-architecture hadn't anticipated: a user's deletion request needs to reach not just the
-raw stored record, but anything derived or summarized from it — the same problem
-[Knowledge graphs](../knowledge-graphs/governance-quality-and-trust.md) names for
-inferred facts, now applied to AI memory. 🎯 *Takeaway:* [deletion has to be designed in
-from the start](./when-memory-goes-wrong.md) — retrofitting it onto a memory system built
-without provenance is a much harder project than building it in from day one.
+**Who owns the store (Claude API).** The Claude memory tool runs on the developer's side.
+Claude asks for a file operation, and the application performs it. Anthropic's docs say
+memory "lives entirely in your application," and put path checks, size caps and expiry on
+the developer. 🎯 *Takeaway:* you own the store, and so you own its boundary and its
+deletion duty. See [session, user & organizational memory](./session-user-and-organizational-memory.md).
 
-**Assistants confidently repeating outdated company information.** A common support-tool
-failure: an AI assistant grounded in a company's own documentation or an evolving customer
-relationship confidently states a policy or a fact that changed months earlier, because
-nothing in the memory or retrieval system tracked freshness. 🎯 *Takeaway:*
-[staleness is a design problem](./when-memory-goes-wrong.md), not a rare edge case — any
-memory or retrieval system needs an explicit freshness signal, or it will eventually state
-something outdated with full confidence.
+**The stale preference (an illustration).** A shopping assistant learns "vegetarian" in
+January. In June the customer starts eating fish and says so, but the store only appends.
+Retrieval returns the January note first, and the assistant keeps offering vegetarian
+options. Nothing crashed. 🎯 *Takeaway:* staleness is a write-path problem. Give facts a
+replace rule and a review date. See [writing and maintaining memory](./writing-and-maintaining-memory.md).
 
 ## Module recap
 
 | Lesson | The one idea | The question it makes you ask |
 | --- | --- | --- |
-| [Memory as a product decision](./memory-as-a-product-decision.md) | Memory is a feature you choose to build, with a cost and a promise attached | What do we actually promise to remember, for whom, and for how long? |
-| [Session, user & organizational memory](./session-user-and-organizational-memory.md) | Three shapes, three different stakes — name which one before building | Which of the three shapes is this feature, and is the boundary enforced? |
-| [Retrieval as memory](./retrieval-as-memory.md) | Retrieval and memory are often the same investment, aimed at different content | Is this memory feature really a retrieval problem in disguise? |
-| [When memory goes wrong](./when-memory-goes-wrong.md) | Staleness, leakage, and no correction path — three specific, testable failures | Would we find a memory failure from monitoring, or from a user telling us? |
+| [Memory as a product decision](./memory-as-a-product-decision.md) | Memory is a set of promises you choose to make, not a free default. | What do we remember, for whom, for how long, and who can edit it? |
+| [Session, user & organizational memory](./session-user-and-organizational-memory.md) | Three shapes carry three different stakes. Name the shape first. | Which shape is this, and is the boundary enforced by the system? |
+| [Writing and maintaining memory](./writing-and-maintaining-memory.md) | Memory quality is set when a memory is written. | What happens to the old fact when a new one contradicts it? |
+| [Retrieval as memory](./retrieval-as-memory.md) | Load, retrieve, or keep notes. Pick by size and kind of data. | Is this small enough to load, large enough to search, or task progress? |
+| [When memory goes wrong](./when-memory-goes-wrong.md) | Stale, leaked, uncorrectable and poisoned memory each need a test. | Would monitoring find a memory failure, or would a user? |
 
-**The through-line:** memory is never something a model gives you — it's something your
-product builds, on purpose, as a set of specific promises. This module deliberately
-stayed at that altitude rather than re-deriving the engineering already developed in
-[Context engineering](../content/00-foundations/context-engineering.md) and
-[Context & memory](../agentic-ai/context-and-memory.md), because the mistakes that
-actually sink memory features are rarely engineering mistakes. They're decisions nobody
-made on purpose: a shape left unnamed, a boundary assumed instead of tested, a correction
-path that was never built. The products that get memory right aren't the ones with the
-cleverest retrieval pipeline — they're the ones that decided, specifically and in writing,
-what they were promising to remember, and built the visibility and control to back that
-promise up.
+**The through-line:** memory is never something a model gives you. Your product builds it
+as a set of promises. The mistakes that sink memory features are rarely engineering
+mistakes. They are decisions nobody made: a shape left unnamed, a boundary assumed instead
+of tested, a write path with no rule, a deletion path never built. The engineering depth
+lives in [Context engineering](../content/00-foundations/context-engineering.md) and
+[Context & memory](../agentic-ai/context-and-memory.md). This module stays at the decision
+altitude.
 
 > **Walk-away question:** *"For our AI feature's memory: could we tell a user exactly what
-> we remember about them, could they see and correct it, is the boundary around it tested
-> rather than assumed, and did anyone actually decide this on purpose?"*
+> we remember, could they see and correct it, do we have a rule for how memories are
+> written and expire, and have we tested the boundary against the store, not just the
+> chat?"*
 
-If yes, memory is a feature your product can stand behind. If no, you now know exactly
-which lesson in this module to reread — and where the deeper engineering lives, one module
-away in [Context engineering](../content/00-foundations/context-engineering.md) and
-[Context & memory](../agentic-ai/context-and-memory.md).
+If yes, this is a memory feature your product can stand behind. If no, you know which
+lesson to reread.
+
+## Test yourself
+
+1. **Why is memory a product decision and not a default?**
+   <details><summary>Answer</summary>The model keeps nothing between calls. Your team builds every bit of memory, and it makes promises about what is kept and for how long. It has a cost and a risk that someone must own. (<a href="./memory-as-a-product-decision.md">Lesson 1</a>)</details>
+2. **What are the four parts of the question that scopes a memory feature?**
+   <details><summary>Answer</summary>What is remembered, for whom, for how long, and who can see or edit it. If any part is "we will decide later", the feature is not ready to build. (<a href="./memory-as-a-product-decision.md">Lesson 1</a>)</details>
+3. **Name the three memory shapes and the main risk of each.**
+   <details><summary>Answer</summary>Session memory (low risk, may be dropped when a long chat is summarised). User memory (a personal data store with duties to show, correct and delete). Organizational memory (the boundary of who is inside). (<a href="./session-user-and-organizational-memory.md">Lesson 2</a>)</details>
+4. **Why must the identity used to filter memories come from the session and not from the model?**
+   <details><summary>Answer</summary>A model can be tricked into asking for another user's data. The store must filter by the authenticated caller before anything reaches the model. (<a href="./session-user-and-organizational-memory.md">Lesson 2</a>)</details>
+5. **A user says "I moved to Pune." The store says "lives in Delhi." What should the write policy do?**
+   <details><summary>Answer</summary>Replace the old value, because the newer fact wins, and keep the old one in history for audit. If the change is ambiguous or sensitive, ask the user. (<a href="./writing-and-maintaining-memory.md">Lesson 3</a>)</details>
+6. **A user has forty stable preferences and three years of chat history. How do you serve each?**
+   <details><summary>Answer</summary>Load the forty preferences directly on every request. Search the history and add only the few relevant pieces. Filter to the user's own records before ranking. (<a href="./retrieval-as-memory.md">Lesson 4</a>)</details>
+7. **How is memory poisoning different from an ordinary prompt injection?**
+   <details><summary>Answer</summary>An ordinary injection ends when the session ends. If it writes itself into memory, it persists and acts in later sessions. Defend by holding writes from untrusted content for confirmation. (<a href="./when-memory-goes-wrong.md">Lesson 5</a>)</details>
+8. **Why is asking the chatbot "do you know other users' data?" a weak leakage test?**
+   <details><summary>Answer</summary>The model may refuse while the store still returns the data. Test the store directly, as an attacker would. (<a href="./when-memory-goes-wrong.md">Lesson 5</a>)</details>
+
+## Sources
+
+- OpenAI, [Memory and new controls for ChatGPT](https://openai.com/index/memory-and-new-controls-for-chatgpt/)
+  (Feb 2024). Confirmed through press coverage in search results; the page could not be
+  opened when this recap was written.
+- OpenAI, [March 20 ChatGPT outage: here's what happened](https://openai.com/index/march-20-chatgpt-outage/)
+  (Mar 2023). Same status: search results only.
+- Johann Rehberger, [ChatGPT macOS app persistent data exfiltration](https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/)
+  (Sep 2024). Press coverage in search results only; the page could not be opened.
+- Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
+  (Claude API docs). Checked 2026-09.
+- The stale-preference story is an invented illustration.
+
+---
+
+← Back to [module overview](./README.md)

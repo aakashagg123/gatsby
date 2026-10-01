@@ -10,76 +10,91 @@ teams either build no memory at all, forcing users to repeat themselves forever,
 memory carelessly, and end up with a feature that resurfaces something a user assumed was
 forgotten, in front of the wrong audience.
 
-**A note on scope.** The engineering mechanics of context and memory — the context window
-as a scarce resource, compaction, offloading, tool-result hygiene, the full memory
-hierarchy — are already developed in real depth in two places in this curriculum:
-[Context engineering](../content/00-foundations/context-engineering.md) and
-[Context & memory](../agentic-ai/context-and-memory.md). Rebuilding that ground here
-would only restate it. This module exists instead to answer the question those two
-lessons don't lead with: **memory as a product decision** — what to promise a user, what
-it costs in trust, and where it fails as a business risk, not just an engineering one.
-It's shorter than most modules in this family for exactly that reason: four lessons, not
-six, because the honest amount of genuinely new ground is four lessons' worth. For the
-broader strategic argument — context engineering as an operating discipline beyond
-memory specifically, including specs, governance, and evals — see
+**A note on scope.** The engineering mechanics of context and memory are already covered
+in depth in two places: [Context engineering](../content/00-foundations/context-engineering.md)
+and [Context & memory](../agentic-ai/context-and-memory.md). They cover the context window
+as a scarce resource, compaction, offloading, and the memory hierarchy. This module does
+not repeat them. It answers what those lessons do not lead with: **memory as a product
+decision**. What do you promise a user? How is a memory written and kept? What does it cost
+in trust? Where does it fail as a business risk?
+
+It has five lessons. Four cover the decision and its risks. One, on the write path, covers
+ground that no other lesson in this curriculum does. For the wider argument about context
+as an operating discipline, including specs, governance and evals, see
 [Context engineering for the product leader](../context-engineering/README.md).
+
+## Where the depth lives
+
+Each lesson summarises an idea and points to the lesson that covers it in full.
+
+| If you want the full depth on | Read |
+| --- | --- |
+| The context window, compaction, offloading | [Context engineering](../content/00-foundations/context-engineering.md) |
+| The memory hierarchy for agents | [Context & memory](../agentic-ai/context-and-memory.md) |
+| Chunking, embeddings, retrieval quality | [RAG & vector databases](../rag-vector-databases/README.md) |
+| Isolating tenants and users | [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) |
+| Prompt injection and defences | [Safety, security & governance](../agentic-ai/safety-security-and-governance.md) |
+| Owning shared context across features | [Context governance at scale](../context-engineering/context-governance-at-scale.md) |
 
 ## The knowledge graph
 
-Memory is a set of promises your product makes about what it will and won't carry
-forward. Every lesson in this module hangs off this picture:
+Memory is a set of promises your product makes about what it will and will not carry
+forward. Every lesson hangs off this picture:
 
 ```mermaid
 flowchart TB
-  subgraph PROMISE["THE PROMISE — lesson 1"]
+  subgraph PROMISE["THE PROMISE: lesson 1"]
     DECIDE["Memory is a feature<br/>you choose to build,<br/>not free infrastructure"]
   end
-  subgraph SCOPE["THE SCOPE — lesson 2"]
+  subgraph SCOPE["THE SCOPE: lesson 2"]
     SESSION["Session memory<br/>this conversation only"]
     USER["User memory<br/>across sessions,<br/>one person"]
     ORG["Organizational memory<br/>shared across<br/>a whole team"]
   end
-  subgraph SOURCE["WHERE IT COMES FROM — lesson 3"]
-    RETRIEVE["Retrieval<br/>(RAG) as one way<br/>to implement memory"]
+  subgraph WRITE["THE WRITE PATH: lesson 3"]
+    WORTH["What is worth saving,<br/>when, how it updates,<br/>when it expires"]
   end
-  subgraph RISK["WHEN IT BREAKS — lesson 4"]
-    STALE["Stale or wrong<br/>memories"]
-    LEAK["Memory that crosses<br/>a boundary it shouldn't"]
-    NODELETE["No way for a user<br/>to see, correct, or<br/>delete what's remembered"]
+  subgraph SOURCE["WHERE IT COMES FROM: lesson 4"]
+    RETRIEVE["Load directly,<br/>retrieve on demand,<br/>or agent-kept notes"]
+  end
+  subgraph RISK["WHEN IT BREAKS: lesson 5"]
+    STALE["Stale memories"]
+    LEAK["Memory that crosses<br/>a boundary"]
+    NODELETE["No way to see,<br/>correct or delete"]
+    POISON["Planted instructions<br/>that persist"]
   end
   DECIDE --> SESSION & USER & ORG
-  RETRIEVE -->|"one implementation<br/>of user & org memory"| USER
-  RETRIEVE --> ORG
-  SESSION -.->|"can decay into"| STALE
-  USER -.->|"can decay into"| LEAK
-  ORG -.->|"can decay into"| NODELETE
+  USER --> WORTH
+  ORG --> WORTH
+  WORTH --> RETRIEVE
+  WORTH -.->|"no rule for updates"| STALE
+  RETRIEVE -.->|"unfiltered index"| LEAK
+  USER -.->|"no user controls"| NODELETE
+  WORTH -.->|"writes from untrusted input"| POISON
 ```
 
-Read it in three passes. **The promise**: memory is something your product decides to
-offer, with a cost and a risk attached, not a default a model gives you for free. **The
-scope**: memory comes in different shapes — one conversation, one person, one whole
-organization — and each shape carries a different product and privacy contract.
-**The risk**: every one of those shapes fails in a specific, predictable way, and the
-failure is almost always a trust problem before it's a technical one.
+Read it in four passes. **The promise**: memory is something your product decides to
+offer, with a cost and a risk. **The scope**: one conversation, one person, or a whole
+organization, each with a different contract. **The write and read paths**: how memory
+gets in, and how it comes back. **The risk**: every shape fails in a predictable way, and
+the failure is usually a trust problem before it is a technical one.
 
 ## The lessons
 
 - [**Memory as a product decision**](./memory-as-a-product-decision.md) — why offering
-  memory at all is a choice with a cost and a promise attached, not free infrastructure.
+  memory is a choice with a cost and a promise, and the four-part question that scopes it.
 - [**Session, user & organizational memory**](./session-user-and-organizational-memory.md)
-  — the three shapes memory takes, and why each one needs its own answer to "who can see
-  this, and for how long."
-- [**Retrieval as memory**](./retrieval-as-memory.md) — the bridge between this module and
-  [RAG & vector databases](../rag-vector-databases/README.md): fetching relevant knowledge
-  at the moment it's needed is one of the most common ways memory actually gets built.
-- [**When memory goes wrong**](./when-memory-goes-wrong.md) — staleness, leakage, and the
-  right to be forgotten: the trust failures a memory feature has to be designed against
-  from day one.
+  — the three shapes, and why each needs its own answer to "who sees this, and for how
+  long?"
+- [**Writing and maintaining memory**](./writing-and-maintaining-memory.md) — what is
+  worth saving, when to save it, how new facts replace old ones, and when memories expire.
+- [**Retrieval as memory**](./retrieval-as-memory.md) — the three designs (load, retrieve,
+  keep notes) and how to choose. Bridges to [RAG](../rag-vector-databases/README.md).
+- [**When memory goes wrong**](./when-memory-goes-wrong.md) — staleness, leakage, the
+  right to be forgotten, and poisoning, with a test for each.
 
-Each lesson pairs the product framing with a **🎯 For the product leader** briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram. For the engineering depth behind every mechanic mentioned here,
-follow the spokes into [Context engineering](../content/00-foundations/context-engineering.md)
-and [Context & memory](../agentic-ai/context-and-memory.md).
+Each lesson has a **🎯 For the product leader** briefing, a labelled worked example, an
+"Under the hood" section for engineers, and a Sources list.
 
-**📌 Close out the module:** [Recap & real-world examples](./recap.md).
+**📌 Close out the module:** [Recap & real-world examples](./recap.md), which ends with a
+self-test.

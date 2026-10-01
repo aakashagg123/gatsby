@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Agentic workflows — recap &amp; real-world examples — Agentic workflows</title>
+<title>Writing and maintaining memory — Memory &amp; context</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -360,150 +360,341 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
 pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
-  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic workflows</span><em>a Generative AI module</em></a>
+  <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Memory &amp; context</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="choosing-a-workflow-pattern.html">1 · Choosing a workflow pattern</a><a class="modlink" href="orchestrating-more-than-one-agent.html">2 · Orchestrating more than one agent</a><a class="modlink" href="making-a-workflow-durable-and-worth-owning.html">3 · Making a workflow durable, and worth owning</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="memory-as-a-product-decision.html">1 · Memory as a product decision</a><a class="modlink" href="session-user-and-organizational-memory.html">2 · Session, user &amp; organizational memory</a><a class="modlink active" href="writing-and-maintaining-memory.html">3 · Writing and maintaining memory</a><a class="modlink" href="retrieval-as-memory.html">4 · Retrieval as memory</a><a class="modlink" href="when-memory-goes-wrong.html">5 · When memory goes wrong</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Recap</span>
-    <h1>Agentic workflows — recap &amp; real-world examples</h1>
+    <span class="chip">Lesson 03</span>
+    <h1>Writing and maintaining memory</h1>
   </div>
-  <h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>A multi-agent system that won, and what it cost (2025).</strong> In June 2025 Anthropic
-described its multi-agent research system. A lead agent split a question and sent
-subagents to search in parallel. On Anthropic's internal research evaluation, it beat a
-single-agent Claude Opus 4 by 90.2%, as of June 2025. The lead was Claude Opus 4 and the
-subagents were Claude Sonnet 4. It also used about 15 times the tokens of a chat,
-against about 4 times for a single agent. 🎯 <em>Takeaway:</em> parallel workers can win on broad
-research. They multiply cost. Estimate both before you
-<a href="orchestrating-more-than-one-agent.html">add an agent</a>.</p>
-<p><strong>The same article says where it does not fit.</strong> Anthropic notes that most coding tasks
-"involve fewer truly parallelizable tasks than research." It also says agents are "not yet
-great at coordinating and delegating to other agents in real time." 🎯 <em>Takeaway:</em> the
-pattern depends on the task. Check how much of your work is truly independent. See
-<a href="choosing-a-workflow-pattern.html">choosing a pattern</a>.</p>
-<p><strong>The counter-view, and its update (2025 and 2026).</strong> In June 2025 Cognition, which builds a
-coding agent, argued that agents working in parallel without shared context make
-conflicting decisions, because actions carry hidden decisions. In April 2026 it published a
-follow-up saying multi-agent setups now work in a narrow class of cases: the writes stay
-single-threaded, and the extra agents contribute intelligence rather than actions.
-🎯 <em>Takeaway:</em> treat shared context as a design requirement for any multi-agent split.
-These summaries come from search-result excerpts. The original pages could not be opened.</p>
-<p><strong>Vague delegation (2025).</strong> Anthropic reports that when its lead agent gave short,
-vague tasks, subagents "misinterpreted the task or performed the exact same searches as
-other agents." Clear briefs with an objective, an output format and boundaries fixed it.
-🎯 <em>Takeaway:</em> many multi-agent failures start as
-<a href="orchestrating-more-than-one-agent.html">specification failures at the handoff</a>.</p>
-<p><strong>Updating a system that is never idle (2025).</strong> Anthropic's research agents run for long
-periods, so a code update can land in the middle of a run. It used "rainbow deployments,"
-which shift traffic gradually so running agents are not cut off. It also built agents to
-resume from where an error happened instead of restarting. 🎯 <em>Takeaway:</em>
-<a href="making-a-workflow-durable-and-worth-owning.html">durability covers deployments too</a>, not
-only crashes.</p>
-<p><strong>The refund that vanished (an illustration).</strong> A workflow waits three days for a manager's
-approval. The server restarts on day two. State was held in memory, so the request is gone
-and the customer never hears back. 🎯 <em>Takeaway:</em> any wait longer than one run needs saved
-state, a timer and an escalation path. See the
-<a href="making-a-workflow-durable-and-worth-owning.html">worked example</a>.</p>
-<h2 id="module-recap">Module recap</h2>
+  <p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>Most talk about memory is about reading: what to fetch and show. The write path decides
+whether the memory is worth reading. It answers four questions.</p>
+<ul>
+<li><strong>What</strong> is worth saving?</li>
+<li><strong>When</strong> does the product save it?</li>
+<li><strong>How</strong> does a new fact change an old one?</li>
+<li><strong>When</strong> does a memory expire or get reviewed?</li>
+</ul>
+<p>A store with no write policy fills with trivia, duplicates and stale facts. Retrieval then
+serves that mess back with full confidence. Most "the AI got me wrong" complaints trace to
+the write path, not to the model.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Memory quality is set when a memory is written. A bad note saved
+today is a wrong answer next month.</p>
+<p><strong>What it changes in your decisions</strong> — You ask for a written policy for saving,
+updating and expiring memories. You decide who writes: the model, your code, or the
+user.</p>
+<p><strong>Ask yourself</strong> — <em>"If a user changes an important fact today, what happens to the old
+version in our store? Who would notice if it did not change?"</em></p>
+<p><strong>Risk if ignored</strong> — The store grows without limit. Old and new facts sit side by side.
+The assistant picks one, and the user sees a confident mistake.</p>
+</blockquote>
+<h2 id="the-mental-model-a-filter-before-the-store">The mental model: a filter before the store</h2>
+<p>Think of the write path as a gate in front of the store, not a pipe into it.</p>
+<!-- Writing and maintaining memory — the write path as a gate in front of the store. -->
+<style>
+.dgm-wr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-wr-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+.dgm-wr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;color:#59636e}
+.dgm-wr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-wr-in{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:300px}
+.dgm-wr-arr{display:flex;justify-content:center;color:#8c959f;padding:3px 0}
+.dgm-wr-arr svg{width:16px;height:16px}
+.dgm-wr-gate{background:#fff8c5;border:1.5px solid #eac54f;border-radius:11px;padding:10px 14px;
+  text-align:center;color:#7d4e00;font-weight:700;font-size:11px;margin:0 auto;max-width:360px;line-height:1.4}
+.dgm-wr-gate small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+.dgm-wr-out{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgm-wr-o{border-radius:10px;padding:9px 8px;text-align:center;font-size:10px;line-height:1.35;
+  font-weight:700;border:1.5px solid}
+.dgm-wr-o small{display:block;font-weight:500;color:#59636e;margin-top:2px}
+.dgm-wr-o.drop{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-wr-o.add{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-wr-o.ref{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-wr-o.ask{background:#efedfa;border-color:#cec8f0;color:#3d3a95}
+.dgm-wr-store{background:#e8eff5;border:1.5px solid #c1d3e2;border-radius:11px;padding:10px 16px;
+  text-align:center;color:#375a75;font-weight:700;font-size:11.5px;margin:0 auto;max-width:360px}
+.dgm-wr-store small{display:block;font-weight:500;font-size:10px;color:#59636e;margin-top:2px}
+@media (max-width:640px){.dgm-wr{padding:20px 16px 18px}.dgm-wr-out{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="dgm-wr">
+  <span class="dgm-wr-chip">The write path</span>
+  <h4>A gate in front of the store, not a pipe into it</h4>
+  <p class="dgm-wr-sub">Decide what gets in, how it changes, and when it leaves. Before the first write.</p>
+
+  <div class="dgm-wr-in">Something said or observed</div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-gate">Worth keeping?<small>Durable · useful later · not held elsewhere · safe · from a trusted source</small></div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-out">
+    <div class="dgm-wr-o drop">Discard<small>fails a test</small></div>
+    <div class="dgm-wr-o add">Add<small>with source and expiry</small></div>
+    <div class="dgm-wr-o ref">Refresh<small>same fact again</small></div>
+    <div class="dgm-wr-o ask">Replace or ask<small>conflict: newer wins, or user decides</small></div>
+  </div>
+  <div class="dgm-wr-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+  <div class="dgm-wr-store">Memory store<small>Reviewed on a schedule · expired items leave</small></div>
+</div>
+
+<h2 id="what-is-worth-saving">What is worth saving</h2>
+<p>Save a fact only if it passes four tests.</p>
+<ol>
+<li><strong>Durable.</strong> It will still be true next week. "Prefers short answers" passes. "Is
+   running late today" fails.</li>
+<li><strong>Useful later.</strong> It would change a future answer. Trivia does not.</li>
+<li><strong>Not held elsewhere.</strong> If an account system already owns the true value, read it
+   live. A copy in memory will go stale.</li>
+<li><strong>Safe to keep.</strong> Health, financial and other sensitive details need an explicit
+   decision. The default should be "do not store".</li>
+</ol>
+<p>Anthropic's docs note that Claude "usually refuses to write sensitive information to
+memory files," and advise validation code for stronger guarantees. Treat model behaviour
+as a helpful default, not a control.</p>
+<h2 id="when-memory-gets-written">When memory gets written</h2>
+<p>There are three common triggers. Each has a different cost and a different failure.</p>
 <table>
 <thead>
 <tr>
-<th>Lesson</th>
-<th>The one idea</th>
-<th>The question it makes you ask</th>
+<th>Trigger</th>
+<th>How it works</th>
+<th>Strength</th>
+<th>Weakness</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="choosing-a-workflow-pattern.html">Choosing a workflow pattern</a></td>
-<td>Five common patterns. Pick the first one that fits.</td>
-<td>Which of the five is this, and could the one before it do the job?</td>
+<td>The user asks</td>
+<td>"Remember that I prefer metric units."</td>
+<td>Clear consent. Easy to explain.</td>
+<td>Users forget to ask.</td>
 </tr>
 <tr>
-<td><a href="orchestrating-more-than-one-agent.html">Orchestrating more than one agent</a></td>
-<td>Every extra agent needs a named bottleneck. The cost is large.</td>
-<td>Would one better-built agent do this, and have we tried?</td>
+<td>End of session</td>
+<td>A step reads the transcript and extracts durable facts.</td>
+<td>Catches what users never think to say.</td>
+<td>Extra model cost. Can save wrong inferences.</td>
 </tr>
 <tr>
-<td><a href="making-a-workflow-durable-and-worth-owning.html">Making a workflow durable, and worth owning</a></td>
-<td>Durability comes first: saved state, waits, retries, safe repeats, undo. Ownership follows.</td>
-<td>If we restarted mid-run, would every workflow resume with nothing done twice?</td>
+<td>During the task</td>
+<td>The agent writes its own notes as it works.</td>
+<td>Fits long tasks that outlast one context window.</td>
+<td>The model decides what matters, and may save trivia.</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> the word "workflow" adds two things a single agent run does not face.
-One is choosing a shape for several steps or agents. The other is surviving the real time a
-long process takes. In this module's view, many failures are not about the pattern chosen. They are an over-flexible
-pattern bought by default, vague handoffs, or a durability gap found on the first restart.
-This module stays at the decision level. The engineering depth lives in
-<a href="../agentic-ai/multi-agent-and-protocols.html">Multi-agent systems &amp; protocols</a>,
-<a href="../flowable/index.html">Flowable</a> and
-<a href="../agentic-ai/agentic-ai-as-a-product.html">Agentic AI as a product</a>.</p>
-<blockquote>
-<p><strong>Walk-away question:</strong> <em>"For this workflow: do we know which pattern it is and why a
-simpler one would not do, does every added agent earn its cost, and would it survive a
-restart mid-run with nothing done twice?"</em></p>
-</blockquote>
-<p>If yes, this is a workflow worth building. If no, you know which lesson to reread.</p>
-<h2 id="test-yourself">Test yourself</h2>
-<ol>
-<li>
-<p><strong>Name the five workflow patterns.</strong>
- <br />
-<details><summary>Answer</summary>Prompt chaining, routing, parallelization, orchestrator-workers, and evaluator-optimizer. (<a href="choosing-a-workflow-pattern.html">Lesson 1</a>)</details></p>
-</li>
-<li>
-<p><strong>In which patterns does your code decide the path, and in which does a model decide?</strong>
- <br />
-<details><summary>Answer</summary>Chaining, routing and parallelization keep the path in your code. In orchestrator-workers a model decides the path. In evaluator-optimizer a model decides when to stop. (<a href="choosing-a-workflow-pattern.html">Lesson 1</a>)</details></p>
-</li>
-<li>
-<p><strong>A task has three fixed steps and two input types. Which pattern should you start with, and why not orchestrator-workers?</strong>
- <br />
-<details><summary>Answer</summary>Route, then a chain per type. The steps are known, so a model-led pattern adds cost and unpredictability for no gain. (<a href="choosing-a-workflow-pattern.html">Lesson 1</a>)</details></p>
-</li>
-<li>
-<p><strong>Why is an evaluator-optimizer loop risky without a limit?</strong>
- <br />
-<details><summary>Answer</summary>It can run until the budget runs out. Set a round limit, and use a real check such as a test or rubric where you can. (<a href="choosing-a-workflow-pattern.html">Lesson 1</a>)</details></p>
-</li>
-<li>
-<p><strong>What does multi-agent cost, and when does it help?</strong>
- <br />
-<details><summary>Answer</summary>Anthropic measured about 15 times the tokens of a chat, against about 4 times for an agent. It helps on broad, parallel tasks with information beyond one context window. It suits tightly coupled work, such as much coding, less. (<a href="orchestrating-more-than-one-agent.html">Lesson 2</a>)</details></p>
-</li>
-<li>
-<p><strong>What should a brief to a subagent contain?</strong>
- <br />
-<details><summary>Answer</summary>A goal, a scope, an output format, the sources to use, boundaries, and a stop rule. Vague briefs lead to duplicated or off-topic work. (<a href="orchestrating-more-than-one-agent.html">Lesson 2</a>)</details></p>
-</li>
-<li>
-<p><strong>A workflow waits three days for an approval and the server restarts. What must already be true?</strong>
- <br />
-<details><summary>Answer</summary>State is saved to durable storage after each step, the wait has a timer, and the workflow can read its state back and continue. Each action is safe to repeat. (<a href="making-a-workflow-durable-and-worth-owning.html">Lesson 3</a>)</details></p>
-</li>
-<li>
-<p><strong>Why do retries need idempotency keys?</strong>
- <br />
-<details><summary>Answer</summary>A retry or restart can run a step twice. A key makes the repeat return the same result instead of charging or sending twice. (<a href="making-a-workflow-durable-and-worth-owning.html">Lesson 3</a>)</details>
-</p>
-</li>
-</ol>
+<p>The third is the design behind the Claude memory tool. Anthropic's context-engineering
+guidance calls it structured note-taking, where "the agent regularly writes notes persisted to
+memory outside of the context window." Pair it with guidance on what to save. The docs
+suggest prompts such as "Only write down information relevant to <topic> in your memory system."</p>
+<h2 id="updating-without-creating-a-mess">Updating without creating a mess</h2>
+<p>Facts change. When a new fact meets an old one, the store needs a rule. Pick one per
+kind of memory.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Example</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same fact again</td>
+<td>"I like short answers" (twice)</td>
+<td>Keep one record. Refresh its last-confirmed date.</td>
+</tr>
+<tr>
+<td>Newer replaces older</td>
+<td>"I moved to Pune" after "I live in Delhi"</td>
+<td>Replace, and keep the old value in history for audit.</td>
+</tr>
+<tr>
+<td>Ambiguous conflict</td>
+<td>"Send it to Sam" vs a saved "Send it to Sara"</td>
+<td>Ask the user. Do not guess.</td>
+</tr>
+<tr>
+<td>Sensitive change</td>
+<td>A new bank account</td>
+<td>Require confirmation through the product, not through chat text.</td>
+</tr>
+</tbody>
+</table>
+<p>Without a rule, an append-only store keeps both facts. Later retrieval may return the
+older one first.</p>
+<h2 id="expiry-and-review">Expiry and review</h2>
+<p>Every memory needs an end date or a review date. Anthropic's docs recommend that
+applications "periodically delete memory files that haven't been accessed in a long
+time." Good defaults:</p>
+<ul>
+<li>Expire preferences after a long idle period, such as 12 months without use.</li>
+<li>Expire case notes when the case's retention period ends.</li>
+<li>Show users their memories periodically and let them confirm or remove them.</li>
+</ul>
+<h2 id="worked-example-one-fact-changing-over-time">Worked example: one fact, changing over time</h2>
+<p><em>This example is invented, to show the method.</em></p>
+<p>A travel assistant serves a customer over several months.</p>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>What the user says</th>
+<th>Write decision</th>
+<th>Store after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jan</td>
+<td>"I'm vegetarian."</td>
+<td>Durable and useful. Add, source "chat, Jan".</td>
+<td>diet: vegetarian</td>
+</tr>
+<tr>
+<td>Mar</td>
+<td>"Book me the vegetarian option again."</td>
+<td>Same fact. Refresh date.</td>
+<td>diet: vegetarian (confirmed Mar)</td>
+</tr>
+<tr>
+<td>Jun</td>
+<td>"I've started eating fish."</td>
+<td>Conflict, newer wins. Replace. Keep old value in history.</td>
+<td>diet: pescatarian (Jun); history: vegetarian</td>
+</tr>
+<tr>
+<td>Jun</td>
+<td>"My card ends in 4412."</td>
+<td>Sensitive, and a payment system owns it. Do not store.</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>Nov</td>
+<td>(no mention for 5 months)</td>
+<td>Nothing written. At the 12-month review, ask: "Still pescatarian?"</td>
+<td>diet: pescatarian, pending review</td>
+</tr>
+</tbody>
+</table>
+<p>Without the policy, the store would hold "vegetarian" and "pescatarian" together. It would
+also hold a card fragment nobody wanted stored.</p>
+<h2 id="who-writes-the-model-or-your-code">Who writes: the model or your code</h2>
+<table>
+<thead>
+<tr>
+<th>Design</th>
+<th>Who decides what to save</th>
+<th>Good for</th>
+<th>Watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model-written notes</td>
+<td>The model, through a memory tool</td>
+<td>Long agent tasks, coding, research</td>
+<td>Trivia, clutter, saving untrusted text</td>
+</tr>
+<tr>
+<td>Pipeline extraction</td>
+<td>Your code runs an extraction step</td>
+<td>Consumer personalization, predictable rules</td>
+<td>Extra cost, wrong inferences</td>
+</tr>
+<tr>
+<td>User-authored</td>
+<td>The user, in a settings page</td>
+<td>Anything sensitive or high-stakes</td>
+<td>Low coverage</td>
+</tr>
+</tbody>
+</table>
+<p>Most products mix these. High-stakes items should use the last row.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Trivia hoarding.</strong> Everything is saved. Retrieval buries the useful facts.</li>
+<li><strong>Silent overwrite.</strong> A wrong inference replaces a correct fact, and no history remains.</li>
+<li><strong>Duplicate drift.</strong> The same fact is stored five ways. The versions slowly disagree.</li>
+<li><strong>Saving untrusted text.</strong> The model writes content from a web page or email into
+  memory. That content may carry instructions. See
+  <a href="when-memory-goes-wrong.html">When memory goes wrong</a>.</li>
+<li><strong>No provenance.</strong> A memory has no source, so you cannot check it or delete what came
+  from it.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>A write policy is a short function in front of the store. This sketch shows the shape.
+It is illustrative, not a library.</p>
+<pre><code class="language-python">def write_memory(store, candidate, caller, now):
+    if not passes_tests(candidate):                 # durable, useful, safe
+        return &quot;dropped&quot;
+    if candidate.source_is_untrusted:               # web page, inbound email, tool output
+        return queue_for_user_confirmation(candidate)
+    existing = store.find_similar(candidate, subject=caller.subject_id)
+    if existing is None:
+        store.add(candidate.with_expiry(now).with_source())
+        return &quot;added&quot;
+    if existing.text == candidate.text:
+        existing.last_confirmed = now
+        return &quot;refreshed&quot;
+    if candidate.is_newer_and_low_risk():
+        store.archive(existing)                     # keep history for audit
+        store.add(candidate.with_expiry(now).with_source())
+        return &quot;replaced&quot;
+    return ask_user(existing, candidate)            # ambiguous or sensitive
+</code></pre>
+<p>If you use the Claude memory tool, your application handles six commands: <code>view</code>,
+<code>create</code>, <code>str_replace</code>, <code>insert</code>, <code>delete</code> and <code>rename</code>. Each command is a point
+where you can validate, log or block. Two rules from the docs matter most:</p>
+<ul>
+<li><strong>Validate every path.</strong> A path such as <code>/memories/../../secrets.env</code> must not reach
+  files outside the memory directory.</li>
+<li><strong>Cap file size and delete old files.</strong> Both are your job, not the model's.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do we have a written rule for what is worth saving, including what is never saved?</li>
+<li class="task todo">Is it clear who writes: the model, our code, or the user?</li>
+<li class="task todo">What happens to an old fact when a new one contradicts it? Do we keep history?</li>
+<li class="task todo">Does every memory carry a source, a last-confirmed date and an expiry or review
+      date?</li>
+<li class="task todo">Are facts owned by another system read live instead of copied?</li>
+<li class="task todo">Is content from untrusted sources kept out of memory, or held for confirmation?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="memory-as-a-product-decision.html">Memory as a product decision</a> — the four-part
+  question the write policy implements.</li>
+<li><a href="session-user-and-organizational-memory.html">Session, user &amp; organizational memory</a> —
+  which shape a new memory belongs to.</li>
+<li><a href="retrieval-as-memory.html">Retrieval as memory</a> — how stored memories get read back.</li>
+<li><a href="when-memory-goes-wrong.html">When memory goes wrong</a> — staleness, poisoning and
+  deletion.</li>
+<li><a href="../agentic-ai/context-and-memory.html">Context &amp; memory</a> — the memory hierarchy, and why
+  models left alone save trivia.</li>
+</ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
-  (Jun 13, 2025): the 90.2% result, 4x and 15x token figures, where multi-agent fits and
-  does not, vague delegation, resuming from errors, and rainbow deployments. Checked
-  2026-09.</li>
-<li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
-  (Dec 2024): the five workflow patterns. Checked 2026-09.</li>
-<li>Cognition, "Don't Build Multi-Agents" (Jun 2025) and "Multi-Agents: What's Actually
-  Working" (Apr 2026). Search-result excerpts only; the pages could not be opened.</li>
-<li>The refund story is an invented illustration.</li>
+<li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a>
+  (Claude API docs): the six commands, path validation, size caps, expiry, the sensitive
+  information note, and prompt guidance on what to write. Checked 2026-09.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>
+  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-09.</li>
+<li>The travel-assistant table and the write-policy code are invented and illustrative.</li>
 </ul>
-<hr />
-  <div class="pagenav"><a class="navcard prev" href="making-a-workflow-durable-and-worth-owning.html"><span class="lbl">← Previous</span><span class="ttl">Making a workflow durable, and worth owning</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="session-user-and-organizational-memory.html"><span class="lbl">← Previous</span><span class="ttl">Session, user &amp; organizational memory</span></a><a class="navcard next" href="retrieval-as-memory.html"><span class="lbl">→ Next</span><span class="ttl">Retrieval as memory</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-filter-before-the-store">The mental model: a filter before the store</a><a class="h2" href="#what-is-worth-saving">What is worth saving</a><a class="h2" href="#when-memory-gets-written">When memory gets written</a><a class="h2" href="#updating-without-creating-a-mess">Updating without creating a mess</a><a class="h2" href="#expiry-and-review">Expiry and review</a><a class="h2" href="#worked-example-one-fact-changing-over-time">Worked example: one fact, changing over time</a><a class="h2" href="#who-writes-the-model-or-your-code">Who writes: the model or your code</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

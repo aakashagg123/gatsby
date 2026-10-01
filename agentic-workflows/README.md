@@ -10,59 +10,66 @@ one loop, or needs the loop to keep its place across real time. Getting this rig
 mostly a small number of orchestration and durability decisions, made deliberately instead
 of by whichever framework happened to be closest to hand.
 
-**A note on scope.** This is the most heavily covered topic in this family so far.
-[Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md) already
-develops orchestration topologies and the MCP/A2A protocol landscape in full depth. The
-workflow-versus-agent distinction itself is already the subject of
-[AI agents](../ai-agents/README.md)'s first lesson in this same family. Human-in-the-loop
-design is already developed as part of
-[Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md)'s agent-UX section, and
-belongs more fully to this family's upcoming AI security & guardrails module. Durable,
-long-running execution is the entire subject of a dedicated twelve-phase track,
-[Flowable](../flowable/README.md), which builds a real process engine from scratch.
-Workflow capture as a business strategy is already a full section — and an existing
-glossary term — inside *Agentic AI as a product*. Re-deriving any of it here would only
-restate it a fourth or fifth time. This module compresses to the two lessons that are
-genuinely new once all of that is accounted for: how to decide on an orchestration shape
-once one agent isn't enough, and what it takes to make a workflow durable enough, and
-valuable enough, to be worth owning end to end.
+**A note on scope.** Several neighbouring lessons already cover parts of this topic.
+[Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md) develops the
+orchestration topologies and the MCP and A2A landscape. [AI agents](../ai-agents/README.md)
+covers the workflow-versus-agent line, and the run-level controls: budgets, approval gates
+and the kill switch. [Flowable](../flowable/README.md) builds a real process engine from
+scratch. [Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md) covers
+workflow capture as a business strategy. This module does not repeat them. It adds the
+decisions that sit between them: which workflow pattern to use, when more than one agent
+earns its cost, and what makes a workflow survive real time.
+
+## Where the depth lives
+
+Each lesson summarises an idea and points to the lesson that covers it in full.
+
+| If you want the full depth on | Read |
+| --- | --- |
+| Orchestration topologies and the MCP and A2A landscape | [Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md) |
+| The autonomy dial, and workflow versus agent | [What an agent is](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) |
+| Run limits, approval gates and the kill switch | [Running an agent in production](../ai-agents/running-an-agent-in-production.md) |
+| Writing the prompts inside a chain | [Prompt chaining and multi-step workflows](../prompt-engineering/prompt-chaining-and-workflows.md) |
+| Wait states, retries, compensation and process engines | [Flowable](../flowable/README.md) |
+| Workflow capture and agent economics | [Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md) |
 
 ## The knowledge graph
 
 ```mermaid
 flowchart TB
-  subgraph ORCH["ORCHESTRATING MORE THAN ONE AGENT — lesson 1"]
-    TOPO["Chains, routers,<br/>and multi-agent topologies"]
+  subgraph PATTERN["CHOOSING A PATTERN: lesson 1"]
+    FIVE["Chain, route, parallelize,<br/>orchestrator-workers,<br/>evaluator-optimizer"]
   end
-  subgraph DURABLE["MAKING IT LAST — lesson 2"]
-    SURVIVE["Surviving pauses,<br/>restarts, and long waits"]
-    OWN["Owning the whole<br/>workflow as a moat"]
+  subgraph ORCH["ORCHESTRATING MORE THAN ONE AGENT: lesson 2"]
+    TOPO["When subagents earn<br/>their cost, and how to<br/>brief them"]
   end
-  TOPO -->|"once it works,<br/>it has to keep working"| SURVIVE
-  SURVIVE -->|"durability is what makes<br/>the strategy credible"| OWN
+  subgraph DURABLE["MAKING IT LAST: lesson 3"]
+    SURVIVE["Saved state, waits,<br/>retries, safe repeats, undo"]
+    OWN["Owning the whole<br/>workflow"]
+  end
+  FIVE -->|"the fourth pattern,<br/>in depth"| TOPO
+  FIVE -->|"whatever the shape,<br/>it has to keep working"| SURVIVE
+  TOPO -->|"more agents, more<br/>to keep alive"| SURVIVE
+  SURVIVE -->|"durability makes the<br/>strategy credible"| OWN
 ```
 
-Read it as two questions asked in sequence. **Orchestrating**: once a single agent's loop
-isn't enough, what shape should the work take — a fixed pipeline, a router, several
-agents coordinating? **Making it last**: once that shape exists, does it survive being
-paused for three days waiting on a human, and is owning the whole thing — not just a step
-inside it — actually the better business bet?
+Read it as three questions in order. **Which shape?** Pick the simplest of five patterns
+that does the job. **How many agents?** Add one only when it clears a named bottleneck.
+**Will it last?** Once the shape exists, it must survive a three-day wait and a restart.
+Only then is owning the whole workflow worth asking.
 
 ## The lessons
 
-- [**Orchestrating more than one agent**](./orchestrating-more-than-one-agent.md) — the
-  recurring shapes multi-agent work takes, and the discipline that keeps a
-  multi-agent system from costing more than the single agent it replaced.
+- [**Choosing a workflow pattern**](./choosing-a-workflow-pattern.md) — the five patterns,
+  what each costs, and how to choose the simplest that works.
+- [**Orchestrating more than one agent**](./orchestrating-more-than-one-agent.md) — when
+  subagents are worth their cost, what the evidence says, and how to write a brief.
 - [**Making a workflow durable, and worth owning**](./making-a-workflow-durable-and-worth-owning.md)
-  — why a workflow has to survive real time to be worth anything, and why owning it
-  end to end is the strategic move underneath the mechanics.
+  — saved state, waits, retries, safe repeats and undo, then the case for owning the whole
+  workflow.
 
-Each lesson pairs the product framing with a **🎯 For the product leader** briefing —
-why it matters, the decision it changes, the question to ask your team, and the risk if
-ignored — plus a diagram. For the engineering depth behind every mechanic mentioned here,
-follow the spokes into
-[Multi-agent systems & protocols](../agentic-ai/multi-agent-and-protocols.md),
-[Flowable](../flowable/README.md), and
-[Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md).
+Each lesson has a **🎯 For the product leader** briefing, a labelled worked example, an
+"Under the hood" section for engineers, and a Sources list.
 
-**📌 Close out the module:** [Recap & real-world examples](./recap.md).
+**📌 Close out the module:** [Recap & real-world examples](./recap.md), which ends with a
+self-test.
