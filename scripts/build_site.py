@@ -24,6 +24,7 @@ import reader_widget
 import build_graph
 import build_glossary
 import glossary_widget
+import smooth_scroll
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "_site")
@@ -133,6 +134,7 @@ VIEWER = """<!doctype html>
   pre{{background:var(--code-bg);color:var(--ink);padding:16px 18px;border-radius:6px;overflow:auto;
     font-size:.86em;line-height:1.55;border:1px solid var(--line)}}
   pre code{{background:none;color:inherit;padding:0;font-size:1em}}
+  pre.mermaid:not([data-processed]){{height:140px;overflow:hidden;color:transparent}}
   pre.mermaid{{background:#ffffff;color:var(--ink);
     border:1px solid var(--line);border-radius:6px;padding:26px 20px;margin:26px 0;
     text-align:center;overflow-x:auto}}
@@ -250,14 +252,27 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
-await mermaid.run({{querySelector:'pre.mermaid'}});
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{{
+// Render each diagram when it nears the viewport, one at a time, so a long page does not
+// block the main thread while the reader starts to scroll. Unrendered diagrams hold a
+// fixed height (see the CSS) so nothing jumps when they appear.
+const mer=[...el.querySelectorAll('pre.mermaid')];
+let chain=Promise.resolve();
+function fitOne(pre){{
+  const s=pre.querySelector('svg'); if(!s) return;
   const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
+  const cw=pre.clientWidth||0;
   if(cw&&w>cw*1.6){{s.style.maxWidth='none';
     const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='\u27f7 scroll';s.parentElement.insertBefore(h,s);}}
-}});
+    h.textContent='\u27f7 scroll';pre.insertBefore(h,s);}}
+}}
+function renderOne(pre){{
+  chain=chain.then(async()=>{{ try{{ await mermaid.run({{nodes:[pre]}}); fitOne(pre); }}catch(e){{}} }});
+}}
+if('IntersectionObserver' in window && mer.length>1){{
+  const io=new IntersectionObserver(es=>{{es.forEach(e=>{{
+    if(e.isIntersecting){{ io.unobserve(e.target); renderOne(e.target); }} }});}},{{rootMargin:'900px 0px'}});
+  mer.forEach(p=>io.observe(p));
+}} else mer.forEach(renderOne);
 </script></body></html>
 """
 
@@ -593,6 +608,29 @@ def inject_favicon(site):
     return injected
 
 
+def inject_smooth_scroll(site):
+    """Add the shared scroll-smoothness rules to every page, landing pages and the
+    graph included. They go in an inline <style> just before </head>, so they load
+    after each page's own <style> (and win the cascade) without an extra request.
+    See smooth_scroll.py."""
+    tag = '<style id="smooth-scroll">' + smooth_scroll.CSS.strip() + '</style>'
+    injected = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            pos = text.find("</head>")
+            if pos == -1 or 'id="smooth-scroll"' in text:
+                continue
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text[:pos] + tag + text[pos:])
+            injected += 1
+    return injected
+
+
 def rel_to_track_root(md_path, site_key):
     """'../' * depth from a track md file up to _site/<site_key>/."""
     rel = os.path.relpath(md_path, os.path.join(SITE, site_key))
@@ -918,11 +956,14 @@ def main():
     # 9. Sitewide favicon, every page including both landing pages.
     fav = inject_favicon(SITE)
 
+    # 10. Shared scroll-smoothness layer, every page.
+    smooth = inject_smooth_scroll(SITE)
+
     print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "
           f"graph ({len(data['nodes'])} nodes, {n_links} links, "
           f"{injected} pages linked) + glossary "
           f"({len(build_glossary.site_entries())} terms, {gloss} pages) + "
-          f"favicon ({fav} pages)")
+          f"favicon ({fav} pages) + smooth-scroll ({smooth} pages)")
 
 
 if __name__ == "__main__":

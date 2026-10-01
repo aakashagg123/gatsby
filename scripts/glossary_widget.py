@@ -130,19 +130,37 @@ JS_LOGIC = r"""
     node.parentNode.replaceChild(frag, node);
   }
 
-  function walk(node){
-    var child = node.firstChild;
-    while(child){
-      var next = child.nextSibling;
-      if(child.nodeType === 3) scanText(child);
-      else if(child.nodeType === 1){
-        var t = child.tagName, c = child.className || '';
-        if(!SKIP[t] && (typeof c !== 'string' || (c.indexOf('gloss-term') < 0 && c.indexOf('mermaid') < 0))
-           && child.id !== 'gl-panel' && child.id !== 'gl-scrim' && child.id !== 'rs-root')
-          walk(child);
+  function allowed(child){
+    var t = child.tagName, c = child.className || '';
+    return !SKIP[t] && (typeof c !== 'string' || (c.indexOf('gloss-term') < 0 && c.indexOf('mermaid') < 0))
+           && child.id !== 'gl-panel' && child.id !== 'gl-scrim' && child.id !== 'rs-root';
+  }
+
+  // Scan <main> in short slices so a long page never blocks the main thread (the first
+  // swipes after load stay smooth). Same document order and first-occurrence rule as
+  // a single pass. A newer scan request supersedes an unfinished one; re-scans are
+  // idempotent because `used` and the skip rules stay in force.
+  var scanGen = 0;
+  var later = window.requestIdleCallback
+    ? function(fn){ window.requestIdleCallback(fn, {timeout:300}); }
+    : function(fn){ setTimeout(fn, 16); };
+  function scan(root, done){
+    var gen = ++scanGen;
+    var stack = [root.firstChild];
+    function slice(){
+      if(gen !== scanGen) return;
+      var t0 = performance.now();
+      while(stack.length){
+        var child = stack[stack.length - 1];
+        if(!child){ stack.pop(); continue; }
+        stack[stack.length - 1] = child.nextSibling;   // advance first: scanText replaces the node
+        if(child.nodeType === 3) scanText(child);
+        else if(child.nodeType === 1 && allowed(child)) stack.push(child.firstChild);
+        if(performance.now() - t0 > 6){ later(slice); return; }
       }
-      child = next;
+      if(done) done();
     }
+    slice();
   }
 
   function escapeHtml(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){
@@ -213,8 +231,8 @@ JS_LOGIC = r"""
 
   function start(){
     var main = document.querySelector('main') || document.body;
-    walk(main);
     build();
+    scan(main, keyBox);
     keyBox();
     document.addEventListener('click', function(e){
       var b = e.target.closest && e.target.closest('.gloss-term, .gl-keyterm');
@@ -226,7 +244,7 @@ JS_LOGIC = r"""
     // mermaid's internal SVG changes. The `used` set keeps first-occurrence
     // correct and makes re-walks idempotent.
     if(window.MutationObserver){
-      var mo = new MutationObserver(function(){ walk(main); keyBox(); });
+      var mo = new MutationObserver(function(){ scan(main, keyBox); keyBox(); });
       mo.observe(main, {childList:true});
     }
   }
