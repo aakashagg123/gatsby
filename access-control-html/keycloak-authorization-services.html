@@ -509,12 +509,13 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tbody>
 </table>
 <h2 id="decision-strategies-unanimous-and-affirmative">Decision strategies: unanimous and affirmative</h2>
-<p>When a permission has several policies, the <strong>decision strategy</strong> says how to combine them. Keycloak's documentation defines two.</p>
+<p>When a permission has several policies, the <strong>decision strategy</strong> says how to combine them. Keycloak's documentation defines three.</p>
 <ul>
 <li><strong>Unanimous (the default):</strong> "all policies must evaluate to a positive decision for the final decision to be also positive."</li>
 <li><strong>Affirmative:</strong> "at least one policy must evaluate to a positive decision for the final decision to be also positive."</li>
+<li><strong>Consensus:</strong> "the number of positive decisions must be greater than the number of negative decisions. If the number of positive and negative decisions is equal, the final decision will be negative."</li>
 </ul>
-<p>Unanimous means AND. Affirmative means OR. Picking wrongly is a common cause of too much or too little access.</p>
+<p>Unanimous means AND. Affirmative means OR. Consensus is a majority vote. Picking the wrong one gives too much or too little access, so test both outcomes.</p>
 <h2 id="real-decisions-from-a-test">Real decisions from a test</h2>
 <p><em>These results come from a local test against Keycloak 26.7.5 on 2026-10-01. The realm, users and rules were created for the test.</em></p>
 <p>Setup: a resource server <code>docs-app</code> with two resources (<code>report</code>, <code>handbook</code>) and three scopes (<code>view</code>, <code>edit</code>, <code>delete</code>). Three policies: <code>is-viewer</code> (role), <code>is-editor</code> (role), <code>in-finance</code> (group). Users: <strong>Priya</strong> (editor, in finance), <strong>Sam</strong> (viewer), <strong>Lee</strong> (editor, no group, no department). The <code>editor</code> role includes <code>viewer</code>.</p>
@@ -584,7 +585,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<p>Four things to see.</p>
+<p>The delete column was taken before the regex <code>delete-report</code> permission, shown below, was added. Once that permission exists, Priya may delete. Four things to see.</p>
 <ol>
 <li><strong>Deny by default.</strong> Nobody could <code>delete</code>, because no permission covered it. A scope with no permission is closed.</li>
 <li><strong>Unanimous works as AND.</strong> Lee is an editor but not in finance, so <code>edit-report</code> denied him. He could still edit the handbook.</li>
@@ -602,11 +603,12 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>Keycloak decides. Your service must still ask and obey. There are three common ways.</p>
 <ul>
 <li><strong>Ask for a decision on each request.</strong> The service calls the token endpoint, as in the test, and allows or denies by the result.</li>
-<li><strong>Use a policy enforcer.</strong> Keycloak provides one. Its documentation says the enforcer implements the Policy Enforcement Point design pattern and "leverages OAuth2 authorization capabilities for fine-grained authorization using a centralized authorization server." It sits in front of your service and asks Keycloak for you.</li>
+<li><strong>Use a policy enforcer.</strong> Keycloak provides ways to build one. Its authorization documentation describes the policy enforcement point pattern, and says Authorization Services "leverages OAuth2 authorization capabilities for fine-grained authorization using a centralized authorization server." The enforcer sits in front of your service and asks Keycloak for you.</li>
 <li><strong>Check the RPT's permissions.</strong> A service reads the <code>authorization.permissions</code> claim in an RPT that a client obtained.</li>
 </ul>
 <p>Pick one pattern per service, document it, and add a test that expects a denial.</p>
 <h2 id="when-to-use-it-and-when-not-to">When to use it, and when not to</h2>
+<p><em>This table is this lesson's judgement, not a Keycloak recommendation or a measured result.</em></p>
 <table>
 <thead>
 <tr>
@@ -689,7 +691,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <li><strong>Missing claim.</strong> A regex policy runs against a claim that is not in the token, and every user is denied, or an unexpected one passes.</li>
 <li><strong>Fail-open.</strong> The service allows access when Keycloak does not answer.</li>
 <li><strong>Console-only policy.</strong> Rules changed by hand with no review and no export.</li>
-<li><strong>Per-object resources.</strong> Millions of resources make evaluation and administration slow.</li>
+<li><strong>Per-object resources.</strong> Very large numbers of resources can make evaluation and administration slow. Measure it in your own setup.</li>
 <li><strong>Mixed ownership.</strong> Some rules live in Keycloak, some in code, and nobody knows which wins.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>

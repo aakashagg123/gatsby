@@ -55,25 +55,26 @@ Avoid the hybrid that causes trouble: a powerful service identity used to answer
 
 **3. Memory.** What an agent remembers about a user is personal data with a boundary. See [Writing and maintaining memory](../memory-and-context/writing-and-maintaining-memory.md).
 
-**4. Other agents and services.** When one agent calls another, the user's authority and limits must travel with the call, and each hop must narrow it, never widen it.
+**4. Other agents and services.** When one agent calls another, the user's authority and limits must travel with the call, and each hop should narrow it, never widen it. Your identity server may not enforce that by default. See the test below.
 
 ## Tokens for agents: exchange, don't copy
 
 An agent often needs a token for a specific tool. Passing the user's login token everywhere is risky. It is meant for the original app, and it may carry more than the tool needs. **Token exchange** (RFC 8693) is the standard way to swap one token for another with a narrower audience.
 
-Keycloak added support for *standard token exchange* in release 26.2. The release notes say it covers "exchanging the Internal token to internal token compliant with the RFC8693 specification" and does not yet cover "use cases related to identity brokering or subject impersonation."
+Keycloak added support for *standard token exchange* in release 26.2. The release notes say it covers exchanging an internal token for another internal token under the token exchange specification (RFC 8693), and does not yet cover "use cases related to identity brokering or subject impersonation." Release 26.7 then added an experimental feature, Token Exchange Delegation, which introduces a `delegation` parameterized scope that checks whether the requesting user may act on behalf of the target user. Check the current release notes before you rely on either.
 
 ### What the test showed
 
 *This section reports a local test against Keycloak 26.7.5 on 2026-10-01. The clients, users and rules were created for the test.*
 
-An `ai-agent` client was set up with standard token exchange enabled. A user logged in through it and received an access token with audience `docs-app` and `account`. The agent then exchanged that token, asking for audience `docs-app`.
+An `ai-agent` client was set up with standard token exchange enabled, and an audience mapper that adds `docs-app` to its tokens. A user logged in through it and received an access token with audience `docs-app` and `account`. The agent then exchanged that token, asking for audience `docs-app`.
 
 - The exchanged token kept the **same subject** as the user. For Sam it was `b84fd0f5-…`, the same id as before.
 - Its **audience** was only `docs-app`.
 - Its `azp` (authorized party) was `ai-agent`, so the logs can show which agent was used.
-- It carried **no** `act` claim, the claim that records "this party is acting for that subject." Audit has to use `azp`.
-- The requested scope was `openid`, and the exchanged token's scope came back as `openid email profile`. Exchange did **not** narrow the scope here. Narrowing has to be set up in the client's scope configuration.
+- It carried **no** `act` claim, the claim that records "this party is acting for that subject." For standard token exchange in 26.7.5, audit has to use `azp`. The experimental delegation feature above may change this.
+- **Exchange did not narrow the token, and it could widen it.** Sam's subject token had the scopes `email profile`. Asking for `openid` returned `openid email profile`. Asking for `openid phone address` returned `openid email address phone profile`, so scopes Sam's token never had were added. The exchanged token also kept every realm role Sam held, because Full Scope Allowed is on by default.
+- So in this default setup, narrowing is something you must configure: turn Full Scope Allowed off and map only the roles each client needs, and restrict which scopes a client may request. Keycloak's documentation lists a policy executor for limiting this, which this test did not try. Do not assume an exchange gives a safer token.
 
 Then the exchanged tokens were used for authorization decisions against the resources from the [previous lesson](./keycloak-authorization-services.md):
 
@@ -175,7 +176,7 @@ Habits to keep.
 
 ## Sources
 
-- Keycloak documentation source (`keycloak/keycloak`, `docs/documentation/release_notes/topics`, main branch): `26_2_0.adoc` (the standard token exchange quotation and its limits) and `26_6_0.adoc` (experimental support for OAuth Client ID Metadata Documents and MCP). Checked 2026-10.
+- Keycloak documentation source (`keycloak/keycloak`, `docs/documentation/release_notes/topics`, main branch): `26_2_0.adoc` (standard token exchange and its stated limits), `26_6_0.adoc` (experimental support for OAuth Client ID Metadata Documents and MCP) and `26_7_0.adoc` (experimental Token Exchange Delegation and its `delegation` scope). Checked 2026-10. The existence of a policy executor for limiting what an exchange may request is taken from a search-result excerpt of Keycloak's token exchange guide, which could not be opened, and was not tested.
 - IETF, RFC 8693, *OAuth 2.0 Token Exchange* (Jan 2020); RFC 9728, *OAuth 2.0 Protected Resource Metadata*; RFC 8707, *Resource Indicators for OAuth 2.0*. The RFC pages could not be opened when this lesson was written.
-- Model Context Protocol, *Authorization* specification (revision of 2025-06-18 and later drafts): the resource server role, Protected Resource Metadata and the `resource` parameter. The specification page could not be opened. It is described from search-result excerpts. Check the current revision.
+- Model Context Protocol, *Authorization* specification: the resource server role, Protected Resource Metadata (RFC 9728) and the `resource` parameter (RFC 8707). Checked against the 2025-06-18 and 2025-11-25 revisions by an independent reviewer. A later revision (2026-07-28) was reported as released and tightening authorization. Its text could not be read here, so check the current revision before relying on these details.
 - The token exchange and decision results come from a local test against Keycloak 26.7.5 on 2026-10-01. The company assistant scenario and the code sketches are invented and illustrative.

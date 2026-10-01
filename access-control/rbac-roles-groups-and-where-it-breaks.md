@@ -36,7 +36,7 @@ flowchart LR
 
 Three links make the model. **User to role** says who holds which job. **Role to permission** says what the job may do. Permission to object is often implicit: "edit report" means any report.
 
-The standard model behind this is the NIST RBAC model, adopted as ANSI INCITS 359-2004. It has four levels. **Core** is users, roles, permissions and sessions. **Hierarchical** adds role inheritance. **Static separation of duty** forbids one person holding two conflicting roles. **Dynamic separation of duty** forbids using two conflicting roles in the same session.
+The standard model behind this is the NIST RBAC model, adopted as ANSI INCITS 359-2004 and since revised as INCITS 359-2012. It has four levels. **Core** is users, roles, permissions and sessions. **Hierarchical** adds role inheritance. **Static separation of duty** forbids one person holding two conflicting roles. **Dynamic separation of duty** forbids using two conflicting roles in the same session.
 
 ## Roles, groups and hierarchies
 
@@ -154,6 +154,6 @@ In the Keycloak test used for this track, a role named `editor` was made a **com
 
 ## Sources
 
-- ANSI/INCITS 359-2004, *Role Based Access Control*, based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.
+- ANSI/INCITS 359-2004, *Role Based Access Control* (revised as INCITS 359-2012 (R2017)), based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.
 - Keycloak documentation source, *Comparing groups and roles* (`server_admin/topics/roles-groups/con-comparing-groups-roles.adoc`, main branch): the quoted definitions. Checked 2026-10.
 - The composite-role behaviour comes from a local test against Keycloak 26.7.5 on 2026-10-01. The role-explosion story, its numbers and the code sketch are invented and illustrative.

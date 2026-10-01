@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-Two questions guard every system. **Authentication** asks "who are you?" **Authorization** asks "what may you do here?" They are different jobs. A product can get the first right and the second wrong, and that is how most data leaks happen.
+Two questions guard every system. **Authentication** asks "who are you?" **Authorization** asks "what may you do here?" They are different jobs. A product can get the first right and the second wrong, and that is a common way data leaks happen.
 
 Authorization is one decision, asked many times. Can this **subject** perform this **action** on this **resource**, in this **context**? Every access-control model, from a simple role to a policy engine, is a way to answer that question.
 
@@ -57,11 +57,11 @@ The models in this track differ in what they put into the decision.
 | Happens | Once per session, roughly | On every request |
 | Typical failure | Weak login, stolen credential | Missing check, wrong rule |
 
-Teams often build the first carefully and the second by habit. The OWASP Top 10 lists broken access control as the top web application risk in its 2021 edition. It is the failure that survives a good login.
+Teams often build the first carefully and the second by habit. The OWASP Top 10 ranked broken access control first in its 2021 edition, and it is still ranked first in the 2025 edition. It is the failure that survives a good login.
 
 ## The four parts of an authorization system
 
-The NIST guide to attribute-based access control describes a standard architecture. The same four parts appear in most systems, whatever the model.
+The NIST guide to attribute-based access control describes a common reference architecture. The same four parts appear in many systems, whatever the model.
 
 ```mermaid
 flowchart LR
@@ -155,7 +155,7 @@ Three habits keep this honest.
 ## Related lessons
 
 - [OAuth 2.0, OpenID Connect and tokens](./oauth-openid-connect-and-tokens.md) — how identity and permissions travel between systems.
-- [RBAC: roles, groups and where it breaks](./rbac-roles-groups-and-where-it-breaks.md) — the first and most common model.
+- [RBAC: roles, groups and where it breaks](./rbac-roles-groups-and-where-it-breaks.md) — the model most teams start with.
 - [Tool permissions, blast radius & the trust boundary](../tool-calling/permissions-blast-radius-and-the-trust-boundary.md) — the same ideas applied to what an AI tool may do.
 - [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) — keeping tenants apart.
 - [Security & privacy sense](../technical-product-sense/security-and-privacy.md) — the wider security instincts.
@@ -163,5 +163,5 @@ Three habits keep this honest.
 ## Sources
 
 - NIST, Special Publication 800-162, *Guide to Attribute Based Access Control (ABAC) Definition and Considerations* (Jan 2014): the enforcement, decision, information and administration points, and the subject, object, action and environment attributes. The NIST page could not be opened when this lesson was written. It is described from search-result excerpts.
-- OWASP, *Top 10:2021*, A01 Broken Access Control: ranked first in the 2021 edition. The OWASP page could not be opened when this lesson was written. It is stated from general knowledge. Check the current edition.
+- OWASP, *Top 10:2021* and *Top 10:2025*, A01 Broken Access Control: ranked first in both editions. The OWASP pages could not be opened when this lesson was written. This is stated from search-result excerpts. Check the current edition.
 - The billing portal scenario and the code sketch are invented and illustrative.

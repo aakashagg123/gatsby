@@ -374,7 +374,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>ABAC fixes the two weaknesses of roles. It can talk about a specific object, and it can use context. It costs more. Every attribute must be accurate, every rule must be understood, and a "why was I denied?" question needs an answer.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the technical PM</strong></p>
-<p><strong>Why it matters</strong> — Most real requirements are about objects and conditions: your own records, your region, your clearance, a managed device. Roles alone cannot express them, so teams invent more roles or hard-code the rules.</p>
+<p><strong>Why it matters</strong> — Many real requirements are about objects and conditions: your own records, your region, your clearance, a managed device. Roles alone cannot express them, so teams invent more roles or hard-code the rules.</p>
 <p><strong>What it changes in your decisions</strong> — You decide which attributes you will trust and who keeps them correct. You also decide who can read and change the rules.</p>
 <p><strong>Ask yourself</strong> — <em>"For each attribute a rule depends on, who sets it, how fresh is it, and what happens when it is missing?"</em></p>
 <p><strong>Risk if ignored</strong> — A rule trusts an attribute that users can edit themselves. Or an attribute is empty for a new user and the rule quietly allows everything.</p>
@@ -441,7 +441,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<p>Most real systems use both. Roles give coarse access. Attributes narrow it. A common pattern is "must be an editor <strong>and</strong> must be in the same department."</p>
+<p>Many real systems use both. Roles give coarse access. Attributes narrow it. A common pattern is "must be an editor <strong>and</strong> must be in the same department."</p>
 <h2 id="what-attributes-are-worth-using">What attributes are worth using</h2>
 <p>Good attributes are accurate, owned and hard for the user to forge.</p>
 <ul>

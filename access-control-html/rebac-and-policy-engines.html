@@ -472,11 +472,18 @@ forbid (principal, action, resource) when { principal.suspended };
 <td>Deny. No permit matched.</td>
 </tr>
 <tr>
+<td>Dana</td>
+<td>editor</td>
+<td>finance</td>
+<td>yes</td>
+<td>Deny. A permit matches, and a <code>forbid</code> overrides it.</td>
+</tr>
+<tr>
 <td>Lee</td>
 <td>editor</td>
 <td>support</td>
-<td>yes</td>
-<td>Deny. A <code>forbid</code> applies.</td>
+<td>no</td>
+<td>Deny. No permit matched, because the report is in finance.</td>
 </tr>
 <tr>
 <td>Priya, action <code>delete</code></td>
@@ -507,7 +514,7 @@ folder:q3      viewer  group:finance#member      # members of finance can view f
 folder:q3      editor  user:lee
 doc:plan       parent  folder:q3                 # the document lives in folder q3
 </code></pre>
-<p>Rule: a document's viewer is any viewer of its parent folder, and any editor also views.</p>
+<p>Rule: a folder's editor is also a folder viewer. A document's viewers are the viewers of its parent folder.</p>
 <table>
 <thead>
 <tr>
@@ -633,7 +640,7 @@ doc:plan       parent  folder:q3                 # the document lives in folder 
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Pang et al., <em>Zanzibar: Google's Consistent, Global Authorization System</em>, USENIX ATC 2019. The page and paper could not be opened when this lesson was written. The description is from search-result excerpts.</li>
-<li>Open Policy Agent, project README (<code>open-policy-agent/opa</code>, main branch): the description, Rego, the query model and the CNCF graduated status. Checked 2026-10.</li>
+<li>Open Policy Agent, project README (<code>open-policy-agent/opa</code>, main branch): the description, the mention of Rego, the allow-or-deny decision example and the CNCF graduated status. Checked 2026-10.</li>
 <li>Cedar, project README (<code>cedar-policy/cedar</code>, main branch): the description and design goals. Checked 2026-10. That AWS created Cedar is stated from general knowledge and is not in the README.</li>
 <li>OpenFGA, project README (<code>openfga/openfga</code>, main branch): the quoted description, authorization models, relationship tuples and the check API. Checked 2026-10.</li>
 <li>The Cedar results come from running <code>cedarpy</code> 4.12.1. The Rego result comes from running <code>regopy</code> 1.5.2. The relationship check comes from a small resolver written for this lesson and run on 2026-10-01. The scenario, the names and the code sketch are invented and illustrative.</li>

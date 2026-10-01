@@ -92,7 +92,8 @@ Test results with a finance report:
 | --- | --- | --- | --- | --- |
 | Priya | editor | finance | no | **Allow** |
 | Sam | viewer | support | no | Deny. No permit matched. |
-| Lee | editor | support | yes | Deny. A `forbid` applies. |
+| Dana | editor | finance | yes | Deny. A permit matches, and a `forbid` overrides it. |
+| Lee | editor | support | no | Deny. No permit matched, because the report is in finance. |
 | Priya, action `delete` | editor | finance | no | Deny. No permit matched. |
 
 Two properties of Cedar showed up. A request is denied unless some `permit` matches. A matching `forbid` beats any `permit`. That makes "suspend this user" a single rule that cannot be overridden by accident.
@@ -123,7 +124,7 @@ folder:q3      editor  user:lee
 doc:plan       parent  folder:q3                 # the document lives in folder q3
 ```
 
-Rule: a document's viewer is any viewer of its parent folder, and any editor also views.
+Rule: a folder's editor is also a folder viewer. A document's viewers are the viewers of its parent folder.
 
 | Question | Answer | Why |
 | --- | --- | --- |
@@ -212,7 +213,7 @@ The product names above change over time. Treat them as examples, and check each
 ## Sources
 
 - Pang et al., *Zanzibar: Google's Consistent, Global Authorization System*, USENIX ATC 2019. The page and paper could not be opened when this lesson was written. The description is from search-result excerpts.
-- Open Policy Agent, project README (`open-policy-agent/opa`, main branch): the description, Rego, the query model and the CNCF graduated status. Checked 2026-10.
+- Open Policy Agent, project README (`open-policy-agent/opa`, main branch): the description, the mention of Rego, the allow-or-deny decision example and the CNCF graduated status. Checked 2026-10.
 - Cedar, project README (`cedar-policy/cedar`, main branch): the description and design goals. Checked 2026-10. That AWS created Cedar is stated from general knowledge and is not in the README.
 - OpenFGA, project README (`openfga/openfga`, main branch): the quoted description, authorization models, relationship tuples and the check API. Checked 2026-10.
 - The Cedar results come from running `cedarpy` 4.12.1. The Rego result comes from running `regopy` 1.5.2. The relationship check comes from a small resolver written for this lesson and run on 2026-10-01. The scenario, the names and the code sketch are invented and illustrative.

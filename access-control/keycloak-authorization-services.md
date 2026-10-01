@@ -40,7 +40,7 @@ flowchart LR
   SC["Scopes<br/>view, edit, delete"] --> PERM
   POL1["Policy: is-editor<br/>(role)"] --> PERM
   POL2["Policy: in-finance<br/>(group)"] --> PERM
-  PERM -->|"decision strategy:<br/>unanimous or affirmative"| DEC{"Allow or deny"}
+  PERM -->|"decision strategy:<br/>unanimous, affirmative or consensus"| DEC{"Allow or deny"}
 ```
 
 ## Policy types
@@ -59,12 +59,13 @@ In the test, Keycloak 26.7.5 offered these policy types out of the box: **role**
 
 ## Decision strategies: unanimous and affirmative
 
-When a permission has several policies, the **decision strategy** says how to combine them. Keycloak's documentation defines two.
+When a permission has several policies, the **decision strategy** says how to combine them. Keycloak's documentation defines three.
 
 - **Unanimous (the default):** "all policies must evaluate to a positive decision for the final decision to be also positive."
 - **Affirmative:** "at least one policy must evaluate to a positive decision for the final decision to be also positive."
+- **Consensus:** "the number of positive decisions must be greater than the number of negative decisions. If the number of positive and negative decisions is equal, the final decision will be negative."
 
-Unanimous means AND. Affirmative means OR. Picking wrongly is a common cause of too much or too little access.
+Unanimous means AND. Affirmative means OR. Consensus is a majority vote. Picking the wrong one gives too much or too little access, so test both outcomes.
 
 ## Real decisions from a test
 
@@ -88,7 +89,7 @@ The application asks Keycloak by sending the user's access token to the token en
 | Sam | allow | **deny** | **deny** | **deny** |
 | Lee | not tested | **deny** | allow | not tested |
 
-Four things to see.
+The delete column was taken before the regex `delete-report` permission, shown below, was added. Once that permission exists, Priya may delete. Four things to see.
 
 1. **Deny by default.** Nobody could `delete`, because no permission covered it. A scope with no permission is closed.
 2. **Unanimous works as AND.** Lee is an editor but not in finance, so `edit-report` denied him. He could still edit the handbook.
@@ -112,12 +113,14 @@ The RPT is a token that lists exactly what was granted. An API can verify it lik
 Keycloak decides. Your service must still ask and obey. There are three common ways.
 
 - **Ask for a decision on each request.** The service calls the token endpoint, as in the test, and allows or denies by the result.
-- **Use a policy enforcer.** Keycloak provides one. Its documentation says the enforcer implements the Policy Enforcement Point design pattern and "leverages OAuth2 authorization capabilities for fine-grained authorization using a centralized authorization server." It sits in front of your service and asks Keycloak for you.
+- **Use a policy enforcer.** Keycloak provides ways to build one. Its authorization documentation describes the policy enforcement point pattern, and says Authorization Services "leverages OAuth2 authorization capabilities for fine-grained authorization using a centralized authorization server." The enforcer sits in front of your service and asks Keycloak for you.
 - **Check the RPT's permissions.** A service reads the `authorization.permissions` claim in an RPT that a client obtained.
 
 Pick one pattern per service, document it, and add a test that expects a denial.
 
 ## When to use it, and when not to
+
+*This table is this lesson's judgement, not a Keycloak recommendation or a measured result.*
 
 | Use Keycloak Authorization Services when | Look elsewhere when |
 | --- | --- |
@@ -159,7 +162,7 @@ The last row shows the limit. Keycloak is strong at a handful of named condition
 - **Missing claim.** A regex policy runs against a claim that is not in the token, and every user is denied, or an unexpected one passes.
 - **Fail-open.** The service allows access when Keycloak does not answer.
 - **Console-only policy.** Rules changed by hand with no review and no export.
-- **Per-object resources.** Millions of resources make evaluation and administration slow.
+- **Per-object resources.** Very large numbers of resources can make evaluation and administration slow. Measure it in your own setup.
 - **Mixed ownership.** Some rules live in Keycloak, some in code, and nobody knows which wins.
 
 ## Under the hood

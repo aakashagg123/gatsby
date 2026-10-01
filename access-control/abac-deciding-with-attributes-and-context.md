@@ -14,7 +14,7 @@ ABAC fixes the two weaknesses of roles. It can talk about a specific object, and
 
 > 🎯 **For the technical PM**
 >
-> **Why it matters** — Most real requirements are about objects and conditions: your own records, your region, your clearance, a managed device. Roles alone cannot express them, so teams invent more roles or hard-code the rules.
+> **Why it matters** — Many real requirements are about objects and conditions: your own records, your region, your clearance, a managed device. Roles alone cannot express them, so teams invent more roles or hard-code the rules.
 >
 > **What it changes in your decisions** — You decide which attributes you will trust and who keeps them correct. You also decide who can read and change the rules.
 >
@@ -54,7 +54,7 @@ No role is named. The same rule covers every department, present and future.
 | Debugging a denial | Check the role | Check every attribute used |
 | Best for | Stable jobs, coarse access | Object and context limits |
 
-Most real systems use both. Roles give coarse access. Attributes narrow it. A common pattern is "must be an editor **and** must be in the same department."
+Many real systems use both. Roles give coarse access. Attributes narrow it. A common pattern is "must be an editor **and** must be in the same department."
 
 ## What attributes are worth using
 

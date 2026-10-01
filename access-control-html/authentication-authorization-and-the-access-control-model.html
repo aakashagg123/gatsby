@@ -369,7 +369,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   </div>
   <p><em>Last reviewed: 2026-10 · Volatility: stable</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>Two questions guard every system. <strong>Authentication</strong> asks "who are you?" <strong>Authorization</strong> asks "what may you do here?" They are different jobs. A product can get the first right and the second wrong, and that is how most data leaks happen.</p>
+<p>Two questions guard every system. <strong>Authentication</strong> asks "who are you?" <strong>Authorization</strong> asks "what may you do here?" They are different jobs. A product can get the first right and the second wrong, and that is a common way data leaks happen.</p>
 <p>Authorization is one decision, asked many times. Can this <strong>subject</strong> perform this <strong>action</strong> on this <strong>resource</strong>, in this <strong>context</strong>? Every access-control model, from a simple role to a policy engine, is a way to answer that question.</p>
 <p>Four rules apply to all of them. Deny by default. Grant the least access that works. Decide on the server, never in the client. Log every decision.</p>
 <blockquote class="pm-callout">
@@ -480,9 +480,9 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 </tr>
 </tbody>
 </table>
-<p>Teams often build the first carefully and the second by habit. The OWASP Top 10 lists broken access control as the top web application risk in its 2021 edition. It is the failure that survives a good login.</p>
+<p>Teams often build the first carefully and the second by habit. The OWASP Top 10 ranked broken access control first in its 2021 edition, and it is still ranked first in the 2025 edition. It is the failure that survives a good login.</p>
 <h2 id="the-four-parts-of-an-authorization-system">The four parts of an authorization system</h2>
-<p>The NIST guide to attribute-based access control describes a standard architecture. The same four parts appear in most systems, whatever the model.</p>
+<p>The NIST guide to attribute-based access control describes a common reference architecture. The same four parts appear in many systems, whatever the model.</p>
 <!-- The four parts: Enforcement · decision · information · administration -->
 <style>
 .dgm-ac2{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2e6f9e;border-radius:16px;padding:28px 26px 22px;
@@ -615,7 +615,7 @@ def get_invoice(user, invoice_id):
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="oauth-openid-connect-and-tokens.html">OAuth 2.0, OpenID Connect and tokens</a> — how identity and permissions travel between systems.</li>
-<li><a href="rbac-roles-groups-and-where-it-breaks.html">RBAC: roles, groups and where it breaks</a> — the first and most common model.</li>
+<li><a href="rbac-roles-groups-and-where-it-breaks.html">RBAC: roles, groups and where it breaks</a> — the model most teams start with.</li>
 <li><a href="../tool-calling/permissions-blast-radius-and-the-trust-boundary.html">Tool permissions, blast radius &amp; the trust boundary</a> — the same ideas applied to what an AI tool may do.</li>
 <li><a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a> — keeping tenants apart.</li>
 <li><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a> — the wider security instincts.</li>
@@ -623,7 +623,7 @@ def get_invoice(user, invoice_id):
 <h2 id="sources">Sources</h2>
 <ul>
 <li>NIST, Special Publication 800-162, <em>Guide to Attribute Based Access Control (ABAC) Definition and Considerations</em> (Jan 2014): the enforcement, decision, information and administration points, and the subject, object, action and environment attributes. The NIST page could not be opened when this lesson was written. It is described from search-result excerpts.</li>
-<li>OWASP, <em>Top 10:2021</em>, A01 Broken Access Control: ranked first in the 2021 edition. The OWASP page could not be opened when this lesson was written. It is stated from general knowledge. Check the current edition.</li>
+<li>OWASP, <em>Top 10:2021</em> and <em>Top 10:2025</em>, A01 Broken Access Control: ranked first in both editions. The OWASP pages could not be opened when this lesson was written. This is stated from search-result excerpts. Check the current edition.</li>
 <li>The billing portal scenario and the code sketch are invented and illustrative.</li>
 </ul>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="oauth-openid-connect-and-tokens.html"><span class="lbl">→ Next</span><span class="ttl">OAuth 2.0, OpenID Connect and tokens</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>

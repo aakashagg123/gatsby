@@ -388,7 +388,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
   R2 --&gt; P2
   R1 -.-&gt;|&quot;inherits&quot;| R2</pre>
 <p>Three links make the model. <strong>User to role</strong> says who holds which job. <strong>Role to permission</strong> says what the job may do. Permission to object is often implicit: "edit report" means any report.</p>
-<p>The standard model behind this is the NIST RBAC model, adopted as ANSI INCITS 359-2004. It has four levels. <strong>Core</strong> is users, roles, permissions and sessions. <strong>Hierarchical</strong> adds role inheritance. <strong>Static separation of duty</strong> forbids one person holding two conflicting roles. <strong>Dynamic separation of duty</strong> forbids using two conflicting roles in the same session.</p>
+<p>The standard model behind this is the NIST RBAC model, adopted as ANSI INCITS 359-2004 and since revised as INCITS 359-2012. It has four levels. <strong>Core</strong> is users, roles, permissions and sessions. <strong>Hierarchical</strong> adds role inheritance. <strong>Static separation of duty</strong> forbids one person holding two conflicting roles. <strong>Dynamic separation of duty</strong> forbids using two conflicting roles in the same session.</p>
 <h2 id="roles-groups-and-hierarchies">Roles, groups and hierarchies</h2>
 <table>
 <thead>
@@ -541,7 +541,7 @@ def allowed(user, permission):
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>ANSI/INCITS 359-2004, <em>Role Based Access Control</em>, based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.</li>
+<li>ANSI/INCITS 359-2004, <em>Role Based Access Control</em> (revised as INCITS 359-2012 (R2017)), based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.</li>
 <li>Keycloak documentation source, <em>Comparing groups and roles</em> (<code>server_admin/topics/roles-groups/con-comparing-groups-roles.adoc</code>, main branch): the quoted definitions. Checked 2026-10.</li>
 <li>The composite-role behaviour comes from a local test against Keycloak 26.7.5 on 2026-10-01. The role-explosion story, its numbers and the code sketch are invented and illustrative.</li>
 </ul>

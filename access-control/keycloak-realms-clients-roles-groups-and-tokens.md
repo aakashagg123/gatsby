@@ -85,7 +85,7 @@ Sam's contained `viewer` and the same defaults, but not `editor`. The extra role
 
 **4. Tokens are short.** The access token lived 300 seconds. The refresh token's lifetime was 1,800 seconds, as returned by the server in this test.
 
-**5. Full scope allowed is on by default.** The access token included every role the user held. The documentation says this means "every access token contains all roles the authenticated user holds," which "unnecessarily widens the blast radius if a token is compromised." Turn it off and map only the roles a client needs.
+**5. Full scope allowed is on by default.** The access token included every role the user held. The documentation says this means "every access token contains all roles the authenticated user holds," which "unnecessarily widens the blast radius if a token is compromised." Turn it off and map only the roles a client needs. Keycloak's documentation also warns that "the *Full Scope Allowed* switch is deprecated and will be removed in a future release," and points to a client policy with the *Full Scope Disabled* executor to enforce the setting across a realm.
 
 What to take from this: roles, groups and attributes live in Keycloak. Getting them into a token is a separate, deliberate step.
 
@@ -98,7 +98,7 @@ A company sells a document product to businesses and also has staff who support 
 | Decision | Choice | Why |
 | --- | --- | --- |
 | Realms | `staff` (employees) and `customers` (all customer users) | Different user populations, different admins, different login rules. Never mix them. |
-| Customer organizations | One realm, with each customer as a group or an organization, not one realm per customer | One realm per customer does not scale to thousands of customers. |
+| Customer organizations | One realm, with each customer as a group or an organization, not one realm per customer | One realm per customer multiplies the admin work. This is this lesson's judgement, so check Keycloak's Organizations documentation for your release. |
 | Realm roles | `viewer`, `editor`, `admin` | Short list. Job names. |
 | Client roles | `docs-app: export`, `billing-app: refund` | Permissions that mean something only in one app |
 | Groups | One per customer team, holding role mappings | New hires join a group and get the right access |
@@ -111,7 +111,7 @@ The table is the decision record. Each row is something to review.
 ## Running Keycloak: what you take on
 
 - **A service that must be up.** If login is down, nothing works. Plan for high availability and a database you back up.
-- **Upgrades.** Keycloak ships frequent releases. At the time of this test, the documentation tree listed release notes for 26.0 through 26.8. Read the notes for each upgrade, test it, and plan for it.
+- **Upgrades.** Keycloak ships frequent releases. At the time of this test, the latest release was 26.7.5. The documentation tree on the main branch already had 26.8 release notes, for a release not yet shipped. Read the notes for each upgrade, test it, and plan for it.
 - **Customisation.** Themes, mappers and extensions are possible. Each one adds something to maintain across upgrades.
 - **Security of the admin plane.** Treat the admin console and API as a high-value target.
 - **Cost.** Open source means no licence fee. It does not mean no cost. Compare with a managed identity service on total effort, not price.
