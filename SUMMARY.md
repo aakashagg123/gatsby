@@ -274,6 +274,20 @@ architecture, tradeoffs, and failure modes that shape product decisions.
 7. [Data infrastructure](./system-design/data-infrastructure.md)
 8. [Transactional & financial systems](./system-design/transactional-and-financial.md) · [Recap](./system-design/recap.md)
 
+## [Access control](./access-control/README.md)
+
+Who may do what, and where that is decided: authentication vs authorization, OAuth and
+tokens, RBAC, ABAC, relationship-based access, Keycloak, and access control for AI agents.
+
+1. [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md)
+2. [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md)
+3. [RBAC: roles, groups and where it breaks](./access-control/rbac-roles-groups-and-where-it-breaks.md)
+4. [ABAC: deciding with attributes and context](./access-control/abac-deciding-with-attributes-and-context.md)
+5. [ReBAC and policy engines](./access-control/rebac-and-policy-engines.md)
+6. [Keycloak: realms, clients, roles, groups and tokens](./access-control/keycloak-realms-clients-roles-groups-and-tokens.md)
+7. [Keycloak Authorization Services](./access-control/keycloak-authorization-services.md)
+8. [Access control for AI agents](./access-control/access-control-for-ai-agents.md) · [Recap](./access-control/recap.md)
+
 ## [Context engineering](./context-engineering/README.md)
 
 Treat what the model gets to see as a product decision — instructions, retrieval,

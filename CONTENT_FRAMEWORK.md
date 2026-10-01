@@ -135,7 +135,7 @@ the lesson against current sources, and how fast its topic moves.
 | Volatility | Review every | Tracks |
 | --- | --- | --- |
 | **fast** | 3 months | `llms`, `generative-ai`, `ai-agents`, `agentic-ai`, `agentic-workflows`, `tool-calling`, `api-integrations`, `prompt-engineering`, `context-engineering`, `memory-and-context`, `evaluation-and-observability`, `ai-security-and-guardrails`, `cost-optimization` |
-| **medium** | 6 months | `rag-vector-databases`, `knowledge-graphs`, `technical-product-management`, `product-sense` |
+| **medium** | 6 months | `rag-vector-databases`, `knowledge-graphs`, `technical-product-management`, `product-sense`, `access-control` (its Keycloak lessons are stamped fast) |
 | **stable** | 12 months | `system-design`, `technical-product-sense`, `first-principles` |
 
 The checker reports a lesson as overdue when its stamp is older than its cadence. Updating
