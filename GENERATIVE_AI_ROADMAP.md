@@ -111,9 +111,9 @@ track and its sibling modules in this family, and adds no new glossary terms —
 core term (`agent-loop`, `autonomy-spectrum`, `compounding-error`, `supervised-cost`,
 `reflection`) already exists and homes correctly to `agentic-ai/`.
 
-### 8. 🔄 Agentic workflows — *2 lessons* — **BUILT** (rescoped from 6 → 2)
+### 8. 🔄 Agentic workflows — *3 lessons* — **BUILT** (rescoped from 6 → 2, then 3 with the pattern chooser)
 Orchestrating many steps and many agents.
-1. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md) · 2. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md). → [Recap](./agentic-workflows/recap.md).
+1. [Choosing a workflow pattern](./agentic-workflows/choosing-a-workflow-pattern.md) · 2. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md) · 3. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md). → [Recap](./agentic-workflows/recap.md).
 *Spokes:* `agentic-ai/multi-agent-and-protocols`, `flowable/*`, `agentic-ai/agentic-ai-as-a-product`, `ai-agents`, `agentic-ai/safety-security-and-governance`.
 
 *Rescoping note:* this module had the densest overlap of any module in the family —

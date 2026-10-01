@@ -235,8 +235,9 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 
 Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
 
-1. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md)
-2. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md) · [Recap](./agentic-workflows/recap.md)
+1. [Choosing a workflow pattern](./agentic-workflows/choosing-a-workflow-pattern.md)
+2. [Orchestrating more than one agent](./agentic-workflows/orchestrating-more-than-one-agent.md)
+3. [Making a workflow durable, and worth owning](./agentic-workflows/making-a-workflow-durable-and-worth-owning.md) · [Recap](./agentic-workflows/recap.md)
 
 ## [Evaluation & observability](./evaluation-and-observability/README.md)
 

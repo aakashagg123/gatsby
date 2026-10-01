@@ -2,7 +2,7 @@
 """Build the standalone "Agentic workflows" module (Generative AI family, module 8).
 
 A thin config wrapper around build_standalone.build_track. Source is
-agentic-workflows/; output is agentic-workflows-html/. Deliberately 2 lessons, not
+agentic-workflows/; output is agentic-workflows-html/. Deliberately 3 lessons, not
 6 — see the module README for why: agentic-ai/multi-agent-and-protocols.md already
 develops orchestration topologies and the MCP/A2A protocol landscape in full depth,
 the workflow-vs-agent distinction is already covered in the AI agents module, durable
@@ -21,12 +21,13 @@ CFG = {
     "brand": "Agentic workflows",
     "tagline": "a Generative AI module",
     "title": "Agentic workflows for the product leader",
-    "lede": "Orchestrating more than one agent when a single loop isn't enough, and "
-            "what it takes to make a workflow durable enough — and valuable enough — "
-            "to be worth owning end to end.",
-    "meta": ["2 lessons", "+ recap", "knowledge graph", "diagrams included"],
+    "lede": "Choosing a workflow pattern, knowing when more than one agent earns its cost, "
+            "and what it takes to make a workflow durable enough to be worth owning end "
+            "to end.",
+    "meta": ["3 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
+        "choosing-a-workflow-pattern",
         "orchestrating-more-than-one-agent",
         "making-a-workflow-durable-and-worth-owning",
     ],

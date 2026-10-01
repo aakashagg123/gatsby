@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Orchestrating more than one agent — Agentic workflows</title>
+<title>Choosing a workflow pattern — Agentic workflows</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -362,332 +362,324 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <body><header class="topbar">
   <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>Agentic workflows</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="choosing-a-workflow-pattern.html">1 · Choosing a workflow pattern</a><a class="modlink active" href="orchestrating-more-than-one-agent.html">2 · Orchestrating more than one agent</a><a class="modlink" href="making-a-workflow-durable-and-worth-owning.html">3 · Making a workflow durable, and worth owning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink active" href="choosing-a-workflow-pattern.html">1 · Choosing a workflow pattern</a><a class="modlink" href="orchestrating-more-than-one-agent.html">2 · Orchestrating more than one agent</a><a class="modlink" href="making-a-workflow-durable-and-worth-owning.html">3 · Making a workflow durable, and worth owning</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 02</span>
-    <h1>Orchestrating more than one agent</h1>
+    <span class="chip">Lesson 01</span>
+    <h1>Choosing a workflow pattern</h1>
   </div>
   <p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>Most tasks do better with one well-built agent. Sometimes one loop is not enough. The
-work may be too big for one context window. It may have independent threads that can run
-at once. It may need specialists with different tools and permissions.</p>
-<p>Then a lead agent can hand pieces to subagents and combine what they return. This is the
-orchestrator-workers pattern from the
-<a href="choosing-a-workflow-pattern.html">previous lesson</a>. It buys two things: clean context
-and parallel work. It costs one thing: coordination.</p>
-<p>That cost is large. Adding an agent needs the same case as adding a service. Name the
-bottleneck that one loop cannot clear. A diagram with more boxes is not a case.</p>
+<p>Most AI features that do real work are not one model call. They are a workflow: several
+model calls, and some plain code, joined in a shape. Five shapes cover most cases.</p>
+<ol>
+<li><strong>Prompt chaining.</strong> Step one feeds step two, and so on.</li>
+<li><strong>Routing.</strong> Classify the input, then send it to the right handler.</li>
+<li><strong>Parallelization.</strong> Run independent calls at once and combine the results.</li>
+<li><strong>Orchestrator-workers.</strong> A lead model splits the task and hands pieces to workers.</li>
+<li><strong>Evaluator-optimizer.</strong> One call writes, another critiques, and they loop.</li>
+</ol>
+<p>The first three keep the path in your code. The fourth lets a model decide the path. The
+fifth adds a quality loop. As you move down the list, you gain flexibility and lose
+predictability, speed and cost control. Pick the first shape that does the job.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — Multi-agent designs are where token budgets grow fastest. Spend
-scales with the number of agents. Failures are emergent: each agent can behave and the
-system can still misbehave.</p>
-<p><strong>What it changes in your decisions</strong> — Every extra agent must name its bottleneck:
-context, parallelism or specialisation. You also ask for a cost estimate against the
-single-agent version.</p>
-<p><strong>Ask yourself</strong> — <em>"Would one agent with better tools and cleaner context do this? Have
-we tried that first?"</em></p>
-<p><strong>Risk if ignored</strong> — A five-agent system that is slower, costs more and is harder to
-debug than the single agent it replaced, built because the diagram looked like progress.</p>
+<p><strong>Why it matters</strong> — The pattern sets your cost per task, your latency, and how hard
+failures are to find. Teams that skip this choice often end up with the most
+flexible shape by default, and pay for it on every request.</p>
+<p><strong>What it changes in your decisions</strong> — You ask which pattern a proposal uses, and why
+a simpler one would not do. You treat a move to a more flexible pattern as a spend
+decision.</p>
+<p><strong>Ask yourself</strong> — <em>"Which of the five is this? Could the previous one on the list do
+the job?"</em></p>
+<p><strong>Risk if ignored</strong> — A feature that could have been a three-step chain ships as an
+orchestrator with workers. It costs several times more, runs slower, and fails in ways
+nobody can trace.</p>
 </blockquote>
-<h2 id="the-mental-model-three-shapes-one-shared-cost">The mental model: three shapes, one shared cost</h2>
-<!-- Orchestrating lesson — 3 recurring topology shapes as visual mini-diagrams.
-     Diagram type: THREE-PANEL VISUAL GLOSSARY (orchestrator, pipeline, peer handoff). -->
+<h2 id="the-mental-model-who-decides-the-path">The mental model: who decides the path</h2>
+<p>The key question is who decides what happens next. In the first three patterns, your code
+decides. In the fourth, a model decides. In the fifth, a model decides when to stop.</p>
+<!-- Choosing a workflow pattern — five patterns split by who decides the path. -->
 <style>
-.dgm-or{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
+.dgm-wp{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
-  font-family:inherit;text-align:left;position:relative}
-.dgm-or-chip{position:absolute;top:-11px;left:24px;background:#2f8f7a;color:#ffffff;
+  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+  text-align:left;position:relative}
+.dgm-wp-chip{position:absolute;top:-11px;left:24px;background:#2f8f7a;color:#ffffff;
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
   border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(47,143,122,.28)}
-.dgm-or h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
+.dgm-wp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
   text-transform:uppercase;color:#59636e}
-.dgm-or-sub{font-size:12px;color:#59636e;margin:0 0 16px}
-.dgm-or-shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.dgm-or-shape{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 14px;
-  display:flex;flex-direction:column;gap:10px;position:relative}
-.dgm-or-shape .dgm-or-name{font-size:11.5px;font-weight:700;color:#1a614f;letter-spacing:.02em}
-.dgm-or-shape .dgm-or-badge{position:absolute;top:-9px;right:12px;background:#2f8f7a;color:#fff;
-  font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:5px;
-  text-transform:uppercase}
-.dgm-or-viz{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:14px 10px;
-  min-height:120px;display:flex;align-items:center;justify-content:center}
-.dgm-or-viz svg{width:100%;max-width:200px;height:auto}
-.dgm-or-shape p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
-.dgm-or-shape .dgm-or-when{font-size:10.5px;font-weight:600;color:#2f8f7a;letter-spacing:.02em;
-  background:#ecf6f2;border:1px solid #c7e4d9;border-radius:6px;padding:5px 8px;line-height:1.35}
+.dgm-wp-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+.dgm-wp-grp{border-radius:13px;padding:14px 16px;margin-bottom:10px;border:1px solid}
+.dgm-wp-grp.code{background:#ecf6f2;border-color:#c7e4d9}
+.dgm-wp-grp.model{background:#fff8c5;border-color:#eac54f}
+.dgm-wp-grp h5{margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:.02em;color:#1f2328;
+  display:flex;align-items:center;gap:8px}
+.dgm-wp-grp h5 span{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;
+  border-radius:5px;background:#ffffff;border:1px solid #d1d9e0;color:#59636e}
+.dgm-wp-row{display:grid;gap:8px}
+.dgm-wp-grp.code .dgm-wp-row{grid-template-columns:repeat(3,1fr)}
+.dgm-wp-grp.model .dgm-wp-row{grid-template-columns:repeat(2,1fr)}
+.dgm-wp-p{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px}
+.dgm-wp-p b{display:block;font-size:11.5px;color:#1f2328;margin-bottom:2px}
+.dgm-wp-p i{font-style:normal;display:block;font-size:10.5px;color:#59636e;line-height:1.35}
+.dgm-wp-p em{font-style:normal;display:block;margin-top:5px;font-size:10px;font-weight:600;color:#7d4e00}
+.dgm-wp-grp.code .dgm-wp-p em{color:#1a614f}
+.dgm-wp-arr{display:flex;justify-content:center;align-items:center;gap:8px;color:#8c959f;
+  font-size:10.5px;font-weight:600;padding:2px 0 8px}
+.dgm-wp-arr svg{width:16px;height:16px}
 @media (max-width:640px){
-  .dgm-or{padding:20px 16px 18px}
-  .dgm-or-shapes{grid-template-columns:1fr}
+  .dgm-wp{padding:20px 16px 18px}
+  .dgm-wp-grp.code .dgm-wp-row,.dgm-wp-grp.model .dgm-wp-row{grid-template-columns:1fr}
 }
 </style>
-<div class="dgm-or">
-  <span class="dgm-or-chip">Topologies</span>
+<div class="dgm-wp">
+  <span class="dgm-wp-chip">Workflow patterns</span>
+  <h4>Five patterns · start at the top, stop at the first that fits</h4>
+  <p class="dgm-wp-sub">The line that matters: who decides what happens next.</p>
 
-  <h4>Three recurring shapes multi-agent work takes · each fits a different reason to split</h4>
-  <p class="dgm-or-sub">Pick the shape that fits the reason you split the work, not the other way around.</p>
-
-  <div class="dgm-or-shapes">
-
-    <div class="dgm-or-shape">
-      <span class="dgm-or-badge">Shape 1</span>
-      <span class="dgm-or-name">Orchestrator + subagents</span>
-      <div class="dgm-or-viz">
-        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="30" r="18" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="100" y="34" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Orch</text>
-          <circle cx="50" cy="95" r="16" fill="#ffffff" stroke="#8c959f" stroke-width="1.2"/>
-          <text x="50" y="99" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#1f2328" text-anchor="middle">Sub A</text>
-          <circle cx="150" cy="95" r="16" fill="#ffffff" stroke="#8c959f" stroke-width="1.2"/>
-          <text x="150" y="99" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#1f2328" text-anchor="middle">Sub B</text>
-          <path d="M88 44 Q70 68 60 82" stroke="#2f8f7a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <path d="M112 44 Q130 68 140 82" stroke="#2f8f7a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <path d="M62 84 Q80 68 92 50" stroke="#8c959f" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/>
-          <path d="M138 84 Q120 68 108 50" stroke="#8c959f" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 3"/>
-        </svg>
-      </div>
-      <p>An orchestrator delegates to subagents that report back.</p>
-      <div class="dgm-or-when"><strong>Fits:</strong> parallelizable threads · noisy subtasks whose detail shouldn't pollute the main agent's context.</div>
+  <div class="dgm-wp-grp code">
+    <h5><span>Your code decides</span>Predictable, testable, cheaper</h5>
+    <div class="dgm-wp-row">
+      <div class="dgm-wp-p"><b>1. Prompt chaining</b><i>Step output feeds the next step.</i><em>Use for fixed steps</em></div>
+      <div class="dgm-wp-p"><b>2. Routing</b><i>Classify, then pick a handler.</i><em>Use for distinct input types</em></div>
+      <div class="dgm-wp-p"><b>3. Parallelization</b><i>Run independent calls, merge by rule.</i><em>Use for independent parts</em></div>
     </div>
+  </div>
 
-    <div class="dgm-or-shape">
-      <span class="dgm-or-badge">Shape 2</span>
-      <span class="dgm-or-name">Pipeline · fixed stages</span>
-      <div class="dgm-or-viz">
-        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="34" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Draft</text>
-          <rect x="74" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="100" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Review</text>
-          <rect x="140" y="52" width="52" height="26" rx="6" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="166" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Finalize</text>
-          <path d="M62 65 L72 65" stroke="#2f8f7a" stroke-width="1.4" fill="none" stroke-linecap="round" marker-end="url(#arr)"/>
-          <path d="M128 65 L138 65" stroke="#2f8f7a" stroke-width="1.4" fill="none" stroke-linecap="round" marker-end="url(#arr)"/>
-          <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l8 5-8 5z" fill="#2f8f7a"/></marker></defs>
-        </svg>
-      </div>
-      <p>Stages known in advance, each independently checkable.</p>
-      <div class="dgm-or-when"><strong>Fits:</strong> when order is fixed and each stage produces a real artifact you can inspect.</div>
+  <div class="dgm-wp-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>more flexible · less predictable · costs more</div>
+
+  <div class="dgm-wp-grp model">
+    <h5><span>A model decides</span>Flexible, harder to trace, costs the most</h5>
+    <div class="dgm-wp-row">
+      <div class="dgm-wp-p"><b>4. Orchestrator-workers</b><i>A lead splits the task and delegates.</i><em>Use when subtasks cannot be listed</em></div>
+      <div class="dgm-wp-p"><b>5. Evaluator-optimizer</b><i>Write, critique, repeat.</i><em>Use with a clear quality bar and a round limit</em></div>
     </div>
-
-    <div class="dgm-or-shape">
-      <span class="dgm-or-badge">Shape 3</span>
-      <span class="dgm-or-name">Peer handoff</span>
-      <div class="dgm-or-viz">
-        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="55" cy="65" r="22" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="55" y="68" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Triage</text>
-          <circle cx="145" cy="65" r="22" fill="#ecf6f2" stroke="#2f8f7a" stroke-width="1.5"/>
-          <text x="145" y="63" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">Special-</text>
-          <text x="145" y="74" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#1a614f" text-anchor="middle">ist</text>
-          <path d="M79 65 L119 65" stroke="#2f8f7a" stroke-width="1.6" fill="none" stroke-linecap="round" marker-end="url(#arr2)"/>
-          <text x="100" y="55" font-family="Inter,sans-serif" font-size="8" font-weight="600" fill="#59636e" text-anchor="middle">hand off</text>
-          <text x="100" y="85" font-family="Inter,sans-serif" font-size="8" fill="#8c959f" text-anchor="middle">(full context)</text>
-          <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l8 5-8 5z" fill="#2f8f7a"/></marker></defs>
-        </svg>
-      </div>
-      <p>An agent recognizes "not my job" and hands the request off with full context.</p>
-      <div class="dgm-or-when"><strong>Fits:</strong> triage-then-specialist flows · when the first agent's job is knowing who to route to.</div>
-    </div>
-
   </div>
 </div>
 
-<ul>
-<li><strong>Orchestrator and subagents.</strong> A lead splits the task. Each subagent works in its own
-  context window and returns a short result. This helps when threads are independent, or
-  when one messy subtask would flood the lead's context.</li>
-<li><strong>Pipeline.</strong> Specialists handle one stage each. It is a fixed workflow with several
-  agents in it, and it is as predictable as one.</li>
-<li><strong>Peer handoff.</strong> An agent sees a request is not its job and passes it on, with context.</li>
-</ul>
-<p>The topologies and the protocols around them (MCP for tools, A2A for agent-to-agent) are
-covered in <a href="../agentic-ai/multi-agent-and-protocols.html">Multi-agent systems &amp; protocols</a>.
-This lesson stays on the decision: when is it worth it?</p>
-<h2 id="the-evidence-it-helps-in-some-work-and-costs-a-lot">The evidence: it helps in some work and costs a lot</h2>
-<p>Anthropic published results from its multi-agent research system in June 2025. Three
-findings matter to a product leader.</p>
-<ul>
-<li><strong>It can win.</strong> The multi-agent setup beat a single-agent Claude Opus 4 by 90.2% on
-  Anthropic's internal research evaluation. The tasks were breadth-first, such as
-  gathering facts across many sources.</li>
-<li><strong>It costs a lot.</strong> Agents used about 4 times the tokens of a chat. Multi-agent systems
-  used about 15 times the tokens of a chat.</li>
-<li><strong>It does not suit everything.</strong> Anthropic says multi-agent systems fit "valuable tasks
-  that involve heavy parallelization, information that exceeds single context windows,
-  and interfacing with numerous complex tools." It also says most coding tasks "involve
-  fewer truly parallelizable tasks than research," and that agents are "not yet great at
-  coordinating and delegating to other agents in real time."</li>
-</ul>
-<p>There is a sharper counter-view. Cognition, the maker of a coding agent, argued in 2025
-that running agents in parallel creates more problems than it solves. Its reasoning is
-that every action carries hidden decisions, and agents that do not share full context make
-conflicting ones. Treat it as a real objection, not a rebuttal of the Anthropic result.
-Both agree on one point: the answer depends on the task. Research that splits into
-independent searches suits parallel workers. Tightly coupled work does not.</p>
-<h2 id="the-discipline-that-keeps-any-shape-from-collapsing">The discipline that keeps any shape from collapsing</h2>
-<p>Two habits separate a multi-agent system that works from one that produces fragments.</p>
-<ul>
-<li><strong>Handoffs are written artifacts, not vibes.</strong> The lead gives each worker a brief. The
-  worker returns a defined result. Most multi-agent failures are specification failures at
-  these seams. Anthropic reports that vague delegation led subagents to misread the task
-  or repeat the same searches as other agents.</li>
-<li><strong>Someone owns the whole.</strong> An orchestrator, or a human, answers for the combined
-  result. Otherwise every piece can be good and the sum can be nonsense.</li>
-</ul>
-<h2 id="worked-example-a-vague-brief-and-a-good-one">Worked example: a vague brief and a good one</h2>
-<p><em>This example is invented, to show the method.</em></p>
-<p>A lead agent is researching "which payment providers support instant payouts in India."
-It spawns three subagents.</p>
-<p><strong>Vague brief, sent to all three:</strong> "Research payment providers and instant payouts."</p>
-<ul>
-<li>Subagent A lists the ten most famous providers.</li>
-<li>Subagent B lists nine of the same providers.</li>
-<li>Subagent C wanders into card fees, which nobody asked about.</li>
-</ul>
-<p>The lead gets overlapping lists and one off-topic report. It spends tokens merging them.</p>
-<p><strong>Good briefs, one per subagent:</strong></p>
+<p>Anthropic's guidance on building agents draws the same line. It separates workflows, where
+code directs the model, from agents, where the model directs itself. It advises starting
+with the simplest approach and adding complexity "only when simpler solutions fall short."
+For the autonomy question itself, see
+<a href="../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is, and how much autonomy it needs</a>.</p>
+<h2 id="the-five-patterns">The five patterns</h2>
+<p>Each pattern below shows what it is, when it fits, and what it costs. The wording of the
+definitions follows Anthropic's.</p>
 <table>
 <thead>
 <tr>
-<th>Part of the brief</th>
-<th>Subagent A</th>
-<th>Subagent B</th>
-<th>Subagent C</th>
+<th>Pattern</th>
+<th>What it does</th>
+<th>Use when</th>
+<th>Main cost</th>
+<th>Typical failure</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Goal</td>
-<td>Find providers with instant payouts to bank accounts</td>
-<td>Same goal</td>
-<td>Same goal</td>
+<td><strong>Prompt chaining</strong></td>
+<td>Breaks a task into a sequence. Each call works on the last call's output.</td>
+<td>The task splits cleanly into fixed steps.</td>
+<td>Latency adds up, one call per step.</td>
+<td>An early mistake flows through every later step.</td>
 </tr>
 <tr>
-<td>Scope</td>
-<td>Providers headquartered in India</td>
-<td>Global providers with Indian operations</td>
-<td>Banks offering their own payout APIs</td>
+<td><strong>Routing</strong></td>
+<td>Classifies the input and sends it to a specialised follow-up.</td>
+<td>There are distinct categories that need different handling.</td>
+<td>One extra classification call.</td>
+<td>Misrouted input gets the wrong handler, confidently.</td>
 </tr>
 <tr>
-<td>Output</td>
-<td>A table: name, payout speed, source link</td>
-<td>Same</td>
-<td>Same</td>
+<td><strong>Parallelization</strong></td>
+<td>Runs calls at the same time and combines the results in code.</td>
+<td>Subtasks are independent, or you want several views.</td>
+<td>More tokens at once. Not slower.</td>
+<td>Results disagree, with no rule to settle it.</td>
 </tr>
 <tr>
-<td>Boundaries</td>
-<td>Skip anything without a source. No fee comparison.</td>
-<td>Same</td>
-<td>Same</td>
+<td><strong>Orchestrator-workers</strong></td>
+<td>A lead model breaks the task down, delegates, and combines.</td>
+<td>You cannot predict the subtasks in advance.</td>
+<td>The highest token spend of the five.</td>
+<td>The lead gives vague briefs, and workers duplicate effort.</td>
 </tr>
 <tr>
-<td>Stop when</td>
-<td>8 providers, or 10 tool calls</td>
-<td>Same</td>
-<td>Same</td>
+<td><strong>Evaluator-optimizer</strong></td>
+<td>One call generates. Another gives feedback. They loop.</td>
+<td>You have clear criteria, and revision measurably helps.</td>
+<td>Several calls per answer.</td>
+<td>The loop runs on, or the critic is no better than the writer.</td>
 </tr>
 </tbody>
 </table>
-<p>Now the threads do not overlap. The results share a format, so the lead can merge them
-with a simple step. Each subagent has a stop rule, so cost is capped.</p>
-<h2 id="a-decision-rule-that-survives-a-vendor-pitch">A decision rule that survives a vendor pitch</h2>
-<ol>
-<li><strong>Start with one agent.</strong> Better tools, a tighter prompt and cleaner context fix most
-   "we need more agents" symptoms.</li>
-<li><strong>Add a subagent only for a named bottleneck.</strong> The bottleneck may be context (isolate
-   a messy subtask), parallelism (independent threads), or specialisation (different tools
-   or permissions). A deploy-only agent that alone holds deploy credentials is a security
-   choice as much as an architecture one.</li>
-<li><strong>Stop when coordination cost shows.</strong> It will show in the token bill, in latency, and
-   in debugging sessions that span several transcripts.</li>
-</ol>
+<h2 id="how-to-choose">How to choose</h2>
+<p>Work down the list and stop at the first pattern that fits.</p>
+<table>
+<thead>
+<tr>
+<th>If the task...</th>
+<th>Start with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Has fixed steps, each easy to check</td>
+<td>Prompt chaining</td>
+</tr>
+<tr>
+<td>Has distinct input types needing different treatment</td>
+<td>Routing, then a chain per route</td>
+</tr>
+<tr>
+<td>Has independent parts, or needs a second opinion</td>
+<td>Parallelization</td>
+</tr>
+<tr>
+<td>Has steps you cannot list in advance</td>
+<td>Orchestrator-workers</td>
+</tr>
+<tr>
+<td>Has a clear quality bar, and a draft is often not good enough</td>
+<td>Evaluator-optimizer on top of one of the above</td>
+</tr>
+</tbody>
+</table>
+<p>Patterns combine. A common product shape is route, then chain, with an evaluator on the
+last step. Keep each added layer justified by a measured gap.</p>
+<h2 id="worked-example-one-support-email-five-ways">Worked example: one support email, five ways</h2>
+<p><em>This example is invented, to show the method. The numbers are illustrative.</em></p>
+<p>A team wants to answer customer emails about orders. They compare patterns.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>How it would work here</th>
+<th>Calls per email</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain</td>
+<td>Extract order id, look it up, draft a reply.</td>
+<td>3</td>
+<td>Good first build. Predictable.</td>
+</tr>
+<tr>
+<td>Route + chain</td>
+<td>Classify as refund, shipping or other. Use a chain per type.</td>
+<td>4</td>
+<td>Best fit. Types differ, and each path is short.</td>
+</tr>
+<tr>
+<td>Parallelize</td>
+<td>Draft three tones at once, pick one.</td>
+<td>4</td>
+<td>Not needed. The tone does not vary enough to pay for.</td>
+</tr>
+<tr>
+<td>Orchestrator-workers</td>
+<td>A lead plans, workers fetch data and draft.</td>
+<td>6 or more</td>
+<td>Overkill. The steps are known.</td>
+</tr>
+<tr>
+<td>Add evaluator</td>
+<td>A second call checks the reply against policy.</td>
+<td>+1 or +2</td>
+<td>Worth it for refunds only, where a wrong reply costs money.</td>
+</tr>
+</tbody>
+</table>
+<p>The team ships "route, then chain", with an evaluator on the refund path only. They do not
+build the orchestrator. If a fourth email type appears with no fixed steps, they revisit
+that choice.</p>
 <h2 id="tradeoffs">Tradeoffs</h2>
 <ul>
-<li><strong>Quality vs. cost.</strong> Parallel workers can raise quality on broad tasks. They multiply
-  tokens.</li>
-<li><strong>Speed vs. complexity.</strong> Threads run at once, but briefs, merging and retries add work.</li>
-<li><strong>Isolation vs. shared context.</strong> A worker with its own window stays focused. It also
-  cannot see what the others know.</li>
-<li><strong>Specialisation vs. oversight.</strong> More specialists means more places to look when
-  something breaks.</li>
+<li><strong>Control vs. flexibility.</strong> Fixed paths are easy to test and trace. Model-chosen paths
+  handle surprises and create their own.</li>
+<li><strong>Cost vs. quality.</strong> Parallel calls and evaluator loops buy quality with tokens.</li>
+<li><strong>Latency.</strong> A chain adds a call per step. Parallel calls add tokens and little time.
+  Loops add time per round.</li>
+<li><strong>Debuggability.</strong> A failure in a chain points to one step. A failure in a model-led
+  pattern can sit anywhere. Log every call.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>Org-chart architecture.</strong> The design copies the team's structure, not the task's.</li>
-<li><strong>Vague briefs.</strong> Workers duplicate effort or return different formats.</li>
-<li><strong>No owner for the whole.</strong> Every part is right and the result is incoherent.</li>
-<li><strong>Hidden conflicts.</strong> Workers make incompatible choices because they cannot see each
-  other's context.</li>
-<li><strong>Protocol-driven roadmaps.</strong> The plan depends on a speculative "agent internet" instead
-  of what is adopted today.</li>
+<li><strong>Flexibility by default.</strong> The most open pattern is chosen because the demo looked good.
+  The task had fixed steps.</li>
+<li><strong>A chain with no checks between steps.</strong> One bad output is passed on and amplified.</li>
+<li><strong>Routing with no fallback.</strong> An input that fits no category gets forced into one.</li>
+<li><strong>A critic that is the same model with the same blind spots.</strong> The loop agrees with
+  itself. Use a test, a validator or a rubric as the check.</li>
+<li><strong>An unbounded loop.</strong> An evaluator that never says "good enough" runs until the budget
+  does. Set a round limit.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
-<p>A brief is a small, fixed structure. Write it once as a template, and have the lead fill
-it in. This makes briefs reviewable and testable.</p>
-<pre><code class="language-python">BRIEF = &quot;&quot;&quot;
-GOAL: {goal}
-SCOPE: {scope}
-OUTPUT FORMAT: {output_format}
-SOURCES TO USE: {sources}
-BOUNDARIES: {boundaries}
-STOP WHEN: {stop_rule}
-&quot;&quot;&quot;
+<p>The point of the first three patterns is that your code holds the control flow. Here is
+each in outline. <code>llm()</code> stands for one model call.</p>
+<pre><code class="language-python"># 1. Chain: each step's output feeds the next, with a check in between.
+facts = llm(&quot;Extract order id and issue as JSON.&quot;, email)
+validate(facts)                                   # fail early, not three steps later
+reply = llm(&quot;Draft a reply.&quot;, [facts, lookup(facts[&quot;order_id&quot;])])
 
-def spawn_worker(lead_ctx, task):
-    brief = BRIEF.format(**task.brief_fields)      # the brief IS the spec
-    result = run_agent(brief, tools=task.tools,    # scoped tools, scoped permissions
-                       max_steps=task.max_steps,   # each worker has its own budget
-                       max_cost=task.max_cost)
-    validate(result, task.output_schema)           # reject results that break the format
-    return result                                  # the lead gets a short summary only
+# 2. Route: a small classifier picks the handler. Always have a fallback.
+kind = llm(&quot;Classify: refund | shipping | other.&quot;, email)
+handler = HANDLERS.get(kind, escalate_to_human)
+reply = handler(email)
+
+# 3. Parallelize: independent calls, merged by a rule in code.
+drafts = run_concurrently([lambda: llm(p, email) for p in PROMPTS])
+reply = pick_by_rule(drafts)                      # not &quot;ask the model to pick&quot;
+
+# 5. Evaluator-optimizer: bounded loop, with a real check where possible.
+draft = llm(&quot;Draft a reply.&quot;, email)
+for _ in range(MAX_ROUNDS):                       # a budget, not a hope
+    verdict = check(draft)                        # a test or rubric beats a second opinion
+    if verdict.ok:
+        break
+    draft = llm(&quot;Revise using this feedback.&quot;, [draft, verdict.feedback])
 </code></pre>
-<p>Three habits matter to an engineer.</p>
-<ul>
-<li><strong>Give each worker its own budget.</strong> Cap steps and cost per worker and per run. See
-  <a href="../ai-agents/running-an-agent-in-production.html">Running an agent in production</a>.</li>
-<li><strong>Validate worker output against a schema.</strong> A lead that merges free-form text will
-  merge mistakes.</li>
-<li><strong>Trace across agents.</strong> Log the brief, the tool calls and the result for every worker
-  under one run id. Otherwise debugging spans several unconnected transcripts.</li>
-</ul>
+<p>Pattern 4, orchestrator-workers, hands control to a model. That is why it needs the limits
+and briefs described in
+<a href="orchestrating-more-than-one-agent.html">Orchestrating more than one agent</a>.</p>
+<p>For prompt-level detail on chains, see
+<a href="../prompt-engineering/prompt-chaining-and-workflows.html">Prompt chaining and multi-step workflows</a>.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
-<li class="task todo">For each agent in the design, which named bottleneck justifies it?</li>
-<li class="task todo">Did we try one better-built agent first, and record the result?</li>
-<li class="task todo">Do we have a cost estimate against the single-agent version, using measured runs?</li>
-<li class="task todo">Are handoffs written briefs with a goal, scope, format, boundaries and stop rule?</li>
-<li class="task todo">Is worker output checked against a schema before the lead uses it?</li>
-<li class="task todo">Is one agent or one person accountable for the combined result?</li>
-<li class="task todo">Is each worker budgeted, and are all workers traced under one run id?</li>
+<li class="task todo">Can we name which of the five patterns this feature uses?</li>
+<li class="task todo">Did we try the earlier patterns first, and write down why they were not enough?</li>
+<li class="task todo">Does each step in a chain validate its input before passing output on?</li>
+<li class="task todo">Does every router have a fallback for input that fits no category?</li>
+<li class="task todo">Are parallel results combined by a rule in code, not by guesswork?</li>
+<li class="task todo">Does every loop have a round limit and a real check?</li>
+<li class="task todo">Do we log every call, so we can see which step failed?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
-<li><a href="choosing-a-workflow-pattern.html">Choosing a workflow pattern</a> — where
-  orchestrator-workers sits among the five patterns.</li>
+<li><a href="orchestrating-more-than-one-agent.html">Orchestrating more than one agent</a> — the
+  fourth pattern in depth: cost, briefs and when it earns its place.</li>
 <li><a href="making-a-workflow-durable-and-worth-owning.html">Making a workflow durable, and worth owning</a>
-  — what has to hold once this runs over real time.</li>
+  — what has to hold once the workflow runs over real time.</li>
 <li><a href="../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html">What an agent is, and how much autonomy it needs</a>
-  — the single-agent decision this builds on.</li>
-<li><a href="../ai-agents/running-an-agent-in-production.html">Running an agent in production</a> —
-  budgets, gates and the kill switch.</li>
+  — the autonomy dial these patterns sit on.</li>
+<li><a href="../prompt-engineering/prompt-chaining-and-workflows.html">Prompt chaining and multi-step workflows</a>
+  — writing the prompts inside a chain.</li>
 <li><a href="../agentic-ai/multi-agent-and-protocols.html">Multi-agent systems &amp; protocols</a> — the
-  topologies and the protocol landscape in depth.</li>
+  topologies in engineering depth.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
-  (Jun 13, 2025): the 90.2% internal result, the 4x and 15x token figures, the conditions
-  where multi-agent fits and does not, and the vague-delegation failures. Checked 2026-09.</li>
-<li>Cognition, "Don't Build Multi-Agents" (2025): the view that parallel agents without
-  shared context make conflicting decisions. The page could not be opened when this lesson
-  was written. It is summarised from search-result excerpts.</li>
-<li>The payments research scenario and the brief template are invented and illustrative.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
+  (Dec 2024): the five workflow patterns and their definitions, the workflow-versus-agent
+  distinction, and the advice to start simple. Checked 2026-09.</li>
+<li>The support-email comparison, its call counts and the code sketches are invented and
+  illustrative.</li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="choosing-a-workflow-pattern.html"><span class="lbl">← Previous</span><span class="ttl">Choosing a workflow pattern</span></a><a class="navcard next" href="making-a-workflow-durable-and-worth-owning.html"><span class="lbl">→ Next</span><span class="ttl">Making a workflow durable, and worth owning</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-shapes-one-shared-cost">The mental model: three shapes, one shared cost</a><a class="h2" href="#the-evidence-it-helps-in-some-work-and-costs-a-lot">The evidence: it helps in some work and costs a lot</a><a class="h2" href="#the-discipline-that-keeps-any-shape-from-collapsing">The discipline that keeps any shape from collapsing</a><a class="h2" href="#worked-example-a-vague-brief-and-a-good-one">Worked example: a vague brief and a good one</a><a class="h2" href="#a-decision-rule-that-survives-a-vendor-pitch">A decision rule that survives a vendor pitch</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="orchestrating-more-than-one-agent.html"><span class="lbl">→ Next</span><span class="ttl">Orchestrating more than one agent</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-who-decides-the-path">The mental model: who decides the path</a><a class="h2" href="#the-five-patterns">The five patterns</a><a class="h2" href="#how-to-choose">How to choose</a><a class="h2" href="#worked-example-one-support-email-five-ways">Worked example: one support email, five ways</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -1,5 +1,5 @@
-<!-- Agentic workflows — knowledge graph: two questions in sequence.
-     Orchestrating shape → Making it durable → Ownership as strategy. -->
+<!-- Agentic workflows — knowledge graph: three questions in sequence.
+     Pattern → Orchestrating → Making it durable → Ownership as strategy. -->
 <style>
 .dgm-aw{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #2f8f7a;
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
@@ -49,25 +49,35 @@
 <div class="dgm-aw">
   <span class="dgm-aw-chip">Agentic workflows</span>
 
-  <h4>Two questions asked in sequence</h4>
-  <p class="dgm-aw-sub">Once a single agent's loop isn't enough — what shape, and how does it survive real time?</p>
+  <h4>Three questions asked in sequence</h4>
+  <p class="dgm-aw-sub">Which shape, how many agents, and will it survive real time?</p>
 
   <div class="dgm-aw-half">
-    <h5><span class="dgm-aw-tag">Lesson 1</span>Orchestrating more than one agent</h5>
+    <h5><span class="dgm-aw-tag">Lesson 1</span>Choosing a workflow pattern</h5>
+    <div class="dgm-aw-shape">
+      <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h6v4H4zM14 6h6v4h-6zM9 16h6v4H9z"/><path d="M7 10v2h10v-2M12 12v4"/></svg>
+      <div><h6>Chain · route · parallelize · orchestrate · evaluate</h6><p>Five patterns. Pick the first one that does the job.</p></div>
+    </div>
+  </div>
+
+  <div class="dgm-aw-link"><span class="dgm-aw-note">↓ when one agent isn't enough</span></div>
+
+  <div class="dgm-aw-half">
+    <h5><span class="dgm-aw-tag">Lesson 2</span>Orchestrating more than one agent</h5>
     <div class="dgm-aw-shape">
       <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 11l7-4M8.5 13l7 4"/></svg>
-      <div><h6>Chains, routers, multi-agent topologies</h6><p>The three recurring shapes work takes when one agent isn't the right unit.</p></div>
+      <div><h6>Orchestrator and subagents</h6><p>When a subagent earns its cost, and how to brief one.</p></div>
     </div>
   </div>
 
   <div class="dgm-aw-link"><span class="dgm-aw-note">↓ once it works, it has to keep working</span></div>
 
   <div class="dgm-aw-half dur">
-    <h5><span class="dgm-aw-tag">Lesson 2</span>Making it last</h5>
+    <h5><span class="dgm-aw-tag">Lesson 3</span>Making it last</h5>
     <div class="dgm-aw-rows">
       <div class="dgm-aw-row">
         <svg class="dgm-aw-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        <div><h6>Surviving pauses &amp; restarts</h6><p>Wait states · persistence · job executor</p></div>
+        <div><h6>Surviving pauses &amp; restarts</h6><p>Saved state · waits · retries · undo</p></div>
       </div>
       <div class="dgm-aw-arr">→</div>
       <div class="dgm-aw-row">

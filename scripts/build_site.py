@@ -418,9 +418,8 @@ LANDING = """<!doctype html>
     <a class="card" href="agentic-workflows/index.html">
       <span class="tag">Generative AI</span>
       <h2>Agentic workflows →</h2>
-      <p>Orchestrating more than one agent when a single loop isn't enough, and what
-      it takes to make a workflow durable enough, and valuable enough, to own end to
-      end.</p>
+      <p>Choosing a workflow pattern, when more than one agent earns its cost, and what
+      it takes to make a workflow durable enough to own end to end.</p>
     </a>
     <a class="card" href="evaluation-and-observability/index.html">
       <span class="tag">Generative AI</span>
