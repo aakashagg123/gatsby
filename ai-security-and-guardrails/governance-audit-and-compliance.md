@@ -90,19 +90,22 @@ general privacy discipline in full. The AI-specific part is **automated decision
 
 GDPR Article 22 limits decisions based solely on automated processing that have legal or
 similarly significant effects on a person. Examples are a loan denial or a hiring
-rejection. Such decisions are allowed only under set exceptions, with safeguards. The
-safeguards include human intervention, the chance to state a view, and the chance to
-contest the decision.
+rejection. Such decisions are allowed only under set exceptions, with safeguards. Safeguards such as
+human intervention, the chance to state a view, and the chance to contest the decision
+apply.
 
 The Court of Justice of the EU widened the reach in *SCHUFA* (case C-634/21, 7 December
-2023). A credit score counts as an automated decision when a third party relies heavily on
+2023). A credit score counts as an automated decision when a third party draws strongly on
 it to decide on a contract. So a model that only "scores" can fall under the rule if
-someone else acts on its output. If your model drives such a decision, plan for human
+someone else acts on its output, and the duty can fall on the scorer. If your model drives such a decision, plan for human
 review.
 
 Do not assume other laws copy Article 22. India's Digital Personal Data Protection (DPDP)
-Rules were notified on 14 November 2025. Their main duties, including notice, consent and
-penalties, are scheduled for 13 May 2027. Check each law and each market with counsel.
+Rules were published in the Gazette on 13 November 2025 and announced on 14 November. Their
+main duties, such as notice and consent, apply from 13 May 2027, 18 months after
+publication. The EU also proposed GDPR changes in the November 2025 Digital Omnibus. I found
+no sign that the Article 22 changes were adopted, so check the current status. Check each
+law and each market with counsel.
 
 ## The EU AI Act: risk tiers, with a moving timeline
 
@@ -116,7 +119,7 @@ uses into **risk tiers**.
   an AI.
 - **Minimal risk** has no specific duty.
 
-The part product leaders miss is the reach. The Act applies to providers outside the EU if
+The part product leaders miss is the reach. The Act applies to providers and deployers outside the EU if
 their AI system's output is used in the EU. Where your company sits does not matter.
 
 The dates have moved. Regulation (EU) 2026/1744, the "Digital Omnibus on AI," was
@@ -256,11 +259,12 @@ Two habits keep it honest.
   [General-purpose AI models in the AI Act: Q&A](https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers):
   duties from 2 Aug 2025 and enforcement powers from 2 Aug 2026. Search-result excerpt.
 - Court of Justice of the EU, *SCHUFA Holding (Scoring)*, C-634/21, 7 Dec 2023: a credit
-  score is an automated decision under Article 22 when a third party relies heavily on it.
+  score is an automated decision under Article 22 when a third party draws strongly on it.
   From law-firm summaries ([A&O Shearman](https://www.aoshearman.com/en/insights/ao-shearman-on-data/cjeu-rules-that-a-credit-score-constitutes-automated-decision-making-under-the-gdpr)).
 - India, [DPDP Rules 2025](https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf):
-  notified 14 Nov 2025, with phased commencement and main duties after 18 months. Dates
-  from secondary summaries.
+  Gazette notification dated 13 Nov 2025 (PIB announcement 14 Nov), with phased
+  commencement and most duties 18 months after publication. Some sources give 14 May 2027.
+  Dates from secondary summaries.
 - AICPA, [SOC suite of services](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2/):
   the 2017 Trust Services Criteria with revised points of focus (2022), five categories,
   security required. The Type II period is a common practice, not a fixed rule.

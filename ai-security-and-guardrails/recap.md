@@ -27,8 +27,8 @@ training even taught the model to recognize its trigger better, which hid the be
 🎯 *Takeaway:* [poisoning](./the-threat-model-and-guardrails.md) before deployment can outlast
 every defense applied after it. Track where training data came from.
 
-**A public jailbreak challenge (Anthropic, February 2025).** Anthropic had reported that its
-Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its own test. Then it
+**A public jailbreak challenge (Anthropic, February 2025).** Alongside its report that
+Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its own test, Anthropic
 opened a public challenge. After about five days and an estimated 3,700 collective hours, four
 users had passed all levels and one had found a universal jailbreak. Anthropic paid $55,000 in
 total. 🎯 *Takeaway:* a strong guardrail raises the cost of an attack by a large factor. It does
@@ -99,7 +99,7 @@ If yes, you can defend the feature under questioning. If no, you know which less
 8. **Why can a SOC 2 Type II report not be rushed?**
    <details><summary>Answer</summary>It attests that controls worked over a period, so it needs a history of operation. Start before a deal asks. (<a href="./governance-audit-and-compliance.md">Lesson 3</a>)</details>
 9. **Your model only produces a credit score, and another company decides on it. Can GDPR Article 22 still apply?**
-   <details><summary>Answer</summary>Yes. In SCHUFA (C-634/21, 7 December 2023), the Court of Justice of the EU held that a credit score counts as an automated decision when a third party relies heavily on it. (<a href="./governance-audit-and-compliance.md">Lesson 3</a>)</details>
+   <details><summary>Answer</summary>Yes. In SCHUFA (C-634/21, 7 December 2023), the Court of Justice of the EU held that a credit score counts as an automated decision when a third party draws strongly on it. (<a href="./governance-audit-and-compliance.md">Lesson 3</a>)</details>
 10. **How did the 2026 Digital Omnibus change the EU AI Act dates?**
     <details><summary>Answer</summary>High-risk duties for Annex III uses moved to 2 December 2027, and for AI built into regulated products to 2 August 2028. Most transparency duties did not move. Check the Official Journal for exact dates. (<a href="./governance-audit-and-compliance.md">Lesson 3</a>)</details>
 
@@ -111,7 +111,7 @@ If yes, you can defend the feature under questioning. If no, you know which less
   (14 Jan 2024). Checked 2026-10.
 - Nasr et al., [Scalable Extraction of Training Data from (Production) Language Models](https://arxiv.org/abs/2311.17035)
   (28 Nov 2023). arXiv was blocked. Search-result excerpts only.
-- Greshake et al., [Not what you've signed up for](https://arxiv.org/abs/2302.12173) (May 2023).
+- Greshake et al., [Not what you've signed up for](https://arxiv.org/abs/2302.12173) (Feb 2023, revised May 2023).
   Search-result excerpts only.
 - Anthropic, [Constitutional Classifiers](https://arxiv.org/abs/2501.18837) (Jan 2025), and the
   public-challenge results posted by Anthropic's Jan Leike (Feb 2025). Search-result excerpts

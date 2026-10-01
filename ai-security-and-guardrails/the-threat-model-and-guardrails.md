@@ -60,26 +60,28 @@ here?" It is "when this guardrail fails, which way does it fail?"
 ## The four attacks, mapped to the standards your buyers use
 
 Buyers and auditors do not use this lesson's words. They use the
-[Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) (2025 edition) from the Open
-Worldwide Application Security Project (OWASP). They also use the report on adversarial
-machine learning (AI 100-2 E2025) from the National Institute of Standards and Technology
-(NIST). This table lets you
-translate.
+[Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) from the Open Worldwide
+Application Security Project (OWASP). OWASP published a new edition on 4 August 2026, so
+the table gives the 2026 number first and the 2025 number in brackets. Buyers also use the
+report on adversarial machine learning (AI 100-2 E2025) from the National Institute of
+Standards and Technology (NIST). The table lets you translate.
 
-| Attack | What it goes after | Where it shows up in OWASP 2025 | A real result |
+| Attack | What it goes after | Where it shows up in OWASP, 2026 (2025) | A real result |
 | --- | --- | --- | --- |
-| **Jailbreak** | The model's trained refusals | LLM01 Prompt Injection. OWASP treats a jailbreak as a form of prompt injection. | Many-shot jailbreaking (Anthropic, Apr 2024) |
-| **Injection** | The line between instructions and data | LLM01 Prompt Injection | Indirect injection against Bing Chat (Greshake et al., 2023) |
-| **Extraction** | What the model or system contains | LLM02 Sensitive Information Disclosure, LLM07 System Prompt Leakage | Training-data extraction from ChatGPT (Nasr et al., 2023) |
-| **Poisoning** | What the model learns | LLM04 Data and Model Poisoning | Sleeper-agent backdoors (Anthropic, Jan 2024) |
+| **Jailbreak** | The model's trained refusals | LLM01 Prompt Injection (same in both). The 2025 text called a jailbreak a form of prompt injection. | Many-shot jailbreaking (Anthropic, Apr 2024) |
+| **Injection** | The line between instructions and data | LLM01 Prompt Injection (same in both) | Indirect injection against Bing Chat (Greshake et al., 2023) |
+| **Extraction** | What the model or system contains | LLM02 Sensitive Information Disclosure (same in both). LLM08 Hidden Context Exposure (2025: LLM07 System Prompt Leakage). | Training-data extraction from ChatGPT (Nasr et al., 2023) |
+| **Poisoning** | What the model learns | LLM05 Data and Model Poisoning (2025: LLM04) | Sleeper-agent backdoors (Anthropic, Jan 2024) |
 
-This lesson keeps jailbreak and injection apart on purpose. OWASP groups them, but the
-defenses differ. A jailbreak attacks the model's judgment. An injection attacks the system
+This lesson keeps jailbreak and injection apart on purpose. OWASP's 2025 edition grouped
+them, but the defenses differ. A jailbreak attacks the model's judgment. An injection attacks the system
 around it. Fixing one does not fix the other. That separation is this lesson's own choice,
 not an OWASP rule.
 
-NIST AI 100-2 E2025 sorts attacks by the property they break: availability, integrity, or
-privacy. It covers poisoning, direct and indirect prompt injection, and privacy attacks.
+NIST AI 100-2 E2025 classifies attacks along several dimensions. One is the attacker's goal:
+availability breakdown, integrity violation or privacy compromise, plus misuse enablement
+for generative AI. It covers poisoning, direct and indirect prompt injection, and privacy
+attacks.
 Use it when a buyer asks for a "recognized taxonomy."
 
 ## Jailbreak: the model turns on its own training
@@ -128,8 +130,8 @@ lesson names injection so it takes its place in the taxonomy.
   make ChatGPT emit memorized training data. The prompt asked the model to repeat one word
   forever. The paper reports a rate about 150 times higher than normal behavior, and
   includes real personal data. It also covers open and semi-open models.
-- **System prompts.** The attacker coaxes out the hidden instructions. OWASP lists this as
-  its own risk, LLM07.
+- **System prompts.** The attacker coaxes out the hidden instructions. OWASP listed this as
+  its own risk in 2025 (LLM07). The 2026 edition renames it Hidden Context Exposure (LLM08).
 - **Model behavior.** High-volume querying can copy a model's behavior into a cheaper
   substitute.
 
@@ -159,7 +161,7 @@ come from Anthropic's own tests, so they are vendor-reported.
   success rate from 61% to 2%. Fine-tuning only delayed the jailbreak.
 - **Constitutional Classifiers (Jan 2025).** Classifiers trained on written rules about
   allowed and blocked content cut jailbreak success on Claude from 86% to 4.4% in
-  Anthropic's test. In a public challenge that followed, the system was broken after about
+  Anthropic's automated test. In a public challenge that followed, the system was broken after about
   five days. Four users passed all levels and one found a universal jailbreak.
 
 Read both fairly. A good guardrail changes the cost of an attack by a large factor. It does
@@ -294,13 +296,16 @@ Three habits matter to an engineer.
   (28 Nov 2023): the divergence attack on ChatGPT and the roughly 150 times higher rate. The
   arXiv page was blocked when checked. The figures come from search-result excerpts.
 - Greshake et al., [Not what you've signed up for](https://arxiv.org/abs/2302.12173)
-  (May 2023): indirect prompt injection against real systems including Bing Chat.
+  (Feb 2023, revised May 2023): indirect prompt injection against real systems including Bing Chat.
   Search-result excerpts only.
 - Anthropic, [Constitutional Classifiers](https://arxiv.org/abs/2501.18837) (Jan 2025) and
   the public-challenge results posted by Anthropic's Jan Leike (Feb 2025): the 86% to 4.4%
   figure and the challenge outcome. Search-result excerpts only.
-- OWASP, [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) (2025
-  edition): LLM01, LLM02, LLM04 and LLM07. Checked through search-result excerpts.
+- OWASP, [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/). The 2026 edition
+  (4 Aug 2026) was read from OWASP's GitHub repository: LLM01 Prompt Injection, LLM02
+  Sensitive Information Disclosure, LLM05 Data and Model Poisoning, LLM08 Hidden Context
+  Exposure. The 2025 numbers (LLM04 and LLM07) and its "jailbreaking is a form of prompt
+  injection" wording come from the 2025 source text in the same repository. Checked 2026-10.
 - NIST, [AI 100-2 E2025, Adversarial Machine Learning](https://www.nist.gov/publications/adversarial-machine-learning-taxonomy-and-terminology-attacks-and-mitigations-0)
   (Mar 2025): the taxonomy by attacker goal, with poisoning, prompt injection and privacy
   attacks.
