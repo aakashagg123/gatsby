@@ -144,6 +144,22 @@ Pages. There's no separate staging environment — a push to `master` is
 live within a couple of minutes. Land changes through a PR from a
 `claude/*` branch rather than pushing to `master` directly.
 
+## Scroll smoothness (iOS first)
+
+Scrolling is native on purpose. iOS Safari scrolls on the compositor thread, and a JS
+scroll smoother would fight it. So the site adds no scroll library and no scroll
+listeners. The rules that keep it smooth:
+
+- Shared overrides live in `scripts/smooth_scroll.py`. `build_site.py` writes them to
+  `assets/smooth.css` and links the file last in `<head>` of **every** page in `_site/`.
+  That is why the committed `<track>-html/` pages need no regeneration for scroll fixes.
+- Do not add per-scroll-event JS. Do not make sticky bars translucent. Do not use
+  `100vh` for panels (use `100dvh` with a fallback). Give inner scrollers
+  `overscroll-behavior:contain`.
+- Heavy work at load (glossary scan, mermaid) is time-sliced or lazy. Keep it that way.
+- Measure before and after on a throttled mobile profile. Chromium is not WebKit, so
+  also test a real iPhone before claiming a win.
+
 ## Before committing
 
 - `python3 scripts/check_links.py` — must exit 0.

@@ -34,6 +34,7 @@ import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is 
 # close to fitting, and the card scrolls horizontally when the diagram is genuinely
 # wide — either way nothing ever bleeds outside the content column.
 MERMAID_CSS = (
+    "pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent}"
     "pre.mermaid{background:#ffffff;"
     "border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;"
     "text-align:center;overflow-x:auto}"
@@ -44,45 +45,64 @@ MERMAID_CSS = (
     "border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}"
 )
 MERMAID_SCRIPT = """<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-  themeVariables:{
-    background:'#ffffff',
-    primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-    secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-    tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-    lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-    clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-    edgeLabelBackground:'#ffffff',
-    actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-    actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-    labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-    noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-    activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-    quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-    quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-    quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-    quadrantTitleFill:'#1f2328',
-    quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-    fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-  flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-    nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-  sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-  quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-    quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-  themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-    '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-    '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-});
-await mermaid.run({querySelector:'pre.mermaid'});
-// fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-document.querySelectorAll('pre.mermaid svg').forEach(s=>{
-  const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-  const cw=s.parentElement.clientWidth||0;
-  if(cw&&w>cw*1.6){s.style.maxWidth='none';
-    const h=document.createElement('span');h.className='mm-hint';
-    h.textContent='\u27f7 scroll';s.parentElement.insertBefore(h,s);}
-});
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see MERMAID_CSS) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
+      themeVariables:{
+        background:'#ffffff',
+        primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
+        secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
+        tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
+        lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
+        clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
+        edgeLabelBackground:'#ffffff',
+        actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
+        actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
+        labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
+        noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
+        activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
+        quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
+        quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
+        quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
+        quadrantTitleFill:'#1f2328',
+        quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
+        fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
+      flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
+        nodeSpacing:36, rankSpacing:46, diagramPadding:12},
+      sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
+      quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
+        quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
+      themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
+        '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
+        '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
+    });
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='\u27f7 scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
 </script>"""
 
 
