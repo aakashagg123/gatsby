@@ -20,8 +20,8 @@ Design rules (iOS first):
 
 CSS = r"""
 /* ---- anchors and programmatic scrolling ---- */
-html{scroll-padding-top:72px}
-@media (max-width:560px){html{scroll-padding-top:64px}}
+html{scroll-padding-top:84px}
+@media (max-width:560px){html{scroll-padding-top:80px}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto !important}}
 
