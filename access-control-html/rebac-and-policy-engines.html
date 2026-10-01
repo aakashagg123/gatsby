@@ -423,7 +423,7 @@ pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;paddin
 <p>They combine. A common design uses roles for coarse access, relationships for who can see which object, and attributes for conditions such as time or device.</p>
 <h2 id="policy-engines-moving-rules-out-of-code">Policy engines: moving rules out of code</h2>
 <p>A <strong>policy engine</strong> evaluates rules held outside your application code. Your service asks, "may this subject do this action on this resource?" The engine answers allow or deny.</p>
-<p>Two widely used open-source examples:</p>
+<p>Two open-source examples:</p>
 <ul>
 <li><strong>Open Policy Agent (OPA).</strong> Its README calls it "an open source, general-purpose policy engine." Policies are written in a language called Rego. Services query OPA with JSON input and receive a decision. OPA is a graduated project in the Cloud Native Computing Foundation.</li>
 <li><strong>Cedar.</strong> Its README calls it "a language for writing and enforcing authorization policies in your applications." It is designed to express RBAC and ABAC, and to be analysable by tools. AWS built Cedar and published it as open source.</li>
@@ -505,9 +505,10 @@ allow if {
   input.action == &quot;edit&quot;
   &quot;editor&quot; in input.user.roles
   input.user.department == input.resource.department
+  not input.user.suspended
 }
 </code></pre>
-<p>With Priya's input the result was <code>true</code>. With Sam's, the package returned <code>allow: false</code>, thanks to the <code>default</code> line. Without it the answer would be "undefined," which a careless caller might treat as allow.</p>
+<p>With Priya's input the result was <code>true</code>. With Sam's, and with Dana's (a suspended finance editor), the package returned <code>allow: false</code>, thanks to the <code>default</code> line and the <code>not input.user.suspended</code> condition. Rego has no separate <code>forbid</code>, so the suspended check is written into the rule. Without it the answer would be "undefined," which a careless caller might treat as allow.</p>
 <p><strong>As relationships.</strong> Four tuples, checked with a small resolver written for this lesson:</p>
 <pre><code class="language-text">group:finance  member  user:priya
 folder:q3      viewer  group:finance#member      # members of finance can view folder q3

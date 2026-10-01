@@ -154,6 +154,6 @@ In the Keycloak test used for this track, a role named `editor` was made a **com
 
 ## Sources
 
-- ANSI/INCITS 359-2004, *Role Based Access Control* (revised as INCITS 359-2012 (R2017)), based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.
+- ANSI/INCITS 359-2004, *Role Based Access Control* (revised as INCITS 359-2012, reaffirmed since), based on the NIST RBAC model (Sandhu, Ferraiolo, Kuhn). The four levels (core, hierarchical, static and dynamic separation of duty) are described from search-result excerpts and general knowledge. The standard's page could not be opened when this lesson was written.
 - Keycloak documentation source, *Comparing groups and roles* (`server_admin/topics/roles-groups/con-comparing-groups-roles.adoc`, main branch): the quoted definitions. Checked 2026-10.
 - The composite-role behaviour comes from a local test against Keycloak 26.7.5 on 2026-10-01. The role-explosion story, its numbers and the code sketch are invented and illustrative.

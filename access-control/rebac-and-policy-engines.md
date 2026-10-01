@@ -57,7 +57,7 @@ They combine. A common design uses roles for coarse access, relationships for wh
 
 A **policy engine** evaluates rules held outside your application code. Your service asks, "may this subject do this action on this resource?" The engine answers allow or deny.
 
-Two widely used open-source examples:
+Two open-source examples:
 
 - **Open Policy Agent (OPA).** Its README calls it "an open source, general-purpose policy engine." Policies are written in a language called Rego. Services query OPA with JSON input and receive a decision. OPA is a graduated project in the Cloud Native Computing Foundation.
 - **Cedar.** Its README calls it "a language for writing and enforcing authorization policies in your applications." It is designed to express RBAC and ABAC, and to be analysable by tools. AWS built Cedar and published it as open source.
@@ -110,10 +110,11 @@ allow if {
   input.action == "edit"
   "editor" in input.user.roles
   input.user.department == input.resource.department
+  not input.user.suspended
 }
 ```
 
-With Priya's input the result was `true`. With Sam's, the package returned `allow: false`, thanks to the `default` line. Without it the answer would be "undefined," which a careless caller might treat as allow.
+With Priya's input the result was `true`. With Sam's, and with Dana's (a suspended finance editor), the package returned `allow: false`, thanks to the `default` line and the `not input.user.suspended` condition. Rego has no separate `forbid`, so the suspended check is written into the rule. Without it the answer would be "undefined," which a careless caller might treat as allow.
 
 **As relationships.** Four tuples, checked with a small resolver written for this lesson:
 

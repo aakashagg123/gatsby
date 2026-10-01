@@ -57,7 +57,7 @@ In the test, Keycloak 26.7.5 offered these policy types out of the box: **role**
 | Regex | A claim matched against a pattern | ABAC-style rules on token claims |
 | Aggregate | A combination of other policies | Reusable bundles |
 
-## Decision strategies: unanimous and affirmative
+## Decision strategies
 
 When a permission has several policies, the **decision strategy** says how to combine them. Keycloak's documentation defines three.
 

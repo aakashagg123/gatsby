@@ -14,7 +14,7 @@ This lesson covers those parts and the traps. It was checked by running Keycloak
 
 > 🎯 **For the technical PM**
 >
-> **Why it matters** — Login and tokens touch every product and every integration. Choosing an identity server is a long-term commitment. The setup you pick on day one shapes SSO, partner access and audits for years.
+> **Why it matters** — Login and tokens touch most products and integrations. Choosing an identity server is a long-term commitment. The setup you pick on day one shapes SSO, partner access and audits for years.
 >
 > **What it changes in your decisions** — You decide the realm layout, who administers it, how roles map to your product, and who runs and upgrades the server. Running it is a team's ongoing job.
 >

@@ -155,7 +155,7 @@ Three habits keep this honest.
 ## Related lessons
 
 - [OAuth 2.0, OpenID Connect and tokens](./oauth-openid-connect-and-tokens.md) — how identity and permissions travel between systems.
-- [RBAC: roles, groups and where it breaks](./rbac-roles-groups-and-where-it-breaks.md) — the model most teams start with.
+- [RBAC: roles, groups and where it breaks](./rbac-roles-groups-and-where-it-breaks.md) — a model many teams start with.
 - [Tool permissions, blast radius & the trust boundary](../tool-calling/permissions-blast-radius-and-the-trust-boundary.md) — the same ideas applied to what an AI tool may do.
 - [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) — keeping tenants apart.
 - [Security & privacy sense](../technical-product-sense/security-and-privacy.md) — the wider security instincts.
@@ -163,5 +163,5 @@ Three habits keep this honest.
 ## Sources
 
 - NIST, Special Publication 800-162, *Guide to Attribute Based Access Control (ABAC) Definition and Considerations* (Jan 2014): the enforcement, decision, information and administration points, and the subject, object, action and environment attributes. The NIST page could not be opened when this lesson was written. It is described from search-result excerpts.
-- OWASP, *Top 10:2021* and *Top 10:2025*, A01 Broken Access Control: ranked first in both editions. The OWASP pages could not be opened when this lesson was written. This is stated from search-result excerpts. Check the current edition.
+- OWASP, *Top 10:2021* and *Top 10:2025*, A01 Broken Access Control: ranked first in both editions. The 2025 edition's A01 page says Broken Access Control "maintains its position at #1" (OWASP Top10 repository on GitHub, read by an independent reviewer). Check the current edition.
 - The billing portal scenario and the code sketch are invented and illustrative.

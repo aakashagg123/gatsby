@@ -73,7 +73,7 @@ An `ai-agent` client was set up with standard token exchange enabled, and an aud
 - Its **audience** was only `docs-app`.
 - Its `azp` (authorized party) was `ai-agent`, so the logs can show which agent was used.
 - It carried **no** `act` claim, the claim that records "this party is acting for that subject." For standard token exchange in 26.7.5, audit has to use `azp`. The experimental delegation feature above may change this.
-- **Exchange did not narrow the token, and it could widen it.** Sam's subject token had the scopes `email profile`. Asking for `openid` returned `openid email profile`. Asking for `openid phone address` returned `openid email address phone profile`, so scopes Sam's token never had were added. The exchanged token also kept every realm role Sam held, because Full Scope Allowed is on by default.
+- **Exchange did not narrow the token, and it could widen it.** Sam's subject token, obtained without asking for a scope, had the scopes `email profile`. Asking for `openid` returned `openid email profile`. Asking for `openid phone address` returned `openid email address phone profile`, so scopes Sam's token never had were added. The exchanged token also kept every realm role Sam held, because Full Scope Allowed is on by default.
 - So in this default setup, narrowing is something you must configure: turn Full Scope Allowed off and map only the roles each client needs, and restrict which scopes a client may request. Keycloak's documentation lists a policy executor for limiting this, which this test did not try. Do not assume an exchange gives a safer token.
 
 Then the exchanged tokens were used for authorization decisions against the resources from the [previous lesson](./keycloak-authorization-services.md):
@@ -127,7 +127,7 @@ Test that matters most: ask the assistant, as a junior user, a question whose on
 
 ## Under the hood
 
-Two checks make most of the difference. First, scope retrieval to the user. Second, call tools with an exchanged token whose decision is made as the user. Both are illustrative.
+Two checks matter a lot. First, scope retrieval to the user. Second, call tools with an exchanged token whose decision is made as the user. Both are illustrative.
 
 ```python
 def retrieve_for(user, query, k=5):
@@ -178,5 +178,5 @@ Habits to keep.
 
 - Keycloak documentation source (`keycloak/keycloak`, `docs/documentation/release_notes/topics`, main branch): `26_2_0.adoc` (standard token exchange and its stated limits), `26_6_0.adoc` (experimental support for OAuth Client ID Metadata Documents and MCP) and `26_7_0.adoc` (experimental Token Exchange Delegation and its `delegation` scope). Checked 2026-10. The existence of a policy executor for limiting what an exchange may request is taken from a search-result excerpt of Keycloak's token exchange guide, which could not be opened, and was not tested.
 - IETF, RFC 8693, *OAuth 2.0 Token Exchange* (Jan 2020); RFC 9728, *OAuth 2.0 Protected Resource Metadata*; RFC 8707, *Resource Indicators for OAuth 2.0*. The RFC pages could not be opened when this lesson was written.
-- Model Context Protocol, *Authorization* specification: the resource server role, Protected Resource Metadata (RFC 9728) and the `resource` parameter (RFC 8707). Checked against the 2025-06-18 and 2025-11-25 revisions by an independent reviewer. A later revision (2026-07-28) was reported as released and tightening authorization. Its text could not be read here, so check the current revision before relying on these details.
+- Model Context Protocol, *Authorization* specification: the resource server role, Protected Resource Metadata (RFC 9728) and the `resource` parameter (RFC 8707). Checked against the 2025-06-18 and 2025-11-25 revisions by an independent reviewer. The 2026-07-28 revision was also read by the reviewer. Its authorization page still requires RFC 9728 metadata and the RFC 8707 `resource` parameter, and adds issuer validation (RFC 9207). Check the current revision before relying on these details.
 - The token exchange and decision results come from a local test against Keycloak 26.7.5 on 2026-10-01. The company assistant scenario and the code sketches are invented and illustrative.

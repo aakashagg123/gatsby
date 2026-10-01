@@ -75,7 +75,7 @@ A scope limits the client. A role describes the user. A claim is how either is c
 
 ## What a real token looks like
 
-*This is a trimmed token from a local test against Keycloak 26.7.5, run on 2026-10-01. Values are shortened. The real token also carried `aud: "account"` and a `resource_access` section. By default, Keycloak does not put your API's client id in `aud`, so an API that checks audience needs an audience mapper on the client. Without it, step 3 below fails.*
+*This is a trimmed token from a local test against Keycloak 26.7.5, run on 2026-10-01. Values are shortened. The real token also carried `aud: "account"` and a `resource_access` section. By default, Keycloak does not put your API's client id in `aud` unless the token carries one of that client's roles, so an API that checks audience needs an audience mapper on the client. Without it, step 3 below fails.*
 
 Decoded access token for a user named Priya who has the roles `editor` and `viewer`:
 
@@ -163,7 +163,7 @@ def authenticate(request, jwks, issuer, audience):
 Two facts from the Keycloak test are worth knowing.
 
 - The server's discovery document listed `S256` and `plain` as supported PKCE methods. RFC 9700 steers clients to `S256`, so configure clients to require it.
-- **Full scope allowed** is on by default for a new client. Keycloak's documentation says every access token then contains all the user's roles, which "unnecessarily widens the blast radius if a token is compromised." Limit it. The same documentation says the switch is deprecated, so plan for its replacement. See [Keycloak: realms, clients, roles, groups and tokens](./keycloak-realms-clients-roles-groups-and-tokens.md).
+- **Full scope allowed** is on by default for a new client. Keycloak's documentation says every access token then contains all the user's roles, which "unnecessarily widens the blast radius if a token is compromised." Limit it. The same documentation says the switch is deprecated, so plan for its removal. See [Keycloak: realms, clients, roles, groups and tokens](./keycloak-realms-clients-roles-groups-and-tokens.md).
 
 ## Practitioner checklist
 
