@@ -9,6 +9,8 @@
 .dgm-edt-sub{font-size:12px;color:#59636e;margin:0 0 16px}
 .dgm-edt-q{background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;padding:9px 14px;text-align:center;
   font-size:11px;font-weight:700;color:#1f2328;margin-bottom:10px}
+.dgm-edt-lane{font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e;text-align:center;margin:0 0 6px}
+.dgm-edt-lane.gap{margin-top:16px}
 .dgm-edt-branches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .dgm-edt-b{border-radius:11px;padding:11px 13px;border:1.5px solid}
 .dgm-edt-b h6{margin:0 0 4px;font-size:10.5px;font-weight:700}
@@ -23,12 +25,40 @@
 .dgm-edt-b.red h6{color:#82061e}
 .dgm-edt-b.neutral{background:#f6f8fa;border-color:#d1d9e0}
 .dgm-edt-b.neutral h6{color:#1f2328}
-@media (max-width:640px){.dgm-edt{padding:20px 16px 18px}.dgm-edt-branches{grid-template-columns:1fr}}
+.dgm-edt-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-edt-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;line-height:1.3}
+.dgm-edt-n.accent{background:#e6f5e6;border-color:#a8d8a8;color:#0d5c0d}
+.dgm-edt-n.blue{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-edt-n.green{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-edt-n.red{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-edt-arr{color:#8c959f;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.dgm-edt-arr .lbl{font-size:8.5px;font-weight:700;color:#8c959f;text-transform:uppercase;letter-spacing:.3px}
+.dgm-edt-split{display:flex;flex-direction:column;gap:6px}
+.dgm-edt-note{font-size:10px;color:#59636e;text-align:center;margin:8px 0 0}
+@media (max-width:640px){.dgm-edt{padding:20px 16px 18px}.dgm-edt-branches{grid-template-columns:1fr}.dgm-edt-row{flex-direction:column}}
 </style>
 <div class="dgm-edt">
-  <span class="dgm-edt-chip">Exactly-once match, or refuse</span>
-  <h4>Zero matches and multiple matches both fail loudly, on purpose</h4>
-  <p class="dgm-edt-sub">An ambiguous edit is worse than a rejected one — the fix is more surrounding context.</p>
+  <span class="dgm-edt-chip">Read first, match once, patch whole</span>
+  <h4>Three gates before a file changes</h4>
+  <p class="dgm-edt-sub">A failed check writes nothing. A crash never leaves half a file.</p>
+  <p class="dgm-edt-lane">Read gate: write</p>
+  <div class="dgm-edt-q">write(path, content) — file read this session?</div>
+  <div class="dgm-edt-branches">
+    <div class="dgm-edt-b red">
+      <h6>Not read</h6>
+      <p>Error: read the file first</p>
+    </div>
+    <div class="dgm-edt-b red">
+      <h6>Changed since read</h6>
+      <p>Error: read it again</p>
+    </div>
+    <div class="dgm-edt-b green">
+      <h6>Read, unchanged, or new file</h6>
+      <p>Write (temp file, rename)</p>
+    </div>
+  </div>
+  <p class="dgm-edt-lane gap">Exact-once edit</p>
   <div class="dgm-edt-q">edit(path, old, new) — old occurs exactly once?</div>
   <div class="dgm-edt-branches">
     <div class="dgm-edt-b red">
@@ -37,11 +67,22 @@
     </div>
     <div class="dgm-edt-b red">
       <h6>No (&gt;1)</h6>
-      <p>Error: ambiguous — add context</p>
+      <p>Error: ambiguous, add context</p>
     </div>
     <div class="dgm-edt-b green">
       <h6>Yes</h6>
       <p>Replace, write</p>
+    </div>
+  </div>
+  <p class="dgm-edt-lane gap">Atomic patch</p>
+  <div class="dgm-edt-row">
+    <div class="dgm-edt-n accent">Patch: list of (path, old, new) hunks</div>
+    <span class="dgm-edt-arr">→</span>
+    <div class="dgm-edt-n blue">Check every hunk on staged text</div>
+    <span class="dgm-edt-arr">→</span>
+    <div class="dgm-edt-split">
+      <div class="dgm-edt-n green">All pass: write all</div>
+      <div class="dgm-edt-n red">Any fails: write nothing</div>
     </div>
   </div>
 </div>

@@ -18,10 +18,17 @@ Both fixes use the same tool: write state to disk, and read it back on start.
 
 ```mermaid
 flowchart LR
-  S["session: history + scratchpad"] --> J["serialize → session.json"]
-  J --> D[("disk")]
-  D --> L["load → restore"]
-  L --> C["continue the agent loop"]
+  subgraph Session
+    S["session: history + scratchpad"] --> J["serialize → session.json"]
+    J --> D[("disk")]
+    D --> L["load → restore"]
+    L --> C["continue the agent loop"]
+  end
+  subgraph Checkpoint
+    P["phase done"] --> R["record what finished and changed"]
+    R --> O["on resume"]
+    O --> K["skip finished phases"]
+  end
 ```
 
 Three pieces of state matter.

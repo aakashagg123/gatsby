@@ -18,7 +18,9 @@ Dropping text also loses facts. The agent may need a decision it made 30 turns a
 
 ```mermaid
 flowchart LR
-  H["old turns"] --> S["summarize → synopsis note"]
+  O["old turns"] --> A["1. clear old tool output"]
+  A --> B["2. drop whole turns"]
+  B --> S["3. summarize → synopsis note"]
   S --> N["history = [synopsis] + recent turns"]
 ```
 
