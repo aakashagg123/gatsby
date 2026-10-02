@@ -1,0 +1,57 @@
+<style>
+.dgm-rae{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #008300;
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-rae-chip{position:absolute;top:-11px;left:24px;background:#008300;color:#ffffff;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,131,0,.28)}
+.dgm-rae h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
+.dgm-rae-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+.dgm-rae-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.dgm-rae-n{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;text-align:center;
+  font-size:10.5px;font-weight:700;color:#1f2328;line-height:1.3}
+.dgm-rae-n.accent{background:#e6f5e6;border-color:#a8d8a8;color:#0d5c0d}
+.dgm-rae-n.blue{background:#ddf4ff;border-color:#b6e3ff;color:#0550ae}
+.dgm-rae-n.green{background:#dafbe1;border-color:#aceebb;color:#1a614f}
+.dgm-rae-n.red{background:#ffebe9;border-color:#ffcecb;color:#82061e}
+.dgm-rae-arr{color:#8c959f;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.dgm-rae-arr .lbl{font-size:8.5px;font-weight:700;color:#8c959f;text-transform:uppercase;letter-spacing:.3px}
+@media (max-width:640px){.dgm-rae{padding:20px 16px 18px}.dgm-rae-row{flex-direction:column}}
+.dgm-rae-q{background:#f6f8fa;border:1px dashed #d1d9e0;border-radius:10px;padding:9px 14px;text-align:center;
+  font-size:11px;font-weight:700;color:#1f2328;margin-bottom:10px}
+.dgm-rae-branches{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px}
+.dgm-rae-b{border-radius:11px;padding:11px 13px;border:1.5px solid}
+.dgm-rae-b h6{margin:0 0 4px;font-size:10.5px;font-weight:700}
+.dgm-rae-b p{margin:0;font-size:10px;color:#59636e;line-height:1.35}
+.dgm-rae-b.accent{background:#e6f5e6;border-color:#a8d8a8}
+.dgm-rae-b.accent h6{color:#0d5c0d}
+.dgm-rae-b.blue{background:#ddf4ff;border-color:#b6e3ff}
+.dgm-rae-b.blue h6{color:#0550ae}
+.dgm-rae-b.green{background:#dafbe1;border-color:#aceebb}
+.dgm-rae-b.green h6{color:#1a614f}
+.dgm-rae-b.red{background:#ffebe9;border-color:#ffcecb}
+.dgm-rae-b.red h6{color:#82061e}
+.dgm-rae-b.neutral{background:#f6f8fa;border-color:#d1d9e0}
+.dgm-rae-b.neutral h6{color:#1f2328}
+@media (max-width:640px){.dgm-rae-branches{grid-template-columns:1fr}}
+</style>
+<div class="dgm-rae">
+  <span class="dgm-rae-chip">Validate first, then the same envelope</span>
+  <h4>Bad args come back as is_error; good args run, wrap, cap</h4>
+  <p class="dgm-rae-sub">The model usually retries with corrections. A huge result never reaches the model whole.</p>
+  <div class="dgm-rae-row">
+    <div class="dgm-rae-n neutral">Model args</div>
+    <span class="dgm-rae-arr">→</span>
+    <div class="dgm-rae-n blue">Valid vs schema?</div>
+  </div>
+  <div class="dgm-rae-branches" style="margin-top:12px">
+    <div class="dgm-rae-b red">
+      <h6>No</h6>
+      <p>is_error result → model</p>
+    </div>
+    <div class="dgm-rae-b green">
+      <h6>Yes</h6>
+      <p>Tool runs → wrap: id + content + is_error → cap: truncate if huge → model</p>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ name: find-your-level
 version: 1.0.0
 description: >
   Interactive placement quiz that maps your agent/harness knowledge to a starting
-  point in the Harness Engineering from Scratch curriculum (20 phases).
+  point in the Harness Engineering from Scratch curriculum (10 phases).
   Trigger phrases: "where should I start", "find my level", "which phase",
   "assess my knowledge", "placement test", "skip ahead".
 tags: [assessment, onboarding, curriculum, harness-engineering]
@@ -11,8 +11,8 @@ tags: [assessment, onboarding, curriculum, harness-engineering]
 
 # Find Your Level
 
-You administer a placement quiz for **Harness Engineering from Scratch** (20 phases,
-~120 lessons; see `harness-engineering/ROADMAP.md`). Your job: find where the learner should begin so they
+You administer a placement quiz for **Harness Engineering from Scratch** (10 phases,
+41 lessons; see `harness-engineering/ROADMAP.md`). Your job: find where the learner should begin so they
 skip what they know and land where the challenge starts.
 
 ## Quiz Structure
@@ -23,15 +23,16 @@ commentary short; don't explain answers until the very end.
 
 ## Scoring → starting phase
 
-- 0–2: start at **Phase 0/1** (Setup, LLM I/O).
-- 3–4: start at **Phase 2** (The Agent Loop).
-- 5–6: start at **Phase 4–6** (Context, Prompts, File Ops).
-- 7–8: start at **Phase 8–12** (Permissions, Memory, Subagents, MCP).
-- 9–10: start at **Phase 14+** (Reliability, Evals, Security, Production) and go
-  straight for the Capstone.
+- 0–2: start at **Phase 1** (Foundations & the loop).
+- 3–4: start at **Phase 2** (Tools), after a quick read of the agent loop lesson.
+- 5–6: start at **Phases 3–5** (Context & memory, Prompts & instructions, Files & shell).
+- 7–8: start at **Phases 6–8** (Permissions & security, Planning & subagents, Extending).
+- 9–10: start at **Phase 9** (Reliability, evals & ops) and go straight for the Capstone.
 
 After scoring, produce a personalized path: list the phases to do, in order, with the
-~hours each (assume ~1–1.5h/lesson) and the first lesson to open.
+~hours each (assume about 1 hour per lesson) and the first lesson to open. Read the
+lesson list from `harness-engineering/ROADMAP.md` and the phase READMEs, so the path
+matches the current track.
 
 ---
 
@@ -90,12 +91,12 @@ After scoring, produce a personalized path: list the phases to do, in order, wit
 
 **Correct: B**
 
-**Q6.** "Context rot" refers to…
+**Q6.** A tool returns 200,000 tokens of logs. The best harness behavior is…
 
-- A) expired API keys
-- B) degraded answer quality as the window fills with stale/low-signal content
-- C) cache eviction
-- D) a streaming bug
+- A) append it all and let the model sort it out
+- B) cap the output, say it was truncated, and let the model ask for a narrower slice
+- C) drop the tool result silently
+- D) switch to a bigger model
 
 **Correct: B**
 

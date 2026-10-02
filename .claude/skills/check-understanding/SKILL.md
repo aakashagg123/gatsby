@@ -11,51 +11,44 @@ Scratch**.
 
 ## Activation
 
-- `/check-understanding 2` or `/check-understanding agent-loop`
+- `/check-understanding 2` or `/check-understanding tools`
 - "quiz me on phase 3", "test phase 8", "am I ready for the next phase"
 
 ## Input
 
-Accepts a phase number (0–19) or a phase name. If none given, list all 20 phases
+Accepts a phase number (1–10) or a phase name. If none given, list all 10 phases
 (from `harness-engineering/ROADMAP.md`) and ask which to test.
 
 ## Phase Map
 
 | Input | Directory | Phase |
 |-------|-----------|-------|
-| 0, setup | `00-setup-and-tooling` | Setup & Tooling |
-| 1, io, llm-io | `01-llm-io-foundations` | LLM I/O Foundations |
-| 2, loop, agent-loop | `02-the-agent-loop` | The Agent Loop |
-| 3, tools | `03-tool-engineering` | Tool Engineering |
-| 4, context | `04-context-engineering` | Context Engineering |
-| 5, prompts | `05-prompt-instruction-architecture` | Prompt & Instruction Architecture |
-| 6, files, code-ops | `06-file-and-code-operations` | File & Code Operations |
-| 7, shell, sandbox | `07-shell-and-sandbox-execution` | Shell & Sandbox Execution |
-| 8, permissions | `08-permissions-and-safety-gating` | Permissions & Safety Gating |
-| 9, memory | `09-memory-and-persistence` | Memory & Persistence |
-| 10, subagents | `10-subagents-and-orchestration` | Subagents & Orchestration |
-| 11, planning | `11-planning-and-task-management` | Planning & Task Management |
-| 12, mcp | `12-mcp-and-extensibility` | MCP & Extensibility |
-| 13, retrieval | `13-retrieval-and-codebase-understanding` | Retrieval & Codebase Understanding |
-| 14, reliability | `14-reliability-engineering` | Reliability Engineering |
-| 15, evals | `15-evals-and-testing-the-harness` | Evals & Testing the Harness |
-| 16, observability, cost | `16-observability-and-cost` | Observability & Cost |
-| 17, security | `17-security-and-alignment` | Security & Alignment |
-| 18, production, deploy | `18-production-and-deployment` | Production & Deployment |
-| 19, capstone | `19-capstone-coding-agent` | Capstone: Build Your Own Coding Agent |
+| 1, loop, foundations | `01-foundations-and-the-loop` | Foundations & the loop |
+| 2, tools | `02-tools` | Tools |
+| 3, context, memory | `03-context-and-memory` | Context & memory |
+| 4, prompts, instructions | `04-prompts-and-instructions` | Prompts & instructions |
+| 5, files, shell | `05-files-and-shell` | Files & shell |
+| 6, permissions, security | `06-permissions-and-security` | Permissions & security |
+| 7, planning, subagents | `07-planning-and-subagents` | Planning & subagents |
+| 8, mcp, skills, retrieval | `08-extending-mcp-skills-retrieval` | Extending: MCP, skills, retrieval |
+| 9, reliability, evals, ops | `09-reliability-evals-and-ops` | Reliability, evals & ops |
+| 10, capstone | `10-capstone` | Capstone |
 
 ## Procedure
 
-1. **Resolve the phase.** Validate the number is 0–19, or map the keyword. On a miss,
+1. **Resolve the phase.** Validate the number is 1–10, or map the keyword. On a miss,
    show the full list.
-2. **Read the content.** Glob `harness-engineering/phases/<phase-dir>/*/docs/en.md` and read them. For
-   large phases (10+ lessons), read a representative spread (first, middle, last).
-3. **Generate exactly 8 questions** from what you read:
-   - Q1–4 **conceptual** (what/why): definitions, reasoning, relationships.
-   - Q5–8 **practical** (how/build): implementation, correct ordering, "if you see X,
+2. **Read the content.** Read `harness-engineering/phases/<phase-dir>/README.md` (its
+   "Test yourself" questions show what matters) and glob
+   `harness-engineering/phases/<phase-dir>/*/docs/en.md`. Read every lesson in the phase.
+3. **Generate 6 questions** (4 for the capstone) from what you read:
+   - Q1–3 **conceptual** (what/why): definitions, reasoning, relationships.
+   - Q4–6 **practical** (how/build): implementation, correct ordering, "if you see X,
      do what?".
    Each has 3–4 options, exactly one correct; wrong options plausible but clearly
-   wrong to someone who studied. Tag each with its source lesson.
+   wrong to someone who studied. Tag each with its source lesson. Do not reuse the
+   README questions word for word.
 4. **Present one at a time** via AskUserQuestion. Don't reveal answers until the end.
-5. **Score & advise.** Report `N/8`. ≥6 → ready for the next phase. <6 → list the
-   specific lessons (by path) to review, drawn from the questions they missed.
+5. **Score & advise.** Report `N/6` (`N/4` for the capstone). At least 5/6 (3/4) → ready
+   for the next phase. Below that → list the specific lessons (by path) to review, drawn
+   from the questions they missed.
