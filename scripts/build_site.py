@@ -446,9 +446,9 @@ LANDING = """<!doctype html>
     <a class="card" href="ai-security-and-guardrails/index.html">
       <span class="tag">Generative AI</span>
       <h2>AI security &amp; guardrails →</h2>
-      <p>Jailbreak, injection, extraction, and poisoning are four different attacks —
-      and why governance only counts once it becomes compliance evidence a regulator
-      or buyer can check.</p>
+      <p>Jailbreak, injection, extraction, and poisoning are four different attacks.
+      How to test your defenses, and how governance becomes compliance evidence a
+      regulator or buyer can check.</p>
     </a>
     <a class="card" href="cost-optimization/index.html">
       <span class="tag">Generative AI</span>

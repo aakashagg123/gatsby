@@ -357,39 +357,46 @@ pre code{background:none;color:inherit;padding:0;font-size:13px}
   .iw-span .sn{min-width:0;flex:0 0 auto;text-align:left}
   .iw-spanbar-wrap{flex:1 1 100%;order:2}
 }
-pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
+pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent}pre.mermaid{background:#ffffff;border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;text-align:center;overflow-x:auto}pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:geometricPrecision}.mm-hint{position:sticky;left:8px;display:block;width:max-content;font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}</style>
 </head>
 <body><header class="topbar">
   <button class="menu-btn" id="sbToggle" aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu">☰</button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg><span>AI security &amp; guardrails</span><em>a Generative AI module</em></a>
   <nav class="topnav"><a href="../index.html">← All courses</a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-threat-model-and-guardrails.html">1 · The threat model, and guardrails as architecture</a><a class="modlink active" href="governance-audit-and-compliance.html">2 · Governance, audit &amp; compliance</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-threat-model-and-guardrails.html">1 · The threat model, and guardrails as architecture</a><a class="modlink" href="red-teaming-and-proving-your-defenses.html">2 · Red-teaming: testing your defenses</a><a class="modlink active" href="governance-audit-and-compliance.html">3 · Governance, audit &amp; compliance</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
-    <span class="chip">Lesson 02</span>
+    <span class="chip">Lesson 03</span>
     <h1>Governance, audit &amp; compliance</h1>
   </div>
-  <h2 id="tldr">TL;DR</h2>
-<p>Security controls answer <em>can this be attacked</em>. Governance and compliance answer a
-different, harder question: <em>can we prove it, to someone who wasn't in the room.</em> An agent
-registry and an audit trail are necessary and not sufficient — the enterprise buyer's
-security team and the regulator both want evidence in a specific, checkable shape.
-<strong>SOC 2</strong> answers the vendor-trust question every enterprise deal now asks. Sector rules
-like <strong>GDPR</strong> and its DPDP-class cousins answer the personal-data question. The <strong>EU AI
-Act</strong> now answers the model-risk question specifically, with real teeth and reach beyond
-Europe. <strong>Red-teaming</strong> is how that evidence gets generated on your own schedule, instead
-of an incident generating it for you on a much worse one.</p>
+  <p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>Security controls answer "can this be attacked?" Governance and compliance answer a harder
+question: "can we prove it to someone who was not in the room?" An agent registry and an
+audit trail are necessary. They are not enough. An enterprise buyer and a regulator each
+want evidence in a specific, checkable shape.</p>
+<ul>
+<li><strong>System and Organization Controls (SOC) 2</strong> answers the vendor-trust question that
+  nearly every enterprise deal asks.</li>
+<li>The <strong>General Data Protection Regulation (GDPR)</strong>, the EU's data protection law, and
+  similar laws answer the personal-data question.</li>
+<li>The <strong>EU AI Act</strong> answers the model-risk question, with real penalties and reach beyond
+  Europe.</li>
+<li><strong>Red-teaming</strong>, covered in the <a href="red-teaming-and-proving-your-defenses.html">previous lesson</a>,
+  creates the evidence on your own schedule. Otherwise an incident creates it for you, on a
+  worse one.</li>
+</ul>
+<p>The theme is lead time. Most of this evidence cannot be produced in a week.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — Enterprise AI deals stall in security review, not the demo. A
-compliance artifact you don't have is now a line item that can sink a quarter.</p>
-<p><strong>What it changes in your decisions</strong> — Red-teaming and compliance certifications get
-budgeted as roadmap items with an owner and a date, not handled as "we'll sort it out
-before the audit."</p>
+<p><strong>Why it matters</strong> — Enterprise AI deals stall in security review, not in the demo. A
+compliance artifact you do not have can sink a quarter.</p>
+<p><strong>What it changes in your decisions</strong> — You budget compliance work as roadmap items with
+an owner and a date. You do not wait for the audit.</p>
 <p><strong>Ask your eng team</strong> — <em>"If an enterprise security team or a regulator asked for our AI
-risk documentation tomorrow, what would we actually hand them?"</em></p>
-<p><strong>Risk if ignored</strong> — A deal that dies quietly in procurement, or a regulatory finding,
-because nobody owned the evidence trail until someone outside the company asked for it.</p>
+risk documentation tomorrow, what would we hand them?"</em></p>
+<p><strong>Risk if ignored</strong> — A deal dies quietly in procurement, or a regulator finds a gap,
+because nobody owned the evidence until an outsider asked for it.</p>
 </blockquote>
-<h2 id="from-governance-to-evidence">From governance to evidence</h2>
+<h2 id="the-mental-model-from-governance-to-evidence">The mental model: from governance to evidence</h2>
 <!-- Governance lesson — red-teaming → findings split (fixes vs trail) → governance
      produces compliance artifacts → four artifacts fan out → unlocks outcome.
      Diagram type: SPLIT/MERGE FLOW with a 4-artifact fan-out. -->
@@ -513,118 +520,257 @@ because nobody owned the evidence trail until someone outside the company asked 
   </div>
 </div>
 
-<p><a href="../agentic-ai/safety-security-and-governance.html">Governance</a> — an agent registry, agent
-identity, org-wide policy, and a named owner per agent — is the internal discipline that
-makes the rest of this stick at company scale. This lesson picks up exactly where that
-one leaves off: governance is the internal control. <strong>Compliance is the same control,
-turned into evidence someone outside the company can check.</strong></p>
-<h3 id="soc-2-the-default-enterprise-gate">SOC 2 — the default enterprise gate</h3>
-<p>SOC 2 isn't AI-specific — it's a general vendor-trust audit against five <strong>Trust Services
-Criteria</strong> (security, availability, processing integrity, confidentiality, privacy) — but
-it's become the near-universal first question in enterprise AI procurement, because
-buyers have no faster way to check "does this vendor take security seriously" than asking
-for the report. <strong>Type I</strong> attests controls exist at a point in time; <strong>Type II</strong> — the
-one buyers actually want — attests they operated effectively over a period, usually six to
-twelve months. That lead time is the trap: a company that starts its SOC 2 process only
-when a six-figure deal demands it has already lost the quarter, because Type II cannot be
-rushed. For an AI vendor specifically, the auditor will also expect <strong>model change
-management</strong> as a control: who approved this model or prompt version, when, and against
-what evaluation.</p>
-<h3 id="gdpr-dpdp-class-laws-and-the-ai-specific-wrinkle">GDPR, DPDP-class laws, and the AI-specific wrinkle</h3>
-<p><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a> develops
-the general privacy discipline — minimize at the spec, make deletion real, let consent
-follow use — in full. The AI-specific addition is <strong>automated decision-making</strong>: GDPR-class
-regimes give individuals rights around decisions made "solely by automated means" with
-legal or similarly significant effect — a loan denial, a hiring rejection, a content
-takedown. If a model is making or materially driving that class of decision, the
-regulatory bar includes a right to meaningful human review and an explanation a person can
-actually act on, not a confidence score.</p>
-<h3 id="the-eu-ai-act-risk-tiered-and-reaching-past-europe">The EU AI Act — risk-tiered, and reaching past Europe</h3>
-<p>The AI Act (in force since August 2024, obligations phasing in through 2026–27) is the
-first horizontal law that regulates the model itself rather than only the data around it,
-and it's organized around <strong>risk tiers</strong>: <strong>unacceptable risk</strong> is banned outright
-(social scoring, certain biometric surveillance); <strong>high-risk</strong> covers use cases like
-hiring, credit, and medical triage, and carries real obligations — a conformity
-assessment, logging, human oversight, and documented risk management; <strong>limited risk</strong>
-gets a transparency duty (tell the user they're talking to an AI); <strong>minimal risk</strong>
-carries no specific obligation. The part product leaders miss is the reach: the Act
-applies to any provider whose AI system's output is used within the EU, <strong>regardless of
-where the company is based</strong>. A team that classifies a hiring-screening feature as
-"limited risk" without checking whether it actually functions as an employment decision
-tool is one product review away from discovering it's high-risk after the obligations
-were due.</p>
-<h3 id="red-teaming-generating-the-evidence-on-purpose">Red-teaming — generating the evidence on purpose</h3>
-<p><strong>Red-teaming</strong> is structured adversarial testing aimed at finding failures before
-launch, run either <strong>internally</strong> (a dedicated team or rotation whose job is breaking the
-product) or <strong>externally</strong> (bug-bounty-style programs that pay outside researchers for
-verified findings). Its output does double duty. Findings that reveal a real gap feed
-back into <a href="the-threat-model-and-guardrails.html">the guardrail set</a> and the
-<a href="../technical-product-management/tpm-for-ai-products.html">eval suite</a> as new adversarial
-cases, closing the loop other lessons in this family describe. And the <em>record</em> of having
-run it — scope, findings, remediation, dates — is itself compliance evidence: proof of
-diligence a regulator or an enterprise buyer can check, not a claim they have to take on
-faith. Treat it as a recurring practice tied to model and prompt changes, not a one-time
-pre-launch event; a red team report from a year and three model versions ago answers a
-question nobody is asking anymore.</p>
-<h3 id="the-model-or-system-card">The model or system card</h3>
-<p>A <strong>model card</strong> (or system card, for the product wrapped around it) is the artifact that
-answers, in one place, what this model actually is: its intended use, known limitations,
-the data it was trained or fine-tuned on, and its evaluated failure modes. It's the
-document an enterprise security reviewer or a regulator reaches for first, and the
-document most teams discover they don't have exactly when someone asks for it.</p>
-<h2 id="a-worked-pass-the-deal-that-stalled-in-security-review">A worked pass: the deal that stalled in security review</h2>
-<p>A mid-market SaaS company has an AI feature two weeks from closing its largest deal ever.
-The buyer's security team sends the standard enterprise questionnaire: a current SOC 2
-Type II report, a data flow diagram showing where customer data goes, a model or system
-card for the AI feature specifically, and a summary of the last red-team engagement. The
-company has none of the four — security was handled ad hoc, by engineers, as they went.
-Producing a SOC 2 Type II report takes six to twelve months of audited history; it cannot
-be compressed by hiring a faster auditor. The deal doesn't die. It slips two quarters,
-while the company starts a SOC 2 engagement it should have started a year earlier, and
-writes a model card and data flow diagram in a week under deal pressure that should have
-existed since launch. The lesson generalizes past this one company: <strong>compliance
-artifacts have lead time that a live deal doesn't have</strong>, which means they belong on the
-roadmap as insurance against a deal that hasn't been sourced yet, not as a response to one
-that already has a signature pending.</p>
+<p><a href="../agentic-ai/safety-security-and-governance.html">Governance</a> is the internal discipline: an
+agent registry, agent identity, org-wide policy, and a named owner per agent. This lesson
+picks up where that one stops. <strong>Compliance is the same control, turned into evidence that
+someone outside the company can check.</strong></p>
+<h2 id="soc-2-the-default-enterprise-gate">SOC 2: the default enterprise gate</h2>
+<p>SOC 2 is not specific to AI. It is a general audit of a vendor's controls, run by an
+independent auditor against the <strong>Trust Services Criteria</strong> of the American Institute of CPAs
+(AICPA). The current version is
+the 2017 criteria with revised points of focus from 2022. There are five categories:
+security, availability, confidentiality, processing integrity and privacy. Security is
+required. The other four are optional, and you choose them to fit the service.</p>
+<p>Buyers ask for the report because it is the fastest way to check "does this vendor take
+security seriously?" Two report types exist.</p>
+<ul>
+<li><strong>Type I</strong> says the controls exist at one point in time.</li>
+<li><strong>Type II</strong> says the controls worked over a period. Buyers usually want this one. The
+  period is often several months, and the buyer decides what it accepts.</li>
+</ul>
+<p>Here is the trap. Type II needs a history of operation, so it cannot be rushed. A company
+that starts only when a large deal asks has already lost the quarter. For an AI vendor, an
+auditor may also look at <strong>model change management</strong>: who approved this model or prompt
+version, when, and against which evaluation. Ask your auditor how they treat it.</p>
+<p>Buyers may also ask for <strong>ISO/IEC 42001</strong> (December 2023), the first international standard
+for an AI management system. Others cite the NIST AI Risk Management Framework (RMF),
+released in January 2023, and its Generative AI Profile, NIST AI 600-1 (July 2024). None replaces SOC 2.
+Each is a different request for the same thing: proof of how you manage AI risk.</p>
+<h2 id="gdpr-and-automated-decisions">GDPR and automated decisions</h2>
+<p><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a> covers the
+general privacy discipline in full. The AI-specific part is <strong>automated decision-making</strong>.</p>
+<p>GDPR Article 22 limits decisions based solely on automated processing that have legal or
+similarly significant effects on a person. Examples are a loan denial or a hiring
+rejection. Such decisions are allowed only under set exceptions, with safeguards. Safeguards such as
+human intervention, the chance to state a view, and the chance to contest the decision
+apply.</p>
+<p>The Court of Justice of the EU widened the reach in <em>SCHUFA</em> (case C-634/21, 7 December
+2023). A credit score counts as an automated decision when a third party draws strongly on
+it to decide on a contract. So a model that only "scores" can fall under the rule if
+someone else acts on its output, and the duty can fall on the scorer. If your model drives such a decision, plan for human
+review.</p>
+<p>Do not assume other laws copy Article 22. India's Digital Personal Data Protection (DPDP)
+Rules were notified in the Gazette (G.S.R. 846(E), dated 13 November 2025) and announced on
+14 November. Their main duties, such as notice and consent, apply from May 2027, 18 months
+after publication. The Commission also proposed GDPR changes, including to Article 22, in the November 2025
+Digital Omnibus. As of 1 October 2026 no amendment has been adopted that I could find, and
+the Council's working text reportedly dropped the Article 22 change. Check the current status. Check each
+law and each market with counsel.</p>
+<h2 id="the-eu-ai-act-risk-tiers-with-a-moving-timeline">The EU AI Act: risk tiers, with a moving timeline</h2>
+<p>The AI Act is the first broad law that regulates AI systems and models directly. It sorts
+uses into <strong>risk tiers</strong>.</p>
+<ul>
+<li><strong>Unacceptable risk</strong> is banned. Social scoring is an example.</li>
+<li><strong>High risk</strong> covers uses such as hiring, credit scoring and school admission. It brings a
+  conformity assessment, logging, human oversight and documented risk management.</li>
+<li><strong>Limited risk</strong> brings a transparency duty. For example, tell people they are talking to
+  an AI.</li>
+<li><strong>Minimal risk</strong> has no specific duty.</li>
+</ul>
+<p>The part product leaders miss is the reach. The Act applies to providers and deployers outside the EU if
+their AI system's output is used in the EU. Where your company sits does not decide it.</p>
+<p>The dates have moved. Regulation (EU) 2026/1744, the "Digital Omnibus on AI," was
+published on 24 July 2026 and entered into force on 27 July 2026. Here is the schedule as
+reported by law-firm and trade sources, as of October 2026.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>What applies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Aug 2024</td>
+<td>The Act entered into force</td>
+</tr>
+<tr>
+<td>2 Feb 2025</td>
+<td>Banned practices</td>
+</tr>
+<tr>
+<td>2 Aug 2025</td>
+<td>Duties for providers of general-purpose AI models</td>
+</tr>
+<tr>
+<td>2 Aug 2026</td>
+<td>Most transparency duties (Article 50). The Commission's enforcement powers over general-purpose models start.</td>
+</tr>
+<tr>
+<td>2 Dec 2026</td>
+<td>Machine-readable marking of AI content, for systems already on the market before 2 Aug 2026</td>
+</tr>
+<tr>
+<td>2 Dec 2027</td>
+<td>High-risk systems listed in Annex III (stand-alone uses such as hiring and credit)</td>
+</tr>
+<tr>
+<td>2 Aug 2028</td>
+<td>High-risk AI built into products already covered by EU product-safety law (Annex I)</td>
+</tr>
+</tbody>
+</table>
+<p>Do not read the delay as a reprieve. The Omnibus moved the high-risk dates. It left most
+transparency duties in place. A team that classifies a hiring feature as "limited risk"
+without checking whether it works as an employment decision tool may learn it is high-risk
+only after the duties apply. Classify first. Dates are secondary.</p>
+<h2 id="the-model-or-system-card">The model or system card</h2>
+<p>A <strong>model card</strong> is the document that says what a model is. A <strong>system card</strong> says the same
+for the product built around it. It states the intended use, known limits, the data used,
+and tested failure modes. It is the first thing a security reviewer or regulator asks for.
+It is also the document most teams find they lack, at the moment someone asks.</p>
+<h2 id="worked-example-the-deal-that-stalled-in-security-review">Worked example: the deal that stalled in security review</h2>
+<p><em>This example is invented, to show the method.</em></p>
+<p>A mid-sized software company has an AI feature. Its largest deal ever is two weeks from
+closing. The buyer's security team sends the standard questionnaire. It asks for four
+things.</p>
+<table>
+<thead>
+<tr>
+<th>Evidence asked for</th>
+<th>Company has it?</th>
+<th>Time to produce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current SOC 2 Type II report</td>
+<td>No</td>
+<td>Many months of audited history</td>
+</tr>
+<tr>
+<td>Data-flow diagram for the AI feature</td>
+<td>No</td>
+<td>About a week</td>
+</tr>
+<tr>
+<td>Model or system card</td>
+<td>No</td>
+<td>About a week</td>
+</tr>
+<tr>
+<td>Summary of the last red-team test</td>
+<td>No</td>
+<td>A few weeks, if the test is run now</td>
+</tr>
+</tbody>
+</table>
+<p>Engineers handled security ad hoc. Nobody owned the paper trail. The company cannot buy a
+faster audit. The two quick items get written under deadline pressure. The deal slips by
+two quarters while a SOC 2 engagement starts. The lesson: <strong>evidence has lead time that a
+live deal does not.</strong> Put it on the roadmap as insurance against a deal you have not
+sourced yet.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<ul>
+<li><strong>Early vs. late.</strong> Starting compliance work early costs money with no deal attached.
+  Starting late costs a deal.</li>
+<li><strong>Breadth vs. depth.</strong> SOC 2 plus an AI-specific standard covers more buyers. It also
+  doubles the upkeep.</li>
+<li><strong>Documentation vs. speed.</strong> Model cards and change logs slow each release a little. They
+  make every later review faster.</li>
+<li><strong>Build vs. buy.</strong> Compliance tooling can collect evidence for you. It cannot decide your
+  risk tier.</li>
+</ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>Governance without evidence</strong> — an agent registry and an internal policy exist, but
-  nothing regulator- or auditor-facing was ever produced from them.</li>
-<li><strong>Compliance as fire drill</strong> — the SOC 2 process starts only when a specific deal
-  demands it, adding a two-to-four-quarter delay that was avoidable a year earlier.</li>
-<li><strong>The EU AI Act blind spot</strong> — a high-risk use case (hiring, credit, medical) ships
-  without the conformity assessment, logging, and human oversight the tier requires,
-  discovered only when a regulator or customer's legal team asks.</li>
-<li><strong>Red-teaming as a one-time PR event</strong> — a single pre-launch engagement, never repeated,
-  while the model and prompts keep changing underneath it.</li>
-<li><strong>No model card</strong> — nobody can answer "what is this model supposed to do, and what
-  should we not trust it to do" without reverse-engineering the answer from the code.</li>
+<li><strong>Governance without evidence.</strong> A registry and an internal policy exist. Nothing an
+  auditor can read was ever produced from them.</li>
+<li><strong>Compliance as a fire drill.</strong> The SOC 2 process starts when a deal demands it. That adds
+  quarters of delay that were avoidable a year earlier.</li>
+<li><strong>The AI Act blind spot.</strong> A high-risk use ships with no plan for the duties that come
+  with its tier. A regulator or a customer's lawyer finds out first.</li>
+<li><strong>Red-teaming as a one-time event.</strong> One test before launch, never repeated, while the
+  model and prompts keep changing.</li>
+<li><strong>No model card.</strong> Nobody can say what the model should and should not be trusted to do
+  without reading the code.</li>
+<li><strong>Stale dates.</strong> A plan built on 2024 or 2025 reading of the Act, before the Omnibus.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>An <strong>evidence register</strong> is a small table that maps each AI feature to its evidence. Engineers
+can keep it in version control next to the code.</p>
+<pre><code class="language-yaml">feature: support-assistant
+risk_tier: limited            # decided and signed off by a named person, with the reason
+tier_reviewed: 2026-10
+owner: head-of-support-platform
+evidence:
+  model_card: docs/cards/support-assistant.md     # updated on every model or prompt change
+  data_flow: docs/dataflow/support-assistant.png
+  red_team_summary: docs/redteam/2026-q3.md
+  change_log: ci/model-approvals/                 # who approved which model version, against which eval
+  soc2_scope: in-scope                            # is this feature inside the audited system?
+eu_exposure: true             # output reaches EU users, so the AI Act applies
+</code></pre>
+<p>Two habits keep it honest.</p>
+<ul>
+<li><strong>Generate it, do not hand-edit it.</strong> Have CI fail a release when <code>model_card</code> or
+  <code>red_team_summary</code> is older than the last model change.</li>
+<li><strong>Review the risk tier on a schedule.</strong> A feature can move into a higher tier when its
+  use changes, even if its code does not.</li>
 </ul>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
-<li class="task todo">Do we have a current SOC 2 report, or is the process at least underway well before
-      any specific deal needs it?</li>
-<li class="task todo">Can we name which of our AI features make or materially drive an automated
-      decision with legal or similarly significant effect?</li>
-<li class="task todo">Have we actually classified our AI use cases against the EU AI Act's risk tiers —
-      including whether any output reaches EU users regardless of where we're based?</li>
-<li class="task todo">Is red-teaming a recurring practice tied to model/prompt changes, with findings
-      that feed back into guardrails and evals?</li>
-<li class="task todo">Does every AI feature have a model or system card someone can hand a reviewer
-      today, not draft under deadline pressure?</li>
+<li class="task todo">Do we have a current SOC 2 report, or is the process underway before a deal needs it?</li>
+<li class="task todo">Can we name each AI feature that makes, or strongly drives, an automated decision with
+      legal or similar effect?</li>
+<li class="task todo">Have we classified each AI use against the EU AI Act's risk tiers, including whether
+      its output reaches EU users?</li>
+<li class="task todo">Is our timeline based on the 2026 Omnibus dates, not older ones?</li>
+<li class="task todo">Does every AI feature have a model or system card we can hand over today?</li>
+<li class="task todo">Is there an evidence register with an owner for each feature?</li>
+<li class="task todo">Is red-teaming a recurring practice tied to model and prompt changes?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
-<li><a href="the-threat-model-and-guardrails.html">The threat model, and guardrails as architecture</a></li>
+<li><a href="red-teaming-and-proving-your-defenses.html">Red-teaming: testing your defenses</a> — the
+  practice that creates much of this evidence.</li>
+<li><a href="the-threat-model-and-guardrails.html">The threat model, and guardrails as architecture</a>
+  — the controls this evidence describes.</li>
 <li><a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance for agents</a>
   — the internal governance discipline this lesson turns into external evidence.</li>
-<li><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a> — the
-  general privacy discipline this lesson adds the AI-specific layer to.</li>
+<li><a href="../technical-product-sense/security-and-privacy.html">Security &amp; privacy sense</a> — the general
+  privacy discipline.</li>
 <li><a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a> — where
-  red-team findings land in the eval-driven development loop.</li>
+  findings land in the eval-driven development loop.</li>
 </ul>
-  <div class="pagenav"><a class="navcard prev" href="the-threat-model-and-guardrails.html"><span class="lbl">← Previous</span><span class="ttl">The threat model, and guardrails as architecture</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#from-governance-to-evidence">From governance to evidence</a><a class="h3" href="#soc-2-the-default-enterprise-gate">SOC 2 — the default enterprise gate</a><a class="h3" href="#gdpr-dpdp-class-laws-and-the-ai-specific-wrinkle">GDPR, DPDP-class laws, and the AI-specific wrinkle</a><a class="h3" href="#the-eu-ai-act-risk-tiered-and-reaching-past-europe">The EU AI Act — risk-tiered, and reaching past Europe</a><a class="h3" href="#red-teaming-generating-the-evidence-on-purpose">Red-teaming — generating the evidence on purpose</a><a class="h3" href="#the-model-or-system-card">The model or system card</a><a class="h2" href="#a-worked-pass-the-deal-that-stalled-in-security-review">A worked pass: the deal that stalled in security review</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>EU AI Act timeline after the Digital Omnibus, as of Oct 2026. Regulation (EU) 2026/1744:
+  published 24 Jul 2026, in force 27 Jul 2026, high-risk Annex III to 2 Dec 2027 and Annex I to
+  2 Aug 2028, Article 50 unchanged, watermarking to 2 Dec 2026 for systems already on the
+  market. Taken from law-firm and trade write-ups
+  (<a href="https://usercentrics.com/knowledge-hub/eu-ai-act-high-risk-delay-article-50-transparency-consent/">Usercentrics</a>,
+  <a href="https://www.bakerbotts.com/thought-leadership/publications/2026/september/eu-ai-act-article-50-transparency-obligations-go-live">Baker Botts</a>,
+  <a href="https://knowledge.dlapiper.com/dlapiperknowledge/globalemploymentlatestdevelopments/2026/The-Digital-AI-Omnibus-Proposed-deferral-of-high-risk-AI-obligations-under-the-AI-Act">DLA Piper</a>).
+  The Official Journal text was not read directly. Check it before you rely on a date.</li>
+<li>European Commission,
+  <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers">General-purpose AI models in the AI Act: Q&amp;A</a>:
+  duties from 2 Aug 2025 and enforcement powers from 2 Aug 2026. Search-result excerpt.</li>
+<li>Court of Justice of the EU, <em>SCHUFA Holding (Scoring)</em>, C-634/21, 7 Dec 2023: a credit
+  score is an automated decision under Article 22 when a third party draws strongly on it.
+  From law-firm summaries (<a href="https://www.aoshearman.com/en/insights/ao-shearman-on-data/cjeu-rules-that-a-credit-score-constitutes-automated-decision-making-under-the-gdpr">A&amp;O Shearman</a>).</li>
+<li>India, <a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf">DPDP Rules 2025</a>:
+  Gazette notification dated 13 Nov 2025 (PIB announcement 14 Nov), with phased
+  commencement and most duties 18 months after publication. Sources give 13 or 14 May 2027.
+  Dates from secondary summaries.</li>
+<li>AICPA, <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2/">SOC suite of services</a>:
+  the 2017 Trust Services Criteria with revised points of focus (2022), five categories,
+  security required. The Type II period is a common practice, not a fixed rule.</li>
+<li>ISO/IEC 42001:2023; NIST AI RMF 1.0 (26 Jan 2023); NIST AI 600-1 (26 Jul 2024). Search-result
+  excerpts.</li>
+<li>The deal scenario and the evidence-register sketch are invented and illustrative.</li>
+</ul>
+  <div class="pagenav"><a class="navcard prev" href="red-teaming-and-proving-your-defenses.html"><span class="lbl">← Previous</span><span class="ttl">Red-teaming: testing your defenses</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-from-governance-to-evidence">The mental model: from governance to evidence</a><a class="h2" href="#soc-2-the-default-enterprise-gate">SOC 2: the default enterprise gate</a><a class="h2" href="#gdpr-and-automated-decisions">GDPR and automated decisions</a><a class="h2" href="#the-eu-ai-act-risk-tiers-with-a-moving-timeline">The EU AI Act: risk tiers, with a moving timeline</a><a class="h2" href="#the-model-or-system-card">The model or system card</a><a class="h2" href="#worked-example-the-deal-that-stalled-in-security-review">Worked example: the deal that stalled in security review</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

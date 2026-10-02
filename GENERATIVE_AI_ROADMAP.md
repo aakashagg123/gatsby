@@ -153,9 +153,9 @@ this investment is the job before a team feels ready for it, and the build order
 turns reading real traces into a full eval and observability practice without
 over-building. No new glossary terms were added.
 
-### 10. 🔐 AI security & guardrails — *2 lessons* — **BUILT** (rescoped from 7 → 2)
+### 10. 🔐 AI security & guardrails — *3 lessons* — **BUILT** (rescoped from 7 → 2, then expanded to 3 in the framework pass)
 Keeping the system, its data, and its tenants safe.
-1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md) · 2. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md). → [Recap](./ai-security-and-guardrails/recap.md).
+1. [The threat model, and guardrails as architecture](./ai-security-and-guardrails/the-threat-model-and-guardrails.md) · 2. [Red-teaming: testing your defenses](./ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md) · 3. [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md). → [Recap](./ai-security-and-guardrails/recap.md).
 *Spokes:* `content/05-safety-multitenancy/*`, `agentic-ai/safety-security-and-governance`.
 
 *Rescoping note:* this topic is as densely pre-covered as module 9 was, for the same
@@ -175,6 +175,12 @@ compliance evidence (SOC 2, GDPR's automated-decision rules, the EU AI Act's ris
 red-teaming, model cards — none of which existed anywhere in the curriculum before this
 module). Four new glossary terms were added: `jailbreak`, `red-teaming`, `soc-2`,
 `eu-ai-act`.
+
+*Framework pass (Oct 2026):* a third lesson, *Red-teaming: testing your defenses*, was added.
+Red-teaming had been a section inside the governance lesson, with no method for measuring
+attack success or gating a release, and it appears nowhere in
+`evaluation-and-observability/`. The EU AI Act timeline was corrected for the July 2026
+Digital Omnibus. New glossary term: `attack-success-rate`.
 
 ### 11. 💰 Cost optimization — *2 lessons* — **BUILT** (rescoped from 6 → 2)
 Making the economics work.
