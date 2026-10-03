@@ -24,7 +24,8 @@ Ask three questions every turn.
 | `tool_use` | run tools, loop again |
 | `max_tokens` | continue the text; raise the cap if a tool call was cut off |
 | `pause_turn` | send the content back to resume |
-| `refusal`, `model_context_window_exceeded` | stop and report |
+| `refusal` | stop and read `stop_details`; retry on a fallback model, or report |
+| `model_context_window_exceeded` | the reply is valid but cut short; trim the context, then continue |
 
 **Did a tool fail?** A model mistake, such as a bad argument, goes back as an `is_error` result. A transient error, such as a timeout or 429, is retried with backoff, a bounded number of times. A fatal error, such as bad credentials, ends the run. Other failures go to the model.
 
@@ -132,11 +133,11 @@ The asserts drive a scripted model through every path. Transient errors retry an
 
 ## Use It
 
-The SDK gives you `stop_reason` and nothing more. Handle every value in the table. A `refusal` is a normal HTTP 200 response, not an error. A `pause_turn` appears when a server-side tool loop hits its iteration limit.
+The SDK already retries 429, 5xx and connection errors twice by default. It does not decide what each `stop_reason` means for your loop. Handle every value in the table. A `refusal` is a normal HTTP 200 response, not an error. A `pause_turn` appears when a server-side tool loop hits its iteration limit.
 
 The step, repeat, and cost ceilings are yours. The provider stops a single call. Only your harness stops a runaway agent.
 
-For a cut-off tool call, raise `max_tokens` and retry the request. Do not run a half-built call.
+For a cut-off tool call, never run the half-built call. This sketch stops with `stopped:max_tokens`. A production loop retries once with a higher `max_tokens`.
 
 ## Challenge
 

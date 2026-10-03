@@ -81,7 +81,7 @@ In Claude Code, an output style sets the response format for a whole session. Sw
 
 In the API, ask for the shape instead of hoping. Structured outputs take a JSON schema in `output_config` with `format` of type `json_schema`. The reply text is then JSON that matches the schema. The schema supports basic types, `enum` and `anyOf`. It does not support numeric limits such as `minimum`, or recursive schemas. Keep your own `check_json` as a backstop.
 
-Tool use is the older route to the same goal. Define a tool whose input schema is your output type. Some current models reject forced tool use, meaning a `tool_choice` of `any` or `tool`, with a 400 error. On those models use `strict: true` on the tool with `tool_choice` set to `auto`, or use structured outputs. Check the docs for your model.
+Tool use is the older route to the same goal. Define a tool whose input schema is your output type. Some current models reject forced tool use, meaning a `tool_choice` of `any` or `tool`, with a 400 error. On those models use `strict: true` on the tool with `tool_choice` set to `auto`, or use structured outputs. Set `additionalProperties: false` on every object. The schema guarantee does not hold if the reply stops on `max_tokens` or `refusal`, so check `stop_reason` first. Check the docs for your model.
 
 `code/output_contract_sdk.py` shows the structured-output call. It needs `pip install anthropic` and an API key, so it does not run offline.
 

@@ -106,9 +106,9 @@ The file ends with asserts. They prove that an unread edit fails, that an ambigu
 
 Claude Code has an **Edit** tool and a **Write** tool. Edit does exact string replacement. It uses no regex and no fuzzy match. A single changed space makes it miss.
 
-The documented checks match this lesson. The file must have been read in the conversation, and a read cut short by a `PARTIAL view` notice does not count. `old_string` must appear exactly once, or Claude sets `replace_all: true`. Newer models may edit an unread file when reading it would need no permission prompt. Older models always need the read.
+The documented checks are close to this lesson. The file must have been read in the conversation, and a read cut short by a `PARTIAL view` notice does not count. `old_string` must appear exactly once, or Claude sets `replace_all: true`. Newer models may edit an unread file when reading it would need no permission prompt. Older models always need the read.
 
-Write creates a file or replaces it whole. The same read rule applies to existing files, and new files are exempt. For a partial change, Claude uses Edit.
+Write creates a file or replaces it whole. Older models must read an existing file before they overwrite it. Newer models may overwrite an unread file when reading it would need no permission prompt. Claude Code also lets Edit proceed on a file that changed on disk after the read, if `old_string` still matches. The digest gate in this lesson is a stricter design. For a partial change, Claude uses Edit.
 
 The docs do not describe an atomic multi-file patch tool. Treat `apply_patch` as your own design for review and rollback. Path rules use `Edit(path)`, so one rule covers every built-in tool that edits files. See [Settings.json](../../../06-permissions-and-security/03-settings-json/docs/en.md).
 

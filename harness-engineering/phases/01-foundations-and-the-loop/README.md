@@ -28,7 +28,7 @@ A model call is one HTTPS POST. A harness is a loop around it. This phase builds
 3. **You add a timestamp to the top of the system prompt, and cache reads drop to zero. Why?**
    <details><summary>Answer</summary>The cache matches a prefix byte for byte. A changed byte early in the prefix invalidates it and everything after it. Put volatile text last. (<a href="./02-tokens-context-and-caching/docs/en.md">Lesson 2</a>)</details>
 4. **A reply ends with `max_tokens` and its last block is a half-written `tool_use`. What do you do?**
-   <details><summary>Answer</summary>Do not run it, because the input is incomplete. Raise `max_tokens` and retry the request. For cut-off plain text you can ask the model to continue instead. (<a href="./04-stopping-errors-and-recovery/docs/en.md">Lesson 4</a>)</details>
+   <details><summary>Answer</summary>Do not run it, because the input is incomplete. A production loop retries once with a higher `max_tokens`. For cut-off plain text you can ask the model to continue instead. (<a href="./04-stopping-errors-and-recovery/docs/en.md">Lesson 4</a>)</details>
 5. **A tool raises a timeout, and another raises a permission error. How should the loop treat each?**
    <details><summary>Answer</summary>Retry the timeout with backoff a bounded number of times. Treat the permission error as fatal and end the run. Other failures go back to the model as `is_error` results. (<a href="./04-stopping-errors-and-recovery/docs/en.md">Lesson 4</a>)</details>
 6. **Why must a "you repeated that call" nudge be sent as a `tool_result` and not as plain user text?**

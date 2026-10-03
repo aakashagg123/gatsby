@@ -14,7 +14,7 @@ An agent also resends a large, mostly identical prefix on every turn. That prefi
 
 ## The Concept
 
-A token is a word piece. For English, 4 characters is about 1 token. This is a planning rule only. Different models use different tokenizers, so the same text can give different counts.
+A token is a word piece. For English, 4 characters is about 1 token on older tokenizers. Current Claude models use more tokens for the same text, about 2.5 to 3 characters each. This is a planning rule only, and it is optimistic for current models. Use the token-counting endpoint for any tight budget.
 
 The window is shared: `input + max_output` must stay within the model limit.
 
@@ -75,7 +75,7 @@ The asserts prove four cases. A new last message hits. A timestamp at the top of
 
 The total input is the sum of the three. Watch these numbers. Do not guess.
 
-Cache entries last 5 minutes by default, and you can set up to 4 breakpoints. A 5-minute write costs 1.25 times the base input price. A read costs a fraction of it, 0.1 times on standard models. Check the pricing page for your model.
+Cache entries last 5 minutes by default, and you can set up to 4 breakpoints. A 5-minute write costs 1.25 times the base input price. A read costs a fraction of it: 0.1 times on most models and less on some (0.05 times on Opus 5.5). Check the pricing page for your model.
 
 To plan before you send, call `client.messages.count_tokens(...)`. It takes the same arguments as `create`, returns `input_tokens`, and is free. The count is an estimate.
 

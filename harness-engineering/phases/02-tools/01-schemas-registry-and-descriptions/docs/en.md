@@ -105,7 +105,7 @@ Pass `reg.schemas()` as `tools=` to `messages.create`. The model replies with `t
 Three more fields help on the Anthropic API:
 
 - `input_examples` holds sample inputs. Each one must match the schema.
-- `strict: true` guarantees that inputs match the schema.
+- `strict: true` makes inputs match the schema. Set `additionalProperties: false` on every object, and check `stop_reason` first: a reply cut off by `max_tokens` may not match.
 - `tool_choice` takes `auto`, `any`, `tool`, or `none`. Some current models reject `any` and `tool` with a 400 error. Check the docs for your model, and use `auto` with strict tools there.
 
 When an eval shows tool misuse, fix the description first.

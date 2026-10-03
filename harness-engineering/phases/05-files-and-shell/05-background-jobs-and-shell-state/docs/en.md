@@ -120,7 +120,7 @@ Claude Code's **Bash** tool behaves like this session. Verified from the docs:
 - `export` does not persist. To keep variables, point `CLAUDE_ENV_FILE` at a shell script, or fill it from a `SessionStart` hook.
 - Aliases and functions from your shell startup file are available.
 
-For background work, Claude sets `run_in_background: true`. A background command has a 30-minute limit by default, and 2 hours at most. List and stop tasks with `/tasks`. A `cd` inside a backgrounded command never applies to later commands.
+For background work, Claude sets `run_in_background: true`. In unattended runs (`-p`, the Agent SDK, CI, cloud), a background command has a 30-minute limit by default and 2 hours at most. A local interactive session has no such limit. List and stop tasks with `/tasks`. A `cd` inside a backgrounded command never applies to later commands.
 
 ## Challenge
 

@@ -77,7 +77,7 @@ Claude Code's **Bash** tool has the same three parts, with some differences.
 
 **Output.** A valid result arrives inline up to about 30,000 characters. Past that, Claude gets a file path and a preview of the first 2,000 characters. A failure result keeps about 10,000 characters as a head and tail excerpt.
 
-**Exit codes.** Exit code 1 counts as success for `grep`, `rg`, `find`, `diff`, `test`, `git diff` and `git grep`, because it means "no match" or "differs". Any other command that exits 1 counts as a failure. Your harness may need the same table.
+**Exit codes.** Exit code 1 counts as success for commands such as `grep`, `rg`, `find`, `diff`, `test` and `git diff`, because it means "no match" or "differs". Any other command that exits 1 counts as a failure. Your harness may need the same table.
 
 ## Challenge
 

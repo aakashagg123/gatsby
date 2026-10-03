@@ -102,7 +102,7 @@ def run_limited(command, workdir, cpu_seconds=2, max_mem_mb=256, max_file_mb=1, 
     return {"exit_code": proc.returncode, "stdout": out, "stderr": err}
 ```
 
-Its asserts prove the limits work. They also prove the limits are thin: the child can still read files outside its folder and open a socket. Run both files with `python3 code/<file>.py`.
+Its asserts prove the limits work on Linux, where they were run. `RLIMIT_AS` in particular is not enforced the same way on every system. They also prove the limits are thin: the child can still read files outside its folder and open a socket. Run both files with `python3 code/<file>.py`.
 
 ## Use It
 

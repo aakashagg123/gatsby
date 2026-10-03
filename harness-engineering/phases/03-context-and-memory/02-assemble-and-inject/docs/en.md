@@ -10,7 +10,7 @@
 
 A request has many parts. It has a system prompt, project memory, tool schemas, history, files and the new user message. You can order them many ways.
 
-Order matters for two reasons. A stable prefix keeps the prompt cache valid. And the model gives weight to the text it reads last, so the ask should come last.
+Order matters for two reasons. A stable prefix keeps the prompt cache valid. And putting the question after long documents improved quality by up to 30% in Anthropic's tests, so the ask should come last.
 
 Injected content adds three more risks. You can inject too much: a whole 5,000-line file when 40 lines mattered. You can inject it unlabeled, so the model cannot tell file text from instructions. And you can inject it without a source, so nothing can be cited.
 
@@ -52,7 +52,7 @@ def assemble(system, memory, history, files, user_msg):
     return system_block, messages
 ```
 
-The files and the ask share one user message. That keeps the roles alternating, which the API expects. The `wrap` function escapes `</file>` inside the content, so a hostile file cannot close its own block and start a fake one. It also caps the size and says how much it cut.
+The files and the ask share one user message. That keeps the roles alternating, so what you send matches what the model sees. The `wrap` function escapes `</file>` inside the content, so a hostile file cannot close its own block and start a fake one. It also caps the size and says how much it cut.
 
 The asserts at the end prove five things. The system block is byte-identical when only this turn's files change. The ask is last. The data note comes before the first file. Hostile text cannot break out of its block. Oversize content gets a visible note.
 

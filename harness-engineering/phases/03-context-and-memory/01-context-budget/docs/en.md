@@ -37,7 +37,7 @@ The numbers are a policy, not a law. Pick weights from what your agent really lo
 
 ```python
 def estimate(text):
-    return max(1, round(len(text) / 4))      # about 4 characters per token
+    return max(1, round(len(text) / 4))      # about 4 chars per token; optimistic for current models, use count_tokens when tight
 
 class ContextBudget:
     def __init__(self, limit, reserve_output, weights):

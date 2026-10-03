@@ -45,7 +45,7 @@ One rule protects all three: write atomically. Write a temp file, then rename it
 
 ```python
 def atomic_write(path, data):
-    """Write to a temp file, then rename. A crash never leaves a half-written file."""
+    """Write to a temp file, then rename. A process crash never leaves a half-written file. For power-loss safety, also call `os.fsync` before the rename."""
     fd, tmp = tempfile.mkstemp(dir=os.path.dirname(os.path.abspath(path)))
     try:
         with os.fdopen(fd, "w") as f:

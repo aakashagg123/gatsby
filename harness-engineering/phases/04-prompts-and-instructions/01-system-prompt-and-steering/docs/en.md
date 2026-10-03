@@ -8,7 +8,7 @@
 
 ## The Problem
 
-The system prompt is the highest-authority text in the harness. It is also the most reused text. The provider can cache it, so a stable prompt is cheap to reuse.
+The system prompt is the most stable text in the harness, and the most reused. The provider can cache it, so a stable prompt is cheap to reuse.
 
 A vague prompt gives an agent that ignores limits, picks the wrong tool and formats output at random. A bloated prompt wastes the cached prefix and buries the rules that matter.
 
@@ -52,7 +52,7 @@ def build_prompt(role, constraints, tools, workflow, output, steering=()):
 
 The `STEERING` table holds four reusable lines: be terse, ask before irreversible actions, refuse in one sentence with an alternative, and report test failures honestly. Each maps to a section.
 
-The `lint` function finds the defects above. It flags a wrong section order, volatile data (dates, clock times, home paths, UUIDs), a constraint that is not an imperative, and a prompt that is too long. The `guard` function is a model of a hook. It denies an edit to any `.env` file, whatever the model says.
+The `lint` function finds the defects above. It flags a wrong section order, volatile data (dates, clock times, home paths, UUIDs), a constraint that is not an imperative, and a prompt that is too long. The `guard` function is a model of a hook. It denies an edit to any `.env` file, whatever the model says. It models only the file tools. A real hook must also inspect Bash (`echo x > .env`), and a `Read(./.env)` deny rule covers the file tools too.
 
 ```python
 def guard(tool, args):

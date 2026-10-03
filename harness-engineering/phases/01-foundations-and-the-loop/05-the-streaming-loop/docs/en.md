@@ -18,7 +18,7 @@ The stream uses server-sent events (SSE). Each event has an `event:` line and a 
 
 The order is fixed. `message_start` opens the message. Each content block then sends `content_block_start`, one or more `content_block_delta` events, and `content_block_stop`. A `message_delta` carries the `stop_reason`. `message_stop` ends the stream.
 
-Text arrives as `text_delta` events. Tool input arrives as `input_json_delta` events. Each holds a `partial_json` string. A fragment is not valid JSON on its own. Join the fragments and parse them at `content_block_stop`.
+Text arrives as `text_delta` events. Tool input arrives as `input_json_delta` events. Each holds a `partial_json` string. A fragment is not valid JSON on its own. Join the fragments and parse them at `content_block_stop`. This lesson handles text and `tool_use` blocks only. With thinking or server tools, you must also keep `thinking_delta`, `signature_delta` and the server-tool JSON.
 
 Two more rules. `ping` events can appear anywhere, and new event types can appear later, so ignore what you do not know. An `error` event can arrive mid-stream, for example `overloaded_error`. Raise it. Do not return a half message.
 
