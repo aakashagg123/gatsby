@@ -1,4 +1,4 @@
-# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 on 2026-10-02.
+# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 and 2.3.0 on 2026-10-02.
 """Drive notes_server_sdk.py with the SDK client and check the result.
 
 Run:  python3 code/notes_client_sdk.py

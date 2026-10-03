@@ -30,7 +30,7 @@ Three syntax facts decide if a rule works:
 
 - Only `Read(path)` and `Edit(path)` rules are consulted for file paths. `Write(src/**)` and `Glob(*)` are accepted but never used.
 - `Bash(npm run test *)` is the usual form. `:*` at the end is an equivalent wildcard. It is not valid in the middle of a pattern.
-- A `Read` deny rule also blocks Edit and Write on that path (Claude Code 2.1.228 or later; `NotebookEdit` needs its own `Edit` deny rule). `//path` is absolute. A single `/path` is relative to the settings source.
+- A `Read` deny rule also blocks Edit and Write on that path (Edit from 2.1.208, Write from 2.1.228; `NotebookEdit` needs its own `Edit` deny rule). `//path` is absolute. A single `/path` is relative to the settings source.
 
 ## Build It
 

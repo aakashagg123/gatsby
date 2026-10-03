@@ -46,7 +46,7 @@ A parameter with a default is optional. A parameter without one goes in `require
 
 ## Use It
 
-Install the SDK with `pip install mcp`. The shape changed between major versions. In `mcp` 1.x you write `from mcp.server.fastmcp import FastMCP`. In `mcp` 2.x the class is `MCPServer`, imported with `from mcp.server import MCPServer`. I ran the files below against `mcp` 2.2.0 and 2.3.0. The client file and the `--check` mode need `mcp` 2.x, because `from mcp import Client` does not exist in 1.x. Pin a version in your own project.
+Install the SDK with `pip install mcp`. The shape changed between major versions. In `mcp` 1.x you write `from mcp.server.fastmcp import FastMCP`. In `mcp` 2.x the class is `MCPServer`, imported with `from mcp.server import MCPServer`. I ran the files below against `mcp` 2.2.0 and 2.3.0. The client file needs `mcp` 2.x, because `from mcp import Client` does not exist in 1.x. Pin a version in your own project.
 
 `code/notes_server_sdk.py` is a small notes server with two tools and one resource. It writes notes to a JSON file, so they survive a restart:
 

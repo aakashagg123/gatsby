@@ -1,4 +1,4 @@
-# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 on 2026-10-02.
+# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 and 2.3.0 on 2026-10-02.
 # In mcp 1.x the import is: from mcp.server.fastmcp import FastMCP
 """A notes MCP server on the official Python SDK. Notes persist in a JSON file.
 

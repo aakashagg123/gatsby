@@ -24,7 +24,7 @@ Ask three questions every turn.
 | `tool_use` | run tools, loop again |
 | `max_tokens` | continue the text; raise the cap if a tool call was cut off |
 | `pause_turn` | send the content back to resume |
-| `refusal` | stop and read `stop_details`; retry on a fallback model, or report |
+| `refusal` | stop and read `stop_details`; retry on a fallback model where one is offered, or report |
 | `model_context_window_exceeded` | the reply is valid but cut short; trim the context, then continue |
 
 **Did a tool fail?** A model mistake, such as a bad argument, goes back as an `is_error` result. A transient error, such as a timeout or 429, is retried with backoff, a bounded number of times. A fatal error, such as bad credentials, ends the run. Other failures go to the model.

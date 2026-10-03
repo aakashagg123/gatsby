@@ -120,7 +120,7 @@ Claude Code applies the same ideas as configuration. These points are in its doc
 - Permissions and the sandbox are separate layers. Sandbox limits still apply if a prompt injection fools the model.
 - A `Bash(curl ...)` rule is fragile. Options, other protocols, redirects and variables get around it. The docs advise a sandbox network allowlist or a PreToolUse hook. Allowing the WebFetch tool alone does not stop `curl` if Bash is allowed.
 - A PostToolUse hook can inject context or rewrite tool output. That is a place to redact.
-- The sandbox passes your environment variables to commands unless you set `sandbox.credentials` in user or managed settings (project settings are ignored), or set `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`.
+- The sandbox passes your environment variables to commands unless you list `deny` entries under `sandbox.credentials` (any settings file works; `mask` entries count only from user or managed settings), or set `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`.
 
 Rotate any secret that reached a transcript. Redaction stops the next leak. It does not undo the last one.
 

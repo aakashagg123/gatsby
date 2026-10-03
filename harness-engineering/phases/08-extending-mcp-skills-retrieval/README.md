@@ -25,7 +25,7 @@ A harness reaches beyond its built-in tools in three ways. MCP connects outside 
 ## Test yourself
 
 1. **A client sends `tools/list` before `notifications/initialized`. What should a careful server do?**
-   <details><summary>Answer</summary>It may refuse, because the handshake is not finished. The spec only tells clients not to send it. The lesson's server returns a JSON-RPC error. The client must send `initialize`, read the reply, then send the `initialized` notification. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
+   <details><summary>Answer</summary>It may refuse, because the handshake is not finished. The spec tells clients not to send requests other than pings before `initialize` is answered. It does not say how a server must react. The lesson's server returns a JSON-RPC error. The client must send `initialize`, read the reply, then send the `initialized` notification. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
 2. **A tool divides by zero. Is that a JSON-RPC error or a tool result? Why does it matter?**
    <details><summary>Answer</summary>It is a normal result with `isError: true`. The model reads results and can recover. A JSON-RPC error is for protocol faults such as an unknown tool, and many clients do not show it to the model. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
 3. **Why does a stray `print` break a stdio MCP server?**

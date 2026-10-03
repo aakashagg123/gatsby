@@ -1,4 +1,4 @@
-# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 on 2026-10-02.
+# needs: pip install mcp   (no API key). Checked against mcp 2.2.0 and 2.3.0 on 2026-10-02.
 """Expose search_code as an MCP tool. Index the directory in REPO_ROOT (default: .).
 
 Run:  python3 code/search_server_sdk.py     (stdio server)

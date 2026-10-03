@@ -66,7 +66,7 @@ Two more functions model the load rules. `which_files` encodes the `AGENTS.md` t
 
 Put `CLAUDE.md` at the repo root, or in `.claude/CLAUDE.md`. Claude Code reads files from your working directory and every directory above it. It orders them from the filesystem root down, so instructions closest to you come last. Files in subdirectories load on demand, when Claude reads files there. Run `/init` to generate a starter file. Run `/context` and check **Memory files** to confirm a file loaded.
 
-By default, Claude Code reads `AGENTS.md` only when no `CLAUDE.md` is in your working directory or above it. Claude Code v2.1.277 or later can read `AGENTS.md` directly in that case. To share one file with other tools on any version, write `@AGENTS.md` in your `CLAUDE.md`.
+By default, Claude Code reads `AGENTS.md` only when no `CLAUDE.md` is in your working directory or above it. Claude Code v2.1.277 or later (v2.1.281 on Bedrock or with telemetry off) can read `AGENTS.md` directly in that case. A `CLAUDE.local.md` also counts as a `CLAUDE.md` for this check. To share one file with other tools on any version, write `@AGENTS.md` in your `CLAUDE.md`.
 
 Block-level HTML comments are stripped before injection, so leave maintainer notes in them. For rules that matter only for some paths, use `.claude/rules/` with a `paths` frontmatter field. Those load when Claude touches matching files. For a task procedure, use a skill.
 

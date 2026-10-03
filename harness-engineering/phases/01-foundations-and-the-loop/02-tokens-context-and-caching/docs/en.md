@@ -14,7 +14,7 @@ An agent also resends a large, mostly identical prefix on every turn. That prefi
 
 ## The Concept
 
-A token is a word piece. For English, 4 characters is about 1 token on older tokenizers. Current Claude models use more tokens for the same text, about 2.5 to 3 characters each. This is a planning rule only, and it is optimistic for current models. Use the token-counting endpoint for any tight budget.
+A token is a word piece. For English, 4 characters is about 1 token on older tokenizers. Claude Opus 4.7 and later use a newer tokenizer that gives about 30% more tokens for the same text, roughly 2.5 characters per token. This is a planning rule only, and it is optimistic for current models. Use the token-counting endpoint for any tight budget.
 
 The window is shared: `input + max_output` must stay within the model limit.
 

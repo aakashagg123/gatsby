@@ -9,7 +9,7 @@ MIN_CACHE_TOKENS = 512   # example value: the real minimum depends on the model
 
 
 def estimate_tokens(text):
-    """About 4 characters per token for English on older tokenizers; current models run higher. Optimistic. Plan with it, never bill with it."""
+    """About 4 characters per token for English on older tokenizers; Opus 4.7 and later use about 30% more tokens, so this estimate runs low. Plan with it, never bill with it."""
     return max(1, round(len(text) / 4))
 
 
