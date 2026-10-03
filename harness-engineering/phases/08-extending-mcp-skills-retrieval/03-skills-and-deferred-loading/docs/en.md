@@ -61,7 +61,7 @@ The header accepts these fields (all optional): `name`, `description`, `when_to_
 
 Two details matter. Claude Code truncates `description` plus `when_to_use` at 1,536 characters in the listing, so put the main use case first. And `allowed-tools` pre-approves tools only for the turn that runs the skill. It does not restrict other tools and it cannot override a deny rule.
 
-Deferred tools work the same way in Claude Code. It uses a `ToolSearch` step to find MCP tools on demand. For a remote server you have used before, it can load the tool list from a cache and connect only on first use.
+Deferred tools work the same way in Claude Code. It uses a `ToolSearch` step to find MCP tools on demand. With `MCP_DISCOVERY_CACHE=1` (v2.1.221 or later, off by default unless rolled out to you), a remote server you have used before can show cached tools and connect on first use.
 
 ## Challenge
 

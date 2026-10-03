@@ -25,8 +25,8 @@ the missing structure to the repo.
 
 ## The principles
 
-The numbers below, such as a score of 70 or a file named `knowledge.md`, are example
-values from one team. Treat them as starting points to test, not as standards.
+Any numbers you meet in phase 7, such as worker or wave limits, are example values from
+one team. Treat them as starting points to test, not as standards.
 
 | # | Principle | The lesson it encodes |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ values from one team. Treat them as starting points to test, not as standards.
 | 02 | **Bounded roles, bounded context** | Each agent sees only what its role needs. A reviewer who sees the plan defends it. Enforce this with an explicit allowlist in prompt construction. |
 | 03 | **Declare the budget upfront** | Set the worker, call and wave limits before dispatch. On a hit, stop and report. Never auto-extend. |
 | 04 | **Hard stops between waves** | After each wave the orchestrator summarizes and waits for a human "continue." |
-| 05 | **Independent adversarial review** | The reviewer sees only the diff and gives one of two verdicts: ship or hold. |
+| 05 | **Independent adversarial review** | The reviewer sees only the diff and, in this pattern, gives one of two verdicts: ship or hold. |
 | 06 | **File isolation per worker** | Each worker gets its own worktree and no shared files in a wave. Shared files cause silent overwrites. |
 | 07 | **Persistent memory** | Keep an append-only record of failures: symptom, cause, fix. Keep the main instruction file short. |
 | 08 | **Patch the harness, not the prompt** | Encode a repeated fix once, as a lint rule or a contract test. Then delete the matching prose from the prompt. |

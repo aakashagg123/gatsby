@@ -25,9 +25,9 @@ A harness reaches beyond its built-in tools in three ways. MCP connects outside 
 ## Test yourself
 
 1. **A client sends `tools/list` before `notifications/initialized`. What should a careful server do?**
-   <details><summary>Answer</summary>It should refuse, because the handshake is not finished. The lesson's server returns a JSON-RPC error. The client must send `initialize`, read the reply, then send the `initialized` notification. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
+   <details><summary>Answer</summary>It may refuse, because the handshake is not finished. The spec only tells clients not to send it. The lesson's server returns a JSON-RPC error. The client must send `initialize`, read the reply, then send the `initialized` notification. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
 2. **A tool divides by zero. Is that a JSON-RPC error or a tool result? Why does it matter?**
-   <details><summary>Answer</summary>It is a normal result with `isError: true`. The model reads results and can recover. A JSON-RPC error is for protocol faults such as an unknown tool, and the model never sees it. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
+   <details><summary>Answer</summary>It is a normal result with `isError: true`. The model reads results and can recover. A JSON-RPC error is for protocol faults such as an unknown tool, and many clients do not show it to the model. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
 3. **Why does a stray `print` break a stdio MCP server?**
    <details><summary>Answer</summary>The client parses every stdout line as a protocol message. The server must write only valid messages to stdout and send logs to stderr. (<a href="./01-mcp-protocol-server-client/docs/en.md">Lesson 1</a>)</details>
 4. **What does an SDK tool decorator derive from your function, and what must you still write well?**

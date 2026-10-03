@@ -71,7 +71,7 @@ Wire the eval harness into CI with `outputs/evals.yml`. Copy it to `.github/work
 
 The workflow has a second step. It runs the harness with `--candidate regressed` and fails if the gate lets that candidate pass. So the pipeline itself proves the gate can fail.
 
-A failing job only blocks the merge if you require it. In GitHub, add the job as a required status check in your branch protection rules.
+A failing job only blocks the merge if you require it. In GitHub, add the job as a required status check in your branch protection rules. The check name must match the job name (`evals`).
 
 Claude Code uses the same layering idea in its settings files. There are user, project, and local files, plus managed settings. When they conflict, managed settings win, then command-line flags, then local, then project, then user. Put team rules in `.claude/settings.json` so they are shared, and personal changes in `.claude/settings.local.json`.
 

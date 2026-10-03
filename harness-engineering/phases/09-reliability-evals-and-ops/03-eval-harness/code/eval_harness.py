@@ -57,7 +57,7 @@ def run_evals(agent):
             "by_tag": {t: sum(v) / len(v) for t, v in tags.items()}}
 
 
-def gate(current, baseline, tolerance=0.02):
+def gate(current, baseline, tolerance=0.02):          # 0.02 is an example value
     """Return (passed, message). Fail when the score drops more than `tolerance` below baseline."""
     delta = current - baseline
     if delta < -tolerance:

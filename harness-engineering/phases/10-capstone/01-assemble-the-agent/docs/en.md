@@ -101,7 +101,7 @@ The tests were checked by breaking the agent on purpose. With the `rm` deny rule
 
 Run `python3 code/test_agent.py` first. Then read `code/agent_sdk.py`. It replaces `scripted_model` with one function that calls the Anthropic Messages API. `agent.py` already keeps history in the tool-use message format, so the history goes straight to `messages=`. `TOOL_SPECS` goes to `tools=`. The model ID comes from `HARNESS_MODEL`. The `ask` verdict becomes a terminal prompt.
 
-Claude Code has the same parts under other names. It evaluates permission rules in the order deny, ask, allow. It tracks tasks with `TaskCreate`, `TaskGet`, `TaskList`, and `TaskUpdate`. It bounds print-mode runs with `--max-turns`. Your 150 lines show how each part works.
+Claude Code has the same parts under other names. It evaluates permission rules in the order deny, ask, allow. It tracks tasks with `TaskCreate`, `TaskGet`, `TaskList`, and `TaskUpdate`, which are on by default only for some models. It bounds print-mode runs with `--max-turns`. Your 150 lines show how each part works.
 
 Before you trust the real agent, run the evals ([lesson 9.3](../../../09-reliability-evals-and-ops/03-eval-harness/docs/en.md)) and record traces ([lesson 9.4](../../../09-reliability-evals-and-ops/04-tracing-and-cost/docs/en.md)).
 

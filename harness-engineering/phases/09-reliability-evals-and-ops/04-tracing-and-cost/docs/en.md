@@ -88,7 +88,7 @@ Feed `cost_by_tag` into the `Budget` from [lesson 2](../../02-budgets-idempotenc
 
 Real responses carry the token counts. The Anthropic Python SDK exposes them on `message.usage`, with `input_tokens` and `output_tokens`. Put those numbers on your span.
 
-To ship spans to a dashboard, use OpenTelemetry (OTel), the standard tracing API. `code/tracing_sdk.py` emits the same tree with the OTel SDK. It uses the GenAI attribute names `gen_ai.operation.name`, `gen_ai.request.model`, `gen_ai.usage.input_tokens`, and `gen_ai.usage.output_tokens`. It uses the operation values `chat`, `invoke_agent`, and `execute_tool`. These conventions are still marked "Development", so check the spec before you rely on them.
+To ship spans to a dashboard, use OpenTelemetry (OTel), the standard tracing API. `code/tracing_sdk.py` emits the same tree with the OTel SDK. It follows a subset of the GenAI attribute names: `gen_ai.operation.name`, `gen_ai.provider.name`, `gen_ai.request.model`, `gen_ai.tool.name`, `gen_ai.usage.input_tokens`, and `gen_ai.usage.output_tokens`. It uses the operation values `chat`, `invoke_agent`, and `execute_tool`. These conventions are still marked "Development", so check the spec before you rely on them.
 
 Claude Code can export its own telemetry. Set `CLAUDE_CODE_ENABLE_TELEMETRY=1` and pick an exporter with `OTEL_METRICS_EXPORTER`, such as `otlp`. It reports metrics including `claude_code.token.usage` and `claude_code.cost.usage`. Traces are in beta and need `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` and `OTEL_TRACES_EXPORTER=otlp`.
 

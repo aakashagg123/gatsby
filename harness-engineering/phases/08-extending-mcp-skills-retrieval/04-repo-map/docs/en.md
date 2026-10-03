@@ -69,7 +69,7 @@ Module-level code between definitions is not chunked. A script with logic at the
 
 You can write a map by hand. A `CLAUDE.md` that says where things live (see [Memory Files](../../../04-prompts-and-instructions/02-memory-files/docs/en.md)) is a repo map in prose. It saves the agent the discovery work on every session. Exact-string search is still the right tool when you know the string; see [Search](../../../05-files-and-shell/03-search/docs/en.md).
 
-Keep the generated map short. A map of 5,000 files costs more than it saves. Show only the directories the task touches, or rank by the query.
+Keep the generated map short. A map of thousands of files can cost more than it saves. Measure yours. Show only the directories the task touches, or rank by the query.
 
 ## Challenge
 

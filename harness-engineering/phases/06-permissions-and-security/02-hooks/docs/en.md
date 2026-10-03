@@ -91,10 +91,12 @@ class HookRunner:
 def main():
     try:
         event = json.load(sys.stdin)
-    except json.JSONDecodeError:
-        print("env hook: stdin was not JSON", file=sys.stderr)
+        if not isinstance(event, dict):
+            raise ValueError("event is not an object")
+        bad = [p for p in paths_in(event) if is_secret_env(p)]
+    except Exception as exc:                           # any failure blocks the call
+        print(f"env hook: cannot read the event ({exc})", file=sys.stderr)
         return 2                                       # fail closed
-    bad = [p for p in paths_in(event) if is_secret_env(p)]
     if not bad:
         return 0                                       # no opinion
     print(json.dumps({"hookSpecificOutput": {
@@ -113,7 +115,7 @@ Claude Code hooks live in `settings.json` in three levels: an event, a matcher g
 
 Facts to rely on:
 
-- PreToolUse hooks run before the permission prompt, for every tool.
+- PreToolUse hooks run before the permission prompt, for every tool except `EndConversation`.
 - Exit 2 blocks the call before permission rules are checked. A blocking hook beats an allow rule.
 - A hook that returns `allow` does not bypass a deny rule or an ask rule.
 - `permissionDecision` can be `allow`, `deny`, `ask` or `defer`. `updatedInput` can rewrite the arguments.
@@ -123,7 +125,7 @@ The [Settings.json](../../03-settings-json/docs/en.md) lesson wires `block_env_h
 
 ## Challenge
 
-Write a PostToolUse hook that reads `tool_response`, finds a string shaped like `AKIA` plus 16 capitals, and exits 2 with a warning. Add it to `hooks.py` with an assert. Then say why this hook can warn but cannot block.
+Write a PostToolUse hook that reads `tool_response`, finds a string shaped like `AKIA` plus 16 capital letters or digits, and exits 2 with a warning. Add it to `hooks.py` with an assert. Then say why this hook can warn but cannot block.
 
 ## Sources
 

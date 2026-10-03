@@ -70,7 +70,7 @@ def key_for(tool, args):
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 ```
 
-This store lives in memory and only blocks repeats of a call that finished. If a call times out and you do not know whether it ran, the store cannot help. Pass the key to the remote service so it can dedupe. Many payment APIs, such as Stripe's, accept an `Idempotency-Key` header for this reason.
+This store lives in memory and only blocks repeats of a call that finished. If a call times out and you do not know whether it ran, the store cannot help. Pass the key to the remote service so it can dedupe. Many payment APIs, such as Stripe's, accept an `Idempotency-Key` header for this reason. Stripe has the caller generate a random key per operation. A hash of the tool and its arguments, as used here, also blocks a deliberate second identical call. Choose one on purpose.
 
 `code/degraded.py` runs a list of steps and keeps what it verified:
 

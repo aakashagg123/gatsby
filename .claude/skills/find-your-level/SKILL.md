@@ -30,7 +30,7 @@ commentary short; don't explain answers until the very end.
 - 9–10: start at **Phase 9** (Reliability, evals & ops) and go straight for the Capstone.
 
 After scoring, produce a personalized path: list the phases to do, in order, with the
-~hours each (assume about 1 hour per lesson) and the first lesson to open. Read the
+~hours each (a rough estimate of about 1 hour per lesson) and the first lesson to open. Read the
 lesson list from `harness-engineering/ROADMAP.md` and the phase READMEs, so the path
 matches the current track.
 
@@ -51,7 +51,7 @@ matches the current track.
 
 - A) Which tools actually execute
 - B) The contents of the context window
-- C) The next token's probability distribution
+- C) The model's weights
 - D) Retries and fallbacks
 
 **Correct: C**
@@ -135,7 +135,7 @@ matches the current track.
 
 **Correct: B**
 
-**Q10.** The single most important guard against a runaway agent is…
+**Q10.** A key guard against a runaway agent is…
 
 - A) a bigger model
 - B) hard ceilings on steps, tools, and tokens per request

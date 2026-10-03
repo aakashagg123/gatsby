@@ -23,7 +23,7 @@ flowchart LR
   H -- "yes" --> A["exit plan mode, then act"]
 ```
 
-**Plan mode** is a permission state. Reads are allowed. Edits and risky commands are denied. The agent can explore the codebase and write a plan. It cannot change anything.
+**Plan mode** is a permission state. Reads are allowed. In this model, edits and risky commands are denied. In Claude Code, edits are blocked, and commands outside the read-only set prompt you or go to the auto-mode classifier. The agent can explore the codebase and write a plan. It cannot change anything.
 
 A human then makes a decision. Reject, and the agent stays read-only and revises. Approve, and the state changes to acting. The permission gate from [Phase 06](../../../06-permissions-and-security/01-permission-gate/docs/en.md) does the enforcing, so plan mode is a setting and not a promise.
 

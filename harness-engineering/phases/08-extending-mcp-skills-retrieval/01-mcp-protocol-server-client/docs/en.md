@@ -31,7 +31,7 @@ sequenceDiagram
 
 MCP uses JSON-RPC 2.0. A request has an `id`, a `method` and `params`. A **notification** has no `id` and gets no reply. The client sends `initialize` first, then the `notifications/initialized` notification. Only then does normal work begin.
 
-Errors have two homes. A **protocol error** (unknown method, unknown tool) is a JSON-RPC `error`. A **tool failure** (the tool ran and broke) is a normal result with `isError: true`. The model reads the second kind and can recover. It never sees the first kind.
+Errors have two homes. A **protocol error** (unknown method, unknown tool) is a JSON-RPC `error`. A **tool failure** (the tool ran and broke) is a normal result with `isError: true`. The model reads the second kind and can recover. It usually cannot act on the first kind, and many clients do not show it to the model.
 
 ## Build It
 
@@ -52,7 +52,7 @@ Errors have two homes. A **protocol error** (unknown method, unknown tool) is a 
 
 The file follows the stdio rules. Each message is one line of JSON, with no embedded newline. The server writes only protocol messages to stdout and sends its logs to stderr. The client calls `json.loads` on every stdout line, so a stray print would crash it.
 
-The asserts walk the full flow. A `tools/list` before the handshake fails. `initialize` returns the version and server info. `tools/list` returns the three required fields. `add` returns `"5"`. `divide` by zero returns `isError: true` as a result, not as an error. An unknown tool returns code `-32602`.
+The asserts walk the full flow. A `tools/list` before the handshake fails. `initialize` returns the version and server info. `tools/list` returns `name` and `inputSchema`, which are required, and `description`, which is optional but you should always set. `add` returns `"5"`. `divide` by zero returns `isError: true` as a result, not as an error. An unknown tool returns code `-32602`.
 
 This server holds no state and writes nothing to disk. It also skips resources and prompts, the two other MCP capabilities. A server may offer any mix of tools, resources and prompts.
 
@@ -72,7 +72,7 @@ claude mcp add --transport http notion https://mcp.notion.com/mcp
 
 The `--` separates Claude's options from the server command. Project-shared servers go in `.mcp.json` at the project root, under the `mcpServers` key. Run `/mcp` in a session to see server status.
 
-MCP has two standard transports. **stdio** runs the server as a subprocess, as you built. **Streamable HTTP** serves one endpoint that takes POST (and optionally GET) and may stream replies with SSE. It replaced the older HTTP+SSE transport, and Claude Code marks SSE as deprecated. A local HTTP server must validate the `Origin` header and bind to localhost.
+MCP has two standard transports. **stdio** runs the server as a subprocess, as you built. **Streamable HTTP** serves one endpoint that handles POST and GET, and may stream replies with SSE. A server that does not stream may answer GET with 405. It replaced the older HTTP+SSE transport, and Claude Code marks SSE as deprecated. A server must validate the `Origin` header, and a local one should bind only to localhost. Newer spec revisions exist (2025-11-25); this lesson follows 2025-06-18.
 
 When a server's tools do not show up, check `initialize` and `tools/list`. Also check stdout. Any non-protocol output there breaks a stdio server.
 

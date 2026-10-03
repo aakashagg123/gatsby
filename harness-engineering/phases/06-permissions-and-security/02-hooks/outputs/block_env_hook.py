@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: deny any tool call that touches a .env file.
+"""PreToolUse hook: deny any tool call that touches a .env file. Fails closed on any error.
 
 Checks file_path for Read, Edit and Write, and every word of a Bash command.
 Template files such as .env.example stay allowed.
@@ -36,10 +36,12 @@ def paths_in(event):
 def main():
     try:
         event = json.load(sys.stdin)
-    except json.JSONDecodeError:
-        print("env hook: stdin was not JSON", file=sys.stderr)
+        if not isinstance(event, dict):
+            raise ValueError("event is not an object")
+        bad = [p for p in paths_in(event) if is_secret_env(p)]
+    except Exception as exc:                           # any failure blocks the call
+        print(f"env hook: cannot read the event ({exc})", file=sys.stderr)
         return 2                                       # fail closed
-    bad = [p for p in paths_in(event) if is_secret_env(p)]
     if not bad:
         return 0                                       # no opinion
     print(json.dumps({"hookSpecificOutput": {

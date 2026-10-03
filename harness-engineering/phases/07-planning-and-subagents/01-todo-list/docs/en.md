@@ -63,7 +63,7 @@ In a real harness, `verify` runs a test command or a file check. Do not let `ver
 
 ## Use It
 
-Claude Code ships task tools for this: `TaskCreate`, `TaskGet`, `TaskList` and `TaskUpdate`. The model creates tasks, updates their status as it works, and lists them again to see what is left. The older `TodoWrite` tool is off by default in favour of these.
+Claude Code has task tools for this: `TaskCreate`, `TaskGet`, `TaskList` and `TaskUpdate`. The model creates tasks, updates their status as it works, and lists them again to see what is left. They are on by default only for some older models. On newer models, turn them on with `CLAUDE_CODE_ENABLE_TODO_TOOLS=1`. Check the tools reference for your version.
 
 The tools store the list. They do not run your done-checks. You add that part yourself. Put it in your instructions ("run the tests before you mark a step complete"), or enforce it with a hook (see [Hooks](../../../06-permissions-and-security/02-hooks/docs/en.md)).
 

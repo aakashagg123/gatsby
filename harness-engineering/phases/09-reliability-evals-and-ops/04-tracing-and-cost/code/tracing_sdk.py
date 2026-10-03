@@ -19,13 +19,16 @@ tracer = provider.get_tracer("harness")
 def run(task):
     with tracer.start_as_current_span("invoke_agent harness") as agent:
         agent.set_attribute("gen_ai.operation.name", "invoke_agent")
+        agent.set_attribute("gen_ai.provider.name", "anthropic")
         with tracer.start_as_current_span(f"chat {MODEL}") as model_call:
             model_call.set_attribute("gen_ai.operation.name", "chat")
+            model_call.set_attribute("gen_ai.provider.name", "anthropic")
             model_call.set_attribute("gen_ai.request.model", MODEL)
             model_call.set_attribute("gen_ai.usage.input_tokens", 120)    # read these from response.usage
             model_call.set_attribute("gen_ai.usage.output_tokens", 40)
         with tracer.start_as_current_span("execute_tool bash") as tool:
             tool.set_attribute("gen_ai.operation.name", "execute_tool")
+            tool.set_attribute("gen_ai.tool.name", "bash")
 
 
 if __name__ == "__main__":

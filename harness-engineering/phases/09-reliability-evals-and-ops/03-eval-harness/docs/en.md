@@ -54,7 +54,7 @@ def trajectory_score(case, run):
 The gate allows a small drop for noise and fails anything bigger:
 
 ```python
-def gate(current, baseline, tolerance=0.02):
+def gate(current, baseline, tolerance=0.02):          # 0.02 is an example value
     """Return (passed, message). Fail when the score drops more than `tolerance` below baseline."""
     delta = current - baseline
     if delta < -tolerance:
