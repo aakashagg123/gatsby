@@ -248,4 +248,4 @@ well.
 - [Creativity](./creativity.md)
 - [Domain expertise](./domain-expertise.md)
 - [Recap & real-world examples](./recap.md)
-- [Evals & testing the harness](../harness-engineering/phases/15-evals-and-testing-the-harness/README.md) — where product taste for AI becomes an executable eval suite.
+- [Reliability, evals & ops](../harness-engineering/phases/09-reliability-evals-and-ops/README.md) — where product taste for AI becomes an executable eval suite.

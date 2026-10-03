@@ -322,7 +322,7 @@ prompts that drive Claude Code, Cursor, and other coding agents.
 
 ## [Harness engineering](./harness-engineering/README.md)
 
-The hands-on build track: construct a coding agent's harness phase by phase. Start with
+The hands-on build track: construct a coding agent's harness in 10 phases and 41 lessons, ending in a capstone agent that passes a real test. Start with
 the [roadmap](./harness-engineering/ROADMAP.md).
 
 ## [Flowable](./flowable/README.md)

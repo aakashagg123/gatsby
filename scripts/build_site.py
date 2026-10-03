@@ -340,8 +340,8 @@ LANDING = """<!doctype html>
     <a class="card" href="harness/index.html">
       <span class="tag">Module</span>
       <h2>Harness engineering →</h2>
-      <p>Build a coding agent's harness from scratch — loop, tools, context, memory,
-      subagents — then use the real SDK. Build it / use it, ships an artifact each lesson.</p>
+      <p>Build a coding agent's harness from scratch — loop, tools, context, permissions,
+      subagents — then use the real SDK. 10 phases, 41 lessons, one tested capstone.</p>
     </a>
     <a class="card" href="flowable/index.html">
       <span class="tag">Module</span>

@@ -26,7 +26,7 @@ Everything here feeds the cross-stack tradeoff reasoning in
 
 ## Connects to other tracks
 
-- [Prompt caching, built by hand](../../harness-engineering/phases/01-llm-io-foundations/08-prompt-caching/docs/en.md) — the harness-side view of what you cache and why.
+- [Prompt caching, built by hand](../../harness-engineering/phases/01-foundations-and-the-loop/02-tokens-context-and-caching/docs/en.md) — the harness-side view of what you cache and why.
 - [Latency, scale & performance](../../technical-product-sense/latency-scale-performance.md) — inference latency as a product and cost concern.
 - [The economics of infrastructure](../../technical-product-sense/economics-of-infrastructure.md) — where the money goes when tokens are the unit.
 

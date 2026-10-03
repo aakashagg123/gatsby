@@ -25,7 +25,7 @@ whole [harness](../00-foundations/harness-engineering.md) is built.
 
 - [AI security & guardrails](../../ai-security-and-guardrails/README.md) — the full four-attack threat taxonomy (jailbreak, injection, extraction, poisoning) and the compliance layer above this module's engineering depth.
 - [Safety, security & governance for agents](../../agentic-ai/safety-security-and-governance.md) — the agent-layer view of injection and permissions.
-- [Security & alignment in the harness](../../harness-engineering/phases/17-security-and-alignment/README.md) — tenant isolation and gating, built by hand.
+- [Permissions & security in the harness](../../harness-engineering/phases/06-permissions-and-security/README.md) — permission gating and untrusted-content defenses, built by hand.
 - [Security & privacy sense](../../technical-product-sense/security-and-privacy.md) — the "what does the attacker hold tomorrow?" frame.
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md) — war stories from production plus the key takeaways.
