@@ -14,9 +14,9 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 68 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 71 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
-**Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
+**Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
 > 🎯 **For the AI engineer**
 >
@@ -34,7 +34,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Foundations | about 1 hour (plus planned modules) |
+| 1 | Foundations | about 4 hours (plus planned modules) |
 | 2 | Models and APIs | about 6.5 hours |
 | 3 | Grounding and memory | about 5 hours |
 | 4 | Agents and the harness (build it) | about 29 hours |
@@ -42,14 +42,14 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 ## Stage 1: Foundations
 
-Learn how a model is trained and what its data looks like. Everything later builds on it. (about 1 hour plus the planned modules)
+Learn how a model is trained and what its data looks like. Everything later builds on it. (about 4 hours plus the planned modules)
 
-- **Machine learning**: coming soon. A module on machine learning basics is planned. Skip this step until it is published.
+- **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [3. Training: loss and gradient descent](../machine-learning/training-loss-and-gradient-descent.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md)
 - **Tensors**: coming soon. Shapes, broadcasting and batching. Planned.
 - **CNNs**: coming soon. Optional branch for vision. Planned.
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md)
 
-**Ready to move on when:** You can explain what a token and a context window are, and how sampling changes the output. Until the machine learning module ships, add a training-loop primer of your own.
+**Ready to move on when:** You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting.
 
 ## Stage 2: Models and APIs
 
@@ -118,7 +118,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week spreads the path over 8 weeks. Each week ends with something you can show.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 71 hours) takes about 8 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

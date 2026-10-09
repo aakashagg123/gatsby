@@ -1,54 +1,54 @@
 <!-- Threat model lesson — 4 attacks × 4 guardrails → fail-closed decision → outcomes.
      Diagram type: PARALLEL MATRIX (attack × defense) with terminal decision fork. -->
 <style>
-.dgm-tm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #a13d63;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+.dgm-tm{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;
   font-family:inherit;text-align:left;position:relative}
-.dgm-tm-chip{position:absolute;top:-11px;left:24px;background:#a13d63;color:#ffffff;
+.dgm-tm-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(161,61,99,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
 .dgm-tm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-tm-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-tm-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px}
 .dgm-tm-matrix{display:grid;grid-template-columns:1fr 24px 1.15fr;gap:8px 12px;
   align-items:center;margin-bottom:16px}
-.dgm-tm-attack{background:#ffebe9;border:1px solid #ffcecb;border-radius:11px;padding:11px 12px;
+.dgm-tm-attack{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface);border-radius:11px;padding:11px 12px;
   display:flex;gap:10px;align-items:flex-start}
-.dgm-tm-attack .dgm-tm-ico{color:#d1242f;width:22px;height:22px;flex:0 0 22px;margin-top:2px}
-.dgm-tm-attack h5{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#82061e;
+.dgm-tm-attack .dgm-tm-ico{color:var(--color-text-danger);width:22px;height:22px;flex:0 0 22px;margin-top:2px}
+.dgm-tm-attack h5{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--color-text-danger);
   letter-spacing:.02em;text-transform:uppercase}
-.dgm-tm-attack p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
-.dgm-tm-vs{text-align:center;color:#8c959f;font-weight:700;font-size:14px}
-.dgm-tm-defense{background:#ddf4ff;border:1px solid #b6e3ff;border-radius:11px;padding:11px 12px;
+.dgm-tm-attack p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-tm-vs{text-align:center;color:var(--color-text-tertiary);font-weight:700;font-size:14px}
+.dgm-tm-defense{background:var(--color-background-info-surface);border:1px solid var(--color-border-info-surface);border-radius:11px;padding:11px 12px;
   display:flex;gap:10px;align-items:flex-start}
-.dgm-tm-defense .dgm-tm-ico{color:#0969da;width:22px;height:22px;flex:0 0 22px;margin-top:2px}
-.dgm-tm-defense h5{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#0550ae}
-.dgm-tm-defense p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
-.dgm-tm-conv{display:flex;justify-content:center;color:#8c959f;margin:8px 0}
+.dgm-tm-defense .dgm-tm-ico{color:var(--color-text-info);width:22px;height:22px;flex:0 0 22px;margin-top:2px}
+.dgm-tm-defense h5{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--color-text-info)}
+.dgm-tm-defense p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-tm-conv{display:flex;justify-content:center;color:var(--color-text-tertiary);margin:8px 0}
 .dgm-tm-conv svg{width:20px;height:20px}
-.dgm-tm-diamond{background:#ffffff;border:1.5px dashed #b6e3ff;border-radius:12px;
-  padding:14px 18px;text-align:center;color:#0550ae;font-weight:600;font-size:13px;
+.dgm-tm-diamond{background:var(--color-surface);border:1.5px dashed var(--color-border-info-surface);border-radius:12px;
+  padding:14px 18px;text-align:center;color:var(--color-text-info);font-weight:600;font-size:13px;
   margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px}
-.dgm-tm-diamond .dgm-tm-tag{background:#ddf4ff;color:#0969da;font-size:10px;font-weight:700;
+.dgm-tm-diamond .dgm-tm-tag{background:var(--color-background-info-surface);color:var(--color-text-info);font-size:10px;font-weight:700;
   letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:6px}
 .dgm-tm-fork{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;align-items:stretch}
 .dgm-tm-branch{border-radius:12px;padding:14px 16px;position:relative;display:flex;
   gap:12px;align-items:flex-start}
-.dgm-tm-branch.safe{background:#dafbe1;border:1.5px solid #aceebb}
-.dgm-tm-branch.trap{background:#ffebe9;border:1.5px solid #ffcecb}
+.dgm-tm-branch.safe{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-tm-branch.trap{background:var(--color-background-danger-surface);border:1.5px solid var(--color-border-danger-surface)}
 .dgm-tm-branch .dgm-tm-ico{width:26px;height:26px;flex:0 0 26px;margin-top:2px}
-.dgm-tm-branch.safe .dgm-tm-ico{color:#1a7f37}
-.dgm-tm-branch.trap .dgm-tm-ico{color:#d1242f}
-.dgm-tm-branch .dgm-tm-verdict{position:absolute;top:-9px;left:14px;background:#ffffff;
-  border:1px solid #d1d9e0;font-size:9.5px;font-weight:700;letter-spacing:.6px;
+.dgm-tm-branch.safe .dgm-tm-ico{color:var(--color-text-success)}
+.dgm-tm-branch.trap .dgm-tm-ico{color:var(--color-text-danger)}
+.dgm-tm-branch .dgm-tm-verdict{position:absolute;top:-9px;left:14px;background:var(--color-surface);
+  border:1px solid var(--color-border);font-size:9.5px;font-weight:700;letter-spacing:.6px;
   text-transform:uppercase;padding:2px 8px;border-radius:6px}
-.dgm-tm-branch.safe .dgm-tm-verdict{color:#1a7f37;border-color:#aceebb}
-.dgm-tm-branch.trap .dgm-tm-verdict{color:#d1242f;border-color:#ffcecb}
-.dgm-tm-branch h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
-.dgm-tm-branch p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
-.dgm-tm-cta{align-self:center;text-align:center;color:#8c959f;font-size:11px;font-weight:700;
-  letter-spacing:.4px;text-transform:uppercase;background:#f6f8fa;border:1px solid #d1d9e0;
+.dgm-tm-branch.safe .dgm-tm-verdict{color:var(--color-text-success);border-color:var(--color-border-success-surface)}
+.dgm-tm-branch.trap .dgm-tm-verdict{color:var(--color-text-danger);border-color:var(--color-border-danger-surface)}
+.dgm-tm-branch h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-tm-branch p{margin:0;font-size:11.5px;color:var(--color-text-secondary);line-height:1.4}
+.dgm-tm-cta{align-self:center;text-align:center;color:var(--color-text-tertiary);font-size:11px;font-weight:700;
+  letter-spacing:.4px;text-transform:uppercase;background:var(--color-surface-tertiary);border:1px solid var(--color-border);
   border-radius:20px;padding:6px 4px}
 @media (max-width:640px){
   .dgm-tm{padding:20px 16px 18px}
@@ -96,7 +96,7 @@
     </div>
 
     <div class="dgm-tm-attack">
-      <svg class="dgm-tm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/><circle cx="12" cy="12" r="2" fill="#82061e"/></svg>
+      <svg class="dgm-tm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/><circle cx="12" cy="12" r="2" fill="var(--color-background-danger-solid)"/></svg>
       <div><h5>Poisoning</h5><p>Corrupt what the model learns in the first place</p></div>
     </div>
     <div class="dgm-tm-vs">→</div>

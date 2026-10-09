@@ -1,0 +1,4 @@
+@openai/apps-sdk-ui 0.2.2 (MIT)
+Source: https://www.npmjs.com/package/@openai/apps-sdk-ui — dist/es/styles/*.css and dist/es/components/*/*.module.css
+Copied verbatim. Do not edit these files. scripts/design_system.py strips only the Tailwind-only
+directives (@theme, @custom-variant) at build time.

@@ -10,6 +10,7 @@ import re
 import html as htmllib
 import markdown
 import reader_widget
+import design_system as ds
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "content")
@@ -74,7 +75,7 @@ def rewrite_target(target, cur_mod):
             "api-integrations", "memory-and-context", "tool-calling", "ai-agents",
             "agentic-workflows", "evaluation-and-observability", "ai-security-and-guardrails",
             "cost-optimization", "access-control", "context-engineering", "prompt-engineering",
-            "learning-paths")
+            "learning-paths", "machine-learning")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):
@@ -184,7 +185,7 @@ def lesson_title(md):
 
 # ---- page chrome --------------------------------------------------------------
 SPARK = ('<svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true">'
-         '<path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="#1F2328"/></svg>')
+         '<path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg>')
 
 def head(title, depth_note=""):
     return f"""<!DOCTYPE html>
@@ -193,29 +194,18 @@ def head(title, depth_note=""):
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{htmllib.escape(title)}</title>
-{FONT_LINKS}
-<style>{CSS}</style>
 </head>
 <body>"""
 
 
-# Inter as the site's default sans, with the standard system-font fallback
-# chain preserved for offline / blocked-CDN cases. Loaded once per page via
-# Google Fonts; the reader-settings widget can override to Tahoma / Arial /
-# Verdana / Helvetica per reader preference.
-FONT_LINKS = (
-    '<link rel="preconnect" href="https://fonts.googleapis.com">'
-    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-    '<link href="https://fonts.googleapis.com/css2?'
-    'family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">'
-)
-
 def topbar(with_menu=False):
     links = "".join(
-        f'<a href="{SLUG_TO_PAGE[s]}">{num}</a>' for (s, num, *_ ) in MODULES
+        f'<a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill '
+        f'href="{SLUG_TO_PAGE[s]}"><span class="ButtonInner">{num}</span></a>' for (s, num, *_ ) in MODULES
     )
-    menu_btn = ('<button class="menu-btn" id="sbToggle" aria-expanded="false" '
-                'aria-controls="sbNav" aria-label="Open module menu">☰</button>') if with_menu else ""
+    menu_btn = ('<button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" '
+                'data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" '
+                'aria-label="Open module menu"><span class="ButtonInner">'+ds.MENU_ICON+'</span></button>') if with_menu else ""
     scrim = '<div id="sb-scrim"></div>' if with_menu else ""
     return f"""<header class="topbar">
   {menu_btn}<a class="brand" href="index.html">{SPARK}<span>AI&nbsp;engineering</span><em>for AI-native PMs</em></a>
@@ -291,8 +281,8 @@ def build_module(idx):
         lessons_meta.append((lid, t))
         body = convert_lesson(md, slug)
         sections.append(
-            f'<section class="lesson" id="{lid}">'
-            f'<div class="lesson-head"><span class="lesson-num">{num}.{i}</span>'
+            f'<section class="lesson MarkdownContent" id="{lid}">'
+            f'<div class="lesson-head">{ds.badge(f"{num}.{i}", size="lg")}'
             f'<h2>{htmllib.escape(t)}</h2></div>{body}'
             f'<a class="totop" href="#top">↑ back to top</a></section>'
         )
@@ -305,7 +295,7 @@ def build_module(idx):
     iw_html, iw_js = ("", "")
     if iw:
         iw_html = (f'<section class="interactive" id="interactive">'
-                   f'<div class="iw-head"><span class="tag">Interactive</span>'
+                   f'<div class="iw-head">{ds.badge("Interactive", color="info", size="md")}'
                    f'<h3>{htmllib.escape(iw["title"])}</h3></div>'
                    f'<div class="iw-body">{iw["html"]}</div></section>')
         iw_js = f"<script>{iw['js']}</script>"
@@ -316,7 +306,7 @@ def build_module(idx):
         with open(recap_path) as f:
             rmd = f.read()
         recap_body = convert_lesson(rmd, slug)
-        recap_html = (f'<section class="recap" id="recap">'
+        recap_html = (f'<section class="recap MarkdownContent" id="recap">'
                       f'<div class="recap-head"><span class="recap-ic">📌</span>'
                       f'<h2>Recap &amp; real-world examples</h2></div>{recap_body}'
                       f'<a class="totop" href="#top">↑ back to top</a></section>')
@@ -345,13 +335,13 @@ def build_module(idx):
     page += sidebar(slug, nav_items)
     page += f"""<main class="content" id="top">
   <div class="hero">
-    <span class="chip">Module {num}</span>
+    {ds.badge(f"Module {num}", size="lg", pill=True)}
     <h1>{htmllib.escape(title)}</h1>
     <p class="lede">{htmllib.escape(desc)}</p>
     <div class="hero-meta">{len(lessons)} lessons · interactive demo · every lesson includes a
       <strong>🎯 For the AI-native PM</strong> briefing</div>
   </div>
-  <div class="intro">{intro_html}</div>
+  <div class="intro MarkdownContent">{intro_html}</div>
   <nav class="toc"><div class="toc-h">In this module</div>{toc_rows}</nav>
   {iw_html}
   {''.join(sections)}
@@ -368,7 +358,7 @@ def build_index():
         lis = "".join(f"<li>{htmllib.escape(l.replace('-', ' '))}</li>" for l in lessons[:3])
         more = f"<li class='more'>+{len(lessons)-3} more…</li>" if len(lessons) > 3 else ""
         cards.append(f"""<a class="card" href="{SLUG_TO_PAGE[slug]}">
-        <span class="card-num">{num}</span>
+        {ds.badge(num, size="md")}
         <h3>{htmllib.escape(title)}</h3>
         <p>{htmllib.escape(desc)}</p>
         <ul>{lis}{more}</ul>
@@ -391,21 +381,15 @@ def build_index():
     page += topbar()
     page += f"""<main class="content index" id="top">
   <div class="index-hero">
-    <span class="chip">A linked curriculum</span>
+    {ds.badge("A linked curriculum", size="lg", pill=True)}
     <h1>AI engineering,<br/><em>from scratch to production.</em></h1>
     <p class="lede">The engineering discipline underneath production LLM systems —
       inference, retrieval, evaluation, observability, safety, and cost — taught through
       the lens of the decisions a <strong>Senior or Principal PM</strong> has to make.</p>
-    <div class="index-meta"><span>7 modules</span><span>23 lessons</span>
-      <span>PM-native</span><span>production-grade</span></div>
+    <div class="index-meta">{"".join(ds.badge(t, size="lg", pill=True) for t in ("7 modules", "23 lessons", "PM-native", "production-grade"))}</div>
   </div>
 
-  <div class="pm-band">
-    <span class="pm-ic">🎯</span>
-    <div><strong>Built for the AI-native PM.</strong> Every lesson pairs the real
-    mechanics with a briefing: why it matters to the product, what it changes in your
-    decisions, the question to ask your eng team, and the product risk if you ignore it.</div>
-  </div>
+  <div class="pm-band">{ds.alert("🎯 Built for the AI-native PM", "Every lesson pairs the real mechanics with a briefing: why it matters to the product, what it changes in your decisions, the question to ask your eng team, and the product risk if you ignore it.", color="primary", icon=False)}</div>
 
   <h2 class="sec">The modules</h2>
   <div class="cards">{''.join(cards)}</div>
@@ -418,368 +402,14 @@ def build_index():
     with open(os.path.join(OUT, "index.html"), "w") as f:
         f.write(reader_widget.inject(page))
 
-CSS = r"""
-:root{
-  --bg:#FFFFFF; --bg2:#F6F8FA; --panel:#FFFFFF; --line:#D1D9E0; --line2:#EAEEF2;
-  --ink:#1F2328; --ink2:#1F2328; --mut:#59636E; --accent:#0969DA; --accent-d:#0550AE;
-  --accent-soft:#DDF4FF; --accent-border:#B6E3FF; --green:#1A7F37; --red:#D1242F;
-  --red-soft:#FFEBE9; --radius:6px;
-  --serif:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,'SFMono-Regular','SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink2);font-family:var(--sans);
-  font-size:16px;line-height:1.7;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
-  font-feature-settings:"cv11","ss01","ss03";
-  overflow-x:hidden}
-img,svg,canvas{max-width:100%;height:auto}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* top bar */
-.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;
-  padding:14px 26px;background:rgba(255,255,255,.96);
-  border-bottom:1px solid var(--line);
-  box-shadow:0 1px 0 rgba(31,35,40,.02),0 4px 16px rgba(31,35,40,.03)}
-.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
-.brand:hover{text-decoration:none}
-.brand span{font-size:16px;letter-spacing:.2px}
-.brand em{font-style:normal;color:var(--mut);font-weight:400;font-size:13px;
-  padding-left:9px;margin-left:3px;border-left:1px solid var(--line)}
-.spark{flex:0 0 auto}
-.topnav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
-.topnav a{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--mut);
-  padding:5px 10px;border-radius:8px}
-.topnav a:hover{background:var(--bg2);color:var(--accent);text-decoration:none}
-.menu-btn{display:none;width:44px;height:44px;align-items:center;justify-content:center;
-  border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);
-  font-size:18px;line-height:1;cursor:pointer;flex:0 0 auto;padding:0;margin-right:4px}
-.menu-btn:hover{border-color:var(--accent)}
-#sb-scrim{position:fixed;inset:0;background:rgba(31,35,40,.30);opacity:0;visibility:hidden;
-  transition:opacity .2s;z-index:34}
-#sb-scrim.open{opacity:1;visibility:visible}
-
-/* layout */
-.layout{display:grid;grid-template-columns:268px minmax(0,1fr);gap:0;
-  max-width:1240px;margin:0 auto}
-.layout.has-outline{grid-template-columns:268px minmax(0,1fr)}
-.sidebar{border-right:1px solid var(--line);padding:30px 18px 60px}
-.sticky{position:sticky;top:74px}
-.modlink{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-radius:var(--radius);
-  color:var(--ink2);font-size:14.5px;font-weight:500}
-.modlink:hover{background:var(--bg2);text-decoration:none}
-.modlink.active{background:var(--accent-soft);color:var(--accent)}
-.modlink .num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
-.sub{display:flex;flex-direction:column;margin:2px 0 10px 34px;
-  border-left:1px solid var(--line);padding-left:12px}
-.sub a{color:var(--mut);font-size:13px;padding:4px 0;line-height:1.4}
-.sub a:hover{color:var(--accent);text-decoration:none}
-
-/* "on this page" outline — right rail, wide screens only */
-.outline{display:none}
-@media (min-width:1280px){
-  .layout.has-outline{grid-template-columns:268px minmax(0,1fr) 220px}
-  .layout.has-outline .outline{display:block;padding:30px 16px 60px 8px}
-}
-.outline-h{font-family:var(--mono);font-size:11px;letter-spacing:.4px;
-  color:var(--mut);margin:0 0 10px 13px}
-.outline a{display:block;padding:5px 13px;font-size:12.5px;color:var(--mut);line-height:1.4;
-  border-left:2px solid transparent}
-.outline a:hover{color:var(--ink);text-decoration:none}
-.outline a.h3{padding-left:25px;font-size:12px}
-.outline a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
-
-/* content column */
-.content{padding:46px 56px 90px;max-width:880px}
-.hero{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
-.chip{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.3px;
-  color:var(--accent);background:var(--accent-soft);
-  padding:5px 11px;border-radius:999px;margin-bottom:18px}
-.hero h1{font-family:var(--serif);font-weight:600;font-size:38px;line-height:1.15;
-  color:var(--ink);margin:.1em 0 .25em}
-.lede{font-size:19px;color:var(--ink2);margin:.2em 0 .6em;line-height:1.5}
-.hero-meta{font-size:14px;color:var(--mut)}
-.hero-meta strong{color:var(--accent);font-weight:600}
-
-.intro{color:var(--ink2)}
-.intro blockquote{margin:18px 0}
-
-/* table of contents */
-.toc{margin:30px 0 8px;background:var(--bg2);border:1px solid var(--line);
-  border-radius:var(--radius);padding:18px 20px}
-.toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.4px;
-  color:var(--mut);margin-bottom:10px}
-.toc a{display:flex;gap:12px;padding:6px 0;color:var(--ink2);font-size:15px;
-  border-bottom:1px solid var(--line2)}
-.toc a:last-child{border-bottom:none}
-.toc a:hover{color:var(--accent);text-decoration:none}
-.toc a span{font-family:var(--mono);font-size:12.5px;color:var(--accent);min-width:32px}
-
-/* lessons */
-.lesson{padding:46px 0 8px;border-top:1px solid var(--line);margin-top:30px}
-.lesson:first-of-type{border-top:none}
-.lesson-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
-.lesson-num{font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);
-  padding:3px 9px;border-radius:var(--radius);font-weight:600}
-.lesson h2{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.25;
-  color:var(--ink);margin:0;padding-bottom:.3em;border-bottom:1px solid var(--line)}
-.lesson h3{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);
-  margin:1.8em 0 .5em}
-.lesson h4{font-size:16px;font-weight:600;color:var(--ink);margin:1.4em 0 .4em;
-  letter-spacing:.2px}
-.lesson p{margin:.85em 0}
-.lesson ul,.lesson ol{padding-left:1.35em;margin:.7em 0}
-.lesson li{margin:.32em 0}
-.lesson strong{color:var(--ink);font-weight:600}
-.lesson em{color:var(--ink2)}
-hr{border:none;border-top:1px solid var(--line);margin:2em 0}
-
-/* PM callout — GitHub "alert" style: coloured left rule, plain canvas fill */
-.pm-callout{position:relative;background:var(--panel);
-  border:1px solid var(--line);border-left:4px solid var(--accent);
-  border-radius:var(--radius);padding:16px 22px 12px;margin:22px 0}
-.pm-callout > p:first-child{font-family:var(--sans);font-weight:600;color:var(--accent);
-  font-size:14px;margin:0 0 .5em}
-.pm-callout p{margin:.5em 0;font-size:15.5px}
-.pm-callout strong{color:var(--ink)}
-
-/* generic blockquote — GitHub markdown treatment: grey rule, no fill */
-blockquote{margin:16px 0;padding:0 1em;border-left:.25em solid var(--line);
-  color:var(--mut);background:none;border-radius:0}
-blockquote p{margin:.5em 0}
-
-/* tables */
-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden}
-th{text-align:left;background:var(--bg2);color:var(--ink);font-weight:600;
-  padding:11px 14px;border-bottom:1px solid var(--line);font-size:13.5px}
-td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr:nth-child(2n) td{background:var(--bg2)}
-td code,th code{font-size:12.5px}
-
-/* code — GitHub markdown code blocks: light grey, no syntax colour */
-code{font-family:var(--mono);font-size:13.5px;background:var(--bg2);color:var(--ink);
-  padding:2px 6px;border-radius:6px;overflow-wrap:anywhere}
-pre{background:var(--bg2);color:var(--ink);border-radius:var(--radius);padding:16px 18px;
-  overflow-x:auto;margin:18px 0;border:1px solid var(--line);line-height:1.55}
-pre code{background:none;color:inherit;padding:0;font-size:13px}
-
-/* task lists */
-.lesson li.task{list-style:none;margin-left:-1.1em;padding-left:1.9em;position:relative}
-.lesson li.task:before{position:absolute;left:0;top:0;width:1.2em;height:1.2em}
-.lesson li.todo:before{content:"☐";color:var(--mut);font-size:1.05em}
-.lesson li.done:before{content:"☑";color:var(--green)}
-
-.totop{display:inline-block;margin-top:24px;font-size:12.5px;color:var(--mut);
-  font-family:var(--mono)}
-.totop:hover{color:var(--accent);text-decoration:none}
-
-/* page nav + footer */
-.pagenav{display:flex;justify-content:space-between;gap:16px;margin:54px 0 30px;
-  flex-wrap:wrap}
-.navcard{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;padding:16px 20px;
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
-.navcard:hover{border-color:var(--accent);text-decoration:none}
-.navcard.next{text-align:right;align-items:flex-end}
-.navcard .lbl{font-size:12px;color:var(--mut);font-family:var(--mono)}
-.navcard .ttl{font-family:var(--serif);font-size:17px;color:var(--ink);font-weight:600}
-.foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);
-  color:var(--mut);font-size:13.5px}
-
-/* ---- index page ---- */
-.index{max-width:1080px;margin:0 auto;padding:60px 40px 90px}
-.index-hero{text-align:center;padding:20px 0 30px}
-.index-hero h1{font-family:var(--serif);font-weight:600;font-size:48px;line-height:1.12;
-  color:var(--ink);margin:.15em 0 .3em}
-.index-hero h1 em{font-style:normal;color:var(--accent)}
-.index-hero .lede{max-width:720px;margin:0 auto;font-size:19px}
-.index-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.index-meta span{font-size:13px;color:var(--ink2);background:var(--bg2);
-  border:1px solid var(--line);padding:6px 14px;border-radius:999px;
-  font-family:var(--mono)}
-.pm-band{display:flex;gap:16px;align-items:flex-start;max-width:860px;margin:36px auto;
-  background:var(--panel);border:1px solid var(--line);
-  border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px}
-.pm-band .pm-ic{font-size:24px;line-height:1.2}
-.pm-band strong{color:var(--ink)}
-.sec{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--ink);
-  text-align:center;margin:60px 0 26px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
-.card{position:relative;display:flex;flex-direction:column;background:var(--panel);
-  border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 22px;color:var(--ink2)}
-.card:hover{border-color:var(--accent);text-decoration:none;transition:.15s}
-.card-num{font-family:var(--mono);font-size:13px;color:#fff;background:var(--accent);
-  width:fit-content;padding:3px 10px;border-radius:var(--radius);font-weight:600;margin-bottom:12px}
-.card h3{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);margin:0 0 .35em}
-.card p{font-size:14.5px;color:var(--mut);margin:0 0 .9em}
-.card ul{margin:0;padding-left:1.1em;font-size:13.5px;color:var(--ink2)}
-.card li{margin:.2em 0}
-.card li.more{list-style:none;margin-left:-1.1em;color:var(--mut);font-style:italic}
-.card-iw{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
-  letter-spacing:.4px;color:var(--accent);opacity:.9}
-.card-go{padding-top:6px;color:var(--accent);font-weight:600;font-size:14px}
-.threads{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
-  max-width:920px;margin:0 auto}
-.thread{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
-.thread-t{font-weight:600;color:var(--ink);margin-bottom:6px;font-size:15.5px}
-.thread p{margin:0;font-size:14px;color:var(--mut)}
-
-/* tablet: collapse to a single column */
-@media (max-width:880px){
-  .layout{grid-template-columns:minmax(0,1fr)}
-  /* .layout.has-outline's unconditional rule below (2 classes) outranks the
-     plain .layout rule above (1 class) on specificity regardless of this
-     media query, so it needs its own same-specificity override here to
-     actually collapse on mobile */
-  .layout.has-outline{grid-template-columns:minmax(0,1fr)}
-  .content{min-width:0;padding:32px 22px 70px}
-  .menu-btn{display:inline-flex}
-  .sidebar{display:block;position:fixed;top:0;left:0;bottom:0;z-index:35;
-    width:280px;max-width:86vw;background:var(--bg);border-right:none;
-    box-shadow:12px 0 40px rgba(31,35,40,.16);
-    transform:translateX(-100%);transition:transform .22s ease;
-    max-height:100%;overflow-y:auto;padding:0}
-  .sidebar.open{transform:translateX(0)}
-  .sidebar .sticky{position:static;padding:20px 14px 40px}
-  .hero h1{font-size:34px}.index-hero h1{font-size:38px}
-  .topnav{display:none}
-  .iw-field input[type=range]{width:160px}
-}
-
-/* phone-first: high readability on iPhone-class widths */
-@media (max-width:560px){
-  body{font-size:17px;line-height:1.7}
-  .topbar{padding:12px 16px;gap:12px}
-  .brand span{font-size:15px}
-  .brand em{display:none}
-  .content{padding:24px 16px 64px}
-  .index{padding:36px 16px 64px}
-  .chip{font-size:11px}
-  .hero h1{font-size:27px;line-height:1.18;margin-top:.2em}
-  .hero .lede,.hero-meta{font-size:15px}
-  .hero-meta{line-height:1.6}
-  .index-hero h1{font-size:30px;line-height:1.12}
-  .index-hero .lede{font-size:16.5px}
-  .lesson{padding:34px 0 8px;margin-top:22px}
-  .lesson-head{gap:10px}
-  .lesson h2{font-size:22px;line-height:1.22}
-  .lesson h3{font-size:18.5px}
-  .lesson p,.lesson li{font-size:16.5px}
-  pre{font-size:12.8px;padding:14px 14px;border-radius:10px}
-  pre code{font-size:12.8px}
-  code{font-size:12.8px;word-break:break-word}
-  /* wide tables scroll instead of breaking the page */
-  .lesson table,table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
-    white-space:nowrap;font-size:13.5px}
-  .cards,.threads{grid-template-columns:1fr}
-  .pagenav{flex-direction:column;gap:12px}
-  .navcard{flex:1 1 auto}
-  .navcard.next{text-align:left;align-items:flex-start}
-  .pm-band,.recap{padding:18px 18px}
-  .recap{margin-top:30px}
-  /* comfortable tap targets */
-  a,.iw-btn,summary{touch-action:manipulation}
-}
-
-/* ---- recap section ---- */
-.recap{margin-top:40px;padding:30px 30px 16px;border:1px solid var(--line);
-  border-radius:var(--radius);background:var(--bg2)}
-.recap-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-.recap-ic{font-size:22px}
-.recap h2{font-family:var(--serif);font-weight:600;font-size:25px;color:var(--ink);margin:0;
-  border-bottom:none;padding-bottom:0}
-.recap h2:not(.recap-head h2){margin-top:1.4em}
-.recap h2{}
-.recap .recap-head + p{margin-top:.6em}
-.recap table{background:#fff}
-.recap blockquote{background:#fff;border-left:.25em solid var(--line)}
-
-/* ---- interactive widgets ---- */
-.interactive{margin:34px 0;border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--panel);overflow:hidden}
-.iw-head{background:var(--bg2);padding:13px 22px;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:11px}
-.iw-head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.3px;
-  color:#fff;background:var(--accent);padding:3px 9px;border-radius:6px}
-.iw-head h3{font-family:var(--serif);margin:0;font-size:18px;color:var(--ink);font-weight:600}
-.iw-body{padding:22px 24px}
-.iw-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:18px}
-.iw-field{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--mut)}
-.iw-field label{font-weight:600;color:var(--ink2);font-size:13px}
-.iw-field .v{font-family:var(--mono);color:var(--accent);font-weight:600}
-.iw-field input[type=range]{width:190px;accent-color:var(--accent);cursor:pointer}
-.iw-btns{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px}
-.iw-btn{font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);
-  background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:var(--radius);transition:.15s}
-.iw-btn:hover{border-color:var(--accent);color:var(--accent)}
-.iw-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.iw-btn.primary:hover{background:var(--accent-d);color:#fff}
-.iw-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.iw-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);
-  cursor:pointer;user-select:none}
-.iw-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
-.iw-out{background:var(--bg2);border-radius:var(--radius);padding:16px 18px;margin-top:8px}
-.iw-note{font-size:13.5px;color:var(--mut);margin-top:12px;line-height:1.55}
-.iw-good{color:var(--green);font-weight:600}.iw-bad{color:var(--red);font-weight:600}
-.iw-metric{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:7px 0}
-.iw-metric .ml{font-size:13px;color:var(--ink2);min-width:120px}
-.iw-metric .mv{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600}
-.iw-track{flex:1;height:13px;background:var(--line2);border-radius:7px;overflow:hidden}
-.iw-fill{height:100%;width:0;background:var(--accent);border-radius:7px;
-  transition:width .45s ease,background-color .3s}
-/* pipeline stages (mod 00) */
-.iw-stages{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 4px}
-.iw-stage{padding:9px 13px;border:1px solid var(--line);border-radius:var(--radius);font-size:13px;
-  background:#fff;color:var(--ink2);transition:.25s;font-weight:500}
-.iw-stage.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-.iw-stage.dim{opacity:.32}.iw-stage.kill{border-color:var(--red);background:var(--red-soft);color:var(--red)}
-.iw-arrow{color:var(--mut);font-size:14px}
-/* chunk grid (mod 03) */
-.iw-grid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
-.iw-chunk{width:20px;height:20px;border-radius:5px;background:var(--line2)}
-.iw-chunk.rel{background:var(--accent)}.iw-chunk.kept{outline:2px solid var(--ink);outline-offset:1px}
-/* trace spans (mod 04) */
-.iw-span{display:flex;align-items:center;gap:10px;margin:5px 0;cursor:pointer}
-.iw-span .sn{min-width:118px;font-size:12.5px;color:var(--ink2);text-align:right}
-.iw-spanbar-wrap{flex:1;background:var(--line2);border-radius:6px;height:22px;position:relative}
-.iw-spanbar{position:absolute;height:22px;border-radius:6px;background:var(--accent);opacity:.85}
-.iw-span:hover .iw-spanbar,.iw-span.sel .iw-spanbar{opacity:1;outline:2px solid var(--ink)}
-.iw-stack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:4px 0 2px;border:1px solid var(--line)}
-.iw-stack span{display:block;height:100%}
-.iw-legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:4px}
-.iw-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.iw-verdict{font-size:15px;font-weight:600;margin-top:4px}
-/* iw-metric (mods 01/03/06) and iw-span (mod 04) are single-row flex
-   layouts with a min-width label that get cramped once the label, bar,
-   and value have to share ~250-300px of actual content width — stack
-   label+value above the bar instead of squeezing everything into one row.
-   Placed after the base rules above so it wins the cascade (equal
-   specificity, later source order) rather than needing !important. */
-@media (max-width:560px){
-  .iw-metric{flex-wrap:wrap;row-gap:4px}
-  .iw-metric .ml{min-width:0;flex:1 1 auto}
-  .iw-metric .mv{flex:0 0 auto}
-  .iw-track{flex:1 1 100%;order:3}
-  .iw-span{flex-wrap:wrap;row-gap:4px}
-  .iw-span .sn{min-width:0;flex:0 0 auto;text-align:left}
-  .iw-spanbar-wrap{flex:1 1 100%;order:2}
-}
-"""
-
 INTERACTIVES = {
 # ---------------------------------------------------------------- module 00
 "00-foundations": {
  "title": "Harness vs. prompt — what catches a bad model call?",
  "html": r'''<p class="iw-note" style="margin-top:0">The model is one fast, unreliable function call. Watch what the <strong>harness</strong> around it does when the model misbehaves — and what happens without it.</p>
 <div class="iw-btns">
-  <button class="iw-btn primary" id="hz-good">▶ Run a good call</button>
-  <button class="iw-btn" id="hz-bad">▶ Run a bad call (model returns garbage)</button>
+  <button class="Button" data-variant="solid" data-color="primary" data-size="sm" data-pill id="hz-good">▶ Run a good call</button>
+  <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill id="hz-bad">▶ Run a bad call (model returns garbage)</button>
   <label class="iw-toggle" style="margin-left:6px"><input type="checkbox" id="hz-harness" checked> Harness enabled</label>
 </div>
 <div class="iw-stages" id="hz-stages"></div>
@@ -806,14 +436,14 @@ root.querySelector('#hz-good').onclick=function(){run(false);};root.querySelecto
   <div class="iw-field"><label>Cached prefix <span class="v" id="lc-cv"></span></label><input type="range" id="lc-cache" min="0" max="100" step="5" value="0"></div>
 </div>
 <div class="iw-btns">
-  <button class="iw-btn" data-p="rag">Long input · short answer</button>
-  <button class="iw-btn" data-p="chat">Chatbot reply</button>
-  <button class="iw-btn" data-p="agent">Cached agent step</button>
+  <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-p="rag">Long input · short answer</button>
+  <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-p="chat">Chatbot reply</button>
+  <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-p="agent">Cached agent step</button>
 </div>
 <div class="iw-out">
   <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><strong>Latency</strong><span class="v" id="lc-total"></span></div>
-  <div class="iw-stack" id="lc-stack"><span id="lc-pre" style="background:#0969DA"></span><span id="lc-dec" style="background:#1A7F37"></span></div>
-  <div class="iw-legend"><span><i style="background:#0969DA"></i>Prefill (input) <span class="v" id="lc-prems"></span></span><span><i style="background:#1A7F37"></i>Decode (output) <span class="v" id="lc-decms"></span></span></div>
+  <div class="iw-stack" id="lc-stack"><span id="lc-pre" style="background:var(--color-background-info-solid)"></span><span id="lc-dec" style="background:var(--color-background-success-solid)"></span></div>
+  <div class="iw-legend"><span><i style="background:var(--color-background-info-solid)"></i>Prefill (input) <span class="v" id="lc-prems"></span></span><span><i style="background:var(--color-background-success-solid)"></i>Decode (output) <span class="v" id="lc-decms"></span></span></div>
   <div class="iw-metric" style="margin-top:14px"><span class="ml">Cost / request</span><span class="mv" id="lc-cost"></span></div>
   <div class="iw-note" id="lc-note"></div>
 </div>
@@ -834,8 +464,8 @@ else if(decode>prefill*1.4)note='<strong>Decode-dominated.</strong> Your latency
 else note='<strong>Balanced.</strong> Both phases matter — measure TTFT and TPOT separately before optimizing.';
 $('#lc-note').innerHTML=note;}
 var presets={rag:[15000,25,0],chat:[700,800,0],agent:[12000,150,80]};
-root.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){var p=presets[b.dataset.p];inEl.value=p[0];outEl.value=p[1];cacheEl.value=p[2];root.querySelectorAll('[data-p]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');calc();};});
-[inEl,outEl,cacheEl].forEach(function(e){e.oninput=function(){root.querySelectorAll('[data-p]').forEach(function(x){x.classList.remove('active');});calc();};});
+root.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){var p=presets[b.dataset.p];inEl.value=p[0];outEl.value=p[1];cacheEl.value=p[2];root.querySelectorAll('[data-p]').forEach(function(x){x.removeAttribute('data-selected');});b.setAttribute('data-selected','');calc();};});
+[inEl,outEl,cacheEl].forEach(function(e){e.oninput=function(){root.querySelectorAll('[data-p]').forEach(function(x){x.removeAttribute('data-selected');});calc();};});
 calc();})();''',
 },
 # ---------------------------------------------------------------- module 02
@@ -848,7 +478,7 @@ calc();})();''',
 </div>
 <div class="iw-btns">
  <label class="iw-toggle"><input type="checkbox" id="ab-g" checked> Guardrails (budgets + no-progress)</label>
- <button class="iw-btn primary" id="ab-run">▶ Run agent</button>
+ <button class="Button" data-variant="solid" data-color="primary" data-size="sm" data-pill id="ab-run">▶ Run agent</button>
 </div>
 <div class="iw-out">
  <div class="iw-stages" id="ab-tl"></div>
@@ -885,11 +515,11 @@ $('#ab-run').onclick=run;})();''',
 <div class="iw-grid" id="rg-grid"></div>
 <div class="iw-out">
  <div class="iw-metric"><span class="ml">Recall@k</span><span class="iw-track"><span class="iw-fill" id="rg-rcf"></span></span><span class="mv" id="rg-rc"></span></div>
- <div class="iw-metric"><span class="ml">Precision@k</span><span class="iw-track"><span class="iw-fill" id="rg-prf" style="background:#1A7F37"></span></span><span class="mv" id="rg-pr"></span></div>
+ <div class="iw-metric"><span class="ml">Precision@k</span><span class="iw-track"><span class="iw-fill" id="rg-prf" style="background:var(--color-background-success-solid)"></span></span><span class="mv" id="rg-pr"></span></div>
  <div class="iw-metric"><span class="ml">Context tokens</span><span class="mv" id="rg-tok"></span></div>
  <div class="iw-note" id="rg-note"></div>
 </div>
-<div class="iw-legend"><span><i style="background:#0969DA"></i>relevant</span><span><i style="background:#EAEEF2"></i>noise</span><span><i style="background:#fff;outline:2px solid #1F2328"></i>kept after rerank</span></div>''',
+<div class="iw-legend"><span><i style="background:var(--color-background-info-solid)"></i>relevant</span><span><i style="background:var(--color-background-primary-soft-alpha)"></i>noise</span><span><i style="background:var(--color-surface);outline:2px solid var(--color-text)"></i>kept after rerank</span></div>''',
  "js": r'''(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var R=8,k=$('#rg-k'),rr=$('#rg-rr');
 function calc(){var K=+k.value,rerank=rr.checked;
@@ -913,17 +543,17 @@ k.oninput=calc;rr.onchange=calc;calc();})();''',
 "04-evals-observability": {
  "title": "Trace waterfall — one request, span by span",
  "html": r'''<div class="iw-btns">
- <button class="iw-btn active" data-s="healthy">Healthy</button>
- <button class="iw-btn" data-s="slow">Slow retrieval</button>
- <button class="iw-btn" data-s="repair">Repair loop</button>
- <button class="iw-btn" data-s="timeout">Tool timeout</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-selected data-s="healthy">Healthy</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-s="slow">Slow retrieval</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-s="repair">Repair loop</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-s="timeout">Tool timeout</button>
 </div>
 <div id="tr-rows" style="margin:8px 0 4px"></div>
 <div class="iw-out" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
- <div><div style="font-size:12px;color:var(--mut)">Total latency</div><div class="mv" id="tr-lat"></div></div>
- <div><div style="font-size:12px;color:var(--mut)">Total cost</div><div class="mv" id="tr-cost"></div></div>
- <div><div style="font-size:12px;color:var(--mut)">Tokens in/out</div><div class="mv" id="tr-tok"></div></div>
- <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--mut)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
+ <div><div style="font-size:12px;color:var(--color-text-secondary)">Total latency</div><div class="mv" id="tr-lat"></div></div>
+ <div><div style="font-size:12px;color:var(--color-text-secondary)">Total cost</div><div class="mv" id="tr-cost"></div></div>
+ <div><div style="font-size:12px;color:var(--color-text-secondary)">Tokens in/out</div><div class="mv" id="tr-tok"></div></div>
+ <div style="flex:1;min-width:180px"><div style="font-size:12px;color:var(--color-text-secondary)">Selected span</div><div class="iw-note" id="tr-sel" style="margin-top:2px">Click a span to inspect tokens, latency &amp; cost.</div></div>
 </div>''',
  "js": r'''(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
 var SC={
@@ -935,14 +565,14 @@ function render(key){var s=SC[key],max=s.lat,rows=$('#tr-rows');rows.innerHTML='
 s.spans.forEach(function(sp){var row=document.createElement('div');row.className='iw-span';
 var name=document.createElement('span');name.className='sn';name.textContent=sp[0];
 var wrap=document.createElement('span');wrap.className='iw-spanbar-wrap';
-var bar=document.createElement('span');bar.className='iw-spanbar';bar.style.left=(sp[1]/max*100)+'%';bar.style.width=Math.max(1.2,sp[2]/max*100)+'%';if(sp[4])bar.style.background='#D1242F';
+var bar=document.createElement('span');bar.className='iw-spanbar';bar.style.left=(sp[1]/max*100)+'%';bar.style.width=Math.max(1.2,sp[2]/max*100)+'%';if(sp[4])bar.style.background='var(--color-background-danger-solid)';
 wrap.appendChild(bar);row.appendChild(name);row.appendChild(wrap);
 row.onclick=function(){rows.querySelectorAll('.iw-span').forEach(function(x){x.classList.remove('sel');});row.classList.add('sel');
 $('#tr-sel').innerHTML='<strong>'+sp[0]+'</strong> · '+sp[2]+' ms — '+sp[3];};
 rows.appendChild(row);});
 $('#tr-lat').textContent=(s.lat/1000).toFixed(2)+' s';$('#tr-cost').textContent='$'+s.cost.toFixed(4);$('#tr-tok').textContent=s.tok;
 $('#tr-sel').innerHTML='Click a span to inspect tokens, latency &amp; cost.';}
-root.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){root.querySelectorAll('[data-s]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');render(b.dataset.s);};});
+root.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){root.querySelectorAll('[data-s]').forEach(function(x){x.removeAttribute('data-selected');});b.setAttribute('data-selected','');render(b.dataset.s);};});
 render('healthy');})();''',
 },
 # ---------------------------------------------------------------- module 05
@@ -975,20 +605,20 @@ else{v.innerHTML='<span class="iw-bad">⚠ Cross-tenant leak</span> — Tenant&n
  "title": "Four-axis tradeoff explorer",
  "html": r'''<p class="iw-note" style="margin-top:0">Toggle levers and watch the four axes move. <strong>Higher is better on every bar</strong> — notice you can never push them all up at once.</p>
 <div class="iw-btns" id="fx-levers">
- <button class="iw-btn" data-l="bigger">Bigger model</button>
- <button class="iw-btn" data-l="smaller">Smaller model</button>
- <button class="iw-btn" data-l="quant">Quantize INT4</button>
- <button class="iw-btn" data-l="spec">Speculative decoding</button>
- <button class="iw-btn" data-l="batch">Bigger batches</button>
- <button class="iw-btn" data-l="cache">Prompt caching</button>
- <button class="iw-btn" data-l="rerank">Add reranking</button>
- <button class="iw-btn" data-l="fallback">Multi-provider fallback</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="bigger">Bigger model</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="smaller">Smaller model</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="quant">Quantize INT4</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="spec">Speculative decoding</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="batch">Bigger batches</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="cache">Prompt caching</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="rerank">Add reranking</button>
+ <button class="Button" data-variant="soft" data-color="secondary" data-size="sm" data-pill data-l="fallback">Multi-provider fallback</button>
 </div>
 <div class="iw-out">
  <div class="iw-metric"><span class="ml">⚡ Speed</span><span class="iw-track"><span class="iw-fill" id="fx-speed"></span></span><span class="mv" id="fx-speedv"></span></div>
- <div class="iw-metric"><span class="ml">✨ Quality</span><span class="iw-track"><span class="iw-fill" id="fx-quality" style="background:#1A7F37"></span></span><span class="mv" id="fx-qualityv"></span></div>
- <div class="iw-metric"><span class="ml">💰 Cost-efficiency</span><span class="iw-track"><span class="iw-fill" id="fx-cost" style="background:#9A6700"></span></span><span class="mv" id="fx-costv"></span></div>
- <div class="iw-metric"><span class="ml">🛡 Reliability</span><span class="iw-track"><span class="iw-fill" id="fx-rel" style="background:#8250DF"></span></span><span class="mv" id="fx-relv"></span></div>
+ <div class="iw-metric"><span class="ml">✨ Quality</span><span class="iw-track"><span class="iw-fill" id="fx-quality" style="background:var(--color-background-success-solid)"></span></span><span class="mv" id="fx-qualityv"></span></div>
+ <div class="iw-metric"><span class="ml">💰 Cost-efficiency</span><span class="iw-track"><span class="iw-fill" id="fx-cost" style="background:var(--color-background-caution-solid)"></span></span><span class="mv" id="fx-costv"></span></div>
+ <div class="iw-metric"><span class="ml">🛡 Reliability</span><span class="iw-track"><span class="iw-fill" id="fx-rel" style="background:var(--color-background-discovery-solid)"></span></span><span class="mv" id="fx-relv"></span></div>
  <div class="iw-note" id="fx-note">Baseline. Toggle one or more levers above.</div>
 </div>''',
  "js": r'''(function(){var root=document.getElementById('interactive');var $=function(id){return root.querySelector(id);};
@@ -1002,7 +632,7 @@ var on=Object.keys(active).filter(function(k){return active[k];});
 var note;if(!on.length)note='Baseline. Toggle one or more levers above.';
 else note='Active: <strong>'+on.length+'</strong> lever(s). Every lever pays for a gain on one axis with a loss on another — there is no globally best config, only the best one <em>for your SLO</em>.';
 $('#fx-note').innerHTML=note;}
-root.querySelectorAll('[data-l]').forEach(function(b){b.onclick=function(){var key=b.dataset.l;active[key]=!active[key];b.classList.toggle('active',active[key]);recompute();};});
+root.querySelectorAll('[data-l]').forEach(function(b){b.onclick=function(){var key=b.dataset.l;active[key]=!active[key];if(active[key])b.setAttribute('data-selected','');else b.removeAttribute('data-selected');recompute();};});
 recompute();})();''',
 },
 }

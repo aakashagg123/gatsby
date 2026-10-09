@@ -1,28 +1,28 @@
 <style>
-.dgm-em{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #bd5d3a;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-em{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-em-chip{position:absolute;top:-11px;left:24px;background:#bd5d3a;color:#ffffff;
+.dgm-em-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-warning-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(189,93,58,.28)}
-.dgm-em h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-em-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-warning-solid) 28%, transparent)}
+.dgm-em h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-em-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
 .dgm-em-path{border-radius:11px;padding:11px 13px;margin-bottom:8px;position:relative}
-.dgm-em-path.in{background:#faece5;border:1.5px solid #e8b39a}
-.dgm-em-path.out{background:#ddf4ff;border:1.5px solid #b6e3ff}
-.dgm-em-path.store{background:#dafbe1;border:1.5px solid #aceebb}
-.dgm-em-path .tag{position:absolute;top:-9px;left:13px;background:#ffffff;border:1px solid;
+.dgm-em-path.in{background:var(--color-background-warning-surface);border:1.5px solid var(--color-border-warning-outline)}
+.dgm-em-path.out{background:var(--color-background-info-surface);border:1.5px solid var(--color-border-info-surface)}
+.dgm-em-path.store{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-em-path .tag{position:absolute;top:-9px;left:13px;background:var(--color-surface);border:1px solid;
   font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
-.dgm-em-path.in .tag{color:#8a3d20;border-color:#e8b39a}
-.dgm-em-path.out .tag{color:#0550ae;border-color:#b6e3ff}
-.dgm-em-path.store .tag{color:#1a614f;border-color:#aceebb}
+.dgm-em-path.in .tag{color:var(--color-text-warning);border-color:var(--color-border-warning-outline)}
+.dgm-em-path.out .tag{color:var(--color-text-info);border-color:var(--color-border-info-surface)}
+.dgm-em-path.store .tag{color:var(--color-text-success);border-color:var(--color-border-success-surface)}
 .dgm-em-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px}
-.dgm-em-n{background:#ffffff;border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:#1f2328}
-.dgm-em-path.in .dgm-em-n{border:1px solid #f2d6c4}
-.dgm-em-path.out .dgm-em-n{border:1px solid #d4ecfa}
-.dgm-em-path.store .dgm-em-n{border:1px solid #cdf0da}
-.dgm-em-arr{color:#8c959f;font-size:10px}
-.dgm-em-clients{display:flex;justify-content:center;gap:8px;font-size:9.5px;color:#59636e;margin-top:4px}
+.dgm-em-n{background:var(--color-surface);border-radius:8px;padding:7px 9px;font-size:9.5px;font-weight:600;color:var(--color-text)}
+.dgm-em-path.in .dgm-em-n{border:1px solid var(--color-border-warning-surface)}
+.dgm-em-path.out .dgm-em-n{border:1px solid var(--color-border-info-surface)}
+.dgm-em-path.store .dgm-em-n{border:1px solid var(--color-border-success-surface)}
+.dgm-em-arr{color:var(--color-text-tertiary);font-size:10px}
+.dgm-em-clients{display:flex;justify-content:center;gap:8px;font-size:9.5px;color:var(--color-text-secondary);margin-top:4px}
 @media (max-width:640px){.dgm-em{padding:20px 16px 18px}}
 </style>
 <div class="dgm-em">

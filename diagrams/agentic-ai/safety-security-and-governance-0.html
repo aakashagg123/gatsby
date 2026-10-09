@@ -1,24 +1,24 @@
 <style>
-.dgm-sg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #4a3aa7;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-sg{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:#4a3aa7;color:#ffffff;
+.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(74,58,167,.28)}
-.dgm-sg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-sg-sub{font-size:12px;color:#59636e;margin:0 0 16px}
-.dgm-sg-atk{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:11px;padding:10px 16px;text-align:center;
-  color:#82061e;font-weight:700;font-size:11.5px;margin-bottom:8px}
-.dgm-sg-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
+.dgm-sg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-sg-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-sg-atk{background:var(--color-background-danger-surface);border:1.5px solid var(--color-border-danger-surface);border-radius:11px;padding:10px 16px;text-align:center;
+  color:var(--color-text-danger);font-weight:700;font-size:11.5px;margin-bottom:8px}
+.dgm-sg-arr{display:flex;justify-content:center;color:var(--color-text-tertiary);padding:2px 0}
 .dgm-sg-arr svg{width:16px;height:16px}
 .dgm-sg-layer{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center;margin-bottom:8px}
-.dgm-sg-l{background:#efeafb;border:1.5px solid #d3c6f5;border-radius:11px;padding:10px 14px;font-size:11px;
-  color:#3d2f8a;font-weight:700;line-height:1.35}
-.dgm-sg-safe{background:#dafbe1;border:1.5px solid #aceebb;border-radius:9px;padding:8px 8px;text-align:center;
-  font-size:10px;font-weight:700;color:#1a614f}
-.dgm-sg-audit{background:#fdf3d9;border:1.5px solid #eac54f;border-radius:11px;padding:10px 16px;text-align:center;
-  color:#7a5300;font-weight:700;font-size:11.5px;margin-top:4px}
-.dgm-sg-slip{font-size:9px;color:#c9432f;text-align:center;font-style:italic;margin:2px 0}
+.dgm-sg-l{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface);border-radius:11px;padding:10px 14px;font-size:11px;
+  color:var(--color-text-discovery);font-weight:700;line-height:1.35}
+.dgm-sg-safe{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface);border-radius:9px;padding:8px 8px;text-align:center;
+  font-size:10px;font-weight:700;color:var(--color-text-success)}
+.dgm-sg-audit{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline);border-radius:11px;padding:10px 16px;text-align:center;
+  color:var(--color-text-caution);font-weight:700;font-size:11.5px;margin-top:4px}
+.dgm-sg-slip{font-size:9px;color:var(--color-text-danger);text-align:center;font-style:italic;margin:2px 0}
 @media (max-width:640px){.dgm-sg{padding:20px 16px 18px}.dgm-sg-layer{grid-template-columns:1fr}}
 </style>
 <div class="dgm-sg">
@@ -28,7 +28,7 @@
 
   <div class="dgm-sg-atk">Attacker plants instructions in content the agent will read — web page, email, doc, tool result</div>
   <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
-  <div class="dgm-sg-atk" style="background:#f6f8fa;border-color:#d1d9e0;color:#1f2328">Agent reads it as ordinary context</div>
+  <div class="dgm-sg-atk" style="background:var(--color-surface-tertiary);border-color:var(--color-border);color:var(--color-text)">Agent reads it as ordinary context</div>
   <div class="dgm-sg-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
   <div class="dgm-sg-layer">

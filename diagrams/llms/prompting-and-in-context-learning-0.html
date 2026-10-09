@@ -1,31 +1,31 @@
 <style>
-.dgm-pr{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #3f7d5c;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-pr{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-success-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-pr-chip{position:absolute;top:-11px;left:24px;background:#3f7d5c;color:#ffffff;
+.dgm-pr-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-success-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(63,125,92,.28)}
-.dgm-pr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-pr-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-success-solid) 28%, transparent)}
+.dgm-pr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-pr-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
 .dgm-pr-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .dgm-pr-col{border-radius:13px;padding:14px 15px;position:relative;display:flex;flex-direction:column;gap:8px}
-.dgm-pr-col.weak{background:#ffebe9;border:1.5px solid #ffcecb}
-.dgm-pr-col.strong{background:#e6f3ec;border:1.5px solid #bfe0cd}
-.dgm-pr-tag{position:absolute;top:-9px;left:14px;background:#ffffff;border:1px solid;
+.dgm-pr-col.weak{background:var(--color-background-danger-surface);border:1.5px solid var(--color-border-danger-surface)}
+.dgm-pr-col.strong{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-pr-tag{position:absolute;top:-9px;left:14px;background:var(--color-surface);border:1px solid;
   font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
-.dgm-pr-col.weak .dgm-pr-tag{color:#82061e;border-color:#ffcecb}
-.dgm-pr-col.strong .dgm-pr-tag{color:#1f5c3f;border-color:#bfe0cd}
-.dgm-pr-node{background:#ffffff;border-radius:9px;padding:9px 11px;font-size:10.5px;color:#1f2328;line-height:1.35;
+.dgm-pr-col.weak .dgm-pr-tag{color:var(--color-text-danger);border-color:var(--color-border-danger-surface)}
+.dgm-pr-col.strong .dgm-pr-tag{color:var(--color-text-success);border-color:var(--color-border-success-surface)}
+.dgm-pr-node{background:var(--color-surface);border-radius:9px;padding:9px 11px;font-size:10.5px;color:var(--color-text);line-height:1.35;
   display:flex;gap:8px;align-items:flex-start;margin-top:4px}
-.dgm-pr-col.weak .dgm-pr-node{border:1px solid #ffd8d5}
-.dgm-pr-col.strong .dgm-pr-node{border:1px solid #d3ecdd}
+.dgm-pr-col.weak .dgm-pr-node{border:1px solid var(--color-border-danger-surface)}
+.dgm-pr-col.strong .dgm-pr-node{border:1px solid var(--color-border-success-surface)}
 .dgm-pr-node svg{width:16px;height:16px;flex:0 0 16px;margin-top:1px}
-.dgm-pr-col.weak .dgm-pr-node svg{color:#c9432f}
-.dgm-pr-col.strong .dgm-pr-node svg{color:#3f7d5c}
-.dgm-pr-arrow{text-align:center;color:#8c959f;font-size:12px}
+.dgm-pr-col.weak .dgm-pr-node svg{color:var(--color-text-danger)}
+.dgm-pr-col.strong .dgm-pr-node svg{color:var(--color-text-success)}
+.dgm-pr-arrow{text-align:center;color:var(--color-text-tertiary);font-size:12px}
 .dgm-pr-result{border-radius:9px;padding:9px 11px;font-weight:700;font-size:11px;text-align:center}
-.dgm-pr-col.weak .dgm-pr-result{background:#fff5f4;color:#82061e}
-.dgm-pr-col.strong .dgm-pr-result{background:#f1f9f4;color:#1f5c3f}
+.dgm-pr-col.weak .dgm-pr-result{background:var(--color-background-danger-surface);color:var(--color-text-danger)}
+.dgm-pr-col.strong .dgm-pr-result{background:var(--color-background-success-surface);color:var(--color-text-success)}
 @media (max-width:640px){.dgm-pr{padding:20px 16px 18px}.dgm-pr-cols{grid-template-columns:1fr}}
 </style>
 <div class="dgm-pr">

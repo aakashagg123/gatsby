@@ -7,9 +7,10 @@ committed. To change a path, edit the PATHS data below and run:
 
     python3 scripts/gen_learning_paths.py && python3 scripts/build_learning_paths.py
 
-When a planned module ships (machine learning, tensors, CNNs), replace its SOON(...) step
-with T(...) lesson links.
+When a planned module ships (tensors, CNNs), replace its SOON(...) step with T(...) lesson
+links. Machine learning has shipped.
 """
+import math
 import glob
 import importlib
 import os
@@ -34,7 +35,7 @@ NAMES = {
     "ai-agents": "AI agents", "agentic-workflows": "Agentic workflows",
     "knowledge-graphs": "Knowledge graphs", "access-control": "Access control",
     "system-design": "System design", "api-integrations": "APIs & integrations",
-    "first-principles": "First principles",
+    "first-principles": "First principles", "machine-learning": "Machine learning",
 }
 CONTENT = {
     "00-foundations": "AI engineering: foundations", "01-inference-internals": "AI engineering: inference internals",
@@ -147,7 +148,6 @@ def hours(minutes):
 
 
 STAMP = "*Last reviewed: 2026-10 · Volatility: medium*"
-ML_NOTE = "A module on machine learning basics is planned. Skip this step until it is published."
 PATHS = []
 
 # ------------------------------------------------------------------ Senior PM
@@ -169,15 +169,14 @@ PATHS.append(dict(
              items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
-             items=[T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
+             items=[T("machine-learning", 1, 2, 5), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
              ready="You can say why the same prompt gives different answers, what a context window limits, and when a bad result is a prompt problem and when it is not."),
         dict(name="The decisions only you own", why="Pick the approach, set the bar, count the cost, and accept the risk.",
              items=[T("generative-ai", 5, 6), T("llms", 7), T("product-sense", 7), T("technical-product-management", 9),
                     T("evaluation-and-observability", 1, 2), T("cost-optimization", 1, 2), T("ai-security-and-guardrails", 1, 3)],
              ready="You can write a one-page case for build, buy or fine-tune. It has an eval plan, a cost per task and the top three risks."),
         dict(name="Go deeper where your product needs it (optional)", why="Read only what your roadmap touches. Retrieval, memory and agents each change the product shape.",
-             items=[T("rag-vector-databases", 1, 5, 6), T("memory-and-context", 1, 5), T("agentic-ai", 1, 8), T("tool-calling", 1),
-                    SOON("Machine learning", ML_NOTE)],
+             items=[T("rag-vector-databases", 1, 5, 6), T("memory-and-context", 1, 5), T("agentic-ai", 1, 8), T("tool-calling", 1)],
              ready="You can tell when a feature needs retrieval, memory or an agent, and when it does not."),
     ],
     skip=["If you have shipped an ML-backed feature, skip stage 1 and start stage 2 at the LLMs lessons.",
@@ -191,6 +190,7 @@ PATHS.append(dict(
              ("5", "Stage 3 (risk)", "List the top three risks and the guardrail for each. Review with your engineering lead."),
              ("6", "Stage 4", "Pick the one deep topic your roadmap needs and read it.")],
     example_who="A senior PM with three hours a week",
+    example_hpw=3,
     tradeoffs=["**Breadth vs. depth.** This path reads many tracks shallowly. You gain vocabulary. You do not gain engineering skill, and that is the point.",
                "**Order vs. urgency.** If a launch is close, jump to stage 3 and come back. The checkpoints tell you what you missed.",
                "**Reading vs. doing.** The decisions stage only works if you apply it to a real feature."],
@@ -222,7 +222,7 @@ PATHS.append(dict(
              "**Risk if ignored** — You ship an agent with the wrong autonomy or a memory that leaks. You find out from a customer."),
     stages=[
         dict(name="Model and data foundations", why="You decide how the product grounds answers. That choice drives quality and cost.",
-             items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), SOON("Machine learning", ML_NOTE),
+             items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), T("machine-learning", 1, 2, 5, 7),
                     T("rag-vector-databases", 1, 5, 6, 7), T("knowledge-graphs", 1, 6, 8)],
              ready="You can compare prompting, retrieval and fine-tuning for a feature and pick one with reasons."),
         dict(name="Context and memory", why="What the model sees is a product decision. So is what it remembers.",
@@ -249,6 +249,7 @@ PATHS.append(dict(
              ("5", "Stage 4", "Run a tabletop review of its threat model, evals and cost."),
              ("6", "Stage 5", "Write the launch gate and incident plan.")],
     example_who="An AI product lead with four hours a week",
+    example_hpw=4,
     tradeoffs=["**Coverage vs. time.** This is a long path. Each stage ends with a checkpoint, so you can stop at the layer you own.",
                "**Product depth vs. engineering depth.** You read mechanics only to ask better questions. The engineer path covers building.",
                "**Standards vs. speed.** Stage 4 slows early work and speeds later work."],
@@ -279,9 +280,9 @@ PATHS.append(dict(
              "**Risk if ignored** — The demo works. Production loops, leaks or overspends, and nobody can say why."),
     stages=[
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
-             items=[SOON("Machine learning", ML_NOTE), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
+             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
                     SOON("CNNs", "Optional branch for vision. Planned."), T("llms", 1, 2, 5)],
-             ready="You can explain what a token and a context window are, and how sampling changes the output. Until the machine learning module ships, add a training-loop primer of your own."),
+             ready="You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
              items=[T("llms", 3, 6, 7), T("api-integrations", 1, 2, 3, 4, 5, 6), T("prompt-engineering", 2, 4, 5, 6, 7, 9, 10)],
              ready="You can call a model with retries and a typed output, and you can diagnose a failing prompt."),
@@ -312,6 +313,7 @@ PATHS.append(dict(
              ("7", "Stage 5", "Build harness phases 7 and 8: planning, subagents and MCP."),
              ("8", "Stage 5", "Build phase 9 and the capstone. Break the capstone on purpose and watch it fail.")],
     example_who="An AI engineer with nine hours a week",
+    example_hpw=9,
     tradeoffs=["**Build vs. read.** The harness lessons ask you to type the code. Skimming saves time and loses the failures you would have hit.",
                "**Depth vs. breadth.** The inference lessons go deep on serving. Read them if you run models, skim them if you call hosted ones.",
                "**Frameworks vs. from scratch.** Building by hand first makes later framework choices easier to judge."],
@@ -342,7 +344,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The team ships fast and unsafe. Review happens after an incident."),
     stages=[
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
-             items=[T("llms", 1, 2, 3, 6, 7), SOON("Machine learning", ML_NOTE),
+             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],
@@ -367,13 +369,14 @@ PATHS.append(dict(
           "If your team already runs evals in CI, read the evaluation lessons as a gap check.",
           "If you want hands-on depth, add the build lessons from the AI Engineer path.",
           "Flowable (process automation) is not on this path. Add it if your team builds approval or long-running workflows."],
-    example_note="This plan is a fast tour: one activity per stage. The full path takes about 11 weeks at this pace.",
+    example_note="This plan is a fast tour: one activity per stage.",
     example=[("1", "Stage 1", "Pull one month of cost and latency numbers for your busiest model call. Find the biggest lever."),
              ("2", "Stage 2", "Review one agent design doc against the loop, tools, permissions and budget."),
              ("3", "Stage 3", "Write the release gate for one feature and name its owner."),
              ("4", "Stage 4", "Run a failure review on one service."),
              ("5", "Stage 5", "Agree a definition of done with your PM.")],
     example_who="An AI engineering lead with three hours a week",
+    example_hpw=3,
     tradeoffs=["**Judgement vs. hands-on skill.** Skimming the build lessons keeps you fast. It also means you rely on your team's account of how things fail.",
                "**Standards first vs. build first.** Standards slow the first feature and speed the next ten.",
                "**One path vs. two.** Pair this path with the engineer path if you still write code."],
@@ -462,7 +465,9 @@ def render_path(p):
     a("")
     a("## Worked example: a week-by-week plan\n")
     a("*This example is invented, to show the method.*\n")
-    a(f"{p['example_who']} spreads the path over {len(p['example'])} weeks. Each week ends with something you can show. {p.get('example_note', '')}".strip() + "\n")
+    full_hours = minutes_of(p["stages"]) / 60
+    full_weeks = math.ceil(full_hours / p["example_hpw"])
+    a(f"{p['example_who']} plans {len(p['example'])} weeks of work. Each week ends with something you can show. {p.get('example_note', '')} At this pace the full path ({hours(full_hours * 60)}) takes about {full_weeks} weeks.".replace("  ", " ") + "\n")
     a("| Week | Stage | What you do |")
     a("| --- | --- | --- |")
     for w, st, what in p["example"]:
@@ -546,7 +551,7 @@ def render_hub():
     a("This library has more than twenty tracks. You do not need all of them. "
       "A learning path picks the tracks and the lessons for one role, puts them in order, and says when to move on.\n")
     a("**A note on scope.** The paths do not teach anything new. They order and explain the lessons that already exist, "
-      "and they say which lessons to skip. The lessons carry the content. Modules on machine learning, tensors and CNNs are planned. "
+      "and they say which lessons to skip. The lessons carry the content. The machine learning module is published. Modules on tensors and CNNs are planned. "
       "They show as \"coming soon\" until they are published.\n")
     a("## Pick your role\n")
     a("| Path | Who it is for | Outcome | Length |")
@@ -590,7 +595,7 @@ def render_recap():
     a("| --- | --- | --- | --- |")
     a("| [Senior PM](./senior-product-manager.md) | A technical footing | The decisions only the PM owns | Optional depth where the roadmap needs it |")
     a("| [AI Product Lead](./ai-product-lead.md) | Model and data foundations | Context, agents, and trust | Running the product |")
-    a("| [AI Engineer](./ai-engineer.md) | LLM basics (machine learning when published) | Agents and the harness | Production |")
+    a("| [AI Engineer](./ai-engineer.md) | Machine learning and LLM basics | Agents and the harness | Production |")
     a("| [AI Engineering Lead](./ai-engineering-lead.md) | Model behaviour and cost | Quality, safety and access | Working with product |")
     a("")
     a("## Which path reads how much of each track\n")

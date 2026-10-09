@@ -1,50 +1,50 @@
 <!-- Reliability lesson — the compound-error math visualized as a chain that degrades.
      Diagram type: HORIZONTAL BAR CHAIN with mathematical terminal outcome. -->
 <style>
-.dgm-rl{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+.dgm-rl{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;font-family:inherit;
   text-align:left;position:relative}
-.dgm-rl-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
+.dgm-rl-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(90,79,207,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
 .dgm-rl h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-rl-sub{font-size:12px;color:#59636e;margin:0 0 20px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-rl-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 20px}
 
 .dgm-rl-chain{display:flex;align-items:stretch;gap:2px;margin-bottom:8px}
-.dgm-rl-step{flex:1;background:#efedfa;border:1px solid #cec8f0;border-radius:0;
-  padding:14px 6px 10px;text-align:center;font-size:10.5px;font-weight:600;color:#3d3a95;
+.dgm-rl-step{flex:1;background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface);border-radius:0;
+  padding:14px 6px 10px;text-align:center;font-size:10.5px;font-weight:600;color:var(--color-text-discovery);
   letter-spacing:.02em;position:relative}
 .dgm-rl-step:first-child{border-top-left-radius:8px;border-bottom-left-radius:8px}
 .dgm-rl-step:last-child{border-top-right-radius:8px;border-bottom-right-radius:8px}
-.dgm-rl-step .dgm-rl-pct{display:block;font-size:11.5px;font-weight:700;color:#5a4fcf;
+.dgm-rl-step .dgm-rl-pct{display:block;font-size:11.5px;font-weight:700;color:var(--color-text-discovery);
   font-variant-numeric:tabular-nums;margin-top:2px;letter-spacing:.5px}
-.dgm-rl-step.gap{flex:.4;background:#f6f8fa;border:1px dashed #d1d9e0;color:#8c959f;
+.dgm-rl-step.gap{flex:.4;background:var(--color-surface-tertiary);border:1px dashed var(--color-border);color:var(--color-text-tertiary);
   border-radius:0;font-size:14px;font-weight:700}
 
-.dgm-rl-formula{margin:14px 0 12px;padding:14px 18px;background:#f6f8fa;border:1px solid #d1d9e0;
+.dgm-rl-formula{margin:14px 0 12px;padding:14px 18px;background:var(--color-surface-tertiary);border:1px solid var(--color-border);
   border-radius:12px;text-align:center;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  font-size:13.5px;color:#1f2328;line-height:1.5}
-.dgm-rl-formula .dgm-rl-eq{color:#5a4fcf;font-weight:700}
-.dgm-rl-formula .dgm-rl-result{color:#d1242f;font-weight:700;font-size:15px}
+  font-size:13.5px;color:var(--color-text);line-height:1.5}
+.dgm-rl-formula .dgm-rl-eq{color:var(--color-text-discovery);font-weight:700}
+.dgm-rl-formula .dgm-rl-result{color:var(--color-text-danger);font-weight:700;font-size:15px}
 
-.dgm-rl-outcome{background:#ffebe9;border:1.5px solid #ffcecb;border-radius:12px;
+.dgm-rl-outcome{background:var(--color-background-danger-surface);border:1.5px solid var(--color-border-danger-surface);border-radius:12px;
   padding:16px 18px;display:flex;gap:14px;align-items:center}
-.dgm-rl-outcome .dgm-rl-ico{width:32px;height:32px;padding:5px;background:#ffffff;
-  border:1.5px solid #ffcecb;border-radius:10px;color:#d1242f;flex:0 0 32px}
-.dgm-rl-outcome h5{margin:0 0 3px;font-size:13px;font-weight:700;color:#82061e;letter-spacing:.02em}
-.dgm-rl-outcome p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-rl-outcome .dgm-rl-ico{width:32px;height:32px;padding:5px;background:var(--color-surface);
+  border:1.5px solid var(--color-border-danger-surface);border-radius:10px;color:var(--color-text-danger);flex:0 0 32px}
+.dgm-rl-outcome h5{margin:0 0 3px;font-size:13px;font-weight:700;color:var(--color-text-danger);letter-spacing:.02em}
+.dgm-rl-outcome p{margin:0;font-size:11.5px;color:var(--color-text-secondary);line-height:1.4}
 
-.dgm-rl-recovery{margin-top:14px;background:#efedfa;border:1px solid #cec8f0;border-radius:12px;
+.dgm-rl-recovery{margin-top:14px;background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface);border-radius:12px;
   padding:12px 14px}
-.dgm-rl-recovery h5{margin:0 0 8px;font-size:12px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
+.dgm-rl-recovery h5{margin:0 0 8px;font-size:12px;font-weight:700;color:var(--color-text-discovery);letter-spacing:.02em}
 .dgm-rl-ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.dgm-rl-rung{background:#ffffff;border:1px solid #cec8f0;border-radius:8px;padding:7px 9px;
-  text-align:center;font-size:11px;font-weight:600;color:#3d3a95;letter-spacing:.02em;
+.dgm-rl-rung{background:var(--color-surface);border:1px solid var(--color-border-discovery-surface);border-radius:8px;padding:7px 9px;
+  text-align:center;font-size:11px;font-weight:600;color:var(--color-text-discovery);letter-spacing:.02em;
   display:flex;flex-direction:column;gap:3px;align-items:center}
-.dgm-rl-rung .dgm-rl-rung-ico{color:#5a4fcf;width:16px;height:16px}
-.dgm-rl-rung .dgm-rl-rung-num{font-size:9px;color:#8c959f;font-weight:700;letter-spacing:.6px;
+.dgm-rl-rung .dgm-rl-rung-ico{color:var(--color-text-discovery);width:16px;height:16px}
+.dgm-rl-rung .dgm-rl-rung-num{font-size:9px;color:var(--color-text-tertiary);font-weight:700;letter-spacing:.6px;
   text-transform:uppercase}
 @media (max-width:640px){
   .dgm-rl{padding:20px 16px 18px}

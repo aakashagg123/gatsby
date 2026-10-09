@@ -2,39 +2,39 @@
      Diagram type: THREAT MODEL → GUARDRAILS → RED-TEAMING → GOVERNANCE → OUTCOME.
      Track accent = red-magenta (#a13d63). -->
 <style>
-.dgm-sg{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #a13d63;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+.dgm-sg{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;
   font-family:inherit;text-align:left;position:relative}
-.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:#a13d63;color:#ffffff;
+.dgm-sg-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(161,61,99,.28)}
-.dgm-sg-caption{font-size:11px;color:#59636e;letter-spacing:.4px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
+.dgm-sg-caption{font-size:11px;color:var(--color-text-secondary);letter-spacing:.4px;text-transform:uppercase;
   font-weight:700;margin:0 0 12px}
 .dgm-sg-threats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.dgm-sg-th{background:#ffebe9;border:1px solid #ffcecb;border-radius:11px;padding:12px 12px 10px;
+.dgm-sg-th{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface);border-radius:11px;padding:12px 12px 10px;
   display:flex;flex-direction:column;gap:6px}
-.dgm-sg-th .dgm-sg-ico{color:#d1242f;width:22px;height:22px}
-.dgm-sg-th h5{margin:0;font-size:12px;font-weight:700;color:#82061e;letter-spacing:.02em;
+.dgm-sg-th .dgm-sg-ico{color:var(--color-text-danger);width:22px;height:22px}
+.dgm-sg-th h5{margin:0;font-size:12px;font-weight:700;color:var(--color-text-danger);letter-spacing:.02em;
   text-transform:uppercase}
-.dgm-sg-th p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
-.dgm-sg-arr{display:flex;justify-content:center;color:#8c959f;margin:2px 0 8px}
+.dgm-sg-th p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-sg-arr{display:flex;justify-content:center;color:var(--color-text-tertiary);margin:2px 0 8px}
 .dgm-sg-arr svg{width:18px;height:18px}
-.dgm-sg-cell{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 16px;
+.dgm-sg-cell{background:var(--color-surface-tertiary);border:1px solid var(--color-border);border-radius:12px;padding:14px 16px;
   display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.dgm-sg-cell.wall{background:#ddf4ff;border-color:#b6e3ff}
-.dgm-sg-cell.evi{background:#fff8c5;border-color:#eac54f}
-.dgm-sg-cell.gov{background:#f6e6ec;border-color:#e9c4d3}
-.dgm-sg-cell.win{background:#dafbe1;border-color:#aceebb}
-.dgm-sg-cell .dgm-sg-ico{width:28px;height:28px;padding:5px;background:#ffffff;
-  border:1px solid #d1d9e0;border-radius:8px;flex:0 0 28px;color:#0969da}
-.dgm-sg-cell.wall .dgm-sg-ico{color:#0969da}
-.dgm-sg-cell.evi .dgm-sg-ico{color:#9a6700}
-.dgm-sg-cell.gov .dgm-sg-ico{color:#a13d63}
-.dgm-sg-cell.win .dgm-sg-ico{color:#1a7f37}
-.dgm-sg-cell h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
-.dgm-sg-cell p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
-.dgm-sg-cell .dgm-sg-num{background:#ffffff;border:1px solid #d1d9e0;color:#59636e;
+.dgm-sg-cell.wall{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-sg-cell.evi{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-sg-cell.gov{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-sg-cell.win{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-sg-cell .dgm-sg-ico{width:28px;height:28px;padding:5px;background:var(--color-surface);
+  border:1px solid var(--color-border);border-radius:8px;flex:0 0 28px;color:var(--color-text-info)}
+.dgm-sg-cell.wall .dgm-sg-ico{color:var(--color-text-info)}
+.dgm-sg-cell.evi .dgm-sg-ico{color:var(--color-text-caution)}
+.dgm-sg-cell.gov .dgm-sg-ico{color:var(--color-text-discovery)}
+.dgm-sg-cell.win .dgm-sg-ico{color:var(--color-text-success)}
+.dgm-sg-cell h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-sg-cell p{margin:0;font-size:11.5px;color:var(--color-text-secondary);line-height:1.4}
+.dgm-sg-cell .dgm-sg-num{background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-secondary);
   font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:5px;
   text-transform:uppercase;margin-left:8px;font-variant-numeric:tabular-nums}
 @media (max-width:640px){
@@ -63,7 +63,7 @@
       <p>Pull training data, prompts, weights back out</p>
     </div>
     <div class="dgm-sg-th">
-      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/><circle cx="12" cy="12" r="2" fill="#82061e"/></svg>
+      <svg class="dgm-sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .8-4.5 4.2 1.2 6.5L12 16.5 6.3 19.5 7.5 13 3 8.8 9 8z"/><circle cx="12" cy="12" r="2" fill="var(--color-background-danger-solid)"/></svg>
       <h5>Poisoning</h5>
       <p>Corrupt what the model learns in the first place</p>
     </div>

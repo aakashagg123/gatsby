@@ -1,40 +1,40 @@
 <!-- Memory & context — knowledge graph across 5 lessons.
      Promise (decide) → Scope (3 tiers) → Write path → Source (3 designs) → Risk (4 failures). -->
 <style>
-.dgm-mc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5d8aa8;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+.dgm-mc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-info-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;font-family:inherit;
   text-align:left;position:relative}
-.dgm-mc-chip{position:absolute;top:-11px;left:24px;background:#5d8aa8;color:#ffffff;
+.dgm-mc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-info-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(93,138,168,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-info-solid) 28%, transparent)}
 .dgm-mc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-mc-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-mc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px}
 
-.dgm-mc-section{margin-bottom:10px;background:#e8eff5;border:1px solid #c1d3e2;
+.dgm-mc-section{margin-bottom:10px;background:var(--color-background-info-surface);border:1px solid var(--color-border-info-surface);
   border-radius:12px;padding:14px 16px;position:relative}
-.dgm-mc-section .dgm-mc-badge{position:absolute;top:-9px;left:14px;background:#5d8aa8;color:#fff;
+.dgm-mc-section .dgm-mc-badge{position:absolute;top:-9px;left:14px;background:var(--color-background-info-solid);color:var(--white);
   font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
   border-radius:6px}
-.dgm-mc-section h5{margin:2px 0 8px;font-size:12.5px;font-weight:700;color:#375a75;letter-spacing:.02em}
-.dgm-mc-lead{background:#ffffff;border:1px solid #c1d3e2;border-radius:9px;padding:10px 12px;
-  display:flex;gap:10px;align-items:center;font-size:11.5px;color:#1f2328;line-height:1.4}
-.dgm-mc-lead svg{width:22px;height:22px;color:#5d8aa8;flex:0 0 22px}
+.dgm-mc-section h5{margin:2px 0 8px;font-size:12.5px;font-weight:700;color:var(--color-text-info);letter-spacing:.02em}
+.dgm-mc-lead{background:var(--color-surface);border:1px solid var(--color-border-info-surface);border-radius:9px;padding:10px 12px;
+  display:flex;gap:10px;align-items:center;font-size:11.5px;color:var(--color-text);line-height:1.4}
+.dgm-mc-lead svg{width:22px;height:22px;color:var(--color-text-info);flex:0 0 22px}
 .dgm-mc-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.dgm-mc-tier{background:#ffffff;border:1px solid #c1d3e2;border-radius:9px;padding:10px 11px;
+.dgm-mc-tier{background:var(--color-surface);border:1px solid var(--color-border-info-surface);border-radius:9px;padding:10px 11px;
   display:flex;flex-direction:column;gap:5px}
-.dgm-mc-tier .dgm-mc-ico{color:#5d8aa8;width:20px;height:20px}
-.dgm-mc-tier h6{margin:0;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-mc-tier p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
-.dgm-mc-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-mc-tier .dgm-mc-ico{color:var(--color-text-info);width:20px;height:20px}
+.dgm-mc-tier h6{margin:0;font-size:11.5px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-mc-tier p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.3}
+.dgm-mc-arr{display:flex;justify-content:center;color:var(--color-text-tertiary);padding:2px 0}
 .dgm-mc-arr svg{width:16px;height:16px}
 .dgm-mc-risks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.dgm-mc-risk{background:#ffebe9;border:1px solid #ffcecb;border-radius:9px;padding:9px 11px}
-.dgm-mc-risk .dgm-mc-ico{color:#d1242f;width:18px;height:18px;margin-bottom:4px}
-.dgm-mc-risk h6{margin:0 0 2px;font-size:11px;font-weight:700;color:#82061e;letter-spacing:.02em;
+.dgm-mc-risk{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface);border-radius:9px;padding:9px 11px}
+.dgm-mc-risk .dgm-mc-ico{color:var(--color-text-danger);width:18px;height:18px;margin-bottom:4px}
+.dgm-mc-risk h6{margin:0 0 2px;font-size:11px;font-weight:700;color:var(--color-text-danger);letter-spacing:.02em;
   text-transform:uppercase}
-.dgm-mc-risk p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
+.dgm-mc-risk p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.3}
 @media (max-width:640px){
   .dgm-mc{padding:20px 16px 18px}
   .dgm-mc-tiers,.dgm-mc-risks{grid-template-columns:1fr}
@@ -100,9 +100,9 @@
 
   <div class="dgm-mc-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
 
-  <div class="dgm-mc-section" style="background:#ffebe9;border-color:#ffcecb">
-    <span class="dgm-mc-badge" style="background:#a13d63">Lesson 5 · When it breaks</span>
-    <h5 style="color:#82061e">Four failure modes to test for by default</h5>
+  <div class="dgm-mc-section" style="background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)">
+    <span class="dgm-mc-badge" style="background:var(--color-background-discovery-solid)">Lesson 5 · When it breaks</span>
+    <h5 style="color:var(--color-text-danger)">Four failure modes to test for by default</h5>
     <div class="dgm-mc-risks">
       <div class="dgm-mc-risk">
         <svg class="dgm-mc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>

@@ -1,39 +1,39 @@
 <!-- AI agents — knowledge graph as decision funnel.
      Five lessons in sequence, terminating in the "often the answer" workflow escape hatch. -->
 <style>
-.dgm-ag{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #5a4fcf;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+.dgm-ag{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;font-family:inherit;
   text-align:left;position:relative}
-.dgm-ag-chip{position:absolute;top:-11px;left:24px;background:#5a4fcf;color:#ffffff;
+.dgm-ag-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(90,79,207,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
 .dgm-ag h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-ag-sub{font-size:12px;color:#59636e;margin:0 0 14px}
-.dgm-ag-stage{background:#efedfa;border:1px solid #cec8f0;border-radius:13px;padding:14px 16px;
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ag-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px}
+.dgm-ag-stage{background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface);border-radius:13px;padding:14px 16px;
   margin-bottom:10px;position:relative}
-.dgm-ag-stage .dgm-ag-badge{position:absolute;top:-9px;left:14px;background:#5a4fcf;color:#fff;
+.dgm-ag-stage .dgm-ag-badge{position:absolute;top:-9px;left:14px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
   padding:2px 8px;border-radius:6px}
-.dgm-ag-stage h5{margin:2px 0 4px;font-size:12.5px;font-weight:700;color:#3d3a95;letter-spacing:.02em}
-.dgm-ag-stage .dgm-ag-lead{margin:0 0 8px;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-ag-stage h5{margin:2px 0 4px;font-size:12.5px;font-weight:700;color:var(--color-text-discovery);letter-spacing:.02em}
+.dgm-ag-stage .dgm-ag-lead{margin:0 0 8px;font-size:11.5px;color:var(--color-text-secondary);line-height:1.4}
 .dgm-ag-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.dgm-ag-card{background:#ffffff;border:1px solid #cec8f0;border-radius:9px;padding:9px 11px;
+.dgm-ag-card{background:var(--color-surface);border:1px solid var(--color-border-discovery-surface);border-radius:9px;padding:9px 11px;
   display:flex;gap:9px;align-items:flex-start}
-.dgm-ag-card .dgm-ag-ico{color:#5a4fcf;width:20px;height:20px;flex:0 0 20px;margin-top:1px}
-.dgm-ag-card h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-ag-card p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
-.dgm-ag-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ag-card .dgm-ag-ico{color:var(--color-text-discovery);width:20px;height:20px;flex:0 0 20px;margin-top:1px}
+.dgm-ag-card h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-ag-card p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-ag-arr{display:flex;justify-content:center;color:var(--color-text-tertiary);padding:2px 0}
 .dgm-ag-arr svg{width:18px;height:18px}
-.dgm-ag-escape{margin-top:12px;padding:14px 16px;background:#fff8c5;border:1.5px dashed #eac54f;
+.dgm-ag-escape{margin-top:12px;padding:14px 16px;background:var(--color-background-caution-surface);border:1.5px dashed var(--color-border-caution-outline);
   border-radius:12px;display:flex;gap:12px;align-items:center}
-.dgm-ag-escape .dgm-ag-ico{width:28px;height:28px;padding:5px;background:#ffffff;
-  border:1px solid #eac54f;border-radius:8px;color:#9a6700;flex:0 0 28px}
-.dgm-ag-escape h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#7a5028}
-.dgm-ag-escape p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
+.dgm-ag-escape .dgm-ag-ico{width:28px;height:28px;padding:5px;background:var(--color-surface);
+  border:1px solid var(--color-border-caution-outline);border-radius:8px;color:var(--color-text-caution);flex:0 0 28px}
+.dgm-ag-escape h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:var(--color-text-warning)}
+.dgm-ag-escape p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.4}
 .dgm-ag-escape .dgm-ag-honest{font-size:9.5px;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase;color:#9a6700;background:#ffffff;border:1px solid #eac54f;
+  text-transform:uppercase;color:var(--color-text-caution);background:var(--color-surface);border:1px solid var(--color-border-caution-outline);
   padding:2px 8px;border-radius:6px;margin-right:8px}
 @media (max-width:640px){
   .dgm-ag{padding:20px 16px 18px}
@@ -56,7 +56,7 @@
         <div><h6>The loop</h6><p>Gather · decide · act · observe</p></div>
       </div>
       <div class="dgm-ag-card">
-        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="4" rx="2"/><circle cx="8" cy="12" r="3" fill="#5a4fcf"/></svg>
+        <svg class="dgm-ag-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="4" rx="2"/><circle cx="8" cy="12" r="3" fill="var(--color-background-discovery-solid)"/></svg>
         <div><h6>Autonomy dial</h6><p>How much the model decides for itself</p></div>
       </div>
     </div>

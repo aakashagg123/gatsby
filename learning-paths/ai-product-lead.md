@@ -14,9 +14,9 @@ This path covers the layers between a model and a product: grounding, context, m
 
 **Before you start:** This path builds on the Senior PM path, stages 1 to 3, or equivalent experience. Lessons marked ↺ repeat that path, so skip them if you did it. You have shipped or closely reviewed one AI feature.
 
-**Length:** about 24 hours, across 5 stages. If you did the Senior PM path, about 14 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
+**Length:** about 25.5 hours, across 5 stages. If you did the Senior PM path, about 14 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
 
-**Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs).
+**Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
 > 🎯 **For the AI product lead**
 >
@@ -34,7 +34,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Model and data foundations | about 6.5 hours (plus planned modules) |
+| 1 | Model and data foundations | about 8.5 hours |
 | 2 | Context and memory | about 5 hours |
 | 3 | Action: tools, agents, workflows | about 5.5 hours |
 | 4 | Trust, access and cost | about 4 hours |
@@ -42,11 +42,11 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 ## Stage 1: Model and data foundations
 
-You decide how the product grounds answers. That choice drives quality and cost. (about 6.5 hours plus the planned modules)
+You decide how the product grounds answers. That choice drives quality and cost. (about 8.5 hours)
 
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) ↺ · [2. The context window](../llms/the-context-window.md) ↺ · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) ↺ · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md) ↺ · [6. Choosing a model](../llms/choosing-a-model.md) ↺ · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md) ↺
 - **Generative AI**: [3. Probabilistic software](../generative-ai/probabilistic-software.md) ↺ · [4. The generative AI product stack](../generative-ai/the-genai-product-stack.md) ↺ · [5. Build, buy, or fine-tune](../generative-ai/build-buy-or-fine-tune.md) ↺
-- **Machine learning**: coming soon. A module on machine learning basics is planned. Skip this step until it is published.
+- **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) ↺ · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) ↺ · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) ↺ · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md)
 - **RAG & vector databases**: [1. Why RAG?](../rag-vector-databases/why-rag.md) ↺ · [5. Retrieval quality](../rag-vector-databases/retrieval-quality.md) ↺ · [6. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md) ↺ · [7. Beyond flat RAG: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md)
 - **Knowledge graphs**: [1. What is a knowledge graph?](../knowledge-graphs/what-is-a-knowledge-graph.md) · [6. Knowledge graphs & LLMs](../knowledge-graphs/knowledge-graphs-and-llms.md) · [8. Knowledge graphs as a product](../knowledge-graphs/knowledge-graphs-as-a-product.md)
 
@@ -104,7 +104,7 @@ Turn the above into specs, launches and a response plan. (about 2.5 hours)
 
 *This example is invented, to show the method.*
 
-An AI product lead with four hours a week spreads the path over 6 weeks. Each week ends with something you can show.
+An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 25.5 hours) takes about 7 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

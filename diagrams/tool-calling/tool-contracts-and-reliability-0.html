@@ -1,46 +1,46 @@
 <!-- Tool contract — 4 checkpoints as a pipeline, each with the product-decision question. -->
 <style>
-.dgm-cn{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #8a6d3b;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;
+.dgm-cn{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;font-family:inherit;
   text-align:left;position:relative}
-.dgm-cn-chip{position:absolute;top:-11px;left:24px;background:#8a6d3b;color:#ffffff;
+.dgm-cn-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-warning-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(138,109,59,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-warning-solid) 28%, transparent)}
 .dgm-cn h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-cn-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-cn-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
 .dgm-cn-pipe{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;gap:6px;
   align-items:stretch;margin-bottom:16px}
-.dgm-cn-node{background:#f6efdd;border:1.5px solid #e0d0a8;border-radius:12px;padding:12px 12px;
+.dgm-cn-node{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline);border-radius:12px;padding:12px 12px;
   display:flex;flex-direction:column;gap:8px;position:relative}
-.dgm-cn-node .dgm-cn-num{position:absolute;top:-9px;left:12px;background:#8a6d3b;color:#ffffff;
+.dgm-cn-node .dgm-cn-num{position:absolute;top:-9px;left:12px;background:var(--color-background-warning-solid);color:var(--white);
   font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;
   text-transform:uppercase;font-variant-numeric:tabular-nums}
-.dgm-cn-node .dgm-cn-ico{color:#8a6d3b;width:24px;height:24px}
-.dgm-cn-node h5{margin:0;font-size:12px;font-weight:700;color:#5a4820;letter-spacing:.02em}
-.dgm-cn-node .dgm-cn-q{font-size:10.5px;color:#59636e;line-height:1.35;font-style:italic}
-.dgm-cn-arr{align-self:center;color:#8c959f;font-weight:700;text-align:center}
-.dgm-cn-callout{padding:14px 16px;background:#fff8c5;border:1px dashed #eac54f;border-radius:11px;
+.dgm-cn-node .dgm-cn-ico{color:var(--color-text-warning);width:24px;height:24px}
+.dgm-cn-node h5{margin:0;font-size:12px;font-weight:700;color:var(--color-text-caution);letter-spacing:.02em}
+.dgm-cn-node .dgm-cn-q{font-size:10.5px;color:var(--color-text-secondary);line-height:1.35;font-style:italic}
+.dgm-cn-arr{align-self:center;color:var(--color-text-tertiary);font-weight:700;text-align:center}
+.dgm-cn-callout{padding:14px 16px;background:var(--color-background-caution-surface);border:1px dashed var(--color-border-caution-outline);border-radius:11px;
   display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.dgm-cn-callout .dgm-cn-ico{width:24px;height:24px;color:#9a6700;flex:0 0 24px}
-.dgm-cn-callout p{margin:0;font-size:11.5px;color:#7a5028;line-height:1.4}
-.dgm-cn-callout strong{color:#5a3d1a}
-.dgm-cn-gran{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:12px;padding:14px 16px}
-.dgm-cn-gran h5{margin:0 0 8px;font-size:12px;font-weight:700;color:#1f2328;letter-spacing:.02em}
+.dgm-cn-callout .dgm-cn-ico{width:24px;height:24px;color:var(--color-text-caution);flex:0 0 24px}
+.dgm-cn-callout p{margin:0;font-size:11.5px;color:var(--color-text-warning);line-height:1.4}
+.dgm-cn-callout strong{color:var(--color-text-warning)}
+.dgm-cn-gran{background:var(--color-surface-tertiary);border:1px solid var(--color-border);border-radius:12px;padding:14px 16px}
+.dgm-cn-gran h5{margin:0 0 8px;font-size:12px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
 .dgm-cn-gran-cols{display:grid;grid-template-columns:1fr 24px 1fr;gap:8px;align-items:center}
-.dgm-cn-gran-panel{background:#ffffff;border:1px solid #d1d9e0;border-radius:10px;padding:10px 12px;
+.dgm-cn-gran-panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:10px 12px;
   display:flex;flex-direction:column;gap:6px}
-.dgm-cn-gran-panel.bad{border-color:#ffcecb;background:#ffebe9}
-.dgm-cn-gran-panel.good{border-color:#aceebb;background:#dafbe1}
+.dgm-cn-gran-panel.bad{border-color:var(--color-border-danger-surface);background:var(--color-background-danger-surface)}
+.dgm-cn-gran-panel.good{border-color:var(--color-border-success-surface);background:var(--color-background-success-surface)}
 .dgm-cn-gran-panel h6{margin:0;font-size:11px;font-weight:700;letter-spacing:.02em}
-.dgm-cn-gran-panel.bad h6{color:#82061e}
-.dgm-cn-gran-panel.good h6{color:#1a614f}
-.dgm-cn-gran-panel code{background:#ffffff;border:1px solid #d1d9e0;border-radius:5px;
+.dgm-cn-gran-panel.bad h6{color:var(--color-text-danger)}
+.dgm-cn-gran-panel.good h6{color:var(--color-text-success)}
+.dgm-cn-gran-panel code{background:var(--color-surface);border:1px solid var(--color-border);border-radius:5px;
   padding:2px 5px;font-size:10.5px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  color:#1f2328;display:inline-block}
-.dgm-cn-gran-panel p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
-.dgm-cn-gran-vs{text-align:center;color:#8c959f;font-size:10.5px;font-weight:700;
+  color:var(--color-text);display:inline-block}
+.dgm-cn-gran-panel p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-cn-gran-vs{text-align:center;color:var(--color-text-tertiary);font-size:10.5px;font-weight:700;
   letter-spacing:.4px;text-transform:uppercase}
 @media (max-width:640px){
   .dgm-cn{padding:20px 16px 18px}

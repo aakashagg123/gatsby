@@ -1,0 +1,97 @@
+/* Long-form reading. The SDK's Markdown component (vendored) styles headings, lists,
+   quotes and tables inside .MarkdownContent. This file sets the reading size and adds
+   what Markdown output needs that the SDK component does not cover: code, callouts,
+   task lists and figures. */
+
+.content{
+  min-width:0;max-width:var(--layout-measure);
+  padding:var(--space-12) var(--space-14) var(--space-24);
+}
+.MarkdownContent{
+  font:var(--font-weight-normal) var(--font-text-lg-size)/var(--font-text-lg-line-height) var(--font-sans);
+  color:var(--color-text);
+}
+.MarkdownContent h1,.MarkdownContent h2,.MarkdownContent h3,.MarkdownContent h4{
+  color:var(--color-text);letter-spacing:var(--tracking-tight);
+}
+.MarkdownContent li > p{margin:0}
+
+/* Inline code: SDK InlineCode. */
+.MarkdownContent :not(pre) > code,.prose :not(pre) > code{
+  padding:1px 0.3rem;border-radius:var(--radius-xs);
+  background-color:var(--alpha-04);
+  box-shadow:inset 0 0 0 1px var(--alpha-08);
+  color:inherit;font-size:0.875em;font-weight:var(--font-weight-medium);
+  overflow-wrap:anywhere;
+}
+
+/* Code blocks: SDK CodeBlock container and type. */
+.MarkdownContent pre,.prose pre{
+  overflow:auto;margin:var(--space-5) 0;
+  padding:var(--space-3-5) var(--space-4);
+  background-color:var(--codeblock-background-color);
+  border:var(--hairline) solid var(--color-border);
+  border-radius:var(--radius-md);
+  color:var(--color-text);
+  font-size:0.875em;line-height:1.5;
+  white-space:pre;tab-size:4;
+}
+.MarkdownContent pre code{background:none;box-shadow:none;padding:0;font-size:1em;font-weight:var(--font-weight-normal)}
+
+/* Tables: SDK Markdown table, kept scrollable on narrow screens. */
+.MarkdownContent table{display:block;overflow-x:auto;max-width:100%}
+.MarkdownContent th{color:var(--color-text);font-weight:var(--font-weight-semibold)}
+.MarkdownContent td code,.MarkdownContent th code{font-size:0.8125em}
+
+/* Figures and media. */
+.MarkdownContent img{border-radius:var(--radius-lg)}
+.MarkdownContent details{
+  margin:var(--space-4) 0;padding:var(--space-3) var(--space-4);
+  border-radius:var(--radius-xl);box-shadow:var(--shadow-hairline);
+}
+.MarkdownContent summary{cursor:pointer;font-weight:var(--font-weight-semibold)}
+.MarkdownContent kbd{
+  padding:0 var(--space-1-5);border-radius:var(--radius-xs);
+  box-shadow:inset 0 0 0 1px var(--color-border-strong);
+  font-size:0.875em;
+}
+
+/* Callout: the "For the [audience]" briefing. Same surface as an SDK soft Alert. */
+.MarkdownContent blockquote.pm-callout,.pm-callout{
+  position:relative;margin:var(--space-6) 0;
+  padding:var(--alert-gutter);
+  border-radius:var(--alert-border-radius);
+  background-color:var(--color-background-primary-surface);
+  box-shadow:0 0 0 1px var(--color-border-primary-surface) inset;
+  color:var(--color-text);
+  font-size:var(--font-text-md-size);line-height:var(--font-text-md-line-height);
+}
+.pm-callout::before{display:none}
+.pm-callout > p{margin:var(--space-2) 0 0}
+.pm-callout > p:first-child{
+  margin-top:0;
+  font-weight:var(--alert-title-font-weight);
+}
+
+/* Plain quotes: SDK blockquote (left rule from Markdown.css). Reset our own legacy look. */
+.MarkdownContent blockquote:not(.pm-callout){color:var(--color-text-secondary)}
+
+/* Task lists produced by "[ ]" and "[x]" in markdown. */
+.MarkdownContent li.task{list-style:none;margin-left:calc(var(--space-6) * -1);padding-left:var(--space-7);position:relative}
+.MarkdownContent li.task::before{position:absolute;left:0;top:0;width:1.2em;height:1.2em;color:var(--color-text-tertiary)}
+.MarkdownContent li.todo::before{content:"☐"}
+.MarkdownContent li.done::before{content:"☑";color:var(--color-text-success)}
+
+.totop{
+  display:inline-block;margin-top:var(--space-6);
+  color:var(--color-text-tertiary);
+  font:var(--font-weight-medium) var(--font-text-xs-size)/var(--font-text-xs-line-height) var(--font-sans);
+}
+@media (hover:hover) and (pointer:fine){.totop:hover{color:var(--color-text)}}
+
+@media (max-width:880px){.content{padding:var(--space-8) var(--space-6) var(--space-20)}}
+@media (max-width:560px){
+  .content{padding:var(--space-6) var(--space-4) var(--space-16)}
+  .MarkdownContent{font-size:var(--font-text-md-size);line-height:var(--font-text-md-line-height)}
+  .MarkdownContent pre{border-radius:var(--radius-lg)}
+}

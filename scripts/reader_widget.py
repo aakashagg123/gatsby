@@ -4,7 +4,8 @@ Injected before </body> by build_html.py (AI engineering modules),
 build_standalone.py (the craft tracks), and build_site.py (harness viewer).
 
 The widget is a floating "Aa" button that opens a panel with:
-  - Font: publisher default, Charter, Georgia, San Francisco, Tahoma, Helvetica
+  - Theme: auto, light or dark (the SDK's data-theme)
+  - Font: Google Sans (default), system, Tahoma, Arial, Verdana, Helvetica
   - Size: A- / A+ over discrete steps (like iBooks)
   - Margins: narrow / default / wide reading column
 
@@ -13,110 +14,52 @@ across every module and track. The page renders with its original design
 until a setting is changed: attributes (data-rf / data-rs / data-rm) are only
 set on <html> for non-default choices, and all override CSS is gated on them.
 Code blocks and mermaid diagrams keep their own fonts.
+Styling lives in design-system/site/60-widgets.css and 70-reader-prefs.css.
 """
 
 READER = r"""
-<style id="reader-css">
-/* ---- font choices (only active when data-rf is set) ----
-   The default (no data-rf) is Inter, loaded once from Google Fonts by every
-   render script and set on <body>. These overrides swap Inter for one of
-   four common system sans-serifs a reader can pick per their preference. */
-html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
-html[data-rf="arial"]{--rs-font:Arial,"Helvetica Neue",Helvetica,sans-serif}
-html[data-rf="verdana"]{--rs-font:Verdana,Geneva,"DejaVu Sans",sans-serif}
-html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
-html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.chip,a){font-family:var(--rs-font) !important}
-html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *,html[data-rf] main p code,html[data-rf] main li code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace !important}
-html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
-/* ---- size scaling (only active when data-rs is set) ---- */
-html[data-rs] main{font-size:calc(16.5px * var(--rs-scale,1)) !important}
-html[data-rs] main h1{font-size:2.35em !important;line-height:1.15 !important}
-html[data-rs] main h2{font-size:1.7em !important}
-html[data-rs] main h3{font-size:1.25em !important}
-html[data-rs] main h4{font-size:1em !important}
-html[data-rs] main .lede{font-size:1.2em !important}
-html[data-rs] main table{font-size:.9em !important}
-html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
-html[data-rs] main .pm-callout p{font-size:.95em !important}
-html[data-rs] main pre{font-size:.85em !important}
-/* ---- margins / column width (only active when data-rm is set) ---- */
-html[data-rm="n"] main{max-width:620px !important}
-html[data-rm="w"] main{max-width:1120px !important}
-/* below this, main is already narrower than either max-width above, so the
-   narrow/wide buttons would otherwise do nothing — map them to side padding.
-   The default (no data-rm) state is intentionally left alone here: each
-   template already tunes its own default mobile padding per breakpoint,
-   and overriding it flattened that down to one generic value for every
-   visitor who hasn't touched the reader-settings widget — a regression. */
-@media (max-width:680px){
-  html[data-rm="n"] main{padding-left:12px !important;padding-right:12px !important}
-  html[data-rm="w"] main{padding-left:32px !important;padding-right:32px !important}
-}
-/* ---- the widget ---- */
-/* sits above the floating knowledge-graph button (44px at right:18/bottom:18) */
-#rs-root{position:fixed;right:18px;bottom:74px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
-#rs-btn{width:44px;height:44px;border-radius:50%;border:1px solid #d1d9e0;background:#ffffff;color:#1f2328;
-  font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);line-height:1}
-#rs-btn:hover{border-color:#0969da;color:#0969da}
-#rs-panel{position:absolute;right:0;bottom:54px;width:264px;background:#ffffff;border:1px solid #d1d9e0;
-  border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.16);padding:14px;display:none}
-#rs-panel.open{display:block}
-#rs-panel .rs-h{font-size:11px;letter-spacing:.3px;color:#59636e;margin:10px 0 6px;font-weight:600}
-#rs-panel .rs-h:first-child{margin-top:0}
-.rs-fonts{display:flex;flex-direction:column;gap:4px}
-.rs-fonts button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:6px 10px;
-  border:1px solid transparent;border-radius:6px;background:none;font-size:15px;color:#1f2328;cursor:pointer;text-align:left}
-.rs-fonts button:hover{background:#f6f8fa}
-.rs-fonts button.on{border-color:#0969da;background:#ddf4ff}
-.rs-fonts button .rs-check{color:#0969da;font-weight:700;visibility:hidden}
-.rs-fonts button.on .rs-check{visibility:visible}
-.rs-row{display:flex;align-items:center;gap:8px}
-.rs-row button{flex:1;padding:7px 0;border:1px solid #d1d9e0;border-radius:6px;background:#fff;
-  cursor:pointer;color:#1f2328;font-size:14px}
-.rs-row button:hover{border-color:#0969da}
-.rs-row button.on{border-color:#0969da;background:#ddf4ff;font-weight:600}
-.rs-row .rs-val{flex:0 0 56px;text-align:center;font-size:13px;color:#59636e;font-variant-numeric:tabular-nums}
-#rs-sminus{font-size:13px}#rs-splus{font-size:17px}
-#rs-reset{margin-top:12px;width:100%;padding:7px 0;border:none;border-radius:6px;background:#f6f8fa;
-  color:#59636e;font-size:13px;cursor:pointer}
-#rs-reset:hover{color:#0969da}
-@media (max-width:640px){#rs-root{right:12px;bottom:68px}#rs-panel{width:240px}}
-@media print{#rs-root{display:none}}
-</style>
 <div id="rs-root">
-  <div id="rs-panel" role="dialog" aria-label="Reader settings">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts">
-      <button data-f="" style="font-family:'Inter',sans-serif">Inter (Default)<span class="rs-check">✓</span></button>
-      <button data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif">Tahoma<span class="rs-check">✓</span></button>
-      <button data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif">Arial<span class="rs-check">✓</span></button>
-      <button data-f="verdana" style="font-family:Verdana,Geneva,sans-serif">Verdana<span class="rs-check">✓</span></button>
-      <button data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">Helvetica<span class="rs-check">✓</span></button>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
-      <button id="rs-sminus" aria-label="Decrease font size">A</button>
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
       <span class="rs-val" id="rs-sval">100%</span>
-      <button id="rs-splus" aria-label="Increase font size">A</button>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
     </div>
     <div class="rs-h">Margins</div>
-    <div class="rs-row rs-margins">
-      <button data-m="n" title="Narrow column">▮</button>
-      <button data-m="" title="Default">▬</button>
-      <button data-m="w" title="Wide column">▭</button>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
     </div>
-    <button id="rs-reset">Reset to defaults</button>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
   </div>
-  <button id="rs-btn" aria-label="Reader settings" aria-expanded="false" title="Reader settings — font, size, margins">Aa</button>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
 </div>
 <script id="reader-js">
 (function(){
   var KEY='ccrReaderSettings';
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
-  // Allowed font keys — reset a returning user's stored value if it points at a
-  // font this build no longer supports (e.g. Charter/Georgia/SF from an earlier
-  // widget generation), so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -124,7 +67,7 @@ html[data-rm="w"] main{max-width:1120px !important}
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval');
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -132,27 +75,35 @@ html[data-rm="w"] main{max-width:1120px !important}
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts button').forEach(function(b){
-      b.classList.toggle('on',b.getAttribute('data-f')===st.f)});
-    panel.querySelectorAll('.rs-margins button').forEach(function(b){
-      b.classList.toggle('on',b.getAttribute('data-m')===st.m)});
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
   }
-  btn.addEventListener('click',function(){
-    var open=panel.classList.toggle('open');btn.setAttribute('aria-expanded',open)});
-  document.addEventListener('click',function(e){
-    if(!root.contains(e.target)){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
-  panel.querySelectorAll('.rs-fonts button').forEach(function(b){
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
     b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
-  panel.querySelectorAll('.rs-margins button').forEach(function(b){
-    b.addEventListener('click',function(){st.m=b.getAttribute('data-m');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){
     if(st.s<SIZES.length-1){st.s++;apply();save()}});
   document.getElementById('rs-reset').addEventListener('click',function(){
-    st={f:'',s:2,m:''};apply();save()});
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
   apply();
 })();
 </script>
