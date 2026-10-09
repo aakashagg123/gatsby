@@ -29,6 +29,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Multi-agent systems & protocols](./agentic-ai/multi-agent-and-protocols.md).
 
+**ABAC** — Attribute-based access control: access is decided from attributes of the user, object, action and context.
+
+*In plain terms.* A rule looks at facts, such as the user's department, the document's owner, the time or the device, and returns allow or deny. It fits object and context limits that roles cannot express. It needs trustworthy attributes and a way to explain denials.
+
+*For example.* An editor may edit a report only if the report's department equals the editor's department.
+
+*Where it shows up:* Writing rules for own-department access; Deciding who owns each attribute; Testing denials.
+
+*See:* [ABAC: deciding with attributes and context](./access-control/abac-deciding-with-attributes-and-context.md).
+
 **Agent loop** — Gather context → decide → act → observe → repeat, until the goal is met or a budget is hit — the core structure of every agent.
 
 *In plain terms.* An agent isn't magic; it's a loop. It looks at the situation, decides one action, does it, sees the result, and repeats. That cycle is what turns a model from something that answers into something that gets things done. Everything else (memory, planning, tools) is an attachment to this loop.
@@ -38,6 +48,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Sizing what an 'agent' proposal really is; Locating where budgets and exits must go; Debugging agent behaviour step by step.
 
 *See:* [What is an agent?](./agentic-ai/what-is-an-agent.md).
+
+**Agent-washing** — Rebranding an existing assistant, chatbot, or scripted automation as an 'agent' without real agentic capability.
+
+*In plain terms.* The label 'agent' sells, so vendors apply it to products that follow a fixed script or answer one question at a time. Gartner used the term in 2025 and estimated that only about 130 of the thousands of agentic vendors were real. A buyer checks the claim by placing the product on the autonomy dial and running an acceptance test on their own cases.
+
+*For example.* A 'support agent' that matches keywords to canned replies. It has no loop, no tool use, and no decisions of its own. It is a chatbot with a new name.
+
+*Where it shows up:* Vetting vendor claims before a purchase; Placing a proposal on the autonomy dial; Setting acceptance criteria in a contract.
+
+*See:* [Choosing and acceptance-testing an agent](./ai-agents/choosing-and-acceptance-testing-an-agent.md).
 
 **AI-native (vs. AI-enabled)** — AI-enabled bolts a model onto an existing product; AI-native is built around the model, such that without it there is no product.
 
@@ -69,6 +89,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
+**Attack success rate (ASR)** — The share of attack attempts in a fixed test suite that reach the attacker's goal, tracked per attack type so a weak spot cannot hide in a blended average.
+
+*In plain terms.* A red-team suite runs a fixed list of attacks against the real system. For each attack, a check written before the run says whether the attacker won. The ASR is wins divided by attempts. Tracking it per attack type, and again after every model or prompt change, turns 'we think we are safe' into a number with a trend and a release gate.
+
+*For example.* Before a model upgrade, 4 of 80 injection attacks succeed (5%). After it, 14 of 80 succeed (18%). The release gate fails on injection, even though the blended rate across all attack types looks only a little worse.
+
+*Where it shows up:* Gating a model or prompt release on a per-attack-type threshold; Showing a buyer or regulator a dated, repeatable security result; Spotting that a model upgrade made one attack type worse.
+
+*See:* [Red-teaming: testing your defenses](./ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md).
+
 **Attribution** — Linking a generated claim back to the specific source passage that supports it.
 
 *In plain terms.* Attribution is showing your work: for each claim the model makes, pointing to the exact sentence in the exact source that backs it. It turns 'trust me' into 'here's why', which is what regulated and high-stakes products need.
@@ -78,6 +108,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Making AI answers auditable/citable; Building user trust in high-stakes domains; Grading grounding in evals.
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
+
+**AUC** — The chance that the model scores a random positive case higher than a random negative one.
+
+*In plain terms.* AUC measures ranking quality with no threshold. 0.5 is a coin flip and 1.0 is perfect. It cannot tell you whether the scores are honest probabilities, so it is not enough on its own.
+
+*For example.* An AUC of 0.76 means a random leaver outranks a random stayer 76% of the time.
+
+*Where it shows up:* Comparing ranking models; Checking that a model beats a baseline.
+
+*See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
+**Authentication vs authorization** — Authentication proves who someone is. Authorization decides what they may do.
+
+*In plain terms.* A verified login is not permission. Authorization needs the action and the object as well as the identity, and it must run on the server on every request.
+
+*For example.* Maya logs in successfully, then edits an invoice id in the URL. Authentication passed. The authorization check was missing.
+
+*Where it shows up:* Writing a permission spec; Reviewing endpoints for missing checks.
+
+*See:* [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md).
 
 **Autonomy spectrum** — The range from a single model call through workflows and routers to fully autonomous agents; the first design decision is how little autonomy suffices.
 
@@ -119,6 +169,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
 
+**Backpropagation** — The method that computes a neural network's gradients by passing the loss slope backward through the layers.
+
+*In plain terms.* A forward pass makes a prediction. A backward pass starts with the slope of the loss at the output and uses the chain rule to pass it back, layer by layer, so each weight learns how it affected the error. Libraries do this automatically. Rumelhart, Hinton and Williams described it in 1986.
+
+*For example.* In a two-layer network, the slope at the output is the prediction minus the truth. Each hidden weight's gradient is the slope arriving from above times the value that went in.
+
+*Where it shows up:* Understanding how deep networks are trained; Checking a hand-written gradient against a numerical one.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
+**Baseline** — The simplest approach a model must beat to be worth building, such as a rule or doing nothing.
+
+*In plain terms.* A score has no meaning without a comparison. A baseline is the best simple rule, the last model, or a program that does nothing. A model should beat it by enough to pay for its data, upkeep and risk.
+
+*For example.* 'Predict that nobody cancels' scores 81.7% accuracy and 50% balanced accuracy.
+
+*Where it shows up:* Judging whether a model was worth building; Keeping a team honest about gains.
+
+*See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
+
 **Behaviour equation (Fogg)** — Behaviour = Motivation × Ability × Trigger — a behaviour happens only when all three are present at once.
 
 *In plain terms.* To get someone to do something, three things must line up in the same moment: they must want to (motivation), be able to easily (ability), and be prompted (trigger). Miss any one and the behaviour doesn't happen — which tells you exactly what to fix.
@@ -128,6 +198,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Diagnosing why a desired action isn't happening; Designing onboarding and activation; Prioritising the right lever (want / ease / prompt).
 
 *See:* [Motivation & behaviour](./product-sense/motivation-and-behaviour.md).
+
+**Bias–variance tradeoff** — Simple models miss real patterns (bias). Flexible models follow noise (variance). You pick the balance.
+
+*In plain terms.* Error on new data has three parts. Bias is the error that stays however you pick the training rows. Variance is how much the model changes when the training rows change. Noise is randomness no model can predict. Making a model more flexible lowers bias and raises variance. You choose the point where the total is lowest.
+
+*For example.* A straight line fits a curve badly (bias). A line through every noisy point swings with each new sample (variance).
+
+*Where it shows up:* Explaining a training-validation gap; Choosing model complexity.
+
+*See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
 
 **Blast radius** — How much is affected when something goes wrong — the scope of damage a failure or a risky action can cause.
 
@@ -149,6 +229,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Flowable](./flowable/README.md).
 
+**Calibration** — Whether a model's scores behave like probabilities: among cases scored near 30%, about 30% should happen.
+
+*In plain terms.* A model can rank cases perfectly and still report numbers that are too high or too low. Calibration checks the numbers themselves. It matters when you add scores to forecast, compute a cutoff from costs, or show a risk figure to a person.
+
+*For example.* Squaring every score keeps the ranking and breaks the probabilities. AUC stays at 0.76, and the calibration error rises from 1.4 to 13.1 points.
+
+*Where it shows up:* Using a score as a forecast; Setting a cost-based cutoff.
+
+*See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
 **Canary release** — Rolling out a change to a tiny slice of traffic first, watching it, then widening — so problems hit 1%, not everyone.
 
 *In plain terms.* Named after the canary in a coal mine: you release a risky change to a small percentage of users, watch the metrics, and only expand if it's healthy. It turns a potential outage for everyone into a contained blip for a few.
@@ -169,9 +259,9 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md).
 
-**Chain-of-thought (CoT)** — Asking the model to reason step by step before committing to an answer — Wei et al. 2022's technique for multi-step reasoning tasks.
+**Chain-of-thought (CoT)** — Asking the model to reason step by step before committing to an answer — from Wei et al. 2022 (worked examples) and Kojima et al. 2022 ('let's think step by step').
 
-*In plain terms.* Language models are next-token predictors. Committing to an answer first leaves no room to backtrack; committing to reasoning first constrains each step by the last. On math, logic, and multi-hop reasoning, appending 'think step by step' lifts accuracy by tens of percentage points. Modern reasoning-tuned models do this internally by default.
+*In plain terms.* Language models are next-token predictors. Committing to an answer first leaves no room to backtrack; committing to reasoning first constrains each step by the last. On math, logic, and multi-hop reasoning, step-by-step prompting lifts accuracy substantially. Modern reasoning-tuned models do this internally, and on current Claude models you steer it with adaptive thinking and the effort setting.
 
 *For example.* For a scheduling question with three constraints, the model lists each constraint, checks each candidate slot against them, then names the winner — instead of guessing the winner and back-rationalizing.
 
@@ -269,6 +359,36 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & evals](./agentic-ai/reliability-and-evals.md).
 
+**Concept drift** — When the link between the inputs and the outcome changes.
+
+*In plain terms.* A price rise changes why people cancel. A new fraud tactic makes yesterday's pattern useless. The inputs can look unchanged while the answers get worse. You need outcomes to see it, so detection is slower.
+
+*For example.* Support tickets used to signal churn strongly. After a service change they signal it weakly.
+
+*Where it shows up:* Explaining a falling score with steady inputs; Planning to watch outcomes as well as inputs.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
+**Confused deputy** — A powerful program that does what a less privileged caller asks, using its own authority.
+
+*In plain terms.* It happens when an AI agent or service uses a broad key to answer users who lack that access. The fix is to act with the caller's authority, so the decision is made as the user.
+
+*For example.* An assistant with a wiki-wide key answers a junior employee from a restricted page.
+
+*Where it shows up:* Designing agent identity; Reviewing shared service keys.
+
+*See:* [Access control for AI agents](./access-control/access-control-for-ai-agents.md).
+
+**Confusion matrix** — A table that counts a classifier's four kinds of outcome: true and false positives, true and false negatives.
+
+*In plain terms.* Every case lands in one of four cells: flagged and right, flagged and wrong, not flagged and right, not flagged and wrong. Precision and recall come from the matrix. It shows what a single accuracy number hides.
+
+*For example.* At a 0.5 cutoff, a churn model flagged 161 customers, 109 of them correct, and missed 625 who left.
+
+*Where it shows up:* Seeing the real mix of errors; Pricing each kind of error.
+
+*See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
 **Context contract** — A spec section naming what an AI feature must know, remember, and retrieve to be trustworthy — next to its eval bar.
 
 *In plain terms.* A behavior-only spec says what a feature should do and how it's graded, but skips the layer in between: what does the model need to see? A context contract fills that gap by naming, up front, the instructions, retrieved facts, memory, and live state a decision requires — so context sourcing is a scoped build item, not a guess made during implementation.
@@ -288,6 +408,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Explaining why 'just give it more data' degrades quality; Prioritising what retrieval and memory should surface; Debugging why the model 'ignored' something you provided.
 
 *See:* [Context engineering](./content/00-foundations/context-engineering.md).
+
+**Context rot** — The drop in model quality that can come as more text is packed into a request — the reason to send the smallest high-signal context, not the most.
+
+*In plain terms.* A model attends across everything in its context window, and Anthropic's engineering guidance describes context as a finite resource with diminishing returns. As a request grows, the useful fact can get buried among irrelevant text, and cost and latency rise too. The product rule is to find the smallest set of information that makes the decision right.
+
+*For example.* A support bot that gets the whole policy handbook on every question answers worse and costs more than one that gets the three relevant paragraphs.
+
+*Where it shows up:* Explaining why 'just add more context' can make answers worse; Setting a context budget for an AI feature; Deciding what to drop when the window gets tight.
+
+*See:* [What is context engineering, for a product leader?](./context-engineering/what-is-context-engineering.md).
 
 **Context window** — The fixed amount of text a model can consider at once — its working memory for a single request.
 
@@ -349,6 +479,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Cost attribution](./content/04-evals-observability/cost-attribution.md).
 
+**Cross-validation** — Rotating which part of the data is held out, so every row is used for both training and scoring.
+
+*In plain terms.* Split the data into k parts. Train on k−1 of them and score on the part left out. Repeat until each part has been left out once, then average the scores. It gives a steadier estimate when data is scarce, at the cost of training k times. If rows share a group, such as one customer with many rows, split by group.
+
+*For example.* Five-fold cross-validation trains five models and averages five scores.
+
+*Where it shows up:* Comparing models on small datasets; Avoiding a lucky validation split.
+
+*See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Data drift** — When the mix of incoming cases moves away from the mix the model trained on.
+
+*In plain terms.* Growth brings new customers or a new channel changes who arrives. The model's rules may still be right, but it has not seen these cases. You can detect data drift from the inputs alone, without waiting for outcomes.
+
+*For example.* After a campaign, newer customers dominate and the spread of tenure shifts far from training.
+
+*Where it shows up:* Setting input monitors; Deciding when to retrain.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
 **Data flywheel** — Usage → captured feedback → better data & evals → better product → more usage; the compounding asset of an AI product.
 
 *In plain terms.* A flywheel is a loop that gets easier to spin the more it spins. For AI products: users generate data, which improves your model and evals, which improves the product, which attracts more users and more data. Once turning, it compounds into a moat competitors can't easily copy.
@@ -359,6 +509,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [TPM for AI products](./technical-product-management/tpm-for-ai-products.md).
 
+**Data leakage** — When the model sees information in training or testing that it will not have at prediction time.
+
+*In plain terms.* Leakage makes a test score too good, so the launch disappoints. Common forms: a column recorded after the outcome, the same customer on both sides of a split, preprocessing learned from all rows, and a random split of data that changes over time. The usual sign is a score that is too good to be true.
+
+*For example.* 'Retention offer sent' predicts cancellation almost perfectly in history, because offers go out after a customer asks to cancel. On the day you need a prediction, the column does not exist yet.
+
+*Where it shows up:* Investigating a suspiciously high score; Reviewing how a test set was built.
+
+*See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
 **Data store (agent)** — Agent-platform term for a corpus provided in its original form and vector-indexed so an agent can query it at runtime — the standard implementation of RAG in agent stacks.
 
 *In plain terms.* On agent platforms, a 'data store' is just the productised version of RAG: you point it at your PDFs, docs, or databases, it indexes them, and the agent can retrieve from them during the loop. Same idea as RAG, packaged as a config option.
@@ -368,6 +528,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Recognising RAG under a platform's branding; Configuring agent knowledge; Reasoning about freshness and retrieval quality.
 
 *See:* [Context & memory](./agentic-ai/context-and-memory.md).
+
+**Decision threshold** — The score above which a model's output becomes an action, such as flag, block or call.
+
+*In plain terms.* A model gives each case a score. A threshold turns the score into a yes or no. Moving it changes who is flagged without changing the model. Pick it from what each mistake costs and how many cases your team can act on. The default of 0.5 is rarely right.
+
+*For example.* If a missed churner costs $60 and a wasted offer costs $15, flag anyone with a risk of at least 15 ÷ (15 + 60) = 20%.
+
+*Where it shows up:* Setting alert volume; Trading precision against recall.
+
+*See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
+**Decision tree** — A model that asks a chain of yes-or-no questions about a case and ends in a leaf with an answer.
+
+*In plain terms.* A tree splits the cases on one question, such as 'tickets at most 2?', then splits each group again. Each leaf holds similar cases and the share of them that left. Trees need little data preparation, handle mixed columns, find interactions, and can be drawn. One deep tree overfits, so trees are usually combined into ensembles.
+
+*For example.* If tenure is under 6 months and tickets are above 3, risk is high.
+
+*Where it shows up:* Choosing a model for table data; Explaining a decision in plain steps.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
 
 **Decode** — The autoregressive phase that produces output tokens one at a time; memory-bandwidth bound.
 
@@ -399,6 +579,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Observability](./content/04-evals-observability/observability.md).
 
+**Early stopping** — Ending training when the validation loss stops improving.
+
+*In plain terms.* Training keeps lowering the loss on the training rows. Past some point it begins to memorize them, and the loss on validation rows rises. Early stopping ends the run at the best validation point.
+
+*For example.* The validation loss bottoms out at epoch 60 while the training loss keeps falling to epoch 150. Stop at 60.
+
+*Where it shows up:* Saving training cost; Limiting overfitting.
+
+*See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
+
 **Embedding** — A numeric fingerprint of a piece of text (a vector) so that similar meanings land near each other in space.
 
 *In plain terms.* Computers compare numbers, not meaning. An embedding turns text into a list of numbers positioned so that things which mean similar things sit close together. That's what lets you search by meaning rather than exact keywords.
@@ -419,6 +609,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Building the graph](./knowledge-graphs/building-the-graph.md).
 
+**Epoch** — One full pass of training over all the training data.
+
+*In plain terms.* Training usually reads the data many times. Each full pass is an epoch. Real systems often update after small groups of rows called mini-batches, so one epoch holds many updates. Training cost grows with data size, parameter count and number of epochs.
+
+*For example.* The churn model trained for 150 epochs over 3,000 rows.
+
+*Where it shows up:* Estimating training cost; Choosing when to stop.
+
+*See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
+
 **Error analysis** — Reading real failures, labeling them in your own words, clustering into a taxonomy, and iterating — the discipline before metric-picking.
 
 *In plain terms.* Before you can fix or measure quality, you have to actually look at what's going wrong. Error analysis is the unglamorous practice of reading real transcripts, naming each failure, then grouping those names into recurring types — so your metrics measure the failures that actually happen, not the ones you imagined.
@@ -429,7 +629,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
 
-**EU AI Act** — The first horizontal law regulating AI models by risk tier (unacceptable / high / limited / minimal), in force since August 2024 with obligations phasing in through 2026–27, applying to any provider whose AI output reaches EU users regardless of where the company is based.
+**EU AI Act** — The first horizontal law regulating AI models by risk tier (unacceptable / high / limited / minimal), in force since August 2024, with high-risk dates moved by the July 2026 Digital Omnibus to December 2027 and August 2028, applying to any provider whose AI output reaches EU users regardless of where the company is based.
 
 *In plain terms.* Most privacy law regulates data. The EU AI Act regulates the model and its use case directly, sorting every AI system into a risk tier with its own obligations — a hiring or credit-decision tool lands in 'high-risk' and owes a conformity assessment, logging, and human oversight, while a chatbot only owes a transparency disclosure. The reach is the part product teams miss: it applies based on where the output is used, not where the company is incorporated.
 
@@ -459,6 +659,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [TPM for AI products](./technical-product-management/tpm-for-ai-products.md).
 
+**Evaluator-optimizer** — A workflow pattern where one model call writes an answer and another critiques it, in a loop, until it is good enough.
+
+*In plain terms.* It helps when you have a clear quality bar and revision measurably improves the result. It multiplies calls per answer. Give the loop a round limit, and prefer a real check, such as a test or a rubric, over a second opinion from the same model.
+
+*For example.* A drafting call writes a refund reply. A checking step tests it against policy and returns feedback. The draft is revised at most twice.
+
+*Where it shows up:* Adding a quality loop to one high-stakes step; Setting a round limit and a stop rule; Choosing between a critic model and a rule-based check.
+
+*See:* [Choosing a workflow pattern](./agentic-workflows/choosing-a-workflow-pattern.md).
+
 **Eventual consistency** — A design where different parts of a system may briefly disagree, then converge — trading instant agreement for scale and availability.
 
 *In plain terms.* At scale, insisting every copy of data is identical at every instant is slow and fragile. Eventual consistency accepts a brief lag — data becomes correct everywhere 'eventually' — in exchange for speed and resilience. The product question is whether that lag is visible and acceptable.
@@ -468,6 +678,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding 'why did my change not show up instantly?'; Deciding where strong consistency is required; Reading distributed-system tradeoffs.
 
 *See:* [Data & the data model](./technical-product-sense/data-and-the-data-model.md).
+
+**Feature** — One fact about a case that a model uses as input, such as months as a customer.
+
+*In plain terms.* A row of data describes one case with a list of facts. Each fact is a feature. Choosing and preparing features is a large part of ML work. A feature must be known at the moment of prediction.
+
+*For example.* For a churn model: months as a customer, tickets in the last 90 days, logins last month.
+
+*Where it shows up:* Auditing what a model is allowed to see; Finding features that are really leaks.
+
+*See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Feedback loop** — When a model's actions change the data it will later learn from.
+
+*In plain terms.* If you only offer discounts to customers the model flags, you never learn what the unflagged customers would have done. A recommender that shows only what it favors trains on the clicks it caused. The model slowly confirms itself.
+
+*For example.* A fraud model blocks a pattern, so the pattern disappears from the data, and the next model sees no fraud of that kind.
+
+*Where it shows up:* Designing holdout groups; Reviewing what a model's data will look like next year.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
 
 **Fermi estimation** — Decomposing an unknown quantity into guessable factors to derive its order of magnitude from fundamentals.
 
@@ -568,6 +798,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a quantization recipe; Understanding open-model variants; Comparing quality tradeoffs.
 
 *See:* [Quantization formats](./content/01-inference-internals/quantization-formats.md).
+
+**Gradient boosting** — Building small trees one after another, each trained on the mistakes the ensemble still makes.
+
+*In plain terms.* The first tree makes a rough guess. The next tree is trained to correct its errors. Then another, and so on, and their outputs are added with small weights. It is often the strongest method on table data. XGBoost is a popular implementation.
+
+*For example.* Tree 1 predicts a 15% churn risk for a customer who left. Tree 2 learns to push that up.
+
+*Where it shows up:* A common baseline for table data; Competitions and production scoring.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
+**Gradient descent** — The method that trains most models: nudge every parameter a small step downhill on the loss.
+
+*In plain terms.* The gradient is the slope of the loss for each parameter. Gradient descent moves each parameter a small step opposite to its slope, then repeats. It is like walking downhill in fog by feeling the slope under your feet. The step size is the learning rate.
+
+*For example.* With one parameter and a learning rate of 0.1, the value moves from 0 toward its best value of 3 in steps of 0.6, 0.48, 0.38 and so on.
+
+*Where it shows up:* Understanding what training costs; Debugging a loss that will not fall.
+
+*See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
 
 **GraphRAG** — RAG that retrieves structure — entity subgraphs and community summaries — not just text chunks, so multi-hop and corpus-wide questions become answerable with citations.
 
@@ -759,6 +1009,36 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Structured output & JSON mode](./api-integrations/structured-output-and-json-mode.md).
 
+**JWT** — JSON Web Token: a signed token that carries claims such as the user id, roles and expiry.
+
+*In plain terms.* An API can check the signature offline, using the issuer's public keys. Decoding is not validating. The API must also check the issuer, audience, expiry and scope. A signed token stays valid until it expires, unless the API checks live.
+
+*For example.* An access token with claims for the user id, roles, and an expiry five minutes ahead.
+
+*Where it shows up:* Setting token lifetimes; Deciding what goes in a token.
+
+*See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
+**Keycloak realm** — An isolated space in Keycloak that holds a set of users, credentials, roles and groups.
+
+*In plain terms.* A user belongs to one realm and logs into it. Use separate realms for different user populations, such as staff and customers. Keep applications out of the master realm, which is for administering the server.
+
+*For example.* A staff realm for employees and a customers realm for customer users.
+
+*Where it shows up:* Laying out identity for a product; Separating staff from customers.
+
+*See:* [Keycloak: realms, clients, roles, groups and tokens](./access-control/keycloak-realms-clients-roles-groups-and-tokens.md).
+
+**Kill switch** — A control that stops one agent run, one agent, or every run within seconds, checked by the loop before each action.
+
+*In plain terms.* An agent acts on its own, so a mistake can repeat quickly. A kill switch is a flag the loop reads before every action. It works at three scopes: a single run, one agent or customer, or everything. It only counts if a named person owns it and it has been tested.
+
+*For example.* An on-call owner turns off one ticket-filing agent when duplicates appear. Other agents keep running. The next loop iteration sees the flag and stops.
+
+*Where it shows up:* Limiting damage from a runaway or hijacked run; Writing a launch-readiness checklist for an agent; Defining who is on call for an agent.
+
+*See:* [Running an agent in production](./ai-agents/running-an-agent-in-production.md).
+
 **Knowledge graph** — Knowledge stored as explicit entities and typed relationships ('things, not strings'), queryable by traversal.
 
 *In plain terms.* Most company knowledge is scattered across systems that don't talk. A knowledge graph makes the connections explicit — customers linked to contracts linked to products linked to suppliers — so you can 'walk' from one thing to related things and answer questions that span systems.
@@ -779,6 +1059,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [KV cache management](./content/01-inference-internals/kv-cache-management.md).
 
+**Label** — The outcome a model is trained to predict, recorded for past cases.
+
+*In plain terms.* A label is the answer attached to a training case. Defining it is a product decision. 'Cancelled' could mean the customer pressed cancel, the payment lapsed, or the account went silent. Each definition produces a different model. Labels can arrive late, contain mistakes, and cover only the cases you let through.
+
+*For example.* A 30-day churn label does not exist until 30 days have passed.
+
+*Where it shows up:* Agreeing what the model predicts; Planning for label delay and label quality.
+
+*See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
 **Latency vs. throughput** — Latency = how long one request takes; throughput = how many requests you handle per second. Different problems, different fixes.
 
 *In plain terms.* Two distinct performance questions people constantly confuse. Latency is the wait for a single answer (what one user feels). Throughput is total volume handled (what the system sustains). You can improve one and hurt the other — batching raises throughput but can add latency.
@@ -788,6 +1078,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting the right performance target; Reading capacity and scaling plans; Understanding batching tradeoffs.
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
+
+**Learning rate** — How big a step training takes on each update.
+
+*In plain terms.* Too small and training crawls. Too large and each step overshoots, so the loss jumps around or grows. It is the most-tuned setting in training. A short search over a few values is cheap next to a bad long run.
+
+*For example.* On the same churn data, a rate of 0.01 was still far from done after 150 epochs, 0.5 converged, and 60 never settled.
+
+*Where it shows up:* Diagnosing a run that stalls or diverges; Budgeting experiments.
+
+*See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
 
 **Least privilege** — Giving an agent only the minimum access and tools it needs — nothing more — so mistakes and attacks stay contained.
 
@@ -819,6 +1119,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reasoning & analytics](./knowledge-graphs/reasoning-and-analytics.md).
 
+**LLM** — A large language model: a very large neural network trained to predict the next piece of text, then steered by prompts.
+
+*In plain terms.* An LLM is a neural network with billions of parameters, trained on a very large amount of text to predict what comes next. That one skill, at scale, lets it answer questions, write, summarize and call tools. It is frozen after training. Everything it knows about your request comes from the prompt you send.
+
+*For example.* A support assistant sends a customer's question and a few help-center paragraphs to an LLM and gets a drafted reply.
+
+*Where it shows up:* Telling a pre-trained model from one you train yourself; Reading the rest of this curriculum.
+
+*See:* [What an LLM actually is](./llms/what-is-an-llm.md).
+
 **LLM-as-judge** — Using a model to score or compare outputs against a rubric, so evaluation can scale beyond human graders.
 
 *In plain terms.* Human grading is accurate but slow and expensive. An LLM-as-judge uses a model to apply a written rubric at scale — grading thousands of answers cheaply. It's powerful but imperfect: the judge has biases, so you validate it against human labels.
@@ -828,6 +1138,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Scaling evals cheaply; Grading open-ended outputs; Continuous quality monitoring (with human spot-checks).
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
+
+**Logistic regression** — A linear model for yes-or-no questions: a weighted sum of the features, turned into a probability.
+
+*In plain terms.* Each feature gets a weight. The model adds them up and squeezes the sum into a number between 0 and 1. The weights are readable: a positive weight on support tickets means more tickets raise the risk. It is fast, hard to overfit, and tends to give well-calibrated probabilities.
+
+*For example.* Weights on standardized churn data: tickets +0.69, tenure −0.70, logins −0.41.
+
+*Where it shows up:* A first model and a reference for others; Decisions that need to be explained.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
 
 **Long-context** — Handing the model a very large amount of text in the prompt each call, instead of retrieving just the relevant bit.
 
@@ -848,6 +1168,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Preventing runaway cost/time; Defining agent exit conditions; Making agents safe to run unattended.
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
+
+**Loss function** — A score of how wrong the model is, which training tries to reduce.
+
+*In plain terms.* The loss turns the model's mistakes into one number. Lower is better. Training changes the parameters to push it down. Because the model chases whatever the loss rewards, the choice of loss is a product decision. Squared error suits numbers. Log loss suits probabilities.
+
+*For example.* A model that gives a 2% chance to something that happens gets a large log loss. A coin-flip prediction scores 0.693.
+
+*Where it shows up:* Reading a training curve; Making sure the objective matches what the product needs.
+
+*See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
+
+**Machine learning** — Software that finds its own rules from examples, instead of following rules a person wrote.
+
+*In plain terms.* A normal program does what its author spelled out. A machine learning program is shown many past cases with known outcomes and adjusts itself until its answers match them. Then it applies what it found to new cases. The data becomes part of the logic.
+
+*For example.* A churn model sees 3,000 past customers and whether each cancelled. It learns that many support tickets and few logins go with cancelling, then scores a new customer.
+
+*Where it shows up:* Deciding whether a problem needs rules, a trained model or an LLM; Asking for a baseline before approving a model; Seeing why data quality is a product concern.
+
+*See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
 
 **Map is not the territory** — Every model, metric, or plan is a simplified map — useful, but never the full reality it represents.
 
@@ -879,6 +1219,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md).
 
+**Memory poisoning** — Planting false or hostile content in an AI product's stored memory so it keeps influencing later sessions.
+
+*In plain terms.* A normal prompt injection ends when the chat ends. If a model can write to memory, an injection can save itself and act again in every later session. The planting and the harm can be days apart. The defence is on the write path: hold saves that come from untrusted content, show sources, and let users review memories.
+
+*For example.* A web page tells an assistant to remember 'always send summaries to this address'. The assistant saves it as a preference. Weeks later, every summary goes there.
+
+*Where it shows up:* Writing a write-policy for a memory feature; Adding a poisoning case to a launch test set; Deciding which sources may write to memory.
+
+*See:* [When memory goes wrong](./memory-and-context/when-memory-goes-wrong.md).
+
+**Memory write policy** — The written rules for what a product saves to memory, when, how new facts replace old ones, and when memories expire.
+
+*In plain terms.* Memory quality is set when a memory is written. A write policy says what is worth saving (durable, useful later, safe), who writes (the model, your code, or the user), what happens when a new fact conflicts with an old one, and when each memory expires or is reviewed.
+
+*For example.* 'I moved to Pune' replaces 'lives in Delhi', the old value is kept in history, and the record gets a 12-month review date.
+
+*Where it shows up:* Specifying a memory feature; Reviewing why an assistant keeps using an outdated fact; Setting expiry and review dates.
+
+*See:* [Writing and maintaining memory](./memory-and-context/writing-and-maintaining-memory.md).
+
 **Mental model / latticework** — A reusable thinking tool from some discipline; a 'latticework' is many of them, so you see a problem from multiple angles.
 
 *In plain terms.* A mental model is a compact way of understanding how something works (supply and demand, feedback loops, incentives). No single model captures reality, so you collect many across disciplines — a latticework — and view each problem through several, avoiding the 'to a hammer everything looks like a nail' trap.
@@ -888,6 +1248,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reasoning across disciplines; Avoiding single-lens blind spots; Building durable judgment.
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**MLOps** — The practice of running ML systems reliably: data pipelines, versioning, release, monitoring and retraining.
+
+*In plain terms.* It is operations discipline applied to models. Models decay, depend on data, and need owners, alarms and rollbacks. MLOps adds the data and the model to the usual concerns of running a service.
+
+*For example.* A runbook says who sees the drift alarm, how to retrain, and what rule runs while the model is off.
+
+*Where it shows up:* Budgeting for life after launch; Assigning ownership.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
 
 **Modality** — The kind of content a generative model creates — text, image, audio, video, or code — each with its own maturity and failure pattern.
 
@@ -939,6 +1309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Multi-tenant isolation](./content/05-safety-multitenancy/multi-tenant-isolation.md).
 
+**Neural network** — A stack of layers of weighted sums with bends between them, able to learn almost any shape.
+
+*In plain terms.* Each layer computes weighted sums of the layer before, then applies a bend called an activation function. The bends let the network draw curves. The hidden layers learn their own features. Networks need a lot of data and compute and are hard to explain. They power images, speech and language models.
+
+*For example.* A network with 6 hidden units and 25 parameters learned a pattern that a straight-line model could not.
+
+*Where it shows up:* Choosing a model for text, images or audio; Understanding what an LLM is.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
 **North star metric** — The single metric that best captures the core value your product delivers to users — the one you rally the team around.
 
 *In plain terms.* Teams optimise what they measure, so choosing the ONE metric that truly reflects delivered value focuses everyone. A good north star moves only when users get real value — not a vanity number you can game while users suffer.
@@ -948,6 +1328,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Aligning a team on what matters; Avoiding vanity-metric traps; Framing goals and roadmaps.
 
 *See:* [Metrics & experimentation](./technical-product-management/metrics-and-experimentation.md).
+
+**OAuth 2.0** — A standard that lets one application act on a user's behalf at another, without sharing the password.
+
+*In plain terms.* It is about delegation. A user logs in at an authorization server, which issues tokens to a client app. The client uses an access token to call an API. OpenID Connect adds login on top.
+
+*For example.* A calendar app gets an access token to read a user's contacts, and never sees their password.
+
+*Where it shows up:* Choosing a login flow; Setting token lifetimes; Reviewing partner access.
+
+*See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
 
 **OKR** — Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.
 
@@ -989,6 +1379,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Choosing a model](./llms/choosing-a-model.md).
 
+**OpenID Connect** — A login layer on top of OAuth 2.0 that tells an app who the user is.
+
+*In plain terms.* It adds an ID token, which says who logged in, alongside the access token, which says what an app may call. The ID token is for the client app. An API should not accept it as proof of access.
+
+*For example.* After login, an app reads the ID token to show the user's name.
+
+*Where it shows up:* Adding single sign-on; Separating login from API access.
+
+*See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
 **Orchestration layer** — The cyclical process governing how an agent takes in information, reasons, and picks its next action — the loop plus its budgets and exits.
 
 *In plain terms.* Between the raw model and a working agent sits the orchestration layer: the code that runs the loop, keeps the running history, enforces step/cost limits, and decides when to stop or ask a human. It's where an 'agent' actually lives, beyond the model itself.
@@ -999,6 +1399,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What is an agent?](./agentic-ai/what-is-an-agent.md).
 
+**Orchestrator-workers** — A workflow pattern where a lead model splits a task, hands pieces to worker models, and combines their results.
+
+*In plain terms.* Use it when you cannot list the subtasks in advance. The lead decides the plan at run time, so the path is not fixed in your code. That flexibility costs the most tokens of the five common workflow patterns, and its quality depends on how clearly the lead briefs each worker.
+
+*For example.* A research assistant splits a question into three searches, sends each to a worker, and merges the three tables.
+
+*Where it shows up:* Choosing between a fixed chain and a model-led plan; Estimating the token cost of a multi-agent design; Reviewing the briefs a lead agent writes.
+
+*See:* [Choosing a workflow pattern](./agentic-workflows/choosing-a-workflow-pattern.md).
+
 **Organizational memory** — Memory shared across everyone in a workspace or tenant, rather than private to one person — the shape where a leak or a bad edit affects everyone, not just its owner.
 
 *In plain terms.* Session and user memory belong to one person. Organizational memory is a shared handbook: one person's contribution becomes something the whole team sees. That's the point of it, but it also means the boundary around who's 'inside' the org is the entire feature — get it wrong and you've built a leak, not a convenience.
@@ -1008,6 +1418,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing which of the three memory shapes a feature actually needs; Scoping a memory boundary before writing any storage code; Explaining why shared memory needs the same isolation guarantees as any other tenant boundary.
 
 *See:* [Session, user & organizational memory](./memory-and-context/session-user-and-organizational-memory.md).
+
+**Overfitting** — When a model memorizes the quirks of its training data and then does worse on new cases.
+
+*In plain terms.* A flexible model can fit the noise in its training rows as if it were pattern. It scores very well on rows it has seen and poorly on new ones. The tell is a wide gap between training and validation scores. Fixes include more data, a simpler model, regularization and early stopping.
+
+*For example.* A decision tree 12 levels deep scored 95.5% on its 600 training customers and 54.2% on new ones. A tree 4 levels deep scored 74.5% and 65.1%.
+
+*Where it shows up:* Reading training and validation scores together; Deciding whether more data will help.
+
+*See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
 
 **p99 / tail latency** — The slow end of the latency distribution — e.g. p99 is the time under which 99% of requests complete; the 1% worst is what users remember.
 
@@ -1028,6 +1448,36 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Explaining throughput gains without new hardware; Evaluating inference servers/vendors; Connecting memory efficiency to serving cost.
 
 *See:* [Continuous batching & paged attention](./content/01-inference-internals/batching-and-paged-attention.md).
+
+**Parameter** — One of the adjustable numbers inside a model, set by training.
+
+*In plain terms.* A model is a formula with knobs. Each knob is a parameter. Training turns the knobs until the model's answers match the data. A small model may have a handful. A large language model has billions. More parameters can fit more patterns and need more data and compute.
+
+*For example.* A churn model with four features has four weights and one bias: five parameters.
+
+*Where it shows up:* Judging model size and cost; Explaining what 'training' changes.
+
+*See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
+
+**PKCE** — Proof Key for Code Exchange: a step that stops a stolen login code from being used.
+
+*In plain terms.* The app creates a random secret, sends a hash of it when it starts login, and shows the secret when it swaps the code for tokens. The server checks they match. The OAuth security best practice, RFC 9700, says public clients must use it.
+
+*For example.* A mobile app uses the authorization code flow with PKCE and the S256 challenge method.
+
+*Where it shows up:* Choosing a login flow for apps; Security review of a client.
+
+*See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
+**Policy decision point** — The part of an authorization system that evaluates the rules and returns allow or deny.
+
+*In plain terms.* Four parts appear in most systems. The enforcement point stops or allows a request. The decision point evaluates the policy. The information point supplies attributes. The administration point is where policy is written. Naming them shows who owns each failure.
+
+*For example.* A service asks the decision point whether Priya may edit report 7, and enforces the answer.
+
+*Where it shows up:* Deciding central versus local decisions; Planning failure behaviour when the decision service is down.
+
+*See:* [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md).
 
 **Postmortem** — A blameless written analysis after an incident: what happened, why, and what changes prevent a recurrence.
 
@@ -1159,6 +1609,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md).
 
+**PSI** — A score of how far a column's live spread has moved from its spread in training.
+
+*In plain terms.* Cut the training values into ten equal bands. Count what share of live values lands in each band. The index is zero when the shares match and grows as they diverge. Many teams treat 0.1 as 'look' and 0.25 as 'act'. That is a habit from credit-risk work, not a standard.
+
+*For example.* A unit slip from months to days gave a PSI of 7.51 on tenure and 0.00 on an untouched column.
+
+*Where it shows up:* Alarming on input drift; Finding a broken input on day one.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
 **Quantization** — Storing a model's numbers at lower precision (e.g. 4/8-bit) to shrink memory and speed inference, trading a little accuracy.
 
 *In plain terms.* A model is billions of numbers. Storing each with fewer digits makes the model smaller and faster and cheaper to run, at some risk to quality. The art is cutting precision where it doesn't matter and protecting the parts that do.
@@ -1179,6 +1639,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
 
+**Random forest** — Many decision trees, each trained on a random sample, whose answers are averaged.
+
+*In plain terms.* Each tree sees a random sample of the rows and a random subset of the columns. Their quirks differ, so averaging cancels much of the noise. This lowers variance. Leo Breiman described the method in 2001.
+
+*For example.* Five hundred trees vote, and the share voting 'will cancel' becomes the risk score.
+
+*Where it shows up:* A strong first model on table data; Reducing overfitting of a single tree.
+
+*See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
 **Rate limit** — A cap on how many requests, or how many tokens, you can send an API in a given window of time.
 
 *In plain terms.* Every API vendor caps how much you can call it, to protect their own systems from being overwhelmed. A rate limit is that cap. Cross it and requests get rejected or delayed until the window resets — which a fast-growing product can hit sooner than a team expects.
@@ -1189,6 +1659,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Calling an LLM API](./api-integrations/calling-an-llm-api.md).
 
+**RBAC** — Role-based access control: permissions go to roles, and people are given roles.
+
+*In plain terms.* Instead of listing what each person may do, you define jobs, such as editor or viewer, and give each job a set of permissions. People hold roles. It is easy to explain and audit. It struggles with rules about a specific object, and roles tend to multiply.
+
+*For example.* Priya holds the editor role, so she can edit reports. Sam holds viewer, so he can only read them.
+
+*Where it shows up:* Designing a short list of roles; Running an access review; Spotting role explosion.
+
+*See:* [RBAC: roles, groups and where it breaks](./access-control/rbac-roles-groups-and-where-it-breaks.md).
+
 **ReAct** — A reasoning framework interleaving Thought, Action, and Observation — the default shape of an agent loop.
 
 *In plain terms.* ReAct makes the agent alternate between thinking out loud ('I should check the logs'), acting (calling a tool), and observing the result — then thinking again. Interleaving reasoning with action is what keeps the agent grounded in what it actually finds rather than guessing.
@@ -1198,6 +1678,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how agents 'think'; Reading agent transcripts; Comparing reasoning strategies (vs. plan-and-execute, tree-of-thoughts).
 
 *See:* [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
+
+**ReBAC** — Relationship-based access control: access follows relationships between users and objects.
+
+*In plain terms.* Facts are stored as small links, such as 'Priya is a member of Finance' and 'Finance can view this folder'. A check walks the links to see if a path grants access. It fits sharing, folders and groups. Google's Zanzibar paper made the approach well known.
+
+*For example.* Priya can view a document because she is in Finance, Finance can view the folder, and the document sits in that folder.
+
+*Where it shows up:* Designing sharing and inheritance; Choosing a permission store; Planning removal and caching.
+
+*See:* [ReBAC and policy engines](./access-control/rebac-and-policy-engines.md).
 
 **Recall vs. precision** — Two sides of retrieval/classification quality: recall = did we find everything relevant; precision = is what we found actually relevant.
 
@@ -1217,7 +1707,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Generating adversarial eval cases before an incident does; Producing compliance evidence for enterprise security reviews; Deciding how often a model or prompt change should trigger a fresh round.
 
-*See:* [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md).
+*See:* [Red-teaming: testing your defenses](./ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md).
 
 **Reflection (self-correction)** — An agent reviewing its own output or plan and revising it before finishing.
 
@@ -1228,6 +1718,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Improving reliability on complex tasks; Deciding where a self-check step earns its cost; Understanding why feedback beats raw 'more thinking'.
 
 *See:* [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
+
+**Regularization** — A penalty on model complexity that makes it prefer simpler explanations.
+
+*In plain terms.* Regularization adds a price to the loss for large weights or many features. The model then keeps a pattern only if the data insists. It is a main tool against overfitting. Too much of it causes underfitting.
+
+*For example.* A penalty on the sum of squared weights pulls them toward zero.
+
+*Where it shows up:* Controlling overfitting in linear models and networks; Tuning on validation data.
+
+*See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
+
+**Relationship tuple** — A stored fact that links an object, a relation and a subject, used by relationship-based access control.
+
+*In plain terms.* A tuple says 'this object has this relation to this subject', for example folder Q3 has viewer group Finance. The system answers access questions by following chains of tuples.
+
+*For example.* folder:q3 viewer group:finance#member
+
+*Where it shows up:* Modelling sharing; Debugging why someone has access.
+
+*See:* [ReBAC and policy engines](./access-control/rebac-and-policy-engines.md).
 
 **Repair loop** — Feeding a validation error back to the model so it can fix a malformed output.
 
@@ -1289,6 +1799,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Few-shot, chain-of-thought, and self-consistency](./prompt-engineering/few-shot-cot-self-consistency.md).
 
+**Self-supervised learning** — Learning where the data supplies its own answers, such as predicting the next word.
+
+*In plain terms.* No person labels each example. The task is built from the data itself: hide part of the input and predict it. A language model reads text and predicts the next word, and the real next word is the answer. Because the labels are free, this kind of learning scales to very large data.
+
+*For example.* Given 'The cat sat on the', predict 'mat'. The text already contains the answer.
+
+*Where it shows up:* Understanding how large language models are first trained; Seeing why unlabeled data can still be useful.
+
+*See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
+
 **Semantic caching** — Returning a cached response when a new query is similar in meaning (by embedding distance) to a previous one.
 
 *In plain terms.* Two questions can be worded differently but mean the same thing. Semantic caching notices that similarity and reuses the earlier answer instead of paying the model again. Powerful, but risky: 'similar' isn't 'identical', so it can serve a subtly wrong answer.
@@ -1319,6 +1839,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
 
+**Shadow mode** — Running a new model on live traffic without acting on its output, to compare it with the current one.
+
+*In plain terms.* The new model scores real requests. Nobody sees or acts on its answers. You compare them with the live model and with real outcomes. It is the safe step before a canary release.
+
+*For example.* A retrained churn model scores every customer for two weeks while the old one still drives offers.
+
+*Where it shows up:* Releasing a retrained model safely; Finding skew before customers do.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
 **SLA / SLO** — An SLO is the reliability/performance target you aim for internally; an SLA is the promise (with penalties) you make to customers.
 
 *In plain terms.* An SLO (objective) is your internal goal — '99.9% of requests succeed'. An SLA (agreement) is the external contract with consequences if you miss it. You set SLOs stricter than SLAs so you have headroom before you owe a customer money.
@@ -1329,7 +1859,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & failure](./technical-product-sense/reliability-and-failure.md).
 
-**SOC 2** — An audit against five Trust Services Criteria (security, availability, processing integrity, confidentiality, privacy) that's become the default first question in enterprise AI procurement — Type II, attesting controls worked over six to twelve months, is what buyers actually want.
+**SOC 2** — An audit against five Trust Services Criteria (security, availability, processing integrity, confidentiality, privacy) that's become the default first question in enterprise AI procurement — Type II, attesting controls worked over a period of time, is what buyers actually want.
 
 *In plain terms.* SOC 2 isn't AI-specific — it's a general vendor-trust audit — but it's become the near-universal opening move in enterprise security review, because a buyer has no faster way to check 'does this vendor take security seriously.' Type I attests controls exist at a point in time; Type II attests they operated effectively over a period, and it cannot be rushed, which makes it a lead-time problem, not a checkbox a team can clear in a sprint.
 
@@ -1409,6 +1939,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
 
+**Supervised learning** — Learning from cases that come with the right answer, called a label.
+
+*In plain terms.* Each training case is a question paired with its known answer. The model learns to map questions to answers. Most business machine learning is supervised, and the labels cost money because someone has to record the outcome.
+
+*For example.* Past customers marked 'cancelled' or 'stayed'. Past emails marked 'spam' or 'not spam'.
+
+*Where it shows up:* Estimating the cost and delay of getting labels; Spotting why a project with no recorded outcomes stalls.
+
+*See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
+
 **T-shaped expertise** — One deep spike of mastery over a broad working-level base — depth that makes breadth credible.
 
 *In plain terms.* A 'T' has a broad top and one deep stem: you know a little about many things and a lot about one. That one deep area earns you credibility and pattern-recognition; the broad base lets you collaborate across fields. It's the practical shape of a versatile expert.
@@ -1469,6 +2009,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What an LLM actually is](./llms/what-is-an-llm.md).
 
+**Token exchange** — Swapping one token for another, usually with a narrower audience.
+
+*In plain terms.* RFC 8693 describes it. An agent can exchange the user's token for one that is valid only for a specific tool, so the tool decides as that user. Check what the exchange does and does not narrow in your identity server.
+
+*For example.* A user's token is exchanged for a token whose audience is only the expenses API.
+
+*Where it shows up:* Giving agents delegated access; Limiting where a token works.
+
+*See:* [Access control for AI agents](./access-control/access-control-for-ai-agents.md).
+
 **Tool** — A capability you expose to a model — search, run code, call an API, write a file — that lets it act on the world.
 
 *In plain terms.* Without tools a model can only describe actions; with tools it can take them. A tool is a well-defined action you let the model invoke (via function calling). The set of tools you give an agent is its 'hands' — and its blast radius if misused.
@@ -1519,6 +2069,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What an LLM actually is](./llms/what-is-an-llm.md).
 
+**Training, validation and test sets** — Three separate slices of data: one to learn from, one to choose between models, one for a final check.
+
+*In plain terms.* The model learns from the training set. You compare settings and models on the validation set. You score the chosen model once on the test set. A slice stays honest only while you do not use it to make choices. Each time you pick a model because it did well on the test set, the test set quietly becomes training data.
+
+*For example.* 3,000 customers to train, 1,500 to choose the tree depth, 1,500 to report the final score.
+
+*Where it shows up:* Asking how a reported score was produced; Spotting a score that was tuned on its own test.
+
+*See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Training-serving skew** — When the model sees different inputs in live use than it saw in training.
+
+*In plain terms.* The code that builds features for training is not the same code that builds them live. Units differ, defaults differ, or a lookup is stale. Nothing crashes, because the values are valid numbers. The answers are just wrong. Share one feature code path and monitor input spread.
+
+*For example.* Training used tenure in months and the live system sent days. AUC fell from 0.727 to 0.621 with no error.
+
+*Where it shows up:* Debugging a model that is worse live than offline; Designing feature pipelines.
+
+*See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
 **Trajectory eval** — Grading the path an agent took — tools chosen, steps used, no flailing — not just its final answer.
 
 *In plain terms.* Two agents can reach the right answer, one cleanly and one after 40 wasteful, lucky steps. A trajectory eval grades the journey, not only the destination, because a messy path is a fragile path that will fail next time.
@@ -1548,6 +2118,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how graphs store knowledge; Why graphs and LLMs pair well (facts as sentences); Modeling data as connected facts.
 
 *See:* [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md).
+
+**Underfitting** — When a model is too simple to capture a real pattern, so it scores poorly everywhere.
+
+*In plain terms.* A straight line cannot trace a curve. An underfit model does badly on its training rows and on new rows alike, and the gap between them is small. More data does not help. A more flexible model or better features does.
+
+*For example.* A depth-1 tree scored 64.4% on training and 60.8% on validation. Both were low.
+
+*Where it shows up:* Telling underfitting from overfitting; Choosing between data and a better model.
+
+*See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
 
 **Vector database** — A store that indexes embeddings so you can quickly find the items most similar in meaning to a query.
 
@@ -1591,9 +2171,9 @@ Which words get an entry — and why — is defined by the rubric in
 
 **XML tags (in prompts)** — Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.
 
-*In plain terms.* Anthropic's Claude was trained on a lot of XML-marked-up text and treats tags as strong boundary signals. Tags nest cleanly, prevent instructions from bleeding into content, and defend against prompt injection through unlabeled user input. In practice: any production prompt over a paragraph benefits.
+*In plain terms.* Anthropic recommends XML tags for Claude because they mark clear boundaries between instructions, examples, and inputs. Tags nest cleanly and stop instructions from bleeding into content. They lower the risk of prompt injection through unlabeled user input, but they do not remove it. In practice: any production prompt over a paragraph benefits.
 
-*For example.* <instructions>Summarize the article.</instructions><article>{{TEXT}}</article> — the model knows the article is content, not an instruction, even if the article contains directive-looking sentences.
+*For example.* <instructions>Summarize the article.</instructions><article>{{TEXT}}</article> — the boundary makes it much less likely that the model treats directive-looking sentences inside the article as instructions.
 
 *Where it shows up:* Making production prompts robust to input variation; Defending against prompt injection; Building reusable scaffolds where sections are named.
 

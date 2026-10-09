@@ -1,0 +1,43 @@
+<style>
+.dgm-ml{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-ml-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-ml h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ml-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ml-grid{display:grid;gap:12px}
+.dgm-ml-card{border-radius:13px;padding:13px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);position:relative}
+.dgm-ml-card h5{margin:0 0 4px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-ml-card p{margin:0;font-size:11.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-ml-num{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;border-radius:10px;margin-right:6px;
+  font-size:10.5px;font-weight:700;background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.dgm-ml-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-ml-bad{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-ml-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-ml-warn{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-surface)}
+.dgm-ml-arrow{display:flex;align-items:center;justify-content:center;color:var(--color-text-tertiary);font-size:16px}
+.dgm-ml-foot{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-ml{padding:22px 16px 18px}}
+.ml-meas{grid-template-columns:1fr 1fr;gap:18px}@media (max-width:640px){.ml-meas{grid-template-columns:1fr}}</style>
+<div class="dgm-ml"><span class="dgm-ml-chip">One model, three policies</span>
+<h4>The score is not the decision. The cutoff is.</h4>
+<p class="dgm-ml-sub">4,000 unseen customers, 734 of whom left. Invented costs: a missed leaver $60, a wasted offer $15.</p>
+<div class="dgm-ml-grid ml-meas">
+  <div>
+    <div class="dgm-ml-grid" style="grid-template-columns:1fr 1fr">
+      <div class="dgm-ml-card dgm-ml-ok"><h5>109</h5><p>flagged and left</p></div>
+      <div class="dgm-ml-card dgm-ml-warn"><h5>52</h5><p>flagged, stayed (wasted offer)</p></div>
+      <div class="dgm-ml-card dgm-ml-bad"><h5>625</h5><p>not flagged, left (missed)</p></div>
+      <div class="dgm-ml-card"><h5>3,214</h5><p>not flagged, stayed</p></div>
+    </div>
+    <p class="dgm-ml-foot" style="text-align:left">Cutoff 0.5: accuracy 83.1% (do nothing: 81.7%), but recall only 14.9%.</p>
+  </div>
+  <div class="dgm-ml-grid" style="align-content:start">
+    <div class="dgm-ml-card"><h5>Do nothing</h5><p>0 flagged · 0 of 734 caught · <b>$44,040</b></p></div>
+    <div class="dgm-ml-card"><h5>Cutoff 0.5 (the default)</h5><p>161 flagged · 109 caught · <b>$38,280</b></p></div>
+    <div class="dgm-ml-card dgm-ml-ok"><h5>Cutoff 0.19 (from the costs)</h5><p>1,420 flagged · 490 caught · <b>$28,590</b></p></div>
+  </div>
+</div>
+<p class="dgm-ml-foot">Best cutoff ≈ cost of a false alarm ÷ (false alarm + miss) = 15 ÷ 75 = 0.20.</p>
+</div>

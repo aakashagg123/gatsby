@@ -1,0 +1,44 @@
+<style>
+.dgm-ml{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-ml-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-ml h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ml-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ml-grid{display:grid;gap:12px}
+.dgm-ml-card{border-radius:13px;padding:13px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);position:relative}
+.dgm-ml-card h5{margin:0 0 4px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-ml-card p{margin:0;font-size:11.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-ml-num{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;border-radius:10px;margin-right:6px;
+  font-size:10.5px;font-weight:700;background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.dgm-ml-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-ml-bad{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-ml-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-ml-warn{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-surface)}
+.dgm-ml-arrow{display:flex;align-items:center;justify-content:center;color:var(--color-text-tertiary);font-size:16px}
+.dgm-ml-foot{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-ml{padding:22px 16px 18px}}
+</style>
+<div class="dgm-ml"><span class="dgm-ml-chip">Overfitting, measured</span>
+<h4>Score against model complexity</h4>
+<p class="dgm-ml-sub">Balanced accuracy of decision trees on 600 training customers and 1,500 validation customers.</p>
+<svg viewBox="0 0 540 215" role="img" aria-label="Training score rises with tree depth while validation score peaks at depth 4 and falls" style="width:100%;height:auto">
+  <rect x="50" y="30" width="147" height="140" style="fill:var(--color-background-info-surface)"/>
+  <rect x="197" y="30" width="147" height="140" style="fill:var(--color-background-success-surface)"/>
+  <rect x="343" y="30" width="147" height="140" style="fill:var(--color-background-danger-surface)"/>
+  <text x="123" y="24" text-anchor="middle" style="fill:var(--color-text-info);font-size:11px;font-weight:600">underfit</text>
+  <text x="270" y="24" text-anchor="middle" style="fill:var(--color-text-success);font-size:11px;font-weight:600">about right</text>
+  <text x="417" y="24" text-anchor="middle" style="fill:var(--color-text-danger);font-size:11px;font-weight:600">overfit</text>
+  <polyline points="50,133 123,124 197,119 270,106 343,93 417,82 490,52" fill="none" style="stroke:var(--color-text-secondary);stroke-width:2.2"/>
+  <polyline points="50,142 123,134 197,134 270,131 343,134 417,146 490,159" fill="none" style="stroke:var(--color-text-discovery);stroke-width:2.6"/>
+  <circle cx="270" cy="131" r="5" style="fill:var(--color-text-discovery)"/>
+  <text x="278" y="121" style="fill:var(--color-text-discovery);font-size:11px;font-weight:600">depth 4: 65.1%</text>
+  <text x="350" y="68" style="fill:var(--color-text-secondary);font-size:11px">training 95.5%</text>
+  <text x="400" y="151" style="fill:var(--color-text-discovery);font-size:11px">validation 54.2%</text>
+  <text x="50" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">1</text><text x="123" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">2</text><text x="197" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">3</text><text x="270" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">4</text><text x="343" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">6</text><text x="417" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">8</text><text x="490" y="192" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">12</text>
+  <text x="270" y="209" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:10px">tree depth (more flexible →)</text>
+  <line x1="50" y1="170" x2="490" y2="170" style="stroke:var(--color-border-strong)"/>
+</svg>
+<p class="dgm-ml-foot">Grey: training score. Purple: validation score. Pick the depth on validation. Report on a test set you touch once.</p>
+</div>

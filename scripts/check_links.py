@@ -19,7 +19,7 @@ SCAN_DIRS = [
     "evaluation-and-observability", "ai-security-and-guardrails", "cost-optimization",
     "technical-product-management", "technical-product-sense",
     "system-design", "access-control", "harness-engineering", "flowable", "context-engineering",
-    "prompt-engineering", "learning-paths",
+    "prompt-engineering", "learning-paths", "machine-learning",
 ]
 ROOT_FILES = ["README.md", "SUMMARY.md", "GLOSSARY.md"]
 

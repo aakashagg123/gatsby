@@ -45,7 +45,7 @@ VOLATILITY = {
     "rag-vector-databases": "medium", "evaluation-and-observability": "fast",
     "ai-security-and-guardrails": "fast", "cost-optimization": "fast",
     "knowledge-graphs": "medium", "system-design": "stable", "access-control": "medium",
-    "learning-paths": "medium",
+    "learning-paths": "medium", "machine-learning": "medium",
     "technical-product-management": "medium", "technical-product-sense": "stable",
     "product-sense": "medium", "first-principles": "stable",
 }

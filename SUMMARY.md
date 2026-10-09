@@ -168,6 +168,18 @@ order below moves from thinking skills to product craft to agents.
 7. [Governance, quality & trust](./knowledge-graphs/governance-quality-and-trust.md)
 8. [Knowledge graphs as a product](./knowledge-graphs/knowledge-graphs-as-a-product.md) · [Recap](./knowledge-graphs/recap.md)
 
+## [Machine learning](./machine-learning/README.md)
+
+The first foundation module. See the [plan](./MACHINE_LEARNING_ROADMAP.md).
+
+1. [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md)
+2. [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md)
+3. [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md)
+4. [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md)
+5. [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md)
+6. [Model families: linear models, trees and neural networks](./machine-learning/model-families.md)
+7. [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md) · [Recap](./machine-learning/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

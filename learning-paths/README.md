@@ -6,16 +6,16 @@
 
 This library has more than twenty tracks. You do not need all of them. A learning path picks the tracks and the lessons for one role, puts them in order, and says when to move on.
 
-**A note on scope.** The paths do not teach anything new. They order and explain the lessons that already exist, and they say which lessons to skip. The lessons carry the content. Modules on machine learning, tensors and CNNs are planned. They show as "coming soon" until they are published.
+**A note on scope.** The paths do not teach anything new. They order and explain the lessons that already exist, and they say which lessons to skip. The lessons carry the content. The machine learning module is published. Modules on tensors and CNNs are planned. They show as "coming soon" until they are published.
 
 ## Pick your role
 
 | Path | Who it is for | Outcome | Length |
 | --- | --- | --- | --- |
-| [Senior PM](./senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | You can lead an AI feature end to end. You choose the approach, set the quality bar, price it, and judge the risk. | about 15.5 hours |
-| [AI Product Lead](./ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering and ask informed questions. | about 24 hours |
-| [AI Engineer](./ai-engineer.md) | A software engineer who builds AI-powered systems | You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 68 hours |
-| [AI Engineering Lead](./ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | You review AI architecture, set quality and safety standards, control cost, and work well with product. | about 32.5 hours |
+| [Senior PM](./senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | You can lead an AI feature end to end. You choose the approach, set the quality bar, price it, and judge the risk. | about 16.5 hours |
+| [AI Product Lead](./ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering and ask informed questions. | about 25.5 hours |
+| [AI Engineer](./ai-engineer.md) | A software engineer who builds AI-powered systems | You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 71 hours |
+| [AI Engineering Lead](./ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | You review AI architecture, set quality and safety standards, control cost, and work well with product. | about 35 hours |
 
 ## Where the depth lives
 

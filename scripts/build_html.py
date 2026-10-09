@@ -75,7 +75,7 @@ def rewrite_target(target, cur_mod):
             "api-integrations", "memory-and-context", "tool-calling", "ai-agents",
             "agentic-workflows", "evaluation-and-observability", "ai-security-and-guardrails",
             "cost-optimization", "access-control", "context-engineering", "prompt-engineering",
-            "learning-paths")
+            "learning-paths", "machine-learning")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):

@@ -1,0 +1,45 @@
+<style>
+.dgm-ml{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-ml-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-ml h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ml-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ml-grid{display:grid;gap:12px}
+.dgm-ml-card{border-radius:13px;padding:13px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);position:relative}
+.dgm-ml-card h5{margin:0 0 4px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-ml-card p{margin:0;font-size:11.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-ml-num{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;border-radius:10px;margin-right:6px;
+  font-size:10.5px;font-weight:700;background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.dgm-ml-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-ml-bad{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-ml-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-ml-warn{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-surface)}
+.dgm-ml-arrow{display:flex;align-items:center;justify-content:center;color:var(--color-text-tertiary);font-size:16px}
+.dgm-ml-foot{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-ml{padding:22px 16px 18px}}
+.ml-two{grid-template-columns:1fr 1fr}@media (max-width:640px){.ml-two{grid-template-columns:1fr}}</style>
+<div class="dgm-ml"><span class="dgm-ml-chip">Two ways to build a decision</span>
+<h4>Where does the logic come from?</h4>
+<p class="dgm-ml-sub">The two sides give the same kind of output. The difference is the author: a person, or the data.</p>
+<div class="dgm-ml-grid ml-two">
+  <div class="dgm-ml-card"><h5>Rules</h5>
+    <div class="dgm-ml-grid" style="margin-top:8px">
+      <div class="dgm-ml-card dgm-ml-info"><p><b>An expert writes the rule</b><br>"3 or more tickets means trouble"</p></div>
+      <div class="dgm-ml-arrow">↓</div>
+      <div class="dgm-ml-card"><p><b>Program</b> applies the rule to a new case</p></div>
+      <div class="dgm-ml-arrow">↓</div>
+      <div class="dgm-ml-card dgm-ml-ok"><p><b>Answer</b> — exact, cheap, easy to audit</p></div>
+    </div></div>
+  <div class="dgm-ml-card"><h5>Learning</h5>
+    <div class="dgm-ml-grid" style="margin-top:8px">
+      <div class="dgm-ml-card dgm-ml-info"><p><b>Past cases with known outcomes</b><br>3,000 customers: cancelled or stayed</p></div>
+      <div class="dgm-ml-arrow">↓ training adjusts the knobs</div>
+      <div class="dgm-ml-card"><p><b>Model</b> applies what it found to a new case</p></div>
+      <div class="dgm-ml-arrow">↓</div>
+      <div class="dgm-ml-card dgm-ml-ok"><p><b>Prediction</b> — finds weights nobody could write by hand</p></div>
+    </div></div>
+</div>
+<p class="dgm-ml-foot">Same output, different author. With learning, the data is part of the logic.</p>
+</div>

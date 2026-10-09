@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | [Senior PM](./senior-product-manager.md) | A technical footing | The decisions only the PM owns | Optional depth where the roadmap needs it |
 | [AI Product Lead](./ai-product-lead.md) | Model and data foundations | Context, agents, and trust | Running the product |
-| [AI Engineer](./ai-engineer.md) | LLM basics (machine learning when published) | Agents and the harness | Production |
+| [AI Engineer](./ai-engineer.md) | Machine learning and LLM basics | Agents and the harness | Production |
 | [AI Engineering Lead](./ai-engineering-lead.md) | Model behaviour and cost | Quality, safety and access | Working with product |
 
 ## Which path reads how much of each track
@@ -37,6 +37,7 @@
 | Access control | — | 2 of 8 | 3 of 8 | 4 of 8 |
 | System design | — | — | 3 of 8 | 4 of 8 |
 | APIs & integrations | — | — | Full | — |
+| Machine learning | 3 of 7 | 4 of 7 | Full | 6 of 7 |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 
