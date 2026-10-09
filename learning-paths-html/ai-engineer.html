@@ -373,7 +373,7 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <p><strong>Who it is for:</strong> a software engineer who builds AI-powered systems.</p>
 <p><strong>Outcome:</strong> You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails.</p>
 <p><strong>Before you start:</strong> Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.</p>
-<p><strong>Length:</strong> about 64 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
+<p><strong>Length:</strong> about 68 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
 <p><strong>Terms:</strong> a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.</p>
 <blockquote>
 <p>🎯 <strong>For the AI engineer</strong></p>
@@ -411,12 +411,12 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <tr>
 <td>4</td>
 <td>Agents and the harness (build it)</td>
-<td>about 29.5 hours</td>
+<td>about 29 hours</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Production</td>
-<td>about 21.5 hours</td>
+<td>about 26 hours</td>
 </tr>
 </tbody>
 </table>
@@ -428,7 +428,7 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <li><strong>CNNs</strong>: coming soon. Optional branch for vision. Planned.</li>
 <li><strong>LLMs</strong>: <a href="../llms/what-is-an-llm.html">1. What an LLM actually is</a> · <a href="../llms/the-context-window.html">2. The context window</a> · <a href="../llms/temperature-sampling-and-determinism.html">5. Temperature, sampling &amp; determinism</a></li>
 </ul>
-<p><strong>Ready to move on when:</strong> You can explain a training loop and what a token and a context window are.</p>
+<p><strong>Ready to move on when:</strong> You can explain what a token and a context window are, and how sampling changes the output. Until the machine learning module ships, add a training-loop primer of your own.</p>
 <h2 id="stage-2-models-and-apis">Stage 2: Models and APIs</h2>
 <p>Call models well: contracts, streaming, retries, structured output and prompts that hold up. (about 6.5 hours)</p>
 <ul>
@@ -447,10 +447,11 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 </ul>
 <p><strong>Ready to move on when:</strong> You can build a retrieval pipeline and measure its quality with a test set.</p>
 <h2 id="stage-4-agents-and-the-harness-build-it">Stage 4: Agents and the harness (build it)</h2>
-<p>Build the parts of an agent by hand. This is the core of the path. (about 29.5 hours)</p>
+<p>Build the parts of an agent by hand. This is the core of the path. (about 29 hours)</p>
 <ul>
 <li><strong>Tool calling</strong>: <a href="../tool-calling/tool-contracts-and-reliability.html">2. Tool contracts &amp; reliability</a> · <a href="../tool-calling/permissions-blast-radius-and-the-trust-boundary.html">3. Permissions, blast radius &amp; the trust boundary</a></li>
-<li><strong>AI agents</strong>: <a href="../ai-agents/planning-reasoning-and-reliability-across-a-run.html">2. Planning, reasoning &amp; reliability across a run</a> · <a href="../ai-agents/running-an-agent-in-production.html">4. Running an agent in production</a> · <a href="../ai-agents/choosing-and-acceptance-testing-an-agent.html">5. Choosing and acceptance-testing an agent</a></li>
+<li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#function-calling">Function calling reliability, tool contracts, argument validation, and idempotency</a></li>
+<li><strong>AI agents</strong>: <a href="../ai-agents/planning-reasoning-and-reliability-across-a-run.html">2. Planning, reasoning &amp; reliability across a run</a></li>
 <li><strong>Agentic workflows</strong>: <a href="../agentic-workflows/choosing-a-workflow-pattern.html">1. Choosing a workflow pattern</a> · <a href="../agentic-workflows/orchestrating-more-than-one-agent.html">2. Orchestrating more than one agent</a> · <a href="../agentic-workflows/making-a-workflow-durable-and-worth-owning.html">3. Making a workflow durable, and worth owning</a></li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/01-foundations-and-the-loop/README.html">Phase 01 — Foundations and the Loop</a> (5 lessons, build it)</li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/02-tools/README.html">Phase 02 — Tools</a> (3 lessons, build it)</li>
@@ -461,15 +462,17 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 </ul>
 <p><strong>Ready to move on when:</strong> You have a working loop with tools, a permission gate and a context budget, and tests that fail when you break them.</p>
 <h2 id="stage-5-production">Stage 5: Production</h2>
-<p>Plan for failure: extend, test, observe, secure and scale. (about 21.5 hours)</p>
+<p>Plan for failure: extend, test, observe, secure and scale. (about 26 hours)</p>
 <ul>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/07-planning-and-subagents/README.html">Phase 07 — Planning and Subagents</a> (4 lessons, build it)</li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/08-extending-mcp-skills-retrieval/README.html">Phase 08 — Extending: MCP, Skills, Retrieval</a> (5 lessons, build it)</li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/09-reliability-evals-and-ops/README.html">Phase 09 — Reliability, evals, and ops</a> (5 lessons, build it)</li>
-<li><strong>Harness engineering</strong>: <a href="../harness/phases/10-capstone/README.html">Phase 10 — Capstone</a> (1 lessons, build it)</li>
+<li><strong>Harness engineering</strong>: <a href="../harness/phases/10-capstone/README.html">Phase 10 — Capstone</a> (1 lessons, build it). Allow about 3 hours: the capstone plus your own evals, traces and cost.</li>
+<li><strong>AI agents</strong>: <a href="../ai-agents/running-an-agent-in-production.html">4. Running an agent in production</a> · <a href="../ai-agents/choosing-and-acceptance-testing-an-agent.html">5. Choosing and acceptance-testing an agent</a></li>
 <li><strong>AI engineering: inference internals</strong>: <a href="../ai/01-inference-internals.html#prefill-vs-decode">Prefill vs. decode latency</a> · <a href="../ai/01-inference-internals.html#batching-and-paged-attention">Continuous batching &amp; paged attention</a> · <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management: eviction, reuse, and memory pressure at scale</a> · <a href="../ai/01-inference-internals.html#prompt-vs-semantic-caching">Prompt caching vs. semantic caching</a></li>
-<li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#model-routing">Model routing, graceful fallback logic, and degraded-mode UX</a> · <a href="../ai/02-reliable-outputs.html#structured-output">Structured output: validation, repair loops, and fallback chains</a></li>
-<li><strong>AI engineering: evals &amp; observability</strong>: <a href="../ai/04-evals-observability.html#evals">Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</a> · <a href="../ai/04-evals-observability.html#observability">LLM observability: traces, spans, tokens, latency, errors, and drift</a></li>
+<li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#model-routing">Model routing, graceful fallback logic, and degraded-mode UX</a> · <a href="../ai/02-reliable-outputs.html#structured-output">Structured output: validation, repair loops, and fallback chains</a> · <a href="../ai/02-reliable-outputs.html#agent-guardrails">Agent guardrails: loop budgets, tool budgets, and termination conditions</a></li>
+<li><strong>AI engineering: evals &amp; observability</strong>: <a href="../ai/04-evals-observability.html#evals">Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</a> · <a href="../ai/04-evals-observability.html#observability">LLM observability: traces, spans, tokens, latency, errors, and drift</a> · <a href="../ai/04-evals-observability.html#cost-attribution">Cost attribution per feature, workflow, tenant, and user journey — not just per model</a></li>
+<li><strong>AI engineering: safety &amp; multi-tenancy</strong>: <a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</a> · <a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation, cache safety, and cross-user context contamination prevention</a></li>
 <li><strong>AI security &amp; guardrails</strong>: <a href="../ai-security-and-guardrails/the-threat-model-and-guardrails.html">1. The threat model, and guardrails as architecture</a> · <a href="../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.html">2. Red-teaming: testing your defenses</a></li>
 <li><strong>Access control</strong>: <a href="../access-control/authentication-authorization-and-the-access-control-model.html">1. Authentication, authorization and the access-control model</a> · <a href="../access-control/oauth-openid-connect-and-tokens.html">2. OAuth 2.0, OpenID Connect and tokens</a> · <a href="../access-control/access-control-for-ai-agents.html">8. Access control for AI agents</a></li>
 <li><strong>System design</strong>: <a href="../system-design/foundations-and-framework.html">1. Foundations &amp; framework</a> · <a href="../system-design/core-building-blocks.html">2. Core building blocks</a> · <a href="../system-design/data-infrastructure.html">7. Data infrastructure</a></li>
@@ -479,11 +482,11 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <ul>
 <li>If you know machine learning, skip the foundations stage and start at models and APIs.</li>
 <li>If you only work with hosted models, read the inference lessons as background and skip the deep ones.</li>
-<li>If you want a faster tour, build harness phases 1, 2 and 6 and skim the rest.</li>
+<li>If you want a faster tour, build harness phases 1, 2, 3 and 6 and skim the rest.</li>
 </ul>
 <h2 id="worked-example-a-week-by-week-plan">Worked example: a week-by-week plan</h2>
 <p><em>This example is invented, to show the method.</em></p>
-<p>An AI engineer with eight hours a week spreads the path over 6 weeks. Each week ends with something you can show.</p>
+<p>An AI engineer with nine hours a week spreads the path over 8 weeks. Each week ends with something you can show.</p>
 <table>
 <thead>
 <tr>
@@ -516,12 +519,22 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <tr>
 <td>5</td>
 <td>Stage 4</td>
-<td>Build harness phases 5 and 6: files, shell and permissions.</td>
+<td>Build harness phases 4 and 5: prompts, files and shell.</td>
 </tr>
 <tr>
 <td>6</td>
+<td>Stage 4</td>
+<td>Build harness phase 6: permissions and security.</td>
+</tr>
+<tr>
+<td>7</td>
 <td>Stage 5</td>
-<td>Run the capstone test, then break it on purpose and watch it fail.</td>
+<td>Build harness phases 7 and 8: planning, subagents and MCP.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Stage 5</td>
+<td>Build phase 9 and the capstone. Break the capstone on purpose and watch it fail.</td>
 </tr>
 </tbody>
 </table>

@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 33 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 32.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs).
 
@@ -34,19 +34,21 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | How models behave and what they cost | about 5 hours (plus planned modules) |
-| 2 | Architecture you can review | about 14 hours |
+| 1 | How models behave and what they cost | about 6 hours (plus planned modules) |
+| 2 | Architecture you can review | about 15 hours |
 | 3 | Quality, safety and access | about 6 hours |
 | 4 | Systems at scale | about 2.5 hours |
-| 5 | Work with product and run the team | about 5.5 hours |
+| 5 | Work with product and run the team | about 3.5 hours |
 
 ## Stage 1: How models behave and what they cost
 
-Cost and latency come from model and serving choices. Know the levers. (about 5 hours plus the planned modules)
+Cost and latency come from model and serving choices. Know the levers. (about 6 hours plus the planned modules)
 
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [6. Choosing a model](../llms/choosing-a-model.md) · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
 - **Machine learning**: coming soon. A module on machine learning basics is planned. Skip this step until it is published.
 - **AI engineering: inference internals**: [Prefill vs. decode latency](../content/01-inference-internals/prefill-vs-decode.md) · [Continuous batching & paged attention](../content/01-inference-internals/batching-and-paged-attention.md) · [Prompt caching vs. semantic caching](../content/01-inference-internals/prompt-vs-semantic-caching.md)
+- **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md)
+- **AI engineering: evals & observability**: [Cost attribution per feature, workflow, tenant, and user journey — not just per model](../content/04-evals-observability/cost-attribution.md)
 - **AI engineering: strategy & tradeoffs**: [Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool](../content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md) · [Latency, quality, cost, and reliability across the full inference stack](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
 - **Cost optimization**: [1. The cost stack, and the build-vs-buy breakeven](../cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.md) · [2. FinOps for AI: budgets, forecasting & the cost review](../cost-optimization/finops-budgets-forecasting-and-the-cost-review.md)
 
@@ -54,11 +56,13 @@ Cost and latency come from model and serving choices. Know the levers. (about 5 
 
 ## Stage 2: Architecture you can review
 
-Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 14 hours)
+Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 15 hours)
 
 - **RAG & vector databases**: [1. Why RAG?](../rag-vector-databases/why-rag.md) · [5. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [6. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
 - **Context engineering**: [1. What is context engineering, for a product leader?](../context-engineering/what-is-context-engineering.md) · [3. The anatomy of a context pipeline](../context-engineering/the-anatomy-of-a-context-pipeline.md) · [5. Context governance at scale](../context-engineering/context-governance-at-scale.md)
 - **Memory & context**: [1. Memory as a product decision](../memory-and-context/memory-as-a-product-decision.md) · [5. When memory goes wrong](../memory-and-context/when-memory-goes-wrong.md)
+- **Tool calling**: [2. Tool contracts & reliability](../tool-calling/tool-contracts-and-reliability.md)
+- **Knowledge graphs**: [1. What is a knowledge graph?](../knowledge-graphs/what-is-a-knowledge-graph.md) · [8. Knowledge graphs as a product](../knowledge-graphs/knowledge-graphs-as-a-product.md)
 - **AI agents**: [1. What an agent is, and how much autonomy it needs](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md) · [3. When not to build an agent](../ai-agents/when-not-to-build-an-agent.md) · [4. Running an agent in production](../ai-agents/running-an-agent-in-production.md)
 - **Agentic workflows**: [1. Choosing a workflow pattern](../agentic-workflows/choosing-a-workflow-pattern.md) · [2. Orchestrating more than one agent](../agentic-workflows/orchestrating-more-than-one-agent.md) · [3. Making a workflow durable, and worth owning](../agentic-workflows/making-a-workflow-durable-and-worth-owning.md)
 - **Harness engineering**: [Phase 01 — Foundations and the Loop](../harness-engineering/phases/01-foundations-and-the-loop/README.md) (5 lessons, skim it)
@@ -92,12 +96,10 @@ AI features still run on ordinary systems. Hold the same bar for reliability. (a
 
 ## Stage 5: Work with product and run the team
 
-Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 5.5 hours)
+Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 3.5 hours)
 
 - **Technical product management**: [3. Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md) · [4. Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) · [5. Working with engineering](../technical-product-management/working-with-engineering.md) · [6. Metrics & experimentation](../technical-product-management/metrics-and-experimentation.md) · [7. Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) · [8. Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md) · [9. Technical product management for AI](../technical-product-management/tpm-for-ai-products.md)
 - **Product sense**: [7. Product sense for AI products](../product-sense/product-sense-for-ai.md)
-- **Knowledge graphs**: [1. What is a knowledge graph?](../knowledge-graphs/what-is-a-knowledge-graph.md) · [8. Knowledge graphs as a product](../knowledge-graphs/knowledge-graphs-as-a-product.md)
-- **Flowable**: [Process automation from scratch](../flowable/README.md) (read the overview and the concept lessons)
 
 **Ready to move on when:** You and your PM share one definition of done, one quality bar and one incident process.
 
@@ -106,12 +108,13 @@ Turn standards into process: specs, launches, incidents and how product and engi
 - If you came from machine learning, skip the first stage's model lessons and read the cost lessons.
 - If your team already runs evals in CI, read the evaluation lessons as a gap check.
 - If you want hands-on depth, add the build lessons from the AI Engineer path.
+- Flowable (process automation) is not on this path. Add it if your team builds approval or long-running workflows.
 
 ## Worked example: a week-by-week plan
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week spreads the path over 5 weeks. Each week ends with something you can show.
+An AI engineering lead with three hours a week spreads the path over 5 weeks. Each week ends with something you can show. This plan is a fast tour: one activity per stage. The full path takes about 11 weeks at this pace.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

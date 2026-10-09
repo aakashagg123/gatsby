@@ -91,7 +91,8 @@ class Item:
             p = f"{ROOT}/{t}/{key}.md"
             assert os.path.exists(p), p
             parts.append(f"[{i}. {h1(p)}](../{t}/{key}.md)")
-        self.line = f"**{NAMES[t]}**: " + " · ".join(parts)
+        self.pairs, self.parts, self.prefix = [(t, i) for i in ids], parts, f"**{NAMES[t]}**: "
+        self.line = self.prefix + " · ".join(parts)
         self.minutes, self.key, self.count, self.total = FLAT_MIN * len(ids), t, len(ids), len(order)
 
     def _c(self):  # content/ stack lessons
@@ -114,6 +115,9 @@ class Item:
         note = f"{c} lessons, {verb}"
         self.line = f"**Harness engineering**: [{h1(p)}](../harness-engineering/phases/{HARNESS[n]}/README.md) ({note})"
         self.minutes = HARNESS_MIN * c if mode == "full" else SKIM_MIN
+        if self.kw.get("minutes"):
+            self.minutes = self.kw["minutes"]
+            self.line += f". {self.kw['note']}"
         self.key, self.count = "harness", c
         self.total = sum(harness_count(i) for i in HARNESS)
 
@@ -130,7 +134,7 @@ class Item:
 
 def T(track, *ids): return Item("t", track=track, ids=list(ids))
 def C(folder, *ids): return Item("c", folder=folder, ids=list(ids))
-def H(phase, mode="full"): return Item("h", phase=phase, mode=mode)
+def H(phase, mode="full", minutes=None, note=""): return Item("h", phase=phase, mode=mode, minutes=minutes, note=note)
 def F(): return Item("f")
 def SOON(name, note=""): return Item("soon", name=name, note=note)
 
@@ -165,7 +169,7 @@ PATHS.append(dict(
              items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
-             items=[T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 3, 9)],
+             items=[T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
              ready="You can say why the same prompt gives different answers, what a context window limits, and when a bad result is a prompt problem and when it is not."),
         dict(name="The decisions only you own", why="Pick the approach, set the bar, count the cost, and accept the risk.",
              items=[T("generative-ai", 5, 6), T("llms", 7), T("product-sense", 7), T("technical-product-management", 9),
@@ -177,6 +181,7 @@ PATHS.append(dict(
              ready="You can tell when a feature needs retrieval, memory or an agent, and when it does not."),
     ],
     skip=["If you have shipped an ML-backed feature, skip stage 1 and start stage 2 at the LLMs lessons.",
+          "If a launch is close, start at stage 3. Read `What an LLM actually is` and `The context window` first, because the decision lessons assume them.",
           "If your product is not agentic, skip the agent lessons in stage 4.",
           "If you already run evals with your team, read the two evaluation lessons as a check, not as new material."],
     example=[("1", "Stage 1", "Write a one-page request path for your product, marking where a model would sit."),
@@ -185,7 +190,7 @@ PATHS.append(dict(
              ("4", "Stage 3 (quality and cost)", "Add an eval plan and a cost per task to the draft."),
              ("5", "Stage 3 (risk)", "List the top three risks and the guardrail for each. Review with your engineering lead."),
              ("6", "Stage 4", "Pick the one deep topic your roadmap needs and read it.")],
-    example_who="A senior PM with six hours a week",
+    example_who="A senior PM with three hours a week",
     tradeoffs=["**Breadth vs. depth.** This path reads many tracks shallowly. You gain vocabulary. You do not gain engineering skill, and that is the point.",
                "**Order vs. urgency.** If a launch is close, jump to stage 3 and come back. The checkpoints tell you what you missed.",
                "**Reading vs. doing.** The decisions stage only works if you apply it to a real feature."],
@@ -206,8 +211,9 @@ PATHS.append(dict(
     slug="ai-product-lead", title="Learning path: AI Product Lead",
     role="AI product lead", short="AI Product Lead",
     who="a product leader who owns an AI product line or a team of PMs shipping AI features",
-    outcome="You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering as an equal.",
-    prereq="The Senior PM path, stages 1 to 3, or equivalent. You have shipped or closely reviewed one AI feature.",
+    outcome="You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering and ask informed questions.",
+    prereq="This path builds on the Senior PM path, stages 1 to 3, or equivalent experience. Lessons marked ↺ repeat that path, so skip them if you did it. You have shipped or closely reviewed one AI feature.",
+    repeat_from="senior-product-manager",
     tldr=("This path covers the layers between a model and a product: grounding, context, memory, tools, agents, workflows, trust and cost. "
           "It is wider and deeper than the Senior PM path. It stays at the decision level. You read enough mechanics to ask sharp questions, not to build."),
     callout=("**Why it matters** — At this level your decisions set the architecture. A weak call on grounding or autonomy is expensive to reverse.",
@@ -217,7 +223,7 @@ PATHS.append(dict(
     stages=[
         dict(name="Model and data foundations", why="You decide how the product grounds answers. That choice drives quality and cost.",
              items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), SOON("Machine learning", ML_NOTE),
-                    T("rag-vector-databases", 1, 2, 3, 4, 5, 6), T("knowledge-graphs", 1, 6, 8)],
+                    T("rag-vector-databases", 1, 5, 6, 7), T("knowledge-graphs", 1, 6, 8)],
              ready="You can compare prompting, retrieval and fine-tuning for a feature and pick one with reasons."),
         dict(name="Context and memory", why="What the model sees is a product decision. So is what it remembers.",
              items=[T("context-engineering", 1, 3, 4, 5, 6, 7), T("memory-and-context", 1, 2, 3, 4, 5), T("prompt-engineering", 10)],
@@ -227,10 +233,10 @@ PATHS.append(dict(
              ready="You can set the autonomy level for a task, justify it, and say what would make you lower it."),
         dict(name="Trust, access and cost", why="Evals, security, permissions and spend decide whether the feature survives contact with real use.",
              items=[T("evaluation-and-observability", 1, 2), T("ai-security-and-guardrails", 1, 2, 3), T("access-control", 1, 8),
-                    T("cost-optimization", 1, 2), T("system-design", 1, 2)],
-             ready="You can show a buyer your eval results, your threat model and your cost per task."),
+                    T("cost-optimization", 1, 2), T("technical-product-sense", 8)],
+             ready="You can show a reviewer your eval results, your threat model and your cost per task."),
         dict(name="Run the product", why="Turn the above into specs, launches and a response plan.",
-             items=[T("technical-product-management", 3, 6, 7, 8), T("product-sense", 7)],
+             items=[T("technical-product-management", 3, 6, 7, 8, 9), T("product-sense", 7)],
              ready="You can write the spec, the launch gate and the incident plan for an AI feature."),
     ],
     skip=["If you ran the Senior PM path, skip the LLMs and generative AI lessons you have already read.",
@@ -275,7 +281,7 @@ PATHS.append(dict(
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
              items=[SOON("Machine learning", ML_NOTE), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
                     SOON("CNNs", "Optional branch for vision. Planned."), T("llms", 1, 2, 5)],
-             ready="You can explain a training loop and what a token and a context window are."),
+             ready="You can explain what a token and a context window are, and how sampling changes the output. Until the machine learning module ships, add a training-loop primer of your own."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
              items=[T("llms", 3, 6, 7), T("api-integrations", 1, 2, 3, 4, 5, 6), T("prompt-engineering", 2, 4, 5, 6, 7, 9, 10)],
              ready="You can call a model with retries and a typed output, and you can diagnose a failing prompt."),
@@ -284,25 +290,28 @@ PATHS.append(dict(
                     T("memory-and-context", 3, 4), T("context-engineering", 3, 6)],
              ready="You can build a retrieval pipeline and measure its quality with a test set."),
         dict(name="Agents and the harness (build it)", why="Build the parts of an agent by hand. This is the core of the path.",
-             items=[T("tool-calling", 2, 3), T("ai-agents", 2, 4, 5), T("agentic-workflows", 1, 2, 3),
+             items=[T("tool-calling", 2, 3), C("02-reliable-outputs", "function-calling"), T("ai-agents", 2), T("agentic-workflows", 1, 2, 3),
                     H(1), H(2), H(3), H(4), H(5), H(6)],
              ready="You have a working loop with tools, a permission gate and a context budget, and tests that fail when you break them."),
         dict(name="Production", why="Plan for failure: extend, test, observe, secure and scale.",
-             items=[H(7), H(8), H(9), H(10), C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "kv-cache-management", "prompt-vs-semantic-caching"),
-                    C("02-reliable-outputs", "model-routing", "structured-output"), C("04-evals-observability", "evals", "observability"),
+             items=[H(7), H(8), H(9), H(10, "full", 180, "Allow about 3 hours: the capstone plus your own evals, traces and cost."), T("ai-agents", 4, 5), C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "kv-cache-management", "prompt-vs-semantic-caching"),
+                    C("02-reliable-outputs", "model-routing", "structured-output", "agent-guardrails"), C("04-evals-observability", "evals", "observability", "cost-attribution"),
+                    C("05-safety-multitenancy", "safety-engineering", "multi-tenant-isolation"),
                     T("ai-security-and-guardrails", 1, 2), T("access-control", 1, 2, 8), T("system-design", 1, 2, 7)],
              ready="Your capstone passes its tests, and you can show its evals, traces, permission rules and cost."),
     ],
     skip=["If you know machine learning, skip the foundations stage and start at models and APIs.",
           "If you only work with hosted models, read the inference lessons as background and skip the deep ones.",
-          "If you want a faster tour, build harness phases 1, 2 and 6 and skim the rest."],
+          "If you want a faster tour, build harness phases 1, 2, 3 and 6 and skim the rest."],
     example=[("1", "Stage 2", "Call a model through an API with retries and a typed output."),
              ("2", "Stage 3", "Add retrieval over your own documents and measure it with ten questions."),
              ("3", "Stage 4", "Build harness phase 1: the loop. Run its asserts."),
              ("4", "Stage 4", "Build harness phases 2 and 3: tools and context."),
-             ("5", "Stage 4", "Build harness phases 5 and 6: files, shell and permissions."),
-             ("6", "Stage 5", "Run the capstone test, then break it on purpose and watch it fail.")],
-    example_who="An AI engineer with eight hours a week",
+             ("5", "Stage 4", "Build harness phases 4 and 5: prompts, files and shell."),
+             ("6", "Stage 4", "Build harness phase 6: permissions and security."),
+             ("7", "Stage 5", "Build harness phases 7 and 8: planning, subagents and MCP."),
+             ("8", "Stage 5", "Build phase 9 and the capstone. Break the capstone on purpose and watch it fail.")],
+    example_who="An AI engineer with nine hours a week",
     tradeoffs=["**Build vs. read.** The harness lessons ask you to type the code. Skimming saves time and loses the failures you would have hit.",
                "**Depth vs. breadth.** The inference lessons go deep on serving. Read them if you run models, skim them if you call hosted ones.",
                "**Frameworks vs. from scratch.** Building by hand first makes later framework choices easier to judge."],
@@ -335,11 +344,12 @@ PATHS.append(dict(
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
              items=[T("llms", 1, 2, 3, 6, 7), SOON("Machine learning", ML_NOTE),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
+                    C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],
              ready="You can explain where a request's time and money go and name the three levers that change them."),
         dict(name="Architecture you can review", why="Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons.",
              items=[T("rag-vector-databases", 1, 5, 6), T("context-engineering", 1, 3, 5), T("memory-and-context", 1, 5),
-                    T("ai-agents", 1, 3, 4), T("agentic-workflows", 1, 2, 3), H(1, "skim"), H(6, "skim"), H(7, "skim"), H(9, "skim")],
+                    T("tool-calling", 2), T("knowledge-graphs", 1, 8), T("ai-agents", 1, 3, 4), T("agentic-workflows", 1, 2, 3), H(1, "skim"), H(6, "skim"), H(7, "skim"), H(9, "skim")],
              ready="You can review a design doc for an agent: its loop, tools, permissions, budgets and failure handling."),
         dict(name="Quality, safety and access", why="Set the standards. Evals, threat models and access control are yours to require.",
              items=[T("evaluation-and-observability", 1, 2), C("04-evals-observability", "evals", "observability"),
@@ -350,12 +360,14 @@ PATHS.append(dict(
              items=[T("system-design", 1, 2, 3, 7), T("technical-product-sense", 5, 8)],
              ready="You can run a design review for scale, failure and cost on any service in the stack."),
         dict(name="Work with product and run the team", why="Turn standards into process: specs, launches, incidents and how product and engineering share ownership.",
-             items=[T("technical-product-management", 3, 4, 5, 6, 7, 8, 9), T("product-sense", 7), T("knowledge-graphs", 1, 8), F()],
+             items=[T("technical-product-management", 3, 4, 5, 6, 7, 8, 9), T("product-sense", 7)],
              ready="You and your PM share one definition of done, one quality bar and one incident process."),
     ],
     skip=["If you came from machine learning, skip the first stage's model lessons and read the cost lessons.",
           "If your team already runs evals in CI, read the evaluation lessons as a gap check.",
-          "If you want hands-on depth, add the build lessons from the AI Engineer path."],
+          "If you want hands-on depth, add the build lessons from the AI Engineer path.",
+          "Flowable (process automation) is not on this path. Add it if your team builds approval or long-running workflows."],
+    example_note="This plan is a fast tour: one activity per stage. The full path takes about 11 weeks at this pace.",
     example=[("1", "Stage 1", "Pull one month of cost and latency numbers for your busiest model call. Find the biggest lever."),
              ("2", "Stage 2", "Review one agent design doc against the loop, tools, permissions and budget."),
              ("3", "Stage 3", "Write the release gate for one feature and name its owner."),
@@ -386,9 +398,28 @@ def link_path(slug, text):
     return f"[{text}](./{slug}.md)"
 
 
+def repeat_set(p):
+    src = p.get("repeat_from")
+    if not src:
+        return set()
+    return {pair for x in PATHS if x["slug"] == src for s_ in x["stages"] for it in s_["items"] if it.kind == "t" for pair in it.pairs}
+
+
+def item_line(it, rep):
+    if it.kind != "t" or not rep:
+        return it.line
+    return it.prefix + " · ".join(part + (" ↺" if pair in rep else "") for pair, part in zip(it.pairs, it.parts))
+
+
+def repeat_minutes(p):
+    rep = repeat_set(p)
+    return FLAT_MIN * sum(1 for s_ in p["stages"] for it in s_["items"] if it.kind == "t" for pair in it.pairs if pair in rep)
+
+
 def render_path(p):
     L = []
     a = L.append
+    rep = repeat_set(p)
     total = minutes_of(p["stages"])
     a(f"# {p['title']}\n")
     a("*Part of [Learning paths](./README.md)*\n")
@@ -398,7 +429,10 @@ def render_path(p):
     a(f"**Who it is for:** {p['who']}.\n")
     a(f"**Outcome:** {p['outcome']}\n")
     a(f"**Before you start:** {p['prereq']}\n")
-    a(f"**Length:** {hours(total)}, across {len(p['stages'])} stages. The time is a rough estimate (see Under the hood).\n")
+    if rep:
+        a(f"**Length:** {hours(total)}, across {len(p['stages'])} stages. If you did the Senior PM path, {hours(total - repeat_minutes(p))}, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).\n")
+    else:
+        a(f"**Length:** {hours(total)}, across {len(p['stages'])} stages. The time is a rough estimate (see Under the hood).\n")
     a(f"> 🎯 **For the {p['role']}**")
     a(">")
     for i, c in enumerate(p["callout"]):
@@ -419,7 +453,7 @@ def render_path(p):
         extra = " plus the planned modules" if any(i.kind == "soon" for i in s["items"]) else ""
         a(f"{s['why']} ({hours(sum(i.minutes for i in s['items']))}{extra})\n")
         for it in s["items"]:
-            a(f"- {it.line}")
+            a(f"- {item_line(it, rep)}")
         a("")
         a(f"**Ready to move on when:** {s['ready']}\n")
     a("## Skip-ahead rules\n")
@@ -428,7 +462,7 @@ def render_path(p):
     a("")
     a("## Worked example: a week-by-week plan\n")
     a("*This example is invented, to show the method.*\n")
-    a(f"{p['example_who']} spreads the path over {len(p['example'])} weeks. Each week ends with something you can show.\n")
+    a(f"{p['example_who']} spreads the path over {len(p['example'])} weeks. Each week ends with something you can show. {p.get('example_note', '')}".strip() + "\n")
     a("| Week | Stage | What you do |")
     a("| --- | --- | --- |")
     for w, st, what in p["example"]:
@@ -556,7 +590,7 @@ def render_recap():
     a("| --- | --- | --- | --- |")
     a("| [Senior PM](./senior-product-manager.md) | A technical footing | The decisions only the PM owns | Optional depth where the roadmap needs it |")
     a("| [AI Product Lead](./ai-product-lead.md) | Model and data foundations | Context, agents, and trust | Running the product |")
-    a("| [AI Engineer](./ai-engineer.md) | Foundations in machine learning | Agents and the harness | Production |")
+    a("| [AI Engineer](./ai-engineer.md) | LLM basics (machine learning when published) | Agents and the harness | Production |")
     a("| [AI Engineering Lead](./ai-engineering-lead.md) | Model behaviour and cost | Quality, safety and access | Working with product |")
     a("")
     a("## Which path reads how much of each track\n")
@@ -567,8 +601,9 @@ def render_recap():
         a(f"| {name} | " + " | ".join(cells) + " |")
     a("")
     a("## What the paths share\n")
-    a("All four paths read the evaluation, security and cost lessons. The difference is depth. "
-      "The PM reads them to make the call. The lead reads them to set the standard. The engineer builds the checks.\n")
+    a("Three of the four paths read the evaluation, security and cost lessons. The PM reads them to make the call. "
+      "The product lead and the engineering lead read them to set the standard. "
+      "The AI engineer meets the same ideas by building them, in the harness track and the AI engineering stack.\n")
     a("## Test yourself\n")
     qs = [
         ("You are a senior PM with a launch in two weeks. Which stage do you do first, and why?",

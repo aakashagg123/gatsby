@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | [Senior PM](./senior-product-manager.md) | A technical footing | The decisions only the PM owns | Optional depth where the roadmap needs it |
 | [AI Product Lead](./ai-product-lead.md) | Model and data foundations | Context, agents, and trust | Running the product |
-| [AI Engineer](./ai-engineer.md) | Foundations in machine learning | Agents and the harness | Production |
+| [AI Engineer](./ai-engineer.md) | LLM basics (machine learning when published) | Agents and the harness | Production |
 | [AI Engineering Lead](./ai-engineering-lead.md) | Model behaviour and cost | Quality, safety and access | Working with product |
 
 ## Which path reads how much of each track
@@ -18,8 +18,8 @@
 | Track | Senior PM | AI Product Lead | AI Engineer | AI Engineering Lead |
 | --- | --- | --- | --- | --- |
 | Product sense | 1 of 7 | 1 of 7 | — | 1 of 7 |
-| Technical product sense | 5 of 9 | — | — | 2 of 9 |
-| Technical product management | 1 of 9 | 4 of 9 | — | 7 of 9 |
+| Technical product sense | 5 of 9 | 1 of 9 | — | 2 of 9 |
+| Technical product management | 1 of 9 | 5 of 9 | — | 7 of 9 |
 | Generative AI | Full | 3 of 6 | — | — |
 | LLMs | 6 of 7 | 6 of 7 | 6 of 7 | 5 of 7 |
 | Prompt engineering | 4 of 10 | 1 of 10 | 7 of 10 | — |
@@ -27,23 +27,22 @@
 | Cost optimization | Full | Full | — | Full |
 | AI security & guardrails | 2 of 3 | Full | 2 of 3 | Full |
 | Agentic AI | 2 of 8 | 2 of 8 | — | — |
-| RAG & vector databases | 3 of 7 | 6 of 7 | 6 of 7 | 3 of 7 |
+| RAG & vector databases | 3 of 7 | 4 of 7 | 6 of 7 | 3 of 7 |
 | Memory & context | 2 of 5 | Full | 2 of 5 | 2 of 5 |
 | Context engineering | — | 6 of 7 | 2 of 7 | 3 of 7 |
-| Tool calling | 1 of 3 | Full | 2 of 3 | — |
+| Tool calling | 1 of 3 | Full | 2 of 3 | 1 of 3 |
 | AI agents | — | Full | 3 of 5 | 3 of 5 |
 | Agentic workflows | — | Full | Full | Full |
 | Knowledge graphs | — | 3 of 8 | — | 2 of 8 |
 | Access control | — | 2 of 8 | 3 of 8 | 4 of 8 |
-| System design | — | 2 of 8 | 3 of 8 | 4 of 8 |
+| System design | — | — | 3 of 8 | 4 of 8 |
 | APIs & integrations | — | — | Full | — |
-| AI engineering stack (content/) | — | — | 10 of 23 | 10 of 23 |
+| AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
-| Flowable | — | — | — | Overview |
 
 ## What the paths share
 
-All four paths read the evaluation, security and cost lessons. The difference is depth. The PM reads them to make the call. The lead reads them to set the standard. The engineer builds the checks.
+Three of the four paths read the evaluation, security and cost lessons. The PM reads them to make the call. The product lead and the engineering lead read them to set the standard. The AI engineer meets the same ideas by building them, in the harness track and the AI engineering stack.
 
 ## Test yourself
 

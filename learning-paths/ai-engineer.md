@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 64 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 68 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -37,8 +37,8 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 1 | Foundations | about 1 hour (plus planned modules) |
 | 2 | Models and APIs | about 6.5 hours |
 | 3 | Grounding and memory | about 5 hours |
-| 4 | Agents and the harness (build it) | about 29.5 hours |
-| 5 | Production | about 21.5 hours |
+| 4 | Agents and the harness (build it) | about 29 hours |
+| 5 | Production | about 26 hours |
 
 ## Stage 1: Foundations
 
@@ -49,7 +49,7 @@ Learn how a model is trained and what its data looks like. Everything later buil
 - **CNNs**: coming soon. Optional branch for vision. Planned.
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md)
 
-**Ready to move on when:** You can explain a training loop and what a token and a context window are.
+**Ready to move on when:** You can explain what a token and a context window are, and how sampling changes the output. Until the machine learning module ships, add a training-loop primer of your own.
 
 ## Stage 2: Models and APIs
 
@@ -74,10 +74,11 @@ Give the model the right data, in the right shape, at the right time. (about 5 h
 
 ## Stage 4: Agents and the harness (build it)
 
-Build the parts of an agent by hand. This is the core of the path. (about 29.5 hours)
+Build the parts of an agent by hand. This is the core of the path. (about 29 hours)
 
 - **Tool calling**: [2. Tool contracts & reliability](../tool-calling/tool-contracts-and-reliability.md) · [3. Permissions, blast radius & the trust boundary](../tool-calling/permissions-blast-radius-and-the-trust-boundary.md)
-- **AI agents**: [2. Planning, reasoning & reliability across a run](../ai-agents/planning-reasoning-and-reliability-across-a-run.md) · [4. Running an agent in production](../ai-agents/running-an-agent-in-production.md) · [5. Choosing and acceptance-testing an agent](../ai-agents/choosing-and-acceptance-testing-an-agent.md)
+- **AI engineering: reliable outputs**: [Function calling reliability, tool contracts, argument validation, and idempotency](../content/02-reliable-outputs/function-calling.md)
+- **AI agents**: [2. Planning, reasoning & reliability across a run](../ai-agents/planning-reasoning-and-reliability-across-a-run.md)
 - **Agentic workflows**: [1. Choosing a workflow pattern](../agentic-workflows/choosing-a-workflow-pattern.md) · [2. Orchestrating more than one agent](../agentic-workflows/orchestrating-more-than-one-agent.md) · [3. Making a workflow durable, and worth owning](../agentic-workflows/making-a-workflow-durable-and-worth-owning.md)
 - **Harness engineering**: [Phase 01 — Foundations and the Loop](../harness-engineering/phases/01-foundations-and-the-loop/README.md) (5 lessons, build it)
 - **Harness engineering**: [Phase 02 — Tools](../harness-engineering/phases/02-tools/README.md) (3 lessons, build it)
@@ -90,15 +91,17 @@ Build the parts of an agent by hand. This is the core of the path. (about 29.5 h
 
 ## Stage 5: Production
 
-Plan for failure: extend, test, observe, secure and scale. (about 21.5 hours)
+Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
 
 - **Harness engineering**: [Phase 07 — Planning and Subagents](../harness-engineering/phases/07-planning-and-subagents/README.md) (4 lessons, build it)
 - **Harness engineering**: [Phase 08 — Extending: MCP, Skills, Retrieval](../harness-engineering/phases/08-extending-mcp-skills-retrieval/README.md) (5 lessons, build it)
 - **Harness engineering**: [Phase 09 — Reliability, evals, and ops](../harness-engineering/phases/09-reliability-evals-and-ops/README.md) (5 lessons, build it)
-- **Harness engineering**: [Phase 10 — Capstone](../harness-engineering/phases/10-capstone/README.md) (1 lessons, build it)
+- **Harness engineering**: [Phase 10 — Capstone](../harness-engineering/phases/10-capstone/README.md) (1 lessons, build it). Allow about 3 hours: the capstone plus your own evals, traces and cost.
+- **AI agents**: [4. Running an agent in production](../ai-agents/running-an-agent-in-production.md) · [5. Choosing and acceptance-testing an agent](../ai-agents/choosing-and-acceptance-testing-an-agent.md)
 - **AI engineering: inference internals**: [Prefill vs. decode latency](../content/01-inference-internals/prefill-vs-decode.md) · [Continuous batching & paged attention](../content/01-inference-internals/batching-and-paged-attention.md) · [KV cache management: eviction, reuse, and memory pressure at scale](../content/01-inference-internals/kv-cache-management.md) · [Prompt caching vs. semantic caching](../content/01-inference-internals/prompt-vs-semantic-caching.md)
-- **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md) · [Structured output: validation, repair loops, and fallback chains](../content/02-reliable-outputs/structured-output.md)
-- **AI engineering: evals & observability**: [Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals](../content/04-evals-observability/evals.md) · [LLM observability: traces, spans, tokens, latency, errors, and drift](../content/04-evals-observability/observability.md)
+- **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md) · [Structured output: validation, repair loops, and fallback chains](../content/02-reliable-outputs/structured-output.md) · [Agent guardrails: loop budgets, tool budgets, and termination conditions](../content/02-reliable-outputs/agent-guardrails.md)
+- **AI engineering: evals & observability**: [Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals](../content/04-evals-observability/evals.md) · [LLM observability: traces, spans, tokens, latency, errors, and drift](../content/04-evals-observability/observability.md) · [Cost attribution per feature, workflow, tenant, and user journey — not just per model](../content/04-evals-observability/cost-attribution.md)
+- **AI engineering: safety & multi-tenancy**: [Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries](../content/05-safety-multitenancy/safety-engineering.md) · [Multi-tenant isolation, cache safety, and cross-user context contamination prevention](../content/05-safety-multitenancy/multi-tenant-isolation.md)
 - **AI security & guardrails**: [1. The threat model, and guardrails as architecture](../ai-security-and-guardrails/the-threat-model-and-guardrails.md) · [2. Red-teaming: testing your defenses](../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md)
 - **Access control**: [1. Authentication, authorization and the access-control model](../access-control/authentication-authorization-and-the-access-control-model.md) · [2. OAuth 2.0, OpenID Connect and tokens](../access-control/oauth-openid-connect-and-tokens.md) · [8. Access control for AI agents](../access-control/access-control-for-ai-agents.md)
 - **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Core building blocks](../system-design/core-building-blocks.md) · [7. Data infrastructure](../system-design/data-infrastructure.md)
@@ -109,13 +112,13 @@ Plan for failure: extend, test, observe, secure and scale. (about 21.5 hours)
 
 - If you know machine learning, skip the foundations stage and start at models and APIs.
 - If you only work with hosted models, read the inference lessons as background and skip the deep ones.
-- If you want a faster tour, build harness phases 1, 2 and 6 and skim the rest.
+- If you want a faster tour, build harness phases 1, 2, 3 and 6 and skim the rest.
 
 ## Worked example: a week-by-week plan
 
 *This example is invented, to show the method.*
 
-An AI engineer with eight hours a week spreads the path over 6 weeks. Each week ends with something you can show.
+An AI engineer with nine hours a week spreads the path over 8 weeks. Each week ends with something you can show.
 
 | Week | Stage | What you do |
 | --- | --- | --- |
@@ -123,8 +126,10 @@ An AI engineer with eight hours a week spreads the path over 6 weeks. Each week 
 | 2 | Stage 3 | Add retrieval over your own documents and measure it with ten questions. |
 | 3 | Stage 4 | Build harness phase 1: the loop. Run its asserts. |
 | 4 | Stage 4 | Build harness phases 2 and 3: tools and context. |
-| 5 | Stage 4 | Build harness phases 5 and 6: files, shell and permissions. |
-| 6 | Stage 5 | Run the capstone test, then break it on purpose and watch it fail. |
+| 5 | Stage 4 | Build harness phases 4 and 5: prompts, files and shell. |
+| 6 | Stage 4 | Build harness phase 6: permissions and security. |
+| 7 | Stage 5 | Build harness phases 7 and 8: planning, subagents and MCP. |
+| 8 | Stage 5 | Build phase 9 and the capstone. Break the capstone on purpose and watch it fail. |
 
 ## Tradeoffs
 

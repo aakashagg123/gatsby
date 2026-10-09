@@ -53,7 +53,7 @@ Learn what a model is, what it does well, and what it does badly. Plain language
 
 - **Generative AI**: [1. What makes AI "generative"?](../generative-ai/what-is-generative-ai.md) · [2. The five modalities](../generative-ai/the-modalities.md) · [3. Probabilistic software](../generative-ai/probabilistic-software.md) · [4. The generative AI product stack](../generative-ai/the-genai-product-stack.md)
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md) · [6. Choosing a model](../llms/choosing-a-model.md)
-- **Prompt engineering**: [1. What prompt engineering actually is](../prompt-engineering/what-prompt-engineering-actually-is.md) · [2. The anatomy of a prompt](../prompt-engineering/the-anatomy-of-a-prompt.md) · [3. Everyday productivity patterns](../prompt-engineering/everyday-productivity-patterns.md) · [9. When prompts fail: the diagnostic playbook](../prompt-engineering/when-prompts-fail.md)
+- **Prompt engineering**: [1. What prompt engineering actually is](../prompt-engineering/what-prompt-engineering-actually-is.md) · [2. The anatomy of a prompt](../prompt-engineering/the-anatomy-of-a-prompt.md) · [7. Prompting for tools and agents](../prompt-engineering/prompting-for-tools-and-agents.md) · [9. When prompts fail: the diagnostic playbook](../prompt-engineering/when-prompts-fail.md)
 
 **Ready to move on when:** You can say why the same prompt gives different answers, what a context window limits, and when a bad result is a prompt problem and when it is not.
 
@@ -86,6 +86,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 ## Skip-ahead rules
 
 - If you have shipped an ML-backed feature, skip stage 1 and start stage 2 at the LLMs lessons.
+- If a launch is close, start at stage 3. Read `What an LLM actually is` and `The context window` first, because the decision lessons assume them.
 - If your product is not agentic, skip the agent lessons in stage 4.
 - If you already run evals with your team, read the two evaluation lessons as a check, not as new material.
 
@@ -93,7 +94,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 
 *This example is invented, to show the method.*
 
-A senior PM with six hours a week spreads the path over 6 weeks. Each week ends with something you can show.
+A senior PM with three hours a week spreads the path over 6 weeks. Each week ends with something you can show.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

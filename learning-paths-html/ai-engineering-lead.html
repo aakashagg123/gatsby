@@ -373,7 +373,7 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <p><strong>Who it is for:</strong> an engineering manager or tech lead who runs a team that builds AI systems.</p>
 <p><strong>Outcome:</strong> You review AI architecture, set quality and safety standards, control cost, and work well with product.</p>
 <p><strong>Before you start:</strong> Years of engineering and some time running a team. You may not have shipped an AI feature yet.</p>
-<p><strong>Length:</strong> about 33 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
+<p><strong>Length:</strong> about 32.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
 <p><strong>Terms:</strong> a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs).</p>
 <blockquote>
 <p>🎯 <strong>For the AI engineering lead</strong></p>
@@ -396,12 +396,12 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <tr>
 <td>1</td>
 <td>How models behave and what they cost</td>
-<td>about 5 hours (plus planned modules)</td>
+<td>about 6 hours (plus planned modules)</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Architecture you can review</td>
-<td>about 14 hours</td>
+<td>about 15 hours</td>
 </tr>
 <tr>
 <td>3</td>
@@ -416,26 +416,30 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <tr>
 <td>5</td>
 <td>Work with product and run the team</td>
-<td>about 5.5 hours</td>
+<td>about 3.5 hours</td>
 </tr>
 </tbody>
 </table>
 <h2 id="stage-1-how-models-behave-and-what-they-cost">Stage 1: How models behave and what they cost</h2>
-<p>Cost and latency come from model and serving choices. Know the levers. (about 5 hours plus the planned modules)</p>
+<p>Cost and latency come from model and serving choices. Know the levers. (about 6 hours plus the planned modules)</p>
 <ul>
 <li><strong>LLMs</strong>: <a href="../llms/what-is-an-llm.html">1. What an LLM actually is</a> · <a href="../llms/the-context-window.html">2. The context window</a> · <a href="../llms/capabilities-and-the-jagged-frontier.html">3. Capabilities &amp; the jagged frontier</a> · <a href="../llms/choosing-a-model.html">6. Choosing a model</a> · <a href="../llms/prompting-vs-rag-vs-finetuning.html">7. Prompting vs. RAG vs. fine-tuning</a></li>
 <li><strong>Machine learning</strong>: coming soon. A module on machine learning basics is planned. Skip this step until it is published.</li>
 <li><strong>AI engineering: inference internals</strong>: <a href="../ai/01-inference-internals.html#prefill-vs-decode">Prefill vs. decode latency</a> · <a href="../ai/01-inference-internals.html#batching-and-paged-attention">Continuous batching &amp; paged attention</a> · <a href="../ai/01-inference-internals.html#prompt-vs-semantic-caching">Prompt caching vs. semantic caching</a></li>
+<li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#model-routing">Model routing, graceful fallback logic, and degraded-mode UX</a></li>
+<li><strong>AI engineering: evals &amp; observability</strong>: <a href="../ai/04-evals-observability.html#cost-attribution">Cost attribution per feature, workflow, tenant, and user journey — not just per model</a></li>
 <li><strong>AI engineering: strategy &amp; tradeoffs</strong>: <a href="../ai/06-strategy-tradeoffs.html#finetune-vs-icl-vs-rag">Fine-tuning vs. in-context learning vs. RAG vs. distillation — and when each is the wrong tool</a> · <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">Latency, quality, cost, and reliability across the full inference stack</a></li>
 <li><strong>Cost optimization</strong>: <a href="../cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.html">1. The cost stack, and the build-vs-buy breakeven</a> · <a href="../cost-optimization/finops-budgets-forecasting-and-the-cost-review.html">2. FinOps for AI: budgets, forecasting &amp; the cost review</a></li>
 </ul>
 <p><strong>Ready to move on when:</strong> You can explain where a request's time and money go and name the three levers that change them.</p>
 <h2 id="stage-2-architecture-you-can-review">Stage 2: Architecture you can review</h2>
-<p>Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 14 hours)</p>
+<p>Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 15 hours)</p>
 <ul>
 <li><strong>RAG &amp; vector databases</strong>: <a href="../rag-vector-databases/why-rag.html">1. Why RAG?</a> · <a href="../rag-vector-databases/retrieval-quality.html">5. Retrieval quality</a> · <a href="../rag-vector-databases/rag-vs-long-context-vs-finetuning.html">6. RAG vs. long-context vs. fine-tuning</a></li>
 <li><strong>Context engineering</strong>: <a href="../context-engineering/what-is-context-engineering.html">1. What is context engineering, for a product leader?</a> · <a href="../context-engineering/the-anatomy-of-a-context-pipeline.html">3. The anatomy of a context pipeline</a> · <a href="../context-engineering/context-governance-at-scale.html">5. Context governance at scale</a></li>
 <li><strong>Memory &amp; context</strong>: <a href="../memory-and-context/memory-as-a-product-decision.html">1. Memory as a product decision</a> · <a href="../memory-and-context/when-memory-goes-wrong.html">5. When memory goes wrong</a></li>
+<li><strong>Tool calling</strong>: <a href="../tool-calling/tool-contracts-and-reliability.html">2. Tool contracts &amp; reliability</a></li>
+<li><strong>Knowledge graphs</strong>: <a href="../knowledge-graphs/what-is-a-knowledge-graph.html">1. What is a knowledge graph?</a> · <a href="../knowledge-graphs/knowledge-graphs-as-a-product.html">8. Knowledge graphs as a product</a></li>
 <li><strong>AI agents</strong>: <a href="../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html">1. What an agent is, and how much autonomy it needs</a> · <a href="../ai-agents/when-not-to-build-an-agent.html">3. When not to build an agent</a> · <a href="../ai-agents/running-an-agent-in-production.html">4. Running an agent in production</a></li>
 <li><strong>Agentic workflows</strong>: <a href="../agentic-workflows/choosing-a-workflow-pattern.html">1. Choosing a workflow pattern</a> · <a href="../agentic-workflows/orchestrating-more-than-one-agent.html">2. Orchestrating more than one agent</a> · <a href="../agentic-workflows/making-a-workflow-durable-and-worth-owning.html">3. Making a workflow durable, and worth owning</a></li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/01-foundations-and-the-loop/README.html">Phase 01 — Foundations and the Loop</a> (5 lessons, skim it)</li>
@@ -463,12 +467,10 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 </ul>
 <p><strong>Ready to move on when:</strong> You can run a design review for scale, failure and cost on any service in the stack.</p>
 <h2 id="stage-5-work-with-product-and-run-the-team">Stage 5: Work with product and run the team</h2>
-<p>Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 5.5 hours)</p>
+<p>Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 3.5 hours)</p>
 <ul>
 <li><strong>Technical product management</strong>: <a href="../technical-product-management/specs-prds-and-rfcs.html">3. Specs, PRDs &amp; RFCs</a> · <a href="../technical-product-management/prioritization-and-roadmaps.html">4. Prioritization &amp; roadmaps</a> · <a href="../technical-product-management/working-with-engineering.html">5. Working with engineering</a> · <a href="../technical-product-management/metrics-and-experimentation.html">6. Metrics &amp; experimentation</a> · <a href="../technical-product-management/launches-rollouts-and-migrations.html">7. Launches, rollouts &amp; migrations</a> · <a href="../technical-product-management/incidents-and-postmortems.html">8. Incidents &amp; postmortems</a> · <a href="../technical-product-management/tpm-for-ai-products.html">9. Technical product management for AI</a></li>
 <li><strong>Product sense</strong>: <a href="../product-sense/product-sense-for-ai.html">7. Product sense for AI products</a></li>
-<li><strong>Knowledge graphs</strong>: <a href="../knowledge-graphs/what-is-a-knowledge-graph.html">1. What is a knowledge graph?</a> · <a href="../knowledge-graphs/knowledge-graphs-as-a-product.html">8. Knowledge graphs as a product</a></li>
-<li><strong>Flowable</strong>: <a href="../flowable/index.html">Process automation from scratch</a> (read the overview and the concept lessons)</li>
 </ul>
 <p><strong>Ready to move on when:</strong> You and your PM share one definition of done, one quality bar and one incident process.</p>
 <h2 id="skip-ahead-rules">Skip-ahead rules</h2>
@@ -476,10 +478,11 @@ pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent
 <li>If you came from machine learning, skip the first stage's model lessons and read the cost lessons.</li>
 <li>If your team already runs evals in CI, read the evaluation lessons as a gap check.</li>
 <li>If you want hands-on depth, add the build lessons from the AI Engineer path.</li>
+<li>Flowable (process automation) is not on this path. Add it if your team builds approval or long-running workflows.</li>
 </ul>
 <h2 id="worked-example-a-week-by-week-plan">Worked example: a week-by-week plan</h2>
 <p><em>This example is invented, to show the method.</em></p>
-<p>An AI engineering lead with three hours a week spreads the path over 5 weeks. Each week ends with something you can show.</p>
+<p>An AI engineering lead with three hours a week spreads the path over 5 weeks. Each week ends with something you can show. This plan is a fast tour: one activity per stage. The full path takes about 11 weeks at this pace.</p>
 <table>
 <thead>
 <tr>
