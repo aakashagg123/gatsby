@@ -1,37 +1,37 @@
 <!-- Building the eval stack — the exact build order (read → cluster → golden → gate → judge → observe → trajectory).
      Diagram type: SEQUENTIAL PIPELINE with numbered stages and one optional terminal. -->
 <style>
-.dgm-bs{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #9e6b3f;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+.dgm-bs{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;
   font-family:inherit;text-align:left;position:relative}
-.dgm-bs-chip{position:absolute;top:-11px;left:24px;background:#9e6b3f;color:#ffffff;
+.dgm-bs-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-warning-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(158,107,63,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-warning-solid) 28%, transparent)}
 .dgm-bs h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-bs-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-bs-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
 .dgm-bs-list{display:flex;flex-direction:column;gap:9px}
-.dgm-bs-step{background:#ffffff;border:1px solid #d1d9e0;border-radius:12px;padding:12px 14px;
+.dgm-bs-step{background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:12px 14px;
   display:grid;grid-template-columns:34px 30px 1fr;gap:12px;align-items:center;position:relative}
-.dgm-bs-step .dgm-bs-num{background:#9e6b3f;color:#ffffff;font-size:10px;font-weight:700;
+.dgm-bs-step .dgm-bs-num{background:var(--color-background-warning-solid);color:var(--white);font-size:10px;font-weight:700;
   letter-spacing:.4px;padding:5px 0;border-radius:8px;text-align:center;
   font-variant-numeric:tabular-nums}
-.dgm-bs-step .dgm-bs-ico{width:26px;height:26px;padding:4px;background:#f6efe6;
-  border:1px solid #d9c9b6;border-radius:8px;color:#9e6b3f}
-.dgm-bs-step h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-bs-step p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-bs-step .dgm-bs-ico{width:26px;height:26px;padding:4px;background:var(--color-background-warning-surface);
+  border:1px solid var(--color-border-warning-surface);border-radius:8px;color:var(--color-text-warning)}
+.dgm-bs-step h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-bs-step p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
 .dgm-bs-step .dgm-bs-tag{position:absolute;top:-9px;right:12px;font-size:9.5px;font-weight:700;
   letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:6px}
-.dgm-bs-step.foundation .dgm-bs-tag{color:#7a5028;background:#fff8c5;border:1px solid #eac54f}
-.dgm-bs-step.optional{background:#f6f8fa}
-.dgm-bs-step.optional .dgm-bs-tag{color:#59636e;background:#eaeef2;border:1px solid #d1d9e0}
+.dgm-bs-step.foundation .dgm-bs-tag{color:var(--color-text-warning);background:var(--color-background-caution-surface);border:1px solid var(--color-border-caution-outline)}
+.dgm-bs-step.optional{background:var(--color-surface-tertiary)}
+.dgm-bs-step.optional .dgm-bs-tag{color:var(--color-text-secondary);background:var(--color-background-primary-soft);border:1px solid var(--color-border)}
 .dgm-bs-step .dgm-bs-arr{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
-  color:#8c959f;font-size:16px;font-weight:700;line-height:1;background:#ffffff;padding:0 4px}
+  color:var(--color-text-tertiary);font-size:16px;font-weight:700;line-height:1;background:var(--color-surface);padding:0 4px}
 .dgm-bs-step:last-child .dgm-bs-arr{display:none}
-.dgm-bs-callout{margin-top:14px;padding:12px 14px;background:#f6efe6;border:1px dashed #d9c9b6;
-  border-radius:10px;font-size:11.5px;color:#7a5028;line-height:1.4}
-.dgm-bs-callout strong{color:#5a3d1a}
+.dgm-bs-callout{margin-top:14px;padding:12px 14px;background:var(--color-background-warning-surface);border:1px dashed var(--color-border-warning-surface);
+  border-radius:10px;font-size:11.5px;color:var(--color-text-warning);line-height:1.4}
+.dgm-bs-callout strong{color:var(--color-text-warning)}
 @media (max-width:640px){
   .dgm-bs{padding:20px 16px 18px}
   .dgm-bs-step{grid-template-columns:34px 1fr}

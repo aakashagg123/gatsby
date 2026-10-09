@@ -1,28 +1,28 @@
 <!-- API integrations — 6-station knowledge graph across 4 lesson themes. -->
 <style>
-.dgm-ai{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #c2185b;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-ai-chip{position:absolute;top:-11px;left:24px;background:#c2185b;color:#ffffff;
+.dgm-ai{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
+.dgm-ai-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(194,24,91,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
 .dgm-ai h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-ai-sub{font-size:12px;color:#59636e;margin:0 0 14px}
-.dgm-ai-band{background:#f9e1ec;border:1px solid #ecc3d5;border-radius:12px;padding:12px 14px;
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ai-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px}
+.dgm-ai-band{background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface);border-radius:12px;padding:12px 14px;
   margin-bottom:9px;position:relative}
-.dgm-ai-band .dgm-ai-badge{position:absolute;top:-9px;left:14px;background:#c2185b;color:#fff;
+.dgm-ai-band .dgm-ai-badge{position:absolute;top:-9px;left:14px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;
   border-radius:5px}
-.dgm-ai-band h5{margin:2px 0 6px;font-size:12px;font-weight:700;color:#7a1140;letter-spacing:.02em}
+.dgm-ai-band h5{margin:2px 0 6px;font-size:12px;font-weight:700;color:var(--color-text-discovery);letter-spacing:.02em}
 .dgm-ai-items{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .dgm-ai-items.two{grid-template-columns:repeat(2,1fr)}
 .dgm-ai-items.one{grid-template-columns:1fr}
-.dgm-ai-item{background:#ffffff;border:1px solid #ecc3d5;border-radius:8px;padding:8px 10px;
+.dgm-ai-item{background:var(--color-surface);border:1px solid var(--color-border-discovery-surface);border-radius:8px;padding:8px 10px;
   display:flex;gap:8px;align-items:center}
-.dgm-ai-item .dgm-ai-ico{color:#c2185b;width:18px;height:18px;flex:0 0 18px}
-.dgm-ai-item span{font-size:11px;font-weight:600;color:#1f2328;line-height:1.3}
-.dgm-ai-arr{display:flex;justify-content:center;color:#8c959f;padding:2px 0}
+.dgm-ai-item .dgm-ai-ico{color:var(--color-text-discovery);width:18px;height:18px;flex:0 0 18px}
+.dgm-ai-item span{font-size:11px;font-weight:600;color:var(--color-text);line-height:1.3}
+.dgm-ai-arr{display:flex;justify-content:center;color:var(--color-text-tertiary);padding:2px 0}
 .dgm-ai-arr svg{width:16px;height:16px}
 @media (max-width:640px){.dgm-ai{padding:20px 16px 18px}.dgm-ai-items{grid-template-columns:1fr}}
 </style>

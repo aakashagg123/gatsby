@@ -21,7 +21,7 @@ CFG = {
             "an AI engineer, or an AI engineering lead. Each path says which lessons to read, "
             "what to skip, and when to move on.",
     "meta": ["4 paths", "+ recap", "time estimates", "checkpoints"],
-    "callout": "For your role",
+    "callout": "🎯",
     "lessons": [
         "senior-product-manager",
         "ai-product-lead",

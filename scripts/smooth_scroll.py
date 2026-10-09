@@ -26,7 +26,7 @@ html{scroll-padding-top:84px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto !important}}
 
 /* ---- sticky bars: opaque, so the browser does not blend them over moving text ---- */
-.topbar,.top,header.bar{background:#ffffff}
+.topbar{background:var(--color-surface)}
 
 /* ---- text rendering: let the browser pick; optimizeLegibility slows long pages ---- */
 body{text-rendering:auto}
@@ -49,12 +49,12 @@ html:has(#sb-scrim.open),html:has(#gl-scrim.open),html:has(body.gl-open){overflo
 
 /* ---- viewport units: iOS toolbars collapse, so 100vh is taller than what is visible ---- */
 @media (min-width:881px){
-  @supports (height:100dvh){.layout .sidebar{max-height:calc(100dvh - 49px)}}
+  @supports (height:100dvh){.layout .sidebar{max-height:calc(100dvh - var(--topbar-height))}}
   .layout .sidebar{overscroll-behavior:contain}
 }
 @supports (height:100dvh){#gl-panel{height:100dvh}}
 
 /* ---- taps: no double-tap wait, a quiet highlight ---- */
-a,button,summary,label,[role=button],.menu-btn,.navcard{touch-action:manipulation}
-html{-webkit-tap-highlight-color:rgba(9,105,218,.10)}
+a,button,summary,label,[role=button],.navcard{touch-action:manipulation}
+html{-webkit-tap-highlight-color:var(--color-background-primary-soft-alpha)}
 """

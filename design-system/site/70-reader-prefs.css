@@ -1,0 +1,29 @@
+/* Reader preferences, set on <html> by the reader-settings widget:
+     data-rf  font family     data-rs  text scale (--rs-scale)     data-rm  column width
+   They scale the SDK type tokens. They never introduce new sizes. */
+
+html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
+html[data-rf="arial"]{--rs-font:Arial,"Helvetica Neue",Helvetica,sans-serif}
+html[data-rf="verdana"]{--rs-font:Verdana,Geneva,"DejaVu Sans",sans-serif}
+html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.Badge,a){font-family:var(--rs-font) !important}
+html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *{font-family:var(--font-mono) !important}
+html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
+
+html[data-rs] main{font-size:calc(var(--font-text-lg-size) * var(--rs-scale,1)) !important;line-height:1.6 !important}
+html[data-rs] main h1{font-size:calc(var(--font-heading-xl-size) * var(--rs-scale,1)) !important;line-height:1.15 !important}
+html[data-rs] main h2{font-size:1.5em !important}
+html[data-rs] main h3{font-size:1.25em !important}
+html[data-rs] main h4{font-size:1em !important}
+html[data-rs] main .lede{font-size:1.1em !important}
+html[data-rs] main table{font-size:.875em !important}
+html[data-rs] main th,html[data-rs] main td{font-size:inherit !important}
+html[data-rs] main .pm-callout{font-size:.9em !important}
+html[data-rs] main pre{font-size:.875em !important}
+
+html[data-rm="n"] main{max-width:calc(var(--spacing) * 155) !important}
+html[data-rm="w"] main{max-width:calc(var(--spacing) * 280) !important}
+@media (max-width:680px){
+  html[data-rm="n"] main{padding-left:var(--space-3) !important;padding-right:var(--space-3) !important}
+  html[data-rm="w"] main{padding-left:var(--space-8) !important;padding-right:var(--space-8) !important}
+}

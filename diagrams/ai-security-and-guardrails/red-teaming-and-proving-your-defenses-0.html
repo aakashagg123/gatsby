@@ -1,36 +1,36 @@
 <!-- Red-teaming lesson — a loop: attack suite → run → measure ASR → fix → add to suite → release gate.
      Diagram type: CYCLE with a terminal gate. Track accent = red-magenta (#a13d63). -->
 <style>
-.dgm-rt{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #a13d63;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+.dgm-rt{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;
   font-family:inherit;text-align:left;position:relative}
-.dgm-rt-chip{position:absolute;top:-11px;left:24px;background:#a13d63;color:#ffffff;
+.dgm-rt-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(161,61,99,.28)}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
 .dgm-rt h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;
-  text-transform:uppercase;color:#59636e}
-.dgm-rt-sub{font-size:12px;color:#59636e;margin:0 0 14px}
+  text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-rt-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px}
 .dgm-rt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
-.dgm-rt-step{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:11px;padding:11px 12px}
-.dgm-rt-step.atk{background:#ffebe9;border-color:#ffcecb}
-.dgm-rt-step.msr{background:#fff8c5;border-color:#eac54f}
-.dgm-rt-step.fix{background:#ddf4ff;border-color:#b6e3ff}
-.dgm-rt-step .dgm-rt-n{display:inline-block;background:#ffffff;border:1px solid #d1d9e0;color:#59636e;
+.dgm-rt-step{background:var(--color-surface-tertiary);border:1px solid var(--color-border);border-radius:11px;padding:11px 12px}
+.dgm-rt-step.atk{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-rt-step.msr{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-rt-step.fix{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-rt-step .dgm-rt-n{display:inline-block;background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-secondary);
   font-size:9.5px;font-weight:700;letter-spacing:.5px;padding:1px 7px;border-radius:5px;margin-bottom:6px}
-.dgm-rt-step h5{margin:0 0 2px;font-size:12px;font-weight:700;color:#1f2328}
-.dgm-rt-step p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
-.dgm-rt-back{display:flex;justify-content:center;align-items:center;gap:8px;color:#8c959f;
+.dgm-rt-step h5{margin:0 0 2px;font-size:12px;font-weight:700;color:var(--color-text)}
+.dgm-rt-step p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-rt-back{display:flex;justify-content:center;align-items:center;gap:8px;color:var(--color-text-tertiary);
   font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:4px 0 12px}
 .dgm-rt-back svg{width:16px;height:16px}
-.dgm-rt-gate{background:#ffffff;border:1.5px dashed #b6e3ff;border-radius:12px;padding:12px 16px;
-  text-align:center;color:#0550ae;font-weight:600;font-size:13px;margin-bottom:12px}
+.dgm-rt-gate{background:var(--color-surface);border:1.5px dashed var(--color-border-info-surface);border-radius:12px;padding:12px 16px;
+  text-align:center;color:var(--color-text-info);font-weight:600;font-size:13px;margin-bottom:12px}
 .dgm-rt-fork{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dgm-rt-out{border-radius:12px;padding:12px 14px;position:relative}
-.dgm-rt-out.ok{background:#dafbe1;border:1.5px solid #aceebb}
-.dgm-rt-out.no{background:#ffebe9;border:1.5px solid #ffcecb}
-.dgm-rt-out h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:#1f2328}
-.dgm-rt-out p{margin:0;font-size:11.5px;color:#59636e;line-height:1.4}
+.dgm-rt-out.ok{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-rt-out.no{background:var(--color-background-danger-surface);border:1.5px solid var(--color-border-danger-surface)}
+.dgm-rt-out h5{margin:0 0 2px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-rt-out p{margin:0;font-size:11.5px;color:var(--color-text-secondary);line-height:1.4}
 @media (max-width:640px){
   .dgm-rt{padding:20px 16px 18px}
   .dgm-rt-steps{grid-template-columns:repeat(2,1fr)}

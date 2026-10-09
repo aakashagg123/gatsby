@@ -120,6 +120,19 @@ one idea per sentence, active voice, plain consistent vocabulary) that all
 lesson content should follow. It applies to prose only: code, commands,
 mermaid syntax, numbers, and named APIs are untouched.
 
+## Design system
+
+Every page is styled by one stylesheet, `assets/ds.css`, built from **OpenAI's Apps SDK UI**
+(vendored in `design-system/vendor/apps-sdk-ui/`, MIT) plus a small site layer in
+`design-system/site/`. Page generators emit markup only and carry no CSS. Read
+**`design-system/README.md`** before changing how anything looks. The short version:
+
+- Use SDK tokens (`--color-*`, `--font-*`, `--radius-*`, `--space-*`). No hex, `rgb()` or px font sizes.
+- Use SDK components for controls: `.Button`, `.Badge`, `.Alert`, `.SegmentedControl`, `.Popover`, `.MenuItem`.
+  `scripts/design_system.py` has markup helpers for them.
+- Light and dark themes both work. Check both. `data-theme` on `<html>` switches them.
+- Never edit `design-system/vendor/`. `python3 scripts/check_design_system.py` fails if you do.
+
 ## Diagrams
 
 Two options, both fine:
@@ -133,12 +146,15 @@ Two options, both fine:
   mermaid block in that page) and `build_standalone.py`'s
   `apply_diagram_overrides()` swaps it in at build time, replacing the
   mermaid fence entirely. See `diagrams/agentic-ai/` or
-  `diagrams/system-design/` for the visual pattern (warm cream gradient
-  card, `.kg-pill`/`.sd-chip` style chips, no Mermaid look).
+  `diagrams/system-design/` for the visual pattern (a soft surface card,
+  `.kg-pill`/`.sd-chip` style chips, no Mermaid look). Colour them with SDK tokens
+  only, never hex, so they follow the dark theme. Pick the family by meaning
+  (`info`, `success`, `warning`, `caution`, `danger`, `discovery`).
+  `scripts/tokenize_colors.py` converts a draft that still uses hex.
 
 ## Deploy
 
-`.github/workflows/pages.yml` runs `check_links.py` (non-blocking) then
+`.github/workflows/pages.yml` runs `check_links.py` and `check_design_system.py` (both non-blocking) then
 `build_site.py` on every push to `master`, and deploys `_site/` to GitHub
 Pages. There's no separate staging environment — a push to `master` is
 live within a couple of minutes. Land changes through a PR from a
@@ -163,6 +179,7 @@ listeners. The rules that keep it smooth:
 ## Before committing
 
 - `python3 scripts/check_links.py` — must exit 0.
+- `python3 scripts/check_design_system.py` — must exit 0. It rejects literal colours and edits to the vendored SDK.
 - If you touched a flat track's markdown, re-run its `build_<track>.py`
   and commit the regenerated `<track>-html/` output.
 - If you edited a flat track's lessons, run `python3 scripts/check_module.py <track>`

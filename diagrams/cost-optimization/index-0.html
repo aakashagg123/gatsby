@@ -1,55 +1,55 @@
 <!-- Cost optimization — knowledge graph diagram.
      Diagram type: THREE-STAGE FLOW (stack → decision → governance) with feedback loop.
      Design language: dgm-* primitives (extends the existing kg-* pattern from
-     agentic-ai/system-design), track accent = money green (#1a7f37).
+     agentic-ai/system-design), track accent = money green (#008635).
      Icons: inline SVG, Lucide-style, 20px stroke, no external dep. -->
 <style>
-.dgm{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #1a7f37;
-  border-radius:16px;padding:28px 28px 24px;box-shadow:0 1px 3px rgba(31,35,40,.04),
-  0 8px 24px rgba(31,35,40,.04);margin:26px 0;max-width:100%;
+.dgm{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-success-outline);
+  border-radius:16px;padding:28px 28px 24px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),
+  0 8px 24px rgb(var(--shadow-color) / 0.04);margin:26px 0;max-width:100%;
   font-family:inherit;text-align:left;position:relative}
-.dgm-chip{position:absolute;top:-11px;left:24px;background:#1a7f37;color:#ffffff;
+.dgm-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-success-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(26,127,55,.28)}
-.dgm-caption{font-size:11px;color:#59636e;letter-spacing:.4px;text-transform:uppercase;
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-success-solid) 28%, transparent)}
+.dgm-caption{font-size:11px;color:var(--color-text-secondary);letter-spacing:.4px;text-transform:uppercase;
   font-weight:700;margin:0 0 12px}
 .dgm-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.dgm-lever{border:1px solid #d1d9e0;border-radius:12px;padding:14px 12px;background:#f6f8fa}
-.dgm-lever .dgm-ico{color:#1a7f37;margin-bottom:8px;display:block;width:22px;height:22px}
-.dgm-lever h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-lever p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
-.dgm-arrow-down{display:flex;justify-content:center;color:#8c959f;margin:6px 0}
+.dgm-lever{border:1px solid var(--color-border);border-radius:12px;padding:14px 12px;background:var(--color-surface-tertiary)}
+.dgm-lever .dgm-ico{color:var(--color-text-success);margin-bottom:8px;display:block;width:22px;height:22px}
+.dgm-lever h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-lever p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.dgm-arrow-down{display:flex;justify-content:center;color:var(--color-text-tertiary);margin:6px 0}
 .dgm-arrow-down svg{width:18px;height:18px}
 .dgm-conv{display:grid;grid-template-columns:1.1fr auto 1fr;gap:14px;align-items:center;
   margin:8px 0 14px}
-.dgm-bill{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:14px 16px;
-  text-align:center;color:#1a7f37;font-weight:700;font-size:13.5px;letter-spacing:.02em;
+.dgm-bill{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface);border-radius:12px;padding:14px 16px;
+  text-align:center;color:var(--color-text-success);font-weight:700;font-size:13.5px;letter-spacing:.02em;
   display:flex;flex-direction:column;align-items:center;gap:4px}
-.dgm-bill .dgm-ico{color:#1a7f37;width:22px;height:22px}
-.dgm-diamond{position:relative;padding:16px 18px;background:#ffffff;border:1.5px solid #b6e3ff;
-  border-radius:12px;text-align:center;color:#0550ae;font-size:12.5px;font-weight:600;
+.dgm-bill .dgm-ico{color:var(--color-text-success);width:22px;height:22px}
+.dgm-diamond{position:relative;padding:16px 18px;background:var(--color-surface);border:1.5px solid var(--color-border-info-surface);
+  border-radius:12px;text-align:center;color:var(--color-text-info);font-size:12.5px;font-weight:600;
   line-height:1.35}
 .dgm-diamond .dgm-tag{display:inline-block;font-size:9.5px;text-transform:uppercase;
-  letter-spacing:.6px;color:#59636e;font-weight:700;margin-bottom:6px}
+  letter-spacing:.6px;color:var(--color-text-secondary);font-weight:700;margin-bottom:6px}
 .dgm-fork{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.dgm-outcome{border:1px solid #d1d9e0;border-radius:12px;padding:14px 14px 12px;background:#ffffff;
+.dgm-outcome{border:1px solid var(--color-border);border-radius:12px;padding:14px 14px 12px;background:var(--color-surface);
   display:flex;gap:12px;align-items:flex-start}
-.dgm-outcome .dgm-ico{color:#0969da;width:22px;height:22px;flex:0 0 22px;margin-top:2px}
-.dgm-outcome h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:#1f2328}
-.dgm-outcome p{margin:0;font-size:11px;color:#59636e;line-height:1.4}
-.dgm-outcome .dgm-verdict{font-size:10.5px;font-weight:700;color:#0969da;letter-spacing:.4px;
+.dgm-outcome .dgm-ico{color:var(--color-text-info);width:22px;height:22px;flex:0 0 22px;margin-top:2px}
+.dgm-outcome h5{margin:0 0 3px;font-size:12.5px;font-weight:700;color:var(--color-text)}
+.dgm-outcome p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.dgm-outcome .dgm-verdict{font-size:10.5px;font-weight:700;color:var(--color-text-info);letter-spacing:.4px;
   text-transform:uppercase;margin-top:6px;display:block}
-.dgm-gov{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:13px;padding:16px 18px;
+.dgm-gov{background:var(--color-surface-tertiary);border:1px solid var(--color-border);border-radius:13px;padding:16px 18px;
   position:relative}
-.dgm-gov h4{margin:0 0 4px;font-size:12.5px;font-weight:700;color:#1a7f37;letter-spacing:.02em}
-.dgm-gov .dgm-sub{font-size:11px;color:#59636e;margin:0 0 12px}
+.dgm-gov h4{margin:0 0 4px;font-size:12.5px;font-weight:700;color:var(--color-text-success);letter-spacing:.02em}
+.dgm-gov .dgm-sub{font-size:11px;color:var(--color-text-secondary);margin:0 0 12px}
 .dgm-gov .dgm-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.dgm-govpill{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:8px 10px;
+.dgm-govpill{background:var(--color-surface);border:1px solid var(--color-border);border-radius:9px;padding:8px 10px;
   display:flex;flex-direction:column;gap:4px}
-.dgm-govpill .dgm-ico{color:#1a7f37;width:16px;height:16px}
-.dgm-govpill span{font-size:11px;font-weight:600;color:#1f2328;line-height:1.3}
-.dgm-loop{margin-top:14px;padding-top:14px;border-top:1.5px dashed #aceebb;
-  display:flex;align-items:center;justify-content:center;gap:10px;color:#1a7f37;
+.dgm-govpill .dgm-ico{color:var(--color-text-success);width:16px;height:16px}
+.dgm-govpill span{font-size:11px;font-weight:600;color:var(--color-text);line-height:1.3}
+.dgm-loop{margin-top:14px;padding-top:14px;border-top:1.5px dashed var(--color-border-success-surface);
+  display:flex;align-items:center;justify-content:center;gap:10px;color:var(--color-text-success);
   font-size:11px;font-weight:600;letter-spacing:.3px}
 .dgm-loop svg{width:16px;height:16px}
 @media (max-width:640px){
@@ -93,7 +93,7 @@
       <svg class="dgm-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
       The bill
     </div>
-    <div style="color:#8c959f;font-weight:700;text-align:center">→</div>
+    <div style="color:var(--color-text-tertiary);font-weight:700;text-align:center">→</div>
     <div class="dgm-diamond">
       <span class="dgm-tag">Build vs. buy — lesson 1</span>
       Is volume high enough to re-run the math?

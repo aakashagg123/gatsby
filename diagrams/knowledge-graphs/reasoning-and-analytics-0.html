@@ -1,31 +1,31 @@
 <style>
-.dgm-ra{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #00879e;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-ra{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-success-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-ra-chip{position:absolute;top:-11px;left:24px;background:#00879e;color:#ffffff;
+.dgm-ra-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-success-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(0,135,158,.28)}
-.dgm-ra h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-ra-sub{font-size:12px;color:#59636e;margin:0 0 16px}
-.dgm-ra-kg{background:#e0f4f7;border:1.5px solid #a8dbe3;border-radius:20px;padding:9px 20px;text-align:center;
-  color:#005a68;font-weight:700;font-size:12px;margin:0 auto 10px;width:fit-content}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-success-solid) 28%, transparent)}
+.dgm-ra h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ra-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ra-kg{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-outline);border-radius:20px;padding:9px 20px;text-align:center;
+  color:var(--color-text-success);font-weight:700;font-size:12px;margin:0 auto 10px;width:fit-content}
 .dgm-ra-groups{display:flex;flex-direction:column;gap:10px}
 .dgm-ra-group{border-radius:12px;padding:11px 13px;position:relative}
-.dgm-ra-group.det{background:#dafbe1;border:1.5px solid #aceebb}
-.dgm-ra-group.stat{background:#ddf4ff;border:1.5px solid #b6e3ff}
-.dgm-ra-group.pred{background:#fdf3d9;border:1.5px solid #eac54f}
-.dgm-ra-group .tag{position:absolute;top:-9px;left:13px;background:#ffffff;border:1px solid;
+.dgm-ra-group.det{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-ra-group.stat{background:var(--color-background-info-surface);border:1.5px solid var(--color-border-info-surface)}
+.dgm-ra-group.pred{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline)}
+.dgm-ra-group .tag{position:absolute;top:-9px;left:13px;background:var(--color-surface);border:1px solid;
   font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
-.dgm-ra-group.det .tag{color:#1a614f;border-color:#aceebb}
-.dgm-ra-group.stat .tag{color:#0550ae;border-color:#b6e3ff}
-.dgm-ra-group.pred .tag{color:#7a5300;border-color:#eac54f}
+.dgm-ra-group.det .tag{color:var(--color-text-success);border-color:var(--color-border-success-surface)}
+.dgm-ra-group.stat .tag{color:var(--color-text-info);border-color:var(--color-border-info-surface)}
+.dgm-ra-group.pred .tag{color:var(--color-text-caution);border-color:var(--color-border-caution-outline)}
 .dgm-ra-fam{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.dgm-ra-f{background:#ffffff;border-radius:9px;padding:8px 10px;flex:1;min-width:150px}
-.dgm-ra-group.det .dgm-ra-f{border:1px solid #cdf0da}
-.dgm-ra-group.stat .dgm-ra-f{border:1px solid #d4ecfa}
-.dgm-ra-group.pred .dgm-ra-f{border:1px solid #f8e6b8}
-.dgm-ra-f h6{margin:0 0 3px;font-size:10.5px;font-weight:700;color:#1f2328}
-.dgm-ra-f p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3}
+.dgm-ra-f{background:var(--color-surface);border-radius:9px;padding:8px 10px;flex:1;min-width:150px}
+.dgm-ra-group.det .dgm-ra-f{border:1px solid var(--color-border-success-surface)}
+.dgm-ra-group.stat .dgm-ra-f{border:1px solid var(--color-border-info-surface)}
+.dgm-ra-group.pred .dgm-ra-f{border:1px solid var(--color-border-caution-surface)}
+.dgm-ra-f h6{margin:0 0 3px;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-ra-f p{margin:0;font-size:9.5px;color:var(--color-text-secondary);line-height:1.3}
 @media (max-width:640px){.dgm-ra{padding:20px 16px 18px}.dgm-ra-fam{flex-direction:column}}
 </style>
 <div class="dgm-ra">

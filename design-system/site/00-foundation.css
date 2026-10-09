@@ -1,0 +1,60 @@
+/* Foundation: the page canvas, type defaults and shared primitives.
+   Everything here reads Apps SDK UI tokens. No literal colours, sizes or radii. */
+
+:root{
+  /* Spacing steps, derived from the SDK's 4px --spacing unit. */
+  --space-1:calc(var(--spacing) * 1);   --space-1-5:calc(var(--spacing) * 1.5); --space-2:calc(var(--spacing) * 2);
+  --space-2-5:calc(var(--spacing) * 2.5); --space-0-5:calc(var(--spacing) * 0.5); --space-3:calc(var(--spacing) * 3);   --space-3-5:calc(var(--spacing) * 3.5); --space-4:calc(var(--spacing) * 4);
+  --space-5:calc(var(--spacing) * 5);   --space-6:calc(var(--spacing) * 6);   --space-7:calc(var(--spacing) * 7);
+  --space-8:calc(var(--spacing) * 8);   --space-10:calc(var(--spacing) * 10);
+  --space-12:calc(var(--spacing) * 12); --space-14:calc(var(--spacing) * 14); --space-16:calc(var(--spacing) * 16);
+  --space-20:calc(var(--spacing) * 20); --space-24:calc(var(--spacing) * 24);
+
+  /* Page geometry. These are layout constants, not design tokens. */
+  --topbar-height:calc(var(--spacing) * 14);
+  --layout-sidebar:calc(var(--spacing) * 68);
+  --layout-outline:calc(var(--spacing) * 56);
+  --layout-measure:calc(var(--spacing) * 190);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  background-color:var(--color-surface);
+}
+
+body{
+  margin:0;
+  background:var(--color-surface);
+  color:var(--color-text);
+  font:var(--font-weight-normal) var(--font-text-md-size)/var(--font-text-md-line-height) var(--font-sans);
+  overflow-x:hidden;
+}
+
+img,svg,canvas{max-width:100%;height:auto}
+code,kbd,samp,pre{font-family:var(--font-mono)}
+::selection{background:var(--color-background-info-soft-alpha)}
+:focus-visible{outline:2px solid var(--color-ring);outline-offset:2px}
+
+/* Text links: the SDK TextLink[data-underline] treatment, applied to bare anchors. */
+:where(.MarkdownContent,.prose) a:not(.Button):not(.TextLink){
+  color:inherit;
+  text-decoration:underline;
+  text-decoration-color:color-mix(in oklab, currentcolor 70%, transparent);
+  text-underline-offset:var(--link-underline-decoration-offset);
+  border-radius:var(--link-radius);
+  overflow-wrap:anywhere;
+}
+@media (hover:hover) and (pointer:fine){
+  :where(.MarkdownContent,.prose) a:not(.Button):not(.TextLink):hover{
+    color:color-mix(in oklab, currentcolor 80%, transparent);
+  }
+}
+
+hr{border:0;border-top:var(--hairline) solid var(--color-border);margin:var(--space-8) 0}
+
+/* Small utility roles used across components. */
+.text-secondary{color:var(--color-text-secondary)}
+.text-tertiary{color:var(--color-text-tertiary)}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}

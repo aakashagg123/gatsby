@@ -27,68 +27,31 @@ import html as htmllib
 import markdown
 
 import reader_widget
-import build_html as bh  # reuse CSS + markdown helpers (import-safe: main() is guarded)
+import build_html as bh  # reuse markdown helpers (import-safe: main() is guarded)
+import design_system as ds
 
 # ---- mermaid (rendered client-side, matching the harness track) ---------------
 # Diagrams render inside a soft card; the SVG scales down to the column when it is
 # close to fitting, and the card scrolls horizontally when the diagram is genuinely
 # wide — either way nothing ever bleeds outside the content column.
-MERMAID_CSS = (
-    "pre.mermaid:not([data-processed]){height:140px;overflow:hidden;color:transparent}"
-    "pre.mermaid{background:#ffffff;"
-    "border:1px solid #d1d9e0;border-radius:6px;padding:26px 20px;margin:26px 0;"
-    "text-align:center;overflow-x:auto}"
-    "pre.mermaid svg{max-width:100%;height:auto;display:inline-block;"
-    "shape-rendering:geometricPrecision}"
-    ".mm-hint{position:sticky;left:8px;display:block;width:max-content;"
-    "font-size:11px;color:#59636e;background:#f6f8fa;border:1px solid #d1d9e0;"
-    "border-radius:20px;padding:2px 10px;margin:0 0 8px;text-align:left}"
-)
 MERMAID_SCRIPT = """<script type="module">
 // Load mermaid and render each diagram only when it nears the viewport, one at a time.
 // The bundle is large; fetching and running it at page load competes with the first
-// scroll on a phone. Diagrams reserve their height (see MERMAID_CSS) so nothing jumps.
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
 const els=[...document.querySelectorAll('pre.mermaid')];
 let lib=null;
 function boot(){
   return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
     const mermaid=m.default;
-    mermaid.initialize({startOnLoad:false, theme:'base', securityLevel:'loose',
-      themeVariables:{
-        background:'#ffffff',
-        primaryColor:'#f6f8fa', primaryTextColor:'#1f2328', primaryBorderColor:'#d1d9e0',
-        secondaryColor:'#eaeef2', secondaryBorderColor:'#d1d9e0', secondaryTextColor:'#1f2328',
-        tertiaryColor:'#ffffff', tertiaryBorderColor:'#d1d9e0', tertiaryTextColor:'#1f2328',
-        lineColor:'#59636e', textColor:'#1f2328', nodeTextColor:'#1f2328',
-        clusterBkg:'#f6f8fa', clusterBorder:'#d1d9e0',
-        edgeLabelBackground:'#ffffff',
-        actorBkg:'#ddf4ff', actorBorder:'#0969da', actorTextColor:'#1f2328',
-        actorLineColor:'#d1d9e0', signalColor:'#59636e', signalTextColor:'#1f2328',
-        labelBoxBkgColor:'#eaeef2', labelBoxBorderColor:'#d1d9e0',
-        noteBkgColor:'#f6f8fa', noteBorderColor:'#d1d9e0',
-        activationBkgColor:'#eaeef2', activationBorderColor:'#0969da',
-        quadrant1Fill:'#ddf4ff', quadrant2Fill:'#f6f8fa', quadrant3Fill:'#eaeef2',
-        quadrant4Fill:'#f6f8fa', quadrantPointFill:'#0969da', quadrantPointTextFill:'#1f2328',
-        quadrantXAxisTextFill:'#59636e', quadrantYAxisTextFill:'#59636e',
-        quadrantTitleFill:'#1f2328',
-        quadrantInternalBorderStrokeFill:'#d1d9e0', quadrantExternalBorderStrokeFill:'#d1d9e0',
-        fontFamily:'Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif', fontSize:'15.5px'},
-      flowchart:{useMaxWidth:false, htmlLabels:true, curve:'basis',
-        nodeSpacing:36, rankSpacing:46, diagramPadding:12},
-      sequence:{useMaxWidth:false, mirrorActors:false, actorMargin:56, messageMargin:34},
-      quadrantChart:{useMaxWidth:false, chartWidth:640, chartHeight:440,
-        quadrantLabelFontSize:13, pointLabelFontSize:12, pointRadius:4, titleFontSize:16},
-      themeCSS:'.node rect{rx:9;ry:9} .cluster rect{rx:12;ry:12} '+
-        '.edgeLabel{border-radius:6px;padding:1px 5px} .label{font-weight:500} '+
-        '.cluster-label .nodeLabel{font-weight:600;letter-spacing:.02em}'
-    });
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
     return mermaid;
   }));
 }
 let chain=Promise.resolve();
 function renderOne(pre){
   chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); await mermaid.run({nodes:[pre]});
+    const mermaid=await boot(); DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
     // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
     const s=pre.querySelector('svg'); if(!s) return;
     const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
@@ -221,18 +184,17 @@ def _head(title):
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{htmllib.escape(title)}</title>
-{bh.FONT_LINKS}
-<style>{bh.CSS}{MERMAID_CSS}</style>
 </head>
 <body>"""
 
 def _topbar(brand, tagline, with_menu=False):
-    menu_btn = ('<button class="menu-btn" id="sbToggle" aria-expanded="false" '
-                'aria-controls="sbNav" aria-label="Open lesson menu">☰</button>') if with_menu else ""
+    menu_btn = ('<button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" '
+                'data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" '
+                'aria-label="Open lesson menu"><span class="ButtonInner">'+ds.MENU_ICON+'</span></button>') if with_menu else ""
     scrim = '<div id="sb-scrim"></div>' if with_menu else ""
     return f"""<header class="topbar">
   {menu_btn}<a class="brand" href="index.html">{bh.SPARK}<span>{htmllib.escape(brand)}</span><em>{htmllib.escape(tagline)}</em></a>
-  <nav class="topnav"><a href="../index.html">← All courses</a></nav>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
 </header>{scrim}"""
 
 def _sidebar(active, nav):
@@ -291,23 +253,23 @@ def build_track(cfg):
     cards = []
     for i, (slug, t) in enumerate(lesson_titles, 1):
         cards.append(
-            f'<a class="card" href="{slug}.html"><span class="card-num">{i:02d}</span>'
+            f'<a class="card" href="{slug}.html">{ds.badge(f"{i:02d}", size="md")}'
             f'<h3>{htmllib.escape(t)}</h3><span class="card-go">Read lesson →</span></a>')
     cards.append(
-        '<a class="card" href="recap.html"><span class="card-num">📌</span>'
+        f'<a class="card" href="recap.html">{ds.badge("📌", size="md")}'
         '<h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a>')
-    meta = "".join(f"<span>{htmllib.escape(m)}</span>" for m in cfg["meta"])
+    meta = "".join(ds.badge(htmllib.escape(m), size="lg", pill=True) for m in cfg["meta"])
 
     page = _head(title)
     page += _topbar(brand, tagline)
     page += f"""<main class="content index" id="top">
   <div class="index-hero">
-    <span class="chip">A standalone module</span>
+    {ds.badge("A standalone module", size="lg", pill=True)}
     <h1>{htmllib.escape(title)}</h1>
     <p class="lede">{htmllib.escape(lede)}</p>
     <div class="index-meta">{meta}</div>
   </div>
-  <div class="intro">{intro_html}</div>
+  <div class="intro MarkdownContent">{intro_html}</div>
   <h2 class="sec">The lessons</h2>
   <div class="cards">{''.join(cards)}</div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
@@ -334,10 +296,10 @@ def build_track(cfg):
         page += _sidebar(key, nav)
         page += f"""<main class="content" id="top">
   <div class="hero">
-    <span class="chip">{chip}</span>
+    {ds.badge(chip, size="lg", pill=True)}
     <h1>{htmllib.escape(t)}</h1>
   </div>
-  {body}
+  <div class="MarkdownContent">{body}</div>
   {_footer(prev, nxt)}
   </main>{outline_html}</div>{bh.SIDEBAR_TOGGLE_JS}{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:

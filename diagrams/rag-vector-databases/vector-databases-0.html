@@ -1,35 +1,35 @@
 <style>
-.dgm-vd{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #7a4fd6;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-vd{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-vd-chip{position:absolute;top:-11px;left:24px;background:#7a4fd6;color:#ffffff;
+.dgm-vd-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(122,79,214,.28)}
-.dgm-vd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-vd-sub{font-size:12px;color:#59636e;margin:0 0 16px}
-.dgm-vd-build{background:#eee7fa;border:1.5px solid #d3c5f0;border-radius:12px;padding:14px 16px;margin-bottom:12px;position:relative}
-.dgm-vd-build .dgm-vd-lbl{position:absolute;top:-9px;left:14px;background:#7a4fd6;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
-.dgm-vd-build h5{margin:2px 0 10px;font-size:12px;font-weight:700;color:#4b2996;letter-spacing:.02em}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
+.dgm-vd h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-vd-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-vd-build{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface);border-radius:12px;padding:14px 16px;margin-bottom:12px;position:relative}
+.dgm-vd-build .dgm-vd-lbl{position:absolute;top:-9px;left:14px;background:var(--color-background-discovery-solid);color:var(--white);font-size:9.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.dgm-vd-build h5{margin:2px 0 10px;font-size:12px;font-weight:700;color:var(--color-text-discovery);letter-spacing:.02em}
 .dgm-vd-inputs{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center}
-.dgm-vd-in{background:#ffffff;border:1px solid #d3c5f0;border-radius:9px;padding:9px 10px;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
-.dgm-vd-in.idx{background:#f6efdd;border:1.5px solid #e0d0a8}
-.dgm-vd-in .dgm-vd-ico{color:#7a4fd6;width:22px;height:22px}
-.dgm-vd-in.idx .dgm-vd-ico{color:#8a6d3b}
-.dgm-vd-in h6{margin:0;font-size:11px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-vd-in p{margin:0;font-size:9.5px;color:#59636e;line-height:1.3}
-.dgm-vd-plus{color:#8c959f;font-weight:700;font-size:18px;text-align:center}
-.dgm-vd-arr{color:#8c959f;font-weight:700;text-align:center}
-.dgm-vd-conn{display:flex;justify-content:center;color:#8c959f;padding:4px 0}
+.dgm-vd-in{background:var(--color-surface);border:1px solid var(--color-border-discovery-surface);border-radius:9px;padding:9px 10px;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.dgm-vd-in.idx{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline)}
+.dgm-vd-in .dgm-vd-ico{color:var(--color-text-discovery);width:22px;height:22px}
+.dgm-vd-in.idx .dgm-vd-ico{color:var(--color-text-warning)}
+.dgm-vd-in h6{margin:0;font-size:11px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-vd-in p{margin:0;font-size:9.5px;color:var(--color-text-secondary);line-height:1.3}
+.dgm-vd-plus{color:var(--color-text-tertiary);font-weight:700;font-size:18px;text-align:center}
+.dgm-vd-arr{color:var(--color-text-tertiary);font-weight:700;text-align:center}
+.dgm-vd-conn{display:flex;justify-content:center;color:var(--color-text-tertiary);padding:4px 0}
 .dgm-vd-conn svg{width:20px;height:20px}
 .dgm-vd-query{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch;margin-bottom:8px}
-.dgm-vd-qcell{background:#ffffff;border:1.5px solid #d3c5f0;border-radius:10px;padding:11px 12px;display:flex;gap:9px;align-items:center}
-.dgm-vd-qcell .dgm-vd-ico{color:#7a4fd6;width:22px;height:22px;flex:0 0 22px}
-.dgm-vd-qcell h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#4b2996}
-.dgm-vd-qcell p{margin:0;font-size:10.5px;color:#59636e;line-height:1.3}
-.dgm-vd-out{background:#dafbe1;border:1.5px solid #aceebb;border-radius:12px;padding:12px 16px;display:flex;gap:12px;align-items:center}
-.dgm-vd-out .dgm-vd-ico{width:24px;height:24px;color:#1a7f37;flex:0 0 24px}
-.dgm-vd-out h5{margin:0 0 2px;font-size:12px;font-weight:700;color:#1a614f;letter-spacing:.02em}
-.dgm-vd-out p{margin:0;font-size:11px;color:#59636e;line-height:1.35}
+.dgm-vd-qcell{background:var(--color-surface);border:1.5px solid var(--color-border-discovery-surface);border-radius:10px;padding:11px 12px;display:flex;gap:9px;align-items:center}
+.dgm-vd-qcell .dgm-vd-ico{color:var(--color-text-discovery);width:22px;height:22px;flex:0 0 22px}
+.dgm-vd-qcell h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--color-text-discovery)}
+.dgm-vd-qcell p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.3}
+.dgm-vd-out{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface);border-radius:12px;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.dgm-vd-out .dgm-vd-ico{width:24px;height:24px;color:var(--color-text-success);flex:0 0 24px}
+.dgm-vd-out h5{margin:0 0 2px;font-size:12px;font-weight:700;color:var(--color-text-success);letter-spacing:.02em}
+.dgm-vd-out p{margin:0;font-size:11px;color:var(--color-text-secondary);line-height:1.35}
 @media (max-width:640px){.dgm-vd{padding:20px 16px 18px}.dgm-vd-inputs,.dgm-vd-query{grid-template-columns:1fr}.dgm-vd-arr,.dgm-vd-plus{padding:2px 0}}
 </style>
 <div class="dgm-vd">

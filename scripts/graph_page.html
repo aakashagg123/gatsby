@@ -2,136 +2,60 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Knowledge graph · Engineering learning modules</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#fafbfc;--surface:#ffffff;--ink:#1f2328;--ink2:#1f2328;--muted:#59636e;
-    --accent:#0969da;--accent-deep:#0550ae;--line:#d1d9e0;--soft:#f6f8fa;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);overflow:hidden;
-    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
-    font-size:15px;font-feature-settings:"cv11","ss01","ss03";
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-    text-rendering:optimizeLegibility}
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
-
-  .bar{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;
-    gap:16px;padding:12px 20px;background:rgba(255,255,255,.96);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 1px 0 rgba(31,35,40,.02),0 4px 16px rgba(31,35,40,.03)}
-  .bar .back{font-weight:500;color:var(--ink);white-space:nowrap}
-  .bar .back:hover{color:var(--accent-deep)}
-  .bar .brand{font-weight:600;color:var(--accent-deep);white-space:nowrap}
-  #search{flex:1;min-width:60px;max-width:340px;padding:7px 12px;border:1px solid var(--line);
-    border-radius:6px;background:var(--surface);font:inherit;font-size:14px;color:var(--ink)}
-  #search:focus{outline:2px solid rgba(9,105,218,.45);outline-offset:1px}
-  .tgl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;
-    white-space:nowrap;cursor:pointer;user-select:none}
-  #listBtn{margin-left:auto;padding:7px 13px;border:1px solid var(--line);border-radius:6px;
-    background:var(--surface);font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);
-    cursor:pointer;white-space:nowrap}
-  #listBtn:hover{border-color:var(--accent)}
-
-  #legend{position:fixed;left:14px;bottom:14px;z-index:25;display:flex;flex-direction:column;
-    gap:3px;padding:14px 16px;background:rgba(255,255,255,.97);border:1px solid var(--line);
-    border-radius:10px;box-shadow:0 8px 28px rgba(31,35,40,.10),0 1px 3px rgba(31,35,40,.04);max-width:280px}
-  #legend .lg-h{font-size:11px;font-weight:600;letter-spacing:.03em;
-    color:var(--muted);margin-bottom:5px}
-  .chip{display:flex;align-items:center;gap:8px;padding:3px 6px;margin:0 -6px;border:0;
-    background:none;font:inherit;font-size:13px;color:var(--ink2);cursor:pointer;
-    border-radius:7px;text-align:left}
-  .chip:hover{background:var(--soft)}
-  .chip .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
-  .chip .n{margin-left:auto;color:var(--muted);font-size:12px}
-  .chip.off{opacity:.38}
-  .chip.off .dot{background:var(--muted) !important}
-
-  #cv{position:fixed;inset:0;display:block;cursor:grab;touch-action:none}
-  #cv.dragging{cursor:grabbing}
-  #cv.overnode{cursor:pointer}
-  #cv3d{position:fixed;inset:0;display:none}
-
-  #tip{position:fixed;z-index:40;pointer-events:none;display:none;max-width:290px;
-    padding:8px 12px;background:var(--ink);color:#ffffff;border-radius:6px;
-    font-size:13px;line-height:1.45;box-shadow:0 8px 24px rgba(31,35,40,.25)}
-  #tip .t-track{display:block;font-size:11px;opacity:.75;margin-top:2px}
-
-  #card{position:fixed;right:14px;bottom:14px;z-index:25;width:320px;max-width:calc(100vw - 28px);
-    max-height:46vh;overflow:auto;padding:18px 20px;background:rgba(255,255,255,.98);
-    border:1px solid var(--line);border-radius:10px;
-    box-shadow:0 10px 32px rgba(31,35,40,.12),0 2px 6px rgba(31,35,40,.05);
-    display:none}
-  #card .c-track{font-size:11px;font-weight:600;letter-spacing:.02em}
-  #card h2{margin:.25em 0 .4em;font-size:17px;line-height:1.3;letter-spacing:-.01em}
-  #card .c-open{display:inline-block;margin:2px 0 10px;font-weight:500;font-size:13.5px}
-  #card .c-h{font-size:11px;font-weight:600;letter-spacing:.03em;
-    color:var(--muted);margin:10px 0 4px}
-  #card ul{list-style:none;margin:0;padding:0}
-  #card li{padding:2px 0;font-size:13px;line-height:1.4}
-  #card li a{color:var(--ink2)}
-  #card li a:hover{color:var(--accent-deep)}
-  #card .c-close{position:sticky;top:0;float:right;border:0;background:none;color:var(--muted);
-    font-size:17px;cursor:pointer;padding:0 0 4px 8px;font-family:inherit}
-
-  #panel{position:fixed;top:0;right:0;bottom:0;z-index:35;width:360px;max-width:92vw;
-    background:var(--surface);border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(31,35,40,.08);
-    transform:translateX(105%);transition:transform .22s ease;overflow:auto;padding:18px 22px 40px}
-  #panel.open{transform:none}
-  #panel .p-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-  #panel h2{font-size:16px;margin:0}
-  #panel .p-close{border:0;background:none;font-size:20px;color:var(--muted);cursor:pointer;font-family:inherit}
-  #panel details{border-top:1px solid var(--line);padding:8px 0}
-  #panel summary{cursor:pointer;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;padding:4px 0}
-  #panel summary .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
-  #panel ul{list-style:none;margin:6px 0;padding:0 0 0 17px}
-  #panel li{padding:2.5px 0;font-size:13.5px;line-height:1.45}
-  #panel li a{color:var(--ink2)}
-  #panel li a:hover{color:var(--accent-deep)}
-
-  #hint{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:20;
-    color:var(--muted);font-size:12.5px;background:rgba(255,255,255,.9);padding:4px 12px;
-    border:1px solid var(--line);border-radius:999px;pointer-events:none;transition:opacity .5s;white-space:nowrap}
-
-  @media (max-width:720px){
-    .bar{gap:10px;padding:10px 12px}
-    .bar .brand{display:none}
-    .tgl span{display:none}
-    #hint{display:none}
-    /* legend + card become full-width bottom sheets on phones, for either renderer */
-    #legend{left:0;right:0;bottom:0;top:auto;max-width:100%;width:100%;
-      border-radius:14px 14px 0 0;border-left:0;border-right:0;border-bottom:0;
-      max-height:34vh;overflow:auto;flex-direction:row;flex-wrap:wrap;gap:6px 14px}
-    #legend .lg-h{width:100%;margin-bottom:2px}
-    #card{left:0;right:0;bottom:0;top:auto;width:100%;max-width:100%;
-      border-radius:14px 14px 0 0;border-left:0;border-right:0;border-bottom:0;max-height:52vh}
-  }
-</style></head>
-<body>
-<header class="bar">
-  <a class="back" href="../index.html">← All courses</a>
-  <span class="brand">Knowledge graph</span>
-  <input id="search" type="search" placeholder="Search pages…" autocomplete="off">
-  <label class="tgl"><input type="checkbox" id="structToggle" checked><span>curriculum links</span></label>
-  <button id="listBtn" type="button">List view</button>
+</head>
+<body class="graph-page">
+<header class="topbar graph-bar">
+  <a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a>
+  <span class="brand"><span>Knowledge graph</span></span>
+  <div class="InputContainer" data-variant="outline" data-size="md" data-pill><input id="search" class="Input" type="search" placeholder="Search pages…" autocomplete="off" aria-label="Search pages"></div>
+  <label class="tgl iw-toggle"><input type="checkbox" id="structToggle" checked><span>curriculum links</span></label>
+  <button id="listBtn" class="Button" type="button" data-variant="outline" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">List view</span></button>
 </header>
 
 <canvas id="cv" aria-label="Interactive knowledge graph of all lessons"></canvas>
 <div id="cv3d" aria-label="Interactive 3D knowledge graph of all lessons"></div>
 
-<div id="legend" role="group" aria-label="Tracks"><div class="lg-h">Tracks — click to toggle</div></div>
+<div id="legend" class="graph-sheet" role="group" aria-label="Tracks"><div class="lg-h">Tracks — click to toggle</div></div>
 <div id="tip" role="status"></div>
-<div id="card"></div>
+<div id="card" class="graph-sheet"></div>
 <aside id="panel" aria-label="All pages, as a list"></aside>
 <div id="hint"></div>
 
 <script>
 "use strict";
 const DATA = /*__GRAPH_DATA__*/null;
+
+/* ---------- theme palette: resolved from design-system tokens, refreshed on theme change ---------- */
+const tokenColor = (() => {
+  const cv = document.createElement("canvas"); cv.width = cv.height = 1;
+  const c = cv.getContext("2d", {willReadFrequently: true});
+  return name => {                       // computed colours may be oklab(); read one painted pixel
+    const e = document.createElement("span"); e.style.color = "var(" + name + ")";
+    document.body.appendChild(e); const v = getComputedStyle(e).color; e.remove();
+    c.clearRect(0, 0, 1, 1); c.fillStyle = v; c.fillRect(0, 0, 1, 1);
+    const d = c.getImageData(0, 0, 1, 1).data;
+    return d[3] === 255 ? "rgb(" + d[0] + "," + d[1] + "," + d[2] + ")"
+                        : "rgba(" + d[0] + "," + d[1] + "," + d[2] + "," + (d[3] / 255).toFixed(3) + ")";
+  };
+})();
+const PAL = {};
+const FONT = getComputedStyle(document.documentElement).getPropertyValue("--font-sans").trim() || "sans-serif";
+function readPalette() {
+  PAL.edge = tokenColor("--color-text-secondary");
+  PAL.edgeHot = tokenColor("--color-text-info");
+  PAL.glow = tokenColor("--color-text-info");
+  PAL.ink = tokenColor("--color-text");
+  PAL.halo = tokenColor("--color-surface");
+  PAL.bg = tokenColor("--color-surface-secondary");
+  PAL.link3d = tokenColor("--color-text-tertiary");
+  PAL.struct3d = tokenColor("--color-border-strong");
+  PAL.dim3d = tokenColor("--color-border");
+}
+readPalette();
+window.addEventListener("ds-themechange", () => {
+  readPalette();
+  if (window.__graph3d) window.__graph3d.backgroundColor(PAL.bg);
+});
 
 /* ---------- data prep (shared by both renderers) ---------- */
 const nodes = DATA.nodes, edges = DATA.edges;
@@ -227,7 +151,7 @@ const legend = document.getElementById("legend");
 DATA.tracks.forEach(t => {
   const count = nodes.filter(n => n.track === t.id).length;
   const b = document.createElement("button");
-  b.className = "chip"; b.type = "button";
+  b.className = "legend-chip"; b.type = "button";
   b.setAttribute("aria-pressed", "true");
   b.innerHTML = '<span class="dot" style="background:' + t.color + '"></span>' +
     esc(t.label) + '<span class="n">' + count + "</span>";
@@ -373,7 +297,7 @@ function boot2D() {
       if (hood) on = (e[0] === focusN.i || e[1] === focusN.i);
       else if (searchSet) on = searchSet.has(e[0]) || searchSet.has(e[1]);
       ctx.globalAlpha = on ? (link ? .55 : .32) : .05;
-      ctx.strokeStyle = hood && on ? "#0550ae" : "#6b7280";
+      ctx.strokeStyle = hood && on ? PAL.edgeHot : PAL.edge;
       ctx.lineWidth = (link ? 1.1 + Math.min(4, e[2]) * .35 : 1.0) / view.k;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
@@ -387,7 +311,7 @@ function boot2D() {
       // Subtle glow on focused nodes for depth on 2K displays.
       if (focused) {
         ctx.shadowBlur = 14 / view.k;
-        ctx.shadowColor = "rgba(5,80,174,.42)";
+        ctx.shadowColor = PAL.glow;
       } else {
         ctx.shadowBlur = 0;
       }
@@ -395,7 +319,7 @@ function boot2D() {
       ctx.fillStyle = n.color; ctx.fill();
       ctx.shadowBlur = 0;                             // reset so ring stroke is crisp
       ctx.lineWidth = (focused ? 3.0 : 1.4) / Math.max(view.k, .9);
-      ctx.strokeStyle = focused ? "#0d1117" : ringOf[n.track];
+      ctx.strokeStyle = focused ? PAL.ink : ringOf[n.track];
       ctx.stroke();
     }
     ctx.globalAlpha = 1;                              // labels
@@ -412,15 +336,15 @@ function boot2D() {
       const fs = (n.kind === "track" ? 14.5 : n.kind === "module" ? 13 : 12.5)
                  / Math.min(Math.max(view.k, .85), 2.2);
       const weight = n.kind === "track" ? "700 " : n.kind === "module" ? "600 " : "500 ";
-      ctx.font = weight + fs + 'px Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
+      ctx.font = weight + fs + "px " + FONT;
       const t = n.title.length > 42 ? n.title.slice(0, 40) + "…" : n.title;
       ctx.globalAlpha = focusLbl || n.kind !== "lesson" ? 1 : .82;
       // Halo stroke: wider + slightly more opaque, so labels stay crisp
       // against colored nodes and denser edge crossings.
       ctx.lineWidth = 3.8 / view.k;
-      ctx.strokeStyle = "rgba(250,251,252,.95)";
+      ctx.strokeStyle = PAL.halo;
       ctx.strokeText(t, n.x, n.y + n.r + 4 / view.k);
-      ctx.fillStyle = "#0d1117";
+      ctx.fillStyle = PAL.ink;
       ctx.fillText(t, n.x, n.y + n.r + 4 / view.k);
     }
     ctx.globalAlpha = 1;
@@ -581,14 +505,14 @@ function boot3D() {
   }
   function linkColor(l) {
     const dim = searchSet && !(searchSet.has(l.source.i) || searchSet.has(l.target.i));
-    return dim ? "rgba(140,149,159,.15)" : (l.kind === "link" ? "#8c959f" : "#aab1b8");
+    return dim ? PAL.dim3d : (l.kind === "link" ? PAL.link3d : PAL.struct3d);
   }
 
-  const Graph = ForceGraph3D()(el)
+  const Graph = window.__graph3d = ForceGraph3D()(el)
     .graphData({nodes: buildNodes(), links: buildLinks()})
     .width(window.innerWidth)
     .height(window.innerHeight)
-    .backgroundColor("#fafbfc")
+    .backgroundColor(PAL.bg)
     .showNavInfo(false)
     .nodeId("id")
     .nodeColor(nodeColor)

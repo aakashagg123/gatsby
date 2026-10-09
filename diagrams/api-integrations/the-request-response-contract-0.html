@@ -1,37 +1,37 @@
 <!-- The request/response contract — two-panel envelope diagram with API in the middle. -->
 <style>
-.dgm-rc{background:#ffffff;border:1px solid #d1d9e0;border-top:3px solid #c2185b;
-  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgba(31,35,40,.04),0 8px 24px rgba(31,35,40,.04);
+.dgm-rc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
   margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative}
-.dgm-rc-chip{position:absolute;top:-11px;left:24px;background:#c2185b;color:#ffffff;
+.dgm-rc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
   font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px rgba(194,24,91,.28)}
-.dgm-rc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#59636e}
-.dgm-rc-sub{font-size:12px;color:#59636e;margin:0 0 16px}
+  border-radius:20px;padding:3px 12px;box-shadow:0 2px 6px color-mix(in oklab, var(--color-background-discovery-solid) 28%, transparent)}
+.dgm-rc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-rc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
 .dgm-rc-envelope{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
 .dgm-rc-side{border-radius:12px;padding:14px 14px;display:flex;flex-direction:column;gap:8px;position:relative}
-.dgm-rc-side.req{background:#efedfa;border:1.5px solid #cec8f0}
-.dgm-rc-side.resp{background:#dafbe1;border:1.5px solid #aceebb}
+.dgm-rc-side.req{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface)}
+.dgm-rc-side.resp{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
 .dgm-rc-side .dgm-rc-lbl{position:absolute;top:-9px;left:14px;font-size:9.5px;font-weight:700;
-  letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px;background:#ffffff}
-.dgm-rc-side.req .dgm-rc-lbl{color:#3d3a95;border:1px solid #cec8f0}
-.dgm-rc-side.resp .dgm-rc-lbl{color:#1a614f;border:1px solid #aceebb}
+  letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px;background:var(--color-surface)}
+.dgm-rc-side.req .dgm-rc-lbl{color:var(--color-text-discovery);border:1px solid var(--color-border-discovery-surface)}
+.dgm-rc-side.resp .dgm-rc-lbl{color:var(--color-text-success);border:1px solid var(--color-border-success-surface)}
 .dgm-rc-side h5{margin:4px 0 6px;font-size:12.5px;font-weight:700;letter-spacing:.02em}
-.dgm-rc-side.req h5{color:#3d3a95}
-.dgm-rc-side.resp h5{color:#1a614f}
-.dgm-rc-part{background:#ffffff;border:1px solid #d1d9e0;border-radius:9px;padding:9px 11px;
+.dgm-rc-side.req h5{color:var(--color-text-discovery)}
+.dgm-rc-side.resp h5{color:var(--color-text-success)}
+.dgm-rc-part{background:var(--color-surface);border:1px solid var(--color-border);border-radius:9px;padding:9px 11px;
   display:flex;gap:9px;align-items:flex-start}
-.dgm-rc-part.req{border-color:#cec8f0}
-.dgm-rc-part.resp{border-color:#aceebb}
+.dgm-rc-part.req{border-color:var(--color-border-discovery-surface)}
+.dgm-rc-part.resp{border-color:var(--color-border-success-surface)}
 .dgm-rc-part .dgm-rc-ico{width:20px;height:20px;flex:0 0 20px;margin-top:1px}
-.dgm-rc-part.req .dgm-rc-ico{color:#5a4fcf}
-.dgm-rc-part.resp .dgm-rc-ico{color:#1a7f37}
-.dgm-rc-part h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:#1f2328;letter-spacing:.02em}
-.dgm-rc-part p{margin:0;font-size:10.5px;color:#59636e;line-height:1.35}
-.dgm-rc-hub{align-self:center;background:#f9e1ec;border:1.5px solid #ecc3d5;border-radius:14px;
-  padding:22px 18px;text-align:center;color:#7a1140;font-weight:700;font-size:11.5px;letter-spacing:.02em;
+.dgm-rc-part.req .dgm-rc-ico{color:var(--color-text-discovery)}
+.dgm-rc-part.resp .dgm-rc-ico{color:var(--color-text-success)}
+.dgm-rc-part h6{margin:0 0 2px;font-size:11.5px;font-weight:700;color:var(--color-text);letter-spacing:.02em}
+.dgm-rc-part p{margin:0;font-size:10.5px;color:var(--color-text-secondary);line-height:1.35}
+.dgm-rc-hub{align-self:center;background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface);border-radius:14px;
+  padding:22px 18px;text-align:center;color:var(--color-text-discovery);font-weight:700;font-size:11.5px;letter-spacing:.02em;
   display:flex;flex-direction:column;align-items:center;gap:6px;min-width:110px}
-.dgm-rc-hub svg{width:32px;height:32px;color:#c2185b}
+.dgm-rc-hub svg{width:32px;height:32px;color:var(--color-text-discovery)}
 @media (max-width:640px){.dgm-rc{padding:20px 16px 18px}.dgm-rc-envelope{grid-template-columns:1fr}}
 </style>
 <div class="dgm-rc">
@@ -48,7 +48,7 @@
         <div><h6>The prompt</h6><p>Instructions + your data — most direct quality lever</p></div>
       </div>
       <div class="dgm-rc-part req">
-        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="4" rx="2"/><circle cx="8" cy="12" r="3" fill="#5a4fcf"/></svg>
+        <svg class="dgm-rc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="4" rx="2"/><circle cx="8" cy="12" r="3" fill="var(--color-background-discovery-solid)"/></svg>
         <div><h6>Parameters</h6><p>Temperature · max length · which model</p></div>
       </div>
       <div class="dgm-rc-part req">
