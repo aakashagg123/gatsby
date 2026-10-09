@@ -73,7 +73,8 @@ def rewrite_target(target, cur_mod):
             "system-design", "rag-vector-databases", "generative-ai", "llms",
             "api-integrations", "memory-and-context", "tool-calling", "ai-agents",
             "agentic-workflows", "evaluation-and-observability", "ai-security-and-guardrails",
-            "cost-optimization", "access-control", "context-engineering", "prompt-engineering")
+            "cost-optimization", "access-control", "context-engineering", "prompt-engineering",
+            "learning-paths")
     PHASED = {"harness-engineering": "harness", "flowable": "flowable"}
     top, _, rest = resolved.partition("/")
     if rest.endswith(".md"):

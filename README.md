@@ -4,13 +4,13 @@
 
 <br/>
 
-![Tracks](https://img.shields.io/badge/tracks-19-D97757?style=flat-square&labelColor=1f1e1d)
+![Tracks](https://img.shields.io/badge/tracks-24-D97757?style=flat-square&labelColor=1f1e1d)
 ![Lessons](https://img.shields.io/badge/lessons-118%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-2692%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
 ![License](https://img.shields.io/badge/license-educational-6b6a64?style=flat-square&labelColor=1f1e1d)
 
-**[🌐 Live site](https://aakashagg123.github.io/gatsby/)** · **[🕸️ Knowledge graph](https://aakashagg123.github.io/gatsby/graph/)** · **[📚 Learning path](./SUMMARY.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)** · **[🧵 Craft tracks](#-beyond-ai-engineering--the-craft-tracks)**
+**[🌐 Live site](https://aakashagg123.github.io/gatsby/)** · **[🕸️ Knowledge graph](https://aakashagg123.github.io/gatsby/graph/)** · **[📚 Reading order](./SUMMARY.md)** · **[🧭 Learning paths by role](./learning-paths/README.md)** · **[📖 Glossary](./GLOSSARY.md)** · **[🎨 HTML editions](./html/index.html)** · **[🧭 Jump to modules](#-curriculum-map)** · **[🧵 Craft tracks](#-beyond-ai-engineering--the-craft-tracks)**
 
 </div>
 
@@ -151,13 +151,14 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## 🧭 Beyond AI Engineering — the craft tracks
 
-The AI Engineering modules above teach the *stack*. Nineteen further tracks teach the *craft*
+The AI Engineering modules above teach the *stack*. Twenty-four further tracks teach the *craft*
 around it — each a standalone folder of cross-linked lessons in the same house style
 (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML
 edition on the [live site](https://aakashagg123.github.io/gatsby/).
 
 | Track | What it teaches | Start here |
 | :-- | :-- | :-- |
+| [**Learning paths**](./learning-paths/README.md) 🆕 | The tracks in order for four roles: senior product manager, AI product lead, AI engineer and AI engineering lead. Each path gives the lessons to read, what to skip, a time estimate and a checkpoint per stage. | [Choose your path](./learning-paths/README.md) |
 | [**Agentic AI**](./agentic-ai/README.md) | What agents actually are — the loop, tools, memory, planning — and the reliability, security, and economics that turn demos into products. Opens with a knowledge graph. | [What is an agent?](./agentic-ai/what-is-an-agent.md) |
 | [**Knowledge graphs**](./knowledge-graphs/README.md) | Treat what the company knows as a product — entities and ontologies, the construction pipeline, GraphRAG, governance, and the business case, in product-leader language. | [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md) |
 | [**Generative AI: the big picture**](./generative-ai/README.md) | What makes AI "generative," the five modalities, why output is probabilistic, the four-layer product stack, and build vs. buy vs. fine-tune. Opens the [Generative AI family](./GENERATIVE_AI_ROADMAP.md). | [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md) |

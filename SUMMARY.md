@@ -1,8 +1,19 @@
-# Learning path
+# Reading order
 
-This is the recommended order. Each lesson links forward to what builds on it and
+This is the recommended order. To follow an order built for your role, start at [Learning paths](./learning-paths/README.md). Each lesson links forward to what builds on it and
 sideways to what it connects with. You can read top-to-bottom, or follow the
 **threads** at the bottom across module boundaries.
+
+---
+
+## [Learning paths](./learning-paths/README.md)
+
+Four ordered paths over the tracks below, with time estimates and a checkpoint per stage.
+
+1. [Senior Product Manager](./learning-paths/senior-product-manager.md)
+2. [AI Product Lead](./learning-paths/ai-product-lead.md)
+3. [AI Engineer](./learning-paths/ai-engineer.md)
+4. [AI Engineering Lead](./learning-paths/ai-engineering-lead.md) · [Recap](./learning-paths/recap.md)
 
 ---
 

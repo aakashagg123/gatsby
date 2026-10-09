@@ -54,6 +54,7 @@ TRACKS = [
     ("flowable", "Flowable", "#a63d40", "flowable"),
     ("context-engineering", "Context engineering", "#d62839", "context-engineering"),
     ("prompt-engineering", "Prompt engineering", "#7b3f00", "prompt-engineering"),
+    ("learning-paths", "Learning paths", "#0a7e8c", "learning-paths"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "technical-product-management", "agentic-ai", "knowledge-graphs",
@@ -61,7 +62,7 @@ FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "memory-and-context", "tool-calling", "ai-agents", "agentic-workflows",
                "evaluation-and-observability", "ai-security-and-guardrails",
                "cost-optimization", "system-design", "access-control",
-               "context-engineering", "prompt-engineering"}
+               "context-engineering", "prompt-engineering", "learning-paths"}
 # Phased tracks share the harness-engineering folder shape:
 # (track id, source dir, site prefix, track title)
 PHASED_TRACKS = [
