@@ -101,9 +101,11 @@ The learning rate is the step multiplier. It is the most-tuned setting in traini
 
 An **epoch** is one pass over all the training rows. Real systems often update on small
 groups of rows, called **mini-batches**, so one epoch holds many updates. Mini-batch methods
-are noisy, and they scale to data that does not fit in memory. Variants such as momentum
-and Adam adjust the step size on the fly. The scikit-learn guide describes Adam as
-adapting the update size for each parameter from running estimates of the gradient.
+are noisy, and they scale to data that does not fit in memory. Momentum carries part of the
+last step into the next one. Adam adapts the step size on the fly. The scikit-learn guide
+says Adam "can automatically adjust the amount to update parameters based on adaptive
+estimates of lower-order moments". Its authors, Kingma and Ba, describe it as computing
+individual adaptive learning rates for different parameters.
 
 ## Reading a loss curve
 
@@ -171,7 +173,7 @@ Now change only the learning rate.
 | --- | --- |
 | 0.01 | After 150 epochs the loss is 0.563. Still far from done |
 | 0.5 | After 150 epochs the loss is 0.403. Converged |
-| 60 | In 20 epochs the loss swings between 1.27 and 3.42 and never settles |
+| 60 | In 20 epochs the loss swings between 0.92 and 3.69 and never settles |
 
 Same data, same model, same code. One number decides whether the run works.
 
@@ -260,12 +262,14 @@ Habits that save time:
 - scikit-learn user guide, [Neural network models (supervised)](https://scikit-learn.org/stable/modules/neural_networks_supervised.html):
   gradient descent as the update `w ← w − η × slope`, the learning rate as the step size,
   backpropagation as the way the gradients are computed, and Adam as an optimizer that adapts
-  the update size. Read from the guide's source text in the scikit-learn repository, 2026-10.
+  the update size from adaptive estimates of lower-order moments. Read from the guide's
+  source text in the scikit-learn repository, 2026-10.
 - scikit-learn user guide, [Model evaluation](https://scikit-learn.org/stable/modules/model_evaluation.html):
   log loss, also called cross-entropy loss, defined on probability estimates. Same reading.
 - Kingma and Ba, *Adam: A method for stochastic optimization* (International Conference on Learning Representations, 2015),
   [arXiv:1412.6980](https://arxiv.org/abs/1412.6980). The optimizer named in the scikit-learn
-  guide. arXiv was blocked when checked.
+  guide, and the source of "individual adaptive learning rates for different parameters".
+  The guide cites this paper. arXiv was blocked when checked.
 - Goodfellow, Bengio and Courville, *Deep Learning* (2016), chapters 4 and 8:
   gradient-based optimization and optimization for training.
 - The churn data, the weights, the loss values and the learning-rate results are invented.

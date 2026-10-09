@@ -115,9 +115,9 @@ flagged without changing the model at all.</p>
 <li><strong>Recall.</strong> Of the customers who leave, what share did we flag? It measures how many we
   catch.</li>
 </ul>
-<p>Raise the threshold and the list gets cleaner but shorter. Precision goes up and recall
-goes down. Lower it and the reverse happens. You cannot improve both by moving the
-threshold. You can only choose a point on the curve.</p>
+<p>Raise the threshold and the list gets shorter. Recall never rises, and precision usually
+does. Lower it and the reverse happens. In practice you trade one for the other. You choose
+a point on the curve.</p>
 <p><a href="../rag-vector-databases/retrieval-quality.html">Retrieval quality</a> uses the same two words
 for a search system. The idea is the same.</p>
 <h2 id="why-accuracy-misleads">Why accuracy misleads</h2>
@@ -138,8 +138,8 @@ list hold? A random list holds 10%. A good model holds much more.</p>
 <p>Suppose a missed leaver costs the company $60 in lost margin, and a retention offer sent to
 a customer who would have stayed costs $15. These numbers are invented. A false negative
 costs four times a false positive.</p>
-<p>If the model's scores are well calibrated, a simple rule gives the best cutoff. Flag a
-customer when the chance of leaving is at least</p>
+<p>If the model's scores are well calibrated, and a correct decision costs nothing, a simple
+rule gives the best cutoff. Flag a customer when the chance of leaving is at least</p>
 <p><code>cost of a false alarm ÷ (cost of a false alarm + cost of a miss)</code></p>
 <p>Here that is 15 ÷ (15 + 60) = 0.20. Flag anyone with a risk of 20% or more. The cutoff is a
 business fact, not a modelling choice. It moves when your costs move.</p>
@@ -172,8 +172,9 @@ covers how.</p>
 <h2 id="worked-example-from-an-83-score-to-a-cost-based-cutoff">Worked example: from an 83% score to a cost-based cutoff</h2>
 <p><em>This example is invented. The data and the costs are made up. The code is in
 <code>machine-learning/code/lesson5_metrics.py</code>.</em></p>
-<p>We take the churn model from lesson 3 and score 4,000 customers it has never seen. Of them,
-734 left, which is 18.3%.</p>
+<p>We use the kind of churn model from lesson 3. This time we make 8,000 invented customers.
+We train on 4,000 of them and score the other 4,000, which the model has never seen. Of
+those, 734 left, which is 18.3%.</p>
 <p><strong>Step 1: accuracy.</strong> At the default cutoff of 0.5, accuracy is 83.1%. The do-nothing
 baseline scores 81.7%. The model looks only 1.4 points better.</p>
 <p><strong>Step 2: the confusion matrix at 0.5.</strong></p>

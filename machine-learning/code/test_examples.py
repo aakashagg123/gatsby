@@ -1,5 +1,6 @@
-"""Run every example in this folder. Each file ends with assert lines, so a pass means the
-claims in the lessons still hold. Run: python3 machine-learning/code/test_examples.py
+"""Run every example in this folder. Each file ends with assert lines. A pass means the
+direction of each claim in the lessons still holds. It does not check every quoted number.
+Run: python3 machine-learning/code/test_examples.py
 """
 import os
 import subprocess

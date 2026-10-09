@@ -15,21 +15,27 @@ signals than cases will find patterns that are not there, and will look fine unt
 moves. This is [overfitting](./generalization-overfitting-and-bias-variance.md), and the drift
 that exposed it is covered in [ML in production](./ml-in-production.md).
 
-**A sepsis alert that did not travel (2021).** Epic's sepsis model is used in many US
-hospitals. Researchers at the University of Michigan tested it on 38,455 hospitalizations and
-published the result in *JAMA Internal Medicine* in 2021. They reported an AUC of 0.63. At
-the score the vendor suggests as an alert cutoff, the model caught 33% of sepsis cases, missed
-67%, and raised alerts on 18% of all hospitalized patients. Epic disputed how the study
-defined sepsis and its onset. 🎯 *Takeaway:* a score measured by the vendor in one setting is a
-claim, not a fact about your hospital. Test on your own data, and look at the
-[confusion matrix and threshold](./measuring-a-model.md), not only one headline number.
+**A sepsis alert that did not travel (2021).** Epic's original sepsis model (version 1) was
+used in many US hospitals. Researchers at the University of Michigan tested it on 38,455
+hospitalizations and published the result in *JAMA Internal Medicine* in 2021. They reported
+an AUC of 0.63. At an alert score of 6, which is within the range Epic recommends, the model
+caught 33% of sepsis cases, missed 67%, and raised alerts on 18% of all hospitalized
+patients. Epic disputed how the study defined sepsis and its onset. Epic has since released a
+revised version. As of 2026-10, a multi-hospital study of that version in *JAMA Network Open*
+reported AUROC between 0.82 and 0.92, with low positive predictive value and a heavy alert
+load. 🎯 *Takeaway:* a score a vendor reports for one setting is a claim, not a fact about
+your hospital, and it belongs to one version of the model. Test the version you run on your
+own data, and look at the [confusion matrix and threshold](./measuring-a-model.md), not only
+one headline number.
 
-**An experimental hiring tool shut down (2018).** Reuters reported in October 2018 that Amazon
-had built an experimental tool to score job applicants' resumes, trained on patterns in the
-resumes the company had received. Engineers found by 2015 that it did not rate technical
-candidates in a gender-neutral way. Recruiters looked at its output but never relied on it
-alone, and the project was later disbanded. Amazon did not comment on the tool itself. 🎯
-*Takeaway:* a model learns the patterns in its history, including the ones you did not want.
+**An experimental hiring tool shut down (reported 2018).** Reuters reported in October 2018
+that Amazon had built an experimental tool to score job applicants' resumes, trained on
+patterns in the resumes the company had received. Reuters said engineers found by 2015 that
+it did not rate technical candidates in a gender-neutral way, and that the team was disbanded
+by the start of 2017. Citing people familiar with the effort, it reported that recruiters
+looked at the tool's recommendations but never relied solely on them. Amazon declined to
+comment on the tool's problems. It said the tool "was never used by Amazon recruiters to
+evaluate candidates." 🎯 *Takeaway:* a model learns the patterns in its history, including the ones you did not want.
 This is the [label and selection problem](./data-features-labels-and-leakage.md): the past you
 learn from is not neutral.
 
@@ -45,7 +51,7 @@ independent one, and we do not claim a single cause.
 
 **The unit that changed (an illustration).** A team ships a churn model. Offline, it scores an
 AUC of 0.73. At launch, the serving system passes tenure in days where training used months.
-No error appears. Live performance drops by about ten points, and the first alert is a
+No error appears. Live performance drops by about 11 points, and the first alert is a
 quarter-end review. The story is invented, and the [numbers come from the lesson-7 code](./ml-in-production.md).
 🎯 *Takeaway:* skew produces no crash, only wrong answers. A check on input spread catches it
 on day one.
@@ -55,7 +61,7 @@ on day one.
 | Lesson | The one idea | The question it makes you ask |
 | --- | --- | --- |
 | [What machine learning is, and when to use it](./what-machine-learning-is.md) | A learned system has data, a model and an objective. Rules, a trained model and an LLM suit different problems. | What is the best simple rule, and how much better is the model? |
-| [Data: features, labels, splits and leakage](./data-features-labels-and-leakage.md) | The data is part of the logic. A score that looks too good usually has a leak. | For every input, do we know it at prediction time, and was the test split honest? |
+| [Data: features, labels, splits and leakage](./data-features-labels-and-leakage.md) | The data is part of the logic. A score that looks too good often has a leak. | For every input, do we know it at prediction time, and was the test split honest? |
 | [Training: loss and gradient descent](./training-loss-and-gradient-descent.md) | Training is a loop: predict, measure the loss, step downhill, repeat. The learning rate is the setting that matters. | Did the training and validation curves flatten together? |
 | [Generalization: overfitting and bias–variance](./generalization-overfitting-and-bias-variance.md) | A model must work on cases it has not seen. Two charts show whether to buy data, simplicity or better features. | What is the gap between training and validation, and would more data close it? |
 | [Measuring a model](./measuring-a-model.md) | One number hides the decision. Use a baseline, a confusion matrix, a cost-based cutoff, and a calibration check. | What does each error cost, and where did we set the threshold? |
@@ -90,7 +96,7 @@ If you can answer all four, you can steer the project. If not, you know which le
 6. **Training loss keeps falling while validation loss rises. What is happening, and what do you try?**
    <details><summary>Answer</summary>Overfitting: the model memorizes the training rows. Try more data, a simpler model, regularization, fewer features, or early stopping. (<a href="./generalization-overfitting-and-bias-variance.md">Lesson 4</a>)</details>
 7. **In the worked example, why did the depth-4 tree on 600 rows beat the depth-8 tree on 3,000 rows?**
-   <details><summary>Answer</summary>The deeper tree overfits, and five times the data only narrowed the gap. A simpler model on less data generalized better. (<a href="./generalization-overfitting-and-bias-variance.md">Lesson 4</a>)</details>
+   <details><summary>Answer</summary>The deeper tree overfits, and five times the data only narrowed the gap. A simpler model on less data did better. (<a href="./generalization-overfitting-and-bias-variance.md">Lesson 4</a>)</details>
 8. **About 18% of customers cancel. A model predicting "nobody cancels" is 82% accurate. What do you ask for instead?**
    <details><summary>Answer</summary>A baseline, a confusion matrix, and precision and recall, or a cost. Accuracy rewards the model that does nothing on a rare outcome. (<a href="./measuring-a-model.md">Lesson 5</a>)</details>
 9. **A missed churner costs $60 and a wasted offer costs $15. Where does a good cutoff sit, if the scores are calibrated?**
@@ -114,22 +120,34 @@ If you can answer all four, you can steer the project. If not, you know which le
   report that Google Flu Trends predicted more than double the CDC's share of doctor visits
   for influenza-like illness, and the point about about 50 million terms and 1,152 data
   points. Checked through search-result excerpts, 2026-10.
+- Butler, D. *When Google got flu wrong*, Nature 494, 155–156, 14 Feb 2013. The news report
+  that Lazer et al. cite for the overshoot. Not opened directly; checked through search
+  results, 2026-10.
 - Wong et al., *External Validation of a Widely Implemented Proprietary Sepsis Prediction Model
-  in Hospitalized Patients*, JAMA Internal Medicine, June 2021
-  ([jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781313](https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781313)):
+  in Hospitalized Patients*, JAMA Internal Medicine 181(8), June 2021
+  ([doi.org/10.1001/jamainternmed.2021.2626](https://doi.org/10.1001/jamainternmed.2021.2626)):
   38,455 hospitalizations, AUC 0.63, 33% sensitivity, 67% of sepsis cases not identified,
-  alerts on 18% of patients. Epic's response disputed the definition of sepsis onset. Checked
-  through search-result summaries, 2026-10.
+  alerts on 18% of patients, at an alert score of 6. These figures are for the original
+  model, version 1. Epic's response disputed the definition of sepsis onset. Checked through
+  search-result summaries, 2026-10.
+- A multicenter external validation of Epic Sepsis Model version 2, *JAMA Network Open*
+  ([jamanetwork.com/journals/jamanetworkopen/article-abstract/2845595](https://jamanetwork.com/journals/jamanetworkopen/article-abstract/2845595)):
+  227,091 inpatient encounters at four US health systems, AUROC between 0.82 and 0.92, high
+  variation between sites, low positive predictive value and a high alert burden. Checked
+  through search-result excerpts, 2026-10. The article was not opened, so read it before you
+  quote it.
 - Dastin, J. *Amazon scraps secret AI recruiting tool that showed bias against women*, Reuters,
   10 Oct 2018. The project start in 2014, the finding of gender skew by 2015, recruiters not
-  relying on it alone, and the later disbanding. Checked through reprints and summaries,
-  2026-10.
-- Zillow Group, third-quarter 2021 results and shareholder letter, 2 Nov 2021, and the Form
-  10-K for 2021 ([sec.gov](https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/q32021991.htm)):
+  relying on it alone (from people familiar with the effort), the team disbanded by the start
+  of 2017, and Amazon's statement that the tool "was never used by Amazon recruiters to
+  evaluate candidates". The statement is checked through coverage of the Reuters report.
+  Checked through reprints and summaries, 2026-10.
+- Zillow Group, third-quarter 2021 results and shareholder letter, 2 Nov 2021, filed as
+  exhibit 99.1 to a Form 8-K ([sec.gov](https://www.sec.gov/Archives/edgar/data/1617640/000161764021000085/q32021991.htm)):
   the decision to wind down Zillow Offers, the inventory write-down of about $304 million
-  in the third quarter, the cut of about 25% of the workforce, and the statement about
-  forecasting home prices. The 9,680 homes bought in the quarter come from press coverage of
-  the same results. Checked through search-result excerpts, 2026-10.
+  in the third quarter, the cut of about 25% of the workforce, the statement about
+  forecasting home prices, and the 9,680 homes bought in the quarter. Checked through
+  search-result excerpts, 2026-10.
 - The unit-mismatch story is an invented illustration. All figures from the example data come
   from `machine-learning/code/`.
 

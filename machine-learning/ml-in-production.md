@@ -103,8 +103,8 @@ The model slowly confirms itself.
 
 Another team renames a field, changes a unit, adds a new category, or starts filling a blank
 with a default. Your model reads the new values as if they were old. Sculley and colleagues
-call the teams that use your output without telling you "undeclared consumers", and the
-reverse problem is as common.
+call this "unstable data dependencies". They also warn about the reverse case: teams that
+use your output without telling you, which they call "undeclared consumers".
 
 ## Monitoring: inputs, scores and outcomes
 

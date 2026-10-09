@@ -140,16 +140,18 @@ memorize them. <a href="generalization-overfitting-and-bias-variance.html">Lesso
    recognises the customer and looks brilliant. The fix is to split by customer, so each
    customer lives on one side only. scikit-learn calls this group-wise splitting.</li>
 <li><strong>Preprocessing that peeked.</strong> You scale or select features using all the data, then
-   split. The test rows have influenced the training step. The effect is often small.
-   The habit still matters. Split first, then learn every transformation from the training
-   rows only.</li>
+   split. The test rows have influenced the training step. For scaling the effect is often
+   small. For feature selection it can be large. In scikit-learn's own example, choosing
+   features on all rows scores 0.76 on purely random labels, against 0.5 when done
+   correctly. Split first, then learn every transformation from the training rows only.</li>
 <li><strong>Time that runs backwards.</strong> A random split mixes next year's rows into the training
    set for last year's test. For anything that changes over time, train on the past and test
    on the future.</li>
 </ol>
-<p>Researchers Kaufman, Rosset and Perlich called leakage the introduction of information
-about the target that should not be legitimately available. They argued it is a data
-problem, not a model problem. No algorithm change fixes it.</p>
+<p>Kaufman and colleagues defined leakage as the introduction of information about the target
+that should not be legitimately available. They proposed avoiding it through careful data
+management and a "learn-predict separation". They also gave ways to detect it when you did
+not control how the data was collected.</p>
 <h2 id="a-data-readiness-checklist">A data-readiness checklist</h2>
 <p>Before a team builds, check the data against this table. A "no" is a finding, not a failure.</p>
 <table>
@@ -240,8 +242,8 @@ similar row.</p>
 <p>The honest score is worse than guessing "stays" for everyone, which would score 72% on this
 test set. The model has learned nothing about customers it has not met. The 100% was
 memory.</p>
-<p>Both leaks share a signature. The score is <strong>too good</strong>. In most real projects a score that
-beats the experts by a wide margin means a leak, not a breakthrough.</p>
+<p>Both leaks share a signature. The score is <strong>too good</strong>. A score that beats the experts by a
+wide margin deserves a leak check before a celebration.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>More data vs. cleaner data.</strong> Doubling noisy labels helps less than fixing the label

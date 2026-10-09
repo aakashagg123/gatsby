@@ -59,7 +59,7 @@ Read it as one loop with a feedback arrow. You **decide** that learning is the r
 ## The lessons
 
 1. [What machine learning is, and when to use it](./what-machine-learning-is.md) — three parts of every learned system, four ways a machine learns, and a test for rules, a trained model or an LLM.
-2. [Data: features, labels, splits and leakage](./data-features-labels-and-leakage.md) — what the model learns from, and why a score that looks too good usually is.
+2. [Data: features, labels, splits and leakage](./data-features-labels-and-leakage.md) — what the model learns from, and why a score that looks too good deserves a leak check.
 3. [Training: loss and gradient descent](./training-loss-and-gradient-descent.md) — the loop that every model uses, and how to read a loss curve.
 4. [Generalization: overfitting and the bias–variance tradeoff](./generalization-overfitting-and-bias-variance.md) — why a model fails on new cases, and which of three fixes to buy.
 5. [Measuring a model: metrics, thresholds and baselines](./measuring-a-model.md) — accuracy's traps, confusion matrices, cost-based cutoffs and calibration.
@@ -76,4 +76,4 @@ Every example is in `machine-learning/code/`. Run them all with one command.
 python3 machine-learning/code/test_examples.py
 ```
 
-The files are `lesson1_rules_vs_learning.py` through `lesson7_drift.py`, with shared pieces in `data.py`, `tree.py` and `mlp.py`. A file that passes proves the numbers quoted in its lesson.
+The files are `lesson1_rules_vs_learning.py` through `lesson7_drift.py`, with shared pieces in `data.py`, `tree.py` and `mlp.py`. A passing file checks the direction of each claim, such as a deep tree scoring worse on new rows. Run a file to see every quoted number printed.

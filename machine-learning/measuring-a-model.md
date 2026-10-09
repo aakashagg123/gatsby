@@ -67,9 +67,9 @@ Two rates come from the matrix.
 - **Recall.** Of the customers who leave, what share did we flag? It measures how many we
   catch.
 
-Raise the threshold and the list gets cleaner but shorter. Precision goes up and recall
-goes down. Lower it and the reverse happens. You cannot improve both by moving the
-threshold. You can only choose a point on the curve.
+Raise the threshold and the list gets shorter. Recall never rises, and precision usually
+does. Lower it and the reverse happens. In practice you trade one for the other. You choose
+a point on the curve.
 
 [Retrieval quality](../rag-vector-databases/retrieval-quality.md) uses the same two words
 for a search system. The idea is the same.
@@ -100,8 +100,8 @@ Suppose a missed leaver costs the company $60 in lost margin, and a retention of
 a customer who would have stayed costs $15. These numbers are invented. A false negative
 costs four times a false positive.
 
-If the model's scores are well calibrated, a simple rule gives the best cutoff. Flag a
-customer when the chance of leaving is at least
+If the model's scores are well calibrated, and a correct decision costs nothing, a simple
+rule gives the best cutoff. Flag a customer when the chance of leaving is at least
 
 `cost of a false alarm ÷ (cost of a false alarm + cost of a miss)`
 
@@ -145,8 +145,9 @@ covers how.
 *This example is invented. The data and the costs are made up. The code is in
 `machine-learning/code/lesson5_metrics.py`.*
 
-We take the churn model from lesson 3 and score 4,000 customers it has never seen. Of them,
-734 left, which is 18.3%.
+We use the kind of churn model from lesson 3. This time we make 8,000 invented customers.
+We train on 4,000 of them and score the other 4,000, which the model has never seen. Of
+those, 734 left, which is 18.3%.
 
 **Step 1: accuracy.** At the default cutoff of 0.5, accuracy is 83.1%. The do-nothing
 baseline scores 81.7%. The model looks only 1.4 points better.

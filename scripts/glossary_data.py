@@ -1913,7 +1913,7 @@ GLOSSARY = [
 {
  "k":"gradient-boosting","t":"Gradient boosting","aliases":["boosted trees","gradient-boosted trees","XGBoost"],"cat":"Machine learning",
  "short":"Building small trees one after another, each trained on the mistakes the ensemble still makes.",
- "fp":"The first tree makes a rough guess. The next tree is trained to correct its errors. Then another, and so on, and their outputs are added with small weights. It is often the strongest method on table data. XGBoost is a popular implementation.",
+ "fp":"The first tree makes a rough guess. The next tree is trained to correct its errors. Then another, and so on, and their outputs are added with small weights. It is a strong baseline on table data. XGBoost is a popular implementation.",
  "example":"Tree 1 predicts a 15% churn risk for a customer who left. Tree 2 learns to push that up.",
  "uses":["A common baseline for table data","Competitions and production scoring"],
  "see":("Model families: linear models, trees and neural networks","machine-learning/model-families.md"),
@@ -1922,7 +1922,7 @@ GLOSSARY = [
 {
  "k":"logistic-regression","t":"Logistic regression","cat":"Machine learning",
  "short":"A linear model for yes-or-no questions: a weighted sum of the features, turned into a probability.",
- "fp":"Each feature gets a weight. The model adds them up and squeezes the sum into a number between 0 and 1. The weights are readable: a positive weight on support tickets means more tickets raise the risk. It is fast, hard to overfit, and tends to give well-calibrated probabilities.",
+ "fp":"Each feature gets a weight. The model adds them up and squeezes the sum into a number between 0 and 1. The weights are readable: a positive weight on support tickets means more tickets raise the risk. It is fast and less prone to overfit when features are few. Its probabilities are often reasonably calibrated.",
  "example":"Weights on standardized churn data: tickets +0.69, tenure −0.70, logins −0.41.",
  "uses":["A first model and a reference for others","Decisions that need to be explained"],
  "see":("Model families: linear models, trees and neural networks","machine-learning/model-families.md"),

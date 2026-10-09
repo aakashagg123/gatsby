@@ -97,16 +97,18 @@ memorize them. [Lesson 4](./generalization-overfitting-and-bias-variance.md) sho
    recognises the customer and looks brilliant. The fix is to split by customer, so each
    customer lives on one side only. scikit-learn calls this group-wise splitting.
 3. **Preprocessing that peeked.** You scale or select features using all the data, then
-   split. The test rows have influenced the training step. The effect is often small.
-   The habit still matters. Split first, then learn every transformation from the training
-   rows only.
+   split. The test rows have influenced the training step. For scaling the effect is often
+   small. For feature selection it can be large. In scikit-learn's own example, choosing
+   features on all rows scores 0.76 on purely random labels, against 0.5 when done
+   correctly. Split first, then learn every transformation from the training rows only.
 4. **Time that runs backwards.** A random split mixes next year's rows into the training
    set for last year's test. For anything that changes over time, train on the past and test
    on the future.
 
-Researchers Kaufman, Rosset and Perlich called leakage the introduction of information
-about the target that should not be legitimately available. They argued it is a data
-problem, not a model problem. No algorithm change fixes it.
+Kaufman and colleagues defined leakage as the introduction of information about the target
+that should not be legitimately available. They proposed avoiding it through careful data
+management and a "learn-predict separation". They also gave ways to detect it when you did
+not control how the data was collected.
 
 ## A data-readiness checklist
 
@@ -152,8 +154,8 @@ The honest score is worse than guessing "stays" for everyone, which would score 
 test set. The model has learned nothing about customers it has not met. The 100% was
 memory.
 
-Both leaks share a signature. The score is **too good**. In most real projects a score that
-beats the experts by a wide margin means a leak, not a breakthrough.
+Both leaks share a signature. The score is **too good**. A score that beats the experts by a
+wide margin deserves a leak check before a celebration.
 
 ## Tradeoffs and decisions
 

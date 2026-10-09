@@ -153,9 +153,10 @@ point. On this problem, a single rule teaches us little.
 
 That is the lesson. ML does not win by finding a cleverer cut on one column. It wins when
 many weak signals must be combined. Lesson 3 trains a model that combines four columns. It
-scores 67.4% on the same test. The extra 8 points over the hand rule come from combining
+scores 67.4% on the same test. The extra 8.5 points over the hand rule come from combining
 signals. You would never write that rule by hand, because the weights have no natural round
-numbers.
+numbers. One caution: we generated this data from a weighted sum of four columns. So
+combining them was bound to win here. On your own data, the baseline is how you find out.
 
 The baseline did its job. It told us a single column was nearly worthless and that the
 payoff was in combination. A team that skipped the baseline would not know what its model

@@ -112,9 +112,10 @@ exactly, the error on new data can fall again. Very large neural networks are of
 well past that point.
 
 This does not remove the need to measure on held-out data. It means that for big neural
-networks, "bigger is automatically worse" is false. For the small, tabular models in most
-business ML, the classic picture is still a good guide. In both cases the habit is the
-same: judge a model by rows it has not seen.
+networks, "bigger is automatically worse" is false. For small tabular models, the classic
+picture is a practical rule of thumb, not a law. Belkin and colleagues also report double
+descent for random forests. In every case the habit is the same: judge a model by rows it
+has not seen.
 
 ## Worked example: how deep should the tree be?
 
@@ -152,7 +153,7 @@ Now fix the depth at 8 and vary the data.
 More data helps. The gap shrinks from 46 points to 14. The comparison to make is this one:
 the depth-8 tree trained on 3,000 rows scores 62.6% on validation. The depth-4 tree
 trained on only 600 rows scores 65.1%. Five times the data did not rescue the flexible
-model. A simpler model on less data won.
+model. A simpler model on less data did at least as well.
 
 One more caution. The validation set has about 270 churners among its 1,500 rows. A
 difference of one or two points between two models is inside the noise of that sample. Do

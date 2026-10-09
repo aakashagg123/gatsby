@@ -78,10 +78,12 @@ if __name__ == "__main__":
     print(f"test loss {r['test_loss']:.3f} against {r['baseline_loss']:.3f} for 'always predict the average'")
     print(f"balanced accuracy at the base-rate cutoff {r['balanced']:.3f}")
     print(f"slow learning rate: loss after 150 epochs {r['slow'][-1]:.3f}")
-    print(f"wild learning rate: losses {[round(x, 2) for x in r['wild'][:6]]}")
+    print(f"wild learning rate: first losses {[round(x, 2) for x in r['wild'][:6]]}, "
+          f"range over {len(r['wild'])} epochs {min(r['wild']):.2f} to {max(r['wild']):.2f}")
     assert all(a >= b - 1e-12 for a, b in zip(r["curve"], r["curve"][1:]))   # loss only falls
     assert r["test_loss"] < r["baseline_loss"]
     assert r["slow"][-1] > r["curve"][-1]                                    # too small: still far behind
     assert max(r["wild"]) > r["wild"][0]                                     # too big: loss gets worse
+    assert round(min(r["wild"]), 2) == 0.92 and round(max(r["wild"]), 2) == 3.69   # the range quoted in the lesson
     assert r["path"][-1] > 1.9 and r["path"][-1] < 3.0
     print("lesson 3 ok")
