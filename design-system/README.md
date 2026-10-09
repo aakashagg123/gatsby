@@ -12,6 +12,7 @@ components are the SDK's own files, vendored unchanged.
 ```
 design-system/
   vendor/apps-sdk-ui/   Verbatim copy of the SDK's CSS. Read-only. See CHECKSUMS and VERSION.
+  fonts/                Google Sans (variable, Latin) and its OFL licence. Built into assets/fonts/.
   preflight.css         The part of Tailwind's reset that the SDK components assume.
   site/                 Our layer. Layout and prose written only with SDK tokens.
     00-foundation.css     canvas, type defaults, spacing steps
@@ -57,7 +58,7 @@ Page generators emit markup only. They carry no CSS.
 
 ## Not from the SDK
 
-- The font is the SDK's system stack. OpenAI's brand typeface is not licensed for reuse, so it is not used.
+- The default typeface is **Google Sans**, self-hosted from `design-system/fonts/` (SIL OFL 1.1). It replaces the first entry of the SDK's `--font-sans`; the SDK's system stack stays as the fallback. Readers can switch to the system font in the reader panel. OpenAI's brand typeface is not licensed for reuse, so it is not used.
 - The knowledge graph keeps one hue per track. These are data colours in `build_graph.py`, not UI colour.
 
 ## Checks

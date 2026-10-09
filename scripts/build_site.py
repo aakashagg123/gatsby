@@ -127,7 +127,7 @@ function fitOne(pre){{
     h.textContent='\u27f7 scroll';pre.insertBefore(h,s);}}
 }}
 function renderOne(pre){{
-  chain=chain.then(async()=>{{ try{{ DS.mermaidRemember(pre); await mermaid.run({{nodes:[pre]}}); fitOne(pre); }}catch(e){{}} }});
+  chain=chain.then(async()=>{{ try{{ if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({{nodes:[pre]}}); fitOne(pre); }}catch(e){{}} }});
 }}
 if('IntersectionObserver' in window && mer.length>1){{
   const io=new IntersectionObserver(es=>{{es.forEach(e=>{{

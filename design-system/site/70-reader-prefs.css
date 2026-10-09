@@ -2,6 +2,7 @@
      data-rf  font family     data-rs  text scale (--rs-scale)     data-rm  column width
    They scale the SDK type tokens. They never introduce new sizes. */
 
+html[data-rf="system"]{--rs-font:ui-sans-serif,-apple-system,system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
 html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
 html[data-rf="arial"]{--rs-font:Arial,"Helvetica Neue",Helvetica,sans-serif}
 html[data-rf="verdana"]{--rs-font:Verdana,Geneva,"DejaVu Sans",sans-serif}

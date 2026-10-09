@@ -2,6 +2,10 @@
    Everything here reads Apps SDK UI tokens. No literal colours, sizes or radii. */
 
 :root{
+  /* Default typeface: Google Sans (self-hosted, design-system/fonts). The SDK's own system
+     stack follows it, so any glyph Google Sans lacks, such as arrows, falls back cleanly. */
+  --font-sans:"Google Sans",ui-sans-serif,-apple-system,system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",sans-serif;
+
   /* Spacing steps, derived from the SDK's 4px --spacing unit. */
   --space-1:calc(var(--spacing) * 1);   --space-1-5:calc(var(--spacing) * 1.5); --space-2:calc(var(--spacing) * 2);
   --space-2-5:calc(var(--spacing) * 2.5); --space-0-5:calc(var(--spacing) * 0.5); --space-3:calc(var(--spacing) * 3);   --space-3-5:calc(var(--spacing) * 3.5); --space-4:calc(var(--spacing) * 4);

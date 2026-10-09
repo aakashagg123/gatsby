@@ -51,7 +51,7 @@ function boot(){
 let chain=Promise.resolve();
 function renderOne(pre){
   chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
     // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
     const s=pre.querySelector('svg'); if(!s) return;
     const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
