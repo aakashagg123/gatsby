@@ -48,6 +48,7 @@ COST_HTML = os.path.join(ROOT, "cost-optimization-html")  # Cost optimization (G
 RAG_HTML = os.path.join(ROOT, "rag-vector-databases-html")  # RAG & vector databases (GenAI family)
 SD_HTML = os.path.join(ROOT, "system-design-html")      # system design
 AC_HTML = os.path.join(ROOT, "access-control-html")     # access control (RBAC, ABAC, Keycloak)
+LP_HTML = os.path.join(ROOT, "learning-paths-html")     # learning paths by role
 CE_HTML = os.path.join(ROOT, "context-engineering-html")  # context engineering
 PE_HTML = os.path.join(ROOT, "prompt-engineering-html")  # prompt engineering
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
@@ -248,7 +249,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -309,6 +310,11 @@ LANDING = """<!doctype html>
   h1{font-size:clamp(1.15rem,calc(6.8vw - 2.5px),3rem);line-height:1.1;letter-spacing:-0.02em;
     font-weight:600;margin:0 0 .3em;white-space:nowrap}
   p.sub{color:var(--muted);font-size:1.2rem;margin:0;max-width:54ch}
+  h3.sec{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent-deep);margin:44px 0 0}
+  h3.sec a{color:inherit;text-decoration:none;font-weight:600;letter-spacing:.02em;
+    text-transform:none;margin-left:10px}
+  .cards.paths{margin-top:14px}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:22px;margin-top:52px}
   @media(max-width:680px){
     .wrap{padding:64px 18px 64px}
@@ -330,7 +336,31 @@ LANDING = """<!doctype html>
 <div class="wrap">
   <h1>Supercharge your AI learning</h1>
   <p class="sub">Hands-on tracks for PMs and engineers moving into AI — from first principles to production.</p>
-  <div class="cards">
+  <h3 class="sec">Choose your path <a href="learning-paths/index.html">Compare the paths →</a></h3>
+  <div class="cards paths">
+    <a class="card" href="learning-paths/senior-product-manager.html">
+      <span class="tag">Path</span>
+      <h2>Senior Product Manager →</h2>
+      <p>Lead an AI feature end to end: the approach, the quality bar, the cost and the risk.</p>
+    </a>
+    <a class="card" href="learning-paths/ai-product-lead.html">
+      <span class="tag">Path</span>
+      <h2>AI Product Lead →</h2>
+      <p>Own grounding, context, memory, agents, trust and cost across an AI product line.</p>
+    </a>
+    <a class="card" href="learning-paths/ai-engineer.html">
+      <span class="tag">Path</span>
+      <h2>AI Engineer →</h2>
+      <p>Build, test and run a retrieval-backed, tool-using agent, and explain how it fails.</p>
+    </a>
+    <a class="card" href="learning-paths/ai-engineering-lead.html">
+      <span class="tag">Path</span>
+      <h2>AI Engineering Lead →</h2>
+      <p>Review architecture, set quality and safety standards, and control cost.</p>
+    </a>
+  </div>
+  <h3 class="sec">All modules</h3>
+  <div class="cards paths">
     <a class="card" href="ai/index.html">
       <span class="tag">Module</span>
       <h2>AI engineering →</h2>
@@ -866,6 +896,10 @@ def main():
     # 1q2. Access control module: copy its pre-rendered pages.
     if os.path.isdir(AC_HTML):
         shutil.copytree(AC_HTML, os.path.join(SITE, "access-control"))
+
+    # 1q3. Learning paths: copy its pre-rendered pages.
+    if os.path.isdir(LP_HTML):
+        shutil.copytree(LP_HTML, os.path.join(SITE, "learning-paths"))
 
     # 1r. Context engineering module: copy its pre-rendered pages.
     if os.path.isdir(CE_HTML):
