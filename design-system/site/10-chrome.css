@@ -26,6 +26,11 @@
 .topnav{margin-left:auto;display:flex;flex-wrap:wrap;gap:var(--space-1)}
 .menu-btn{display:none;flex:0 0 auto}
 
+/* ---- theme toggle (added by ds.js on every page) ---- */
+.theme-toggle{flex:0 0 auto}
+.theme-toggle-end{margin-left:auto}
+.theme-toggle-float{position:fixed;top:var(--space-4);right:var(--space-4);z-index:30;background:var(--color-surface)}
+
 /* ---- drawer scrim (mobile) ---- */
 #sb-scrim{
   position:fixed;inset:0;z-index:34;

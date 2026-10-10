@@ -13,6 +13,40 @@
   };
   if(mq&&mq.addEventListener)mq.addEventListener('change',function(){if(!stored())apply()});
 
+  /* Site-wide theme toggle. One button on every page: in the top bar when the page has one,
+     floating at the top right otherwise (the landing page). It flips light and dark. The
+     reader panel keeps its three-way control (Light, Dark, Auto) and stays in sync. */
+  var ICON={
+    sun:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    moon:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'};
+  /* Keep the reader panel's Light, Dark, Auto control in step. The panel re-measures its thumb
+     when it opens, so only the selected state needs setting here. */
+  function syncPanel(){
+    var seg=document.getElementById('rs-theme');if(!seg)return;var c=DS.theme.choice();
+    [].forEach.call(seg.querySelectorAll('.SegmentedControlOption'),function(o){
+      var on=o.getAttribute('data-value')===c;o.setAttribute('data-state',on?'on':'off');o.setAttribute('aria-checked',on?'true':'false')});
+  }
+  function mountToggle(){
+    if(document.querySelector('.theme-toggle'))return;
+    var bar=document.querySelector('.topbar'),b=document.createElement('button');
+    b.type='button';b.className='Button theme-toggle';
+    b.setAttribute('data-variant',bar?'ghost':'outline');b.setAttribute('data-color','secondary');
+    b.setAttribute('data-size','md');b.setAttribute('data-uniform','');b.setAttribute('data-pill','');
+    b.innerHTML='<span class="ButtonInner"></span>';
+    function sync(){
+      var dark=root.getAttribute('data-theme')==='dark';
+      b.firstChild.innerHTML=dark?ICON.sun:ICON.moon;   // show what a click switches to
+      b.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');
+      b.title=dark?'Switch to light theme':'Switch to dark theme';
+    }
+    b.addEventListener('click',function(){DS.theme.set(root.getAttribute('data-theme')==='dark'?'light':'dark')});
+    window.addEventListener('ds-themechange',function(){sync();syncPanel()});
+    sync();
+    if(bar){if(!bar.querySelector('.topnav'))b.className+=' theme-toggle-end';bar.appendChild(b)}
+    else{b.className+=' theme-toggle-float';document.body.appendChild(b)}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountToggle);else mountToggle();
+
   /* SegmentedControl: move the thumb under the selected option, as the SDK component does. */
   DS.segmented=function(el,value,onChange){
     var thumb=el.querySelector('.SegmentedControlThumb'),opts=[].slice.call(el.querySelectorAll('.SegmentedControlOption'));

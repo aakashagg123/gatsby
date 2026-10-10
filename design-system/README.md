@@ -23,7 +23,7 @@ design-system/
     50-landing-diagrams.css  landing page and Mermaid figure card
     60-widgets.css        reader panel, graph button, glossary sheet, graph page
     70-reader-prefs.css   font, size and margin choices
-  ds.js                 Theme switch, SegmentedControl thumb, Mermaid colours
+  ds.js                 Theme switch and the site-wide theme toggle button, SegmentedControl thumb, Mermaid colours
 scripts/design_system.py   Builds assets/ds.css from the above. Also emits SDK markup.
 scripts/check_design_system.py   Lint. Run before every commit.
 scripts/tokenize_colors.py       Migrates literal colours in diagrams to tokens.
