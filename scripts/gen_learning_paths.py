@@ -169,7 +169,7 @@ PATHS.append(dict(
              items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
-             items=[T("machine-learning", 1, 2, 5), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
+             items=[T("machine-learning", 1, 2, 5, 8), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
              ready="You can say why the same prompt gives different answers, what a context window limits, and when a bad result is a prompt problem and when it is not."),
         dict(name="The decisions only you own", why="Pick the approach, set the bar, count the cost, and accept the risk.",
              items=[T("generative-ai", 5, 6), T("llms", 7), T("product-sense", 7), T("technical-product-management", 9),
@@ -222,7 +222,7 @@ PATHS.append(dict(
              "**Risk if ignored** — You ship an agent with the wrong autonomy or a memory that leaks. You find out from a customer."),
     stages=[
         dict(name="Model and data foundations", why="You decide how the product grounds answers. That choice drives quality and cost.",
-             items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), T("machine-learning", 1, 2, 5, 7),
+             items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), T("machine-learning", 1, 2, 5, 7, 8),
                     T("rag-vector-databases", 1, 5, 6, 7), T("knowledge-graphs", 1, 6, 8)],
              ready="You can compare prompting, retrieval and fine-tuning for a feature and pick one with reasons."),
         dict(name="Context and memory", why="What the model sees is a product decision. So is what it remembers.",
@@ -280,7 +280,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The demo works. Production loops, leaks or overspends, and nobody can say why."),
     stages=[
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
-             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
+             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
                     SOON("CNNs", "Optional branch for vision. Planned."), T("llms", 1, 2, 5)],
              ready="You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
@@ -344,7 +344,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The team ships fast and unsafe. Review happens after an incident."),
     stages=[
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
-             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7),
+             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],

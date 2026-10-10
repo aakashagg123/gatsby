@@ -123,7 +123,7 @@ JS_LOGIC = r"""
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
     panel.addEventListener('click', function(e){
       var tgt = e.target;
-      if(tgt.id === 'gl-close'){ close(); return; }
+      if(tgt.closest && tgt.closest('#gl-close')){ close(); return; }   // the click lands on the inner span
       var r = tgt.closest && tgt.closest('[data-goto]');
       if(r){ e.preventDefault(); open(r.getAttribute('data-goto')); }
     });

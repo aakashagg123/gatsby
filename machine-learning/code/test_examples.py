@@ -10,6 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FILES = [
     "lesson1_rules_vs_learning.py", "lesson2_leakage.py", "lesson3_gradient_descent.py",
     "lesson4_overfitting.py", "lesson5_metrics.py", "lesson6_model_families.py", "lesson7_drift.py",
+    "lesson8_agent_guardrails.py",
 ]
 
 failed = []

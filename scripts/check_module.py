@@ -62,6 +62,7 @@ COMMON_ACRONYMS = {
     "FAQ", "SLA", "SLAS", "KPI", "KPIS", "OKR", "OKRS", "ROI", "URL", "HTTP", "JSON", "SQL",
     "CSV", "PDF", "USD", "EU", "US", "UK", "IT", "QA", "PR", "ID", "IDS", "HR", "SEO", "B2B",
     "B2C", "SAAS", "CRM", "ERP", "RFC", "RFCS", "MVP", "TL", "DR", "TLDR", "CI", "CD", "OS",
+    "CLAUDE", "TODO",   # file and marker names (CLAUDE.md, TODO comments), not acronyms
 }
 
 
