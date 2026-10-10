@@ -11,7 +11,8 @@ html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,
 html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *{font-family:var(--font-mono) !important}
 html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
 
-html[data-rs] main{font-size:calc(var(--font-text-lg-size) * var(--rs-scale,1)) !important;line-height:1.6 !important}
+/* flat tracks put .MarkdownContent (which sets its own font) inside main, so size both */
+html[data-rs] main,html[data-rs] main .MarkdownContent{font-size:calc(var(--font-text-lg-size) * var(--rs-scale,1)) !important;line-height:1.6 !important}
 html[data-rs] main h1{font-size:calc(var(--font-heading-xl-size) * var(--rs-scale,1)) !important;line-height:1.15 !important}
 html[data-rs] main h2{font-size:1.5em !important}
 html[data-rs] main h3{font-size:1.25em !important}
