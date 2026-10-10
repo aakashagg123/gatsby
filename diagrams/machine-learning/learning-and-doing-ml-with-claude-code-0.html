@@ -19,9 +19,21 @@
 .dgm-ml-arrow{display:flex;align-items:center;justify-content:center;color:var(--color-text-tertiary);font-size:16px}
 .dgm-ml-foot{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
 @media (max-width:640px){.dgm-ml{padding:22px 16px 18px}}
-.ml-idx{grid-template-columns:repeat(4,1fr)}@media (max-width:760px){.ml-idx{grid-template-columns:repeat(2,1fr)}}@media (max-width:420px){.ml-idx{grid-template-columns:1fr}}</style>
-<div class="dgm-ml"><span class="dgm-ml-chip">The learning loop</span>
-<h4>From a decision to a system that keeps working</h4>
-<p class="dgm-ml-sub">Read left to right, then follow the dashed arrow back: the world moves, so the loop runs again.</p>
-<div class="dgm-ml-grid ml-idx"><div class="dgm-ml-card"><h5><span class="dgm-ml-num">1</span>Decide</h5><p>Rules, a trained model or an LLM?</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">2</span>Feed it</h5><p>Features, labels, honest splits</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">3</span>Teach it</h5><p>Loss, gradient descent</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">3-4</span>Generalize</h5><p>Overfit or underfit?</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">5</span>Trust it</h5><p>Metrics, cutoffs, baselines</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">6</span>Shape it</h5><p>Linear, trees, networks</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">7</span>Keep it working</h5><p>Skew, drift, lifecycle</p></div><div class="dgm-ml-card"><h5><span class="dgm-ml-num">8</span>Work with agents</h5><p>Contract, checks, review</p></div></div><p class="dgm-ml-foot">↺ retrain when the world moves — back to lesson 2</p>
+.l8-flow{grid-template-columns:1fr 28px 1fr 28px 1fr;align-items:stretch}.l8-out{grid-template-columns:1fr 1fr;margin-top:12px}
+@media (max-width:640px){.l8-flow,.l8-out{grid-template-columns:1fr}.l8-flow .dgm-ml-arrow{transform:rotate(90deg);height:18px}}</style>
+<div class="dgm-ml"><span class="dgm-ml-chip">Working with an agent</span>
+<h4>You hold the contract. The agent runs the loop.</h4>
+<p class="dgm-ml-sub">An agent makes the loop fast. The checks keep the result true.</p>
+<div class="dgm-ml-grid l8-flow">
+  <div class="dgm-ml-card dgm-ml-info"><h5><span class="dgm-ml-num">1</span>You</h5><p>Frame the question.<br>Own the data contract: split, baseline, metric.<br>Review the evidence.</p></div>
+  <div class="dgm-ml-arrow">→</div>
+  <div class="dgm-ml-card"><h5><span class="dgm-ml-num">2</span>Agent loop</h5><p>Read the data.<br>Write the code.<br>Run it.<br>Read the output.</p></div>
+  <div class="dgm-ml-arrow">→</div>
+  <div class="dgm-ml-card dgm-ml-ok"><h5><span class="dgm-ml-num">3</span>Checks</h5><p>Asserts and tests.<br>A test set scored once, with a log.<br>A leak audit.</p></div>
+</div>
+<div class="dgm-ml-grid l8-out">
+  <div class="dgm-ml-card dgm-ml-bad"><h5>A check fails</h5><p>Back to the loop, loudly. The agent fixes the cause, not the symptom.</p></div>
+  <div class="dgm-ml-card dgm-ml-ok"><h5>All checks pass, with evidence</h5><p>The command, the output and the log line come to you. You decide.</p></div>
+</div>
+<p class="dgm-ml-foot">The agent can run hundreds of experiments. Each extra try is another chance for a lucky score.</p>
 </div>

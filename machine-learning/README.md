@@ -50,8 +50,12 @@ flowchart TB
   subgraph RUN["KEEP IT WORKING: lesson 7"]
     P["Production<br/>skew · drift · lifecycle"]
   end
+  subgraph AGENT["WORK WITH AGENTS: lesson 8"]
+    C["Claude Code<br/>contract · checks · review<br/>learning loop"]
+  end
   W --> D --> T --> G --> M --> F --> P
   P -. "retrain when the world moves" .-> D
+  C -. "runs the loop, you keep the contract" .-> T
 ```
 
 Read it as one loop with a feedback arrow. You **decide** that learning is the right tool. You **feed** it data that matches the future. It **learns** by repeated small corrections, and you check that it **generalizes** to cases it has not seen. You **measure** it against a baseline with a threshold that fits your costs. You **choose a shape** of model that fits the data. Then you **keep it working**, because the world moves and the loop has to run again.
@@ -65,6 +69,7 @@ Read it as one loop with a feedback arrow. You **decide** that learning is the r
 5. [Measuring a model: metrics, thresholds and baselines](./measuring-a-model.md) — accuracy's traps, confusion matrices, cost-based cutoffs and calibration.
 6. [Model families: linear models, trees and neural networks](./model-families.md) — what each can see, and backpropagation in one page.
 7. [ML in production: drift, skew and the lifecycle](./ml-in-production.md) — the five failure modes after launch, and the monitors that catch them.
+8. [Learning and doing ML with Claude Code](./learning-and-doing-ml-with-claude-code.md) — how to run experiments through a coding agent without fooling yourself, and how to use the agent to learn this module.
 
 Then the [recap and real-world examples](./recap.md), with a self-test.
 
@@ -76,4 +81,4 @@ Every example is in `machine-learning/code/`. Run them all with one command.
 python3 machine-learning/code/test_examples.py
 ```
 
-The files are `lesson1_rules_vs_learning.py` through `lesson7_drift.py`, with shared pieces in `data.py`, `tree.py` and `mlp.py`. A passing file checks the direction of each claim, such as a deep tree scoring worse on new rows. Run a file to see every quoted number printed.
+The files are `lesson1_rules_vs_learning.py` through `lesson8_agent_guardrails.py`, with shared pieces in `data.py`, `tree.py` and `mlp.py`. A passing file checks the direction of each claim, such as a deep tree scoring worse on new rows. Run a file to see every quoted number printed.

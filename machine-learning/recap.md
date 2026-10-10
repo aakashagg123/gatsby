@@ -67,6 +67,7 @@ on day one.
 | [Measuring a model](./measuring-a-model.md) | One number hides the decision. Use a baseline, a confusion matrix, a cost-based cutoff, and a calibration check. | What does each error cost, and where did we set the threshold? |
 | [Model families](./model-families.md) | A model can only find patterns its shape allows. Tables suit linear models and trees. Perception suits neural networks. | How much better is this family than a linear model on the same data? |
 | [ML in production](./ml-in-production.md) | Launch is the middle. Skew, drift, feedback loops and silent upstream changes decay a model. | If it got worse next Tuesday, which alarm fires and who owns it? |
+| [Learning and doing ML with Claude Code](./learning-and-doing-ml-with-claude-code.md) | An agent speeds up the loop and does not change what makes a score honest. You hold the contract, and the checks fail loudly. | How many times did the agent score the test rows, and where is the log? |
 
 **The through-line:** a learned model is a bet that the past resembles the future. Every
 lesson tests that bet from a different side. Does the data describe the future (lesson 2)?
@@ -111,6 +112,11 @@ If you can answer all four, you can steer the project. If not, you know which le
     <details><summary>Answer</summary>The model sees different inputs live than in training, such as a different unit or a stale lookup. The values are valid numbers, so nothing fails. The answers are just wrong. Share one feature code path and monitor input spread. (<a href="./ml-in-production.md">Lesson 7</a>)</details>
 14. **Why do teams watch inputs, scores and outcomes, not just accuracy?**
     <details><summary>Answer</summary>Outcomes arrive late, by the label delay. Input and score checks are immediate but cannot prove the model is wrong. You need both. (<a href="./ml-in-production.md">Lesson 7</a>)</details>
+
+15. **An agent tried 36 settings and reports its best test score. Why is the number too good, and what do you ask for?**
+    <details><summary>Answer</summary>Choosing the winner by its test score picks partly on luck, so the score overstates what fresh rows will show. In the lesson-8 example the average overstatement was 2.5 points. Ask for the log of every evaluation, how many times the test rows were scored, and a score on rows that were never used to choose. (<a href="./learning-and-doing-ml-with-claude-code.md">Lesson 8</a>)</details>
+16. **Why is a deny rule on the test file not enough to protect the test rows from an agent?**
+    <details><summary>Answer</summary>A rule limits the agent's own file tools. A script the agent writes and runs can open any file the operating system allows. Keep the final labels out of the agent's reach, and score them through a step you run. (<a href="./learning-and-doing-ml-with-claude-code.md">Lesson 8</a>)</details>
 
 ## Sources
 

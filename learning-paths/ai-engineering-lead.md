@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 35 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 35.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -34,7 +34,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | How models behave and what they cost | about 8.5 hours |
+| 1 | How models behave and what they cost | about 9 hours |
 | 2 | Architecture you can review | about 15 hours |
 | 3 | Quality, safety and access | about 6 hours |
 | 4 | Systems at scale | about 2.5 hours |
@@ -42,10 +42,10 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 ## Stage 1: How models behave and what they cost
 
-Cost and latency come from model and serving choices. Know the levers. (about 8.5 hours)
+Cost and latency come from model and serving choices. Know the levers. (about 9 hours)
 
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [6. Choosing a model](../llms/choosing-a-model.md) · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
-- **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md)
+- **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **AI engineering: inference internals**: [Prefill vs. decode latency](../content/01-inference-internals/prefill-vs-decode.md) · [Continuous batching & paged attention](../content/01-inference-internals/batching-and-paged-attention.md) · [Prompt caching vs. semantic caching](../content/01-inference-internals/prompt-vs-semantic-caching.md)
 - **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md)
 - **AI engineering: evals & observability**: [Cost attribution per feature, workflow, tenant, and user journey — not just per model](../content/04-evals-observability/cost-attribution.md)
@@ -114,7 +114,7 @@ Turn standards into process: specs, launches, incidents and how product and engi
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 35 hours) takes about 12 weeks.
+An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 35.5 hours) takes about 12 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

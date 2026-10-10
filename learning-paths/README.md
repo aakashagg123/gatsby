@@ -12,10 +12,10 @@ This library has more than twenty tracks. You do not need all of them. A learnin
 
 | Path | Who it is for | Outcome | Length |
 | --- | --- | --- | --- |
-| [Senior PM](./senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | You can lead an AI feature end to end. You choose the approach, set the quality bar, price it, and judge the risk. | about 16.5 hours |
-| [AI Product Lead](./ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering and ask informed questions. | about 25.5 hours |
-| [AI Engineer](./ai-engineer.md) | A software engineer who builds AI-powered systems | You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 71 hours |
-| [AI Engineering Lead](./ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | You review AI architecture, set quality and safety standards, control cost, and work well with product. | about 35 hours |
+| [Senior PM](./senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | You can lead an AI feature end to end. You choose the approach, set the quality bar, price it, and judge the risk. | about 17 hours |
+| [AI Product Lead](./ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | You set direction for how the product grounds its answers, remembers, acts, stays safe and stays affordable. You can review a design with engineering and ask informed questions. | about 26 hours |
+| [AI Engineer](./ai-engineer.md) | A software engineer who builds AI-powered systems | You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 71.5 hours |
+| [AI Engineering Lead](./ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | You review AI architecture, set quality and safety standards, control cost, and work well with product. | about 35.5 hours |
 
 ## Where the depth lives
 

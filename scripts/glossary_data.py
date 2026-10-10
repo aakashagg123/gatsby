@@ -2009,4 +2009,22 @@ GLOSSARY = [
  "see":("ML in production: drift, skew and the lifecycle","machine-learning/ml-in-production.md"),
  "related":["concept-drift","data-leakage"],
 },
+{
+ "k":"coding-agent","t":"Coding agent","aliases":["coding agents","Claude Code"],"cat":"Machine learning",
+ "short":"An AI agent that works on code by reading files, running commands, editing, and reading the output.",
+ "fp":"A coding agent runs the loop of write, run, read, fix. In ML work, an experiment is a script that prints a score, so the agent can run many. It speeds up the work. It does not decide what a fair test is. You give it a contract: the split, the baseline, the metric and the rule for the test rows. You back the contract with checks that fail loudly.",
+ "example":"You ask an agent to improve a churn model. It tries 36 settings and reports the best. Without a log of every evaluation, you cannot tell whether it chose the winner using the test rows.",
+ "uses":["Running experiments through the terminal","Using an agent as a tutor for this module","Reviewing agent-made ML results"],
+ "see":("Learning and doing ML with Claude Code","machine-learning/learning-and-doing-ml-with-claude-code.md"),
+ "related":["agent-loop","test-set-reuse","data-leakage"],
+},
+{
+ "k":"test-set-reuse","t":"Test-set reuse","aliases":["tuning on the test set","tuning on the test rows"],"cat":"Machine learning",
+ "short":"Using the test rows to choose a model or setting, so the test score overstates real performance.",
+ "fp":"Each choice that looks at the test score moves a little information from the test rows into the model. After many tries, the best score is partly luck. The fix is to choose on validation rows and score the test rows once. A ledger that logs every evaluation, and refuses a second test score, makes the rule hard to break by accident.",
+ "example":"Over 30 repeats, picking the best of 36 tree settings by test score overstated the result by 2.5 points on average. Picking by validation score overstated it by 0.4.",
+ "uses":["Auditing an agent's experiment log","Setting a rule for how often the test set may be scored"],
+ "see":("Learning and doing ML with Claude Code","machine-learning/learning-and-doing-ml-with-claude-code.md"),
+ "related":["data-split","overfitting","data-leakage"],
+},
 ]

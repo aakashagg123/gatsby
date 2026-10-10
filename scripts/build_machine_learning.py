@@ -19,7 +19,7 @@ CFG = {
     "title": "Machine learning for the product and technology leader",
     "lede": "What a learned system is, what it learns from, how it learns, how to trust its "
             "score, which kind of model to pick, and how to keep it working after launch.",
-    "meta": ["7 lessons", "+ recap", "runnable code", "knowledge graph", "diagrams included"],
+    "meta": ["8 lessons", "+ recap", "runnable code", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
         "what-machine-learning-is",
@@ -29,6 +29,7 @@ CFG = {
         "measuring-a-model",
         "model-families",
         "ml-in-production",
+        "learning-and-doing-ml-with-claude-code",
     ],
 }
 

@@ -178,7 +178,8 @@ The first foundation module. See the [plan](./MACHINE_LEARNING_ROADMAP.md).
 4. [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md)
 5. [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md)
 6. [Model families: linear models, trees and neural networks](./machine-learning/model-families.md)
-7. [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md) · [Recap](./machine-learning/recap.md)
+7. [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md)
+8. [Learning and doing ML with Claude Code](./machine-learning/learning-and-doing-ml-with-claude-code.md) · [Recap](./machine-learning/recap.md)
 
 ## [Generative AI: the big picture](./generative-ai/README.md)
 

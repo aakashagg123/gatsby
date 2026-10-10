@@ -309,6 +309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Integrating into existing systems](./api-integrations/integrating-into-existing-systems.md).
 
+**Coding agent** — An AI agent that works on code by reading files, running commands, editing, and reading the output.
+
+*In plain terms.* A coding agent runs the loop of write, run, read, fix. In ML work, an experiment is a script that prints a score, so the agent can run many. It speeds up the work. It does not decide what a fair test is. You give it a contract: the split, the baseline, the metric and the rule for the test rows. You back the contract with checks that fail loudly.
+
+*For example.* You ask an agent to improve a churn model. It tries 36 settings and reports the best. Without a log of every evaluation, you cannot tell whether it chose the winner using the test rows.
+
+*Where it shows up:* Running experiments through the terminal; Using an agent as a tutor for this module; Reviewing agent-made ML results.
+
+*See:* [Learning and doing ML with Claude Code](./machine-learning/learning-and-doing-ml-with-claude-code.md).
+
 **Cognitive empathy** — Accurately modeling what your user thinks, knows, and feels — reasoning from inside their head, not yours.
 
 *In plain terms.* Cognitive empathy is the skill of genuinely simulating the user's mind: their goals, their gaps in knowledge, their context and frustrations — as they experience them, not as an expert imagines them. It's what separates products that 'get it' from products built for their own makers.
@@ -801,7 +811,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Gradient boosting** — Building small trees one after another, each trained on the mistakes the ensemble still makes.
 
-*In plain terms.* The first tree makes a rough guess. The next tree is trained to correct its errors. Then another, and so on, and their outputs are added with small weights. It is often the strongest method on table data. XGBoost is a popular implementation.
+*In plain terms.* The first tree makes a rough guess. The next tree is trained to correct its errors. Then another, and so on, and their outputs are added with small weights. It is a strong baseline on table data. XGBoost is a popular implementation.
 
 *For example.* Tree 1 predicts a 15% churn risk for a customer who left. Tree 2 learns to push that up.
 
@@ -1141,7 +1151,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Logistic regression** — A linear model for yes-or-no questions: a weighted sum of the features, turned into a probability.
 
-*In plain terms.* Each feature gets a weight. The model adds them up and squeezes the sum into a number between 0 and 1. The weights are readable: a positive weight on support tickets means more tickets raise the risk. It is fast, hard to overfit, and tends to give well-calibrated probabilities.
+*In plain terms.* Each feature gets a weight. The model adds them up and squeezes the sum into a number between 0 and 1. The weights are readable: a positive weight on support tickets means more tickets raise the risk. It is fast and less prone to overfit when features are few. Its probabilities are often reasonably calibrated.
 
 *For example.* Weights on standardized churn data: tickets +0.69, tenure −0.70, logins −0.41.
 
@@ -1978,6 +1988,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Tuning consistency versus variety per feature, deliberately; Explaining why the same prompt gave two different answers; Deciding when a cache, not a temperature setting, is the real fix for needed consistency.
 
 *See:* [Temperature, sampling & determinism](./llms/temperature-sampling-and-determinism.md).
+
+**Test-set reuse** — Using the test rows to choose a model or setting, so the test score overstates real performance.
+
+*In plain terms.* Each choice that looks at the test score moves a little information from the test rows into the model. After many tries, the best score is partly luck. The fix is to choose on validation rows and score the test rows once. A ledger that logs every evaluation, and refuses a second test score, makes the rule hard to break by accident.
+
+*For example.* Over 30 repeats, picking the best of 36 tree settings by test score overstated the result by 2.5 points on average. Picking by validation score overstated it by 0.4.
+
+*Where it shows up:* Auditing an agent's experiment log; Setting a rule for how often the test set may be scored.
+
+*See:* [Learning and doing ML with Claude Code](./machine-learning/learning-and-doing-ml-with-claude-code.md).
 
 **Text-to-query** — A model translating a plain-language question into a database query (SQL/Cypher/SPARQL) that the database actually answers.
 
