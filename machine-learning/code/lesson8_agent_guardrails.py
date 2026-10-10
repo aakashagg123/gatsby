@@ -147,10 +147,11 @@ def main():
     flagged_clean = leak_audit(clean_rows, clean_labels, FEATURES)
     flagged_leaky = leak_audit(leaky_rows, leaky_labels, names)
     strengths = dict(zip(names, column_strength(leaky_rows, leaky_labels)))
+    clean_strengths = dict(zip(FEATURES, column_strength(clean_rows, clean_labels)))
     overlap = shared_ids([1, 2, 3, 4, 5], [5, 6, 7])
     return dict(best=best, final=final, ledger=ledger, stopped_at=stopped_at, gap_by_tries=gap_by_tries,
                 gap_valid=gap_valid, wins=wins, flagged_clean=flagged_clean, flagged_leaky=flagged_leaky,
-                strengths=strengths, overlap=overlap)
+                strengths=strengths, clean_strengths=clean_strengths, overlap=overlap)
 
 
 if __name__ == "__main__":
@@ -165,6 +166,7 @@ if __name__ == "__main__":
     print(f"  test-chosen score beat the fresh rows in {r['wins']} of 30 repeats")
     print("single-column strength with the leaky column added:",
           {k: round(v, 3) for k, v in r["strengths"].items()})
+    print("single-column strength on the clean data:", {k: round(v, 3) for k, v in r["clean_strengths"].items()})
     print("flagged on clean data:", r["flagged_clean"], "| flagged on leaky data:", r["flagged_leaky"])
     print("customers on both sides of a split:", r["overlap"])
     assert r["ledger"].count("test") == 1 and r["ledger"].count("valid") == len(CONFIGS)
@@ -176,5 +178,6 @@ if __name__ == "__main__":
     assert r["wins"] >= 20
     assert r["flagged_clean"] == [] and r["flagged_leaky"] == ["retention_offer_sent"]
     assert r["strengths"]["retention_offer_sent"] > 0.9
+    assert round(max(r["clean_strengths"].values()), 3) == 0.628     # the clean-data figure quoted in the lesson
     assert r["overlap"] == [5]
     print("lesson 8 ok")

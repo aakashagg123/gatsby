@@ -21,11 +21,11 @@
 <li><strong>Doing.</strong> The agent runs the experiments. You set the rules and review the result.</li>
 <li><strong>Learning.</strong> The agent works as a tutor that runs real code with you. You use it to learn this module faster.</li>
 </ul>
-<p>How people write code is shifting toward agents in the terminal. You do not need to guess how far that goes. You need habits that keep a result true, whoever wrote the code. The agent speeds up the loop from <a href="training-loss-and-gradient-descent.html">lesson 3</a>. It does not change what makes a score honest. The hard parts stay with you: a fair split, a baseline, a leak check and the right metric.</p>
+<p>You do not need to guess how far agents in the terminal will go. You need habits that keep a result true, whoever wrote the code. The agent speeds up the loop from <a href="training-loss-and-gradient-descent.html">lesson 3</a>. It does not change what makes a score honest. The hard parts stay with you: a fair split, a baseline, a leak check and the right metric.</p>
 <p>One risk is new. An agent that chases a score will take shortcuts without meaning to. It may tune on the test rows. It may add a column that leaks the answer. So you give it a contract, and checks that fail loudly.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — Agents make experiments cheap. A team can now try hundreds of settings in an afternoon. More tries give more chances for a lucky number. A fast team with weak controls ships a worse model with a better-looking score.</p>
+<p><strong>Why it matters</strong> — Agents make experiments cheap, so a team can try many settings quickly. More tries give more chances for a lucky number. A fast team with weak controls ships a worse model with a better-looking score.</p>
 <p><strong>What it changes in your decisions</strong> — You ask for the log, not the headline. You ask how many times the test rows were scored. You ask who reviewed the agent's code, and whether that reviewer saw the agent's reasoning or only the result.</p>
 <p><strong>Ask your eng team</strong> — <em>"How many times did the agent score the test rows, and where is the log that shows it?"</em></p>
 <p><strong>Risk if ignored</strong> — A model that looked like 66% in the report and does 64% in production. Or a leak that no one saw, because the agent reported a number it was never asked to explain.</p>
@@ -77,7 +77,7 @@
 <h3 id="1-write-the-contract-in-claudemd">1. Write the contract in <code>CLAUDE.md</code></h3>
 <p><code>CLAUDE.md</code> is a file that Claude Code reads at the start of every session. Keep it short. Put in the rules that apply to every task. For an ML project, that means the rules from lessons 2 to 5.</p>
 <pre><code class="language-text"># ML rules for this repo
-- Data: data/train.csv and data/valid.csv. Never open data/test.csv.
+- Data: data/train.csv and data/valid.csv. Never open anything under data/test/.
 - Split by customer_id, never by row.
 - Always report a baseline first: predict the average, and the best single rule.
 - Choose settings on valid. The test rows are scored once, by `python score_test.py`.
@@ -86,8 +86,8 @@
 </code></pre>
 <p><code>CLAUDE.md</code> is advice, not enforcement. The Claude Code docs say hooks are the deterministic option: "Unlike CLAUDE.md instructions which are advisory, hooks are deterministic and guarantee the action happens." Use <code>CLAUDE.md</code> for what the agent should know. Use a hook or a permission rule for what must never happen. <a href="../harness/phases/04-prompts-and-instructions/02-memory-files/docs/en.html">Memory files</a> and <a href="../harness/phases/06-permissions-and-security/02-hooks/docs/en.html">Hooks</a> in the harness track show how.</p>
 <h3 id="2-keep-the-final-test-labels-out-of-reach">2. Keep the final test labels out of reach</h3>
-<p>A deny rule such as <code>Read(./data/test/**)</code> stops the agent's own file tools from opening that path. Rules are covered in <a href="../harness/phases/06-permissions-and-security/03-settings-json/docs/en.html">Settings.json</a>. That track also warns that a hook cannot see inside a script, and that only the operating-system sandbox enforces at that level.</p>
-<p>So think of the rule as a guard rail. A script the agent writes and runs can open any file the operating system lets it open. The strong control is structural. Keep the final test labels where the agent cannot read them, and score them through a step that you or your pipeline run. The example below shows a softer version in code: a ledger that allows one test score.</p>
+<p>A <code>Read</code> deny rule such as <code>Read(./data/test/**)</code> blocks Claude's file tools from reading that path. The permissions docs say it also covers the shell file commands Claude Code recognizes. It does not cover a script the agent writes and runs. Rules are covered in <a href="../harness/phases/06-permissions-and-security/03-settings-json/docs/en.html">Settings.json</a>. That track also warns that a hook cannot see inside a script, and that only the operating-system sandbox enforces at that level.</p>
+<p>So think of the rule as a guard rail. A Python script the agent writes can open any file the operating system lets it open. The docs point to the sandbox for operating-system-level enforcement. The strongest control is structural. Keep the final test labels where the agent cannot read them, and score them through a step that you or your pipeline run. The example below shows a softer version in code: a ledger that allows one test score.</p>
 <h3 id="3-plan-first-then-run">3. Plan first, then run</h3>
 <p>Claude Code has a plan mode. In plan mode it reads files and answers questions without making changes. You enter it with <code>Shift+Tab</code>, or start with <code>claude --permission-mode plan</code>. The docs recommend four steps: explore, plan, implement, commit. Use it for ML when the question is open. Ask for the experiment design before any code: which split, which baseline, which metric, which settings to try, and what would change your mind.</p>
 <p>For a small, clear task such as "add a column to the table", skip the plan. The docs say the same: if you can describe the change in one sentence, skip planning.</p>
@@ -153,7 +153,7 @@
 </code></pre>
 <h2 id="worked-example-how-much-does-the-shortcut-cost">Worked example: how much does the shortcut cost?</h2>
 <p><em>This example is invented. The data is generated by code with a fixed seed.</em></p>
-<p><strong>The ledger.</strong> The disciplined loop scores 36 settings on the validation rows and 1 setting on the test rows. The ledger shows 36 validation entries and 1 test entry. The chosen setting is depth 4 with at least 20 rows per leaf. Its test score is 61.1%. The shortcut loop tries to score a second setting on the test rows. The ledger stops it at step 2 of 36.</p>
+<p><strong>The ledger.</strong> The disciplined loop scores 36 settings on the validation rows and 1 setting on the test rows. Every score in this example is balanced accuracy, from <a href="what-machine-learning-is.html">lesson 1</a>. The ledger shows 36 validation entries and 1 test entry. The chosen setting is depth 4 with at least 20 rows per leaf. Its test score is 61.1%. The shortcut loop tries to score a second setting on the test rows. The ledger stops it at step 2 of 36.</p>
 <p><strong>The overstatement.</strong> With no ledger, how wrong is a score chosen on the test rows? Over 30 repeats:</p>
 <table>
 <thead>
@@ -176,13 +176,13 @@
 <td>+2.5 points</td>
 </tr>
 <tr>
-<td>36, chosen on validation instead</td>
+<td>36, chosen on validation (test score of that choice minus fresh-row score)</td>
 <td>+0.4 points</td>
 </tr>
 </tbody>
 </table>
-<p>With 36 tries, the test score beat the fresh-row score in 23 of 30 repeats. More tries gave a bigger gap. Choosing on the validation rows left a gap of 0.4 points, which is noise. The gap is modest here because the model is small and the sweep is only 36 settings. An agent that tries hundreds of settings, or a larger search space, has more room to fool you. We did not measure that.</p>
-<p><strong>The leak audit.</strong> On the clean churn data, no column predicts churn above 90% alone. The best is tickets in 90 days, at 62.5%. We then add the column <code>retention_offer_sent</code> from <a href="data-features-labels-and-leakage.html">lesson 2</a>. It alone scores 96.6%. The audit flags it and nothing else. A single column this strong deserves a leak check before it deserves a celebration.</p>
+<p>With 36 tries, the test score beat the fresh-row score in 23 of 30 repeats. More tries gave a bigger gap. Choosing on the validation rows left a gap of 0.4 points, which is noise. The gap is modest here. The model is small and the sweep is only 36 settings. An agent that tries hundreds of settings, or a larger search space, has more room to fool you. We did not measure that.</p>
+<p><strong>The leak audit.</strong> On the clean churn data, no column predicts churn above 90% alone. The best is tickets in 90 days, at 62.8%. We then add the column <code>retention_offer_sent</code> from <a href="data-features-labels-and-leakage.html">lesson 2</a>. It alone scores 96.6%. The audit flags it and nothing else. A single column this strong deserves a leak check before it deserves a celebration.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Does the repo have a short <code>CLAUDE.md</code> with the split, baseline, metric and test-set rules?</li>
@@ -208,6 +208,8 @@
 <ul>
 <li>Claude Code docs, <a href="https://code.claude.com/docs/en/best-practices">Best practices</a>: verification checks, "stops when the work looks done", show evidence, explore then plan then code, plan mode with <code>Shift+Tab</code> or <code>--permission-mode plan</code>, <code>CLAUDE.md</code>, hooks as deterministic, subagents and the adversarial review step, <code>/clear</code>, and non-interactive <code>claude -p</code>. Read 2026-10.</li>
 <li>Claude Code docs, <a href="https://code.claude.com/docs/en/output-styles">Output styles</a>: the built-in Explanatory and Learning styles, <code>TODO(human)</code>, and <code>/output-style</code>. Read 2026-10.</li>
+<li>Claude Code docs, <a href="https://code.claude.com/docs/en/permission-modes">Permission modes</a>: Manual mode, auto mode and which mode a session starts in. Read 2026-10.</li>
+<li>Claude Code docs, <a href="https://code.claude.com/docs/en/permissions">Configure permissions</a>: <code>Read</code> deny rules, gitignore-style paths, what they do not cover (a script that opens files itself), and the sandbox as the operating-system control. Read 2026-10.</li>
 <li>Claude Code docs, <a href="https://code.claude.com/docs/en/headless">Run Claude Code programmatically</a>: <code>claude -p</code>, <code>--allowedTools</code> and the <code>dontAsk</code> permission mode. Read 2026-10.</li>
 <li>The harness-engineering lessons linked above, which cite the Claude Code docs for permission rules, hooks and the sandbox.</li>
 <li>These docs change often. Check the page for your version before you rely on a flag or a setting name.</li>
