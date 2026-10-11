@@ -59,7 +59,7 @@
 </tr>
 <tr>
 <td><a href="vision-foundation-models.html">Vision foundation models</a></td>
-<td>CLIP, DINO and SAM can need few labels or none. Licences and intended-use notes vary.</td>
+<td>CLIP and DINOv2 can need few labels or none; SAM 3 segments from a prompt. Licences and intended-use notes vary.</td>
 <td>Does a foundation model meet the bar, and may we ship it?</td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 </li>
 <li><strong>After a camera upgrade, accuracy drops but there are no errors and latency is normal. What do you check first?</strong>
     <details><summary>Answer</summary>The preprocessing contract: colour order, resize and crop, normalisation, orientation and channel layout. Compare the model inputs from the new cameras with the training pipeline's inputs. Then check image statistics such as brightness and blur for a shift. (<a href="shipping-vision-in-production.html">Lesson 7</a>)</details></li>
-<li><strong>Eight cameras at 10 frames per second, batches of 8, and 20 ms per batch. How many cameras can one GPU serve, as a first estimate?</strong>
+<li><strong>In lesson 7's setup, a GPU runs batches of 8 images and each batch takes 20 ms (assumed). Each camera sends 10 frames per second. How many cameras can one GPU serve, as a first estimate?</strong>
     <details><summary>Answer</summary>The GPU can run 1,000 ÷ 20 = 50 batches a second, which is 400 images a second. At 10 frames per second per camera, that is 40 cameras. Confirm with a load test, because latency does not always scale with load. (<a href="shipping-vision-in-production.html">Lesson 7</a>)</details></li>
 </ol>
 <h2 id="sources">Sources</h2>
@@ -136,6 +136,7 @@
 <li>PyTorch torchvision source, <code>torchvision/models/resnet.py</code> (<a href="https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py">GitHub, main branch</a>): <code>out += identity</code> in each block; ResNet-50 <code>IMAGENET1K_V2</code> lists <code>_ops</code> of 4.089, which torchvision's documentation build (<code>docs/source/conf.py</code>) labels "GFLOPS". Read 2026-10.</li>
 <li>Meta AI Research (FAIR), <em>DINOv2</em> README (<a href="https://github.com/facebookresearch/dinov2/blob/main/README.md">GitHub, main branch</a>): code and weights under the Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.</li>
 <li>OpenAI, <em>CLIP</em> README and model card (<a href="https://github.com/openai/CLIP/blob/main/README.md">README</a>, <a href="https://github.com/openai/CLIP/blob/main/model-card.md">model card</a>, GitHub, main branch): zero-shot ImageNet performance matching the original ResNet-50; deployed use out of scope. Read 2026-10.</li>
+<li>Meta, <em>SAM 3</em> README (<a href="https://github.com/facebookresearch/sam3/blob/main/README.md">GitHub, main branch</a>): promptable segmentation in images and videos from text or visual prompts such as points, boxes and masks. Read 2026-10.</li>
 <li>Hendrycks and Dietterich, <em>robustness</em> README (<a href="https://github.com/hendrycks/robustness/blob/master/README.md">GitHub, master branch</a>): ImageNet-C's 15 corruptions and ImageNet-A. Read 2026-10.</li>
 <li>COCO API source, <code>PythonAPI/pycocotools/cocoeval.py</code> (<a href="https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/cocoeval.py">GitHub, master branch</a>): IoU thresholds from 0.50 to 0.95 in steps of 0.05. Read 2026-10.</li>
 <li>PyTorch torchvision source, <code>torchvision/models/mobilenetv3.py</code> (<a href="https://github.com/pytorch/vision/blob/main/torchvision/models/mobilenetv3.py">GitHub, main branch</a>): MobileNetV3-Large lists <code>_ops</code> of 0.217, labelled "GFLOPS" in torchvision's <code>docs/source/conf.py</code>. Read 2026-10.</li>
