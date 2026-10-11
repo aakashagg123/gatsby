@@ -60,9 +60,10 @@ flowchart LR
 ## Tokens: the model's actual unit of text
 
 A model does not see words the way you do. It sees **tokens** — pieces of text, often
-smaller than a word, that a fixed vocabulary breaks language into. Each model family has
-its own tokenizer, so the same word can split differently in different models. As an
-illustration, a longer word may split into two or three pieces, while a short, common word
+smaller than a word, that a fixed vocabulary breaks language into. The tokenizer can change
+between models. Anthropic, for example, says Claude 4.7 and later models use a newer
+tokenizer that turns the same text into about 30 percent more tokens than earlier models.
+Count tokens with the model you plan to use. As an illustration, a longer word may split into two or three pieces, while a short, common word
 is often one token on its own. This matters for a product leader for three concrete
 reasons. **Cost** is usually counted in tokens. Anthropic, for example, bills Claude by
 input tokens and output tokens. Check your own vendor's pricing page, but expect token
@@ -75,7 +76,7 @@ individual letters, only token chunks that may not align with them.
 
 To predict the next token, the model must decide which earlier tokens matter. The step
 that does this is the **attention mechanism**. It is the core of the **transformer**, the
-model design behind today's LLMs. Meta's model card for Llama 3, for example, describes it
+model design behind LLMs such as Llama 3 and GPT-2. Meta's model card for Llama 3 describes it
 as "an auto-regressive language model that uses an optimized transformer architecture."
 Auto-regressive means it predicts one token at a time, as above.
 
@@ -311,5 +312,10 @@ more weight table.
   [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
   conversation history is billed as input tokens and generated text as output tokens.
   Read 2026-10-11. Other vendors set their own pricing.
+- Anthropic, Claude documentation,
+  [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting):
+  Claude 4.7 and later models use a newer tokenizer, and the same input text produces
+  approximately 30 percent more tokens than on earlier models, depending on the content.
+  The page advises recounting prompts against the model you plan to use. Read 2026-10-11.
 - The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.
