@@ -181,6 +181,16 @@ The first foundation module. See the [plan](./MACHINE_LEARNING_ROADMAP.md).
 7. [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md)
 8. [Learning and doing ML with Claude Code](./machine-learning/learning-and-doing-ml-with-claude-code.md) · [Recap](./machine-learning/recap.md)
 
+## [Tensors](./tensors/README.md)
+
+The second foundation module. See the [plan](./TENSORS_ROADMAP.md).
+
+1. [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md)
+2. [Operations and broadcasting](./tensors/operations-and-broadcasting.md)
+3. [Matrix multiplication: the workhorse](./tensors/matrix-multiplication.md)
+4. [Batching, memory and precision](./tensors/batching-memory-and-precision.md)
+5. [Automatic differentiation](./tensors/automatic-differentiation.md) · [Recap](./tensors/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

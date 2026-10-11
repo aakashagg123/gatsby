@@ -4,7 +4,7 @@
 
 <br/>
 
-![Tracks](https://img.shields.io/badge/tracks-25-D97757?style=flat-square&labelColor=1f1e1d)
+![Tracks](https://img.shields.io/badge/tracks-26-D97757?style=flat-square&labelColor=1f1e1d)
 ![Lessons](https://img.shields.io/badge/lessons-118%2B-D97757?style=flat-square&labelColor=1f1e1d)
 ![Audience](https://img.shields.io/badge/for-Senior%20%26%20Principal%20PMs-1f1e1d?style=flat-square)
 ![Cross-links](https://img.shields.io/badge/internal%20links-2692%20verified-2e7d32?style=flat-square&labelColor=1f1e1d)
@@ -151,7 +151,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## 🧭 Beyond AI Engineering — the craft tracks
 
-The AI Engineering modules above teach the *stack*. Twenty-five further tracks teach the *craft*
+The AI Engineering modules above teach the *stack*. Twenty-six further tracks teach the *craft*
 around it — each a standalone folder of cross-linked lessons in the same house style
 (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML
 edition on the [live site](https://aakashagg123.github.io/gatsby/).
@@ -162,6 +162,7 @@ edition on the [live site](https://aakashagg123.github.io/gatsby/).
 | [**Agentic AI**](./agentic-ai/README.md) | What agents actually are — the loop, tools, memory, planning — and the reliability, security, and economics that turn demos into products. Opens with a knowledge graph. | [What is an agent?](./agentic-ai/what-is-an-agent.md) |
 | [**Knowledge graphs**](./knowledge-graphs/README.md) | Treat what the company knows as a product — entities and ontologies, the construction pipeline, GraphRAG, governance, and the business case, in product-leader language. | [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md) |
 | [**Machine learning**](./machine-learning/README.md) 🆕 | What a learned system is, what it learns from, how it learns, how to trust its score, which model family to pick, and how to keep it working after launch. Runnable code in every lesson. | [Plan](./MACHINE_LEARNING_ROADMAP.md) |
+| [**Tensors**](./tensors/README.md) 🆕 | What the objects every model works on are, what they cost in memory and compute, why shape errors are silent, and how a library gets the gradient for free. Runnable code in every lesson. | [Plan](./TENSORS_ROADMAP.md) |
 | [**Generative AI: the big picture**](./generative-ai/README.md) | What makes AI "generative," the five modalities, why output is probabilistic, the four-layer product stack, and build vs. buy vs. fine-tune. Opens the [Generative AI family](./GENERATIVE_AI_ROADMAP.md). | [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md) |
 | [**LLMs**](./llms/README.md) | Tokens, the context window, the jagged frontier, prompting, sampling, choosing a model, and the order to reach for prompting, RAG, or fine-tuning. | [What an LLM actually is](./llms/what-is-an-llm.md) |
 | [**APIs & integrations**](./api-integrations/README.md) 🆕 | The request/response contract, authentication, rate limits, streaming, retries, structured output, webhooks, and fitting a model call into a real system. | [The request/response contract](./api-integrations/the-request-response-contract.md) |
