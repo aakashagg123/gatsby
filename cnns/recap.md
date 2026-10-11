@@ -62,7 +62,7 @@ If you can answer all five, you can steer the work. If not, you know which lesso
     <details><summary>Answer</summary>The licence for the exact weights, and the vendor's intended-use statement or model card. Licences can differ even inside one repository. As of 2026-10, the DINOv2 README releases its main code and weights under Apache License 2.0, and its XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Some model cards also rule out deployment. (<a href="./vision-foundation-models.md">Lesson 6</a>)</details>
 11. **After a camera upgrade, accuracy drops but there are no errors and latency is normal. What do you check first?**
     <details><summary>Answer</summary>The preprocessing contract: colour order, resize and crop, normalisation, orientation and channel layout. Compare the model inputs from the new cameras with the training pipeline's inputs. Then check image statistics such as brightness and blur for a shift. (<a href="./shipping-vision-in-production.md">Lesson 7</a>)</details>
-12. **Eight cameras at 10 frames per second, batches of 8, and 20 ms per batch. How many cameras can one GPU serve, as a first estimate?**
+12. **In lesson 7's setup, a GPU runs batches of 8 images and each batch takes 20 ms (assumed). Each camera sends 10 frames per second. How many cameras can one GPU serve, as a first estimate?**
     <details><summary>Answer</summary>The GPU can run 1,000 ÷ 20 = 50 batches a second, which is 400 images a second. At 10 frames per second per camera, that is 40 cameras. Confirm with a load test, because latency does not always scale with load. (<a href="./shipping-vision-in-production.md">Lesson 7</a>)</details>
 
 ## Sources
