@@ -1,0 +1,37 @@
+<style>
+.cn{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.cn-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:var(--font-text-3xs-size);font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.cn h4{margin:0 0 4px;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.cn-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 16px}
+.cn-row{display:grid;gap:12px;align-items:stretch}
+.cn-c2{grid-template-columns:repeat(2,1fr)}.cn-c3{grid-template-columns:repeat(3,1fr)}.cn-c4{grid-template-columns:repeat(4,1fr)}
+.cn-card{border-radius:13px;padding:13px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border)}
+.cn-card h5{margin:0 0 4px;font-size:var(--font-text-sm-size);font-weight:700;color:var(--color-text)}
+.cn-card p{margin:0;font-size:var(--font-text-xs-size);line-height:1.4;color:var(--color-text-secondary)}
+.cn-tag{display:inline-block;border-radius:10px;padding:1px 8px;margin-bottom:6px;font-size:var(--font-text-3xs-size);font-weight:700;
+  background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.cn-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.cn-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.cn-warn{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-surface)}
+.cn-disc{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.cn-mono{font-family:var(--font-mono);font-size:var(--font-text-2xs-size);color:var(--color-text);background:var(--color-surface-tertiary);border-radius:6px;padding:1px 6px;display:inline-block;margin:2px 0}
+.cn-arrow{text-align:center;color:var(--color-text-tertiary);margin:8px 0;font-size:var(--font-text-sm-size)}
+.cn-foot{margin:14px 0 0;font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.cn-c4{grid-template-columns:repeat(2,1fr)}.cn-c3{grid-template-columns:1fr}}
+@media (max-width:520px){.cn-c4,.cn-c2{grid-template-columns:1fr}.cn{padding:22px 16px 18px}}
+</style>
+<div class="cn"><span class="cn-chip">Module map</span>
+<h4>From product question to production</h4>
+<p class="cn-sub">Seven lessons in four steps. Each step links to the Tensors and LLMs lessons it builds on.</p>
+<div class="cn-row cn-c1"><div class="cn-card cn-info"><span class="cn-tag">Frame it</span><h5>1 · What computer vision does</h5><p>classify · detect · segment · embed</p></div></div>
+<div class="cn-arrow">↓</div>
+<div class="cn-row cn-c2"><div class="cn-card "><span class="cn-tag">See it</span><h5>2 · How a convolution sees</h5><p>kernel · stride · weight sharing</p></div><div class="cn-card "><span class="cn-tag">See it</span><h5>3 · From edges to objects</h5><p>receptive field · depth · residuals</p></div></div>
+<div class="cn-arrow">↓</div>
+<div class="cn-row cn-c3"><div class="cn-card cn-disc"><span class="cn-tag">Reuse it</span><h5>4 · Transfer learning and labels</h5><p>freeze · fine-tune · linear probe</p></div><div class="cn-card cn-disc"><span class="cn-tag">Reuse it</span><h5>5 · CNNs vs. vision transformers</h5><p>patches as tokens · backbone cost</p></div><div class="cn-card cn-disc"><span class="cn-tag">Reuse it</span><h5>6 · Vision foundation models</h5><p>CLIP · DINO · SAM · licences</p></div></div>
+<div class="cn-arrow">↓</div>
+<div class="cn-row cn-c1"><div class="cn-card cn-warn"><span class="cn-tag">Ship it</span><h5>7 · Shipping vision in production</h5><p>preprocessing contract · hardware · image shift</p></div></div>
+<p class="cn-foot">resolution, chosen in lesson 2, sets the cost you meet again in lesson 7</p>
+</div>

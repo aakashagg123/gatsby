@@ -144,6 +144,6 @@ To fine-tune later layers only, unfreeze `model.layer4` and give its parameters 
 ## Sources
 
 - CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): few people train from scratch for lack of data; ImageNet as 1.2 million images in 1,000 categories; the fixed-feature-extractor and fine-tuning strategies; the four scenarios by dataset size and similarity; early features generic, later features specific; a smaller learning rate for pre-trained weights. Read 2026-10.
-- Meta FAIR, *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): features usable "with classifiers as simple as linear layers", performing well "without any requirement for fine-tuning". Read 2026-10.
+- Meta AI Research (FAIR), *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): features usable "with classifiers as simple as linear layers", performing well "without any requirement for fine-tuning". Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): `ResNet50_Weights.IMAGENET1K_V2` with `num_params` 25,557,032; the final layer `nn.Linear(512 * block.expansion, num_classes)`; `expansion = 4` in the ResNet-50 block. Read 2026-10.
 - The factory example, the class counts and the test split are invented. The arithmetic is shown in the lesson.

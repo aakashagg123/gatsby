@@ -77,7 +77,7 @@ The input is a 224 by 224 colour image. The layer has 64 kernels of size 3 by 3,
 
 Step 5 is the product lesson. The Tensors module says that [parameters understate compute](../tensors/matrix-multiplication.md) for a convolution. Here is by how much. Each of the 1,728 weights is used once per output position, 224 × 224 = 50,176 times, at 2 FLOPs per use: 1,728 × 50,176 × 2 = 173,408,256.
 
-**A note on counting.** This lesson counts a multiply and an add as two FLOPs. Some model tables count a multiply-add once. The TensorFlow MobileNet page, for example, reports "MACs" (multiply-accumulates). Check the convention before you compare two tables.
+**A note on counting.** This lesson counts a multiply and an add as two FLOPs. Some model tables count a multiply-add once. The TensorFlow MobileNet page, for example, reports multiply-accumulates (MACs). Check the convention before you compare two tables.
 
 ## Tradeoffs and decisions
 
@@ -144,5 +144,5 @@ In PyTorch the worked example layer is one line: `nn.Conv2d(3, 64, kernel_size=3
 
 - CS231n course notes, *Convolutional Neural Networks* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md)): the output-size formula `(W − F + 2P)/S + 1` with the 7 by 7 examples; parameter sharing with the AlexNet figures (290,400 neurons, 363 weights and 1 bias each, 105,705,600 parameters without sharing, 34,944 with); where sharing does not make sense; max pooling at 2 by 2 and stride 2 discarding 75% of activations; im2col turning a convolution into one matrix multiply; relaxing sharing for centred faces. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): one `MaxPool2d(kernel_size=3, stride=2, padding=1)` after the first convolution, and `stride=2` at the start of `layer2`, `layer3` and `layer4`. Read 2026-10.
-- TensorFlow Models, *MobileNet* README ([GitHub, master branch](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md)): efficiency reported in MACs, "also sometimes known as MADDs", the number of multiply-accumulates per image. Read 2026-10.
+- TensorFlow Models, *MobileNet* README ([GitHub, master branch](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md)): efficiency reported in MACs, the number of multiply-accumulates needed for one image. Read 2026-10.
 - The layer sizes, the edge image and every computed figure are illustrative. They come from `cnns/code/lesson2_convolution.py`, which ends in `assert` lines.

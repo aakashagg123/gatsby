@@ -44,7 +44,7 @@ You measure it with accuracy, or better, with precision and recall per class. [M
 
 The model returns a list of boxes. Each box has four corner coordinates, a label and a score. Torchvision's detection models document this output: `boxes` as `[x1, y1, x2, y2]`, plus `labels` and `scores`, one entry per object found.
 
-A predicted box rarely matches the true box exactly. So detection is measured with **intersection over union (IoU)**: the overlap of the two boxes divided by the area they cover together. A box counts as correct when its IoU passes a threshold. The usual summary is **mean average precision (mAP)**. The COCO benchmark's evaluation code averages it over ten IoU thresholds, from 0.50 to 0.95 in steps of 0.05. Model tables often label this "mAP 50-95".
+A predicted box rarely matches the true box exactly. So detection is measured with **intersection over union (IoU)**: the overlap of the two boxes divided by the area they cover together. A box counts as correct when its IoU passes a threshold. The usual summary is **mean average precision (mAP)**. The Common Objects in Context (COCO) benchmark's evaluation code averages it over ten IoU thresholds, from 0.50 to 0.95 in steps of 0.05. Model tables often label this "mAP 50-95".
 
 ### Segmentation
 
@@ -77,7 +77,7 @@ The team ships classification first. It labels in an afternoon and tells the sto
 ## Tradeoffs and decisions
 
 - **Detail vs. labelling cost.** Each step down the ladder adds information and multiplies labelling time. You pay that cost again every time you relabel.
-- **Detail vs. speed.** Detail costs compute. In the Ultralytics tables (as of 2026-10), the smallest YOLO26 classifier runs at 224 pixels in about 5.0 ms on a CPU. The smallest detector runs at 640 pixels in about 38.9 ms, and the smallest instance-segmentation model in about 53.3 ms. Part of that gap is the larger input. Check the latency on your own hardware before you promise a real-time feature.
+- **Detail vs. speed.** Detail costs compute. In the Ultralytics tables (as of 2026-10), the smallest YOLO26 classifier runs at 224 pixels in about 5.0 ms on a central processing unit (CPU). The smallest detector runs at 640 pixels in about 38.9 ms, and the smallest instance-segmentation model in about 53.3 ms. Part of that gap is the larger input. Check the latency on your own hardware before you promise a real-time feature.
 - **A fixed class list vs. an embedding.** A classifier knows only its classes. An embedding can match new products without retraining, but someone must still decide what "similar enough" means.
 - **One model vs. two stages.** A cheap classifier can filter images before a costly detector runs. You save compute and add a second place to fail.
 
@@ -137,7 +137,7 @@ The COCO evaluation code sets its IoU thresholds with
 
 - PyTorch torchvision source, `torchvision/models/detection/faster_rcnn.py` and `mask_rcnn.py` ([GitHub, main branch](https://github.com/pytorch/vision/tree/main/torchvision/models/detection)): detection output as `boxes` in `[x1, y1, x2, y2]` format with `labels` and `scores`; Mask R-CNN `masks` as one soft mask per instance, in the 0 to 1 range, "generally" thresholded at 0.5. Read 2026-10.
 - COCO API source, `PythonAPI/pycocotools/cocoeval.py` ([GitHub, master branch](https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/cocoeval.py)): IoU thresholds from 0.50 to 0.95 in ten steps. Read 2026-10.
-- Ultralytics README ([GitHub, main branch](https://github.com/ultralytics/ultralytics/blob/main/README.md)): model tables report "mAP val 50-95" on COCO val2017; the same library offers detection, segmentation, classification and pose models; CPU ONNX speeds of 5.0 ms for YOLO26n-cls at 224 pixels, 38.9 ms for YOLO26n at 640 pixels and 53.3 ms for YOLO26n-seg at 640 pixels. Read 2026-10.
+- Ultralytics README ([GitHub, main branch](https://github.com/ultralytics/ultralytics/blob/main/README.md)): model tables report "mAP val 50-95" on COCO val2017; the same library offers detection, segmentation, classification and pose models; CPU speeds, measured with an Open Neural Network Exchange (ONNX) export, of 5.0 ms for YOLO26n-cls at 224 pixels, 38.9 ms for YOLO26n at 640 pixels and 53.3 ms for YOLO26n-seg at 640 pixels. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): the final layer is `nn.Linear(512 * block.expansion, num_classes)`, with `expansion = 4` for the ResNet-50 block, so 2,048 features. Read 2026-10.
 - CS231n course notes, *Transfer learning* ([GitHub source](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): ImageNet as "1.2 million images with 1000 categories". Read 2026-10.
 - The shelf example, the labelling times and the hourly rate are invented. The arithmetic is shown in the lesson.

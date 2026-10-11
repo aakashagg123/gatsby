@@ -46,6 +46,7 @@ VOLATILITY = {
     "ai-security-and-guardrails": "fast", "cost-optimization": "fast",
     "knowledge-graphs": "medium", "system-design": "stable", "access-control": "medium",
     "learning-paths": "medium", "machine-learning": "medium", "tensors": "medium",
+    "cnns": "medium",
     "technical-product-management": "medium", "technical-product-sense": "stable",
     "product-sense": "medium", "first-principles": "stable",
 }

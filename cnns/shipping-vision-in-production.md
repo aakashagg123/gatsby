@@ -47,7 +47,7 @@ So the contract belongs to the weights, not the architecture. Common ways to bre
 - **Resize and crop.** Serving squashes the whole image to 224 by 224 instead of resizing then cropping. Objects change shape.
 - **Normalisation.** Values in 0 to 255 instead of 0 to 1, or the wrong means.
 - **Layout.** Channels first or channels last. [What a tensor is](../tensors/what-a-tensor-is.md) covers this. When the shapes still line up, the error is silent.
-- **Orientation.** Photos can carry an EXIF orientation tag. Pillow, for example, only rotates the pixels when you call `ImageOps.exif_transpose`. If the loader skips that step, the image can arrive sideways.
+- **Orientation.** Photos can carry an Exchangeable Image File Format (EXIF) orientation tag. Pillow, for example, only rotates the pixels when you call `ImageOps.exif_transpose`. If the loader skips that step, the image can arrive sideways.
 
 Each of these is a vision-specific form of the training-serving skew in [ML in production](../machine-learning/ml-in-production.md).
 
@@ -75,7 +75,7 @@ A warehouse runs a damage-detection model on 8 cameras at 10 frames per second e
 
 1. **Load.** 8 × 10 = 80 images per second.
 2. **Batching.** The service groups 8 images per batch, one from each camera, so it runs 80 ÷ 8 = 10 batches per second.
-3. **Measured latency.** On the chosen GPU, one batch of 8 takes 20 ms (assumed, measured in a load test).
+3. **Measured latency.** On the chosen graphics processing unit (GPU), one batch of 8 takes 20 ms (assumed, measured in a load test).
 4. **Utilisation.** 10 batches × 20 ms = 200 ms of GPU time each second, so the GPU is about 20% busy.
 5. **Headroom.** At 20 ms a batch, the GPU can run 1,000 ÷ 20 = 50 batches a second, which is 400 images a second, or 40 cameras at 10 frames per second.
 6. **A resolution change.** The team wants to double the input side to see small dents. As a first estimate, compute per image rises about 4 times. If latency rises in proportion, capacity falls to about 10 cameras. The team re-runs the load test before it commits, because equal FLOPs do not mean equal time ([Matrix multiplication](../tensors/matrix-multiplication.md)).

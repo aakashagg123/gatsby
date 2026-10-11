@@ -209,6 +209,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
 
+**Backbone (vision)** — The main feature-extracting part of a vision model, reused under different task heads.
+
+*In plain terms.* A backbone turns an image into features. A head turns features into the answer: classes, boxes or masks. Teams often keep one backbone and swap heads per task.
+
+*For example.* ResNet-50 without its last layer, used as a backbone for a 4-class head.
+
+*Where it shows up:* Sharing one model across features; Choosing what to freeze.
+
+*See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
+
 **Backpressure** — A system pushing back when it's overloaded — slowing, queuing, or shedding work — instead of collapsing.
 
 *In plain terms.* When more work arrives than a system can handle, it needs a way to say 'slow down' rather than fall over. Backpressure is that mechanism: queue, throttle, or reject gracefully, so overload degrades the experience a little instead of taking everything down.
@@ -288,6 +298,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Assessing risk of changes and permissions; Designing isolation and containment; Scoping agent access (least privilege).
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
+
+**Bounding box** — The rectangle a detector draws around an object, given by its corner coordinates.
+
+*In plain terms.* A box is four numbers, such as the top-left and bottom-right corners. It says where an object is, roughly. It does not say which pixels are the object, which is what a mask does.
+
+*For example.* A box [x1, y1, x2, y2] of [40, 60, 120, 200] around a bottle on a shelf.
+
+*Where it shows up:* Reading a detector's output; Writing labelling instructions.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
 **BPMN** — Business Process Model and Notation — a standard visual language for drawing business processes as boxes-and-arrows that software can actually run.
 
@@ -388,6 +408,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Containing a dependency's bad day to one feature instead of the whole product; Designing graceful degradation for AI-dependent flows; Avoiding making an already-struggling service worse.
 
 *See:* [Integrating into existing systems](./api-integrations/integrating-into-existing-systems.md).
+
+**CLIP** — OpenAI's model that learns from images paired with captions, so it can classify images against text labels you write.
+
+*In plain terms.* CLIP encodes an image and a set of text prompts, then picks the prompt most similar to the image. Its model card rules deployed use out of scope and lists weaknesses in fine-grained classification and counting.
+
+*For example.* Prompts 'a photo of a shoe', 'a photo of a bag' and 'a photo of a watch' route product photos with no training.
+
+*Where it shows up:* Prototyping a classifier with no labels; Reading model cards before shipping.
+
+*See:* [Vision foundation models](./cnns/vision-foundation-models.md).
 
 **Coding agent** — An AI agent that works on code by reading files, running commands, editing, and reading the output.
 
@@ -559,6 +589,36 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [TPM for AI products](./technical-product-management/tpm-for-ai-products.md).
 
+**Convolution** — The operation that slides one small grid of weights across an image and records how well each spot matches.
+
+*In plain terms.* At each position the kernel's weights multiply the pixels under it and the products are added. The same weights are used everywhere. The result is a feature map. Compute grows with the image area even though the weights do not.
+
+*For example.* A 3 by 3 kernel with weights [-1, 0, 1] in each row responds where dark meets bright: a vertical edge.
+
+*Where it shows up:* Understanding why resolution sets cost; Reading a vision model's design.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Convolution kernel** — The small grid of learned weights a convolution slides across an image, such as 3 by 3 pixels by all input channels.
+
+*In plain terms.* A kernel on a colour image spans all three channels, so a 3 by 3 kernel has 27 weights plus a bias. A layer runs many kernels, and each one makes one output channel.
+
+*For example.* 64 kernels of size 3 by 3 on a colour image have 1,792 parameters in all.
+
+*Where it shows up:* Counting parameters; Reading layer definitions.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Convolutional neural network** — A neural network built mainly from convolution layers, the long-time workhorse of computer vision.
+
+*In plain terms.* A CNN slides small learned grids of weights over an image, layer after layer. Early layers find simple patterns and later layers combine them into parts and objects. Sharing weights across positions keeps the number of parameters small.
+
+*For example.* ResNet-50 and ConvNeXt-Tiny are convolutional networks.
+
+*Where it shows up:* Choosing a vision backbone; Estimating vision compute.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
 **Cosine similarity** — The usual measure of how close two embeddings are — the angle between the vectors — used to rank passages by relevance.
 
 *In plain terms.* Once text is embedding vectors, you need a number for 'how similar'. Cosine similarity measures the angle between two vectors: point the same way (similar meaning) scores near 1, unrelated scores near 0. It's the yardstick semantic search uses to pick the nearest passages.
@@ -658,6 +718,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding streaming latency; Explaining why output tokens cost more than input tokens; Motivating speculative decoding.
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
+
+**DINOv2** — Meta's self-supervised vision models whose features work with a simple linear classifier, no fine-tuning needed.
+
+*In plain terms.* DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.
+
+*For example.* A linear probe on DINOv2 features as a first defect classifier.
+
+*Where it shows up:* Getting strong frozen features; Checking licence terms per checkpoint.
+
+*See:* [Vision foundation models](./cnns/vision-foundation-models.md).
 
 **Distillation** — Training a smaller 'student' model to imitate a larger 'teacher' model's behaviour.
 
@@ -798,6 +868,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Auditing what a model is allowed to see; Finding features that are really leaks.
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Feature map** — The grid of outputs one kernel produces: how strongly each position matched its pattern.
+
+*In plain terms.* Each kernel in a layer makes one feature map. A layer with 64 kernels outputs 64 maps, which become the 64 input channels of the next layer.
+
+*For example.* A 3 by 3 layer with 64 kernels turns a 224 by 224 image into 224 by 224 by 64 feature maps.
+
+*Where it shows up:* Estimating activation memory; Reading what a layer outputs.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
 
 **Feedback loop** — When a model's actions change the data it will later learn from.
 
@@ -1059,6 +1139,46 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Function calling](./content/02-reliable-outputs/function-calling.md).
 
+**im2col** — A common way to compute a convolution: stretch every window into a column, then do one big matrix multiplication.
+
+*In plain terms.* Turning a convolution into one matrix multiply lets it use fast matrix code. It also means the matrix-multiplication cost rules apply to convolutions.
+
+*For example.* 96 kernels of 11 by 11 by 3 become a 96 by 363 weight matrix multiplied against one column per output position.
+
+*Where it shows up:* Estimating convolution compute.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Image classification** — The vision job that gives one label per image, such as 'shelf empty'.
+
+*In plain terms.* The model scores every class it knows and the highest score wins. It says what is in the image, not where. It is the cheapest vision job to label, because a person only picks one label.
+
+*For example.* A shelf photo is labelled 'full', 'partly empty' or 'empty'.
+
+*Where it shows up:* Choosing the simplest framing for a product question; Estimating labelling cost.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
+
+**Image segmentation** — The vision job that labels pixels: which pixels belong to which class or object.
+
+*In plain terms.* Semantic segmentation gives every pixel a class, such as road or sky. Instance segmentation also separates objects, such as car 1 and car 2. It is the most detailed and the most expensive of the common vision jobs to label.
+
+*For example.* A mask marks exactly which pixels of a photo are the damaged part of a panel.
+
+*Where it shows up:* Measuring area or shape; Deciding whether boxes are enough.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
+
+**ImageNet** — The standard image-classification benchmark: about 1.2 million training images in 1,000 categories.
+
+*In plain terms.* Most pre-trained vision backbones were trained or measured on ImageNet. A high ImageNet score is evidence about everyday photos, not about your images.
+
+*For example.* Torchvision lists ResNet-50 V2 at 80.858% top-1 on ImageNet.
+
+*Where it shows up:* Reading model tables; Judging how far your data is from pre-training data.
+
+*See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
+
 **In-context learning** — Teaching a model a task on the fly by putting instructions and examples in the prompt — no training required.
 
 *In plain terms.* Models can pick up a task just from examples shown in the prompt, without any retraining. In-context learning is that: you demonstrate 'input → output' a few times and the model follows the pattern. Fastest to try, but it costs prompt space every call.
@@ -1098,6 +1218,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing how far to compress; Estimating memory savings; Interpreting model-serving options.
 
 *See:* [Quantization formats](./content/01-inference-internals/quantization-formats.md).
+
+**Intersection over union** — How much a predicted box overlaps the true box: the overlap divided by the area they cover together.
+
+*In plain terms.* IoU is 1 for a perfect match and 0 for no overlap. A detection counts as correct only when its IoU passes a threshold, often 0.5. The threshold decides how sloppy a box may be.
+
+*For example.* Two 10 by 10 boxes that overlap in a 5 by 5 corner have an IoU of 25 / 175 = 0.143.
+
+*Where it shows up:* Setting how strict a detection metric is; Reading detection benchmarks.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
 **Inversion** — Solving a problem backward — ask how to guarantee failure, then design against that list.
 
@@ -1259,6 +1389,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
 
+**Linear probe** — A single linear classifier trained on top of a frozen model's features.
+
+*In plain terms.* It is the cheapest way to test whether a pre-trained model's features fit your task. If it meets the bar, you may not need fine-tuning at all.
+
+*For example.* Train one linear layer on DINOv2 features for 4 defect classes and compare with fine-tuning.
+
+*Where it shows up:* Getting a first baseline in a day; Comparing backbones fairly.
+
+*See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
+
 **Link prediction** — Inferring edges that are missing or likely to form next in a graph (recommendations, 'people you may know') — probabilistic, so ship as suggestion, never as fact.
 
 *In plain terms.* Given the pattern of existing connections, you can guess connections that probably exist or will. Link prediction is that guess: powering recommendations and next-best-action. Crucially it's a probability, not a truth — so it belongs in the UI as a suggestion, never stored as a hard fact.
@@ -1379,6 +1519,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Matrix multiplication: the workhorse](./tensors/matrix-multiplication.md).
 
+**Max pooling** — A weight-free layer that shrinks a feature map by keeping the largest value in each small window.
+
+*In plain terms.* The most common setting is a 2 by 2 window with stride 2, which halves each side and keeps a quarter of the values. Average pooling keeps the mean instead.
+
+*For example.* A 224 by 224 by 64 map pooled 2 by 2 at stride 2 becomes 112 by 112 by 64.
+
+*Where it shows up:* Reading a network's downsampling steps.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
 **MCP** — Model Context Protocol — the adopted standard for plugging tools and data sources into agents: one server, any compatible client.
 
 *In plain terms.* Before MCP, every AI app wired up every tool integration its own way. MCP is a common plug shape: build a tool/data connector once as an MCP 'server', and any MCP-aware assistant can use it. Like USB for AI tools — build once, connect anywhere.
@@ -1388,6 +1538,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reducing integration cost across AI tools; Evaluating the agent/tool ecosystem; Standardising how your data reaches assistants.
 
 *See:* [Tools & function calling](./agentic-ai/tools-and-function-calling.md).
+
+**Mean average precision** — The usual summary score for a detector, averaged over classes and, in COCO style, over IoU thresholds from 0.50 to 0.95.
+
+*In plain terms.* Average precision summarises the precision-recall curve for one class. The mean takes it over all classes. COCO-style 'mAP 50-95' also averages over ten IoU thresholds, so it rewards boxes that fit tightly.
+
+*For example.* A model table lists a detector at 40.9 mAP 50-95 on COCO val2017.
+
+*Where it shows up:* Comparing detectors; Setting a launch bar for detection.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
 **Memory leakage** — A remembered fact showing up somewhere it doesn't belong — a different user, a different tenant, or a context the person never agreed to.
 
@@ -1529,6 +1689,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
 
+**Object detection** — The vision job that finds each object and draws a box around it, with a label and a score.
+
+*In plain terms.* A detector returns a list of boxes per image. Each box has four corner coordinates, a class and a score. Labelling means drawing every box, so it costs much more than labelling a whole image.
+
+*For example.* A detector returns 12 boxes on a shelf photo, one per product, each labelled with the product type.
+
+*Where it shows up:* Counting or locating items; Pricing a labelling project.
+
+*See:* [What computer vision does](./cnns/what-computer-vision-does.md).
+
 **OKR** — Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.
 
 *In plain terms.* An OKR translates strategy into something a team can act on this quarter: the Objective restates the strategic bet in outcome language, and the Key Results are the numbers that prove it's working. OKRs should be set BY strategy, not used as a substitute for having one — a Key Result that doesn't trace back to a strategic choice is a number in search of a reason.
@@ -1659,6 +1829,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
 
+**Patch embedding** — The step that turns each image patch into one token vector, in practice a convolution with kernel and stride equal to the patch size.
+
+*In plain terms.* Each patch is flattened and multiplied by one weight table. Written as a convolution, the windows never overlap. The number of tokens is the number of patches, plus any class token.
+
+*For example.* A 16 by 16 colour patch holds 768 numbers and becomes one token.
+
+*Where it shows up:* Counting tokens per image.
+
+*See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
+
 **PKCE** — Proof Key for Code Exchange: a step that stops a stolen login code from being used.
 
 *In plain terms.* The app creates a random secret, sends a hash of it when it starts login, and shows the secret when it swaps the code for tokens. The server checks they match. The OAuth security best practice, RFC 9700, says public clients must use it.
@@ -1678,6 +1858,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding central versus local decisions; Planning failure behaviour when the decision service is down.
 
 *See:* [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md).
+
+**Position embedding** — A learned vector added to each token so a transformer knows where in the image a patch came from.
+
+*In plain terms.* Attention alone treats tokens as an unordered set. Position embeddings add the order back. They are sized for one token count, so running a pre-trained ViT at a new resolution means resizing them.
+
+*For example.* Torchvision offers interpolate_embeddings to adapt a ViT's position embeddings to a new image size.
+
+*Where it shows up:* Planning a resolution change for a ViT.
+
+*See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
 
 **Postmortem** — A blameless written analysis after an incident: what happened, why, and what changes prevent a recurrence.
 
@@ -1718,6 +1908,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Explaining why long inputs cause a startup delay; Separating input cost (prefill) from output cost (decode); Reasoning about time-to-first-token.
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
+
+**Preprocessing contract** — The exact resize, crop, colour order, scaling and normalisation a set of model weights expects.
+
+*In plain terms.* Each set of pre-trained weights was trained with one preprocessing recipe. Serving must repeat it exactly. A mismatch gives no error, only lower accuracy, so write it down and test it.
+
+*For example.* Torchvision's ResNet-50 V2 weights expect resize 232, centre crop 224, then mean (0.485, 0.456, 0.406) and std (0.229, 0.224, 0.225).
+
+*Where it shows up:* Writing a serving test; Reviewing a camera or model change.
+
+*See:* [Shipping vision in production](./cnns/shipping-vision-in-production.md).
 
 **Probabilistic output** — Output that can differ each time, even from the exact same input, because a generative model samples from a range of likely answers instead of computing one fixed result.
 
@@ -1909,6 +2109,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
 
+**Receptive field** — The patch of the original image that one value in a layer can depend on.
+
+*In plain terms.* Each layer looks at a small window of the layer before it, so the patch grows with depth. Downsampling makes it grow faster. Compare it with the size of what you need to detect.
+
+*For example.* Three stacked 3 by 3 layers at stride 1 have a 7 by 7 receptive field.
+
+*Where it shows up:* Choosing which layer's features to reuse; Checking that a model can see a whole object.
+
+*See:* [From edges to objects](./cnns/from-edges-to-objects.md).
+
 **Red-teaming** — Structured adversarial testing — internal or paid external researchers actively trying to break a model or product before launch — run as a recurring practice, not a one-time pre-launch event.
 
 *In plain terms.* Most testing checks that a system does what it's supposed to. Red-teaming inverts that: a dedicated team or outside researchers try, on purpose, to make it fail — jailbreak it, extract data from it, trick it into a harmful action. The findings do double duty: they fix real gaps, and the record of having run the exercise is itself evidence a regulator or enterprise buyer can check.
@@ -1979,6 +2189,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
 
+**Residual connection** — A shortcut that adds a block's input to its output, y = x + F(x), as in ResNet.
+
+*In plain terms.* Instead of replacing its input, each block adds a correction to it. With all-zero weights a residual block passes its input through unchanged. This design made very deep networks practical.
+
+*For example.* Torchvision's ResNet ends each block with out += identity.
+
+*Where it shows up:* Reading a backbone's design; Judging depth versus latency.
+
+*See:* [From edges to objects](./cnns/from-edges-to-objects.md).
+
+**ResNet** — A family of deep convolutional networks built from residual blocks. It won the ILSVRC 2015 ImageNet challenge.
+
+*In plain terms.* ResNets come in depths such as 18, 50, 101 and 152 layers. ResNet-50 is a common baseline backbone: about 25.6 million parameters in torchvision.
+
+*For example.* A team starts from torchvision's ResNet-50 weights and trains a new 4-class head.
+
+*Where it shows up:* Picking a baseline backbone; Reading model tables.
+
+*See:* [From edges to objects](./cnns/from-edges-to-objects.md).
+
 **Reverse mode** — The way of applying the chain rule that starts at the output and works back.
 
 *In plain terms.* One backward pass gives the slope of a single output, such as a loss, with respect to every input. A model has one loss and millions of parameters, so reverse mode is the choice for training. Backpropagation is its special case for neural networks.
@@ -2018,6 +2248,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Avoiding decisions that backfire later; Anticipating unintended consequences; Evaluating incentives and metrics.
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**Segment Anything Model** — Meta's promptable segmentation models. SAM 3 segments objects from points, boxes, masks or a short text phrase.
+
+*In plain terms.* You give a prompt and get masks, boxes and scores back. SAM 3 can segment every instance of a concept named in a short phrase, in images and videos. Its checkpoints need an access request and come under the SAM License.
+
+*For example.* The prompt 'a player in white' returns a mask for each matching player.
+
+*Where it shows up:* Prototyping segmentation with no training; Speeding up mask labelling.
+
+*See:* [Vision foundation models](./cnns/vision-foundation-models.md).
 
 **Self-attention** — Attention where the queries, keys and values all come from the same text, so the text attends to itself.
 
@@ -2148,6 +2388,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Making an interactive feature feel fast even when total generation time is unchanged; Deciding when the simpler full-response call is fine instead (background jobs, no one watching); Reducing perceived wait time for a user-facing feature.
 
 *See:* [Calling an LLM API](./api-integrations/calling-an-llm-api.md).
+
+**Stride (convolution)** — How many pixels a convolution's window moves between positions. Not the same as a tensor's memory stride.
+
+*In plain terms.* Stride 1 visits every position. Stride 2 skips every other one, so each side of the output is about half as long and later layers do about a quarter of the work. Fine detail can be lost early.
+
+*For example.* A 7 by 7 input with a 3 by 3 kernel gives a 5 by 5 output at stride 1 and 3 by 3 at stride 2.
+
+*Where it shows up:* Trading detail for speed; Reading output-size arithmetic.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
 
 **Stride (memory layout)** — How far to move in a tensor's flat storage to step one place along an axis.
 
@@ -2389,6 +2639,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & evals](./agentic-ai/reliability-and-evals.md).
 
+**Transfer learning** — Reusing a model trained on one large dataset as the starting point for your task.
+
+*In plain terms.* Few teams train vision models from scratch. They take a pre-trained network and either freeze it and train a small head, or fine-tune some or all of it. How much data you have and how similar it is decide which.
+
+*For example.* An ImageNet-trained ResNet-50, frozen, with a new 4-class layer of 8,196 parameters.
+
+*Where it shows up:* Cutting the labelling budget; Choosing between a frozen backbone and fine-tuning.
+
+*See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
+
 **Transformer** — The model design behind today's LLMs: a stack of blocks, each an attention layer plus a small network that works on each token alone.
 
 *In plain terms.* A transformer reads text as a sequence of tokens. In each block, attention lets every token gather information from the tokens it can see, then a small network processes each token on its own. Stacking many blocks builds up the model's picture of the text. The design is credited to Vaswani et al. in the paper 'Attention Is All You Need'.
@@ -2439,6 +2699,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
 
+**Vision foundation model** — A large model pre-trained on a very large image collection, often without hand-made labels, and reused for many tasks.
+
+*In plain terms.* Instead of labelling thousands of images, you describe classes in words, train a small head on its features, or prompt it. The licence and the vendor's intended-use note are part of the choice.
+
+*For example.* CLIP for zero-shot classification, DINOv2 for features, SAM 3 for prompted masks.
+
+*Where it shows up:* Cutting labelling cost; Checking licences before building.
+
+*See:* [Vision foundation models](./cnns/vision-foundation-models.md).
+
+**Vision transformer** — A transformer that reads an image as a sequence of patch tokens.
+
+*In plain terms.* A ViT cuts the image into square patches, turns each into a token, adds position information and runs a transformer encoder. Unlike a CNN it builds in no locality, so it leans on large-scale pre-training.
+
+*For example.* ViT-B/16 cuts a 224 by 224 image into 196 patches and adds 1 class token: 197 tokens.
+
+*Where it shows up:* Choosing a backbone family; Estimating how cost grows with resolution.
+
+*See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
+
 **Wait state** — A point where a process pauses and persists, waiting for an external event (a human approval, a timer, a message) before continuing.
 
 *In plain terms.* Real processes don't run start-to-finish in one go — they wait for people, timers, and other systems. A wait state is where the process safely pauses and saves itself to the database, so it can sleep for days and resume exactly where it left off when the event arrives.
@@ -2459,6 +2739,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Webhooks & async patterns](./api-integrations/webhooks-and-async-patterns.md).
 
+**Weight sharing** — Using the same kernel weights at every position of an image.
+
+*In plain terms.* Sharing assumes a pattern worth finding in one place is worth finding everywhere. It cuts the number of weights enormously, and a shifted input gives a shifted output. It fits poorly when position matters, such as on centred faces.
+
+*For example.* AlexNet's first layer needs 34,944 parameters with sharing and 105,705,600 without.
+
+*Where it shows up:* Explaining why CNNs need few weights; Spotting when the assumption fails.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
 **Workflow capture** — Owning an entire workflow end-to-end (not just a tool within it) — the strategy that erases adoption friction and compounds into a moat.
 
 *In plain terms.* A tool that does one step still needs a human to run the rest. Capturing the whole workflow means the agent owns the end-to-end job, so there's nothing for the user to stitch together — and once you own the workflow, you can expand and rebundle from that position.
@@ -2478,3 +2768,23 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Making production prompts robust to input variation; Defending against prompt injection; Building reusable scaffolds where sections are named.
 
 *See:* [Structured prompting: XML, delimiters, scaffolds](./prompt-engineering/structured-prompting.md).
+
+**Zero padding** — A border of zeros added around an image so a convolution's window can sit on the edge pixels.
+
+*In plain terms.* Padding controls the output size. A 3 by 3 kernel with padding 1 and stride 1 keeps the size the same. The padded zeros are not part of the scene, which is one reason to test objects at the frame edge.
+
+*For example.* A 224 by 224 input stays 224 by 224 after a 3 by 3 convolution with padding 1.
+
+*Where it shows up:* Reading output-size arithmetic.
+
+*See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Zero-shot classification** — Classifying into classes the model was never trained on, by comparing the image with text descriptions.
+
+*In plain terms.* It needs no training labels, only a labelled test set to check it. The probabilities can look very confident because small similarity gaps are scaled up, so set a threshold and test.
+
+*For example.* Similarities of 0.31, 0.27 and 0.22 become probabilities of 0.982, 0.018 and 0.0001.
+
+*Where it shows up:* Trying a vision feature before labelling; Setting a human-review threshold.
+
+*See:* [Vision foundation models](./cnns/vision-foundation-models.md).
