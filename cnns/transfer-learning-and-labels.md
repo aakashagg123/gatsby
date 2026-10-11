@@ -94,7 +94,7 @@ A factory wants to sort photos of parts into 4 classes: good, scratched, dented,
 - **Leakage across the split.** Five photos of the same part, some in training and some in test. The score is inflated.
 - **A high learning rate on pre-trained weights.** Early training destroys the useful features.
 - **A preprocessing mismatch.** The backbone expects the exact resizing and normalisation it was trained with. A different one can quietly lower accuracy. [Shipping vision in production](./shipping-vision-in-production.md) covers this.
-- **A licence missed.** Some pre-trained weights are not licensed for commercial use. Check before you build on them. [Vision foundation models](./vision-foundation-models.md) has examples.
+- **A licence missed.** The DINOv2 repository, for example, releases its XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License, unlike its main Apache 2.0 weights (as of 2026-10). Check the licence of the exact weights before you build on them. [Vision foundation models](./vision-foundation-models.md) has more examples.
 
 ## Under the hood
 
@@ -144,6 +144,6 @@ To fine-tune later layers only, unfreeze `model.layer4` and give its parameters 
 ## Sources
 
 - CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): few people train from scratch for lack of data; ImageNet as 1.2 million images in 1,000 categories; the fixed-feature-extractor and fine-tuning strategies; the four scenarios by dataset size and similarity; early features generic, later features specific; a smaller learning rate for pre-trained weights. Read 2026-10.
-- Meta AI Research (FAIR), *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): features usable "with classifiers as simple as linear layers", performing well "without any requirement for fine-tuning". Read 2026-10.
+- Meta AI Research (FAIR), *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): features usable "with classifiers as simple as linear layers", performing well "without any requirement for fine-tuning"; main code and weights under the Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): `ResNet50_Weights.IMAGENET1K_V2` with `num_params` 25,557,032; the final layer `nn.Linear(512 * block.expansion, num_classes)`; `expansion = 4` in the ResNet-50 block. Read 2026-10.
 - The factory example, the class counts and the test split are invented. The arithmetic is shown in the lesson.

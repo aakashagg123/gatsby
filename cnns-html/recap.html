@@ -92,7 +92,7 @@
 <details><summary>Answer</summary>The parameters stay the same, because the kernels are shared across positions. The compute per layer rises about four times, because the number of positions quadruples. Activation memory rises about four times too. Price the change before approving it. (<a href="how-a-convolution-sees.html">Lesson 2</a>)</details></p>
 </li>
 <li>
-<p><strong>Two vendor tables list a model at "4.1 GFLOPS" and a rival at "2.1 GMACs". Can you conclude the rival is half the cost?</strong>
+<p><strong>Torchvision lists ResNet-50 at 4.089 "GFLOPS". TensorFlow's MobileNet page lists MobileNetV3-Large at 217 million MACs. Can you divide one by the other to say how much cheaper MobileNet is?</strong>
  <br />
 <details><summary>Answer</summary>No. The two tables use different units. Read how each table defines its unit before you compare, and then measure latency on your own hardware, which is the number that matters. (<a href="how-a-convolution-sees.html">Lesson 2</a>)</details></p>
 </li>
@@ -123,7 +123,7 @@
 </li>
 <li>
 <p><strong>Before shipping a feature built on a pre-trained vision model, what two documents do you read?</strong>
-    <details><summary>Answer</summary>The licence for the exact weights, and the vendor's intended-use statement or model card. Two models in one repository can carry different licences, and some cards rule out deployment. (<a href="vision-foundation-models.html">Lesson 6</a>)</details></p>
+    <details><summary>Answer</summary>The licence for the exact weights, and the vendor's intended-use statement or model card. Licences can differ even inside one repository. As of 2026-10, the DINOv2 README releases its main code and weights under Apache License 2.0, and its XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Some model cards also rule out deployment. (<a href="vision-foundation-models.html">Lesson 6</a>)</details></p>
 </li>
 <li><strong>After a camera upgrade, accuracy drops but there are no errors and latency is normal. What do you check first?</strong>
     <details><summary>Answer</summary>The preprocessing contract: colour order, resize and crop, normalisation, orientation and channel layout. Compare the model inputs from the new cameras with the training pipeline's inputs. Then check image statistics such as brightness and blur for a shift. (<a href="shipping-vision-in-production.html">Lesson 7</a>)</details></li>
@@ -133,10 +133,11 @@
 <h2 id="sources">Sources</h2>
 <ul>
 <li>CS231n course notes, <em>Convolutional Neural Networks</em> (<a href="https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md">GitHub source, master branch</a>): the AlexNet first-layer counts with and without sharing; ResNet as the ILSVRC 2015 winner, with skip connections. Read 2026-10.</li>
-<li>PyTorch torchvision source, <code>torchvision/models/resnet.py</code> (<a href="https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py">GitHub, main branch</a>): <code>out += identity</code> in each block. Read 2026-10.</li>
+<li>PyTorch torchvision source, <code>torchvision/models/resnet.py</code> (<a href="https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py">GitHub, main branch</a>): <code>out += identity</code> in each block; ResNet-50 <code>IMAGENET1K_V2</code> lists <code>_ops</code> of 4.089, which torchvision's documentation build (<code>docs/source/conf.py</code>) labels "GFLOPS". Read 2026-10.</li>
+<li>Meta AI Research (FAIR), <em>DINOv2</em> README (<a href="https://github.com/facebookresearch/dinov2/blob/main/README.md">GitHub, main branch</a>): code and weights under the Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.</li>
 <li>OpenAI, <em>CLIP</em> README and model card (<a href="https://github.com/openai/CLIP/blob/main/README.md">README</a>, <a href="https://github.com/openai/CLIP/blob/main/model-card.md">model card</a>, GitHub, main branch): zero-shot ImageNet performance matching the original ResNet-50; deployed use out of scope. Read 2026-10.</li>
 <li>Hendrycks and Dietterich, <em>robustness</em> README (<a href="https://github.com/hendrycks/robustness/blob/master/README.md">GitHub, master branch</a>): ImageNet-C's 15 corruptions and ImageNet-A. Read 2026-10.</li>
-<li>TensorFlow Models, <em>MobileNet</em> README (<a href="https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md">GitHub, master branch</a>): MobileNetV3-Large latency and accuracy, float and 8-bit, on a Pixel 1. Read 2026-10.</li>
+<li>TensorFlow Models, <em>MobileNet</em> README (<a href="https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md">GitHub, master branch</a>): MobileNetV3-Large latency and accuracy, float and 8-bit, on a Pixel 1; 217 million MACs for MobileNetV3-Large in its checkpoint table ("Large dm=1 (float)"). Read 2026-10.</li>
 <li>The two illustrations are invented. Their numbers come from the worked examples in lessons 1 and 7.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="shipping-vision-in-production.html"><span class="lbl">← Previous</span><span class="ttl">Shipping vision in production</span></a><span></span></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
