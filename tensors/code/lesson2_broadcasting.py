@@ -44,6 +44,10 @@ def main():
     wrong_diff = p - y
     right_diff = p.reshape(n) - y
     wrong_loss = (wrong_diff * wrong_diff).mean()
+    # A perfect model (predictions equal the labels) still scores badly under the wrong shape.
+    perfect = Tensor([float(v) for v in labels[:n]], (n, 1))
+    perfect_wrong = perfect - y
+    perfect_wrong_loss = (perfect_wrong * perfect_wrong).mean()
     right_loss = (right_diff * right_diff).mean()
 
     # A shape that cannot work is refused, which is the good case.
@@ -55,7 +59,7 @@ def main():
     return dict(rule=rule, shape=centered.shape, after=after.data, strides=stretched_strides,
                 row_means_right=row_means_right, row_means_wrong=row_means_wrong,
                 taller_failed=taller_failed, wrong_shape=wrong_diff.shape, right_shape=right_diff.shape,
-                wrong_loss=wrong_loss, right_loss=right_loss, refused=refused, n=n)
+                wrong_loss=wrong_loss, right_loss=right_loss, perfect_wrong_loss=perfect_wrong_loss, refused=refused, n=n)
 
 
 if __name__ == "__main__":
@@ -68,6 +72,7 @@ if __name__ == "__main__":
     print("the same slip on a 5x4 table raises an error:", r["taller_failed"])
     print(f"predictions (n,1) minus labels (n,) -> shape {r['wrong_shape']} ({r['wrong_shape'][0] * r['wrong_shape'][1]:,} numbers, not {r['n']})")
     print(f"squared-error loss: wrong {r['wrong_loss']:.4f}, right {r['right_loss']:.4f}")
+    print(f"a perfect model still scores {r['perfect_wrong_loss']:.4f} under the wrong shape")
     assert r["rule"] == (8, 7, 6, 5)
     assert r["shape"] == (1000, 4) and all(abs(v) < 1e-9 for v in r["after"])
     assert r["strides"] == (0, 1)
@@ -76,4 +81,5 @@ if __name__ == "__main__":
     assert r["taller_failed"] and r["refused"]
     assert r["wrong_shape"] == (300, 300) and r["right_shape"] == (300,)
     assert abs(r["wrong_loss"] - r["right_loss"]) > 0.01           # same code path, a different number
+    assert r["perfect_wrong_loss"] > 0.1                           # the wrong loss has a high floor, even for a perfect model
     print("lesson 2 ok")

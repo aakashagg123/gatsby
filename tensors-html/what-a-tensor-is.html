@@ -17,7 +17,7 @@
 <h2 id="tldr">TL;DR</h2>
 <p>A <strong>tensor</strong> is a grid of numbers with a <strong>shape</strong>. A single number is a tensor with no axes. A list of numbers has one axis. A table has two. A batch of images has four. The number of axes is the <strong>rank</strong>. Each axis has a size, and the list of sizes is the shape.</p>
 <p>Every input, every weight and every gradient in a model is a tensor. So the size of a model, the cost of a batch and the memory of a graphics processing unit (GPU) all come from counting numbers and multiplying by bytes. The number format is the <strong>dtype</strong>. A float32 number takes 4 bytes. A float16 number takes 2.</p>
-<p>The shape is also the contract between the parts of a program. A layer expects one shape and returns another. Most framework errors are shape errors. You can read a shape the way you read a unit.</p>
+<p>The shape is also the contract between the parts of a program. A layer expects one shape and returns another. Many framework errors are shape errors. You can read a shape the way you read a unit.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — Shape and dtype turn vague claims into arithmetic. "We will process a batch of 32 images" has a size you can compute. So does "we will fit a longer context". That arithmetic decides which hardware you need and what it costs.</p>
@@ -144,7 +144,7 @@
 <p>The memory for a tensor is its size times the bytes per number. A batch of 32 images at float32 is 4,816,896 × 4 = 19,267,584 bytes, which is 18.4 MiB. At float16 it is half that.</p>
 <h3 id="storage-and-strides">Storage and strides</h3>
 <p>A tensor is stored as one flat list in <strong>row-major</strong> order. The last index changes fastest. The <strong>strides</strong> say how far to move in that flat list to step one place along each axis. For a <code>(1000, 4)</code> table, the strides are <code>(4, 1)</code> in numbers. One step down a row jumps over 4 numbers. One step along a row moves 1.</p>
-<p>This is why some operations are free. A <strong>reshape</strong> keeps the same numbers and changes only the shape and strides. It is a view. Reshaping <code>(12,)</code> to <code>(3, 4)</code> copies nothing. NumPy's documentation describes the same idea for arrays: views share data, so a change through one is visible through the other.</p>
+<p>This is why some operations are free. A <strong>reshape</strong> keeps the same numbers and changes only the shape and strides. When the layout allows it, it is a view. Reshaping <code>(12,)</code> to <code>(3, 4)</code> copies nothing. On a non-contiguous tensor, such as one just transposed, NumPy's documentation says reshape creates a view where possible or a copy otherwise. NumPy's documentation describes the same idea for arrays: views share data, so a change through one is visible through the other.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>Bytes vs. precision.</strong> A smaller dtype fits more in memory and moves faster. It stores each number less exactly. <a href="batching-memory-and-precision.html">Lesson 4</a> shows where that bites.</li>

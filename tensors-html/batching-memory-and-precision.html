@@ -16,14 +16,14 @@
   <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Will it fit? That question is answered by counting tensors. Training keeps four kinds of numbers on the device: the <strong>weights</strong>, the <strong>gradients</strong>, the <strong>optimizer state</strong> and the <strong>activations</strong>. The first three scale with the number of parameters. The last scales with the batch.</p>
-<p>With the Adam optimizer, a common setup needs about 16 bytes per parameter for the first three. A model with 1.5 billion parameters needs about 24 gigabytes (GB) before it stores a single activation. Serving the same model in float16 needs only the weights: about 3 GB.</p>
-<p>The number format is the other lever. float16 and bfloat16 use half the bytes of float32. They cannot store every number float32 can. float16 overflows above 65,504 and loses very small numbers. bfloat16 keeps float32's range and gives up precision. These limits are why training keeps a float32 copy of the weights.</p>
+<p>With the Adam optimizer, a common setup needs about 16 bytes per parameter for the first three. A model with 1.5 billion parameters needs about 24 gigabytes (GB) before it stores a single activation. Serving the same model in float16 needs the weights, about 3 GB, plus the cache for each request.</p>
+<p>The number format is the other lever. float16 and bfloat16 use half the bytes of float32. They cannot store every number float32 can. float16 cannot hold values above 65,504 and loses very small numbers. bfloat16 keeps float32's range and gives up precision. These limits are why training keeps a float32 copy of the weights.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — Memory decides what hardware a project needs, and so what it costs. A model that serves on one device may need many to train. The difference is the gradient, the optimizer state and the activations.</p>
 <p><strong>What it changes in your decisions</strong> — You ask for a memory budget by part, not a single "model size". You see that a request to train, to fine-tune or to serve is three different memory problems. You expect a number-format choice to be tested on quality, not assumed.</p>
 <p><strong>Ask your eng team</strong> — <em>"What is the memory budget for training, split into weights, gradients, optimizer state and activations, and which number format does each part use?"</em></p>
-<p><strong>Risk if ignored</strong> — A plan that sizes hardware from the model's file size and finds, in the first run, that training needs seven or eight times as much. Or a switch to a smaller format that quietly degrades the model.</p>
+<p><strong>Risk if ignored</strong> — A plan that sizes hardware from the model's file size and finds, in the first run, that training needs about four times a float32 file, or eight times a float16 file, before activations. Or a switch to a smaller format that quietly degrades the model.</p>
 </blockquote>
 <h2 id="the-mental-model-four-piles-of-numbers">The mental model: four piles of numbers</h2>
 <style>
@@ -115,7 +115,7 @@
 </tbody>
 </table>
 <p>The exponent bits set the range. The fraction bits set the precision. bfloat16 keeps float32's exponent, so it has the same range, and keeps only 7 fraction bits. Google describes it as having the same dynamic range as float32, and builds it into its tensor processing units (TPUs). float16 has a small range and more precision.</p>
-<p>Two failures follow, both from float16. A number above 65,504 overflows. A very small number rounds to zero. The smallest positive float16 number is about 6 × 10⁻⁸.</p>
+<p>Two failures follow, both from float16. A number too large for float16 overflows. Round-to-nearest sends values up to about 65,519 back to 65,504, and larger ones to infinity. A very small number rounds to zero. The smallest positive float16 number is about 6 × 10⁻⁸.</p>
 <h3 id="why-training-keeps-a-float32-copy">Why training keeps a float32 copy</h3>
 <p>A weight update is often tiny next to the weight. Add 0.0001 to 1.0 in float16. The smallest step near 1.0 is about 0.001, so the sum rounds back to 1.0. The update vanishes. The mixed precision paper keeps a float32 master copy of the weights for this reason. Each step updates the master copy, then makes a float16 copy for the next forward and backward pass.</p>
 <p>Gradients can vanish too. Many gradients are small. In float16, a gradient smaller than the smallest float16 number, about 6 × 10⁻⁸, is lost. Values below half of it round to zero. <strong>Loss scaling</strong> multiplies the loss by a constant before the backward pass, which scales every gradient up. The gradients are divided by the same constant before the update. This is also from the mixed precision paper.</p>
@@ -131,7 +131,7 @@
 <ul>
 <li><strong>Sizing training from the file size.</strong> The weights are one pile of four.</li>
 <li><strong>An out-of-memory error on the largest input.</strong> Activations grew with the batch and the length.</li>
-<li><strong>A format that overflows.</strong> A value above 65,504 in float16 becomes infinity.</li>
+<li><strong>A format that overflows.</strong> A value of about 65,520 or more in float16 becomes infinity.</li>
 <li><strong>Vanishing gradients in float16.</strong> Training stalls with no error. Loss scaling is the usual fix.</li>
 <li><strong>A stalled update.</strong> Small updates round away. The weights never change.</li>
 <li><strong>A format change judged on speed alone.</strong> Quality is checked later, or never.</li>
@@ -205,7 +205,7 @@ def state_bytes(params, scheme):
 <li>65,504 is held exactly in float16. 70,000 overflows to infinity. bfloat16 holds 70,000 as 70,144.</li>
 <li>10⁻⁸ becomes 0 in float16. bfloat16 keeps it as 1.001 × 10⁻⁸.</li>
 <li>Loss scaling works. Multiply 10⁻⁸ by 1,024, store it in float16, then divide. The result is 1.0012 × 10⁻⁸, within 0.2% of the original.</li>
-<li>Adding 0.0001 to 1.0, ten thousand times, in float16 leaves 1.0. In float32 it reaches 2.0002. This is the stalled update, and the reason for a float32 master copy.</li>
+<li>Adding 0.0001 to 1.0, ten thousand times, in float16 leaves 1.0. In float32 it reaches 2.0002. The exact sum is 2.0, so the extra 0.0002 is float32 rounding drift. This is the stalled update, and the reason for a float32 master copy.</li>
 </ul>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
@@ -227,7 +227,7 @@ def state_bytes(params, scheme):
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Rajbhandari, Rajbhandari, Ruwase and He, <em>ZeRO: Memory Optimizations Toward Training Trillion Parameter Models</em>, 2020 (<a href="https://arxiv.org/abs/1910.02054">arxiv.org/abs/1910.02054</a>): the memory accounting for mixed-precision Adam training, with 2 + 2 bytes for the float16 weights and gradients and <code>K = 12</code> bytes of optimizer state per parameter. The 24 GB figure for 1.5 billion parameters is this lesson's own arithmetic (16 bytes × 1.5 billion). Checked through search-result excerpts, 2026-10.</li>
+<li>Rajbhandari, Rasley, Ruwase and He, <em>ZeRO: Memory Optimizations Toward Training Trillion Parameter Models</em>, SC20 (2020) (<a href="https://arxiv.org/abs/1910.02054">arxiv.org/abs/1910.02054</a>): the memory accounting for mixed-precision Adam training, with 2 + 2 bytes for the float16 weights and gradients and <code>K = 12</code> bytes of optimizer state per parameter. The 24 GB figure for 1.5 billion parameters is this lesson's own arithmetic (16 bytes × 1.5 billion). Checked through search-result excerpts, 2026-10.</li>
 <li>Micikevicius et al., <em>Mixed Precision Training</em>, International Conference on Learning Representations, 2018 (<a href="https://arxiv.org/abs/1710.03740">arxiv.org/abs/1710.03740</a>): a float32 master copy of the weights, a float16 copy for the forward and backward passes, and loss scaling. Checked through search-result excerpts, 2026-10.</li>
 <li>Kalamkar et al., <em>A Study of BFLOAT16 for Deep Learning Training</em>, 2019 (<a href="https://arxiv.org/abs/1905.12322">arxiv.org/abs/1905.12322</a>): bfloat16 has the range of float32, and training matched float32 without hyper-parameter changes. Checked through search-result excerpts, 2026-10.</li>
 <li>Google Cloud, <a href="https://cloud.google.com/blog/products/ai-machine-learning/bfloat16-the-secret-to-high-performance-on-cloud-tpus">bfloat16: the secret to high performance on Cloud TPUs</a>: bfloat16 as one sign bit, eight exponent bits and seven mantissa bits, with the same dynamic range as float32. Checked through search-result excerpts, 2026-10.</li>

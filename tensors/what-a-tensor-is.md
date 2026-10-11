@@ -10,7 +10,7 @@ A **tensor** is a grid of numbers with a **shape**. A single number is a tensor 
 
 Every input, every weight and every gradient in a model is a tensor. So the size of a model, the cost of a batch and the memory of a graphics processing unit (GPU) all come from counting numbers and multiplying by bytes. The number format is the **dtype**. A float32 number takes 4 bytes. A float16 number takes 2.
 
-The shape is also the contract between the parts of a program. A layer expects one shape and returns another. Most framework errors are shape errors. You can read a shape the way you read a unit.
+The shape is also the contract between the parts of a program. A layer expects one shape and returns another. Many framework errors are shape errors. You can read a shape the way you read a unit.
 
 > 🎯 **For the product leader**
 >
@@ -64,7 +64,7 @@ The memory for a tensor is its size times the bytes per number. A batch of 32 im
 
 A tensor is stored as one flat list in **row-major** order. The last index changes fastest. The **strides** say how far to move in that flat list to step one place along each axis. For a `(1000, 4)` table, the strides are `(4, 1)` in numbers. One step down a row jumps over 4 numbers. One step along a row moves 1.
 
-This is why some operations are free. A **reshape** keeps the same numbers and changes only the shape and strides. It is a view. Reshaping `(12,)` to `(3, 4)` copies nothing. NumPy's documentation describes the same idea for arrays: views share data, so a change through one is visible through the other.
+This is why some operations are free. A **reshape** keeps the same numbers and changes only the shape and strides. When the layout allows it, it is a view. Reshaping `(12,)` to `(3, 4)` copies nothing. On a non-contiguous tensor, such as one just transposed, NumPy's documentation says reshape creates a view where possible or a copy otherwise. NumPy's documentation describes the same idea for arrays: views share data, so a change through one is visible through the other.
 
 ## Tradeoffs and decisions
 

@@ -10,7 +10,7 @@ Most tensor work is three kinds of operation. **Elementwise** operations act on 
 
 When two tensors have different shapes, **broadcasting** decides whether they can combine. Line the shapes up from the right. Each pair of axis sizes must be equal, or one must be 1, or one must be missing. The small tensor is then stretched to fit. A bias vector added to every row of a table is the usual case.
 
-Broadcasting is convenient and dangerous. A wrong axis can still have a legal shape. Then the code runs, the numbers are wrong, and nothing warns you. This is the most common cause of silent bugs in model code.
+Broadcasting is convenient and dangerous. A wrong axis can still have a legal shape. Then the code runs, the numbers are wrong, and nothing warns you. This is a common cause of silent bugs in model code.
 
 > 🎯 **For the product leader**
 >
@@ -67,7 +67,7 @@ The documentation also warns that broadcasting can be a bad idea when it leads t
 
 ### Reshape
 
-A reshape reads the same numbers with a new shape. One size can be left as -1 for the library to work out. A reshape is a view, so it costs nothing, but the numbers must fill the new shape exactly.
+A reshape reads the same numbers with a new shape. One size can be left as -1 for the library to work out. A reshape returns a view when the layout allows it, so it usually costs nothing. The numbers must fill the new shape exactly.
 
 ## Tradeoffs and decisions
 
@@ -126,7 +126,7 @@ Habits to adopt:
 
 **Silent bug 1: the wrong axis.** Take a `4 × 4` table. To center each row, we subtract the row means with keepdims, shape `(4, 1)`. The row means of the result are all zero. Now forget keepdims. The row means have shape `(4,)`, which lines up with the columns. The code runs. The row means of the result are −5.6, −3.1, −8.1 and 16.9. Nothing is centered. Try the same slip on a `5 × 4` table and the library raises an error. The error is a lucky accident of the shape.
 
-**Silent bug 2: the loss that averages over the wrong thing.** We have 300 predictions of shape `(300, 1)` and 300 labels of shape `(300,)`. The difference is `(300, 300)`, which is 90,000 numbers instead of 300. The squared-error loss is 0.188. The correct loss, with the predictions reshaped to `(300,)`, is 0.041. The wrong version averages every prediction against every label. A model trained on it sees a loss that barely moves. We chose predictions that carry signal on purpose. If every prediction were the same number, the two averages would match and the bug would hide.
+**Silent bug 2: the loss that averages over the wrong thing.** We have 300 predictions of shape `(300, 1)` and 300 labels of shape `(300,)`. The difference is `(300, 300)`, which is 90,000 numbers instead of 300. The squared-error loss is 0.188. The correct loss, with the predictions reshaped to `(300,)`, is 0.041. The wrong version averages every prediction against every label. Even a perfect model, whose predictions equal the labels, scores 0.295 under this loss. The loss has a high floor, so it hides progress. We chose predictions that carry signal on purpose. If every prediction were the same number, the two averages would match and the bug would hide.
 
 **The loud one.** Adding a `(3,)` tensor to a `(4,)` tensor raises an error. This is the good case: the shapes cannot be broadcast, and the library says so.
 

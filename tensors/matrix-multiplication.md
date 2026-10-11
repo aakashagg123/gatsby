@@ -49,7 +49,7 @@ For a whole transformer language model, Kaplan and colleagues give the forward c
 
 **Arithmetic intensity** is the FLOPs done per byte moved from memory. Hardware has a ratio of compute speed to memory speed. If an operation does fewer FLOPs per byte than that ratio, it waits on memory. If it does more, it is limited by compute.
 
-NVIDIA's performance guide gives the formula for a matrix multiply. For matrices of sizes `M × K` and `K × N`, the FLOPs are `2 × M × N × K`, and the bytes moved are the sizes of the three matrices if each is read or written once. The guide notes that a matrix-vector product, where `M` or `N` is 1, always has an intensity below 1. So it is always memory limited. The guide calls the method a first-order rule of thumb.
+NVIDIA's performance guide gives the formula for a matrix multiply. For matrices of sizes `M × K` and `K × N`, the FLOPs are `2 × M × N × K`, and the bytes moved are the sizes of the three matrices if each is read or written once. The guide notes that a matrix-vector product, where `M` or `N` is 1, always has an intensity below 1, for numbers of 2 or 4 bytes. So it is memory limited. The guide calls the method a simplified rule of thumb.
 
 Now apply it. With a `4096 × 4096` weight table at float32, one input (`m = 1`) does half a FLOP per byte. A batch of 512 does about 205. The weights are the same size in both cases. A batch reuses each weight 512 times after reading it once.
 
@@ -102,7 +102,7 @@ Habits to adopt:
 - **Count FLOPs** for any layer you plan to scale: `2 × batch × in × out`.
 - **Check the inner sizes** whenever you write a multiply.
 - **Test a transposed weight table** on a non-square layer.
-- **Measure on the real device.** The intensity model is a first-order guide, as NVIDIA's guide says.
+- **Measure on the real device.** The intensity model is a simplified guide, as NVIDIA's guide says.
 
 ## Worked example: the same layer, one input or a batch
 
