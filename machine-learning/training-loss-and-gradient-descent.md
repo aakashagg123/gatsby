@@ -228,7 +228,7 @@ For a model with one layer, the gradient has a short closed form, as above. A de
 has many layers. Its gradient comes from **backpropagation**, which applies the chain rule
 from the output back to the input, one layer at a time. [Lesson 6](./model-families.md)
 writes that out by hand for a small network and checks it against a numerical slope. The
-Tensors module that follows shows how libraries compute it for you.
+[Tensors module](../tensors/automatic-differentiation.md) shows how libraries compute it for you.
 
 Habits that save time:
 

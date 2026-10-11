@@ -77,7 +77,7 @@ JS_LOGIC = r"""
   }
 
   function allowed(child){
-    var t = child.tagName, c = child.className || '';
+    var t = (child.tagName || '').toUpperCase(), c = child.className || '';   // SVG elements report lowercase tag names
     return !SKIP[t] && (typeof c !== 'string' || (c.indexOf('gloss-term') < 0 && c.indexOf('mermaid') < 0))
            && child.id !== 'gl-panel' && child.id !== 'gl-scrim' && child.id !== 'rs-root';
   }

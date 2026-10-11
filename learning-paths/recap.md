@@ -38,6 +38,7 @@
 | System design | — | — | 3 of 8 | 4 of 8 |
 | APIs & integrations | — | — | Full | — |
 | Machine learning | 4 of 8 | 5 of 8 | Full | 7 of 8 |
+| Tensors | — | — | Full | 3 of 5 |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 

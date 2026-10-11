@@ -8,7 +8,7 @@ committed. To change a path, edit the PATHS data below and run:
     python3 scripts/gen_learning_paths.py && python3 scripts/build_learning_paths.py
 
 When a planned module ships (tensors, CNNs), replace its SOON(...) step with T(...) lesson
-links. Machine learning has shipped.
+links. Machine learning and tensors have shipped.
 """
 import math
 import glob
@@ -35,7 +35,7 @@ NAMES = {
     "ai-agents": "AI agents", "agentic-workflows": "Agentic workflows",
     "knowledge-graphs": "Knowledge graphs", "access-control": "Access control",
     "system-design": "System design", "api-integrations": "APIs & integrations",
-    "first-principles": "First principles", "machine-learning": "Machine learning",
+    "first-principles": "First principles", "machine-learning": "Machine learning", "tensors": "Tensors",
 }
 CONTENT = {
     "00-foundations": "AI engineering: foundations", "01-inference-internals": "AI engineering: inference internals",
@@ -280,7 +280,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The demo works. Production loops, leaks or overspends, and nobody can say why."),
     stages=[
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
-             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), SOON("Tensors", "Shapes, broadcasting and batching. Planned."),
+             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), T("tensors", 1, 2, 3, 4, 5),
                     SOON("CNNs", "Optional branch for vision. Planned."), T("llms", 1, 2, 5)],
              ready="You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
@@ -344,7 +344,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The team ships fast and unsafe. Review happens after an incident."),
     stages=[
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
-             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8),
+             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8), T("tensors", 1, 3, 4),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],
@@ -551,7 +551,7 @@ def render_hub():
     a("This library has more than twenty tracks. You do not need all of them. "
       "A learning path picks the tracks and the lessons for one role, puts them in order, and says when to move on.\n")
     a("**A note on scope.** The paths do not teach anything new. They order and explain the lessons that already exist, "
-      "and they say which lessons to skip. The lessons carry the content. The machine learning module is published. Modules on tensors and CNNs are planned. "
+      "and they say which lessons to skip. The lessons carry the content. The machine learning and tensors modules are published. A module on CNNs is planned. "
       "They show as \"coming soon\" until they are published.\n")
     a("## Pick your role\n")
     a("| Path | Who it is for | Outcome | Length |")
