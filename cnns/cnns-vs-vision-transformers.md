@@ -85,7 +85,7 @@ Torchvision also asserts that a ViT's input matches the size it was built for. T
 
 All compute figures in this table are torchvision's own, so they compare with each other. They are not on the same scale as the FLOPs counted in [lesson 2](./how-a-convolution-sees.md), which may be twice a torchvision figure for the same work.
 
-Read across. ConvNeXt-Tiny and ViT-B/16 at 224 are within 1.5 points. The ViT lists about 3.9 times the compute (17.564 ÷ 4.456). The 384-pixel ViT lists 3.16 times the compute of the 224-pixel one, while the pixel count grows 2.94 times. That gap is the attention term. The 384 model is also more accurate, but it is a different weights set. Torchvision says it was made by "end-to-end fine-tuning the original SWAG weights on ImageNet-1K data", so not all of that gain comes from resolution.
+Read across. ConvNeXt-Tiny and ViT-B/16 at 224 are within 1.5 points. The ViT lists about 3.9 times the compute (17.564 ÷ 4.456). The 384-pixel ViT lists 3.16 times the compute of the 224-pixel one, while the pixel count grows 2.94 times. That gap is consistent with attention cost growing faster than the pixel count. Torchvision lists only the total, so it does not show the split. The 384 model is also more accurate, but it is a different weights set. Torchvision says it was made by "end-to-end fine-tuning the original SWAG weights on ImageNet-1K data", so not all of that gain comes from resolution.
 
 **The decision.** A team with 5,000 labelled images and a mobile target starts with MobileNetV3 or EfficientNet-B0. A team with a server graphics processing unit (GPU) and a broad task tries ConvNeXt-Tiny and ViT-B/16 on its own test set, at its own resolution, and picks on accuracy per unit of cost.
 
