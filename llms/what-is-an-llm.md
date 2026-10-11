@@ -2,6 +2,8 @@
 
 *Part of [LLMs for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: fast*
+
 ## TL;DR
 
 A large language model does one thing: given some text, it predicts the most likely next
