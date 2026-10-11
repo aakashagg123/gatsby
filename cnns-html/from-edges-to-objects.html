@@ -13,7 +13,8 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>From edges to objects: what depth buys</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
 <p>One convolution layer sees a 3 by 3 window. A network that recognises a dog must see the whole dog. Depth closes the gap. Each layer looks at a small window of the layer before it, so the patch of the original image that a value depends on grows with every layer. That patch is the <strong>receptive field</strong>. Downsampling makes it grow faster.</p>
 <p>What the layers learn follows the same path. Early layers respond to simple local patterns such as edges and colour blobs. Later layers respond to larger, more specific patterns. The CS231n course notes describe early features as generic and useful for many tasks, and later features as specific to the data the network was trained on.</p>
 <p>Depth has a cost. A deeper network is slower per image. <strong>Residual connections</strong>, the "skip" paths in ResNet, are one well-known design for deep networks. They let each block add a correction to its input instead of replacing it. ResNet, built on them, won the 2015 ImageNet challenge.</p>

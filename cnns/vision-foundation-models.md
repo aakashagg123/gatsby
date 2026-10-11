@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: fast*
+
 ## TL;DR
 
 A **vision foundation model** is a large model pre-trained on a very large image collection, often without hand-made labels, and meant to be reused for many tasks. This lesson covers three families.

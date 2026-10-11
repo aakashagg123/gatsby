@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **convolution** slides one small grid of weights across an image. The grid is the **kernel**, often 3 by 3 pixels. At each position it multiplies the pixels under it by its weights and adds them up. The result is one number per position: a new grid called a **feature map**. A kernel that has learned "dark on the left, bright on the right" lights up wherever a vertical edge is.

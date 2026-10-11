@@ -191,6 +191,18 @@ The second foundation module. See the [plan](./TENSORS_ROADMAP.md).
 4. [Batching, memory and precision](./tensors/batching-memory-and-precision.md)
 5. [Automatic differentiation](./tensors/automatic-differentiation.md) · [Recap](./tensors/recap.md)
 
+## [Convolutional networks](./cnns/README.md)
+
+The third foundation module.
+
+1. [What computer vision does: the four jobs](./cnns/what-computer-vision-does.md)
+2. [How a convolution sees: one small grid, used everywhere](./cnns/how-a-convolution-sees.md)
+3. [From edges to objects: what depth buys](./cnns/from-edges-to-objects.md)
+4. [Transfer learning and labels: start from someone else's model](./cnns/transfer-learning-and-labels.md)
+5. [CNNs vs. vision transformers: picking a backbone](./cnns/cnns-vs-vision-transformers.md)
+6. [Vision foundation models: CLIP, DINO and SAM](./cnns/vision-foundation-models.md)
+7. [Shipping vision in production](./cnns/shipping-vision-in-production.md) · [Recap](./cnns/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

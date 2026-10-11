@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A vision model that scores well in a notebook can fail on the first real camera. Most of the failures are not in the model. They are in what happens to the image before the model sees it, and in how the world in front of the camera changes after launch.

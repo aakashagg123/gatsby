@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Computer vision turns pixels into a decision. Most products ask one of four questions about an image. **What is in it?** That is classification. **Where is each thing?** That is detection, which draws a box around each object. **Which pixels belong to what?** That is segmentation, which colours every pixel. **What is it similar to?** That is an embedding, a list of numbers you can search and compare.

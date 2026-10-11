@@ -13,7 +13,8 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 02</span>
     <h1>How a convolution sees: one small grid, used everywhere</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
 <p>A <strong>convolution</strong> slides one small grid of weights across an image. The grid is the <strong>kernel</strong>, often 3 by 3 pixels. At each position it multiplies the pixels under it by its weights and adds them up. The result is one number per position: a new grid called a <strong>feature map</strong>. A kernel that has learned "dark on the left, bright on the right" lights up wherever a vertical edge is.</p>
 <p>Two ideas make this work. Each output looks only at a small local window. And the same weights are used at every position, so a detector learned in one corner works in every corner. Together they cut the number of weights by a huge factor compared with connecting every pixel to every output.</p>
 <p>The cost is compute. A few weights are reused at every pixel, so the work grows with the image area. Double the width and height of the input and a convolution layer does four times the work, with the same weights. That makes input resolution one of the biggest cost levers in a vision product.</p>

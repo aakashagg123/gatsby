@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 One convolution layer sees a 3 by 3 window. A network that recognises a dog must see the whole dog. Depth closes the gap. Each layer looks at a small window of the layer before it, so the patch of the original image that a value depends on grows with every layer. That patch is the **receptive field**. Downsampling makes it grow faster.

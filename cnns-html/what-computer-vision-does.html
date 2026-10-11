@@ -13,7 +13,8 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>What computer vision does: the four jobs</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
 <p>Computer vision turns pixels into a decision. Most products ask one of four questions about an image. <strong>What is in it?</strong> That is classification. <strong>Where is each thing?</strong> That is detection, which draws a box around each object. <strong>Which pixels belong to what?</strong> That is segmentation, which colours every pixel. <strong>What is it similar to?</strong> That is an embedding, a list of numbers you can search and compare.</p>
 <p>The four jobs differ in what they cost to label, how you measure them and how fast they run. A box costs more to draw than a label. A mask costs more than a box. So the first product decision is the framing: pick the least detailed output that still answers the product question.</p>
 <p>This lesson is about that choice. It does not explain how an image becomes numbers. <a href="../tensors/what-a-tensor-is.html">What a tensor is</a> covers that: an image batch is a grid of shape (batch, channels, height, width).</p>

@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **vision transformer (ViT)** reads an image the way a language model reads text. It cuts the image into square **patches**, turns each patch into a token, and lets every token attend to every other token. A convolutional network (CNN) instead slides small kernels over the image, so it builds in two assumptions: nearby pixels matter most, and the same pattern matters everywhere.

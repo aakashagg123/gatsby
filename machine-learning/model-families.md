@@ -122,7 +122,7 @@ explain. It has many settings to tune. In return it handles data that rows and c
 cannot hold: pictures, speech, free text. A large language model is a very large neural
 network of a specific design, trained as in [What an LLM actually is](../llms/what-is-an-llm.md).
 Two modules that follow this one cover how networks handle numbers in bulk
-([Tensors](../tensors/README.md)) and how they see images (convolutional networks).
+([Tensors](../tensors/README.md)) and how they see images ([convolutional networks](../cnns/README.md)).
 
 ## Backpropagation in one page
 

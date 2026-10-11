@@ -13,7 +13,8 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Transfer learning and labels: start from someone else&#x27;s model</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
 <p>Almost nobody trains a vision model from scratch. The CS231n course notes say very few people do, because few teams have a big enough dataset. Instead a team takes a network already trained on a large dataset such as ImageNet and reuses it. This is <strong>transfer learning</strong>.</p>
 <p>There are three ways to reuse it. Use it as a <strong>frozen feature extractor</strong> and train only a small classifier on top. <strong>Fine-tune</strong> it: keep training some or all of its layers on your data. Or train from scratch, which is rarely the right call. The choice depends on two things: how many labelled images you have, and how much they look like the pre-training images.</p>
 <p>Labels are the real budget. Transfer learning cuts how many you need. It does not remove the need for a clean, honest test set.</p>

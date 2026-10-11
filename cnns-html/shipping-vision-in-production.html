@@ -13,7 +13,8 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 07</span>
     <h1>Shipping vision in production</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
 <p>A vision model that scores well in a notebook can fail on the first real camera. Most of the failures are not in the model. They are in what happens to the image before the model sees it, and in how the world in front of the camera changes after launch.</p>
 <p>Three things are specific to vision. First, the <strong>preprocessing contract</strong>: every pre-trained model expects a precise resize, crop, colour order and normalisation. Break it and accuracy drops with no error. Second, <strong>resolution and hardware</strong> set the cost per image, and an edge device changes the model you can afford. Third, <strong>image shift</strong>: lighting, blur, compression, new cameras and new products move the inputs away from the training set.</p>
 <p>The general machinery is covered elsewhere. <a href="../machine-learning/ml-in-production.html">ML in production</a> covers training-serving skew, drift and monitors. <a href="../tensors/batching-memory-and-precision.html">Batching, memory and precision</a> and <a href="../tensors/matrix-multiplication.html">Matrix multiplication</a> cover why batching pays and what number formats trade. This lesson adds only the vision-specific part.</p>

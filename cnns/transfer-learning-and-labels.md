@@ -2,6 +2,8 @@
 
 *Part of [Convolutional networks for the product and technology leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Almost nobody trains a vision model from scratch. The CS231n course notes say very few people do, because few teams have a big enough dataset. Instead a team takes a network already trained on a large dataset such as ImageNet and reuses it. This is **transfer learning**.
