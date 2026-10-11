@@ -2711,7 +2711,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Vision transformer** — A transformer that reads an image as a sequence of patch tokens.
 
-*In plain terms.* A ViT cuts the image into square patches, turns each into a token, adds position information and runs a transformer encoder. Unlike a CNN it builds in no locality, so it leans on large-scale pre-training.
+*In plain terms.* A ViT cuts the image into square patches, turns each into a token, adds position information and runs a transformer encoder. Unlike a CNN it builds in no locality. The recommended checkpoints in the ViT authors' repository are pre-trained on ImageNet-21k.
 
 *For example.* ViT-B/16 cuts a 224 by 224 image into 196 patches and adds 1 class token: 197 tokens.
 

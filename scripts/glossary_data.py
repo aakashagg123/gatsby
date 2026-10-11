@@ -2473,7 +2473,7 @@ GLOSSARY = [
 {
  "k":'vision-transformer',"t":'Vision transformer',"aliases":['vision transformers', 'ViT', 'ViTs'],"cat":"Convolutional networks",
  "short":'A transformer that reads an image as a sequence of patch tokens.',
- "fp":'A ViT cuts the image into square patches, turns each into a token, adds position information and runs a transformer encoder. Unlike a CNN it builds in no locality, so it leans on large-scale pre-training.',
+ "fp":'A ViT cuts the image into square patches, turns each into a token, adds position information and runs a transformer encoder. Unlike a CNN it builds in no locality. The recommended checkpoints in the ViT authors\' repository are pre-trained on ImageNet-21k.',
  "example":'ViT-B/16 cuts a 224 by 224 image into 196 patches and adds 1 class token: 197 tokens.',
  "uses":['Choosing a backbone family', 'Estimating how cost grows with resolution'],
  "see":('CNNs vs. vision transformers', 'cnns/cnns-vs-vision-transformers.md'),

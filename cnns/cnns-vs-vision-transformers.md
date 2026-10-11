@@ -6,7 +6,7 @@
 
 A **vision transformer (ViT)** reads an image the way a language model reads text. It cuts the image into square **patches**, turns each patch into a token, and lets every token attend to every other token. A convolutional network (CNN) instead slides small kernels over the image, so it builds in two assumptions: nearby pixels matter most, and the same pattern matters everywhere.
 
-Those built-in assumptions are the core tradeoff. A CNN starts with them, which tends to help when data is limited. A ViT must learn them from data, so it leans on large-scale pre-training. In return it can relate any two parts of the image from the first layer.
+Those built-in assumptions are the core tradeoff. A CNN starts with them, which tends to help when data is limited. A ViT must learn them from data, and the ViT authors' recommended checkpoints are pre-trained on ImageNet-21k. In return it can relate any two parts of the image from the first layer.
 
 Neither family wins outright. In torchvision's own ImageNet tables (as of 2026-10), a modern CNN (ConvNeXt-Tiny) and a ViT (ViT-B/16) land within 1.5 points of accuracy. The ViT needs about four times the listed compute. So pick the backbone by your data, your hardware and your resolution, not by fashion.
 
@@ -48,7 +48,7 @@ Torchvision's implementation shows the details. The patch embedding is a convolu
 
 A CNN builds in locality and weight sharing ([How a convolution sees](./how-a-convolution-sees.md)). A ViT builds in neither. Its attention can link any two patches from the first layer, and it learns from data which links matter. That is more flexible. It also means the model must learn from examples what a CNN gets for free.
 
-The ViT authors' repository points to this dependence. Its README says the models were pre-trained on the ImageNet and ImageNet-21k datasets, and its recommended AugReg checkpoints are pre-trained on ImageNet-21k. It lists a follow-up paper titled *How to train your ViT? Data, Augmentation, and Regularization in Vision Transformers*. It also lists *When Vision Transformers Outperform ResNets without Pretraining or Strong Data Augmentations*. That title assumes the usual case: ViTs rely on pre-training or strong augmentation.
+The ViT authors' repository shows what its models were trained on. Its README says the models were pre-trained on the ImageNet and ImageNet-21k datasets, and its recommended checkpoints are AugReg ones pre-trained on ImageNet-21k. It also lists two follow-up papers, titled *How to train your ViT? Data, Augmentation, and Regularization in Vision Transformers* and *When Vision Transformers Outperform ResNets without Pretraining or Strong Data Augmentations*.
 
 ### The modern CNN
 
@@ -58,7 +58,7 @@ ConvNeXt, from Facebook AI Research and the University of California, Berkeley, 
 
 A convolution layer's compute grows with the pixel count: double the side and it does four times the work. A ViT's token count also grows with the pixel count. Its attention scores grow with the square of the token count, as the [attention section](../llms/what-is-an-llm.md#inside-the-model-attention) explains. So raising resolution costs a ViT more than four times in its attention layers.
 
-Torchvision also asserts that a ViT's input matches the size it was built for. To use a pre-trained ViT at another resolution, its position embeddings must be resized. Torchvision ships a helper, `interpolate_embeddings`, for this. A CNN accepts other sizes as long as each stride step still divides the image evenly, as the CS231n transfer-learning notes point out.
+Torchvision also asserts that a ViT's input matches the size it was built for. To use a pre-trained ViT at another resolution, its position embeddings must be resized. Torchvision ships a helper, `interpolate_embeddings`, for this. A CNN is more flexible here. The CS231n transfer-learning notes say a pre-trained ConvNet can run on images of a different spatial size, as long as each layer's stride steps "fit" the new size.
 
 ## Worked example: two resolutions, two families
 
@@ -89,7 +89,7 @@ Read across. ConvNeXt-Tiny and ViT-B/16 at 224 are within 1.5 points. The ViT li
 
 ## Tradeoffs and decisions
 
-- **Built-in assumptions vs. flexibility.** A CNN's locality helps with limited data. A ViT's global attention is more flexible and leans on large pre-training.
+- **Built-in assumptions vs. flexibility.** A CNN's locality helps with limited data. A ViT's global attention is more flexible. Its authors' recommended checkpoints are pre-trained on ImageNet-21k, so plan to start from pre-trained weights.
 - **Compute vs. accuracy.** At similar accuracy in torchvision's tables, the ViT lists about four times the compute of ConvNeXt-Tiny. You pay that on every image.
 - **Resolution growth.** CNN compute grows with pixels. ViT attention grows with pixels squared. High-resolution products feel this most.
 - **Fixed vs. flexible input size.** Torchvision's ViT expects one size and needs its position embeddings resized for another. A CNN is easier to run at new sizes.
@@ -145,5 +145,5 @@ The reshape from patches to a token sequence is ordinary tensor work. [Operation
 - Meta AI Research, *DINOv2* and *DINOv3* READMEs ([DINOv2](https://github.com/facebookresearch/dinov2/blob/main/README.md), [DINOv3](https://github.com/facebookresearch/dinov3/blob/main/README.md), GitHub, main branch): DINOv2 backbones are ViTs; DINOv3 lists ViT and ConvNeXt models pre-trained on its web dataset. Read 2026-10.
 - Facebook AI Research and the University of California, Berkeley, *ConvNeXt* README ([GitHub, main branch](https://github.com/facebookresearch/ConvNeXt/blob/main/README.md)): "a pure ConvNet model constructed entirely from standard ConvNet modules"; released under the MIT licence. Read 2026-10.
 - TensorFlow Models, *MobileNet* README ([GitHub, master branch](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md)): efficiency reported in MACs, the number of multiply-accumulates needed for one image; 217 million MACs for MobileNetV3-Large ("Large dm=1 (float)"). Read 2026-10.
-- CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): a pre-trained ConvNet can run on images of a different size as long as each stride step still divides the image evenly. Read 2026-10.
+- CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): a pre-trained ConvNet can run on images of a different spatial size when the stride steps "fit". Read 2026-10.
 - The token counts, score counts and ratios are computed by `cnns/code/lesson5_patches.py` or shown as arithmetic in the lesson. The two team scenarios are illustrative.

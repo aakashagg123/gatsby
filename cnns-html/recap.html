@@ -114,7 +114,7 @@
 <li>
 <p><strong>A team wants a ViT trained from scratch on 3,000 images for a phone app. What concerns do you raise?</strong>
  <br />
-<details><summary>Answer</summary>A ViT lacks a CNN's built-in locality and leans on large pre-training, so training from scratch on 3,000 images is risky. It also costs more compute per image than a small CNN such as MobileNetV3. Start from pre-trained weights, and compare against a mobile CNN on the target phone. (<a href="cnns-vs-vision-transformers.html">Lesson 5</a>)</details></p>
+<details><summary>Answer</summary>A ViT lacks a CNN's built-in locality, and the ViT authors' recommended checkpoints are pre-trained on ImageNet-21k rather than trained from scratch on a small set. It also costs more compute per image than a small CNN such as MobileNetV3. Start from pre-trained weights, and compare against a mobile CNN on the target phone. (<a href="cnns-vs-vision-transformers.html">Lesson 5</a>)</details></p>
 </li>
 <li>
 <p><strong>A zero-shot CLIP prototype reports 98% probability on most images. Is the model 98% accurate?</strong>
