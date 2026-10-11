@@ -60,6 +60,7 @@ Page generators emit markup only. They carry no CSS.
 
 - The default typeface is **Google Sans**, self-hosted from `design-system/fonts/` (SIL OFL 1.1). It replaces the first entry of the SDK's `--font-sans`; the SDK's system stack stays as the fallback. Readers can switch to the system font in the reader panel. OpenAI's brand typeface is not licensed for reuse, so it is not used.
 - The knowledge graph keeps one hue per track. These are data colours in `build_graph.py`, not UI colour.
+- The README banner (`assets/banner-light.svg`, `assets/banner-dark.svg`) is an image, so it cannot read CSS variables. `scripts/build_banner.py` writes it with the resolved token values and an embedded copy of Google Sans. Re-run it if the tokens change.
 
 ## Checks
 
