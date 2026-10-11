@@ -45,7 +45,7 @@ VOLATILITY = {
     "rag-vector-databases": "medium", "evaluation-and-observability": "fast",
     "ai-security-and-guardrails": "fast", "cost-optimization": "fast",
     "knowledge-graphs": "medium", "system-design": "stable", "access-control": "medium",
-    "learning-paths": "medium", "machine-learning": "medium",
+    "learning-paths": "medium", "machine-learning": "medium", "tensors": "medium",
     "technical-product-management": "medium", "technical-product-sense": "stable",
     "product-sense": "medium", "first-principles": "stable",
 }
@@ -63,6 +63,7 @@ COMMON_ACRONYMS = {
     "CSV", "PDF", "USD", "EU", "US", "UK", "IT", "QA", "PR", "ID", "IDS", "HR", "SEO", "B2B",
     "B2C", "SAAS", "CRM", "ERP", "RFC", "RFCS", "MVP", "TL", "DR", "TLDR", "CI", "CD", "OS",
     "CLAUDE", "TODO",   # file and marker names (CLAUDE.md, TODO comments), not acronyms
+    "NVIDIA",           # a company name
 }
 
 

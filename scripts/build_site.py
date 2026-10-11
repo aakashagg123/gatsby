@@ -54,6 +54,7 @@ LP_HTML = os.path.join(ROOT, "learning-paths-html")     # learning paths by role
 CE_HTML = os.path.join(ROOT, "context-engineering-html")  # context engineering
 PE_HTML = os.path.join(ROOT, "prompt-engineering-html")  # prompt engineering
 ML_HTML = os.path.join(ROOT, "machine-learning-html")   # machine learning (foundation modules)
+TENSORS_HTML = os.path.join(ROOT, "tensors-html")        # tensors (foundation modules)
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -110,7 +111,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -231,6 +232,13 @@ LANDING = """<!doctype html>
       <h3>Machine learning →</h3>
       <p>What a learned system is, what it learns from, how it learns, how to trust its
       score, which model family to pick, and how to keep it working after launch. Runnable
+      code in every lesson.</p>
+    </a>
+    <a class="card" href="tensors/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
+      <h3>Tensors →</h3>
+      <p>What the objects every model works on are, what they cost in memory and compute,
+      why shape errors are silent, and how a library gets the gradient for free. Runnable
       code in every lesson.</p>
     </a>
     <a class="card" href="generative-ai/index.html">
@@ -752,6 +760,10 @@ def main():
     # 1t. Machine learning module: copy its pre-rendered pages.
     if os.path.isdir(ML_HTML):
         shutil.copytree(ML_HTML, os.path.join(SITE, "machine-learning"))
+
+    # 1u. Tensors module: copy its pre-rendered pages.
+    if os.path.isdir(TENSORS_HTML):
+        shutil.copytree(TENSORS_HTML, os.path.join(SITE, "tensors"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.
