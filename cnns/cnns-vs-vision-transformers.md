@@ -99,7 +99,7 @@ Read across. ConvNeXt-Tiny and ViT-B/16 at 224 are within 1.5 points. The ViT li
 - **A ViT on a small dataset with no pre-training.** It underfits or overfits. Start from pre-trained weights.
 - **Raising resolution on a ViT without re-costing.** Attention cost grows with the square of the token count. The latency target breaks.
 - **Serving at a size the model was not built for.** Torchvision's ViT raises an error. A custom stack may resize silently and lose accuracy.
-- **Mixed compute conventions.** Torchvision's "GFLOPS" and another vendor's multiply-accumulates (MACs) are not the same unit. Compare like with like.
+- **Mixed compute units.** Torchvision's tables label compute "GFLOPS". TensorFlow's MobileNet page reports multiply-accumulates (MACs). Check how each source defines its unit before you compare them.
 
 ## Under the hood
 

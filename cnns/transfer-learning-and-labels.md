@@ -136,7 +136,7 @@ To fine-tune later layers only, unfreeze `model.layer4` and give its parameters 
 ## Related lessons
 
 - [From edges to objects](./from-edges-to-objects.md) — why early features transfer and late ones are specific.
-- [Vision foundation models](./vision-foundation-models.md) — backbones trained without labels, and their licences.
+- [Vision foundation models](./vision-foundation-models.md) — large pre-trained backbones, and their licences.
 - [Automatic differentiation](../tensors/automatic-differentiation.md) — freezing as a deliberate cut in the gradient graph.
 - [Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) — why a small set overfits a big model.
 - [Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md) — the same cheapest-lever-first rule for language models.

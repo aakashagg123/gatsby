@@ -26,6 +26,6 @@
 <div class="cn"><span class="cn-chip">Depth</span>
 <h4>The view grows with every layer</h4>
 <p class="cn-sub">Receptive field in input pixels, computed in cnns/code/lesson3_receptive_field.py.</p>
-<div class="cn-row cn-c4"><div class="cn-card "><span class="cn-tag">early</span><h5>1 layer, 3 x 3</h5><p>sees 3 x 3<br>edges, colour</p></div><div class="cn-card "><h5>3 layers, 3 x 3</h5><p>sees 7 x 7<br>27C² weights, not 49C²</p></div><div class="cn-card cn-info"><h5>ResNet stem + 1 layer</h5><p>sees 19 x 19<br>after two stride-2 steps</p></div><div class="cn-card cn-ok"><span class="cn-tag">late</span><h5>Last stage</h5><p>7 x 7 grid from 224<br>parts and objects</p></div></div>
+<div class="cn-row cn-c4"><div class="cn-card "><span class="cn-tag">early</span><h5>1 layer, 3 x 3</h5><p>sees 3 x 3<br>edges, colour blobs</p></div><div class="cn-card "><h5>3 layers, 3 x 3</h5><p>sees 7 x 7<br>27C² weights, not 49C²</p></div><div class="cn-card cn-info"><h5>ResNet stem + 1 layer</h5><p>sees 19 x 19<br>after two stride-2 steps</p></div><div class="cn-card cn-ok"><span class="cn-tag">late</span><h5>Last stage</h5><p>7 x 7 grid from 224<br>larger, specific patterns</p></div></div>
 <p class="cn-foot">early features are generic and transfer widely; late features are specific to the training data</p>
 </div>

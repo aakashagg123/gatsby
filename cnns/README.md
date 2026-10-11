@@ -2,7 +2,7 @@
 
 *Part of the [foundation modules](../MACHINE_LEARNING_ROADMAP.md). It follows [machine learning](../machine-learning/README.md) and [tensors](../tensors/README.md).*
 
-Computer vision is the part of AI that reads images. It counts stock on shelves, checks parts on a production line, sorts uploaded photos and reads documents. For more than a decade the workhorse behind it has been the **convolutional neural network (CNN)**. Vision transformers and large pre-trained "foundation" models now sit beside it.
+Computer vision is the part of AI that reads images. It counts stock on shelves, checks parts on a production line, sorts uploaded photos and reads documents. Much of it runs on the **convolutional neural network (CNN)**. The CS231n course notes credit AlexNet, entered in the 2012 ImageNet challenge, as the first work that popularized CNNs in computer vision. Vision transformers and large pre-trained "foundation" models now sit beside them.
 
 Product and technology leaders make vision decisions often. What should the model output: a label, a box or a mask? What resolution do we need, and what does it cost? Do we label thousands of images, or start from someone else's model? CNN or transformer? Can we ship this pre-trained model under its licence? Why did accuracy drop when we changed cameras? These decisions do not need the mathematics. They need a clear picture of what a convolution does, what depth buys, how transfer works and where vision systems break.
 
@@ -63,7 +63,7 @@ Read it as a path from question to production. You **frame** the product questio
 3. [From edges to objects: what depth buys](./from-edges-to-objects.md) — receptive fields, what layers learn, residual connections, and which layer to reuse.
 4. [Transfer learning and labels: start from someone else's model](./transfer-learning-and-labels.md) — frozen features, fine-tuning, linear probes and the labelling budget.
 5. [CNNs vs. vision transformers: picking a backbone](./cnns-vs-vision-transformers.md) — patches as tokens, built-in assumptions, and a backbone table.
-6. [Vision foundation models: CLIP, DINO and SAM](./vision-foundation-models.md) — zero-shot classification, label-free features, promptable segmentation, and licences.
+6. [Vision foundation models: CLIP, DINO and SAM](./vision-foundation-models.md) — zero-shot classification, reusable pre-trained features, promptable segmentation, and licences.
 7. [Shipping vision in production](./shipping-vision-in-production.md) — the preprocessing contract, hardware sizing and image shift.
 
 Then the [recap and real-world examples](./recap.md), with a self-test.
@@ -77,3 +77,7 @@ python3 cnns/code/test_examples.py
 ```
 
 The files are `lesson2_convolution.py`, `lesson3_receptive_field.py` and `lesson5_patches.py`. Each ends in `assert` lines that check the numbers quoted in its lesson. Run a file on its own to see the numbers printed.
+
+## Sources
+
+- CS231n course notes, *Convolutional Neural Networks* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md)): AlexNet as "the first work that popularized Convolutional Networks in Computer Vision", submitted to the ImageNet ILSVRC challenge in 2012. Read 2026-10.

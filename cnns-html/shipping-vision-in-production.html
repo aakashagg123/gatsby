@@ -68,7 +68,7 @@
 <li><strong>Resize and crop.</strong> Serving squashes the whole image to 224 by 224 instead of resizing then cropping. Objects change shape.</li>
 <li><strong>Normalisation.</strong> Values in 0 to 255 instead of 0 to 1, or the wrong means.</li>
 <li><strong>Layout.</strong> Channels first or channels last. <a href="../tensors/what-a-tensor-is.html">What a tensor is</a> covers this. When the shapes still line up, the error is silent.</li>
-<li><strong>Orientation.</strong> Photos can carry an Exchangeable Image File Format (EXIF) orientation tag. Pillow, for example, only rotates the pixels when you call <code>ImageOps.exif_transpose</code>. If the loader skips that step, the image can arrive sideways.</li>
+<li><strong>Orientation.</strong> Photos can carry an Exchangeable Image File Format (EXIF) orientation tag. Pillow's <code>ImageOps.exif_transpose</code> applies that tag to the pixels. If the loader never applies the tag, the image can arrive sideways.</li>
 </ul>
 <p>Each of these is a vision-specific form of the training-serving skew in <a href="../machine-learning/ml-in-production.html">ML in production</a>.</p>
 <h3 id="fixed-input-sizes">Fixed input sizes</h3>

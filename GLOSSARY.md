@@ -719,7 +719,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
 
-**DINOv2** — Meta's self-supervised vision models whose features work with a simple linear classifier, no fine-tuning needed.
+**DINOv2** — Meta's vision models. DINOv2 learns features without labels that work with a simple linear classifier; DINOv3 continues the line.
 
 *In plain terms.* DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.
 
@@ -2191,7 +2191,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Residual connection** — A shortcut that adds a block's input to its output, y = x + F(x), as in ResNet.
 
-*In plain terms.* Instead of replacing its input, each block adds a correction to it. With all-zero weights a residual block passes its input through unchanged. This design made very deep networks practical.
+*In plain terms.* Instead of replacing its input, each block adds a correction to it. With all-zero weights a residual block passes its input through unchanged. ResNet, built from such blocks, won the 2015 ImageNet challenge.
 
 *For example.* Torchvision's ResNet ends each block with out += identity.
 

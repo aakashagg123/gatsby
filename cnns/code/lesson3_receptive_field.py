@@ -52,6 +52,9 @@ def main():
     assert receptive_field(stem) == 11
     assert receptive_field(stem + [(3, 1)]) == 19        # one more 3x3 layer after the stem
     assert receptive_field([(3, 1)] * 4) == 9            # four 3x3 layers without downsampling
+    # ResNet-50 layer1: three bottleneck blocks, one 3x3 each (the 1x1 convs add nothing).
+    assert [receptive_field(stem + [(3, 1)] * n) for n in (1, 2, 3)] == [19, 27, 35]
+    assert 224 // 56 == 4 and 224 // 7 == 32                  # pixels per position: layer1 vs last stage
 
     # 4. Feature-map sizes through torchvision's ResNet layout for a 224 x 224 input.
     sizes = [224]

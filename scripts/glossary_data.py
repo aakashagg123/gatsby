@@ -2428,7 +2428,7 @@ GLOSSARY = [
 {
  "k":'residual-connection',"t":'Residual connection',"aliases":['residual connections', 'skip connection', 'skip connections'],"cat":"Convolutional networks",
  "short":"A shortcut that adds a block's input to its output, y = x + F(x), as in ResNet.",
- "fp":'Instead of replacing its input, each block adds a correction to it. With all-zero weights a residual block passes its input through unchanged. This design made very deep networks practical.',
+ "fp":'Instead of replacing its input, each block adds a correction to it. With all-zero weights a residual block passes its input through unchanged. ResNet, built from such blocks, won the 2015 ImageNet challenge.',
  "example":"Torchvision's ResNet ends each block with out += identity.",
  "uses":["Reading a backbone's design", 'Judging depth versus latency'],
  "see":('From edges to objects', 'cnns/from-edges-to-objects.md'),
@@ -2526,7 +2526,7 @@ GLOSSARY = [
 },
 {
  "k":'dino',"t":'DINOv2',"aliases":['DINOv3', 'DINO'],"cs":True,"cat":"Convolutional networks",
- "short":"Meta's self-supervised vision models whose features work with a simple linear classifier, no fine-tuning needed.",
+ "short":"Meta's vision models. DINOv2 learns features without labels that work with a simple linear classifier; DINOv3 continues the line.",
  "fp":'DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.',
  "example":'A linear probe on DINOv2 features as a first defect classifier.',
  "uses":['Getting strong frozen features', 'Checking licence terms per checkpoint'],

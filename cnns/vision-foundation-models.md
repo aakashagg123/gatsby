@@ -7,7 +7,7 @@
 A **vision foundation model** is a large model pre-trained on a very large image collection, often without hand-made labels, and meant to be reused for many tasks. This lesson covers three families.
 
 - **CLIP** (OpenAI) learns from images paired with captions. You can classify an image by comparing it with text labels you write, with no training. This is **zero-shot** classification.
-- **DINOv2 and DINOv3** (Meta) learn image features with no labels at all. You put a small classifier on top, often a single linear layer.
+- **DINOv2** (Meta) learns image features with no labels. You put a small classifier on top, often a single linear layer. **DINOv3** continues the line with more backbones.
 - **SAM 3** (Meta) segments objects from a prompt: points, boxes, masks, or a short text phrase such as "a player in white".
 
 These models change the first question. It is no longer "how many images must we label to train?" It is "can a foundation model do this with few labels or none, and are we allowed to ship it?" The licence and the vendor's stated intended use are now part of the technical choice.
@@ -16,7 +16,7 @@ This field moves fast. Every model name, licence and figure here is as of 2026-1
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — A foundation model can turn a three-month labelling project into a one-week prototype. It can also carry a licence that forbids your use, or a vendor note that says it is not meant for deployment.
+> **Why it matters** — A foundation model can let a team prototype a vision feature before it labels a training set. It can also carry a licence that forbids your use, or a vendor note that says it is not meant for deployment.
 >
 > **What it changes in your decisions** — You try zero-shot or a linear probe before you fund labelling. You check the licence, the access terms and the intended-use statement before the prototype becomes the plan.
 >
@@ -48,9 +48,9 @@ CLIP has two encoders, one for images and one for text. Training pulls matching 
 
 The README reports that CLIP "matches the performance of the original ResNet50 on ImageNet 'zero-shot' without using any of the original 1.28M labeled examples." The model card lists limits. CLIP struggles with fine-grained classification and counting objects. Its performance and biases depend on how the classes are worded and chosen.
 
-### DINOv2 and DINOv3: features without labels
+### DINOv2 and DINOv3: reusable features
 
-DINOv2 was "pretrained on a dataset of 142 M images without using any labels or annotations." Its README says the features work "with classifiers as simple as linear layers" across many tasks "without any requirement for fine-tuning." That makes it a strong frozen backbone for [transfer learning](./transfer-learning-and-labels.md). DINOv3 continues the line. It offers ViT and ConvNeXt backbones pre-trained on a web dataset, plus ViT backbones pre-trained on satellite imagery.
+DINOv2 was "pretrained on a dataset of 142 M images without using any labels or annotations." Its README says the features work "with classifiers as simple as linear layers" across many tasks "without any requirement for fine-tuning." That makes it a strong frozen backbone for [transfer learning](./transfer-learning-and-labels.md). The DINOv2 README describes DINOv3 as "continuing this line of work." The DINOv3 README offers ViT and ConvNeXt backbones pre-trained on a web dataset, plus ViT backbones pre-trained on satellite imagery.
 
 ### SAM 3: segment from a prompt
 
@@ -154,7 +154,7 @@ SAM 3 on an image, from its README: build the model, call `processor.set_image(i
 
 - OpenAI, *CLIP* README ([GitHub, main branch](https://github.com/openai/CLIP/blob/main/README.md)): CLIP trained on image and text pairs; matching the original ResNet-50 on ImageNet zero-shot without the 1.28M labelled examples; the zero-shot code with the "a photo of a {c}" prompt, normalised features and the factor of 100 before the softmax. The repository's LICENSE file is the MIT License. Read 2026-10.
 - OpenAI, *CLIP* model card ([GitHub, main branch](https://github.com/openai/CLIP/blob/main/model-card.md)): image and text encoders trained with a contrastive loss; "any deployed use case of the model … is currently out of scope"; surveillance and facial-recognition uses always out of scope; data skewed toward people "most connected to the internet"; weaknesses in fine-grained classification and counting; performance and biases depending on class design. Read 2026-10.
-- Meta AI Research (FAIR), *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): pre-trained on 142 M images without labels; features usable with linear classifiers without fine-tuning; code and weights under Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.
+- Meta AI Research (FAIR), *DINOv2* README ([GitHub, main branch](https://github.com/facebookresearch/dinov2/blob/main/README.md)): pre-trained on 142 M images without labels; features usable with linear classifiers without fine-tuning; DINOv3 described as "continuing this line of work"; code and weights under Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.
 - Meta AI Research, *DINOv3* README ([GitHub, main branch](https://github.com/facebookresearch/dinov3/blob/main/README.md)): ViT and ConvNeXt backbones pre-trained on a web dataset, ViT backbones pre-trained on a satellite dataset, backbones from 21M parameters (ViT-S/16 distilled) to 6,716M (ViT-7B/16); weights by access request; code and weights under the DINOv3 License. Read 2026-10.
 - Meta, *SAM 3* README ([GitHub, main branch](https://github.com/facebookresearch/sam3/blob/main/README.md)): promptable segmentation in images and videos from text or visual prompts; segmenting all instances of a concept from a short phrase, with "a player in white" as an example prompt; 75 to 80% of human performance on Meta's new benchmark; access requested on Hugging Face; the SAM License; the image usage example. Read 2026-10.
 - The marketplace example and its similarity values are invented. The arithmetic is shown and checked in the lesson.

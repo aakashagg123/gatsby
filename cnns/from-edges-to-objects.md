@@ -8,7 +8,7 @@ One convolution layer sees a 3 by 3 window. A network that recognises a dog must
 
 What the layers learn follows the same path. Early layers respond to simple local patterns such as edges and colour blobs. Later layers respond to larger, more specific patterns. The CS231n course notes describe early features as generic and useful for many tasks, and later features as specific to the data the network was trained on.
 
-Depth has a cost. A deeper network is slower and harder to train. **Residual connections**, the "skip" paths in ResNet, made very deep networks practical. They let each block add a correction to its input instead of replacing it.
+Depth has a cost. A deeper network is slower per image. **Residual connections**, the "skip" paths in ResNet, are one well-known design for deep networks. They let each block add a correction to its input instead of replacing it. ResNet, built on them, won the 2015 ImageNet challenge.
 
 For a product leader, this decides two things: how much model you need, and which layers of a pre-trained model to reuse for your data.
 
@@ -26,8 +26,8 @@ For a product leader, this decides two things: how much model you need, and whic
 
 ```mermaid
 flowchart LR
-  L1["Layer 1<br/>sees 3 x 3 pixels<br/>edges, colour"] --> L2["Layer 2<br/>sees 5 x 5<br/>corners, textures"]
-  L2 --> L3["Deeper layers<br/>after downsampling<br/>parts: wheels, eyes"]
+  L1["Layer 1<br/>sees 3 x 3 pixels<br/>edges, colour blobs"] --> L2["Layer 2<br/>sees 5 x 5<br/>small local patterns"]
+  L2 --> L3["Deeper layers<br/>after downsampling<br/>larger, more specific patterns"]
   L3 --> L4["Last layers<br/>most of the image<br/>whole objects"]
 ```
 
@@ -51,11 +51,11 @@ By the last stage, a 224 by 224 input has become a 7 by 7 grid, 32 times smaller
 
 ### What the layers respond to
 
-The CS231n notes on visualising networks show first-layer filters as smooth edge and colour patterns. In deeper layers, they show images that most strongly activate single units of AlexNet's fifth pooling layer. Those units respond to things like upper bodies, text and specular highlights, and each one depends on a large part of the image. The transfer-learning notes draw the practical conclusion. Early features are generic, such as edge and colour-blob detectors. Later features are more specific to the classes of the original dataset.
+The CS231n notes on visualising networks describe the first-layer weights of a trained network as "very nice and smooth". In deeper layers, they show images that most strongly activate single units of AlexNet's fifth pooling layer. Those units respond to things like upper bodies, text and specular highlights, and each one depends on a large part of the image. The transfer-learning notes draw the practical conclusion. Early features are generic, such as edge and colour-blob detectors. Later features are more specific to the classes of the original dataset.
 
 ### Residual connections
 
-A plain block replaces its input: y = F(x). A residual block adds to it: y = x + F(x). Torchvision's ResNet code shows this as one line, `out += identity`. If a residual block's weights are all zero, it passes its input through unchanged. A plain block with zero weights passes nothing. So in a residual network each block starts close to "do no harm" and learns a correction.
+A plain block replaces its input: y = F(x). A residual block adds to it: y = x + F(x). Torchvision's ResNet code shows this as one line, `out += identity`. If a residual block's weights are all zero, it passes its input through unchanged. A plain block with zero weights passes nothing. So a residual block can keep its input and learn only a correction on top of it.
 
 The ResNet family, from Kaiming He and colleagues at Microsoft Research Asia, won the ImageNet challenge (ILSVRC) in 2015, according to the CS231n notes. Its authors' repository releases the original ResNet-50, ResNet-101 and ResNet-152 models.
 
@@ -71,7 +71,9 @@ The ResNet family, from Kaiming He and colleagues at Microsoft Research Asia, wo
 
 **Step 4: the grid shrinks.** Through torchvision's ResNet layout, a 224-pixel side becomes 112, then 56, 28, 14 and 7.
 
-**The decision.** A defect-inspection team has 30-pixel scratches on 224-pixel images. The early layers already see far enough to cover a scratch. The team takes features from a middle stage of a pre-trained ResNet, not the last one. The last stage summarises whole everyday objects at 7 by 7, and the scratch is a small part of one cell. This choice is a hypothesis. The team tests features from both stages on a held-out set before it commits.
+**Step 5: the end of the first stage.** In ResNet-50, the first stage (`layer1`) adds three blocks after the stem. Each block has one 3 by 3 convolution, and its 1 by 1 convolutions do not widen the view. At that point the grid has a step of 4 pixels, so each 3 by 3 layer adds 2 × 4 = 8 pixels. The view grows from 11 to 19, 27 and then 35 pixels. The map is still 56 by 56, so each position covers 4 by 4 pixels of the image.
+
+**The decision.** A defect-inspection team has 30-pixel scratches on 224-pixel images. After the stem and one layer, each value sees only 19 pixels, less than a scratch. By the end of the first stage it sees 35, enough to cover one, on a 56 by 56 map. At the last stage one cell of the 7 by 7 grid spans 32 pixels, so a scratch fills about one cell and is mixed with everything else in it. The team takes features from an early or middle stage of a pre-trained ResNet, not the last one. This choice is a hypothesis. The team tests features from both stages on a held-out set before it commits.
 
 ## Tradeoffs and decisions
 
@@ -130,7 +132,7 @@ To reuse a middle stage, take the output of a named layer instead of the last on
 ## Sources
 
 - CS231n course notes, *Convolutional Neural Networks* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md)): three stacked 3 by 3 layers see 7 by 7, with 27C² parameters against 49C² for one 7 by 7 layer; ResNet "developed by Kaiming He et al. was the winner of ILSVRC 2015", with skip connections. Read 2026-10.
-- CS231n course notes, *Visualizing what ConvNets learn* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/understanding-cnn.md)): smooth first-layer filters; AlexNet POOL5 units responding to upper bodies, text and specular highlights over large parts of the image; neurons without semantic meaning on their own; all-zero activation maps as a sign of dead filters. Read 2026-10.
+- CS231n course notes, *Visualizing what ConvNets learn* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/understanding-cnn.md)): first-layer weights described as "very nice and smooth"; AlexNet POOL5 units responding to upper bodies, text and specular highlights over large parts of the image; neurons without semantic meaning on their own; all-zero activation maps as a sign of dead filters. Read 2026-10.
 - CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): early features are generic (edge and colour-blob detectors), later features are specific to the original dataset. Read 2026-10.
 - Kaiming He et al., *Deep Residual Networks* README ([GitHub, master branch](https://github.com/KaimingHe/deep-residual-networks/blob/master/README.md)): the original ResNet-50, ResNet-101 and ResNet-152 models from the paper "Deep Residual Learning for Image Recognition", Microsoft Research Asia. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): `out += identity` in each block; the 7 by 7 stride-2 first convolution and 3 by 3 stride-2 max pool; stride 2 at the start of `layer2` to `layer4`; listed compute of 1.814 GFLOPS for ResNet-18 and 4.089 for ResNet-50. Read 2026-10.

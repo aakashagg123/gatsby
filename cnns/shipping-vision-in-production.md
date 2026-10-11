@@ -47,7 +47,7 @@ So the contract belongs to the weights, not the architecture. Common ways to bre
 - **Resize and crop.** Serving squashes the whole image to 224 by 224 instead of resizing then cropping. Objects change shape.
 - **Normalisation.** Values in 0 to 255 instead of 0 to 1, or the wrong means.
 - **Layout.** Channels first or channels last. [What a tensor is](../tensors/what-a-tensor-is.md) covers this. When the shapes still line up, the error is silent.
-- **Orientation.** Photos can carry an Exchangeable Image File Format (EXIF) orientation tag. Pillow, for example, only rotates the pixels when you call `ImageOps.exif_transpose`. If the loader skips that step, the image can arrive sideways.
+- **Orientation.** Photos can carry an Exchangeable Image File Format (EXIF) orientation tag. Pillow's `ImageOps.exif_transpose` applies that tag to the pixels. If the loader never applies the tag, the image can arrive sideways.
 
 Each of these is a vision-specific form of the training-serving skew in [ML in production](../machine-learning/ml-in-production.md).
 

@@ -158,7 +158,7 @@
 <li><strong>A ViT on a small dataset with no pre-training.</strong> It underfits or overfits. Start from pre-trained weights.</li>
 <li><strong>Raising resolution on a ViT without re-costing.</strong> Attention cost grows with the square of the token count. The latency target breaks.</li>
 <li><strong>Serving at a size the model was not built for.</strong> Torchvision's ViT raises an error. A custom stack may resize silently and lose accuracy.</li>
-<li><strong>Mixed compute conventions.</strong> Torchvision's "GFLOPS" and another vendor's multiply-accumulates (MACs) are not the same unit. Compare like with like.</li>
+<li><strong>Mixed compute units.</strong> Torchvision's tables label compute "GFLOPS". TensorFlow's MobileNet page reports multiply-accumulates (MACs). Check how each source defines its unit before you compare them.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
 <p>The file is <code>cnns/code/lesson5_patches.py</code>. The token count is one line, and it mirrors torchvision's <code>seq_length = (image_size // patch_size) ** 2</code> plus one class token.</p>

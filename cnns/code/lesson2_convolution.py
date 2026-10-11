@@ -114,7 +114,7 @@ def main():
 
     # 6. Double the resolution: 4x the FLOPs, the same parameters.
     flops_448 = conv_flops(448, 448, 64, 3, 3)
-    assert flops_448 == 4 * flops
+    assert flops_448 == 4 * flops == 693_633_024
     assert conv_params(3, 3, 64) == params
 
     # 7. The CS231n AlexNet first-layer numbers: 55*55*96 positions, 11*11*3 + 1 per position.
