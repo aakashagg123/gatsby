@@ -97,7 +97,7 @@
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
-<li><strong>Detail smaller than the window.</strong> A crack two pixels wide on a phone photo shrunk to 224 pixels becomes less than one pixel. No kernel can find it.</li>
+<li><strong>Detail smaller than one pixel.</strong> A crack two pixels wide on a photo 4,000 pixels wide (assumed) is shrunk to 224 pixels. It becomes 2 × 224 ÷ 4,000 = 0.112 pixels wide. No kernel can find it.</li>
 <li><strong>Resolution changed late.</strong> A team trains at 224 and serves at 512 to "see more". The cost per image rises about five times and accuracy may fall, because the model never saw objects at that scale.</li>
 <li><strong>Parameter count used as a cost proxy.</strong> A small model with large inputs can cost more per image than a bigger model on small inputs. Ask for FLOPs at your resolution.</li>
 <li><strong>Mixed compute labels.</strong> One table reports MACs, another reports "GFLOPS", and someone compares them directly. The labels may hide the same count, or a count that differs by two. Without knowing how each source counts, the comparison can be off by a factor of two.</li>

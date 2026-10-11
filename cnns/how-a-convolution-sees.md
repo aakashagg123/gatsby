@@ -88,7 +88,7 @@ Step 5 is the product lesson. The Tensors module says that [parameters understat
 
 ## Failure modes
 
-- **Detail smaller than the window.** A crack two pixels wide on a phone photo shrunk to 224 pixels becomes less than one pixel. No kernel can find it.
+- **Detail smaller than one pixel.** A crack two pixels wide on a photo 4,000 pixels wide (assumed) is shrunk to 224 pixels. It becomes 2 × 224 ÷ 4,000 = 0.112 pixels wide. No kernel can find it.
 - **Resolution changed late.** A team trains at 224 and serves at 512 to "see more". The cost per image rises about five times and accuracy may fall, because the model never saw objects at that scale.
 - **Parameter count used as a cost proxy.** A small model with large inputs can cost more per image than a bigger model on small inputs. Ask for FLOPs at your resolution.
 - **Mixed compute labels.** One table reports MACs, another reports "GFLOPS", and someone compares them directly. The labels may hide the same count, or a count that differs by two. Without knowing how each source counts, the comparison can be off by a factor of two.

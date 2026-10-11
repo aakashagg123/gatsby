@@ -84,7 +84,7 @@ A factory wants to sort photos of parts into 4 classes: good, scratched, dented,
 ## Tradeoffs and decisions
 
 - **Frozen vs. fine-tuned.** Frozen is fast, cheap and hard to overfit, and it is capped by what the backbone already sees. Fine-tuning can fit your images better. It costs more compute, needs more labels and can overfit a small set.
-- **Late vs. early features.** Late features are strong when your images look like the pre-training data. Early features transfer to different images and leave more for your classifier to learn.
+- **Late vs. early features.** Late features are strong when your images look like the pre-training data. Early features are more generic and useful for many tasks, and leave more for your classifier to learn.
 - **More labels vs. a bigger model.** Both raise accuracy. Labels also strengthen your test set. A bigger model raises your serving bill and leaves the test set as thin as before.
 - **One backbone vs. many.** Sharing one frozen backbone across several product features saves serving cost, and every feature then depends on its quality.
 

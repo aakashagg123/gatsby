@@ -99,7 +99,7 @@
 <li>
 <p><strong>Your images are X-ray scans, nothing like everyday photos. Your team uses features from the last layer of an ImageNet model and accuracy stalls. What should it try?</strong>
  <br />
-<details><summary>Answer</summary>Features from an earlier layer. Early layers hold generic patterns such as edges, which transfer to different images. The last layers are tuned to the original dataset's classes. Compare both on a held-out set. (<a href="from-edges-to-objects.html">Lesson 3</a>)</details></p>
+<details><summary>Answer</summary>Features from an earlier layer. Early layers hold more generic patterns, such as edges, that are useful for many tasks. For a small, very different dataset, the CS231n notes suggest training on activations from earlier in the network. The last layers are tuned to the original dataset's classes. Compare both on a held-out set. (<a href="from-edges-to-objects.html">Lesson 3</a>)</details></p>
 </li>
 <li>
 <p><strong>You have 800 labelled images in 3 classes that look like everyday photos. What is the first model to try?</strong>

@@ -14,7 +14,7 @@ For a product leader, this decides two things: how much model you need, and whic
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — The layer you reuse decides what you inherit. Early layers carry generic edges that transfer almost anywhere. Late layers carry the original dataset's ideas of what matters, which may not fit your images.
+> **Why it matters** — The layer you reuse decides what you inherit. Early layers carry more generic features, such as edges, that are useful for many tasks. Late layers carry the original dataset's ideas of what matters, which may not fit your images.
 >
 > **What it changes in your decisions** — You stop treating a pre-trained model as one block. You ask which layers the team keeps, which it retrains, and why. You also treat "this neuron detects X" pictures as illustrations, not proof.
 >
@@ -78,7 +78,7 @@ The ResNet family, from Kaiming He and colleagues at Microsoft Research Asia, wo
 ## Tradeoffs and decisions
 
 - **Depth vs. speed.** More layers see more and cost more time per image. A 50-layer model is slower than an 18-layer one on the same hardware. In torchvision's tables, ResNet-18 lists a compute figure of 1.814 and ResNet-50 lists 4.089, in a column labelled "GFLOPS" (as of 2026-10). Compare them with each other, not with the FLOPs counted in [lesson 2](./how-a-convolution-sees.md); torchvision's figure may be a multiply-accumulate count.
-- **Early features vs. late features.** Early layers transfer to almost any images. Late layers carry the original task's ideas. For images unlike the pre-training data, an earlier layer may serve better, at the cost of training more on top.
+- **Early features vs. late features.** Early features are more generic and useful for many tasks. Late layers carry the original task's ideas. For images unlike the pre-training data, an earlier layer may serve better, at the cost of training more on top.
 - **Downsampling vs. small detail.** Each halving speeds up every later layer and blurs small objects. If the product must find small objects, ask how the model keeps a higher-resolution map for them.
 - **Interpretability pictures vs. evidence.** Feature visualisations help a team debug. They are not a guarantee of what the model relies on. Test behaviour on your data instead.
 
@@ -133,7 +133,7 @@ To reuse a middle stage, take the output of a named layer instead of the last on
 
 - CS231n course notes, *Convolutional Neural Networks* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md)): three stacked 3 by 3 layers see 7 by 7, with 27C² parameters against 49C² for one 7 by 7 layer; ResNet "developed by Kaiming He et al. was the winner of ILSVRC 2015", with skip connections. Read 2026-10.
 - CS231n course notes, *Visualizing what ConvNets learn* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/understanding-cnn.md)): first-layer weights described as "very nice and smooth"; AlexNet POOL5 units responding to upper bodies, text and specular highlights over large parts of the image; neurons without semantic meaning on their own; all-zero activation maps as a sign of dead filters. Read 2026-10.
-- CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): early features are generic (edge and colour-blob detectors), later features are specific to the original dataset. Read 2026-10.
+- CS231n course notes, *Transfer learning* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transfer-learning.md)): early features are generic (edge and colour-blob detectors) "that should be useful to many tasks", later features are specific to the original dataset. Read 2026-10.
 - Kaiming He et al., *Deep Residual Networks* README ([GitHub, master branch](https://github.com/KaimingHe/deep-residual-networks/blob/master/README.md)): the original ResNet-50, ResNet-101 and ResNet-152 models from the paper "Deep Residual Learning for Image Recognition", Microsoft Research Asia. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): `out += identity` in each block; the 7 by 7 stride-2 first convolution and 3 by 3 stride-2 max pool; stride 2 at the start of `layer2` to `layer4`; listed compute of 1.814 GFLOPS for ResNet-18 and 4.089 for ResNet-50. Read 2026-10.
 - The layer stacks, the scratch example and every computed figure are illustrative. They come from `cnns/code/lesson3_receptive_field.py`, which ends in `assert` lines.
