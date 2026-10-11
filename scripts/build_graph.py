@@ -57,6 +57,7 @@ TRACKS = [
     ("learning-paths", "Learning paths", "#0a7e8c", "learning-paths"),
     ("machine-learning", "Machine learning", "#8a4f7d", "machine-learning"),
     ("tensors", "Tensors", "#5a6fb0", "tensors"),
+    ("cnns", "Convolutional networks", "#4f8a6f", "cnns"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "technical-product-management", "agentic-ai", "knowledge-graphs",
@@ -65,7 +66,7 @@ FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "evaluation-and-observability", "ai-security-and-guardrails",
                "cost-optimization", "system-design", "access-control",
                "context-engineering", "prompt-engineering", "learning-paths",
-               "machine-learning", "tensors"}
+               "machine-learning", "tensors", "cnns"}
 # Phased tracks share the harness-engineering folder shape:
 # (track id, source dir, site prefix, track title)
 PHASED_TRACKS = [

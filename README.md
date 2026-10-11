@@ -8,10 +8,10 @@
 <br/>
 
 ![Modules](https://img.shields.io/badge/core%20modules-7-5d5d5d?style=flat-square&labelColor=0d0d0d)
-![Tracks](https://img.shields.io/badge/tracks-26-5d5d5d?style=flat-square&labelColor=0d0d0d)
-![Lessons](https://img.shields.io/badge/lessons-260%2B-5d5d5d?style=flat-square&labelColor=0d0d0d)
-![Glossary](https://img.shields.io/badge/glossary-243%20terms-5d5d5d?style=flat-square&labelColor=0d0d0d)
-![Links](https://img.shields.io/badge/internal%20links-4%2C058%20verified-00692a?style=flat-square&labelColor=0d0d0d)
+![Tracks](https://img.shields.io/badge/tracks-27-5d5d5d?style=flat-square&labelColor=0d0d0d)
+![Lessons](https://img.shields.io/badge/lessons-270%2B-5d5d5d?style=flat-square&labelColor=0d0d0d)
+![Glossary](https://img.shields.io/badge/glossary-277%20terms-5d5d5d?style=flat-square&labelColor=0d0d0d)
+![Links](https://img.shields.io/badge/internal%20links-4%2C263%20verified-00692a?style=flat-square&labelColor=0d0d0d)
 ![Code](https://img.shields.io/badge/runnable%20examples-Python%20standard%20library-5d5d5d?style=flat-square&labelColor=0d0d0d)
 ![Design system](https://img.shields.io/badge/design%20system-Apps%20SDK%20UI-5d5d5d?style=flat-square&labelColor=0d0d0d)
 ![License](https://img.shields.io/badge/license-educational-5d5d5d?style=flat-square&labelColor=0d0d0d)
@@ -35,7 +35,7 @@ Pick the role closest to yours. Each path is an ordered list of lessons across t
 | :-- | :-- | :-- | :-- |
 | [Senior PM](./learning-paths/senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | Lead an AI feature end to end: choose the approach, set the quality bar, price it, and judge the risk. | about 17 hours |
 | [AI Product Lead](./learning-paths/ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | Set direction for grounding, memory, agents, safety and cost, and review a design with engineering. | about 26 hours |
-| [AI Engineer](./learning-paths/ai-engineer.md) | A software engineer who builds AI-powered systems | Build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 73 hours |
+| [AI Engineer](./learning-paths/ai-engineer.md) | A software engineer who builds AI-powered systems | Build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 76.5 hours |
 | [AI Engineering Lead](./learning-paths/ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | Review AI architecture, set quality and safety standards, control cost, and work well with product. | about 37 hours |
 
 Not sure where to start? Read the [paths overview](./learning-paths/README.md).
@@ -172,7 +172,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## Beyond AI Engineering: the craft tracks
 
-The AI Engineering modules above teach the *stack*. Twenty-six further tracks teach the *craft* around it. Each is a standalone folder of cross-linked lessons in the same house style (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML edition on the [live site](https://aakashagg123.github.io/gatsby/).
+The AI Engineering modules above teach the *stack*. Twenty-seven further tracks teach the *craft* around it. Each is a standalone folder of cross-linked lessons in the same house style (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML edition on the [live site](https://aakashagg123.github.io/gatsby/).
 
 ### Start here
 
@@ -186,6 +186,7 @@ The AI Engineering modules above teach the *stack*. Twenty-six further tracks te
 | :-- | :-- | :-- |
 | [**Machine learning**](./machine-learning/README.md) **New** | What a learned system is, what it learns from, how it learns, how to trust its score, which model family to pick, and how to keep it working after launch. Runnable code in every lesson. | [Plan](./MACHINE_LEARNING_ROADMAP.md) |
 | [**Tensors**](./tensors/README.md) **New** | What the objects every model works on are, what they cost in memory and compute, why shape errors are silent, and how a library gets the gradient for free. Runnable code in every lesson. | [Plan](./TENSORS_ROADMAP.md) |
+| [**Convolutional networks**](./cnns/README.md) **New** | How a vision model sees, what resolution and depth cost, when to reuse a pre-trained or foundation model, and why vision features break in production. Runnable code in three lessons. | [What computer vision does](./cnns/what-computer-vision-does.md) |
 
 ### Generative AI
 
@@ -234,8 +235,6 @@ The AI Engineering modules above teach the *stack*. Twenty-six further tracks te
 | [**Technical product sense**](./technical-product-sense/README.md) | How systems are actually built — request paths, APIs, data, latency, reliability, tech debt — at the altitude a PM needs to lead technical conversations. | [How systems are built](./technical-product-sense/how-systems-are-built.md) |
 | [**Technical product management**](./technical-product-management/README.md) | The operating craft: discovery, specs, prioritization, working with engineering, metrics, launches — and the AI-products capstone. | [The technical PM role](./technical-product-management/the-technical-pm-role.md) |
 | [**First principles & the polymath mind**](./first-principles/README.md) | Reasoning from fundamentals instead of by analogy, and building the mental-model range to do it well. | [What first-principles thinking is](./first-principles/what-is-first-principles.md) |
-
-A module on convolutional networks follows Tensors. It is planned, and the AI Engineer path marks the step.
 
 <br/>
 
@@ -301,7 +300,7 @@ And five threads that cross track boundaries — the same concern, followed from
 </tr>
 <tr>
 <td valign="top"><strong>New to how models learn?</strong></td>
-<td>Read <a href="./machine-learning/README.md">Machine learning</a>, then <a href="./tensors/README.md">Tensors</a>. Each has runnable code and a self-test.</td>
+<td>Read <a href="./machine-learning/README.md">Machine learning</a>, then <a href="./tensors/README.md">Tensors</a>, then <a href="./cnns/README.md">Convolutional networks</a>. Each has runnable code and a self-test.</td>
 </tr>
 <tr>
 <td valign="top"><strong>New to the AI engineering stack?</strong></td>

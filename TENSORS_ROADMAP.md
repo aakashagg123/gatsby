@@ -2,7 +2,7 @@
 
 > **Status:** built and registered; fact-check in progress. Plan written 2026-10. See the status table at the end.
 
-The second foundation module, after [machine learning](./MACHINE_LEARNING_ROADMAP.md) and before convolutional networks. It follows the same dual altitude: a leader briefing in every lesson, plus one runnable standard-library example that ends in `assert` lines.
+The second foundation module, after [machine learning](./MACHINE_LEARNING_ROADMAP.md) and before [convolutional networks](./cnns/README.md). It follows the same dual altitude: a leader briefing in every lesson, plus one runnable standard-library example that ends in `assert` lines.
 
 ## Decisions
 

@@ -65,7 +65,9 @@ Inside a model, every token is compared against every other token in the window 
 what matters for predicting the next one. Double the number of tokens, and that comparison
 work grows faster than double — which is why context windows did not simply start at
 "unlimited" and why growing them takes real engineering effort, not a configuration change.
-The deep mechanics of that cost — attention, memory, and the tricks that make longer
+That comparison step is called attention, and
+[What an LLM actually is](./what-is-an-llm.md#inside-the-model-attention) explains it in
+plain words. The deep mechanics of that cost — attention, memory, and the tricks that make longer
 windows practical — live in [Inference internals](../content/01-inference-internals/README.md).
 The product-relevant fact is simpler: a bigger window is not free, and someone chose its
 size for real, physical reasons.

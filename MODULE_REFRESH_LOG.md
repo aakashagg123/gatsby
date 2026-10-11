@@ -39,6 +39,7 @@ always moves forward.
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | never |
 | system-design | system-design/ | scripts/build_system_design.py | never |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
+| cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
 
 ## Run history
 
