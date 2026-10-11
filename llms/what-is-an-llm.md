@@ -60,11 +60,13 @@ flowchart LR
 ## Tokens: the model's actual unit of text
 
 A model does not see words the way you do. It sees **tokens** — pieces of text, often
-smaller than a word, that a fixed vocabulary breaks language into. "Generative" might split
-into "Gener," "ative." A short, common word like "the" is usually one token on its own.
-This matters for a product leader for three concrete reasons. **Cost** is charged per
-token, both for what you send in and what the model sends back, so token count is a real
-line item. **The context window**, covered in the next lesson, is measured in tokens, not
+smaller than a word, that a fixed vocabulary breaks language into. Each model family has
+its own tokenizer, so the same word can split differently in different models. As an
+illustration, a longer word may split into two or three pieces, while a short, common word
+is often one token on its own. This matters for a product leader for three concrete
+reasons. **Cost** is usually counted in tokens. Anthropic, for example, bills Claude by
+input tokens and output tokens. Check your own vendor's pricing page, but expect token
+count to be a real line item. **The context window**, covered in the next lesson, is measured in tokens, not
 words or characters. **Some tasks that look easy to a human are hard for a model precisely
 because of tokens** — counting the letters in a word is awkward for a model that never sees
 individual letters, only token chunks that may not align with them.
@@ -110,18 +112,21 @@ is the intuition, and it breaks in two places. The model does not look up a mean
 scores are learned numbers, and they can favour the wrong word. It also does not glance at
 one word at a time. Every head scores every earlier token at once.
 
-**Why this matters for cost.** Every token is scored against every token it can see. With
-n tokens, that is a table of n × n scores, for each head in each layer. Double the tokens
-and the table grows about four times. This is why the [context window](./the-context-window.md)
-has a real ceiling, and why a longer prompt costs more than its token count suggests. The
+**Why this matters for speed and compute.** Every token is scored against every token it
+can see. With n tokens, that is a table of n × n scores, for each head in each layer. Double
+the tokens and the table grows about four times. This is why the [context window](./the-context-window.md)
+has a real ceiling. It is also why the compute and the wait for a long prompt grow faster
+than its length, even when the price per token stays flat. The
 scores are matrix multiplications, the operation covered in
 [Tensors: matrix multiplication](../tensors/matrix-multiplication.md).
 
 **The tradeoff.** Full attention lets every token see every earlier token, and you pay for
-that with cost that grows with the square of the length. Model makers trim the cost with
-other designs. Grouped-query attention shares keys and values across heads, so they take
-less memory. Sliding-window attention looks only at recent tokens, so it gives up the view
-of distant ones. [KV cache management](../content/01-inference-internals/kv-cache-management.md)
+that with compute that grows with the square of the length. Model makers trim it with
+other designs. Grouped-query attention shares each key and value head across several query
+heads. Meta's Llama 3 model card says it uses this "to improve inference efficiency". In
+sliding-window attention, each token in a layer sees only a fixed number of the most recent
+tokens, set by the model's window size. Older tokens drop out of its direct view in that
+layer. [KV cache management](../content/01-inference-internals/kv-cache-management.md)
 covers these designs. This lesson does not repeat them.
 
 **Ask your eng team:** *"When our prompt doubles in length, what happens to our cost and
@@ -130,7 +135,7 @@ latency, and have we measured it or assumed it?"*
 ## Training versus inference: two very different costs
 
 Training happens once, on a huge amount of computing power, and produces the frozen model.
-This is why a vendor can spend months and a large budget building a model, then let
+This is why a vendor can spend a long time and a lot of money building a model, then let
 millions of people use it. Inference happens every single time your product calls the
 model, and it is a much smaller cost per call — but it happens constantly, so it is the
 cost that actually shows up on your monthly bill. Confusing the two leads to real
@@ -183,8 +188,9 @@ it does not change the fourfold growth.
   trained on or told this request, instead of recognizing it can only guess.
 - **Assuming a mention becomes memory** — believing that telling the model something once
   means it will remember it in a future, separate conversation.
-- **Ignoring token cost** — pricing a feature by "one API call" instead of by the number of
-  tokens in and out, and being surprised by the bill.
+- **Ignoring token cost** — pricing a feature by "one API call" instead of by the tokens
+  it sends and receives, which is how vendors such as Anthropic bill, and being surprised by
+  the bill.
 - **Expecting letter-level precision** — asking a model to count characters or reverse a
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.
@@ -287,11 +293,9 @@ more weight table.
   the layer as the architecture of *Attention Is All You Need*. Read 2026-10.
 - Stanford CS231n course notes, *Transformers*
   ([GitHub source](https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md)):
-  Vaswani et al. introduced the transformer in *Attention Is All You Need* (2017);
-  self-attention derives queries, keys and values from the input; the masked decoder
-  attends only to previous inputs. Read from the GitHub source, 2026-10. The paper itself,
-  [arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762), could not be opened from
-  the authoring sandbox.
+  credits the transformer to Vaswani et al., *Attention Is All You Need*; self-attention
+  derives queries, keys and values from the input; the masked decoder attends only to
+  previous inputs. Read from the GitHub source, 2026-10.
 - OpenAI, source code of GPT-2, its second Generative Pre-trained Transformer (GPT) model, `src/model.py`
   ([GitHub](https://github.com/openai/gpt-2/blob/master/src/model.py)): the attention mask
   keeps ones in the lower triangle, so each token sees only earlier tokens. Read 2026-10.
@@ -299,5 +303,14 @@ more weight table.
   ([GitHub](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md)): "an
   auto-regressive language model that uses an optimized transformer architecture", with
   grouped-query attention "to improve inference efficiency". Read 2026-10.
+- Hugging Face Transformers source, `src/transformers/masking_utils.py`, function
+  `sliding_window_overlay`
+  ([GitHub, main branch](https://github.com/huggingface/transformers/blob/main/src/transformers/masking_utils.py)):
+  added on top of a causal mask, it keeps a key only when `kv_idx > q_idx - sliding_window`,
+  so each token sees only the most recent tokens inside the window. Read 2026-10.
+- Anthropic, Claude documentation,
+  [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
+  conversation history is billed as input tokens and generated text as output tokens.
+  Read 2026-10-11. Other vendors set their own pricing.
 - The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.

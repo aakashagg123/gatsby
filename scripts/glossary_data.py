@@ -1334,7 +1334,7 @@ GLOSSARY = [
  "short":"The step inside a transformer where each token scores the other tokens it can see and takes a weighted blend of them.",
  "fp":"Each token gets a query (what it looks for), a key (what it offers) and a value (what it passes on). The model compares each query with the keys, turns the scores into weights that add up to 1, and blends the values by those weights. Every token is scored against every token it can see, so the work grows with the square of the text length.",
  "example":"In 'The refund failed because it', the token 'it' puts about half its weight on 'refund' in an illustrative example, which links the two words.",
- "uses":["Explaining why a longer prompt costs more than its token count suggests","Reading vendor notes on attention variants that cut memory","Understanding why the context window has a ceiling"],
+ "uses":["Explaining why compute and latency grow faster than prompt length","Reading vendor notes on attention variants that improve inference efficiency","Understanding why the context window has a ceiling"],
  "see":("What an LLM actually is","llms/what-is-an-llm.md"),
  "related":["self-attention","transformer","token","context-window","kv-cache","matrix-multiplication"],
 },
@@ -1350,7 +1350,7 @@ GLOSSARY = [
 {
  "k":"transformer","t":"Transformer","aliases":["transformers"],"cat":"LLMs",
  "short":"The model design behind today's LLMs: a stack of blocks, each an attention layer plus a small network that works on each token alone.",
- "fp":"A transformer reads text as a sequence of tokens. In each block, attention lets every token gather information from the tokens it can see, then a small network processes each token on its own. Stacking many blocks builds up the model's picture of the text. The design was introduced in the 2017 paper 'Attention Is All You Need'.",
+ "fp":"A transformer reads text as a sequence of tokens. In each block, attention lets every token gather information from the tokens it can see, then a small network processes each token on its own. Stacking many blocks builds up the model's picture of the text. The design is credited to Vaswani et al. in the paper 'Attention Is All You Need'.",
  "example":"Meta's model card describes Llama 3 as an auto-regressive language model that uses an optimized transformer architecture.",
  "uses":["Reading model cards and vendor documentation","Understanding where the cost of long context comes from"],
  "see":("What an LLM actually is","llms/what-is-an-llm.md"),

@@ -86,7 +86,7 @@ still a guess, weighted toward what is likely, not verified against what is true
     <div class="dgm-ti-col train">
       <span class="dgm-ti-tag">Once, in advance</span>
       <h5>Training</h5>
-      <p class="dgm-ti-freq">Months, a large budget</p>
+      <p class="dgm-ti-freq">Long and costly</p>
       <div class="dgm-ti-steps">
         <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Enormous amounts of text</div>
         <div class="dgm-ti-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2-7 4 14 2-7h4"/></svg>Adjust billions of internal numbers</div>
@@ -114,11 +114,13 @@ still a guess, weighted toward what is likely, not verified against what is true
 
 <h2 id="tokens-the-models-actual-unit-of-text">Tokens: the model's actual unit of text</h2>
 <p>A model does not see words the way you do. It sees <strong>tokens</strong> — pieces of text, often
-smaller than a word, that a fixed vocabulary breaks language into. "Generative" might split
-into "Gener," "ative." A short, common word like "the" is usually one token on its own.
-This matters for a product leader for three concrete reasons. <strong>Cost</strong> is charged per
-token, both for what you send in and what the model sends back, so token count is a real
-line item. <strong>The context window</strong>, covered in the next lesson, is measured in tokens, not
+smaller than a word, that a fixed vocabulary breaks language into. Each model family has
+its own tokenizer, so the same word can split differently in different models. As an
+illustration, a longer word may split into two or three pieces, while a short, common word
+is often one token on its own. This matters for a product leader for three concrete
+reasons. <strong>Cost</strong> is usually counted in tokens. Anthropic, for example, bills Claude by
+input tokens and output tokens. Check your own vendor's pricing page, but expect token
+count to be a real line item. <strong>The context window</strong>, covered in the next lesson, is measured in tokens, not
 words or characters. <strong>Some tasks that look easy to a human are hard for a model precisely
 because of tokens</strong> — counting the letters in a word is awkward for a model that never sees
 individual letters, only token chunks that may not align with them.</p>
@@ -180,23 +182,26 @@ small network that works on each token alone.</p>
 is the intuition, and it breaks in two places. The model does not look up a meaning. Its
 scores are learned numbers, and they can favour the wrong word. It also does not glance at
 one word at a time. Every head scores every earlier token at once.</p>
-<p><strong>Why this matters for cost.</strong> Every token is scored against every token it can see. With
-n tokens, that is a table of n × n scores, for each head in each layer. Double the tokens
-and the table grows about four times. This is why the <a href="the-context-window.html">context window</a>
-has a real ceiling, and why a longer prompt costs more than its token count suggests. The
+<p><strong>Why this matters for speed and compute.</strong> Every token is scored against every token it
+can see. With n tokens, that is a table of n × n scores, for each head in each layer. Double
+the tokens and the table grows about four times. This is why the <a href="the-context-window.html">context window</a>
+has a real ceiling. It is also why the compute and the wait for a long prompt grow faster
+than its length, even when the price per token stays flat. The
 scores are matrix multiplications, the operation covered in
 <a href="../tensors/matrix-multiplication.html">Tensors: matrix multiplication</a>.</p>
 <p><strong>The tradeoff.</strong> Full attention lets every token see every earlier token, and you pay for
-that with cost that grows with the square of the length. Model makers trim the cost with
-other designs. Grouped-query attention shares keys and values across heads, so they take
-less memory. Sliding-window attention looks only at recent tokens, so it gives up the view
-of distant ones. <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management</a>
+that with compute that grows with the square of the length. Model makers trim it with
+other designs. Grouped-query attention shares each key and value head across several query
+heads. Meta's Llama 3 model card says it uses this "to improve inference efficiency". In
+sliding-window attention, each token in a layer sees only a fixed number of the most recent
+tokens, set by the model's window size. Older tokens drop out of its direct view in that
+layer. <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management</a>
 covers these designs. This lesson does not repeat them.</p>
 <p><strong>Ask your eng team:</strong> <em>"When our prompt doubles in length, what happens to our cost and
 latency, and have we measured it or assumed it?"</em></p>
 <h2 id="training-versus-inference-two-very-different-costs">Training versus inference: two very different costs</h2>
 <p>Training happens once, on a huge amount of computing power, and produces the frozen model.
-This is why a vendor can spend months and a large budget building a model, then let
+This is why a vendor can spend a long time and a lot of money building a model, then let
 millions of people use it. Inference happens every single time your product calls the
 model, and it is a much smaller cost per call — but it happens constantly, so it is the
 cost that actually shows up on your monthly bill. Confusing the two leads to real
@@ -258,8 +263,9 @@ it does not change the fourfold growth.</p>
   trained on or told this request, instead of recognizing it can only guess.</li>
 <li><strong>Assuming a mention becomes memory</strong> — believing that telling the model something once
   means it will remember it in a future, separate conversation.</li>
-<li><strong>Ignoring token cost</strong> — pricing a feature by "one API call" instead of by the number of
-  tokens in and out, and being surprised by the bill.</li>
+<li><strong>Ignoring token cost</strong> — pricing a feature by "one API call" instead of by the tokens
+  it sends and receives, which is how vendors such as Anthropic bill, and being surprised by
+  the bill.</li>
 <li><strong>Expecting letter-level precision</strong> — asking a model to count characters or reverse a
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.</li>
@@ -356,11 +362,9 @@ more weight table.</p>
   the layer as the architecture of <em>Attention Is All You Need</em>. Read 2026-10.</li>
 <li>Stanford CS231n course notes, <em>Transformers</em>
   (<a href="https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md">GitHub source</a>):
-  Vaswani et al. introduced the transformer in <em>Attention Is All You Need</em> (2017);
-  self-attention derives queries, keys and values from the input; the masked decoder
-  attends only to previous inputs. Read from the GitHub source, 2026-10. The paper itself,
-  <a href="https://arxiv.org/abs/1706.03762">arxiv.org/abs/1706.03762</a>, could not be opened from
-  the authoring sandbox.</li>
+  credits the transformer to Vaswani et al., <em>Attention Is All You Need</em>; self-attention
+  derives queries, keys and values from the input; the masked decoder attends only to
+  previous inputs. Read from the GitHub source, 2026-10.</li>
 <li>OpenAI, source code of GPT-2, its second Generative Pre-trained Transformer (GPT) model, <code>src/model.py</code>
   (<a href="https://github.com/openai/gpt-2/blob/master/src/model.py">GitHub</a>): the attention mask
   keeps ones in the lower triangle, so each token sees only earlier tokens. Read 2026-10.</li>
@@ -368,6 +372,15 @@ more weight table.</p>
   (<a href="https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md">GitHub</a>): "an
   auto-regressive language model that uses an optimized transformer architecture", with
   grouped-query attention "to improve inference efficiency". Read 2026-10.</li>
+<li>Hugging Face Transformers source, <code>src/transformers/masking_utils.py</code>, function
+  <code>sliding_window_overlay</code>
+  (<a href="https://github.com/huggingface/transformers/blob/main/src/transformers/masking_utils.py">GitHub, main branch</a>):
+  added on top of a causal mask, it keeps a key only when <code>kv_idx &gt; q_idx - sliding_window</code>,
+  so each token sees only the most recent tokens inside the window. Read 2026-10.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a>:
+  conversation history is billed as input tokens and generated text as output tokens.
+  Read 2026-10-11. Other vendors set their own pricing.</li>
 <li>The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.</li>
 </ul></div>

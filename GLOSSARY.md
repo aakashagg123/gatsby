@@ -135,7 +135,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *For example.* In 'The refund failed because it', the token 'it' puts about half its weight on 'refund' in an illustrative example, which links the two words.
 
-*Where it shows up:* Explaining why a longer prompt costs more than its token count suggests; Reading vendor notes on attention variants that cut memory; Understanding why the context window has a ceiling.
+*Where it shows up:* Explaining why compute and latency grow faster than prompt length; Reading vendor notes on attention variants that improve inference efficiency; Understanding why the context window has a ceiling.
 
 *See:* [What an LLM actually is](./llms/what-is-an-llm.md).
 
@@ -2391,7 +2391,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Transformer** — The model design behind today's LLMs: a stack of blocks, each an attention layer plus a small network that works on each token alone.
 
-*In plain terms.* A transformer reads text as a sequence of tokens. In each block, attention lets every token gather information from the tokens it can see, then a small network processes each token on its own. Stacking many blocks builds up the model's picture of the text. The design was introduced in the 2017 paper 'Attention Is All You Need'.
+*In plain terms.* A transformer reads text as a sequence of tokens. In each block, attention lets every token gather information from the tokens it can see, then a small network processes each token on its own. Stacking many blocks builds up the model's picture of the text. The design is credited to Vaswani et al. in the paper 'Attention Is All You Need'.
 
 *For example.* Meta's model card describes Llama 3 as an auto-regressive language model that uses an optimized transformer architecture.
 
