@@ -116,7 +116,7 @@ one word at a time. Every head scores every earlier token at once.
 can see. With n tokens, that is a table of n × n scores, for each head in each layer. Double
 the tokens and the table grows about four times. This is why the [context window](./the-context-window.md)
 has a real ceiling. It is also why the compute and the wait for a long prompt grow faster
-than its length, even when the price per token stays flat. The
+than its length. The
 scores are matrix multiplications, the operation covered in
 [Tensors: matrix multiplication](../tensors/matrix-multiplication.md).
 
@@ -124,9 +124,8 @@ scores are matrix multiplications, the operation covered in
 that with compute that grows with the square of the length. Model makers trim it with
 other designs. Grouped-query attention shares each key and value head across several query
 heads. Meta's Llama 3 model card says it uses this "to improve inference efficiency". In
-sliding-window attention, each token in a layer sees only a fixed number of the most recent
-tokens, set by the model's window size. Older tokens drop out of its direct view in that
-layer. [KV cache management](../content/01-inference-internals/kv-cache-management.md)
+sliding-window attention, each token sees only the most recent tokens inside the window.
+Older tokens drop out of its direct view. [KV cache management](../content/01-inference-internals/kv-cache-management.md)
 covers these designs. This lesson does not repeat them.
 
 **Ask your eng team:** *"When our prompt doubles in length, what happens to our cost and
@@ -194,8 +193,8 @@ it does not change the fourfold growth.
 - **Expecting letter-level precision** — asking a model to count characters or reverse a
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.
-- **Pricing long context as linear** — assuming a prompt twice as long costs twice as much
-  in compute and time. The attention step grows faster than that, so a long-document
+- **Planning long context as linear** — assuming a prompt twice as long needs twice the
+  compute and time. The attention step grows faster than that, so a long-document
   feature can miss its latency target at the largest inputs.
 
 ## Under the hood: attention in a few lines
@@ -292,15 +291,15 @@ more weight table.
   multi-head attention as the heads joined and multiplied by an output weight table, and
   the layer as the architecture of *Attention Is All You Need*. Read 2026-10.
 - Stanford CS231n course notes, *Transformers*
-  ([GitHub source](https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md)):
+  ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md)):
   credits the transformer to Vaswani et al., *Attention Is All You Need*; self-attention
   derives queries, keys and values from the input; the masked decoder attends only to
   previous inputs. Read from the GitHub source, 2026-10.
 - OpenAI, source code of GPT-2, its second Generative Pre-trained Transformer (GPT) model, `src/model.py`
-  ([GitHub](https://github.com/openai/gpt-2/blob/master/src/model.py)): the attention mask
+  ([GitHub, master branch](https://github.com/openai/gpt-2/blob/master/src/model.py)): the attention mask
   keeps ones in the lower triangle, so each token sees only earlier tokens. Read 2026-10.
 - Meta, Llama 3 model card
-  ([GitHub](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md)): "an
+  ([GitHub, main branch](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md)): "an
   auto-regressive language model that uses an optimized transformer architecture", with
   grouped-query attention "to improve inference efficiency". Read 2026-10.
 - Hugging Face Transformers source, `src/transformers/masking_utils.py`, function

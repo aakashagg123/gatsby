@@ -186,16 +186,15 @@ one word at a time. Every head scores every earlier token at once.</p>
 can see. With n tokens, that is a table of n × n scores, for each head in each layer. Double
 the tokens and the table grows about four times. This is why the <a href="the-context-window.html">context window</a>
 has a real ceiling. It is also why the compute and the wait for a long prompt grow faster
-than its length, even when the price per token stays flat. The
+than its length. The
 scores are matrix multiplications, the operation covered in
 <a href="../tensors/matrix-multiplication.html">Tensors: matrix multiplication</a>.</p>
 <p><strong>The tradeoff.</strong> Full attention lets every token see every earlier token, and you pay for
 that with compute that grows with the square of the length. Model makers trim it with
 other designs. Grouped-query attention shares each key and value head across several query
 heads. Meta's Llama 3 model card says it uses this "to improve inference efficiency". In
-sliding-window attention, each token in a layer sees only a fixed number of the most recent
-tokens, set by the model's window size. Older tokens drop out of its direct view in that
-layer. <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management</a>
+sliding-window attention, each token sees only the most recent tokens inside the window.
+Older tokens drop out of its direct view. <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management</a>
 covers these designs. This lesson does not repeat them.</p>
 <p><strong>Ask your eng team:</strong> <em>"When our prompt doubles in length, what happens to our cost and
 latency, and have we measured it or assumed it?"</em></p>
@@ -269,8 +268,8 @@ it does not change the fourfold growth.</p>
 <li><strong>Expecting letter-level precision</strong> — asking a model to count characters or reverse a
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.</li>
-<li><strong>Pricing long context as linear</strong> — assuming a prompt twice as long costs twice as much
-  in compute and time. The attention step grows faster than that, so a long-document
+<li><strong>Planning long context as linear</strong> — assuming a prompt twice as long needs twice the
+  compute and time. The attention step grows faster than that, so a long-document
   feature can miss its latency target at the largest inputs.</li>
 </ul>
 <h2 id="under-the-hood-attention-in-a-few-lines">Under the hood: attention in a few lines</h2>
@@ -361,15 +360,15 @@ more weight table.</p>
   multi-head attention as the heads joined and multiplied by an output weight table, and
   the layer as the architecture of <em>Attention Is All You Need</em>. Read 2026-10.</li>
 <li>Stanford CS231n course notes, <em>Transformers</em>
-  (<a href="https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md">GitHub source</a>):
+  (<a href="https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md">GitHub source, master branch</a>):
   credits the transformer to Vaswani et al., <em>Attention Is All You Need</em>; self-attention
   derives queries, keys and values from the input; the masked decoder attends only to
   previous inputs. Read from the GitHub source, 2026-10.</li>
 <li>OpenAI, source code of GPT-2, its second Generative Pre-trained Transformer (GPT) model, <code>src/model.py</code>
-  (<a href="https://github.com/openai/gpt-2/blob/master/src/model.py">GitHub</a>): the attention mask
+  (<a href="https://github.com/openai/gpt-2/blob/master/src/model.py">GitHub, master branch</a>): the attention mask
   keeps ones in the lower triangle, so each token sees only earlier tokens. Read 2026-10.</li>
 <li>Meta, Llama 3 model card
-  (<a href="https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md">GitHub</a>): "an
+  (<a href="https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md">GitHub, main branch</a>): "an
   auto-regressive language model that uses an optimized transformer architecture", with
   grouped-query attention "to improve inference efficiency". Read 2026-10.</li>
 <li>Hugging Face Transformers source, <code>src/transformers/masking_utils.py</code>, function
