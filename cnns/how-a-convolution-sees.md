@@ -77,7 +77,7 @@ The input is a 224 by 224 colour image. The layer has 64 kernels of size 3 by 3,
 
 Step 5 is the product lesson. The Tensors module says that [parameters understate compute](../tensors/matrix-multiplication.md) for a convolution. Here is by how much. Each of the 1,728 weights is used once per output position, 224 × 224 = 50,176 times, at 2 FLOPs per use: 1,728 × 50,176 × 2 = 173,408,256.
 
-**A note on counting.** This lesson counts a multiply and an add as two FLOPs. Model tables label compute in different ways. The TensorFlow MobileNet page reports multiply-accumulates (MACs). Torchvision's tables label their column "GFLOPS". Check how each table defines its unit before you compare two of them.
+**A note on counting.** This lesson counts a multiply and an add as two FLOPs. A multiply-accumulate (MAC) is one multiply plus one add, so on this lesson's count one MAC is two FLOPs, and the 173,408,256 FLOPs above are 86,704,128 MACs. Model tables label compute in different ways. The TensorFlow MobileNet page reports multiply-accumulates (MACs). Torchvision's tables label their column "GFLOPS". For MobileNetV3-Large the two sources give the same number: torchvision lists 0.217 "GFLOPS" and the MobileNet page lists 217 million MACs. So torchvision's figure may be a multiply-accumulate count, whatever its label says. Do not set this lesson's FLOPs next to a torchvision "GFLOPS" figure as if they were on the same scale. Find out how each source counts before you compare or convert.
 
 ## Tradeoffs and decisions
 
@@ -91,7 +91,7 @@ Step 5 is the product lesson. The Tensors module says that [parameters understat
 - **Detail smaller than the window.** A crack two pixels wide on a phone photo shrunk to 224 pixels becomes less than one pixel. No kernel can find it.
 - **Resolution changed late.** A team trains at 224 and serves at 512 to "see more". The cost per image rises about five times and accuracy may fall, because the model never saw objects at that scale.
 - **Parameter count used as a cost proxy.** A small model with large inputs can cost more per image than a bigger model on small inputs. Ask for FLOPs at your resolution.
-- **Mixed compute units.** One table reports multiply-accumulates, another reports "GFLOPS", and neither number is converted. The comparison is wrong by an unknown factor.
+- **Mixed compute labels.** One table reports MACs, another reports "GFLOPS", and someone compares them directly. The labels may hide the same count, or a count that differs by two. Without knowing how each source counts, the comparison can be off by a factor of two.
 - **Padding at the border.** At the edge, the window sees a border of padded zeros that is not in the scene. Objects cut by the frame edge are a separate case. Test them on their own.
 
 ## Under the hood
@@ -128,7 +128,7 @@ In PyTorch the worked example layer is one line: `nn.Conv2d(3, 64, kernel_size=3
 - [ ] Do we know our input resolution, and the smallest detail the product must see at it?
 - [ ] Have we priced a change in resolution as roughly the square of the change in side length?
 - [ ] Do we compare models by FLOPs at our resolution, not by parameter count?
-- [ ] When we compare vendor tables, do we know how each one defines its compute unit?
+- [ ] When we compare vendor tables, do we know how each one counts compute, whatever its label says?
 - [ ] Do we train and serve at the same resolution?
 - [ ] Do we test objects at the edge of the frame?
 
@@ -145,5 +145,6 @@ In PyTorch the worked example layer is one line: `nn.Conv2d(3, 64, kernel_size=3
 - CS231n course notes, *Convolutional Neural Networks* ([GitHub source, master branch](https://github.com/cs231n/cs231n.github.io/blob/master/convolutional-networks.md)): the output-size formula `(W − F + 2P)/S + 1` with the 7 by 7 examples; parameter sharing with the AlexNet figures (290,400 neurons, 363 weights and 1 bias each, 105,705,600 parameters without sharing, 34,944 with); where sharing does not make sense; max pooling at 2 by 2 and stride 2 discarding 75% of activations; im2col turning a convolution into one matrix multiply; relaxing sharing for centred faces; AlexNet, submitted to the ImageNet challenge in 2012, "significantly outperformed the second runner-up". Read 2026-10.
 - PyTorch source, `torch/nn/modules/conv.py` ([GitHub, main branch](https://github.com/pytorch/pytorch/blob/main/torch/nn/modules/conv.py)): `Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0, ...)`, with input shape `(N, C_in, H_in, W_in)` and output size rounded down. Read 2026-10.
 - PyTorch torchvision source, `torchvision/models/resnet.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)): one `MaxPool2d(kernel_size=3, stride=2, padding=1)` after the first convolution, and `stride=2` at the start of `layer2`, `layer3` and `layer4`. Read 2026-10.
-- TensorFlow Models, *MobileNet* README ([GitHub, master branch](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md)): efficiency reported in MACs, the number of multiply-accumulates needed for one image. Read 2026-10.
+- TensorFlow Models, *MobileNet* README ([GitHub, master branch](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md)): efficiency reported in MACs, the number of multiply-accumulates needed for one image; 217 million MACs for MobileNetV3-Large ("Large dm=1 (float)"). Read 2026-10.
+- PyTorch torchvision source, `torchvision/models/mobilenetv3.py` ([GitHub, main branch](https://github.com/pytorch/vision/blob/main/torchvision/models/mobilenetv3.py)): MobileNetV3-Large `IMAGENET1K_V1` and `IMAGENET1K_V2` list `_ops` of 0.217, which torchvision's `docs/source/conf.py` labels "GFLOPS". Read 2026-10.
 - The layer sizes, the edge image and every computed figure are illustrative. They come from `cnns/code/lesson2_convolution.py`, which ends in `assert` lines.

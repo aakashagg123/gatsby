@@ -82,9 +82,9 @@
 <details><summary>Answer</summary>Start with classification: one label per shelf image, such as full, partly empty or empty. It answers the product question and costs a fraction of the labelling time of masks. Move to detection or segmentation only when the question needs location or area. (<a href="what-computer-vision-does.html">Lesson 1</a>)</details></p>
 </li>
 <li>
-<p><strong>A predicted box and the true box overlap, but the IoU is 0.14. Does it count as a correct detection at the usual threshold?</strong>
+<p><strong>A predicted box and the true box overlap, but the IoU is 0.14. Does it count as a correct detection in COCO-style mAP?</strong>
  <br />
-<details><summary>Answer</summary>No. Detection is usually scored at an IoU threshold of 0.5 or higher, and COCO-style mAP averages over thresholds from 0.50 to 0.95. Touching the object is not enough. (<a href="what-computer-vision-does.html">Lesson 1</a>)</details></p>
+<details><summary>Answer</summary>Not at any of the thresholds COCO-style mAP averages over, which run from 0.50 to 0.95. An IoU of 0.14 is below all of them. Touching the object is not enough. (<a href="what-computer-vision-does.html">Lesson 1</a>)</details></p>
 </li>
 <li>
 <p><strong>Engineering wants to double the input side from 224 to 448 pixels to catch small defects. What happens to parameters and to compute in a convolution layer?</strong>
@@ -94,7 +94,7 @@
 <li>
 <p><strong>Torchvision lists ResNet-50 at 4.089 "GFLOPS". TensorFlow's MobileNet page lists MobileNetV3-Large at 217 million MACs. Can you divide one by the other to say how much cheaper MobileNet is?</strong>
  <br />
-<details><summary>Answer</summary>No. The two tables use different units. Read how each table defines its unit before you compare, and then measure latency on your own hardware, which is the number that matters. (<a href="how-a-convolution-sees.html">Lesson 2</a>)</details></p>
+<details><summary>Answer</summary>No, not safely. The labels differ, "GFLOPS" against MACs, yet for MobileNetV3-Large the two sources give the same number: torchvision lists 0.217 "GFLOPS" and the MobileNet page 217 million MACs. So a label may not mean what you assume. Find out how each source counts before you compare or convert. A count that treats a multiply and an add as two FLOPs is twice a MAC count. Then measure latency on your own hardware, which is the number that matters. (<a href="how-a-convolution-sees.html">Lesson 2</a>)</details></p>
 </li>
 <li>
 <p><strong>Your images are X-ray scans, nothing like everyday photos. Your team uses features from the last layer of an ImageNet model and accuracy stalls. What should it try?</strong>
@@ -137,6 +137,8 @@
 <li>Meta AI Research (FAIR), <em>DINOv2</em> README (<a href="https://github.com/facebookresearch/dinov2/blob/main/README.md">GitHub, main branch</a>): code and weights under the Apache License 2.0; XRay-DINO and Cell-DINO weights under the FAIR Noncommercial Research License. Read 2026-10.</li>
 <li>OpenAI, <em>CLIP</em> README and model card (<a href="https://github.com/openai/CLIP/blob/main/README.md">README</a>, <a href="https://github.com/openai/CLIP/blob/main/model-card.md">model card</a>, GitHub, main branch): zero-shot ImageNet performance matching the original ResNet-50; deployed use out of scope. Read 2026-10.</li>
 <li>Hendrycks and Dietterich, <em>robustness</em> README (<a href="https://github.com/hendrycks/robustness/blob/master/README.md">GitHub, master branch</a>): ImageNet-C's 15 corruptions and ImageNet-A. Read 2026-10.</li>
+<li>COCO API source, <code>PythonAPI/pycocotools/cocoeval.py</code> (<a href="https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/cocoeval.py">GitHub, master branch</a>): IoU thresholds from 0.50 to 0.95 in steps of 0.05. Read 2026-10.</li>
+<li>PyTorch torchvision source, <code>torchvision/models/mobilenetv3.py</code> (<a href="https://github.com/pytorch/vision/blob/main/torchvision/models/mobilenetv3.py">GitHub, main branch</a>): MobileNetV3-Large lists <code>_ops</code> of 0.217, labelled "GFLOPS" in torchvision's <code>docs/source/conf.py</code>. Read 2026-10.</li>
 <li>TensorFlow Models, <em>MobileNet</em> README (<a href="https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet/README.md">GitHub, master branch</a>): MobileNetV3-Large latency and accuracy, float and 8-bit, on a Pixel 1; 217 million MACs for MobileNetV3-Large in its checkpoint table ("Large dm=1 (float)"). Read 2026-10.</li>
 <li>The two illustrations are invented. Their numbers come from the worked examples in lessons 1 and 7.</li>
 </ul></div>

@@ -1221,7 +1221,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Intersection over union** — How much a predicted box overlaps the true box: the overlap divided by the area they cover together.
 
-*In plain terms.* IoU is 1 for a perfect match and 0 for no overlap. A detection counts as correct only when its IoU passes a threshold, often 0.5. The threshold decides how sloppy a box may be.
+*In plain terms.* IoU is 1 for a perfect match and 0 for no overlap. A detection counts as correct only when its IoU passes a threshold, such as 0.5. The threshold decides how sloppy a box may be.
 
 *For example.* Two 10 by 10 boxes that overlap in a 5 by 5 corner have an IoU of 25 / 175 = 0.143.
 

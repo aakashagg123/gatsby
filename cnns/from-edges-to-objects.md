@@ -77,7 +77,7 @@ The ResNet family, from Kaiming He and colleagues at Microsoft Research Asia, wo
 
 ## Tradeoffs and decisions
 
-- **Depth vs. speed.** More layers see more and cost more time per image. A 50-layer model is slower than an 18-layer one on the same hardware. In torchvision's tables, ResNet-18 lists 1.814 billion floating-point operations (GFLOPS) per image and ResNet-50 lists 4.089 (as of 2026-10).
+- **Depth vs. speed.** More layers see more and cost more time per image. A 50-layer model is slower than an 18-layer one on the same hardware. In torchvision's tables, ResNet-18 lists a compute figure of 1.814 and ResNet-50 lists 4.089, in a column labelled "GFLOPS" (as of 2026-10). Compare them with each other, not with the FLOPs counted in [lesson 2](./how-a-convolution-sees.md); torchvision's figure may be a multiply-accumulate count.
 - **Early features vs. late features.** Early layers transfer to almost any images. Late layers carry the original task's ideas. For images unlike the pre-training data, an earlier layer may serve better, at the cost of training more on top.
 - **Downsampling vs. small detail.** Each halving speeds up every later layer and blurs small objects. If the product must find small objects, ask how the model keeps a higher-resolution map for them.
 - **Interpretability pictures vs. evidence.** Feature visualisations help a team debug. They are not a guarantee of what the model relies on. Test behaviour on your data instead.

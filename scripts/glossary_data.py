@@ -2320,7 +2320,7 @@ GLOSSARY = [
 {
  "k":'intersection-over-union',"t":'Intersection over union',"aliases":['IoU'],"cat":"Convolutional networks",
  "short":'How much a predicted box overlaps the true box: the overlap divided by the area they cover together.',
- "fp":'IoU is 1 for a perfect match and 0 for no overlap. A detection counts as correct only when its IoU passes a threshold, often 0.5. The threshold decides how sloppy a box may be.',
+ "fp":'IoU is 1 for a perfect match and 0 for no overlap. A detection counts as correct only when its IoU passes a threshold, such as 0.5. The threshold decides how sloppy a box may be.',
  "example":'Two 10 by 10 boxes that overlap in a 5 by 5 corner have an IoU of 25 / 175 = 0.143.',
  "uses":['Setting how strict a detection metric is', 'Reading detection benchmarks'],
  "see":('What computer vision does', 'cnns/what-computer-vision-does.md'),
