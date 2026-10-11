@@ -61,8 +61,9 @@ a better prompt, retrieval, or fine-tuning — to reach for first.
 
 ## The lessons
 
-- [**What an LLM actually is**](./what-is-an-llm.md) — tokens, next-token prediction, and
-  the difference between training a model once and running it many times.
+- [**What an LLM actually is**](./what-is-an-llm.md) — tokens, next-token prediction,
+  attention (the step that lets each token look at the others), and the difference between
+  training a model once and running it many times.
 - [**The context window**](./the-context-window.md) — why a model can only see a fixed
   amount of text, and why that limit exists at all.
 - [**Capabilities & the jagged frontier**](./capabilities-and-the-jagged-frontier.md) —

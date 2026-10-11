@@ -69,6 +69,64 @@ words or characters. **Some tasks that look easy to a human are hard for a model
 because of tokens** — counting the letters in a word is awkward for a model that never sees
 individual letters, only token chunks that may not align with them.
 
+## Inside the model: attention
+
+To predict the next token, the model must decide which earlier tokens matter. The step
+that does this is the **attention mechanism**. It is the core of the **transformer**, the
+model design behind today's LLMs. Meta's model card for Llama 3, for example, describes it
+as "an auto-regressive language model that uses an optimized transformer architecture."
+Auto-regressive means it predicts one token at a time, as above.
+
+Here is the mechanism in plain words. Each token starts as a list of numbers. The model
+turns each token into three new lists:
+
+- a **query**: what this token is looking for
+- a **key**: what this token offers, like a label
+- a **value**: the content this token passes on
+
+For each token, the model compares its query with the key of every token it can see. A
+close match gives a high score. The scores become weights that add up to 1. The token then
+takes a blend of the values, weighted by those scores. After this step, each token's numbers
+carry information from the tokens it found relevant.
+
+Three terms complete the picture. **Self-attention** means the queries, keys and values
+all come from the same text, so the text attends to itself. A **causal mask** lets each
+token look only at tokens before it, never after. That keeps next-token prediction honest:
+the model cannot peek at the answer. **Multi-head** attention runs several of these
+comparisons side by side, so different heads can attend to different parts of the text. A transformer stacks many blocks. Each block has an attention layer and a
+small network that works on each token alone.
+
+```mermaid
+flowchart LR
+  T1["The<br/>0.067"] --> IT["it"]
+  T2["refund<br/>0.498"] --> IT
+  T3["failed<br/>0.183"] --> IT
+  T4["because<br/>0.067"] --> IT
+  T5["it<br/>0.183"] --> IT
+```
+
+Think of a reader who meets the word "it" and glances back to find what "it" means. That
+is the intuition, and it breaks in two places. The model does not look up a meaning. Its
+scores are learned numbers, and they can favour the wrong word. It also does not glance at
+one word at a time. Every head scores every earlier token at once.
+
+**Why this matters for cost.** Every token is scored against every token it can see. With
+n tokens, that is a table of n × n scores, for each head in each layer. Double the tokens
+and the table grows about four times. This is why the [context window](./the-context-window.md)
+has a real ceiling, and why a longer prompt costs more than its token count suggests. The
+scores are matrix multiplications, the operation covered in
+[Tensors: matrix multiplication](../tensors/matrix-multiplication.md).
+
+**The tradeoff.** Full attention lets every token see every earlier token, and you pay for
+that with cost that grows with the square of the length. Model makers trim the cost with
+other designs. Grouped-query attention shares keys and values across heads, so they take
+less memory. Sliding-window attention looks only at recent tokens, so it gives up the view
+of distant ones. [KV cache management](../content/01-inference-internals/kv-cache-management.md)
+covers these designs. This lesson does not repeat them.
+
+**Ask your eng team:** *"When our prompt doubles in length, what happens to our cost and
+latency, and have we measured it or assumed it?"*
+
 ## Training versus inference: two very different costs
 
 Training happens once, on a huge amount of computing power, and produces the frozen model.
@@ -93,6 +151,32 @@ of retrieval, covered in the [RAG & vector databases module](../rag-vector-datab
 **Why longer generation costs more** — every additional token is another prediction step,
 so a longer answer is not a flat fee, it is proportionally more work.
 
+## Worked example: what "it" looks at
+
+*This example is illustrative. The scores are assumed, not taken from a real model. The
+code in Under the hood reproduces every number.*
+
+The text so far is "The refund failed because it". The model must decide what "it" refers
+to. Follow the attention step for the token "it".
+
+1. **Score.** Compare the query of "it" with the key of each token it can see. The assumed
+   scores, after scaling, are: The 0, refund 2, failed 1, because 0, it 1.
+2. **Turn scores into weights.** Raise e to each score: 1, 7.389, 2.718, 1 and 2.718. They
+   add up to 14.826. Divide each by 14.826. The weights are 0.067, 0.498, 0.183, 0.067 and
+   0.183. They add up to 1, apart from rounding.
+3. **Blend.** The new numbers for "it" are a mix of the values, about half from "refund".
+   The model has linked "it" to "refund".
+
+Now the cost. All figures below are derived: they are n × n, and the step is shown.
+
+| Prompt length (n) | Scores per head, per layer (n × n) | With the causal mask (n × (n + 1) ÷ 2) |
+| --- | --- | --- |
+| 8,000 tokens | 64,000,000 | 32,004,000 |
+| 16,000 tokens | 256,000,000 | 128,008,000 |
+
+The prompt doubled. The score table grew four times. The mask roughly halves the table, and
+it does not change the fourfold growth.
+
 ## Failure modes
 
 - **Treating the model like a database** — expecting it to "know" a fact it was never
@@ -104,6 +188,65 @@ so a longer answer is not a flat fee, it is proportionally more work.
 - **Expecting letter-level precision** — asking a model to count characters or reverse a
   word and treating the frequent mistakes as a bug, when they follow directly from how
   tokens work.
+- **Pricing long context as linear** — assuming a prompt twice as long costs twice as much
+  in compute and time. The attention step grows faster than that, so a long-document
+  feature can miss its latency target at the largest inputs.
+
+## Under the hood: attention in a few lines
+
+The formula is `softmax(Q·Kᵀ / √d + mask) · V`. `Q`, `K` and `V` hold the queries, keys and
+values, one row per token. `d` is the length of each key. The mask adds minus infinity to
+every score for a later token, so its weight becomes 0. PyTorch's reference version of
+`scaled_dot_product_attention` follows the same steps: multiply queries by keys, scale by
+`1 / √d`, apply a lower-triangle mask when `is_causal` is set, take the softmax, then
+multiply by the values.
+
+This standard-library version reproduces the worked example. The queries and keys are
+assumed. The values are one-hot, so the output for "it" shows its weights directly.
+
+```python
+import math
+
+def softmax(row):
+    top = max(row)
+    e = [math.exp(x - top) for x in row]     # exp(-inf) is 0, so masked tokens get no weight
+    return [x / sum(e) for x in e]
+
+def attention(Q, K, V, causal=True):
+    """softmax(Q Kᵀ / √d + mask) · V, one query row at a time."""
+    d = len(K[0])
+    out, weights = [], []
+    for i, q in enumerate(Q):
+        scores = [sum(a * b for a, b in zip(q, k)) / math.sqrt(d) for k in K]
+        if causal:                               # token i may look only at tokens 0..i
+            scores = [s if j <= i else float("-inf") for j, s in enumerate(scores)]
+        w = softmax(scores)
+        weights.append(w)
+        out.append([sum(w[j] * V[j][c] for j in range(len(V))) for c in range(len(V[0]))])
+    return out, weights
+
+tokens = ["The", "refund", "failed", "because", "it"]
+K = [[0, 1, 0, 0], [2, 0, 0, 0], [1, 0, 1, 0], [0, 0, 0, 1], [1, 1, 0, 0]]   # assumed keys
+Q = K[:4] + [[2, 0, 0, 0]]                                                   # assumed queries
+V = [[1 if r == c else 0 for c in range(5)] for r in range(5)]              # one-hot values
+
+out, w = attention(Q, K, V)
+print([round(x, 3) for x in w[4]])
+assert all(abs(sum(row) - 1) < 1e-12 for row in w)                 # weights sum to 1
+assert all(w[i][j] == 0 for i in range(5) for j in range(i + 1, 5))  # no peeking ahead
+assert [round(x, 3) for x in w[4]] == [0.067, 0.498, 0.183, 0.067, 0.183]
+assert out[4] == w[4]                                              # one-hot values show the blend
+for n in (8_000, 16_000):
+    print(n, n * n, n * (n + 1) // 2)
+assert 16_000 ** 2 == 4 * 8_000 ** 2
+```
+
+The query for "it" is `[2, 0, 0, 0]`. Its dot products with the five keys are 0, 4, 2, 0
+and 2. Dividing by √4 = 2 gives the scores 0, 2, 1, 0 and 1 from the worked example. A real
+model learns `Q`, `K` and `V` from weight tables, uses hundreds of numbers per token, and
+runs many heads in parallel. PyTorch's `MultiheadAttention` documents that last step: each
+head runs attention on its own projections, and the heads are joined and multiplied by one
+more weight table.
 
 ## Practitioner checklist
 
@@ -114,6 +257,8 @@ so a longer answer is not a flat fee, it is proportionally more work.
 - [ ] Is our cost model based on token counts, not a flat per-call assumption?
 - [ ] For any task involving exact counting, spelling, or character-level detail, have we
       tested it directly instead of assuming the model handles it like a human would?
+- [ ] For long-input features, have we measured cost and latency at our largest real
+      input, not only at a typical one?
 
 ## Related lessons
 
@@ -123,3 +268,36 @@ so a longer answer is not a flat fee, it is proportionally more work.
   not have.
 - [Inference internals](../content/01-inference-internals/README.md) — the engineering
   depth behind prefill, decode, and the cost of each token.
+- [KV cache management](../content/01-inference-internals/kv-cache-management.md) — why
+  a model keeps the keys and values of earlier tokens while it generates.
+- [Matrix multiplication](../tensors/matrix-multiplication.md) — the operation that
+  computes the attention scores, and how to count its cost.
+
+## Sources
+
+- PyTorch source, `torch/nn/functional.py`, docstring of `scaled_dot_product_attention`
+  ([GitHub, main branch](https://github.com/pytorch/pytorch/blob/main/torch/nn/functional.py)):
+  a reference version that multiplies queries by keys, scales by `1 / sqrt(d)`, applies a
+  lower-triangle mask when `is_causal` is set, takes the softmax and multiplies by the
+  values. With `enable_gqa`, it repeats each key and value head across several query heads.
+  Read 2026-10.
+- PyTorch source, `torch/nn/modules/activation.py`, docstring of `MultiheadAttention`
+  ([GitHub, main branch](https://github.com/pytorch/pytorch/blob/main/torch/nn/modules/activation.py)):
+  multi-head attention as the heads joined and multiplied by an output weight table, and
+  the layer as the architecture of *Attention Is All You Need*. Read 2026-10.
+- Stanford CS231n course notes, *Transformers*
+  ([GitHub source](https://github.com/cs231n/cs231n.github.io/blob/master/transformers.md)):
+  Vaswani et al. introduced the transformer in *Attention Is All You Need* (2017);
+  self-attention derives queries, keys and values from the input; the masked decoder
+  attends only to previous inputs. Read from the GitHub source, 2026-10. The paper itself,
+  [arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762), could not be opened from
+  the authoring sandbox.
+- OpenAI, source code of GPT-2, its second Generative Pre-trained Transformer (GPT) model, `src/model.py`
+  ([GitHub](https://github.com/openai/gpt-2/blob/master/src/model.py)): the attention mask
+  keeps ones in the lower triangle, so each token sees only earlier tokens. Read 2026-10.
+- Meta, Llama 3 model card
+  ([GitHub](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md)): "an
+  auto-regressive language model that uses an optimized transformer architecture", with
+  grouped-query attention "to improve inference efficiency". Read 2026-10.
+- The worked example's scores, queries, keys and values are assumed. The weights and the
+  score counts are computed by the code in Under the hood.

@@ -1,0 +1,30 @@
+<style>
+.dgm-at{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-info-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-at-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-info-solid);color:var(--white);
+  font-size:var(--font-text-3xs-size);font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-at h4{margin:0 0 4px;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-at-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-at-rows{display:grid;gap:8px}
+.dgm-at-row{display:grid;grid-template-columns:5.5em 1fr 3.5em;gap:10px;align-items:center;font-size:var(--font-text-xs-size)}
+.dgm-at-tok{font-family:var(--font-mono);color:var(--color-text);background:var(--color-surface-tertiary);border-radius:6px;padding:2px 8px;text-align:center}
+.dgm-at-track{background:var(--color-surface-secondary);border:1px solid var(--color-border);border-radius:8px;height:1.1em;overflow:hidden}
+.dgm-at-bar{height:100%;background:var(--color-background-info-solid);border-radius:8px}
+.dgm-at-row.top .dgm-at-bar{background:var(--color-background-success-solid)}
+.dgm-at-w{font-family:var(--font-mono);color:var(--color-text-secondary);text-align:right}
+.dgm-at-foot{margin:14px 0 0;font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-at{padding:22px 16px 18px}}
+</style>
+<div class="dgm-at"><span class="dgm-at-chip">Attention</span>
+<h4>Where the token "it" looks</h4>
+<p class="dgm-at-sub">Illustrative weights from the worked example. They add up to 1. With a causal mask, "it" sees only itself and earlier tokens.</p>
+<div class="dgm-at-rows">
+<div class="dgm-at-row"><span class="dgm-at-tok">The</span><div class="dgm-at-track"><div class="dgm-at-bar" style="width:6.7%"></div></div><span class="dgm-at-w">0.067</span></div>
+<div class="dgm-at-row top"><span class="dgm-at-tok">refund</span><div class="dgm-at-track"><div class="dgm-at-bar" style="width:49.8%"></div></div><span class="dgm-at-w">0.498</span></div>
+<div class="dgm-at-row"><span class="dgm-at-tok">failed</span><div class="dgm-at-track"><div class="dgm-at-bar" style="width:18.3%"></div></div><span class="dgm-at-w">0.183</span></div>
+<div class="dgm-at-row"><span class="dgm-at-tok">because</span><div class="dgm-at-track"><div class="dgm-at-bar" style="width:6.7%"></div></div><span class="dgm-at-w">0.067</span></div>
+<div class="dgm-at-row"><span class="dgm-at-tok">it</span><div class="dgm-at-track"><div class="dgm-at-bar" style="width:18.3%"></div></div><span class="dgm-at-w">0.183</span></div>
+</div>
+<p class="dgm-at-foot">the new numbers for "it" = a blend of each token's value, in these proportions</p>
+</div>
