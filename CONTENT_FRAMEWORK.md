@@ -117,7 +117,8 @@ false one.
 ### Independent fact-check
 
 The author cannot fact-check their own edits reliably. Before a module ships, a separate
-agent checks it with no knowledge of the edits.
+agent checks it with no knowledge of the edits. In this repo that agent is
+[`research-fact-checker`](./.claude/agents/research-fact-checker.md). It is read-only.
 
 1. Give the agent only: the final lesson files, section 5 of this document, and web
    access. Do not give it a summary of what changed or why.
@@ -165,7 +166,10 @@ The delta test is what stops the same idea being restated in three modules.
 
 ## 8. The improvement workflow
 
-Follow these steps in order for any module.
+Follow these steps in order for any module. In this repo,
+[`learning-module-creator`](./.claude/agents/learning-module-creator.md) runs steps 1 to 7
+and 9, and `research-fact-checker` runs step 8. The main session coordinates them (see
+`CLAUDE.md`, "Delegation").
 
 1. **Baseline.** Run `python3 scripts/check_module.py <track>`. Save the numbers.
 2. **Read every lesson.** Read the whole text. Do not rely on the README summaries.
