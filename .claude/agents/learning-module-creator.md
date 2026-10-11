@@ -36,7 +36,7 @@ The caller gives you:
 4. **Attachments** the phase needs:
    - `BUILD` needs the approved gap table.
    - `FIX` needs the fact-check table.
-   - `STAMP` needs a fact-check result with no `WRONG` or `STALE` row.
+   - `STAMP` needs a fact-check result with `CLEAN: yes`.
 
 If an input or attachment is missing, stop. Ask for it. Do not guess. You keep no memory
 between calls, so the caller must pass the table every time.
@@ -98,7 +98,14 @@ The caller attaches a fact-check table.
 1. Fix every `WRONG` row. Use the correct statement and its source.
 2. Fix every `STALE` row. Update the claim and its "as of" date.
 3. Fix every `UNSUPPORTED` row. Add a primary source, or remove the claim.
+   Three cases have a shorter fix:
+   - Invented input in a worked example: label it "assumed" or "illustrative".
+   - Derived figure: say it is derived, and show the step.
+   - Claim wider than its source: narrow the claim to what the source says.
+   Give a time-sensitive figure an "as of" date or an approximate year.
 4. Open every source before you cite it. Never cite a page you did not read.
+   If the network blocks a primary host, report the host. Do not cite a secondary copy as primary.
+   Prefer the original author's source over a famous copy.
 5. Check that the fix does not break a worked example. Recompute any number you touch.
 6. Search the whole track for the same claim. Fix every copy, not only the flagged one.
 7. Do not argue with a verdict. If you think a row is wrong, say so and give a primary source.
@@ -110,8 +117,8 @@ The caller attaches a fact-check table.
 A stamp says a check happened. `CONTENT_FRAMEWORK.md` section 6 forbids a stamp without one.
 So you stamp only after a clean fact-check.
 
-1. Confirm the caller attached a fact-check result with no `WRONG` or `STALE` row.
-   If it is missing or not clean, stop. Do not stamp.
+1. Confirm the caller attached a fact-check result with `CLEAN: yes`.
+   If it is missing, or shows `CLEAN: no`, or web access was not `ok`, stop. Do not stamp.
 2. Add `*Last reviewed: YYYY-MM · Volatility: fast|medium|stable*` as line 5 of each
    lesson that the fact-check covered. Use today's year and month. Take volatility from
    `CONTENT_FRAMEWORK.md` section 6. Copy the exact format of the stamps in `access-control/`.
@@ -131,7 +138,8 @@ The scorer cannot judge these. You must.
 - **The 🎯 briefing earns its place.** The "Ask your eng team" question must be one a PM can
   say aloud in a meeting. It must expose a real risk. Generic questions fail.
 - **Worked example.** One concrete case with numbers or a real artifact. Show each step.
-  Every number must compute. Recompute it before you finish. Label an invented case as invented.
+  Every number must compute. Recompute it before you finish. Label every invented input
+  as "assumed" or "illustrative". State the year length in any uptime or storage calculation.
 - **Mental model.** One analogy or one diagram. Not three. Say where the analogy breaks.
 - **Tradeoffs have costs.** Name what you give up. A tradeoff with no cost is a slogan.
 - **Failure modes are specific.** Say how it fails in production, and how the reader sees it.

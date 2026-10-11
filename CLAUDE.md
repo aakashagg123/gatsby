@@ -127,7 +127,7 @@ Two project agents live in `.claude/agents/`:
 
 | Agent | Role | Model | Tools |
 | --- | --- | --- | --- |
-| `learning-module-creator` | Writes. Modes `create` and `improve`. Phases `PLAN`, `BUILD`, `FIX`. | Opus 5.5, medium effort | Read, Write, Edit, Bash, Web |
+| `learning-module-creator` | Writes. Modes `create` and `improve`. Phases `PLAN`, `BUILD`, `FIX`, `STAMP`. | Opus 5.5, medium effort | Read, Write, Edit, Bash, Web |
 | `research-fact-checker` | Verifies. Read-only. Blind to the edits. | Sonnet 5.5, high effort | Read, Glob, Grep, Web |
 
 Subagents cannot start subagents. The main session runs the loop:
@@ -137,10 +137,15 @@ Subagents cannot start subagents. The main session runs the loop:
 3. Call the creator in `BUILD` phase.
 4. Call the checker with the final lesson file paths only. Give it no diff and no summary.
 5. If any row is `WRONG` or `STALE`, call the creator in `FIX` phase with the table.
-6. Call the checker again on the fixed files. Repeat until no `WRONG` or `STALE` row remains.
-7. Commit and push to the `claude/*` branch. Open a PR only when the owner asks.
+6. Call the checker again on the fixed files. Repeat until it reports `CLEAN: yes`.
+7. Call the creator in `STAMP` phase with the clean result. It dates the review stamps and updates the trackers.
+8. Commit and push to the `claude/*` branch. Open a PR only when the owner asks.
 
 The checker stays blind on purpose. See `CONTENT_FRAMEWORK.md`, section 5.
+
+The checker needs web access to primary sources. If it reports `Web access: partial` or
+`failed`, its result is never clean, and no stamp is written. Allow the blocked hosts in the
+environment's network settings, then run it again. Do not stamp from memory.
 
 ## Design system
 
