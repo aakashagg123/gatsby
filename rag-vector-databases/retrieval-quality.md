@@ -53,11 +53,15 @@ Retrieve more passages and recall rises while precision falls. Retrieve fewer an
 
 ### The three levers
 
-- **Hybrid search.** Keyword search finds exact strings: IDs, names, codes. Semantic search finds paraphrase and intent. Running both and combining the lists covers both blind spots. A common way to combine them is **reciprocal rank fusion**: each list gives each chunk `1 / (60 + rank)`, and the sums decide the order. It needs no tuning of scores across the two lists.
+- **Hybrid search.** Keyword search finds exact strings: IDs, names, codes. Semantic search finds paraphrase and intent. Running both and combining the lists covers both blind spots. Keyword search is also called **sparse** retrieval: each text becomes a long list of word weights, mostly zero. Embedding search is **dense** retrieval: a shorter list where most numbers are not zero. A common way to combine them is **reciprocal rank fusion**: each list gives each chunk `1 / (60 + rank)`, and the sums decide the order. It needs no tuning of scores across the two lists.
 - **Reranking.** First-pass search is fast and a little sloppy. It returns a wide net of perhaps 20 to 100 candidates. A **reranker**, often a cross-encoder that reads the question and each passage together, re-scores them. The best few reach the model. It costs some latency and no change to the index. Anthropic's 2024 contextual retrieval study reports that adding a reranker raised the cut in retrieval failures from 49% to 67%.
 - **Filtering.** Use metadata to remove what should never be an answer: retracted versions, other tenants, documents this user may not see. Here retrieval quality and [safety](../content/05-safety-multitenancy/multi-tenant-isolation.md) are the same lever.
 
 A strong default pipeline: hybrid search for about 50 candidates, filter by metadata, rerank to the top 5, then hand those to the model.
+
+### Fixing the question before search
+
+Users type short, messy questions. **Query rewriting** changes the question before search: it fixes spelling, expands abbreviations or adds context from the conversation, often with a model call. **Multi-query** search runs several rewrites and merges the results, for example with reciprocal rank fusion. [HyDE](./embeddings-and-semantic-search.md) goes further and searches with a drafted answer. Each adds a model call per question, so measure the recall gain before you keep it.
 
 ### Measuring it
 
@@ -66,7 +70,11 @@ Retrieval quality is invisible to inspection. A feature can look great on every 
 - **Recall@k**: the share of questions whose answering passage is in the top k.
 - **MRR** (mean reciprocal rank): the average of 1 / rank of the first correct passage. It rewards putting the answer first.
 
-Break the numbers down by question type. An average hides the pattern that tells you which lever to pull. The [retrieval evals](../content/03-rag/retrieval-evals.md) spoke covers answer-side metrics such as faithfulness.
+A third, **nDCG** (normalized discounted cumulative gain), gives more credit to relevant passages near the top and allows graded relevance, such as "answers it" versus "related".
+
+Break the numbers down by question type. An average hides the pattern that tells you which lever to pull.
+
+These metrics measure retrieval only. The answer needs its own checks. **Faithfulness**, also called groundedness, asks whether every claim in the answer is supported by the retrieved passages. **Answer relevance** asks whether the answer addresses the question. A person or a judge model scores them against a rubric. Retrieval can be perfect while the answer adds an unsupported claim, so track both. The [retrieval evals](../content/03-rag/retrieval-evals.md) spoke covers them in depth.
 
 ## Tradeoffs and decisions
 
@@ -117,7 +125,7 @@ The eval set has 12 questions. Seven are paraphrases, such as "download everythi
 
 **Hybrid is not free.** It loses one question that vector search found: "how do I stop paying for fernpay". The keyword leg matched only the word "fernpay", in three unrelated chunks. Those chunks also sit lower down the vector list, so each collects two votes. The right chunk is first in the vector list and absent from the keyword list, so it has one vote, and falls out of the top 3. A reranker is the usual fix for that kind of noise.
 
-**The filter matters as much as the method.** Without a filter, "can I get my money back on a yearly plan" returns the current policy at 0.936 and the retracted one at 0.927. With `status = 'current'`, the retracted chunk is gone. No ranking method can tell these two apart. Only metadata can.
+**The filter matters as much as the method.** Without a filter, "can I get my money back on a yearly plan" returns the current policy at 0.936 and the retracted one at 0.927. With `status = 'current'`, the retracted chunk is gone. Vector search happens to rank the current policy first, by 0.009. No similarity score reliably tells two versions of a policy apart. Metadata does.
 
 ## Practitioner checklist
 

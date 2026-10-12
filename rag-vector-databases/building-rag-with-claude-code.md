@@ -79,7 +79,7 @@ pgvector adds a vector type and nearest-neighbour search to Postgres. The quicke
 docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:pg16
 ```
 
-Then the schema. This is an excerpt of `rag-vector-databases/code/pgvector_demo.sql`:
+Then the schema. This is adapted from `rag-vector-databases/code/pgvector_demo.sql`, with a real model's 1,024 dimensions and fewer columns:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
@@ -98,7 +98,7 @@ CREATE INDEX ON chunks USING gin (fts);
 
 Three choices sit in that schema. The `vector(1024)` size must match the model. The HNSW index is the approximate search; its operator class, `vector_cosine_ops`, must match the `<=>` cosine distance used in queries. The `fts` column gives you keyword search in the same table, which is what makes hybrid search one SQL statement.
 
-Two limits from the pgvector documentation matter early. An index on the `vector` type supports up to 2,000 dimensions; the `halfvec` type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that (`SET hnsw.iterative_scan = strict_order`).
+Two limits from the pgvector documentation matter early. An index on the `vector` type supports up to 2,000 dimensions; the `halfvec` type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that. They are off by default: turn them on with `SET hnsw.iterative_scan = strict_order`. They still stop at a scan limit, `hnsw.max_scan_tuples`.
 
 Claude Code reaches the database through its Bash tool, with `psql`. You can also connect a database server over the Model Context Protocol (MCP) with `claude mcp add`. The docs warn you to verify that you trust each server before you connect it. Either way, give the session a local database and nothing else.
 
@@ -247,11 +247,11 @@ The corpus is 10 help documents, cut into 22 chunks. One document is a retracted
 
 **The retracted policy nearly wins.** Ask "can I get my money back on a yearly plan". Unfiltered, Postgres returns the current policy at 0.936 and the retracted one at 0.927. Add `WHERE status = 'current'` and the retracted chunk is gone. The Python index returns the same three chunks with the same scores.
 
-**Keyword search finds the code.** Ask "what does E-4021 mean". Vector search ranks a refund chunk first, at a similarity of 0.113, and misses the error page. Postgres full-text search returns `errors#0` first. The hybrid query keeps `errors#0` on top with a fused score of 0.0320.
+**Keyword search finds the code.** Ask "what does E-4021 mean". Vector search ranks a refund chunk first, at a similarity of 0.113, and misses the E-4021 section (`errors#0`) in its top 3. Postgres full-text search returns `errors#0` first. The hybrid query keeps `errors#0` on top with a fused score of 0.0320.
 
 **The index is used.** `EXPLAIN` shows `Index Scan using chunks_embedding_hnsw`. On 22 rows Postgres prefers a plain scan, so the demo turns sequential scans off for that one statement.
 
-**The eval.** On 12 questions, recall@3 is 0.667 for keyword search, 0.833 for vector search and 0.917 for hybrid. The contract's bar is 0.90, so hybrid ships and vector search alone does not.
+**The eval.** The demo runs no eval itself. In the Python pipeline (`mini_rag.py`), on 12 questions, recall@3 is 0.667 for keyword search, 0.833 for vector search and 0.917 for hybrid. The contract's bar is 0.90, so hybrid ships and vector search alone does not.
 
 ## Practitioner checklist
 

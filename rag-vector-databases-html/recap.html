@@ -14,8 +14,8 @@
     <h1>RAG &amp; vector databases — recap &amp; real-world examples</h1>
   </div>
   <div class="MarkdownContent"><h2 id="real-world-examples">Real-world examples</h2>
-<p><strong>The support bot that invented a policy (2025).</strong> Users of an AI coding tool were logged out without warning. The company's AI support agent explained that this was expected under a new login policy. The policy did not exist. Users cancelled before staff stepped in. 🎯 <em>Takeaway:</em> a model answering from memory <a href="why-rag.html">invents your own business</a>. Grounding the bot in current support documents, with a path to say "I don't have that", is the difference between a helpful answer and lost customers.</p>
-<p><strong>Contextual retrieval (2024).</strong> Anthropic tested a simple change to ingestion: add a short note about the whole document to each chunk before embedding it. Failed retrievals in the top 20 fell by 35%. With keyword search added, they fell by 49%. With a reranker, by 67%. The same post says a knowledge base under about 200,000 tokens can often skip RAG and go in the prompt. 🎯 <em>Takeaway:</em> the biggest gains came from <a href="chunking-and-ingestion.html">chunking</a> and <a href="retrieval-quality.html">retrieval</a>, not from a bigger model. And the first question is still <a href="when-to-use-rag.html">whether you need RAG</a>.</p>
+<p><strong>The support bot that invented a policy (2025).</strong> Users of an AI coding tool were logged out without warning. The company's AI support agent reportedly explained that this was expected under a new login policy. The policy did not exist. Users cancelled before staff stepped in. 🎯 <em>Takeaway:</em> a model answering from memory <a href="why-rag.html">invents your own business</a>. Grounding the bot in current support documents, with a path to say "I don't have that", is the difference between a helpful answer and lost customers.</p>
+<p><strong>Contextual retrieval (2024).</strong> Anthropic tested a simple change to ingestion: add a short note about the whole document to each chunk before embedding it. Failed retrievals in the top 20 fell by 35%. With keyword search added, they fell by 49%. With a reranker, by 67%. The same post says a knowledge base under about 200,000 tokens can often skip RAG and go in the prompt. 🎯 <em>Takeaway:</em> the gains came from <a href="chunking-and-ingestion.html">ingestion</a> and <a href="retrieval-quality.html">retrieval</a> changes alone, with the same generating model. And the first question is still <a href="when-to-use-rag.html">whether you need RAG</a>.</p>
 <p><strong>Microsoft GraphRAG (2024).</strong> Microsoft Research showed that flat RAG struggles with global questions, such as "what are the main themes in this corpus?". Their method builds a graph over the corpus and writes summaries for clusters of related entities in advance. A model can then answer global questions from those summaries. 🎯 <em>Takeaway:</em> <a href="graphrag-and-structured-retrieval.html">flat RAG has a definite edge</a>. Know which question shapes it cannot answer.</p>
 <p><strong>"Lost in the middle" (2023).</strong> Researchers at Stanford and elsewhere moved the passage that held the answer around a long prompt. Models often did best when it was at the start or end, and worse when it was in the middle. 🎯 <em>Takeaway:</em> a bigger window is not a free replacement for retrieval. <a href="rag-vs-long-context-vs-finetuning.html">Fewer, better passages</a> often beat everything at once.</p>
 <p><strong>The stale-index pattern.</strong> A common story in teams that ship RAG: the feature is accurate at launch, and weeks later cites a retracted policy with a confident source link. Nobody built a <a href="chunking-and-ingestion.html">delete path</a>. In this module's Fernpay corpus, the retracted refund policy scores 0.927 against 0.936 for the current one. 🎯 <em>Takeaway:</em> ingestion is a permanent product surface. A feature that cannot forget is worse than one that never knew, because people trust the citation.</p>
@@ -96,7 +96,7 @@
 <li>
 <p><strong>Your HR handbook is 35,000 tokens and changes twice a year. Every employee may see all of it. RAG or not?</strong>
  <br />
-<details><summary>Answer</summary>Not RAG. It is small, stable and the same for everyone, so none of the three deciding signals (too big, changes often, differs by user) holds. Put it in the prompt and use prompt caching. In the lesson's sketch, cached long context costs $106.50 per 10,000 questions against $61.50 for RAG, and needs no pipeline. (<a href="when-to-use-rag.html">Lesson 1</a>)</details></p>
+<details><summary>Answer</summary>Not RAG. It is small, stable and the same for everyone, so none of the three deciding signals (too big, changes often, differs by user) holds. Put it in the prompt and use prompt caching. In the lesson's sketch, cached long context costs $54.00 to $106.50 per 10,000 questions, depending on the cache price, against $61.50 for RAG. It needs no pipeline. (<a href="when-to-use-rag.html">Lesson 1</a>)</details></p>
 </li>
 <li>
 <p><strong>Name the four jobs RAG does that a bare model cannot.</strong>
@@ -126,12 +126,12 @@
 <li>
 <p><strong>A small tenant's searches return 1 result instead of 10. What is the likely cause?</strong>
  <br />
-<details><summary>Answer</summary>The filter is applied after the approximate index scan. The scan returns the nearest candidates across all tenants, and few belong to the small one. Fixes include iterative index scans (pgvector 0.8.0 and later), a partial index, or exact search within the tenant. (<a href="vector-databases.html">Lesson 4</a>)</details></p>
+<details><summary>Answer</summary>The filter is applied after the approximate index scan. The scan returns the nearest candidates across all tenants, and few belong to the small one. Fixes include iterative index scans (pgvector 0.8.0 and later, off by default), a partial index, or exact search within the tenant. (<a href="vector-databases.html">Lesson 4</a>)</details></p>
 </li>
 <li>
 <p><strong>Why did 80-character chunks answer only 7 of 12 questions while section chunks answered 11?</strong>
  <br />
-<details><summary>Answer</summary>Blind cuts sliced two answer facts in half, so no chunk held them whole. Fixed chunks also lost the titles and headings, which carried many of the matching words. (<a href="chunking-and-ingestion.html">Lesson 5</a>)</details></p>
+<details><summary>Answer</summary>Blind cuts sliced two answer facts in half, so no chunk held them whole. Fixed chunks also lost the titles and headings, which probably cost some matches as well. (<a href="chunking-and-ingestion.html">Lesson 5</a>)</details></p>
 </li>
 <li>
 <p><strong>Keyword search scores 0.667 recall@3, vector search 0.833 and hybrid 0.917. Why does hybrid win?</strong>
@@ -150,7 +150,7 @@
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, April 2025: an AI support agent invented a login policy. Read 2026-10.</li>
+<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, reported 19 April 2025: an AI support agent reportedly invented a login policy, leading to cancellations. The site could not be opened from the build sandbox; checked through search excerpts, 2026-10.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024. Read 2026-10.</li>
 <li>Edge et al., <em>From Local to Global: A Graph RAG Approach to Query-Focused Summarization</em>, Microsoft Research, 2024 (<a href="https://arxiv.org/abs/2404.16130">arxiv.org/abs/2404.16130</a>).</li>
 <li>Liu et al., <em>Lost in the Middle: How Language Models Use Long Contexts</em>, Transactions of the ACL, 2024 (<a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a>).</li>

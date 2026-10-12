@@ -199,7 +199,7 @@ def chunk_fixed(doc, size=120, overlap=0):
 </tbody>
 </table>
 <p><strong>Blind cuts lose answers.</strong> At 80 characters, two facts are cut in half: "first day of every month" and "get error 429". No search can return them whole. Only 7 questions are answered.</p>
-<p><strong>Overlap rescues the facts, not the ranking.</strong> With 30 characters of overlap, no fact is cut. But there are now 42 chunks, many near-duplicates, and they crowd the top 3. Only 8 questions are answered. Fixed chunks also lose the titles and headings, which carried many of the words that match.</p>
+<p><strong>Overlap rescues the facts, not the ranking.</strong> With 30 characters of overlap, no fact is cut. But there are now 42 chunks, many near-duplicates, and they crowd the top 3. Only 8 questions are answered. Fixed chunks also lose the titles and headings. That probably costs some matches, though the demo does not measure it separately.</p>
 <p><strong>Big chunks win here, for a reason that will not last.</strong> Each Fernpay document is 127 to 295 characters long, so a 200-character chunk holds most of a document. It answers all 12 questions, and sends a third more words per question than section chunks. On a real corpus, with documents of thousands of words, a big fixed chunk mixes many topics. Section chunks are the plan that scales.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
@@ -222,7 +222,7 @@ def chunk_fixed(doc, size=120, overlap=0):
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings and by 49% with contextual embeddings plus contextual BM25. Read 2026-10.</li>
-<li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04418">arxiv.org/abs/2409.04418</a>).</li>
+<li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04701">arxiv.org/abs/2409.04701</a>).</li>
 <li>The Fernpay corpus, the chunk plans and every number are invented. They come from <code>rag-vector-databases/code/chunking_demo.py</code>.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="vector-databases.html"><span class="lbl">← Previous</span><span class="ttl">Vector databases</span></a><a class="navcard next" href="retrieval-quality.html"><span class="lbl">→ Next</span><span class="ttl">Retrieval quality</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>

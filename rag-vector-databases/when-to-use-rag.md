@@ -65,7 +65,7 @@ How big is too big? Anthropic's 2024 contextual retrieval post gives a rule of t
 | "What is the status of order 48213?" | The key is exact. A "similar" order is a wrong order. | A direct lookup by key, or keyword search. |
 | "Summarize this contract." | The task needs the whole document. Retrieval hands over pieces. | Send the whole document (long context). |
 | "Write in our brand voice." | This is behaviour, not knowledge. | A system prompt with examples, or fine-tuning. |
-| "Answer from our 60-page handbook." | It is small and stable. Retrieval adds a pipeline and a new way to miss. | Put it in the prompt with prompt caching. |
+| "Answer from our 90-page handbook." | It is small and stable. Retrieval adds a pipeline and a new way to miss. | Put it in the prompt with prompt caching. |
 | "Fix the model's reasoning on our domain." | Retrieval adds facts. It does not fix reasoning. | Better prompts, a stronger model, or tools. |
 | "Remember what this user told us." | One user's history is small and ordered by time. | Conversation memory, covered in [memory and context](../memory-and-context/README.md). |
 
@@ -116,7 +116,7 @@ def decide(req):
 
 The order matters. A count over private, changing data still has two retrieval signals. It goes to the database anyway, because the shape test comes first.
 
-The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts that fraction at about one tenth on most models. The price per token in the sketch is an assumption for the arithmetic, not a quote.
+The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on most models, and 0.05 times on Claude Opus 5.5 and Sonnet 5.5, so the sketch shows both. The price per token is an assumption for the arithmetic, not a quote.
 
 ## Worked example: six requests, two get RAG
 
@@ -130,7 +130,7 @@ A product team brings six requests, all labelled "RAG".
 | "How many invoices are overdue this month?" in the app | Query the system of record | The answer is a count over rows. |
 | Summarize the contract the user just uploaded | Long context | The task needs the whole 30,000-token document. |
 | Write marketing emails in our brand voice | Prompt or fine-tune | It is behaviour, not knowledge. |
-| HR policy helper over a 60-page handbook | Put it in the prompt, with prompt caching | 35,000 tokens, stable, the same for every employee. |
+| HR policy helper over a 90-page handbook | Put it in the prompt, with prompt caching | 35,000 tokens, stable, the same for every employee. |
 | Security questionnaire answers from past responses and product docs | **RAG** | 2.5 million tokens, changes with every release, and every answer needs a source. |
 
 Now look at the cost of the handbook choice. The sketch assumes $3 per million input tokens and 10,000 questions.
@@ -138,10 +138,13 @@ Now look at the cost of the handbook choice. The sketch assumes $3 per million i
 | How each question is answered | Input tokens per question | Input cost per 10,000 questions |
 | --- | --- | --- |
 | Send the whole handbook every time | 35,050 | $1,051.50 |
-| Send the whole handbook, cached | 35,050, of which 35,000 cached | $106.50 |
+| Send the whole handbook, cached at 0.1x | 35,050, of which 35,000 cached | $106.50 |
+| Send the whole handbook, cached at 0.05x | 35,050, of which 35,000 cached | $54.00 |
 | Retrieve 5 chunks of about 400 tokens | 2,050 | $61.50 |
 
-Caching cuts the cost of the full handbook by about 10 times. RAG is cheaper again per question. The gap is $45 per 10,000 questions. A retrieval pipeline costs far more than that to build and run, so the handbook stays in the prompt. The sketch leaves out the cache-write cost and the output tokens, which are the same for all three.
+Caching cuts the cost of the full handbook by about 10 times at 0.1x, and about 20 times at 0.05x. At 0.1x, RAG is $45 cheaper per 10,000 questions. At 0.05x, the cached handbook is $7.50 cheaper than RAG. Either way, a retrieval pipeline costs far more to build and run than the gap, so the handbook stays in the prompt.
+
+The sketch leaves out two things. Output tokens are the same for all three, so they do not change the comparison. Cache writes are not: they apply only to the cached options, at 1.25 times the base price for the default 5-minute cache, and again each time the cache expires between questions.
 
 ## Practitioner checklist
 
@@ -165,6 +168,6 @@ Caching cuts the cost of the full handbook by about 10 times. RAG is cheaper aga
 ## Sources
 
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: a knowledge base "smaller than 200,000 tokens (about 500 pages of material)" can go in the prompt whole, and prompt caching for repeated context. Read 2026-10.
-- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): cache reads billed at about 0.1 times the base input price on most models, cache writes at 1.25 times for the 5-minute lifetime. Some newer models price reads lower. Read 2026-10.
+- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): cache reads billed at 0.1 times the base input price on most models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1; cache writes at 1.25 times for the 5-minute lifetime. Read 2026-10.
 - Anthropic documentation, [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): current Claude models with a 1 million token context window. Read 2026-10.
-- The six requests, the token counts and the $3 price are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.
+- The six requests, the token counts (35,000 tokens is about 90 pages at Anthropic's ratio of 200,000 tokens to 500 pages) and the $3 price are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.

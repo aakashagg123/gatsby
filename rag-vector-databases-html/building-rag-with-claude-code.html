@@ -118,7 +118,7 @@ Say which embedding model and dimension you assume. Do not write code yet.
 <p>pgvector adds a vector type and nearest-neighbour search to Postgres. The quickest local start is the project's Docker image:</p>
 <pre><code class="language-bash">docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:pg16
 </code></pre>
-<p>Then the schema. This is an excerpt of <code>rag-vector-databases/code/pgvector_demo.sql</code>:</p>
+<p>Then the schema. This is adapted from <code>rag-vector-databases/code/pgvector_demo.sql</code>, with a real model's 1,024 dimensions and fewer columns:</p>
 <pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE chunks (
     id        text PRIMARY KEY,          -- 'refunds-v2#0': document id + section number
@@ -133,7 +133,7 @@ CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON chunks USING gin (fts);
 </code></pre>
 <p>Three choices sit in that schema. The <code>vector(1024)</code> size must match the model. The HNSW index is the approximate search; its operator class, <code>vector_cosine_ops</code>, must match the <code>&lt;=&gt;</code> cosine distance used in queries. The <code>fts</code> column gives you keyword search in the same table, which is what makes hybrid search one SQL statement.</p>
-<p>Two limits from the pgvector documentation matter early. An index on the <code>vector</code> type supports up to 2,000 dimensions; the <code>halfvec</code> type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that (<code>SET hnsw.iterative_scan = strict_order</code>).</p>
+<p>Two limits from the pgvector documentation matter early. An index on the <code>vector</code> type supports up to 2,000 dimensions; the <code>halfvec</code> type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that. They are off by default: turn them on with <code>SET hnsw.iterative_scan = strict_order</code>. They still stop at a scan limit, <code>hnsw.max_scan_tuples</code>.</p>
 <p>Claude Code reaches the database through its Bash tool, with <code>psql</code>. You can also connect a database server over the Model Context Protocol (MCP) with <code>claude mcp add</code>. The docs warn you to verify that you trust each server before you connect it. Either way, give the session a local database and nothing else.</p>
 <h3 id="stage-4-ingestion">Stage 4: ingestion</h3>
 <p>Ingestion reads each document, cuts it into chunks, embeds each chunk and stores it with its metadata. Anthropic does not offer its own embedding model. Its documentation points to Voyage AI. With Voyage, you embed documents and questions with different <code>input_type</code> values, which handles the gap between short questions and long passages:</p>
@@ -294,9 +294,9 @@ assert &quot;chunks_embedding_hnsw&quot; in r[&quot;plan&quot;]                 
 <p><em>This example is invented. Fernpay is a made-up product. The output is from <code>rag-vector-databases/code/pgvector_demo.py</code>, run against Postgres 16 with pgvector 0.8.1.</em></p>
 <p>The corpus is 10 help documents, cut into 22 chunks. One document is a retracted refund policy that allowed 30 days. The current policy allows 14.</p>
 <p><strong>The retracted policy nearly wins.</strong> Ask "can I get my money back on a yearly plan". Unfiltered, Postgres returns the current policy at 0.936 and the retracted one at 0.927. Add <code>WHERE status = 'current'</code> and the retracted chunk is gone. The Python index returns the same three chunks with the same scores.</p>
-<p><strong>Keyword search finds the code.</strong> Ask "what does E-4021 mean". Vector search ranks a refund chunk first, at a similarity of 0.113, and misses the error page. Postgres full-text search returns <code>errors#0</code> first. The hybrid query keeps <code>errors#0</code> on top with a fused score of 0.0320.</p>
+<p><strong>Keyword search finds the code.</strong> Ask "what does E-4021 mean". Vector search ranks a refund chunk first, at a similarity of 0.113, and misses the E-4021 section (<code>errors#0</code>) in its top 3. Postgres full-text search returns <code>errors#0</code> first. The hybrid query keeps <code>errors#0</code> on top with a fused score of 0.0320.</p>
 <p><strong>The index is used.</strong> <code>EXPLAIN</code> shows <code>Index Scan using chunks_embedding_hnsw</code>. On 22 rows Postgres prefers a plain scan, so the demo turns sequential scans off for that one statement.</p>
-<p><strong>The eval.</strong> On 12 questions, recall@3 is 0.667 for keyword search, 0.833 for vector search and 0.917 for hybrid. The contract's bar is 0.90, so hybrid ships and vector search alone does not.</p>
+<p><strong>The eval.</strong> The demo runs no eval itself. In the Python pipeline (<code>mini_rag.py</code>), on 12 questions, recall@3 is 0.667 for keyword search, 0.833 for vector search and 0.917 for hybrid. The contract's bar is 0.90, so hybrid ships and vector search alone does not.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Is the eval set written by a person, with the answering chunk for each question?</li>

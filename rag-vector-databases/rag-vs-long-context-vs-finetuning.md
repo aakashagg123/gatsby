@@ -51,7 +51,7 @@ flowchart TB
 | --- | --- | --- | --- |
 | Best for | Behaviour, style, format | Small knowledge, or one whole document | Large, changing, private or citable knowledge |
 | Freshness | Stale until you retrain | Fresh: you supply it | Fresh: update the index |
-| Citations | No | Possible, coarse | Yes, per passage |
+| Citations | No | Yes, with a citations feature such as the Claude API's | Yes, per passage |
 | Cost shape | Training up front, normal serving | Every token, every call (caching helps) | Small prompts, plus a pipeline to run |
 | Size limit | Not about data size | The context window | Millions of documents |
 | Main risk | Facts go stale | Cost, and quality drops in long prompts | Retrieval quality caps answer quality |
@@ -62,7 +62,7 @@ The engineering detail is in the [strategy spoke](../content/06-strategy-tradeof
 
 Context windows have grown fast. Current Claude models accept up to 1 million tokens. Each jump revives the claim that RAG is obsolete. Four reasons keep it alive:
 
-- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, often to about a tenth on Claude models, but does not remove it.
+- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, to a tenth on most Claude models and a twentieth on Claude Opus 5.5 and Sonnet 5.5, but does not remove it.
 - **Latency.** A huge prompt takes longer to read before the first word of the answer appears.
 - **Quality.** Models do not use every part of a long prompt equally. Liu and colleagues found that accuracy was often highest when the relevant passage was at the start or end of the context, and dropped when it was in the middle. They called it "lost in the middle".
 - **Size and change.** Many corpora are bigger than any window, and they change every day.
@@ -78,7 +78,7 @@ Common stacks are a fine-tuned model plus RAG, where the model has your style an
 - **Up-front cost vs. per-call cost.** Fine-tuning costs once per training run. Long context costs on every call. RAG costs a pipeline plus small calls.
 - **Freshness vs. effort.** Long context and RAG are fresh by construction. Fine-tuning needs a new run for every change.
 - **Simplicity vs. scale.** Long context is the simplest to build. It stops scaling at the window, and its cost grows with every question.
-- **Citations vs. convenience.** Only RAG gives a clean, per-passage source for each claim.
+- **Citations vs. convenience.** RAG gives a per-passage source by construction. Long context can cite too, through a citations feature that points to the text it used.
 
 ## Failure modes
 
@@ -102,23 +102,23 @@ def scale_costs(corpus_tokens, questions=10_000, price=3.0, window=1_000_000, qu
     ...
 ```
 
-The sketch counts input tokens only. Output tokens are the same for all three approaches. It also leaves out cache writes, embedding costs and the cost of running a retrieval pipeline.
+The sketch counts input tokens only. Output tokens are the same for all three approaches. It leaves out cache writes, which apply only to the cached options and recur each time the cache expires. It also leaves out embedding costs and the cost of running a retrieval pipeline.
 
 ## Worked example: the same 10,000 questions at three corpus sizes
 
 *This example is invented. The price of $3 per million input tokens is an assumption for the arithmetic, not a quote. The numbers come from `rag-vector-databases/code/decide.py`.*
 
-Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long context sends the whole corpus. Cached reads cost a tenth of the base price.
+Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long context sends the whole corpus. Cached reads cost 0.1 or 0.05 times the base price, depending on the model.
 
-| Corpus size | Long context | Long context, cached | RAG |
-| --- | --- | --- | --- |
-| 35,000 tokens (a handbook) | $1,051.50 | $106.50 | $61.50 |
-| 400,000 tokens (a product's docs) | $12,001.50 | $1,201.50 | $61.50 |
-| 2,500,000 tokens (docs plus past answers) | does not fit | does not fit | $61.50 |
+| Corpus size | Long context | Cached at 0.1x | Cached at 0.05x | RAG |
+| --- | --- | --- | --- | --- |
+| 35,000 tokens (a handbook) | $1,051.50 | $106.50 | $54.00 | $61.50 |
+| 400,000 tokens (a product's docs) | $12,001.50 | $1,201.50 | $601.50 | $61.50 |
+| 2,500,000 tokens (docs plus past answers) | does not fit | does not fit | does not fit | $61.50 |
 
 **The cost of RAG does not grow with the corpus.** It sends the same 2,000 tokens whether the corpus is a handbook or a library. Long context grows in proportion to the corpus.
 
-**Caching changes the small case, not the large one.** For the handbook, cached long context costs $45 more than RAG per 10,000 questions, and needs no pipeline. That is why [lesson 1](./when-to-use-rag.md) keeps the handbook in the prompt. At 400,000 tokens, cached long context costs about 20 times as much as RAG. At 2.5 million tokens, it is not an option.
+**Caching changes the small case, not the large one.** For the handbook, cached long context is within $45 of RAG per 10,000 questions, and at 0.05x it is cheaper. It needs no pipeline. That is why [lesson 1](./when-to-use-rag.md) keeps the handbook in the prompt. At 400,000 tokens, cached long context costs about 10 to 20 times as much as RAG, depending on the cache price. At 2.5 million tokens, it is not an option.
 
 ## Practitioner checklist
 
@@ -141,5 +141,5 @@ Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long con
 
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, Transactions of the ACL, 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)): performance often highest when relevant information is at the start or end of the input, and lower in the middle.
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: knowledge bases under about 200,000 tokens in the prompt, with prompt caching. Read 2026-10.
-- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at about 0.1 times the base input price on most models, and a 1 million token context window on current models. Read 2026-10.
+- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at 0.1 times the base input price on most models and 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and a 1 million token context window on current models. Read 2026-10.
 - The corpus sizes, the $3 price and every number are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.

@@ -48,7 +48,7 @@ flowchart LR
 | **Chunk size** | How long each chunk is, in characters or tokens. | Fixed 80-character chunks. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Chunk overlap** | Text repeated at the start of the next chunk, so a fact on a boundary survives. | 30 characters of overlap. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Metadata** | Fields stored with a chunk: source, date, status, audience. | `status = 'retracted'`. | [Chunking and ingestion](./chunking-and-ingestion.md) |
-| **Contextual retrieval** | Adding a short note about the whole document to each chunk before it is embedded. | "From Fernpay's refund policy, 2026:" before a chunk. | [Retrieval quality](./retrieval-quality.md) |
+| **Contextual retrieval** | Adding a short note about the whole document to each chunk before it is embedded. | "From Fernpay's refund policy, 2026:" before a chunk. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Late chunking** | Embedding the whole document first, then cutting the result into chunk vectors, so each keeps document context. | Not used in Fernpay. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 
 ### Embed
@@ -188,7 +188,7 @@ A customer asks: "can I get my money back on a yearly plan?"
 5. The **evidence gate** passes. The top **similarity** is 0.936, above the **threshold** of 0.35, so the question is not refused.
 6. **Augmentation** puts the top 2 chunks into the prompt as sources [1] and [2], with an instruction to answer only from them and **cite** each claim.
 7. A **grounded** answer reads "Annual plans can be refunded within 14 days of purchase [1]." It is **faithful**, because source [1] says exactly that. The toy builds the prompt but does not call a model.
-8. In the **eval set**, this question's answering chunk is `refunds-v2#0`. It is at rank 1, so it counts for **recall@3**, and its **reciprocal rank** is 1.
+8. In the **eval set**, this question's answering chunk is `refunds-v2#0`. In vector search it is at rank 1, so it counts for **recall@3** and its **reciprocal rank** is 1. Under **hybrid search** the keyword leg matches "plan" in the two End-plan chunks, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.
 
 ## Practitioner checklist
 
@@ -215,7 +215,7 @@ A customer asks: "can I get my money back on a yearly plan?"
 - Gao, Ma, Lin and Callan, *Precise Zero-Shot Dense Retrieval without Relevance Labels*, ACL 2023 ([arxiv.org/abs/2212.10496](https://arxiv.org/abs/2212.10496)): HyDE.
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, TACL 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)).
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), September 2024: contextual retrieval.
-- Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04418](https://arxiv.org/abs/2409.04418)).
+- Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04701](https://arxiv.org/abs/2409.04701)).
 - Järvelin and Kekäläinen, *Cumulated gain-based evaluation of IR techniques*, ACM TOIS, 2002: nDCG.
 - Edge et al., *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*, 2024 ([arxiv.org/abs/2404.16130](https://arxiv.org/abs/2404.16130)): GraphRAG.
 - Greshake et al., *Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection*, 2023 ([arxiv.org/abs/2302.12173](https://arxiv.org/abs/2302.12173)).

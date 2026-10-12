@@ -1,6 +1,8 @@
 """When to use RAG, as code. An ordered decision tree, a RAG signal score, and a cost sketch.
 
-The six requests are invented. The prices are assumptions for the arithmetic, not quotes.
+The six requests are invented. The $3 price is an assumption for the arithmetic, not a quote.
+Cache reads are billed at a fraction of the base input price. Anthropic's docs (2026-10) give
+0.1x on most models and 0.05x on Claude Opus 5.5 and Sonnet 5.5, so the sketch shows both.
 Run: python3 decide.py
 """
 
@@ -68,6 +70,7 @@ def scale_costs(corpus_tokens, questions=10_000, price=3.0, window=1_000_000, qu
     return dict(
         stuff=round(questions * cost_per_query(corpus_tokens + question, price), 2) if fits else None,
         stuff_cached=round(questions * cost_per_query(corpus_tokens + question, price, corpus_tokens), 2) if fits else None,
+        stuff_cached_05=round(questions * cost_per_query(corpus_tokens + question, price, corpus_tokens, 0.05), 2) if fits else None,
         rag=round(questions * cost_per_query(retrieved + question, price), 2),
     )
 
@@ -79,6 +82,7 @@ def main(price=3.0):
     costs = dict(
         stuff=cost_per_query(handbook + question, price),
         stuff_cached=cost_per_query(handbook + question, price, cached_tokens=handbook),
+        stuff_cached_05=cost_per_query(handbook + question, price, handbook, cache_read_multiplier=0.05),
         rag=cost_per_query(retrieved + question, price),
     )
     scales = {n: scale_costs(n) for n in (35_000, 400_000, 2_500_000)}
@@ -96,10 +100,12 @@ if __name__ == "__main__":
                                 "put it in the prompt, with prompt caching", "RAG"]
     assert sum(1 for x in v.values() if x == "RAG") == 2
     assert costs["rag"] < costs["stuff_cached"] < costs["stuff"]
+    assert costs["stuff_cached_05"] < costs["rag"]                # at 0.05x the cached handbook beats RAG
+    assert per_10k["stuff_cached_05"] == 54.0
     assert round(costs["stuff"] / costs["stuff_cached"], 1) == 9.9      # caching cuts the stuffed prompt about 10x
     assert round(per_10k["stuff"]) == 1052 and per_10k["rag"] == 61.5
     for n, c in scales.items():
         print(f"corpus of {n:>9,} tokens, 10,000 questions: {c}")
-    assert scales[400_000] == dict(stuff=12001.5, stuff_cached=1201.5, rag=61.5)
+    assert scales[400_000] == dict(stuff=12001.5, stuff_cached=1201.5, stuff_cached_05=601.5, rag=61.5)
     assert scales[2_500_000]["stuff"] is None                   # bigger than a 1M-token window
     print("decide ok")

@@ -113,7 +113,7 @@ def chunk_fixed(doc, size=120, overlap=0):
 
 **Blind cuts lose answers.** At 80 characters, two facts are cut in half: "first day of every month" and "get error 429". No search can return them whole. Only 7 questions are answered.
 
-**Overlap rescues the facts, not the ranking.** With 30 characters of overlap, no fact is cut. But there are now 42 chunks, many near-duplicates, and they crowd the top 3. Only 8 questions are answered. Fixed chunks also lose the titles and headings, which carried many of the words that match.
+**Overlap rescues the facts, not the ranking.** With 30 characters of overlap, no fact is cut. But there are now 42 chunks, many near-duplicates, and they crowd the top 3. Only 8 questions are answered. Fixed chunks also lose the titles and headings. That probably costs some matches, though the demo does not measure it separately.
 
 **Big chunks win here, for a reason that will not last.** Each Fernpay document is 127 to 295 characters long, so a 200-character chunk holds most of a document. It answers all 12 questions, and sends a third more words per question than section chunks. On a real corpus, with documents of thousands of words, a big fixed chunk mixes many topics. Section chunks are the plan that scales.
 
@@ -138,5 +138,5 @@ def chunk_fixed(doc, size=120, overlap=0):
 ## Sources
 
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings and by 49% with contextual embeddings plus contextual BM25. Read 2026-10.
-- Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04418](https://arxiv.org/abs/2409.04418)).
+- Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04701](https://arxiv.org/abs/2409.04701)).
 - The Fernpay corpus, the chunk plans and every number are invented. They come from `rag-vector-databases/code/chunking_demo.py`.

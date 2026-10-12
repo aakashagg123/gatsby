@@ -1,4 +1,4 @@
-"""Chunking decides what can be found. The same questions, the same search, three ways to cut.
+"""Chunking decides what can be found. The same questions, the same search, four ways to cut.
 
 A question counts as answered when one of the top 3 chunks contains the whole answer fact.
 Run: python3 chunking_demo.py

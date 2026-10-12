@@ -90,7 +90,7 @@
 
   <div class="dgm-vd-out">
     <svg class="dgm-vd-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
-    <div><h5>Top-k nearest passages · approximate</h5><p>ANN trades a tiny bit of exactness for orders-of-magnitude speed</p></div>
+    <div><h5>Top-k nearest passages · approximate</h5><p>ANN trades a little exactness for much faster search at scale</p></div>
   </div>
 </div>
 
@@ -105,7 +105,7 @@
 <p>Both have a dial. In pgvector it is <code>hnsw.ef_search</code> (40 by default) or <code>ivfflat.probes</code>. Turn it up for recall. Turn it down for speed.</p>
 <h3 id="the-filter-trap">The filter trap</h3>
 <p>Products need filters: this tenant, this language, current documents only. With an approximate index, many stores apply the filter <em>after</em> the index scan. pgvector's documentation gives an example. If a filter matches 10% of rows, and <code>hnsw.ef_search</code> is 40, only about 4 rows match on average. You asked for 10 results and get 4.</p>
-<p>Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.</p>
+<p>Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (<code>SET hnsw.iterative_scan = strict_order</code> turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.</p>
 <h3 id="what-separates-the-options">What separates the options</h3>
 <table>
 <thead>

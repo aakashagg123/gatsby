@@ -57,7 +57,7 @@ Both have a dial. In pgvector it is `hnsw.ef_search` (40 by default) or `ivfflat
 
 Products need filters: this tenant, this language, current documents only. With an approximate index, many stores apply the filter *after* the index scan. pgvector's documentation gives an example. If a filter matches 10% of rows, and `hnsw.ef_search` is 40, only about 4 rows match on average. You asked for 10 results and get 4.
 
-Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.
+Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (`SET hnsw.iterative_scan = strict_order` turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.
 
 ### What separates the options
 

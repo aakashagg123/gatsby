@@ -102,7 +102,7 @@ A real model learns its map from huge amounts of text, with hundreds or thousand
 
 *This example is invented. Fernpay is a made-up product. The numbers come from `rag-vector-databases/code/embeddings_demo.py`.*
 
-**Paraphrase works.** The question "how do I stop paying for fernpay" shares no meaningful word with the "End plan" help section. Their cosine similarity is still 0.773, because "stop", "paying" and "end", "billing" map to the same concepts. Keyword search finds nothing to match.
+**Paraphrase works.** The question "how do I stop paying for fernpay" shares no meaningful word with the "End plan" help section. Their cosine similarity is still 0.773, because "stop", "paying" and "end", "billing" map to the same concepts. Keyword search has no word to match in that section. It matches "fernpay" in unrelated chunks instead.
 
 **Similar is not correct.** The question "can I get my money back on a yearly plan" scores 0.936 against the current refund policy and 0.927 against the retracted one. The two policies score 0.99 against each other. They differ only in the word "old" in one title and the number of days. Embeddings alone cannot tell which one is in force. A status filter can.
 

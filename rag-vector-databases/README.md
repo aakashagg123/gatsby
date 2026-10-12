@@ -6,7 +6,7 @@ A model's built-in knowledge is frozen at training time, generic, and has no sou
 
 This module is the product leader's map of that machinery, in ten lessons. It starts with the decision most teams skip: whether RAG is the right tool at all. It then covers how semantic search and vector databases work, why chunking and retrieval quality decide whether a feature can be trusted, when long context or fine-tuning fits better, and where flat RAG gives way to structure. It ends with a hands-on build using Claude Code with pgvector or Pinecone, and a reference to every RAG term.
 
-**Every lesson has two layers.** The body is for the leader who decides. A short **Under the hood** section is for the engineer who builds. It points to code in `rag-vector-databases/code/` that runs on the Python standard library, with no account and no install, and ends in `assert` lines that check the claims. The examples share one invented corpus: the help centre of Fernpay, a made-up invoicing product.
+**Every lesson has two layers.** The body is for the leader who decides. A short **Under the hood** section is for the engineer who builds. It points to code in `rag-vector-databases/code/` that runs on the Python standard library, with no account and no install, and ends in `assert` lines that check the direction of each claim. Run a file to see every quoted number printed. The examples share one invented corpus: the help centre of Fernpay, a made-up invoicing product.
 
 ## Where the depth lives
 

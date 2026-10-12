@@ -136,7 +136,7 @@
 <td><strong>Contextual retrieval</strong></td>
 <td>Adding a short note about the whole document to each chunk before it is embedded.</td>
 <td>"From Fernpay's refund policy, 2026:" before a chunk.</td>
-<td><a href="retrieval-quality.html">Retrieval quality</a></td>
+<td><a href="chunking-and-ingestion.html">Chunking and ingestion</a></td>
 </tr>
 <tr>
 <td><strong>Late chunking</strong></td>
@@ -658,7 +658,7 @@
 <li>The <strong>evidence gate</strong> passes. The top <strong>similarity</strong> is 0.936, above the <strong>threshold</strong> of 0.35, so the question is not refused.</li>
 <li><strong>Augmentation</strong> puts the top 2 chunks into the prompt as sources [1] and [2], with an instruction to answer only from them and <strong>cite</strong> each claim.</li>
 <li>A <strong>grounded</strong> answer reads "Annual plans can be refunded within 14 days of purchase [1]." It is <strong>faithful</strong>, because source [1] says exactly that. The toy builds the prompt but does not call a model.</li>
-<li>In the <strong>eval set</strong>, this question's answering chunk is <code>refunds-v2#0</code>. It is at rank 1, so it counts for <strong>recall@3</strong>, and its <strong>reciprocal rank</strong> is 1.</li>
+<li>In the <strong>eval set</strong>, this question's answering chunk is <code>refunds-v2#0</code>. In vector search it is at rank 1, so it counts for <strong>recall@3</strong> and its <strong>reciprocal rank</strong> is 1. Under <strong>hybrid search</strong> the keyword leg matches "plan" in the two End-plan chunks, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.</li>
 </ol>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
@@ -685,7 +685,7 @@
 <li>Gao, Ma, Lin and Callan, <em>Precise Zero-Shot Dense Retrieval without Relevance Labels</em>, ACL 2023 (<a href="https://arxiv.org/abs/2212.10496">arxiv.org/abs/2212.10496</a>): HyDE.</li>
 <li>Liu et al., <em>Lost in the Middle: How Language Models Use Long Contexts</em>, TACL 2024 (<a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a>).</li>
 <li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, September 2024: contextual retrieval.</li>
-<li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04418">arxiv.org/abs/2409.04418</a>).</li>
+<li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04701">arxiv.org/abs/2409.04701</a>).</li>
 <li>Järvelin and Kekäläinen, <em>Cumulated gain-based evaluation of IR techniques</em>, ACM TOIS, 2002: nDCG.</li>
 <li>Edge et al., <em>From Local to Global: A Graph RAG Approach to Query-Focused Summarization</em>, 2024 (<a href="https://arxiv.org/abs/2404.16130">arxiv.org/abs/2404.16130</a>): GraphRAG.</li>
 <li>Greshake et al., <em>Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</em>, 2023 (<a href="https://arxiv.org/abs/2302.12173">arxiv.org/abs/2302.12173</a>).</li>

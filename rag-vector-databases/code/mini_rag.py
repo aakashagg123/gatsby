@@ -1,8 +1,8 @@
 """A whole RAG pipeline in the Python standard library: chunk, embed, index, retrieve,
 filter, fuse, cite and measure. No account, no API key, no install.
 
-The embedding is a toy. A small hand-made table maps words to about 30 concepts, and every
-other word is hashed into a few spare slots. A real embedding model learns its own map from
+The embedding is a toy. A small hand-made table maps words to 22 concepts, and every other
+word is hashed into 8 spare slots, for 30 numbers in all. A real embedding model learns its own map from
 billions of sentences. The toy is just enough to show what an embedding does well
 (paraphrase) and badly (exact codes).
 
