@@ -82,7 +82,7 @@
 <td><strong>Corpus</strong></td>
 <td>All the text the system can retrieve from.</td>
 <td>The 10 help documents.</td>
-<td><a href="why-rag.html">Why RAG?</a></td>
+<td><a href="chunking-and-ingestion.html">Chunking and ingestion</a></td>
 </tr>
 <tr>
 <td><strong>Ingestion</strong></td>
@@ -258,7 +258,7 @@
 <td><strong>Distance metric</strong></td>
 <td>How closeness is measured: cosine, dot product or Euclidean (L2).</td>
 <td>Cosine, <code>&lt;=&gt;</code> in pgvector.</td>
-<td><a href="vector-databases.html">Vector databases</a></td>
+<td><a href="building-rag-with-claude-code.html">Building RAG</a></td>
 </tr>
 <tr>
 <td><strong>Cosine similarity</strong></td>
@@ -600,7 +600,7 @@
 <li><strong>Citations as decoration.</strong> Showing sources without checking that they support the claim.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
-<p>Every retrieval term in this lesson has a function in <code>rag-vector-databases/code/mini_rag.py</code>.</p>
+<p>Most retrieval terms in this lesson have a function in <code>rag-vector-databases/code/mini_rag.py</code>. Reranking, query rewriting, HyDE and nDCG do not; the toy leaves them out.</p>
 <table>
 <thead>
 <tr>
@@ -658,7 +658,7 @@
 <li>The <strong>evidence gate</strong> passes. The top <strong>similarity</strong> is 0.936, above the <strong>threshold</strong> of 0.35, so the question is not refused.</li>
 <li><strong>Augmentation</strong> puts the top 2 chunks into the prompt as sources [1] and [2], with an instruction to answer only from them and <strong>cite</strong> each claim.</li>
 <li>A <strong>grounded</strong> answer reads "Annual plans can be refunded within 14 days of purchase [1]." It is <strong>faithful</strong>, because source [1] says exactly that. The toy builds the prompt but does not call a model.</li>
-<li>In the <strong>eval set</strong>, this question's answering chunk is <code>refunds-v2#0</code>. In vector search it is at rank 1, so it counts for <strong>recall@3</strong> and its <strong>reciprocal rank</strong> is 1. Under <strong>hybrid search</strong> the keyword leg matches "plan" in the two End-plan chunks, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.</li>
+<li>In the <strong>eval set</strong>, this question's answering chunk is <code>refunds-v2#0</code>. In vector search it is at rank 1, so it counts for <strong>recall@3</strong> and its <strong>reciprocal rank</strong> is 1. Under <strong>hybrid search</strong> the keyword leg matches "plan" in two chunks of the "Ending your subscription" page, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.</li>
 </ol>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>

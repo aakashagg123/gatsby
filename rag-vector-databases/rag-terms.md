@@ -39,7 +39,7 @@ flowchart LR
 
 | Term | Plain meaning | Fernpay example | Develops it |
 | --- | --- | --- | --- |
-| **Corpus** | All the text the system can retrieve from. | The 10 help documents. | [Why RAG?](./why-rag.md) |
+| **Corpus** | All the text the system can retrieve from. | The 10 help documents. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Ingestion** | Reading sources, cutting them into chunks, embedding and storing them. | `ingest.py` runs nightly. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Loader** | Code that reads one kind of source, such as PDF, HTML or a ticket system. | A loader for the help-centre Markdown. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Parsing** | Turning a raw file into clean text and structure. | Dropping the navigation bar from an HTML page. | [Chunking and ingestion](./chunking-and-ingestion.md) |
@@ -74,7 +74,7 @@ flowchart LR
 | **ANN** | Approximate nearest neighbour: fast search that may miss a true neighbour. | HNSW in Postgres. | [Vector databases](./vector-databases.md) |
 | **HNSW** | Hierarchical navigable small world: a layered graph index, fast at query time. | `USING hnsw`. | [Vector databases](./vector-databases.md) |
 | **IVF** | Inverted file index: vectors grouped into lists around centres; a query scans the nearest lists. | The `ann_demo.py` index. | [Vector databases](./vector-databases.md) |
-| **Distance metric** | How closeness is measured: cosine, dot product or Euclidean (L2). | Cosine, `<=>` in pgvector. | [Vector databases](./vector-databases.md) |
+| **Distance metric** | How closeness is measured: cosine, dot product or Euclidean (L2). | Cosine, `<=>` in pgvector. | [Building RAG](./building-rag-with-claude-code.md) |
 | **Cosine similarity** | The cosine of the angle between two vectors. 1 means the same direction. | 0.936 for the current refund policy. | [Embeddings](./embeddings-and-semantic-search.md) |
 | **Namespace** | A partition of an index. A search sees one namespace only. | One per tenant in Pinecone. | [Building RAG](./building-rag-with-claude-code.md) |
 
@@ -161,7 +161,7 @@ flowchart LR
 
 ## Under the hood
 
-Every retrieval term in this lesson has a function in `rag-vector-databases/code/mini_rag.py`.
+Most retrieval terms in this lesson have a function in `rag-vector-databases/code/mini_rag.py`. Reranking, query rewriting, HyDE and nDCG do not; the toy leaves them out.
 
 | Term | Function |
 | --- | --- |
@@ -188,7 +188,7 @@ A customer asks: "can I get my money back on a yearly plan?"
 5. The **evidence gate** passes. The top **similarity** is 0.936, above the **threshold** of 0.35, so the question is not refused.
 6. **Augmentation** puts the top 2 chunks into the prompt as sources [1] and [2], with an instruction to answer only from them and **cite** each claim.
 7. A **grounded** answer reads "Annual plans can be refunded within 14 days of purchase [1]." It is **faithful**, because source [1] says exactly that. The toy builds the prompt but does not call a model.
-8. In the **eval set**, this question's answering chunk is `refunds-v2#0`. In vector search it is at rank 1, so it counts for **recall@3** and its **reciprocal rank** is 1. Under **hybrid search** the keyword leg matches "plan" in the two End-plan chunks, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.
+8. In the **eval set**, this question's answering chunk is `refunds-v2#0`. In vector search it is at rank 1, so it counts for **recall@3** and its **reciprocal rank** is 1. Under **hybrid search** the keyword leg matches "plan" in two chunks of the "Ending your subscription" page, which push it to rank 3. It still counts for recall@3, with a reciprocal rank of 0.33.
 
 ## Practitioner checklist
 

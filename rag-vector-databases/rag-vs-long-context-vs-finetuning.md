@@ -62,7 +62,7 @@ The engineering detail is in the [strategy spoke](../content/06-strategy-tradeof
 
 Context windows have grown fast. Current Claude models accept up to 1 million tokens. Each jump revives the claim that RAG is obsolete. Four reasons keep it alive:
 
-- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, to a tenth on most Claude models and a twentieth on Claude Opus 5.5 and Sonnet 5.5, but does not remove it.
+- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, to 0.1 times the base price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1. It does not remove the cost.
 - **Latency.** A huge prompt takes longer to read before the first word of the answer appears.
 - **Quality.** Models do not use every part of a long prompt equally. Liu and colleagues found that accuracy was often highest when the relevant passage was at the start or end of the context, and dropped when it was in the middle. They called it "lost in the middle".
 - **Size and change.** Many corpora are bigger than any window, and they change every day.
@@ -118,7 +118,7 @@ Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long con
 
 **The cost of RAG does not grow with the corpus.** It sends the same 2,000 tokens whether the corpus is a handbook or a library. Long context grows in proportion to the corpus.
 
-**Caching changes the small case, not the large one.** For the handbook, cached long context is within $45 of RAG per 10,000 questions, and at 0.05x it is cheaper. It needs no pipeline. That is why [lesson 1](./when-to-use-rag.md) keeps the handbook in the prompt. At 400,000 tokens, cached long context costs about 10 to 20 times as much as RAG, depending on the cache price. At 2.5 million tokens, it is not an option.
+**Caching changes the small case, not the large one.** For the handbook, cached long context is within $45 of RAG per 10,000 questions, and at 0.05x its reads are cheaper. Cache writes, about $0.13 each time the cache expires, can tip it back. It needs no pipeline. That is why [lesson 1](./when-to-use-rag.md) keeps the handbook in the prompt. At 400,000 tokens, cached long context costs about 10 to 20 times as much as RAG, depending on the cache price. At 2.5 million tokens, it is not an option.
 
 ## Practitioner checklist
 
@@ -141,5 +141,5 @@ Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long con
 
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, Transactions of the ACL, 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)): performance often highest when relevant information is at the start or end of the input, and lower in the middle.
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: knowledge bases under about 200,000 tokens in the prompt, with prompt caching. Read 2026-10.
-- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at 0.1 times the base input price on most models and 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and a 1 million token context window on current models. Read 2026-10.
+- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at 0.1 times the base input price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5 and 0.025 times on Claude Fable 5.1, and a 1 million token context window on current models. Read 2026-10.
 - The corpus sizes, the $3 price and every number are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.

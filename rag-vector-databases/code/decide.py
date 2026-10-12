@@ -2,7 +2,8 @@
 
 The six requests are invented. The $3 price is an assumption for the arithmetic, not a quote.
 Cache reads are billed at a fraction of the base input price. Anthropic's docs (2026-10) give
-0.1x on most models and 0.05x on Claude Opus 5.5 and Sonnet 5.5, so the sketch shows both.
+0.1x on Haiku 5.5 and older models, 0.05x on Claude Opus 5.5 and Sonnet 5.5, and 0.025x on
+Fable 5.1. The sketch shows 0.1x and 0.05x.
 Run: python3 decide.py
 """
 
@@ -50,7 +51,7 @@ REQUESTS = [
     dict(name="Summarize the contract the user just uploaded", need="whole_document",
          corpus_tokens=30_000, private=True),
     dict(name="Write marketing emails in our brand voice", need="behaviour", corpus_tokens=8_000),
-    dict(name="HR policy helper over a 60-page handbook", need="passage",
+    dict(name="HR policy helper over a 90-page handbook", need="passage",
          corpus_tokens=35_000, private=True, needs_citations=True),
     dict(name="Security questionnaire answers from past responses and product docs", need="passage",
          corpus_tokens=2_500_000, private=True, changes_often=True, needs_citations=True),

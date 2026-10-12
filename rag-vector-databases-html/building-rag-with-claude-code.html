@@ -116,23 +116,26 @@ Say which embedding model and dimension you assume. Do not write code yet.
 <p>Check four things in the plan: the vector dimension matches the embedding model, the filter is in every query, deletes are handled, and the eval uses your questions.</p>
 <h3 id="stage-3-the-database">Stage 3: the database</h3>
 <p>pgvector adds a vector type and nearest-neighbour search to Postgres. The quickest local start is the project's Docker image:</p>
-<pre><code class="language-bash">docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:pg16
+<pre><code class="language-bash">docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:0.8.1-pg16
 </code></pre>
-<p>Then the schema. This is adapted from <code>rag-vector-databases/code/pgvector_demo.sql</code>, with a real model's 1,024 dimensions and fewer columns:</p>
+<p>Then the schema. This is adapted from <code>rag-vector-databases/code/pgvector_demo.sql</code>, with a real model's 1,024 dimensions and the <code>updated</code> column left out:</p>
 <pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE chunks (
     id        text PRIMARY KEY,          -- 'refunds-v2#0': document id + section number
     doc       text NOT NULL,
+    title     text NOT NULL,
+    section   text NOT NULL,
     body      text NOT NULL,
     status    text NOT NULL,             -- 'current' or 'retracted'
     audience  text NOT NULL,             -- 'customer' or 'internal'
     embedding vector(1024) NOT NULL,     -- must equal the embedding model's dimension
-    fts       tsvector GENERATED ALWAYS AS (to_tsvector('english', body)) STORED
+    fts       tsvector GENERATED ALWAYS AS (to_tsvector('english', title || ' ' || body)) STORED
 );
 CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON chunks USING gin (fts);
 </code></pre>
 <p>Three choices sit in that schema. The <code>vector(1024)</code> size must match the model. The HNSW index is the approximate search; its operator class, <code>vector_cosine_ops</code>, must match the <code>&lt;=&gt;</code> cosine distance used in queries. The <code>fts</code> column gives you keyword search in the same table, which is what makes hybrid search one SQL statement.</p>
+<p>pgvector has three main distance operators: <code>&lt;=&gt;</code> for cosine distance, <code>&lt;-&gt;</code> for Euclidean (L2) distance and <code>&lt;#&gt;</code> for the negative inner product (dot product). Pick the one your embedding model is designed for. Normalized vectors give the same ranking under all three.</p>
 <p>Two limits from the pgvector documentation matter early. An index on the <code>vector</code> type supports up to 2,000 dimensions; the <code>halfvec</code> type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that. They are off by default: turn them on with <code>SET hnsw.iterative_scan = strict_order</code>. They still stop at a scan limit, <code>hnsw.max_scan_tuples</code>.</p>
 <p>Claude Code reaches the database through its Bash tool, with <code>psql</code>. You can also connect a database server over the Model Context Protocol (MCP) with <code>claude mcp add</code>. The docs warn you to verify that you trust each server before you connect it. Either way, give the session a local database and nothing else.</p>
 <h3 id="stage-4-ingestion">Stage 4: ingestion</h3>

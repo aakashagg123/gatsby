@@ -3,7 +3,7 @@
 Needs a Postgres server with the pgvector extension and the psql client. It uses the
 standard PG* variables (PGHOST, PGPORT, PGUSER, PGDATABASE). Quick start with Docker:
 
-    docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:pg16
+    docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:0.8.1-pg16
     PGHOST=localhost PGUSER=postgres PGPASSWORD=pw python3 pgvector_demo.py
 
 With no server it prints a skip message and exits 0, so the test runner stays green.

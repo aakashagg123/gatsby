@@ -180,7 +180,7 @@ def build_prompt(index, question, hits):
 <p>The gate uses both legs on purpose. A similarity score alone is a weak test, as the worked example shows.</p>
 <h2 id="worked-example-a-grounded-prompt-and-a-refusal">Worked example: a grounded prompt and a refusal</h2>
 <p><em>This example is invented. Fernpay is a made-up invoicing product. The numbers come from <code>rag-vector-databases/code/mini_rag.py</code>.</em></p>
-<p><strong>A question the data covers.</strong> A customer asks "can I get my money back on a yearly plan?". Vector search, with the status filter, returns the current refund policy first, with a similarity of 0.936. (Hybrid search would rank two End-plan chunks above it, because they contain the word "plan". That is one reason <a href="retrieval-quality.html">lesson 6</a> adds a reranker.) The prompt the model receives starts like this:</p>
+<p><strong>A question the data covers.</strong> A customer asks "can I get my money back on a yearly plan?". Vector search, with the status filter, returns the current refund policy first, with a similarity of 0.936. (Hybrid search would rank two chunks from the "Ending your subscription" page above it, because they contain the word "plan". That is one reason <a href="retrieval-quality.html">lesson 6</a> adds a reranker.) The prompt the model receives starts like this:</p>
 <pre><code class="language-text">Answer only from the sources below. Cite each claim as [n].
 If the sources do not contain the answer, say you do not know.
 
@@ -209,7 +209,7 @@ If the sources do not contain the answer, say you do not know.
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Lewis et al., <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em>, NeurIPS 2020 (<a href="https://arxiv.org/abs/2005.11401">arxiv.org/abs/2005.11401</a>): the RAG pattern of a retriever plus a generator, with provenance for answers.</li>
-<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, reported April 2025: an AI support agent at a software company reportedly invented a login policy, and users cancelled before staff stepped in. Checked through search excerpts, 2026-10.</li>
+<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, reported April 2025: an AI support agent at a software company reportedly invented a login policy, which reportedly led to cancellations. Checked through search excerpts, 2026-10.</li>
 <li>The Fernpay corpus, the questions and every number are invented. They come from <code>rag-vector-databases/code/mini_rag.py</code>.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="when-to-use-rag.html"><span class="lbl">← Previous</span><span class="ttl">When to use RAG, and when not to</span></a><a class="navcard next" href="embeddings-and-semantic-search.html"><span class="lbl">→ Next</span><span class="ttl">Embeddings &amp; semantic search</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -76,27 +76,31 @@ Check four things in the plan: the vector dimension matches the embedding model,
 pgvector adds a vector type and nearest-neighbour search to Postgres. The quickest local start is the project's Docker image:
 
 ```bash
-docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:pg16
+docker run -d --name rag-pg -e POSTGRES_PASSWORD=pw -p 5432:5432 pgvector/pgvector:0.8.1-pg16
 ```
 
-Then the schema. This is adapted from `rag-vector-databases/code/pgvector_demo.sql`, with a real model's 1,024 dimensions and fewer columns:
+Then the schema. This is adapted from `rag-vector-databases/code/pgvector_demo.sql`, with a real model's 1,024 dimensions and the `updated` column left out:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE chunks (
     id        text PRIMARY KEY,          -- 'refunds-v2#0': document id + section number
     doc       text NOT NULL,
+    title     text NOT NULL,
+    section   text NOT NULL,
     body      text NOT NULL,
     status    text NOT NULL,             -- 'current' or 'retracted'
     audience  text NOT NULL,             -- 'customer' or 'internal'
     embedding vector(1024) NOT NULL,     -- must equal the embedding model's dimension
-    fts       tsvector GENERATED ALWAYS AS (to_tsvector('english', body)) STORED
+    fts       tsvector GENERATED ALWAYS AS (to_tsvector('english', title || ' ' || body)) STORED
 );
 CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON chunks USING gin (fts);
 ```
 
 Three choices sit in that schema. The `vector(1024)` size must match the model. The HNSW index is the approximate search; its operator class, `vector_cosine_ops`, must match the `<=>` cosine distance used in queries. The `fts` column gives you keyword search in the same table, which is what makes hybrid search one SQL statement.
+
+pgvector has three main distance operators: `<=>` for cosine distance, `<->` for Euclidean (L2) distance and `<#>` for the negative inner product (dot product). Pick the one your embedding model is designed for. Normalized vectors give the same ranking under all three.
 
 Two limits from the pgvector documentation matter early. An index on the `vector` type supports up to 2,000 dimensions; the `halfvec` type supports up to 4,000. And a filter is applied after the approximate index scan, so a narrow filter can return fewer rows than you asked for. Version 0.8.0 added iterative index scans to fix that. They are off by default: turn them on with `SET hnsw.iterative_scan = strict_order`. They still stop at a scan limit, `hnsw.max_scan_tuples`.
 

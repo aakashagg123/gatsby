@@ -116,7 +116,7 @@ def decide(req):
 
 The order matters. A count over private, changing data still has two retrieval signals. It goes to the database anyway, because the shape test comes first.
 
-The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on most models, and 0.05 times on Claude Opus 5.5 and Sonnet 5.5, so the sketch shows both. The price per token is an assumption for the arithmetic, not a quote.
+The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1. The sketch shows 0.1 and 0.05. The price per token is an assumption for the arithmetic, not a quote.
 
 ## Worked example: six requests, two get RAG
 
@@ -142,9 +142,9 @@ Now look at the cost of the handbook choice. The sketch assumes $3 per million i
 | Send the whole handbook, cached at 0.05x | 35,050, of which 35,000 cached | $54.00 |
 | Retrieve 5 chunks of about 400 tokens | 2,050 | $61.50 |
 
-Caching cuts the cost of the full handbook by about 10 times at 0.1x, and about 20 times at 0.05x. At 0.1x, RAG is $45 cheaper per 10,000 questions. At 0.05x, the cached handbook is $7.50 cheaper than RAG. Either way, a retrieval pipeline costs far more to build and run than the gap, so the handbook stays in the prompt.
+Caching cuts the cost of the full handbook by about 10 times at 0.1x, and about 20 times at 0.05x. At 0.1x, RAG is $45 cheaper per 10,000 questions. At 0.05x, the cached handbook is $7.50 cheaper than RAG on reads alone. Either way, a retrieval pipeline costs far more to build and run than the gap, so the handbook stays in the prompt.
 
-The sketch leaves out two things. Output tokens are the same for all three, so they do not change the comparison. Cache writes are not: they apply only to the cached options, at 1.25 times the base price for the default 5-minute cache, and again each time the cache expires between questions.
+The sketch leaves out two things. Output tokens are the same for all three, so they do not change the comparison. Cache writes are not: they apply only to the cached options, at 1.25 times the base price for the default 5-minute cache, and again each time the cache expires between questions. One write of the 35,000-token handbook costs about $0.13 at the assumed price, so about 57 cache expiries erase the $7.50 lead. With traffic spread over days, RAG's input cost is lower. The pipeline cost still decides the case.
 
 ## Practitioner checklist
 

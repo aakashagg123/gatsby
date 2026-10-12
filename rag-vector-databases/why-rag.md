@@ -103,7 +103,7 @@ The gate uses both legs on purpose. A similarity score alone is a weak test, as 
 
 *This example is invented. Fernpay is a made-up invoicing product. The numbers come from `rag-vector-databases/code/mini_rag.py`.*
 
-**A question the data covers.** A customer asks "can I get my money back on a yearly plan?". Vector search, with the status filter, returns the current refund policy first, with a similarity of 0.936. (Hybrid search would rank two End-plan chunks above it, because they contain the word "plan". That is one reason [lesson 6](./retrieval-quality.md) adds a reranker.) The prompt the model receives starts like this:
+**A question the data covers.** A customer asks "can I get my money back on a yearly plan?". Vector search, with the status filter, returns the current refund policy first, with a similarity of 0.936. (Hybrid search would rank two chunks from the "Ending your subscription" page above it, because they contain the word "plan". That is one reason [lesson 6](./retrieval-quality.md) adds a reranker.) The prompt the model receives starts like this:
 
 ```text
 Answer only from the sources below. Cite each claim as [n].
@@ -138,5 +138,5 @@ A grounded answer is "within 14 days of purchase [1]". A closed-book model has n
 ## Sources
 
 - Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*, NeurIPS 2020 ([arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)): the RAG pattern of a retriever plus a generator, with provenance for answers.
-- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported April 2025: an AI support agent at a software company reportedly invented a login policy, and users cancelled before staff stepped in. Checked through search excerpts, 2026-10.
+- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported April 2025: an AI support agent at a software company reportedly invented a login policy, which reportedly led to cancellations. Checked through search excerpts, 2026-10.
 - The Fernpay corpus, the questions and every number are invented. They come from `rag-vector-databases/code/mini_rag.py`.

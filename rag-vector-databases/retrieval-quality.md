@@ -101,7 +101,7 @@ def hybrid(self, query, k=5, where=None, depth=20, c=60):
     for ranked in (self.vector_search(query, depth, where), self.bm25(query, depth, where)):
         for rank, (_, cid) in enumerate(ranked, start=1):
             votes[cid] += 1 / (c + rank)
-    return sorted(votes.items(), key=lambda x: -x[1])[:k]
+    return sorted(votes.items(), key=lambda x: -x[1])[:k]     # simplified: the file also breaks ties by id
 
 def recall_at_k(results, gold):
     return 1.0 if gold in [cid for _, cid in results] else 0.0
