@@ -271,8 +271,8 @@ LANDING = """<!doctype html>
     <a class="card" href="rag-vector-databases/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
       <h3>RAG &amp; vector databases →</h3>
-      <p>Grounding models in your data — embeddings, vector databases, chunking, retrieval
-      quality, and when to reach for long-context, fine-tuning, or a graph.</p>
+      <p>Grounding models in your data — when to use RAG and when not to, embeddings, vector
+      databases, chunking, retrieval quality, and a hands-on build with Claude Code and pgvector.</p>
     </a>
     <a class="card" href="memory-and-context/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>

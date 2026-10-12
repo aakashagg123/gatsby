@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 37 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 37.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -35,7 +35,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | Stage | Focus | About |
 | --- | --- | --- |
 | 1 | How models behave and what they cost | about 10 hours |
-| 2 | Architecture you can review | about 15 hours |
+| 2 | Architecture you can review | about 16 hours |
 | 3 | Quality, safety and access | about 6 hours |
 | 4 | Systems at scale | about 2.5 hours |
 | 5 | Work with product and run the team | about 3.5 hours |
@@ -57,9 +57,9 @@ Cost and latency come from model and serving choices. Know the levers. (about 10
 
 ## Stage 2: Architecture you can review
 
-Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 15 hours)
+Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 16 hours)
 
-- **RAG & vector databases**: [1. Why RAG?](../rag-vector-databases/why-rag.md) · [5. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [6. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
+- **RAG & vector databases**: [1. When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md) · [2. Why RAG?](../rag-vector-databases/why-rag.md) · [6. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [7. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md) · [9. Building RAG with Claude Code, pgvector and Pinecone](../rag-vector-databases/building-rag-with-claude-code.md)
 - **Context engineering**: [1. What is context engineering, for a product leader?](../context-engineering/what-is-context-engineering.md) · [3. The anatomy of a context pipeline](../context-engineering/the-anatomy-of-a-context-pipeline.md) · [5. Context governance at scale](../context-engineering/context-governance-at-scale.md)
 - **Memory & context**: [1. Memory as a product decision](../memory-and-context/memory-as-a-product-decision.md) · [5. When memory goes wrong](../memory-and-context/when-memory-goes-wrong.md)
 - **Tool calling**: [2. Tool contracts & reliability](../tool-calling/tool-contracts-and-reliability.md)
@@ -115,7 +115,7 @@ Turn standards into process: specs, launches, incidents and how product and engi
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 37 hours) takes about 13 weeks.
+An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 37.5 hours) takes about 13 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

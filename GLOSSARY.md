@@ -79,6 +79,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Choosing and acceptance-testing an agent](./ai-agents/choosing-and-acceptance-testing-an-agent.md).
 
+**Agentic RAG** — RAG where the model decides when to search, what to search for, and whether to search again, instead of one fixed retrieval step.
+
+*In plain terms.* Basic RAG retrieves once, then answers. In agentic RAG, retrieval is a tool the model can call several times. It can rewrite the query, search another source, or stop when it has enough. It handles harder questions and costs more calls and more latency.
+
+*For example.* An assistant searches the help centre, finds a reference to an error code, then searches the error page before answering.
+
+*Where it shows up:* Deciding whether a question needs more than one search; Budgeting tool calls and latency.
+
+*See:* [RAG terms, explained](./rag-vector-databases/rag-terms.md).
+
 **AI-native (vs. AI-enabled)** — AI-enabled bolts a model onto an existing product; AI-native is built around the model, such that without it there is no product.
 
 *In plain terms.* There's a difference between adding AI to something that already worked and building something that only exists because of AI. The test: turn the model off — if you still have a product, it's AI-enabled; if there's nothing left, it's AI-native. Native products win categories.
@@ -299,6 +309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
 
+**BM25** — The standard keyword-search scoring formula: rare words count more, repeated words count less each time, and long passages count less per word.
+
+*In plain terms.* BM25 scores a passage by the query words it contains. A word that appears in few documents, such as an error code, counts for a lot. A common word counts for little. It finds exact strings that embeddings can blur, which is why hybrid search pairs it with vector search.
+
+*For example.* The query 'E-4022' finds the bank-error page first with BM25, while vector search ranks it third.
+
+*Where it shows up:* Adding a keyword leg to retrieval; Explaining why codes, names and IDs need keyword search; Reading search-quality reports.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
 **Bounding box** — The rectangle a detector draws around an object, given by its corner coordinates.
 
 *In plain terms.* A box is four numbers, such as the top-left and bottom-right corners. It says where an object is, roughly. It does not say which pixels are the object, which is what a mask does.
@@ -378,6 +398,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding which practice fits an organization's cost-maturity stage; Explaining why visibility alone often fails to change engineering behavior; Scoping the billing-dispute friction chargeback introduces for shared services.
 
 *See:* [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md).
+
+**Chunk overlap** — Text repeated at the end of one chunk and the start of the next, so a fact that crosses a boundary survives whole.
+
+*In plain terms.* Cutting documents into chunks can slice a fact in half. Overlap repeats a short stretch across each cut. It rescues boundary facts, and it creates near-duplicate chunks that can crowd the top results.
+
+*For example.* With 30 characters of overlap, no Fernpay fact was cut, but there were 42 chunks instead of 29.
+
+*Where it shows up:* Tuning a chunking rule; Diagnosing duplicates in retrieval results.
+
+*See:* [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md).
 
 **Chunking** — Splitting documents into passages small enough to embed and retrieve precisely — a quietly decisive design choice.
 
@@ -569,6 +599,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What is context engineering, for a product leader?](./context-engineering/what-is-context-engineering.md).
 
+**Contextual retrieval** — Adding a short note about the whole document to each chunk before embedding and indexing it.
+
+*In plain terms.* A chunk on its own can lose the context that makes it findable: which company, which policy, which year. Contextual retrieval asks a model to write a short note placing the chunk in its document, and prepends it. Anthropic reported in 2024 that this cut retrieval failures by 35%, and by 49% with contextual keyword search.
+
+*For example.* 'From Fernpay's 2026 refund policy:' added before the annual-plans chunk.
+
+*Where it shows up:* Improving retrieval without changing the store; Weighing extra ingestion cost against recall.
+
+*See:* [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md).
+
 **Continuous batching** — Adding and removing requests from a running inference batch at the token level instead of waiting for a whole batch to finish.
 
 *In plain terms.* Hardware is most efficient serving many requests together. Old batching made a finished request wait for its slower neighbours. Continuous batching lets a request leave the moment it's done and a new one join immediately, keeping the expensive hardware fully busy.
@@ -638,6 +678,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Pricing and margin analysis for AI features; Finding optimisation targets; Charging costs back to teams/tenants.
 
 *See:* [Cost attribution](./content/04-evals-observability/cost-attribution.md).
+
+**Cross-encoder** — A reranking model that reads the question and a passage together and scores how well the passage answers it.
+
+*In plain terms.* An embedding model encodes the question and each passage separately, which is fast and a little rough. A cross-encoder reads the pair together, so it can weigh every word against every other. It is too slow to run over a whole corpus, so it re-scores only the top candidates from a first search.
+
+*For example.* Search returns 50 candidates; a cross-encoder re-scores them and the best 5 go to the model.
+
+*Where it shows up:* Deciding whether to add a reranking stage; Budgeting the latency it adds.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
 **Cross-validation** — Rotating which part of the data is held out, so every row is used for both training and scoring.
 
@@ -858,6 +908,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding 'why did my change not show up instantly?'; Deciding where strong consistency is required; Reading distributed-system tradeoffs.
 
 *See:* [Data & the data model](./technical-product-sense/data-and-the-data-model.md).
+
+**Faithfulness** — Whether every claim in a generated answer is supported by the retrieved sources.
+
+*In plain terms.* Retrieval can be perfect and the answer can still add claims the sources do not make. Faithfulness, also called groundedness, checks the answer against its sources, claim by claim. It is an answer metric, separate from retrieval metrics such as recall.
+
+*For example.* The answer 'within 14 days [1]' is faithful when source [1] says 14 days; it is not if source [1] says 30.
+
+*Where it shows up:* Measuring the answer side of RAG; Separating retrieval failures from generation failures.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
 **Feature** — One fact about a case that a model uses as input, such as months as a customer.
 
@@ -1099,6 +1159,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Harness engineering](./content/00-foundations/harness-engineering.md).
 
+**Hierarchical navigable small world (HNSW)** — A graph-based approximate nearest-neighbour index: each vector links to near neighbours in layers, and a search walks from coarse to fine.
+
+*In plain terms.* Instead of checking every vector, HNSW links each vector to a few close neighbours, in several layers. A search starts in a sparse top layer, jumps toward the query, and drops to denser layers until it reaches the closest vectors. It is fast at question time, and it costs memory and build time.
+
+*For example.* pgvector's CREATE INDEX ... USING hnsw (embedding vector_cosine_ops) builds one; hnsw.ef_search sets how widely each search looks.
+
+*Where it shows up:* Reading a vector-store design or bill; Tuning the recall-versus-speed dial; Explaining why a search occasionally misses a true neighbour.
+
+*See:* [Vector databases](./rag-vector-databases/vector-databases.md).
+
 **Hook model** — Trigger → Action → Variable reward → Investment — the loop by which products build habits.
 
 *In plain terms.* Habits form through a repeating loop: something prompts you (trigger), you do a small action, you get a reward that varies (the unpredictability is what hooks), and you put in a bit of investment that sets up the next trigger. Understanding it helps you build engagement — and use it ethically.
@@ -1128,6 +1198,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Improving retrieval on mixed queries; Handling identifiers and jargon in RAG; Reducing 'it couldn't find the obvious doc'.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Hypothetical document embeddings (HyDE)** — A retrieval trick: have a model write a hypothetical answer, then search with the embedding of that answer instead of the question.
+
+*In plain terms.* A short question and a long passage look different, even when they match. HyDE closes the gap by first drafting a fake answer, which looks like a passage, and searching with it. The draft can be wrong; only its shape and vocabulary matter.
+
+*For example.* The question 'money back on a yearly plan?' becomes a drafted refund paragraph before search.
+
+*Where it shows up:* Improving recall on short or vague questions; Weighing an extra model call per search.
+
+*See:* [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md).
 
 **Idempotency** — A property where doing an operation many times has the same effect as doing it once — essential for safely retrying tool calls.
 
@@ -1239,6 +1319,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
 
+**Inverted file index (IVF)** — An approximate nearest-neighbour index that groups vectors into lists around centre points and scans only the lists closest to the query.
+
+*In plain terms.* IVF first finds a set of centre points with k-means and files every vector under its nearest centre. A search compares the query with the centres, then scans only the few closest lists. Scanning more lists finds more true neighbours and takes longer.
+
+*For example.* With 32 lists, scanning 8 of them compared a quarter of the vectors and found 95.5% of the true top 10 in this module's demo.
+
+*Where it shows up:* Understanding the 'lists' and 'probes' settings; Choosing between IVF and HNSW; Reasoning about recall at a given speed.
+
+*See:* [Vector databases](./rag-vector-databases/vector-databases.md).
+
 **Jagged frontier** — The uneven boundary of model capability — brilliant at some hard tasks, unreliable at some easy ones — which makes scoping a core product skill.
 
 *In plain terms.* Model ability isn't a smooth line where 'harder = worse'. It's jagged: a model may ace a complex analysis yet flub a simple count. You can't assume; you have to test where the edges are for your specific task, because intuition misleads.
@@ -1309,6 +1399,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Keycloak: realms, clients, roles, groups and tokens](./access-control/keycloak-realms-clients-roles-groups-and-tokens.md).
 
+**Keyword search** — Search that matches the words in the query against the words in the documents, rather than their meaning.
+
+*In plain terms.* Keyword (or lexical) search looks for the query's words. It is exact and fast, and it finds IDs, names and codes reliably. It misses paraphrase: 'stop paying' does not match 'end plan'. Semantic search has the opposite strengths, so production systems often run both.
+
+*For example.* Postgres full-text search with websearch_to_tsquery finds 'E-4021' on the error page.
+
+*Where it shows up:* Deciding whether retrieval needs a keyword leg; Diagnosing misses on exact codes or names.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
 **Kill switch** — A control that stops one agent run, one agent, or every run within seconds, checked by the loop before each action.
 
 *In plain terms.* An agent acts on its own, so a mistake can repeat quickly. A kill switch is a flag the loop reads before every action. It works at three scopes: a single run, one agent or customer, or everything. It only counts if a named person owns it and it has been tested.
@@ -1348,6 +1448,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Agreeing what the model predicts; Planning for label delay and label quality.
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Late chunking** — Embedding a whole document first, then splitting the result into chunk vectors, so each chunk keeps document context.
+
+*In plain terms.* Normal chunking cuts first and embeds each piece alone. Late chunking runs a long-context embedding model over the whole document, then pools the token vectors for each chunk. Each chunk vector has seen its surroundings.
+
+*For example.* A chunk that says 'the plan' still carries the information that the document is about refunds.
+
+*Where it shows up:* Comparing ways to keep context in chunks.
+
+*See:* [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md).
 
 **Latency vs. throughput** — Latency = how long one request takes; throughput = how many requests you handle per second. Different problems, different fixes.
 
@@ -1479,6 +1589,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
 
+**Lost in the middle** — The finding that language models often use information at the start or end of a long prompt better than information in the middle.
+
+*In plain terms.* A bigger context window does not mean every part of it is used equally. Liu and colleagues moved the passage that held the answer through a long prompt, and accuracy was often lowest when it sat in the middle. It is one reason fewer, better passages can beat sending everything.
+
+*For example.* The answer buried in passage 10 of 20 is used less reliably than the same answer placed first.
+
+*Where it shows up:* Deciding between long context and retrieval; Ordering retrieved passages in a prompt.
+
+*See:* [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md).
+
 **Machine learning** — Software that finds its own rules from examples, instead of following rules a person wrote.
 
 *In plain terms.* A normal program does what its author spelled out. A machine learning program is shown many past cases with known outcomes and adjusts itself until its answers match them. Then it applies what it found to new cases. The data becomes part of the logic.
@@ -1549,6 +1669,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
+**Mean reciprocal rank (MRR)** — A ranking metric: the average, over questions, of 1 divided by the rank of the first correct result.
+
+*In plain terms.* Recall@k asks whether the right passage is in the top k. MRR also rewards putting it first. A correct passage at rank 1 scores 1, at rank 2 scores 0.5, at rank 3 scores 0.33, and a miss scores 0.
+
+*For example.* Hybrid search on the Fernpay questions has an MRR of 0.778, against 0.736 for vector search.
+
+*Where it shows up:* Comparing rankers when recall is similar; Judging whether a reranker helps.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
 **Memory leakage** — A remembered fact showing up somewhere it doesn't belong — a different user, a different tenant, or a context the person never agreed to.
 
 *In plain terms.* A memory feature only works if what it remembers stays inside the boundary it was stored under. Leakage is that boundary failing — one user's or tenant's information reaching another — and it costs a memory feature more trust in one incident than its convenience ever earned, because it turns 'the AI understands me' into 'the AI can't be trusted with anything I tell it.'
@@ -1588,6 +1718,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reasoning across disciplines; Avoiding single-lens blind spots; Building durable judgment.
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**Metadata filter** — A rule that limits retrieval to chunks whose stored fields match, such as status, tenant, date or permission.
+
+*In plain terms.* Each chunk carries fields beside its text. A filter keeps only the chunks that match, for example current documents that this customer may see. It is how retrieval removes the similar-but-wrong and the forbidden. With an approximate index, a filter applied after the scan can return fewer results than asked for.
+
+*For example.* WHERE status = 'current' AND audience = 'customer' removes the retracted refund policy that scored 0.927.
+
+*Where it shows up:* Enforcing tenant and permission boundaries; Keeping retracted or old versions out of answers.
+
+*See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
 **Mixed precision training** — Training with float16 or bfloat16 for most arithmetic and float32 where accuracy matters.
 
@@ -1668,6 +1808,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a model for text, images or audio; Understanding what an LLM is.
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
+**Normalized discounted cumulative gain (nDCG)** — A ranking metric that gives more credit for relevant results near the top, and allows graded relevance.
+
+*In plain terms.* nDCG adds up the relevance of each result, with less weight the further down it sits, then divides by the best possible score. It suits cases where some passages are more relevant than others, not just right or wrong.
+
+*For example.* A search that puts the best passage first and a partly relevant one second scores higher than the reverse.
+
+*Where it shows up:* Reading search-quality reports; Choosing a metric for graded relevance.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
 **North star metric** — The single metric that best captures the core value your product delivers to users — the one you rally the team around.
 
@@ -1838,6 +1988,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Counting tokens per image.
 
 *See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
+
+**pgvector** — An open-source Postgres extension that adds a vector column type and nearest-neighbour search, with HNSW and IVFFlat indexes.
+
+*In plain terms.* pgvector lets the database you may already run store embeddings next to your other data. You add a vector(N) column, create an index, and order by a distance operator such as <=> for cosine distance. Filters are ordinary SQL WHERE clauses.
+
+*For example.* SELECT id FROM chunks WHERE status = 'current' ORDER BY embedding <=> $1 LIMIT 3;
+
+*Where it shows up:* Choosing a vector store without adding a new system; Joining retrieval with business data in one query.
+
+*See:* [Building RAG with Claude Code, pgvector and Pinecone](./rag-vector-databases/building-rag-with-claude-code.md).
 
 **PKCE** — Proof Key for Code Exchange: a step that stops a stolen login code from being used.
 
@@ -2029,6 +2189,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Quantization formats](./content/01-inference-internals/quantization-formats.md).
 
+**Query rewriting** — Changing a user's question before search: fixing spelling, expanding terms, adding context or splitting it into several queries.
+
+*In plain terms.* Users type short, messy questions. Rewriting turns them into better search queries, often with a model. Multi-query search runs several rewrites and merges the results.
+
+*For example.* 'E4021 wont go away' becomes 'error E-4021 bank feed timeout fix'.
+
+*Where it shows up:* Raising recall on real user wording; Weighing an extra model call per question.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
 **RAG** — Retrieval-Augmented Generation: fetch relevant text from your data and put it in the prompt so the model answers from facts, not memory.
 
 *In plain terms.* A model's built-in knowledge is frozen and can't include your private data. RAG fixes that by searching your documents for the relevant bits and pasting them into the prompt, so the answer is grounded in real, current, private facts — and can cite them.
@@ -2109,6 +2279,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
 
+**Recall@k** — The share of questions whose answering passage appears in the top k retrieved results.
+
+*In plain terms.* Recall@k is the core retrieval metric. Take an eval set of questions, each with the passage that answers it. Run retrieval, keep the top k, and count how often the right passage is there. If it is missing, the model cannot answer from it, however good the model is.
+
+*For example.* On 12 Fernpay questions, recall@3 was 0.667 for keyword search, 0.833 for vector search and 0.917 for hybrid.
+
+*Where it shows up:* Setting a launch bar for a RAG feature; Comparing retrieval methods on the same questions.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
 **Receptive field** — The patch of the original image that one value in a layer can depend on.
 
 *In plain terms.* Each layer looks at a small window of the layer before it, so the patch grows with depth. Downsampling makes it grow faster. Compare it with the size of what you need to detect.
@@ -2118,6 +2298,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing which layer's features to reuse; Checking that a model can see a whole object.
 
 *See:* [From edges to objects](./cnns/from-edges-to-objects.md).
+
+**Reciprocal rank fusion (RRF)** — A simple way to merge ranked lists: each list gives each item 1 / (60 + its rank), and the sums decide the final order.
+
+*In plain terms.* Keyword and vector search score on different scales, so you cannot add their scores directly. RRF ignores the scores and uses only the ranks. An item near the top of both lists wins. It needs no tuning, which makes it a common default for hybrid search.
+
+*For example.* A chunk ranked 1st by keyword search and 3rd by vector search scores 1/61 + 1/63.
+
+*Where it shows up:* Building hybrid search; Understanding why a noisy list can outvote the right answer.
+
+*See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
 **Red-teaming** — Structured adversarial testing — internal or paid external researchers actively trying to break a model or product before launch — run as a recurring practice, not a one-time pre-launch event.
 

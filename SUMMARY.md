@@ -241,13 +241,16 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 
 Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
 
-1. [Why RAG?](./rag-vector-databases/why-rag.md)
-2. [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md)
-3. [Vector databases](./rag-vector-databases/vector-databases.md)
-4. [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md)
-5. [Retrieval quality](./rag-vector-databases/retrieval-quality.md)
-6. [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
-7. [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md) · [Recap](./rag-vector-databases/recap.md)
+1. [When to use RAG, and when not to](./rag-vector-databases/when-to-use-rag.md)
+2. [Why RAG?](./rag-vector-databases/why-rag.md)
+3. [Embeddings & semantic search](./rag-vector-databases/embeddings-and-semantic-search.md)
+4. [Vector databases](./rag-vector-databases/vector-databases.md)
+5. [Chunking & ingestion](./rag-vector-databases/chunking-and-ingestion.md)
+6. [Retrieval quality](./rag-vector-databases/retrieval-quality.md)
+7. [RAG vs. long-context vs. fine-tuning](./rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
+8. [Beyond flat RAG: GraphRAG & structured retrieval](./rag-vector-databases/graphrag-and-structured-retrieval.md)
+9. [Building RAG with Claude Code, pgvector and Pinecone](./rag-vector-databases/building-rag-with-claude-code.md)
+10. [RAG terms, explained](./rag-vector-databases/rag-terms.md) · [Recap](./rag-vector-databases/recap.md)
 
 ## [Memory & context](./memory-and-context/README.md)
 

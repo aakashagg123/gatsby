@@ -27,7 +27,7 @@
 | Cost optimization | Full | Full | — | Full |
 | AI security & guardrails | 2 of 3 | Full | 2 of 3 | Full |
 | Agentic AI | 2 of 8 | 2 of 8 | — | — |
-| RAG & vector databases | 3 of 7 | 4 of 7 | 6 of 7 | 3 of 7 |
+| RAG & vector databases | 4 of 10 | 6 of 10 | 9 of 10 | 5 of 10 |
 | Memory & context | 2 of 5 | Full | 2 of 5 | 2 of 5 |
 | Context engineering | — | 6 of 7 | 2 of 7 | 3 of 7 |
 | Tool calling | 1 of 3 | Full | 2 of 3 | 1 of 3 |

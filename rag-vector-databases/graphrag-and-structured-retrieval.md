@@ -2,41 +2,27 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
-Plain ("flat") RAG retrieves the text chunks most *similar* to a question — which is
-perfect when the answer sits in a passage somewhere, and useless when the answer is a
-*connection* no single passage states, or a *summary* of the whole corpus. Two question
-types break flat RAG structurally: **multi-hop** ("which of our customers are exposed to
-this supplier's recall?" — the answer is a chain across documents, not any one of them) and
-**global** ("what are the main themes across this quarter's tickets?" — the answer is an
-aggregate, not a retrievable passage). **GraphRAG** and structured retrieval fix this by
-retrieving *structure* — a subgraph of connected entities, pre-built community summaries, or
-the result of an actual database query — instead of, or alongside, similar text. The
-product-leader takeaway is a discipline, not a technology purchase: know *which* questions
-flat RAG can't answer, adopt structure only when your roadmap actually has those questions,
-and never let a heavier pipeline in for a workload plain vector search already handles.
+Plain, or "flat", RAG retrieves the chunks most *similar* to a question. That works when the answer sits in a passage. It fails when the answer is a *connection* that no single passage states, or a *summary* of the whole corpus, or a *count*.
+
+Three question shapes break flat RAG. **Multi-hop**: "which customers are exposed to this supplier's recall?" The answer is a chain across documents. **Global**: "what are the main themes in this quarter's tickets?" The answer is about the corpus, not in it. **Quantitative**: "how many contracts renew in Q3?" The answer is computed from rows, and top-k retrieval can never count past k.
+
+**GraphRAG** and structured retrieval fix this by retrieving *structure* instead of similar text. That can be a set of connected entities, pre-built summaries, or the result of a real database query. The discipline is to know which questions flat RAG cannot answer, and to add structure only when your roadmap has those questions.
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — Teams hit a wall where "our RAG just can't answer these questions"
-> and either give up or over-build. Knowing the *shape* of question that flat RAG can't do
-> tells you exactly when to invest in structure — and when the acronym is just fashion.
+> **Why it matters** — Teams hit a wall where "our RAG can't answer these questions". They either give up or over-build. The shape of the failing questions tells you when structure is worth it.
 >
-> **What it changes in your decisions** — You classify the questions your feature must
-> answer (passage-level vs. multi-hop vs. global) before choosing a retrieval architecture,
-> and you let *measured* flat-RAG failures justify the step up, not a vendor deck.
+> **What it changes in your decisions** — You sort your questions into passage, multi-hop, global and quantitative before choosing an architecture. You let measured failures justify the step up, not a vendor deck.
 >
-> **Ask yourself** — *"Are the questions we're failing on actually about connections or
-> whole-corpus summaries — or is our flat RAG just tuned badly?"*
+> **Ask your eng team** — *"Are the questions we fail on about connections or whole-corpus summaries, or is our flat RAG just tuned badly?"*
 >
-> **Risk if ignored** — Either a feature that plateaus because it can't do the questions
-> that matter most, or an expensive graph-indexing pipeline built for questions that were
-> 95% simple passage lookups.
+> **Risk if ignored** — A feature that stalls on the questions that matter most. Or an expensive graph pipeline built for questions that were mostly simple lookups.
 
-## The mental model: passages, chains, and summaries
-
-Three question shapes, three retrieval needs:
+## The mental model: passages, chains and summaries
 
 ```mermaid
 flowchart TB
@@ -51,90 +37,92 @@ flowchart TB
   class FLAT flat
 ```
 
-Flat RAG is the right and cheapest tool for the first shape — most questions. The other two
-are where you graduate to structure.
+Flat RAG is the right and cheapest tool for the first shape, which covers most questions. The others are where structure earns its cost.
 
-## Why flat RAG breaks on these
+## Mechanics
 
-- **Multi-hop.** The answer requires *joining* facts across several documents:
-  customer → contract → product → component → supplier. No single chunk contains the chain,
-  so similarity search — which fetches chunks that each resemble the question — retrieves
-  fragments that never connect. You can sometimes brute-force it with clever prompting and
-  many retrieval rounds, but it's fragile and expensive.
-- **Global.** The answer is *about the corpus*, not *in it*: "what are the recurring
-  complaints?", "how has our policy drifted over time?" There's no passage to retrieve
-  because the answer is a synthesis over thousands of passages. Similarity search returns a
-  handful of chunks and the model summarizes *those*, giving a confident answer based on a
-  biased sliver.
+### Why flat RAG breaks
 
-## The structured approaches
+- **Multi-hop.** The answer joins facts across documents: supplier, then part, then product, then customer. No chunk holds the whole chain. Similarity search fetches chunks that each resemble the question, and they rarely connect. Many rounds of retrieval can sometimes force it, but that is fragile and slow.
+- **Global.** "What are the recurring complaints?" has no passage to retrieve. The answer is a synthesis over thousands of passages. Flat retrieval returns a handful, and the model summarizes those. The answer sounds confident and rests on a small, biased sample.
+- **Quantitative.** "How many?" and "what is the total?" need every matching row. Top-k returns k at most.
 
-- **GraphRAG.** Build a [knowledge graph](../knowledge-graphs/what-is-a-knowledge-graph.md)
-  from your corpus (entities and typed relationships), then retrieve *connected subgraphs*
-  for multi-hop questions, and *pre-computed community summaries* for global ones.
-  Microsoft's 2024 GraphRAG work popularized the pattern; it answers the two hard shapes
-  with citations. The cost is a real indexing stage — extraction, resolution, summarization
-  — that must be [kept fresh](../knowledge-graphs/governance-quality-and-trust.md), so it
-  earns its place only when those questions are on the roadmap.
-- **Text-to-query (structured data).** When the real answer lives in a database ("how many
-  contracts renew in Q3?"), don't embed and retrieve — have the model
-  [write a query](../knowledge-graphs/knowledge-graphs-and-llms.md) (SQL/Cypher) and let the
-  database compute the exact answer. Retrieval-by-similarity is the wrong tool for precise
-  aggregates; the database is the right one.
-- **Hybrid, in practice.** Most mature systems keep flat RAG for the common passage-level
-  questions and route the multi-hop/global/quantitative ones to graph or query retrieval —
-  a router in front of several retrievers, not one architecture forced to do everything.
+### The structured approaches
 
-The full treatment of graphs and their marriage with LLMs is the
-[Knowledge graphs](../knowledge-graphs/README.md) track — this lesson is the bridge from
-RAG to it.
+- **GraphRAG.** Build a [knowledge graph](../knowledge-graphs/what-is-a-knowledge-graph.md) from your corpus: entities and typed relations. For multi-hop questions, retrieve connected subgraphs. For global questions, use summaries written in advance for each cluster of related entities. Microsoft Research's 2024 GraphRAG paper by Edge and colleagues built this for global questions over a whole corpus. The cost is a real indexing stage, with extraction, entity matching and summaries, that must be [kept fresh](../knowledge-graphs/governance-quality-and-trust.md).
+- **Text-to-query.** When the answer lives in a database, do not embed and retrieve. Have the model [write a query](../knowledge-graphs/knowledge-graphs-and-llms.md), in SQL or Cypher, and let the database compute the exact answer.
+- **A router.** Mature systems keep flat RAG for passage questions, and send multi-hop, global and quantitative questions to a graph or a query. That is several retrievers behind a router, not one architecture forced to do everything.
 
-## How to decide
+The [knowledge graphs](../knowledge-graphs/README.md) track covers graphs and their use with language models in full.
 
-1. **Classify your questions.** Sample the real (or expected) questions and bucket them:
-   passage-level, multi-hop, global, quantitative. The mix tells you what you need.
-2. **Start flat, measure the failures.** Ship plain [hybrid RAG](./retrieval-quality.md),
-   and watch *which* questions it fails — with an [eval set](../content/03-rag/retrieval-evals.md),
-   not vibes. If the failures cluster in multi-hop/global, you have your justification.
-3. **Add structure surgically.** Route only the question types that need it to graph or
-   query retrieval; keep flat RAG for the majority. Don't replace a working pipeline
-   wholesale.
-4. **Cost the freshness.** A graph or structured index is a second thing to keep current;
-   budget that before committing.
+### How to decide
+
+1. **Sort your questions.** Take a sample of real or expected questions. Label each one: passage, multi-hop, global or quantitative.
+2. **Start flat and measure.** Ship hybrid RAG with an [eval set](./retrieval-quality.md). Watch which question types fail.
+3. **Add structure where it fails.** Route only those question types to a graph or a query. Keep flat RAG for the rest.
+4. **Cost the freshness.** A graph or structured index is a second thing to keep current. Budget for it first.
+
+## Tradeoffs and decisions
+
+- **Coverage vs. cost.** A graph answers multi-hop and global questions. It adds an extraction pipeline, entity matching and a second index to keep fresh.
+- **Exact vs. approximate.** A database query returns the exact count. Retrieval returns similar text. Choose by the question.
+- **One architecture vs. a router.** A router gives each question the right tool. It also adds a classification step that can route wrongly.
 
 ## Failure modes
 
-- **GraphRAG as fashion** — building an expensive graph-indexing pipeline for a workload
-  that was overwhelmingly simple passage lookups; complexity and cost with no payoff.
-- **Flat RAG on multi-hop forever** — jamming ever-more chunks into the prompt to force
-  connections similarity can't make, instead of retrieving structure.
-- **Similarity for aggregates** — answering "how many / what's the trend" from a handful of
-  retrieved chunks instead of querying the source of truth; confidently wrong numbers.
-- **All-or-nothing architecture** — replacing flat RAG entirely with a graph, losing the
-  cheap, excellent tool for the 90% of questions that were passage-level.
-- **Unmeasured escalation** — jumping to GraphRAG on a hunch without an eval showing flat
-  RAG actually fails the questions that matter.
+- **GraphRAG as fashion.** A graph pipeline for a workload that was mostly simple lookups.
+- **Flat RAG on multi-hop forever.** Adding more and more chunks to the prompt to force connections that similarity cannot make.
+- **Similarity for aggregates.** Answering "how many?" from a few chunks instead of the source of truth. The numbers are confident and wrong.
+- **All or nothing.** Replacing flat RAG with a graph, and losing the cheap, good tool for most questions.
+- **Unmeasured escalation.** Moving to GraphRAG on a hunch, with no eval that shows flat RAG fails.
+
+## Under the hood
+
+The file is `rag-vector-databases/code/graph_demo.py`. It stores 13 facts as short chunks, one fact each, the way an ingestion pipeline would. Suppliers make parts, parts go into products, and customers buy products. A graph walk follows the links three steps.
+
+```python
+def walk(start):
+    parts = {o for s, r, o in FACTS if s == start and r == "makes"}
+    products = {o for s, r, o in FACTS if s in parts and r == "goes into"}
+    customers = {s for s, r, o in FACTS if o in products and r == "buys"}
+    return customers
+```
+
+The same file runs the multi-hop question and a count through the hybrid search from `mini_rag.py`, and compares.
+
+## Worked example: a supplier recall and a renewal count
+
+*This example is invented. The companies are made up. The numbers come from `rag-vector-databases/code/graph_demo.py`.*
+
+**The multi-hop question.** "Which customers are exposed to the recall at Kestrel Metals?" Hybrid search returns the top 5 chunks:
+
+- Kestrel Metals makes bracket B-2.
+- Kestrel Metals makes hinge H-7.
+- Northgate School buys Atlas shelf.
+- The contract with Northgate School renews in Q1.
+- bracket B-2 goes into Atlas shelf.
+
+Those chunks name one exposed customer, Northgate School. The graph walk follows the chain: two parts, then two products (Atlas desk and Atlas shelf), then three customers: Brightwell Hotels, Harbor Clinic and Northgate School. Flat retrieval found one of the three. It missed the two customers that buy the Atlas desk, because the "hinge H-7 goes into Atlas desk" link was not in the top 5.
+
+**The count.** "How many contracts renew in Q3?" The top 3 chunks all mention Q3, so a model reading them would say three. A count over the table gives five. Top-k retrieval can never count past k. A database query gets it right every time.
 
 ## Practitioner checklist
 
-- [ ] Have we classified our real questions into passage-level / multi-hop / global /
-      quantitative?
-- [ ] Is plain hybrid RAG in place and *measured*, so we know which question types actually
-      fail?
-- [ ] For multi-hop/global needs, have we scoped graph retrieval — including the freshness
-      cost of a second index?
-- [ ] For precise aggregates, are we using text-to-query against the source of truth rather
-      than similarity retrieval?
-- [ ] Do we route by question type (keep flat RAG for the majority) rather than forcing one
-      architecture to do everything?
+- [ ] Have we sorted our real questions into passage, multi-hop, global and quantitative?
+- [ ] Is hybrid RAG in place and measured, so we know which types fail?
+- [ ] Do counts and totals go to a database query, not to retrieval?
+- [ ] For multi-hop or global needs, have we scoped a graph, including the cost of keeping it fresh?
+- [ ] Do we route by question type, keeping flat RAG for most questions?
 
 ## Related lessons
 
-- [Retrieval quality](./retrieval-quality.md) — get flat RAG genuinely good before adding
-  structure.
-- [Knowledge graphs & LLMs](../knowledge-graphs/knowledge-graphs-and-llms.md) — GraphRAG and
-  text-to-query in depth.
-- [What is a knowledge graph?](../knowledge-graphs/what-is-a-knowledge-graph.md) — the
-  structure GraphRAG retrieves over.
-- [RAG vs. long-context vs. fine-tuning](./rag-vs-long-context-vs-finetuning.md) — the other
-  axis of the retrieval decision.
+- [When to use RAG, and when not to](./when-to-use-rag.md) — counts and connections in the decision tree.
+- [Retrieval quality](./retrieval-quality.md) — make flat RAG good before adding structure.
+- [Knowledge graphs and LLMs](../knowledge-graphs/knowledge-graphs-and-llms.md) — GraphRAG and text-to-query in depth.
+- [What is a knowledge graph?](../knowledge-graphs/what-is-a-knowledge-graph.md) — the structure GraphRAG retrieves over.
+- [RAG vs. long context vs. fine-tuning](./rag-vs-long-context-vs-finetuning.md) — the other axis of the decision.
+
+## Sources
+
+- Edge et al., *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*, Microsoft Research, 2024 ([arxiv.org/abs/2404.16130](https://arxiv.org/abs/2404.16130)): a graph index with community summaries, for global questions over a whole corpus.
+- The suppliers, customers and every number are invented. They come from `rag-vector-databases/code/graph_demo.py`.

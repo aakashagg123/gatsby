@@ -17,11 +17,13 @@ CFG = {
     "brand": "RAG & vector databases",
     "tagline": "a Generative AI module",
     "title": "RAG & vector databases for the product leader",
-    "lede": "Grounding models in your data — embeddings, vector databases, chunking, "
-            "retrieval quality, and when to reach for long-context, fine-tuning, or a graph.",
-    "meta": ["7 lessons", "+ recap", "knowledge graph", "diagrams included"],
+    "lede": "Grounding models in your data — when to use RAG and when not to, embeddings, "
+            "vector databases, chunking, retrieval quality, the alternatives, and a hands-on "
+            "build with Claude Code, pgvector and Pinecone.",
+    "meta": ["10 lessons", "+ recap", "runnable code", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
+        "when-to-use-rag",
         "why-rag",
         "embeddings-and-semantic-search",
         "vector-databases",
@@ -29,6 +31,8 @@ CFG = {
         "retrieval-quality",
         "rag-vs-long-context-vs-finetuning",
         "graphrag-and-structured-retrieval",
+        "building-rag-with-claude-code",
+        "rag-terms",
     ],
 }
 

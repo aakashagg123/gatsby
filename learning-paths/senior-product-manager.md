@@ -14,7 +14,7 @@ This path takes a working product manager from "AI is a black box" to "I can mak
 
 **Before you start:** Several years in product. No machine learning background is needed.
 
-**Length:** about 17 hours, across 4 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 17.5 hours, across 4 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -37,7 +37,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 1 | Technical footing | about 2 hours |
 | 2 | AI literacy | about 7 hours |
 | 3 | The decisions only you own | about 4.5 hours |
-| 4 | Go deeper where your product needs it (optional) | about 3.5 hours |
+| 4 | Go deeper where your product needs it (optional) | about 4 hours |
 
 ## Stage 1: Technical footing
 
@@ -74,9 +74,9 @@ Pick the approach, set the bar, count the cost, and accept the risk. (about 4.5 
 
 ## Stage 4: Go deeper where your product needs it (optional)
 
-Read only what your roadmap touches. Retrieval, memory and agents each change the product shape. (about 3.5 hours)
+Read only what your roadmap touches. Retrieval, memory and agents each change the product shape. (about 4 hours)
 
-- **RAG & vector databases**: [1. Why RAG?](../rag-vector-databases/why-rag.md) · [5. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [6. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
+- **RAG & vector databases**: [1. When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md) · [2. Why RAG?](../rag-vector-databases/why-rag.md) · [6. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [7. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
 - **Memory & context**: [1. Memory as a product decision](../memory-and-context/memory-as-a-product-decision.md) · [5. When memory goes wrong](../memory-and-context/when-memory-goes-wrong.md)
 - **Agentic AI**: [1. What is an agent?](../agentic-ai/what-is-an-agent.md) · [8. Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md)
 - **Tool calling**: [1. What tool calling is](../tool-calling/what-tool-calling-is.md)
@@ -94,7 +94,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 
 *This example is invented, to show the method.*
 
-A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 17 hours) takes about 6 weeks.
+A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 17.5 hours) takes about 6 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

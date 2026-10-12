@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 76.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 77.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -36,7 +36,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | --- | --- | --- |
 | 1 | Foundations | about 9.5 hours |
 | 2 | Models and APIs | about 6.5 hours |
-| 3 | Grounding and memory | about 5 hours |
+| 3 | Grounding and memory | about 6 hours |
 | 4 | Agents and the harness (build it) | about 29 hours |
 | 5 | Production | about 26 hours |
 
@@ -63,9 +63,9 @@ Call models well: contracts, streaming, retries, structured output and prompts t
 
 ## Stage 3: Grounding and memory
 
-Give the model the right data, in the right shape, at the right time. (about 5 hours)
+Give the model the right data, in the right shape, at the right time. (about 6 hours)
 
-- **RAG & vector databases**: [1. Why RAG?](../rag-vector-databases/why-rag.md) · [2. Embeddings & semantic search](../rag-vector-databases/embeddings-and-semantic-search.md) · [3. Vector databases](../rag-vector-databases/vector-databases.md) · [4. Chunking & ingestion](../rag-vector-databases/chunking-and-ingestion.md) · [5. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [7. Beyond flat RAG: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md)
+- **RAG & vector databases**: [1. When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md) · [2. Why RAG?](../rag-vector-databases/why-rag.md) · [3. Embeddings & semantic search](../rag-vector-databases/embeddings-and-semantic-search.md) · [4. Vector databases](../rag-vector-databases/vector-databases.md) · [5. Chunking & ingestion](../rag-vector-databases/chunking-and-ingestion.md) · [6. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [8. Beyond flat RAG: GraphRAG & structured retrieval](../rag-vector-databases/graphrag-and-structured-retrieval.md) · [9. Building RAG with Claude Code, pgvector and Pinecone](../rag-vector-databases/building-rag-with-claude-code.md) · [10. RAG terms, explained](../rag-vector-databases/rag-terms.md)
 - **AI engineering: RAG**: [RAG architecture: chunking, embeddings, hybrid search, reranking, and freshness](../content/03-rag/rag-architecture.md) · [Retrieval evals: recall, precision, grounding, attribution, and citation quality](../content/03-rag/retrieval-evals.md)
 - **Memory & context**: [3. Writing and maintaining memory](../memory-and-context/writing-and-maintaining-memory.md) · [4. Retrieval as memory](../memory-and-context/retrieval-as-memory.md)
 - **Context engineering**: [3. The anatomy of a context pipeline](../context-engineering/the-anatomy-of-a-context-pipeline.md) · [6. Evaluating context quality](../context-engineering/evaluating-context-quality.md)
@@ -118,7 +118,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 76.5 hours) takes about 9 weeks.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 77.5 hours) takes about 9 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

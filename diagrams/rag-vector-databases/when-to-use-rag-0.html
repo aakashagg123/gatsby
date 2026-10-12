@@ -1,0 +1,76 @@
+<style>
+.dgm-wu{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-wu-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-wu h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-wu-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-wu-q{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface);border-radius:12px;padding:11px 16px;
+  text-align:center;color:var(--color-text-discovery);font-weight:700;font-size:12.5px;margin:0 auto 10px;max-width:340px}
+.dgm-wu-rows{display:flex;flex-direction:column;gap:7px}
+.dgm-wu-row{display:grid;grid-template-columns:minmax(150px,1fr) 22px minmax(150px,1.2fr);gap:8px;align-items:center}
+.dgm-wu-if{font-size:11.5px;color:var(--color-text-secondary);background:var(--color-surface-secondary);border:1px solid var(--color-border);border-radius:9px;padding:8px 11px}
+.dgm-wu-if b{color:var(--color-text);font-weight:700}
+.dgm-wu-to{color:var(--color-text-tertiary);display:flex;justify-content:center}
+.dgm-wu-to svg{width:16px;height:16px}
+.dgm-wu-out{border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700}
+.dgm-wu-out small{display:block;font-weight:500;font-size:10.5px;color:var(--color-text-secondary);margin-top:1px}
+.dgm-wu-not{background:var(--color-background-info-surface);border:1.5px solid var(--color-border-info-surface);color:var(--color-text-info)}
+.dgm-wu-cheap{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface);color:var(--color-text-success)}
+.dgm-wu-rag{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline);color:var(--color-text-warning)}
+.dgm-wu-gate{margin:12px 0 8px;padding:10px 12px;border:1.5px dashed var(--color-border-discovery-surface);border-radius:11px}
+.dgm-wu-gate p{margin:0 0 8px;font-size:11.5px;font-weight:700;color:var(--color-text-discovery);text-align:center}
+.dgm-wu-pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px}
+.dgm-wu-pill{font-size:10.5px;font-weight:600;border-radius:20px;padding:2px 10px;background:var(--color-surface-secondary);border:1px solid var(--color-border);color:var(--color-text-secondary)}
+.dgm-wu-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-wu{padding:22px 14px 18px}.dgm-wu-row{grid-template-columns:1fr;gap:4px}.dgm-wu-to{transform:rotate(90deg);justify-content:flex-start;padding-left:10px}}
+</style>
+<div class="dgm-wu">
+  <span class="dgm-wu-chip">When to use RAG</span>
+  <h4>The shape of the answer picks the tool</h4>
+  <p class="dgm-wu-sub">Ask what kind of thing the answer is. Only one shape is a retrieval question.</p>
+
+  <div class="dgm-wu-q">What is the answer?</div>
+
+  <div class="dgm-wu-rows">
+    <div class="dgm-wu-row">
+      <div class="dgm-wu-if"><b>A behaviour</b> · tone, format, voice</div>
+      <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="dgm-wu-out dgm-wu-not">Prompt or fine-tune<small>Not knowledge, so not RAG</small></div>
+    </div>
+    <div class="dgm-wu-row">
+      <div class="dgm-wu-if"><b>A number over rows</b> · "how many overdue?"</div>
+      <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="dgm-wu-out dgm-wu-not">SQL or a tool call<small>Top-k cannot count past k</small></div>
+    </div>
+    <div class="dgm-wu-row">
+      <div class="dgm-wu-if"><b>One record by key</b> · "order 48213"</div>
+      <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="dgm-wu-out dgm-wu-not">Look it up directly<small>A similar order is a wrong order</small></div>
+    </div>
+    <div class="dgm-wu-row">
+      <div class="dgm-wu-if"><b>The whole document</b> · "summarize this contract"</div>
+      <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="dgm-wu-out dgm-wu-not">Long context<small>Retrieval hands over pieces</small></div>
+    </div>
+  </div>
+
+  <div class="dgm-wu-gate">
+    <p>A passage somewhere in a body of text · is the knowledge…</p>
+    <div class="dgm-wu-pills"><span class="dgm-wu-pill">too big to send each call?</span><span class="dgm-wu-pill">changing often?</span><span class="dgm-wu-pill">different per user?</span></div>
+    <div class="dgm-wu-rows">
+      <div class="dgm-wu-row">
+        <div class="dgm-wu-if"><b>None of the three</b> · a 35,000-token handbook</div>
+        <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="dgm-wu-out dgm-wu-cheap">Put it in the prompt<small>With prompt caching</small></div>
+      </div>
+      <div class="dgm-wu-row">
+        <div class="dgm-wu-if"><b>Any of the three</b> · 6 million tokens of tickets</div>
+        <div class="dgm-wu-to"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="dgm-wu-out dgm-wu-rag">RAG<small>Add a graph or SQL if the answer joins documents</small></div>
+      </div>
+    </div>
+  </div>
+  <p class="dgm-wu-foot">Private and must-cite matter too, but on their own they do not demand retrieval.</p>
+</div>
