@@ -1,0 +1,65 @@
+<style>
+.dgm-bc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-bc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-bc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-bc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-bc-flow{display:grid;grid-template-columns:1fr 2.6fr 1fr;gap:10px;align-items:stretch}
+.dgm-bc-lane{border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.dgm-bc-you{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface)}
+.dgm-bc-agent{background:var(--color-surface-secondary);border:1px solid var(--color-border)}
+.dgm-bc-lane h5{margin:0 0 2px;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary)}
+.dgm-bc-you h5{color:var(--color-text-discovery)}
+.dgm-bc-step{background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:8px 10px}
+.dgm-bc-step b{display:block;font-size:12px;font-weight:700;color:var(--color-text)}
+.dgm-bc-step > span{display:block;font-size:10.5px;line-height:1.35;color:var(--color-text-secondary);margin-top:2px}
+.dgm-bc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;
+  font-size:10px;font-weight:700;background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.dgm-bc-stages{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.dgm-bc-gate{background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline)}
+.dgm-bc-gate b{color:var(--color-text-warning)}
+.dgm-bc-ship{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-bc-ship b{color:var(--color-text-success)}
+.dgm-bc-loop{margin:12px 0 0;font-size:11px;color:var(--color-text-secondary);text-align:center;display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap}
+.dgm-bc-loop svg{width:15px;height:15px;color:var(--color-text-tertiary)}
+.dgm-bc-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.dgm-bc-pill{font-size:10px;font-weight:600;border-radius:20px;padding:1px 8px;background:var(--color-surface-secondary);border:1px solid var(--color-border);color:var(--color-text-secondary)}
+@media (max-width:760px){.dgm-bc{padding:22px 14px 18px}.dgm-bc-flow{grid-template-columns:1fr}}
+@media (max-width:420px){.dgm-bc-stages{grid-template-columns:1fr}}
+</style>
+<div class="dgm-bc">
+  <span class="dgm-bc-chip">Building RAG with Claude Code</span>
+  <h4>You set the contract and the gate · the agent fills in the stages</h4>
+  <p class="dgm-bc-sub">Seven stages. Two belong to you, because they define what "correct" means.</p>
+
+  <div class="dgm-bc-flow">
+    <div class="dgm-bc-lane dgm-bc-you">
+      <h5>You own</h5>
+      <div class="dgm-bc-step"><b><span class="dgm-bc-n">1</span>Contract</b><span>CLAUDE.md: corpus, chunk rule, model, filter, the check. A human-written eval set.</span></div>
+    </div>
+
+    <div class="dgm-bc-lane dgm-bc-agent">
+      <h5>Claude Code does</h5>
+      <div class="dgm-bc-stages">
+        <div class="dgm-bc-step"><b><span class="dgm-bc-n">2</span>Plan</b><span>Plan mode: schema, index, query, eval design. No code yet.</span></div>
+        <div class="dgm-bc-step"><b><span class="dgm-bc-n">3</span>Database</b><span>pgvector or Pinecone. Dimension matches the model.</span></div>
+        <div class="dgm-bc-step"><b><span class="dgm-bc-n">4</span>Ingest</b><span>Chunk, embed, store with metadata. Deletes included.</span></div>
+        <div class="dgm-bc-step"><b><span class="dgm-bc-n">5</span>Retrieve</b><span>Vector, keyword, hybrid. Filter on every query.</span></div>
+        <div class="dgm-bc-step"><b><span class="dgm-bc-n">6</span>Generate</b><span>Numbered sources, cite [n], "I don't know" path.</span></div>
+        <div class="dgm-bc-step"><b>Store options</b>
+          <div class="dgm-bc-pills"><span class="dgm-bc-pill">pgvector · your Postgres</span><span class="dgm-bc-pill">Pinecone · managed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dgm-bc-lane dgm-bc-you">
+      <h5>You own</h5>
+      <div class="dgm-bc-step dgm-bc-gate"><b><span class="dgm-bc-n">7</span>Eval gate</b><span>recall@3 at or above the bar, by question type. Enforced by a hook or CI.</span></div>
+      <div class="dgm-bc-step dgm-bc-ship"><b>Ship</b><span>Fernpay: hybrid 0.917 passes a 0.90 bar.</span></div>
+    </div>
+  </div>
+
+  <p class="dgm-bc-loop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5"/></svg>Below the bar, the agent goes back to stage 4 or 5 and tries again.</p>
+</div>

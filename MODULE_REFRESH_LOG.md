@@ -29,7 +29,7 @@ always moves forward.
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | never |
 | llms | llms/ | scripts/build_llms.py | never |
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | never |
-| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | never |
+| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2026-10-12 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | never |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | never |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | never |
