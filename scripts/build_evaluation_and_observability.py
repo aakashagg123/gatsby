@@ -25,6 +25,7 @@ CFG = {
     "lede": "Why treating the eval set as the product spec for a non-deterministic "
             "system is the job, not a nice-to-have, and the order to actually build "
             "the eval and observability stack in.",
+    "insight": "An AI system's biggest risk is failing quietly. The defence is measurement built in the right order, starting with reading real failures.",
     "meta": ["2 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

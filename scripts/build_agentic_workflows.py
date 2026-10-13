@@ -24,6 +24,7 @@ CFG = {
     "lede": "Choosing a workflow pattern, knowing when more than one agent earns its cost, "
             "and what it takes to make a workflow durable enough to be worth owning end "
             "to end.",
+    "insight": "A workflow adds two problems a single agent run does not have: choosing a shape for many steps, and surviving the real time a long process takes.",
     "meta": ["3 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

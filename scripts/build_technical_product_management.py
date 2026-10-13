@@ -14,10 +14,11 @@ CFG = {
     "src": os.path.join(ROOT, "technical-product-management"),
     "out": os.path.join(ROOT, "technical-product-management-html"),
     "brand": "Technical product management",
-    "tagline": "a standalone module",
+    "tagline": "a product craft module",
     "title": "Technical product management for the AI PM",
     "lede": "The operating discipline of shipping — the role, specs, prioritization, "
             "execution, metrics, and releases that carry an idea into production.",
+    "insight": "Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.",
     "meta": ["8 lessons", "+ recap", "for APMs & PMs", "diagrams included"],
     "callout": "For the AI PM",
     "lessons": [

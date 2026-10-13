@@ -14,10 +14,11 @@ CFG = {
     "src": os.path.join(ROOT, "technical-product-sense"),
     "out": os.path.join(ROOT, "technical-product-sense-html"),
     "brand": "Technical product sense",
-    "tagline": "a standalone module",
+    "tagline": "a product craft module",
     "title": "Technical product sense for the AI PM",
     "lede": "Reading systems like an engineer — architecture, data, latency, and failure — "
             "so you can build with them, not just around them.",
+    "insight": "See the system behind the feature: where data lives, where time and money go, and how it fails, so you can build with it.",
     "meta": ["7 lessons", "+ recap", "for APMs & PMs", "diagrams included"],
     "callout": "For the AI PM",
     "lessons": [

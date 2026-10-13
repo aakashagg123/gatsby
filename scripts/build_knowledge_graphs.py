@@ -15,10 +15,11 @@ CFG = {
     "src": os.path.join(ROOT, "knowledge-graphs"),
     "out": os.path.join(ROOT, "knowledge-graphs-html"),
     "brand": "Knowledge graphs",
-    "tagline": "a standalone module",
+    "tagline": "a Generative AI module",
     "title": "Knowledge graphs for the product leader",
     "lede": "Treat what the company knows as a product — entities, relationships, "
             "ontologies, GraphRAG, governance, and the business case, in product leader language.",
+    "insight": "A knowledge graph pays off when you pick the killer questions first, pay the curation bill, and show the source of every fact.",
     "meta": ["8 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

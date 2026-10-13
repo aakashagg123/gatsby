@@ -13,9 +13,10 @@ build_track(cfg). A cfg dict looks like:
       "src": "<abs path to markdown source dir>",
       "out": "<abs path to output html dir>",
       "brand": "First principles",
-      "tagline": "a standalone module",
+      "tagline": "a product craft module",
       "title": "First principles & the polymath mind",
       "lede": "Reasoning from fundamentals — and building range across every discipline.",
+      "insight": "The one idea the reader takes away, in one plain sentence.",
       "meta": ["6 lessons", "+ recap", "first-principles", "polymath"],
       "callout": "For the builder",   # marker phrase that tags the styled briefing box
       "lessons": ["slug-1", "slug-2", ...],
@@ -204,7 +205,7 @@ def _sidebar(active, nav):
         items.append(f'<a class="{cls}" href="{href}">{htmllib.escape(label)}</a>')
     return f'<aside class="sidebar" id="sbNav"><div class="sticky">{"".join(items)}</div></aside>'
 
-def _footer(prev, nxt):
+def _footer(prev, nxt, insight):
     def card(item, dir_):
         if not item:
             return "<span></span>"
@@ -215,13 +216,16 @@ def _footer(prev, nxt):
                 f'<span class="lbl">{arrow} {lbl}</span>'
                 f'<span class="ttl">{htmllib.escape(label)}</span></a>')
     return (f'<div class="pagenav">{card(prev,"prev")}{card(nxt,"next")}</div>'
-            '<footer class="foot">A standalone module · part of the '
+            f'<footer class="foot"><strong>Core insight:</strong> {htmllib.escape(insight)}<br>Part of the '
             '<a href="../index.html">learning modules</a> collection.</footer>')
 
 # ---- build --------------------------------------------------------------------
 def build_track(cfg):
     src, out = cfg["src"], cfg["out"]
-    brand, tagline = cfg["brand"], cfg.get("tagline", "a standalone module")
+    brand, tagline = cfg["brand"], cfg.get("tagline", "a learning module")
+    insight = cfg.get("insight", "").strip()
+    if not insight:
+        raise SystemExit(f"{cfg['src']}: the track config needs an 'insight' sentence")
     title, lede, callout = cfg["title"], cfg["lede"], cfg["callout"]
     lessons = cfg["lessons"]
     os.makedirs(out, exist_ok=True)
@@ -264,9 +268,9 @@ def build_track(cfg):
     page += _topbar(brand, tagline)
     page += f"""<main class="content index" id="top">
   <div class="index-hero">
-    {ds.badge("A standalone module", size="lg", pill=True)}
     <h1>{htmllib.escape(title)}</h1>
     <p class="lede">{htmllib.escape(lede)}</p>
+    <div class="index-insight">{ds.badge("Core insight", color="discovery", size="md", pill=True)}<p>{htmllib.escape(insight)}</p></div>
     <div class="index-meta">{meta}</div>
   </div>
   <div class="intro MarkdownContent">{intro_html}</div>
@@ -300,7 +304,7 @@ def build_track(cfg):
     <h1>{htmllib.escape(t)}</h1>
   </div>
   <div class="MarkdownContent">{body}</div>
-  {_footer(prev, nxt)}
+  {_footer(prev, nxt, insight)}
   </main>{outline_html}</div>{bh.SIDEBAR_TOGGLE_JS}{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
         with open(os.path.join(out, f"{key}.html"), "w") as f:
             f.write(reader_widget.inject(_inject_mermaid(page)))

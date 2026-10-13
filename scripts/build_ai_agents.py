@@ -23,6 +23,7 @@ CFG = {
     "lede": "The loop behind every agent, how much autonomy a task actually needs, "
             "what keeps it reliable across many steps, the economics that decide "
             "whether it's worth building, how to run it safely, and how to choose one.",
+    "insight": "The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.",
     "meta": ["5 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

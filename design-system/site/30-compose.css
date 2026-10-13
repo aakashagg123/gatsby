@@ -63,6 +63,16 @@
 }
 .index-hero h1 em{font-style:normal;color:var(--color-text-secondary)}
 .index-hero .lede{max-width:calc(var(--spacing) * 180);margin:0 auto}
+.index-insight{
+  max-width:calc(var(--spacing) * 180);margin:var(--space-6) auto 0;padding:var(--space-4) var(--space-5);
+  background:var(--color-background-discovery-surface);border:var(--hairline) solid var(--color-border-discovery-surface);
+  border-radius:var(--radius-xl);
+}
+.index-hero .index-insight .Badge{margin-bottom:var(--space-2)}
+.index-insight p{
+  margin:0;color:var(--color-text);
+  font:var(--font-weight-semibold) var(--font-text-lg-size)/var(--font-text-lg-line-height) var(--font-sans);
+}
 .index-meta{display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center;margin-top:var(--space-6)}
 
 .pm-band{margin:var(--space-8) auto;max-width:calc(var(--spacing) * 215)}

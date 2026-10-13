@@ -14,10 +14,11 @@ CFG = {
     "src": os.path.join(ROOT, "agentic-ai"),
     "out": os.path.join(ROOT, "agentic-ai-html"),
     "brand": "Agentic AI",
-    "tagline": "a standalone module",
+    "tagline": "an agents module",
     "title": "Agentic AI for the AI PM",
     "lede": "What agents actually are — the loop, tools, memory, and planning — and the "
             "reliability, security, and economics that turn demos into products.",
+    "insight": "Teams win with agents by matching autonomy to stakes, making the work verifiable, and earning trust one tier at a time.",
     "meta": ["8 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the AI PM",
     "lessons": [

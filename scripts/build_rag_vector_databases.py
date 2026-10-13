@@ -20,6 +20,7 @@ CFG = {
     "lede": "Grounding models in your data — when to use RAG and when not to, embeddings, "
             "vector databases, chunking, retrieval quality, the alternatives, and a hands-on "
             "build with Claude Code, pgvector and Pinecone.",
+    "insight": "Use RAG only when the answer is a passage in knowledge too big, too fresh or too private to send whole. Then retrieval quality is the product.",
     "meta": ["10 lessons", "+ recap", "runnable code", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [
