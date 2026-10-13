@@ -19,6 +19,7 @@ CFG = {
     "title": "LLMs for the product leader",
     "lede": "Tokens, the context window, the jagged frontier, prompting, sampling, "
             "choosing a model, and the order to reach for prompting, RAG, or fine-tuning.",
+    "insight": "Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.",
     "meta": ["7 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

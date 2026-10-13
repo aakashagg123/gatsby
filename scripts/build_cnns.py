@@ -19,6 +19,7 @@ CFG = {
     "title": "Convolutional networks for the product and technology leader",
     "lede": "How a vision model sees, what resolution and depth cost, when to reuse a pre-trained "
             "or foundation model, and why vision features break in production.",
+    "insight": "A vision product is a chain of choices, each with a price, and the cheapest test is to measure on your own images before you commit.",
     "meta": ["7 lessons", "+ recap", "runnable code", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

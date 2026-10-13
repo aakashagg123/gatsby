@@ -13,9 +13,10 @@ CFG = {
     "src": os.path.join(ROOT, "first-principles"),
     "out": os.path.join(ROOT, "first-principles-html"),
     "brand": "First principles",
-    "tagline": "a standalone module",
+    "tagline": "a product craft module",
     "title": "First principles & the polymath mind",
     "lede": "Reasoning from fundamentals — and building range across every discipline.",
+    "insight": "First principles is the method, a broad set of mental models is the material, and judgment about when to use them keeps it honest.",
     "meta": ["6 lessons", "+ recap", "first-principles", "polymath"],
     "callout": "For the builder",
     "lessons": [

@@ -23,6 +23,7 @@ CFG = {
     "lede": "Memory as a product decision, the three shapes it takes, how memories are "
             "written and kept, the designs for reading them back, and the trust failures "
             "it has to be designed against.",
+    "insight": "A model does not give you memory. Your product builds it as a set of promises about what it keeps, reads back and forgets.",
     "meta": ["5 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

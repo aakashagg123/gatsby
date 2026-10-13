@@ -27,6 +27,7 @@ CFG = {
             "not one. A defense you have not attacked is a guess. And governance only "
             "counts once it becomes compliance evidence a regulator or an enterprise buyer "
             "can check.",
+    "insight": "AI security is four attacks, not one. A guardrail covers one shape, an untested defence is a guess, and governance counts only as evidence.",
     "meta": ["3 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

@@ -1,6 +1,6 @@
 # Access control for the technical PM
 
-*A standalone module: RBAC, ABAC, relationship-based access, and Keycloak.*
+*Covers RBAC, ABAC, relationship-based access, and Keycloak.*
 
 Every product answers one question thousands of times a day: **may this person do this to that, right now?** Get it wrong in one direction and users cannot work. Get it wrong in the other and one user reads another's data. The login can be perfect while the check is missing.
 

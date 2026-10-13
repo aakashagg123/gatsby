@@ -20,6 +20,7 @@ CFG = {
     "lede": "The tracks, put in order for a senior product manager, an AI product lead, "
             "an AI engineer, or an AI engineering lead. Each path says which lessons to read, "
             "what to skip, and when to move on.",
+    "insight": "You do not need every lesson. Read the path for your role, in order, and skip the rest.",
     "meta": ["4 paths", "+ recap", "time estimates", "checkpoints"],
     "callout": "🎯",
     "lessons": [

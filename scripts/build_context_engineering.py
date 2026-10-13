@@ -14,11 +14,12 @@ CFG = {
     "src": os.path.join(ROOT, "context-engineering"),
     "out": os.path.join(ROOT, "context-engineering-html"),
     "brand": "Context engineering",
-    "tagline": "a standalone module",
+    "tagline": "a Generative AI module",
     "title": "Context engineering for the product leader",
     "lede": "Treat what the model gets to see as a product decision — instructions, "
             "retrieval, memory, and live state, spec'd, governed, and evaluated "
             "with the same rigor as the output it produces.",
+    "insight": "Most \"the model is bad\" problems are context problems. The fix is in what you put in front of the model, not in a bigger model.",
     "meta": ["7 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

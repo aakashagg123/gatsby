@@ -14,12 +14,13 @@ CFG = {
     "src": os.path.join(ROOT, "prompt-engineering"),
     "out": os.path.join(ROOT, "prompt-engineering-html"),
     "brand": "Prompt engineering",
-    "tagline": "a standalone module",
+    "tagline": "a Generative AI module",
     "title": "Prompt engineering, from productivity to coding agents",
     "lede": "The craft of writing input a model will reliably act on — from "
             "ChatGPT productivity patterns, through the classical techniques "
             "power users depend on, into the prompts that drive Claude Code, "
             "Cursor, and other coding agents.",
+    "insight": "Prompting is a craft with a small vocabulary, not a bag of tricks. Reach for the right piece, and diagnose failures instead of blaming the model.",
     "meta": ["10 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the AI PM (or coding-agent user)",
     "lessons": [

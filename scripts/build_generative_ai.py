@@ -20,6 +20,7 @@ CFG = {
     "title": "Generative AI: the big picture",
     "lede": "What makes AI \"generative,\" the five modalities, why output is "
             "probabilistic, the four-layer product stack, and build vs. buy vs. fine-tune.",
+    "insight": "Buy the model and build the system around it, for jobs that are slow by hand, cheap to check and safe to sometimes get wrong.",
     "meta": ["6 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

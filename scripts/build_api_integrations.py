@@ -20,6 +20,7 @@ CFG = {
     "lede": "The request/response contract, authentication, rate limits, streaming, "
             "retries, structured output, webhooks, and fitting a model call into a "
             "real system.",
+    "insight": "A model is a slower, less predictable dependency. Proven integration discipline, not a cleverer model, makes AI features reliable.",
     "meta": ["6 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

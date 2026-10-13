@@ -23,6 +23,7 @@ CFG = {
     "lede": "The line where an AI product stops talking and starts doing: what tool "
             "calling is, how to design a tool worth trusting, and how to keep the "
             "permission and trust boundary around it real.",
+    "insight": "Tool calling moves the risk from wrong words to wrong actions, so every safeguard that matters sits between the model's request and the real world.",
     "meta": ["3 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

@@ -28,6 +28,7 @@ CFG = {
     "lede": "Which lever fixes which cost driver, the build-vs-buy breakeven done as "
             "arithmetic, and the FinOps practice that turns attribution into "
             "governance before the invoice, not after.",
+    "insight": "Cost optimization is diagnosis plus governance: find the lever that is actually slack before you fix anything, and catch drift before the invoice does.",
     "meta": ["2 lessons", "+ recap", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

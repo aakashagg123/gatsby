@@ -76,9 +76,11 @@ and commit the regenerated HTML alongside the markdown.
    lessons need diagrams (see below) — or leave mermaid fences in the
    markdown and let them render as-is.
 3. Write `scripts/build_<track>.py`: a thin config dict (`src`, `out`,
-   `brand`, `tagline`, `title`, `lede`, `meta`, `callout`, `lessons`)
+   `brand`, `tagline`, `title`, `lede`, `insight`, `meta`, `callout`, `lessons`)
    passed to `build_standalone.build_track`. Copy an existing one
-   (`build_system_design.py` is a clean recent example).
+   (`build_system_design.py` is a clean recent example). `insight` is required: one plain
+   sentence stating the core idea the reader takes away. It shows in the landing-page hero
+   and in the footer of every page.
 4. Wire it into `scripts/build_site.py`: add a `<TRACK>_HTML` constant, a
    `copytree` block, and a landing-page card. Bump the module count in the
    landing hero copy.

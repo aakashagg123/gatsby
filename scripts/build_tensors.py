@@ -19,6 +19,7 @@ CFG = {
     "title": "Tensors for the product and technology leader",
     "lede": "What the objects every model works on are, what they cost in memory and compute, "
             "why shape errors are silent, and how a library gets the gradient for free.",
+    "insight": "A model is arithmetic on tensors, so most questions about it are counting questions, and shape errors fail silently instead of crashing.",
     "meta": ["5 lessons", "+ recap", "runnable code", "knowledge graph", "diagrams included"],
     "callout": "For the product leader",
     "lessons": [

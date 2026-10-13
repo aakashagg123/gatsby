@@ -15,11 +15,12 @@ CFG = {
     "src": os.path.join(ROOT, "access-control"),
     "out": os.path.join(ROOT, "access-control-html"),
     "brand": "Access control",
-    "tagline": "a standalone module",
+    "tagline": "a quality and safety module",
     "title": "Access control for the technical PM",
     "lede": "Who may do what, and where that is decided: authentication vs authorization, "
             "OAuth and tokens, RBAC, ABAC, relationship-based access, Keycloak, and "
             "access control for AI agents.",
+    "insight": "Every access decision has four inputs: who, what, which object and under what conditions. Most failures are a missing check, not a clever attack.",
     "meta": ["8 lessons", "+ recap", "Keycloak tested", "diagrams included"],
     "callout": "For the technical PM",
     "lessons": [
