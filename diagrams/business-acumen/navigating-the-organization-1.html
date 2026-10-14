@@ -1,0 +1,62 @@
+<style>
+.ba-pi{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;
+  padding:var(--space-6,24px) var(--space-5,20px);margin:26px 0;font-family:inherit;text-align:left}
+.ba-pi-title{font-size:var(--font-text-xs-size);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-secondary);font-weight:700;margin:0 0 4px}
+.ba-pi-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-pi-wrap{display:grid;grid-template-columns:auto 1fr;gap:8px}
+.ba-pi-yaxis{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;
+  font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-tertiary)}
+.ba-pi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ba-pi-q{border-radius:12px;padding:12px 14px;min-height:120px}
+.ba-pi-q h5{margin:0 0 2px;font-size:var(--font-text-sm-size);font-weight:700}
+.ba-pi-q p{margin:0 0 10px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+.ba-pi-q.sat{background:var(--color-background-caution-surface);border:1px solid var(--color-border-caution-outline)}
+.ba-pi-q.sat h5{color:var(--color-text-caution)}
+.ba-pi-q.close{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-outline)}
+.ba-pi-q.close h5{color:var(--color-text-danger)}
+.ba-pi-q.mon{background:var(--color-surface-tertiary);border:1px solid var(--color-border)}
+.ba-pi-q.mon h5{color:var(--color-text)}
+.ba-pi-q.inf{background:var(--color-background-info-surface);border:1px solid var(--color-border-info-surface)}
+.ba-pi-q.inf h5{color:var(--color-text-info)}
+.ba-pi-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ba-pi-chip{font-size:var(--font-text-2xs-size);font-weight:600;border-radius:999px;padding:3px 9px;
+  background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)}
+.ba-pi-chip.veto{border-color:var(--color-border-danger-outline);color:var(--color-text-danger)}
+.ba-pi-xaxis{grid-column:2;display:flex;justify-content:space-between;font-size:var(--font-text-2xs-size);
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-top:4px}
+.ba-pi-note{margin-top:12px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+@media (max-width:640px){.ba-pi-grid{grid-template-columns:1fr}.ba-pi-yaxis,.ba-pi-xaxis{display:none}.ba-pi-wrap{grid-template-columns:1fr}}
+</style>
+<div class="ba-pi" role="img" aria-label="Power and interest grid with four quadrants: keep satisfied (high power, low interest), manage closely (high power, high interest), monitor (low power, low interest), keep informed (low power, high interest). Illustrative placements for an instant payouts launch.">
+  <div class="ba-pi-title">Power and interest grid</div>
+  <p class="ba-pi-sub">Map power per decision, not per person. Illustrative placements for an instant payouts launch.</p>
+  <div class="ba-pi-wrap">
+    <div class="ba-pi-yaxis">Power over this decision →</div>
+    <div class="ba-pi-grid">
+      <div class="ba-pi-q sat">
+        <h5>Keep satisfied</h5>
+        <p>High power, low interest. Short note, clear ask, no surprises.</p>
+        <div class="ba-pi-chips"><span class="ba-pi-chip veto">Partner bank compliance · veto</span><span class="ba-pi-chip">Internal audit</span></div>
+      </div>
+      <div class="ba-pi-q close">
+        <h5>Manage closely</h5>
+        <p>High power, high interest. Meet alone before every decision.</p>
+        <div class="ba-pi-chips"><span class="ba-pi-chip veto">Merchant Risk · veto</span><span class="ba-pi-chip">Treasury</span><span class="ba-pi-chip">Finance</span></div>
+      </div>
+      <div class="ba-pi-q mon">
+        <h5>Monitor</h5>
+        <p>Low power, low interest. A line in the update.</p>
+        <div class="ba-pi-chips"><span class="ba-pi-chip">Brand marketing</span></div>
+      </div>
+      <div class="ba-pi-q inf">
+        <h5>Keep informed</h5>
+        <p>Low power, high interest. Share plans early.</p>
+        <div class="ba-pi-chips"><span class="ba-pi-chip">Support operations</span><span class="ba-pi-chip">Sales</span></div>
+      </div>
+    </div>
+    <div class="ba-pi-xaxis"><span>Low interest</span><span>High interest →</span></div>
+  </div>
+  <div class="ba-pi-note">Anyone with a veto sits in the top row, whatever their title. Add each person's stance today: support, neutral or against.</div>
+</div>

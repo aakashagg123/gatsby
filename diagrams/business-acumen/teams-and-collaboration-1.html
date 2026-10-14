@@ -1,0 +1,35 @@
+<style>
+.ba-q{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;
+  padding:var(--space-6,24px) var(--space-5,20px);margin:26px 0;font-family:inherit;text-align:left}
+.ba-q-title{font-size:var(--font-text-xs-size);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-secondary);font-weight:700;margin:0 0 4px}
+.ba-q-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-q-rows{display:flex;flex-direction:column;gap:8px}
+.ba-q-row{display:grid;grid-template-columns:3.5em 1fr 5.5em;align-items:center;gap:10px}
+.ba-q-load{font-size:var(--font-text-sm-size);font-weight:700;color:var(--color-text)}
+.ba-q-track{background:var(--color-surface-tertiary);border-radius:8px;height:22px;overflow:hidden;display:flex}
+.ba-q-work{background:var(--color-background-info-solid);height:100%}
+.ba-q-wait{height:100%}
+.ba-q-row.ok .ba-q-wait{background:var(--color-background-success-surface);border-left:1px solid var(--color-border-success-surface)}
+.ba-q-row.warn .ba-q-wait{background:var(--color-background-caution-surface);border-left:1px solid var(--color-border-caution-outline)}
+.ba-q-row.bad .ba-q-wait{background:var(--color-background-danger-surface);border-left:1px solid var(--color-border-danger-outline)}
+.ba-q-days{font-size:var(--font-text-sm-size);font-weight:700;color:var(--color-text);text-align:right}
+.ba-q-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+.ba-q-key{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:5px}
+.ba-q-key.work{background:var(--color-background-info-solid)}
+.ba-q-key.wait{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-outline)}
+.ba-q-note{margin-top:10px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+</style>
+<div class="ba-q" role="img" aria-label="Bar chart. Lead time for two days of work by load of the receiving team: 50% load 4 days, 70% load 6.7 days, 80% load 10 days, 90% load 20 days, 95% load 40 days.">
+  <div class="ba-q-title">The cost of a handoff</div>
+  <p class="ba-q-sub">Lead time for 2 days of work, by load of the receiving team. Lead time = work ÷ (1 − load).</p>
+  <div class="ba-q-rows">
+    <div class="ba-q-row ok"><span class="ba-q-load">50%</span><div class="ba-q-track"><div class="ba-q-work" style="width:5%"></div><div class="ba-q-wait" style="width:5%"></div></div><span class="ba-q-days">4 days</span></div>
+    <div class="ba-q-row ok"><span class="ba-q-load">70%</span><div class="ba-q-track"><div class="ba-q-work" style="width:5%"></div><div class="ba-q-wait" style="width:11.7%"></div></div><span class="ba-q-days">6.7 days</span></div>
+    <div class="ba-q-row warn"><span class="ba-q-load">80%</span><div class="ba-q-track"><div class="ba-q-work" style="width:5%"></div><div class="ba-q-wait" style="width:20%"></div></div><span class="ba-q-days">10 days</span></div>
+    <div class="ba-q-row bad"><span class="ba-q-load">90%</span><div class="ba-q-track"><div class="ba-q-work" style="width:5%"></div><div class="ba-q-wait" style="width:45%"></div></div><span class="ba-q-days">20 days</span></div>
+    <div class="ba-q-row bad"><span class="ba-q-load">95%</span><div class="ba-q-track"><div class="ba-q-work" style="width:5%"></div><div class="ba-q-wait" style="width:95%"></div></div><span class="ba-q-days">40 days</span></div>
+  </div>
+  <div class="ba-q-legend"><span><span class="ba-q-key work"></span>Work (2 days)</span><span><span class="ba-q-key wait"></span>Waiting in the queue</span></div>
+  <div class="ba-q-note">Keep platform and specialist teams below about 80% load. Past that point, waits grow faster than load.</div>
+</div>

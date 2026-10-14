@@ -1,0 +1,75 @@
+<style>
+.ba-tor{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
+  border-radius:var(--radius-xl, 16px);padding:28px 24px 22px;margin:26px 0;position:relative;font-family:inherit;text-align:left}
+.ba-tor-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-warning-solid);color:var(--white);
+  font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);letter-spacing:.06em;text-transform:uppercase;
+  border-radius:999px;padding:3px 12px}
+.ba-tor h4{margin:0 0 4px;font-size:var(--font-text-sm-size);font-weight:var(--font-weight-semibold);color:var(--color-text)}
+.ba-tor-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 18px}
+.ba-tor-grid{display:grid;grid-template-columns:minmax(120px,30%) 1fr;row-gap:10px;column-gap:12px;align-items:center}
+.ba-tor-lbl{font-size:var(--font-text-xs-size);color:var(--color-text);font-weight:var(--font-weight-semibold);line-height:1.3}
+.ba-tor-lbl small{display:block;font-weight:var(--font-weight-normal);color:var(--color-text-secondary);font-size:var(--font-text-xs-size)}
+.ba-tor-lane{position:relative;height:30px;background:var(--color-surface-tertiary);border-radius:6px}
+.ba-tor-neg,.ba-tor-pos{position:absolute;top:5px;height:20px;display:flex;align-items:center;
+  font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);white-space:nowrap}
+.ba-tor-neg{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface);color:var(--color-text-danger);
+  border-radius:5px 0 0 5px;justify-content:flex-start;padding-left:4px}
+.ba-tor-pos{background:var(--color-background-success-surface);border:1px solid var(--color-border-success-surface);color:var(--color-text-success);
+  border-radius:0 5px 5px 0;justify-content:flex-end;padding-right:4px}
+.ba-tor-base{position:absolute;top:0;bottom:0;width:0;border-left:2px solid var(--color-border-strong)}
+.ba-tor-zero{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--color-text-danger)}
+.ba-tor-axis{position:relative;height:30px;font-size:var(--font-text-xs-size);color:var(--color-text-tertiary)}
+.ba-tor-axis i{position:absolute;top:4px;font-style:normal;transform:translateX(-50%);white-space:nowrap}
+.ba-tor-note{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:12px 0 0}
+@media (max-width:640px){.ba-tor{padding:22px 14px 18px}.ba-tor-grid{grid-template-columns:1fr}.ba-tor-neg,.ba-tor-pos{font-size:0}}
+</style>
+<div class="ba-tor" role="img" aria-label="Tornado chart of the fraud-model NPV. Base NPV is 94,741 dollars. Model life of 2 to 4 years moves NPV from minus 205,785 to plus 367,946. Savings of 400,000 to 600,000 moves it from minus 153,944 to plus 343,426. Build cost of 1.08 million to 720,000 moves it from minus 85,259 to plus 274,741. Running cost of 150,000 to 50,000 moves it from minus 29,602 to plus 219,083. Discount rate of 14% to 8% moves it from 28,653 to 130,839.">
+  <span class="ba-tor-chip">Tornado</span>
+  <h4>Fraud-model NPV: which input moves the answer most?</h4>
+  <p class="ba-tor-sub">One input moved at a time; the others stay at base. Solid line = base NPV $94,741. Dashed line = NPV of zero. Illustrative; all ranges assumed.</p>
+  <div class="ba-tor-grid">
+    <div class="ba-tor-lbl">Model life<small>2 to 4 years</small></div>
+    <div class="ba-tor-lane">
+      <div class="ba-tor-zero" style="left:36.21%"></div>
+      <div class="ba-tor-neg" style="left:0.73%;width:51.81%">−$205,785</div>
+      <div class="ba-tor-pos" style="left:52.54%;width:47.10%">+$367,946</div>
+      <div class="ba-tor-base" style="left:52.54%"></div>
+    </div>
+
+    <div class="ba-tor-lbl">Annual savings<small>$400k to $600k</small></div>
+    <div class="ba-tor-lane">
+      <div class="ba-tor-zero" style="left:36.21%"></div>
+      <div class="ba-tor-neg" style="left:9.66%;width:42.88%">−$153,944</div>
+      <div class="ba-tor-pos" style="left:52.54%;width:42.88%">+$343,426</div>
+      <div class="ba-tor-base" style="left:52.54%"></div>
+    </div>
+
+    <div class="ba-tor-lbl">Build cost<small>$1.08M to $720k</small></div>
+    <div class="ba-tor-lane">
+      <div class="ba-tor-zero" style="left:36.21%"></div>
+      <div class="ba-tor-neg" style="left:21.51%;width:31.03%">−$85,259</div>
+      <div class="ba-tor-pos" style="left:52.54%;width:31.03%">+$274,741</div>
+      <div class="ba-tor-base" style="left:52.54%"></div>
+    </div>
+
+    <div class="ba-tor-lbl">Running cost<small>$150k to $50k a year</small></div>
+    <div class="ba-tor-lane">
+      <div class="ba-tor-zero" style="left:36.21%"></div>
+      <div class="ba-tor-neg" style="left:31.10%;width:21.44%">−$29,602</div>
+      <div class="ba-tor-pos" style="left:52.54%;width:21.44%">+$219,083</div>
+      <div class="ba-tor-base" style="left:52.54%"></div>
+    </div>
+
+    <div class="ba-tor-lbl">Discount rate<small>14% to 8%</small></div>
+    <div class="ba-tor-lane">
+      <div class="ba-tor-zero" style="left:36.21%"></div>
+      <div class="ba-tor-neg" style="left:41.15%;width:11.39%"></div>
+      <div class="ba-tor-pos" style="left:52.54%;width:6.23%"></div>
+      <div class="ba-tor-base" style="left:52.54%"></div>
+    </div>
+
+    <div></div>
+    <div class="ba-tor-axis"><i style="left:0%">−$210k</i><i style="left:36.21%">$0</i><i style="left:52.54%">base</i><i style="left:100%">+$370k</i></div>
+  </div>
+  <p class="ba-tor-note">Discount rate: NPV stays positive across the range ($28,653 to $130,839). The top two bars cross zero, so they are what the pilot must measure.</p>
+</div>

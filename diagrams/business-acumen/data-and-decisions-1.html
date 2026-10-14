@@ -1,0 +1,48 @@
+<style>
+.ba-cm{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;
+  padding:24px 22px 20px;margin:26px 0;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04)}
+.ba-cm-title{font-size:var(--font-text-xs-size);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-secondary);font-weight:700;margin:0 0 4px}
+.ba-cm-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-cm-grid{display:grid;grid-template-columns:minmax(6em,auto) 1fr 1fr;gap:8px;align-items:stretch}
+.ba-cm-h{font-size:var(--font-text-xs-size);font-weight:700;color:var(--color-text-secondary);
+  text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:4px}
+.ba-cm-rh{justify-content:flex-start;text-align:left}
+.ba-cm-cell{border-radius:12px;padding:12px 14px;border:1px solid;display:flex;flex-direction:column;gap:4px}
+.ba-cm-cell b{font-size:var(--font-text-sm-size)}
+.ba-cm-n{font-size:var(--font-text-lg-size);font-weight:700;font-variant-numeric:tabular-nums}
+.ba-cm-cost{font-size:var(--font-text-sm-size);font-variant-numeric:tabular-nums}
+.ba-cm-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface);color:var(--color-text-success)}
+.ba-cm-warn{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface);color:var(--color-text-warning)}
+.ba-cm-bad{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface);color:var(--color-text-danger)}
+.ba-cm-neutral{background:var(--color-surface-tertiary);border-color:var(--color-border);color:var(--color-text-secondary)}
+.ba-cm-foot{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.ba-cm-chip{font-size:var(--font-text-xs-size);font-weight:600;border-radius:20px;padding:3px 10px;border:1px solid}
+.ba-cm-chip.info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface);color:var(--color-text-info)}
+.ba-cm-chip.danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface);color:var(--color-text-danger)}
+.ba-cm-chip.discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface);color:var(--color-text-discovery)}
+@media (max-width:640px){.ba-cm{padding:18px 14px}.ba-cm-grid{grid-template-columns:1fr 1fr}.ba-cm-h.ba-cm-corner{display:none}.ba-cm-rh{grid-column:1 / -1}}
+</style>
+<div class="ba-cm" role="figure" aria-label="Priced confusion matrix for a fraud model at 90 percent recall and a 2 percent false-alarm rate on one million transactions">
+  <div class="ba-cm-title">A priced confusion matrix · illustrative</div>
+  <p class="ba-cm-sub">1,000,000 card transactions · 0.2% fraud · threshold T2 (90% recall, 2% false-alarm rate) · costs assumed</p>
+  <div class="ba-cm-grid">
+    <div class="ba-cm-h ba-cm-corner"></div>
+    <div class="ba-cm-h">Really fraud · 2,000</div>
+    <div class="ba-cm-h">Really good · 998,000</div>
+
+    <div class="ba-cm-h ba-cm-rh">Model flags it</div>
+    <div class="ba-cm-cell ba-cm-ok"><b>Caught fraud</b><span class="ba-cm-n">1,800</span><span class="ba-cm-cost">cost ≈ $0</span></div>
+    <div class="ba-cm-cell ba-cm-bad"><b>False declines</b><span class="ba-cm-n">19,960</span><span class="ba-cm-cost">× $25 = $499,000</span></div>
+
+    <div class="ba-cm-h ba-cm-rh">Model approves it</div>
+    <div class="ba-cm-cell ba-cm-warn"><b>Missed fraud</b><span class="ba-cm-n">200</span><span class="ba-cm-cost">× $160 = $32,000</span></div>
+    <div class="ba-cm-cell ba-cm-neutral"><b>Good approvals</b><span class="ba-cm-n">978,040</span><span class="ba-cm-cost">cost $0</span></div>
+  </div>
+  <div class="ba-cm-foot">
+    <span class="ba-cm-chip info">Precision 8.3%: 1 in 12 flags is fraud</span>
+    <span class="ba-cm-chip danger">Total $531,000 vs $320,000 with no model</span>
+    <span class="ba-cm-chip discovery">Break-even fraud share 25 ÷ 185 = 13.5%</span>
+  </div>
+</div>
