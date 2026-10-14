@@ -353,7 +353,7 @@ LANDING = """<!doctype html>
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
       <h3>Business acumen →</h3>
       <p>Money, markets, organizations and influence for Group PMs, Heads of Product and
-      VPs — grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 12 lessons
+      VPs — grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 15 lessons
       and an interactive self-assessment with a radar chart and an improvement plan.</p>
     </a>
     <a class="card" href="graph/index.html">

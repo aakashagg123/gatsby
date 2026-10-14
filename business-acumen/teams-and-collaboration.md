@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 Above the individual-contributor level, your job changes. You stop being the person in every meeting. You design the system that lets teams decide well without you. That system has three parts: **structure** (which teams exist and how they work together), **rhythm** (when teams meet, review and decide) and **decision rights** (who decides what).

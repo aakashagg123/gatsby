@@ -2,15 +2,13 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 **Business acumen** is the skill of seeing how a decision moves the business. You know how the company makes money. You know which numbers matter. You can predict how a product change will show up in revenue, cost, risk and cash.
 
 For a product leader, acumen has two parts. **Breadth** is general business knowledge: money, markets, organizations and people. **Depth** is mastery of one domain, such as Payments or Lending. Together they make a **T shape**: a wide bar of business knowledge over one deep stem of domain knowledge.
 
-The core tradeoff is time. Every hour spent on breadth is an hour not spent on depth. This lesson helps you diagnose your own gaps first, so you spend that time where it pays. The track's <a href="assessment.html">interactive self-assessment</a> scores you on twelve axes and builds a plan.
+The core tradeoff is time. Every hour spent on breadth is an hour not spent on depth. This lesson helps you diagnose your own gaps first, so you spend that time where it pays. The track's <a href="assessment.html">interactive self-assessment</a> scores you on fifteen axes and builds a plan.
 
 > 🎯 **For the product leader**
 >
@@ -99,7 +97,7 @@ Self-ratings are noisy. People tend to rate themselves higher on skills they use
 - **Check against evidence.** For each high score, name an artifact you produced: a business case, a pricing memo, a reorg proposal. No artifact means the score is a guess.
 - **Ask one honest peer.** A finance or risk partner can tell you in ten minutes where you sound unsure.
 
-The <a href="assessment.html">self-assessment</a> uses this method. It asks 48 "I can" statements, four for each of the twelve lessons. It turns your answers into a score per axis and a radar chart. Then it ranks your gaps and suggests a two-week action from the matching lesson.
+The <a href="assessment.html">self-assessment</a> uses this method. It asks 60 "I can" statements, four for each of the fifteen lessons. It turns your answers into a score per axis and a radar chart. Then it ranks your gaps and suggests a two-week action from the matching lesson.
 
 ## Worked example: a leader changes domain
 
@@ -111,19 +109,19 @@ A Group PM has spent six years in eCommerce marketplaces. She moves to a consume
 
 | Axis | Ratings | Total | Score |
 | --- | --- | --- | --- |
-| The language of money | 4, 4, 3, 3 | 14 | (14 − 4) ÷ 16 = 62.5% |
-| Markets and strategy | 4, 4, 4, 3 | 15 | 68.75% |
-| Monetization and business models | 4, 3, 2, 2 | 11 | 43.75% |
+| Reading the three statements | 4, 4, 3, 3 | 14 | (14 − 4) ÷ 16 = 62.5% |
+| Markets and customers | 4, 4, 4, 3 | 15 | 68.75% |
+| Unit economics | 4, 3, 2, 2 | 11 | 43.75% |
 | Data and decisions | 3, 2, 2, 3 | 10 | 37.5% |
-| Executive influence | 4, 4, 4, 4 | 16 | 75% |
+| Executive influence and stakeholders | 4, 4, 4, 4 | 16 | 75% |
 
-**Step 2: check the low scores against the new domain.** Her monetization score is low on the two lending statements. She knows take rates well. She has never priced credit, where the price must cover the cost of funds and the expected losses. Her data score is low because lending outcomes are slow. A loan approved today may not default for a year.
+**Step 2: check the low scores against the new domain.** Her unit-economics score is low on the two lending statements. She knows take rates well. She has never built the economics of one loan, where interest and fees must cover the cost of funds and the expected losses. Her data score is low because lending outcomes are slow. A loan approved today may not default for a year.
 
-**Step 3: pick two gaps that block a current decision.** Her first big decision is whether to loosen the credit cutoff to grow volume. That decision needs both weak axes. She picks Monetization and Data and decisions.
+**Step 3: pick two gaps that block a current decision.** Her first big decision is whether to loosen the credit cutoff to grow volume. That decision needs both weak axes. She picks Unit economics, and Data and decisions.
 
 **Step 4: set a two-week action for each.**
 
-- Monetization: rebuild the unit economics of one loan product with the finance partner. Write down the cost of funds, expected loss, servicing cost and margin per loan. See [lending per loan](./unit-economics.md#lending-per-loan).
+- Unit economics: rebuild the unit economics of one loan product with the finance partner. Write down the cost of funds, expected loss, servicing cost and margin per loan. See [lending per loan](./unit-economics.md#lending-per-loan).
 - Data and decisions: ask the credit risk team for loss curves by monthly cohort of loans. Learn when losses peak. See [vintage curves](./performance-and-growth.md#lending-vintage-curves) and [data and decisions](./data-and-decisions.md).
 
 **Step 5: re-take the assessment in a quarter.** The aim is not a high score. The aim is that the next cutoff decision is one she can defend to the Chief Risk Officer.
@@ -159,12 +157,12 @@ Rank axes by gap, largest first.
   score >= 75%       -> "maintain or stretch"
 ```
 
-The radar chart plots each score as a distance from the centre on twelve spokes. The spokes are grouped by cluster, so a weak cluster shows as a dent on one side.
+The radar chart plots each score as a distance from the centre on fifteen spokes. The spokes are grouped by cluster, so a weak cluster shows as a dent on one side.
 
 ## Practitioner checklist
 
 - [ ] Write two sentences on how your company makes money, and check them with a finance partner.
-- [ ] Take the <a href="assessment.html">self-assessment</a> and record your twelve scores.
+- [ ] Take the <a href="assessment.html">self-assessment</a> and record your fifteen scores.
 - [ ] For each score of 4 or 5 on a statement, name one artifact that proves it.
 - [ ] List your domain's three binding constraints, and the team that owns each one.
 - [ ] Pick two gaps that block a decision you face this quarter.

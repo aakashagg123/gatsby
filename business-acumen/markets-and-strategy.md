@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 Before you decide how to win, decide where to compete and for whom. This lesson covers the market side of strategy. **Market sizing** tells you how much revenue a market can hold. **Segmentation** splits that market into groups that need different things and have different economics. **Positioning** states why your target segment should choose you over its real alternative. A **competitor teardown** reads a rival's economics, not its feature list. **SWOT** and the **growth matrix** turn the facts into options and show how much risk each option carries.
@@ -14,7 +12,7 @@ The scale matters. A sizing error of 10x is common when a team counts payment vo
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — At VP level you set the frame your teams work inside. If the frame is "serve everyone," every roadmap debate is a fight about priorities. If the frame names a target segment with known economics, most debates settle themselves.
+> **Why it matters** — At vice president (VP) level you set the frame your teams work inside. If the frame is "serve everyone," every roadmap debate is a fight about priorities. If the frame names a target segment with known economics, most debates settle themselves.
 >
 > **What it changes in your decisions** — You size markets in revenue, from the bottom up. You choose segments by contribution and payback, not by size alone. You write down which segments you will not serve this year.
 >
@@ -325,8 +323,8 @@ The script prints a TAM of $600M, a SAM of $210M and a SOM of $25.9M (12.3% of S
 - [Competitive advantage and strategy](./competitive-advantage-and-strategy.md) — the five forces, profit pools and how to win once you have chosen the segment.
 - [Unit economics](./unit-economics.md) — the contribution and payback behind segment economics.
 - [The language of money](./the-language-of-money.md) — take rate, and gross versus net revenue, for sizing in revenue.
-- [Products and marketing](./products-and-marketing.md) — turning a position into an offer and a launch.
-- [Portfolio strategy and allocation](./portfolio-strategy-and-allocation.md) — funding bets across the growth matrix.
+- [Products and go-to-market](./products-and-marketing.md) — turning a position into an offer and a launch.
+- [Portfolio strategy and capital allocation](./portfolio-strategy-and-allocation.md) — funding bets across the growth matrix.
 - [User research](../product-sense/user-research.md) — the interviews behind segment hypotheses.
 - [Cognitive empathy](../product-sense/cognitive-empathy.md) — understanding the need behind a segment.
 - [Prioritization and roadmaps](../technical-product-management/prioritization-and-roadmaps.md) — strategy as the input to a roadmap.

@@ -99,6 +99,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Product sense for AI products](./product-sense/product-sense-for-ai.md).
 
+**Allowance for credit losses** — A lender's estimate of the loans it will not collect, subtracted from its loans on the balance sheet.
+
+*In plain terms.* When the allowance grows, the cost flows through the income statement as a provision. Under US current expected credit loss (CECL) rules, a lender books the expected loss for a loan's whole life on the day it makes the loan. So fast growth depresses reported profit first.
+
+*For example.* Making 10,000 loans with an expected loss of $408 each adds a $4.08 million provision at once.
+
+*Where it shows up:* Explaining why a fast-growing loan book shows lower profit; Reading a lender's results.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **API / contract** — The agreed interface between two systems — what one can ask for and what it will get back — that both sides depend on.
 
 *In plain terms.* Systems talk through APIs, and an API is a promise: 'send me this shape, I'll return that shape.' That promise is the contract. Everything downstream depends on it, which is why changing it carelessly ('a breaking change') shatters things you didn't know were connected.
@@ -179,6 +189,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Authentication, authorization and the access-control model](./access-control/authentication-authorization-and-the-access-control-model.md).
 
+**Authorization rate** — The share of attempted card payments that the card issuer approves.
+
+*In plain terms.* False declines lose the sale. Providers compete on authorization rate through message formatting, retries, card updates and routing. Your own fraud rules are part of the rate a merchant sees.
+
+*For example.* On $10 billion of attempted volume, one extra point approves $100 million more payments.
+
+*Where it shows up:* Changing a fraud rule or payment route; Selling to large merchants.
+
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
+
 **Automatic differentiation** — Computing gradients by recording the forward pass and replaying it backward with the chain rule.
 
 *In plain terms.* Each operation has one small backward rule. The library records the operations as the forward pass runs, saves the values the rules need, and walks the record in reverse from the loss. Backpropagation is this method applied to a neural network.
@@ -248,6 +268,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how deep networks are trained; Checking a hand-written gradient against a numerical one.
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
+**Base rate** — How common an event is before you look at any signal.
+
+*In plain terms.* When an event is rare, even an accurate model raises mostly false alarms. Ask for the base rate before you accept any accuracy figure.
+
+*For example.* With 0.2% fraud, a model with 90% recall and a 2% false-alarm rate is right only about once in every twelve flags.
+
+*Where it shows up:* Judging a fraud or risk model; Sizing a review team.
+
+*See:* [Data and decisions](./business-acumen/data-and-decisions.md).
 
 **Baseline** — The simplest approach a model must beat to be worth building, such as a rule or doing nothing.
 
@@ -389,6 +419,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
 
+**Cash conversion cycle (CCC)** — The number of days cash is tied up, from paying a supplier to being paid by a customer: days of inventory plus days of receivables minus days of payables.
+
+*In plain terms.* A positive cycle means the business funds its own operations for that many days. A negative cycle means it holds other people's money first, which lets it grow with little capital.
+
+*For example.* A retailer with 60 days of stock, 2-day card settlement and 45-day supplier terms has a 17-day cycle. A marketplace that pays sellers after 14 days has a cycle of minus 12 days.
+
+*Where it shows up:* Setting supplier and seller payout terms; Comparing a retail model with a marketplace model.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **Centrality** — Ranking nodes by how important they are in the graph's structure (the PageRank family).
 
 *In plain terms.* Some things matter more because of how they're connected. Centrality scores that: the supplier whose failure cascades furthest, the person the org actually routes through, the account whose loss unravels a network — importance measured by structure, not by a label.
@@ -489,6 +529,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Cognitive empathy](./product-sense/cognitive-empathy.md).
 
+**Cohort payback** — The month in which the cumulative contribution of a group of customers, counting those who left, covers what it cost to acquire them.
+
+*In plain terms.* Simple payback divides acquisition cost by monthly contribution and assumes nobody leaves. Cohort payback follows the real group month by month, so early churn is built in. It is usually longer, and it is the number to fund growth on.
+
+*For example.* In an illustrative merchant cohort, simple payback on paid acquisition cost is 12 months. With early churn, cohort payback is about 17 months.
+
+*Where it shows up:* Approving growth spend by channel; Challenging a "6-month payback" pitch.
+
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
 **Comb-shaped expertise** — Several deep spikes over a broad base — the mature form of T-shaped range; the polymath's profile.
 
 *In plain terms.* Where a T has one deep spike, a comb has several — multiple areas of real depth on top of broad general knowledge. It's what accomplished generalists develop over time, letting them connect fields others keep separate.
@@ -537,7 +587,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Reading retail results; Separating growth from new stores.
 
-*See:* [Data and decisions](./business-acumen/data-and-decisions.md).
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
 
 **Compounding error** — Small per-step error rates multiplying over a long agent task, so 'usually right' still fails overall.
 
@@ -659,15 +709,25 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Continuous batching & paged attention](./content/01-inference-internals/batching-and-paged-attention.md).
 
+**Contra-revenue** — An amount that reduces revenue directly instead of being booked as a cost, such as a discount, a sign-up bonus paid to a customer, or a refund reserve.
+
+*In plain terms.* Under the main accounting standards, most payments a company makes to its own customers count as a price cut. So promotions lower revenue, while an ad paid to a third party is a marketing cost.
+
+*For example.* A $10 bonus paid into a new customer's wallet lowers revenue by $10. It is not marketing spend.
+
+*Where it shows up:* Designing promotions and cash-back; Reading net revenue after incentives.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **Contribution margin** — Price minus variable cost, per unit or per customer: what each sale contributes to fixed costs and profit.
 
-*In plain terms.* Contribution margin tells you whether growth helps or hurts. If it is negative, each new sale deepens the loss.
+*In plain terms.* Contribution margin tells you whether growth helps or hurts. If it is negative, each new sale deepens the loss. It comes in layers: CM1 is net revenue minus direct variable cost, CM2 also takes off the variable cost to serve, and CM3 also takes off performance marketing.
 
 *For example.* $11 of monthly revenue minus $5 of variable cost is a $6 monthly contribution margin.
 
 *Where it shows up:* Checking unit economics; Deciding whether to spend on growth.
 
-*See:* [The language of money](./business-acumen/the-language-of-money.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Control point** — A workflow step you own whose outputs downstream work consumes — the position from which scope expands and moats form.
 
@@ -709,6 +769,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
 
+**Cornered resource** — Access to something valuable on better terms than rivals, such as a bank charter, licences, an exclusive partner or proprietary data.
+
+*In plain terms.* It is an advantage only if it is truly exclusive. A partner deal that the partner would also sign with your rival is not cornered.
+
+*For example.* A bank charter lets a lender fund loans with deposits, which usually cost less than credit lines.
+
+*Where it shows up:* Valuing a licence or partner deal; Testing claims of a data advantage.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
 **Cosine similarity** — The usual measure of how close two embeddings are — the angle between the vectors — used to rank passages by relevance.
 
 *In plain terms.* Once text is embedding vectors, you need a number for 'how similar'. Cosine similarity measures the angle between two vectors: point the same way (similar meaning) scores near 1, unrelated scores near 0. It's the yardstick semantic search uses to pick the nearest passages.
@@ -728,6 +798,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Pricing and margin analysis for AI features; Finding optimisation targets; Charging costs back to teams/tenants.
 
 *See:* [Cost attribution](./content/04-evals-observability/cost-attribution.md).
+
+**Cost of capital (WACC)** — The return a company's investors and lenders expect: the company's cost of money. WACC blends the cost of equity and debt by their shares.
+
+*In plain terms.* A bet that earns less than the cost of capital destroys value even if it is profitable on paper. A bank funded by deposits has a much lower cost of capital than a venture-funded fintech.
+
+*For example.* The same product bet can be worth building at a deposit-funded bank and not at an unprofitable fintech.
+
+*Where it shows up:* Setting the discount rate for a case; Explaining why funding cost shapes strategy.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Counter-positioning** — A newcomer's model that an incumbent could copy but chooses not to, because copying would damage its existing business.
+
+*In plain terms.* The barrier is the incumbent's own self-harm. It erodes when the old business shrinks enough that copying becomes cheap.
+
+*For example.* A fee-free account against banks that earn overdraft fees.
+
+*Where it shows up:* Attacking an incumbent; Responding to a low-end entrant.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
 
 **Cross-encoder** — A reranking model that reads the question and a passage together and scores how well the passage answers it.
 
@@ -757,7 +847,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Judging channel efficiency; Computing payback.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Data drift** — When the mix of incoming cases moves away from the mix the model trained on.
 
@@ -839,6 +929,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
 
+**Deferred revenue** — Cash received for something not yet delivered. It sits on the balance sheet as a liability until it is earned.
+
+*In plain terms.* Revenue is recorded when the company delivers, not when it is paid. Until then the company owes the customer the service, or the money back. Insurers call this unearned premium.
+
+*For example.* A $1,200 annual premium paid on 1 January has earned $300 by the end of March. The other $900 is still a liability.
+
+*Where it shows up:* Reading annual-plan and subscription revenue; Explaining why cash and revenue differ.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **DINOv2** — Meta's vision models. DINOv2 learns features without labels that work with a simple linear classifier; DINOv3 continues the line.
 
 *In plain terms.* DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.
@@ -889,6 +989,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Generalization: overfitting and the bias–variance tradeoff](./machine-learning/generalization-overfitting-and-bias-variance.md).
 
+**Earn-out** — Part of an acquisition price paid later, only if agreed targets are met.
+
+*In plain terms.* An earn-out moves the risk of unproven synergies to the seller. It costs flexibility during integration and invites disputes over the metric.
+
+*For example.* Offer $45 million up front and up to $15 million more if the revenue synergy is delivered.
+
+*Where it shows up:* Pricing an acquisition; Structuring a partnership with uncertain value.
+
+*See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
+
+**EBITDA** — Earnings before interest, taxes, depreciation and amortization. "Adjusted EBITDA" usually also adds back stock-based pay.
+
+*In plain terms.* EBITDA strips out financing and some accounting choices, so it is easy to compare. It also leaves out working capital, capital spending, capitalized software and the real cost of stock pay. It is not cash.
+
+*For example.* "We are EBITDA-positive, so we fund ourselves" can be false: interest, tax, working capital and capex can consume most of it.
+
+*Where it shows up:* Reading investor updates; Challenging a self-funding claim.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **Embedding** — A numeric fingerprint of a piece of text (a vector) so that similar meanings land near each other in space.
 
 *In plain terms.* Computers compare numbers, not meaning. An embedding turns text into a list of numbers positioned so that things which mean similar things sit close together. That's what lets you search by meaning rather than exact keywords.
@@ -898,6 +1018,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Powering semantic search and RAG retrieval; Clustering/deduping content by meaning; Understanding vector databases and semantic caching.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Enterprise value (EV)** — The value of the whole operating business to all its funders: equity value plus debt minus cash.
+
+*In plain terms.* Equity value is what the shares are worth. Enterprise value adds the debt and removes the cash, so companies with different funding can be compared. Valuation multiples usually divide it by revenue, gross profit or EBITDA.
+
+*For example.* Market capitalization $8 billion, debt $1 billion and cash $2 billion give an enterprise value of $7 billion.
+
+*Where it shows up:* Reading how investors value a company; Translating a product bet into company value.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
 **Entity resolution** — Deciding when two records from different sources refer to the same real-world thing, and merging them under one identity.
 
@@ -978,6 +1108,36 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding 'why did my change not show up instantly?'; Deciding where strong consistency is required; Reading distributed-system tradeoffs.
 
 *See:* [Data & the data model](./technical-product-sense/data-and-the-data-model.md).
+
+**Excess of loss** — Reinsurance that pays an insurer's losses above a set retention, up to a limit.
+
+*In plain terms.* Excess of loss protects against a single large event, such as a storm. It does little for capital needs on ordinary claims.
+
+*For example.* A reinsurer pays storm losses between $1 million and $10 million per event.
+
+*Where it shows up:* Protecting an insurance product from catastrophes; Choosing between reinsurance structures.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Expected loss (EL)** — The average credit loss a lender expects on a loan: probability of default × loss given default × exposure at default.
+
+*In plain terms.* PD is the chance the borrower defaults. LGD is the share of the balance lost after recoveries. EAD is the balance owed at default. Expected loss is a cost of each loan, like the cost of funds, and the price must cover it.
+
+*For example.* PD 8% × LGD 85% × EAD $6,000 = $408 of expected loss on one $10,000 loan.
+
+*Where it shows up:* Pricing a loan product; Deciding whether to approve a riskier band.
+
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
+**Expense ratio** — An insurer's acquisition and other underwriting expenses divided by its premium.
+
+*In plain terms.* Together with the loss ratio it makes the combined ratio. A cheap acquisition channel lowers it, but may bring riskier customers who raise the loss ratio.
+
+*For example.* On a $180 policy, $36 of acquisition cost and $21.60 of other expense is a 32% expense ratio.
+
+*Where it shows up:* Choosing insurance distribution channels; Pricing claims and onboarding automation.
+
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Faithfulness** — Whether every claim in a generated answer is supported by the retrieved sources.
 
@@ -1077,7 +1237,17 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Choosing a market to enter; Explaining where margin leaks.
 
-*See:* [Markets and strategy](./business-acumen/markets-and-strategy.md).
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
+**Float** — Money a company holds for a while that belongs to someone else, such as merchant funds before payout or insurance premiums before claims.
+
+*In plain terms.* Float is roughly the daily flow times the days of delay. The company can earn interest on it, within its licences and customer terms. So faster payouts cost real money when rates are high.
+
+*For example.* A marketplace with $1 billion of yearly sales that pays sellers after 12 days holds about $32.9 million; at a 4% yield that earns about $1.3 million a year.
+
+*Where it shows up:* Pricing instant payouts; Judging how interest rates move a payments or insurance P&L.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
 **float16** — A 16-bit floating-point format with a small range and fine precision.
 
@@ -1119,6 +1289,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Quantization formats](./content/01-inference-internals/quantization-formats.md).
 
+**Free cash flow (FCF)** — Cash from operations minus capital spending and capitalized software: the cash the business actually generates.
+
+*In plain terms.* Profit and EBITDA leave out working capital, capital spending and capitalized development. Free cash flow puts them back. It answers whether the business can fund itself.
+
+*For example.* In an illustrative company, adjusted EBITDA is $25 million but free cash flow is only $7 million.
+
+*Where it shows up:* Testing a claim that a business is self-funding; Judging capital-heavy product bets.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
 **Function calling** — A model emitting a structured request to invoke a named tool with typed arguments.
 
 *In plain terms.* It's how a model 'does' things instead of just talking. Rather than executing anything itself, the model outputs a precise request — 'call refund(order_id=123, amount=40)' — and your code decides whether and how to run it. The model proposes; your system disposes.
@@ -1138,6 +1318,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding whether a task needs a judgment or a creation; Scoping cost and risk correctly for a proposed feature; Explaining why generative and predictive models are priced and tested differently.
 
 *See:* [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md).
+
+**Go-to-market motion (GTM motion)** — The repeatable way customers find, buy and start using a product: self-serve, sales-led, partner-led or embedded in someone else's software.
+
+*In plain terms.* Each motion has its own acquisition cost and payback. Match the motion to the deal size. A strong offer sold through the wrong motion still loses money.
+
+*For example.* Small merchants who earn too little to repay a salesperson's cost should come through self-serve or a software partner.
+
+*Where it shows up:* Choosing how to sell a new product; Deciding when to move a segment to another motion.
+
+*See:* [Products and go-to-market](./business-acumen/products-and-marketing.md).
 
 **Golden set** — A curated, version-controlled set of inputs with known-good expected outputs — the backbone of regression testing.
 
@@ -1199,6 +1389,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Knowledge graphs & LLMs](./knowledge-graphs/knowledge-graphs-and-llms.md).
 
+**Gross margin return on inventory investment (GMROI)** — Gross margin divided by average inventory at cost: how many dollars of margin each dollar of stock earns in a year.
+
+*In plain terms.* GMROI combines margin and speed. A high-margin category that sells slowly can earn less on its stock than a low-margin one that turns fast.
+
+*For example.* $480,000 of gross margin on $200,000 of average inventory is a GMROI of 2.4. Adding range that drops it to 1.78 makes every dollar of stock work less hard.
+
+*Where it shows up:* Judging a range expansion; Allocating retail space and cash.
+
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
 **Gross merchandise value (GMV)** — The total value of goods sold through a platform. It is not the platform's revenue.
 
 *In plain terms.* A marketplace's revenue is only the share it keeps: its take rate, fees and ads. GMV shows scale; revenue and contribution show the business.
@@ -1207,7 +1407,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Reading marketplace results; Avoiding the GMV-as-revenue mistake.
 
-*See:* [The language of money](./business-acumen/the-language-of-money.md).
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
 **Gross order value (GOV)** — The total value of orders on a delivery marketplace, including taxes, tips and consumer fees.
 
@@ -1216,6 +1416,16 @@ Which words get an entry — and why — is defined by the rubric in
 *For example.* DoorDash reports net revenue margin as revenue divided by Marketplace GOV: 13.4% for 2024.
 
 *Where it shows up:* Comparing delivery marketplaces; Computing take rate.
+
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
+
+**Gross revenue retention (GRR)** — Revenue kept from a group of customers after churn and contraction, ignoring expansion. It cannot exceed 100%.
+
+*In plain terms.* GRR shows whether the base leaks. A business can show NRR above 100% while a large share of revenue walks out each year.
+
+*For example.* The same $10 million cohort with NRR of 100% has GRR of 85%.
+
+*Where it shows up:* Judging churn; Deciding what to fix before funding expansion.
 
 *See:* [Performance and growth](./business-acumen/performance-and-growth.md).
 
@@ -1229,6 +1439,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
 
+**Growth accounting** — Splitting the change in active customers into new, resurrected and churned flows.
+
+*In plain terms.* End = start + new + resurrected − churned. The growth quick ratio, (new + resurrected) ÷ churned, shows whether you grow or only replace leavers.
+
+*For example.* 1,000k active customers plus 120k new and 30k resurrected, minus 100k churned, end at 1,050k: a quick ratio of 1.5.
+
+*Where it shows up:* Reading a growth number; Choosing between acquisition and retention work.
+
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
+
+**Growth gap** — The distance between the company's growth target and where the core business will get on its own.
+
+*In plain terms.* Size the next and future horizons from the gap, not from a fixed split. Subtract the risk-adjusted value of bets already in flight to see what new bets must deliver.
+
+*For example.* A $500 million company targeting 15% a year for three years, whose core grows 5%, has a gap of about $181.6 million of year-three revenue.
+
+*Where it shows up:* Sizing investment by horizon; Explaining why the core alone is not enough.
+
+*See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
+
 **Growth matrix** — A grid of existing or new markets against existing or new products, showing four growth paths and their risk.
 
 *In plain terms.* Penetration (existing product, existing market) is lowest risk. Product development and market development are in between. Diversification (new product, new market) is highest risk.
@@ -1237,7 +1467,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Labelling growth bets; Explaining risk to the board.
 
-*See:* [Markets and strategy](./business-acumen/markets-and-strategy.md).
+*See:* [Markets and customers: segments, sizing and positioning](./business-acumen/markets-and-strategy.md).
 
 **Guardrail** — An inline, blocking check on model output before the user sees it — fast, cheap, fail-closed.
 
@@ -1298,6 +1528,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Bounding risk on irreversible actions; Designing approval gates by stakes; Meeting compliance requirements.
 
 *See:* [Safety, security & governance](./agentic-ai/safety-security-and-governance.md).
+
+**Hurdle rate** — The minimum return Finance requires before it funds a bet. It starts from the cost of capital and rises for riskier bets.
+
+*In plain terms.* Finance or Treasury sets the hurdle; product leaders do not pick it. A new market or business model usually faces a higher hurdle than a cost saving in the core.
+
+*For example.* An illustrative pattern: about 10% for a core improvement, 3 to 5 points more for a new product, 10 points or more for a new business model.
+
+*Where it shows up:* Building a business case; Comparing core and new-horizon bets.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
 **Hybrid search** — Combining keyword search and meaning-based (vector) search to get the strengths of both.
 
@@ -1379,6 +1619,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md).
 
+**Incrementality** — The difference between the world with your bet and the world without it: what the bet truly caused.
+
+*In plain terms.* Before-and-after numbers credit a bet with seasonal drift, cannibalized sales and other noise. A randomized holdout, or a matched comparison, measures what would have happened anyway.
+
+*For example.* A BNPL option shows $10 million of sales, but a holdout finds only 15% were new. The net gain is about $62,500 a year.
+
+*Where it shows up:* Judging a launch claim; Funding marketing on true, not attributed, results.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
 **Inference** — Running a trained model to get an output — the per-request work (and cost) every time your product calls the model.
 
 *In plain terms.* Training is teaching the model once, up front; inference is *using* it — every time a user request hits the model, that's an inference. It's where your ongoing compute cost and latency live, which is why so much engineering (caching, batching, quantization) targets making inference cheaper and faster.
@@ -1417,7 +1667,17 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Pricing card acceptance; Stress-testing a fintech model.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
+
+**Internal rate of return (IRR)** — The discount rate at which a bet's NPV is exactly zero: the yearly return the bet earns.
+
+*In plain terms.* IRR is easy to compare with a hurdle rate. It also misleads: it ignores the size of the bet, can have two answers when cash flows change sign, and assumes cash is reinvested at the same rate. Rank by NPV; quote IRR next to it.
+
+*For example.* A bet that costs $900,000 and returns $400,000 a year for three years has an IRR of about 15.9%.
+
+*Where it shows up:* Presenting a business case; Comparing bets of different sizes.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
 **Intersection over union** — How much a predicted box overlaps the true box: the overlap divided by the area they cover together.
 
@@ -1437,7 +1697,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Managing retail cash; Judging a range expansion.
 
-*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Inversion** — Solving a problem backward — ask how to guarantee failure, then design against that list.
 
@@ -1637,7 +1897,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Comparing with CAC; Setting acquisition budgets.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Linear probe** — A single linear classifier trained on top of a frozen model's features.
 
@@ -1879,6 +2139,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
+**Metered funding** — Releasing money to a bet in stages, each enough to reach the next proof point, with more only after a written gate.
+
+*In plain terms.* Metered funding limits the loss on bets that fail and keeps money for the ones that pass. Each gate must be written before the stage starts.
+
+*For example.* Ten bets get $0.5 million each; three pass and get $2 million; one passes and gets $10 million to scale.
+
+*Where it shows up:* Funding future-horizon bets; Writing stage gates.
+
+*See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
+
 **Mixed precision training** — Training with float16 or bfloat16 for most arithmetic and float32 where accuracy matters.
 
 *In plain terms.* The forward and backward passes use the smaller format. A float32 master copy of the weights takes the update. Loss scaling protects small gradients. Model state is still about 16 bytes per parameter with Adam. The saving is in speed and activation memory.
@@ -1967,7 +2237,27 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Writing a business case; Comparing bets with different timing.
 
-*See:* [The language of money](./business-acumen/the-language-of-money.md).
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Net revenue retention (NRR)** — Revenue from a group of customers this year as a share of what the same group brought a year ago, including expansion.
+
+*In plain terms.* NRR above 100% means the base grows on its own. It nets expansion against churn, so it can hide a leaking base. Read gross revenue retention first.
+
+*For example.* A $10 million cohort with $1.5 million of expansion, $0.5 million of contraction and $1.0 million of churn has NRR of 100%.
+
+*Where it shows up:* Judging customer health; Deciding between expansion features and churn fixes.
+
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
+
+**Network effect** — When each new user makes a product more valuable to other users.
+
+*In plain terms.* Network effects can be same-side or cross-side, local or global. They are weak when users cheaply join several networks at once. Prove one with data showing value or retention rising with network density; otherwise call it scale.
+
+*For example.* A card network is worth more to cardholders when more merchants accept it, and more to merchants when more people carry it.
+
+*Where it shows up:* Testing a "network effects" claim; Planning a marketplace launch city by city.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
 
 **Neural network** — A stack of layers of weighted sums with bends between them, able to learn almost any shape.
 
@@ -2077,7 +2367,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Forecasting profit at scale; Judging downside risk.
 
-*See:* [The language of money](./business-acumen/the-language-of-money.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **Optimizer state** — The extra numbers an optimizer keeps for each parameter between steps.
 
@@ -2177,7 +2467,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Judging growth spend; Comparing bets under cash pressure.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
 **pgvector** — An open-source Postgres extension that adds a vector column type and nearest-neighbour search, with HNSW and IVFFlat indexes.
 
@@ -2279,6 +2569,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Shipping vision in production](./cnns/shipping-vision-in-production.md).
 
+**Price elasticity** — How much volume moves when price moves: percentage change in quantity divided by percentage change in price.
+
+*In plain terms.* Elasticity is almost always negative. For a price change, the more useful number is the break-even volume loss: price change ÷ (contribution margin + price change).
+
+*For example.* Raising $29 to $35 with a $20 contribution can lose up to 23.1% of customers before total contribution falls.
+
+*Where it shows up:* Deciding a price rise; Reading price tests.
+
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
+
 **Price metric** — The unit you charge by — per seat, per transaction, per dollar processed, per policy — which decides who pays more as usage grows.
 
 *In plain terms.* A good price metric grows with the value the customer gets and with your cost to serve. A mismatch makes heavy users unprofitable.
@@ -2287,7 +2587,37 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Designing pricing; Packaging tiers.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
+
+**Price waterfall** — The steps from a list price down to the pocket price a company actually keeps, after discounts, rebates, waivers and incentives.
+
+*In plain terms.* Off-invoice items such as rebates, waived fees and credits are often booked in different places, so nobody sees their sum. Approve deals on pocket price and pocket margin, not the headline rate.
+
+*For example.* An illustrative payments deal listed at 3.50% of volume ends at a pocket price of 2.46% and a pocket margin of 0.56% after interchange.
+
+*Where it shows up:* Approving enterprise discounts; Finding where price leaks.
+
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
+
+**Price-sensitivity meter** — A survey method that asks four price questions (too cheap, cheap, expensive, too expensive) and reads an acceptable price range from where the answer curves cross.
+
+*In plain terms.* It is cheap and fast and works before launch. It shows the range customers will not reject on sight, but says nothing about volume or rivals, and answers anchor on today's price.
+
+*For example.* In an illustrative survey of 400 small-business owners, the acceptable range for an invoicing plan runs from $18 to $41 a month.
+
+*Where it shows up:* Setting a launch price range; Checking whether a current price is out of range.
+
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
+
+**Principal versus agent** — The accounting test that decides whether a company reports the full sale as revenue (principal, "gross") or only its fee (agent, "net").
+
+*In plain terms.* The test is control: who is responsible for delivery, who bears inventory risk, and who sets the price. The choice changes revenue and gross margin a lot. It does not change gross profit.
+
+*For example.* A $100 item where the platform keeps $15 is $100 of revenue at 15% margin as principal, or $15 of revenue at 100% margin as agent. Gross profit is $15 either way.
+
+*Where it shows up:* Comparing marketplaces and retailers fairly; Designing a model where you hold stock or only connect parties.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
 **Probabilistic output** — Output that can differ each time, even from the exact same input, because a generative model samples from a range of likely answers instead of computing one fixed result.
 
@@ -2308,6 +2638,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how process engines track state; Reasoning about parallel branches; Debugging 'where is this process stuck?'.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Profit pool** — The total profit earned across an industry's value chain, split by who earns it.
+
+*In plain terms.* Revenue share and profit share are not the same. A player can touch most of the money and keep little of it. Map the pool one unit at a time, then ask which force protects each share.
+
+*For example.* In an illustrative $100 card payment, the issuer takes 72% of the fee revenue but 62.5% of the profit; the network takes 6% of revenue and 12.5% of profit.
+
+*Where it shows up:* Choosing where in a value chain to compete; Judging a partnership split.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
 
 **Prompt caching** — Reusing the computed work for an exact shared prompt prefix across requests, to cut cost and latency.
 
@@ -2409,6 +2749,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
+**Quota attainment** — The share of quota that salespeople actually close, on average.
+
+*In plain terms.* Quota is the new business one fully productive salesperson is expected to close in a year. Many teams plan attainment well below 100%. A plan that assumes full attainment and no ramp hires too few people.
+
+*For example.* An account executive with a $600,000 quota at 70% attainment closes about $420,000 a year.
+
+*Where it shows up:* Planning sales hiring; Computing sales-led acquisition cost.
+
+*See:* [Products and go-to-market](./business-acumen/products-and-marketing.md).
+
+**Quota share** — Reinsurance in which an insurer passes a fixed share of every policy's premium and losses to a reinsurer, and receives a ceding commission.
+
+*In plain terms.* Quota share cuts the capital the insurer needs roughly in proportion. It also gives away that share of the profit. It does not turn a loss-making book into a profitable one.
+
+*For example.* An insurer cedes 50% of its premium and losses to free capital for growth, and gets a commission to cover part of its acquisition cost.
+
+*Where it shows up:* Funding insurance growth; Reading an insurer's margins.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
 **RAG** — Retrieval-Augmented Generation: fetch relevant text from your data and put it in the prompt so the model answers from facts, not memory.
 
 *In plain terms.* A model's built-in knowledge is frozen and can't include your private data. RAG fixes that by searching your documents for the relevant bits and pasting them into the prompt, so the answer is grounded in real, current, private facts — and can cite them.
@@ -2418,6 +2778,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Grounding answers in private/current data; Reducing hallucination with citations; The default way to give a model 'your' knowledge.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Ramp (sales)** — How long a new salesperson takes to reach full productivity.
+
+*In plain terms.* While reps ramp, they cost full salary and close less, so a team with many new hires shows a higher acquisition cost. Plan capacity on ramped, attained output, not on quota.
+
+*For example.* A rep who closes nothing for three months, half for the next three, then full output averages 62.5% of a full rep in year one.
+
+*Where it shows up:* Timing sales hiring before a revenue target; Reading acquisition cost by tenure.
+
+*See:* [Products and go-to-market](./business-acumen/products-and-marketing.md).
 
 **Random forest** — Many decision trees, each trained on a random sample, whose answers are averaged.
 
@@ -2649,6 +3019,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Specs, PRDs & RFCs](./technical-product-management/specs-prds-and-rfcs.md).
 
+**Risk appetite** — A board-approved statement of how much risk of each kind the company will take to meet its goals.
+
+*In plain terms.* It has qualitative statements and quantitative limits, each with an early-warning trigger. A launch that pushes a metric past a limit needs a decision, often a time-limited risk acceptance.
+
+*For example.* An illustrative lender sets an amber trigger at a 4.0% annualized net loss rate and a red limit at 5.0%.
+
+*Where it shows up:* Designing guardrails for a launch; Asking for a risk acceptance.
+
+*See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
 **Run-off** — The period after an insurer stops writing new policies, when it must still pay claims on existing ones.
 
 *In plain terms.* Closing an insurance product does not end its obligations. Claims on policies in force can keep arriving for years.
@@ -2678,6 +3058,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Avoiding decisions that backfire later; Anticipating unintended consequences; Evaluating incentives and metrics.
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
+
+**Securitization** — Selling a pool of loans to a trust that issues bonds in layers, paid in order of seniority.
+
+*In plain terms.* Senior layers are paid first and cost least. The lender usually keeps the riskiest layer. It is cheap funding at scale, but it needs a track record and open markets. US rules generally require the sponsor to keep at least 5% of the credit risk.
+
+*For example.* A lender with a few years of loss history packages its loans into senior and junior bonds to fund growth more cheaply than a warehouse line.
+
+*Where it shows up:* Planning lending growth; Explaining why market conditions move a lender's margin.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
 **Segment Anything Model** — Meta's promptable segmentation models. SAM 3 segments objects from points, boxes, masks or a short text phrase.
 
@@ -2743,11 +3133,11 @@ Which words get an entry — and why — is defined by the rubric in
 
 *In plain terms.* A sensitivity table shows which assumption the case depends on. If a small miss flips the answer, the case is fragile and may be better staged.
 
-*For example.* A fraud-model case turns negative if savings are about 8% below the estimate.
+*For example.* A fraud-model case turns negative if savings are about 7.6% below the estimate.
 
 *Where it shows up:* Stress-testing a business case; Deciding whether to run a pilot first.
 
-*See:* [The language of money](./business-acumen/the-language-of-money.md).
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
 **Service-as-a-Software** — Selling the outcome of a workflow (the resolved ticket, the booked trip) rather than software the customer operates.
 
@@ -2829,6 +3219,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
 
+**Strategy kernel** — The core of a strategy: a diagnosis of the crux, a guiding policy that rules options out, and a few coherent actions.
+
+*In plain terms.* A diagnosis names the one or two problems that matter most. The guiding policy is the overall approach to them. Coherent actions support each other. A goal such as "grow 30%" is not a strategy.
+
+*For example.* "Our net take rate falls because merchants can switch in a week" (diagnosis) leads to "win where payments are embedded in the merchant's software" (guiding policy).
+
+*Where it shows up:* Writing a product strategy; Spotting a strategy that is only a list of goals.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
 **Streaming** — Receiving a model's output token by token, as it's generated, instead of waiting for the whole response to finish first.
 
 *In plain terms.* Because a model writes its answer one piece at a time, an API can send you each piece the moment it's ready, so a user sees the answer appear progressively — the now-familiar 'typing' effect in chat products — rather than staring at a blank screen until everything is done.
@@ -2889,6 +3289,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Multi-agent systems & protocols](./agentic-ai/multi-agent-and-protocols.md).
 
+**Sunset value** — The value of closing a product: present value of costs avoided, minus contribution lost, minus one-off sunset costs.
+
+*In plain terms.* A product with customers can still be worth closing. The one-off costs include migration, notice, incentives and run-off, which in lending and insurance can last years.
+
+*For example.* Closing a legacy prepaid card and moving its customers gains about $1.42 million a year after a $1.2 million one-off cost.
+
+*Where it shows up:* Deciding whether to close a product; Planning run-off.
+
+*See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
+
 **Supervised cost per task** — Agent cost per task PLUS the human checking cost PLUS the expected cost of misses — the honest number an agent must beat.
 
 *In plain terms.* An agent that's 'cheaper than a human' often isn't, once you add the human who reviews its work and the cost of the mistakes that slip through. Supervised cost is that full, honest total — the only fair comparison against the old way of doing the task.
@@ -2909,6 +3319,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What machine learning is, and when to use it](./machine-learning/what-machine-learning-is.md).
 
+**Switching costs** — What a customer would lose in money, time or data by moving to a rival.
+
+*In plain terms.* Switching costs can be financial, procedural or relational. They protect you only if they exceed the saving a rival offers. Friction added on purpose is not an advantage; customers and regulators resent it.
+
+*For example.* A merchant whose point-of-sale software, payments and payroll run on one platform faces weeks of work to move.
+
+*Where it shows up:* Judging customer lock-in; Designing bundles that build value inside the product.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
 **SWOT** — Strengths, weaknesses, opportunities and threats: a list of inside and outside facts about a business.
 
 *In plain terms.* A SWOT on its own is a list. Its value comes from crossing the quadrants: using strengths on opportunities, and avoiding spots where weaknesses meet threats.
@@ -2917,7 +3337,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Strategy offsites; Turning facts into options.
 
-*See:* [Markets and strategy](./business-acumen/markets-and-strategy.md).
+*See:* [Markets and customers: segments, sizing and positioning](./business-acumen/markets-and-strategy.md).
 
 **System-mirrors-the-org principle** — The tendency of organizations to build systems that copy their own communication structure.
 
@@ -2947,7 +3367,17 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Pricing a marketplace; Comparing platforms.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
+**TAM, SAM and SOM** — Total addressable market, serviceable addressable market and serviceable obtainable market: all the revenue available, the part you can serve, and the part you can win.
+
+*In plain terms.* Size each layer in revenue you can keep, not in volume. Build it bottom-up from customers you can count, and cap the obtainable share by what your channels can reach.
+
+*For example.* 200,000 restaurants with $600,000 of card volume each is $120 billion of volume, but at a 0.5% net take rate the revenue pool is $600 million.
+
+*Where it shows up:* Sizing a new market; Challenging a "we only need 1%" pitch.
+
+*See:* [Markets and customers: segments, sizing and positioning](./business-acumen/markets-and-strategy.md).
 
 **Tech debt** — The accumulated cost of past shortcuts — code and design choices that speed you up now and slow you down later, with interest.
 
@@ -3019,6 +3449,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Safety, security & governance](./agentic-ai/safety-security-and-governance.md).
 
+**Third-party risk management** — How a company chooses, watches and exits its vendors and partners: planning, due diligence, contract, monitoring and exit.
+
+*In plain terms.* In financial services, regulators expect it. In 2023 the three US federal banking agencies issued joint guidance on third-party relationships. The company stays responsible for what it outsources.
+
+*For example.* A fintech names a fallback provider and writes audit rights and exit help into the contract before it signs an identity-verification vendor.
+
+*Where it shows up:* Signing a critical vendor; Working with a partner bank as its third party.
+
+*See:* [Products and go-to-market](./business-acumen/products-and-marketing.md).
+
+**Three lines of defence** — The split of risk work in regulated companies: the business owns the risk, Risk and Compliance set policy and challenge, and internal audit gives independent assurance.
+
+*In plain terms.* The first line is the business, including product. Risk does not own your product's risk; it sets limits and challenges. A partner bank's second line also reviews a fintech's products.
+
+*For example.* "Risk approved it, so it is Risk's problem" misreads the model: the product team still owns the risk.
+
+*Where it shows up:* Planning a launch in a regulated business; Working with Risk and Compliance.
+
+*See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
 **Token** — The small piece of text — often smaller than a word — that a language model actually reads and writes, one at a time.
 
 *In plain terms.* A model doesn't see words the way a person does. It breaks text into tokens, using a fixed vocabulary — a common short word might be one token, a longer or rarer word might split into two or three. Cost, context-window size, and some odd failures (like miscounting letters) all trace back to this one fact.
@@ -3069,6 +3519,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
+**Total cost of ownership (TCO)** — Everything an option costs over its life, not just its price tag: build or integration, running costs, oversight, hidden costs and exit.
+
+*In plain terms.* Compare make, buy and partner over the same three to five years. The costs most often missed are the roadmap the team did not build, price rises at renewal, and the cost of leaving.
+
+*For example.* A vendor that looks cheaper than building can cost more once audit rights, a fallback vendor and a future migration are counted.
+
+*Where it shows up:* Making build, buy or partner decisions; Negotiating vendor contracts.
+
+*See:* [Products and go-to-market](./business-acumen/products-and-marketing.md).
+
 **Trace** — The end-to-end record of one request as it flows through every step of your pipeline.
 
 *In plain terms.* When an AI request does many things — retrieve, call a model, use a tool, call another model — a trace is the full timeline of that one request, step by step, with inputs, outputs, timings, and costs. It's how you debug and understand what actually happened.
@@ -3078,6 +3538,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Debugging latency and failures; Auditing what an agent did; The raw material for error analysis.
 
 *See:* [Observability](./content/04-evals-observability/observability.md).
+
+**Trade-off survey** — A survey that shows people repeated choices between product versions with different features and prices, then estimates what each feature is worth.
+
+*In plain terms.* A statistical choice model turns the choices into a utility, called a part-worth, for each feature and for price. Dividing a feature's part-worth by the utility of one dollar gives a stated willingness to pay. Stated value often runs higher than real behaviour.
+
+*For example.* If each extra dollar lowers utility by 0.05 and same-day payouts add 0.6, willingness to pay is about $12 a month.
+
+*Where it shows up:* Designing packages and tiers; Valuing a premium feature.
+
+*See:* [Pricing and business models](./business-acumen/monetization-and-business-models.md).
 
 **Training** — The one-time process of adjusting a model's internal numbers on huge amounts of data so its predictions improve, producing a frozen model.
 
@@ -3177,7 +3647,27 @@ Which words get an entry — and why — is defined by the rubric in
 
 *Where it shows up:* Approving growth spend; Choosing a business model.
 
-*See:* [Monetization and business models](./business-acumen/monetization-and-business-models.md).
+*See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
+**Valuation multiple** — A shortcut investors use to value a company: enterprise value or share price divided by one metric, such as revenue, gross profit or EBITDA.
+
+*In plain terms.* A multiple stands in for discounting future profit. Durable, growing profit earns a higher multiple than one-off profit. Multiples move with interest rates and market mood, so treat any number as illustrative.
+
+*For example.* At a 10% discount rate, $1 of gross profit that recurs and grows 3% a year is worth about $14.29; $1 of one-off gross profit is worth $1.
+
+*Where it shows up:* Explaining why recurring revenue matters; Estimating what a bet adds to company value.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Value of information** — How much better a decision gets, in money, because you learned something first.
+
+*In plain terms.* The expected value of perfect information is the cap: no test, model or data purchase can be worth more. If the cost is above the cap, decide now.
+
+*For example.* If perfect knowledge of a credit band is worth $1.2 million, a "$1.5 million insight" is overpriced at any accuracy.
+
+*Where it shows up:* Deciding whether to run a test; Pricing a data purchase.
+
+*See:* [Data and decisions](./business-acumen/data-and-decisions.md).
 
 **Vector database** — A store that indexes embeddings so you can quickly find the items most similar in meaning to a query.
 
@@ -3188,6 +3678,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building the retrieval half of RAG; Evaluating retrieval infrastructure; Reasoning about recall and index freshness.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Vintage curve** — A plot of one group of loans' cumulative net charge-offs by months on book, so groups can be compared at the same age.
+
+*In plain terms.* A young vintage always looks good, because losses arrive later. Comparing vintages at the same age shows whether credit quality is changing, months before the final losses are known.
+
+*For example.* If the newest vintage has 1.3% losses at month 6 against 0.8% for an older one, it is heading for about 3.9% at month 12.
+
+*Where it shows up:* Monitoring a credit change; Deciding whether to tighten approvals.
+
+*See:* [Performance and growth](./business-acumen/performance-and-growth.md).
 
 **Vision foundation model** — A large model pre-trained on a very large image collection, often without hand-made labels, and reused for many tasks.
 
@@ -3219,6 +3719,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Flowable](./flowable/README.md).
 
+**Warehouse facility** — A bank credit line secured by a pool of a lender's loans. It advances only part of each loan's value.
+
+*In plain terms.* Non-bank lenders often fund new loans this way before selling them or securitizing them. The rate floats, and the facility can stop funding if losses pass a trigger. So funding depends on loan quality.
+
+*For example.* A warehouse that advances 85% of each loan leaves the lender to fund the other 15% with its own equity.
+
+*Where it shows up:* Understanding a lender's cost of funds; Seeing why credit quality is a funding risk.
+
+*See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
 **Webhook** — A URL you register in advance that another service calls to deliver a result to you, instead of you repeatedly asking whether it's ready.
 
 *In plain terms.* For work that takes too long for a normal request-response call, a webhook flips who initiates the final step: you start the job, then the service calls a URL you provided the moment it's done, pushing the result to you rather than making you keep asking.
@@ -3239,6 +3749,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
 
+**Where to play and how to win** — A cascade of linked strategic choices: aspiration, where to play, how to win, the capabilities needed and the management systems that support them.
+
+*In plain terms.* Each answer constrains the next. Where to play and how to win must fit: "small restaurants" and "lowest price" only fit if you have the lowest cost.
+
+*For example.* "Small restaurants" plus "payments built into the restaurant's software" fits a company with software partnerships.
+
+*Where it shows up:* Linking strategy to the org and its metrics; Testing whether choices fit together.
+
+*See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
 **Workflow capture** — Owning an entire workflow end-to-end (not just a tool within it) — the strategy that erases adoption friction and compounds into a moat.
 
 *In plain terms.* A tool that does one step still needs a human to run the rest. Capturing the whole workflow means the agent owns the end-to-end job, so there's nothing for the user to stitch together — and once you own the workflow, you can expand and rebundle from that position.
@@ -3248,6 +3768,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Finding defensible AI product positions; Planning expansion from a beachhead; Building moats via owned workflows.
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
+
+**Working capital** — The money tied up in running the business day to day: receivables plus inventory minus payables.
+
+*In plain terms.* Customers who pay late and stock that sits on a shelf both use cash. Suppliers you pay late provide it. A feature that changes when money moves changes working capital, even if profit stays the same.
+
+*For example.* Offering business customers net-60 terms on about $79 million of sales adds about $13 million of receivables, so cash falls even though profit rises.
+
+*Where it shows up:* Judging payment terms and payout schedules; Explaining why a profitable launch needs a credit line.
+
+*See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
 **XML tags (in prompts)** — Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.
 

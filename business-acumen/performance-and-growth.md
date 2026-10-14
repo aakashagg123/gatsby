@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 Performance management is a loop: set targets, measure, review, act. A **key performance indicator (KPI)** is a measure you have chosen to steer by. At leadership level, the hard part is not choosing metrics. It is choosing a small, balanced set that ties product work to profit, reading it correctly, and acting on what it shows.
@@ -252,7 +250,7 @@ The fix for sandbagging is not tougher talk. Track each team's forecast accuracy
 
 A metric is only useful if it means the same thing every time. Three practices keep it so.
 
-- **One written definition per metric.** It names the formula, scope, source, owner and refresh cadence. The YAML spec under the hood is one format.
+- **One written definition per metric.** It names the formula, scope, source, owner and refresh cadence. The spec under the hood shows one way to write it, in a plain-text configuration format (YAML).
 - **Versioned changes.** When a definition changes, give it a new version and a change date. Restate history, or mark the break on every chart.
 - **Certified metrics.** A small set of metrics is certified by Finance or the data team. Leadership reviews use only certified metrics.
 

@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 A **business model** is how a company turns value for customers into revenue, and revenue into profit. **Pricing** is the set of choices inside it: what you charge for, how much, how you package it, and how much of the list price you actually collect. Pricing is the fastest lever a product leader has. A feature takes a quarter to ship. A price change can move contribution by a fifth in one billing cycle.
@@ -162,7 +160,7 @@ Elasticity is almost always negative: price up, volume down. People often quote 
 
 **Why elasticity is not enough.** The textbook rule says: raise price when demand is inelastic, because revenue rises. But you do not manage revenue. You manage contribution. Contribution can rise even when revenue falls, because each lost customer also takes away their variable cost.
 
-**The break-even formula.** Let CM be the contribution margin per unit before the change, and ΔP the price change per unit. Before the change, total contribution is Q × CM. After it, volume is Q × (1 − x) and margin per unit is CM + ΔP. Set them equal and solve for x:
+**The break-even formula.** Let contribution margin (CM) be the margin per unit before the change, and ΔP the price change per unit. Before the change, total contribution is Q × CM. After it, volume is Q × (1 − x) and margin per unit is CM + ΔP. Set them equal and solve for x:
 
 **Break-even volume loss = ΔP ÷ (CM + ΔP).**
 
@@ -566,7 +564,7 @@ To use it on your own product, replace the price, variable cost and expected los
 - Affirm, Form 10-K for fiscal 2026 (year ended 2026-06-30, filed 2026-08-27): it has charged $0 in late fees since its founding. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm). As of 2026-10.
 - Wise, pricing page for sending money: the mid-market rate with no markup, and a separate fee. [Wise pricing](https://wise.com/gb/pricing/send-money). As of 2026-10.
 - EU interchange: Regulation (EU) 2015/751 caps consumer debit card interchange at 0.2% and consumer credit card interchange at 0.3% of the transaction value. Text of the Regulation as adopted by the EU, published on legislation.gov.uk: [Article 3](https://www.legislation.gov.uk/eur/2015/751/article/3/adopted) and [Article 4](https://www.legislation.gov.uk/eur/2015/751/article/4/adopted). As of 2026-10.
-- US debit interchange: Regulation II, 12 CFR 235.3 to 235.5. The cap is 21 cents plus 5 basis points of the transaction value (235.3), plus up to 1 cent for fraud prevention (235.4). Issuers with less than $10 billion in assets, with affiliates, are exempt (235.5). [12 CFR 235.3](https://www.law.cornell.edu/cfr/text/12/235.3), [235.4](https://www.law.cornell.edu/cfr/text/12/235.4) and [235.5](https://www.law.cornell.edu/cfr/text/12/235.5) (Cornell Legal Information Institute); matches the eCFR text current as of 2026-10-09.
+- US debit interchange: Regulation II, in title 12 of the Code of Federal Regulations (CFR), 12 CFR 235.3 to 235.5. The cap is 21 cents plus 5 basis points of the transaction value (235.3), plus up to 1 cent for fraud prevention (235.4). Issuers with less than $10 billion in assets, with affiliates, are exempt (235.5). [12 CFR 235.3](https://www.law.cornell.edu/cfr/text/12/235.3), [235.4](https://www.law.cornell.edu/cfr/text/12/235.4) and [235.5](https://www.law.cornell.edu/cfr/text/12/235.5) (Cornell Legal Information Institute); matches the eCFR text current as of 2026-10-09.
 - Federal Reserve, press release of 2023-10-25 proposing to lower the debit interchange cap. [Federal Reserve](https://www.federalreserve.gov/newsevents/pressreleases/bcreg20231025a.htm). As of 2026-10.
 - The link between the small-issuer exemption and fintech partner-bank choice is general reasoning, not a sourced fact.
 - Truth in Lending Act and Regulation Z (12 CFR Part 1026): APR and finance-charge disclosure, and 45 days' notice of significant changes in terms for credit card accounts (12 CFR 1026.9). Not yet fact-checked in this pass.

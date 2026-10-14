@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 Senior leaders rarely lack data. They lack time, and the data they have is partial, late or biased. The skill is to decide well **before** the data is complete. That means four things. Know what your data cannot see. Know the base rate before you trust an accuracy claim. Put a money value on each kind of mistake. And know when more data is worth its cost and its delay.
@@ -244,7 +242,7 @@ Under the first weights, A wins clearly. When the CFO shifts weight from confide
 
 ### Model governance in regulated domains
 
-**What it is.** In banking, a credit, fraud, pricing or capital model is a regulated asset. In 2011 the US Federal Reserve and the Office of the Comptroller of the Currency (OCC) issued supervisory guidance on **model risk management**. The Federal Reserve's version is the letter known as SR 11-7. It defines model risk as the harm that can come from decisions based on wrong or misused model outputs. Many lenders, and many fintechs that lend through partner banks, follow it.
+**What it is.** In banking, a credit, fraud, pricing or capital model is a regulated asset. In 2011 the US Federal Reserve and the Office of the Comptroller of the Currency (OCC) issued supervisory guidance on **model risk management**. The Federal Reserve's version is its supervision and regulation (SR) letter 11-7, known as SR 11-7. It defines model risk as the harm that can come from decisions based on wrong or misused model outputs. Many lenders, and many fintechs that lend through partner banks, follow it.
 
 **How it works.** The guidance rests on three ideas. Build and use models soundly. Validate them independently. Govern them with clear roles and policies. Its central test is **effective challenge**: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model has:
 
@@ -402,4 +400,4 @@ inside_p10_p90: null    # the team's hit rate over many rows should be near 80%
 - The fraud example, the credit-cutoff test, the forecast log and the retail scoring example are invented and illustrative. All inputs are assumed. The code above reproduces every number.
 - Root, Form 10-K for fiscal 2025 (filed 2026-02): use of telematics and other data in pricing, and the choice not to quote the drivers its models score as riskiest. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1788882/000178888226000014/root-20251231.htm). As of 2026-10.
 - Board of Governors of the Federal Reserve System, SR 11-7, *Supervisory Guidance on Model Risk Management* (2011-04-04), issued with the OCC. Defines model risk, effective challenge, validation and governance. [SR 11-7](https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm). Check with your model risk team for the version and agency guidance that apply to you. As of 2026-10.
-- US adverse action notices: a creditor must give a declined applicant the principal reasons, or tell them how to ask for them. [Regulation B, 12 CFR 1002.9 (CFPB)](https://www.consumerfinance.gov/rules-policy/regulations/1002/9/). As of 2026-10.
+- US adverse action notices: a creditor must give a declined applicant the principal reasons, or tell them how to ask for them. [Regulation B, Code of Federal Regulations (CFR) title 12, 12 CFR 1002.9 (CFPB)](https://www.consumerfinance.gov/rules-policy/regulations/1002/9/). As of 2026-10.

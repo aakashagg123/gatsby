@@ -2,8 +2,6 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
-
 ## TL;DR
 
 When you lead managers, your product is the organization. You no longer make most product decisions yourself. You choose the structure, hire and develop the leaders, set the standards, and inspect the results. A good org lets good decisions happen without you. A bad one routes every hard call to your calendar.
