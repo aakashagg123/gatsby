@@ -14,13 +14,22 @@ The core tradeoff is time. Every hour spent on breadth is an hour not spent on d
 
 > 🎯 **For the product leader**
 >
-> **Why it matters** — At Group PM level and above, your decisions move money directly. You approve bets, set targets and trade one team's capacity for another's. A leader who cannot connect a roadmap to the profit and loss statement gets overruled by someone who can.
+> **Why it matters** — At Group product manager (PM) level and above, your decisions move money directly. You approve bets, set targets and trade one team's capacity for another's. A leader who cannot connect a roadmap to the profit and loss statement gets overruled by someone who can.
 >
 > **What it changes in your decisions** — You stop picking development goals by comfort. You diagnose your gaps with evidence, pick the two that block your current decisions, and close them on purpose.
 >
 > **Ask your team** — *"If this initiative works, which line of our financial statements moves first, and by roughly how much?"*
 >
 > **Risk if ignored** — You win the product argument and lose the business argument. Finance, Risk or Sales leaders make the real call, and your team builds what they decided.
+
+## Decision rules in this lesson
+
+- **Before you debate a product change, say which financial line it moves first, and roughly by how much.**
+- **In any domain, ask the first unit-economics question before you ask about volume.**
+- **Count a self-rating of 4 or 5 only when you can name an artifact that proves it.**
+- **Pick the two gaps that block a decision you face this quarter.** Ignore gaps no current decision needs.
+- **When you change domain, learn its binding constraints before you propose a roadmap.**
+- **Re-take the assessment after a quarter, and judge it by your next hard decision, not by the score.**
 
 ## Mental model: the T, and where it bends
 
@@ -53,35 +62,38 @@ This track groups those abilities into four clusters. Each cluster is a set of l
 
 | Cluster | Lessons | The question it answers |
 | --- | --- | --- |
-| Foundations | 1, 5 | Where am I strong, and how do I decide under uncertainty? |
-| Business and markets | 2, 4, 6 | How does this company make money, and where should it compete? |
-| Product leadership | 7, 8, 9, 11 | What do we build, how do we price it, and how do we know it works? |
-| People and influence | 3, 10, 12 | How do I lead teams, leaders and executives? |
+| Foundations | This lesson; [data and decisions](./data-and-decisions.md) | Where am I strong, and how do I decide under uncertainty? |
+| Business and markets | [The language of money](./the-language-of-money.md); [unit economics](./unit-economics.md); [business cases, capital and valuation](./business-cases-and-valuation.md); [markets and customers](./markets-and-strategy.md); [competitive advantage and strategy](./competitive-advantage-and-strategy.md) | How does this company make money, and where should it compete? |
+| Product leadership | [Pricing and business models](./monetization-and-business-models.md); [products and go-to-market](./products-and-marketing.md); [performance and growth](./performance-and-growth.md); [portfolio strategy and capital allocation](./portfolio-strategy-and-allocation.md) | What do we build, how do we price it, and how do we know it works? |
+| People and influence | [Navigating the organization](./navigating-the-organization.md); [teams and collaboration](./teams-and-collaboration.md); [leading leaders and org design](./leading-leaders-and-org-design.md); [executive influence](./executive-influence-and-stakeholders.md) | How do I lead teams, leaders and executives? |
 
 ## Why domain depth compounds
 
 General acumen tells you which questions to ask. Domain depth tells you the answers that are specific to your industry. Each domain has a few **binding constraints**. These are the rules that decide what is possible, whatever the product idea.
 
-| Domain | A binding constraint | What a leader without depth gets wrong |
-| --- | --- | --- |
-| **Payments** | Interchange and dispute economics. The card issuer earns a fee on each card payment. The merchant pays it, and the merchant also absorbs most losses when a cardholder disputes a charge. | Prices a new merchant segment on volume alone. Then dispute losses in that segment erase the margin. |
-| **Lending** | Credit losses arrive months after the decision. Revenue arrives over the life of the loan. | Celebrates a rise in approval rate before the first loans have had time to default. |
-| **eCommerce** | A marketplace keeps only its **take rate**, the share of each sale it earns as revenue. Logistics and returns can cost more than that share. | Reports gross merchandise value as if it were revenue. |
-| **InsurTech** | The **loss ratio**, claims paid as a share of premium earned, is only known after claims come in. In the US, states regulate insurance, and many lines need rate filings with state regulators. | Launches a cheap price to grow fast. The losses on that business show up a year later. |
-| **Retail** | Inventory ties up cash. Unsold stock gets marked down. | Adds range to lift sales and slows stock turns. Cash gets tight in the peak season. |
-| **FinTech** | Regulation shapes the model. Licences, partner banks and capital rules decide what the company may do. | Plans a feature that the partner bank's compliance team must approve, and finds out late. |
+| Domain | A binding constraint | What a leader without depth gets wrong | The first unit-economics question |
+| --- | --- | --- | --- |
+| **Payments** | Interchange and dispute economics. The card issuer earns a fee on each card payment. The merchant pays it. The merchant also usually bears the loss when it loses a dispute. | Prices a new merchant segment on volume alone. Then dispute losses in that segment erase the margin. | After interchange, network fees, fraud and disputes, what is left from one payment? See [payments per transaction](./unit-economics.md#payments-per-transaction). |
+| **Lending** | Credit losses arrive months after the decision. Revenue arrives over the life of the loan. | Celebrates a rise in approval rate before the first loans have had time to default. | Do interest and fees on one loan cover the cost of funds, expected loss, servicing and acquisition, for the marginal borrower? See [lending per loan](./unit-economics.md#lending-per-loan). |
+| **eCommerce** | A marketplace keeps only its **take rate**, the share of each sale it earns as revenue. Logistics and returns can cost more than that share. | Reports gross merchandise value as if it were revenue. | After fulfilment, payment cost, promotions and returns, what does one order contribute? See [marketplaces per order](./unit-economics.md#marketplaces-and-ecommerce-per-order). |
+| **InsurTech** | The **loss ratio**, claims paid as a share of premium earned, is only known after claims come in. In the US, states regulate insurance, and many lines need rate filings with state regulators. | Launches a cheap price to grow fast. The losses on that business show up a year later. | For one policy, do claims plus all expenses stay below the premium, and what does the premium earn while it is held? See [insurance per policy](./unit-economics.md#insurance-per-policy). |
+| **Retail** | Inventory ties up cash. Unsold stock gets marked down. | Adds range to lift sales and slows stock turns. Cash gets tight in the peak season. | How much gross margin does each dollar of stock earn in a year? That is the gross margin return on inventory investment (GMROI). See [retail per category](./unit-economics.md#retail-per-category). |
+| **FinTech** | Regulation shapes the model. Licences, partner banks and capital rules decide what the company may do. | Plans a feature that the partner bank's compliance team must approve, and finds out late. | What does one active customer earn each month, and what does it cost to serve? See [neobanks per customer](./unit-economics.md#neobanks-per-customer). |
 
-Public companies show these constraints in what they choose to report. Three examples:
+The last column is the habit to build. Before anyone talks about volume, ask what one unit earns after the costs that come with it. A unit is the thing the business sells once: a payment, a loan, an order, a policy, a shelf of stock or an active customer. If one unit loses money, more volume loses more money. [Unit economics](./unit-economics.md) shows how to build each of these from one unit up to a cohort of customers.
+
+Public companies show these constraints in what they choose to report. Two examples:
 
 - **eCommerce.** DoorDash reports a "net revenue margin": its revenue as a share of the order value on its marketplace. Its filings put that figure at 13.4% for 2024. The rest of each order's value goes to merchants, couriers, taxes and tips.
-- **InsurTech.** Lemonade's filings for 2020 show its gross loss ratio falling from 161% in 2017 to 71% in 2020. For its first years, claims cost more than the premium it earned.
 - **Lending.** Upstart's 10-K for 2022 says funding constraints led it to use its own balance sheet to support loan funding. A lending platform depends on capital partners as much as on borrowers.
+
+For insurance, a public loss-ratio series, and why the latest year's loss ratio always looks too low, is in [performance and growth](./performance-and-growth.md#insurance-loss-development).
 
 Depth compounds for three reasons. First, each decision reuses the same model, so you get faster. Second, you see second-order effects, such as a growth push that raises losses later. Third, you earn trust with Risk, Finance and Compliance partners. They stop explaining the basics and start debating options with you.
 
 ## How to self-diagnose
 
-Self-ratings are noisy. Most people rate themselves higher on skills they use often, and lower on skills they rarely see. Three habits make a self-diagnosis useful.
+Self-ratings are noisy. People tend to rate themselves higher on skills they use often, and lower on skills they rarely see. Three habits make a self-diagnosis useful.
 
 - **Rate behaviours, not traits.** "I can explain how a rise in our default rate changes next quarter's profit" is testable. "I understand finance" is not.
 - **Check against evidence.** For each high score, name an artifact you produced: a business case, a pricing memo, a reorg proposal. No artifact means the score is a guess.
@@ -111,8 +123,8 @@ A Group PM has spent six years in eCommerce marketplaces. She moves to a consume
 
 **Step 4: set a two-week action for each.**
 
-- Monetization: rebuild the unit economics of one loan product with the finance partner. Write down the cost of funds, expected loss, servicing cost and margin per loan. See [lesson 11](./monetization-and-business-models.md).
-- Data and decisions: ask the credit risk team for loss curves by monthly cohort of loans. Learn when losses peak. See [lesson 5](./data-and-decisions.md).
+- Monetization: rebuild the unit economics of one loan product with the finance partner. Write down the cost of funds, expected loss, servicing cost and margin per loan. See [lending per loan](./unit-economics.md#lending-per-loan).
+- Data and decisions: ask the credit risk team for loss curves by monthly cohort of loans. Learn when losses peak. See [vintage curves](./performance-and-growth.md#lending-vintage-curves) and [data and decisions](./data-and-decisions.md).
 
 **Step 5: re-take the assessment in a quarter.** The aim is not a high score. The aim is that the next cutoff decision is one she can defend to the Chief Risk Officer.
 
@@ -120,7 +132,7 @@ A Group PM has spent six years in eCommerce marketplaces. She moves to a consume
 
 - **Breadth vs. depth.** Breadth makes you mobile across companies. Depth makes you valuable inside one industry. The cost of breadth is shallow judgement on the hard calls. The cost of depth is a narrower market for your skills.
 - **One domain vs. a neighbour.** Moving from Payments to Lending reuses much of your depth, such as risk, fraud and regulation. Moving from Payments to Retail reuses less. The cost of a far move is a slower first year.
-- **Acumen vs. craft.** Time spent learning finance is time not spent on discovery or design. At VP level the balance shifts toward acumen. Your teams hold the craft, and you hold the tradeoffs.
+- **Acumen vs. craft.** Time spent learning finance is time not spent on discovery or design. At vice president (VP) level the balance shifts toward acumen. Your teams hold the craft, and you hold the tradeoffs.
 - **Self-study vs. a partner.** Learning with a finance or risk partner is faster and builds a relationship. It costs you some exposure, because they see what you do not know.
 
 ## Failure modes
@@ -163,6 +175,8 @@ The radar chart plots each score as a distance from the centre on twelve spokes.
 
 - [Navigating the organization](./navigating-the-organization.md) — how the company makes money, and who decides.
 - [The language of money](./the-language-of-money.md) — the statements behind every business argument.
+- [Unit economics](./unit-economics.md) — the first question in every domain, worked from one unit to a cohort.
+- [Performance and growth](./performance-and-growth.md) — vintage curves and loss development, the slow feedback in Lending and Insurance.
 - [Domain expertise](../product-sense/domain-expertise.md) — how domain knowledge becomes product intuition, and the expert trap.
 - [Becoming a polymath](../first-principles/becoming-a-polymath.md) — breadth and depth as a learning strategy.
 - [The technical PM role](../technical-product-management/the-technical-pm-role.md) — the craft side of the job that acumen sits on.
@@ -173,5 +187,4 @@ The radar chart plots each score as a distance from the centre on twelve spokes.
 - The scoring formula is the one implemented in this track's self-assessment page.
 - Domain facts in the table are general descriptions of how these industries work. The note on how much depth carries from one domain to another is general reasoning, not a measured figure. As of 2026-10.
 - DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm). As of 2026-10.
-- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
 - Upstart, Form 10-K for fiscal 2022 (filed 2023-02): in response to constrained loan funding, it increased the use of its balance sheet to fund loans. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm). As of 2026-10.

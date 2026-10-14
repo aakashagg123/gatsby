@@ -1,0 +1,47 @@
+<style>
+.ba-rc{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;
+  padding:var(--space-6,24px) var(--space-5,20px);margin:26px 0;font-family:inherit;text-align:left}
+.ba-rc-title{font-size:var(--font-text-xs-size);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-secondary);font-weight:700;margin:0 0 4px}
+.ba-rc-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-rc-chart{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch}
+.ba-rc-col{display:flex;flex-direction:column;align-items:center}
+.ba-rc-up,.ba-rc-down{width:100%;height:7em;display:flex;justify-content:center}
+.ba-rc-up{align-items:flex-end;border-bottom:2px solid var(--color-border-strong,var(--color-border))}
+.ba-rc-down{align-items:flex-start}
+.ba-rc-bar{width:60%;max-width:4.5em}
+.ba-rc-bar.neg{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-outline);border-top:none;border-radius:0 0 8px 8px}
+.ba-rc-bar.pos{background:var(--color-background-success-surface);border:1px solid var(--color-border-success-surface);border-bottom:none;border-radius:8px 8px 0 0}
+.ba-rc-val{font-size:var(--font-text-sm-size);font-weight:700;color:var(--color-text);margin-top:6px}
+.ba-rc-val.neg{color:var(--color-text-danger)}
+.ba-rc-val.pos{color:var(--color-text-success)}
+.ba-rc-lab{font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+.ba-rc-note{margin-top:14px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+</style>
+<div class="ba-rc" role="img" aria-label="Bar chart of the cumulative net value of an illustrative reorg: minus 2.18 million dollars at launch, minus 1.0 million after year 1, plus 0.18 million after year 2, plus 1.35 million after year 3. Payback is about 22 months.">
+  <div class="ba-rc-title">The reorg J-curve</div>
+  <p class="ba-rc-sub">Cumulative net value, $ millions. Cost $2.18M up front; saving $1.18M a year. Illustrative, all inputs assumed.</p>
+  <div class="ba-rc-chart">
+    <div class="ba-rc-col">
+      <div class="ba-rc-up"></div>
+      <div class="ba-rc-down"><div class="ba-rc-bar neg" style="height:87%"></div></div>
+      <span class="ba-rc-val neg">−2.18</span><span class="ba-rc-lab">Launch</span>
+    </div>
+    <div class="ba-rc-col">
+      <div class="ba-rc-up"></div>
+      <div class="ba-rc-down"><div class="ba-rc-bar neg" style="height:40%"></div></div>
+      <span class="ba-rc-val neg">−1.00</span><span class="ba-rc-lab">Year 1</span>
+    </div>
+    <div class="ba-rc-col">
+      <div class="ba-rc-up"><div class="ba-rc-bar pos" style="height:7%"></div></div>
+      <div class="ba-rc-down"></div>
+      <span class="ba-rc-val pos">+0.18</span><span class="ba-rc-lab">Year 2</span>
+    </div>
+    <div class="ba-rc-col">
+      <div class="ba-rc-up"><div class="ba-rc-bar pos" style="height:54%"></div></div>
+      <div class="ba-rc-down"></div>
+      <span class="ba-rc-val pos">+1.35</span><span class="ba-rc-lab">Year 3</span>
+    </div>
+  </div>
+  <div class="ba-rc-note">Payback ≈ 1.85 years. A structure replaced within two years never pays back. The count ignores the value of shipping faster, which comes on top.</div>
+</div>
