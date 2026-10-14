@@ -310,6 +310,24 @@ Part of the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.
 1. [The cost stack, and the build-vs-buy breakeven](./cost-optimization/the-cost-stack-and-the-build-vs-buy-breakeven.md)
 2. [FinOps for AI: budgets, forecasting & the cost review](./cost-optimization/finops-budgets-forecasting-and-the-cost-review.md) · [Recap](./cost-optimization/recap.md)
 
+## [Business acumen](./business-acumen/README.md)
+
+Money, markets, organizations and influence for Group PMs, Heads of Product and VPs,
+grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail.
+
+1. [Foundations: business acumen and the T-shaped leader](./business-acumen/foundations-and-assessment.md)
+2. [Navigating the organization](./business-acumen/navigating-the-organization.md)
+3. [Teams and collaboration](./business-acumen/teams-and-collaboration.md)
+4. [The language of money](./business-acumen/the-language-of-money.md)
+5. [Data and decisions](./business-acumen/data-and-decisions.md)
+6. [Markets and strategy](./business-acumen/markets-and-strategy.md)
+7. [Products and marketing](./business-acumen/products-and-marketing.md)
+8. [Performance and growth](./business-acumen/performance-and-growth.md)
+9. [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md)
+10. [Leading leaders and designing the product org](./business-acumen/leading-leaders-and-org-design.md)
+11. [Monetization and business models](./business-acumen/monetization-and-business-models.md)
+12. [Executive influence](./business-acumen/executive-influence-and-stakeholders.md) · [Recap](./business-acumen/recap.md)
+
 ## [System design](./system-design/README.md)
 
 How real systems are designed at scale — from rate limiters to stock exchanges — with the

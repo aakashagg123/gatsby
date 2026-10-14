@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Monetization and business models — Business Acumen</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Business Acumen</span><em>a standalone module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-assessment.html">1 · Foundations: business acumen and the T-shaped leader</a><a class="modlink" href="navigating-the-organization.html">2 · Navigating the organization: how the company really works</a><a class="modlink" href="teams-and-collaboration.html">3 · Teams and collaboration: structures, rhythms and decision rights</a><a class="modlink" href="the-language-of-money.html">4 · The language of money: statements, margins and the business case</a><a class="modlink" href="data-and-decisions.html">5 · Data and decisions: deciding well under uncertainty</a><a class="modlink" href="markets-and-strategy.html">6 · Markets and strategy: choosing customers, offers and advantage</a><a class="modlink" href="products-and-marketing.html">7 · Products and marketing: from opportunity to launch</a><a class="modlink" href="performance-and-growth.html">8 · Performance and growth: KPIs, scorecards and the metrics that move profit</a><a class="modlink" href="portfolio-strategy-and-allocation.html">9 · Portfolio strategy and capital allocation</a><a class="modlink" href="leading-leaders-and-org-design.html">10 · Leading leaders and designing the product org</a><a class="modlink active" href="monetization-and-business-models.html">11 · Monetization and business models</a><a class="modlink" href="executive-influence-and-stakeholders.html">12 · Executive influence: narrative, the board and the negotiating table</a><a class="modlink" href="recap.html">Recap &amp; examples</a><a class="modlink" href="assessment.html">Self-assessment</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 11</span>
+    <h1>Monetization and business models</h1>
+  </div>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>A <strong>business model</strong> is how a company turns value for customers into revenue, and revenue into profit. <strong>Monetization</strong> is the set of choices inside it: what you charge for, how much, and how you package it. At leadership level, these choices often matter more than any single feature. The same product can be a great business or a poor one, depending on the price metric and the unit economics.</p>
+<p>The core tradeoff is capture against growth. A higher price captures more value per customer and slows adoption. A lower price speeds adoption and may never cover cost. Good monetization aligns the <strong>price metric</strong> with what customers value and with what drives your cost. Then it checks <strong>unit economics</strong> before you spend to grow.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — In Payments, Lending and Insurance, the business model is the product. A payments company that misprices risk, a lender whose spread does not cover losses, or an insurer whose premium does not cover claims will lose more money as it grows.</p>
+<p><strong>What it changes in your decisions</strong> — You choose a price metric that grows with customer value and covers your cost driver. You check customer acquisition cost, lifetime value, payback and contribution margin before you approve growth spend. You stress-test the revenue line that depends on a rule or a partner.</p>
+<p><strong>Ask your team</strong> — <em>"What happens to our payback period if our largest revenue line falls by half because of a rule change or a partner renegotiation?"</em></p>
+<p><strong>Risk if ignored</strong> — Growth that deepens losses. Or a model that depends on one fee, one partner or one rule that you do not control.</p>
+</blockquote>
+<h2 id="mental-model-the-value-gap-and-the-meter">Mental model: the value gap and the meter</h2>
+<pre class="mermaid">flowchart LR
+  C[&quot;Your cost&lt;br/&gt;per unit&lt;br/&gt;(price floor)&quot;] --&gt; P[&quot;Your price&lt;br/&gt;(value you capture)&quot;]
+  P --&gt; W[&quot;Customer&#x27;s&lt;br/&gt;willingness to pay&lt;br/&gt;(price ceiling)&quot;]
+  W --&gt; A[&quot;Value of the&lt;br/&gt;best alternative&quot;]</pre>
+<p>Your price sits between two limits. Below it is your cost to serve: price under it and every sale loses money. Above it is the customer's <strong>willingness to pay</strong>, which is set by the value they get and by their next-best alternative. Monetization is the choice of where to sit in that gap.</p>
+<p>The <strong>price metric</strong> is the meter: per seat, per transaction, per dollar processed, per loan, per policy. The meter decides who pays more as usage grows. Think of a taxi meter. Charge by distance and long trips pay more. Charge a flat fare and short trips subsidize long ones.</p>
+<p><strong>Where the analogy breaks.</strong> A taxi meter is fixed. Your price metric shapes behaviour. Customers will change how they use the product to lower their bill. A per-transaction fee nudges merchants toward fewer, larger payments.</p>
+<h2 id="pricing-strategy-and-willingness-to-pay">Pricing strategy and willingness to pay</h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>How it sets price</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cost-plus</strong></td>
+<td>Cost plus a markup</td>
+<td>Ignores what customers would pay; leaves money on the table or prices you out</td>
+</tr>
+<tr>
+<td><strong>Competitor-based</strong></td>
+<td>Matches or undercuts rivals</td>
+<td>Leads to price wars; ignores your own costs</td>
+</tr>
+<tr>
+<td><strong>Value-based</strong></td>
+<td>A share of the value the customer gains</td>
+<td>Needs real evidence of that value</td>
+</tr>
+</tbody>
+</table>
+<p>To learn willingness to pay, use more than one method:</p>
+<ul>
+<li><strong>Customer interviews</strong> about the value of the problem solved.</li>
+<li><strong>Price-sensitivity surveys</strong> that ask at what price a product feels too cheap, a bargain, getting expensive and too expensive.</li>
+<li><strong>Trade-off surveys</strong> that ask customers to choose between bundles of features and prices.</li>
+<li><strong>Live price tests</strong>, where rules and fairness allow. In credit and insurance, price tests are restricted by law in many places. Check with Compliance first.</li>
+</ul>
+<h2 id="packaging-and-tiering">Packaging and tiering</h2>
+<ul>
+<li><strong>Good-better-best tiers</strong> let customers pick a level. The middle tier often sells most.</li>
+<li><strong>Add-ons</strong> sell extra capabilities to customers who need them.</li>
+<li><strong>Bundles</strong> combine products at one price. They raise average revenue and can hide weak products.</li>
+<li><strong>Fences</strong> decide who gets which price: volume, company size, contract length.</li>
+</ul>
+<p>Wise shows a transparent package. It says it uses the mid-market exchange rate and charges a visible fee, instead of hiding a markup in the rate. The package itself is part of the value proposition.</p>
+<h2 id="business-models-by-domain">Business models by domain</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Revenue line</th>
+<th>Main cost line</th>
+<th>Profit lever</th>
+<th>A public example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Subscription</strong></td>
+<td>Recurring fee</td>
+<td>Cost to serve</td>
+<td>Retention and expansion</td>
+<td>Shopify's Subscription Solutions were 24% of its revenue in 2025. The other 76% came from Merchant Solutions, mainly payment processing.</td>
+</tr>
+<tr>
+<td><strong>Usage-based</strong></td>
+<td>Fee per unit used</td>
+<td>Variable cost per unit</td>
+<td>Margin per unit, volume</td>
+<td>Payment processors charge per transaction or per dollar processed</td>
+</tr>
+<tr>
+<td><strong>Marketplace take rate</strong></td>
+<td>A share of each transaction</td>
+<td>Delivery, payments, support, incentives</td>
+<td>Take rate and contribution per order</td>
+<td>DoorDash's net revenue margin was 13.4% of Marketplace GOV in 2024.</td>
+</tr>
+<tr>
+<td><strong>Transactional / interchange</strong></td>
+<td>Fees on payments</td>
+<td>Interchange and network fees paid onward</td>
+<td>Net take rate after pass-through costs</td>
+<td>Adyen's interchange++ pricing shows its fee apart from interchange and scheme fees.</td>
+</tr>
+<tr>
+<td><strong>Lending spread</strong></td>
+<td>Interest and fees</td>
+<td>Cost of funds, credit losses, servicing</td>
+<td>Risk-adjusted margin</td>
+<td>Upstart earns fees from lending partners for its platform and for borrower referrals. Most of the loans are kept by its lending partners or bought by institutional investors.</td>
+</tr>
+<tr>
+<td><strong>Insurance premium</strong></td>
+<td>Premium</td>
+<td>Claims, expenses, reinsurance</td>
+<td>Combined ratio, plus investment income on premiums held</td>
+<td>Lemonade's 2020 filings described a fixed fee: 25% of premiums at the time. The rest went to claims and reinsurance.</td>
+</tr>
+<tr>
+<td><strong>Retail margin</strong></td>
+<td>Product sales</td>
+<td>Cost of goods, shrink, markdowns</td>
+<td>Gross margin and stock turns</td>
+<td>A retailer earns the gap between the shelf price and the landed cost of goods.</td>
+</tr>
+<tr>
+<td><strong>Advertising</strong></td>
+<td>Fees from brands</td>
+<td>Sales and ad-tech costs</td>
+<td>Ad revenue per user</td>
+<td>Instacart reports advertising and other revenue as a separate line from transaction revenue.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A note on interchange.</strong> On a card payment, the merchant's bank pays an <strong>interchange</strong> fee to the cardholder's bank. Card networks set the rates. In some places the law caps them. The European Union caps interchange on consumer debit and credit cards. In the US, a Federal Reserve rule, Regulation II, caps debit interchange for card issuers with $10 billion or more in assets. Smaller issuers are exempt from that cap. As of 2026-10, the US cap is 21 cents plus 5 basis points of the transaction value, with a 1-cent fraud-prevention adjustment for eligible issuers. The Federal Reserve proposed lowering it in 2023, so check the current level before you model it. A general inference, not a sourced fact: the exemption can make a smaller partner bank attractive to a fintech that issues debit cards, because the bank can earn uncapped interchange.</p>
+<h2 id="unit-economics">Unit economics</h2>
+<p><strong>Unit economics</strong> describe the profit from one customer or one transaction.</p>
+<ul>
+<li><strong>Customer acquisition cost (CAC)</strong> = sales and marketing spend ÷ new customers won.</li>
+<li><strong>Contribution margin</strong> per customer = revenue − variable costs, per period.</li>
+<li><strong>Lifetime value (LTV)</strong> = contribution margin per period × expected customer lifetime. A simple estimate of lifetime is 1 ÷ the churn rate per period. Discount it for long lifetimes.</li>
+<li><strong>Payback period</strong> = CAC ÷ contribution margin per period.</li>
+<li><strong>LTV to CAC ratio</strong> compares what a customer is worth with what it costs to win them.</li>
+</ul>
+<p>Nubank publishes two of the inputs. It reports monthly average revenue per active customer and monthly cost to serve. In Q2 2023 it said the first passed $9 while the second stayed below $1. A low cost to serve is what lets a digital bank profit from customers with small balances.</p>
+<p>Affirm says it never charges late fees. So its revenue must come from merchant fees, interest and other sources. That shows in its chosen metric, revenue less transaction costs. The model choice is also a brand promise.</p>
+<h2 id="worked-example-a-neobanks-debit-card-economics">Worked example: a neobank's debit card economics</h2>
+<p><em>This example is invented, to show the method. The neobank, its partner and all rates are illustrative assumptions.</em></p>
+<p>A US neobank issues debit cards through a partner bank that is exempt from the debit interchange cap.</p>
+<p><strong>Assumed inputs, per active customer per month:</strong></p>
+<ul>
+<li>Card spend $1,000. Interchange rate 1.2%. The neobank keeps 75% of interchange; the partner bank keeps 25%.</li>
+<li>Average balance $800, earning a net 3% a year for the neobank.</li>
+<li>Cost to serve $4 (support, card, processing, compliance). Fraud and other losses $1.</li>
+<li>CAC $90. Monthly churn 2%.</li>
+</ul>
+<p><strong>Step 1: revenue.</strong> Interchange: $1,000 × 1.2% = $12. Neobank share: $12 × 75% = $9. Interest: $800 × 3% ÷ 12 = $2. Total: <strong>$11 a month</strong>.</p>
+<p><strong>Step 2: contribution margin.</strong> $11 − $4 − $1 = <strong>$6 a month</strong>.</p>
+<p><strong>Step 3: payback.</strong> $90 ÷ $6 = <strong>15 months</strong>.</p>
+<p><strong>Step 4: LTV.</strong> Expected lifetime = 1 ÷ 2% = 50 months. LTV = $6 × 50 = <strong>$300</strong>, undiscounted. LTV to CAC = $300 ÷ $90 = <strong>3.3</strong>.</p>
+<p><strong>Step 5: stress test.</strong> Suppose interchange halves. The partner bank might grow past the $10 billion threshold, or renegotiate its share. Interchange becomes $6. Neobank share: $4.50. Revenue: $6.50. Contribution: $1.50. Payback: $90 ÷ $1.50 = <strong>60 months</strong>. LTV: $1.50 × 50 = <strong>$75</strong>. LTV to CAC: <strong>0.8</strong>. Each new customer now loses money.</p>
+<p><strong>What the leader does with this.</strong> The model depends on one revenue line that a partner and a rule control. The team adds a second revenue line, such as a paid tier or a lending product, and caps acquisition spend until the second line proves out.</p>
+<h2 id="a-lending-spread-simplified">A lending spread, simplified</h2>
+<p><em>Illustrative and simplified: one year, a balance that does not amortize, no fees.</em></p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Rate</th>
+<th>On a $10,000 loan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interest charged</td>
+<td>18%</td>
+<td>$1,800</td>
+</tr>
+<tr>
+<td>− Cost of funds</td>
+<td>6%</td>
+<td>−$600</td>
+</tr>
+<tr>
+<td>− Expected credit loss</td>
+<td>5%</td>
+<td>−$500</td>
+</tr>
+<tr>
+<td>− Servicing cost</td>
+<td>1.5%</td>
+<td>−$150</td>
+</tr>
+<tr>
+<td><strong>Risk-adjusted margin</strong></td>
+<td><strong>5.5%</strong></td>
+<td><strong>$550</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A small rise in expected loss erases the margin fast. Each point of loss is $100 here. Approving riskier applicants to grow volume only pays if the price rises with the risk, and in many places the law limits how high it can go.</p>
+<h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
+<ul>
+<li><strong>Capture vs. growth.</strong> Higher prices raise margin and slow adoption.</li>
+<li><strong>Simple vs. precise pricing.</strong> A flat rate is easy to understand. A pass-through model like interchange-plus is more transparent and harder to compare.</li>
+<li><strong>Subscription vs. usage.</strong> Subscriptions give predictable revenue. Usage pricing grows with the customer and swings with their volume.</li>
+<li><strong>One revenue line vs. many.</strong> A single line is simple and fragile. More lines add resilience and complexity.</li>
+<li><strong>Promise vs. revenue.</strong> No late fees builds trust. It gives up a revenue line that rivals may keep.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Price below cost to serve.</strong> Each new customer deepens the loss.</li>
+<li><strong>CAC from the best channel only.</strong> The blended CAC hides a channel that never pays back.</li>
+<li><strong>LTV on hope.</strong> Lifetime value assumes churn the product has never achieved.</li>
+<li><strong>Single-point revenue.</strong> A rule change or partner renegotiation removes most of the margin.</li>
+<li><strong>Meter mismatch.</strong> You charge per seat while your cost grows per transaction. Heavy users become unprofitable.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>The unit economics above, in Python:</p>
+<pre><code class="language-python">def unit_econ(spend, ic_rate, share, balance, nim, cost, loss, cac, churn):
+    revenue = spend * ic_rate * share + balance * nim / 12
+    contribution = revenue - cost - loss
+    payback = cac / contribution if contribution &gt; 0 else float(&quot;inf&quot;)
+    ltv = contribution / churn
+    return round(revenue, 2), round(contribution, 2), round(payback, 1), round(ltv), round(ltv / cac, 2)
+
+print(unit_econ(1000, 0.012, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (11.0, 6.0, 15.0, 300, 3.33)
+print(unit_econ(1000, 0.006, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (6.5, 1.5, 60.0, 75, 0.83)
+</code></pre>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Write your price metric, and check that it grows with customer value and with your cost driver.</li>
+<li class="task todo">Compute CAC by channel, not only blended.</li>
+<li class="task todo">Compute contribution margin and payback for your main customer segment.</li>
+<li class="task todo">List each revenue line that depends on a rule, a partner or a network, and stress-test it at half.</li>
+<li class="task todo">Run one willingness-to-pay study before your next price change.</li>
+<li class="task todo">Review your tiers. Check which one most customers buy, and why.</li>
+<li class="task todo">Check with Compliance which price tests are allowed in your domain.</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="the-language-of-money.html">The language of money</a> — margins, statements and the business case.</li>
+<li><a href="performance-and-growth.html">Performance and growth</a> — the KPIs that track unit economics.</li>
+<li><a href="../technical-product-sense/economics-of-infrastructure.html">The economics of infrastructure</a> — the cost side of unit economics.</li>
+<li><a href="../system-design/transactional-and-financial.html">Transactional and financial systems</a> — how payments are processed and settled.</li>
+<li><a href="../product-sense/motivation-and-behaviour.html">Motivation and behaviour</a> — why people pay, and why they stop.</li>
+</ul>
+<h2 id="sources-and-notes">Sources and notes</h2>
+<ul>
+<li>The neobank example, the lending spread and all their rates are invented and illustrative.</li>
+<li>Shopify, Form 10-K for fiscal 2025 (filed 2026-02): subscription solutions were 24% of total revenues. <a href="https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. <a href="https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Adyen, help article <em>What is the interchange ++?</em>: Adyen's fee shown apart from interchange and card-scheme fees. <a href="https://help.adyen.com/knowledge/payment-methods/explore-payment-methods/what-is-the-interchange">Adyen</a>. As of 2026-10.</li>
+<li>Upstart, Form 10-K for fiscal 2022 (filed 2023-02): platform and referral fees charged to lending partners at origination, and servicing fees. <a href="https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): it typically retains a fixed fee, then 25% of premiums. <a href="https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Maplebear (Instacart), Form 10-K for fiscal 2025 (filed 2026-02): revenue consists of transaction revenue and advertising and other revenue. <a href="https://www.sec.gov/Archives/edgar/data/1579091/000157909126000018/cart-20251231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Nu Holdings, second quarter 2023 results (2023-08-15): monthly average revenue per active customer of $9.3, and monthly cost to serve per active customer of $0.8. <a href="https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results">Nu newsroom</a>. As of 2026-10.</li>
+<li>Affirm, Form 10-K for fiscal 2026 (year ended 2026-06-30, filed 2026-08-27): it has charged $0 in late fees since its founding. <a href="https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Wise, pricing page for sending money: the mid-market rate with no markup, and a separate fee. <a href="https://wise.com/gb/pricing/send-money">Wise pricing</a>. As of 2026-10.</li>
+<li>EU interchange: Regulation (EU) 2015/751 caps consumer debit card interchange at 0.2% and consumer credit card interchange at 0.3% of the transaction value. Text of the Regulation as adopted by the EU, published on legislation.gov.uk: <a href="https://www.legislation.gov.uk/eur/2015/751/article/3/adopted">Article 3</a> and <a href="https://www.legislation.gov.uk/eur/2015/751/article/4/adopted">Article 4</a>. As of 2026-10.</li>
+<li>US debit interchange: Regulation II, 12 CFR 235.3 to 235.5. The cap is 21 cents plus 5 basis points of the transaction value (235.3), plus up to 1 cent for fraud prevention (235.4). Issuers with less than $10 billion in assets, with affiliates, are exempt (235.5). <a href="https://www.law.cornell.edu/cfr/text/12/235.3">12 CFR 235.3</a>, <a href="https://www.law.cornell.edu/cfr/text/12/235.4">235.4</a> and <a href="https://www.law.cornell.edu/cfr/text/12/235.5">235.5</a> (Cornell Legal Information Institute); matches the eCFR text current as of 2026-10-09.</li>
+<li>Federal Reserve, press release of 2023-10-25 proposing to lower the debit interchange cap. <a href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20231025a.htm">Federal Reserve</a>. As of 2026-10.</li>
+<li>The link between the small-issuer exemption and fintech partner-bank choice is general reasoning, not a sourced fact.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="leading-leaders-and-org-design.html"><span class="lbl">← Previous</span><span class="ttl">Leading leaders and designing the product org</span></a><a class="navcard next" href="executive-influence-and-stakeholders.html"><span class="lbl">→ Next</span><span class="ttl">Executive influence: narrative, the board and the negotiating table</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#mental-model-the-value-gap-and-the-meter">Mental model: the value gap and the meter</a><a class="h2" href="#pricing-strategy-and-willingness-to-pay">Pricing strategy and willingness to pay</a><a class="h2" href="#packaging-and-tiering">Packaging and tiering</a><a class="h2" href="#business-models-by-domain">Business models by domain</a><a class="h2" href="#unit-economics">Unit economics</a><a class="h2" href="#worked-example-a-neobanks-debit-card-economics">Worked example: a neobank&#x27;s debit card economics</a><a class="h2" href="#a-lending-spread-simplified">A lending spread, simplified</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources-and-notes">Sources and notes</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

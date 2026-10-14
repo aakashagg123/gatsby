@@ -172,7 +172,7 @@ Each module is a folder of cross-linked markdown, readable directly on GitHub. P
 
 ## Beyond AI Engineering: the craft tracks
 
-The AI Engineering modules above teach the *stack*. Twenty-seven further tracks teach the *craft* around it. Each is a standalone folder of cross-linked lessons in the same house style (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML edition on the [live site](https://aakashagg123.github.io/gatsby/).
+The AI Engineering modules above teach the *stack*. Twenty-eight further tracks teach the *craft* around it. Each is a standalone folder of cross-linked lessons in the same house style (TL;DR → 🎯 briefing → mechanics → failure modes → checklist), each with a rendered HTML edition on the [live site](https://aakashagg123.github.io/gatsby/).
 
 ### Start here
 
@@ -234,6 +234,7 @@ The AI Engineering modules above teach the *stack*. Twenty-seven further tracks 
 | [**Product sense**](./product-sense/README.md) | The five habits under great product judgment — behaviour, empathy, strategy, communication, domain — and how they bend for AI products. | [Motivation & behaviour](./product-sense/motivation-and-behaviour.md) |
 | [**Technical product sense**](./technical-product-sense/README.md) | How systems are actually built — request paths, APIs, data, latency, reliability, tech debt — at the altitude a PM needs to lead technical conversations. | [How systems are built](./technical-product-sense/how-systems-are-built.md) |
 | [**Technical product management**](./technical-product-management/README.md) | The operating craft: discovery, specs, prioritization, working with engineering, metrics, launches — and the AI-products capstone. | [The technical PM role](./technical-product-management/the-technical-pm-role.md) |
+| [**Business acumen**](./business-acumen/README.md) | Money, markets, organizations and influence for Group PMs, Heads of Product and VPs — statements, strategy, pricing, portfolios, org design and the executive table, grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 12 lessons and an interactive self-assessment. | [Foundations: business acumen and the T-shaped leader](./business-acumen/foundations-and-assessment.md) |
 | [**First principles & the polymath mind**](./first-principles/README.md) | Reasoning from fundamentals instead of by analogy, and building the mental-model range to do it well. | [What first-principles thinking is](./first-principles/what-is-first-principles.md) |
 
 <br/>

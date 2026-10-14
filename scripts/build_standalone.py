@@ -20,6 +20,10 @@ build_track(cfg). A cfg dict looks like:
       "meta": ["6 lessons", "+ recap", "first-principles", "polymath"],
       "callout": "For the builder",   # marker phrase that tags the styled briefing box
       "lessons": ["slug-1", "slug-2", ...],
+      # optional: extra pages after the recap, each a raw HTML fragment that is
+      # inserted as-is (no markdown pass), e.g. an interactive self-assessment
+      "extra_pages": [{"key": "assessment", "label": "Self-assessment",
+                       "chip": "Self-assessment", "title": "...", "html": "<abs path>"}],
     }
 """
 import os
@@ -240,10 +244,14 @@ def build_track(cfg):
     for i, (slug, t) in enumerate(lesson_titles, 1):
         nav.append((f"{slug}.html", f"{i} · {t}", slug))
     nav.append(("recap.html", "Recap & examples", "recap"))
+    extras = cfg.get("extra_pages", [])
+    for x in extras:
+        nav.append((f"{x['key']}.html", x["label"], x["key"]))
 
     order = [("index", "index.html", "Overview")]
     order += [(slug, f"{slug}.html", t) for slug, t in lesson_titles]
     order += [("recap", "recap.html", "Recap & examples")]
+    order += [(x["key"], f"{x['key']}.html", x["label"]) for x in extras]
 
     def prevnext(key):
         idx = [o[0] for o in order].index(key)
@@ -262,6 +270,10 @@ def build_track(cfg):
     cards.append(
         f'<a class="card" href="recap.html">{ds.badge("📌", size="md")}'
         '<h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a>')
+    for x in extras:
+        cards.append(
+            f'<a class="card" href="{x["key"]}.html">{ds.badge(x.get("badge", "✓"), size="md")}'
+            f'<h3>{htmllib.escape(x["title"])}</h3><span class="card-go">Open →</span></a>')
     meta = "".join(ds.badge(htmllib.escape(m), size="lg", pill=True) for m in cfg["meta"])
 
     page = _head(title)
@@ -309,4 +321,26 @@ def build_track(cfg):
         with open(os.path.join(out, f"{key}.html"), "w") as f:
             f.write(reader_widget.inject(_inject_mermaid(page)))
 
-    print(f"Built {len(lessons)} lesson pages + recap + index.html into {out}/")
+    # --- extra pages (raw HTML fragments, e.g. an interactive self-assessment) ---
+    for x in extras:
+        with open(x["html"]) as f:
+            body = f.read()
+        outline_html, has_outline = bh.render_outline(bh.extract_outline(body))
+        prev, nxt = prevnext(x["key"])
+        page = _head(f"{x['title']} — {brand}")
+        page += _topbar(brand, tagline, with_menu=True)
+        page += f'<div class="layout{" has-outline" if has_outline else ""}">'
+        page += _sidebar(x["key"], nav)
+        page += f"""<main class="content" id="top">
+  <div class="hero">
+    {ds.badge(x.get("chip", x["label"]), size="lg", pill=True)}
+    <h1>{htmllib.escape(x["title"])}</h1>
+  </div>
+  <div class="MarkdownContent">{body}</div>
+  {_footer(prev, nxt)}
+  </main>{outline_html}</div>{bh.SIDEBAR_TOGGLE_JS}{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
+        with open(os.path.join(out, f"{x['key']}.html"), "w") as f:
+            f.write(reader_widget.inject(page))
+
+    extra = f" + {len(extras)} extra page(s)" if extras else ""
+    print(f"Built {len(lessons)} lesson pages + recap{extra} + index.html into {out}/")

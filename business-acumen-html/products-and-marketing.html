@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Products and marketing: from opportunity to launch — Business Acumen</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Business Acumen</span><em>a standalone module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-assessment.html">1 · Foundations: business acumen and the T-shaped leader</a><a class="modlink" href="navigating-the-organization.html">2 · Navigating the organization: how the company really works</a><a class="modlink" href="teams-and-collaboration.html">3 · Teams and collaboration: structures, rhythms and decision rights</a><a class="modlink" href="the-language-of-money.html">4 · The language of money: statements, margins and the business case</a><a class="modlink" href="data-and-decisions.html">5 · Data and decisions: deciding well under uncertainty</a><a class="modlink" href="markets-and-strategy.html">6 · Markets and strategy: choosing customers, offers and advantage</a><a class="modlink active" href="products-and-marketing.html">7 · Products and marketing: from opportunity to launch</a><a class="modlink" href="performance-and-growth.html">8 · Performance and growth: KPIs, scorecards and the metrics that move profit</a><a class="modlink" href="portfolio-strategy-and-allocation.html">9 · Portfolio strategy and capital allocation</a><a class="modlink" href="leading-leaders-and-org-design.html">10 · Leading leaders and designing the product org</a><a class="modlink" href="monetization-and-business-models.html">11 · Monetization and business models</a><a class="modlink" href="executive-influence-and-stakeholders.html">12 · Executive influence: narrative, the board and the negotiating table</a><a class="modlink" href="recap.html">Recap &amp; examples</a><a class="modlink" href="assessment.html">Self-assessment</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 07</span>
+    <h1>Products and marketing: from opportunity to launch</h1>
+  </div>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>A <strong>product</strong> is the whole offer a customer buys: the core function, the package around it, the price, the service and the promise. Features are only part of it. Marketing is how the offer reaches the right customer with the right message. At leadership level, both are business decisions. You decide which opportunities get a business case, what to build, buy or partner for, and how the product goes to market.</p>
+<p>The core tradeoff is control against speed. Building gives you control and differentiation. Buying or partnering gets you to market faster. In regulated domains, a partner may hold the licence you lack. But the regulator still holds you responsible for what your customers experience.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Many products fail on the parts around the feature: the wrong price, the wrong channel, a missing licence, terms that scare buyers away. Those parts are your call, not the engineering team's.</p>
+<p><strong>What it changes in your decisions</strong> — You require an opportunity assessment before a build. You make build-buy-partner calls on differentiation and total cost, not on pride. You plan the launch with all four Ps, not only the product.</p>
+<p><strong>Ask your team</strong> — <em>"If a competitor copied this feature tomorrow, what part of our offer would they still not have?"</em></p>
+<p><strong>Risk if ignored</strong> — A strong feature with a weak offer. Or a vendor or partner who becomes a single point of failure for a regulated product you still answer for.</p>
+</blockquote>
+<h2 id="mental-model-the-offer-is-more-than-the-feature">Mental model: the offer is more than the feature</h2>
+<pre class="mermaid">flowchart TB
+  subgraph OFFER[&quot;THE OFFER&quot;]
+    CORE[&quot;Core&lt;br/&gt;the job it does&quot;]
+    PKG[&quot;Package&lt;br/&gt;tiers · bundle · terms&quot;]
+    SVC[&quot;Service&lt;br/&gt;onboarding · support · returns&quot;]
+    PRM[&quot;Promise&lt;br/&gt;brand · trust · guarantees&quot;]
+  end
+  CORE --- PKG --- SVC --- PRM</pre>
+<p>Think of the offer as layers. The core is what the product does. The package, service and promise make it something people buy. Competitors can copy a core feature quickly. The outer layers take longer to copy.</p>
+<p><strong>Where the model breaks.</strong> In some markets, the core really is everything. A payments API that fails one time in ten loses, whatever its service. Layers help only once the core is good enough.</p>
+<h2 id="opportunity-assessment-and-the-business-case">Opportunity assessment and the business case</h2>
+<p>Before a build, answer these questions on one page:</p>
+<ol>
+<li><strong>What problem, for whom?</strong> Name the target customer and the need.</li>
+<li><strong>How big?</strong> Size the reachable market with simple, visible arithmetic.</li>
+<li><strong>Why now?</strong> What changed: a rule, a technology, a competitor, a customer behaviour?</li>
+<li><strong>Why us?</strong> What advantage do we bring?</li>
+<li><strong>How will we know it worked?</strong> One outcome metric and a target.</li>
+<li><strong>What could kill it?</strong> Regulatory, credit, fraud, operational and partner risks.</li>
+</ol>
+<p>If the answers are strong, write the full business case with NPV and a sensitivity table, as in <a href="the-language-of-money.html">lesson 4</a>.</p>
+<h2 id="iterative-development-with-gates-where-the-rules-require-them">Iterative development, with gates where the rules require them</h2>
+<p>Most products should be built in small steps: test the riskiest assumption first, release to a small group, learn, then scale. In regulated domains, some steps need a gate before they go live. Examples are a new credit product, new customer disclosures or a new insurance rate. Plan the gate in from the start. Do not discover it a week before launch.</p>
+<p>Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. Its 10-K for 2025 names Virtual Try-On as part of its offer.</p>
+<h2 id="product-design-and-packaging">Product design and packaging</h2>
+<p><strong>Packaging</strong> decides how features are grouped and sold: one product or many, tiers, bundles and add-ons. Packaging is a pricing decision in disguise. <a href="monetization-and-business-models.html">Lesson 11</a> covers it in depth.</p>
+<p>A wholesale marketplace can package risk relief into its offer to independent retailers. Two common forms are delayed payment terms and easy returns on a first order from a new brand. Both lower the retailer's risk of trying a new brand. The marketplace absorbs some of that risk itself as part of the offer. (This is a general pattern, not a description of one company's current terms.)</p>
+<h2 id="make-buy-or-partner">Make, buy or partner</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Choose it when</th>
+<th>The cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Make</strong></td>
+<td>The capability is a core differentiator, or no vendor fits</td>
+<td>Time, team and upkeep for as long as you run it</td>
+</tr>
+<tr>
+<td><strong>Buy</strong></td>
+<td>The capability is common, and vendors do it well</td>
+<td>Per-unit fees, less control, vendor lock-in</td>
+</tr>
+<tr>
+<td><strong>Partner</strong></td>
+<td>Someone else holds what you need: a licence, a balance sheet, a channel</td>
+<td>A share of the revenue, and dependence on the partner's priorities</td>
+</tr>
+</tbody>
+</table>
+<p>In regulated domains, partnership is common. A fintech may use a partner bank to hold deposits or issue cards. An insurance agency may sell on a carrier's licence and capital. A retailer may use an outside lender for financing at checkout.</p>
+<p>Target took the buy route for same-day delivery. In December 2017 it agreed to acquire Shipt, a same-day delivery platform, for $550 million. As general reasoning, not a Target statement: buying an existing network can be faster than building one.</p>
+<h2 id="the-marketing-cycle-and-go-to-market">The marketing cycle and go-to-market</h2>
+<p>Marketing runs as a loop: <strong>insight → plan → execute → measure → learn</strong>. A <strong>go-to-market plan</strong> answers:</p>
+<ul>
+<li><strong>Who</strong> is the target segment for this launch?</li>
+<li><strong>What</strong> is the message, and the proof behind it?</li>
+<li><strong>Where</strong> will we reach them: self-serve, sales team, partners or marketplaces?</li>
+<li><strong>How much</strong> will it cost to win each customer, and how fast will it pay back?</li>
+<li><strong>When</strong> will each segment get it?</li>
+</ul>
+<h2 id="the-four-ps">The four Ps</h2>
+<p>The 4 Ps are four levers of the marketing mix.</p>
+<table>
+<thead>
+<tr>
+<th>P</th>
+<th>The question</th>
+<th>Payments</th>
+<th>Retail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Product</strong></td>
+<td>What exactly are we selling?</td>
+<td>Online card acceptance with fraud tools</td>
+<td>A private-label product line</td>
+</tr>
+<tr>
+<td><strong>Price</strong></td>
+<td>What do we charge, and how?</td>
+<td>A blended rate, or interchange plus a markup</td>
+<td>Shelf price, promotions and markdown plan</td>
+</tr>
+<tr>
+<td><strong>Place</strong></td>
+<td>Where does the customer buy it?</td>
+<td>Direct sign-up, or through software platforms that embed it</td>
+<td>Stores, website, marketplaces</td>
+</tr>
+<tr>
+<td><strong>Promotion</strong></td>
+<td>How do they hear about it?</td>
+<td>Developer docs, partner listings, sales team</td>
+<td>In-store display, loyalty emails, ads</td>
+</tr>
+</tbody>
+</table>
+<h2 id="launches">Launches</h2>
+<p>Not every launch needs the same weight. Tier them.</p>
+<ul>
+<li><strong>Tier 1</strong>: a new product or market. Full plan: press, sales training, support readiness, risk sign-off.</li>
+<li><strong>Tier 2</strong>: a major feature. Customer communication, docs, support briefing.</li>
+<li><strong>Tier 3</strong>: an improvement. Release notes.</li>
+</ul>
+<p>See <a href="../technical-product-management/launches-rollouts-and-migrations.html">Launches, rollouts and migrations</a> for the execution side.</p>
+<h2 id="intellectual-property-basics">Intellectual property basics</h2>
+<p>Four kinds of intellectual property matter most to a product leader.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What it protects</th>
+<th>How you get it</th>
+<th>Domain example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Patent</strong></td>
+<td>An invention: a new, useful, non-obvious method or device</td>
+<td>Apply and get it granted. You must disclose how it works. In the US, a utility patent generally lasts 20 years from filing.</td>
+<td>A new card-reader design</td>
+</tr>
+<tr>
+<td><strong>Trademark</strong></td>
+<td>A brand name, logo or slogan</td>
+<td>Use it in trade, and register it for stronger rights. It can last as long as you use it and renew it.</td>
+<td>A product or app name</td>
+</tr>
+<tr>
+<td><strong>Copyright</strong></td>
+<td>Original expression, such as code, text and design</td>
+<td>It exists once the work is created. Registration adds rights in some countries.</td>
+<td>Your app's code and content</td>
+</tr>
+<tr>
+<td><strong>Trade secret</strong></td>
+<td>Valuable information kept secret</td>
+<td>Keep it secret, with access controls and contracts</td>
+<td>A credit model or pricing algorithm</td>
+</tr>
+</tbody>
+</table>
+<p>Credit and pricing models are usually protected as trade secrets, not patents. A patent would require you to publish how the model works. Note one tension in US lending: the law requires a lender to tell a declined applicant the main reasons for the decision. You disclose reasons, not the model.</p>
+<h2 id="worked-example-build-or-buy-identity-verification">Worked example: build or buy identity verification</h2>
+<p><em>This example is invented, to show the method. The company and all numbers are illustrative.</em></p>
+<p>A fintech must verify each new customer's identity. This step is often called know your customer (KYC). It needs 600,000 checks a year.</p>
+<p><strong>Buy.</strong> A vendor charges $1.20 a check. Annual cost: 600,000 × $1.20 = $720,000. Three-year cost: <strong>$2,160,000</strong>.</p>
+<p><strong>Build.</strong> Build cost $1,500,000. Running cost $400,000 a year for data sources, staff and upkeep. Three-year cost: $1,500,000 + 3 × $400,000 = <strong>$2,700,000</strong>.</p>
+<p><strong>Step 1: compare.</strong> Over three years, buying is $540,000 cheaper.</p>
+<p><strong>Step 2: find the break-even volume.</strong> Building costs $2,700,000 over three years. Buying the same costs 3 × $1.20 × V. They are equal when V = $2,700,000 ÷ $3.60 = <strong>750,000 checks a year</strong>. Below that, buy. Above it, building starts to pay, if the build estimate holds.</p>
+<p><strong>Step 3: check differentiation.</strong> Identity checks are not why customers choose this fintech. They are a gate. That points to buy.</p>
+<p><strong>Step 4: check accountability.</strong> Buying moves the work, not the responsibility. If the vendor's checks fail, the fintech answers to its regulator and its partner bank. The team adds vendor monitoring, a fallback vendor and audit rights to the contract.</p>
+<p><strong>Decision:</strong> buy now, with a review if volume nears 750,000 a year.</p>
+<h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
+<ul>
+<li><strong>Make vs. buy.</strong> Making gives control and costs time and upkeep. Buying gives speed and costs per unit, forever.</li>
+<li><strong>Partner vs. licence.</strong> A partner's licence gets you to market. It costs revenue share and control of your roadmap. Getting your own licence costs years and capital.</li>
+<li><strong>Big launch vs. quiet launch.</strong> A big launch builds awareness. It costs more and makes a slow start visible.</li>
+<li><strong>Patent vs. trade secret.</strong> A patent gives a time-limited legal monopoly and requires disclosure. A secret lasts as long as you keep it, and gives no protection if someone builds the same thing on their own.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Feature without an offer.</strong> A strong feature with no price, channel or support plan.</li>
+<li><strong>Gate discovered late.</strong> A regulatory or partner approval appears in the last week.</li>
+<li><strong>Outsourced and forgotten.</strong> A vendor's failure becomes your regulatory finding.</li>
+<li><strong>One launch weight for all.</strong> Every launch is tier 1, so none gets the attention it needs.</li>
+<li><strong>Leaked secret.</strong> A pricing model is shared in a pitch deck or a partner integration with no protection.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>A one-page opportunity assessment template:</p>
+<pre><code class="language-markdown">## Opportunity: &lt;name&gt;
+- Target customer and need:
+- Reachable market (show the arithmetic):
+- Why now:
+- Why us (advantage):
+- Outcome metric and target:
+- Build / buy / partner, and why:
+- Regulatory and partner gates (with lead times):
+- Top three risks and how we test them first:
+- Go-to-market: segment, message, channel, launch tier:
+- Ask: money, people, decision date
+</code></pre>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Write a one-page opportunity assessment for your next proposed build.</li>
+<li class="task todo">List the outer layers of your offer that a competitor could not copy quickly.</li>
+<li class="task todo">For each vendor or partner, name the fallback if they fail.</li>
+<li class="task todo">Map every regulatory and partner gate for your next launch, with lead times.</li>
+<li class="task todo">Fill in the 4 Ps for your next launch.</li>
+<li class="task todo">Assign a launch tier to each item on your roadmap.</li>
+<li class="task todo">Check with Legal which of your assets are patents, trademarks, copyright or trade secrets.</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="markets-and-strategy.html">Markets and strategy</a> — choosing the segment the offer serves.</li>
+<li><a href="monetization-and-business-models.html">Monetization and business models</a> — pricing, packaging and tiers.</li>
+<li><a href="../technical-product-management/launches-rollouts-and-migrations.html">Launches, rollouts and migrations</a> — running the launch itself.</li>
+<li><a href="../product-sense/creativity.html">Creativity</a> — generating the options before you choose.</li>
+<li><a href="../technical-product-management/discovery-to-delivery.html">Discovery to delivery</a> — testing the riskiest assumption first.</li>
+</ul>
+<h2 id="sources-and-notes">Sources and notes</h2>
+<ul>
+<li>The identity-verification case and all its numbers are invented and illustrative.</li>
+<li>Warby Parker, Form S-1 (2021): Home Try-On lets customers pick five pairs of frames on the website and try them at home for five days for free. <a href="https://www.sec.gov/Archives/edgar/data/1504776/000162828021017546/warbyparkerincs-1.htm">Form S-1</a>. As of 2026-10.</li>
+<li>Warby Parker, Form 10-Q for the quarter ended 2026-06-30 (filed 2026-08-06): the decision in the second quarter of 2025 to sunset Home Try-On at the end of 2025. <a href="https://www.sec.gov/Archives/edgar/data/1504776/000150477626000019/wrby-20260630.htm">Form 10-Q</a>. As of 2026-10.</li>
+<li>Warby Parker, Form 10-K for fiscal 2025 (filed 2026-02): Virtual Try-On as part of its offer. <a href="https://www.sec.gov/Archives/edgar/data/1504776/000150477626000006/wrby-20251231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>The wholesale-marketplace example of risk relief is a general pattern, not a description of one company's terms.</li>
+<li>Target, press release of 2017-12-13: agreement to acquire Shipt for $550 million in cash. <a href="https://corporate.target.com/press/release/2017/12/target-to-acquire-same-day-delivery-platform-shipt,-inc-to-bolster-fulfillment-capabilities">Target</a>. As of 2026-10.</li>
+<li>US utility patent term: generally 20 years from the filing date. <a href="https://www.law.cornell.edu/uscode/text/35/154">35 U.S.C. 154</a> and <a href="https://www.uspto.gov/web/offices/pac/mpep/s2701.html">US Patent and Trademark Office, Manual of Patent Examining Procedure, section 2701</a>. As of 2026-10.</li>
+<li>US adverse action notices: a creditor must give a declined applicant the principal reasons, or tell them how to ask for them. <a href="https://www.consumerfinance.gov/rules-policy/regulations/1002/9/">Regulation B, 12 CFR 1002.9 (CFPB)</a>. As of 2026-10.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="markets-and-strategy.html"><span class="lbl">← Previous</span><span class="ttl">Markets and strategy: choosing customers, offers and advantage</span></a><a class="navcard next" href="performance-and-growth.html"><span class="lbl">→ Next</span><span class="ttl">Performance and growth: KPIs, scorecards and the metrics that move profit</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#mental-model-the-offer-is-more-than-the-feature">Mental model: the offer is more than the feature</a><a class="h2" href="#opportunity-assessment-and-the-business-case">Opportunity assessment and the business case</a><a class="h2" href="#iterative-development-with-gates-where-the-rules-require-them">Iterative development, with gates where the rules require them</a><a class="h2" href="#product-design-and-packaging">Product design and packaging</a><a class="h2" href="#make-buy-or-partner">Make, buy or partner</a><a class="h2" href="#the-marketing-cycle-and-go-to-market">The marketing cycle and go-to-market</a><a class="h2" href="#the-four-ps">The four Ps</a><a class="h2" href="#launches">Launches</a><a class="h2" href="#intellectual-property-basics">Intellectual property basics</a><a class="h2" href="#worked-example-build-or-buy-identity-verification">Worked example: build or buy identity verification</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources-and-notes">Sources and notes</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

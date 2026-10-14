@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Navigating the organization: how the company really works — Business Acumen</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Business Acumen</span><em>a standalone module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-assessment.html">1 · Foundations: business acumen and the T-shaped leader</a><a class="modlink active" href="navigating-the-organization.html">2 · Navigating the organization: how the company really works</a><a class="modlink" href="teams-and-collaboration.html">3 · Teams and collaboration: structures, rhythms and decision rights</a><a class="modlink" href="the-language-of-money.html">4 · The language of money: statements, margins and the business case</a><a class="modlink" href="data-and-decisions.html">5 · Data and decisions: deciding well under uncertainty</a><a class="modlink" href="markets-and-strategy.html">6 · Markets and strategy: choosing customers, offers and advantage</a><a class="modlink" href="products-and-marketing.html">7 · Products and marketing: from opportunity to launch</a><a class="modlink" href="performance-and-growth.html">8 · Performance and growth: KPIs, scorecards and the metrics that move profit</a><a class="modlink" href="portfolio-strategy-and-allocation.html">9 · Portfolio strategy and capital allocation</a><a class="modlink" href="leading-leaders-and-org-design.html">10 · Leading leaders and designing the product org</a><a class="modlink" href="monetization-and-business-models.html">11 · Monetization and business models</a><a class="modlink" href="executive-influence-and-stakeholders.html">12 · Executive influence: narrative, the board and the negotiating table</a><a class="modlink" href="recap.html">Recap &amp; examples</a><a class="modlink" href="assessment.html">Self-assessment</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 02</span>
+    <h1>Navigating the organization: how the company really works</h1>
+  </div>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>Every company has two maps. The <strong>formal organization</strong> is the org chart: who reports to whom, who owns which budget. The <strong>informal organization</strong> is the network of trust, favours and information that decides what actually happens. A product leader needs both maps, and one more: a clear view of how the company makes money.</p>
+<p>The core tradeoff is time and credibility. Building relationships, sponsors and political capital takes months. Skipping that work feels faster, until a decision you need is made in a room you were not in. At Group PM level and above, most of your outcomes depend on people who do not report to you.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Your biggest decisions need yes from Finance, Risk, Sales, Operations and sometimes an outside partner. Each of them is measured on something different. If you do not know what they are paid to protect, you cannot design a proposal they can accept.</p>
+<p><strong>What it changes in your decisions</strong> — You map who decides and what they fear before you write the proposal. You spend political capital on purpose, on the few fights that matter.</p>
+<p><strong>Ask your team</strong> — <em>"Who outside this room can stop this, and have we talked to them yet?"</em></p>
+<p><strong>Risk if ignored</strong> — A well-built launch is blocked a week before release by a compliance review, a partner bank or a finance sign-off that nobody on the team knew existed.</p>
+</blockquote>
+<h2 id="mental-model-the-road-map-and-the-traffic">Mental model: the road map and the traffic</h2>
+<pre class="mermaid">flowchart LR
+  subgraph FORMAL[&quot;FORMAL: the org chart&quot;]
+    CEO[&quot;CEO&quot;] --&gt; CFO[&quot;Finance&quot;]
+    CEO --&gt; CRO[&quot;Risk and Compliance&quot;]
+    CEO --&gt; CPO[&quot;Product&quot;]
+    CEO --&gt; CRO2[&quot;Sales and Ops&quot;]
+  end
+  subgraph INFORMAL[&quot;INFORMAL: trust and information&quot;]
+    P[&quot;You&quot;] -.-&gt;|&quot;trusted peer&quot;| F2[&quot;Finance partner&quot;]
+    P -.-&gt;|&quot;asks for advice&quot;| M[&quot;Mentor&quot;]
+    S[&quot;Sponsor&quot;] -.-&gt;|&quot;speaks for you&quot;| CEO
+    F2 -.-&gt;|&quot;early warning&quot;| P
+  end</pre>
+<p>The org chart is the road map. It shows the official routes. The informal network is the traffic. It shows which routes are open today, and which shortcut a trusted peer can give you.</p>
+<p><strong>Where the analogy breaks.</strong> Roads do not remember you. People do. Every interaction changes the informal map. A shortcut you abuse closes for good.</p>
+<h2 id="how-the-company-actually-makes-money">How the company actually makes money</h2>
+<p>Start with the money engine. Write it in two sentences. Then check it with a finance partner. Most leaders get one part wrong.</p>
+<p>Every business has a revenue engine, a cost base, and one or two constraints that limit growth. The table shows how this differs by domain, using public company disclosures.</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>How revenue is earned</th>
+<th>What limits growth</th>
+<th>A public example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Payments</strong></td>
+<td>A fee on each payment processed</td>
+<td>Fraud, disputes and the fees paid to card networks and issuers</td>
+<td>Adyen prices many card payments as <strong>interchange++</strong>: the card's interchange fee, plus network fees, plus Adyen's own fee. Its markup is visible apart from the pass-through costs.</td>
+</tr>
+<tr>
+<td><strong>Lending</strong></td>
+<td>Interest and fees on loans</td>
+<td>Credit losses and the cost of funding the loans</td>
+<td>SoFi agreed in 2021 to buy a community bank to accelerate its pursuit of a national bank charter. The aim was to fund loans with deposits, a cheaper source than the market funding a non-bank relies on.</td>
+</tr>
+<tr>
+<td><strong>eCommerce</strong></td>
+<td>A share of each order, plus ads and subscriptions</td>
+<td>Delivery cost, and the supply of merchants and couriers</td>
+<td>Instacart reports two revenue lines: transaction revenue and advertising and other revenue. Brands pay to reach shoppers.</td>
+</tr>
+<tr>
+<td><strong>InsurTech</strong></td>
+<td>Premium, minus claims and expenses</td>
+<td>Loss ratio, capital and reinsurance</td>
+<td>Lemonade's 2020 filings described keeping a fixed share of premium as its fee. The rest paid claims and reinsurance. It aimed to give any leftover money to charities its customers chose.</td>
+</tr>
+<tr>
+<td><strong>Retail</strong></td>
+<td>Product margin on goods sold</td>
+<td>Inventory, store costs and markdowns</td>
+<td>Walmart's comparable-sales figure includes eCommerce sales, not only sales in its stores. In general, a shared metric like this can help align store and online teams.</td>
+</tr>
+<tr>
+<td><strong>FinTech</strong></td>
+<td>Fees, interchange and interest on balances</td>
+<td>Regulation, partner banks and cost to serve</td>
+<td>Nubank reports its monthly cost to serve each active customer. In 2023 it said that cost stayed below one US dollar.</td>
+</tr>
+</tbody>
+</table>
+<p>Once you know the engine, you know which functions hold the levers. In a lender, Credit Risk owns the approval cutoff. In a payments company, the Risk team owns fraud rules. In a retailer, Merchandising owns the range and the stock budget.</p>
+<h2 id="the-formal-organization-where-decisions-are-made">The formal organization: where decisions are made</h2>
+<p>The formal org decides money and headcount through a few fixed processes. Learn their calendar.</p>
+<ul>
+<li><strong>The annual plan.</strong> Finance sets revenue and cost targets for each unit. Headcount is fixed here. A bet not in the plan needs a trade-off later.</li>
+<li><strong>Quarterly reviews.</strong> Leaders report against plan. Shortfalls trigger cuts or shifts.</li>
+<li><strong>Investment or portfolio committees.</strong> Large bets are approved here. See <a href="portfolio-strategy-and-allocation.html">lesson 9</a>.</li>
+<li><strong>Risk and compliance sign-offs.</strong> In regulated domains, a product cannot launch without them. These often sit outside the product calendar.</li>
+<li><strong>Partner approvals.</strong> A fintech that uses a partner bank needs that bank's approval for new products. An insurance agency needs the carrier that holds the risk. These approvers are not on your org chart at all.</li>
+</ul>
+<h2 id="the-informal-organization-trust-capital-and-sponsors">The informal organization: trust, capital and sponsors</h2>
+<p><strong>Political capital</strong> is the stock of trust you can draw on to get things done. Think of it as an account.</p>
+<table>
+<thead>
+<tr>
+<th>Deposits</th>
+<th>Withdrawals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delivering what you promised</td>
+<td>Escalating a peer to their boss</td>
+</tr>
+<tr>
+<td>Giving credit to other teams in public</td>
+<td>Asking for an exception to a process</td>
+</tr>
+<tr>
+<td>Sharing information early</td>
+<td>Surprising a peer in a large meeting</td>
+</tr>
+<tr>
+<td>Helping a peer hit their target</td>
+<td>Missing a commitment you made to them</td>
+</tr>
+<tr>
+<td>Keeping a confidence</td>
+<td>Reversing a decision they relied on</td>
+</tr>
+</tbody>
+</table>
+<p>Withdrawals are not bad. They are the point of saving. Spend capital on the two or three decisions that change your year. Do not spend it on a slide format or a meeting time.</p>
+<p><strong>Mentors and sponsors are different.</strong> A <strong>mentor</strong> gives you advice. A <strong>sponsor</strong> spends their own capital to argue for you in rooms you are not in, such as promotion or staffing discussions. You earn a sponsor by making them look right for backing you. Most leaders have mentors. Fewer have a sponsor. At VP level, a sponsor often decides whether you get the next scope.</p>
+<h2 id="managing-conflict">Managing conflict</h2>
+<p>Conflict between functions is normal. Each function is paid to protect something. The design question is how to make the conflict useful.</p>
+<ol>
+<li><strong>Separate positions from interests.</strong> Risk says "no launch." Its interest is "no unexpected losses." A launch with a loss cap may meet that interest.</li>
+<li><strong>Agree on the facts first.</strong> Write the shared facts in one document. Most fights are about different numbers.</li>
+<li><strong>Name the decision owner.</strong> If nobody owns the call, the loudest voice wins. See <a href="teams-and-collaboration.html">lesson 3</a>.</li>
+<li><strong>Escalate together.</strong> If you cannot agree, write one page with both views and take it up together. A joint escalation costs little capital. A solo escalation costs a lot.</li>
+</ol>
+<h2 id="influence-across-functions">Influence across functions</h2>
+<p>To influence a function, know what it is measured on and what it fears.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Measured on</th>
+<th>Fears</th>
+<th>What helps them say yes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Finance</td>
+<td>Plan accuracy, margin, cash</td>
+<td>Surprises and unfunded costs</td>
+<td>A business case with a sensitivity table</td>
+</tr>
+<tr>
+<td>Risk and Compliance</td>
+<td>Losses, regulatory findings</td>
+<td>An issue a regulator finds first</td>
+<td>Early involvement and a loss cap</td>
+</tr>
+<tr>
+<td>Sales</td>
+<td>Bookings against quota</td>
+<td>Losing deals to a missing feature</td>
+<td>A date they can tell customers</td>
+</tr>
+<tr>
+<td>Operations</td>
+<td>Cost per case, service levels</td>
+<td>Volume spikes with no staff</td>
+<td>A volume forecast and a runbook</td>
+</tr>
+<tr>
+<td>Engineering</td>
+<td>Delivery, reliability</td>
+<td>Rushed scope and on-call pain</td>
+<td>Clear scope and time for quality</td>
+</tr>
+</tbody>
+</table>
+<h2 id="worked-example-launching-instant-payouts-at-a-payments-company">Worked example: launching instant payouts at a payments company</h2>
+<p><em>This example is invented, to show the method. The company and numbers are illustrative.</em></p>
+<p>A payments company pays merchants their sales in two business days. The VP of Product wants to offer instant payouts for a fee. She assumes a fee of 1% of each payout.</p>
+<p><strong>Step 1: map the money.</strong> Assume merchants would move $50 million a month through instant payouts. At 1%, that is $500,000 a month in fee revenue.</p>
+<p><strong>Step 2: map who decides, and what they fear.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Stakeholder</th>
+<th>What they fear</th>
+<th>What they need</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Treasury</td>
+<td>Paying merchants before the card networks settle with the company. That needs cash on hand.</td>
+<td>A funding estimate. At two days of early payout on $50 million a month, the company pre-funds about $3.3 million at any time ($50 million ÷ 30 days × 2 days).</td>
+</tr>
+<tr>
+<td>Risk</td>
+<td>A fraudster takes sales, cashes out instantly, and the disputes arrive weeks later.</td>
+<td>Eligibility rules, such as a minimum account age, and a daily cap per merchant.</td>
+</tr>
+<tr>
+<td>Finance</td>
+<td>Fee revenue counted before losses</td>
+<td>A net figure after expected losses and funding cost</td>
+</tr>
+<tr>
+<td>Operations</td>
+<td>Support tickets about failed payouts</td>
+<td>A help article and a status page</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 3: adjust the proposal to their interests.</strong> The VP adds eligibility rules and a daily cap. She asks Finance to model the funding cost. Assume 5% a year on $3.3 million. That is about $165,000 a year, or about $14,000 a month.</p>
+<p><strong>Step 4: spend capital on one point only.</strong> Risk wants a 90-day account age. The VP agrees, except for merchants with a clean dispute history. That is the one point she argues.</p>
+<p><strong>Step 5: pre-wire.</strong> She meets each stakeholder alone before the decision meeting. The meeting confirms what was already agreed.</p>
+<p>The result: about $486,000 a month net of funding cost, before losses. Risk's eligibility rules keep loss exposure inside a cap that Risk set itself.</p>
+<h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
+<ul>
+<li><strong>Speed vs. support.</strong> Pre-wiring every stakeholder takes days. Skipping it saves days and risks a late veto.</li>
+<li><strong>Visibility vs. trust.</strong> Credit given to other teams builds trust. It costs you some visibility with your own leadership.</li>
+<li><strong>Fight now vs. save capital.</strong> Every fight you win costs capital. Pick the fights that change the outcome.</li>
+<li><strong>Formal vs. informal routes.</strong> Informal routes are fast. They leave no record, so a decision made in a hallway can be undone in a review.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>The invisible approver.</strong> A partner bank, a carrier or a regulator-facing team blocks a launch late. Nobody mapped them.</li>
+<li><strong>Capital spent on small things.</strong> The leader argues every point and has nothing left for the one that matters.</li>
+<li><strong>Sponsor without delivery.</strong> A sponsor backs you once. You miss, and they stop.</li>
+<li><strong>Conflict without an owner.</strong> Two functions argue for weeks because nobody holds the decision.</li>
+<li><strong>The org chart illusion.</strong> The leader assumes the boss of a function makes its decisions. A trusted senior expert often does.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>A stakeholder map works best as a shared, plain file. Keep it next to the proposal.</p>
+<pre><code class="language-yaml">initiative: instant-payouts
+decision_owner: VP Product
+decision_date: 2026-11-15
+stakeholders:
+  - function: Treasury
+    person_role: Head of Treasury
+    measured_on: [liquidity buffer, funding cost]
+    interest: &quot;never pre-fund beyond the approved limit&quot;
+    position_today: neutral
+    pre_wire: done
+  - function: Risk
+    person_role: Head of Merchant Risk
+    measured_on: [loss rate, dispute rate]
+    interest: &quot;no loss above the agreed cap&quot;
+    position_today: against
+    ask: &quot;eligibility rules plus a daily cap&quot;
+    pre_wire: scheduled
+  - function: Partner bank
+    person_role: Partner compliance lead
+    approval_required: true
+    lead_time_days: 30
+</code></pre>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Write two sentences on how the company makes money. Get a finance partner to correct them.</li>
+<li class="task todo">List every approval a launch in your area needs, including outside partners.</li>
+<li class="task todo">For your next big decision, list each stakeholder's measure, fear and need.</li>
+<li class="task todo">Name the decision owner for each open cross-team conflict.</li>
+<li class="task todo">Pre-wire every key stakeholder alone before the decision meeting.</li>
+<li class="task todo">Name your sponsor. If you cannot, decide whose sponsor you want to earn.</li>
+<li class="task todo">Count your political capital spends this quarter. Cut the ones on small points.</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="teams-and-collaboration.html">Teams and collaboration</a> — decision rights that stop conflicts without owners.</li>
+<li><a href="executive-influence-and-stakeholders.html">Executive influence and stakeholders</a> — the executive table and negotiation.</li>
+<li><a href="../product-sense/communication.html">Communication</a> — influencing stakeholders with artifacts and story.</li>
+<li><a href="../technical-product-management/working-with-engineering.html">Working with engineering</a> — the closest partnership a product leader has.</li>
+<li><a href="../system-design/transactional-and-financial.html">Transactional and financial systems</a> — how payment systems settle and pay out.</li>
+</ul>
+<h2 id="sources-and-notes">Sources and notes</h2>
+<ul>
+<li>The instant payouts example, its numbers and the stakeholder map are invented and illustrative. The 1% fee and 5% funding rate are assumed.</li>
+<li>Adyen, help article <em>What is the interchange ++?</em>: the card's interchange, plus scheme fees, plus Adyen's own fee. <a href="https://help.adyen.com/knowledge/payment-methods/explore-payment-methods/what-is-the-interchange">Adyen</a>. As of 2026-10.</li>
+<li>SoFi, press release of 2021-03-09 announcing the agreement to acquire Golden Pacific Bancorp, a community bank: to accelerate its pursuit of a national bank charter, and to lower its cost of funding versus a non-bank. <a href="https://www.sofi.com/newsroom/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/">SoFi</a>. As of 2026-10.</li>
+<li>Maplebear (Instacart), Form 10-K for fiscal 2025 (filed 2026-02): revenue consists of transaction revenue and advertising and other revenue. <a href="https://www.sec.gov/Archives/edgar/data/1579091/000157909126000018/cart-20251231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): fixed-fee model and Giveback. <a href="https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Walmart, Form 10-K for fiscal 2026 (year ended 2026-01-31, filed 2026-03): comparable sales include eCommerce sales, measured as all sales initiated digitally. <a href="https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm">Form 10-K</a>. As of 2026-10.</li>
+<li>Nu Holdings, second quarter 2023 results (2023-08-15): monthly cost to serve per active customer of $0.8, below one US dollar. <a href="https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results">Nu newsroom</a>. As of 2026-10.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="foundations-and-assessment.html"><span class="lbl">← Previous</span><span class="ttl">Foundations: business acumen and the T-shaped leader</span></a><a class="navcard next" href="teams-and-collaboration.html"><span class="lbl">→ Next</span><span class="ttl">Teams and collaboration: structures, rhythms and decision rights</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#mental-model-the-road-map-and-the-traffic">Mental model: the road map and the traffic</a><a class="h2" href="#how-the-company-actually-makes-money">How the company actually makes money</a><a class="h2" href="#the-formal-organization-where-decisions-are-made">The formal organization: where decisions are made</a><a class="h2" href="#the-informal-organization-trust-capital-and-sponsors">The informal organization: trust, capital and sponsors</a><a class="h2" href="#managing-conflict">Managing conflict</a><a class="h2" href="#influence-across-functions">Influence across functions</a><a class="h2" href="#worked-example-launching-instant-payouts-at-a-payments-company">Worked example: launching instant payouts at a payments company</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources-and-notes">Sources and notes</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>
