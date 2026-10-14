@@ -86,6 +86,6 @@ The order is money first. The first four lessons give you the numbers that every
 14. [**Leading leaders and org design**](./leading-leaders-and-org-design.md) — the org-design process, the cost of a reorg, the general-manager model, leveling and calibration.
 15. [**Executive influence and stakeholders**](./executive-influence-and-stakeholders.md) — the executive narrative, how the board works, and negotiation in numbers.
 
-Each lesson has a **🎯 For the product leader** briefing, a labelled worked example, examples across the six domains, an "Under the hood" section with a formula or template, and a Sources list.
+Each lesson has a **🎯 For the product leader** briefing, a labelled worked example, examples across the six domains, and an "Under the hood" section with a formula or template.
 
 **📌 Close out the module:** [Recap & real-world examples](./recap.md), which ends with a self-test. Then re-take the <a href="assessment.html">self-assessment</a> to see what moved.

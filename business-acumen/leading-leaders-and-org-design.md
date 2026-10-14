@@ -372,9 +372,3 @@ review_on: 2027-06-30
 - [How systems are built](../technical-product-sense/how-systems-are-built.md) — the architecture your org will mirror.
 - [Foundations and framework](../system-design/foundations-and-framework.md) — how systems are designed at scale.
 - [Working with engineering](../technical-product-management/working-with-engineering.md) — the partnership at team level.
-
-## Sources and notes
-
-- The lending reorg example, its criteria, its costs and all its numbers are invented and illustrative. All inputs are assumed. The layer, cost and payback arithmetic can be recomputed with the code above.
-- The leveling rubric, the calibration steps and the calibration example are illustrative. They describe common practice, not any company's ladder.
-- Block, Form 10-K for fiscal 2025 (filed 2026-02): the Square and Cash App ecosystems; gross profit of $10.4 billion, of which Cash App $6.3 billion and Square $3.9 billion. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm). As of 2026-10.
