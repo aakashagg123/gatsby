@@ -1,0 +1,60 @@
+<style>
+.ba-gtm{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:24px 22px 20px;margin:26px 0;font-family:inherit;text-align:left}
+.ba-gtm-title{font-size:var(--font-text-2xs-size);letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  color:var(--color-text-secondary);margin:0 0 4px}
+.ba-gtm-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-gtm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.ba-gtm-card{border-radius:var(--radius-lg);padding:12px 12px 10px;border:1px solid var(--color-border);background:var(--color-surface)}
+.ba-gtm-chip{display:inline-block;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:var(--radius-full);padding:3px 10px;border:1px solid transparent;margin:0 0 8px}
+.ba-gtm-who{font-size:var(--font-text-xs-size);color:var(--color-text);margin:0 0 8px;line-height:1.4}
+.ba-gtm-row{display:flex;justify-content:space-between;gap:8px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary);
+  margin:0 0 3px;line-height:1.4}
+.ba-gtm-row b{font-family:var(--font-mono);color:var(--color-text);font-weight:600}
+.ba-gtm-fit{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--color-border);line-height:1.4}
+.ba-gtm-ss .ba-gtm-chip{background:var(--color-background-info-surface);color:var(--color-text-info);border-color:var(--color-border-info-surface)}
+.ba-gtm-ss{border-top:3px solid var(--color-border-info-outline)}
+.ba-gtm-sl .ba-gtm-chip{background:var(--color-background-discovery-surface);color:var(--color-text-discovery);border-color:var(--color-border-discovery-surface)}
+.ba-gtm-sl{border-top:3px solid var(--color-border-discovery-outline)}
+.ba-gtm-pl .ba-gtm-chip{background:var(--color-background-caution-surface);color:var(--color-text-caution);border-color:var(--color-border-caution-surface)}
+.ba-gtm-pl{border-top:3px solid var(--color-border-caution-outline)}
+.ba-gtm-em .ba-gtm-chip{background:var(--color-background-success-surface);color:var(--color-text-success);border-color:var(--color-border-success-surface)}
+.ba-gtm-em{border-top:3px solid var(--color-border-success-outline)}
+.ba-gtm-foot{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:14px 0 0;padding-top:10px;border-top:1px solid var(--color-border)}
+</style>
+<div class="ba-gtm" role="figure" aria-label="Four go-to-market motions for a payments company. Self-serve: contribution 60 dollars a month, CAC 400 dollars, payback 6.7 months. Sales-led: contribution 600 dollars a month, CAC 10,071 dollars, payback 16.8 months. Partner-led: 25 percent revenue share, contribution 350 dollars, CAC 4,250 dollars, payback 12.1 months. Embedded: 30 percent revenue share, contribution 53.33 dollars, CAC 400 dollars, payback 7.5 months. Illustrative, all inputs assumed.">
+  <p class="ba-gtm-title">Four go-to-market motions</p>
+  <p class="ba-gtm-sub">Per merchant, payments company. Illustrative; all inputs assumed. Contribution is per month, after any revenue share and the cost to serve.</p>
+  <div class="ba-gtm-grid">
+    <div class="ba-gtm-card ba-gtm-ss"><span class="ba-gtm-chip">Self-serve</span>
+      <p class="ba-gtm-who">Customer signs up alone. Small online merchant.</p>
+      <p class="ba-gtm-row">Revenue share<b>0%</b></p>
+      <p class="ba-gtm-row">Contribution<b>$60</b></p>
+      <p class="ba-gtm-row">CAC<b>$400</b></p>
+      <p class="ba-gtm-row">Payback<b>6.7 mo</b></p>
+      <p class="ba-gtm-fit"><b>Fits:</b> simple product, small deals. <b>Breaks:</b> on churn.</p></div>
+    <div class="ba-gtm-card ba-gtm-sl"><span class="ba-gtm-chip">Sales-led</span>
+      <p class="ba-gtm-who">A sales team closes a contract. Mid-sized merchant.</p>
+      <p class="ba-gtm-row">Revenue share<b>0%</b></p>
+      <p class="ba-gtm-row">Contribution<b>$600</b></p>
+      <p class="ba-gtm-row">CAC<b>$10,071</b></p>
+      <p class="ba-gtm-row">Payback<b>16.8 mo</b></p>
+      <p class="ba-gtm-fit"><b>Fits:</b> large deals. <b>Breaks:</b> below about $933 a month of net revenue.</p></div>
+    <div class="ba-gtm-card ba-gtm-pl"><span class="ba-gtm-chip">Partner-led</span>
+      <p class="ba-gtm-who">A partner refers or resells. Mid-sized merchant.</p>
+      <p class="ba-gtm-row">Revenue share<b>25%</b></p>
+      <p class="ba-gtm-row">Contribution<b>$350</b></p>
+      <p class="ba-gtm-row">CAC<b>$4,250</b></p>
+      <p class="ba-gtm-row">Payback<b>12.1 mo</b></p>
+      <p class="ba-gtm-fit"><b>Fits:</b> partner holds the trust. <b>Breaks:</b> a share for life costs more than it saves.</p></div>
+    <div class="ba-gtm-card ba-gtm-em"><span class="ba-gtm-chip">Embedded</span>
+      <p class="ba-gtm-who">Sold inside the merchant's software. Small merchant.</p>
+      <p class="ba-gtm-row">Revenue share<b>30%</b></p>
+      <p class="ba-gtm-row">Contribution<b>$53.33</b></p>
+      <p class="ba-gtm-row">CAC<b>$400</b></p>
+      <p class="ba-gtm-row">Payback<b>7.5 mo</b></p>
+      <p class="ba-gtm-fit"><b>Fits:</b> buying happens in the software. <b>Breaks:</b> if the partner switches provider.</p></div>
+  </div>
+  <p class="ba-gtm-foot">Lower acquisition cost usually means a larger revenue share. Compare motions on lifetime contribution after the share, and on payback.</p>
+</div>

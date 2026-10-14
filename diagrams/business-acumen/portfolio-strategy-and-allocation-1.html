@@ -1,0 +1,52 @@
+<style>
+.ba-opt{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:var(--radius-2xl);padding:28px 22px 20px;margin:26px 0;font-family:inherit;text-align:left;position:relative}
+.ba-opt-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-surface);color:var(--color-text-discovery);
+  border:1px solid var(--color-border-discovery-surface);font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;border-radius:var(--radius-full);padding:3px 12px}
+.ba-opt-title{font-size:var(--font-text-sm-size);font-weight:var(--font-weight-semibold);color:var(--color-text);margin:0 0 4px}
+.ba-opt-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-opt-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+.ba-opt-col{display:flex;flex-direction:column;gap:8px}
+.ba-opt-step{font-size:var(--font-text-2xs-size);letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--color-text-tertiary);margin:0}
+.ba-opt-node{border-radius:var(--radius-lg);border:1px solid var(--color-border);padding:10px 10px 8px;background:var(--color-surface)}
+.ba-opt-node p{margin:0;font-size:var(--font-text-xs-size);color:var(--color-text-secondary);line-height:1.4}
+.ba-opt-node .ba-opt-name{font-size:var(--font-text-sm-size);font-weight:650;color:var(--color-text);margin:0 0 4px}
+.ba-opt-node b{font-family:var(--font-mono);color:var(--color-text);font-weight:600}
+.ba-opt-go{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.ba-opt-stop{background:var(--color-surface-secondary)}
+.ba-opt-cost{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-surface)}
+.ba-opt-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:16px 0 0}
+.ba-opt-box{border-radius:var(--radius-lg);border:1px solid var(--color-border);padding:10px 12px}
+.ba-opt-box p{margin:0 0 3px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary);display:flex;justify-content:space-between;gap:8px}
+.ba-opt-box p b{font-family:var(--font-mono);color:var(--color-text)}
+.ba-opt-box .ba-opt-name{display:block;font-size:var(--font-text-sm-size);font-weight:650;color:var(--color-text);margin:0 0 6px}
+.ba-opt-win{border-top:3px solid var(--color-border-success-outline)}
+.ba-opt-win p b.ba-opt-big{color:var(--color-text-success)}
+.ba-opt-foot{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:14px 0 0;padding-top:10px;border-top:1px solid var(--color-border)}
+@media (max-width:640px){.ba-opt-flow{grid-template-columns:1fr 1fr}.ba-opt{padding:24px 14px 16px}}
+</style>
+<div class="ba-opt" role="figure" aria-label="Decision tree for the staged buy now, pay later bet with an option to expand. Pilot costs 2 million dollars. With 50 percent success, scale the core for 8 million dollars, worth 30 million dollars; with 50 percent failure, stop. After success, a 1 million dollar test of merchant financing; with 40 percent good news, expand for 12 million dollars, worth 40 million dollars; otherwise do not expand. The expansion option is worth 10.2 million dollars. Commit fully: 6 million dollars without the option, 11.1 million with it. Staged: 9 million without, 14.1 million with. Illustrative, no time value of money.">
+  <span class="ba-opt-chip">Option tree</span>
+  <p class="ba-opt-title">Staged BNPL bet, with the option to expand</p>
+  <p class="ba-opt-sub">Illustrative. All inputs assumed. Values in $ millions, ignoring the time value of money.</p>
+  <div class="ba-opt-flow">
+    <div class="ba-opt-col"><p class="ba-opt-step">Stage 1</p>
+      <div class="ba-opt-node ba-opt-cost"><p class="ba-opt-name">Pilot</p><p>Cost <b>−2</b></p><p>Reveals if the core works</p></div></div>
+    <div class="ba-opt-col"><p class="ba-opt-step">Gate 1</p>
+      <div class="ba-opt-node ba-opt-go"><p class="ba-opt-name">50% success</p><p>Scale for <b>−8</b></p><p>Core worth <b>30</b></p></div>
+      <div class="ba-opt-node ba-opt-stop"><p class="ba-opt-name">50% fail</p><p>Stop: <b>0</b></p></div></div>
+    <div class="ba-opt-col"><p class="ba-opt-step">Stage 2</p>
+      <div class="ba-opt-node ba-opt-cost"><p class="ba-opt-name">Test merchant financing</p><p>Cost <b>−1</b></p><p>Only on the success path</p></div></div>
+    <div class="ba-opt-col"><p class="ba-opt-step">Gate 2</p>
+      <div class="ba-opt-node ba-opt-go"><p class="ba-opt-name">40% good</p><p>Expand for <b>−12</b></p><p>Worth <b>40</b></p></div>
+      <div class="ba-opt-node ba-opt-stop"><p class="ba-opt-name">60% weak</p><p>Do not expand: <b>0</b></p></div></div>
+  </div>
+  <div class="ba-opt-res">
+    <div class="ba-opt-box"><span class="ba-opt-name">Commit fully now</span>
+      <p>Core only <b>6.0</b></p><p>With expansion option <b>11.1</b></p></div>
+    <div class="ba-opt-box ba-opt-win"><span class="ba-opt-name">Stage it</span>
+      <p>Core only <b>9.0</b></p><p>With expansion option <b class="ba-opt-big">14.1</b></p></div>
+  </div>
+  <p class="ba-opt-foot">Expansion option = −1 + 0.4 × (40 − 12) = 10.2, reachable only after the core succeeds. It counts only if gate 2 is written and enforced.</p>
+</div>
