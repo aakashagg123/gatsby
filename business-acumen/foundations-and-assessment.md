@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 **Business acumen** is the skill of seeing how a decision moves the business. You know how the company makes money. You know which numbers matter. You can predict how a product change will show up in revenue, cost, risk and cash.
@@ -117,7 +119,7 @@ A Group PM has spent six years in eCommerce marketplaces. She moves to a consume
 ## Tradeoffs and decisions
 
 - **Breadth vs. depth.** Breadth makes you mobile across companies. Depth makes you valuable inside one industry. The cost of breadth is shallow judgement on the hard calls. The cost of depth is a narrower market for your skills.
-- **One domain vs. a neighbour.** Moving from Payments to Lending reuses half your depth. Moving from Payments to Retail reuses less. The cost of a far move is a slower first year.
+- **One domain vs. a neighbour.** Moving from Payments to Lending reuses much of your depth, such as risk, fraud and regulation. Moving from Payments to Retail reuses less. The cost of a far move is a slower first year.
 - **Acumen vs. craft.** Time spent learning finance is time not spent on discovery or design. At VP level the balance shifts toward acumen. Your teams hold the craft, and you hold the tradeoffs.
 - **Self-study vs. a partner.** Learning with a finance or risk partner is faster and builds a relationship. It costs you some exposure, because they see what you do not know.
 
@@ -169,8 +171,7 @@ The radar chart plots each score as a distance from the centre on twelve spokes.
 
 - The worked example, the person and all scores are invented and illustrative.
 - The scoring formula is the one implemented in this track's self-assessment page.
-- Domain facts in the table are general descriptions of how these industries work. As of 2026-10.
-- DoorDash, Form 10-K for fiscal 2024 (net revenue margin defined as revenue divided by Marketplace GOV; 13.4% for 2024). [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1792789&type=10-K).
-- Lemonade, Form 10-K for fiscal 2020 (gross loss ratio 161% in 2017, 113% in 2018, 79% in 2019, 71% in 2020). [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K).
-- Upstart, Form 10-K for fiscal 2022 (use of its balance sheet in response to funding constraints). [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1647639&type=10-K).
-- Note: sec.gov could not be opened from the build environment (blocked by the network proxy). These figures were corroborated from search-result excerpts of the filings, as of 2026-10. The fact-check should confirm them against the filings.
+- Domain facts in the table are general descriptions of how these industries work. The note on how much depth carries from one domain to another is general reasoning, not a measured figure. As of 2026-10.
+- DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Upstart, Form 10-K for fiscal 2022 (filed 2023-02): in response to constrained loan funding, it increased the use of its balance sheet to fund loans. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm). As of 2026-10.

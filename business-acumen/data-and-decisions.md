@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Senior leaders rarely lack data. They lack time, and the data they have is partial, late or biased. The skill is to decide well **before** the data is complete. That means knowing what kind of data you have, what it cannot show, and when more of it would change the decision.
@@ -180,7 +182,6 @@ Expected value (EV) for a bet with known odds: EV = Σ (probability × value). U
 ## Sources and notes
 
 - The retail scoring example and all its numbers are invented and illustrative. The arithmetic can be recomputed with the code above.
-- Lemonade, Form 10-K for fiscal 2020: gross loss ratio by year, 2017 to 2020. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- Walmart, Form 10-K: definition of comparable sales, including the 12-month rule and eCommerce sales, and the note that other retailers calculate it differently. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=104169&type=10-K). As of 2026-10.
-- Root, Forms 10-K: use of telematics in pricing, and the choice not to quote the riskiest drivers. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1788882&type=10-K). As of 2026-10.
-- Note: sec.gov could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the filings.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Walmart, Form 10-K for fiscal 2026 (year ended 2026-01-31, filed 2026-03): comparable sales include stores and clubs open for the previous 12 months, and eCommerce sales; the method of calculating comparable sales varies across the retail industry. [Form 10-K](https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm). As of 2026-10.
+- Root, Form 10-K for fiscal 2025 (filed 2026-02): use of telematics and other data in pricing, and the choice not to quote the drivers its models score as riskiest. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1788882/000178888226000014/root-20251231.htm). As of 2026-10.

@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **product** is the whole offer a customer buys: the core function, the package around it, the price, the service and the promise. Features are only part of it. Marketing is how the offer reaches the right customer with the right message. At leadership level, both are business decisions. You decide which opportunities get a business case, what to build, buy or partner for, and how the product goes to market.
@@ -52,13 +54,13 @@ If the answers are strong, write the full business case with NPV and a sensitivi
 
 Most products should be built in small steps: test the riskiest assumption first, release to a small group, learn, then scale. In regulated domains, some steps need a gate before they go live. Examples are a new credit product, new customer disclosures or a new insurance rate. Plan the gate in from the start. Do not discover it a week before launch.
 
-Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's website now says the program has ended, and points customers to virtual try-on and its stores instead. The offer changed as the channel mix changed.
+Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. Its 10-K for 2025 names Virtual Try-On as part of its offer.
 
 ## Product design and packaging
 
 **Packaging** decides how features are grouped and sold: one product or many, tiers, bundles and add-ons. Packaging is a pricing decision in disguise. [Lesson 11](./monetization-and-business-models.md) covers it in depth.
 
-Faire, a wholesale marketplace, packages risk relief into its offer to independent retailers. Its help pages describe net 60 payment terms for eligible retailers, and free returns on the first order with each brand. Both lower the risk of trying a new brand. Faire absorbs some of that risk itself as part of the offer.
+A wholesale marketplace can package risk relief into its offer to independent retailers. Two common forms are delayed payment terms and easy returns on a first order from a new brand. Both lower the retailer's risk of trying a new brand. The marketplace absorbs some of that risk itself as part of the offer. (This is a general pattern, not a description of one company's current terms.)
 
 ## Make, buy or partner
 
@@ -70,7 +72,7 @@ Faire, a wholesale marketplace, packages risk relief into its offer to independe
 
 In regulated domains, partnership is common. A fintech may use a partner bank to hold deposits or issue cards. An insurance agency may sell on a carrier's licence and capital. A retailer may use an outside lender for financing at checkout.
 
-Target took the buy route for same-day delivery. In December 2017 it agreed to acquire Shipt, a same-day delivery platform, for $550 million. Building a delivery network from scratch would have taken years.
+Target took the buy route for same-day delivery. In December 2017 it agreed to acquire Shipt, a same-day delivery platform, for $550 million. As general reasoning, not a Target statement: buying an existing network can be faster than building one.
 
 ## The marketing cycle and go-to-market
 
@@ -190,8 +192,10 @@ A one-page opportunity assessment template:
 ## Sources and notes
 
 - The identity-verification case and all its numbers are invented and illustrative.
-- Warby Parker, Form S-1 (2021): Home Try-On program; Warby Parker's Home Try-On page says the program has ended. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1504776&type=S-1) and [Warby Parker](https://www.warbyparker.com/home-try-on). As of 2026-10.
-- Faire, retailer FAQ: net 60 terms for eligible retailers; free returns on the first order with each brand. [Faire](https://www.faire.com/faq/retailers). As of 2026-10.
-- Target's agreement to acquire Shipt for $550 million (December 2017), as reported in press coverage of Target's announcement. As of 2026-10.
-- US utility patent term (generally 20 years from the filing date) and the US rule that lenders give declined applicants the principal reasons for adverse action are matters of US law (35 U.S.C. 154; Regulation B, 12 CFR 1002.9).
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the documents.
+- Warby Parker, Form S-1 (2021): Home Try-On lets customers pick five pairs of frames on the website and try them at home for five days for free. [Form S-1](https://www.sec.gov/Archives/edgar/data/1504776/000162828021017546/warbyparkerincs-1.htm). As of 2026-10.
+- Warby Parker, Form 10-Q for the quarter ended 2026-06-30 (filed 2026-08-06): the decision in the second quarter of 2025 to sunset Home Try-On at the end of 2025. [Form 10-Q](https://www.sec.gov/Archives/edgar/data/1504776/000150477626000019/wrby-20260630.htm). As of 2026-10.
+- Warby Parker, Form 10-K for fiscal 2025 (filed 2026-02): Virtual Try-On as part of its offer. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1504776/000150477626000006/wrby-20251231.htm). As of 2026-10.
+- The wholesale-marketplace example of risk relief is a general pattern, not a description of one company's terms.
+- Target, press release of 2017-12-13: agreement to acquire Shipt for $550 million in cash. [Target](https://corporate.target.com/press/release/2017/12/target-to-acquire-same-day-delivery-platform-shipt,-inc-to-bolster-fulfillment-capabilities). As of 2026-10.
+- US utility patent term: generally 20 years from the filing date. [35 U.S.C. 154](https://www.law.cornell.edu/uscode/text/35/154) and [US Patent and Trademark Office, Manual of Patent Examining Procedure, section 2701](https://www.uspto.gov/web/offices/pac/mpep/s2701.html). As of 2026-10.
+- US adverse action notices: a creditor must give a declined applicant the principal reasons, or tell them how to ask for them. [Regulation B, 12 CFR 1002.9 (CFPB)](https://www.consumerfinance.gov/rules-policy/regulations/1002/9/). As of 2026-10.

@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Performance management is a loop: set targets, measure, review, act. A **key performance indicator (KPI)** is a measure you have chosen to steer by. At leadership level, the hard part is not choosing metrics. It is choosing a small, balanced set that ties product work to profit, and then acting on what it shows.
@@ -172,10 +174,9 @@ leading_indicators: [quote_volume, bind_rate_by_channel]
 ## Sources and notes
 
 - The insurer example and all its numbers are invented and illustrative.
-- Stripe, 2024 annual letter summary in the Stripe newsroom: total payment volume of $1.4 trillion, up 38%. [Stripe](https://stripe.com/en-pl/newsroom/news/stripe-2024-update). As of 2026-10.
-- Affirm, earnings releases filed on Form 8-K: revenue less transaction costs as a percentage of GMV. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1820953&type=8-K). As of 2026-10.
-- DoorDash, Form 10-K for fiscal 2024: net revenue margin of 13.4%. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1792789&type=10-K). As of 2026-10.
-- Lemonade, Form 10-K for fiscal 2020: gross loss ratio of 71% for 2020. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- Walmart, Form 10-K: comparable sales definition and note on comparability. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=104169&type=10-K). As of 2026-10.
-- Nu Holdings, second quarter 2023 results. [Nubank](https://international.nubank.com.br/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results/). As of 2026-10.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the documents.
+- Stripe, *Stripe's 2024 annual letter* newsroom post (2025-02-27): total payment volume of $1.4 trillion in 2024, up 38%. [Stripe](https://stripe.com/en-pl/newsroom/news/stripe-2024-update). As of 2026-10.
+- Affirm, fiscal third-quarter 2026 shareholder letter (Exhibit to Form 8-K, quarter ended 2026-03-31): revenue less transaction costs as a percentage of GMV, 4.3% for the quarter. [Shareholder letter](https://www.sec.gov/Archives/edgar/data/1820953/000162828026032105/affirmfq326shareholderle.htm). As of 2026-10.
+- DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Walmart, Form 10-K for fiscal 2026 (year ended 2026-01-31, filed 2026-03): comparable sales definition, and the note that the method varies across the retail industry. [Form 10-K](https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm). As of 2026-10.
+- Nu Holdings, second quarter 2023 results (2023-08-15): monthly average revenue per active customer of $9.3, and cost to serve of $0.8. [Nu newsroom](https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results). As of 2026-10.

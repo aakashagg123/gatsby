@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Strategy is a set of choices that fit together. Which customers will we serve? What offer will we make them? Why will we win against the alternatives? And what will we choose **not** to do? A strategy that does not exclude anything is a wish list.
@@ -78,7 +80,7 @@ A market's profit potential depends on five forces. The stronger the forces, the
 
 Two public examples make the forces concrete:
 
-- **Buyer power through a marketplace.** Policybazaar, run by PB Fintech in India, is an online insurance marketplace. It earns commissions and fees from insurers for policies sold through it. When customers compare insurers side by side, buyers gain power and insurers compete harder on price.
+- **Buyer power through a marketplace.** An online insurance marketplace lets customers compare policies from many insurers in one place. It usually earns commissions or fees from the insurers whose policies it sells. When customers compare insurers side by side, buyers gain power and insurers compete harder on price. (This is a general pattern, not a description of one company.)
 - **Supplier power in insurance.** Lemonade's 2020 filings describe its reliance on reinsurance. Reinsurers take a share of the risk in exchange for a share of the premium. A small insurer depends on that supply of capacity, so reinsurers hold real power over its economics.
 
 ## SWOT and synthesis
@@ -183,8 +185,8 @@ Keep the scoring simple and the reasons written. The written reasons matter more
 ## Sources and notes
 
 - The renters insurer, its options and all numbers are invented and illustrative.
-- Wise, *Revealing our 2019 annual report* (blog): average price fell from 0.73% in 2016 to 0.67% in 2018; use of the mid-market rate. [Wise](https://wise.com/gb/blog/annualreport2019). As of 2026-10.
-- PB Fintech (Policybazaar), company disclosures describing its insurance marketplace and commission-based revenue. [BSE filing](https://www.bseindia.com/xml-data/corpfiling/AttachHis/d901abd2-8970-43e3-a81c-2cdc9feb982f.pdf). As of 2026-10.
-- Lemonade, Form 10-K for fiscal 2020: reliance on reinsurance. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- MercadoLibre, Form 10-K: Commerce and Fintech revenue streams; Fintech includes Mercado Pago and credit. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1099590&type=10-K). As of 2026-10.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the documents.
+- Wise, *Revealing our 2019 annual report* (blog): average price fell from 0.73% of the transfer amount in 2016 to 0.67% in 2018. [Wise blog](https://wise.com/gb/blog/annualreport2019). As of 2026-10.
+- Wise, pricing page for sending money: customers get the mid-market rate, with no markup on the rate, and a separate fee. [Wise pricing](https://wise.com/gb/pricing/send-money). As of 2026-10.
+- The insurance-marketplace example of buyer power is a general description of how such marketplaces work, not a description of one company.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): reliance on reinsurance; it typically retains a fixed fee and excess claims are generally offloaded to reinsurers. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- MercadoLibre, Form 10-K for fiscal 2025 (filed 2026-02): Commerce and Fintech revenue streams; Fintech includes the Mercado Pago platform and credit. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm). As of 2026-10.

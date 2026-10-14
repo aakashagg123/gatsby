@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Every company has two maps. The **formal organization** is the org chart: who reports to whom, who owns which budget. The **informal organization** is the network of trust, favours and information that decides what actually happens. A product leader needs both maps, and one more: a clear view of how the company makes money.
@@ -49,10 +51,10 @@ Every business has a revenue engine, a cost base, and one or two constraints tha
 | Domain | How revenue is earned | What limits growth | A public example |
 | --- | --- | --- | --- |
 | **Payments** | A fee on each payment processed | Fraud, disputes and the fees paid to card networks and issuers | Adyen prices many card payments as **interchange++**: the card's interchange fee, plus network fees, plus Adyen's own fee. Its markup is visible apart from the pass-through costs. |
-| **Lending** | Interest and fees on loans | Credit losses and the cost of funding the loans | SoFi agreed in 2021 to buy a small bank to get a national bank charter. The aim was to fund loans with deposits, a cheaper source than the market funding a non-bank relies on. |
+| **Lending** | Interest and fees on loans | Credit losses and the cost of funding the loans | SoFi agreed in 2021 to buy a community bank to accelerate its pursuit of a national bank charter. The aim was to fund loans with deposits, a cheaper source than the market funding a non-bank relies on. |
 | **eCommerce** | A share of each order, plus ads and subscriptions | Delivery cost, and the supply of merchants and couriers | Instacart reports two revenue lines: transaction revenue and advertising and other revenue. Brands pay to reach shoppers. |
-| **InsurTech** | Premium, minus claims and expenses | Loss ratio, capital and reinsurance | Lemonade's 2020 filings described keeping a fixed share of premium as its fee. The rest paid claims and reinsurance. Any leftover went to charities its customers chose. |
-| **Retail** | Product margin on goods sold | Inventory, store costs and markdowns | Walmart counts eCommerce sales, including orders fulfilled through its stores, in its comparable-sales figure. Store and online teams share one scorecard. |
+| **InsurTech** | Premium, minus claims and expenses | Loss ratio, capital and reinsurance | Lemonade's 2020 filings described keeping a fixed share of premium as its fee. The rest paid claims and reinsurance. It aimed to give any leftover money to charities its customers chose. |
+| **Retail** | Product margin on goods sold | Inventory, store costs and markdowns | Walmart's comparable-sales figure includes eCommerce sales, not only sales in its stores. In general, a shared metric like this can help align store and online teams. |
 | **FinTech** | Fees, interchange and interest on balances | Regulation, partner banks and cost to serve | Nubank reports its monthly cost to serve each active customer. In 2023 it said that cost stayed below one US dollar. |
 
 Once you know the engine, you know which functions hold the levers. In a lender, Credit Risk owns the approval cutoff. In a payments company, the Risk team owns fraud rules. In a retailer, Merchandising owns the range and the stock budget.
@@ -193,10 +195,9 @@ stakeholders:
 ## Sources and notes
 
 - The instant payouts example, its numbers and the stakeholder map are invented and illustrative. The 1% fee and 5% funding rate are assumed.
-- Adyen, global payment processing page describing its "Interchange ++" model. [Adyen](https://www.adyen.com/en_AU/global-payment-processing). As of 2026-10.
-- SoFi, press release announcing the agreement to acquire Golden Pacific Bancorp (March 2021). [SoFi](https://www.sofi.com/press/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/). As of 2026-10.
-- Maplebear (Instacart), Form 10-K: revenue consists of transaction revenue and advertising and other revenue. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1579091&type=10-K). As of 2026-10.
-- Lemonade, Form 10-K for fiscal 2020: fixed-fee model and Giveback. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- Walmart, Form 10-K: comparable sales include eCommerce sales. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=104169&type=10-K). As of 2026-10.
-- Nu Holdings, second quarter 2023 results: monthly cost to serve per active customer below one US dollar. [Nubank](https://international.nubank.com.br/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results/). As of 2026-10.
-- Note: the hosts above could not be opened from the build environment (blocked by the network proxy). Each fact was corroborated from search-result excerpts of the named document.
+- Adyen, help article *What is the interchange ++?*: the card's interchange, plus scheme fees, plus Adyen's own fee. [Adyen](https://help.adyen.com/knowledge/payment-methods/explore-payment-methods/what-is-the-interchange). As of 2026-10.
+- SoFi, press release of 2021-03-09 announcing the agreement to acquire Golden Pacific Bancorp, a community bank: to accelerate its pursuit of a national bank charter, and to lower its cost of funding versus a non-bank. [SoFi](https://www.sofi.com/newsroom/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/). As of 2026-10.
+- Maplebear (Instacart), Form 10-K for fiscal 2025 (filed 2026-02): revenue consists of transaction revenue and advertising and other revenue. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1579091/000157909126000018/cart-20251231.htm). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): fixed-fee model and Giveback. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Walmart, Form 10-K for fiscal 2026 (year ended 2026-01-31, filed 2026-03): comparable sales include eCommerce sales, measured as all sales initiated digitally. [Form 10-K](https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm). As of 2026-10.
+- Nu Holdings, second quarter 2023 results (2023-08-15): monthly cost to serve per active customer of $0.8, below one US dollar. [Nu newsroom](https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results). As of 2026-10.

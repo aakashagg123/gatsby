@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **business model** is how a company turns value for customers into revenue, and revenue into profit. **Monetization** is the set of choices inside it: what you charge for, how much, and how you package it. At leadership level, these choices often matter more than any single feature. The same product can be a great business or a poor one, depending on the price metric and the unit economics.
@@ -70,7 +72,7 @@ Wise shows a transparent package. It says it uses the mid-market exchange rate a
 | **Retail margin** | Product sales | Cost of goods, shrink, markdowns | Gross margin and stock turns | A retailer earns the gap between the shelf price and the landed cost of goods. |
 | **Advertising** | Fees from brands | Sales and ad-tech costs | Ad revenue per user | Instacart reports advertising and other revenue as a separate line from transaction revenue. |
 
-**A note on interchange.** On a card payment, the merchant's bank pays an **interchange** fee to the cardholder's bank. Card networks set the rates. In some places the law caps them. The European Union caps interchange on consumer debit and credit cards. In the US, a Federal Reserve rule, Regulation II, caps debit interchange for card issuers with $10 billion or more in assets. Smaller issuers are exempt from that cap. That exemption is one reason some US fintechs issue debit cards through smaller partner banks. The US cap has been subject to a proposed revision and to litigation, so check its current level before you model it.
+**A note on interchange.** On a card payment, the merchant's bank pays an **interchange** fee to the cardholder's bank. Card networks set the rates. In some places the law caps them. The European Union caps interchange on consumer debit and credit cards. In the US, a Federal Reserve rule, Regulation II, caps debit interchange for card issuers with $10 billion or more in assets. Smaller issuers are exempt from that cap. As of 2026-10, the US cap is 21 cents plus 5 basis points of the transaction value, with a 1-cent fraud-prevention adjustment for eligible issuers. The Federal Reserve proposed lowering it in 2023, so check the current level before you model it. A general inference, not a sourced fact: the exemption can make a smaller partner bank attractive to a fintech that issues debit cards, because the bank can earn uncapped interchange.
 
 ## Unit economics
 
@@ -178,14 +180,16 @@ print(unit_econ(1000, 0.006, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (6.5, 1.5, 60.
 ## Sources and notes
 
 - The neobank example, the lending spread and all their rates are invented and illustrative.
-- Shopify, Form 10-K for fiscal 2025: subscription solutions were 24% of total revenue. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1594805&type=10-K). As of 2026-10.
-- DoorDash, Form 10-K for fiscal 2024: net revenue margin of 13.4%. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1792789&type=10-K). As of 2026-10.
-- Adyen, global payment processing page: "Interchange ++" pricing. [Adyen](https://www.adyen.com/en_AU/global-payment-processing). As of 2026-10.
-- Upstart, Forms 10-K: platform and referral fees from lending partners. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1647639&type=10-K). As of 2026-10.
-- Lemonade, Form 10-K for fiscal 2020: fixed fee, then 25% of premiums. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- Maplebear (Instacart), Form 10-K: transaction revenue and advertising and other revenue. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1579091&type=10-K). As of 2026-10.
-- Nu Holdings, second quarter 2023 results. [Nubank](https://international.nubank.com.br/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results/). As of 2026-10.
-- Affirm, investor release stating that it never charges late fees. [Affirm investor relations](https://investors.affirm.com/news-releases/news-release-details/affirm-difference-building-new-kind-payments-network-money-and). As of 2026-10.
-- Wise, pricing pages and 2019 annual report post: mid-market rate and a separate, visible fee. [Wise](https://wise.com/gb/blog/annualreport2019). As of 2026-10.
-- Interchange rules: Regulation (EU) 2015/751 caps consumer debit and credit card interchange in the EU. Regulation II (12 CFR Part 235) caps US debit interchange for issuers with $10 billion or more in assets; the Federal Reserve proposed a revision in 2023, and the rule has faced litigation. The current US cap level was not stated here because its status could not be confirmed from a primary source.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the documents.
+- Shopify, Form 10-K for fiscal 2025 (filed 2026-02): subscription solutions were 24% of total revenues. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm). As of 2026-10.
+- DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm). As of 2026-10.
+- Adyen, help article *What is the interchange ++?*: Adyen's fee shown apart from interchange and card-scheme fees. [Adyen](https://help.adyen.com/knowledge/payment-methods/explore-payment-methods/what-is-the-interchange). As of 2026-10.
+- Upstart, Form 10-K for fiscal 2022 (filed 2023-02): platform and referral fees charged to lending partners at origination, and servicing fees. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): it typically retains a fixed fee, then 25% of premiums. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Maplebear (Instacart), Form 10-K for fiscal 2025 (filed 2026-02): revenue consists of transaction revenue and advertising and other revenue. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1579091/000157909126000018/cart-20251231.htm). As of 2026-10.
+- Nu Holdings, second quarter 2023 results (2023-08-15): monthly average revenue per active customer of $9.3, and monthly cost to serve per active customer of $0.8. [Nu newsroom](https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results). As of 2026-10.
+- Affirm, Form 10-K for fiscal 2026 (year ended 2026-06-30, filed 2026-08-27): it has charged $0 in late fees since its founding. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm). As of 2026-10.
+- Wise, pricing page for sending money: the mid-market rate with no markup, and a separate fee. [Wise pricing](https://wise.com/gb/pricing/send-money). As of 2026-10.
+- EU interchange: Regulation (EU) 2015/751 caps consumer debit card interchange at 0.2% and consumer credit card interchange at 0.3% of the transaction value. Text of the Regulation as adopted by the EU, published on legislation.gov.uk: [Article 3](https://www.legislation.gov.uk/eur/2015/751/article/3/adopted) and [Article 4](https://www.legislation.gov.uk/eur/2015/751/article/4/adopted). As of 2026-10.
+- US debit interchange: Regulation II, 12 CFR 235.3 to 235.5. The cap is 21 cents plus 5 basis points of the transaction value (235.3), plus up to 1 cent for fraud prevention (235.4). Issuers with less than $10 billion in assets, with affiliates, are exempt (235.5). [12 CFR 235.3](https://www.law.cornell.edu/cfr/text/12/235.3), [235.4](https://www.law.cornell.edu/cfr/text/12/235.4) and [235.5](https://www.law.cornell.edu/cfr/text/12/235.5) (Cornell Legal Information Institute); matches the eCFR text current as of 2026-10-09.
+- Federal Reserve, press release of 2023-10-25 proposing to lower the debit interchange cap. [Federal Reserve](https://www.federalreserve.gov/newsevents/pressreleases/bcreg20231025a.htm). As of 2026-10.
+- The link between the small-issuer exemption and fintech partner-bank choice is general reasoning, not a sourced fact.

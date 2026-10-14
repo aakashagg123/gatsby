@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A product leader at Head of Product or VP level owns a **portfolio**: several products and bets at different stages. The job is to allocate money and people across them. That means funding the core, growing what is emerging, buying options on the future, and stopping what no longer earns its place.
@@ -56,14 +58,14 @@ The grid is a starting point. It ignores synergies. A low-share product might be
 At portfolio level, the question is how to gain a whole capability or market, not a single feature.
 
 - **Build** when the capability is core to your advantage and you have time.
-- **Buy** a company when you need speed, a licence, a team or customers. SoFi agreed in 2021 to acquire Golden Pacific Bancorp, a small community bank. SoFi said the deal was a faster route to a national bank charter than applying from scratch. A charter lets a lender fund loans with deposits.
+- **Buy** a company when you need speed, a licence, a team or customers. SoFi agreed in 2021 to acquire Golden Pacific Bancorp, a community bank with about $150 million in assets. SoFi said the deal would accelerate its pursuit of a national bank charter. It already had preliminary conditional approval from the OCC (the US national bank regulator) for a new bank, granted in October 2020. With the deal, it planned to switch that new-bank application to a change-of-control application. A charter lets a lender fund loans with deposits.
 - **Partner** when someone else holds what you need and you can share the economics. Many fintechs reach customers through a partner bank instead of holding a charter.
 
 ## Double down or sunset
 
 Decide in advance what would make you scale a bet, and what would make you stop it. Typical scale signals: improving unit economics, organic demand, and a lead competitors cannot easily close. Typical stop signals: flat adoption after real effort, unit economics that do not improve with scale, and a high cost to maintain.
 
-Shopify shows that a large bet can be reversed. In 2022 it bought Deliverr, a fulfillment company, for about $2.1 billion, to build its logistics business. In May 2023 Shopify agreed to sell its logistics business to Flexport. Press coverage reported that Shopify took an equity stake in Flexport in return, and that Flexport became a logistics partner for Shopify merchants. Shopify moved logistics from "build" to "partner" in about a year.
+Shopify shows that a large bet can be reversed. In 2022 it agreed to buy Deliverr, a fulfillment company, in a deal valued at about $2.1 billion, to build its logistics business. In May 2023 Shopify agreed to sell most of its logistics business to Flexport. Shopify's results release said it would receive stock representing a 13% equity interest in Flexport, on top of its existing stake. Flexport would become the official logistics partner for Shopify. Shopify moved logistics from "build" to "partner" in about a year.
 
 **Sunsetting has obligations in regulated domains.** You cannot just switch a product off.
 
@@ -167,6 +169,6 @@ owner: GM Commerce Financial Services
 ## Sources and notes
 
 - The buy now, pay later example and all its numbers are invented and illustrative.
-- SoFi, press release announcing the agreement to acquire Golden Pacific Bancorp (March 2021). [SoFi](https://www.sofi.com/press/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/). As of 2026-10.
-- Shopify's sale of its logistics business, including Deliverr, to Flexport (agreed May 2023, completed June 2023), from press coverage of the announcement (a secondary source). [CNBC](https://www.cnbc.com/2023/05/04/shopify-offloads-logistics-business-to-flexport.html). Shopify's own filings for 2023 are the primary record. As of 2026-10.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts and press coverage.
+- SoFi, press release of 2021-03-09 announcing the agreement to acquire Golden Pacific Bancorp: a community bank with about $150 million in assets; the deal to accelerate SoFi's pursuit of a national bank charter; OCC preliminary conditional approval of its de novo bank plan in October 2020; the switch to a change-of-control application. [SoFi](https://www.sofi.com/newsroom/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/). As of 2026-10.
+- Shopify, first-quarter 2022 results release (Exhibit 99.1 to Form 6-K, 2022-05-05): plan to acquire Deliverr in a transaction valued at about $2.1 billion. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1594805/000159480522000019/exhibit991pressreleaseq120.htm). As of 2026-10.
+- Shopify, first-quarter 2023 results release (Exhibit 99.1 to Form 6-K, 2023-05-04): agreement of 2023-05-03 to sell the majority of its logistics business to Flexport; a 13% equity interest in Flexport on top of its existing equity interest; Flexport to become the official logistics partner for Shopify. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1594805/000159480523000023/exhibit991pressreleaseq120.htm). As of 2026-10.

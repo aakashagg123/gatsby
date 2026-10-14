@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Above the individual-contributor level, your job changes. You stop being the person in every meeting. You design the system that lets teams decide well without you. That system has three parts: **structure** (who is on each team), **rhythm** (when teams meet, review and decide) and **decision rights** (who decides what).
@@ -43,7 +45,7 @@ Most product organizations combine three team types.
 
 A good structure minimizes **handoffs**: points where work must pass from one team to another. Each handoff adds waiting time and a chance of error.
 
-Amazon has written about its "two-pizza teams" on its AWS blog. The point it makes is less about team size and more about autonomy and a **single-threaded owner**: one leader who focuses only on one goal. The lesson for any company is to give each important outcome one owner whose attention is not split.
+Amazon has written about its "two-pizza teams" on its AWS blog. The point it makes is less about team size and more about autonomy and a **single-threaded leader**: one leader who focuses only on a specific product or outcome. The lesson for any company is to give each important outcome one leader whose attention is not split.
 
 ## Rhythm: the operating cadence
 
@@ -183,6 +185,6 @@ Review the log each quarter. Look for decisions with no owner, decisions that we
 ## Sources and notes
 
 - The buy now, pay later example, its decisions and its counts are invented and illustrative.
-- AWS Executive in Residence blog, *Two-pizza teams are just the start* (part 2): two-pizza teams and single-threaded owners. [AWS blog](https://aws.amazon.com/blogs/enterprise-strategy/two-pizza-teams-are-just-the-start-accountability-and-empowerment-are-key-to-high-performing-agile-organizations-part-2/). As of 2026-10.
-- Amazon, 2017 letter to shareholders (six-page narrative memos) and 2015 letter to shareholders ("one-way doors" and "two-way doors"). [Amazon investor relations](https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx). As of 2026-10.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts and press coverage of the documents.
+- AWS Executive in Residence blog, *Two-pizza teams are just the start* (part 2, 2021-03-18): two-pizza teams, and single-threaded leaders dedicated to a specific product. [AWS blog](https://aws.amazon.com/blogs/enterprise-strategy/two-pizza-teams-are-just-the-start-accountability-and-empowerment-are-key-to-high-performing-agile-organizations-part-2/). As of 2026-10.
+- Amazon, 2017 letter to shareholders (published April 2018): six-page narrative memos. [Amazon](https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders). As of 2026-10.
+- Amazon, 2015 letter to shareholders (Exhibit 99.1 to Form 8-K, filed 2016-04-05): "one-way doors" for consequential, near-irreversible decisions, and "two-way doors" for reversible ones. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm). As of 2026-10.

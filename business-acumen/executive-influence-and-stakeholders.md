@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 At VP level, influence is most of the job. You rarely control the resources you need. You win them by making a clear case to executives, aligning peers before decisions, and negotiating with partners and other leaders. The skills are learnable: an **answer-first narrative**, data that makes one point per chart, **pre-wiring** before meetings, and negotiation built on interests and alternatives.
@@ -110,7 +112,7 @@ Executives negotiate constantly: budgets with Finance, dates with Sales, terms w
 - **The zone of agreement.** If your walk-away point and theirs overlap, a deal is possible. Find out where theirs is by asking questions, not by guessing.
 - **Trade across issues.** Price, term, exclusivity, volume and timing can be traded against each other. A deal on one issue alone is a tug of war.
 
-Public deals show trades across issues. When Shopify sold its logistics business to Flexport in 2023, press coverage reported that Shopify received an equity stake in Flexport instead of only cash. Flexport also became a logistics partner for Shopify merchants. Both sides traded across several issues: ownership, cash, a partnership and continued service for merchants.
+Public deals show trades across issues. When Shopify agreed in 2023 to sell most of its logistics business to Flexport, its results release said Shopify would receive a 13% equity interest in Flexport, on top of its existing stake. Shopify could also name a director to Flexport's board. Flexport would also become the official logistics partner for Shopify. Both sides traded across several issues: ownership, a board seat, a partnership and continued service for merchants.
 
 ## Worked example: a $3 million ask at an insurer
 
@@ -198,7 +200,6 @@ A one-page decision memo template:
 ## Sources and notes
 
 - The insurer example and all its numbers are invented and illustrative.
-- Amazon, 2017 letter to shareholders: six-page narrative memos. [Amazon investor relations](https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx). As of 2026-10.
-- Lemonade, Forms 10-K and quarterly results: gross loss ratio reported over many years. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1691421&type=10-K). As of 2026-10.
-- Shopify's sale of its logistics business to Flexport (2023), as reported in press coverage of the announcement (a secondary source). [CNBC](https://www.cnbc.com/2023/05/04/shopify-offloads-logistics-business-to-flexport.html). As of 2026-10.
-- Note: these hosts could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts and press coverage.
+- Amazon, 2017 letter to shareholders (published April 2018): six-page narrative memos, read silently at the start of meetings. [Amazon](https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Shopify, first-quarter 2023 results release (Exhibit 99.1 to Form 6-K, 2023-05-04): agreement of 2023-05-03 to sell the majority of its logistics business to Flexport; Shopify to receive stock representing a 13% equity interest in Flexport, on top of its existing equity interest; Shopify entitled to name a director to Flexport's board; Flexport to become the official logistics partner for Shopify. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1594805/000159480523000023/exhibit991pressreleaseq120.htm). As of 2026-10.

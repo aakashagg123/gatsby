@@ -40,6 +40,7 @@ always moves forward.
 | system-design | system-design/ | scripts/build_system_design.py | never |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
 | cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
+| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-14 |
 
 ## Run history
 
@@ -296,3 +297,14 @@ and a link to the merged PR.)
   reverse); Intercom's RICE framework documentation; Reinertsen's
   "Principles of Product Development Flow" WSJF formulation; SAFe's
   official WSJF guidance.
+
+- 2026-10-14 — business-acumen — new track shipped (12 lessons, recap, and
+  an interactive self-assessment). Independent blind fact-check over three
+  passes. Pass 1: 1 WRONG (a SoFi bank-charter claim), 7 unsupported claims,
+  13 Sources-hygiene issues. Pass 2: those cleared, web access ok, 6
+  unsupported author inferences left. Pass 3: 0 WRONG / 0 STALE, inferences
+  softened or re-grounded. Every company figure now cites a specific SEC
+  filing document or the company's own release with an as-of date; regulatory
+  claims cite law.cornell.edu, legislation.gov.uk, consumerfinance.gov,
+  federalreserve.gov and uspto.gov. No book, author or person named in prose.
+  check_module: avg sentence 10.8, 1% over 30 words, Flesch 67, PASS. PR #151.

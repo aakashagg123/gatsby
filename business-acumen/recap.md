@@ -8,11 +8,11 @@
 
 **An insurer's loss ratio falls with scale and data (Lemonade).** Lemonade's 2020 10-K shows its gross loss ratio at 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. In its early years, claims cost more than the premium it earned. 🎯 *Takeaway:* in insurance, you learn whether your price was right only after the claims come in. See [performance and growth](./performance-and-growth.md).
 
-**A lender's funding dries up (Upstart).** Upstart's 10-K for 2022 says that, to address funding constraints, it used its own balance sheet to support short-term funding for personal loans. A lending platform needs capital partners as much as borrowers. 🎯 *Takeaway:* in Lending, the funding side is a product dependency. See [the language of money](./the-language-of-money.md).
+**A lender's funding dries up (Upstart).** Upstart's 10-K for 2022 says that, in response to constrained loan funding, it increased the use of its own balance sheet to fund loans. A lending platform needs capital partners as much as borrowers. 🎯 *Takeaway:* in Lending, the funding side is a product dependency. See [the language of money](./the-language-of-money.md).
 
-**Buying a bank to lower the cost of funds (SoFi).** In 2021 SoFi agreed to acquire Golden Pacific Bancorp, a small community bank, as a faster route to a national bank charter. A charter lets a lender fund loans with deposits. 🎯 *Takeaway:* at portfolio level, buying a licence can beat building one. See [portfolio strategy](./portfolio-strategy-and-allocation.md).
+**Buying a bank to lower the cost of funds (SoFi).** In 2021 SoFi agreed to acquire Golden Pacific Bancorp, a community bank, to accelerate its pursuit of a national bank charter. Its own application for a new bank was already under way, with preliminary conditional approval in October 2020 from the OCC, the US national bank regulator. A charter lets a lender fund loans with deposits. 🎯 *Takeaway (general principle, not a claim from the release):* buying a licensed entity is one route to a capability. It can be faster than building that capability alone. See [portfolio strategy](./portfolio-strategy-and-allocation.md).
 
-**A big bet reversed in about a year (Shopify).** Shopify bought Deliverr in 2022 to build its logistics business. In 2023 it agreed to sell the logistics business to Flexport, Press coverage reported that Shopify took an equity stake in Flexport, and that Flexport became a logistics partner for Shopify merchants. 🎯 *Takeaway:* set stop criteria for big bets, and know your partner alternative. See [portfolio strategy](./portfolio-strategy-and-allocation.md).
+**A big bet reversed in about a year (Shopify).** Shopify agreed to buy Deliverr in 2022 to build its logistics business. In 2023 it agreed to sell most of the logistics business to Flexport. Shopify's results release said it would receive a 13% equity interest in Flexport, on top of its existing stake, and that Flexport would become its official logistics partner. 🎯 *Takeaway:* set stop criteria for big bets, and know your partner alternative. See [portfolio strategy](./portfolio-strategy-and-allocation.md).
 
 **A cheap cost to serve as a strategy (Nubank).** Nubank reports monthly revenue and monthly cost to serve per active customer. In Q2 2023 it said the first passed $9 while the second stayed below $1. 🎯 *Takeaway:* a low cost to serve lets a digital bank profit from customers others cannot serve. See [monetization](./monetization-and-business-models.md).
 
@@ -78,13 +78,13 @@ If you can answer all four, you are speaking the business's language. If not, re
 
 ## Sources
 
-- DoorDash, Form 10-K for fiscal 2024: net revenue margin of 13.4%.
-- Lemonade, Form 10-K for fiscal 2020: gross loss ratio by year, 2017 to 2020.
-- Upstart, Form 10-K for fiscal 2022: use of its balance sheet in response to funding constraints.
-- SoFi, press release announcing the agreement to acquire Golden Pacific Bancorp (March 2021).
-- Shopify's sale of its logistics business to Flexport (2023), from press coverage of the announcement.
-- Nu Holdings, second quarter 2023 results.
-- Each lesson's Sources list has the links. Primary hosts could not be opened from the build environment (blocked by the network proxy). Facts were corroborated from search-result excerpts of the named documents. As of 2026-10.
+- DoorDash, Form 10-K for fiscal 2024 (filed 2025-02): net revenue margin is revenue as a percentage of Marketplace GOV; 13.4% for 2024. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1792789/000162828025005715/dash-20241231.htm). As of 2026-10.
+- Lemonade, Form 10-K for fiscal 2020 (filed 2021-03): gross loss ratio of 161% in 2017, 113% in 2018, 79% in 2019 and 71% in 2020. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1691421/000169142121000024/lmda-20201231.htm). As of 2026-10.
+- Upstart, Form 10-K for fiscal 2022 (filed 2023-02): in response to constrained loan funding, it increased the use of its balance sheet to fund loans. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm). As of 2026-10.
+- SoFi, press release of 2021-03-09 announcing the agreement to acquire Golden Pacific Bancorp, a community bank, to accelerate its pursuit of a national bank charter; OCC preliminary conditional approval of its de novo bank plan in October 2020. [SoFi](https://www.sofi.com/newsroom/sofi-announces-agreement-acquire-golden-pacific-bancorp-inc/). As of 2026-10.
+- Shopify, first-quarter 2022 results release (Exhibit 99.1 to Form 6-K, 2022-05-05): plan to acquire Deliverr. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1594805/000159480522000019/exhibit991pressreleaseq120.htm). As of 2026-10.
+- Shopify, first-quarter 2023 results release (Exhibit 99.1 to Form 6-K, 2023-05-04): sale of the majority of its logistics business to Flexport; a 13% equity interest on top of its existing interest; Flexport as official logistics partner. [Exhibit 99.1](https://www.sec.gov/Archives/edgar/data/1594805/000159480523000023/exhibit991pressreleaseq120.htm). As of 2026-10.
+- Nu Holdings, second quarter 2023 results (2023-08-15). [Nu newsroom](https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2023-financial-results). As of 2026-10.
 - The partner-bank and combined-ratio stories are invented illustrations.
 
 ---

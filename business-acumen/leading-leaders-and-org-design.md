@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 When you lead managers, your product is the organization. You no longer make most product decisions yourself. You choose the structure, hire and develop the leaders, set the standards, and inspect the results. A good org lets good decisions happen without you. A bad one routes every hard call to your calendar.
@@ -168,5 +170,4 @@ print(layers(30, 3))  # (4, 17)
 ## Sources and notes
 
 - The lending reorg example and all its numbers are invented and illustrative. The layer arithmetic can be recomputed with the code above.
-- Block, Form 10-K for fiscal 2025: the Square and Cash App ecosystems and gross profit for each. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1512673&type=10-K). As of 2026-10.
-- Note: sec.gov could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the filing.
+- Block, Form 10-K for fiscal 2025 (filed 2026-02): the Square and Cash App ecosystems; gross profit of $10.4 billion, of which Cash App $6.3 billion and Square $3.9 billion. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm). As of 2026-10.

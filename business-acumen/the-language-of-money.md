@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Finance speaks through three statements. The **income statement** shows performance over a period: revenue, costs and profit. The **balance sheet** shows position at one moment: what the company owns, owes and keeps for its owners. The **cash-flow statement** shows how cash moved. A product decision touches all three, often in different ways and at different times.
@@ -52,7 +54,7 @@ Revenue is not always what it looks like. Each domain has its own trap.
 
 - **eCommerce marketplaces.** Gross merchandise value (GMV) is the value of goods sold through the platform. It is not revenue. Shopify's 10-K defines GMV and states that GMV does not represent revenue earned by Shopify. Shopify's revenue comes from subscriptions and from merchant services such as payment processing.
 - **Payments.** A processor collects a fee on each payment. Much of that fee passes to card issuers and networks. Accounting rules decide whether the company reports the full fee as revenue (and the pass-through as cost) or only its net share. Ask which one your company does before you compare margins with a competitor.
-- **Fintech with trading products.** Block reports bitcoin sales to Cash App customers as revenue, with the cost of the bitcoin as a cost. That makes revenue large and the margin on it thin. Block leads its reporting with **gross profit**. Its 10-K for 2025 reports gross profit of $10.4 billion, of which Cash App was $6.3 billion and Square $3.9 billion.
+- **Fintech with trading products.** Block reports bitcoin sales to Cash App customers as revenue, with the cost of the bitcoin as a cost. That makes revenue large and the margin on it thin. So **gross profit** is the more useful number to watch. Block's 10-K for 2025 reports gross profit of $10.4 billion, of which Cash App was $6.3 billion and Square $3.9 billion.
 - **Lending.** A lender earns interest over the life of a loan. It must also book an allowance for expected losses. Affirm reports **revenue less transaction costs**: total revenue minus loss on loan purchase commitments, provision for credit losses, funding costs, and processing and servicing costs. It is a measure of what each transaction is worth after its direct costs.
 - **Insurance.** A customer pays a year's premium up front. The insurer earns it month by month. The unearned part sits on the balance sheet as a liability.
 - **Retail.** Revenue is product sales. The trap is inventory. A product bought but not sold is on the balance sheet, not in cost of goods sold. Profit can look fine while cash is stuck in stock.
@@ -184,8 +186,7 @@ print(round(base), round(low), round(breakeven_savings))
 ## Sources and notes
 
 - The fraud-model case and all its numbers are invented and illustrative. The arithmetic is exact and can be recomputed with the code above.
-- Shopify, Form 10-K: GMV definition and the statement that GMV does not represent revenue earned by Shopify. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1594805&type=10-K). As of 2026-10.
-- Block, Form 10-K for fiscal 2025: gross profit of $10.4 billion; Cash App $6.3 billion; Square $3.9 billion. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1512673&type=10-K). As of 2026-10.
-- Affirm, earnings releases filed on Form 8-K: definition of revenue less transaction costs. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1820953&type=8-K). As of 2026-10.
-- Upstart, Form 10-K for fiscal 2022: use of its balance sheet to support funding. [Filing index](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1647639&type=10-K). As of 2026-10.
-- Note: sec.gov could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the filings.
+- Shopify, Form 10-K for fiscal 2025 (filed 2026-02): GMV definition, and the statement that GMV does not represent revenue earned by Shopify. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm). As of 2026-10.
+- Block, Form 10-K for fiscal 2025 (filed 2026-02): gross profit of $10.4 billion; Cash App $6.3 billion; Square $3.9 billion. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm). As of 2026-10.
+- Affirm, fiscal third-quarter 2026 shareholder letter (Exhibit to Form 8-K, quarter ended 2026-03-31): definition of revenue less transaction costs. [Shareholder letter](https://www.sec.gov/Archives/edgar/data/1820953/000162828026032105/affirmfq326shareholderle.htm). As of 2026-10.
+- Upstart, Form 10-K for fiscal 2022 (filed 2023-02): in response to constrained loan funding, it increased the use of its balance sheet to fund loans. [Form 10-K](https://www.sec.gov/Archives/edgar/data/1647639/000164763923000021/upst-20221231.htm). As of 2026-10.
