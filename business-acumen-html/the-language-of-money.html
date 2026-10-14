@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The language of money: statements, margins and the business case — Business Acumen</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Business Acumen</span><em>a standalone module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-assessment.html">1 · Foundations: business acumen and the T-shaped leader</a><a class="modlink" href="navigating-the-organization.html">2 · Navigating the organization: how the company really works</a><a class="modlink" href="teams-and-collaboration.html">3 · Teams and collaboration: structures, rhythms and decision rights</a><a class="modlink active" href="the-language-of-money.html">4 · The language of money: statements, margins and the business case</a><a class="modlink" href="data-and-decisions.html">5 · Data and decisions: deciding well under uncertainty</a><a class="modlink" href="markets-and-strategy.html">6 · Markets and strategy: choosing customers, offers and advantage</a><a class="modlink" href="products-and-marketing.html">7 · Products and marketing: from opportunity to launch</a><a class="modlink" href="performance-and-growth.html">8 · Performance and growth: KPIs, scorecards and the metrics that move profit</a><a class="modlink" href="portfolio-strategy-and-allocation.html">9 · Portfolio strategy and capital allocation</a><a class="modlink" href="leading-leaders-and-org-design.html">10 · Leading leaders and designing the product org</a><a class="modlink" href="monetization-and-business-models.html">11 · Monetization and business models</a><a class="modlink" href="executive-influence-and-stakeholders.html">12 · Executive influence: narrative, the board and the negotiating table</a><a class="modlink" href="recap.html">Recap &amp; examples</a><a class="modlink" href="assessment.html">Self-assessment</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
+    <h1>The language of money: statements, margins and the business case</h1>
+  </div>
+  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+<p>Finance speaks through three statements. The <strong>income statement</strong> shows performance over a period: revenue, costs and profit. The <strong>balance sheet</strong> shows position at one moment: what the company owns, owes and keeps for its owners. The <strong>cash-flow statement</strong> shows how cash moved. A product decision touches all three, often in different ways and at different times.</p>
+<p>The core tradeoff is between profit and cash, and between today and later. A product can raise profit and drain cash, as a fast-growing loan book does. A bet can lose money this year and be worth a lot in present-value terms. The leader who can show both, with a sensitivity table, gets the investment.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — Every serious bet is approved in the CFO's language. "Users love it" does not survive a budget review. "This adds $2 million of gross profit a year, pays back in 18 months, and still works if adoption is 30% lower" does.</p>
+<p><strong>What it changes in your decisions</strong> — You write business cases in cash and present value. You show the one or two assumptions the case depends on. You know which line of which statement your product moves.</p>
+<p><strong>Ask your team</strong> — <em>"What does this case look like if our biggest assumption is 20% worse, and does it still clear the bar?"</em></p>
+<p><strong>Risk if ignored</strong> — A case built on revenue that is really pass-through money, or on profit that arrives years after the cash goes out. Finance finds the hole, and your credibility goes with it.</p>
+</blockquote>
+<h2 id="mental-model-one-story-three-views">Mental model: one story, three views</h2>
+<pre class="mermaid">flowchart LR
+  IS[&quot;INCOME STATEMENT&lt;br/&gt;a period&lt;br/&gt;revenue − costs = profit&quot;] --&gt;|&quot;profit adds to&lt;br/&gt;retained earnings&quot;| BS[&quot;BALANCE SHEET&lt;br/&gt;a moment&lt;br/&gt;assets = liabilities + equity&quot;]
+  IS --&gt;|&quot;start from profit,&lt;br/&gt;adjust for non-cash items&quot;| CF[&quot;CASH-FLOW STATEMENT&lt;br/&gt;a period&lt;br/&gt;operating · investing · financing&quot;]
+  CF --&gt;|&quot;ending cash&quot;| BS</pre>
+<p>Think of a business as a household. The income statement is this year's salary minus spending. The balance sheet is the house, the savings and the mortgage on one date. The cash-flow statement is the bank account: what came in and went out.</p>
+<p><strong>Where the analogy breaks.</strong> A household counts money when it arrives. Companies use <strong>accrual accounting</strong>. Revenue is recorded when it is earned, and costs when they are incurred, not when cash moves. That is why profit and cash can differ so much.</p>
+<h2 id="the-income-statement">The income statement</h2>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue</td>
+<td>What the company earned from customers in the period</td>
+</tr>
+<tr>
+<td>Cost of revenue (cost of goods sold)</td>
+<td>The direct cost of delivering what was sold</td>
+</tr>
+<tr>
+<td><strong>Gross profit</strong></td>
+<td>Revenue minus cost of revenue</td>
+</tr>
+<tr>
+<td>Operating expenses</td>
+<td>Research and development, sales and marketing, general and administrative</td>
+</tr>
+<tr>
+<td><strong>Operating income</strong></td>
+<td>Gross profit minus operating expenses</td>
+</tr>
+<tr>
+<td>Net income</td>
+<td>Profit after interest, taxes and other items</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gross margin</strong> is gross profit as a share of revenue. It tells you how much each sale contributes before overheads. <strong>Operating margin</strong> is operating income as a share of revenue. It tells you whether the business as a whole earns money from its operations.</p>
+<p>Product leaders move gross margin more than they think. A support-heavy feature, a costly data vendor or a free-delivery promise all sit in cost of revenue.</p>
+<h2 id="what-counts-as-revenue-the-domain-traps">What counts as revenue: the domain traps</h2>
+<p>Revenue is not always what it looks like. Each domain has its own trap.</p>
+<ul>
+<li><strong>eCommerce marketplaces.</strong> Gross merchandise value (GMV) is the value of goods sold through the platform. It is not revenue. Shopify's 10-K defines GMV and states that GMV does not represent revenue earned by Shopify. Shopify's revenue comes from subscriptions and from merchant services such as payment processing.</li>
+<li><strong>Payments.</strong> A processor collects a fee on each payment. Much of that fee passes to card issuers and networks. Accounting rules decide whether the company reports the full fee as revenue (and the pass-through as cost) or only its net share. Ask which one your company does before you compare margins with a competitor.</li>
+<li><strong>Fintech with trading products.</strong> Block reports bitcoin sales to Cash App customers as revenue, with the cost of the bitcoin as a cost. That makes revenue large and the margin on it thin. Block leads its reporting with <strong>gross profit</strong>. Its 10-K for 2025 reports gross profit of $10.4 billion, of which Cash App was $6.3 billion and Square $3.9 billion.</li>
+<li><strong>Lending.</strong> A lender earns interest over the life of a loan. It must also book an allowance for expected losses. Affirm reports <strong>revenue less transaction costs</strong>: total revenue minus loss on loan purchase commitments, provision for credit losses, funding costs, and processing and servicing costs. It is a measure of what each transaction is worth after its direct costs.</li>
+<li><strong>Insurance.</strong> A customer pays a year's premium up front. The insurer earns it month by month. The unearned part sits on the balance sheet as a liability.</li>
+<li><strong>Retail.</strong> Revenue is product sales. The trap is inventory. A product bought but not sold is on the balance sheet, not in cost of goods sold. Profit can look fine while cash is stuck in stock.</li>
+</ul>
+<h2 id="the-balance-sheet">The balance sheet</h2>
+<p><strong>Assets = liabilities + equity.</strong> Assets are what the company owns or is owed. Liabilities are what it owes. Equity is what is left for the owners.</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>A product-driven asset</th>
+<th>A product-driven liability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lending</td>
+<td>Loans to customers</td>
+<td>Funding borrowed to make those loans</td>
+</tr>
+<tr>
+<td>Payments</td>
+<td>Money due from card networks</td>
+<td>Money owed to merchants</td>
+</tr>
+<tr>
+<td>InsurTech</td>
+<td>Investments bought with premium</td>
+<td>Claims reserves and unearned premium</td>
+</tr>
+<tr>
+<td>Retail</td>
+<td>Inventory</td>
+<td>Money owed to suppliers</td>
+</tr>
+<tr>
+<td>eCommerce</td>
+<td>Cash from buyers</td>
+<td>Money owed to sellers</td>
+</tr>
+</tbody>
+</table>
+<p>A lender that grows its loan book grows its assets. It must fund them with debt, deposits or equity. Upstart's 10-K for 2022 shows this tension. When institutional investors bought fewer loans, Upstart used its own balance sheet to fund some of them.</p>
+<h2 id="the-cash-flow-statement">The cash-flow statement</h2>
+<p>Cash flow has three parts.</p>
+<ul>
+<li><strong>Operating</strong>: cash from running the business.</li>
+<li><strong>Investing</strong>: cash spent on long-term assets, such as equipment or acquisitions.</li>
+<li><strong>Financing</strong>: cash raised or repaid through debt and equity.</li>
+</ul>
+<p>A growing retailer often has strong profit and weak operating cash, because cash goes into inventory before peak season. A fast-growing subscription business can be the opposite. Customers pay a year up front, so cash arrives before revenue is earned.</p>
+<h2 id="time-value-of-money-and-discounted-cash-flow">Time value of money and discounted cash flow</h2>
+<p>A dollar today is worth more than a dollar next year. You could invest today's dollar and earn a return. So future cash must be <strong>discounted</strong> to compare it with cash today.</p>
+<ul>
+<li><strong>Present value (PV)</strong> of a future cash flow = cash ÷ (1 + r)^t, where r is the discount rate and t is years from now.</li>
+<li><strong>Net present value (NPV)</strong> = the sum of the present values of all cash flows, minus the investment today. A positive NPV means the bet earns more than the discount rate.</li>
+<li>The <strong>discount rate</strong> is usually set by Finance. It reflects the company's cost of capital and the risk of the bet.</li>
+<li><strong>Payback period</strong> is how long until cumulative cash returns equal the investment. It ignores what happens after payback, and it ignores the time value of money unless you discount.</li>
+</ul>
+<h2 id="budgets-forecasts-business-cases-and-sensitivity">Budgets, forecasts, business cases and sensitivity</h2>
+<ul>
+<li>A <strong>budget</strong> is the plan: what each team may spend and what it must deliver.</li>
+<li>A <strong>forecast</strong> is the current best guess of where the year will land. It changes. The budget usually does not.</li>
+<li>A <strong>business case</strong> asks for money for one bet. It shows costs, benefits, timing, risks and NPV.</li>
+<li>A <strong>sensitivity analysis</strong> changes one input at a time and shows how the result moves. It tells the reader which assumption the case depends on.</li>
+</ul>
+<h2 id="cost-structure-and-basic-pricing">Cost structure and basic pricing</h2>
+<p><strong>Fixed costs</strong> do not change with volume in the short run, such as salaries and platform licences. <strong>Variable costs</strong> rise with each unit, such as interchange, delivery or claims handling.</p>
+<p><strong>Contribution margin</strong> is price minus variable cost per unit. It is what each sale contributes to fixed costs and profit. A business with high fixed costs and high contribution margin has <strong>operating leverage</strong>. Profit rises fast once volume passes break-even, and falls fast below it.</p>
+<p>There are three basic ways to set a price. <strong>Cost-plus</strong> adds a markup to cost. <strong>Competitor-based</strong> matches the market. <strong>Value-based</strong> prices on what the customer gains. <a href="monetization-and-business-models.html">Lesson 11</a> covers pricing in depth.</p>
+<h2 id="worked-example-a-business-case-for-a-fraud-model">Worked example: a business case for a fraud model</h2>
+<p><em>This example is invented, to show the method. The company and all numbers are illustrative.</em></p>
+<p>A payments company wants a new fraud model. It costs $900,000 to build (year 0). It costs $100,000 a year to run. The team estimates it saves $500,000 a year in fraud losses and dispute costs. Finance sets a 10% discount rate. The model's life is three years.</p>
+<p><strong>Step 1: net cash per year.</strong> Savings $500,000 − running cost $100,000 = $400,000 a year.</p>
+<p><strong>Step 2: discount each year.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Net cash</th>
+<th>Discount factor 1 ÷ 1.1^t</th>
+<th>Present value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$400,000</td>
+<td>0.9091</td>
+<td>$363,636</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$400,000</td>
+<td>0.8264</td>
+<td>$330,579</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$400,000</td>
+<td>0.7513</td>
+<td>$300,526</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>2.4869</strong></td>
+<td><strong>$994,741</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 3: NPV.</strong> $994,741 − $900,000 = <strong>$94,741</strong>. The case is positive.</p>
+<p><strong>Step 4: payback.</strong> $900,000 ÷ $400,000 = 2.25 years, undiscounted.</p>
+<p><strong>Step 5: sensitivity.</strong> Suppose savings are 20% lower: $400,000 a year. Net cash falls to $300,000. PV = $300,000 × 2.4869 = $746,056. NPV = <strong>−$153,944</strong>. The case flips.</p>
+<p><strong>Step 6: find the break-even.</strong> NPV is zero when net cash × 2.4869 = $900,000. That is net cash of about $361,900, or savings of about $461,900. The case survives only if savings are within about 7.6% of the estimate.</p>
+<p><strong>What the leader does with this.</strong> The case is thin. She proposes a pilot on one merchant segment for one quarter to measure real savings before the full build. That turns a fragile bet into a staged one. See real options in <a href="portfolio-strategy-and-allocation.html">lesson 9</a>.</p>
+<h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
+<ul>
+<li><strong>Profit vs. cash.</strong> Growing a loan book or an inventory raises future profit and uses cash now. The cost is funding, and the risk is running short.</li>
+<li><strong>NPV vs. payback.</strong> NPV values the whole life of a bet. Payback rewards fast returns. A board under cash pressure may prefer payback. The cost is passing on long-lived bets.</li>
+<li><strong>Gross vs. net revenue.</strong> Reporting gross revenue looks bigger. It makes margins look thinner and harder to compare.</li>
+<li><strong>Precision vs. honesty.</strong> A case with one precise number looks confident. A case with a range and a sensitivity table is more honest and easier to trust.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>GMV called revenue.</strong> A team reports marketplace volume as revenue. Finance corrects it in the review, in public.</li>
+<li><strong>Cash surprise.</strong> A product that sells on long payment terms or holds stock raises profit and drains cash. Treasury finds out first.</li>
+<li><strong>The single-number case.</strong> No sensitivity. The first question about an assumption sinks it.</li>
+<li><strong>Ignored losses.</strong> A lending case counts interest and leaves out expected credit losses and funding cost.</li>
+<li><strong>Wrong discount rate.</strong> The team picks a low rate to make NPV positive. Finance uses its own rate, and the case fails.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>The NPV and sensitivity above, in a few lines of Python:</p>
+<pre><code class="language-python">def npv(rate, cash_flows, invest):
+    return sum(cf / (1 + rate) ** t for t, cf in enumerate(cash_flows, start=1)) - invest
+
+base = npv(0.10, [400_000] * 3, 900_000)      # 94,741
+low  = npv(0.10, [300_000] * 3, 900_000)      # -153,944
+
+annuity = sum(1 / 1.10 ** t for t in (1, 2, 3))  # 2.4869
+breakeven_net = 900_000 / annuity                # ~361,900
+breakeven_savings = breakeven_net + 100_000      # ~461,900
+print(round(base), round(low), round(breakeven_savings))
+</code></pre>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Find your product's revenue, cost of revenue and gross margin in the last management report.</li>
+<li class="task todo">Ask Finance whether your company reports revenue gross or net of pass-through costs.</li>
+<li class="task todo">Name the balance-sheet line your product grows: loans, inventory, receivables or reserves.</li>
+<li class="task todo">Rewrite your next business case with NPV, payback and a sensitivity table.</li>
+<li class="task todo">Find the break-even value of the case's biggest assumption.</li>
+<li class="task todo">Ask Finance for the discount rate before you build the case.</li>
+<li class="task todo">Check whether the case includes losses, funding cost and running cost.</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="monetization-and-business-models.html">Monetization and business models</a> — pricing and unit economics in depth.</li>
+<li><a href="portfolio-strategy-and-allocation.html">Portfolio strategy and allocation</a> — staged bets and real options.</li>
+<li><a href="../technical-product-sense/economics-of-infrastructure.html">The economics of infrastructure</a> — the cost of goods sold hidden in infrastructure.</li>
+<li><a href="../system-design/transactional-and-financial.html">Transactional and financial systems</a> — ledgers and reconciliation under the money.</li>
+</ul>
+<h2 id="sources-and-notes">Sources and notes</h2>
+<ul>
+<li>The fraud-model case and all its numbers are invented and illustrative. The arithmetic is exact and can be recomputed with the code above.</li>
+<li>Shopify, Form 10-K: GMV definition and the statement that GMV does not represent revenue earned by Shopify. <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=1594805&amp;type=10-K">Filing index</a>. As of 2026-10.</li>
+<li>Block, Form 10-K for fiscal 2025: gross profit of $10.4 billion; Cash App $6.3 billion; Square $3.9 billion. <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=1512673&amp;type=10-K">Filing index</a>. As of 2026-10.</li>
+<li>Affirm, earnings releases filed on Form 8-K: definition of revenue less transaction costs. <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=1820953&amp;type=8-K">Filing index</a>. As of 2026-10.</li>
+<li>Upstart, Form 10-K for fiscal 2022: use of its balance sheet to support funding. <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=1647639&amp;type=10-K">Filing index</a>. As of 2026-10.</li>
+<li>Note: sec.gov could not be opened from the build environment (blocked by the network proxy). The facts were corroborated from search-result excerpts of the filings.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="teams-and-collaboration.html"><span class="lbl">← Previous</span><span class="ttl">Teams and collaboration: structures, rhythms and decision rights</span></a><a class="navcard next" href="data-and-decisions.html"><span class="lbl">→ Next</span><span class="ttl">Data and decisions: deciding well under uncertainty</span></a></div><footer class="foot">A standalone module · part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#mental-model-one-story-three-views">Mental model: one story, three views</a><a class="h2" href="#the-income-statement">The income statement</a><a class="h2" href="#what-counts-as-revenue-the-domain-traps">What counts as revenue: the domain traps</a><a class="h2" href="#the-balance-sheet">The balance sheet</a><a class="h2" href="#the-cash-flow-statement">The cash-flow statement</a><a class="h2" href="#time-value-of-money-and-discounted-cash-flow">Time value of money and discounted cash flow</a><a class="h2" href="#budgets-forecasts-business-cases-and-sensitivity">Budgets, forecasts, business cases and sensitivity</a><a class="h2" href="#cost-structure-and-basic-pricing">Cost structure and basic pricing</a><a class="h2" href="#worked-example-a-business-case-for-a-fraud-model">Worked example: a business case for a fraud model</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources-and-notes">Sources and notes</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

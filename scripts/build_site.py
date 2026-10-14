@@ -56,6 +56,7 @@ PE_HTML = os.path.join(ROOT, "prompt-engineering-html")  # prompt engineering
 ML_HTML = os.path.join(ROOT, "machine-learning-html")   # machine learning (foundation modules)
 TENSORS_HTML = os.path.join(ROOT, "tensors-html")        # tensors (foundation modules)
 CNNS_HTML = os.path.join(ROOT, "cnns-html")              # convolutional networks (foundation modules)
+BUSINESS_ACUMEN_HTML = os.path.join(ROOT, "business-acumen-html")  # business acumen (product leaders)
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
 MD_TRACKS = [
@@ -112,7 +113,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|business-acumen)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -348,10 +349,17 @@ LANDING = """<!doctype html>
       productivity patterns, through few-shot and chain-of-thought, into the prompts
       that drive Claude Code and other coding agents. 10 lessons.</p>
     </a>
+    <a class="card" href="business-acumen/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
+      <h3>Business acumen →</h3>
+      <p>Money, markets, organizations and influence for Group PMs, Heads of Product and
+      VPs — grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 12 lessons
+      and an interactive self-assessment with a radar chart and an improvement plan.</p>
+    </a>
     <a class="card" href="graph/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Explore</span>
       <h3>Knowledge graph →</h3>
-      <p>Every page across all nine modules as one interactive map — __NODES__ pages,
+      <p>Every page across all 29 modules as one interactive map — __NODES__ pages,
       __LINKS__ cross-references. Search it, filter by track, click any node to jump in.</p>
     </a>
   </div>
@@ -776,6 +784,10 @@ def main():
     # 1v. Convolutional networks module: copy its pre-rendered pages.
     if os.path.isdir(CNNS_HTML):
         shutil.copytree(CNNS_HTML, os.path.join(SITE, "cnns"))
+
+    # 1w. Business acumen module: copy its pre-rendered pages.
+    if os.path.isdir(BUSINESS_ACUMEN_HTML):
+        shutil.copytree(BUSINESS_ACUMEN_HTML, os.path.join(SITE, "business-acumen"))
 
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.
