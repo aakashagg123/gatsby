@@ -337,7 +337,7 @@ def build_track(cfg):
     <h1>{htmllib.escape(x["title"])}</h1>
   </div>
   <div class="MarkdownContent">{body}</div>
-  {_footer(prev, nxt)}
+  {_footer(prev, nxt, insight)}
   </main>{outline_html}</div>{bh.SIDEBAR_TOGGLE_JS}{bh.OUTLINE_SCRIPT if has_outline else ""}</body></html>"""
         with open(os.path.join(out, f"{x['key']}.html"), "w") as f:
             f.write(reader_widget.inject(page))

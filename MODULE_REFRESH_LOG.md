@@ -308,3 +308,12 @@ and a link to the merged PR.)
   claims cite law.cornell.edu, legislation.gov.uk, consumerfinance.gov,
   federalreserve.gov and uspto.gov. No book, author or person named in prose.
   check_module: avg sentence 10.8, 1% over 30 words, Flesch 67, PASS. PR #151.
+
+- 2026-10-14 — business-acumen — expanded from 12 to 15 lessons (~66k
+  words), money first. New: unit economics; business cases, capital and
+  valuation; competitive advantage and strategy. Retitled: markets and
+  customers; pricing and business models; products and go-to-market. The
+  self-assessment grows to 60 items on 15 axes. Review stamps withdrawn from
+  every lesson pending one independent fact-check before merge, so the
+  last_refreshed date is unchanged. check_module: avg sentence 10.7, 0% over
+  30 words, Flesch 69, WARN (no stamps).

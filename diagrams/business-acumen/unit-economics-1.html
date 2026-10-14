@@ -1,0 +1,65 @@
+<style>
+.ba-pb{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-success-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.ba-pb-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-success-solid);color:var(--white);
+  font-size:var(--font-text-3xs-size);font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.ba-pb h4{margin:0 0 4px;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.ba-pb-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 12px}
+.ba-pb svg{width:100%;height:auto;display:block}
+.ba-pb .ax{stroke:var(--color-border-strong);stroke-width:1.2}
+.ba-pb .grid{stroke:var(--color-border-subtle);stroke-width:1}
+.ba-pb .naive{fill:none;stroke:var(--color-text-tertiary);stroke-width:2;stroke-dasharray:6 5}
+.ba-pb .cohort{fill:none;stroke:var(--color-background-success-solid);stroke-width:3}
+.ba-pb .cac1{stroke:var(--color-background-info-solid);stroke-width:1.5;stroke-dasharray:3 4}
+.ba-pb .cac2{stroke:var(--color-background-danger-solid);stroke-width:1.5;stroke-dasharray:3 4}
+.ba-pb .dot-ok{fill:var(--color-background-success-solid)}
+.ba-pb .dot-naive{fill:var(--color-text-tertiary)}
+.ba-pb text{font-family:inherit;font-size:var(--font-text-3xs-size);fill:var(--color-text-secondary)}
+.ba-pb text.t-info{fill:var(--color-text-info);font-weight:700}
+.ba-pb text.t-danger{fill:var(--color-text-danger);font-weight:700}
+.ba-pb text.t-ok{fill:var(--color-text-success);font-weight:700}
+.ba-pb-legend{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.ba-pb-pill{font-size:var(--font-text-3xs-size);font-weight:600;border-radius:10px;padding:2px 9px;background:var(--color-surface-secondary);color:var(--color-text-secondary)}
+.ba-pb-pill.ok{background:var(--color-background-success-surface);color:var(--color-text-success)}
+.ba-pb-foot{margin:10px 0 0;font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary)}
+@media (max-width:520px){.ba-pb{padding:22px 12px 16px}}
+</style>
+<div class="ba-pb"><span class="ba-pb-chip">Cohort payback</span>
+<h4>Cumulative CM2 per acquired merchant, by month</h4>
+<p class="ba-pb-sub">Illustrative (worked example B). CM2 $250 a month. Churn 8% a month for three months, then 2%.</p>
+<svg viewBox="0 0 640 310" role="img" aria-label="Cumulative contribution per acquired merchant. The no-churn line crosses blended CAC of 1,500 dollars at month 6 and paid CAC of 3,000 dollars at month 12. The cohort line with churn crosses them at months 8 and 17.">
+  <line class="grid" x1="60" y1="216.7" x2="610" y2="216.7"/>
+  <line class="grid" x1="60" y1="163.3" x2="610" y2="163.3"/>
+  <line class="grid" x1="60" y1="56.7" x2="610" y2="56.7"/>
+  <line class="cac1" x1="60" y1="190" x2="610" y2="190"/>
+  <line class="cac2" x1="60" y1="110" x2="610" y2="110"/>
+  <line class="ax" x1="60" y1="270" x2="610" y2="270"/>
+  <line class="ax" x1="60" y1="30" x2="60" y2="270"/>
+  <polyline class="naive" points="60.0,270.0 82.9,256.7 105.8,243.3 128.8,230.0 151.7,216.7 174.6,203.3 197.5,190.0 220.4,176.7 243.3,163.3 266.2,150.0 289.2,136.7 312.1,123.3 335.0,110.0 357.9,96.7 380.8,83.3 403.8,70.0 426.7,56.7 449.6,43.3 472.5,30.0"/>
+  <polyline class="cohort" points="60.0,270.0 82.9,256.7 105.8,244.4 128.8,233.1 151.7,222.7 174.6,212.6 197.5,202.6 220.4,192.8 243.3,183.2 266.2,173.8 289.2,164.7 312.1,155.7 335.0,146.8 357.9,138.2 380.8,129.7 403.8,121.4 426.7,113.2 449.6,105.2 472.5,97.4 495.4,89.7 518.3,82.2 541.2,74.9 564.2,67.7 587.1,60.6 610.0,53.6"/>
+  <circle class="dot-naive" cx="197.5" cy="190" r="4"/>
+  <circle class="dot-naive" cx="335" cy="110" r="4"/>
+  <circle class="dot-ok" cx="243.3" cy="183.2" r="5"/>
+  <circle class="dot-ok" cx="449.6" cy="105.2" r="5"/>
+  <text x="54" y="273" text-anchor="end">$0</text>
+  <text x="54" y="219.7" text-anchor="end">$1,000</text>
+  <text x="54" y="166.3" text-anchor="end">$2,000</text>
+  <text x="54" y="113" text-anchor="end">$3,000</text>
+  <text x="54" y="59.7" text-anchor="end">$4,000</text>
+  <text x="60" y="288" text-anchor="middle">0</text>
+  <text x="197.5" y="288" text-anchor="middle">6</text>
+  <text x="335" y="288" text-anchor="middle">12</text>
+  <text x="472.5" y="288" text-anchor="middle">18</text>
+  <text x="610" y="288" text-anchor="middle">24</text>
+  <text x="335" y="304" text-anchor="middle">months since acquisition</text>
+  <text class="t-info" x="606" y="184" text-anchor="end">blended CAC $1,500</text>
+  <text class="t-danger" x="606" y="104" text-anchor="end">paid CAC $3,000</text>
+  <text class="t-ok" x="250" y="200">cohort: month 8</text>
+  <text class="t-ok" x="456" y="124">cohort: month 17</text>
+  <text x="150" y="182" text-anchor="end">simple: month 6</text>
+  <text x="328" y="100" text-anchor="end">simple: month 12</text>
+</svg>
+<div class="ba-pb-legend"><span class="ba-pb-pill">dashed: simple payback, no churn</span><span class="ba-pb-pill ok">solid: cohort payback, with churn</span></div>
+<p class="ba-pb-foot">Simple payback divides CAC by one survivor's margin. Cohort payback divides it by the average acquired merchant's margin, and that average shrinks as merchants leave.</p>
+</div>

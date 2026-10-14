@@ -1,0 +1,77 @@
+<style>
+.ba-adv{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:24px 22px 20px;margin:26px 0;font-family:inherit;text-align:left}
+.ba-adv-title{font-size:var(--font-text-2xs-size);letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  color:var(--color-text-secondary);margin:0 0 4px}
+.ba-adv-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-adv-fam{margin:0 0 14px}
+.ba-adv-fam:last-child{margin-bottom:0}
+.ba-adv-fam-head{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.ba-adv-chip{display:inline-block;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:var(--radius-full);padding:3px 10px;border:1px solid transparent}
+.ba-adv-fam-note{font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+.ba-adv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.ba-adv-card{border-radius:var(--radius-lg);padding:12px 12px 10px;border:1px solid var(--color-border);background:var(--color-surface)}
+.ba-adv-name{font-size:var(--font-text-sm-size);font-weight:650;color:var(--color-text);margin:0 0 6px}
+.ba-adv-row{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 3px;line-height:1.4}
+.ba-adv-row b{color:var(--color-text);font-weight:600}
+.ba-adv-cost .ba-adv-chip{background:var(--color-background-success-surface);color:var(--color-text-success);border-color:var(--color-border-success-surface)}
+.ba-adv-cost .ba-adv-card{border-top:3px solid var(--color-border-success-outline)}
+.ba-adv-demand .ba-adv-chip{background:var(--color-background-info-surface);color:var(--color-text-info);border-color:var(--color-border-info-surface)}
+.ba-adv-demand .ba-adv-card{border-top:3px solid var(--color-border-info-outline)}
+.ba-adv-struct .ba-adv-chip{background:var(--color-background-discovery-surface);color:var(--color-text-discovery);border-color:var(--color-border-discovery-surface)}
+.ba-adv-struct .ba-adv-card{border-top:3px solid var(--color-border-discovery-outline)}
+.ba-adv-foot{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:14px 0 0;padding-top:10px;border-top:1px solid var(--color-border)}
+</style>
+<div class="ba-adv" role="figure" aria-label="Seven sources of competitive advantage in three families, each with its benefit, barrier and test">
+  <p class="ba-adv-title">Seven sources of advantage</p>
+  <p class="ba-adv-sub">Each needs a benefit (lower cost or higher price) and a barrier (why rivals cannot copy it).</p>
+
+  <div class="ba-adv-fam ba-adv-cost">
+    <div class="ba-adv-fam-head"><span class="ba-adv-chip">Cost advantages</span><span class="ba-adv-fam-note">you deliver the same thing for less</span></div>
+    <div class="ba-adv-grid">
+      <div class="ba-adv-card"><p class="ba-adv-name">Scale economies</p>
+        <p class="ba-adv-row"><b>Barrier:</b> a rival needs your volume</p>
+        <p class="ba-adv-row"><b>Test:</b> cost per unit falls with volume</p>
+        <p class="ba-adv-row"><b>Erodes:</b> rivals rent scale as a service</p></div>
+      <div class="ba-adv-card"><p class="ba-adv-name">Process power</p>
+        <p class="ba-adv-row"><b>Barrier:</b> routines built over years</p>
+        <p class="ba-adv-row"><b>Test:</b> rivals tried for 2+ years and fell short</p>
+        <p class="ba-adv-row"><b>Erodes:</b> vendors package the process</p></div>
+    </div>
+  </div>
+
+  <div class="ba-adv-fam ba-adv-demand">
+    <div class="ba-adv-fam-head"><span class="ba-adv-chip">Demand advantages</span><span class="ba-adv-fam-note">customers value you more or stay longer</span></div>
+    <div class="ba-adv-grid">
+      <div class="ba-adv-card"><p class="ba-adv-name">Network effects</p>
+        <p class="ba-adv-row"><b>Barrier:</b> a rival needs your network</p>
+        <p class="ba-adv-row"><b>Test:</b> retention rises with density</p>
+        <p class="ba-adv-row"><b>Erodes:</b> cheap multi-homing</p></div>
+      <div class="ba-adv-card"><p class="ba-adv-name">Switching costs</p>
+        <p class="ba-adv-row"><b>Barrier:</b> the customer's cost to move</p>
+        <p class="ba-adv-row"><b>Test:</b> cost to switch &gt; rival's saving</p>
+        <p class="ba-adv-row"><b>Erodes:</b> portability rules, standard APIs</p></div>
+      <div class="ba-adv-card"><p class="ba-adv-name">Brand</p>
+        <p class="ba-adv-row"><b>Barrier:</b> years of trust</p>
+        <p class="ba-adv-row"><b>Test:</b> better conversion at equal price</p>
+        <p class="ba-adv-row"><b>Erodes:</b> a breach or a scandal</p></div>
+    </div>
+  </div>
+
+  <div class="ba-adv-fam ba-adv-struct">
+    <div class="ba-adv-fam-head"><span class="ba-adv-chip">Structural advantages</span><span class="ba-adv-fam-note">access or a model rivals cannot or will not copy</span></div>
+    <div class="ba-adv-grid">
+      <div class="ba-adv-card"><p class="ba-adv-name">Cornered resource</p>
+        <p class="ba-adv-row"><b>Barrier:</b> exclusive access</p>
+        <p class="ba-adv-row"><b>Test:</b> would the partner sign your rival?</p>
+        <p class="ba-adv-row"><b>Erodes:</b> licences open up, contracts end</p></div>
+      <div class="ba-adv-card"><p class="ba-adv-name">Counter-positioning</p>
+        <p class="ba-adv-row"><b>Barrier:</b> copying harms the incumbent</p>
+        <p class="ba-adv-row"><b>Test:</b> the incumbent's best response loses it money</p>
+        <p class="ba-adv-row"><b>Erodes:</b> the old business shrinks</p></div>
+    </div>
+  </div>
+
+  <p class="ba-adv-foot">A benefit with no barrier is a head start, not an advantage.</p>
+</div>

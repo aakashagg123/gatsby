@@ -1,0 +1,51 @@
+<style>
+.ba-pw{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.ba-pw-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-caution-solid);color:var(--white);
+  font-size:var(--font-text-3xs-size);font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.ba-pw h4{margin:0 0 4px;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.ba-pw-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-pw-row{display:grid;grid-template-columns:11rem 1fr 5.5rem;gap:10px;align-items:center;margin:5px 0}
+.ba-pw-lab{font-size:var(--font-text-xs-size);color:var(--color-text);line-height:1.3}
+.ba-pw-lab small{display:block;color:var(--color-text-tertiary);font-size:var(--font-text-3xs-size)}
+.ba-pw-track{position:relative;height:18px;background:var(--color-surface-secondary);border-radius:5px}
+.ba-pw-bar{position:absolute;top:0;bottom:0;border-radius:5px}
+.ba-pw-list{background:var(--color-background-info-solid)}
+.ba-pw-on{background:var(--color-background-caution-surface);border:1px solid var(--color-border-caution-surface)}
+.ba-pw-off{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface)}
+.ba-pw-pass{background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface)}
+.ba-pw-sum{background:var(--color-background-success-solid)}
+.ba-pw-val{font-family:var(--font-mono);font-size:var(--font-text-xs-size);text-align:right;color:var(--color-text)}
+.ba-pw-tot .ba-pw-lab{font-weight:700}
+.ba-pw-tot .ba-pw-val{font-weight:700;color:var(--color-text-success)}
+.ba-pw-gap{border-top:1px dashed var(--color-border);margin:9px 0}
+.ba-pw-legend{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.ba-pw-pill{font-size:var(--font-text-3xs-size);font-weight:600;border-radius:10px;padding:2px 9px}
+.ba-pw-p1{background:var(--color-background-info-surface);color:var(--color-text-info)}
+.ba-pw-p2{background:var(--color-background-caution-surface);color:var(--color-text-caution)}
+.ba-pw-p3{background:var(--color-background-danger-surface);color:var(--color-text-danger)}
+.ba-pw-p4{background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.ba-pw-p5{background:var(--color-background-success-surface);color:var(--color-text-success)}
+.ba-pw-foot{margin:12px 0 0;font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary)}
+@media (max-width:560px){.ba-pw-row{grid-template-columns:7.5rem 1fr 4.6rem}.ba-pw{padding:22px 14px 16px}}
+</style>
+<div class="ba-pw"><span class="ba-pw-chip">Price waterfall</span>
+<h4>One enterprise merchant, one year: from list price to pocket margin</h4>
+<p class="ba-pw-sub">Illustrative. $50 million of card volume, 1 million payments of $50. All inputs assumed.</p>
+
+<div class="ba-pw-row"><div class="ba-pw-lab">List price<small>2.9% + $0.30</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-list" style="left:0;width:100%"></div></div><div class="ba-pw-val">$1,750k</div></div>
+<div class="ba-pw-row"><div class="ba-pw-lab">Negotiated rate<small>on the invoice, to 2.5% + $0.10</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-on" style="left:77.14%;width:22.86%"></div></div><div class="ba-pw-val">−$400k</div></div>
+<div class="ba-pw-row ba-pw-tot"><div class="ba-pw-lab">Invoice price<small>2.70% of volume</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-sum" style="left:0;width:77.14%"></div></div><div class="ba-pw-val">$1,350k</div></div>
+<div class="ba-pw-gap"></div>
+<div class="ba-pw-row"><div class="ba-pw-lab">Volume rebate<small>off the invoice, 0.10% of volume</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-off" style="left:74.29%;width:2.86%"></div></div><div class="ba-pw-val">−$50k</div></div>
+<div class="ba-pw-row"><div class="ba-pw-lab">Waived fees<small>off the invoice, disputes and platform</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-off" style="left:72%;width:2.29%"></div></div><div class="ba-pw-val">−$40k</div></div>
+<div class="ba-pw-row"><div class="ba-pw-lab">Migration credit<small>off the invoice, $60k over 2 years</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-off" style="left:70.29%;width:1.71%"></div></div><div class="ba-pw-val">−$30k</div></div>
+<div class="ba-pw-row ba-pw-tot"><div class="ba-pw-lab">Pocket price<small>2.46% of volume</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-sum" style="left:0;width:70.29%"></div></div><div class="ba-pw-val">$1,230k</div></div>
+<div class="ba-pw-gap"></div>
+<div class="ba-pw-row"><div class="ba-pw-lab">Interchange and scheme fees<small>pass-through, assumed 1.9%</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-pass" style="left:16%;width:54.29%"></div></div><div class="ba-pw-val">−$950k</div></div>
+<div class="ba-pw-row ba-pw-tot"><div class="ba-pw-lab">Pocket margin<small>0.56% of volume</small></div><div class="ba-pw-track"><div class="ba-pw-bar ba-pw-sum" style="left:0;width:16%"></div></div><div class="ba-pw-val">$280k</div></div>
+
+<div class="ba-pw-legend"><span class="ba-pw-pill ba-pw-p1">list price</span><span class="ba-pw-pill ba-pw-p2">on-invoice discount</span><span class="ba-pw-pill ba-pw-p3">off-invoice leakage</span><span class="ba-pw-pill ba-pw-p4">pass-through cost</span><span class="ba-pw-pill ba-pw-p5">what you keep</span></div>
+<p class="ba-pw-foot">The three off-invoice items look small against the $1,350k bill. Together they take $120k, or 30% of the $400k margin the invoice suggests. Approve discounts on pocket margin, not on the headline rate.</p>
+</div>

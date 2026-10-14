@@ -1,0 +1,50 @@
+<style>
+.ba-wf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-info-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.ba-wf-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-info-solid);color:var(--white);
+  font-size:var(--font-text-3xs-size);font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.ba-wf h4{margin:0 0 4px;font-size:var(--font-text-2xs-size);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.ba-wf-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 16px}
+.ba-wf-row{display:grid;grid-template-columns:11rem 1fr 4.5rem;gap:10px;align-items:center;margin:5px 0}
+.ba-wf-lab{font-size:var(--font-text-xs-size);color:var(--color-text);line-height:1.3}
+.ba-wf-lab small{display:block;color:var(--color-text-tertiary);font-size:var(--font-text-3xs-size)}
+.ba-wf-track{position:relative;height:18px;background:var(--color-surface-secondary);border-radius:5px}
+.ba-wf-bar{position:absolute;top:0;bottom:0;border-radius:5px}
+.ba-wf-in{background:var(--color-background-info-solid)}
+.ba-wf-out{background:var(--color-background-danger-surface);border:1px solid var(--color-border-danger-surface)}
+.ba-wf-sum{background:var(--color-background-success-solid)}
+.ba-wf-mkt{background:var(--color-background-caution-surface);border:1px solid var(--color-border-caution-surface)}
+.ba-wf-val{font-family:var(--font-mono);font-size:var(--font-text-xs-size);text-align:right;color:var(--color-text)}
+.ba-wf-tot .ba-wf-lab{font-weight:700}
+.ba-wf-tot .ba-wf-val{font-weight:700;color:var(--color-text-success)}
+.ba-wf-gap{border-top:1px dashed var(--color-border);margin:9px 0}
+.ba-wf-legend{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.ba-wf-pill{font-size:var(--font-text-3xs-size);font-weight:600;border-radius:10px;padding:2px 9px}
+.ba-wf-p1{background:var(--color-background-info-surface);color:var(--color-text-info)}
+.ba-wf-p2{background:var(--color-background-danger-surface);color:var(--color-text-danger)}
+.ba-wf-p3{background:var(--color-background-success-surface);color:var(--color-text-success)}
+.ba-wf-p4{background:var(--color-background-caution-surface);color:var(--color-text-caution)}
+.ba-wf-foot{margin:12px 0 0;font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary)}
+@media (max-width:560px){.ba-wf-row{grid-template-columns:7.5rem 1fr 3.8rem}.ba-wf{padding:22px 14px 16px}}
+</style>
+<div class="ba-wf"><span class="ba-wf-chip">Contribution margin</span>
+<h4>One SMB merchant, one month: from gross fees to CM3</h4>
+<p class="ba-wf-sub">Illustrative. 400 card payments of $50 at 2.9% + $0.30. All inputs assumed (worked example B).</p>
+
+<div class="ba-wf-row"><div class="ba-wf-lab">Gross fees<small>what the merchant pays</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-in" style="left:0;width:100%"></div></div><div class="ba-wf-val">$700</div></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Interchange<small>to the card issuer</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-out" style="left:48.57%;width:51.43%"></div></div><div class="ba-wf-val">−$360</div></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Scheme fees<small>to the card network</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-out" style="left:44.86%;width:3.71%"></div></div><div class="ba-wf-val">−$26</div></div>
+<div class="ba-wf-row ba-wf-tot"><div class="ba-wf-lab">Net revenue</div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-sum" style="left:0;width:44.86%"></div></div><div class="ba-wf-val">$314</div></div>
+<div class="ba-wf-gap"></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Fraud and disputes<small>losses you cannot pass on</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-out" style="left:42%;width:2.86%"></div></div><div class="ba-wf-val">−$20</div></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Processing<small>per-transaction cost</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-out" style="left:39.14%;width:2.86%"></div></div><div class="ba-wf-val">−$20</div></div>
+<div class="ba-wf-row ba-wf-tot"><div class="ba-wf-lab">CM1</div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-sum" style="left:0;width:39.14%"></div></div><div class="ba-wf-val">$274</div></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Cost to serve<small>support, onboarding, risk review</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-out" style="left:35.71%;width:3.43%"></div></div><div class="ba-wf-val">−$24</div></div>
+<div class="ba-wf-row ba-wf-tot"><div class="ba-wf-lab">CM2</div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-sum" style="left:0;width:35.71%"></div></div><div class="ba-wf-val">$250</div></div>
+<div class="ba-wf-row"><div class="ba-wf-lab">Performance marketing<small>period view, per active merchant</small></div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-mkt" style="left:27.14%;width:8.57%"></div></div><div class="ba-wf-val">−$60</div></div>
+<div class="ba-wf-row ba-wf-tot"><div class="ba-wf-lab">CM3</div><div class="ba-wf-track"><div class="ba-wf-bar ba-wf-sum" style="left:0;width:27.14%"></div></div><div class="ba-wf-val">$190</div></div>
+
+<div class="ba-wf-legend"><span class="ba-wf-pill ba-wf-p1">money in</span><span class="ba-wf-pill ba-wf-p2">variable cost</span><span class="ba-wf-pill ba-wf-p3">margin layer</span><span class="ba-wf-pill ba-wf-p4">growth spend</span></div>
+<p class="ba-wf-foot">Only 27% of the gross fee survives to CM3. Steer pricing and risk by CM1, operations by CM2, growth by CM3 and cohort payback.</p>
+</div>

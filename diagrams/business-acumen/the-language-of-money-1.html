@@ -1,0 +1,66 @@
+<style>
+.ba-ccc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-info-outline);
+  border-radius:var(--radius-xl, 16px);padding:28px 24px 22px;margin:26px 0;position:relative;font-family:inherit;text-align:left}
+.ba-ccc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-info-solid);color:var(--white);
+  font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);letter-spacing:.06em;text-transform:uppercase;
+  border-radius:999px;padding:3px 12px}
+.ba-ccc h4{margin:0 0 4px;font-size:var(--font-text-sm-size);font-weight:var(--font-weight-semibold);color:var(--color-text)}
+.ba-ccc-sub{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:0 0 18px}
+.ba-ccc-row{margin:0 0 22px}
+.ba-ccc-name{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 8px;
+  font-size:var(--font-text-sm-size);font-weight:var(--font-weight-semibold);color:var(--color-text)}
+.ba-ccc-name span{font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);border-radius:999px;padding:2px 10px}
+.ba-ccc-bad{background:var(--color-background-danger-surface);color:var(--color-text-danger);border:1px solid var(--color-border-danger-surface)}
+.ba-ccc-good{background:var(--color-background-success-surface);color:var(--color-text-success);border:1px solid var(--color-border-success-surface)}
+.ba-ccc-track{position:relative;height:64px;background:var(--color-surface-tertiary);border:1px solid var(--color-border);border-radius:10px}
+.ba-ccc-seg{position:absolute;top:8px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);white-space:nowrap;overflow:hidden}
+.ba-ccc-stock{background:var(--color-background-info-surface);color:var(--color-text-info);border:1px solid var(--color-border-info-surface)}
+.ba-ccc-settle{background:var(--color-background-discovery-surface);color:var(--color-text-discovery);border:1px solid var(--color-border-discovery-surface)}
+.ba-ccc-gap{position:absolute;top:34px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);white-space:nowrap}
+.ba-ccc-gap.ba-ccc-bad{border-style:dashed}
+.ba-ccc-gap.ba-ccc-good{border-style:dashed}
+.ba-ccc-mark{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px solid var(--color-border-strong)}
+.ba-ccc-mark b{position:absolute;top:-20px;left:-4px;font-size:var(--font-text-xs-size);font-weight:var(--font-weight-semibold);
+  color:var(--color-text-secondary);white-space:nowrap}
+.ba-ccc-axis{position:relative;height:18px;margin-top:4px;font-size:var(--font-text-xs-size);color:var(--color-text-tertiary)}
+.ba-ccc-axis i{position:absolute;font-style:normal;transform:translateX(-50%)}
+.ba-ccc-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.ba-ccc-legend span{font-size:var(--font-text-xs-size);border-radius:999px;padding:2px 10px}
+.ba-ccc-note{font-size:var(--font-text-xs-size);color:var(--color-text-secondary);margin:14px 0 0}
+</style>
+<div class="ba-ccc" role="img" aria-label="Cash conversion cycle timelines. Retailer: stock sits 60 days, cash settles 2 days after sale, supplier paid on day 45, so its own cash is tied up from day 45 to day 62, 17 days. Marketplace: buyer pays day 0, cash settles day 2, seller paid day 14, so it holds other people's cash for 12 days.">
+  <span class="ba-ccc-chip">Cash conversion cycle</span>
+  <h4>CCC = DIO + DSO − DPO, in days</h4>
+  <p class="ba-ccc-sub">Who funds the gap between paying out and getting paid? Illustrative; all inputs assumed. Scale: day 0 to day 70.</p>
+
+  <div class="ba-ccc-row">
+    <div class="ba-ccc-name">Retailer <span class="ba-ccc-bad">+17 days of its own cash</span></div>
+    <div class="ba-ccc-track">
+      <div class="ba-ccc-seg ba-ccc-stock" style="left:0;width:85.71%">Stock on shelf: DIO 60</div>
+      <div class="ba-ccc-seg ba-ccc-settle" style="left:85.71%;width:2.86%"></div>
+      <div class="ba-ccc-gap ba-ccc-bad" style="left:64.29%;width:24.28%">Gap 17</div>
+      <div class="ba-ccc-mark" style="left:64.29%"><b>pays supplier · day 45</b></div>
+    </div>
+    <div class="ba-ccc-axis"><i style="left:0%">0</i><i style="left:64.29%">45</i><i style="left:85.71%">60</i><i style="left:92%">62</i></div>
+  </div>
+
+  <div class="ba-ccc-row">
+    <div class="ba-ccc-name">Marketplace <span class="ba-ccc-good">−12 days: holds others' cash</span></div>
+    <div class="ba-ccc-track">
+      <div class="ba-ccc-seg ba-ccc-settle" style="left:0;width:2.86%"></div>
+      <div class="ba-ccc-gap ba-ccc-good" style="left:2.86%;width:17.14%">Float 12</div>
+      <div class="ba-ccc-mark" style="left:20%"><b>pays seller · day 14</b></div>
+    </div>
+    <div class="ba-ccc-axis"><i style="left:0%">0</i><i style="left:4%">2</i><i style="left:20%">14</i></div>
+  </div>
+
+  <div class="ba-ccc-legend">
+    <span class="ba-ccc-stock">Inventory days (DIO)</span>
+    <span class="ba-ccc-settle">Settlement days (DSO)</span>
+    <span class="ba-ccc-bad">Company funds the gap</span>
+    <span class="ba-ccc-good">Suppliers or sellers fund the gap</span>
+  </div>
+  <p class="ba-ccc-note">Product levers: payment terms and invoice options move DSO; range breadth moves DIO; supplier terms and payout speed move DPO.</p>
+</div>

@@ -1,0 +1,44 @@
+<style>
+.ba-z{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;
+  padding:var(--space-6,24px) var(--space-5,20px);margin:26px 0;font-family:inherit;text-align:left}
+.ba-z-title{font-size:var(--font-text-xs-size);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-text-secondary);font-weight:700;margin:0 0 4px}
+.ba-z-sub{font-size:var(--font-text-sm-size);color:var(--color-text-secondary);margin:0 0 18px}
+.ba-z-row{display:grid;grid-template-columns:7.5em 1fr;align-items:center;gap:10px;margin-bottom:12px}
+.ba-z-lab{font-size:var(--font-text-xs-size);font-weight:700;color:var(--color-text)}
+.ba-z-track{position:relative;height:2.6em;background:var(--color-surface-tertiary);border-radius:8px}
+.ba-z-band{position:absolute;top:0;bottom:0;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-2xs-size);font-weight:700}
+.ba-z-band.before{background:var(--color-background-info-surface);border:1px solid var(--color-border-info-surface);color:var(--color-text-info)}
+.ba-z-band.after{background:var(--color-background-success-surface);border:1px solid var(--color-border-success-surface);color:var(--color-text-success)}
+.ba-z-axis{position:relative;height:3.6em;margin-left:calc(7.5em + 10px)}
+.ba-z-mark{position:absolute;top:0;transform:translateX(-50%);text-align:center;font-size:var(--font-text-2xs-size);
+  color:var(--color-text-secondary);white-space:nowrap}
+.ba-z-mark::before{content:"";display:block;width:2px;height:.8em;margin:0 auto 2px;background:var(--color-border-strong)}
+.ba-z-mark.deal{color:var(--color-text-success);font-weight:700}
+.ba-z-mark.deal::before{background:var(--color-text-success)}
+.ba-z-mark.ask{color:var(--color-text-danger);font-weight:700}
+.ba-z-mark.ask::before{background:var(--color-text-danger)}
+.ba-z-ends{display:flex;justify-content:space-between;margin-left:calc(7.5em + 10px);font-size:var(--font-text-2xs-size);color:var(--color-text-tertiary)}
+.ba-z-note{margin-top:12px;font-size:var(--font-text-xs-size);color:var(--color-text-secondary)}
+@media (max-width:640px){.ba-z-row{grid-template-columns:1fr}.ba-z-axis,.ba-z-ends{margin-left:0}}
+</style>
+<div class="ba-z" role="img" aria-label="Zone of agreement for the share of interchange the partner bank keeps. Before the trade the zone runs from 16% (bank walk-away) to 24.7% (fintech walk-away), worth 1.95 million dollars a year. After the fintech takes on transaction monitoring it runs from 12.4% to 22.9%, worth 2.35 million dollars. Today's share is 20%, the bank's ask is 30%, outside the zone, and the deal settles at 18%.">
+  <div class="ba-z-title">The zone of agreement</div>
+  <p class="ba-z-sub">Share of the $22.5M interchange pool the partner bank keeps. Illustrative, all inputs assumed.</p>
+  <div class="ba-z-row">
+    <span class="ba-z-lab">Before the trade</span>
+    <div class="ba-z-track"><div class="ba-z-band before" style="left:27.3%;width:39.4%">16% to 24.7% · $1.95M</div></div>
+  </div>
+  <div class="ba-z-row">
+    <span class="ba-z-lab">After the trade</span>
+    <div class="ba-z-track"><div class="ba-z-band after" style="left:11.1%;width:47.5%">12.4% to 22.9% · $2.35M</div></div>
+  </div>
+  <div class="ba-z-axis">
+    <span class="ba-z-mark deal" style="left:36.4%">Deal<br>18%</span>
+    <span class="ba-z-mark" style="left:45.5%">Today<br>20%</span>
+    <span class="ba-z-mark ask" style="left:90.9%">Bank's ask<br>30%</span>
+  </div>
+  <div class="ba-z-ends"><span>10%</span><span>32%</span></div>
+  <div class="ba-z-note">Left edge of each band: the bank's walk-away. Right edge: the fintech's walk-away. The trade widens the zone by $0.4M, the gap between the two sides' cost of the same task. The ask sits outside both zones.</div>
+</div>
