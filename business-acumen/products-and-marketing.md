@@ -254,9 +254,9 @@ The life cycle, in product terms:
 4. **Monitor.** Track performance, incidents and the vendor's finances. Review critical vendors at least yearly.
 5. **Exit.** Keep a written, tested plan to move to another provider or bring the work in-house.
 
-**When you are the third party.** In banking-as-a-service, a fintech uses a partner bank's licence. To the bank, the fintech is the third party. The bank must oversee the fintech's onboarding, complaints and compliance. US bank regulators have brought enforcement actions against several partner banks over weak oversight of their fintech programmes. The fintech feels that as slower launches and new controls.
+**When you are the third party.** In banking-as-a-service, a fintech uses a partner bank's licence. To the bank, the fintech is the third party. The bank must oversee the fintech's onboarding, complaints and compliance. US bank regulators have taken enforcement action against partner banks over weak oversight of their fintech programmes, for example a Federal Reserve action in June 2024. The fintech feels that as slower launches and new controls.
 
-**A real failure of a middle layer.** In April 2024, Synapse, a company that connected fintech apps to partner banks, filed for bankruptcy. Many end customers of those apps lost access to their money for months while the parties tried to reconcile who owned what. The lesson for a product leader is not about one company. If a middle layer keeps the record of whose money is whose, your customers depend on that record. Ask who holds it, and how you would rebuild it without them.
+**A real failure of a middle layer.** In April 2024, a banking-as-a-service middleware provider filed for bankruptcy. Many end customers of the fintech apps that relied on it lost access to their money for weeks or months, while the parties tried to reconcile who owned what. The lesson for a product leader is not about one company. If a middle layer keeps the record of whose money is whose, your customers depend on that record. Ask who holds it, and how you would rebuild it without them.
 
 **Decision rule.** For any critical vendor or partner, name the fallback before you sign. If there is none, the contract needs stronger rights or the capability needs to come in-house.
 

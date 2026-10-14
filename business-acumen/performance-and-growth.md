@@ -281,7 +281,7 @@ Revenue held flat only because some customers grew. Fifteen percent of last year
 
 ## Worked example: which lever moves an insurer's profit?
 
-*This example is invented, to show the method. The insurer and all numbers are illustrative. For simplicity, both ratios here use earned premium. Statutory reporting usually divides expenses by written premium instead.*
+*This example is invented, to show the method. The insurer and all numbers are illustrative. For simplicity, both ratios here use earned premium. Some reports divide expenses by written premium instead, so check the definition.*
 
 An insurer has $50 million of earned premium a year. Claims and claim-handling costs are $34 million. Other underwriting expenses are $17 million.
 

@@ -8,7 +8,7 @@ Finance speaks through three statements. The **income statement** shows performa
 
 The core tradeoff is between profit and cash. A product can raise profit and drain cash. Longer payment terms, a growing loan book and a wider product range all do this. A product can also bring in cash before it earns a cent of revenue. Annual prepaid plans, insurance premiums and marketplace payouts all do that.
 
-This lesson teaches you to read the statements as a product leader. You will learn which line each product decision lands on. You will learn how revenue is recognized, and why the same sale can be $100 of revenue or $15. You will learn working capital, float and the bridge from EBITDA to free cash flow. The scale of the stakes is large. A payment-terms change at a mid-sized distributor can tie up more cash than the whole product budget.
+This lesson teaches you to read the statements as a product leader. You will learn which line each product decision lands on. You will learn how revenue is recognized, and why the same sale can be $100 of revenue or $15. You will learn working capital, float and the bridge from EBITDA to free cash flow. The scale of the stakes is large. In this lesson's illustrative worked example, a payment-terms change at a distributor ties up about $13 million of cash.
 
 > 🎯 **For the product leader**
 >
@@ -293,7 +293,7 @@ The retailer funds 17 days of its own cost of goods. The marketplace holds 12 da
 
 **Float** is money a company holds that belongs to someone else, for a while. Payments companies hold merchants' money between settlement and payout. Marketplaces hold sellers' money. Wallets hold customers' balances. Insurers hold premiums until they pay claims.
 
-**How it works.** Float ≈ daily flow × the lag in days. The company can earn interest on it, within the limits of its licences and its customer terms. Many regulated money transmitters must keep customer funds in safe, liquid assets. So the yield is close to short-term interest rates.
+**How it works.** Float ≈ daily flow × the lag in days. The company can earn interest on it, within the limits of its licences and its customer terms. Licensing rules often restrict how a money transmitter may hold customer funds. Ask Legal what applies. Where funds must sit in safe, liquid assets, the yield is close to short-term interest rates.
 
 **How to compute it.** A marketplace processes $1 billion of GMV a year. It pays sellers 12 days after each sale. (Illustrative; all inputs assumed.)
 
@@ -345,7 +345,7 @@ Then walk down from adjusted EBITDA to free cash flow. Assume interest and tax w
 
 Check the operating cash flow another way. Net income 5 + depreciation and amortization 8 + stock-based compensation 7 − working capital 4 = 16. Stock pay stays added back, because no cash left the company. Adjusted EBITDA is $25 million. Free cash flow is $7 million. The company also issued $7 million of stock to staff, which shareholders pay for through dilution.
 
-**Capitalized software.** Some software development cost can be put on the balance sheet as an asset, instead of being expensed. It is then amortized over a few years. Amortization sits below EBITDA. So the more a company capitalizes, the higher its EBITDA, with no change in cash. The US GAAP rules on which development costs may be capitalized changed recently. Ask Finance which rules your company applies, and what share of your team's cost it capitalizes.
+**Capitalized software.** Some software development cost can be put on the balance sheet as an asset, instead of being expensed. It is then amortized over a few years. Amortization sits below EBITDA. So the more a company capitalizes, the higher its EBITDA, with no change in cash. The US standard-setter issued an update in September 2025 that replaces the project-stage model. It takes effect for annual periods beginning after 15 December 2027. Ask Finance which rules apply to you, and what share of your team's cost it capitalizes.
 
 **Domain application.** For a lender, EBITDA hides the funding cost, which is the main cost of the business. Lenders are judged on net interest margin, credit losses and return on equity instead. For a retailer, working capital and store capex dominate the bridge.
 
@@ -397,7 +397,7 @@ The product leader must answer three questions. Does it make money? How much cas
 
 The balance sheet balances: assets rise $14.79 million, and liabilities plus equity rise $14.79 million.
 
-**Step 9: test the key assumption.** Without the 10% sales lift, the terms cost $1.83 million a year and earn nothing. The lift needed just to break even is about $6.1 million of extra sales, or about 5%. This is approximate, because it holds the cost of terms at the $132 million level. So the whole case rests on the sales lift being real.
+**Step 9: test the key assumption.** Without the 10% sales lift, sales stay at $120 million and terms sales are $72 million. The terms then cost about **$1.67 million** a year and earn nothing: $0.72 million of bad debt plus $0.95 million of interest. The lift needed just to break even is about **$5.83 million** of extra sales, or about 4.9%. That figure counts the extra cost of terms on the extra sales. So the whole case rests on the sales lift being real.
 
 **What the leader does with this.** Year 2 looks good. If sales hold at $132 million, receivables stay flat and operating cash is +$1.77 million. The return on the receivables before funding cost is about 21.6%. That beats an 8% borrowing rate.
 
@@ -458,15 +458,19 @@ assert abs(assets - (liabilities + equity)) < 1
 # Context numbers
 dso = receivables / new_sales * 365
 pre_finance_return = (extra_gross_profit - bad_debt) / receivables
-breakeven_lift = (bad_debt + interest) / gross_margin   # extra sales needed for zero profit
+cost_rate = terms_share * (bad_debt_rate + terms_days / 365 * borrow_rate)  # cost of terms per $ of sales
+cost_no_lift = old_sales * cost_rate                   # cost of terms if sales do not rise
+breakeven_lift = cost_no_lift / (gross_margin - cost_rate)   # extra sales needed for zero profit
 
 for name, v in [("terms sales", terms_sales), ("receivables", receivables),
                 ("extra gross profit", extra_gross_profit), ("bad debt", bad_debt),
                 ("interest", interest), ("profit change", profit),
                 ("operating cash, year 1", operating_cash), ("financing cash", financing_cash),
-                ("net cash", net_cash), ("break-even sales lift", breakeven_lift)]:
+                ("net cash", net_cash), ("cost of terms, no lift", cost_no_lift),
+                ("break-even sales lift", breakeven_lift)]:
     print(f"{name:24s} ${v / M:7.2f}M")
 print(f"company DSO {dso:.0f} days; return on receivables before financing {pre_finance_return:.1%}")
+print(f"break-even lift as a share of today's sales: {breakeven_lift / old_sales:.1%}")
 print(f"year 2 operating cash if sales stay flat: ${profit / M:.2f}M")
 ```
 
@@ -482,8 +486,10 @@ profit change            $   1.77M
 operating cash, year 1   $ -11.25M
 financing cash           $  13.02M
 net cash                 $   1.77M
-break-even sales lift    $   6.11M
+cost of terms, no lift   $   1.67M
+break-even sales lift    $   5.83M
 company DSO 36 days; return on receivables before financing 21.6%
+break-even lift as a share of today's sales: 4.9%
 year 2 operating cash if sales stay flat: $1.77M
 ```
 

@@ -142,7 +142,7 @@ A lender must find the cash it lends. It has four main sources. Most lenders use
 | Source | How it works | Cost and risk |
 | --- | --- | --- |
 | **Deposits** | A bank lends out customers' deposits. This needs a bank charter. | Usually the cheapest source. Deposit rates lag market rates. Deposits can leave fast in a panic. |
-| **Warehouse facility** | A bank lends against a pool of the lender's loans. It advances only part of each loan's value, often 80% to 90%. The lender funds the rest with its own equity. | Floating rate. The facility has rules on loan quality. If losses rise past a trigger, the bank can stop funding. |
+| **Warehouse facility** | A bank lends against a pool of the lender's loans. It advances only part of each loan's value, for example 80% to 90% (illustrative). The lender funds the rest with its own equity. | Floating rate. The facility has rules on loan quality. If losses rise past a trigger, the bank can stop funding. |
 | **Forward flow** | An investor commits to buy loans that meet set criteria, at an agreed price, over a set period. The lender keeps a fee and often keeps servicing. | Moves loans off the balance sheet. The buyer can reprice or walk away when the agreement ends. |
 | **Securitization** | The lender sells a pool of loans to a trust. The trust issues bonds in layers, called tranches. Senior tranches are paid first and cost least. The lender usually keeps the riskiest layer. | Cheap at scale. Needs a track record and good markets. US rules generally require the sponsor to keep at least 5% of the credit risk. |
 
@@ -157,7 +157,7 @@ The difference is about $500 per loan. That is a large share of the loan's whole
 
 #### Bank capital in plain words
 
-**Capital** is the owners' money that absorbs losses before depositors and creditors lose anything. It is the cushion. Regulators set minimum amounts of capital relative to **risk-weighted assets**. A riskier asset gets a higher weight, so it needs more capital. Most countries base their rules on the international Basel framework, with local changes.
+**Capital** is the owners' money that absorbs losses before depositors and creditors lose anything. It is the cushion. Regulators set minimum amounts of capital relative to **risk-weighted assets**. A riskier asset gets a higher weight, so it needs more capital. Basel Committee member jurisdictions commit to implementing its international standards, with local changes.
 
 **Why a product leader cares.** Every loan a bank makes uses some of its capital. Capital is expensive equity. So a loan product must earn a return on the capital it uses, not only a margin on the loan.
 
@@ -267,7 +267,7 @@ These are simple growing-perpetuity values. They ignore operating costs and tax.
 | Insurance | Premium growth, combined ratio, reserve adequacy, book value growth |
 | eCommerce and marketplaces | GMV, take rate, contribution margin per order, free cash flow |
 | Retail | Comparable sales, gross margin, inventory turns, free cash flow |
-| Software | Revenue growth, net revenue retention, gross margin, and a heuristic that growth rate plus profit margin should reach about 40% |
+| Software | Revenue growth, net revenue retention, gross margin, and an industry rule of thumb, not a standard, that growth rate plus profit margin should reach about 40% |
 
 **A bet's implied value.** You can translate a bet into company value. Suppose a bet adds $2 million of recurring gross profit a year. Suppose the company trades at an assumed 8 times gross profit. The implied value is about **$16 million**. Use this to explain why a bet matters to the CEO. Do not put it in the business case as the bet's return. The multiple belongs to the market, and the market applies it only to profit it believes will last.
 

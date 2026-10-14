@@ -68,7 +68,7 @@ The tests pull against each other. Usage tracks cost best and is hardest to pred
 
 - **Payments: percentage or fixed fee.** A percentage fee grows with the ticket size. It also tracks interchange, which is mostly a percentage. A fixed fee per transaction covers costs that do not scale with the amount, such as processing and fraud checks. Most small-merchant prices combine both, for example 2.9% + $0.30. The combination hurts small tickets. A $5 payment pays $0.445, an effective rate of 8.9%. A merchant who sells coffee feels that more than one who sells furniture.
 - **Lending: rate or fee.** A loan can charge interest as an annual percentage rate (APR), a flat fee, or both. Interest grows with the amount and the time, which matches the lender's funding cost and risk. A flat fee is easy to understand. But it can hide a high rate on a short loan. A $10 fee on a $100 loan repaid in two weeks equals an APR of about 261%. Regulators look at the APR, not at how small the fee feels.
-- **Insurance: premium per exposure unit.** Insurers price per unit of risk exposure. For car insurance the unit is often a car-year. For property it is often each $1,000 of insured value. For US workers' compensation it is commonly each $100 of payroll. Usage-based car insurance charges partly by distance or driving behaviour. That tracks risk better and makes the bill harder to predict.
+- **Insurance: premium per exposure unit.** Insurers price per unit of risk exposure. For car insurance the unit is often a car-year. Other units work the same way. For example, a rate per $100 of insured value, or per $100 of payroll for workers' compensation. These units are illustrative. Usage-based car insurance charges partly by distance or driving behaviour. That tracks risk better and makes the bill harder to predict.
 - **eCommerce and Retail: margin or membership.** A retailer earns its margin on each item. A paid membership adds a fixed fee per year, often in exchange for free delivery. The fee is predictable for the customer. The delivery cost scales with orders. So a heavy-use member can cost more than they pay.
 - **AI features: seat or usage.** An AI feature priced per seat often has a cost that grows per model call. That fails the cost-driver test. The heaviest users become the least profitable. Teams respond with usage limits, credits or a usage-based add-on.
 
@@ -278,7 +278,7 @@ Adyen's interchange++ pricing shows its own fee apart from interchange and schem
 **The rules that cap interchange.**
 
 - The European Union caps interchange on consumer debit and credit cards. The cap is 0.2% of the transaction value for debit and 0.3% for credit.
-- In the US, a Federal Reserve rule, Regulation II, caps debit interchange for card issuers with $10 billion or more in assets. Smaller issuers are exempt from that cap. As of 2026-10, the US cap is 21 cents plus 5 basis points of the transaction value, with a 1-cent fraud-prevention adjustment for eligible issuers. The Federal Reserve proposed lowering it in 2023, so check the current level before you model it. US credit card interchange is not capped by this rule.
+- In the US, a Federal Reserve rule, Regulation II, caps debit interchange for card issuers with $10 billion or more in assets. Smaller issuers are exempt from that cap. The rule sets the cap at 21 cents plus 5 basis points of the transaction value, plus a 1-cent fraud-prevention adjustment for eligible issuers. The rule is being challenged in federal court. Check its current status before you model it. US credit card interchange is not capped by this rule.
 
 A general inference, not a sourced fact: the exemption can make a smaller partner bank attractive to a fintech that issues debit cards, because the bank can earn uncapped interchange. [Unit economics](./unit-economics.md) works through what happens to a neobank when that revenue halves.
 
@@ -291,9 +291,9 @@ A general inference, not a sourced fact: the exemption can make a smaller partne
 **Risk-based pricing** charges higher rates to borrowers with higher expected loss. It is how a lender covers each risk band. [Unit economics](./unit-economics.md) shows how expected loss sets the floor for each band. Several US rules shape the price.
 
 - **Disclosure.** The Truth in Lending Act and its Regulation Z require lenders to disclose the APR and the finance charge in a standard form. Many fees, such as an origination fee, count in the finance charge. So a low headline rate with a high fee shows as a higher APR. How these rules apply to buy now, pay later plans has been contested and has changed. Ask Legal for the current position.
-- **Rate limits.** Many US states set maximum interest rates, and the limits vary widely by state and product. A national bank can generally charge the rate allowed in its home state to borrowers in other states. That is one reason many fintech lenders partner with banks. Some states have challenged these partnerships.
+- **Rate limits.** Many US states set maximum interest rates, and the limits vary widely by state and product. A national bank can generally charge the rate allowed in its home state to borrowers in other states. That is one reason many fintech lenders partner with banks. These partnerships carry legal risk: states can contest which party is the true lender.
 - **The Military Lending Act.** It caps the cost of many consumer credit products for active-duty servicemembers and their dependents at a 36% Military Annual Percentage Rate. That rate includes many fees that a standard APR leaves out. A product with a flat fee on short loans can breach it easily. The 261% example above would.
-- **Fair lending.** The Equal Credit Opportunity Act and its Regulation B forbid discrimination in any part of a credit transaction on protected grounds, such as race, sex or age. Price is part of the transaction. A pricing model that uses a factor closely linked to a protected group can create a fair-lending problem even if no one intended it.
+- **Fair lending.** The Equal Credit Opportunity Act and its Regulation B forbid discrimination in any part of a credit transaction on protected grounds, such as race, sex or age. Price is part of the transaction. Using a factor as a proxy for a protected trait, on purpose, is still prohibited. Unintended effects are a contested area. Under current federal Regulation B, the Consumer Financial Protection Bureau's position is that the Act does not support liability for effects alone, known as disparate impact. State laws and other regimes may still apply effects tests. So check with Legal before you price on any factor closely linked to a protected group.
 - **Changing the price later.** For US credit cards, Regulation Z generally requires 45 days' written notice before a significant change in terms, such as a higher rate.
 
 **Decision rule.** When you design a fee for a credit product, convert it to an APR and to a Military Annual Percentage Rate before you test it. When either looks high, take it to Compliance before you take it to customers.
@@ -302,10 +302,10 @@ A general inference, not a sourced fact: the exemption can make a smaller partne
 
 In the US, insurance is regulated by the states. Insurers file their rates, or the rules behind them, with each state's insurance regulator. The common standard is that rates must not be excessive, inadequate or unfairly discriminatory.
 
-- **Prior approval.** In some states and lines, the regulator must approve a new rate before the insurer uses it. That can take months.
+- **Prior approval.** In some states and lines, the regulator must approve a new rate before the insurer uses it. That can take longer than planned.
 - **File and use.** In others, the insurer files the rate and may start using it straight away, or after a short wait.
 
-Which applies varies by state and by line of business. A product team that plans a price change in four weeks may find it needs months in key states. Several states have also restricted pricing on factors other than risk, such as a customer's likelihood to shop around at renewal.
+Which applies varies by state and by line of business. A product team that plans a price change in four weeks may find it takes longer than planned in key states. Several states have also restricted pricing on factors other than risk, such as a customer's likelihood to shop around at renewal.
 
 The UK took a similar step. From 2022, the Financial Conduct Authority's rules require home and motor insurers to offer a renewing customer a price no higher than they would offer a new customer through the same channel. The practice it ended was known as "price walking": raising renewal prices year after year for customers who do not shop around.
 
@@ -317,7 +317,7 @@ A pricing model does not change this duty. Even an insurer that keeps a fixed fe
 
 A price test shows different prices to different people. In most retail software, that is a business choice. In credit and insurance, it can breach the rules above. Even in payments and eCommerce, three limits apply.
 
-- **Disparate impact.** If the test groups line up with a protected characteristic, through geography for example, the test can discriminate without intending to.
+- **Unintended effects on protected groups.** If the test groups line up with a protected characteristic, through geography for example, the test can treat a protected group worse without anyone intending it. Federal lending rules now give this less weight, but state laws and other regimes may still apply. Check with Legal.
 - **Disclosure and fairness.** Consumer-protection rules in many places forbid misleading price presentation. Customers who find they paid more than a neighbour may complain to a regulator.
 - **Reputation.** A personalized price that looks like it targets people who cannot shop around damages trust fast.
 

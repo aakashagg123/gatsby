@@ -134,7 +134,7 @@ In the figure, the dashed line ignores churn. The solid line counts it. With chu
 
 **How to run it.** You need three tables: acquisition spend by channel and month, customers acquired by channel and month, and contribution by customer and month. Most data teams can build the cohort table in a day. Ask for it by channel, because each channel has its own churn as well as its own CAC.
 
-**Heuristics, labelled as heuristics.** Many software investors look for payback under about 12 months for small-business products and under about 24 months for enterprise products. These are rules of thumb, not laws. A lender or insurer with cheap long-term funding can accept longer payback. A startup with 18 months of cash cannot.
+**Heuristics, labelled as heuristics.** A widely repeated rule of thumb says payback should be under about 12 months for small-business products and under about 24 months for enterprise products. These are rules of thumb, not sourced benchmarks or laws. A lender or insurer with cheap long-term funding can accept longer payback. A startup with 18 months of cash cannot.
 
 **Decision rule.** When cohort payback is longer than your cash runway or your planning horizon, slow the channel, whatever the lifetime value says.
 
@@ -163,7 +163,7 @@ In the figure, the dashed line ignores churn. The solid line counts it. With chu
 
 **Decision rule.** When someone shows you LTV ÷ CAC, ask for cohort payback beside it, and for the horizon and discount rate behind it. Approve spend only if both look healthy.
 
-**Common misreading.** "LTV to CAC is above 3, so we should spend more." The 3:1 ratio is a common rule of thumb, not a law. A 3:1 ratio that pays back in 40 months can still sink a company that runs out of cash in 24.
+**Common misreading.** "LTV to CAC is above 3, so we should spend more." The 3:1 ratio is a widely repeated rule of thumb, not a sourced benchmark or a law. A 3:1 ratio that pays back in 40 months can still sink a company that runs out of cash in 24.
 
 ### Cohort curves
 
@@ -223,7 +223,7 @@ The expected cost of one dispute has four parts:
 
 **Where the acquirer carries the loss.** The acquirer is exposed when the merchant cannot pay the chargeback back. That happens when a merchant fails after taking payment for goods it never delivers, such as tickets, travel or pre-orders. This is **merchant credit risk**. Acquirers manage it with reserves, which hold back part of a risky merchant's payouts, and with slower payouts. These tools cost the merchant cash flow. They are a pricing and product decision, not only a risk one.
 
-**Network monitoring.** Card networks run dispute-monitoring programmes. A merchant whose dispute rate stays above a network's threshold can face fines and, in the end, lose the ability to accept those cards. The thresholds differ by network and change over time. Ask your risk team for the current ones.
+**Network monitoring.** Card networks monitor merchants' dispute rates against thresholds. A merchant above them faces remediation requirements and escalating consequences. Thresholds differ by network and change over time. Ask your risk team for the current ones.
 
 #### Lending: per loan
 
@@ -267,7 +267,7 @@ Reinsurance changes the unit too. An insurer that passes part of each policy to 
 
 *Illustrative food-delivery order, inputs assumed:* a $40 basket. The restaurant pays 20% commission ($8). The customer pays $5 in delivery and service fees. Revenue is $13. The courier is paid $7. Payment processing is 3% of the $45 charged, which is $1.35. Promotions cost $1.50. Refunds and credits average $0.60. Support averages $0.40. Contribution per order is $13 − $7 − $1.35 − $1.50 − $0.60 − $0.40 = **$2.15**. A $2 delivery-fee waiver removes almost all of it.
 
-**Returns economics.** In online fashion and electronics, returns can be the largest cost after goods. The expected cost of returns per order is:
+**Returns economics.** In online fashion and electronics, returns can be one of the largest costs. The expected cost of returns per order is:
 
 **return rate × (lost margin + reverse logistics + unsellable share × cost of goods)**
 
@@ -298,7 +298,7 @@ GMROI combines margin and speed. A high-margin category that sells slowly can ea
 
 A neobank earns from card interchange, from the spread on deposits, and from fees and lending. It pays for support, cards, processing, compliance and fraud. Its unit is one active customer per month.
 
-Nubank publishes two of the inputs. It reports monthly average revenue per active customer and monthly cost to serve per active customer. In Q2 2023 it reported the first as $9.3 and the second as $0.8. A low cost to serve is what lets a digital bank profit from customers with small balances. A branch bank with a cost to serve many times higher cannot.
+Nubank publishes two of the inputs. It reports monthly average revenue per active customer and monthly cost to serve per active customer. In Q2 2023 it reported the first as $9.3 and the second as $0.8. A low cost to serve is what lets a digital bank profit from customers with small balances. A bank with a cost to serve several times higher could not serve these customers profitably.
 
 **Worked example: a neobank's debit card economics.** *Illustrative. The neobank, its partner bank and all rates are assumed.*
 
@@ -384,7 +384,7 @@ Costs come in three kinds:
 - Cohort LTV over 36 months, undiscounted: **$5,428**.
 - Cohort LTV over 36 months, discounted at 1% a month: **$4,648**. Against paid CAC, LTV to CAC is 1.5.
 
-**What the leader does with this.** The pitch said "6-month payback and LTV to CAC near 6". That used blended CAC against naive LTV: $8,333 ÷ $1,500 = 5.6. The truth for the channel being funded is 17-month payback and about 1.5 times CAC over 3 years. The leader does two things. She funds the field-sales channel only for merchant segments whose cohort payback is under 12 months. And she funds a project to cut first-quarter churn, because the 8% early churn costs 5 months of payback on the paid channel.
+**What the leader does with this.** The pitch said "6-month payback and LTV to CAC near 6". That used blended CAC against naive LTV: $8,333 ÷ $1,500 = 5.6. The truth for the channel being funded is 17-month payback and about 1.5 times CAC over 3 years. The leader does two things. She funds the field-sales channel only for merchant segments whose cohort payback is under 12 months. And she funds a project to cut first-quarter churn, because churn costs 5 months of payback on the paid channel (month 12 with no churn, month 17 with it). The 8% early churn alone adds 3 of those months: with a flat 2% churn from the start, paid CAC would be covered in month 14.
 
 ### Worked example: one personal loan
 
@@ -416,7 +416,7 @@ Costs come in three kinds:
 | Monthly defaults, evenly spread | $1,269 | $874 | 29.8% |
 | Monthly defaults, twice as likely in year 1 | $1,201 | $746 | 26.1% |
 
-Real defaults on personal loans tend to cluster early in the loan's life. The front-loaded row is the most realistic of the three. In it, the marginal band earns $746, 38% less than the average loan's $1,201.
+The script assumes defaults cluster early in the loan's life. Check that against your own vintage curves. If your defaults do cluster early, the front-loaded row is the closest of the three. In it, the marginal band earns $746, 38% less than the average loan's $1,201.
 
 **What the leader does with this.** The band is still profitable on these numbers. But the estimate of its PD is the least certain number in the model, because the lender has never approved that band. The leader approves a small, capped test of the band, with its own vintage curve. She also asks for the band's own price. Charging the same APR to both bands means the safer borrowers subsidize the riskier ones. In many places, the law limits how high the APR can go. See [pricing and business models](./monetization-and-business-models.md).
 
@@ -528,6 +528,8 @@ blended = 0.4 * 3000 + 0.6 * 500
 print(f"CM1/month ${cm1_m:.0f}  CM2/month ${cm2_m:.0f}  blended CAC ${blended:.0f}")
 print(f"simple payback, blended / paid: {blended / cm2_m:.0f} / {3000 / cm2_m:.0f} months")
 print(f"cohort payback, blended / paid: {cohort_payback(blended, cm2_m)} / {cohort_payback(3000, cm2_m)} months")
+flat = next(t for t in range(1, 121) if sum(cm2_m * 0.98 ** (m - 1) for m in range(1, t + 1)) >= 3000)
+print(f"paid payback with a flat 2% churn: {flat} months")
 print("survival at month 3, 12, 36:", [round(survival(m), 3) for m in (3, 12, 36)])
 print(f"naive LTV ${cm2_m/0.03:,.0f}   discounted naive ${cm2_m/(0.03+0.01):,.0f}")
 print(f"cohort LTV, 36 months: ${cohort_ltv(cm2_m, 36):,.0f} undiscounted, "
@@ -634,6 +636,7 @@ gross take 3.50%  net take 1.57%
 CM1/month $274  CM2/month $250  blended CAC $1500
 simple payback, blended / paid: 6 / 12 months
 cohort payback, blended / paid: 8 / 17 months
+paid payback with a flat 2% churn: 14 months
 survival at month 3, 12, 36: [0.779, 0.649, 0.4]
 naive LTV $8,333   discounted naive $6,250
 cohort LTV, 36 months: $5,428 undiscounted, $4,648 at 1%/month

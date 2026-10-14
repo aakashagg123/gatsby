@@ -53,7 +53,7 @@ Most product organizations use four types of team. Each has a different job and 
 | **Specialist team** | A part that needs rare expertise, such as a model or a pricing engine | Other teams use its output without learning the specialism | In an insurer, the pricing actuaries' rating engine. In payments, the fraud model. |
 | **Enabling team** | Helps other teams gain a skill, then moves on | The teams it helped no longer need it | A compliance group that teaches journey teams to build disclosures and records correctly |
 
-A good team owns no more than it can hold in its head. Teams of roughly five to nine people are common practice. When one team owns too many systems, it slows on all of them.
+A good team owns no more than it can hold in its head. A common rule of thumb is a team of roughly five to nine people. When one team owns too many systems, it slows on all of them.
 
 **The common misreading.** "A platform team owns all the shared code." A platform is a product with internal customers. If journey teams cannot use it without filing a ticket, it is a queue, not a platform.
 

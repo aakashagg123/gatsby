@@ -105,7 +105,7 @@ Most product leaders meet the board rarely. They meet its effects often. The boa
 | **Compensation** | Pay for senior leaders, and the metrics bonuses are tied to | Which product metrics executives are paid on |
 | **Nominating and governance** | Board membership and governance rules | Rarely |
 
-Under rules of the US Securities and Exchange Commission (SEC) adopted after the Sarbanes-Oxley Act of 2002, a listed company's audit committee must be made up of independent directors. Federal Reserve rules require larger bank holding companies to have a board risk committee. In a regulated firm, a new product often needs a management new-product committee first. Its decision then appears in the risk committee's report.
+Under rules of the US Securities and Exchange Commission (SEC) adopted after the 2002 US corporate-governance law, a listed company's audit committee must be made up of independent directors. Federal Reserve rules require larger bank holding companies to have a board risk committee. In a regulated firm, a new product often needs a management new-product committee first. Its decision then appears in the risk committee's report.
 
 **The board pack.** Directors receive a **board pack** some days before each meeting. Many boards meet about quarterly. A typical pack holds:
 
@@ -193,7 +193,7 @@ You will not know their numbers exactly. A range is enough. Test it with questio
 
 **Anchoring and the first offer.** The first number often pulls the final deal toward it. Make the first offer when you have a good estimate of the zone. Make it inside the zone, near the other side's walk-away point, and give a reason for it. When the other side opens far outside the zone, do not counter by splitting the difference. Restate the economics and re-anchor.
 
-**Domain application.** Fintechs that offer debit cards usually issue them through a partner bank. In the US, debit interchange is capped for large issuers, and smaller issuers are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). So partner banks are often smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
+**Domain application.** Fintechs that offer debit cards usually issue them through a partner bank. In the US, debit interchange is capped for large issuers, and smaller issuers are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). So partner banks can be smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
 
 **Decision rule.** Write both walk-away points, in numbers, before the first meeting. If you cannot estimate theirs, your first meeting is for questions, not offers.
 

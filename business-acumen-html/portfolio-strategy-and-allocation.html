@@ -69,7 +69,7 @@
 <h3 id="allocation-mechanics">Allocation mechanics</h3>
 <p>Allocation decides how much money and how many people each horizon gets. Four mechanics make it work.</p>
 <h4 id="size-the-horizons-from-the-growth-gap">Size the horizons from the growth gap</h4>
-<p>A fixed split, such as 70% core, 20% next and 10% future, is common. It is easy to explain. It is also arbitrary. A shrinking core needs more in the later horizons. A core growing fast needs most of its capacity just to keep up.</p>
+<p>One example split is 70/20/10: 70% core, 20% next and 10% future. A fixed split is easy to explain. It is also arbitrary. A shrinking core needs more in the later horizons. A core growing fast needs most of its capacity just to keep up.</p>
 <p>A better start is the <strong>growth gap</strong>: the distance between the company's target and where the core will get on its own.</p>
 <p><strong>How to compute it.</strong> An illustrative company has $500 million of revenue. All inputs are assumed.</p>
 <ol>
@@ -128,7 +128,7 @@
 <p><strong>Decision rule.</strong> Size each stage to the cheapest test that can change the next decision. If no result could change it, the stage is not a test. It is a launch.</p>
 <h4 id="zero-based-review">Zero-based review</h4>
 <p>Most budgets are <strong>incremental</strong>: last year's number plus or minus a few percent. A <strong>zero-based review</strong> starts each team from zero. The team must justify every dollar against what it delivers.</p>
-<p>Zero-based review finds the spending that nobody would approve today. It has a cost. It takes leaders' time, and it can scare teams into short-term projects. Many companies run it every two or three years, or on one slice of the portfolio each year. A practical version splits each team's budget into <strong>run</strong> (keep the lights on, meet regulatory duties) and <strong>change</strong> (new value). Then it reviews the change part from zero.</p>
+<p>Zero-based review finds the spending that nobody would approve today. It has a cost. It takes leaders' time, and it can scare teams into short-term projects. Some companies run it every few years, or on one slice of the portfolio each year. A practical version splits each team's budget into <strong>run</strong> (keep the lights on, meet regulatory duties) and <strong>change</strong> (new value). Then it reviews the change part from zero.</p>
 <p><strong>Decision rule.</strong> When more than about half of a product's team works on run costs, put that product in the next zero-based review. It is a sunset or re-platform candidate.</p>
 <p><a href="navigating-the-organization.html">Navigating the organization</a> explains how the annual plan and budget cycle works.</p>
 <h4 id="hold-a-reserve-and-review-on-a-cadence">Hold a reserve, and review on a cadence</h4>
@@ -210,7 +210,7 @@
 <li>Realistic value created: $40M + $21.6M − $8M − $60M = <strong>−$6.4M</strong>. The deal destroys value.</li>
 <li>The <strong>walk-away price</strong> on realized synergies is $40M + $21.6M − $8M = <strong>$53.6M</strong>.</li>
 </ol>
-<p><strong>Earn-outs move the risk.</strong> An <strong>earn-out</strong> pays part of the price later, only if agreed targets are met. Here, offer $45M up front and up to $15M more if the revenue synergy is delivered. If it is delivered in full, you pay $60M and create $6.1M of value. If only half is delivered, you pay $45M and create $40M + $21.6M − $8M − $45M = <strong>+$8.6M</strong>. The earn-out turns a losing case into a winning one.</p>
+<p><strong>Earn-outs move the risk.</strong> An <strong>earn-out</strong> pays part of the price later, only if agreed targets are met. Here, offer $45M up front and up to $15M more if the revenue synergy is delivered. If it is delivered in full, with cost synergy still at 90%, you pay $60M and create $40M + ($6M + $2.7M) × 3.7908 − $8M − $60M ≈ <strong>+$5.0M</strong>. If only half is delivered, you pay $45M and create $40M + $21.6M − $8M − $45M = <strong>+$8.6M</strong>. The earn-out turns a losing case into a winning one.</p>
 <p>Earn-outs have costs. The sellers will push the earn-out metric, even when that conflicts with integration. Disputes over how the metric was measured are common. Write the definition as carefully as a contract price.</p>
 <p><strong>Acqui-hires.</strong> An <strong>acqui-hire</strong> buys a company mainly for its team. Price it against the alternative of hiring. In an illustration, a $12M deal for 15 engineers costs $800,000 per engineer. Hiring 15 engineers might cost $40,000 each in recruiting: $0.6M. The acqui-hire is worth more only if it saves time worth the difference. If it brings a product to market 12 months earlier, and that product earns $0.5M of gross profit a month, the time is worth $6M. Then the deal is worth about $6.6M against a $12M price. It needs more than speed to pay. A rare skill, a licence or customers must make up the rest. Retention packages also matter. If the team leaves when its packages vest, you bought a short lease.</p>
 <p><strong>Domain application: insurance.</strong> An insurer buys an agency or a managing general agent (MGA) for its distribution. The revenue synergy is placing more premium with the buyer. The hidden cost is that the agency's other carriers may move their business elsewhere. Standalone value can fall on the day the deal closes.</p>
@@ -429,6 +429,7 @@ planned = (6 + 3) * af5                           # 34.1
 realized = (6 * 0.5 + 3 * 0.9) * af5              # 21.6
 print(round(40 + planned - 8 - 60, 1), round(40 + realized - 8 - 60, 1))    # 6.1 -6.4
 print(round(40 + realized - 8, 1))                       # walk-away price 53.6
+print(round(40 + (6 + 3 * 0.9) * af5 - 8 - 60, 1))       # earn-out, revenue in full: 5.0
 print(round(40 + realized - 8 - 45, 1))                  # earn-out, half delivered: 8.6
 
 # Acqui-hire: price per engineer, and the alternative

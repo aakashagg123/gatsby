@@ -28,7 +28,7 @@ The scale is large. A fraud model that "catches 90% of fraud" can block ten good
 4. **Forecast in ranges and keep score.** Report P10, P50 and P90. If fewer than about eight in ten outcomes land inside your P10 to P90 range, your ranges are too narrow.
 5. **Judge the decision, not the outcome.** A good decision can have a bad result. Review what you knew and how you reasoned, not only what happened.
 6. **Match the process to reversibility.** Decide reversible calls fast and low in the organization. Give hard-to-reverse calls more evidence and a senior owner.
-7. **In regulated domains, a model is a governed asset.** It needs an owner, an inventory entry, an independent validation and a monitoring plan before it decides anything about a customer.
+7. **In regulated domains, treat a model as a governed asset.** Good practice is to give it an owner, an inventory entry, independent validation and a monitoring plan before it decides anything about a customer.
 
 ## Mental model: the forecast and the umbrella
 
@@ -97,7 +97,7 @@ precision     = true alarms ÷ (true alarms + false alarms)
 **Domain application.**
 
 - **Payments.** A "90% accurate" fraud model at a merchant blocks real buyers. Each block is a lost sale and an annoyed customer.
-- **Anti-money-laundering (AML) monitoring.** Suspicious-activity alerts are rare events against huge volumes. Most alerts are false, and each one costs analyst time. The base rate drives the size of the investigations team.
+- **Anti-money-laundering (AML) monitoring.** Suspicious-activity alerts are rare events against huge volumes. Even a good model can produce mostly false alerts, because of the base-rate effect above. Each one costs analyst time. The base rate drives the size of the investigations team.
 - **Insurance.** A claims-fraud flag that sends claims to investigation slows payment for honest claimants. That hurts retention and can draw complaints.
 - **Lending.** A model that flags "likely default" on 4% base-rate loans has far better precision than a fraud model, at the same recall. The base rate is twenty times higher.
 
@@ -242,12 +242,12 @@ Under the first weights, A wins clearly. When the CFO shifts weight from confide
 
 ### Model governance in regulated domains
 
-**What it is.** In banking, a credit, fraud, pricing or capital model is a regulated asset. In 2011 the US Federal Reserve and the Office of the Comptroller of the Currency (OCC) issued supervisory guidance on **model risk management**. The Federal Reserve's version is its supervision and regulation (SR) letter 11-7, known as SR 11-7. It defines model risk as the harm that can come from decisions based on wrong or misused model outputs. Many lenders, and many fintechs that lend through partner banks, follow it.
+**What it is.** In banking, a credit, fraud, pricing or capital model is a supervised asset. In April 2026 the US Federal Reserve, the Office of the Comptroller of the Currency (OCC) and the Federal Deposit Insurance Corporation (FDIC) issued joint supervisory guidance on **model risk management**. It replaced the agencies' earlier 2011 guidance. It is most relevant to banking organizations with more than $30 billion in total assets. It is guidance, not an enforceable standard. Model risk is the harm that can come from decisions based on wrong or misused model outputs. Smaller banks, and fintechs that lend through partner banks, often meet similar expectations through their bank partners. Ask your model risk team which rules apply to you.
 
-**How it works.** The guidance rests on three ideas. Build and use models soundly. Validate them independently. Govern them with clear roles and policies. Its central test is **effective challenge**: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model has:
+**How it works.** The guidance groups the work into three areas: development and use, validation and monitoring, and governance. A common test in model risk practice is **effective challenge**: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model often has:
 
-- **An inventory entry.** Every model in use is listed, with its owner, purpose and risk tier.
-- **Independent validation.** A team that did not build the model checks its concept, its data and its results before use.
+- **An inventory entry.** Every model in use is listed, with its owner, purpose and risk tier. The guidance describes a model inventory as common industry practice.
+- **Independent validation.** A team that did not build the model checks its concept, its data and its results, generally before first use.
 - **Ongoing monitoring.** Score drift, approval rates and outcomes are tracked against what the model predicted.
 - **A challenger.** A **champion–challenger** setup runs an alternative model or threshold on a small share of traffic. It shows whether the live model is still the best choice.
 - **Documented overrides.** When people overrule the model, the reasons are recorded and reviewed.

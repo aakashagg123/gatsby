@@ -8,7 +8,7 @@ Before you decide how to win, decide where to compete and for whom. This lesson 
 
 The core tradeoff is focus against reach. Focus on one segment builds an edge faster and makes every message sharper. Reach spreads the same budget across customers with different needs and different economics. Most product lines serve two or three segments well. Few serve ten.
 
-The scale matters. A sizing error of 10x is common when a team counts payment volume or loan volume as if it were revenue. A segment with half the revenue can be worth twice as much once you count acquisition cost and retention.
+The scale matters. A sizing error can be 10x when a team counts payment volume or loan volume as if it were revenue. A segment with half the revenue can be worth twice as much once you count acquisition cost and retention.
 
 > 🎯 **For the product leader**
 >

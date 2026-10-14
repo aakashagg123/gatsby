@@ -32,7 +32,7 @@
 <li><strong>Forecast in ranges and keep score.</strong> Report P10, P50 and P90. If fewer than about eight in ten outcomes land inside your P10 to P90 range, your ranges are too narrow.</li>
 <li><strong>Judge the decision, not the outcome.</strong> A good decision can have a bad result. Review what you knew and how you reasoned, not only what happened.</li>
 <li><strong>Match the process to reversibility.</strong> Decide reversible calls fast and low in the organization. Give hard-to-reverse calls more evidence and a senior owner.</li>
-<li><strong>In regulated domains, a model is a governed asset.</strong> It needs an owner, an inventory entry, an independent validation and a monitoring plan before it decides anything about a customer.</li>
+<li><strong>In regulated domains, treat a model as a governed asset.</strong> Good practice is to give it an owner, an inventory entry, independent validation and a monitoring plan before it decides anything about a customer.</li>
 </ol>
 <h2 id="mental-model-the-forecast-and-the-umbrella">Mental model: the forecast and the umbrella</h2>
 <pre class="mermaid">flowchart LR
@@ -113,7 +113,7 @@ precision     = true alarms ÷ (true alarms + false alarms)
 <p><strong>Domain application.</strong></p>
 <ul>
 <li><strong>Payments.</strong> A "90% accurate" fraud model at a merchant blocks real buyers. Each block is a lost sale and an annoyed customer.</li>
-<li><strong>Anti-money-laundering (AML) monitoring.</strong> Suspicious-activity alerts are rare events against huge volumes. Most alerts are false, and each one costs analyst time. The base rate drives the size of the investigations team.</li>
+<li><strong>Anti-money-laundering (AML) monitoring.</strong> Suspicious-activity alerts are rare events against huge volumes. Even a good model can produce mostly false alerts, because of the base-rate effect above. Each one costs analyst time. The base rate drives the size of the investigations team.</li>
 <li><strong>Insurance.</strong> A claims-fraud flag that sends claims to investigation slows payment for honest claimants. That hurts retention and can draw complaints.</li>
 <li><strong>Lending.</strong> A model that flags "likely default" on 4% base-rate loans has far better precision than a fraud model, at the same recall. The base rate is twenty times higher.</li>
 </ul>
@@ -328,11 +328,11 @@ precision     = true alarms ÷ (true alarms + false alarms)
 <p>Under the first weights, A wins clearly. When the CFO shifts weight from confidence to revenue, A and B almost tie. The decision now depends on one question: how much do we value confidence? B has the higher upside and the weaker evidence. The team picks A and funds a small, time-boxed test of B in one region. The matrix did not decide. It showed the team what it was arguing about.</p>
 <p><strong>Decision rule.</strong> Never present a matrix without its weight test. A gap of 0.05 is a tie. Allocating capacity across many bets is a different job. See <a href="portfolio-strategy-and-allocation.html">portfolio strategy and capital allocation</a>.</p>
 <h3 id="model-governance-in-regulated-domains">Model governance in regulated domains</h3>
-<p><strong>What it is.</strong> In banking, a credit, fraud, pricing or capital model is a regulated asset. In 2011 the US Federal Reserve and the Office of the Comptroller of the Currency (OCC) issued supervisory guidance on <strong>model risk management</strong>. The Federal Reserve's version is its supervision and regulation (SR) letter 11-7, known as SR 11-7. It defines model risk as the harm that can come from decisions based on wrong or misused model outputs. Many lenders, and many fintechs that lend through partner banks, follow it.</p>
-<p><strong>How it works.</strong> The guidance rests on three ideas. Build and use models soundly. Validate them independently. Govern them with clear roles and policies. Its central test is <strong>effective challenge</strong>: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model has:</p>
+<p><strong>What it is.</strong> In banking, a credit, fraud, pricing or capital model is a supervised asset. In April 2026 the US Federal Reserve, the Office of the Comptroller of the Currency (OCC) and the Federal Deposit Insurance Corporation (FDIC) issued joint supervisory guidance on <strong>model risk management</strong>. It replaced the agencies' earlier 2011 guidance. It is most relevant to banking organizations with more than $30 billion in total assets. It is guidance, not an enforceable standard. Model risk is the harm that can come from decisions based on wrong or misused model outputs. Smaller banks, and fintechs that lend through partner banks, often meet similar expectations through their bank partners. Ask your model risk team which rules apply to you.</p>
+<p><strong>How it works.</strong> The guidance groups the work into three areas: development and use, validation and monitoring, and governance. A common test in model risk practice is <strong>effective challenge</strong>: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model often has:</p>
 <ul>
-<li><strong>An inventory entry.</strong> Every model in use is listed, with its owner, purpose and risk tier.</li>
-<li><strong>Independent validation.</strong> A team that did not build the model checks its concept, its data and its results before use.</li>
+<li><strong>An inventory entry.</strong> Every model in use is listed, with its owner, purpose and risk tier. The guidance describes a model inventory as common industry practice.</li>
+<li><strong>Independent validation.</strong> A team that did not build the model checks its concept, its data and its results, generally before first use.</li>
 <li><strong>Ongoing monitoring.</strong> Score drift, approval rates and outcomes are tracked against what the model predicted.</li>
 <li><strong>A challenger.</strong> A <strong>champion–challenger</strong> setup runs an alternative model or threshold on a small share of traffic. It shows whether the live model is still the best choice.</li>
 <li><strong>Documented overrides.</strong> When people overrule the model, the reasons are recorded and reviewed.</li>

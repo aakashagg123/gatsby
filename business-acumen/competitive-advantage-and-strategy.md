@@ -68,7 +68,7 @@ The stronger the forces, the less profit any player keeps. A list of the forces 
 
 **Step 3. Quantify where you can.** Numbers turn a debate into a decision. Five measures cover most of it:
 
-- **Concentration.** Compute the Herfindahl–Hirschman Index (HHI): the sum of each player's squared market share in percent. Four acquirers with 30%, 25%, 20% and 15%, plus ten with 1% each, give 900 + 625 + 400 + 225 + 10 = **2,160**. A higher number means fewer, larger players. A higher number usually means calmer rivalry.
+- **Concentration.** Compute a concentration index: the sum of each player's squared market share in percent. Four acquirers with 30%, 25%, 20% and 15%, plus ten with 1% each, give 900 + 625 + 400 + 225 + 10 = **2,160**. A higher number means fewer, larger players. A higher number usually means calmer rivalry.
 - **Price trend.** Track the net price over three years: net take rate, loan spread, or premium per unit of risk. A falling net price with flat costs means a force is taking your margin.
 - **Supplier share.** Divide what you pay key suppliers by your gross revenue. In the card example below, the issuer and network keep $1.95 of a $2.50 merchant fee. That is **78%**.
 - **Switching cost.** Estimate the customer's cost to switch in dollars and weeks. Compare it with the saving a rival offers.
@@ -203,7 +203,7 @@ flowchart TB
 
 ### Network effects in depth
 
-Network effects are the most claimed and least proven source of advantage. So test them with care.
+Network effects are easy to claim and hard to prove. Test them before you rely on them.
 
 **Same-side and cross-side.** A **same-side** (direct) effect means users on one side benefit from more users on the same side. A P2P payment app is more useful when more of your friends use it. A **cross-side** (indirect) effect means one side benefits from more users on the other side. Buyers want more sellers. Merchants want more cardholders. Cross-side networks must grow both sides in balance.
 
@@ -332,7 +332,7 @@ The embedded merchant earns *less* each month. It is still worth far more, becau
 **Step 8: choose coherent actions.**
 
 1. **Vertical-software partnerships.** Sign three software platforms in salons, restaurants and field services. Offer a 30% revenue share and a one-week integration.
-2. **Bundled working-capital loans.** Offer merchant loans repaid from a share of daily card sales. The loan uses the acquirer's sales data for underwriting. It also raises switching costs, because the repayment runs through settlement. Some US states have disclosure laws for small-business financing, so involve Legal early.
+2. **Bundled working-capital loans.** Offer merchant loans repaid from a share of daily card sales. The loan uses the acquirer's sales data for underwriting. It also raises switching costs, because the repayment runs through settlement. Disclosure rules for small-business financing vary by state. Check with Legal early.
 3. **Payout speed priced against float.** Offer instant payouts for a fee. Price the fee against the float the company gives up when it pays faster. The float logic lives in [The language of money](./the-language-of-money.md).
 
 Each action reinforces the others. Partners bring merchants. Merchant data improves loan underwriting. Loans and instant payouts make the platform harder to leave.
@@ -412,9 +412,9 @@ for party, (rev, cost) in pool.items():
     print(f"{party:9} revenue {rev/total_rev:5.1%}  profit {profit/total_profit:5.1%}  margin {profit/rev:5.1%}")
 print(f"supplier share of MDR: {(1.80 + 0.15) / total_rev:.0%}")   # 78%
 
-# Concentration (HHI): four large players plus ten with 1% each
+# Concentration index: four large players plus ten with 1% each
 shares = [30, 25, 20, 15] + [1] * 10
-print("HHI:", sum(s ** 2 for s in shares))                       # 2160
+print("concentration index:", sum(s ** 2 for s in shares))                       # 2160
 
 # Direct vs embedded merchant (worked example)
 monthly_tpv = 8e9 / 40_000 / 12
@@ -426,7 +426,7 @@ print("direct   (CM/month, lifetime CM, payback months):", merchant(0.006, 0.0, 
 print("embedded (CM/month, lifetime CM, payback months):", merchant(0.008, 0.3, 40, 0.01, 400))
 ```
 
-The script prints revenue shares of 72%, 6% and 22%, and profit shares of 62.5%, 12.5% and 25%. It prints an HHI of 2,160. For the direct merchant, it prints a contribution of 60.0 a month, a lifetime contribution of 3000 and a payback of 25.0 months. For the embedded merchant, it prints 53.33, 5333 and 7.5.
+The script prints revenue shares of 72%, 6% and 22%, and profit shares of 62.5%, 12.5% and 25%. It prints a concentration index of 2,160. For the direct merchant, it prints a contribution of 60.0 a month, a lifetime contribution of 3000 and a payback of 25.0 months. For the embedded merchant, it prints 53.33, 5333 and 7.5.
 
 ## Practitioner checklist
 

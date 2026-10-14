@@ -63,7 +63,7 @@ Allocation decides how much money and how many people each horizon gets. Four me
 
 #### Size the horizons from the growth gap
 
-A fixed split, such as 70% core, 20% next and 10% future, is common. It is easy to explain. It is also arbitrary. A shrinking core needs more in the later horizons. A core growing fast needs most of its capacity just to keep up.
+One example split is 70/20/10: 70% core, 20% next and 10% future. A fixed split is easy to explain. It is also arbitrary. A shrinking core needs more in the later horizons. A core growing fast needs most of its capacity just to keep up.
 
 A better start is the **growth gap**: the distance between the company's target and where the core will get on its own.
 
@@ -113,7 +113,7 @@ Total spend: **$21M**. Funding all ten bets fully from the start would cost 10 �
 
 Most budgets are **incremental**: last year's number plus or minus a few percent. A **zero-based review** starts each team from zero. The team must justify every dollar against what it delivers.
 
-Zero-based review finds the spending that nobody would approve today. It has a cost. It takes leaders' time, and it can scare teams into short-term projects. Many companies run it every two or three years, or on one slice of the portfolio each year. A practical version splits each team's budget into **run** (keep the lights on, meet regulatory duties) and **change** (new value). Then it reviews the change part from zero.
+Zero-based review finds the spending that nobody would approve today. It has a cost. It takes leaders' time, and it can scare teams into short-term projects. Some companies run it every few years, or on one slice of the portfolio each year. A practical version splits each team's budget into **run** (keep the lights on, meet regulatory duties) and **change** (new value). Then it reviews the change part from zero.
 
 **Decision rule.** When more than about half of a product's team works on run costs, put that product in the next zero-based review. It is a sunset or re-platform candidate.
 
@@ -184,7 +184,7 @@ Product leaders are often asked to judge a target: a small company whose product
 6. Realistic value created: $40M + $21.6M − $8M − $60M = **−$6.4M**. The deal destroys value.
 7. The **walk-away price** on realized synergies is $40M + $21.6M − $8M = **$53.6M**.
 
-**Earn-outs move the risk.** An **earn-out** pays part of the price later, only if agreed targets are met. Here, offer $45M up front and up to $15M more if the revenue synergy is delivered. If it is delivered in full, you pay $60M and create $6.1M of value. If only half is delivered, you pay $45M and create $40M + $21.6M − $8M − $45M = **+$8.6M**. The earn-out turns a losing case into a winning one.
+**Earn-outs move the risk.** An **earn-out** pays part of the price later, only if agreed targets are met. Here, offer $45M up front and up to $15M more if the revenue synergy is delivered. If it is delivered in full, with cost synergy still at 90%, you pay $60M and create $40M + ($6M + $2.7M) × 3.7908 − $8M − $60M ≈ **+$5.0M**. If only half is delivered, you pay $45M and create $40M + $21.6M − $8M − $45M = **+$8.6M**. The earn-out turns a losing case into a winning one.
 
 Earn-outs have costs. The sellers will push the earn-out metric, even when that conflicts with integration. Disputes over how the metric was measured are common. Write the definition as carefully as a contract price.
 
@@ -381,6 +381,7 @@ planned = (6 + 3) * af5                           # 34.1
 realized = (6 * 0.5 + 3 * 0.9) * af5              # 21.6
 print(round(40 + planned - 8 - 60, 1), round(40 + realized - 8 - 60, 1))    # 6.1 -6.4
 print(round(40 + realized - 8, 1))                       # walk-away price 53.6
+print(round(40 + (6 + 3 * 0.9) * af5 - 8 - 60, 1))       # earn-out, revenue in full: 5.0
 print(round(40 + realized - 8 - 45, 1))                  # earn-out, half delivered: 8.6
 
 # Acqui-hire: price per engineer, and the alternative

@@ -2611,7 +2611,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Principal versus agent** — The accounting test that decides whether a company reports the full sale as revenue (principal, "gross") or only its fee (agent, "net").
 
-*In plain terms.* The test is control: who is responsible for delivery, who bears inventory risk, and who sets the price. The choice changes revenue and gross margin a lot. It does not change gross profit.
+*In plain terms.* The test is control. Indicators include who is primarily responsible for fulfilment, who bears inventory risk, and who has discretion over price. The choice changes revenue and gross margin a lot. It does not change gross profit.
 
 *For example.* A $100 item where the platform keeps $15 is $100 of revenue at 15% margin as principal, or $15 of revenue at 100% margin as agent. Gross profit is $15 either way.
 

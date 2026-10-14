@@ -3168,7 +3168,7 @@ GLOSSARY = [
  'aliases':['gross versus net', 'gross vs net revenue', 'principal or agent'],
  'cat':'Business acumen',
  'short':'The accounting test that decides whether a company reports the full sale as revenue (principal, "gross") or only its fee (agent, "net").',
- 'fp':'The test is control: who is responsible for delivery, who bears inventory risk, and who sets the price. The choice changes revenue and gross margin a lot. It does not change gross profit.',
+ 'fp':'The test is control. Indicators include who is primarily responsible for fulfilment, who bears inventory risk, and who has discretion over price. The choice changes revenue and gross margin a lot. It does not change gross profit.',
  'example':'A $100 item where the platform keeps $15 is $100 of revenue at 15% margin as principal, or $15 of revenue at 100% margin as agent. Gross profit is $15 either way.',
  'uses':['Comparing marketplaces and retailers fairly', 'Designing a model where you hold stock or only connect parties'],
  'see':('The language of money: reading the three statements', 'business-acumen/the-language-of-money.md'),
