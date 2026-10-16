@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Finance speaks through three statements. The **income statement** shows performance over a period: revenue, costs and profit. The **balance sheet** shows position at one moment: what the company owns, owes and keeps for its owners. The **cash-flow statement** shows how cash moved. A product decision touches all three, often in different ways and at different times.

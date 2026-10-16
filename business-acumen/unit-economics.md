@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 **Unit economics** is the profit or loss on one unit of business. The unit can be one payment, one order, one loan, one policy or one customer. You start with what the unit earns. You subtract every cost that rises with it. What is left is the **contribution margin**. Then you roll the unit up to a customer, and the customers up to a **cohort**: everyone acquired in the same month.

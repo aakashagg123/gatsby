@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Some markets leave profit on the table. Others grind every player down to thin margins. The difference is structure, and you can analyse it. This lesson gives you four tools, used in order.
@@ -102,7 +104,7 @@ The binding force often follows a pattern by domain. Use this as a starting hypo
 | **eCommerce**, marketplaces | Supplier power of traffic sources, and rivalry | Paid search and app stores sell the customer's attention |
 | **Retail**, general merchandise | Buyer power and substitutes | Shoppers compare prices online; online channels substitute for the store |
 
-A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. Under its reinsurance programme, it typically retains a fixed fee, and reinsurers take on much of the risk of excess claims. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
+A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. Under its reinsurance programme, it typically retains a fixed fee, and reinsurers carry much of the claims risk. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
 
 ### Value chain and profit pools
 

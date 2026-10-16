@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 At vice president (VP) level, influence is most of the job. You rarely control the resources you need. You win them by making a clear case to executives, aligning peers before decisions, and negotiating with partners and other leaders. The skills are learnable: an **answer-first narrative**, data that makes one point per chart, **pre-wiring** before meetings, a clear view of how the **board** works, and negotiation built on numbers.

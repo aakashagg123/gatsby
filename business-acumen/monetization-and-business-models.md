@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **business model** is how a company turns value for customers into revenue, and revenue into profit. **Pricing** is the set of choices inside it: what you charge for, how much, how you package it, and how much of the list price you actually collect. Pricing is the fastest lever a product leader has. A feature takes a quarter to ship. A price change can move contribution by a fifth in one billing cycle.

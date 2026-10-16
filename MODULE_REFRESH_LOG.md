@@ -40,7 +40,7 @@ always moves forward.
 | system-design | system-design/ | scripts/build_system_design.py | never |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
 | cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
-| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-14 |
+| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-16 |
 
 ## Run history
 
@@ -317,3 +317,10 @@ and a link to the merged PR.)
   every lesson pending one independent fact-check before merge, so the
   last_refreshed date is unchanged. check_module: avg sentence 10.7, 0% over
   30 words, Flesch 69, WARN (no stamps).
+
+- 2026-10-16 — business-acumen — post-merge independent fact-check of the
+  15-lesson expansion: 0 WRONG / 0 STALE. Tightened six loose phrasings (US
+  rate dates, Regulation B wording, a debit-cap court-challenge note, three
+  quantifiers, and the reinsurance framing). Final check of the edited
+  lessons: 0 WRONG / 0 STALE, web access ok. All 15 lessons stamped 2026-10
+  (medium). check_module: avg sentence 10.5, 0% over 30 words, Flesch 69.

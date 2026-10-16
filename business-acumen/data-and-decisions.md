@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Senior leaders rarely lack data. They lack time, and the data they have is partial, late or biased. The skill is to decide well **before** the data is complete. That means four things. Know what your data cannot see. Know the base rate before you trust an accuracy claim. Put a money value on each kind of mistake. And know when more data is worth its cost and its delay.
