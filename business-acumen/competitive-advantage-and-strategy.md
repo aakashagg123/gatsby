@@ -136,7 +136,7 @@ Now subtract each party's assumed variable cost for this payment:
 
 Three lessons follow. First, the issuer gets most of the money but spends much of it on rewards to win cardholders. Second, the network earns the smallest fee and the highest margin, because network effects and scale protect it. Third, the acquirer sits in the most crowded part of the chain. Its $0.55 is the part merchants negotiate hardest.
 
-Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. The EU caps interchange on consumer debit and credit cards. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
+Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. The rule is being challenged in federal court, so check its current status before you rely on it. The EU caps interchange on consumer debit and credit cards. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
 
 **Lending.** A loan passes through four roles. One company can play all four, or each can be a different firm.
 
