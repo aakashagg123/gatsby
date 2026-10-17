@@ -203,6 +203,17 @@ The third foundation module.
 6. [Vision foundation models: CLIP, DINO and SAM](./cnns/vision-foundation-models.md)
 7. [Shipping vision in production](./cnns/shipping-vision-in-production.md) · [Recap](./cnns/recap.md)
 
+## [Transformers](./transformers/README.md)
+
+Part of the **foundation modules**: after [Machine learning](./machine-learning/README.md), [Tensors](./tensors/README.md) and [Convolutional networks](./cnns/README.md).
+
+1. [The shape of a transformer](./transformers/the-shape-of-a-transformer.md)
+2. [Attention](./transformers/attention.md)
+3. [The block: heads, the feed-forward layer and the residual stream](./transformers/the-block.md)
+4. [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md)
+5. [Generating text and the KV cache](./transformers/generating-text-and-the-kv-cache.md)
+6. [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md) · [Recap](./transformers/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

@@ -26,7 +26,7 @@ FLAT_TRACKS = {
     "ai-agents", "agentic-workflows", "evaluation-and-observability",
     "ai-security-and-guardrails", "cost-optimization", "system-design", "access-control",
     "context-engineering", "prompt-engineering", "learning-paths", "machine-learning",
-    "tensors", "cnns", "business-acumen",
+    "tensors", "cnns", "transformers", "business-acumen",
 }
 # Phased tracks share the harness folder shape; only README/foundations are linked.
 PHASED = {"flowable": "flowable", "harness-engineering": "harness"}

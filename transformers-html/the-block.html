@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The block: heads, the feed-forward layer and the residual stream — Transformers</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Transformers</span><em>a foundation module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="the-shape-of-a-transformer.html">1 · The shape of a transformer</a><a class="modlink" href="attention.html">2 · Attention</a><a class="modlink active" href="the-block.html">3 · The block: heads, the feed-forward layer and the residual stream</a><a class="modlink" href="position-and-the-cost-of-context.html">4 · Position, and the cost of context</a><a class="modlink" href="generating-text-and-the-kv-cache.html">5 · Generating text and the KV cache</a><a class="modlink" href="variants-and-reading-a-model-card.html">6 · Variants, and reading a model card</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
+    <h1>The block: heads, the feed-forward layer and the residual stream</h1>
+  </div>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>A transformer block has two parts. <strong>Multi-head attention</strong> lets tokens read from each other. A <strong>feed-forward layer</strong>, also called the MLP, then reworks each token's vector alone. Around both sit two helpers. A <strong>residual connection</strong> adds each part's output to its input, so nothing is overwritten. <strong>Layer normalization</strong> rescales each vector so the numbers stay in a stable range.</p>
+<p>The best way to picture a block is a shared notebook, the <strong>residual stream</strong>. Each token has a page. Every head and every feed-forward layer reads the page and writes a small note on it. Nothing erases. The last page, after all the blocks, is what the model uses to predict the next token.</p>
+<p>This view explains three facts a leader meets often. Models can be made deeper without retraining from scratch, because a block that writes nothing changes nothing. Heads add up, so they can be studied, and pruned, one by one. And the feed-forward layers hold most of the weights, so they set most of the memory and the cost.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For the product leader</strong></p>
+<p><strong>Why it matters</strong> — "Layers" and "heads" are on every spec sheet. They are not decoration. They set how much a model can compose, and how much it weighs.</p>
+<p><strong>What it changes in your decisions</strong> — You see compression as a choice of where to cut. Quantizing or pruning the feed-forward layers saves the most. Pruning attention heads saves less, and can hurt long-range tasks.</p>
+<p><strong>Ask your eng team</strong> — <em>"Where does the size reduction come from, which layers did we compress, and what did we measure on long inputs?"</em></p>
+<p><strong>Risk if ignored</strong> — A compressed model that passes short tests and loses accuracy on the long, multi-step tasks your product depends on.</p>
+</blockquote>
+<h2 id="the-mental-model-a-shared-notebook">The mental model: a shared notebook</h2>
+<pre class="mermaid">flowchart TB
+  X0[&quot;page for one token&lt;br/&gt;(the residual stream)&quot;] --&gt; N1[&quot;normalize&quot;]
+  N1 --&gt; A[&quot;multi-head attention&lt;br/&gt;reads other pages&quot;]
+  A --&gt; P1[&quot;add a note&quot;]
+  X0 --&gt; P1
+  P1 --&gt; N2[&quot;normalize&quot;]
+  N2 --&gt; F[&quot;feed-forward layer&lt;br/&gt;reworks this page alone&quot;]
+  F --&gt; P2[&quot;add a note&quot;]
+  P1 --&gt; P2
+  P2 --&gt; X1[&quot;page after the block&quot;]</pre>
+<h2 id="mechanics">Mechanics</h2>
+<h3 id="multi-head-attention">Multi-head attention</h3>
+<p>One attention step has one set of weights. It can attend to only one kind of thing at a time. <strong>Multi-head</strong> attention splits the vector into <code>h</code> slices of size <code>d_k = d_model / h</code>. Each head runs its own attention on its slice. The heads' outputs are joined and multiplied by one output matrix.</p>
+<p>The result has a useful property. Joining the heads and then applying the output matrix gives the same answer as applying a slice of that matrix to each head and adding the results. So each head writes its own note into the stream, and the notes add. Elhage and colleagues used this view to study trained models head by head.</p>
+<h3 id="the-feed-forward-layer">The feed-forward layer</h3>
+<p>The feed-forward layer takes one token's vector. It widens it to <code>4 × d_model</code>, applies a nonlinear function such as GELU, and narrows it back. Many newer models use a gated version with three matrices, which gives a slightly different width. The layer works on each token separately. No information crosses between tokens here.</p>
+<p>It holds about two thirds of a block's parameters. Research suggests that these layers store much of what a model knows as facts, with attention moving information to the right place. Geva and colleagues described them as key-value memories.</p>
+<h3 id="residuals-and-normalization">Residuals and normalization</h3>
+<p>A <strong>residual connection</strong> computes <code>x + f(x)</code>. If <code>f</code> outputs nothing, the block returns <code>x</code> unchanged. This does two things. Gradients flow straight through the stack during training, so deep models train. And each layer only has to learn a small change.</p>
+<p><strong>Layer normalization</strong> rescales each vector to mean 0 and spread 1. Most current models normalize before each part. The original paper normalized after. GPT-2 moved the norm to the input of each part, which trains more stably in deep stacks.</p>
+<h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
+<ul>
+<li><strong>More heads vs. wider heads.</strong> Same total width, split more ways. More heads attend to more kinds of things. Each head has less room.</li>
+<li><strong>Depth vs. width.</strong> Each added block adds one more read and write on the stream.</li>
+<li><strong>Dense vs. gated feed-forward.</strong> A gated layer often gives better quality for the same cost. It has three matrices, so its hidden size is set to keep parameters level.</li>
+<li><strong>Compress here or there.</strong> The feed-forward layers are the largest target. They are also where much of the stored knowledge sits.</li>
+</ul>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Unstable training.</strong> Without normalization or with the wrong placement, the numbers blow up in deep stacks.</li>
+<li><strong>Dead heads.</strong> Some heads learn little. Teams find them by pruning. Counting heads overstates capacity.</li>
+<li><strong>Compression that hurts the wrong thing.</strong> A cut that keeps average accuracy and loses rare facts.</li>
+<li><strong>Mistaking layers for steps of thought.</strong> A block is a layer of computation, not one reasoning step.</li>
+</ul>
+<h2 id="under-the-hood">Under the hood</h2>
+<p>The file is <code>transformers/code/lesson3_block.py</code>. It checks three facts about the block on the tiny model.</p>
+<pre><code class="language-python">def zero_block_is_identity(seed=4):
+    model = Transformer(Config(d_model=8, n_heads=2, n_layers=1, vocab=10, max_len=8), seed)
+    L = copy.deepcopy(model.layers[0])
+    L[&quot;wo&quot;] = [[0.0] * 8 for _ in range(8)]           # attention writes nothing
+    L[&quot;w2&quot;] = [[0.0] * 8 for _ in range(model.cfg.d_ff)]   # feed-forward writes nothing
+    x = add([model.tok[t] for t in (1, 2, 3)], model.position_rows(0, 3))
+    return max(abs(a - b) for r, s in zip(x, model.block(x, L)) for a, b in zip(r, s))
+</code></pre>
+<p>The other two checks are that the heads' notes add up, and that layer normalization gives mean 0 and mean square 1.</p>
+<h2 id="worked-example-three-facts-about-a-block">Worked example: three facts about a block</h2>
+<p><em>This example is invented. The numbers come from <code>transformers/code/lesson3_block.py</code>.</em></p>
+<p><strong>Heads add.</strong> A model with 3 heads and <code>d_model = 12</code>. We run all heads and apply the output matrix. We also keep one head's slice at a time, apply the output matrix, and sum the three results. The largest difference is 4.4 × 10⁻¹⁶. That is rounding.</p>
+<p><strong>A block can do nothing.</strong> We set the two output matrices of a block to zero. The block returns its input exactly: the largest change is 0.0. This is why a new block can be added to a trained model and start as a no-op.</p>
+<p><strong>Normalization sets the scale.</strong> One row has values near 3, 9 and -1. Another has values near 100. After layer normalization, both rows have mean 0 and mean square 1.0.</p>
+<p><strong>The weight split.</strong> In GPT-2 small, attention has 33.3% of the block parameters and the feed-forward layer has 66.7%, as <a href="the-shape-of-a-transformer.html">lesson 1</a> counted.</p>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Do we know the share of weights in attention and in feed-forward layers for the models we compare?</li>
+<li class="task todo">When a model is compressed, do we know which layers were cut?</li>
+<li class="task todo">Do we test compressed models on long and multi-step tasks, not only short ones?</li>
+<li class="task todo">Do we avoid describing layers as steps of reasoning?</li>
+<li class="task todo">Do we know if the model normalizes before or after each part, if we change it?</li>
+</ul>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="attention.html">Attention</a> — the first part of a block.</li>
+<li><a href="the-shape-of-a-transformer.html">The shape of a transformer</a> — the parameter counts.</li>
+<li><a href="../ai/01-inference-internals.html#quantization-formats">Quantization formats</a> — compressing the weights.</li>
+<li><a href="../tensors/automatic-differentiation.html">Automatic differentiation</a> — why residual paths help gradients.</li>
+<li><a href="../machine-learning/model-families.html">Model families</a> — where a transformer sits among the model kinds.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Vaswani et al., <em>Attention Is All You Need</em>, NeurIPS 2017 (<a href="https://arxiv.org/abs/1706.03762">arxiv.org/abs/1706.03762</a>): multi-head attention, the feed-forward layer, residual connections and layer normalization.</li>
+<li>Radford et al., <em>Language Models are Unsupervised Multitask Learners</em>, OpenAI, 2019: layer normalization moved to the input of each sub-block.</li>
+<li>Elhage et al., <em>A Mathematical Framework for Transformer Circuits</em>, Anthropic, 2021 (<a href="https://transformer-circuits.pub/2021/framework/index.html">transformer-circuits.pub/2021/framework</a>): the residual stream, and heads that add to it independently.</li>
+<li>Geva et al., <em>Transformer Feed-Forward Layers Are Key-Value Memories</em>, EMNLP 2021 (<a href="https://arxiv.org/abs/2012.14913">arxiv.org/abs/2012.14913</a>).</li>
+<li>Shazeer, <em>GLU Variants Improve Transformer</em>, 2020 (<a href="https://arxiv.org/abs/2002.05202">arxiv.org/abs/2002.05202</a>): gated feed-forward layers.</li>
+<li>The tiny model and every number from it are invented. They come from <code>transformers/code/lesson3_block.py</code>. This module's sources were not re-opened during the build, and its fact-check is pending.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="attention.html"><span class="lbl">← Previous</span><span class="ttl">Attention</span></a><a class="navcard next" href="position-and-the-cost-of-context.html"><span class="lbl">→ Next</span><span class="ttl">Position, and the cost of context</span></a></div><footer class="foot"><strong>Core insight:</strong> A transformer is one block repeated, so almost every question about it is a counting question: parameters, multiply-adds and cache.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-shared-notebook">The mental model: a shared notebook</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#multi-head-attention">Multi-head attention</a><a class="h3" href="#the-feed-forward-layer">The feed-forward layer</a><a class="h3" href="#residuals-and-normalization">Residuals and normalization</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-three-facts-about-a-block">Worked example: three facts about a block</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

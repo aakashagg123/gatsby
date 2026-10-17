@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Transformers for the product and technology leader</title>
+</head>
+<body><header class="topbar">
+  <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Transformers</span><em>a foundation module</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><main class="content index" id="top">
+  <div class="index-hero">
+    <h1>Transformers for the product and technology leader</h1>
+    <p class="lede">The stack behind almost every language model: attention, the block, position and the cost of context, the KV cache, and how to read a model card as memory, compute and cost.</p>
+    <div class="index-insight"><span class="Badge" data-color="discovery" data-size="md" data-variant="soft" data-pill="">Core insight</span><p>A transformer is one block repeated, so almost every question about it is a counting question: parameters, multiply-adds and cache.</p></div>
+    <div class="index-meta"><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">6 lessons</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">+ recap</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">runnable code</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">knowledge graph</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">diagrams included</span></div>
+  </div>
+  <div class="intro MarkdownContent"><p>Almost every language model you buy or build is a <strong>transformer</strong>. It is a stack of identical blocks, and each block does two things. Attention lets each token read from the others. A feed-forward layer then reworks each token on its own. That is the whole design. The rest is scale, and a few well-chosen tricks.</p>
+<p>You do not need the mathematics to decide well. You need to count. How many parameters? How many are active for each token? How much memory does a request add? How does cost change when the input is ten times longer? This module teaches the parts, so you can turn a model's spec sheet into memory, compute and cost on one page.</p>
+<p>Every lesson has two layers. The body is for the leader who decides. A short <strong>Under the hood</strong> section is for the engineer who builds. It points to code that runs on the Python standard library, with no install, and ends in <code>assert</code> lines. The code builds one small transformer, with random weights, and a counter for multiply-adds. The weights say nothing useful. Their job is to let every claim be counted and checked. The matrix multiplication underneath is the one from <a href="../tensors/matrix-multiplication.html">Tensors</a>.</p>
+<p><strong>A note on scope.</strong> <a href="../llms/index.html">LLMs</a> covers the model most products call: tokens, context, prompting and choosing. This module goes one level lower, into the machine. <a href="../ai/01-inference-internals.html">Inference internals</a> covers serving in engineering depth. Here you get the arithmetic behind those lessons. The delta over <code>llms/what-is-an-llm</code> is the counted, runnable version: parameters, multiply-adds, the cache and the model card.</p>
+<h2 id="where-the-depth-lives">Where the depth lives</h2>
+<p>Each lesson summarizes an idea and points to the lesson that covers it in full.</p>
+<table>
+<thead>
+<tr>
+<th>If you want the full depth on</th>
+<th>Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What an LLM is, and how to choose one</td>
+<td><a href="../llms/what-is-an-llm.html">What an LLM actually is</a> and <a href="../llms/choosing-a-model.html">Choosing a model</a></td>
+</tr>
+<tr>
+<td>The context window as a product limit</td>
+<td><a href="../llms/the-context-window.html">The context window</a></td>
+</tr>
+<tr>
+<td>Serving: prefill, decode, batching and the cache</td>
+<td><a href="../ai/01-inference-internals.html#prefill-vs-decode">Prefill vs. decode</a> and <a href="../ai/01-inference-internals.html#kv-cache-management">KV cache management</a></td>
+</tr>
+<tr>
+<td>Smaller number formats for weights and cache</td>
+<td><a href="../ai/01-inference-internals.html#quantization-formats">Quantization formats</a></td>
+</tr>
+<tr>
+<td>Why the multiplies dominate</td>
+<td><a href="../tensors/matrix-multiplication.html">Matrix multiplication: the workhorse</a></td>
+</tr>
+<tr>
+<td>The training loop and gradients</td>
+<td><a href="../machine-learning/training-loss-and-gradient-descent.html">Training: loss and gradient descent</a> and <a href="../tensors/automatic-differentiation.html">Automatic differentiation</a></td>
+</tr>
+<tr>
+<td>The same block applied to images</td>
+<td><a href="../cnns/cnns-vs-vision-transformers.html">CNNs vs. vision transformers</a></td>
+</tr>
+<tr>
+<td>What a model costs over its life</td>
+<td><a href="../cost-optimization/index.html">Cost optimization</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-knowledge-graph">The knowledge graph</h2>
+<pre class="mermaid">flowchart TB
+  S[&quot;1 · The shape&lt;br/&gt;layers · width · parameters&quot;] --&gt; A[&quot;2 · Attention&lt;br/&gt;query · key · value&quot;]
+  A --&gt; B[&quot;3 · The block&lt;br/&gt;heads · feed-forward · residuals&quot;]
+  B --&gt; P[&quot;4 · Position and context&lt;br/&gt;order · the n² cost&quot;]
+  P --&gt; G[&quot;5 · Generation&lt;br/&gt;prefill · decode · KV cache&quot;]
+  G --&gt; V[&quot;6 · Variants and the model card&lt;br/&gt;grouped-query · experts · tiles&quot;]
+  V -. &quot;spec sheet to cost&quot; .-&gt; S</pre>
+<p>Read it as a chain with one loop. You see the <strong>shape</strong>: five numbers on a spec sheet. <strong>Attention</strong> is the one step where tokens exchange information. The <strong>block</strong> pairs it with a feed-forward layer and keeps a running notebook, the residual stream. <strong>Position</strong> fixes order, and the cost of attention grows with the square of the length. <strong>Generation</strong> writes one token at a time, and a cache of keys and values keeps that affordable and sets how many requests fit on a machine. The <strong>variants</strong> change these costs. Reading a model card then closes the loop, from spec sheet back to the shape.</p>
+<h2 id="the-lessons">The lessons</h2>
+<ol>
+<li><a href="the-shape-of-a-transformer.html">The shape of a transformer</a> — five numbers, where the parameters live, and what a forward pass costs.</li>
+<li><a href="attention.html">Attention</a> — queries, keys and values, the scale, the mask, and a head you can build by hand.</li>
+<li><a href="the-block.html">The block: heads, the feed-forward layer and the residual stream</a> — what one block does, and why the feed-forward layer is most of the weight.</li>
+<li><a href="position-and-the-cost-of-context.html">Position, and the cost of context</a> — why order must be added, and when attention takes over the bill.</li>
+<li><a href="generating-text-and-the-kv-cache.html">Generating text and the KV cache</a> — prefill, decode, and why memory per request limits serving.</li>
+<li><a href="variants-and-reading-a-model-card.html">Variants, and reading a model card</a> — grouped-query attention, mixtures of experts and tiled kernels.</li>
+</ol>
+<p>Then the <a href="recap.html">recap and real-world examples</a>, with a self-test.</p>
+<h2 id="run-the-code">Run the code</h2>
+<p>Every example is in <code>transformers/code/</code>. Run them all with one command.</p>
+<pre><code class="language-bash">python3 transformers/code/test_examples.py
+</code></pre>
+<p>The files are <code>lesson1_shape.py</code> through <code>lesson6_variants.py</code>, built on <code>mini_transformer.py</code>. A passing file checks the direction of each claim, such as the cache giving the same tokens as recomputing. Run a file to see every quoted number printed.</p></div>
+  <h2 class="sec">The lessons</h2>
+  <div class="cards"><a class="card" href="the-shape-of-a-transformer.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">01</span><h3>The shape of a transformer</h3><span class="card-go">Read lesson →</span></a><a class="card" href="attention.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">02</span><h3>Attention</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-block.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">03</span><h3>The block: heads, the feed-forward layer and the residual stream</h3><span class="card-go">Read lesson →</span></a><a class="card" href="position-and-the-cost-of-context.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">04</span><h3>Position, and the cost of context</h3><span class="card-go">Read lesson →</span></a><a class="card" href="generating-text-and-the-kv-cache.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">05</span><h3>Generating text and the KV cache</h3><span class="card-go">Read lesson →</span></a><a class="card" href="variants-and-reading-a-model-card.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">06</span><h3>Variants, and reading a model card</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
+  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
+  </main><script type="module">
+// Load mermaid and render each diagram only when it nears the viewport, one at a time.
+// The bundle is large; fetching and running it at page load competes with the first
+// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
+const els=[...document.querySelectorAll('pre.mermaid')];
+let lib=null;
+function boot(){
+  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
+    const mermaid=m.default;
+    mermaid.initialize(DS.mermaidConfig());
+    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
+    return mermaid;
+  }));
+}
+let chain=Promise.resolve();
+function renderOne(pre){
+  chain=chain.then(async()=>{ try{
+    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
+    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
+    const s=pre.querySelector('svg'); if(!s) return;
+    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
+    const cw=pre.clientWidth||0;
+    if(cw&&w>cw*1.6){s.style.maxWidth='none';
+      const h=document.createElement('span');h.className='mm-hint';
+      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
+  }catch(e){} });
+}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
+  els.forEach(p=>io.observe(p));
+}else els.forEach(renderOne);
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

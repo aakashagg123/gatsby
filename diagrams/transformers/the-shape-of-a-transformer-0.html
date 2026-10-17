@@ -1,0 +1,52 @@
+<style>
+.dgm-tf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-tf-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-tf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-tf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-tf-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.dgm-tf-stack{display:flex;flex-direction:column;gap:6px}
+.dgm-tf-row{border-radius:10px;padding:8px 12px;font-size:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.dgm-tf-row b{font-weight:700}.dgm-tf-row span{font-size:10.5px;color:var(--color-text-secondary)}
+.dgm-tf-in{background:var(--color-background-info-surface);border:1.5px solid var(--color-border-info-surface)}
+.dgm-tf-blk{background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface)}
+.dgm-tf-out{background:var(--color-background-success-surface);border:1.5px solid var(--color-border-success-surface)}
+.dgm-tf-dots{text-align:center;color:var(--color-text-tertiary);font-size:12px;line-height:1}
+.dgm-tf-nums{display:flex;flex-direction:column;gap:6px}
+.dgm-tf-num{background:var(--color-surface-secondary);border:1px solid var(--color-border);border-radius:10px;padding:8px 12px;font-size:11.5px;color:var(--color-text-secondary)}
+.dgm-tf-num b{display:block;color:var(--color-text);font-size:12px}
+.dgm-tf-bar{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:8px 0 4px;border:1px solid var(--color-border)}
+.dgm-tf-bar i{display:block}
+.dgm-tf-b1{background:var(--color-background-info-surface);width:31.6%}.dgm-tf-b2{background:var(--color-background-caution-surface);width:22.8%}.dgm-tf-b3{background:var(--color-background-discovery-surface);width:45.6%}
+.dgm-tf-leg{font-size:10.5px;color:var(--color-text-secondary);display:flex;flex-wrap:wrap;gap:4px 10px}
+.dgm-tf-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-tf{padding:22px 14px 18px}.dgm-tf-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tf">
+  <span class="dgm-tf-chip">The shape of a transformer</span>
+  <h4>One vector per token, rewritten by a stack of identical blocks</h4>
+  <p class="dgm-tf-sub">Five numbers on the spec sheet set the parameters, the memory and the compute.</p>
+  <div class="dgm-tf-grid">
+    <div class="dgm-tf-stack">
+      <div class="dgm-tf-row dgm-tf-out"><b>Softmax</b><span>probabilities for the next token</span></div>
+      <div class="dgm-tf-row dgm-tf-out"><b>Unembedding</b><span>one score per vocabulary word</span></div>
+      <div class="dgm-tf-row dgm-tf-blk"><b>Block L</b><span>attention + feed-forward</span></div>
+      <div class="dgm-tf-dots">⋮</div>
+      <div class="dgm-tf-row dgm-tf-blk"><b>Block 2</b><span>attention + feed-forward</span></div>
+      <div class="dgm-tf-row dgm-tf-blk"><b>Block 1</b><span>attention + feed-forward</span></div>
+      <div class="dgm-tf-row dgm-tf-in"><b>Embedding + position</b><span>d_model numbers per token</span></div>
+      <div class="dgm-tf-row dgm-tf-in"><b>Token ids</b><span>from a vocabulary of V</span></div>
+    </div>
+    <div class="dgm-tf-nums">
+      <div class="dgm-tf-num"><b>Five numbers</b>layers L · hidden size d_model · heads h · vocabulary V · context n_max</div>
+      <div class="dgm-tf-num"><b>GPT-2 small: 124,439,808 parameters</b>
+        <div class="dgm-tf-bar"><i class="dgm-tf-b1"></i><i class="dgm-tf-b2"></i><i class="dgm-tf-b3"></i></div>
+        <div class="dgm-tf-leg"><span>Embeddings 31.6%</span><span>Attention 22.8%</span><span>Feed-forward 45.5%</span></div>
+      </div>
+      <div class="dgm-tf-num"><b>Cost rule</b>about 2 FLOPs per parameter, per token, plus 2n²d per layer for attention</div>
+    </div>
+  </div>
+  <p class="dgm-tf-foot">Inside a block, attention holds 33.3% of the weights and the feed-forward layer 66.7%.</p>
+</div>

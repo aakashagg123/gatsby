@@ -136,7 +136,7 @@ the lesson against current sources, and how fast its topic moves.
 | Volatility | Review every | Tracks |
 | --- | --- | --- |
 | **fast** | 3 months | `llms`, `generative-ai`, `ai-agents`, `agentic-ai`, `agentic-workflows`, `tool-calling`, `api-integrations`, `prompt-engineering`, `context-engineering`, `memory-and-context`, `evaluation-and-observability`, `ai-security-and-guardrails`, `cost-optimization` |
-| **medium** | 6 months | `rag-vector-databases` (its building-rag-with-claude-code and rag-vs-long-context lessons are stamped fast), `knowledge-graphs`, `technical-product-management`, `product-sense`, `learning-paths`, `machine-learning`, `tensors`, `cnns` (its vision-foundation-models lesson is stamped fast), `access-control` (its Keycloak lessons are stamped fast), `business-acumen` |
+| **medium** | 6 months | `rag-vector-databases` (its building-rag-with-claude-code and rag-vs-long-context lessons are stamped fast), `knowledge-graphs`, `technical-product-management`, `product-sense`, `learning-paths`, `machine-learning`, `tensors`, `cnns` (its vision-foundation-models lesson is stamped fast), `transformers` (its variants-and-reading-a-model-card lesson is stamped fast), `access-control` (its Keycloak lessons are stamped fast), `business-acumen` |
 | **stable** | 12 months | `system-design`, `technical-product-sense`, `first-principles` |
 
 The checker reports a lesson as overdue when its stamp is older than its cadence. Updating

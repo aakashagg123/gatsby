@@ -49,6 +49,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
 
+**Active parameters** — The parameters actually used for one token. In a mixture-of-experts model, this is less than the total.
+
+*In plain terms.* A dense model uses all its parameters for every token. A mixture uses only the router, attention and the chosen experts. Active parameters set the compute per token. Total parameters set the memory to hold the model.
+
+*For example.* 13 billion active out of 47 billion total.
+
+*Where it shows up:* Comparing model sizes fairly; Estimating serving cost.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **Adam** — An optimizer that adapts the step size of each parameter from running averages of the gradient and its square.
 
 *In plain terms.* It keeps two extra numbers per parameter, which makes it a large part of training memory. It usually needs less tuning of the learning rate than plain gradient descent.
@@ -428,6 +438,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting supplier and seller payout terms; Comparing a retail model with a marketplace model.
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
+**Causal mask** — A rule that hides later tokens, so each token can attend only to itself and earlier tokens.
+
+*In plain terms.* A language model learns by predicting the next token. If a token could read the one after it, it would copy the answer. The causal mask sets the score for every later token to minus infinity, so after the softmax their weights are exactly zero.
+
+*For example.* Token 3 can attend to tokens 1, 2 and 3. Token 4 has weight 0 for it.
+
+*Where it shows up:* Understanding why decoder models write left to right; Debugging a training leak.
+
+*See:* [Attention](./transformers/attention.md).
 
 **Centrality** — Ranking nodes by how important they are in the graph's structure (the PageRank family).
 
@@ -929,6 +949,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
 
+**Decoder-only model** — A transformer that writes text one token at a time, with a causal mask. Most chat models are decoder-only.
+
+*In plain terms.* Transformers come in three layouts. Encoder-only models read text in both directions and produce vectors, as in many embedding models. Encoder-decoder models read an input and write an output. Decoder-only models write left to right, and most general chat models use this layout.
+
+*For example.* A chat model is decoder-only. A search embedding model is often encoder-only.
+
+*Where it shows up:* Choosing a model type for a task; Understanding where embeddings come from.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **Deferred revenue** — Cash received for something not yet delivered. It sits on the balance sheet as a liability until it is earned.
 
 *In plain terms.* Revenue is recorded when the company delivers, not when it is paid. Until then the company owes the customer the service, or the money back. Insurers call this unearned premium.
@@ -1169,6 +1199,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
 
+**Feed-forward layer** — The part of a transformer block that reworks each token's vector on its own, and holds about two thirds of a block's weights.
+
+*In plain terms.* After attention mixes information between tokens, the feed-forward layer, or MLP, processes each token alone. It widens the vector to about four times its size, applies a nonlinear function, and narrows it again. It holds most of a block's parameters, and research suggests much of a model's stored knowledge.
+
+*For example.* In GPT-2 small, the feed-forward layers hold 66.7% of the block parameters.
+
+*Where it shows up:* Deciding where to compress a model; Counting parameters.
+
+*See:* [The block](./transformers/the-block.md).
+
 **Feedback loop** — When a model's actions change the data it will later learn from.
 
 *In plain terms.* If you only offer discounts to customers the model flags, you never learn what the unflagged customers would have done. A recommender that shows only what it favors trains on the clicks it caused. The model slowly confirms itself.
@@ -1238,6 +1278,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a market to enter; Explaining where margin leaks.
 
 *See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
+**FlashAttention** — A way to compute exact attention in small tiles, so the full score matrix is never stored.
+
+*In plain terms.* A plain implementation writes the whole table of scores to memory. FlashAttention splits the work into tiles that fit in fast memory, and combines them. The answer is the same. Memory use grows with length instead of its square, and the run is faster.
+
+*For example.* At 131,072 tokens, 32 heads and 16-bit numbers, a stored score matrix would take 1 TiB per layer.
+
+*Where it shows up:* Evaluating long-context serving; Asking vendors how they handle length.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
 
 **Float** — Money a company holds for a while that belongs to someone else, such as merchant funds before payout or insurance premiums before claims.
 
@@ -1438,6 +1488,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting a quality bar for AI answers; Deciding what must be cited; Measuring hallucination in retrieval evals.
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
+
+**Grouped-query attention (GQA)** — An attention design where several query heads share one key and value head, which shrinks the KV cache.
+
+*In plain terms.* In standard attention each head has its own queries, keys and values. In grouped-query attention, query heads are split into groups, and each group shares one key and value head. The cache for keys and values shrinks by the ratio of heads to groups, with little loss of quality.
+
+*For example.* 32 query heads sharing 8 key and value heads cut the cache to a quarter.
+
+*Where it shows up:* Comparing models for serving cost; Planning how many requests fit on one accelerator.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
 
 **Growth accounting** — Splitting the change in active customers into new, resurrected and churned flows.
 
@@ -1859,6 +1919,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
 
+**Layer normalization** — A step that rescales each token's vector to a steady mean and spread, which keeps training stable.
+
+*In plain terms.* Numbers in a deep network can grow or shrink from layer to layer. Layer normalization rescales each vector to mean 0 and spread 1. Most current models apply it before each part of a block. The original transformer applied it after.
+
+*For example.* A row of values near 100 and a row near 3 both come out with mean 0 and mean square 1.
+
+*Where it shows up:* Reading model descriptions; Debugging unstable training.
+
+*See:* [The block](./transformers/the-block.md).
+
 **Learning rate** — How big a step training takes on each update.
 
 *In plain terms.* Too small and training crawls. Too large and each step overshoots, so the loss jumps around or grows. It is the most-tuned setting in training. A short search over a few values is cheap next to a bad long run.
@@ -1948,6 +2018,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* A first model and a reference for others; Decisions that need to be explained.
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
+
+**Logits** — The raw scores a model gives to each possible next token, before they are turned into probabilities.
+
+*In plain terms.* At the top of a transformer, the last vector is multiplied by an output matrix. That gives one number for each word in the vocabulary. These raw scores are the logits. A softmax turns them into probabilities, and sampling picks a token.
+
+*For example.* A vocabulary of 50,257 tokens gives 50,257 logits for each step.
+
+*Where it shows up:* Understanding sampling settings; Reading API options that return token scores.
+
+*See:* [The shape of a transformer](./transformers/the-shape-of-a-transformer.md).
 
 **Long-context** — Handing the model a very large amount of text in the prompt each call, instead of retrieving just the relevant bit.
 
@@ -2159,6 +2239,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
 
+**Mixture of experts (MoE)** — A design with many feed-forward layers, called experts, where a router sends each token to only a few of them.
+
+*In plain terms.* A mixture keeps several expert layers and uses a small router to pick the best few for each token. The model has far more total parameters than it uses for any one token. Total parameters set the memory needed. Active parameters set the compute per token.
+
+*For example.* 8 experts with 2 used per token: about 47 billion total and 13 billion active parameters.
+
+*Where it shows up:* Reading a model card; Estimating the memory a model needs.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **MLOps** — The practice of running ML systems reliably: data pipelines, versioning, release, monitoring and retraining.
 
 *In plain terms.* It is operations discipline applied to models. Models decay, depend on data, and need owners, alarms and rollbacks. MLOps adds the data and the model to the usual concerns of running a service.
@@ -2198,6 +2288,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding when more agents actually help; Designing orchestrator/subagent structure; Weighing coordination overhead.
 
 *See:* [Multi-agent systems & protocols](./agentic-ai/multi-agent-and-protocols.md).
+
+**Multi-head attention** — Several attention comparisons run side by side on slices of the vector, then combined.
+
+*In plain terms.* One attention step can attend to one kind of thing at a time. Multi-head attention splits each vector into slices and runs a separate attention on each. The outputs are joined and multiplied by an output matrix. Each head writes its own note into the shared stream, and the notes add up.
+
+*For example.* A model with 12 heads and a width of 768 gives each head 64 numbers.
+
+*Where it shows up:* Reading a model's spec sheet; Understanding what heads and layers mean.
+
+*See:* [The block](./transformers/the-block.md).
 
 **Multi-hop query** — A question whose answer requires chaining several relationships across entities — the thing graphs do that tables struggle with.
 
@@ -2519,6 +2619,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
 
+**Positional encoding** — A signal added to the input so a model can tell which token came first, since attention alone ignores order.
+
+*In plain terms.* Attention treats its input as a set: shuffle the tokens and the outputs shuffle the same way. A positional encoding adds the order. Methods include fixed sine waves, learned vectors, rotary embeddings and distance penalties.
+
+*For example.* Without it, 'dog bites man' and 'man bites dog' look the same to attention.
+
+*Where it shows up:* Understanding context-length limits; Evaluating long-context claims.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
+
 **Postmortem** — A blameless written analysis after an incident: what happened, why, and what changes prevent a recurrence.
 
 *In plain terms.* After something breaks, a postmortem calmly reconstructs the timeline, finds the real (usually systemic) causes, and commits to fixes — without blaming individuals, because blame hides truth. The goal is a system that can't fail the same way twice.
@@ -2748,6 +2858,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Raising recall on real user wording; Weighing an extra model call per question.
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
+**Query, key and value** — The three vectors each token makes for attention: what it looks for, what it offers, and what it hands over.
+
+*In plain terms.* In attention, each token's vector is multiplied by three learned matrices. The query says what the token is looking for. The key says what it offers to others. The value is the content it passes on. A token compares its query with every key and takes a weighted blend of the values.
+
+*For example.* In a head that reads the previous token, the query asks for the position before, the key says which position it is, and the value carries the token.
+
+*Where it shows up:* Reading how attention works; Counting the cache: keys and values are what it stores.
+
+*See:* [Attention](./transformers/attention.md).
 
 **Quota attainment** — The share of quota that salespeople actually close, on average.
 
@@ -2989,6 +3109,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [From edges to objects](./cnns/from-edges-to-objects.md).
 
+**Residual stream** — The running vector for each token that every attention head and feed-forward layer reads from and adds a note to.
+
+*In plain terms.* In a transformer, each part adds its output to its input instead of replacing it. So each token has one vector that is built up layer by layer, like a shared notebook. A part that writes nothing leaves the vector unchanged.
+
+*For example.* A block whose output matrices are zero returns its input exactly.
+
+*Where it shows up:* Understanding why deep models train; Reading interpretability research.
+
+*See:* [The block](./transformers/the-block.md).
+
 **ResNet** — A family of deep convolutional networks built from residual blocks. It won the ILSVRC 2015 ImageNet challenge.
 
 *In plain terms.* ResNets come in depths such as 18, 50, 101 and 152 layers. ResNet-50 is a common baseline backbone: about 25.6 million parameters in torchvision.
@@ -3028,6 +3158,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Designing guardrails for a launch; Asking for a risk acceptance.
 
 *See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
+**Rotary position embedding (RoPE)** — A way to encode position by turning each query and key by an angle that grows with position, so scores depend on distance.
+
+*In plain terms.* Rotary embeddings rotate pairs of numbers in the query and key. The dot product of a rotated query and key then depends only on how far apart the two tokens are. It adds no learned position table and is common in current open models.
+
+*For example.* A query at position 10 and a key at 4 score the same as at 110 and 104.
+
+*Where it shows up:* Understanding how context limits are extended; Reading model cards.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
 
 **Run-off** — The period after an insurer stops writing new policies, when it must still pay claims on existing ones.
 
@@ -3188,6 +3328,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Budgeting compliance certification as a roadmap item with real lead time; Understanding why enterprise deals stall in security review, not the demo; Scoping what an AI vendor's auditor will expect beyond the general controls (model change management).
 
 *See:* [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md).
+
+**Softmax** — A function that turns a list of scores into weights between 0 and 1 that add up to 1.
+
+*In plain terms.* Softmax raises each score to an exponent and divides by the total. Larger scores get much more of the weight. In attention it turns match scores into weights. At the end of a model it turns a score for each vocabulary word into probabilities.
+
+*For example.* Scores 2, 1 and 0 become weights of about 0.67, 0.24 and 0.09.
+
+*Where it shows up:* Reading attention weights; Understanding temperature and sampling.
+
+*See:* [Attention](./transformers/attention.md).
 
 **Span** — A single timed unit of work inside a trace — one retrieval, one model call, one tool execution.
 
