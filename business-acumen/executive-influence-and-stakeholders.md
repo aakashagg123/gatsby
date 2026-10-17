@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 At vice president (VP) level, influence is most of the job. You rarely control the resources you need. You win them by making a clear case to executives, aligning peers before decisions, and negotiating with partners and other leaders. The skills are learnable: an **answer-first narrative**, data that makes one point per chart, **pre-wiring** before meetings, a clear view of how the **board** works, and negotiation built on numbers.
@@ -193,7 +195,7 @@ You will not know their numbers exactly. A range is enough. Test it with questio
 
 **Anchoring and the first offer.** The first number often pulls the final deal toward it. Make the first offer when you have a good estimate of the zone. Make it inside the zone, near the other side's walk-away point, and give a reason for it. When the other side opens far outside the zone, do not counter by splitting the difference. Restate the economics and re-anchor.
 
-**Domain application.** Fintechs that offer debit cards usually issue them through a partner bank. In the US, debit interchange is capped for large issuers, and smaller issuers are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). So partner banks can be smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
+**Domain application.** Many fintechs that offer debit cards issue them through a partner bank. In the US, debit interchange is capped for large issuers, and smaller issuers are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). So partner banks can be smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
 
 **Decision rule.** Write both walk-away points, in numbers, before the first meeting. If you cannot estimate theirs, your first meeting is for questions, not offers.
 

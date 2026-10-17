@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Senior leaders rarely lack data. They lack time, and the data they have is partial, late or biased. The skill is to decide well **before** the data is complete. That means four things. Know what your data cannot see. Know the base rate before you trust an accuracy claim. Put a money value on each kind of mistake. And know when more data is worth its cost and its delay.
@@ -252,7 +254,7 @@ Under the first weights, A wins clearly. When the CFO shifts weight from confide
 - **A challenger.** A **champion–challenger** setup runs an alternative model or threshold on a small share of traffic. It shows whether the live model is still the best choice.
 - **Documented overrides.** When people overrule the model, the reasons are recorded and reviewed.
 
-**Domain application.** In US lending, a declined applicant must be told the main reasons for the decline. That is part of Regulation B. So a credit model must produce reasons a person can read. This shapes which model types a lender can use. Insurers file rating rules with state regulators. Payments and anti-money-laundering models are reviewed by bank partners and examiners.
+**Domain application.** In US lending, a declined applicant must be given the main reasons for the decline, or be told how to request them. That is part of Regulation B. So a credit model must produce reasons a person can read. This shapes which model types a lender can use. Insurers file rating rules with state regulators. Payments and anti-money-laundering models are reviewed by bank partners and examiners.
 
 **The common misreading.** "Governance slows us down." Model governance mostly adds lead time you can plan for. Discovering it late is what slows you down. A threshold change on a credit model may need validation sign-off. Put it in the plan.
 

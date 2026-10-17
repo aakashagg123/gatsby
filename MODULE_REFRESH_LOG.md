@@ -43,7 +43,7 @@ always moves forward.
 | transformers | transformers/ | scripts/build_transformers.py | 2026-10-17 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 2026-10-17 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 2026-10-17 |
-| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-14 |
+| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-16 |
 
 ## Run history
 
@@ -320,3 +320,10 @@ and a link to the merged PR.)
   every lesson pending one independent fact-check before merge, so the
   last_refreshed date is unchanged. check_module: avg sentence 10.7, 0% over
   30 words, Flesch 69, WARN (no stamps).
+
+- 2026-10-16 — business-acumen — post-merge independent fact-check of the
+  15-lesson expansion: 0 WRONG / 0 STALE. Tightened six loose phrasings (US
+  rate dates, Regulation B wording, a debit-cap court-challenge note, three
+  quantifiers, and the reinsurance framing). Final check of the edited
+  lessons: 0 WRONG / 0 STALE, web access ok. All 15 lessons stamped 2026-10
+  (medium). check_module: avg sentence 10.5, 0% over 30 words, Flesch 69.

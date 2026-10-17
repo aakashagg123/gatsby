@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Some markets leave profit on the table. Others grind every player down to thin margins. The difference is structure, and you can analyse it. This lesson gives you four tools, used in order.
@@ -102,7 +104,7 @@ The binding force often follows a pattern by domain. Use this as a starting hypo
 | **eCommerce**, marketplaces | Supplier power of traffic sources, and rivalry | Paid search and app stores sell the customer's attention |
 | **Retail**, general merchandise | Buyer power and substitutes | Shoppers compare prices online; online channels substitute for the store |
 
-A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. Under its reinsurance programme, it typically retains a fixed fee, and reinsurers take on much of the risk of excess claims. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
+A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. Under its reinsurance programme, it typically retains a fixed fee, and reinsurers carry much of the claims risk. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
 
 ### Value chain and profit pools
 
@@ -136,7 +138,7 @@ Now subtract each party's assumed variable cost for this payment:
 
 Three lessons follow. First, the issuer gets most of the money but spends much of it on rewards to win cardholders. Second, the network earns the smallest fee and the highest margin, because network effects and scale protect it. Third, the acquirer sits in the most crowded part of the chain. Its $0.55 is the part merchants negotiate hardest.
 
-Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. The EU caps interchange on consumer debit and credit cards. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
+Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. The rule is being challenged in federal court, so check its current status before you rely on it. The EU caps interchange on consumer debit and credit cards. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
 
 **Lending.** A loan passes through four roles. One company can play all four, or each can be a different firm.
 

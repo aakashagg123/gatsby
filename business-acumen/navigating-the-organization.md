@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Every company has two maps. The **formal organization** is the org chart, the budget and the approval process. The **informal organization** is the network of trust, favours and information that decides what actually happens. A product leader needs both maps. You also need to know which function holds which lever on the money.

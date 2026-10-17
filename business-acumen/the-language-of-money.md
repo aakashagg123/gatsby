@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Finance speaks through three statements. The **income statement** shows performance over a period: revenue, costs and profit. The **balance sheet** shows position at one moment: what the company owns, owes and keeps for its owners. The **cash-flow statement** shows how cash moved. A product decision touches all three, often in different ways and at different times.
@@ -301,7 +303,7 @@ The retailer funds 17 days of its own cost of goods. The marketplace holds 12 da
 - Float = $2.74 million × 12 = **$32.9 million**.
 - At a 4% yield, float earns about **$1.3 million a year**.
 
-That income depends on interest rates. US short-term rates were near zero in 2020 and 2021. They were above 5% from mid-2023 into late 2024. The same float earned almost nothing in one period and a lot in the other.
+That income depends on interest rates. US short-term rates were near zero in 2020 and 2021. They were above 5% from mid-2023 until September 2024. The same float earned almost nothing in one period and a lot in the other.
 
 **Insurance float.** An insurer collects premium first and pays claims later, sometimes years later. It invests the money in between. For lines where claims settle slowly, such as liability insurance, the float is large. Investment income can turn an underwriting loss into an overall profit. [Unit economics](./unit-economics.md) shows this on one policy.
 

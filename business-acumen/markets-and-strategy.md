@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 Before you decide how to win, decide where to compete and for whom. This lesson covers the market side of strategy. **Market sizing** tells you how much revenue a market can hold. **Segmentation** splits that market into groups that need different things and have different economics. **Positioning** states why your target segment should choose you over its real alternative. A **competitor teardown** reads a rival's economics, not its feature list. **SWOT** and the **growth matrix** turn the facts into options and show how much risk each option carries.
