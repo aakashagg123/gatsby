@@ -699,6 +699,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Context engineering](./content/00-foundations/context-engineering.md).
 
+**Context file (CLAUDE.md)** — A short file of standing instructions that a coding agent loads at the start of every session.
+
+*In plain terms.* It tells the agent what it cannot work out from the code: build and test commands, naming rules and traps. Each line costs tokens in every session, and a long file lowers adherence, so keep it short and pruned.
+
+*For example.* A 150-line file with the test command, the lint command and three project rules.
+
+*Where it shows up:* Setting team-wide agent behaviour; Cutting context cost.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
+
 **Context rot** — The drop in model quality that can come as more text is packed into a request — the reason to send the smallest high-signal context, not the most.
 
 *In plain terms.* A model attends across everything in its context window, and Anthropic's engineering guidance describes context as a finite resource with diminishing returns. As a request grows, the useful fact can get buried among irrelevant text, and cost and latency rise too. The product rule is to find the smallest set of information that makes the decision right.
@@ -1219,6 +1229,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
+**Fan-out (agent batches)** — Running the same agent job over many items in parallel.
+
+*In plain terms.* It multiplies cost and also review work. Retries rescue tasks at a small price, and the review team becomes the limit on throughput.
+
+*For example.* 200 tasks, up to 3 attempts each, with a hand-off for failures.
+
+*Where it shows up:* Large migrations; Budgeting a batch.
+
+*See:* [Running at scale](./ai-assisted-development/running-at-scale.md).
+
 **Feature** — One fact about a case that a model uses as input, such as months as a customer.
 
 *In plain terms.* A row of data describes one case with a list of facts. Each fact is a feature. Choosing and preparing features is a large part of ML work. A feature must be known at the moment of prediction.
@@ -1608,6 +1628,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reading a vector-store design or bill; Tuning the recall-versus-speed dial; Explaining why a search occasionally misses a true neighbour.
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
+
+**Hook (agent)** — A command that runs at a set point in an agent's life, such as before a tool call or when it tries to stop.
+
+*In plain terms.* Hooks are deterministic: they run every time, unlike a line in a context file. They can check, log or block an action.
+
+*For example.* A hook that refuses any edit under tests/.
+
+*Where it shows up:* Enforcing rules; Running checks automatically.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
 
 **Hook model** — Trigger → Action → Variable reward → Investment — the loop by which products build habits.
 
@@ -2279,6 +2309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
 
+**Mix shift (Simpson's paradox)** — A change in the average caused by a change in the mix of work, not in the speed on each kind.
+
+*In plain terms.* When agents take the easy work, average cycle time falls even if hard work barely changed. Split results by difficulty before you report a gain.
+
+*For example.* Cycle time fell 3.2 times overall, but hard work improved by 20% and its rework doubled.
+
+*Where it shows up:* Reading productivity dashboards.
+
+*See:* [Measuring and governing](./ai-assisted-development/measuring-and-governing.md).
+
 **Mixed precision training** — Training with float16 or bfloat16 for most arithmetic and float32 where accuracy matters.
 
 *In plain terms.* The forward and backward passes use the smaller format. A float32 master copy of the weights takes the update. Loss scaling protects small gradients. Model state is still about 16 bytes per parameter with Adam. The saving is in speed and activation memory.
@@ -2619,6 +2659,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
+**Permission mode** — The overall posture of a coding agent: ask for everything, auto-approve edits, plan only, let a classifier decide, or skip checks.
+
+*In plain terms.* The mode sets the default for what the agent may do alone. Bypass modes belong only in isolated environments.
+
+*For example.* Default asks first; acceptEdits approves file edits; plan cannot edit.
+
+*Where it shows up:* Setting a default posture per environment.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
+
+**Permission rule** — A deny, ask or allow rule for a tool or command, checked in that order with the first match winning.
+
+*In plain terms.* Rules guard against honest mistakes. A shell rule matches the command as written, so a different spelling of the same command can miss it. It is not a security boundary.
+
+*For example.* Deny Bash(curl *); allow Read(src/*).
+
+*Where it shows up:* Limiting agent actions; Protecting test files and secrets.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
+
 **pgvector** — An open-source Postgres extension that adds a vector column type and nearest-neighbour search, with HNSW and IVFFlat indexes.
 
 *In plain terms.* pgvector lets the database you may already run store embeddings next to your other data. You add a vector(N) column, create an index, and order by a distance operator such as <=> for cosine distance. Filters are ordinary SQL WHERE clauses.
@@ -2638,6 +2698,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a login flow for apps; Security review of a client.
 
 *See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
+**Plan mode** — A mode in which the agent reads and proposes a plan but cannot edit until you approve it.
+
+*In plain terms.* It separates exploring from changing. You see the approach before any file changes, which cuts wasted work on large or unclear tasks.
+
+*For example.* Press Shift+Tab to enter plan mode, review the plan, then approve.
+
+*Where it shows up:* Large or unclear changes; Reviewing an approach early.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
 
 **Policy decision point** — The part of an authorization system that evaluates the rules and returns allow or deny.
 
@@ -3239,6 +3309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
 
+**Rework rate** — The share of changes that need a fix within a set time, such as 30 days.
+
+*In plain terms.* It shows quality that speed metrics hide. Read it beside lead time and failure rate.
+
+*For example.* 7.5% of merged pull requests needed a fix within 30 days.
+
+*Where it shows up:* Measuring agent quality.
+
+*See:* [Measuring and governing](./ai-assisted-development/measuring-and-governing.md).
+
 **RFC** — Request For Comments — a written technical proposal circulated for feedback before a significant engineering decision is made.
 
 *In plain terms.* For a big technical choice (a new architecture, a risky migration), an RFC lays out the proposal, the alternatives, and the tradeoffs, then invites critique before anyone commits. It moves the argument to a document where it's cheap to change your mind.
@@ -3298,6 +3378,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Consistency across distributed steps; Designing rollback/undo in workflows; Handling partial failures gracefully.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Sandbox (for agents)** — An isolated environment, such as a container, where an agent runs with limited files, network and credentials.
+
+*In plain terms.* A sandbox is enforced by the operating system, so it does not depend on how the agent words a command. It is what makes unattended or bypass runs acceptable.
+
+*For example.* A container with only the repository mounted and no production keys.
+
+*Where it shows up:* Unattended runs; Limiting prompt-injection damage.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
 
 **Second-order effects** — The consequences of the consequences — 'and then what?' — where first-order-obvious decisions age badly.
 
@@ -3479,6 +3569,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
 
+**Stop hook** — A hook that runs when the agent tries to finish and can block the stop until a check passes.
+
+*In plain terms.* It turns "done" from a sentence into an exit code. It exits 2 with a message to send the agent back to work, and it must guard against endless loops.
+
+*For example.* A script that runs the tests and exits 2 if they fail.
+
+*Where it shows up:* Gating agent work on a passing check.
+
+*See:* [Verification is the product](./ai-assisted-development/verification-is-the-product.md).
+
 **Strategy kernel** — The core of a strategy: a diagnosis of the crux, a guiding policy that rules options out, and a few coherent actions.
 
 *In plain terms.* A diagnosis names the one or two problems that matter most. The guiding policy is the overall approach to them. Coherent actions support each other. A goal such as "grow 30%" is not a strategy.
@@ -3648,6 +3748,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Sizing a new market; Challenging a "we only need 1%" pitch.
 
 *See:* [Markets and customers: segments, sizing and positioning](./business-acumen/markets-and-strategy.md).
+
+**Task spec (for an agent)** — A task brief with a goal, a scope, the key constraint and a way to check the result.
+
+*In plain terms.* An agent builds what you describe and guesses the rest. The check is the part most often missing. With it, the agent can tell when it is done.
+
+*For example.* Add a retry to the email sender; touch only billing/email.py; no duplicate sends; pytest must pass.
+
+*Where it shows up:* Briefing a coding agent; Writing tickets that double as tests.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
 
 **Tech debt** — The accumulated cost of past shortcuts — code and design choices that speed you up now and slow you down later, with interest.
 
@@ -3948,6 +4058,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building the retrieval half of RAG; Evaluating retrieval infrastructure; Reasoning about recall and index freshness.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Verification gate** — A command with a pass or fail result that must succeed before an agent's work counts as done.
+
+*In plain terms.* It replaces the agent's own report with evidence. It should be fast, deterministic and meaningful, and the agent should not be able to edit it.
+
+*For example.* pytest -x -q, plus a type check, run before the agent stops.
+
+*Where it shows up:* Trusting agent output; Reducing review load.
+
+*See:* [Verification is the product](./ai-assisted-development/verification-is-the-product.md).
 
 **Vintage curve** — A plot of one group of loans' cumulative net charge-offs by months on book, so groups can be compared at the same age.
 

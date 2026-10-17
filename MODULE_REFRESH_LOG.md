@@ -42,6 +42,7 @@ always moves forward.
 | cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
 | transformers | transformers/ | scripts/build_transformers.py | 2026-10-17 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 2026-10-17 |
+| ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 2026-10-17 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-14 |
 
 ## Run history

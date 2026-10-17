@@ -225,6 +225,17 @@ Part of the **foundation modules**: it builds on [Machine learning](./machine-le
 5. [The dataset: quality, duplicates, contamination and synthetic data](./fine-tuning/the-dataset.md)
 6. [Deciding, costing and checking a fine-tune](./fine-tuning/deciding-costing-and-checking-a-fine-tune.md) · [Recap](./fine-tuning/recap.md)
 
+## [AI-assisted development](./ai-assisted-development/README.md)
+
+Part of the **craft tracks**: it builds on [Agentic AI](./agentic-ai/README.md), [Tool calling](./tool-calling/README.md) and [Evaluation and observability](./evaluation-and-observability/README.md).
+
+1. [When an agent writes the code: where the bottleneck goes](./ai-assisted-development/when-an-agent-writes-the-code.md)
+2. [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md)
+3. [Verification is the product](./ai-assisted-development/verification-is-the-product.md)
+4. [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md)
+5. [Running at scale: sessions, subagents and fan-out](./ai-assisted-development/running-at-scale.md)
+6. [Measuring and governing](./ai-assisted-development/measuring-and-governing.md) · [Recap](./ai-assisted-development/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

@@ -1,0 +1,30 @@
+<style>
+.dgm-mx{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-mx-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-mx h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-mx-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-mx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-mx-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary)}
+.dgm-mx-c h5{margin:0 0 6px;font-size:12px;font-weight:700}
+.dgm-mx-c p{margin:2px 0;font-size:11px;color:var(--color-text-secondary)}
+.dgm-mx-c b{color:var(--color-text)}
+.dgm-mx-h{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-mx-e{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-mx-d{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-mx-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-mx{padding:22px 14px 18px}.dgm-mx-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-mx">
+  <span class="dgm-mx-chip">Headline versus split</span>
+  <h4>A 3.2× gain that is mostly a change in the mix of work</h4>
+  <p class="dgm-mx-sub">Invented pull-request data from the lesson. Cycle time and rework, before and with the agent.</p>
+  <div class="dgm-mx-grid">
+    <div class="dgm-mx-c dgm-mx-h"><h5>All work · 200 → 350 PRs</h5><p>Cycle time <b>23.0 h → 7.1 h</b></p><p>Rework <b>7.5% → 9.7%</b></p></div>
+    <div class="dgm-mx-c dgm-mx-e"><h5>Easy work · 50% → 86% of PRs</h5><p>Cycle time <b>6.0 h → 3.0 h</b></p><p>Rework <b>5% → 8%</b></p></div>
+    <div class="dgm-mx-c dgm-mx-d"><h5>Hard work · 50% → 14% of PRs</h5><p>Cycle time <b>40 h → 32 h</b></p><p>Rework <b>10% → 20%</b></p></div>
+  </div>
+  <p class="dgm-mx-foot">Split by difficulty before you report a number. The average hides what moved.</p>
+</div>

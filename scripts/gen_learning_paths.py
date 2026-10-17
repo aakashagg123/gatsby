@@ -8,7 +8,7 @@ committed. To change a path, edit the PATHS data below and run:
     python3 scripts/gen_learning_paths.py && python3 scripts/build_learning_paths.py
 
 When a planned module ships, replace its SOON(...) step with T(...) lesson
-links. Machine learning, tensors, CNNs, transformers and fine-tuning have shipped.
+links. Machine learning, tensors, CNNs, transformers, fine-tuning and AI-assisted development have shipped.
 """
 import math
 import glob
@@ -35,7 +35,7 @@ NAMES = {
     "ai-agents": "AI agents", "agentic-workflows": "Agentic workflows",
     "knowledge-graphs": "Knowledge graphs", "access-control": "Access control",
     "system-design": "System design", "api-integrations": "APIs & integrations",
-    "first-principles": "First principles", "machine-learning": "Machine learning", "tensors": "Tensors", "cnns": "CNNs", "transformers": "Transformers", "fine-tuning": "Fine-tuning and post-training",
+    "first-principles": "First principles", "machine-learning": "Machine learning", "tensors": "Tensors", "cnns": "CNNs", "transformers": "Transformers", "fine-tuning": "Fine-tuning and post-training", "ai-assisted-development": "AI-assisted development",
 }
 CONTENT = {
     "00-foundations": "AI engineering: foundations", "01-inference-internals": "AI engineering: inference internals",
@@ -295,7 +295,7 @@ PATHS.append(dict(
                     H(1), H(2), H(3), H(4), H(5), H(6)],
              ready="You have a working loop with tools, a permission gate and a context budget, and tests that fail when you break them."),
         dict(name="Production", why="Plan for failure: extend, test, observe, secure and scale.",
-             items=[H(7), H(8), H(9), H(10, "full", 180, "Allow about 3 hours: the capstone plus your own evals, traces and cost."), T("ai-agents", 4, 5), C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "kv-cache-management", "prompt-vs-semantic-caching"),
+             items=[H(7), H(8), H(9), H(10, "full", 180, "Allow about 3 hours: the capstone plus your own evals, traces and cost."), T("ai-agents", 4, 5), T("ai-assisted-development", 3, 4, 5), C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "kv-cache-management", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing", "structured-output", "agent-guardrails"), C("04-evals-observability", "evals", "observability", "cost-attribution"),
                     C("05-safety-multitenancy", "safety-engineering", "multi-tenant-isolation"),
                     T("ai-security-and-guardrails", 1, 2), T("access-control", 1, 2, 8), T("system-design", 1, 2, 7)],
@@ -362,7 +362,7 @@ PATHS.append(dict(
              items=[T("system-design", 1, 2, 3, 7), T("technical-product-sense", 5, 8)],
              ready="You can run a design review for scale, failure and cost on any service in the stack."),
         dict(name="Work with product and run the team", why="Turn standards into process: specs, launches, incidents and how product and engineering share ownership.",
-             items=[T("technical-product-management", 3, 4, 5, 6, 7, 8, 9), T("product-sense", 7)],
+             items=[T("technical-product-management", 3, 4, 5, 6, 7, 8, 9), T("ai-assisted-development", 1, 2, 4, 5, 6), T("product-sense", 7)],
              ready="You and your PM share one definition of done, one quality bar and one incident process."),
     ],
     skip=["If you came from machine learning, skip the first stage's model lessons and read the cost lessons.",
@@ -551,7 +551,7 @@ def render_hub():
     a("This library has more than twenty tracks. You do not need all of them. "
       "A learning path picks the tracks and the lessons for one role, puts them in order, and says when to move on.\n")
     a("**A note on scope.** The paths do not teach anything new. They order and explain the lessons that already exist, "
-      "and they say which lessons to skip. The lessons carry the content. The machine learning, tensors, CNNs, transformers and fine-tuning modules are published.\n")
+      "and they say which lessons to skip. The lessons carry the content. The machine learning, tensors, CNNs, transformers, fine-tuning and AI-assisted development modules are published.\n")
     a("## Pick your role\n")
     a("| Path | Who it is for | Outcome | Length |")
     a("| --- | --- | --- | --- |")

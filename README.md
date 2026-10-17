@@ -189,6 +189,7 @@ The AI Engineering modules above teach the *stack*. Twenty-eight further tracks 
 | [**Convolutional networks**](./cnns/README.md) **New** | How a vision model sees, what resolution and depth cost, when to reuse a pre-trained or foundation model, and why vision features break in production. Runnable code in three lessons. | [What computer vision does](./cnns/what-computer-vision-does.md) |
 | [**Transformers**](./transformers/README.md) **New** | The stack behind almost every language model: attention, the block, position and the cost of context, the KV cache, and reading a model card as memory, compute and cost. Runnable code in every lesson. | [The shape of a transformer](./transformers/the-shape-of-a-transformer.md) |
 | [**Fine-tuning and post-training**](./fine-tuning/README.md) **New** | How a base model becomes an assistant, what supervised tuning, LoRA and preference tuning change, why the dataset is the product, and how to test the break-even and gate the release. Runnable code in every lesson. | [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md) |
+| [**AI-assisted development**](./ai-assisted-development/README.md) **New** | What changes when a coding agent writes the code: specifying, verifying, controlling and measuring the work. Runnable code in every lesson, including a real Stop-hook script. | [When an agent writes the code](./ai-assisted-development/when-an-agent-writes-the-code.md) |
 
 ### Generative AI
 
