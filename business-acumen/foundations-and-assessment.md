@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 **Business acumen** is the skill of seeing how a decision moves the business. You know how the company makes money. You know which numbers matter. You can predict how a product change will show up in revenue, cost, risk and cash.

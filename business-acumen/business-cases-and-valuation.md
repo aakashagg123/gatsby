@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **business case** asks for money for one bet. It shows what the bet costs, what it returns, when, and how sure you are. Finance judges it with a few tools. **Net present value** (NPV) says whether the bet earns more than the company's cost of money. **Internal rate of return** (IRR) states the same bet as a yearly return. **Payback** says how long until you get the money back. A **sensitivity table** says which assumption the case rests on.

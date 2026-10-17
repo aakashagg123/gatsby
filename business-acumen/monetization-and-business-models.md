@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **business model** is how a company turns value for customers into revenue, and revenue into profit. **Pricing** is the set of choices inside it: what you charge for, how much, how you package it, and how much of the list price you actually collect. Pricing is the fastest lever a product leader has. A feature takes a quarter to ship. A price change can move contribution by a fifth in one billing cycle.
@@ -66,7 +68,7 @@ The tests pull against each other. Usage tracks cost best and is hardest to pred
 
 **Domain applications.**
 
-- **Payments: percentage or fixed fee.** A percentage fee grows with the ticket size. It also tracks interchange, which is mostly a percentage. A fixed fee per transaction covers costs that do not scale with the amount, such as processing and fraud checks. Most small-merchant prices combine both, for example 2.9% + $0.30. The combination hurts small tickets. A $5 payment pays $0.445, an effective rate of 8.9%. A merchant who sells coffee feels that more than one who sells furniture.
+- **Payments: percentage or fixed fee.** A percentage fee grows with the ticket size. It also tracks interchange, which often has a large percentage component. A fixed fee per transaction covers costs that do not scale with the amount, such as processing and fraud checks. Many small-merchant prices combine both, for example 2.9% + $0.30. The combination hurts small tickets. A $5 payment pays $0.445, an effective rate of 8.9%. A merchant who sells coffee feels that more than one who sells furniture.
 - **Lending: rate or fee.** A loan can charge interest as an annual percentage rate (APR), a flat fee, or both. Interest grows with the amount and the time, which matches the lender's funding cost and risk. A flat fee is easy to understand. But it can hide a high rate on a short loan. A $10 fee on a $100 loan repaid in two weeks equals an APR of about 261%. Regulators look at the APR, not at how small the fee feels.
 - **Insurance: premium per exposure unit.** Insurers price per unit of risk exposure. For car insurance the unit is often a car-year. Other units work the same way. For example, a rate per $100 of insured value, or per $100 of payroll for workers' compensation. These units are illustrative. Usage-based car insurance charges partly by distance or driving behaviour. That tracks risk better and makes the bill harder to predict.
 - **eCommerce and Retail: margin or membership.** A retailer earns its margin on each item. A paid membership adds a fixed fee per year, often in exchange for free delivery. The fee is predictable for the customer. The delivery cost scales with orders. So a heavy-use member can cost more than they pay.

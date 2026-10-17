@@ -2,6 +2,8 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: medium*
+
 ## TL;DR
 
 A **product** is the whole offer a customer buys: the core function, the package around it, the price, the service and the promise. Features are only part of it. **Go-to-market** (GTM) is how the offer reaches the customer and how the customer buys it. At leadership level, both are business decisions. You decide which opportunities get a business case. You decide what to build, buy or partner for. And you decide which **GTM motion** sells the product: self-serve, a sales team, partners, or embedding inside someone else's software.
