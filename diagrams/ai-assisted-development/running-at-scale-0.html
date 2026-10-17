@@ -1,0 +1,39 @@
+<style>
+.dgm-rs{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-rs-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-rs h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-rs-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-rs-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-rs-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-rs-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-rs-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-rs-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-rs-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-rs-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-rs-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-rs-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-rs-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-rs-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-rs-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-rs-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-rs-note b{color:var(--color-text)}
+.dgm-rs-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-rs{padding:22px 14px 18px}.dgm-rs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-rs-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-rs">
+  <span class="dgm-rs-chip">A factory with a quality desk</span>
+  <h4>Workers are cheap and parallel. Review is not.</h4>
+  <p class="dgm-rs-sub">Throughput is limited by the slowest station.</p>
+  <div class="dgm-rs-grid">
+    <div class="dgm-rs-c dgm-rs-info"><h5><span class="dgm-rs-n">1</span>Task queue</h5><p>Many independent tasks.</p></div>
+    <div class="dgm-rs-c dgm-rs-discovery"><h5><span class="dgm-rs-n">2</span>Agents</h5><span class="dgm-rs-t">parallel · cheap</span><p>Each in its own worktree.</p></div>
+    <div class="dgm-rs-c dgm-rs-warning"><h5><span class="dgm-rs-n">3</span>Automatic gate</h5><span class="dgm-rs-t">tests · types · lint</span><p>Retries up to a cap.</p></div>
+    <div class="dgm-rs-c dgm-rs-success"><h5><span class="dgm-rs-n">4</span>Review queue</h5><span class="dgm-rs-t">people · slow</span><p>Accepted work waits here.</p></div>
+    <div class="dgm-rs-c dgm-rs-danger"><h5><span class="dgm-rs-n">5</span>Hand-off</h5><span class="dgm-rs-t">failed after retries</span><p>Goes to a person.</p></div>
+  </div>
+  <p class="dgm-rs-foot">200 tasks at 70% pass: 3 attempts add $117, rescue 55 tasks, and add 5 review hours.</p>
+</div>

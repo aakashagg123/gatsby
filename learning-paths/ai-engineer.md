@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 77.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 82.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -34,7 +34,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Foundations | about 9.5 hours |
+| 1 | Foundations | about 14.5 hours |
 | 2 | Models and APIs | about 6.5 hours |
 | 3 | Grounding and memory | about 6 hours |
 | 4 | Agents and the harness (build it) | about 29 hours |
@@ -42,11 +42,13 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 ## Stage 1: Foundations
 
-Learn how a model is trained and what its data looks like. Everything later builds on it. (about 9.5 hours)
+Learn how a model is trained and what its data looks like. Everything later builds on it. (about 14.5 hours)
 
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [3. Training: loss and gradient descent](../machine-learning/training-loss-and-gradient-descent.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Tensors**: [1. What a tensor is: shape, rank and dtype](../tensors/what-a-tensor-is.md) · [2. Operations and broadcasting](../tensors/operations-and-broadcasting.md) · [3. Matrix multiplication: the workhorse](../tensors/matrix-multiplication.md) · [4. Batching, memory and precision](../tensors/batching-memory-and-precision.md) · [5. Automatic differentiation](../tensors/automatic-differentiation.md)
 - **CNNs**: [1. What computer vision does: the four jobs](../cnns/what-computer-vision-does.md) · [2. How a convolution sees: one small grid, used everywhere](../cnns/how-a-convolution-sees.md) · [3. From edges to objects: what depth buys](../cnns/from-edges-to-objects.md) · [4. Transfer learning and labels: start from someone else's model](../cnns/transfer-learning-and-labels.md) · [5. CNNs vs. vision transformers: picking a backbone](../cnns/cnns-vs-vision-transformers.md) · [6. Vision foundation models: CLIP, DINO and SAM](../cnns/vision-foundation-models.md) · [7. Shipping vision in production](../cnns/shipping-vision-in-production.md)
+- **Transformers**: [1. The shape of a transformer](../transformers/the-shape-of-a-transformer.md) · [2. Attention](../transformers/attention.md) · [3. The block: heads, the feed-forward layer and the residual stream](../transformers/the-block.md) · [4. Position, and the cost of context](../transformers/position-and-the-cost-of-context.md) · [5. Generating text and the KV cache](../transformers/generating-text-and-the-kv-cache.md) · [6. Variants, and reading a model card](../transformers/variants-and-reading-a-model-card.md)
+- **Fine-tuning and post-training**: [1. From base model to assistant: the post-training pipeline](../fine-tuning/from-base-model-to-assistant.md) · [2. Supervised fine-tuning](../fine-tuning/supervised-fine-tuning.md) · [3. LoRA and parameter-efficient tuning](../fine-tuning/lora-and-parameter-efficient-tuning.md) · [4. Preference tuning and reward hacking](../fine-tuning/preference-tuning-and-reward-hacking.md) · [5. The dataset: quality, duplicates, contamination and synthetic data](../fine-tuning/the-dataset.md) · [6. Deciding, costing and checking a fine-tune](../fine-tuning/deciding-costing-and-checking-a-fine-tune.md)
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md)
 
 **Ready to move on when:** You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting.
@@ -118,7 +120,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 77.5 hours) takes about 9 weeks.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 82.5 hours) takes about 10 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

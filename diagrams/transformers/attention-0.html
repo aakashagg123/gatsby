@@ -1,0 +1,47 @@
+<style>
+.dgm-at{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-at-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-at h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-at-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-at-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dgm-at-step{border-radius:12px;padding:10px 11px;background:var(--color-surface-secondary);border:1px solid var(--color-border)}
+.dgm-at-step .n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-background-discovery-surface);color:var(--color-text-discovery)}
+.dgm-at-step b{font-size:12px;font-weight:700}
+.dgm-at-step p{margin:4px 0 0;font-size:10.5px;line-height:1.35;color:var(--color-text-secondary)}
+.dgm-at-step code{font-size:10.5px;color:var(--color-text)}
+.dgm-at-mask{margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:center}
+.dgm-at-tab{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;max-width:240px}
+.dgm-at-tab i{display:block;aspect-ratio:1;border-radius:4px;background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface)}
+.dgm-at-tab i.x{background:var(--color-surface-tertiary);border-color:var(--color-border)}
+.dgm-at-note{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.dgm-at-note b{color:var(--color-text)}
+.dgm-at-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:720px){.dgm-at{padding:22px 14px 18px}.dgm-at-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.dgm-at-mask{grid-template-columns:1fr}}
+@media (max-width:420px){.dgm-at-flow{grid-template-columns:1fr}}
+</style>
+<div class="dgm-at">
+  <span class="dgm-at-chip">Attention</span>
+  <h4>A lookup that blends · four steps, one mask</h4>
+  <p class="dgm-at-sub">Each token asks a question, every earlier token offers an answer, and the reply is a weighted mix.</p>
+  <div class="dgm-at-flow">
+    <div class="dgm-at-step"><b><span class="n">1</span>Project</b><p>Make three vectors per token: query <code>Q</code>, key <code>K</code>, value <code>V</code>.</p></div>
+    <div class="dgm-at-step"><b><span class="n">2</span>Score</b><p>Match each query with every key: <code>Q·Kᵀ</code>. A big number means a good match.</p></div>
+    <div class="dgm-at-step"><b><span class="n">3</span>Normalize</b><p>Divide by <code>√d_k</code>, hide later tokens, then softmax. Each row sums to 1.</p></div>
+    <div class="dgm-at-step"><b><span class="n">4</span>Blend</b><p>Multiply the weights by <code>V</code>. Each token gets a mix of what it matched.</p></div>
+  </div>
+  <div class="dgm-at-mask">
+    <div class="dgm-at-tab" aria-label="causal mask: each token sees itself and earlier tokens">
+      <i></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i>
+      <i></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i>
+      <i></i><i></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i>
+      <i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i>
+      <i></i><i></i><i></i><i></i><i></i><i class="x"></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <p class="dgm-at-note"><b>The causal mask.</b> Row 4 can weigh tokens 1 to 4. Tokens 5 and 6 have weight exactly 0, so a model cannot read the answer it is meant to predict.</p>
+  </div>
+  <p class="dgm-at-foot">Without the √d_k division, 8 random keys at d_k = 256 give a top weight of 0.92. With it, 0.34.</p>
+</div>

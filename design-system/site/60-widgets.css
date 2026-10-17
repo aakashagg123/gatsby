@@ -48,6 +48,9 @@
 }
 @media (hover:hover) and (pointer:fine){.gloss-term:hover{background:var(--color-background-info-soft-alpha);text-decoration-color:var(--color-text-info)}}
 body.gl-open{overflow:hidden}
+/* A key-term pill with a long name wraps instead of widening the page on a phone. */
+.gl-keyterm{max-width:100%;height:auto;white-space:normal;text-align:left}
+.gl-keyterm .ButtonInner{white-space:normal}
 #gl-scrim{
   position:fixed;inset:0;z-index:10000;background:var(--modal-backdrop-background);
   opacity:0;visibility:hidden;transition:opacity var(--transition-duration-basic) var(--transition-ease-basic);

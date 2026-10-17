@@ -1,0 +1,54 @@
+<style>
+.dgm-kv{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-kv-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-kv h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-kv-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-kv-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dgm-kv-col{border-radius:12px;padding:12px;border:1px solid var(--color-border)}
+.dgm-kv-no{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-kv-yes{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-kv-col h5{margin:0 0 6px;font-size:12px;font-weight:700}
+.dgm-kv-no h5{color:var(--color-text-danger)}.dgm-kv-yes h5{color:var(--color-text-success)}
+.dgm-kv-rows{display:flex;flex-direction:column;gap:4px}
+.dgm-kv-r{display:flex;gap:3px;align-items:center;font-size:10px;color:var(--color-text-secondary)}
+.dgm-kv-r i{display:block;width:16px;height:12px;border-radius:3px;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-kv-no .dgm-kv-r i{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-kv-yes .dgm-kv-r i.old{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-kv-yes .dgm-kv-r i.new{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface);box-shadow:0 0 0 1.5px var(--color-border-success-surface)}
+.dgm-kv-r span{margin-left:6px}
+.dgm-kv-col p{margin:8px 0 0;font-size:10.5px;line-height:1.35;color:var(--color-text-secondary)}
+.dgm-kv-eq{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);text-align:center}
+.dgm-kv-eq b{color:var(--color-text)}
+.dgm-kv-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-kv{padding:22px 14px 18px}.dgm-kv-cols{grid-template-columns:1fr}}
+</style>
+<div class="dgm-kv">
+  <span class="dgm-kv-chip">The KV cache</span>
+  <h4>Keep the notes, add one line per token</h4>
+  <p class="dgm-kv-sub">Keys and values of earlier tokens never change, so the model stores them.</p>
+  <div class="dgm-kv-cols">
+    <div class="dgm-kv-col dgm-kv-no"><h5>No cache: recompute everything</h5>
+      <div class="dgm-kv-rows">
+        <div class="dgm-kv-r"><i></i><i></i><i></i><span>step 1</span></div>
+        <div class="dgm-kv-r"><i></i><i></i><i></i><i></i><span>step 2</span></div>
+        <div class="dgm-kv-r"><i></i><i></i><i></i><i></i><i></i><span>step 3</span></div>
+        <div class="dgm-kv-r"><i></i><i></i><i></i><i></i><i></i><i></i><span>step 4</span></div>
+      </div>
+      <p>Every step re-derives the keys and values of every token so far. Work grows with n².</p>
+    </div>
+    <div class="dgm-kv-col dgm-kv-yes"><h5>Cache: compute only the new token</h5>
+      <div class="dgm-kv-rows">
+        <div class="dgm-kv-r"><i class="old"></i><i class="old"></i><i class="new"></i><span>step 1</span></div>
+        <div class="dgm-kv-r"><i class="old"></i><i class="old"></i><i class="old"></i><i class="new"></i><span>step 2</span></div>
+        <div class="dgm-kv-r"><i class="old"></i><i class="old"></i><i class="old"></i><i class="old"></i><i class="new"></i><span>step 3</span></div>
+        <div class="dgm-kv-r"><i class="old"></i><i class="old"></i><i class="old"></i><i class="old"></i><i class="old"></i><i class="new"></i><span>step 4</span></div>
+      </div>
+      <p>Blue boxes are read from memory. The green box is the one new computation. Work grows with n.</p>
+    </div>
+  </div>
+  <div class="dgm-kv-eq"><b>Size:</b> 2 × layers × key-value heads × head size × tokens × bytes · tiny run: 107,520 → 15,360 key and value multiply-adds (7.0× fewer)</div>
+  <p class="dgm-kv-foot">7B-class shape at 8,192 tokens, 16-bit: 4.0 GiB per sequence, or 1.0 GiB with 8 key and value heads.</p>
+</div>

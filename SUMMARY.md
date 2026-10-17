@@ -203,6 +203,39 @@ The third foundation module.
 6. [Vision foundation models: CLIP, DINO and SAM](./cnns/vision-foundation-models.md)
 7. [Shipping vision in production](./cnns/shipping-vision-in-production.md) · [Recap](./cnns/recap.md)
 
+## [Transformers](./transformers/README.md)
+
+Part of the **foundation modules**: after [Machine learning](./machine-learning/README.md), [Tensors](./tensors/README.md) and [Convolutional networks](./cnns/README.md).
+
+1. [The shape of a transformer](./transformers/the-shape-of-a-transformer.md)
+2. [Attention](./transformers/attention.md)
+3. [The block: heads, the feed-forward layer and the residual stream](./transformers/the-block.md)
+4. [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md)
+5. [Generating text and the KV cache](./transformers/generating-text-and-the-kv-cache.md)
+6. [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md) · [Recap](./transformers/recap.md)
+
+## [Fine-tuning and post-training](./fine-tuning/README.md)
+
+Part of the **foundation modules**: it builds on [Machine learning](./machine-learning/README.md), [Tensors](./tensors/README.md) and [Transformers](./transformers/README.md).
+
+1. [From base model to assistant: the post-training pipeline](./fine-tuning/from-base-model-to-assistant.md)
+2. [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md)
+3. [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md)
+4. [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md)
+5. [The dataset: quality, duplicates, contamination and synthetic data](./fine-tuning/the-dataset.md)
+6. [Deciding, costing and checking a fine-tune](./fine-tuning/deciding-costing-and-checking-a-fine-tune.md) · [Recap](./fine-tuning/recap.md)
+
+## [AI-assisted development](./ai-assisted-development/README.md)
+
+Part of the **craft tracks**: it builds on [Agentic AI](./agentic-ai/README.md), [Tool calling](./tool-calling/README.md) and [Evaluation and observability](./evaluation-and-observability/README.md).
+
+1. [When an agent writes the code: where the bottleneck goes](./ai-assisted-development/when-an-agent-writes-the-code.md)
+2. [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md)
+3. [Verification is the product](./ai-assisted-development/verification-is-the-product.md)
+4. [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md)
+5. [Running at scale: sessions, subagents and fan-out](./ai-assisted-development/running-at-scale.md)
+6. [Measuring and governing](./ai-assisted-development/measuring-and-governing.md) · [Recap](./ai-assisted-development/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

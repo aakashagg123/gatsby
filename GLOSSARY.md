@@ -49,6 +49,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
 
+**Active parameters** — The parameters actually used for one token. In a mixture-of-experts model, this is less than the total.
+
+*In plain terms.* A dense model uses all its parameters for every token. A mixture uses only the router, attention and the chosen experts. Active parameters set the compute per token. Total parameters set the memory to hold the model.
+
+*For example.* 13 billion active out of 47 billion total.
+
+*Where it shows up:* Comparing model sizes fairly; Estimating serving cost.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **Adam** — An optimizer that adapts the step size of each parameter from running averages of the gradient and its square.
 
 *In plain terms.* It keeps two extra numbers per parameter, which makes it a large part of training memory. It usually needs less tuning of the learning rate than plain gradient descent.
@@ -269,6 +279,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
 
+**Base model** — A model trained only to predict the next token. It continues text and does not follow instructions.
+
+*In plain terms.* Pretraining on huge amounts of text gives a base model. It knows a lot of language and facts. It has no habit of answering questions or following a format. Post-training turns it into an assistant.
+
+*For example.* Asked 'What is the capital of France?', a base model may continue with more quiz questions.
+
+*Where it shows up:* Understanding what fine-tuning starts from; Reading vendor model lists.
+
+*See:* [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md).
+
 **Base rate** — How common an event is before you look at any signal.
 
 *In plain terms.* When an event is rare, even an accurate model raises mostly false alarms. Ask for the base rate before you accept any accuracy figure.
@@ -428,6 +448,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting supplier and seller payout terms; Comparing a retail model with a marketplace model.
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
+**Catastrophic forgetting** — Losing earlier skills when a model is trained on new data.
+
+*In plain terms.* A model's weights are shared by every behaviour. A step that makes a new behaviour likely also moves the numbers behind old ones. Higher learning rates and narrow data forget more. Mixing in general examples limits it.
+
+*For example.* A model tuned on one task loses accuracy on ordinary text, as the toy in this module does: loss on general text rose from 1.10 to 2.28.
+
+*Where it shows up:* Deciding what to test after tuning; Choosing a learning rate.
+
+*See:* [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md).
+
+**Causal mask** — A rule that hides later tokens, so each token can attend only to itself and earlier tokens.
+
+*In plain terms.* A language model learns by predicting the next token. If a token could read the one after it, it would copy the answer. The causal mask sets the score for every later token to minus infinity, so after the softmax their weights are exactly zero.
+
+*For example.* Token 3 can attend to tokens 1, 2 and 3. Token 4 has weight 0 for it.
+
+*Where it shows up:* Understanding why decoder models write left to right; Debugging a training leak.
+
+*See:* [Attention](./transformers/attention.md).
 
 **Centrality** — Ranking nodes by how important they are in the graph's structure (the PageRank family).
 
@@ -659,6 +699,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Context engineering](./content/00-foundations/context-engineering.md).
 
+**Context file (CLAUDE.md)** — A short file of standing instructions that a coding agent loads at the start of every session.
+
+*In plain terms.* It tells the agent what it cannot work out from the code: build and test commands, naming rules and traps. Each line costs tokens in every session, and a long file lowers adherence, so keep it short and pruned.
+
+*For example.* A 150-line file with the test command, the lint command and three project rules.
+
+*Where it shows up:* Setting team-wide agent behaviour; Cutting context cost.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
+
 **Context rot** — The drop in model quality that can come as more text is packed into a request — the reason to send the smallest high-signal context, not the most.
 
 *In plain terms.* A model attends across everything in its context window, and Anthropic's engineering guidance describes context as a finite resource with diminishing returns. As a request grows, the useful fact can get buried among irrelevant text, and cost and latency rise too. The product rule is to find the smallest set of information that makes the decision right.
@@ -849,6 +899,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
+**Data contamination (test leak)** — Test examples appearing in the training data, which makes the evaluation score meaningless.
+
+*In plain terms.* If a model has seen the test questions, a high score shows memory, not ability. Leaks can be exact or paraphrased. Split the test set first, keep it out of every later step, and compare normalized text.
+
+*For example.* An evaluation question that also appears in the training set.
+
+*Where it shows up:* Gating a release on an honest score; Auditing a dataset.
+
+*See:* [The dataset](./fine-tuning/the-dataset.md).
+
 **Data drift** — When the mix of incoming cases moves away from the mix the model trained on.
 
 *In plain terms.* Growth brings new customers or a new channel changes who arrives. The model's rules may still be right, but it has not seen these cases. You can detect data drift from the inputs alone, without waiting for outcomes.
@@ -929,6 +989,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Prefill vs. decode](./content/01-inference-internals/prefill-vs-decode.md).
 
+**Decoder-only model** — A transformer that writes text one token at a time, with a causal mask. Most chat models are decoder-only.
+
+*In plain terms.* Transformers come in three layouts. Encoder-only models read text in both directions and produce vectors, as in many embedding models. Encoder-decoder models read an input and write an output. Decoder-only models write left to right, and most general chat models use this layout.
+
+*For example.* A chat model is decoder-only. A search embedding model is often encoder-only.
+
+*Where it shows up:* Choosing a model type for a task; Understanding where embeddings come from.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **Deferred revenue** — Cash received for something not yet delivered. It sits on the balance sheet as a liability until it is earned.
 
 *In plain terms.* Revenue is recorded when the company delivers, not when it is paid. Until then the company owes the customer the service, or the money back. Insurers call this unearned premium.
@@ -958,6 +1028,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Cutting cost on high-volume narrow tasks; Deciding between distillation, quantization, and RAG; Planning a cheaper 'fast path' model.
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
+
+**DPO (direct preference optimization)** — A way to tune a model from pairs of better and worse answers directly, with no separate reward model and no reinforcement learning loop.
+
+*In plain terms.* For each pair, DPO raises the log-probability of the chosen answer and lowers the rejected one, relative to a frozen reference model. It is simpler to run than RLHF.
+
+*For example.* In the toy, 40 DPO steps took the rejected word from 0.091 to 0.003.
+
+*Where it shows up:* Choosing a preference-tuning method; Reading model reports.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
 
 **Drift** — Gradual degradation of system quality over time as inputs, data, models, or dependencies change underneath you.
 
@@ -1149,6 +1229,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
 
+**Fan-out (agent batches)** — Running the same agent job over many items in parallel.
+
+*In plain terms.* It multiplies cost and also review work. Retries rescue tasks at a small price, and the review team becomes the limit on throughput.
+
+*For example.* 200 tasks, up to 3 attempts each, with a hand-off for failures.
+
+*Where it shows up:* Large migrations; Budgeting a batch.
+
+*See:* [Running at scale](./ai-assisted-development/running-at-scale.md).
+
 **Feature** — One fact about a case that a model uses as input, such as months as a customer.
 
 *In plain terms.* A row of data describes one case with a list of facts. Each fact is a feature. Choosing and preparing features is a large part of ML work. A feature must be known at the moment of prediction.
@@ -1168,6 +1258,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Estimating activation memory; Reading what a layer outputs.
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Feed-forward layer** — The part of a transformer block that reworks each token's vector on its own, and holds about two thirds of a block's weights.
+
+*In plain terms.* After attention mixes information between tokens, the feed-forward layer, or MLP, processes each token alone. It widens the vector to about four times its size, applies a nonlinear function, and narrows it again. It holds most of a block's parameters, and research suggests much of a model's stored knowledge.
+
+*For example.* In GPT-2 small, the feed-forward layers hold 66.7% of the block parameters.
+
+*Where it shows up:* Deciding where to compress a model; Counting parameters.
+
+*See:* [The block](./transformers/the-block.md).
 
 **Feedback loop** — When a model's actions change the data it will later learn from.
 
@@ -1238,6 +1338,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a market to enter; Explaining where margin leaks.
 
 *See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
+**FlashAttention** — A way to compute exact attention in small tiles, so the full score matrix is never stored.
+
+*In plain terms.* A plain implementation writes the whole table of scores to memory. FlashAttention splits the work into tiles that fit in fast memory, and combines them. The answer is the same. Memory use grows with length instead of its square, and the run is faster.
+
+*For example.* At 131,072 tokens, 32 heads and 16-bit numbers, a stored score matrix would take 1 TiB per layer.
+
+*Where it shows up:* Evaluating long-context serving; Asking vendors how they handle length.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
 
 **Float** — Money a company holds for a while that belongs to someone else, such as merchant funds before payout or insurance premiums before claims.
 
@@ -1439,6 +1549,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Retrieval evals](./content/03-rag/retrieval-evals.md).
 
+**Grouped-query attention (GQA)** — An attention design where several query heads share one key and value head, which shrinks the KV cache.
+
+*In plain terms.* In standard attention each head has its own queries, keys and values. In grouped-query attention, query heads are split into groups, and each group shares one key and value head. The cache for keys and values shrinks by the ratio of heads to groups, with little loss of quality.
+
+*For example.* 32 query heads sharing 8 key and value heads cut the cache to a quarter.
+
+*Where it shows up:* Comparing models for serving cost; Planning how many requests fit on one accelerator.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
+
 **Growth accounting** — Splitting the change in active customers into new, resurrected and churned flows.
 
 *In plain terms.* End = start + new + resurrected − churned. The growth quick ratio, (new + resurrected) ÷ churned, shows whether you grow or only replace leavers.
@@ -1508,6 +1628,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reading a vector-store design or bill; Tuning the recall-versus-speed dial; Explaining why a search occasionally misses a true neighbour.
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
+
+**Hook (agent)** — A command that runs at a set point in an agent's life, such as before a tool call or when it tries to stop.
+
+*In plain terms.* Hooks are deterministic: they run every time, unlike a line in a context file. They can check, log or block an action.
+
+*For example.* A hook that refuses any edit under tests/.
+
+*Where it shows up:* Enforcing rules; Running checks automatically.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
 
 **Hook model** — Trigger → Action → Variable reward → Investment — the loop by which products build habits.
 
@@ -1859,6 +1989,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
 
+**Layer normalization** — A step that rescales each token's vector to a steady mean and spread, which keeps training stable.
+
+*In plain terms.* Numbers in a deep network can grow or shrink from layer to layer. Layer normalization rescales each vector to mean 0 and spread 1. Most current models apply it before each part of a block. The original transformer applied it after.
+
+*For example.* A row of values near 100 and a row near 3 both come out with mean 0 and mean square 1.
+
+*Where it shows up:* Reading model descriptions; Debugging unstable training.
+
+*See:* [The block](./transformers/the-block.md).
+
 **Learning rate** — How big a step training takes on each update.
 
 *In plain terms.* Too small and training crawls. Too large and each step overshoots, so the loss jumps around or grows. It is the most-tuned setting in training. A short search over a few values is cheap next to a bad long run.
@@ -1949,6 +2089,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
 
+**Logits** — The raw scores a model gives to each possible next token, before they are turned into probabilities.
+
+*In plain terms.* At the top of a transformer, the last vector is multiplied by an output matrix. That gives one number for each word in the vocabulary. These raw scores are the logits. A softmax turns them into probabilities, and sampling picks a token.
+
+*For example.* A vocabulary of 50,257 tokens gives 50,257 logits for each step.
+
+*Where it shows up:* Understanding sampling settings; Reading API options that return token scores.
+
+*See:* [The shape of a transformer](./transformers/the-shape-of-a-transformer.md).
+
 **Long-context** — Handing the model a very large amount of text in the prompt each call, instead of retrieving just the relevant bit.
 
 *In plain terms.* As context windows grew huge, one option is to skip retrieval and just paste everything in every time. Simple and always current, but you pay to re-read the whole pile on every request, latency grows, and quality can drop as the answer hides in a haystack ('lost in the middle'). It's a partner to RAG when the knowledge is small and static, not a wholesale replacement.
@@ -1968,6 +2118,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Preventing runaway cost/time; Defining agent exit conditions; Making agents safe to run unattended.
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
+
+**LoRA (low-rank adaptation)** — A way to fine-tune by freezing the model and training two thin matrices whose product is the change.
+
+*In plain terms.* Instead of updating every weight in a matrix, LoRA learns a small low-rank update, with far fewer parameters. The model starts unchanged, and you can drop the adapter to get the base back exactly. Training memory falls sharply.
+
+*For example.* Rank 16 on two matrices per layer of a 7B-class model trains about 8.4 million parameters, 0.12% of the model.
+
+*Where it shows up:* Making tuning affordable; Serving one adapter per customer.
+
+*See:* [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md).
 
 **Loss function** — A score of how wrong the model is, which training tries to reduce.
 
@@ -2149,6 +2309,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Portfolio strategy and capital allocation](./business-acumen/portfolio-strategy-and-allocation.md).
 
+**Mix shift (Simpson's paradox)** — A change in the average caused by a change in the mix of work, not in the speed on each kind.
+
+*In plain terms.* When agents take the easy work, average cycle time falls even if hard work barely changed. Split results by difficulty before you report a gain.
+
+*For example.* Cycle time fell 3.2 times overall, but hard work improved by 20% and its rework doubled.
+
+*Where it shows up:* Reading productivity dashboards.
+
+*See:* [Measuring and governing](./ai-assisted-development/measuring-and-governing.md).
+
 **Mixed precision training** — Training with float16 or bfloat16 for most arithmetic and float32 where accuracy matters.
 
 *In plain terms.* The forward and backward passes use the smaller format. A float32 master copy of the weights takes the update. Loss scaling protects small gradients. Model state is still about 16 bytes per parameter with Adam. The saving is in speed and activation memory.
@@ -2158,6 +2328,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Speeding up training; Budgeting training memory.
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
+
+**Mixture of experts (MoE)** — A design with many feed-forward layers, called experts, where a router sends each token to only a few of them.
+
+*In plain terms.* A mixture keeps several expert layers and uses a small router to pick the best few for each token. The model has far more total parameters than it uses for any one token. Total parameters set the memory needed. Active parameters set the compute per token.
+
+*For example.* 8 experts with 2 used per token: about 47 billion total and 13 billion active parameters.
+
+*Where it shows up:* Reading a model card; Estimating the memory a model needs.
+
+*See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
 
 **MLOps** — The practice of running ML systems reliably: data pipelines, versioning, release, monitoring and retraining.
 
@@ -2198,6 +2378,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding when more agents actually help; Designing orchestrator/subagent structure; Weighing coordination overhead.
 
 *See:* [Multi-agent systems & protocols](./agentic-ai/multi-agent-and-protocols.md).
+
+**Multi-head attention** — Several attention comparisons run side by side on slices of the vector, then combined.
+
+*In plain terms.* One attention step can attend to one kind of thing at a time. Multi-head attention splits each vector into slices and runs a separate attention on each. The outputs are joined and multiplied by an output matrix. Each head writes its own note into the shared stream, and the notes add up.
+
+*For example.* A model with 12 heads and a width of 768 gives each head 64 numbers.
+
+*Where it shows up:* Reading a model's spec sheet; Understanding what heads and layers mean.
+
+*See:* [The block](./transformers/the-block.md).
 
 **Multi-hop query** — A question whose answer requires chaining several relationships across entities — the thing graphs do that tables struggle with.
 
@@ -2469,6 +2659,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
+**Permission mode** — The overall posture of a coding agent: ask for everything, auto-approve edits, plan only, let a classifier decide, or skip checks.
+
+*In plain terms.* The mode sets the default for what the agent may do alone. Bypass modes belong only in isolated environments.
+
+*For example.* Default asks first; acceptEdits approves file edits; plan cannot edit.
+
+*Where it shows up:* Setting a default posture per environment.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
+
+**Permission rule** — A deny, ask or allow rule for a tool or command, checked in that order with the first match winning.
+
+*In plain terms.* Rules guard against honest mistakes. A shell rule matches the command as written, so a different spelling of the same command can miss it. It is not a security boundary.
+
+*For example.* Deny Bash(curl *); allow Read(src/*).
+
+*Where it shows up:* Limiting agent actions; Protecting test files and secrets.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
+
 **pgvector** — An open-source Postgres extension that adds a vector column type and nearest-neighbour search, with HNSW and IVFFlat indexes.
 
 *In plain terms.* pgvector lets the database you may already run store embeddings next to your other data. You add a vector(N) column, create an index, and order by a distance operator such as <=> for cosine distance. Filters are ordinary SQL WHERE clauses.
@@ -2488,6 +2698,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a login flow for apps; Security review of a client.
 
 *See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
+**Plan mode** — A mode in which the agent reads and proposes a plan but cannot edit until you approve it.
+
+*In plain terms.* It separates exploring from changing. You see the approach before any file changes, which cuts wasted work on large or unclear tasks.
+
+*For example.* Press Shift+Tab to enter plan mode, review the plan, then approve.
+
+*Where it shows up:* Large or unclear changes; Reviewing an approach early.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
 
 **Policy decision point** — The part of an authorization system that evaluates the rules and returns allow or deny.
 
@@ -2518,6 +2738,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Planning a resolution change for a ViT.
 
 *See:* [CNNs vs. vision transformers](./cnns/cnns-vs-vision-transformers.md).
+
+**Positional encoding** — A signal added to the input so a model can tell which token came first, since attention alone ignores order.
+
+*In plain terms.* Attention treats its input as a set: shuffle the tokens and the outputs shuffle the same way. A positional encoding adds the order. Methods include fixed sine waves, learned vectors, rotary embeddings and distance penalties.
+
+*For example.* Without it, 'dog bites man' and 'man bites dog' look the same to attention.
+
+*Where it shows up:* Understanding context-length limits; Evaluating long-context claims.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
+
+**Post-training** — The training after pretraining that shapes a model's behaviour: supervised tuning, preference tuning and reinforcement learning.
+
+*In plain terms.* Post-training uses far less data and compute than pretraining. It teaches format, tone and which kinds of answer people prefer. It points what the model already knows. It can also damage skills it was not aimed at.
+
+*For example.* InstructGPT used about 13,000 prompts for supervised tuning, against hundreds of billions of pretraining tokens.
+
+*Where it shows up:* Judging what a vendor's assistant has already been trained for; Planning your own tuning.
+
+*See:* [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md).
 
 **Postmortem** — A blameless written analysis after an incident: what happened, why, and what changes prevent a recurrence.
 
@@ -2729,6 +2969,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
 
+**QLoRA** — LoRA applied to a frozen model held in 4-bit numbers, which cuts memory enough to tune very large models on one accelerator.
+
+*In plain terms.* QLoRA keeps the frozen weights in a compact 4-bit format and trains a small adapter in higher precision. It allowed a 65 billion parameter model to be tuned on a single 48 GB accelerator.
+
+*For example.* A workstation-class card tunes a model that once needed a cluster.
+
+*Where it shows up:* Planning hardware for tuning; Weighing quality against cost.
+
+*See:* [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md).
+
 **Quantization** — Storing a model's numbers at lower precision (e.g. 4/8-bit) to shrink memory and speed inference, trading a little accuracy.
 
 *In plain terms.* A model is billions of numbers. Storing each with fewer digits makes the model smaller and faster and cheaper to run, at some risk to quality. The art is cutting precision where it doesn't matter and protecting the parts that do.
@@ -2748,6 +2998,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Raising recall on real user wording; Weighing an extra model call per question.
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
+**Query, key and value** — The three vectors each token makes for attention: what it looks for, what it offers, and what it hands over.
+
+*In plain terms.* In attention, each token's vector is multiplied by three learned matrices. The query says what the token is looking for. The key says what it offers to others. The value is the content it passes on. A token compares its query with every key and takes a weighted blend of the values.
+
+*For example.* In a head that reads the previous token, the query asks for the position before, the key says which position it is, and the value carries the token.
+
+*Where it shows up:* Reading how attention works; Counting the cache: keys and values are what it stores.
+
+*See:* [Attention](./transformers/attention.md).
 
 **Quota attainment** — The share of quota that salespeople actually close, on average.
 
@@ -2959,6 +3219,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [ReBAC and policy engines](./access-control/rebac-and-policy-engines.md).
 
+**Release gate** — A rule set before training: ship only if the target task improved by a set margin and general ability did not drop past a set limit.
+
+*In plain terms.* A tuned model can win on its own task and lose elsewhere. The gate compares it with the base model on both, using numbers fixed in advance, so a good-looking result is not accepted by default.
+
+*For example.* Gain at least 0.02 and a general drop of at most 0.01.
+
+*Where it shows up:* Approving a tuning project; Stopping a release that traded away general ability.
+
+*See:* [Deciding, costing and checking a fine-tune](./fine-tuning/deciding-costing-and-checking-a-fine-tune.md).
+
 **Repair loop** — Feeding a validation error back to the model so it can fix a malformed output.
 
 *In plain terms.* When a model returns broken output (invalid JSON, wrong schema), you don't just fail — you tell it what was wrong and ask again. That retry-with-feedback is a repair loop, and it's how flaky structured output becomes reliable enough to ship.
@@ -2989,6 +3259,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [From edges to objects](./cnns/from-edges-to-objects.md).
 
+**Residual stream** — The running vector for each token that every attention head and feed-forward layer reads from and adds a note to.
+
+*In plain terms.* In a transformer, each part adds its output to its input instead of replacing it. So each token has one vector that is built up layer by layer, like a shared notebook. A part that writes nothing leaves the vector unchanged.
+
+*For example.* A block whose output matrices are zero returns its input exactly.
+
+*Where it shows up:* Understanding why deep models train; Reading interpretability research.
+
+*See:* [The block](./transformers/the-block.md).
+
 **ResNet** — A family of deep convolutional networks built from residual blocks. It won the ILSVRC 2015 ImageNet challenge.
 
 *In plain terms.* ResNets come in depths such as 18, 50, 101 and 152 layers. ResNet-50 is a common baseline backbone: about 25.6 million parameters in torchvision.
@@ -3008,6 +3288,36 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding why training is not cost-prohibitive.
 
 *See:* [Automatic differentiation](./tensors/automatic-differentiation.md).
+
+**Reward hacking** — A model finding ways to score high on a proxy reward without delivering the quality the reward was meant to measure.
+
+*In plain terms.* A reward is only a stand-in for what you want. Optimize hard enough and the model finds its gaps, such as padding, flattery or false confidence. The proxy score keeps rising while real quality falls.
+
+*For example.* Best-of-512 against a noisy proxy picked answers with true quality 0.05, down from 0.87 at best-of-16, while the proxy score rose.
+
+*Where it shows up:* Setting limits on tuning pressure; Tracking an independent quality metric.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
+
+**Reward model** — A model trained on pairs of better and worse answers to give any answer a score for how much people prefer it.
+
+*In plain terms.* A reward model learns what separates chosen from rejected answers. It then stands in for human judges. It also learns their biases, such as a liking for long answers.
+
+*For example.* Fit to judges who prefer length, a reward model put a weight of 1.53 on length, against 0.08 for unbiased judges.
+
+*Where it shows up:* Understanding how preference tuning works; Auditing preference data for bias.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
+
+**Rework rate** — The share of changes that need a fix within a set time, such as 30 days.
+
+*In plain terms.* It shows quality that speed metrics hide. Read it beside lead time and failure rate.
+
+*For example.* 7.5% of merged pull requests needed a fix within 30 days.
+
+*Where it shows up:* Measuring agent quality.
+
+*See:* [Measuring and governing](./ai-assisted-development/measuring-and-governing.md).
 
 **RFC** — Request For Comments — a written technical proposal circulated for feedback before a significant engineering decision is made.
 
@@ -3029,6 +3339,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
 
+**RLHF (reinforcement learning from human feedback)** — Tuning a model with reinforcement learning against a reward model trained on human preferences.
+
+*In plain terms.* People compare answers. A reward model learns their choices. Reinforcement learning then shifts the model toward answers the reward model scores highly, with a limit on drifting from the starting model.
+
+*For example.* InstructGPT used this to make a 1.3 billion parameter model preferred over a 175 billion parameter base model.
+
+*Where it shows up:* Understanding how assistants are shaped; Asking about the judges behind a model.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
+
+**Rotary position embedding (RoPE)** — A way to encode position by turning each query and key by an angle that grows with position, so scores depend on distance.
+
+*In plain terms.* Rotary embeddings rotate pairs of numbers in the query and key. The dot product of a rotated query and key then depends only on how far apart the two tokens are. It adds no learned position table and is common in current open models.
+
+*For example.* A query at position 10 and a key at 4 score the same as at 110 and 104.
+
+*Where it shows up:* Understanding how context limits are extended; Reading model cards.
+
+*See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
+
 **Run-off** — The period after an insurer stops writing new policies, when it must still pay claims on existing ones.
 
 *In plain terms.* Closing an insurance product does not end its obligations. Claims on policies in force can keep arriving for years.
@@ -3048,6 +3378,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Consistency across distributed steps; Designing rollback/undo in workflows; Handling partial failures gracefully.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Sandbox (for agents)** — An isolated environment, such as a container, where an agent runs with limited files, network and credentials.
+
+*In plain terms.* A sandbox is enforced by the operating system, so it does not depend on how the agent words a command. It is what makes unattended or bypass runs acceptable.
+
+*For example.* A container with only the repository mounted and no production keys.
+
+*Where it shows up:* Unattended runs; Limiting prompt-injection damage.
+
+*See:* [Control: permissions, modes and hooks](./ai-assisted-development/control-permissions-modes-and-hooks.md).
 
 **Second-order effects** — The consequences of the consequences — 'and then what?' — where first-order-obvious decisions age badly.
 
@@ -3189,6 +3529,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Governance, audit & compliance](./ai-security-and-guardrails/governance-audit-and-compliance.md).
 
+**Softmax** — A function that turns a list of scores into weights between 0 and 1 that add up to 1.
+
+*In plain terms.* Softmax raises each score to an exponent and divides by the total. Larger scores get much more of the weight. In attention it turns match scores into weights. At the end of a model it turns a score for each vocabulary word into probabilities.
+
+*For example.* Scores 2, 1 and 0 become weights of about 0.67, 0.24 and 0.09.
+
+*Where it shows up:* Reading attention weights; Understanding temperature and sampling.
+
+*See:* [Attention](./transformers/attention.md).
+
 **Span** — A single timed unit of work inside a trace — one retrieval, one model call, one tool execution.
 
 *In plain terms.* If a trace is the whole story of a request, a span is one scene: a single operation with its own start, end, inputs, and outputs. Traces are made of spans, and looking at spans is how you find which step was slow or wrong.
@@ -3218,6 +3568,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reducing latency without quality loss; Comparing acceleration techniques vs. quantization/distillation; Setting latency SLAs.
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
+
+**Stop hook** — A hook that runs when the agent tries to finish and can block the stop until a check passes.
+
+*In plain terms.* It turns "done" from a sentence into an exit code. It exits 2 with a message to send the agent back to work, and it must guard against endless loops.
+
+*For example.* A script that runs the tests and exits 2 if they fail.
+
+*Where it shows up:* Gating agent work on a passing check.
+
+*See:* [Verification is the product](./ai-assisted-development/verification-is-the-product.md).
 
 **Strategy kernel** — The core of a strategy: a diagnosis of the crux, a guiding policy that rules options out, and a few coherent actions.
 
@@ -3309,6 +3669,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
 
+**Supervised fine-tuning (SFT)** — Further training on prompts paired with ideal answers, so the model learns the format and behaviour of those answers.
+
+*In plain terms.* SFT is ordinary training on a small, curated dataset. For each example the model predicts the answer, and its weights move a little to reduce the error. Quantity, learning rate, mixed-in general data and label quality decide how well it goes.
+
+*For example.* A few hundred checked support answers teach a model your house style.
+
+*Where it shows up:* Changing format, tone or a narrow task; Planning data and review work.
+
+*See:* [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md).
+
 **Supervised learning** — Learning from cases that come with the right answer, called a label.
 
 *In plain terms.* Each training case is a question paired with its known answer. The model learns to map questions to answers. Most business machine learning is supervised, and the labels cost money because someone has to record the outcome.
@@ -3378,6 +3748,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Sizing a new market; Challenging a "we only need 1%" pitch.
 
 *See:* [Markets and customers: segments, sizing and positioning](./business-acumen/markets-and-strategy.md).
+
+**Task spec (for an agent)** — A task brief with a goal, a scope, the key constraint and a way to check the result.
+
+*In plain terms.* An agent builds what you describe and guesses the rest. The check is the part most often missing. With it, the agent can tell when it is done.
+
+*For example.* Add a retry to the email sender; touch only billing/email.py; no duplicate sends; pytest must pass.
+
+*Where it shows up:* Briefing a coding agent; Writing tickets that double as tests.
+
+*See:* [Specs and the context file](./ai-assisted-development/specs-and-the-context-file.md).
 
 **Tech debt** — The accumulated cost of past shortcuts — code and design choices that speed you up now and slow you down later, with interest.
 
@@ -3678,6 +4058,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building the retrieval half of RAG; Evaluating retrieval infrastructure; Reasoning about recall and index freshness.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Verification gate** — A command with a pass or fail result that must succeed before an agent's work counts as done.
+
+*In plain terms.* It replaces the agent's own report with evidence. It should be fast, deterministic and meaningful, and the agent should not be able to edit it.
+
+*For example.* pytest -x -q, plus a type check, run before the agent stops.
+
+*Where it shows up:* Trusting agent output; Reducing review load.
+
+*See:* [Verification is the product](./ai-assisted-development/verification-is-the-product.md).
 
 **Vintage curve** — A plot of one group of loans' cumulative net charge-offs by months on book, so groups can be compared at the same age.
 

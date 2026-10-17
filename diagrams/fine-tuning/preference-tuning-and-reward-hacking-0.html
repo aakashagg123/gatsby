@@ -1,0 +1,35 @@
+<style>
+.dgm-rh{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-rh-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-rh h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-rh-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-rh-rows{display:flex;flex-direction:column;gap:8px}
+.dgm-rh-row{display:grid;grid-template-columns:64px minmax(0,1fr) 96px;gap:10px;align-items:center;font-size:11px}
+.dgm-rh-n{font-weight:700;color:var(--color-text-secondary)}
+.dgm-rh-track{height:16px;border-radius:8px;background:var(--color-surface-secondary);border:1px solid var(--color-border);overflow:hidden}
+.dgm-rh-bar{display:block;height:100%;background:var(--color-background-success-surface);border-right:2px solid var(--color-border-success-surface)}
+.dgm-rh-bar.low{background:var(--color-background-danger-surface);border-right-color:var(--color-border-danger-surface)}
+.dgm-rh-px{color:var(--color-text-secondary);text-align:right}
+.dgm-rh-leg{margin-top:10px;font-size:10.5px;color:var(--color-text-secondary);display:flex;flex-wrap:wrap;gap:4px 14px}
+.dgm-rh-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-background-caution-surface);border:1.5px solid var(--color-border-caution-outline);font-size:11.5px;color:var(--color-text)}
+.dgm-rh-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:520px){.dgm-rh{padding:22px 14px 18px}.dgm-rh-row{grid-template-columns:48px minmax(0,1fr) 70px;gap:6px}}
+</style>
+<div class="dgm-rh">
+  <span class="dgm-rh-chip">Reward hacking</span>
+  <h4>Push a proxy harder · real quality peaks, then falls</h4>
+  <p class="dgm-rh-sub">Best-of-n against a noisy reward model. Bars show the true quality of the pick. The number on the right is the proxy score.</p>
+  <div class="dgm-rh-rows">
+    <div class="dgm-rh-row"><span class="dgm-rh-n">n = 1</span><span class="dgm-rh-track"><i class="dgm-rh-bar low" style="width:2%"></i></span><span class="dgm-rh-px">proxy 0.2</span></div>
+    <div class="dgm-rh-row"><span class="dgm-rh-n">n = 4</span><span class="dgm-rh-track"><i class="dgm-rh-bar" style="width:83%"></i></span><span class="dgm-rh-px">proxy 3.9</span></div>
+    <div class="dgm-rh-row"><span class="dgm-rh-n">n = 16</span><span class="dgm-rh-track"><i class="dgm-rh-bar" style="width:100%"></i></span><span class="dgm-rh-px">proxy 9.3</span></div>
+    <div class="dgm-rh-row"><span class="dgm-rh-n">n = 64</span><span class="dgm-rh-track"><i class="dgm-rh-bar low" style="width:47%"></i></span><span class="dgm-rh-px">proxy 51.8</span></div>
+    <div class="dgm-rh-row"><span class="dgm-rh-n">n = 512</span><span class="dgm-rh-track"><i class="dgm-rh-bar low" style="width:6%"></i></span><span class="dgm-rh-px">proxy 438.4</span></div>
+  </div>
+  <div class="dgm-rh-leg"><span>Bar length: true quality, 0.87 at best</span><span>Red: below the peak</span></div>
+  <div class="dgm-rh-note">The proxy rises the whole way. Anyone watching only the training reward sees steady progress. Track an independent measure of real quality, and cap how far the model is pushed.</div>
+  <p class="dgm-rh-foot">Invented simulation, from <code>fine-tuning/code/lesson4_preference.py</code>.</p>
+</div>

@@ -187,6 +187,9 @@ The AI Engineering modules above teach the *stack*. Twenty-eight further tracks 
 | [**Machine learning**](./machine-learning/README.md) **New** | What a learned system is, what it learns from, how it learns, how to trust its score, which model family to pick, and how to keep it working after launch. Runnable code in every lesson. | [Plan](./MACHINE_LEARNING_ROADMAP.md) |
 | [**Tensors**](./tensors/README.md) **New** | What the objects every model works on are, what they cost in memory and compute, why shape errors are silent, and how a library gets the gradient for free. Runnable code in every lesson. | [Plan](./TENSORS_ROADMAP.md) |
 | [**Convolutional networks**](./cnns/README.md) **New** | How a vision model sees, what resolution and depth cost, when to reuse a pre-trained or foundation model, and why vision features break in production. Runnable code in three lessons. | [What computer vision does](./cnns/what-computer-vision-does.md) |
+| [**Transformers**](./transformers/README.md) **New** | The stack behind almost every language model: attention, the block, position and the cost of context, the KV cache, and reading a model card as memory, compute and cost. Runnable code in every lesson. | [The shape of a transformer](./transformers/the-shape-of-a-transformer.md) |
+| [**Fine-tuning and post-training**](./fine-tuning/README.md) **New** | How a base model becomes an assistant, what supervised tuning, LoRA and preference tuning change, why the dataset is the product, and how to test the break-even and gate the release. Runnable code in every lesson. | [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md) |
+| [**AI-assisted development**](./ai-assisted-development/README.md) **New** | What changes when a coding agent writes the code: specifying, verifying, controlling and measuring the work. Runnable code in every lesson, including a real Stop-hook script. | [When an agent writes the code](./ai-assisted-development/when-an-agent-writes-the-code.md) |
 
 ### Generative AI
 
@@ -301,7 +304,7 @@ And five threads that cross track boundaries — the same concern, followed from
 </tr>
 <tr>
 <td valign="top"><strong>New to how models learn?</strong></td>
-<td>Read <a href="./machine-learning/README.md">Machine learning</a>, then <a href="./tensors/README.md">Tensors</a>, then <a href="./cnns/README.md">Convolutional networks</a>. Each has runnable code and a self-test.</td>
+<td>Read <a href="./machine-learning/README.md">Machine learning</a>, then <a href="./tensors/README.md">Tensors</a>, then <a href="./cnns/README.md">Convolutional networks</a>, then <a href="./transformers/README.md">Transformers</a>, then <a href="./fine-tuning/README.md">Fine-tuning</a>. Each has runnable code and a self-test.</td>
 </tr>
 <tr>
 <td valign="top"><strong>New to the AI engineering stack?</strong></td>

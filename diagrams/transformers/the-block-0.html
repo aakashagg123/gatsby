@@ -1,0 +1,42 @@
+<style>
+.dgm-bk{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-bk-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-bk h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-bk-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-bk-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dgm-bk-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-bk-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-bk-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-bk-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-bk-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-bk-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-bk-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-bk-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-bk-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-bk-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-bk-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-bk-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-bk-note b{color:var(--color-text)}
+.dgm-bk-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-bk{padding:22px 14px 18px}.dgm-bk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-bk-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-bk">
+  <span class="dgm-bk-chip">One block</span>
+  <h4>A shared notebook, one page per token</h4>
+  <p class="dgm-bk-sub">Each part reads the page, writes a small note, and nothing is erased.</p>
+  <div class="dgm-bk-grid">
+    <div class="dgm-bk-c dgm-bk-info"><h5><span class="dgm-bk-n">1</span>Page for one token</h5><span class="dgm-bk-t">the residual stream</span><p>The vector the block starts from.</p></div>
+    <div class="dgm-bk-c dgm-bk-plain"><h5><span class="dgm-bk-n">2</span>Normalize</h5><span class="dgm-bk-t">keeps numbers in range</span><p>Rescales each vector.</p></div>
+    <div class="dgm-bk-c dgm-bk-discovery"><h5><span class="dgm-bk-n">3</span>Multi-head attention</h5><span class="dgm-bk-t">reads other pages</span><p>Each head writes its own note.</p></div>
+    <div class="dgm-bk-c dgm-bk-success"><h5><span class="dgm-bk-n">4</span>Add a note</h5><span class="dgm-bk-t">x + attention(x)</span><p>The input is kept.</p></div>
+    <div class="dgm-bk-c dgm-bk-plain"><h5><span class="dgm-bk-n">5</span>Normalize</h5><span class="dgm-bk-t">again</span><p>Before the second part.</p></div>
+    <div class="dgm-bk-c dgm-bk-warning"><h5><span class="dgm-bk-n">6</span>Feed-forward layer</h5><span class="dgm-bk-t">reworks this page alone</span><p>Holds about two thirds of the block weights.</p></div>
+    <div class="dgm-bk-c dgm-bk-success"><h5><span class="dgm-bk-n">7</span>Add a note</h5><span class="dgm-bk-t">x + feed-forward(x)</span><p>The input is kept again.</p></div>
+    <div class="dgm-bk-c dgm-bk-info"><h5><span class="dgm-bk-n">8</span>Page after the block</h5><span class="dgm-bk-t">input to the next block</span><p>Same shape all the way up.</p></div>
+  </div>
+  <p class="dgm-bk-foot">Set both output matrices to zero and the block returns its input exactly.</p>
+</div>

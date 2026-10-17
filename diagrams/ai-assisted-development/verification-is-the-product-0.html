@@ -1,0 +1,35 @@
+<style>
+.dgm-vg{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-vg-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-vg h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-vg-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-vg-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}
+.dgm-vg-st{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-vg-st h5{margin:0;font-size:12px;font-weight:700}
+.dgm-vg-st p{margin:0;font-size:10.5px;line-height:1.35;color:var(--color-text-secondary)}
+.dgm-vg-a{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-vg-b{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-vg-ok{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-vg-no{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-vg-res{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.dgm-vg-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-vg{padding:22px 14px 18px}.dgm-vg-flow,.dgm-vg-res{grid-template-columns:1fr}}
+</style>
+<div class="dgm-vg">
+  <span class="dgm-vg-chip">The Stop-hook gate</span>
+  <h4>The agent's word versus an exit code</h4>
+  <p class="dgm-vg-sub">The check runs when the agent tries to finish. Only a pass lets it stop.</p>
+  <div class="dgm-vg-flow">
+    <div class="dgm-vg-st dgm-vg-a"><h5>Agent says "done"</h5><p>A sentence. It may not have run the tests.</p></div>
+    <div class="dgm-vg-st dgm-vg-b"><h5>Stop hook runs the check</h5><p>One command: tests, types, lint. Fast and deterministic.</p></div>
+    <div class="dgm-vg-st"><h5>Guards</h5><p><b>stop_hook_active</b> set: exit 0, no trap. After 8 blocks in a row Claude Code lets the agent stop.</p></div>
+  </div>
+  <div class="dgm-vg-res">
+    <div class="dgm-vg-st dgm-vg-ok"><h5>Exit 0</h5><p>The check passed. The agent may stop.</p></div>
+    <div class="dgm-vg-st dgm-vg-no"><h5>Exit 2 + message</h5><p>The agent keeps working and sees the failure text.</p></div>
+  </div>
+  <p class="dgm-vg-foot">Review then confirms the check tests the right thing, and that no test was weakened.</p>
+</div>

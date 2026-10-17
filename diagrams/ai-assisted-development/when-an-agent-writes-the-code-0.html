@@ -1,0 +1,34 @@
+<style>
+.dgm-bt{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-bt-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-bt h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-bt-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-bt-row{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) 56px;gap:10px;align-items:center;margin:8px 0}
+.dgm-bt-lbl{font-size:11.5px;font-weight:600}
+.dgm-bt-bar{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--color-surface-secondary)}
+.dgm-bt-bar i{display:block;height:100%}
+.dgm-bt-s{background:var(--color-background-info-surface);border-right:1px solid var(--color-border-info-surface)}
+.dgm-bt-r{background:var(--color-background-discovery-surface);border-right:1px solid var(--color-border-discovery-surface)}
+.dgm-bt-v{background:var(--color-background-caution-surface)}
+.dgm-bt-t{font-size:11px;color:var(--color-text-secondary);text-align:right}
+.dgm-bt-key{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;font-size:11px;color:var(--color-text-secondary)}
+.dgm-bt-key span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.dgm-bt-key .s::before{background:var(--color-background-info-surface);border:1px solid var(--color-border-info-surface)}
+.dgm-bt-key .r::before{background:var(--color-background-discovery-surface);border:1px solid var(--color-border-discovery-surface)}
+.dgm-bt-key .v::before{background:var(--color-background-caution-surface);border:1px solid var(--color-border-caution-outline)}
+.dgm-bt-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:560px){.dgm-bt{padding:22px 14px 18px}.dgm-bt-row{grid-template-columns:minmax(0,1fr) 52px}.dgm-bt-lbl{grid-column:1 / -1}}
+</style>
+<div class="dgm-bt">
+  <span class="dgm-bt-chip">Minutes per accepted task</span>
+  <h4>Same task · where the time goes</h4>
+  <p class="dgm-bt-sub">Bar length is minutes. Invented numbers from the lesson's model.</p>
+  <div class="dgm-bt-row"><div class="dgm-bt-lbl">By hand</div><div class="dgm-bt-bar"><i class="dgm-bt-s" style="width:6.9%"></i><i class="dgm-bt-r" style="width:82.8%"></i><i class="dgm-bt-v" style="width:10.3%"></i></div><div class="dgm-bt-t">290</div></div>
+  <div class="dgm-bt-row"><div class="dgm-bt-lbl">Agent, weak checks</div><div class="dgm-bt-bar"><i class="dgm-bt-s" style="width:13.8%"></i><i class="dgm-bt-r" style="width:18.6%"></i><i class="dgm-bt-v" style="width:18.1%"></i></div><div class="dgm-bt-t">146</div></div>
+  <div class="dgm-bt-row"><div class="dgm-bt-lbl">Agent, strong checks</div><div class="dgm-bt-bar"><i class="dgm-bt-s" style="width:13.8%"></i><i class="dgm-bt-r" style="width:4.8%"></i><i class="dgm-bt-v" style="width:10.3%"></i></div><div class="dgm-bt-t">84</div></div>
+  <div class="dgm-bt-key"><span class="s">specify and re-specify</span><span class="r">run</span><span class="v">review</span></div>
+  <p class="dgm-bt-foot">The run step shrinks. Specify and review stay, and retries repeat both.</p>
+</div>

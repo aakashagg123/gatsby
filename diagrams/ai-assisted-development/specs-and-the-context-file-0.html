@@ -1,0 +1,38 @@
+<style>
+.dgm-sp{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-sp-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-sp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-sp-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-sp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dgm-sp-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-sp-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-sp-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-sp-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-sp-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-sp-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-sp-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-sp-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-sp-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-sp-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-sp-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-sp-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-sp-note b{color:var(--color-text)}
+.dgm-sp-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-sp{padding:22px 14px 18px}.dgm-sp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-sp-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-sp">
+  <span class="dgm-sp-chip">Two documents</span>
+  <h4>A briefing for a capable stranger</h4>
+  <p class="dgm-sp-sub">The agent remembers nothing between sessions, so it needs both every time.</p>
+  <div class="dgm-sp-grid">
+    <div class="dgm-sp-c dgm-sp-info"><h5><span class="dgm-sp-n">1</span>Context file</h5><span class="dgm-sp-t">always true · short</span><p>Build and test commands, traps. Under about 200 lines.</p></div>
+    <div class="dgm-sp-c dgm-sp-discovery"><h5><span class="dgm-sp-n">2</span>Path rules and skills</h5><span class="dgm-sp-t">loaded when relevant</span><p>Part-of-codebase rules and multi-step procedures.</p></div>
+    <div class="dgm-sp-c dgm-sp-caution"><h5><span class="dgm-sp-n">3</span>Spec for this task</h5><span class="dgm-sp-t">goal · scope · constraint · check</span><p>The check is the part most often missing.</p></div>
+    <div class="dgm-sp-c dgm-sp-success"><h5><span class="dgm-sp-n">4</span>Session starts, agent works</h5><p>With the standing brief and the job card.</p></div>
+  </div>
+  <p class="dgm-sp-foot">Imports organize a file but do not cut its context cost.</p>
+</div>
