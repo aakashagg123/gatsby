@@ -1,0 +1,38 @@
+<style>
+.dgm-cp{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-cp-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-cp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-cp-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-cp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dgm-cp-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-cp-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-cp-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-cp-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-cp-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-cp-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-cp-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-cp-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-cp-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-cp-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-cp-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-cp-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-cp-note b{color:var(--color-text)}
+.dgm-cp-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-cp{padding:22px 14px 18px}.dgm-cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-cp-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cp">
+  <span class="dgm-cp-chip">Four nested controls</span>
+  <h4>Each layer catches what the one above lets through</h4>
+  <p class="dgm-cp-sub">Only the last does not depend on how the agent words a command.</p>
+  <div class="dgm-cp-grid">
+    <div class="dgm-cp-c dgm-cp-info"><h5><span class="dgm-cp-n">1</span>Mode</h5><span class="dgm-cp-t">the default posture</span><p>Manual · acceptEdits · plan · auto · dontAsk · bypass.</p></div>
+    <div class="dgm-cp-c dgm-cp-discovery"><h5><span class="dgm-cp-n">2</span>Rules</h5><span class="dgm-cp-t">deny, then ask, then allow</span><p>First match wins. A shell rule matches the text as written.</p></div>
+    <div class="dgm-cp-c dgm-cp-warning"><h5><span class="dgm-cp-n">3</span>Hooks</h5><span class="dgm-cp-t">your code decides</span><p>Sees the real arguments and can block.</p></div>
+    <div class="dgm-cp-c dgm-cp-success"><h5><span class="dgm-cp-n">4</span>Sandbox</h5><span class="dgm-cp-t">the operating system enforces</span><p>Container, limited network, no secrets.</p></div>
+  </div>
+  <p class="dgm-cp-foot">Rules are guardrails for honest mistakes. They are not a security boundary.</p>
+</div>

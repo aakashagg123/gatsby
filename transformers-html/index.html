@@ -64,13 +64,47 @@
 </tbody>
 </table>
 <h2 id="the-knowledge-graph">The knowledge graph</h2>
-<pre class="mermaid">flowchart TB
-  S[&quot;1 · The shape&lt;br/&gt;layers · width · parameters&quot;] --&gt; A[&quot;2 · Attention&lt;br/&gt;query · key · value&quot;]
-  A --&gt; B[&quot;3 · The block&lt;br/&gt;heads · feed-forward · residuals&quot;]
-  B --&gt; P[&quot;4 · Position and context&lt;br/&gt;order · the n² cost&quot;]
-  P --&gt; G[&quot;5 · Generation&lt;br/&gt;prefill · decode · KV cache&quot;]
-  G --&gt; V[&quot;6 · Variants and the model card&lt;br/&gt;grouped-query · experts · tiles&quot;]
-  V -. &quot;spec sheet to cost&quot; .-&gt; S</pre>
+<style>
+.dgm-tr{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-tr-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-tr h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-tr-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-tr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-tr-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-tr-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-tr-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-tr-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-tr-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-tr-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-tr-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-tr-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-tr-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-tr-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-tr-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-tr-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-tr-note b{color:var(--color-text)}
+.dgm-tr-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-tr{padding:22px 14px 18px}.dgm-tr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-tr-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tr">
+  <span class="dgm-tr-chip">The module map</span>
+  <h4>Six lessons, one loop</h4>
+  <p class="dgm-tr-sub">Count the parameters, the multiply-adds and the cache, then turn a spec sheet into a cost.</p>
+  <div class="dgm-tr-grid">
+    <div class="dgm-tr-c dgm-tr-info"><h5><span class="dgm-tr-n">1</span>The shape</h5><span class="dgm-tr-t">layers · width · parameters</span><p>Five numbers on the spec sheet give the weights.</p></div>
+    <div class="dgm-tr-c dgm-tr-discovery"><h5><span class="dgm-tr-n">2</span>Attention</h5><span class="dgm-tr-t">query · key · value</span><p>How a token reads from other tokens.</p></div>
+    <div class="dgm-tr-c dgm-tr-success"><h5><span class="dgm-tr-n">3</span>The block</h5><span class="dgm-tr-t">heads · feed-forward · residuals</span><p>What repeats, and where the weights live.</p></div>
+    <div class="dgm-tr-c dgm-tr-caution"><h5><span class="dgm-tr-n">4</span>Position and context</h5><span class="dgm-tr-t">order · the n² cost</span><p>Why long inputs cost more than they look.</p></div>
+    <div class="dgm-tr-c dgm-tr-warning"><h5><span class="dgm-tr-n">5</span>Generation</h5><span class="dgm-tr-t">prefill · decode · KV cache</span><p>Why memory, not weights, sets concurrency.</p></div>
+    <div class="dgm-tr-c dgm-tr-info"><h5><span class="dgm-tr-n">6</span>Variants and the model card</h5><span class="dgm-tr-t">grouped-query · experts · tiles</span><p>Reading total and active size.</p></div>
+  </div>
+  <p class="dgm-tr-foot">The loop closes: a spec sheet becomes a serving cost, and a serving cost sends you back to the sheet.</p>
+</div>
+
 <p>Read it as a chain with one loop. You see the <strong>shape</strong>: five numbers on a spec sheet. <strong>Attention</strong> is the one step where tokens exchange information. The <strong>block</strong> pairs it with a feed-forward layer and keeps a running notebook, the residual stream. <strong>Position</strong> fixes order, and the cost of attention grows with the square of the length. <strong>Generation</strong> writes one token at a time, and a cache of keys and values keeps that affordable and sets how many requests fit on a machine. The <strong>variants</strong> change these costs. Reading a model card then closes the loop, from spec sheet back to the shape.</p>
 <h2 id="the-lessons">The lessons</h2>
 <ol>
@@ -90,39 +124,7 @@
   <h2 class="sec">The lessons</h2>
   <div class="cards"><a class="card" href="the-shape-of-a-transformer.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">01</span><h3>The shape of a transformer</h3><span class="card-go">Read lesson →</span></a><a class="card" href="attention.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">02</span><h3>Attention</h3><span class="card-go">Read lesson →</span></a><a class="card" href="the-block.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">03</span><h3>The block: heads, the feed-forward layer and the residual stream</h3><span class="card-go">Read lesson →</span></a><a class="card" href="position-and-the-cost-of-context.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">04</span><h3>Position, and the cost of context</h3><span class="card-go">Read lesson →</span></a><a class="card" href="generating-text-and-the-kv-cache.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">05</span><h3>Generating text and the KV cache</h3><span class="card-go">Read lesson →</span></a><a class="card" href="variants-and-reading-a-model-card.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">06</span><h3>Variants, and reading a model card</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-  </main><script type="module">
-// Load mermaid and render each diagram only when it nears the viewport, one at a time.
-// The bundle is large; fetching and running it at page load competes with the first
-// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
-const els=[...document.querySelectorAll('pre.mermaid')];
-let lib=null;
-function boot(){
-  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
-    const mermaid=m.default;
-    mermaid.initialize(DS.mermaidConfig());
-    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
-    return mermaid;
-  }));
-}
-let chain=Promise.resolve();
-function renderOne(pre){
-  chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
-    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-    const s=pre.querySelector('svg'); if(!s) return;
-    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-    const cw=pre.clientWidth||0;
-    if(cw&&w>cw*1.6){s.style.maxWidth='none';
-      const h=document.createElement('span');h.className='mm-hint';
-      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
-  }catch(e){} });
-}
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{
-    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
-  els.forEach(p=>io.observe(p));
-}else els.forEach(renderOne);
-</script>
+  </main>
 <div id="rs-root">
   <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
     <div class="rs-h">Theme</div>

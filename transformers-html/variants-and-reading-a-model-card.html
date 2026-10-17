@@ -26,14 +26,45 @@
 <p><strong>Risk if ignored</strong> — A model chosen for its low active parameter count that needs a cluster of accelerators to hold its weights. Or one chosen for quality that cannot serve your concurrency.</p>
 </blockquote>
 <h2 id="the-mental-model-four-dials">The mental model: four dials</h2>
-<pre class="mermaid">flowchart TB
-  M[&quot;Model card&quot;] --&gt; A[&quot;What it reads&lt;br/&gt;encoder · decoder · both&quot;]
-  M --&gt; B[&quot;Cache per token&lt;br/&gt;kv heads · layers · d_head&quot;]
-  M --&gt; C[&quot;Compute per token&lt;br/&gt;active parameters&quot;]
-  M --&gt; D[&quot;Memory for weights&lt;br/&gt;total parameters&quot;]
-  B --&gt; S[&quot;Serving cost&quot;]
-  C --&gt; S
-  D --&gt; S</pre>
+<style>
+.dgm-vc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-vc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-vc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-vc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-vc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.dgm-vc-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-vc-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-vc-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-vc-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-vc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-vc-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-vc-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-vc-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-vc-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-vc-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-vc-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-vc-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-vc-note b{color:var(--color-text)}
+.dgm-vc-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-vc{padding:22px 14px 18px}.dgm-vc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-vc-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-vc">
+  <span class="dgm-vc-chip">Model card</span>
+  <h4>Four dials that set the serving cost</h4>
+  <p class="dgm-vc-sub">Read the card, compute four quantities, then price serving.</p>
+  <div class="dgm-vc-grid">
+    <div class="dgm-vc-c dgm-vc-info"><h5><span class="dgm-vc-n">1</span>What it reads</h5><span class="dgm-vc-t">encoder · decoder · both</span><p>Chat models are mostly decoder-only.</p></div>
+    <div class="dgm-vc-c dgm-vc-discovery"><h5><span class="dgm-vc-n">2</span>Cache per token</h5><span class="dgm-vc-t">kv heads · layers · head size</span><p>Grouped-query attention cuts it.</p></div>
+    <div class="dgm-vc-c dgm-vc-warning"><h5><span class="dgm-vc-n">3</span>Compute per token</h5><span class="dgm-vc-t">active parameters</span><p>A mixture uses a few experts.</p></div>
+    <div class="dgm-vc-c dgm-vc-caution"><h5><span class="dgm-vc-n">4</span>Memory for weights</h5><span class="dgm-vc-t">total parameters</span><p>A mixture holds all experts.</p></div>
+  </div>
+  <div class="dgm-vc-note"><b>Serving cost</b> = weights + cache at your concurrency, and compute at your volume. The three illustrative cards: dense 6.74B, grouped-query 5.93B, mixture 46.70B total and 12.75B active.</div>
+</div>
+
 <h2 id="mechanics">Mechanics</h2>
 <h3 id="encoder-decoder-or-both">Encoder, decoder or both</h3>
 <p>An <strong>encoder-only</strong> model reads all tokens in both directions. It produces a vector for each token or for the whole text. BERT is the best-known example. Encoder models suit search embeddings, classification and ranking. Many of the embedding models behind <a href="../rag-vector-databases/embeddings-and-semantic-search.html">RAG</a> work this way.</p>
@@ -215,38 +246,6 @@
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-// Load mermaid and render each diagram only when it nears the viewport, one at a time.
-// The bundle is large; fetching and running it at page load competes with the first
-// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
-const els=[...document.querySelectorAll('pre.mermaid')];
-let lib=null;
-function boot(){
-  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
-    const mermaid=m.default;
-    mermaid.initialize(DS.mermaidConfig());
-    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
-    return mermaid;
-  }));
-}
-let chain=Promise.resolve();
-function renderOne(pre){
-  chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
-    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-    const s=pre.querySelector('svg'); if(!s) return;
-    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-    const cw=pre.clientWidth||0;
-    if(cw&&w>cw*1.6){s.style.maxWidth='none';
-      const h=document.createElement('span');h.className='mm-hint';
-      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
-  }catch(e){} });
-}
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{
-    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
-  els.forEach(p=>io.observe(p));
-}else els.forEach(renderOne);
 </script>
 <div id="rs-root">
   <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">

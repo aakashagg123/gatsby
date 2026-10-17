@@ -29,8 +29,45 @@
 <h2 id="the-mental-model-a-seating-plan-and-a-handshake-count">The mental model: a seating plan and a handshake count</h2>
 <p>Without positions, tokens are guests in a room with no seats. Each guest can talk to all the others, but nobody knows who sat where. A position signal hands out seat numbers.</p>
 <p>The cost is the handshakes. If <code>n</code> guests each greet every other guest, there are about <code>n²</code> greetings. Double the guests and the greetings quadruple.</p>
-<pre class="mermaid">flowchart LR
-  A[&quot;1,024 tokens&lt;br/&gt;1 M pairs&quot;] --&gt; B[&quot;8,192 tokens&lt;br/&gt;67 M pairs&lt;br/&gt;64 times more&quot;] --&gt; C[&quot;131,072 tokens&lt;br/&gt;17 B pairs&lt;br/&gt;16,384 times more&quot;]</pre>
+<style>
+.dgm-pc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-pc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-pc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-pc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-pc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-pc-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-pc-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-pc-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-pc-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-pc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-pc-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-pc-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-pc-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-pc-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-pc-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-pc-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-pc-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-pc-note b{color:var(--color-text)}
+.dgm-pc-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-pc{padding:22px 14px 18px}.dgm-pc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-pc-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pc">
+  <span class="dgm-pc-chip">Pairs of tokens</span>
+  <h4>Handshakes grow with the square</h4>
+  <p class="dgm-pc-sub">Every token scores every other token, so doubling the length quadruples the work.</p>
+  <div class="dgm-pc-grid">
+    <div class="dgm-pc-c dgm-pc-info"><h5>1,024 tokens</h5><span class="dgm-pc-t">1 million pairs</span><p>The baseline.</p></div>
+    <div class="dgm-pc-c dgm-pc-caution"><h5>8,192 tokens</h5><span class="dgm-pc-t">67 million pairs</span><p>64 times more than the baseline.</p></div>
+    <div class="dgm-pc-c dgm-pc-danger"><h5>131,072 tokens</h5><span class="dgm-pc-t">17 billion pairs</span><p>16,384 times more than the baseline.</p></div>
+  </div>
+  <div class="dgm-pc-note"><b>Crossover:</b> attention costs 2n²d, and projections plus feed-forward cost 12nd². They are equal at n = 6 × d_model. For d_model = 4,096 that is 24,576 tokens.</div>
+  <p class="dgm-pc-foot">Tiled attention saves memory. The compute still grows with the square.</p>
+</div>
+
 <h2 id="mechanics">Mechanics</h2>
 <h3 id="why-attention-is-order-blind">Why attention is order-blind</h3>
 <p>The score between two tokens depends on their vectors only. It does not depend on where they sit. So a permutation of the inputs permutes the outputs. Nothing inside attention can tell the difference. Position must be added from outside.</p>
@@ -187,38 +224,6 @@
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-// Load mermaid and render each diagram only when it nears the viewport, one at a time.
-// The bundle is large; fetching and running it at page load competes with the first
-// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
-const els=[...document.querySelectorAll('pre.mermaid')];
-let lib=null;
-function boot(){
-  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
-    const mermaid=m.default;
-    mermaid.initialize(DS.mermaidConfig());
-    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
-    return mermaid;
-  }));
-}
-let chain=Promise.resolve();
-function renderOne(pre){
-  chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
-    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-    const s=pre.querySelector('svg'); if(!s) return;
-    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-    const cw=pre.clientWidth||0;
-    if(cw&&w>cw*1.6){s.style.maxWidth='none';
-      const h=document.createElement('span');h.className='mm-hint';
-      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
-  }catch(e){} });
-}
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{
-    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
-  els.forEach(p=>io.observe(p));
-}else els.forEach(renderOne);
 </script>
 <div id="rs-root">
   <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">

@@ -27,12 +27,47 @@
 </blockquote>
 <h2 id="the-mental-model-the-model-is-a-mirror">The mental model: the model is a mirror</h2>
 <p>The model matches its data. If 5% of examples are duplicates, it favours them. If two answers conflict, it splits the difference. If the test leaked into training, it recites. So you do not ask whether the training worked. You ask what the data was.</p>
-<pre class="mermaid">flowchart LR
-  R[&quot;raw examples&quot;] --&gt; A[&quot;audit&lt;br/&gt;duplicates · conflicts · empties · outliers&quot;]
-  A --&gt; C[&quot;clean set&quot;]
-  C --&gt; S[&quot;split&lt;br/&gt;train · validation · test&quot;]
-  S --&gt; L[&quot;leak check&lt;br/&gt;no test input in train&quot;]
-  L --&gt; T[&quot;train&quot;]</pre>
+<style>
+.dgm-ds{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-ds-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-ds h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ds-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ds-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-ds-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-ds-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-ds-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-ds-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-ds-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-ds-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-ds-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-ds-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-ds-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-ds-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-ds-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-ds-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-ds-note b{color:var(--color-text)}
+.dgm-ds-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-ds{padding:22px 14px 18px}.dgm-ds-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-ds-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ds">
+  <span class="dgm-ds-chip">The audit gate</span>
+  <h4>Clean before you train</h4>
+  <p class="dgm-ds-sub">The audit costs almost nothing and can save a failed run.</p>
+  <div class="dgm-ds-grid">
+    <div class="dgm-ds-c dgm-ds-info"><h5><span class="dgm-ds-n">1</span>Raw examples</h5><p>What you collected.</p></div>
+    <div class="dgm-ds-c dgm-ds-caution"><h5><span class="dgm-ds-n">2</span>Audit</h5><span class="dgm-ds-t">duplicates · conflicts · empties · outliers</span><p>Fix or drop.</p></div>
+    <div class="dgm-ds-c dgm-ds-success"><h5><span class="dgm-ds-n">3</span>Clean set</h5><p>What is left.</p></div>
+    <div class="dgm-ds-c dgm-ds-discovery"><h5><span class="dgm-ds-n">4</span>Split</h5><span class="dgm-ds-t">train · validation · test</span><p>Before any tuning.</p></div>
+    <div class="dgm-ds-c dgm-ds-danger"><h5><span class="dgm-ds-n">5</span>Leak check</h5><span class="dgm-ds-t">no test input in train</span><p>Compare normalized text.</p></div>
+    <div class="dgm-ds-c dgm-ds-info"><h5><span class="dgm-ds-n">6</span>Train</h5><p>Only now.</p></div>
+  </div>
+  <p class="dgm-ds-foot">A leak can be a paraphrase, not only an exact copy.</p>
+</div>
+
 <h2 id="mechanics">Mechanics</h2>
 <h3 id="the-audit">The audit</h3>
 <table>
@@ -216,38 +251,6 @@ def jaccard(a, b):
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-</script><script type="module">
-// Load mermaid and render each diagram only when it nears the viewport, one at a time.
-// The bundle is large; fetching and running it at page load competes with the first
-// scroll on a phone. Diagrams reserve their height (see design-system/site) so nothing jumps.
-const els=[...document.querySelectorAll('pre.mermaid')];
-let lib=null;
-function boot(){
-  return lib||(lib=import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m=>{
-    const mermaid=m.default;
-    mermaid.initialize(DS.mermaidConfig());
-    window.addEventListener('ds-themechange',()=>DS.mermaidRerender(mermaid));
-    return mermaid;
-  }));
-}
-let chain=Promise.resolve();
-function renderOne(pre){
-  chain=chain.then(async()=>{ try{
-    const mermaid=await boot(); if(document.fonts&&document.fonts.ready)await document.fonts.ready; DS.mermaidRemember(pre); await mermaid.run({nodes:[pre]});
-    // fit-or-scroll: genuinely wide diagrams keep natural size and scroll in the card
-    const s=pre.querySelector('svg'); if(!s) return;
-    const w=(s.viewBox&&s.viewBox.baseVal&&s.viewBox.baseVal.width)||0;
-    const cw=pre.clientWidth||0;
-    if(cw&&w>cw*1.6){s.style.maxWidth='none';
-      const h=document.createElement('span');h.className='mm-hint';
-      h.textContent='⟷ scroll';pre.insertBefore(h,s);}
-  }catch(e){} });
-}
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{
-    if(e.isIntersecting){io.unobserve(e.target);renderOne(e.target);}});},{rootMargin:'900px 0px'});
-  els.forEach(p=>io.observe(p));
-}else els.forEach(renderOne);
 </script>
 <div id="rs-root">
   <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">

@@ -1,0 +1,39 @@
+<style>
+.dgm-dc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-dc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-dc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-dc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-dc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-dc-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-dc-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-dc-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-dc-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-dc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-dc-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-dc-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-dc-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-dc-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-dc-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-dc-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-dc-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-dc-note b{color:var(--color-text)}
+.dgm-dc-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-dc{padding:22px 14px 18px}.dgm-dc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-dc-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-dc">
+  <span class="dgm-dc-chip">The decision</span>
+  <h4>Three questions before you tune</h4>
+  <p class="dgm-dc-sub">Each answer ends in an action.</p>
+  <div class="dgm-dc-grid">
+    <div class="dgm-dc-c dgm-dc-info"><h5><span class="dgm-dc-n">1</span>A behaviour problem</h5><p>Where you start.</p></div>
+    <div class="dgm-dc-c dgm-dc-caution"><h5><span class="dgm-dc-n">2</span>Does a better prompt or retrieval fix it?</h5><span class="dgm-dc-t">yes: do that</span><p>If no, go on.</p></div>
+    <div class="dgm-dc-c dgm-dc-warning"><h5><span class="dgm-dc-n">3</span>Is there a test that measures it?</h5><span class="dgm-dc-t">no: build the test first</span><p>If yes, go on.</p></div>
+    <div class="dgm-dc-c dgm-dc-discovery"><h5><span class="dgm-dc-n">4</span>Does the saving pay for the project at our volume?</h5><span class="dgm-dc-t">no: do not tune</span><p>If yes, go on.</p></div>
+    <div class="dgm-dc-c dgm-dc-success"><h5><span class="dgm-dc-n">5</span>Tune, then gate the release</h5><p>Gain above the margin, general drop below the limit.</p></div>
+  </div>
+  <p class="dgm-dc-foot">Example break-even: about 250,980 requests for a $2,000 project (invented prices).</p>
+</div>
