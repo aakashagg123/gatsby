@@ -1,0 +1,41 @@
+<style>
+.dgm-lo{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-lo-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-lo h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-lo-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-lo-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;align-items:center}
+.dgm-lo-shape{display:flex;align-items:center;justify-content:center;gap:6px}
+.dgm-lo-w{width:88px;height:88px;border-radius:10px;background:var(--color-background-info-surface);border:1.5px solid var(--color-border-info-surface);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--color-text-info);text-align:center;padding:6px}
+.dgm-lo-op{font-size:18px;color:var(--color-text-tertiary)}
+.dgm-lo-a{width:20px;height:88px;border-radius:6px;background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface)}
+.dgm-lo-b{width:88px;height:20px;border-radius:6px;background:var(--color-background-discovery-surface);border:1.5px solid var(--color-border-discovery-surface)}
+.dgm-lo-lbl{font-size:10px;color:var(--color-text-secondary);text-align:center;margin-top:4px}
+.dgm-lo-nums{display:flex;flex-direction:column;gap:6px}
+.dgm-lo-num{background:var(--color-surface-secondary);border:1px solid var(--color-border);border-radius:10px;padding:8px 12px;font-size:11.5px;color:var(--color-text-secondary)}
+.dgm-lo-num b{display:block;color:var(--color-text);font-size:12px}
+.dgm-lo-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:640px){.dgm-lo{padding:22px 14px 18px}.dgm-lo-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-lo">
+  <span class="dgm-lo-chip">LoRA</span>
+  <h4>A thin patch over frozen weights · output = W·x + A·B·x</h4>
+  <p class="dgm-lo-sub">Only A and B are trained. B starts at zero, so the model starts exactly as the base model.</p>
+  <div class="dgm-lo-grid">
+    <div class="dgm-lo-shape" aria-label="a d by d frozen matrix plus a d by r matrix times an r by d matrix">
+      <div><div class="dgm-lo-w">W<br>frozen<br>d × d</div></div>
+      <div class="dgm-lo-op">+</div>
+      <div><div class="dgm-lo-a"></div><div class="dgm-lo-lbl">A · d × r</div></div>
+      <div class="dgm-lo-op">×</div>
+      <div><div class="dgm-lo-b"></div><div class="dgm-lo-lbl">B · r × d</div></div>
+    </div>
+    <div class="dgm-lo-nums">
+      <div class="dgm-lo-num"><b>d = 4,096, rank r = 16</b>131,072 trained weights against 16,777,216: 0.78% of the matrix</div>
+      <div class="dgm-lo-num"><b>7B-class model, two matrices per layer</b>8.4 million trainable (0.12%)</div>
+      <div class="dgm-lo-num"><b>Training memory, 16 bytes per trained weight</b>about 100 GiB full tuning, about 12.7 GiB with the adapter</div>
+    </div>
+  </div>
+  <p class="dgm-lo-foot">Drop the adapter and the base model is back exactly. The adapter can still hurt general ability while it is loaded.</p>
+</div>

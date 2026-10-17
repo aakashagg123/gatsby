@@ -57,6 +57,7 @@ ML_HTML = os.path.join(ROOT, "machine-learning-html")   # machine learning (foun
 TENSORS_HTML = os.path.join(ROOT, "tensors-html")        # tensors (foundation modules)
 CNNS_HTML = os.path.join(ROOT, "cnns-html")              # convolutional networks (foundation modules)
 TRANSFORMERS_HTML = os.path.join(ROOT, "transformers-html")  # transformers (foundation modules)
+FINE_TUNING_HTML = os.path.join(ROOT, "fine-tuning-html")  # fine-tuning
 BUSINESS_ACUMEN_HTML = os.path.join(ROOT, "business-acumen-html")  # business acumen (product leaders)
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
@@ -114,7 +115,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|transformers|business-acumen)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|transformers|fine-tuning|business-acumen)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -257,6 +258,11 @@ LANDING = """<!doctype html>
       <p>The stack behind almost every language model: attention, the block, position and the
       cost of context, the KV cache, and reading a model card as memory, compute and cost.
       Runnable code in every lesson.</p>
+    </a>
+    <a class="card" href="fine-tuning/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
+      <h3>Fine-tuning and post-training →</h3>
+      <p>How a base model becomes an assistant, what supervised tuning, LoRA and preference tuning change, why the dataset is the product, and how to test the break-even and gate the release. Runnable code in every lesson.</p>
     </a>
     <a class="card" href="generative-ai/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
@@ -796,6 +802,10 @@ def main():
     # 1x. Transformers module: copy its pre-rendered pages.
     if os.path.isdir(TRANSFORMERS_HTML):
         shutil.copytree(TRANSFORMERS_HTML, os.path.join(SITE, "transformers"))
+
+    # 1y. Fine-tuning module: copy its pre-rendered pages.
+    if os.path.isdir(FINE_TUNING_HTML):
+        shutil.copytree(FINE_TUNING_HTML, os.path.join(SITE, "fine-tuning"))
 
     # 1w. Business acumen module: copy its pre-rendered pages.
     if os.path.isdir(BUSINESS_ACUMEN_HTML):

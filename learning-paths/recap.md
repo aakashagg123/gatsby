@@ -41,6 +41,7 @@
 | Tensors | — | — | Full | 3 of 5 |
 | CNNs | — | — | Full | — |
 | Transformers | — | — | Full | 4 of 6 |
+| Fine-tuning and post-training | — | — | Full | 3 of 6 |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 

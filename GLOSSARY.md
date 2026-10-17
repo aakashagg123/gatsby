@@ -279,6 +279,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Model families: linear models, trees and neural networks](./machine-learning/model-families.md).
 
+**Base model** — A model trained only to predict the next token. It continues text and does not follow instructions.
+
+*In plain terms.* Pretraining on huge amounts of text gives a base model. It knows a lot of language and facts. It has no habit of answering questions or following a format. Post-training turns it into an assistant.
+
+*For example.* Asked 'What is the capital of France?', a base model may continue with more quiz questions.
+
+*Where it shows up:* Understanding what fine-tuning starts from; Reading vendor model lists.
+
+*See:* [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md).
+
 **Base rate** — How common an event is before you look at any signal.
 
 *In plain terms.* When an event is rare, even an accurate model raises mostly false alarms. Ask for the base rate before you accept any accuracy figure.
@@ -438,6 +448,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting supplier and seller payout terms; Comparing a retail model with a marketplace model.
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
+**Catastrophic forgetting** — Losing earlier skills when a model is trained on new data.
+
+*In plain terms.* A model's weights are shared by every behaviour. A step that makes a new behaviour likely also moves the numbers behind old ones. Higher learning rates and narrow data forget more. Mixing in general examples limits it.
+
+*For example.* A model tuned on one task loses accuracy on ordinary text, as the toy in this module does: loss on general text rose from 1.10 to 2.28.
+
+*Where it shows up:* Deciding what to test after tuning; Choosing a learning rate.
+
+*See:* [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md).
 
 **Causal mask** — A rule that hides later tokens, so each token can attend only to itself and earlier tokens.
 
@@ -869,6 +889,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
+**Data contamination (test leak)** — Test examples appearing in the training data, which makes the evaluation score meaningless.
+
+*In plain terms.* If a model has seen the test questions, a high score shows memory, not ability. Leaks can be exact or paraphrased. Split the test set first, keep it out of every later step, and compare normalized text.
+
+*For example.* An evaluation question that also appears in the training set.
+
+*Where it shows up:* Gating a release on an honest score; Auditing a dataset.
+
+*See:* [The dataset](./fine-tuning/the-dataset.md).
+
 **Data drift** — When the mix of incoming cases moves away from the mix the model trained on.
 
 *In plain terms.* Growth brings new customers or a new channel changes who arrives. The model's rules may still be right, but it has not seen these cases. You can detect data drift from the inputs alone, without waiting for outcomes.
@@ -988,6 +1018,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Cutting cost on high-volume narrow tasks; Deciding between distillation, quantization, and RAG; Planning a cheaper 'fast path' model.
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
+
+**DPO (direct preference optimization)** — A way to tune a model from pairs of better and worse answers directly, with no separate reward model and no reinforcement learning loop.
+
+*In plain terms.* For each pair, DPO raises the log-probability of the chosen answer and lowers the rejected one, relative to a frozen reference model. It is simpler to run than RLHF.
+
+*For example.* In the toy, 40 DPO steps took the rejected word from 0.091 to 0.003.
+
+*Where it shows up:* Choosing a preference-tuning method; Reading model reports.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
 
 **Drift** — Gradual degradation of system quality over time as inputs, data, models, or dependencies change underneath you.
 
@@ -2049,6 +2089,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
 
+**LoRA (low-rank adaptation)** — A way to fine-tune by freezing the model and training two thin matrices whose product is the change.
+
+*In plain terms.* Instead of updating every weight in a matrix, LoRA learns a small low-rank update, with far fewer parameters. The model starts unchanged, and you can drop the adapter to get the base back exactly. Training memory falls sharply.
+
+*For example.* Rank 16 on two matrices per layer of a 7B-class model trains about 8.4 million parameters, 0.12% of the model.
+
+*Where it shows up:* Making tuning affordable; Serving one adapter per customer.
+
+*See:* [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md).
+
 **Loss function** — A score of how wrong the model is, which training tries to reduce.
 
 *In plain terms.* The loss turns the model's mistakes into one number. Lower is better. Training changes the parameters to push it down. Because the model chases whatever the loss rewards, the choice of loss is a product decision. Squared error suits numbers. Log loss suits probabilities.
@@ -2629,6 +2679,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
 
+**Post-training** — The training after pretraining that shapes a model's behaviour: supervised tuning, preference tuning and reinforcement learning.
+
+*In plain terms.* Post-training uses far less data and compute than pretraining. It teaches format, tone and which kinds of answer people prefer. It points what the model already knows. It can also damage skills it was not aimed at.
+
+*For example.* InstructGPT used about 13,000 prompts for supervised tuning, against hundreds of billions of pretraining tokens.
+
+*Where it shows up:* Judging what a vendor's assistant has already been trained for; Planning your own tuning.
+
+*See:* [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md).
+
 **Postmortem** — A blameless written analysis after an incident: what happened, why, and what changes prevent a recurrence.
 
 *In plain terms.* After something breaks, a postmortem calmly reconstructs the timeline, finds the real (usually systemic) causes, and commits to fixes — without blaming individuals, because blame hides truth. The goal is a system that can't fail the same way twice.
@@ -2838,6 +2898,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Alarming on input drift; Finding a broken input on day one.
 
 *See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
+
+**QLoRA** — LoRA applied to a frozen model held in 4-bit numbers, which cuts memory enough to tune very large models on one accelerator.
+
+*In plain terms.* QLoRA keeps the frozen weights in a compact 4-bit format and trains a small adapter in higher precision. It allowed a 65 billion parameter model to be tuned on a single 48 GB accelerator.
+
+*For example.* A workstation-class card tunes a model that once needed a cluster.
+
+*Where it shows up:* Planning hardware for tuning; Weighing quality against cost.
+
+*See:* [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md).
 
 **Quantization** — Storing a model's numbers at lower precision (e.g. 4/8-bit) to shrink memory and speed inference, trading a little accuracy.
 
@@ -3079,6 +3149,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [ReBAC and policy engines](./access-control/rebac-and-policy-engines.md).
 
+**Release gate** — A rule set before training: ship only if the target task improved by a set margin and general ability did not drop past a set limit.
+
+*In plain terms.* A tuned model can win on its own task and lose elsewhere. The gate compares it with the base model on both, using numbers fixed in advance, so a good-looking result is not accepted by default.
+
+*For example.* Gain at least 0.02 and a general drop of at most 0.01.
+
+*Where it shows up:* Approving a tuning project; Stopping a release that traded away general ability.
+
+*See:* [Deciding, costing and checking a fine-tune](./fine-tuning/deciding-costing-and-checking-a-fine-tune.md).
+
 **Repair loop** — Feeding a validation error back to the model so it can fix a malformed output.
 
 *In plain terms.* When a model returns broken output (invalid JSON, wrong schema), you don't just fail — you tell it what was wrong and ask again. That retry-with-feedback is a repair loop, and it's how flaky structured output becomes reliable enough to ship.
@@ -3139,6 +3219,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Automatic differentiation](./tensors/automatic-differentiation.md).
 
+**Reward hacking** — A model finding ways to score high on a proxy reward without delivering the quality the reward was meant to measure.
+
+*In plain terms.* A reward is only a stand-in for what you want. Optimize hard enough and the model finds its gaps, such as padding, flattery or false confidence. The proxy score keeps rising while real quality falls.
+
+*For example.* Best-of-512 against a noisy proxy picked answers with true quality 0.05, down from 0.87 at best-of-16, while the proxy score rose.
+
+*Where it shows up:* Setting limits on tuning pressure; Tracking an independent quality metric.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
+
+**Reward model** — A model trained on pairs of better and worse answers to give any answer a score for how much people prefer it.
+
+*In plain terms.* A reward model learns what separates chosen from rejected answers. It then stands in for human judges. It also learns their biases, such as a liking for long answers.
+
+*For example.* Fit to judges who prefer length, a reward model put a weight of 1.53 on length, against 0.08 for unbiased judges.
+
+*Where it shows up:* Understanding how preference tuning works; Auditing preference data for bias.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
+
 **RFC** — Request For Comments — a written technical proposal circulated for feedback before a significant engineering decision is made.
 
 *In plain terms.* For a big technical choice (a new architecture, a risky migration), an RFC lays out the proposal, the alternatives, and the tradeoffs, then invites critique before anyone commits. It moves the argument to a document where it's cheap to change your mind.
@@ -3158,6 +3258,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Designing guardrails for a launch; Asking for a risk acceptance.
 
 *See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
+**RLHF (reinforcement learning from human feedback)** — Tuning a model with reinforcement learning against a reward model trained on human preferences.
+
+*In plain terms.* People compare answers. A reward model learns their choices. Reinforcement learning then shifts the model toward answers the reward model scores highly, with a limit on drifting from the starting model.
+
+*For example.* InstructGPT used this to make a 1.3 billion parameter model preferred over a 175 billion parameter base model.
+
+*Where it shows up:* Understanding how assistants are shaped; Asking about the judges behind a model.
+
+*See:* [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md).
 
 **Rotary position embedding (RoPE)** — A way to encode position by turning each query and key by an angle that grows with position, so scores depend on distance.
 
@@ -3458,6 +3568,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building an honest AI business case; Deciding where agents actually pay off; Avoiding 'perceived vs. measured' savings traps.
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
+
+**Supervised fine-tuning (SFT)** — Further training on prompts paired with ideal answers, so the model learns the format and behaviour of those answers.
+
+*In plain terms.* SFT is ordinary training on a small, curated dataset. For each example the model predicts the answer, and its weights move a little to reduce the error. Quantity, learning rate, mixed-in general data and label quality decide how well it goes.
+
+*For example.* A few hundred checked support answers teach a model your house style.
+
+*Where it shows up:* Changing format, tone or a narrow task; Planning data and review work.
+
+*See:* [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md).
 
 **Supervised learning** — Learning from cases that come with the right answer, called a label.
 

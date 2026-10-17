@@ -214,6 +214,17 @@ Part of the **foundation modules**: after [Machine learning](./machine-learning/
 5. [Generating text and the KV cache](./transformers/generating-text-and-the-kv-cache.md)
 6. [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md) · [Recap](./transformers/recap.md)
 
+## [Fine-tuning and post-training](./fine-tuning/README.md)
+
+Part of the **foundation modules**: it builds on [Machine learning](./machine-learning/README.md), [Tensors](./tensors/README.md) and [Transformers](./transformers/README.md).
+
+1. [From base model to assistant: the post-training pipeline](./fine-tuning/from-base-model-to-assistant.md)
+2. [Supervised fine-tuning](./fine-tuning/supervised-fine-tuning.md)
+3. [LoRA and parameter-efficient tuning](./fine-tuning/lora-and-parameter-efficient-tuning.md)
+4. [Preference tuning and reward hacking](./fine-tuning/preference-tuning-and-reward-hacking.md)
+5. [The dataset: quality, duplicates, contamination and synthetic data](./fine-tuning/the-dataset.md)
+6. [Deciding, costing and checking a fine-tune](./fine-tuning/deciding-costing-and-checking-a-fine-tune.md) · [Recap](./fine-tuning/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).
