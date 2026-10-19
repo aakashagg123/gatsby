@@ -225,6 +225,24 @@ A URL shortener, a chat system, or a payment flow can be built in a weekend hack
    <details><summary>Answer</summary>About 4.32 minutes. In series, two 99.9% services give about 99.8%. (<a href="./numbers-and-formulas.md">Numbers and formulas</a>)</details>
 15. **For 200 million daily users with 2 posts each, what write rate and yearly storage do you estimate?**
    <details><summary>Answer</summary>About 4,630 writes per second on average and about 43.8 TB a year for 300-byte posts. Reads, at 100 times writes, are about 463,000 per second. (<a href="./foundations-and-framework.md">Foundations and framework</a>)</details>
+16. **Round robin and least connections are compared with every third request slow. What happens?**
+   <details><summary>Answer</summary>Round robin sends all the slow requests to one server, which reached 17 open connections. Least connections peaked at 6. (<a href="./traffic-caching-apis-and-storage-choice.md">Traffic, caching, APIs and storage choice</a>)</details>
+17. **A write-back cache flushes every 100 writes and crashes after write 457. What is lost?**
+   <details><summary>Answer</summary>The 58 acknowledged writes that were not yet flushed. A write-through cache would lose none, at the cost of slower writes. (<a href="./traffic-caching-apis-and-storage-choice.md">Traffic, caching, APIs and storage choice</a>)</details>
+18. **Two new rows arrive while a user reads a feed. Why does offset paging repeat rows, and cursor paging not?**
+   <details><summary>Answer</summary>An offset counts positions, so inserting rows at the front shifts every row down. A cursor asks for rows older than the last one seen, so it does not move. (<a href="./traffic-caching-apis-and-storage-choice.md">Traffic, caching, APIs and storage choice</a>)</details>
+19. **A user changes a photo and refreshes half a second later and sees the old one. Name the violated guarantee and a fix.**
+   <details><summary>Answer</summary>Read-your-writes. Read from the leader for a short window after the user's own write. (<a href="./distributed-data-and-consistency.md">Distributed data and consistency</a>)</details>
+20. **A trip saga reserves a flight and a hotel and then the card charge fails. What happens next?**
+   <details><summary>Answer</summary>The saga compensates in reverse order: it cancels the hotel, then the flight. (<a href="./distributed-data-and-consistency.md">Distributed data and consistency</a>)</details>
+21. **Why does a transactional outbox beat updating the database and then publishing an event?**
+   <details><summary>Answer</summary>A crash between the two steps loses the event. With an outbox the event is stored in the same transaction, and a relay publishes it later. In the example, 9 of 10 events were published with a dual write and 10 of 10 with an outbox. (<a href="./distributed-data-and-consistency.md">Distributed data and consistency</a>)</details>
+22. **Why can last-write-wins by wall-clock timestamp drop the newest write?**
+   <details><summary>Answer</summary>Clocks drift. A server running 2 seconds fast stamps an earlier write later than a later write on a correct clock. Logical clocks order by cause and effect instead. (<a href="./distributed-data-and-consistency.md">Distributed data and consistency</a>)</details>
+23. **A service handles 100 requests per second and is offered 90. A one-second blip makes every call fail, and clients retry three times. Why does it not recover?**
+   <details><summary>Answer</summary>The retries raise the offered load to 360 per second, so the service stays overloaded. Backoff, jitter and a retry budget kept the peak at 96 per second. (<a href="./reliability-and-operations.md">Reliability and operations</a>)</details>
+24. **What did the Cloudflare 2019 outage and the GitLab 2017 outage have in common with a missing safeguard?**
+   <details><summary>Answer</summary>Cloudflare pushed a rule to the whole network with no staged rollout and no CPU check in the tests. GitLab had four recovery mechanisms and none worked, because nobody owned testing the restore. (<a href="./reliability-and-operations.md">Reliability and operations</a>)</details>
 
 For more practice, use the [question bank](./question-bank.md).
 
@@ -234,15 +252,17 @@ For more practice, use the [question bank](./question-bank.md).
 
 1. [Foundations & framework](./foundations-and-framework.md) — scaling, estimation, the four-step design process, and a practice plan
 2. [Numbers, formulas and papers](./numbers-and-formulas.md) — latency, nines, estimation shortcuts and classic papers
-3. [Core building blocks](./core-building-blocks.md) — rate limiting, consistent hashing, key-value stores, unique ID generation
-4. [Web-scale services](./web-scale-services.md) — URL shortener, web crawler, notification system, news feed
-5. [Real-time systems](./real-time-systems.md) — chat, search autocomplete, video streaming
-6. [Storage & sync](./storage-and-sync.md) — Google Drive file sync, S3-like object storage
-7. [Location & geo services](./location-and-geo-services.md) — proximity service, nearby friends, Google Maps
-8. [Data infrastructure](./data-infrastructure.md) — message queues, metrics monitoring, ad click aggregation, email
-9. [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, leaderboard, payments, digital wallet, stock exchange
-
-10. [Question bank](./question-bank.md) — 50 design questions mapped to the lessons
+3. [Traffic, caching, APIs and storage choice](./traffic-caching-apis-and-storage-choice.md) — load balancers, caches, CDNs, stores and APIs
+4. [Core building blocks](./core-building-blocks.md) — rate limiting, consistent hashing, key-value stores, unique ID generation
+5. [Distributed data and consistency](./distributed-data-and-consistency.md) — replication, consistency, consensus, sagas and clocks
+6. [Web-scale services](./web-scale-services.md) — URL shortener, web crawler, notification system, news feed
+7. [Real-time systems](./real-time-systems.md) — chat, search autocomplete, video streaming
+8. [Storage & sync](./storage-and-sync.md) — Google Drive file sync, S3-like object storage
+9. [Location & geo services](./location-and-geo-services.md) — proximity service, nearby friends, Google Maps
+10. [Data infrastructure](./data-infrastructure.md) — message queues, metrics monitoring, ad click aggregation, email
+11. [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, leaderboard, payments, digital wallet, stock exchange
+12. [Reliability and operations](./reliability-and-operations.md) — SLOs, resilience, safe change, recovery and incident case studies
+13. [Question bank](./question-bank.md) — 50 design questions mapped to the lessons
 
 ← [Transactional & financial systems](./transactional-and-financial.md) · [Back to overview](./README.md)
 

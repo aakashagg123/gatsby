@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-This page is a practice list. It holds 50 questions that come up in design reviews and interviews, grouped by the kind of knowledge each one tests. Each row says how hard the question is and where this track answers it. **Read** means a lesson covers it. **Partly** means a lesson covers part of it. **Planned** means a later lesson will cover it. At the time of writing, 16 are covered, 13 are partly covered and 21 are planned.
+This page is a practice list. It holds 50 questions that come up in design reviews and interviews, grouped by the kind of knowledge each one tests. Each row says how hard the question is and where this track answers it. **Read** means a lesson covers it. **Partly** means a lesson covers part of it. **Planned** means a later lesson will cover it. At the time of writing, 34 are covered, 3 are partly covered and 13 are planned.
 
 The best way to use it is recall. Pick a question. Answer it aloud, on a blank page, in about five minutes. Then read the lesson and mark what you missed. Recalling an answer teaches more than reading one again.
 
@@ -36,24 +36,24 @@ The rows run in five groups, in order. Questions 1 to 10 cover building blocks. 
 | --- | --- | --- | --- |
 | 1 | What does a design discussion test, and how do you spend 45 minutes? | Junior | [Read](./foundations-and-framework.md) |
 | 2 | Why prefer stateless services and horizontal scaling? | Junior | [Read](./foundations-and-framework.md) |
-| 3 | How do L4 and L7 load balancers differ, and what do health checks do? | Junior | Planned |
-| 4 | Which caching strategies exist, and how do you avoid a stampede? | Mid | [Partly](./web-scale-services.md) |
-| 5 | What does a CDN do, and when is it the right tool? | Junior | [Partly](./real-time-systems.md) |
-| 6 | How do you choose between SQL and NoSQL? | Mid | Planned |
+| 3 | How do L4 and L7 load balancers differ, and what do health checks do? | Junior | [Read](./traffic-caching-apis-and-storage-choice.md) |
+| 4 | Which caching strategies exist, and how do you avoid a stampede? | Mid | [Read](./traffic-caching-apis-and-storage-choice.md) |
+| 5 | What does a CDN do, and when is it the right tool? | Junior | [Read](./traffic-caching-apis-and-storage-choice.md) |
+| 6 | How do you choose between SQL and NoSQL? | Mid | [Read](./traffic-caching-apis-and-storage-choice.md) |
 | 7 | How do message queues differ from event logs, and what do the delivery guarantees mean? | Mid | [Read](./data-infrastructure.md) |
-| 8 | How do you design an API: REST, gRPC, GraphQL, pagination, idempotency? | Mid | Planned |
+| 8 | How do you design an API: REST, gRPC, GraphQL, pagination, idempotency? | Mid | [Read](./traffic-caching-apis-and-storage-choice.md) |
 | 9 | Estimate the load and storage for a Twitter-like service. | Mid | [Read](./foundations-and-framework.md) |
 | 10 | Design a rate limiter and distribute it. | Mid | [Read](./core-building-blocks.md) |
-| 11 | Compare leader-follower, multi-leader and leaderless replication. | Mid | Planned |
-| 12 | How do you shard a database, and what goes wrong? | Mid | [Partly](./core-building-blocks.md) |
+| 11 | Compare leader-follower, multi-leader and leaderless replication. | Mid | [Read](./distributed-data-and-consistency.md) |
+| 12 | How do you shard a database, and what goes wrong? | Mid | [Read](./distributed-data-and-consistency.md) |
 | 13 | Explain consistent hashing and virtual nodes. | Mid | [Read](./core-building-blocks.md) |
-| 14 | What do CAP and PACELC say? | Mid | [Partly](./core-building-blocks.md) |
-| 15 | Explain the main consistency models with an example. | Senior | Planned |
+| 14 | What do CAP and PACELC say? | Mid | [Read](./distributed-data-and-consistency.md) |
+| 15 | Explain the main consistency models with an example. | Senior | [Read](./distributed-data-and-consistency.md) |
 | 16 | How do quorum reads and writes work? | Senior | [Read](./core-building-blocks.md) |
-| 17 | What is consensus, and where do Raft and Paxos fit? | Senior | [Partly](./transactional-and-financial.md) |
-| 18 | How do you keep data consistent across services: 2PC, sagas, outbox? | Senior | [Partly](./transactional-and-financial.md) |
+| 17 | What is consensus, and where do Raft and Paxos fit? | Senior | [Read](./distributed-data-and-consistency.md) |
+| 18 | How do you keep data consistent across services: 2PC, sagas, outbox? | Senior | [Read](./distributed-data-and-consistency.md) |
 | 19 | How do you generate unique IDs at scale? | Mid | [Read](./core-building-blocks.md) |
-| 20 | Why can you not trust wall-clock time? | Senior | [Partly](./core-building-blocks.md) |
+| 20 | Why can you not trust wall-clock time? | Senior | [Read](./distributed-data-and-consistency.md) |
 | 21 | Design a URL shortener. | Mid | [Read](./web-scale-services.md) |
 | 22 | Design a chat system. | Senior | [Read](./real-time-systems.md) |
 | 23 | Design a news feed. | Senior | [Read](./web-scale-services.md) |
@@ -77,12 +77,12 @@ The rows run in five groups, in order. Questions 1 to 10 cover building blocks. 
 | 41 | Design a platform that runs AI agents at scale. | Senior | Planned |
 | 42 | How do you keep autonomous agents safe in production? | Senior | Planned |
 | 43 | Reason about availability with SLIs, SLOs, SLAs and nines. | Junior | [Read](./numbers-and-formulas.md) |
-| 44 | What should an observability setup include? | Mid | [Partly](./data-infrastructure.md) |
-| 45 | Which resilience patterns prevent cascading failures? | Senior | [Partly](./web-scale-services.md) |
-| 46 | How do you deploy changes safely, including configuration? | Mid | Planned |
-| 47 | Design for regional failure: multi-region, RPO and RTO. | Senior | Planned |
-| 48 | How do you limit the blast radius of human error? | Mid | Planned |
-| 49 | What does a backup strategy that works look like? | Mid | [Partly](./storage-and-sync.md) |
+| 44 | What should an observability setup include? | Mid | [Read](./reliability-and-operations.md) |
+| 45 | Which resilience patterns prevent cascading failures? | Senior | [Read](./reliability-and-operations.md) |
+| 46 | How do you deploy changes safely, including configuration? | Mid | [Read](./reliability-and-operations.md) |
+| 47 | Design for regional failure: multi-region, RPO and RTO. | Senior | [Read](./reliability-and-operations.md) |
+| 48 | How do you limit the blast radius of human error? | Mid | [Read](./reliability-and-operations.md) |
+| 49 | What does a backup strategy that works look like? | Mid | [Read](./reliability-and-operations.md) |
 | 50 | What happens when you type a URL and press Enter? | Junior | Planned |
 
 ### How to answer well

@@ -69,6 +69,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
 
+**Active-active and active-passive** — Active-passive keeps a standby region. Active-active serves traffic from several regions at once.
+
+*In plain terms.* Active-passive is simpler. Active-active gives higher availability and needs conflict handling or partitioned data ownership.
+
+*For example.* Region A serves all users and region B waits, or both serve their nearest users.
+
+*Where it shows up:* Multi-region design.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Adam** — An optimizer that adapts the step size of each parameter from running averages of the gradient and its square.
 
 *In plain terms.* It keeps two extra numbers per parameter, which makes it a large part of training memory. It usually needs less tuning of the learning rate than plain gradient descent.
@@ -279,6 +289,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
 
+**Backoff, jitter and retry budget** — Waiting longer between retries, adding randomness, and capping the extra load that retries can add.
+
+*In plain terms.* Naive retries multiply load on a struggling service. In one example, three naive retries raised 90 requests per second to 360. A budget kept it under the limit.
+
+*For example.* Wait 1 s, 2 s, 4 s with random jitter, and allow retries up to 10% of the base load.
+
+*Where it shows up:* Calling flaky dependencies.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Backpressure** — A system pushing back when it's overloaded — slowing, queuing, or shedding work — instead of collapsing.
 
 *In plain terms.* When more work arrives than a system can handle, it needs a way to say 'slow down' rather than fall over. Backpressure is that mechanism: queue, throttle, or reject gracefully, so overload degrades the experience a little instead of taking everything down.
@@ -389,6 +409,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
 
+**Blue-green deployment** — Running the old and new versions side by side and switching traffic between them.
+
+*In plain terms.* The old version stays ready, so rollback is an instant switch.
+
+*For example.* Switch the load balancer from blue to green, and back if there is a problem.
+
+*Where it shows up:* Safe deploys.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **BM25** — The standard keyword-search scoring formula: rare words count more, repeated words count less each time, and long passages count less per word.
 
 *In plain terms.* BM25 scores a passage by the query words it contains. A word that appears in few documents, such as an error code, counts for a lot. A common word counts for little. It finds exact strings that embeddings can blur, which is why hybrid search pairs it with vector search.
@@ -428,6 +458,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Adding a bias to every row; Finding a silent shape bug.
 
 *See:* [Operations and broadcasting](./tensors/operations-and-broadcasting.md).
+
+**Bulkhead** — Separate resource pools so one failing dependency cannot use up everything.
+
+*In plain terms.* Like the sealed sections of a ship, bulkheads contain a leak. Use separate thread pools or connection limits per dependency.
+
+*For example.* Payment calls get their own pool of 20 connections.
+
+*Where it shows up:* Isolation.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
 
 **Business acumen** — The skill of seeing how a decision moves the business: revenue, cost, risk and cash.
 
@@ -518,6 +558,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Serving static assets and video; Absorbing traffic spikes.
 
 *See:* [Real-time systems](./system-design/real-time-systems.md).
+
+**Cell-based architecture** — Splitting a service into independent copies, each serving a subset of customers.
+
+*In plain terms.* A bad change or failure reaches only one cell, which limits the blast radius.
+
+*For example.* Customers are assigned to one of four cells, each with its own stack.
+
+*Where it shows up:* Limiting blast radius.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
 
 **Centrality** — Ranking nodes by how important they are in the graph's structure (the PageRank family).
 
@@ -728,6 +778,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Seeing the real mix of errors; Pricing each kind of error.
 
 *See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
+**Consensus (Raft, Paxos)** — A protocol that lets nodes agree on a sequence of values despite failures.
+
+*In plain terms.* With 2f + 1 nodes it tolerates f failures. Use it for small, critical state such as leader election and configuration, not every write.
+
+*For example.* etcd uses Raft to store cluster configuration.
+
+*Where it shows up:* Leader election; Configuration and locks.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
 
 **Consistent hashing** — A way to spread keys over servers so that adding or removing a server moves only about 1/N of the keys.
 
@@ -968,6 +1028,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Comparing models on small datasets; Avoiding a lucky validation split.
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Cursor pagination** — Paging by asking for items after the last one you saw, instead of by position.
+
+*In plain terms.* Offsets skip or repeat rows when data changes and get slower with depth. Cursors stay stable.
+
+*For example.* Give me 10 posts older than post 91.
+
+*Where it shows up:* List APIs.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
 
 **Customer acquisition cost (CAC)** — Sales and marketing spend divided by the number of new customers won.
 
@@ -1369,6 +1439,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
 
+**Feature flag** — A switch that turns a feature on or off without a deploy.
+
+*In plain terms.* Flags separate deploying code from releasing it, and allow gradual rollout and instant disable.
+
+*For example.* Show the new checkout to 5% of users.
+
+*Where it shows up:* Safe releases.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Feature map** — The grid of outputs one kernel produces: how strongly each position matched its pattern.
 
 *In plain terms.* Each kernel in a layer makes one feature map. A layer with 64 kernels outputs 64 maps, which become the 64 input channels of the next layer.
@@ -1758,6 +1838,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding what your team actually has to build beyond 'call the model'; Explaining why a demo that works 'in the prompt' still needs months of engineering; Locating where reliability, cost, and safety controls live.
 
 *See:* [Harness engineering](./content/00-foundations/harness-engineering.md).
+
+**Health check and connection draining** — A probe that removes failing servers from a pool, and a step that lets in-flight requests finish before a server leaves.
+
+*In plain terms.* Together they make failures and deploys invisible to users.
+
+*For example.* The balancer stops sending new requests to a server in draining state.
+
+*Where it shows up:* Load balancing; Safe deploys.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
 
 **Hierarchical navigable small world (HNSW)** — A graph-based approximate nearest-neighbour index: each vector links to near neighbours in layers, and a search walks from coarse to fine.
 
@@ -2189,6 +2279,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
 
+**Linearizability** — The guarantee that a system acts like a single copy: once a write completes, every later read sees it.
+
+*In plain terms.* It is the strongest common model. It costs latency and availability, so use it only where needed.
+
+*For example.* After a payment is recorded, any read shows it.
+
+*Where it shows up:* Payments; Locks and leader election.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Link prediction** — Inferring edges that are missing or likely to form next in a graph (recommendations, 'people you may know') — probabilistic, so ship as suggestion, never as fact.
 
 *In plain terms.* Given the pattern of existing connections, you can guess connections that probably exist or will. Link prediction is that guess: powering recommendations and next-best-action. Crucially it's a probability, not a truth — so it belongs in the UI as a suggestion, never stored as a hard fact.
@@ -2228,6 +2328,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Scaling stateless services; Safe deploys.
 
 *See:* [Foundations and framework](./system-design/foundations-and-framework.md).
+
+**Load shedding and backpressure** — Rejecting work early when a service is overloaded, and telling callers to slow down.
+
+*In plain terms.* It keeps a service working for some requests instead of failing for all of them.
+
+*For example.* Return HTTP 503 for low-priority requests when queues are full.
+
+*Where it shows up:* Overload protection.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
+**Logical clock (Lamport)** — A counter that orders events by cause and effect without trusting wall-clock time.
+
+*In plain terms.* Wall clocks drift. A logical clock takes the later of its own value and the one it receives, then adds one, so effects always follow causes.
+
+*For example.* Send at time 2, receive at time 3, reply at time 4.
+
+*Where it shows up:* Ordering events; Conflict detection.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
 
 **Logistic regression** — A linear model for yes-or-no questions: a weighted sum of the features, turned into a probability.
 
@@ -2669,6 +2789,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
+**Observability (RED and USE)** — The ability to understand a system from its outputs: metrics, logs and traces.
+
+*In plain terms.* RED covers services: rate, errors, duration. USE covers resources: utilization, saturation, errors. Alert on user-facing symptoms.
+
+*For example.* A dashboard of request rate, error rate and latency per service.
+
+*Where it shows up:* Operating services.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **OKR** — Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.
 
 *In plain terms.* An OKR translates strategy into something a team can act on this quarter: the Objective restates the strategic bet in outcome language, and the Key Results are the numbers that prove it's working. OKRs should be set BY strategy, not used as a substitute for having one — a Key Result that doesn't trace back to a strategic choice is a number in search of a reason.
@@ -2788,6 +2918,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting honest performance SLAs; Explaining 'it's fast for me but users complain'; Prioritising tail-latency fixes.
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
+
+**PACELC** — If there is a Partition, trade Availability against Consistency; Else, trade Latency against Consistency.
+
+*In plain terms.* CAP covers only the partition case. PACELC adds the everyday trade-off between speed and consistency.
+
+*For example.* A store that waits for a remote replica is consistent and slow. One that does not is fast and may be stale.
+
+*Where it shows up:* Reading vendor consistency claims.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
 
 **Paged attention** — Managing the KV cache in fixed-size non-contiguous blocks (like OS virtual memory) to eliminate wasted memory.
 
@@ -3299,6 +3439,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
 
+**Read-your-writes** — The guarantee that a user always sees their own updates.
+
+*In plain terms.* Without it, a user changes a setting, refreshes and sees the old value from a lagging replica. Read from the leader for a short time after a write.
+
+*For example.* A new profile photo shows right away for the user who uploaded it.
+
+*Where it shows up:* Settings and profiles.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Real option** — The right, but not the obligation, to take a future business action, such as expanding or stopping a bet.
 
 *In plain terms.* Staged investment creates options. You pay a little to learn, then decide. Options are worth most when uncertainty is high.
@@ -3568,6 +3718,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how context limits are extended; Reading model cards.
 
 *See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
+
+**RPO and RTO** — RPO is how much data you can afford to lose. RTO is how long recovery may take.
+
+*In plain terms.* They turn "disaster recovery" into numbers a design can meet. Smaller values cost more.
+
+*For example.* RPO of 1 minute needs near-continuous replication. RTO of 15 minutes needs a warm standby.
+
+*Where it shows up:* Disaster recovery planning.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
 
 **Run-off** — The period after an insurer stops writing new policies, when it must still pay claims on existing ones.
 
@@ -4209,6 +4369,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & evals](./agentic-ai/reliability-and-evals.md).
 
+**Transactional outbox** — A pattern where a service writes an event to an outbox table in the same transaction as its data, and a relay publishes it.
+
+*In plain terms.* It removes the gap between updating the database and publishing an event, so a crash loses nothing.
+
+*For example.* An order row and its OrderPlaced event commit together.
+
+*Where it shows up:* Reliable event publishing.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Transfer learning** — Reusing a model trained on one large dataset as the starting point for your task.
 
 *In plain terms.* Few teams train vision models from scratch. They take a pre-trained network and either freeze it and train a small head, or fine-tune some or all of it. How much data you have and how similar it is decide which.
@@ -4448,6 +4618,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Durability; Backups and recovery.
 
 *See:* [Data infrastructure](./system-design/data-infrastructure.md).
+
+**Write-back and write-through cache** — Write-through writes to the cache and the database together. Write-back writes to the cache and flushes later.
+
+*In plain terms.* Write-back is faster and loses unflushed writes in a crash. In one example, 58 acknowledged writes were lost.
+
+*For example.* A cache flushed every 100 writes crashes after write 457.
+
+*Where it shows up:* Cache design.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
 
 **XML tags (in prompts)** — Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.
 

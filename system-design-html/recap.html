@@ -8,7 +8,7 @@
 <body><header class="topbar">
   <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>System Design</span><em>a systems module</em></a>
   <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="numbers-and-formulas.html">2 · Numbers, formulas and papers to know</a><a class="modlink" href="core-building-blocks.html">3 · Core building blocks</a><a class="modlink" href="web-scale-services.html">4 · Web-scale services</a><a class="modlink" href="real-time-systems.html">5 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">6 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">7 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">8 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">9 · Transactional &amp; financial systems</a><a class="modlink" href="question-bank.html">10 · Question bank: 50 design questions mapped to the lessons</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="foundations-and-framework.html">1 · Foundations &amp; framework</a><a class="modlink" href="numbers-and-formulas.html">2 · Numbers, formulas and papers to know</a><a class="modlink" href="traffic-caching-apis-and-storage-choice.html">3 · Traffic, caching, APIs and storage choice</a><a class="modlink" href="core-building-blocks.html">4 · Core building blocks</a><a class="modlink" href="distributed-data-and-consistency.html">5 · Distributed data and consistency</a><a class="modlink" href="web-scale-services.html">6 · Web-scale services</a><a class="modlink" href="real-time-systems.html">7 · Real-time systems</a><a class="modlink" href="storage-and-sync.html">8 · Storage &amp; sync</a><a class="modlink" href="location-and-geo-services.html">9 · Location &amp; geo services</a><a class="modlink" href="data-infrastructure.html">10 · Data infrastructure</a><a class="modlink" href="transactional-and-financial.html">11 · Transactional &amp; financial systems</a><a class="modlink" href="reliability-and-operations.html">12 · Reliability and operations</a><a class="modlink" href="question-bank.html">13 · Question bank: 50 design questions mapped to the lessons</a><a class="modlink active" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Recap</span>
     <h1>Recap &amp; real-world examples</h1>
@@ -471,7 +471,52 @@
 <li>
 <p><strong>For 200 million daily users with 2 posts each, what write rate and yearly storage do you estimate?</strong>
  <br />
-<details><summary>Answer</summary>About 4,630 writes per second on average and about 43.8 TB a year for 300-byte posts. Reads, at 100 times writes, are about 463,000 per second. (<a href="foundations-and-framework.html">Foundations and framework</a>)</details>
+<details><summary>Answer</summary>About 4,630 writes per second on average and about 43.8 TB a year for 300-byte posts. Reads, at 100 times writes, are about 463,000 per second. (<a href="foundations-and-framework.html">Foundations and framework</a>)</details></p>
+</li>
+<li>
+<p><strong>Round robin and least connections are compared with every third request slow. What happens?</strong>
+ <br />
+<details><summary>Answer</summary>Round robin sends all the slow requests to one server, which reached 17 open connections. Least connections peaked at 6. (<a href="traffic-caching-apis-and-storage-choice.html">Traffic, caching, APIs and storage choice</a>)</details></p>
+</li>
+<li>
+<p><strong>A write-back cache flushes every 100 writes and crashes after write 457. What is lost?</strong>
+ <br />
+<details><summary>Answer</summary>The 58 acknowledged writes that were not yet flushed. A write-through cache would lose none, at the cost of slower writes. (<a href="traffic-caching-apis-and-storage-choice.html">Traffic, caching, APIs and storage choice</a>)</details></p>
+</li>
+<li>
+<p><strong>Two new rows arrive while a user reads a feed. Why does offset paging repeat rows, and cursor paging not?</strong>
+ <br />
+<details><summary>Answer</summary>An offset counts positions, so inserting rows at the front shifts every row down. A cursor asks for rows older than the last one seen, so it does not move. (<a href="traffic-caching-apis-and-storage-choice.html">Traffic, caching, APIs and storage choice</a>)</details></p>
+</li>
+<li>
+<p><strong>A user changes a photo and refreshes half a second later and sees the old one. Name the violated guarantee and a fix.</strong>
+ <br />
+<details><summary>Answer</summary>Read-your-writes. Read from the leader for a short window after the user's own write. (<a href="distributed-data-and-consistency.html">Distributed data and consistency</a>)</details></p>
+</li>
+<li>
+<p><strong>A trip saga reserves a flight and a hotel and then the card charge fails. What happens next?</strong>
+ <br />
+<details><summary>Answer</summary>The saga compensates in reverse order: it cancels the hotel, then the flight. (<a href="distributed-data-and-consistency.html">Distributed data and consistency</a>)</details></p>
+</li>
+<li>
+<p><strong>Why does a transactional outbox beat updating the database and then publishing an event?</strong>
+ <br />
+<details><summary>Answer</summary>A crash between the two steps loses the event. With an outbox the event is stored in the same transaction, and a relay publishes it later. In the example, 9 of 10 events were published with a dual write and 10 of 10 with an outbox. (<a href="distributed-data-and-consistency.html">Distributed data and consistency</a>)</details></p>
+</li>
+<li>
+<p><strong>Why can last-write-wins by wall-clock timestamp drop the newest write?</strong>
+ <br />
+<details><summary>Answer</summary>Clocks drift. A server running 2 seconds fast stamps an earlier write later than a later write on a correct clock. Logical clocks order by cause and effect instead. (<a href="distributed-data-and-consistency.html">Distributed data and consistency</a>)</details></p>
+</li>
+<li>
+<p><strong>A service handles 100 requests per second and is offered 90. A one-second blip makes every call fail, and clients retry three times. Why does it not recover?</strong>
+ <br />
+<details><summary>Answer</summary>The retries raise the offered load to 360 per second, so the service stays overloaded. Backoff, jitter and a retry budget kept the peak at 96 per second. (<a href="reliability-and-operations.html">Reliability and operations</a>)</details></p>
+</li>
+<li>
+<p><strong>What did the Cloudflare 2019 outage and the GitLab 2017 outage have in common with a missing safeguard?</strong>
+ <br />
+<details><summary>Answer</summary>Cloudflare pushed a rule to the whole network with no staged rollout and no CPU check in the tests. GitLab had four recovery mechanisms and none worked, because nobody owned testing the restore. (<a href="reliability-and-operations.html">Reliability and operations</a>)</details>
 </p>
 </li>
 </ol>
@@ -481,18 +526,17 @@
 <ol>
 <li><a href="foundations-and-framework.html">Foundations &amp; framework</a> — scaling, estimation, the four-step design process, and a practice plan</li>
 <li><a href="numbers-and-formulas.html">Numbers, formulas and papers</a> — latency, nines, estimation shortcuts and classic papers</li>
+<li><a href="traffic-caching-apis-and-storage-choice.html">Traffic, caching, APIs and storage choice</a> — load balancers, caches, CDNs, stores and APIs</li>
 <li><a href="core-building-blocks.html">Core building blocks</a> — rate limiting, consistent hashing, key-value stores, unique ID generation</li>
+<li><a href="distributed-data-and-consistency.html">Distributed data and consistency</a> — replication, consistency, consensus, sagas and clocks</li>
 <li><a href="web-scale-services.html">Web-scale services</a> — URL shortener, web crawler, notification system, news feed</li>
 <li><a href="real-time-systems.html">Real-time systems</a> — chat, search autocomplete, video streaming</li>
 <li><a href="storage-and-sync.html">Storage &amp; sync</a> — Google Drive file sync, S3-like object storage</li>
 <li><a href="location-and-geo-services.html">Location &amp; geo services</a> — proximity service, nearby friends, Google Maps</li>
 <li><a href="data-infrastructure.html">Data infrastructure</a> — message queues, metrics monitoring, ad click aggregation, email</li>
-<li>
-<p><a href="transactional-and-financial.html">Transactional &amp; financial systems</a> — hotel reservation, leaderboard, payments, digital wallet, stock exchange</p>
-</li>
-<li>
-<p><a href="question-bank.html">Question bank</a> — 50 design questions mapped to the lessons</p>
-</li>
+<li><a href="transactional-and-financial.html">Transactional &amp; financial systems</a> — hotel reservation, leaderboard, payments, digital wallet, stock exchange</li>
+<li><a href="reliability-and-operations.html">Reliability and operations</a> — SLOs, resilience, safe change, recovery and incident case studies</li>
+<li><a href="question-bank.html">Question bank</a> — 50 design questions mapped to the lessons</li>
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>

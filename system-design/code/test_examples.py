@@ -11,6 +11,8 @@ FILES = [
     "estimator.py", "rate_limiter.py", "consistent_hash.py", "quorum.py", "snowflake.py",
     "fanout.py", "stampede.py", "geo_grid.py", "ledger.py", "order_book.py",
     "chat_sync.py", "block_sync.py", "delivery_semantics.py",
+    "load_balancer.py", "cache_policies.py", "pagination.py", "replication_lag.py", "saga.py", "outbox.py",
+    "lamport.py", "circuit_breaker.py", "retries.py", "canary.py",
 ]
 
 failed = []
