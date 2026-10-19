@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Every large-scale system assembles from a small set of reusable primitives. **Rate limiters** protect services from being overwhelmed by users, by bugs, or by attacks. They use algorithms that trade precision for memory and latency. **Consistent hashing** distributes data across a changing set of servers without triggering full re-mappings. Virtual nodes smooth out the inevitable hot spots. **Distributed key-value stores** force you to choose between consistency and availability (the CAP theorem). They then give you dials — quorum parameters, vector clocks, gossip protocols — to fine-tune that choice. **Unique ID generators** seem trivial until you need 10,000 IDs per second across five datacenters with no coordination. Twitter's Snowflake shows how a 64-bit integer can encode time, location, and sequence without a single network call.
@@ -309,6 +311,39 @@ flowchart LR
 
 ---
 
+## Under the hood
+
+Four small files check the four building blocks.
+
+- `rate_limiter.py` has a token bucket and a sliding-window counter, driven by a fake clock.
+- `consistent_hash.py` builds a ring, adds a node, and counts how many keys move.
+- `quorum.py` checks every read set against every write set for a few settings of N, W and R.
+- `snowflake.py` builds a 64-bit ID from a timestamp, a machine number and a sequence, and refuses to issue IDs when the clock moves back.
+
+```python
+def allow(self, now):                      # token bucket
+    self.tokens = min(self.capacity, self.tokens + (now - self.last) * self.rate)
+    self.last = now
+    if self.tokens >= 1:
+        self.tokens -= 1
+        return True
+    return False
+```
+
+## Worked example: four claims, measured
+
+*The numbers come from the four files in `system-design/code/`. The traffic and keys are invented.*
+
+**Token bucket.** With a rate of 5 per second and a capacity of 10, 20 requests in the same instant get 10 answers and 10 refusals. A steady 10 requests per second for 10 seconds gets 59 answers: the 10 saved tokens plus the refill.
+
+**Fixed window versus sliding counter.** The limit is 100 requests per 10 seconds. 100 requests arrive just before a window boundary and 100 just after. A fixed-window counter allows all 200. The sliding-window counter allows 101.
+
+**Consistent hashing.** Add an 11th server to 10. With `hash mod N`, 91% of keys change servers. On a ring with 100 virtual nodes per server, 9.7% move, close to the ideal 1/11 (9.1%). Balance improves with virtual nodes: the busiest server holds 2.69 times the average with 1 virtual node, 1.25 times with 10 and 1.08 times with 100.
+
+**Quorums.** With 3 replicas, W = 2 and R = 2 always overlap, so a read sees the latest write. W = 1 and R = 1 can miss it. The code checks every combination, and it agrees with the rule R + W > N.
+
+**Snowflake.** 41 timestamp bits last about 69.7 years. 10 machine bits allow 1,024 machines. 12 sequence bits allow 4,096 IDs per millisecond per machine. IDs sort by time. If the clock moves back by 5 ms, the generator refuses to issue an ID.
+
 ## Failure modes
 
 - **Rate limiter bypassed by client IP rotation** — IP-based rate limiting fails against distributed attacks. Combine with user-ID, API-key, and behavioral-pattern limiting.
@@ -339,3 +374,11 @@ flowchart LR
 - [Transactional & financial systems](./transactional-and-financial.md) — payment systems where quorum configuration is a business-critical decision
 
 ← [Foundations & framework](./foundations-and-framework.md) · → [Web-scale services](./web-scale-services.md)
+
+## Sources
+
+- David Karger et al., *Consistent Hashing and Random Trees*, STOC 1997: the ring.
+- Giuseppe DeCandia et al., *Dynamo: Amazon's Highly Available Key-value Store*, SOSP 2007: virtual nodes, quorums, vector clocks, gossip, Merkle trees.
+- Twitter, "Announcing Snowflake", 2010: the 64-bit ID layout.
+- Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 1978.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

@@ -346,7 +346,7 @@ LANDING = """<!doctype html>
       <h3>System design →</h3>
       <p>How real systems are designed at scale — from rate limiters to stock exchanges —
       with the architecture, tradeoffs, and failure modes that shape product decisions.
-      28 systems across 8 lessons, diagrams included.</p>
+      28 systems plus lessons on distributed data, caching, ML and GenAI systems, social media and reliability, a question bank and runnable code, diagrams included.</p>
     </a>
     <a class="card" href="access-control/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>

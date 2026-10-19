@@ -19,6 +19,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 
 
+**A/B test** — An online experiment that compares two versions on live traffic.
+
+*In plain terms.* Offline metrics are cheap and can mislead. An A/B test measures the real outcome, such as watch time or revenue, for a model or product change.
+
+*For example.* Send 5% of users to the new ranker and compare watch time.
+
+*Where it shows up:* Launching model changes.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
+
 **A2A** — Agent2Agent — an emerging protocol for agents to advertise capabilities and delegate to each other across vendors.
 
 *In plain terms.* If MCP is how an agent talks to tools, A2A is how one agent talks to another. It lets agents from different vendors discover what each can do and hand off work — early and evolving, but the direction of a multi-agent world.
@@ -38,6 +48,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Writing rules for own-department access; Deciding who owns each attribute; Testing denials.
 
 *See:* [ABAC: deciding with attributes and context](./access-control/abac-deciding-with-attributes-and-context.md).
+
+**ACID transaction** — Atomic, consistent, isolated and durable: the guarantees of a classic database transaction.
+
+*In plain terms.* ACID lets a group of changes succeed or fail together. It is easy to keep on one database and costly across many machines, which is why distributed systems use sagas or consensus instead.
+
+*For example.* A bank transfer either moves the money out and in, or does neither.
+
+*Where it shows up:* Choosing a database; Judging a vendor's consistency claim.
+
+*See:* [Transactional and financial systems](./system-design/transactional-and-financial.md).
 
 **Activations** — The outputs of each layer that training keeps so the backward pass can use them.
 
@@ -59,6 +79,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Variants, and reading a model card](./transformers/variants-and-reading-a-model-card.md).
 
+**Active-active and active-passive** — Active-passive keeps a standby region. Active-active serves traffic from several regions at once.
+
+*In plain terms.* Active-passive is simpler. Active-active gives higher availability and needs conflict handling or partitioned data ownership.
+
+*For example.* Region A serves all users and region B waits, or both serve their nearest users.
+
+*Where it shows up:* Multi-region design.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Adam** — An optimizer that adapts the step size of each parameter from running averages of the gradient and its square.
 
 *In plain terms.* It keeps two extra numbers per parameter, which makes it a large part of training memory. It usually needs less tuning of the learning rate than plain gradient descent.
@@ -68,6 +98,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding why training needs more memory than serving.
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
+
+**Adaptive bitrate (HLS, DASH)** — Video cut into short segments at several qualities, so the player can switch quality as bandwidth changes.
+
+*In plain terms.* The player reads a manifest and pulls segments over HTTP, so CDNs carry most of the load.
+
+*For example.* A 1080p stream drops to 480p when the network slows.
+
+*Where it shows up:* Video streaming.
+
+*See:* [Real-time systems](./system-design/real-time-systems.md).
 
 **Agent loop** — Gather context → decide → act → observe → repeat, until the goal is met or a budget is hit — the core structure of every agent.
 
@@ -259,6 +299,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
 
+**Backoff, jitter and retry budget** — Waiting longer between retries, adding randomness, and capping the extra load that retries can add.
+
+*In plain terms.* Naive retries multiply load on a struggling service. In one example, three naive retries raised 90 requests per second to 360. A budget kept it under the limit.
+
+*For example.* Wait 1 s, 2 s, 4 s with random jitter, and allow retries up to 10% of the base load.
+
+*Where it shows up:* Calling flaky dependencies.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Backpressure** — A system pushing back when it's overloaded — slowing, queuing, or shedding work — instead of collapsing.
 
 *In plain terms.* When more work arrives than a system can handle, it needs a way to say 'slow down' rather than fall over. Backpressure is that mechanism: queue, throttle, or reject gracefully, so overload degrades the experience a little instead of taking everything down.
@@ -369,6 +419,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
 
+**Blue-green deployment** — Running the old and new versions side by side and switching traffic between them.
+
+*In plain terms.* The old version stays ready, so rollback is an instant switch.
+
+*For example.* Switch the load balancer from blue to green, and back if there is a problem.
+
+*Where it shows up:* Safe deploys.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **BM25** — The standard keyword-search scoring formula: rare words count more, repeated words count less each time, and long passages count less per word.
 
 *In plain terms.* BM25 scores a passage by the query words it contains. A word that appears in few documents, such as an error code, counts for a lot. A common word counts for little. It finds exact strings that embeddings can blur, which is why hybrid search pairs it with vector search.
@@ -409,6 +469,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Operations and broadcasting](./tensors/operations-and-broadcasting.md).
 
+**Bulkhead** — Separate resource pools so one failing dependency cannot use up everything.
+
+*In plain terms.* Like the sealed sections of a ship, bulkheads contain a leak. Use separate thread pools or connection limits per dependency.
+
+*For example.* Payment calls get their own pool of 20 connections.
+
+*Where it shows up:* Isolation.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Business acumen** — The skill of seeing how a decision moves the business: revenue, cost, risk and cash.
 
 *In plain terms.* Business acumen means you can trace a product decision to the numbers it moves, and to the people who must agree. It combines general business knowledge with deep knowledge of one domain.
@@ -418,6 +488,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing your own development goals; Writing a business case Finance accepts; Judging a bet outside your own team.
 
 *See:* [Foundations: business acumen and the T-shaped leader](./business-acumen/foundations-and-assessment.md).
+
+**Cache stampede (thundering herd)** — Many requests hitting the database at once when a hot cache entry expires.
+
+*In plain terms.* Fix it with request coalescing, jittered expiry and serving stale data while refreshing. The database must survive a cold cache.
+
+*For example.* 1,000 requests at the moment a hot key expires.
+
+*Where it shows up:* Cache design.
+
+*See:* [Web-scale services](./system-design/web-scale-services.md).
 
 **Calibration** — Whether a model's scores behave like probabilities: among cases scored near 30%, about 30% should happen.
 
@@ -438,6 +518,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* De-risking launches and migrations; Catching regressions in production safely; Designing progressive rollouts.
 
 *See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
+
+**CAP theorem** — When a network partition happens, a system must choose between consistency and availability.
+
+*In plain terms.* Partitions cannot be wished away, so the real choice is what to give up during one. Label operations, not whole systems: payments may need consistency while a like count can lag.
+
+*For example.* During a partition, a CP system refuses some writes. An AP system accepts them and reconciles later.
+
+*Where it shows up:* Setting expectations on data freshness; Reviewing a storage design.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
 
 **Cash conversion cycle (CCC)** — The number of days cash is tied up, from paying a supplier to being paid by a customer: days of inventory plus days of receivables minus days of payables.
 
@@ -468,6 +558,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding why decoder models write left to right; Debugging a training leak.
 
 *See:* [Attention](./transformers/attention.md).
+
+**CDN (content delivery network)** — A network of edge servers that cache content close to users.
+
+*In plain terms.* A CDN cuts latency and takes load off your origin. It suits images, video segments and other cacheable responses. Pull CDNs fetch from the origin on the first miss. Push CDNs get uploads in advance. Use versioned URLs instead of purging.
+
+*For example.* A user in Tokyo gets an image from a nearby edge in a few milliseconds instead of from a US origin.
+
+*Where it shows up:* Serving static assets and video; Absorbing traffic spikes.
+
+*See:* [Real-time systems](./system-design/real-time-systems.md).
+
+**Cell-based architecture** — Splitting a service into independent copies, each serving a subset of customers.
+
+*In plain terms.* A bad change or failure reaches only one cell, which limits the blast radius.
+
+*For example.* Customers are assigned to one of four cells, each with its own stack.
+
+*Where it shows up:* Limiting blast radius.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
 
 **Centrality** — Ranking nodes by how important they are in the graph's structure (the PageRank family).
 
@@ -679,6 +789,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
 
+**Consensus (Raft, Paxos)** — A protocol that lets nodes agree on a sequence of values despite failures.
+
+*In plain terms.* With 2f + 1 nodes it tolerates f failures. Use it for small, critical state such as leader election and configuration, not every write.
+
+*For example.* etcd uses Raft to store cluster configuration.
+
+*Where it shows up:* Leader election; Configuration and locks.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
+**Consistent hashing** — A way to spread keys over servers so that adding or removing a server moves only about 1/N of the keys.
+
+*In plain terms.* Plain hash-mod-N remaps almost every key when N changes. A ring avoids that. Virtual nodes, many points per server, smooth the load.
+
+*For example.* Adding an 11th server to 10 moves about 9% of keys on a ring, against 91% with hash mod N.
+
+*Where it shows up:* Cache and storage clusters; Planning a data migration.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
+
 **Context contract** — A spec section naming what an AI feature must know, remember, and retrieve to be trustworthy — next to its eval bar.
 
 *In plain terms.* A behavior-only spec says what a feature should do and how it's graded, but skips the layer in between: what does the model need to see? A context contract fills that gap by naming, up front, the instructions, retrieved facts, memory, and live state a decision requires — so context sourcing is a scoped build item, not a guess made during implementation.
@@ -869,6 +999,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
 
+**CQRS** — Using separate models for writing and reading data.
+
+*In plain terms.* CQRS lets a read side be shaped for queries, often with copies updated asynchronously. The cost is extra moving parts and read-after-write delay.
+
+*For example.* Orders are written to a normalized store and read from a denormalized view.
+
+*Where it shows up:* Read-heavy systems.
+
+*See:* [Transactional and financial systems](./system-design/transactional-and-financial.md).
+
+**CRDT** — A data type whose copies can be changed independently and then merged without conflicts.
+
+*In plain terms.* CRDTs give automatic merging for counters, sets and text. They suit offline-first and multi-leader designs.
+
+*For example.* Two phones add items to a shared list offline and the lists merge.
+
+*Where it shows up:* Collaborative editing; Multi-region writes.
+
+*See:* [Storage and sync](./system-design/storage-and-sync.md).
+
 **Cross-encoder** — A reranking model that reads the question and a passage together and scores how well the passage answers it.
 
 *In plain terms.* An embedding model encodes the question and each passage separately, which is fast and a little rough. A cross-encoder reads the pair together, so it can weigh every word against every other. It is too slow to run over a whole corpus, so it re-scores only the top candidates from a first search.
@@ -888,6 +1038,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Comparing models on small datasets; Avoiding a lucky validation split.
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
+
+**Cursor pagination** — Paging by asking for items after the last one you saw, instead of by position.
+
+*In plain terms.* Offsets skip or repeat rows when data changes and get slower with depth. Cursors stay stable.
+
+*For example.* Give me 10 posts older than post 91.
+
+*Where it shows up:* List APIs.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
 
 **Customer acquisition cost (CAC)** — Sales and marketing spend divided by the number of new customers won.
 
@@ -948,6 +1108,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Recognising RAG under a platform's branding; Configuring agent knowledge; Reasoning about freshness and retrieval quality.
 
 *See:* [Context & memory](./agentic-ai/context-and-memory.md).
+
+**DAU, QPS and peak factor** — Daily active users, queries per second, and how much higher the peak is than the average.
+
+*In plain terms.* Estimates start from users per day, divide by 86,400 for a per-second average, and multiply by a peak factor of about 2 to 3.
+
+*For example.* 200 million DAU with 2 posts each is about 4,630 writes per second on average.
+
+*Where it shows up:* Back-of-envelope estimates.
+
+*See:* [Foundations and framework](./system-design/foundations-and-framework.md).
 
 **Decision threshold** — The score above which a model's output becomes an action, such as flag, block or call.
 
@@ -1029,6 +1199,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Speculative decoding vs. quantization vs. distillation](./content/01-inference-internals/speculative-quantization-distillation.md).
 
+**Double-entry ledger** — A bookkeeping log where every transaction posts equal debits and credits and balances are derived.
+
+*In plain terms.* The invariant that entries sum to zero catches bugs. Entries are immutable, and money is held as integers in minor units.
+
+*For example.* A $20 charge posts -2,000 to the card, +1,940 to the merchant and +60 to fees.
+
+*Where it shows up:* Payments; Auditing.
+
+*See:* [Transactional and financial systems](./system-design/transactional-and-financial.md).
+
 **DPO (direct preference optimization)** — A way to tune a model from pairs of better and worse answers directly, with no separate reward model and no reinforcement learning loop.
 
 *In plain terms.* For each pair, DPO raises the log-probability of the chosen answer and lowers the rejected one, relative to a frozen reference model. It is simpler to run than RLHF.
@@ -1058,6 +1238,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Sizing memory; Choosing a number format.
 
 *See:* [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md).
+
+**Durable execution (checkpointing)** — Saving a long-running workflow's progress after each step, so a crash resumes instead of restarting.
+
+*In plain terms.* For agents it stops paid or irreversible tool calls from repeating after a failure.
+
+*For example.* An agent crashes after step 3 and resumes at step 4 without repeating the first three.
+
+*Where it shows up:* Agent platforms; Long workflows.
+
+*See:* [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md).
 
 **Early stopping** — Ending training when the validation loss stops improving.
 
@@ -1128,6 +1318,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Estimating training cost; Choosing when to stop.
 
 *See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
+
+**Erasure coding** — Storing data as coded fragments so the original survives the loss of some fragments.
+
+*In plain terms.* It uses less space than full copies for the same durability, but repair and reads cost more compute and network. It suits warm and cold data.
+
+*For example.* Storing 1.4 to 2 times the data instead of 3 copies.
+
+*Where it shows up:* Object storage; Cost control.
+
+*See:* [Storage and sync](./system-design/storage-and-sync.md).
 
 **Error analysis** — Reading real failures, labeling them in your own words, clustering into a taxonomy, and iterating — the discipline before metric-picking.
 
@@ -1239,6 +1439,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Running at scale](./ai-assisted-development/running-at-scale.md).
 
+**Fan-out (on write, on read)** — Copying one event to many readers when it is written, or gathering it from many sources when it is read.
+
+*In plain terms.* Fan-out on write makes reads fast and writes costly for popular accounts. Fan-out on read does the opposite. Real feeds use a hybrid.
+
+*For example.* A celebrity post is pulled at read time, while a friend's post is pushed into feeds.
+
+*Where it shows up:* News feeds; Notifications.
+
+*See:* [Web-scale services](./system-design/web-scale-services.md).
+
 **Feature** — One fact about a case that a model uses as input, such as months as a customer.
 
 *In plain terms.* A row of data describes one case with a list of facts. Each fact is a feature. Choosing and preparing features is a large part of ML work. A feature must be known at the moment of prediction.
@@ -1249,6 +1459,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Data: features, labels, splits and leakage](./machine-learning/data-features-labels-and-leakage.md).
 
+**Feature flag** — A switch that turns a feature on or off without a deploy.
+
+*In plain terms.* Flags separate deploying code from releasing it, and allow gradual rollout and instant disable.
+
+*For example.* Show the new checkout to 5% of users.
+
+*Where it shows up:* Safe releases.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **Feature map** — The grid of outputs one kernel produces: how strongly each position matched its pattern.
 
 *In plain terms.* Each kernel in a layer makes one feature map. A layer with 64 kernels outputs 64 maps, which become the 64 input channels of the next layer.
@@ -1258,6 +1478,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Estimating activation memory; Reading what a layer outputs.
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Feature store** — A shared store of feature definitions and values for training and serving.
+
+*In plain terms.* It keeps one definition of each feature, so the model sees in production what it saw in training. That prevents training-serving skew.
+
+*For example.* The same 'clicks in the last hour' feature feeds both the training job and the live ranker.
+
+*Where it shows up:* ML platforms; Avoiding training-serving skew.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Feed-forward layer** — The part of a transformer block that reworks each token's vector on its own, and holds about two thirds of a block's weights.
 
@@ -1429,6 +1659,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What makes AI "generative"?](./generative-ai/what-is-generative-ai.md).
 
+**Geospatial index (geohash, S2, H3)** — A way to map locations to cells so nearby search looks at a few cells instead of every item.
+
+*In plain terms.* Search the user's cell and its neighbours, then filter by distance. Hexagonal grids make all neighbours equally near.
+
+*For example.* Find drivers in the rider's cell and the six cells around it.
+
+*Where it shows up:* Nearby search; Ride hailing.
+
+*See:* [Location and geo services](./system-design/location-and-geo-services.md).
+
 **Go-to-market motion (GTM motion)** — The repeatable way customers find, buy and start using a product: self-serve, sales-led, partner-led or embedded in someone else's software.
 
 *In plain terms.* Each motion has its own acquisition cost and payback. Match the motion to the deal size. A strong offer sold through the wrong motion still loses money.
@@ -1448,6 +1688,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Preventing quality regressions; Making 'is the new version better?' answerable; Gating releases of AI features.
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
+
+**Gossip protocol** — A way for nodes to share state by regularly telling a few random peers.
+
+*In plain terms.* Gossip spreads failure and membership news without a central server. It converges quickly and tolerates node loss.
+
+*For example.* Each node pings a few peers every second and shares its heartbeat table.
+
+*Where it shows up:* Failure detection.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
 
 **GPTQ** — A one-shot post-training quantization method using approximate second-order information to minimise layer-wise error.
 
@@ -1619,6 +1869,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Harness engineering](./content/00-foundations/harness-engineering.md).
 
+**Health check and connection draining** — A probe that removes failing servers from a pool, and a step that lets in-flight requests finish before a server leaves.
+
+*In plain terms.* Together they make failures and deploys invisible to users.
+
+*For example.* The balancer stops sending new requests to a server in draining state.
+
+*Where it shows up:* Load balancing; Safe deploys.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
+
 **Hierarchical navigable small world (HNSW)** — A graph-based approximate nearest-neighbour index: each vector links to near neighbours in layers, and a search walks from coarse to fine.
 
 *In plain terms.* Instead of checking every vector, HNSW links each vector to a few close neighbours, in several layers. A search starts in a sparse top layer, jumps toward the query, and drops to denser layers until it reaches the closest vectors. It is fast at question time, and it costs memory and build time.
@@ -1678,6 +1938,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Improving retrieval on mixed queries; Handling identifiers and jargon in RAG; Reducing 'it couldn't find the obvious doc'.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**HyperLogLog** — A probabilistic structure that counts distinct items in a few kilobytes.
+
+*In plain terms.* It trades a small error for tiny, constant memory and can be merged. Redis's version uses up to 12 KB with a standard error of 0.81%.
+
+*For example.* Counting unique viewers of a post.
+
+*Where it shows up:* Unique counts at scale.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
 
 **Hypothetical document embeddings (HyDE)** — A retrieval trick: have a model write a hypothetical answer, then search with the embedding of that answer instead of the question.
 
@@ -1849,6 +2119,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
+**Inverted index** — An index that maps each term to the list of items that contain it.
+
+*In plain terms.* A query becomes set operations on the lists. Graph search does the same over edges, for example friend:alice and lives_in:london.
+
+*For example.* Friends of Alice who live in London is the intersection of two lists.
+
+*Where it shows up:* Search; Graph search.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
+
 **Jagged frontier** — The uneven boundary of model capability — brilliant at some hard tasks, unreliable at some easy ones — which makes scoping a core product skill.
 
 *In plain terms.* Model ability isn't a smooth line where 'harder = worse'. It's jagged: a model may ace a complex analysis yet flub a simple count. You can't assume; you have to test where the edges are for your specific task, because intuition misleads.
@@ -2009,6 +2289,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
 
+**Learning to rank** — A model trained on relevance and conversion signals to order retrieved results.
+
+*In plain terms.* Search retrieves candidates with keywords and embeddings, then a ranking model orders them, with business rules applied last.
+
+*For example.* Hybrid retrieval of BM25 and embedding hits, then a ranker, then rules.
+
+*Where it shows up:* Search; Marketplaces.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
+
 **Least privilege** — Giving an agent only the minimum access and tools it needs — nothing more — so mistakes and attacks stay contained.
 
 *In plain terms.* The blast radius of an agent equals what it's allowed to touch. Least privilege means granting the narrowest access that still gets the job done, so a compromised or confused agent can only do limited damage.
@@ -2049,6 +2339,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Transfer learning and labels](./cnns/transfer-learning-and-labels.md).
 
+**Linearizability** — The guarantee that a system acts like a single copy: once a write completes, every later read sees it.
+
+*In plain terms.* It is the strongest common model. It costs latency and availability, so use it only where needed.
+
+*For example.* After a payment is recorded, any read shows it.
+
+*Where it shows up:* Payments; Locks and leader election.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Link prediction** — Inferring edges that are missing or likely to form next in a graph (recommendations, 'people you may know') — probabilistic, so ship as suggestion, never as fact.
 
 *In plain terms.* Given the pattern of existing connections, you can guess connections that probably exist or will. Link prediction is that guess: powering recommendations and next-best-action. Crucially it's a probability, not a truth — so it belongs in the UI as a suggestion, never stored as a hard fact.
@@ -2078,6 +2378,36 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Scaling evals cheaply; Grading open-ended outputs; Continuous quality monitoring (with human spot-checks).
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
+
+**Load balancer** — A component that spreads requests over several servers.
+
+*In plain terms.* Layer 4 balancers route by address and port and are fast. Layer 7 balancers read the request and can route by path, header or cookie. Health checks remove failing servers, and pairs avoid a single point of failure.
+
+*For example.* An L7 balancer sends /api to one pool and /static to another.
+
+*Where it shows up:* Scaling stateless services; Safe deploys.
+
+*See:* [Foundations and framework](./system-design/foundations-and-framework.md).
+
+**Load shedding and backpressure** — Rejecting work early when a service is overloaded, and telling callers to slow down.
+
+*In plain terms.* It keeps a service working for some requests instead of failing for all of them.
+
+*For example.* Return HTTP 503 for low-priority requests when queues are full.
+
+*Where it shows up:* Overload protection.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
+**Logical clock (Lamport)** — A counter that orders events by cause and effect without trusting wall-clock time.
+
+*In plain terms.* Wall clocks drift. A logical clock takes the later of its own value and the one it receives, then adds one, so effects always follow causes.
+
+*For example.* Send at time 2, receive at time 3, reply at time 4.
+
+*Where it shows up:* Ordering events; Conflict detection.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
 
 **Logistic regression** — A linear model for yes-or-no questions: a weighted sum of the features, turned into a probability.
 
@@ -2289,6 +2619,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [A latticework of mental models](./first-principles/mental-models-latticework.md).
 
+**Merkle tree** — A tree of hashes used to compare large data sets by comparing a few hashes.
+
+*In plain terms.* Replicas compare root hashes and walk down only the branches that differ, so repair needs little traffic.
+
+*For example.* Two replicas find 3 differing keys out of millions.
+
+*Where it shows up:* Replica repair.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
+
+**Message queue vs. log** — A queue hands each message to one consumer. A log keeps ordered, replayable partitions that many consumer groups read.
+
+*In plain terms.* Queues decouple producers from slow consumers. Logs also allow replay and many readers. Both usually deliver at least once, so consumers must be idempotent.
+
+*For example.* A payment event written to a log, read by billing and analytics separately.
+
+*Where it shows up:* Async processing; Absorbing bursts.
+
+*See:* [Data infrastructure](./system-design/data-infrastructure.md).
+
 **Metadata filter** — A rule that limits retrieval to chunks whose stored fields match, such as status, tenant, date or permission.
 
 *In plain terms.* Each chunk carries fields beside its text. A filter keeps only the chunks that match, for example current documents that this customer may see. It is how retrieval removes the similar-but-wrong and the forbidden. With an approximate index, a filter applied after the scan can return fewer results than asked for.
@@ -2499,6 +2849,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What computer vision does](./cnns/what-computer-vision-does.md).
 
+**Observability (RED and USE)** — The ability to understand a system from its outputs: metrics, logs and traces.
+
+*In plain terms.* RED covers services: rate, errors, duration. USE covers resources: utilization, saturation, errors. Alert on user-facing symptoms.
+
+*For example.* A dashboard of request rate, error rate and latency per service.
+
+*Where it shows up:* Operating services.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
+
 **OKR** — Objectives and Key Results — a goal-setting format that turns a strategic choice into a measurable quarterly target.
 
 *In plain terms.* An OKR translates strategy into something a team can act on this quarter: the Objective restates the strategic bet in outcome language, and the Key Results are the numbers that prove it's working. OKRs should be set BY strategy, not used as a substitute for having one — a Key Result that doesn't trace back to a strategic choice is a number in search of a reason.
@@ -2619,6 +2979,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
 
+**PACELC** — If there is a Partition, trade Availability against Consistency; Else, trade Latency against Consistency.
+
+*In plain terms.* CAP covers only the partition case. PACELC adds the everyday trade-off between speed and consistency.
+
+*For example.* A store that waits for a remote replica is consistent and slow. One that does not is fast and may be stale.
+
+*Where it shows up:* Reading vendor consistency claims.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Paged attention** — Managing the KV cache in fixed-size non-contiguous blocks (like OS virtual memory) to eliminate wasted memory.
 
 *In plain terms.* Naively, each request reserves one big contiguous chunk of memory for its cache, and the gaps between requests are wasted. Paged attention chops memory into small uniform blocks handed out as needed — the same trick operating systems use — so far more requests fit on the same hardware.
@@ -2658,6 +3028,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Judging growth spend; Comparing bets under cash pressure.
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
+**pCTR (predicted click-through rate)** — The model's estimate of the chance that a user clicks an ad.
+
+*In plain terms.* Auctions often rank by bid times pCTR, so the probabilities must be calibrated. A model that is three times too high keeps the order and misprices everything.
+
+*For example.* Ad a with a $2.00 bid and a 1.0% pCTR is worth $0.020 per impression.
+
+*Where it shows up:* Ads ranking.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Permission mode** — The overall posture of a coding agent: ask for everything, auto-approve edits, plan only, let a classifier decide, or skip checks.
 
@@ -2879,6 +3259,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Flowable](./flowable/README.md).
 
+**Product quantization** — Compressing vectors by splitting them into parts and storing each part as a short code.
+
+*In plain terms.* It cuts memory sharply: 100 billion 128-number vectors need 51.2 TB uncompressed and 3.2 TB at 32 bytes each. Search then re-ranks the best candidates exactly.
+
+*For example.* A 512-byte vector stored in 32 bytes.
+
+*Where it shows up:* Large vector indexes.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
+
 **Profit pool** — The total profit earned across an industry's value chain, split by who earns it.
 
 *In plain terms.* Revenue share and profit share are not the same. A player can touch most of the money and keep little of it. Map the pool one unit at a time, then ask which force protects each share.
@@ -2969,6 +3359,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [ML in production: drift, skew and the lifecycle](./machine-learning/ml-in-production.md).
 
+**Push notification (APNs, FCM)** — A message sent to a phone through Apple's or Google's push service.
+
+*In plain terms.* Your server asks the platform service to deliver. Delivery is best effort, so use retries with backoff, dead-letter queues and user preferences.
+
+*For example.* A password-reset code sent through a high-priority queue.
+
+*Where it shows up:* Notification systems.
+
+*See:* [Web-scale services](./system-design/web-scale-services.md).
+
 **QLoRA** — LoRA applied to a frozen model held in 4-bit numbers, which cuts memory enough to tune very large models on one accelerator.
 
 *In plain terms.* QLoRA keeps the frozen weights in a compact 4-bit format and trains a small adapter in higher precision. It allowed a 65 billion parameter model to be tuned on a single 48 GB accelerator.
@@ -3008,6 +3408,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Reading how attention works; Counting the cache: keys and values are what it stores.
 
 *See:* [Attention](./transformers/attention.md).
+
+**Quorum (R + W > N)** — Reading from R and writing to W of N replicas so that every read meets every write when R + W > N.
+
+*In plain terms.* Quorum overlap means a read sees at least one copy of the latest write. It does not by itself give strict ordering, and sloppy quorums weaken it.
+
+*For example.* N = 3, W = 2, R = 2 always overlaps. W = 1, R = 1 can return stale data.
+
+*Where it shows up:* Tuning freshness against latency.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
 
 **Quota attainment** — The share of quota that salespeople actually close, on average.
 
@@ -3079,6 +3489,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Calling an LLM API](./api-integrations/calling-an-llm-api.md).
 
+**Rate limiter** — A control that caps how many requests a client can make in a period.
+
+*In plain terms.* Token bucket allows bursts up to a capacity. Fixed windows allow double bursts at the edge. Sliding windows are more exact. Answer over the limit with HTTP 429 and a Retry-After header.
+
+*For example.* 100 requests per minute per API key.
+
+*Where it shows up:* Protecting services; Fair use and abuse control.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
+
 **RBAC** — Role-based access control: permissions go to roles, and people are given roles.
 
 *In plain terms.* Instead of listing what each person may do, you define jobs, such as editor or viewer, and give each job a set of permissions. People hold roles. It is easy to explain and audit. It struggles with rules about a specific object, and roles tend to multiply.
@@ -3098,6 +3518,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how agents 'think'; Reading agent transcripts; Comparing reasoning strategies (vs. plan-and-execute, tree-of-thoughts).
 
 *See:* [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
+
+**Read-your-writes** — The guarantee that a user always sees their own updates.
+
+*In plain terms.* Without it, a user changes a setting, refreshes and sees the old value from a lagging replica. Read from the leader for a short time after a write.
+
+*For example.* A new profile photo shows right away for the user who uploaded it.
+
+*Where it shows up:* Settings and profiles.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
 
 **Real option** — The right, but not the obligation, to take a future business action, such as expanding or stopping a bet.
 
@@ -3158,6 +3588,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building hybrid search; Understanding why a noisy list can outvote the right answer.
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
+**Recommendation funnel** — A serving path that narrows a huge catalogue in stages: retrieval, ranking and re-ranking.
+
+*In plain terms.* A cheap stage keeps thousands of candidates so a heavy model scores only those. An item dropped early can never be recovered, so measure retrieval recall.
+
+*For example.* 20,000 items, 500 retrieved, then 20 shown, at about one thirtieth of the cost of scoring everything.
+
+*Where it shows up:* Feeds and recommendations; Ads and search.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Red-teaming** — Structured adversarial testing — internal or paid external researchers actively trying to break a model or product before launch — run as a recurring practice, not a one-time pre-launch event.
 
@@ -3238,6 +3678,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Making structured output production-grade; Deciding retry limits and fallbacks; Improving tool-call reliability.
 
 *See:* [Structured output](./content/02-reliable-outputs/structured-output.md).
+
+**Replication** — Keeping copies of data on several machines.
+
+*In plain terms.* Replication adds read capacity and survives machine loss. The price is lag and conflicts. Leader-follower is simple. Multi-leader and leaderless designs trade conflicts for availability.
+
+*For example.* A leader takes writes and streams changes to followers that serve reads.
+
+*Where it shows up:* Read scaling; Failover design.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
 
 **Reranking** — A second-stage model that re-scores retrieved candidates for relevance before they enter the prompt.
 
@@ -3358,6 +3808,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how context limits are extended; Reading model cards.
 
 *See:* [Position, and the cost of context](./transformers/position-and-the-cost-of-context.md).
+
+**RPO and RTO** — RPO is how much data you can afford to lose. RTO is how long recovery may take.
+
+*In plain terms.* They turn "disaster recovery" into numbers a design can meet. Smaller values cost more.
+
+*For example.* RPO of 1 minute needs near-continuous replication. RTO of 15 minutes needs a warm standby.
+
+*Where it shows up:* Disaster recovery planning.
+
+*See:* [Reliability and operations](./system-design/reliability-and-operations.md).
 
 **Run-off** — The period after an insurer stops writing new policies, when it must still pay claims on existing ones.
 
@@ -3509,6 +3969,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md).
 
+**Sharded counter** — A counter split into many rows, written to at random and summed on read.
+
+*In plain terms.* It removes the hot spot a viral item creates on a single row. In one example, the busiest row fell from 50,000 writes to 3,195.
+
+*For example.* A like count split over 16 shards.
+
+*Where it shows up:* Likes and views; Hot keys.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
+
+**Sharding** — Splitting a data set across machines by a key.
+
+*In plain terms.* Sharding scales writes and storage. The shard key decides everything: it must match the common queries and spread load. Watch hot keys, cross-shard queries and resharding.
+
+*For example.* User data split by hash of user ID across 16 shards.
+
+*Where it shows up:* Scaling a database; Reviewing a data model.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
+
 **SLA / SLO** — An SLO is the reliability/performance target you aim for internally; an SLA is the promise (with penalties) you make to customers.
 
 *In plain terms.* An SLO (objective) is your internal goal — '99.9% of requests succeed'. An SLA (agreement) is the external contract with consequences if you miss it. You set SLOs stricter than SLAs so you have headroom before you owe a customer money.
@@ -3518,6 +3998,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting reliability targets and commitments; Negotiating enterprise contracts; Prioritising reliability work.
 
 *See:* [Reliability & failure](./technical-product-sense/reliability-and-failure.md).
+
+**SLI, SLO and SLA** — An SLI measures service health, an SLO is the target, and an SLA is a contract with consequences.
+
+*In plain terms.* The gap between 100% and the SLO is the error budget you can spend on change. 99.9% allows about 43 minutes of downtime in a 30-day month.
+
+*For example.* SLI: share of requests that succeed. SLO: 99.9% over 30 days.
+
+*Where it shows up:* Setting reliability goals; Deciding when to freeze releases.
+
+*See:* [Foundations and framework](./system-design/foundations-and-framework.md).
+
+**Snowflake ID** — A 64-bit unique ID built from a timestamp, a machine number and a sequence.
+
+*In plain terms.* It needs no network call and sorts roughly by time. It depends on clocks, so it must refuse to issue IDs if the clock moves back.
+
+*For example.* 41 bits of time, 10 of machine and 12 of sequence: 4,096 IDs per millisecond per machine.
+
+*Where it shows up:* Generating IDs without coordination.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
 
 **SOC 2** — An audit against five Trust Services Criteria (security, availability, processing integrity, confidentiality, privacy) that's become the default first question in enterprise AI procurement — Type II, attesting controls worked over a period of time, is what buyers actually want.
 
@@ -3889,6 +4389,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
 
+**Tool gateway** — A service that sits between an agent and its tools and checks every call.
+
+*In plain terms.* It authenticates, checks per-tool permissions, enforces quotas and timeouts, and logs the call. A denied tool never runs.
+
+*For example.* An agent allowed to search cannot charge a card.
+
+*Where it shows up:* Agent platforms; Least privilege.
+
+*See:* [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md).
+
 **Top-k retrieval** — How many passages retrieval hands the model — the 'k' most relevant. A key dial in the recall/precision tradeoff.
 
 *In plain terms.* Retrieval doesn't return everything; it returns the k best matches (say, the top 5). Raise k and you catch more of the answer but also more noise; lower it and you stay focused but risk missing something. Choosing k is choosing where you sit on the recall-vs-precision tradeoff.
@@ -3969,6 +4479,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Reliability & evals](./agentic-ai/reliability-and-evals.md).
 
+**Transactional outbox** — A pattern where a service writes an event to an outbox table in the same transaction as its data, and a relay publishes it.
+
+*In plain terms.* It removes the gap between updating the database and publishing an event, so a crash loses nothing.
+
+*For example.* An order row and its OrderPlaced event commit together.
+
+*Where it shows up:* Reliable event publishing.
+
+*See:* [Distributed data and consistency](./system-design/distributed-data-and-consistency.md).
+
 **Transfer learning** — Reusing a model trained on one large dataset as the starting point for your task.
 
 *In plain terms.* Few teams train vision models from scratch. They take a pre-trained network and either freeze it and train a small head, or fine-tune some or all of it. How much data you have and how similar it is decide which.
@@ -4008,6 +4528,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how graphs store knowledge; Why graphs and LLMs pair well (facts as sentences); Modeling data as connected facts.
 
 *See:* [What is a knowledge graph?](./knowledge-graphs/what-is-a-knowledge-graph.md).
+
+**Two-phase commit (2PC)** — A protocol where a coordinator asks all participants to prepare and then to commit.
+
+*In plain terms.* It is atomic but blocking: if the coordinator fails at the wrong moment, participants hold locks. Sagas are the more available alternative.
+
+*For example.* Two databases commit a transfer together or abort together.
+
+*Where it shows up:* Cross-database transactions.
+
+*See:* [Transactional and financial systems](./system-design/transactional-and-financial.md).
 
 **Underfitting** — When a model is too simple to capture a real pattern, so it scores poorly everywhere.
 
@@ -4049,6 +4579,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Data and decisions](./business-acumen/data-and-decisions.md).
 
+**Vector clock** — A set of counters that records which updates each node has seen.
+
+*In plain terms.* Vector clocks tell whether two versions are ordered or concurrent, so a store can detect conflicts that wall-clock time would hide.
+
+*For example.* Versions [A:2] and [B:1] are concurrent and need a merge.
+
+*Where it shows up:* Conflict detection.
+
+*See:* [Core building blocks](./system-design/core-building-blocks.md).
+
 **Vector database** — A store that indexes embeddings so you can quickly find the items most similar in meaning to a query.
 
 *In plain terms.* Once text is turned into embedding vectors, you need somewhere to keep millions of them and search them fast. A vector database does exactly that: given a query's vector, it returns the nearest neighbours — the most semantically similar chunks — in milliseconds.
@@ -4058,6 +4598,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building the retrieval half of RAG; Evaluating retrieval infrastructure; Reasoning about recall and index freshness.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Vehicle routing problem** — Planning routes for many vehicles under constraints such as time windows and capacity.
+
+*In plain terms.* It is NP-hard, so real systems use heuristics and solvers, then re-plan as traffic and orders change.
+
+*For example.* A nearest-neighbour tour of 116 km improved to 103 km by a 2-opt pass.
+
+*Where it shows up:* Delivery and logistics.
+
+*See:* [Location and geo services](./system-design/location-and-geo-services.md).
 
 **Verification gate** — A command with a pass or fail result that must succeed before an agent's work counts as done.
 
@@ -4129,6 +4679,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Webhooks & async patterns](./api-integrations/webhooks-and-async-patterns.md).
 
+**WebSocket** — A long-lived two-way connection between a client and a server.
+
+*In plain terms.* WebSockets let the server push messages without polling. They hold state on the server, so they need a connection tier and a way to find which server holds a user.
+
+*For example.* A chat app keeps one WebSocket open per device.
+
+*Where it shows up:* Chat and live updates.
+
+*See:* [Real-time systems](./system-design/real-time-systems.md).
+
 **Weight sharing** — Using the same kernel weights at every position of an image.
 
 *In plain terms.* Sharing assumes a pattern worth finding in one place is worth finding everywhere. It cuts the number of weights enormously, and a shifted input gives a shifted output. It fits poorly when position matters, such as on centred faces.
@@ -4168,6 +4728,26 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Judging payment terms and payout schedules; Explaining why a profitable launch needs a credit line.
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
+
+**Write-ahead log (WAL)** — An append-only file where changes are recorded before they are applied.
+
+*In plain terms.* A WAL gives durability and fast sequential writes. It also supports replication and point-in-time recovery.
+
+*For example.* A database records a change in the WAL, then updates its tables.
+
+*Where it shows up:* Durability; Backups and recovery.
+
+*See:* [Data infrastructure](./system-design/data-infrastructure.md).
+
+**Write-back and write-through cache** — Write-through writes to the cache and the database together. Write-back writes to the cache and flushes later.
+
+*In plain terms.* Write-back is faster and loses unflushed writes in a crash. In one example, 58 acknowledged writes were lost.
+
+*For example.* A cache flushed every 100 writes crashes after write 457.
+
+*Where it shows up:* Cache design.
+
+*See:* [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md).
 
 **XML tags (in prompts)** — Wrapping each part of a prompt in named tags like <document> or <example> so the model treats section boundaries as unambiguous.
 

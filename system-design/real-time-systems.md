@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Three systems where latency is the product. A **chat system** serves 50 million daily users through WebSocket connections to stateful chat servers. It uses a key-value store for message history and heartbeat-based presence detection. A **search autocomplete** system responds in under 100ms at 48,000 peak QPS. It pre-computes top-k results at every node of a trie data structure, rebuilt weekly in batch and sharded by prefix range. And a **video streaming platform** at YouTube scale (5 billion daily views) parallelizes upload and transcoding through a DAG-based processing pipeline. It serves popular content from CDN edge nodes, and streams via adaptive bitrate protocols (MPEG-DASH, HLS) that adjust quality to the viewer's bandwidth in real time.
@@ -343,6 +345,28 @@ Video infrastructure is expensive. Key optimizations:
 
 ---
 
+## Under the hood
+
+The file is `system-design/code/chat_sync.py`. A conversation is an append-only log. Each message gets the next sequence number. A retried send carries the same client message ID, so it is not stored twice. A phone that was offline asks for everything after the last sequence number it saw.
+
+```python
+def send(self, client_msg_id, text):
+    if client_msg_id in self.seen:
+        return self.seen[client_msg_id]          # a retry: return the original position
+    seq = len(self.log) + 1
+    self.log.append((seq, client_msg_id, text))
+    self.seen[client_msg_id] = seq
+    return seq
+```
+
+## Worked example: a lost ack and an offline phone
+
+*The messages are invented. The numbers come from `chat_sync.py`.*
+
+A user sends "hi". The server stores it as message 1, but the acknowledgement is lost, so the app sends it again with the same client message ID. The server answers with sequence number 1 and stores nothing new. Two more messages arrive while the user's phone is offline. When the phone reconnects, it says "I last saw message 1" and receives messages 2 and 3. No message was lost and none was stored twice.
+
+The same two ideas, a sequence number per conversation and an idempotent send, are why chat apps can retry freely.
+
 ## Failure modes
 
 - **WebSocket server restart** — All clients connected to a chat server lose their connection simultaneously. Without graceful drain (migrating connections before shutdown), thousands of clients reconnect at once, potentially overwhelming other servers. Implement connection draining: stop accepting new connections, notify clients to reconnect to a different server, wait for transfer before shutting down.
@@ -377,3 +401,10 @@ Video infrastructure is expensive. Key optimizations:
 - [Data infrastructure](./data-infrastructure.md) — the distributed message queues that connect chat servers and the event pipelines that feed autocomplete trie rebuilds
 
 ← [Web-scale services](./web-scale-services.md) · → [Storage & sync](./storage-and-sync.md)
+
+## Sources
+
+- I. Fette and A. Melnikov, *The WebSocket Protocol*, RFC 6455, 2011.
+- R. Pantos and W. May, *HTTP Live Streaming*, RFC 8216, 2017: segmented adaptive-bitrate video.
+- Alex Xu, *System Design Interview*, volume 1: chat system, autocomplete and video streaming chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

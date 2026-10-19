@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Cloud storage systems solve two distinct problems. **File sync** (Google Drive) keeps user files consistent across devices. It splits them into content-addressed blocks, syncs only deltas, and resolves conflicts. **Object storage** (S3) stores immutable blobs at planetary scale, with extreme durability guarantees through replication or erasure coding. Both split metadata from data, but for different reasons: file sync needs fast tree traversal and conflict detection, while object storage needs petabyte-scale durability at minimal overhead. Understanding the boundary between these two models determines whether your product stores files that users edit or objects that services consume.
@@ -298,6 +300,31 @@ Lifecycle policies automate storage management:
 
 ---
 
+## Under the hood
+
+The file is `system-design/code/block_sync.py`. It splits a file into 4 KB blocks, hashes each block, and uploads only the blocks the server does not already hold.
+
+```python
+def upload(self, data):
+    sent = skipped = 0
+    for b in blocks(data):
+        d = digest(b)
+        if d in self.store:
+            skipped += 1
+        else:
+            self.store[d] = b
+            sent += 1
+    return sent, skipped
+```
+
+## Worked example: a one-byte edit
+
+*The file is random bytes. The numbers come from `block_sync.py`.*
+
+A 400 KB file is 100 blocks. The first upload sends all 100. The user then changes one byte in block 51. The second upload sends 1 block and skips 99. Another user uploads an identical copy of the original file. It sends 0 blocks and skips 100.
+
+This is why sync clients feel fast, and why storage providers can deduplicate across users. It also shows the cost: the server must hash and look up every block.
+
 ## Failure modes
 
 - **Split-brain in file sync** — two devices both believe they have the latest version, producing irreconcilable changes. The conflict-copy approach is safe but creates user friction.
@@ -328,3 +355,11 @@ Lifecycle policies automate storage management:
 - [Web-scale services](./web-scale-services.md) — notification patterns (long polling, push) from the notification system design
 
 ← [Real-time systems](./real-time-systems.md) · → [Location & geo services](./location-and-geo-services.md)
+
+## Sources
+
+- Doug Beaver et al., *Finding a Needle in Haystack: Facebook's Photo Storage*, OSDI 2010.
+- Subramanian Muralidhar et al., *f4: Facebook's Warm BLOB Storage System*, OSDI 2014: erasure coding for warm data.
+- Sanjay Ghemawat, Howard Gobioff and Shun-Tak Leung, *The Google File System*, SOSP 2003.
+- Alex Xu, *System Design Interview*, volume 2: Google Drive and S3-like object storage chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

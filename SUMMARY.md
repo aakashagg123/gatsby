@@ -370,13 +370,21 @@ How real systems are designed at scale — from rate limiters to stock exchanges
 architecture, tradeoffs, and failure modes that shape product decisions.
 
 1. [Foundations & framework](./system-design/foundations-and-framework.md)
-2. [Core building blocks](./system-design/core-building-blocks.md)
-3. [Web-scale services](./system-design/web-scale-services.md)
-4. [Real-time systems](./system-design/real-time-systems.md)
-5. [Storage & sync](./system-design/storage-and-sync.md)
-6. [Location & geo services](./system-design/location-and-geo-services.md)
-7. [Data infrastructure](./system-design/data-infrastructure.md)
-8. [Transactional & financial systems](./system-design/transactional-and-financial.md) · [Recap](./system-design/recap.md)
+2. [Numbers, formulas and papers](./system-design/numbers-and-formulas.md)
+3. [Traffic, caching, APIs and storage choice](./system-design/traffic-caching-apis-and-storage-choice.md)
+4. [Core building blocks](./system-design/core-building-blocks.md)
+5. [Distributed data and consistency](./system-design/distributed-data-and-consistency.md)
+6. [Web-scale services](./system-design/web-scale-services.md)
+7. [Real-time systems](./system-design/real-time-systems.md)
+8. [Storage & sync](./system-design/storage-and-sync.md)
+9. [Location & geo services](./system-design/location-and-geo-services.md)
+10. [Data infrastructure](./system-design/data-infrastructure.md)
+11. [Transactional & financial systems](./system-design/transactional-and-financial.md)
+12. [ML system design](./system-design/ml-system-design.md)
+13. [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md)
+14. [Social and media systems](./system-design/social-and-media-systems.md)
+15. [Reliability and operations](./system-design/reliability-and-operations.md)
+16. [Question bank](./system-design/question-bank.md) · [Recap](./system-design/recap.md)
 
 ## [Access control](./access-control/README.md)
 

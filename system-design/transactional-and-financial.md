@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Financial and transactional systems are where distributed systems meet zero tolerance for error. A **hotel reservation** system prevents double-booking through database constraints and idempotency keys on a modest 3 TPS write load. A **gaming leaderboard** exploits Redis sorted sets for O(log N) rank operations across 5M daily players. A **payment system** orchestrates PSP integration, double-entry ledgers, and nightly reconciliation to ensure every cent is accounted for. A **digital wallet** evolves from naive Redis to event-sourced Raft replication as TPS demands grow from thousands to millions. A **stock exchange** pushes latency to microseconds with single-server mmap'd memory, custom sequencers, and reliable UDP multicast. The common theme: correctness is more important than availability. The cost of a bug is measured in dollars, not just user frustration.
@@ -430,6 +432,28 @@ The tradeoff: UDP multicast requires network infrastructure support (IGMP, switc
 
 ---
 
+## Under the hood
+
+- `ledger.py` is a double-entry ledger. Every transaction posts debits and credits that sum to zero. A retry with the same transaction ID changes nothing. Balances are derived from entries, never stored.
+- `order_book.py` is a limit order book with price-time priority, built from two heaps.
+
+```python
+def post(self, txn_id, lines):
+    if txn_id in self.seen:                      # idempotent: a retry changes nothing
+        return False
+    if sum(a for _, a in lines) != 0:
+        raise ValueError("debits and credits must balance")
+    ...
+```
+
+## Worked example: a charge, a retry and a match
+
+*The amounts are in cents and are invented. The numbers come from `ledger.py` and `order_book.py`.*
+
+**Ledger.** A customer pays $20.00. The ledger posts −2,000 to the card account, +1,940 to the merchant and +60 to fees. The entries sum to zero. The same transaction ID arrives again, because the client retried. The ledger posts nothing. A malformed transaction with debits of 100 and credits of 90 is rejected. Money is held as integers in minor units, never as floating point.
+
+**Order book.** Three sell orders rest in the book: 50 at 101, then 30 at 100, then 20 at 100. A buy of 60 with a limit of 101 fills 30 at 100, then 20 at 100, then 10 at 101. The two orders at the same price fill in the order they arrived. A fair exchange guarantees that rule.
+
 ## Failure modes
 
 - **Double-booking despite locking** — optimistic locking retries can succeed if the retry window is too wide and availability changes between retries. DB constraints are the safest fallback.
@@ -462,3 +486,10 @@ The tradeoff: UDP multicast requires network infrastructure support (IGMP, switc
 - [Real-time systems](./real-time-systems.md) — low-latency pub/sub patterns from chat and streaming that inform market data distribution
 
 ← [Data infrastructure](./data-infrastructure.md) · → [Recap](./recap.md)
+
+## Sources
+
+- Stripe API documentation, "Idempotent requests", stripe.com/docs/api/idempotent_requests.
+- Pat Helland, *Life beyond Distributed Transactions: an Apostate's Opinion*, CIDR 2007.
+- Alex Xu, *System Design Interview*, volume 2: payment system, digital wallet, hotel reservation, gaming leaderboard and stock exchange chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

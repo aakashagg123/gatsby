@@ -1,0 +1,39 @@
+<style>
+.dgm-tc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-tc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-tc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-tc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-tc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-tc-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-tc-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-tc-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-tc-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-tc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-tc-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-tc-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-tc-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-tc-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-tc-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-tc-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-tc-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-tc-note b{color:var(--color-text)}
+.dgm-tc-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-tc{padding:22px 14px 18px}.dgm-tc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-tc-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-tc">
+  <span class="dgm-tc-chip">A request passes four doors</span>
+  <h4>The deeper it goes, the slower and costlier it gets</h4>
+  <p class="dgm-tc-sub">Each door tries to answer before the request goes deeper.</p>
+  <div class="dgm-tc-grid">
+    <div class="dgm-tc-c dgm-tc-info"><h5><span class="dgm-tc-n">1</span>CDN</h5><span class="dgm-tc-t">a nearby copy</span><p>Static files, images, video segments.</p></div>
+    <div class="dgm-tc-c dgm-tc-discovery"><h5><span class="dgm-tc-n">2</span>Load balancer</h5><span class="dgm-tc-t">spread and health-check</span><p>Layer 4 is fast. Layer 7 can route by path.</p></div>
+    <div class="dgm-tc-c dgm-tc-success"><h5><span class="dgm-tc-n">3</span>App servers</h5><span class="dgm-tc-t">stateless</span><p>Any server can answer any request.</p></div>
+    <div class="dgm-tc-c dgm-tc-caution"><h5><span class="dgm-tc-n">4</span>Cache</h5><span class="dgm-tc-t">memory</span><p>Cache-aside, write-through or write-back.</p></div>
+    <div class="dgm-tc-c dgm-tc-danger"><h5><span class="dgm-tc-n">5</span>Database</h5><span class="dgm-tc-t">source of truth</span><p>Chosen by access pattern.</p></div>
+  </div>
+  <p class="dgm-tc-foot">Design for most requests to stop at the first or second door.</p>
+</div>
