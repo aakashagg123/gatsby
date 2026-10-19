@@ -18,6 +18,14 @@ Design rules (iOS first):
   * Every rule is guarded (`@supports`, `@media`) so an older browser ignores it.
 """
 
+# Same-site pages are prefetched when the pointer lingers on a link ("moderate" eagerness), so a lesson-to-lesson
+# click finds the HTML already cached. Prefetch, not prerender: no page script runs early, so the glossary scan
+# and mermaid never run twice. Browsers without Speculation Rules ignore the block.
+SPECULATION_RULES = (
+    '{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*/graph/*"}},'
+    '{"not":{"href_matches":"/graph/*"}}]},"eagerness":"moderate"}]}'
+)
+
 CSS = r"""
 /* ---- anchors and programmatic scrolling ---- */
 html{scroll-padding-top:84px}

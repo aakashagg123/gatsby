@@ -202,6 +202,8 @@ listeners. The rules that keep it smooth:
   `100vh` for panels (use `100dvh` with a fallback). Give inner scrollers
   `overscroll-behavior:contain`.
 - Heavy work at load (glossary scan, mermaid) is time-sliced or lazy. Keep it that way.
+- Page-to-page speed comes from Speculation Rules in `scripts/smooth_scroll.py` (`prefetch`, moderate
+  eagerness, same site, not the graph). Use prefetch, not prerender, so page scripts never run twice.
 - Measure before and after on a throttled mobile profile. Chromium is not WebKit, so
   also test a real iPhone before claiming a win.
 

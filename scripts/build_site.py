@@ -526,7 +526,8 @@ def inject_smooth_scroll(site):
     graph included. They go in an inline <style> just before </head>, so they load
     after each page's own <style> (and win the cascade) without an extra request.
     See smooth_scroll.py."""
-    tag = '<style id="smooth-scroll">' + smooth_scroll.CSS.strip() + '</style>'
+    tag = ('<style id="smooth-scroll">' + smooth_scroll.CSS.strip() + '</style>'
+           '<script type="speculationrules">' + smooth_scroll.SPECULATION_RULES + '</script>')
     injected = 0
     for dp, _, files in os.walk(site):
         for fn in files:
