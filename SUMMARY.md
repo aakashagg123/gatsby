@@ -380,8 +380,11 @@ architecture, tradeoffs, and failure modes that shape product decisions.
 9. [Location & geo services](./system-design/location-and-geo-services.md)
 10. [Data infrastructure](./system-design/data-infrastructure.md)
 11. [Transactional & financial systems](./system-design/transactional-and-financial.md)
-12. [Reliability and operations](./system-design/reliability-and-operations.md)
-13. [Question bank](./system-design/question-bank.md) · [Recap](./system-design/recap.md)
+12. [ML system design](./system-design/ml-system-design.md)
+13. [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md)
+14. [Social and media systems](./system-design/social-and-media-systems.md)
+15. [Reliability and operations](./system-design/reliability-and-operations.md)
+16. [Question bank](./system-design/question-bank.md) · [Recap](./system-design/recap.md)
 
 ## [Access control](./access-control/README.md)
 

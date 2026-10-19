@@ -1,0 +1,39 @@
+<style>
+.dgm-ga{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-ga-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-ga h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-ga-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-ga-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-ga-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-ga-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-ga-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-ga-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-ga-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-ga-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-ga-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-ga-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-ga-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-ga-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-ga-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-ga-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-ga-note b{color:var(--color-text)}
+.dgm-ga-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-ga{padding:22px 14px 18px}.dgm-ga-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-ga-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-ga">
+  <span class="dgm-ga-chip">An LLM service</span>
+  <h4>Ordinary layers in front, a memory-bound worker behind</h4>
+  <p class="dgm-ga-sub">Weights and the KV cache share accelerator memory.</p>
+  <div class="dgm-ga-grid">
+    <div class="dgm-ga-c dgm-ga-info"><h5><span class="dgm-ga-n">1</span>Gateway</h5><span class="dgm-ga-t">auth · token limits</span><p>Counts tokens, not only requests.</p></div>
+    <div class="dgm-ga-c dgm-ga-discovery"><h5><span class="dgm-ga-n">2</span>Conversation service</h5><span class="dgm-ga-t">history · prompt</span><p>Builds the prompt.</p></div>
+    <div class="dgm-ga-c dgm-ga-caution"><h5><span class="dgm-ga-n">3</span>Router</h5><span class="dgm-ga-t">load and cache aware</span><p>Sends a prompt prefix to the replica that holds it.</p></div>
+    <div class="dgm-ga-c dgm-ga-danger"><h5><span class="dgm-ga-n">4</span>GPU replicas</h5><span class="dgm-ga-t">continuous batching · KV cache</span><p>Memory, not compute, caps concurrency.</p></div>
+    <div class="dgm-ga-c dgm-ga-success"><h5><span class="dgm-ga-n">5</span>Stream tokens back</h5><span class="dgm-ga-t">server-sent events</span><p>First token, then the rest.</p></div>
+  </div>
+  <p class="dgm-ga-foot">Agents add a loop: the model proposes a tool call, a gateway checks it, and a checkpoint saves progress.</p>
+</div>

@@ -243,6 +243,22 @@ A URL shortener, a chat system, or a payment flow can be built in a weekend hack
    <details><summary>Answer</summary>The retries raise the offered load to 360 per second, so the service stays overloaded. Backoff, jitter and a retry budget kept the peak at 96 per second. (<a href="./reliability-and-operations.md">Reliability and operations</a>)</details>
 24. **What did the Cloudflare 2019 outage and the GitLab 2017 outage have in common with a missing safeguard?**
    <details><summary>Answer</summary>Cloudflare pushed a rule to the whole network with no staged rollout and no CPU check in the tests. GitLab had four recovery mechanisms and none worked, because nobody owned testing the restore. (<a href="./reliability-and-operations.md">Reliability and operations</a>)</details>
+25. **Why does a funnel retrieve 500 of 20,000 items before the heavy model runs, and what is the risk?**
+   <details><summary>Answer</summary>It cut the cost from 2,000,000 units to 70,000, about 29 times less. The risk is that an item dropped at retrieval can never be recovered, so measure the recall of the retrieval stage. (<a href="./ml-system-design.md">ML system design</a>)</details>
+26. **A model's click probabilities are all three times too high. Does the ad order change, and does it matter?**
+   <details><summary>Answer</summary>The order does not change, and it still matters: predicted clicks are three times actual clicks, and every impression is mispriced. Calibration matters as much as ranking when the score sets a price. (<a href="./ml-system-design.md">ML system design</a>)</details>
+27. **What do you trade when you probe more buckets in an approximate nearest-neighbour index?**
+   <details><summary>Answer</summary>Recall against work. In the example, probing 1, 4 and 16 of 64 buckets scanned 2%, 6% and 26% of the vectors and found 24%, 60% and 94% of the true top 10. (<a href="./ml-system-design.md">ML system design</a>)</details>
+28. **Why does grouped-query attention let one accelerator serve more long conversations?**
+   <details><summary>Answer</summary>It shrinks the KV cache per conversation. In the example, 16 conversations fit with 32 key-value heads and 68 with 8. (<a href="./genai-and-agent-platforms.md">GenAI and agent platforms</a>)</details>
+29. **Why is continuous batching faster than static batching?**
+   <details><summary>Answer</summary>A finished request leaves at once and a waiting one takes its slot, so the accelerator does not idle waiting for the longest request. In the example, 1,887 steps against 2,890. (<a href="./genai-and-agent-platforms.md">GenAI and agent platforms</a>)</details>
+30. **An agent crashes after its third of five tool calls. How do you avoid repeating paid calls?**
+   <details><summary>Answer</summary>Checkpoint progress after each committed step and resume from it. In the example, five calls were made in total with no repeats. Also add budgets, per-tool permissions and a kill switch. (<a href="./genai-and-agent-platforms.md">GenAI and agent platforms</a>)</details>
+31. **50,000 likes arrive in one second on a viral post. How do you avoid a hot row?**
+   <details><summary>Answer</summary>Shard the counter and sum the shards on read. In the example, the busiest row fell from 50,000 writes to 3,195 with 16 shards. Deduplicate (user, post) pairs so double taps count once. (<a href="./social-and-media-systems.md">Social and media systems</a>)</details>
+32. **How can you count unique viewers of a post in a few kilobytes?**
+   <details><summary>Answer</summary>With a HyperLogLog. Redis's version uses up to 12 KB and has a standard error of 0.81%. In the example, 100,000 distinct items were counted with an error of 0.42%. (<a href="./social-and-media-systems.md">Social and media systems</a>)</details>
 
 For more practice, use the [question bank](./question-bank.md).
 
@@ -261,8 +277,11 @@ For more practice, use the [question bank](./question-bank.md).
 9. [Location & geo services](./location-and-geo-services.md) — proximity service, nearby friends, Google Maps
 10. [Data infrastructure](./data-infrastructure.md) — message queues, metrics monitoring, ad click aggregation, email
 11. [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, leaderboard, payments, digital wallet, stock exchange
-12. [Reliability and operations](./reliability-and-operations.md) — SLOs, resilience, safe change, recovery and incident case studies
-13. [Question bank](./question-bank.md) — 50 design questions mapped to the lessons
+12. [ML system design](./ml-system-design.md) — recommendation funnels, ads click prediction, search and vector indexes
+13. [GenAI and agent platforms](./genai-and-agent-platforms.md) — LLM serving, continuous batching, agent runtimes and safety
+14. [Social and media systems](./social-and-media-systems.md) — likes, graph search, matching, photo tiers, video and live streaming
+15. [Reliability and operations](./reliability-and-operations.md) — SLOs, resilience, safe change, recovery and incident case studies
+16. [Question bank](./question-bank.md) — 50 design questions mapped to the lessons
 
 ← [Transactional & financial systems](./transactional-and-financial.md) · [Back to overview](./README.md)
 

@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-This page is a practice list. It holds 50 questions that come up in design reviews and interviews, grouped by the kind of knowledge each one tests. Each row says how hard the question is and where this track answers it. **Read** means a lesson covers it. **Partly** means a lesson covers part of it. **Planned** means a later lesson will cover it. At the time of writing, 34 are covered, 3 are partly covered and 13 are planned.
+This page is a practice list. It holds 50 questions that come up in design reviews and interviews, grouped by the kind of knowledge each one tests. Each row says how hard the question is and which lesson answers it. All 50 are now covered by at least one lesson.
 
 The best way to use it is recall. Pick a question. Answer it aloud, on a blank page, in about five minutes. Then read the lesson and mark what you missed. Recalling an answer teaches more than reading one again.
 
@@ -59,23 +59,23 @@ The rows run in five groups, in order. Questions 1 to 10 cover building blocks. 
 | 23 | Design a news feed. | Senior | [Read](./web-scale-services.md) |
 | 24 | Design find-nearby-drivers for ride hailing. | Senior | [Read](./location-and-geo-services.md) |
 | 25 | Design a payment system. | Senior | [Read](./transactional-and-financial.md) |
-| 26 | Design a short-video upload and processing pipeline. | Senior | [Partly](./real-time-systems.md) |
-| 27 | Design live streaming for tens of millions of viewers. | Senior | [Partly](./real-time-systems.md) |
-| 28 | Design a like button that updates for everyone at global scale. | Mid | Planned |
-| 29 | Design photo storage that serves a 15-year-old photo on demand. | Senior | [Partly](./storage-and-sync.md) |
+| 26 | Design a short-video upload and processing pipeline. | Senior | [Read](./social-and-media-systems.md) |
+| 27 | Design live streaming for tens of millions of viewers. | Senior | [Read](./social-and-media-systems.md) |
+| 28 | Design a like button that updates for everyone at global scale. | Mid | [Read](./social-and-media-systems.md) |
+| 29 | Design photo storage that serves a 15-year-old photo on demand. | Senior | [Read](./social-and-media-systems.md) |
 | 30 | Design metrics collection and monitoring for thousands of servers. | Mid | [Read](./data-infrastructure.md) |
-| 31 | Design search over a social graph. | Senior | Planned |
-| 32 | Design a swipe-and-match system. | Mid | Planned |
-| 33 | Design a delivery routing system. | Senior | Planned |
+| 31 | Design search over a social graph. | Senior | [Read](./social-and-media-systems.md) |
+| 32 | Design a swipe-and-match system. | Mid | [Read](./social-and-media-systems.md) |
+| 33 | Design a delivery routing system. | Senior | [Read](./location-and-geo-services.md) |
 | 34 | Design a notification system. | Mid | [Read](./web-scale-services.md) |
-| 35 | How does ML system design differ from classic system design? | Mid | Planned |
-| 36 | Design a recommendation system for short videos. | Senior | Planned |
-| 37 | Design ads click prediction. | Senior | Planned |
-| 38 | Design product search ranking and listing classification. | Mid | Planned |
-| 39 | Design reverse image search over 100 billion images. | Senior | Planned |
-| 40 | Design an LLM chat service. | Senior | Planned |
-| 41 | Design a platform that runs AI agents at scale. | Senior | Planned |
-| 42 | How do you keep autonomous agents safe in production? | Senior | Planned |
+| 35 | How does ML system design differ from classic system design? | Mid | [Read](./ml-system-design.md) |
+| 36 | Design a recommendation system for short videos. | Senior | [Read](./ml-system-design.md) |
+| 37 | Design ads click prediction. | Senior | [Read](./ml-system-design.md) |
+| 38 | Design product search ranking and listing classification. | Mid | [Read](./ml-system-design.md) |
+| 39 | Design reverse image search over 100 billion images. | Senior | [Read](./ml-system-design.md) |
+| 40 | Design an LLM chat service. | Senior | [Read](./genai-and-agent-platforms.md) |
+| 41 | Design a platform that runs AI agents at scale. | Senior | [Read](./genai-and-agent-platforms.md) |
+| 42 | How do you keep autonomous agents safe in production? | Senior | [Read](./genai-and-agent-platforms.md) |
 | 43 | Reason about availability with SLIs, SLOs, SLAs and nines. | Junior | [Read](./numbers-and-formulas.md) |
 | 44 | What should an observability setup include? | Mid | [Read](./reliability-and-operations.md) |
 | 45 | Which resilience patterns prevent cascading failures? | Senior | [Read](./reliability-and-operations.md) |
@@ -83,7 +83,7 @@ The rows run in five groups, in order. Questions 1 to 10 cover building blocks. 
 | 47 | Design for regional failure: multi-region, RPO and RTO. | Senior | [Read](./reliability-and-operations.md) |
 | 48 | How do you limit the blast radius of human error? | Mid | [Read](./reliability-and-operations.md) |
 | 49 | What does a backup strategy that works look like? | Mid | [Read](./reliability-and-operations.md) |
-| 50 | What happens when you type a URL and press Enter? | Junior | Planned |
+| 50 | What happens when you type a URL and press Enter? | Junior | [Read](./foundations-and-framework.md) |
 
 ### How to answer well
 
@@ -93,7 +93,7 @@ Use the same steps every time: scope the problem, estimate the load, sketch the 
 
 - **Breadth vs. depth.** Cover many questions lightly or a few deeply. Depth shows in the senior rows.
 - **Memorized answers vs. reasoning.** An answer you can derive from numbers beats one you recall.
-- **Planned rows.** Treat them as a to-do list for your own study until a lesson covers them.
+- **Coverage.** A lesson covers a question at the depth of a design review. For a question that matters to you, follow the lesson's sources.
 
 ## Failure modes
 
@@ -104,7 +104,7 @@ Use the same steps every time: scope the problem, estimate the load, sketch the 
 
 ## Under the hood
 
-The levels and the coverage column are a plain table in this file. Each link points to the lesson with the closest answer. When a new lesson ships, change the matching row from **Planned** or **Partly** to **Read**. The code behind most answers is in `system-design/code/`. Run `python3 system-design/code/test_examples.py` to check all of it.
+The levels and the coverage column are a plain table in this file. Each link points to the lesson with the closest answer. If you add a lesson, link it from the matching row. The code behind most answers is in `system-design/code/`. Run `python3 system-design/code/test_examples.py` to check all of it.
 
 ## Worked example: answering question 9
 

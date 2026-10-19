@@ -36,7 +36,7 @@ Every lesson in this track follows the same shape:
 - **Failure modes** — how it breaks in production.
 - **Practitioner checklist** — what to verify before you ship or bet on this architecture.
 
-This track covers **28 real-world systems** across eight system lessons, plus lessons on numbers, traffic and caching, distributed data and reliability, and a question bank. Systems are grouped by the kind of problem they solve.
+This track covers **28 real-world systems** across eight system lessons, plus lessons on numbers, traffic and caching, distributed data, ML and GenAI systems, social and media systems, and reliability, and a question bank. Systems are grouped by the kind of problem they solve.
 
 ## Connects to other tracks
 
@@ -58,6 +58,9 @@ This track covers **28 real-world systems** across eight system lessons, plus le
 - [Data infrastructure](./data-infrastructure.md) — distributed message queues, metrics monitoring, ad click aggregation, and email service
 - [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, gaming leaderboard, payment system, digital wallet, and stock exchange
 
+- [ML system design](./ml-system-design.md) — the ML lifecycle, recommendation funnels, ads click prediction, product search and reverse image search
+- [GenAI and agent platforms](./genai-and-agent-platforms.md) — serving an LLM chat service, continuous batching, agent runtimes and keeping agents safe
+- [Social and media systems](./social-and-media-systems.md) — likes at scale, social-graph search, swipe and match, photo tiers, video pipelines and live streaming
 - [Reliability and operations](./reliability-and-operations.md) — SLOs, observability, resilience patterns, safe deploys, regional failure, backups, and five incident case studies
 - [Question bank](./question-bank.md) — 50 design questions, by level, mapped to the lessons that answer them
 
@@ -73,10 +76,13 @@ Each lesson summarizes an idea and points to the lesson that covers it in full.
 | Rate limits, hashing, quorums and IDs | [Core building blocks](./core-building-blocks.md) |
 | Caches, balancers, CDNs, stores and APIs | [Traffic, caching, APIs and storage choice](./traffic-caching-apis-and-storage-choice.md) |
 | Replicas, consistency, consensus and sagas | [Distributed data and consistency](./distributed-data-and-consistency.md) |
+| Recommendations, ads, search and vector indexes | [ML system design](./ml-system-design.md) |
+| Serving LLMs and running agents safely | [GenAI and agent platforms](./genai-and-agent-platforms.md) |
+| Counters, graphs, photos and live video | [Social and media systems](./social-and-media-systems.md) |
 | Failure, rollout safety and recovery | [Reliability and operations](./reliability-and-operations.md) |
 | Feeds, caches and fan-out | [Web-scale services](./web-scale-services.md) |
 | Messages that must not be lost or doubled | [Data infrastructure](./data-infrastructure.md) and [Transactional & financial systems](./transactional-and-financial.md) |
-| How the LLM-serving side of a system works | [Generating text and the KV cache](../transformers/generating-text-and-the-kv-cache.md) and [Cost optimization](../cost-optimization/README.md) |
+| How models work inside the serving layer | [Generating text and the KV cache](../transformers/generating-text-and-the-kv-cache.md) and [Cost optimization](../cost-optimization/README.md) |
 | Evals, traces and the numbers you measure | [Evaluation and observability](../evaluation-and-observability/README.md) |
 | Practising with questions | [Question bank](./question-bank.md) |
 

@@ -1,0 +1,39 @@
+<style>
+.dgm-mf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-mf-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-mf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-mf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-mf-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-mf-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-mf-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-mf-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-mf-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-mf-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-mf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-mf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-mf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-mf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-mf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-mf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-mf-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-mf-note b{color:var(--color-text)}
+.dgm-mf-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-mf{padding:22px 14px 18px}.dgm-mf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-mf-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-mf">
+  <span class="dgm-mf-chip">The ML lifecycle</span>
+  <h4>A loop around a funnel</h4>
+  <p class="dgm-mf-sub">Production data feeds the next model, and the serving path narrows the catalogue in stages.</p>
+  <div class="dgm-mf-grid">
+    <div class="dgm-mf-c dgm-mf-info"><h5><span class="dgm-mf-n">1</span>Data and labels</h5><span class="dgm-mf-t">collect · label</span><p>What the model learns from.</p></div>
+    <div class="dgm-mf-c dgm-mf-discovery"><h5><span class="dgm-mf-n">2</span>Features and training</h5><span class="dgm-mf-t">feature store · training</span><p>Same features offline and online.</p></div>
+    <div class="dgm-mf-c dgm-mf-caution"><h5><span class="dgm-mf-n">3</span>Offline eval and A/B test</h5><span class="dgm-mf-t">AUC · NDCG · online metric</span><p>The online metric is the truth.</p></div>
+    <div class="dgm-mf-c dgm-mf-success"><h5><span class="dgm-mf-n">4</span>Serve: retrieve, rank, re-rank</h5><span class="dgm-mf-t">corpus → thousands → hundreds → tens</span><p>Retrieval recall caps everything after it.</p></div>
+    <div class="dgm-mf-c dgm-mf-danger"><h5><span class="dgm-mf-n">5</span>Monitor drift</h5><span class="dgm-mf-t">then retrain</span><p>The world changes, and the model does not.</p></div>
+  </div>
+  <p class="dgm-mf-foot">Calibration matters as much as ranking when the score sets a price.</p>
+</div>

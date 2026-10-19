@@ -343,6 +343,17 @@ def near(index, lat, lon, ring=1):
 
 A square grid has a flaw: a cell's neighbours are not all the same distance away, because corners are farther than edges. Hexagonal grids, such as H3, make all six neighbours equally near. That is why ride-hailing systems prefer them.
 
+## Delivery routing
+
+A delivery company must plan routes for many vans from geocoded addresses. This is the **vehicle routing problem**. It is NP-hard, so production systems use heuristics and optimization solvers under constraints: delivery time windows, vehicle capacity, driver hours and traffic.
+
+- **Planning.** Optimize routes in batch before the vans leave, using predicted travel times.
+- **Execution.** A driver app shows turn-by-turn stops, live tracking and proof of delivery.
+- **Re-planning.** Adjust in real time for failed deliveries, traffic and new orders.
+- **Customer side.** Models estimate delivery promises and arrival times.
+
+The file `system-design/code/vrp.py` shows why heuristics help. It places 40 stops in a 20 km square. A nearest-neighbour tour, which always drives to the closest unvisited stop, is 116.0 km. A 2-opt pass, which reverses segments of the tour whenever that shortens it, brings it to 103.0 km, 11% shorter. Real solvers add constraints and much stronger search, and the pattern is the same: build a quick plan, then improve it.
+
 ## Failure modes
 
 - **Geohash boundary misses** — a business 50m away sits across a geohash boundary and is missed because only the center cell was queried. Always query 8 neighbors.

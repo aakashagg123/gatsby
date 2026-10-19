@@ -19,6 +19,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 
 
+**A/B test** — An online experiment that compares two versions on live traffic.
+
+*In plain terms.* Offline metrics are cheap and can mislead. An A/B test measures the real outcome, such as watch time or revenue, for a model or product change.
+
+*For example.* Send 5% of users to the new ranker and compare watch time.
+
+*Where it shows up:* Launching model changes.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
+
 **A2A** — Agent2Agent — an emerging protocol for agents to advertise capabilities and delegate to each other across vendors.
 
 *In plain terms.* If MCP is how an agent talks to tools, A2A is how one agent talks to another. It lets agents from different vendors discover what each can do and hand off work — early and evolving, but the direction of a multi-agent world.
@@ -1229,6 +1239,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md).
 
+**Durable execution (checkpointing)** — Saving a long-running workflow's progress after each step, so a crash resumes instead of restarting.
+
+*In plain terms.* For agents it stops paid or irreversible tool calls from repeating after a failure.
+
+*For example.* An agent crashes after step 3 and resumes at step 4 without repeating the first three.
+
+*Where it shows up:* Agent platforms; Long workflows.
+
+*See:* [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md).
+
 **Early stopping** — Ending training when the validation loss stops improving.
 
 *In plain terms.* Training keeps lowering the loss on the training rows. Past some point it begins to memorize them, and the loss on validation rows rises. Early stopping ends the run at the best validation point.
@@ -1458,6 +1478,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Estimating activation memory; Reading what a layer outputs.
 
 *See:* [How a convolution sees](./cnns/how-a-convolution-sees.md).
+
+**Feature store** — A shared store of feature definitions and values for training and serving.
+
+*In plain terms.* It keeps one definition of each feature, so the model sees in production what it saw in training. That prevents training-serving skew.
+
+*For example.* The same 'clicks in the last hour' feature feeds both the training job and the live ranker.
+
+*Where it shows up:* ML platforms; Avoiding training-serving skew.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Feed-forward layer** — The part of a transformer block that reworks each token's vector on its own, and holds about two thirds of a block's weights.
 
@@ -1909,6 +1939,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
 
+**HyperLogLog** — A probabilistic structure that counts distinct items in a few kilobytes.
+
+*In plain terms.* It trades a small error for tiny, constant memory and can be merged. Redis's version uses up to 12 KB with a standard error of 0.81%.
+
+*For example.* Counting unique viewers of a post.
+
+*Where it shows up:* Unique counts at scale.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
+
 **Hypothetical document embeddings (HyDE)** — A retrieval trick: have a model write a hypothetical answer, then search with the embedding of that answer instead of the question.
 
 *In plain terms.* A short question and a long passage look different, even when they match. HyDE closes the gap by first drafting a fake answer, which looks like a passage, and searching with it. The draft can be wrong; only its shape and vocabulary matter.
@@ -2079,6 +2119,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
+**Inverted index** — An index that maps each term to the list of items that contain it.
+
+*In plain terms.* A query becomes set operations on the lists. Graph search does the same over edges, for example friend:alice and lives_in:london.
+
+*For example.* Friends of Alice who live in London is the intersection of two lists.
+
+*Where it shows up:* Search; Graph search.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
+
 **Jagged frontier** — The uneven boundary of model capability — brilliant at some hard tasks, unreliable at some easy ones — which makes scoping a core product skill.
 
 *In plain terms.* Model ability isn't a smooth line where 'harder = worse'. It's jagged: a model may ace a complex analysis yet flub a simple count. You can't assume; you have to test where the edges are for your specific task, because intuition misleads.
@@ -2238,6 +2288,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Diagnosing a run that stalls or diverges; Budgeting experiments.
 
 *See:* [Training: loss and gradient descent](./machine-learning/training-loss-and-gradient-descent.md).
+
+**Learning to rank** — A model trained on relevance and conversion signals to order retrieved results.
+
+*In plain terms.* Search retrieves candidates with keywords and embeddings, then a ranking model orders them, with business rules applied last.
+
+*For example.* Hybrid retrieval of BM25 and embedding hits, then a ranker, then rules.
+
+*Where it shows up:* Search; Marketplaces.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Least privilege** — Giving an agent only the minimum access and tools it needs — nothing more — so mistakes and attacks stay contained.
 
@@ -2969,6 +3029,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
 
+**pCTR (predicted click-through rate)** — The model's estimate of the chance that a user clicks an ad.
+
+*In plain terms.* Auctions often rank by bid times pCTR, so the probabilities must be calibrated. A model that is three times too high keeps the order and misprices everything.
+
+*For example.* Ad a with a $2.00 bid and a 1.0% pCTR is worth $0.020 per impression.
+
+*Where it shows up:* Ads ranking.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
+
 **Permission mode** — The overall posture of a coding agent: ask for everything, auto-approve edits, plan only, let a classifier decide, or skip checks.
 
 *In plain terms.* The mode sets the default for what the agent may do alone. Bypass modes belong only in isolated environments.
@@ -3188,6 +3258,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Understanding how process engines track state; Reasoning about parallel branches; Debugging 'where is this process stuck?'.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Product quantization** — Compressing vectors by splitting them into parts and storing each part as a short code.
+
+*In plain terms.* It cuts memory sharply: 100 billion 128-number vectors need 51.2 TB uncompressed and 3.2 TB at 32 bytes each. Search then re-ranks the best candidates exactly.
+
+*For example.* A 512-byte vector stored in 32 bytes.
+
+*Where it shows up:* Large vector indexes.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Profit pool** — The total profit earned across an industry's value chain, split by who earns it.
 
@@ -3508,6 +3588,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building hybrid search; Understanding why a noisy list can outvote the right answer.
 
 *See:* [Retrieval quality](./rag-vector-databases/retrieval-quality.md).
+
+**Recommendation funnel** — A serving path that narrows a huge catalogue in stages: retrieval, ranking and re-ranking.
+
+*In plain terms.* A cheap stage keeps thousands of candidates so a heavy model scores only those. An item dropped early can never be recovered, so measure retrieval recall.
+
+*For example.* 20,000 items, 500 retrieved, then 20 shown, at about one thirtieth of the cost of scoring everything.
+
+*Where it shows up:* Feeds and recommendations; Ads and search.
+
+*See:* [ML system design](./system-design/ml-system-design.md).
 
 **Red-teaming** — Structured adversarial testing — internal or paid external researchers actively trying to break a model or product before launch — run as a recurring practice, not a one-time pre-launch event.
 
@@ -3878,6 +3968,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Estimating memory; Debugging a shape error.
 
 *See:* [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md).
+
+**Sharded counter** — A counter split into many rows, written to at random and summed on read.
+
+*In plain terms.* It removes the hot spot a viral item creates on a single row. In one example, the busiest row fell from 50,000 writes to 3,195.
+
+*For example.* A like count split over 16 shards.
+
+*Where it shows up:* Likes and views; Hot keys.
+
+*See:* [Social and media systems](./system-design/social-and-media-systems.md).
 
 **Sharding** — Splitting a data set across machines by a key.
 
@@ -4289,6 +4389,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Agent guardrails](./content/02-reliable-outputs/agent-guardrails.md).
 
+**Tool gateway** — A service that sits between an agent and its tools and checks every call.
+
+*In plain terms.* It authenticates, checks per-tool permissions, enforces quotas and timeouts, and logs the call. A denied tool never runs.
+
+*For example.* An agent allowed to search cannot charge a card.
+
+*Where it shows up:* Agent platforms; Least privilege.
+
+*See:* [GenAI and agent platforms](./system-design/genai-and-agent-platforms.md).
+
 **Top-k retrieval** — How many passages retrieval hands the model — the 'k' most relevant. A key dial in the recall/precision tradeoff.
 
 *In plain terms.* Retrieval doesn't return everything; it returns the k best matches (say, the top 5). Raise k and you catch more of the answer but also more noise; lower it and you stay focused but risk missing something. Choosing k is choosing where you sit on the recall-vs-precision tradeoff.
@@ -4488,6 +4598,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Building the retrieval half of RAG; Evaluating retrieval infrastructure; Reasoning about recall and index freshness.
 
 *See:* [RAG architecture](./content/03-rag/rag-architecture.md).
+
+**Vehicle routing problem** — Planning routes for many vehicles under constraints such as time windows and capacity.
+
+*In plain terms.* It is NP-hard, so real systems use heuristics and solvers, then re-plan as traffic and orders change.
+
+*For example.* A nearest-neighbour tour of 116 km improved to 103 km by a 2-opt pass.
+
+*Where it shows up:* Delivery and logistics.
+
+*See:* [Location and geo services](./system-design/location-and-geo-services.md).
 
 **Verification gate** — A command with a pass or fail result that must succeed before an agent's work counts as done.
 

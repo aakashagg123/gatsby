@@ -19,7 +19,7 @@ CFG = {
     "lede": "How real systems are designed at scale — from rate limiters to stock exchanges — "
             "with the architecture, tradeoffs, and failure modes that shape product decisions.",
     "insight": "Start with the constraints, not the technology. The numbers drive the architecture, and every design must choose between correctness and throughput.",
-    "meta": ["13 lessons", "+ recap", "28 systems", "runnable code", "diagrams included"],
+    "meta": ["16 lessons", "+ recap", "28 systems", "runnable code", "diagrams included"],
     "callout": "For the technical PM",
     "lessons": [
         "foundations-and-framework",
@@ -33,6 +33,9 @@ CFG = {
         "location-and-geo-services",
         "data-infrastructure",
         "transactional-and-financial",
+        "ml-system-design",
+        "genai-and-agent-platforms",
+        "social-and-media-systems",
         "reliability-and-operations",
         "question-bank",
     ],

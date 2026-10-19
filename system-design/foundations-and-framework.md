@@ -186,6 +186,20 @@ The best study loop is recall. Read one design, then redraw it from memory on a 
 
 ---
 
+## What happens when you type a URL and press Enter
+
+This one question touches every layer in the track. Practise telling it in two minutes, then go deep wherever someone points.
+
+1. **DNS.** The browser and operating system check their caches. If the name is unknown, a recursive resolver asks the root servers, then the top-level domain servers, then the authoritative servers for the IP address, which is often a CDN's.
+2. **Connection.** A TCP handshake, then a TLS handshake. HTTP/3 uses QUIC, which combines both.
+3. **Request.** The HTTP request reaches the CDN edge. On a miss, a load balancer forwards it to an application server.
+4. **Backend.** Services read caches and databases, may call other services, and build a response.
+5. **Response.** The HTML returns. The browser parses it, fetches CSS, scripts and images, mostly from the CDN, and renders the page.
+
+Each step is a place where a design can be fast or slow, and a place where it can fail.
+
+---
+
 ## Under the hood
 
 The file is `system-design/code/estimator.py`. It holds the estimation formulas as small functions, so you can change an assumption and watch the answer move.
