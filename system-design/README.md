@@ -36,7 +36,7 @@ Every lesson in this track follows the same shape:
 - **Failure modes** — how it breaks in production.
 - **Practitioner checklist** — what to verify before you ship or bet on this architecture.
 
-This track covers **28 real-world systems** across eight lessons, grouped by the kind of problem they solve.
+This track covers **28 real-world systems** across eight system lessons, plus a numbers-and-formulas lesson and a question bank. Systems are grouped by the kind of problem they solve.
 
 ## Connects to other tracks
 
@@ -46,7 +46,8 @@ This track covers **28 real-world systems** across eight lessons, grouped by the
 
 ## The lessons
 
-- [Foundations & framework](./foundations-and-framework.md) — scaling from zero to millions, back-of-envelope estimation, and the four-step system design framework
+- [Foundations & framework](./foundations-and-framework.md) — scaling from zero to millions, back-of-envelope estimation, the four-step system design framework, what a design review evaluates, and a seven-stage practice plan
+- [Numbers, formulas and papers](./numbers-and-formulas.md) — latency orders of magnitude, availability and downtime, estimation shortcuts, and the classic papers
 - [Core building blocks](./core-building-blocks.md) — rate limiting, consistent hashing, distributed key-value stores, and unique ID generation
 - [Web-scale services](./web-scale-services.md) — URL shortener, web crawler, notification system, and news feed
 - [Real-time systems](./real-time-systems.md) — chat system, search autocomplete, and video streaming platforms
@@ -55,4 +56,30 @@ This track covers **28 real-world systems** across eight lessons, grouped by the
 - [Data infrastructure](./data-infrastructure.md) — distributed message queues, metrics monitoring, ad click aggregation, and email service
 - [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, gaming leaderboard, payment system, digital wallet, and stock exchange
 
+- [Question bank](./question-bank.md) — 50 design questions, by level, mapped to the lessons that answer them
+
 **📌 Close out the module:** [Recap & real-world examples](./recap.md)
+
+## Where the depth lives
+
+Each lesson summarizes an idea and points to the lesson that covers it in full.
+
+| If you want the full depth on | Read |
+| --- | --- |
+| Turning load forecasts into capacity | [Numbers, formulas and papers](./numbers-and-formulas.md) and [Foundations & framework](./foundations-and-framework.md) |
+| Rate limits, hashing, quorums and IDs | [Core building blocks](./core-building-blocks.md) |
+| Feeds, caches and fan-out | [Web-scale services](./web-scale-services.md) |
+| Messages that must not be lost or doubled | [Data infrastructure](./data-infrastructure.md) and [Transactional & financial systems](./transactional-and-financial.md) |
+| How the LLM-serving side of a system works | [Generating text and the KV cache](../transformers/generating-text-and-the-kv-cache.md) and [Cost optimization](../cost-optimization/README.md) |
+| Evals, traces and the numbers you measure | [Evaluation and observability](../evaluation-and-observability/README.md) |
+| Practising with questions | [Question bank](./question-bank.md) |
+
+## Run the code
+
+Every example is in `system-design/code/`. Run them all with one command.
+
+```bash
+python3 system-design/code/test_examples.py
+```
+
+Each file ends with `assert` lines. A passing file checks the direction of each claim in the lessons, such as consistent hashing moving only about 1/N of the keys. Run a file to see every quoted number printed.

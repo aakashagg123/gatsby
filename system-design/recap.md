@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 This track covered **28 real-world systems** across eight lessons, from single-server scaling patterns to microsecond-latency stock exchanges. The systems span six categories: web-scale services, real-time communication, storage, geospatial, data infrastructure, and financial/transactional. But the same dozen patterns appear again and again. This recap maps every system at a glance. It names the recurring patterns that connect them, and distills the practitioner-level takeaways that cut across all 28 designs.
@@ -191,15 +193,60 @@ A URL shortener, a chat system, or a payment flow can be built in a weekend hack
 
 ---
 
+## Test yourself
+
+1. **Adding an 11th server to 10 moves 91% of keys with hash mod N. How many move on a ring with 100 virtual nodes per server?**
+   <details><summary>Answer</summary>About 9.7%, close to the ideal 1/11. Virtual nodes also even out the load: the busiest server held 1.08 times the average, against 2.69 times with one point per server. (<a href="./core-building-blocks.md">Core building blocks</a>)</details>
+2. **A token bucket has a rate of 5 per second and a capacity of 10. What do 20 simultaneous requests get?**
+   <details><summary>Answer</summary>10 are allowed and 10 are refused. The bucket holds 10 tokens, and refills are too slow to help within the same instant. (<a href="./core-building-blocks.md">Core building blocks</a>)</details>
+3. **Why can a fixed-window rate limiter allow twice the limit?**
+   <details><summary>Answer</summary>Requests just before and just after a window boundary count in different windows. In the example, 200 requests in a burst were all allowed, against 101 for a sliding-window counter. (<a href="./core-building-blocks.md">Core building blocks</a>)</details>
+4. **With 3 replicas, which of W = 1 R = 1, W = 2 R = 2 and W = 3 R = 1 always read the latest write?**
+   <details><summary>Answer</summary>W = 2 R = 2 and W = 3 R = 1. Both satisfy R + W > N, so every read set overlaps every write set. W = 1 R = 1 does not. (<a href="./core-building-blocks.md">Core building blocks</a>)</details>
+5. **What should a Snowflake-style ID generator do if its clock moves back?**
+   <details><summary>Answer</summary>Refuse to issue IDs, or wait, until time passes the last timestamp. Issuing IDs would risk duplicates. (<a href="./core-building-blocks.md">Core building blocks</a>)</details>
+6. **A feed has 100 celebrity accounts with 20 million followers each. Why is pure fan-out on write a poor fit?**
+   <details><summary>Answer</summary>The celebrities alone caused 98% of about 10.2 billion daily feed writes. A hybrid, which pulls celebrity posts at read time, cost about 1.7 billion operations. (<a href="./web-scale-services.md">Web-scale services</a>)</details>
+7. **1,000 requests arrive at the moment a hot cache key expires. How do you keep the database safe?**
+   <details><summary>Answer</summary>Coalesce requests so one request refills the cache and the rest wait: 1 read instead of 1,000. Add jitter to expiry times so keys do not expire together. (<a href="./web-scale-services.md">Web-scale services</a>)</details>
+8. **At 100 million new links a day, how long do 7 Base62 characters last?**
+   <details><summary>Answer</summary>About 96 years. 62 to the 7th power is about 3.52 trillion codes. (<a href="./numbers-and-formulas.md">Numbers and formulas</a>)</details>
+9. **A message log delivers at least once, and a consumer crashes after processing a message but before committing its offset. What protects you?**
+   <details><summary>Answer</summary>An idempotent consumer. Without it the example charged 80 instead of 60. (<a href="./data-infrastructure.md">Data infrastructure</a>)</details>
+10. **A user retries a chat send because the ack was lost. How do you avoid a duplicate message?**
+   <details><summary>Answer</summary>The client sends the same message ID, and the server returns the stored sequence number instead of storing the message again. (<a href="./real-time-systems.md">Real-time systems</a>)</details>
+11. **A user edits one byte of a 400 KB file. How much does a block-based sync client upload?**
+   <details><summary>Answer</summary>One 4 KB block, because the client hashes blocks and skips the 99 the server already has. (<a href="./storage-and-sync.md">Storage and sync</a>)</details>
+12. **How does a grid index make nearby search fast?**
+   <details><summary>Answer</summary>It maps each location to a cell and searches only the rider's cell and its neighbours. In the example, 190 of 50,000 drivers were examined and none was missed. (<a href="./location-and-geo-services.md">Location and geo services</a>)</details>
+13. **A payment is retried. What stops the ledger from posting it twice, and what invariant catches a malformed entry?**
+   <details><summary>Answer</summary>An idempotent transaction ID, and the rule that debits and credits in a transaction sum to zero. (<a href="./transactional-and-financial.md">Transactional and financial systems</a>)</details>
+14. **A 99.99% SLO allows how much downtime in a 30-day month, and what do two 99.9% services in series give?**
+   <details><summary>Answer</summary>About 4.32 minutes. In series, two 99.9% services give about 99.8%. (<a href="./numbers-and-formulas.md">Numbers and formulas</a>)</details>
+15. **For 200 million daily users with 2 posts each, what write rate and yearly storage do you estimate?**
+   <details><summary>Answer</summary>About 4,630 writes per second on average and about 43.8 TB a year for 300-byte posts. Reads, at 100 times writes, are about 463,000 per second. (<a href="./foundations-and-framework.md">Foundations and framework</a>)</details>
+
+For more practice, use the [question bank](./question-bank.md).
+
+---
+
 ## The full track
 
-1. [Foundations & framework](./foundations-and-framework.md) — scaling, estimation, and the four-step design process
-2. [Core building blocks](./core-building-blocks.md) — rate limiting, consistent hashing, key-value stores, unique ID generation
-3. [Web-scale services](./web-scale-services.md) — URL shortener, web crawler, notification system, news feed
-4. [Real-time systems](./real-time-systems.md) — chat, search autocomplete, video streaming
-5. [Storage & sync](./storage-and-sync.md) — Google Drive file sync, S3-like object storage
-6. [Location & geo services](./location-and-geo-services.md) — proximity service, nearby friends, Google Maps
-7. [Data infrastructure](./data-infrastructure.md) — message queues, metrics monitoring, ad click aggregation, email
-8. [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, leaderboard, payments, digital wallet, stock exchange
+1. [Foundations & framework](./foundations-and-framework.md) — scaling, estimation, the four-step design process, and a practice plan
+2. [Numbers, formulas and papers](./numbers-and-formulas.md) — latency, nines, estimation shortcuts and classic papers
+3. [Core building blocks](./core-building-blocks.md) — rate limiting, consistent hashing, key-value stores, unique ID generation
+4. [Web-scale services](./web-scale-services.md) — URL shortener, web crawler, notification system, news feed
+5. [Real-time systems](./real-time-systems.md) — chat, search autocomplete, video streaming
+6. [Storage & sync](./storage-and-sync.md) — Google Drive file sync, S3-like object storage
+7. [Location & geo services](./location-and-geo-services.md) — proximity service, nearby friends, Google Maps
+8. [Data infrastructure](./data-infrastructure.md) — message queues, metrics monitoring, ad click aggregation, email
+9. [Transactional & financial systems](./transactional-and-financial.md) — hotel reservation, leaderboard, payments, digital wallet, stock exchange
+
+10. [Question bank](./question-bank.md) — 50 design questions mapped to the lessons
 
 ← [Transactional & financial systems](./transactional-and-financial.md) · [Back to overview](./README.md)
+
+## Sources
+
+- Alex Xu, *System Design Interview*, volumes 1 and 2, and Martin Kleppmann, *Designing Data-Intensive Applications*, O'Reilly, 2017.
+- The sources for each system are at the end of its lesson. The numbers in the questions come from `system-design/code/`. They are invented or estimated. These sources were not re-opened during this revision, and the module's fact-check is pending.

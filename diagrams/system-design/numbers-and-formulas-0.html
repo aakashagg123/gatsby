@@ -1,0 +1,39 @@
+<style>
+.dgm-nf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-nf-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-nf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-nf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-nf-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-nf-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-nf-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-nf-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-nf-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-nf-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-nf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-nf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-nf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-nf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-nf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-nf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-nf-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-nf-note b{color:var(--color-text)}
+.dgm-nf-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-nf{padding:22px 14px 18px}.dgm-nf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-nf-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-nf">
+  <span class="dgm-nf-chip">Ladder of costs</span>
+  <h4>Each rung is roughly a thousand times slower</h4>
+  <p class="dgm-nf-sub">Keep the hot path on the upper rungs.</p>
+  <div class="dgm-nf-grid">
+    <div class="dgm-nf-c dgm-nf-success"><h5><span class="dgm-nf-n">1</span>Memory</h5><span class="dgm-nf-t">about 100 ns</span><p>A cache or in-process read.</p></div>
+    <div class="dgm-nf-c dgm-nf-info"><h5><span class="dgm-nf-n">2</span>SSD read</h5><span class="dgm-nf-t">16 to 100 µs</span><p>Random read, order of magnitude.</p></div>
+    <div class="dgm-nf-c dgm-nf-discovery"><h5><span class="dgm-nf-n">3</span>Data center round trip</h5><span class="dgm-nf-t">about 0.5 ms</span><p>One network hop.</p></div>
+    <div class="dgm-nf-c dgm-nf-caution"><h5><span class="dgm-nf-n">4</span>Disk seek</h5><span class="dgm-nf-t">about 10 ms</span><p>A spinning disk.</p></div>
+    <div class="dgm-nf-c dgm-nf-danger"><h5><span class="dgm-nf-n">5</span>Ocean crossing</h5><span class="dgm-nf-t">about 150 ms</span><p>California to Europe.</p></div>
+  </div>
+  <p class="dgm-nf-foot">Exact values vary by hardware. The ratios are what matter.</p>
+</div>

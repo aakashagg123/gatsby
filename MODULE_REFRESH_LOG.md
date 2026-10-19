@@ -37,7 +37,7 @@ always moves forward.
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | never |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | never |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | never |
-| system-design | system-design/ | scripts/build_system_design.py | never |
+| system-design | system-design/ | scripts/build_system_design.py | 2026-10-19 |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
 | cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
 | transformers | transformers/ | scripts/build_transformers.py | 2026-10-17 |

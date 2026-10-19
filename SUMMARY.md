@@ -370,13 +370,15 @@ How real systems are designed at scale — from rate limiters to stock exchanges
 architecture, tradeoffs, and failure modes that shape product decisions.
 
 1. [Foundations & framework](./system-design/foundations-and-framework.md)
-2. [Core building blocks](./system-design/core-building-blocks.md)
-3. [Web-scale services](./system-design/web-scale-services.md)
-4. [Real-time systems](./system-design/real-time-systems.md)
-5. [Storage & sync](./system-design/storage-and-sync.md)
-6. [Location & geo services](./system-design/location-and-geo-services.md)
-7. [Data infrastructure](./system-design/data-infrastructure.md)
-8. [Transactional & financial systems](./system-design/transactional-and-financial.md) · [Recap](./system-design/recap.md)
+2. [Numbers, formulas and papers](./system-design/numbers-and-formulas.md)
+3. [Core building blocks](./system-design/core-building-blocks.md)
+4. [Web-scale services](./system-design/web-scale-services.md)
+5. [Real-time systems](./system-design/real-time-systems.md)
+6. [Storage & sync](./system-design/storage-and-sync.md)
+7. [Location & geo services](./system-design/location-and-geo-services.md)
+8. [Data infrastructure](./system-design/data-infrastructure.md)
+9. [Transactional & financial systems](./system-design/transactional-and-financial.md)
+10. [Question bank](./system-design/question-bank.md) · [Recap](./system-design/recap.md)
 
 ## [Access control](./access-control/README.md)
 

@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Data infrastructure is the plumbing beneath every system in this track. **Distributed message queues** (Kafka) decouple producers from consumers, using append-only logs, partitioned topics, and consumer groups. This same pattern appears as a building block in metrics, ad aggregation, email, and a dozen other designs. **Metrics monitoring** combines pull-based collection (Prometheus) with time-series databases and down-sampling, to track 10M metrics without drowning in data. **Ad click aggregation** applies MapReduce and stream processing (Kappa architecture) to produce billing-accurate counts under exactly-once semantics. **Distributed email** handles 100K messages per second by separating SMTP processing from metadata storage, search indexing, and deliverability infrastructure. These four systems share a throughput-first, eventual-consistency design philosophy.
@@ -388,6 +390,33 @@ Sending email is easy. Getting it delivered to inboxes (not spam folders) is har
 
 ---
 
+## Under the hood
+
+The file is `system-design/code/delivery_semantics.py`. It reads three payment messages from a log. The consumer crashes after it processes the second message but before it commits the offset. On restart it reads that message again.
+
+```python
+if not (idempotent and msg_id in done_ids):
+    processed.append(amount)
+    done_ids.add(msg_id)
+if crash_after_processing_at == committed and not crashed:
+    crashed = True          # restart from the last committed offset
+    continue
+committed += 1
+```
+
+## Worked example: one crash, two outcomes
+
+*The amounts are invented. The numbers come from `delivery_semantics.py`.*
+
+Three messages carry charges of 10, 20 and 30. The correct total is 60. The consumer crashes once, after processing the second message and before committing its offset.
+
+| Consumer | Total charged |
+| --- | --- |
+| Not idempotent | 80, because the second message is processed twice |
+| Idempotent, keeps a set of processed message IDs | 60 |
+
+"At-least-once" delivery is the normal default. It is safe only when the consumer's effect is idempotent.
+
 ## Failure modes
 
 - **Consumer lag in Kafka** — if consumers can't keep up with producers, the lag grows until retention expires and messages are lost. Monitor consumer lag as a first-class metric.
@@ -420,3 +449,10 @@ Sending email is easy. Getting it delivered to inboxes (not spam folders) is har
 - [Transactional & financial systems](./transactional-and-financial.md) — exactly-once semantics reappears in payment processing and double-entry ledgers
 
 ← [Location & geo services](./location-and-geo-services.md) · → [Transactional & financial systems](./transactional-and-financial.md)
+
+## Sources
+
+- Jay Kreps, Neha Narkhede and Jun Rao, *Kafka: a Distributed Messaging System for Log Processing*, NetDB 2011.
+- Tuomas Pelkonen et al., *Gorilla: A Fast, Scalable, In-Memory Time Series Database*, VLDB 2015: time-series compression.
+- Alex Xu, *System Design Interview*, volume 2: message queue, metrics monitoring, ad click aggregation and email service chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

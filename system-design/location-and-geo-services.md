@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Location-aware systems face a fundamental challenge: mapping the continuous, curved surface of the Earth onto discrete, queryable data structures. **Proximity search** (find businesses near me) uses geohashing to convert 2D coordinates into sortable 1D strings. This enables efficient range queries on standard databases. **Nearby friends** (real-time location sharing) adds the streaming dimension — 334K location updates per second flowing through WebSocket servers and Redis pub/sub channels. **Google Maps** stacks multiple geospatial problems: tiling the planet into a hierarchy of pre-rendered images, routing through continent-scale road graphs, and computing adaptive ETAs from live traffic. The common thread: spatial indexing is the bottleneck. The choice of index structure — geohash, quadtree, S2 cells — determines every downstream tradeoff.
@@ -319,6 +321,28 @@ The feedback loop is powerful: the more users navigate with the system, the bett
 
 ---
 
+## Under the hood
+
+The file is `system-design/code/geo_grid.py`. It puts 50,000 drivers into square cells, then looks only at the rider's cell and its 8 neighbours. A plain grid stands in for geohash, S2 or H3. The idea is the same.
+
+```python
+def near(index, lat, lon, ring=1):
+    cx, cy = cell(lat, lon)
+    found = []
+    for dx in range(-ring, ring + 1):
+        for dy in range(-ring, ring + 1):
+            found += index.get((cx + dx, cy + dy), [])
+    return found
+```
+
+## Worked example: 190 candidates instead of 50,000
+
+*The drivers are random points. The numbers come from `geo_grid.py`.*
+
+50,000 drivers are spread over a square about 50 km on a side. The cells are about 1.1 km wide. A rider asks for drivers within one cell width. The 3 by 3 search looks at 190 candidates instead of 50,000. 65 drivers are actually within one cell width, and the search missed none of them.
+
+A square grid has a flaw: a cell's neighbours are not all the same distance away, because corners are farther than edges. Hexagonal grids, such as H3, make all six neighbours equally near. That is why ride-hailing systems prefer them.
+
 ## Failure modes
 
 - **Geohash boundary misses** — a business 50m away sits across a geohash boundary and is missed because only the center cell was queried. Always query 8 neighbors.
@@ -349,3 +373,10 @@ The feedback loop is powerful: the more users navigate with the system, the bett
 - [Storage & sync](./storage-and-sync.md) — notification via long polling as an alternative to WebSockets
 
 ← [Storage & sync](./storage-and-sync.md) · → [Data infrastructure](./data-infrastructure.md)
+
+## Sources
+
+- Uber Engineering, H3: a hexagonal hierarchical geospatial indexing system, h3geo.org.
+- Google, S2 Geometry library, s2geometry.io.
+- Alex Xu, *System Design Interview*, volume 2: proximity service, nearby friends and Google Maps chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

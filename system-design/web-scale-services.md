@@ -2,6 +2,8 @@
 
 *Part of [System design for the technical PM](./README.md)*
 
+*Last reviewed: 2026-10 · Volatility: stable*
+
 ## TL;DR
 
 Four systems that define "internet scale." A **URL shortener** maps 100 million new short links per day, using a distributed ID generator and Base62 encoding. It chooses between 301 redirects (faster, cached) and 302 redirects (trackable, measurable). A **web crawler** systematically downloads billions of pages, using BFS traversal, a URL frontier with politeness and priority queues, and deduplication at every layer. A **notification system** routes 16 million daily notifications across push (APNS/FCM), SMS (Twilio), and email (SendGrid). Each channel gets its own message queue, with templating, rate limiting, and retry logic. And a **news feed system** serves a personalized timeline by combining fanout-on-write for normal users with fanout-on-read for celebrities, backed by a five-layer cache architecture.
@@ -305,6 +307,37 @@ The social graph (who follows whom) is read on every fanout and every feed fetch
 
 ---
 
+## Under the hood
+
+- `fanout.py` counts the daily cost of fan-out on write, fan-out on read and a hybrid, for an invented mix of accounts.
+- `stampede.py` counts database reads when a hot key expires, with and without request coalescing, and shows how a random jitter on the time to live spreads expiry.
+- `estimator.py` gives the Base62 and capacity numbers for the URL shortener.
+
+```python
+def hybrid_cost(accounts, users, threshold=1_000_000):
+    pushed = sum(f * p for _, f, p in accounts if f < threshold)        # normal accounts: copy into feeds
+    pulled = users * READS_PER_USER_PER_DAY * CELEBRITIES_FOLLOWED      # celebrities: merge at read time
+    return pushed + pulled
+```
+
+## Worked example: why feeds are hybrid
+
+*The accounts and rates are invented. The numbers come from `fanout.py`, `stampede.py` and `estimator.py`.*
+
+**Feed fan-out.** 10 million users. 99,000 regular accounts have 200 followers and post twice a day. 900 popular accounts have 50,000 followers. 100 celebrities have 20 million followers.
+
+| Strategy | Operations per day |
+| --- | --- |
+| Fan-out on write for everyone | about 10.2 billion feed writes, and 98% of them come from the 100 celebrities |
+| Fan-out on read for everyone | about 60 billion post lookups |
+| Hybrid: push for normal accounts, pull for celebrities | about 1.7 billion |
+
+The hybrid costs a sixth of pure push and a thirtieth of pure pull.
+
+**Cache stampede.** A hot key expires while 1,000 requests are waiting. Naively that is 1,000 database reads. With request coalescing, one request refills the cache and the rest wait: 1 read. A second trap is synchronized expiry. 5,000 keys with the same 600-second TTL all expire in the same second. With 20% random jitter the busiest second has 59.
+
+**URL shortener.** 7 Base62 characters give about 3.52 trillion codes. At 100 million new links a day, that lasts about 96 years.
+
 ## Failure modes
 
 - **URL shortener hash collision** — If using hash+collision resolution, high write rates increase collision frequency, degrading write latency. Monitor collision rate; switch to ID-based encoding if it exceeds 1%.
@@ -337,3 +370,10 @@ The social graph (who follows whom) is read on every fanout and every feed fetch
 - [Data infrastructure](./data-infrastructure.md) — distributed message queues that underpin the notification and feed architectures
 
 ← [Core building blocks](./core-building-blocks.md) · → [Real-time systems](./real-time-systems.md)
+
+## Sources
+
+- Nathan Bronson et al., *TAO: Facebook's Distributed Data Store for the Social Graph*, USENIX ATC 2013: the social graph behind feeds.
+- Stripe API documentation, "Idempotent requests", stripe.com/docs/api/idempotent_requests: idempotency keys.
+- Alex Xu, *System Design Interview*, volume 1: URL shortener, web crawler, notification system and news feed chapters.
+- These sources were not re-opened during this revision, and the lesson's fact-check is pending. Numbers in the worked examples are invented or estimated, and come from the code in `system-design/code/`.

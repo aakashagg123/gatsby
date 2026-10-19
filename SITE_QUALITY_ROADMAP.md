@@ -103,7 +103,7 @@ a track without review stamps means it has not yet been onboarded to the full st
 | `product-sense` | 7 | 15.4 | 7 | 53 | yes | WARN |
 | `prompt-engineering` | 10 | 13.3 | 3 | 67 | yes | WARN |
 | `rag-vector-databases` | 10 | 11.9 | 2 | 66 | yes | PASS |
-| `system-design` | 8 | 12.7 | 2 | 48 | no | WARN |
+| `system-design` | 10 | 12.4 | 2 | 50 | yes | PASS |
 | `technical-product-management` | 9 | 16.5 | 10 | 54 | yes | WARN |
 | `technical-product-sense` | 9 | 14.8 | 6 | 59 | yes | WARN |
 | `tool-calling` | 3 | 24.9 | 25 | 47 | no | FAIL |
