@@ -26,6 +26,23 @@ SPECULATION_RULES = (
     '{"not":{"href_matches":"/graph/*"}}]},"eagerness":"moderate"}]}'
 )
 
+# A short cross-fade between pages (cross-document view transitions). CSS only: no script, no scroll listeners.
+# It holds rendering until the next page is ready, so keep it brief. Reduced-motion users and browsers without
+# support navigate normally. The top bar and the desktop sidebar get their own layers, so they stay still while
+# the page body fades. build_site.py leaves this block out of the graph page.
+VIEW_TRANSITION_CSS = r"""
+@media (prefers-reduced-motion:no-preference){
+  @supports (view-transition-name:none){
+    @view-transition{navigation:auto}
+    .topbar{view-transition-name:site-topbar}
+    @media (min-width:881px){.layout .sidebar{view-transition-name:site-sidebar}}
+    ::view-transition-group(root){animation-duration:.15s}
+    ::view-transition-old(root),::view-transition-new(root){animation-duration:.15s;animation-timing-function:ease}
+    ::view-transition-group(site-topbar),::view-transition-group(site-sidebar){animation-duration:0s}
+  }
+}
+"""
+
 CSS = r"""
 /* ---- anchors and programmatic scrolling ---- */
 html{scroll-padding-top:84px}

@@ -204,6 +204,8 @@ listeners. The rules that keep it smooth:
 - Heavy work at load (glossary scan, mermaid) is time-sliced or lazy. Keep it that way.
 - Page-to-page speed comes from Speculation Rules in `scripts/smooth_scroll.py` (`prefetch`, moderate
   eagerness, same site, not the graph). Use prefetch, not prerender, so page scripts never run twice.
+- The cross-fade between pages is CSS only (`VIEW_TRANSITION_CSS`, 150 ms, off for reduced motion, left out of the graph page).
+  It holds rendering until the next page is ready, so keep it brief.
 - Measure before and after on a throttled mobile profile. Chromium is not WebKit, so
   also test a real iPhone before claiming a win.
 
