@@ -37,7 +37,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install Python dependencies
-        run: pip install markdown
+        run: pip install markdown pytest
+      - name: Test lesson code (backs the green checks in the harness and flowable tables)
+        run: python3 -m pytest tests -q
       - name: Check markdown links
         run: python3 scripts/check_links.py
         continue-on-error: true

@@ -95,3 +95,26 @@
   .MarkdownContent{font-size:var(--font-text-md-size);line-height:var(--font-text-md-line-height)}
   .MarkdownContent pre{border-radius:var(--radius-lg)}
 }
+
+/* Lesson code panel: status badge, run command, collapsible source and run output. */
+.lesson-code{
+  margin:var(--space-5) 0;padding:var(--space-4) var(--space-5);
+  border-radius:var(--radius-lg);
+  background-color:var(--color-surface-secondary);
+  box-shadow:var(--shadow-hairline);
+}
+.lesson-code[data-state="verified"],.lesson-code[data-state="xml-valid"]{background-color:var(--color-background-success-surface)}
+.lesson-code[data-state="failing"]{background-color:var(--color-background-danger-surface)}
+.lesson-code p{margin:var(--space-2) 0}
+.lesson-code-badge{font-weight:var(--font-weight-semibold)}
+.lesson-code-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-3)}
+.lesson-code details{margin-top:var(--space-3)}
+.lesson-code summary{cursor:pointer;font-weight:var(--font-weight-medium)}
+
+/* Syntax colours (highlight.js classes), semantic tokens only so both themes work. */
+.MarkdownContent .hljs-comment,.MarkdownContent .hljs-quote{color:var(--color-text-tertiary);font-style:italic}
+.MarkdownContent .hljs-keyword,.MarkdownContent .hljs-literal,.MarkdownContent .hljs-selector-tag{color:var(--color-text-discovery)}
+.MarkdownContent .hljs-string,.MarkdownContent .hljs-regexp,.MarkdownContent .hljs-attr{color:var(--color-text-success)}
+.MarkdownContent .hljs-number,.MarkdownContent .hljs-built_in,.MarkdownContent .hljs-type{color:var(--color-text-info)}
+.MarkdownContent .hljs-title,.MarkdownContent .hljs-name,.MarkdownContent .hljs-tag{color:var(--color-text-caution)}
+.MarkdownContent .hljs-meta,.MarkdownContent .hljs-variable,.MarkdownContent .hljs-params{color:var(--color-text-secondary)}

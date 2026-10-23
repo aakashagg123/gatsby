@@ -26,6 +26,7 @@ import design_system
 import build_graph
 import build_glossary
 import glossary_widget
+import lesson_status
 import smooth_scroll
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -103,6 +104,7 @@ VIEWER = """<!doctype html>
 }})();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize(DS.mermaidConfig());
@@ -114,6 +116,19 @@ const blocks=[]; const stripped = md.replace(/```mermaid\\n([\\s\\S]*?)```/g,(m,
 let html = marked.parse(stripped);
 html = html.replace(/__MERMAID_(\\d+)__/g,(m,i)=>blocks[+i]);
 const el = document.getElementById('content'); el.innerHTML = html;
+el.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{{
+  const lab=b.querySelector('.ButtonInner')||b;
+  const done=t=>{{lab.textContent=t;setTimeout(()=>{{lab.textContent='Copy command'}},1600)}};
+  (navigator.clipboard?navigator.clipboard.writeText(b.getAttribute('data-copy')):Promise.reject())
+    .then(()=>done('Copied'),()=>done('Select the text and copy'));
+}}));
+// Highlight code one block per idle slot so a long lesson never blocks the first scroll.
+const codes=[...el.querySelectorAll('pre code[class*="language-"]')];
+(function step(){{
+  const c=codes.shift(); if(!c||!window.hljs) return;
+  try{{hljs.highlightElement(c)}}catch(e){{}}
+  (window.requestIdleCallback||setTimeout)(step);
+}})();
 // rewrite intra-site .md links to their .html viewers. AI-engineering lessons
 // deploy under ai/<module>.html#<lesson> (not content/), so remap those first.
 el.querySelectorAll('a[href]').forEach(a=>{{
@@ -687,6 +702,35 @@ def apply_phased_diagram_overrides(dst_track, site_key):
                     f.write(new_text)
 
 
+def apply_lesson_status(dst_track, src_dir, records):
+    """Back every Build/Use claim with evidence, in the copied markdown only.
+
+    Tables: the hand-typed check after a lesson link becomes the badge lesson_status earned.
+    Lesson pages: a panel under the H1 with the run command, source links, the source in a
+    collapsible block and the output of the run this build made. Sources are never touched.
+    """
+    changed = 0
+    for dp, _, files in os.walk(dst_track):
+        for fn in files:
+            if not fn.endswith(".md"):
+                continue
+            md_path = os.path.join(dp, fn)
+            md_dir = os.path.join(src_dir, os.path.relpath(dp, dst_track)).replace(os.sep, "/")
+            md_dir = os.path.normpath(md_dir)
+            with open(md_path, encoding="utf-8") as f:
+                text = f.read()
+            new = lesson_status.rewrite_tables(text, md_dir, records)
+            if is_lesson(md_path):
+                rec = records.get(os.path.normpath(os.path.join(md_dir, "..")).replace(os.sep, "/"))
+                if rec is not None and rec["state"] != "concept":
+                    new = lesson_status.add_panel(new, rec)
+            if new != text:
+                with open(md_path, "w", encoding="utf-8") as f:
+                    f.write(new)
+                changed += 1
+    return changed
+
+
 def _title_of(md_path):
     with open(md_path) as f:
         for line in f:
@@ -898,10 +942,15 @@ def main():
     # (md + code + outputs) and render a viewer next to every markdown file.
     pages = 0
     legacy_readmes = []
+    records = lesson_status.collect(run=True)
+    bad = [r for r in records if records[r]["state"] == "failing"]
+    for r in bad:
+        print(f"WARNING: lesson code failing: {r}")
     for src_dir, site_key, brand in MD_TRACKS:
         dst_track = os.path.join(SITE, site_key)
         shutil.copytree(os.path.join(ROOT, src_dir), dst_track)
         apply_phased_diagram_overrides(dst_track, site_key)
+        apply_lesson_status(dst_track, src_dir, records)
 
         # 3. Lesson ordering for prev/next navigation.
         lessons = lesson_order(dst_track)
