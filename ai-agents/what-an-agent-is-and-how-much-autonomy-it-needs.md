@@ -163,7 +163,7 @@ Three points matter to an engineer.
 **Two protocols you will hear named.** The **Model Context Protocol (MCP)** is an open
 standard for connecting an AI application to tools and data. In December 2025 Anthropic
 donated it to the Agentic AI Foundation, a directed fund under the Linux Foundation. The
-**Agent2Agent protocol (A2A)** lets separate agents discover each other and delegate work.
+**Agent2Agent protocol (A2A)** lets autonomous agents collaborate across platforms.
 Google donated it to the Linux Foundation in June 2025. MCP connects an agent to tools. A2A
 connects an agent to other agents. Neither changes the loop above. For the honest state of
 each, read [multi-agent and protocols](../agentic-ai/multi-agent-and-protocols.md).
