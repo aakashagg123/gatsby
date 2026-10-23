@@ -83,6 +83,15 @@ Also measure the cost side. Track the **false positive rate**: how many normal r
 guardrail blocks. A guardrail that stops every attack by blocking half your users is not a
 win.
 
+**A fixed suite flatters the defense.** In the paper *The Attacker Moves Second* (Nasr et
+al., Oct 2025), adaptive attacks beat 12 published jailbreak and injection defenses. Most
+defenses had reported near-zero attack success rates. The attacks tuned themselves against
+each defense, using gradient search, reinforcement learning, random search and human
+guidance. More than 90% of attempts succeeded against most of them. The cause: the
+defenses were tested against static attack strings. So report the fixed-suite rate as a
+regression number only. Add an adaptive test, where an attacker sees your defense and
+iterates, before you claim a defense works.
+
 Two published numbers show the scale. In its 2024 many-shot study, Anthropic reported one
 prompt-based mitigation that cut an attack's success from 61% to 2%. In 2025, Anthropic
 reported that its Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its
@@ -140,6 +149,8 @@ return. That is a record a buyer can read: scope, method, result, fix, date.
 - **Success never defined.** Everyone argues about whether an output counts as a failure.
 - **Findings not kept.** A hole is fixed once and returns after the next change, because it
   never entered the suite.
+- **Static attacks only.** The suite never adapts to the defense, so a low rate means
+  little. A motivated attacker will tune against it.
 - **Grading your own homework.** The same team writes the system, the attacks and the pass
   mark.
 - **Attacks that never reach the tools.** The suite checks what the model says, not what the
@@ -190,6 +201,7 @@ Three habits matter to an engineer.
 - [ ] Is each finding added to the suite as a permanent case?
 - [ ] Do we test the whole system with its tools and permissions, not only the model?
 - [ ] Does someone outside the build team write or review some attacks?
+- [ ] Have we run adaptive attacks, not just fixed strings, against each defense?
 - [ ] Do we keep dated records that we can hand to a buyer or regulator?
 
 ## Related lessons
@@ -213,8 +225,10 @@ Three habits matter to an engineer.
   [Art. 55](https://ai-act-law.eu/article/55/). Checked 2026-10.
 - Anthropic, [Many-shot jailbreaking](https://www.anthropic.com/research/many-shot-jailbreaking)
   (2 Apr 2024): the 61% to 2% mitigation result. Checked 2026-10.
-- Anthropic, [Constitutional Classifiers](https://arxiv.org/abs/2501.18837) (Jan 2025): the
-  86% to 4.4% result and the public-challenge outcome. Search-result excerpts only.
+- Anthropic, [Constitutional Classifiers](https://www.anthropic.com/research/constitutional-classifiers)
+  (Jan 2025): the 86% to 4.4% result. Page opened 2026-10-23.
+- Nasr et al., [The Attacker Moves Second](https://arxiv.org/abs/2510.09023) (Oct 2025): adaptive
+  attacks against 12 defenses, over 90% success on most. Abstract opened 2026-10-23.
 - NIST, [AI 100-2 E2025](https://www.nist.gov/publications/adversarial-machine-learning-taxonomy-and-terminology-attacks-and-mitigations-0)
   (Mar 2025): taxonomy of attacks and attacker goals.
 - The ASR method, the attack suite, its numbers and the code are invented and illustrative.

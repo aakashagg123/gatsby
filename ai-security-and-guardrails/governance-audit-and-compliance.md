@@ -80,7 +80,9 @@ version, when, and against which evaluation. Ask your auditor how they treat it.
 
 Buyers may also ask for **ISO/IEC 42001** (December 2023), the first international standard
 for an AI management system. Others cite the NIST AI Risk Management Framework (RMF),
-released in January 2023, and its Generative AI Profile, NIST AI 600-1 (July 2024). None replaces SOC 2.
+released in January 2023, and its Generative AI Profile, NIST AI 600-1 (July 2024). NIST has also drafted a Cyber AI Profile (NIST IR 8596, preliminary draft Dec 2025) that
+maps AI security work onto its Cybersecurity Framework 2.0. It was still a draft in 2026.
+None replaces SOC 2.
 Each is a different request for the same thing: proof of how you manage AI risk.
 
 ## GDPR and automated decisions
@@ -269,6 +271,11 @@ Two habits keep it honest.
 - AICPA, [SOC suite of services](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2/):
   the 2017 Trust Services Criteria with revised points of focus (2022), five categories,
   security required. The Type II period is a common practice, not a fixed rule.
+- NIST Cyber AI Profile (IR 8596): draft status from search results only
+  ([KPMG alert](https://kpmg.com/us/en/articles/2026/cybersecurity-nist-draft-cybersecurity-framework-for-ai-reg-alert.html)).
+  Not opened. Check NIST for the current status.
+- Omnibus dates re-confirmed 2026-10-23 through search results from White & Case, Mayer Brown
+  and Cuatrecasas. White & Case blocked a direct read. The Official Journal still was not read.
 - ISO/IEC 42001:2023; NIST AI RMF 1.0 (26 Jan 2023); NIST AI 600-1 (26 Jul 2024). Search-result
   excerpts.
 - The deal scenario and the evidence-register sketch are invented and illustrative.
