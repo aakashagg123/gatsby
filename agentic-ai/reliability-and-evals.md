@@ -87,7 +87,11 @@ one via eleven wasted tool calls and a lucky guess. Grade both:
 
 Two agent-specific measurement traps deserve attention. **Non-determinism**: run each
 eval task several times and report pass rates with spread, since a single green run
-proves little. **Environment drift**: agent evals need stable sandboxed environments
+proves little. Report consistency, not just best-case success. The τ-bench benchmark
+separates *pass@k* (at least one of k tries succeeds) from *pass^k* (all k tries
+succeed). Customer-facing agents need the second number. In the τ-bench paper, a
+top function-calling agent of its day passed under 50% of tasks and fell below 25% on
+pass^8 in retail. **Environment drift**: agent evals need stable sandboxed environments
 (seeded data, frozen APIs). An eval that flakes because the test environment changed
 teaches teams to ignore evals.
 

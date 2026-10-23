@@ -59,7 +59,8 @@ flowchart TB
 - **Working memory (the window)** — everything the model can "see" right now. Two hard
   truths follow. It's paid for on *every* step, so a bloated context multiplies cost
   across the whole loop. And attention isn't uniform — as windows fill, models
-  increasingly miss or misweight things buried in the middle. A big window is headroom,
+  increasingly miss or misweight things buried in the middle. Chroma's 2025 "context rot" study tested 18 models and found
+  performance fell as input grew, even on simple tasks. A big window is headroom,
   not a strategy.
 - **Retrieval** — instead of pre-loading everything, fetch what *this step* needs.
   Classic RAG works over embeddings, but agents increasingly also use **agentic
