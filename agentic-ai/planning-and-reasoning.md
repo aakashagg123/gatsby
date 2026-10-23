@@ -95,7 +95,10 @@ are a page of prompting.
 ## Test-time compute: thinking as a budget
 
 Reasoning models (o-series, Claude's extended thinking, R1, Gemini thinking) generate
-internal chains of thought before answering. Accuracy on hard problems climbs with
+internal chains of thought before answering. Newer models often manage this
+themselves. Claude's *adaptive thinking* decides per request whether to think and how
+much, and an **effort** setting (`low` to `max`) steers it. So the budget you set is an
+intent, not a fixed token count. Accuracy on hard problems climbs with
 thinking time — a new scaling axis that happens at *inference*, on your bill, per
 request. Three product consequences follow:
 
