@@ -21,32 +21,33 @@ Resolution Tribunal of British Columbia (<em>Moffatt v. Air Canada</em>, 2024 BC
 the airline's suggestion that the chatbot was a separate entity. It held the company
 responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
 in total with interest and fees. This was a small-claims decision.
-🎯 <em>Takeaway:</em> if your agent says it, you said it. This is the case for
+<strong>Takeaway.</strong> If your agent says it, you said it. This is the case for
 <a href="running-an-agent-in-production.html">risk tiers and approval gates</a> on any action or
 statement that binds the company.</p>
 <p><strong>Agent-washing, estimated.</strong> In June 2025 Gartner predicted that over 40% of agentic AI
 projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
 or weak risk controls. It also described "agent-washing": rebranding existing assistants,
 robotic process automation, and chatbots as agents, and it estimated that only about 130 of
-the thousands of vendors were real. 🎯 <em>Takeaway:</em>
-<a href="choosing-and-acceptance-testing-an-agent.html">test the claim on your own cases</a> before you
+the thousands of vendors were real. <strong>Takeaway.</strong>
+<a href="choosing-and-acceptance-testing-an-agent.html">Test the claim on your own cases</a> before you
 sign, and place any pitch on
 <a href="what-an-agent-is-and-how-much-autonomy-it-needs.html">the autonomy dial</a>.</p>
 <p><strong>Agents get better at short tasks first.</strong> The research group Model Evaluation &amp; Threat Research (METR) measures agents by how
 long a task, in human time, they can finish with 50% success. In a March 2025 study, this
 length had doubled about every seven months since 2019, measured on software tasks. METR has
-reported a faster recent pace since. 🎯 <em>Takeaway:</em> progress is real, and success still falls
+reported a faster recent pace since. <strong>Takeaway.</strong> Progress is real, and success still falls
 as tasks get longer.
 <a href="planning-reasoning-and-reliability-across-a-run.html">Judge reliability at the real task length</a>,
 not on a three-step demo.</p>
 <p><strong>Feedback beats cleverness.</strong> Anthropic's guidance on building agents says an agent should
 gain "ground truth" from the environment at each step, such as tool results or code
-execution, and should have stopping conditions. 🎯 <em>Takeaway:</em> what an agent can see when it
+execution, and should have stopping conditions. <strong>Takeaway.</strong> What an agent can see when it
 is wrong predicts its reliability better than how sophisticated its reasoning is.</p>
-<p><strong>The runaway loop (an illustration).</strong> Picture an agent that files tickets, and a supplier
-that changes an email format. A repeat cap stops the first loop within minutes, a per-agent
-kill switch limits the damage, and the audit trail shows the cause. 🎯 <em>Takeaway:</em> controls
-that live in code, tested before launch, are what turn an incident into a small one. See the
+<p><strong>The runaway loop (an illustration).</strong> Picture an agent that reads the bank statements
+small-business loan applicants upload, and a partner bank that changes its statement format.
+A repeat cap stops the first loop within minutes, a per-agent kill switch limits the damage,
+and the audit trail shows the cause. <strong>Takeaway.</strong> Controls that live in code, tested before
+launch, are what turn an incident into a small one. See the
 <a href="running-an-agent-in-production.html">hour-by-hour example</a>.</p>
 <h2 id="module-recap">Module recap</h2>
 <table>
@@ -182,8 +183,8 @@ wrote before we saw the results?"</em></p>
   onScroll();
 })();
 </script>
-<div id="rs-root">
-  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+<div id="rs-root" data-nosnippet>
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings" aria-hidden="true">
     <div class="rs-h">Theme</div>
     <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
       <div class="SegmentedControlThumb"></div>
@@ -192,13 +193,11 @@ wrote before we saw the results?"</em></p>
       <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
     </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts" role="radiogroup" aria-label="Font">
-      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    <div class="SegmentedControl" id="rs-font" data-size="md" data-pill role="radiogroup" aria-label="Font">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="" style="font-family:var(--font-sans)"><span class="relative">Sans</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="serif" style="font-family:Charter,Georgia,serif"><span class="relative">Serif</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="mono" style="font-family:ui-monospace,Menlo,Consolas,monospace"><span class="relative">Mono</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
@@ -223,7 +222,7 @@ wrote before we saw the results?"</em></p>
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
   // Allowed font keys. Reset a returning reader's stored value if it points at a font
   // this build no longer supports, so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var ALLOWED_F={'':1,serif:1,mono:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -231,7 +230,7 @@ wrote before we saw the results?"</em></p>
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null,segFont=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -239,27 +238,24 @@ wrote before we saw the results?"</em></p>
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-      var on=b.getAttribute('data-f')===st.f;
-      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
-      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segFont)segFont.set(st.f);
     if(segMargins)segMargins.set(st.m);
   }
   function setOpen(open){
     panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
     // the thumb needs layout, so size it once the panel is visible
-    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+    if(open){if(segTheme)segTheme.sync();if(segFont)segFont.sync();if(segMargins)segMargins.sync();}
   }
   function initSegments(){
     if(!window.DS||!DS.segmented)return;
     segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segFont=DS.segmented(document.getElementById('rs-font'),st.f,function(v){st.f=v;apply();save()});
     segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
   }
   btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
   document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){

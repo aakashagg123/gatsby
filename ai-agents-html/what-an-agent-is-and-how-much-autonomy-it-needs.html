@@ -28,18 +28,15 @@ ability to debug.</p>
 defines. An <strong>agent</strong> lets the LLM direct its own process and tool use. Their advice is to
 start with the simplest approach and add complexity only when it is needed.</p>
 <blockquote class="pm-callout">
-<p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — "Agent" describes everything from a scripted pipeline with one
-model call to a system that plans its own steps. If you cannot place a proposal on the
-dial, you cannot estimate its cost, its risk, or how it will fail.</p>
-<p><strong>What it changes in your decisions</strong> — For every "let's build an agent" proposal, ask
-first whether a fixed workflow with model steps inside would do the job. It is cheaper,
-faster, and easier to debug.</p>
-<p><strong>Ask yourself</strong> — <em>"Could I draw this task as a flowchart? If yes, what are we paying
-an agent to rediscover on every request?"</em></p>
-<p><strong>Risk if ignored</strong> — An expensive, unpredictable loop ships where a five-step pipeline
-would have worked. Or a scripted workflow is sold as an autonomous agent, and sets
-expectations the design cannot meet.</p>
+<p>🎯 <strong>Production Bottom Line</strong></p>
+<p>"Agent" covers everything from a scripted pipeline with one model call to a system that
+plans its own steps. Place each proposal on the autonomy dial first. If you cannot, you
+cannot estimate its cost, its risk, or how it will fail. Start from a fixed workflow with
+model steps inside. It is cheaper, faster, and easier to debug. Get this wrong and you ship
+an expensive, unpredictable loop where a five-step pipeline would have worked. Or you sell a
+scripted workflow as an autonomous agent, and promise what the design cannot deliver.
+<strong>Ask your team:</strong> <em>"Could we draw this task as a flowchart? If yes, what are we paying an
+agent to rediscover on every request?"</em></p>
 </blockquote>
 <h2 id="the-mental-model-the-loop-and-the-dial-next-to-it">The mental model: the loop, and the dial next to it</h2>
 <!-- What an agent is — the loop diagram (gather → decide → act → observe → check).
@@ -162,23 +159,31 @@ the first surprise. Here the loop earns its cost, because it chooses its next mo
 what it just learned.</p>
 <p>A third factor sits on top of both. Autonomy should shrink as stakes and irreversibility
 rise, however well the task fits the agent shape.</p>
-<h2 id="worked-example-a-refund-triage-proposal">Worked example: a refund-triage proposal</h2>
-<p><em>This example is invented, to show the method. The numbers are illustrative.</em></p>
-<p>A support lead proposes "an agent that handles refund requests." You ask four questions.</p>
+<h2 id="worked-example-an-msme-loan-intake-proposal">Worked example: an MSME loan-intake proposal</h2>
+<p><em>An illustrative example with no real lender or data behind it.</em></p>
+<p>A lending team at a business lender proposes "an agent that handles small-business (MSME)
+loan applications." You ask four questions.</p>
 <ol>
-<li><strong>Can an expert write the steps?</strong> Mostly. Check the order, check the refund window,
-   check the amount, then refund or escalate. Six of every seven requests follow this path.</li>
-<li><strong>What is unpredictable?</strong> One in seven has a messy case: a damaged item, a disputed
-   charge, or a customer in distress. These need judgment.</li>
-<li><strong>What are the stakes?</strong> Refunds under a set amount are reversible. Larger refunds and
-   account closures are not.</li>
-<li><strong>Where does that put it on the dial?</strong> A fixed workflow for the routine path. A model
-   step to read the customer's message and draft the reply. A human approval gate for large
-   refunds. An agent loop only for the messy one in seven, with a low spending limit.</li>
+<li><strong>Can an expert write the steps?</strong> Mostly. Check that the required documents are
+   present. Run the eligibility rules, such as business age, sector, and loan size. Then send
+   the file to underwriting, or ask the applicant for what is missing. Most applications
+   follow this path. A <strong>rules engine</strong>, software that applies written business rules, already
+   does the eligibility step well.</li>
+<li><strong>What is unpredictable?</strong> A minority of files are messy. The business name differs across
+   documents. A bank statement shows large transfers nobody has explained. These need
+   judgment.</li>
+<li><strong>What are the stakes?</strong> A request for a missing document is easy to correct. A credit
+   decision is not. A wrong approval puts money at risk, and a wrong decline loses a good
+   customer.</li>
+<li><strong>Where does that put it on the dial?</strong> The rules engine stays in charge of eligibility. A
+   model step reads the documents, extracts the fields, and drafts the request for missing
+   items. A credit officer approves every credit decision. An agent loop runs only on the
+   messy files. Its job is to gather the evidence and write a discrepancy note for the
+   officer, within a low step and cost limit.</li>
 </ol>
-<p>The result is not "an agent." It is a workflow with one model step, one approval gate, and
-one small agent for the hard cases. That design costs far less to run than an agent on
-every request, and its failures are easy to locate.</p>
+<p>The result is not "an agent." It is a workflow with one model step, one human gate, and one
+small agent for the hard files. That design costs far less to run than an agent on every
+application, and its failures are easy to locate.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>Flexibility vs. predictability.</strong> More autonomy handles surprises. It also produces
@@ -208,12 +213,12 @@ pay for flexibility the task never needed.</p>
 <p>The difference between a workflow and an agent is who owns the control flow. Here is the
 same task both ways, in outline.</p>
 <pre><code class="language-python"># Workflow: your code owns the control flow. Model calls sit inside fixed steps.
-def handle_refund(request):
-    order = lookup_order(request.order_id)            # plain code
-    if not within_refund_window(order):
-        return escalate(request, reason=&quot;outside window&quot;)
-    reply = llm(&quot;Draft a reply.&quot;, context=[order, request.text])   # one model step
-    return send(reply)
+def handle_application(app):
+    docs = fetch_documents(app.id)                    # plain code
+    if not passes_eligibility_rules(app):             # the rules engine decides
+        return route_to_officer(app, reason=&quot;rule check failed&quot;)
+    fields = llm(&quot;Extract the fields.&quot;, context=docs) # one model step
+    return send_to_underwriting(app, fields)
 
 # Agent: the model owns the control flow. Your code owns the limits.
 def run_agent(goal, tools, max_steps=8, max_cost=0.50):
@@ -261,6 +266,8 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
 <li><a href="../agentic-ai/what-is-an-agent.html">What is an agent?</a> — the full mechanics and
   vocabulary behind this lesson.</li>
 <li><a href="../tool-calling/index.html">Tool calling</a> — how an agent acts.</li>
+<li><a href="../business-acumen/data-and-decisions.html">Data and decisions</a> — how to price a wrong
+  approval against a wrong decline, with lending examples.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
@@ -273,7 +280,7 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
   (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-09.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="planning-reasoning-and-reliability-across-a-run.html"><span class="lbl">→ Next</span><span class="ttl">Planning, reasoning &amp; reliability across a run</span></a></div><footer class="foot"><strong>Core insight:</strong> The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-the-loop-and-the-dial-next-to-it">The mental model: the loop, and the dial next to it</a><a class="h2" href="#where-a-task-belongs-on-the-dial">Where a task belongs on the dial</a><a class="h2" href="#worked-example-a-refund-triage-proposal">Worked example: a refund-triage proposal</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#why-the-decision-comes-before-the-build">Why the decision comes before the build</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-the-loop-and-the-dial-next-to-it">The mental model: the loop, and the dial next to it</a><a class="h2" href="#where-a-task-belongs-on-the-dial">Where a task belongs on the dial</a><a class="h2" href="#worked-example-an-msme-loan-intake-proposal">Worked example: an MSME loan-intake proposal</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#why-the-decision-comes-before-the-build">Why the decision comes before the build</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');
@@ -305,8 +312,8 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
   onScroll();
 })();
 </script>
-<div id="rs-root">
-  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+<div id="rs-root" data-nosnippet>
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings" aria-hidden="true">
     <div class="rs-h">Theme</div>
     <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
       <div class="SegmentedControlThumb"></div>
@@ -315,13 +322,11 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
       <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
     </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts" role="radiogroup" aria-label="Font">
-      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    <div class="SegmentedControl" id="rs-font" data-size="md" data-pill role="radiogroup" aria-label="Font">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="" style="font-family:var(--font-sans)"><span class="relative">Sans</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="serif" style="font-family:Charter,Georgia,serif"><span class="relative">Serif</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="mono" style="font-family:ui-monospace,Menlo,Consolas,monospace"><span class="relative">Mono</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
@@ -346,7 +351,7 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
   // Allowed font keys. Reset a returning reader's stored value if it points at a font
   // this build no longer supports, so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var ALLOWED_F={'':1,serif:1,mono:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -354,7 +359,7 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null,segFont=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -362,27 +367,24 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-      var on=b.getAttribute('data-f')===st.f;
-      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
-      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segFont)segFont.set(st.f);
     if(segMargins)segMargins.set(st.m);
   }
   function setOpen(open){
     panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
     // the thumb needs layout, so size it once the panel is visible
-    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+    if(open){if(segTheme)segTheme.sync();if(segFont)segFont.sync();if(segMargins)segMargins.sync();}
   }
   function initSegments(){
     if(!window.DS||!DS.segmented)return;
     segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segFont=DS.segmented(document.getElementById('rs-font'),st.f,function(v){st.f=v;apply();save()});
     segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
   }
   btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
   document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){

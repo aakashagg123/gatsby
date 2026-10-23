@@ -25,7 +25,7 @@ CFG = {
             "whether it's worth building, how to run it safely, and how to choose one.",
     "insight": "The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.",
     "meta": ["5 lessons", "+ recap", "knowledge graph", "diagrams included"],
-    "callout": "For the product leader",
+    "callout": "Production Bottom Line",
     "lessons": [
         "what-an-agent-is-and-how-much-autonomy-it-needs",
         "planning-reasoning-and-reliability-across-a-run",

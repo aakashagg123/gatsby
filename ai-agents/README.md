@@ -81,7 +81,7 @@ controls you set before launch. **How to choose it**: how to test a claim before
 - [**Choosing and acceptance-testing an agent**](./choosing-and-acceptance-testing-an-agent.md)
   — due diligence, agent-washing, and an acceptance test you agree before you sign.
 
-Each lesson pairs the product framing with a **🎯 For the product leader** briefing, a
+Each lesson pairs the product framing with a **🎯 Production Bottom Line** briefing, a
 worked example, a diagram, and an **Under the hood** section for engineers. Sources and a
 review date close each lesson.
 

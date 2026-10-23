@@ -26,15 +26,13 @@ run, or all runs, in seconds. This lesson turns these into an operating runbook.
 <a href="../agentic-ai/safety-security-and-governance.html">Safety, security &amp; governance</a>. This
 lesson is the practical layer: what to set, who owns it, and what to do at 2 a.m.</p>
 <blockquote class="pm-callout">
-<p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — An agent that fails in a demo costs a retry. An agent that fails in
-production can send the wrong email a thousand times, or spend a budget in an hour.</p>
-<p><strong>What it changes in your decisions</strong> — You approve an agent for launch only when the
-controls exist and have been tested. "It usually works" is not a control.</p>
-<p><strong>Ask yourself</strong> — <em>"If this agent started doing the wrong thing right now, how fast could
-we stop it, and how much would it have done by then?"</em></p>
-<p><strong>Risk if ignored</strong> — A runaway loop or a hijacked run does damage at machine speed, and
-the first sign is an invoice or a customer complaint.</p>
+<p>🎯 <strong>Production Bottom Line</strong></p>
+<p>An agent that fails in a demo costs a retry. An agent that fails in production can send the
+wrong request to a thousand applicants, or spend a budget in an hour. It does damage at
+machine speed, and the first sign is often an invoice or a complaint. Approve an agent for
+launch only when its controls exist and have been tested. "It usually works" is not a
+control. <strong>Ask your team:</strong> <em>"If this agent started doing the wrong thing right now, how
+fast could we stop it, and how much would it have done by then?"</em></p>
 </blockquote>
 <h2 id="the-mental-model-a-control-layer-around-the-loop">The mental model: a control layer around the loop</h2>
 <style>
@@ -115,25 +113,25 @@ removes the safety. Sort actions into tiers and set the gate for each tier.</p>
 <tbody>
 <tr>
 <td>0. Read only</td>
-<td>Search a knowledge base, read an order</td>
+<td>Read a loan file, read a rules-engine result</td>
 <td>n/a</td>
 <td>None. Log it.</td>
 </tr>
 <tr>
 <td>1. Reversible write</td>
-<td>Draft a reply, update a ticket field</td>
+<td>Add a case note, set a document-status field</td>
 <td>Yes</td>
 <td>Automatic. Sample and review after the fact.</td>
 </tr>
 <tr>
 <td>2. Costly to reverse</td>
-<td>Send an email to a customer, refund under a limit</td>
+<td>Send a missing-document request to an applicant, waive a fee under a limit</td>
 <td>Partly</td>
 <td>Automatic under a limit. Human approval above it.</td>
 </tr>
 <tr>
 <td>3. Irreversible or high stakes</td>
-<td>Delete data, move money above a limit, change access, contact many people</td>
+<td>Approve or decline credit, disburse funds, change a credit limit or access, contact many borrowers</td>
 <td>No</td>
 <td>Always a human approval.</td>
 </tr>
@@ -148,10 +146,17 @@ at a high tier</strong> and move down only after a track record. For the permiss
 its arguments, each result, the approver for any gate, and the cost. You need this to debug,
 to answer a customer, and to answer a regulator. A trace you cannot replay cannot be
 audited. See <a href="../agentic-ai/reliability-and-evals.html">Reliability &amp; evals</a>.</p>
+<p>Lenders in India have a specific reason to keep this record. In August 2025 a Reserve Bank of
+India (RBI) committee published its report on a Framework for Responsible and Ethical
+Enablement of AI (FREE-AI) in the financial sector.
+It recommends that regulated entities adopt a board-approved AI policy and strengthen AI
+incident reporting. Its principles say AI should defer to human judgment. This is a committee
+report with recommendations, not a binding rule. Check what the RBI has adopted since before
+you cite it to a customer or an auditor.</p>
 <p><strong>Rollback.</strong> Decide before launch what "undo" means for each tool.</p>
 <ul>
 <li><strong>Reversible actions</strong> need an undo path: a saved previous value, or a compensating
-  action such as a refund reversal.</li>
+  action such as reversing a waived fee.</li>
 <li><strong>Irreversible actions</strong> need a gate, because rollback is not available.</li>
 <li><strong>Repeated calls</strong> need to be safe. A tool that runs twice must not charge twice. Use an
   idempotency key, which makes a repeat harmless.</li>
@@ -159,7 +164,8 @@ audited. See <a href="../agentic-ai/reliability-and-evals.html">Reliability &amp
 <h2 id="the-kill-switch">The kill switch</h2>
 <p>A kill switch is only real if it is fast, easy to reach, and tested.</p>
 <ul>
-<li><strong>Three scopes.</strong> Stop one run. Stop one agent or one customer's runs. Stop everything.</li>
+<li><strong>Three scopes.</strong> Stop one run. Stop one agent, or one tenant's runs. On a platform that
+  serves several lenders, a tenant is one lender. Stop everything.</li>
 <li><strong>Checked every step.</strong> The loop reads the switch before each action, so a stop takes
   effect within one step.</li>
 <li><strong>Owned by a person, not a team.</strong> Name who may pull it, and who is on call.</li>
@@ -170,10 +176,12 @@ run for long periods across many tool calls, so a code update can land in the mi
 run. It used "rainbow deployments," which shift traffic gradually so running agents are not
 cut off. Plan for updates to a system that is never idle.</p>
 <h2 id="worked-example-a-runaway-loop-hour-by-hour">Worked example: a runaway loop, hour by hour</h2>
-<p><em>This example is invented, to show the runbook in use. Times and amounts are illustrative.</em></p>
-<p>An agent files support tickets from customer emails. A supplier changes an email format.</p>
+<p><em>An illustrative example of the runbook in use. Times are assumed.</em></p>
+<p>An agent reads the bank statements that small-business loan applicants upload. It opens a
+document-check case for each file. A partner bank changes its statement export format.</p>
 <ul>
-<li><strong>09:00</strong> The agent starts misreading one field. It creates duplicate tickets.</li>
+<li><strong>09:00</strong> The agent starts misreading one field. It opens duplicate cases, and some
+  applicants get a second request for the same document.</li>
 <li><strong>09:12</strong> The repeat cap trips. The same call with the same arguments has run three
   times. The run stops and escalates to a person. This is a budget control doing its job.</li>
 <li><strong>09:15</strong> Monitoring shows the same pattern across forty runs. An alert pages the
@@ -183,7 +191,7 @@ cut off. Plan for updates to a system that is never idle.</p>
   to confirm.</li>
 <li><strong>10:30</strong> They fix the parsing step, run the saved failing cases as tests, and re-enable
   the agent at a small share of traffic.</li>
-<li><strong>Next day</strong> They add the failing email format to the eval set, so it cannot regress.</li>
+<li><strong>Next day</strong> They add the new statement format to the eval set, so it cannot regress.</li>
 </ul>
 <p>Without the repeat cap, the loop would have run until the step limit. Without the audit
 trail, the team would have guessed. Without the kill switch, it would have needed a
@@ -194,8 +202,11 @@ deployment.</p>
   tier, using evidence.</li>
 <li><strong>Budget tightness vs. completion.</strong> Too low a cap causes premature give-ups. Tune against
   real tasks.</li>
-<li><strong>Logging depth vs. privacy.</strong> Full traces help debugging. They also store customer data.
-  Set retention and access rules.</li>
+<li><strong>Logging depth vs. privacy.</strong> Full traces help debugging. They also store borrowers'
+  financial data. Set retention and access rules. On a platform that serves several lenders,
+  keep each lender's traces and tool credentials apart. A run for one lender must never read
+  another lender's files. This costs extra setup per tenant. See
+  <a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation</a>.</li>
 <li><strong>Central kill switch vs. local control.</strong> A global stop is powerful. A per-agent stop
   limits collateral damage. Have both.</li>
 </ul>
@@ -207,8 +218,8 @@ deployment.</p>
 <li><strong>Approval fatigue.</strong> People are asked to approve too many low-risk actions, and start
   approving without reading. Gate by tier so approvals are rare and meaningful.</li>
 <li><strong>No owner at 2 a.m.</strong> The controls exist, and nobody is responsible for using them.</li>
-<li><strong>Rollback assumed.</strong> A team believes actions can be undone, and finds that an email
-  cannot be unsent.</li>
+<li><strong>Rollback assumed.</strong> A team believes actions can be undone, and finds that a request
+  sent to a borrower cannot be unsent.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
 <p>The policy check is a small piece of code that sits between the model's proposal and the
@@ -271,6 +282,8 @@ to keep such a test set.</p>
   injection, defences, and governance in depth.</li>
 <li><a href="../tool-calling/permissions-blast-radius-and-the-trust-boundary.html">Tool permissions, blast radius &amp; the trust boundary</a>
   — the permission mechanics behind the tiers.</li>
+<li><a href="../access-control/access-control-for-ai-agents.html">Access control for AI agents</a> — how
+  an agent gets only the access its task needs.</li>
 <li><a href="../technical-product-management/incidents-and-postmortems.html">Incidents &amp; postmortems</a>
   — the general incident discipline this runbook borrows.</li>
 </ul>
@@ -281,8 +294,13 @@ to keep such a test set.</p>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
   (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-09.</li>
 <li>OWASP GenAI Security Project, <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">Top 10 for Agentic Applications for 2026</a>
-  (Dec 2025): the risk names above. Confirmed through search results and secondary
-  summaries; the page could not be opened when this lesson was written.</li>
+  (Dec 2025): the publication date, 9 December 2025, was confirmed on the page in 2026-10. The
+  risk names come from the downloadable document, not the page text.</li>
+<li>Reserve Bank of India, <a href="https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&amp;ID=1306">FREE-AI Committee Report</a>
+  (13 Aug 2025): the recommendations for a board-approved AI policy and for AI incident
+  reporting, and the principle that AI should "defer to human judgment." See also the
+  <a href="https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=61018">RBI press release</a>.
+  Checked 2026-10.</li>
 <li>The runaway-loop example and the policy file are invented and illustrative.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="when-not-to-build-an-agent.html"><span class="lbl">← Previous</span><span class="ttl">When not to build an agent</span></a><a class="navcard next" href="choosing-and-acceptance-testing-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">Choosing and acceptance-testing an agent</span></a></div><footer class="foot"><strong>Core insight:</strong> The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
@@ -318,8 +336,8 @@ to keep such a test set.</p>
   onScroll();
 })();
 </script>
-<div id="rs-root">
-  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+<div id="rs-root" data-nosnippet>
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings" aria-hidden="true">
     <div class="rs-h">Theme</div>
     <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
       <div class="SegmentedControlThumb"></div>
@@ -328,13 +346,11 @@ to keep such a test set.</p>
       <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
     </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts" role="radiogroup" aria-label="Font">
-      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    <div class="SegmentedControl" id="rs-font" data-size="md" data-pill role="radiogroup" aria-label="Font">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="" style="font-family:var(--font-sans)"><span class="relative">Sans</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="serif" style="font-family:Charter,Georgia,serif"><span class="relative">Serif</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="mono" style="font-family:ui-monospace,Menlo,Consolas,monospace"><span class="relative">Mono</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
@@ -359,7 +375,7 @@ to keep such a test set.</p>
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
   // Allowed font keys. Reset a returning reader's stored value if it points at a font
   // this build no longer supports, so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var ALLOWED_F={'':1,serif:1,mono:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -367,7 +383,7 @@ to keep such a test set.</p>
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null,segFont=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -375,27 +391,24 @@ to keep such a test set.</p>
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-      var on=b.getAttribute('data-f')===st.f;
-      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
-      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segFont)segFont.set(st.f);
     if(segMargins)segMargins.set(st.m);
   }
   function setOpen(open){
     panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
     // the thumb needs layout, so size it once the panel is visible
-    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+    if(open){if(segTheme)segTheme.sync();if(segFont)segFont.sync();if(segMargins)segMargins.sync();}
   }
   function initSegments(){
     if(!window.DS||!DS.segmented)return;
     segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segFont=DS.segmented(document.getElementById('rs-font'),st.f,function(v){st.f=v;apply();save()});
     segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
   }
   btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
   document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){

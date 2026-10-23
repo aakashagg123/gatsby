@@ -26,17 +26,15 @@ sounds reliable. Chain twenty of them and the task succeeds about a third of the
 version of the same job. It is also why recovering well from an error matters more than
 never making one.</p>
 <blockquote class="pm-callout">
-<p>🎯 <strong>For the product leader</strong></p>
-<p><strong>Why it matters</strong> — This is the gap between "worked in the demo" and "works for
-customers." It sets the two numbers that make or break an agent's economics: how often
-it finishes, and how often a human must step in.</p>
-<p><strong>What it changes in your decisions</strong> — Spec reliability like any feature. Set a target
-completion rate per task type. Write down what happens when a step fails.</p>
-<p><strong>Ask yourself</strong> — <em>"How many things must go right in a row for this task to succeed?
-What is our measured success rate per step, not the one we hope for?"</em></p>
-<p><strong>Risk if ignored</strong> — A team promises an agent will handle a thirty-step task alone,
-ships something that behaves like a coin flip, and learns it from customer complaints
-instead of a dashboard.</p>
+<p>🎯 <strong>Production Bottom Line</strong></p>
+<p>This is the gap between "worked in the demo" and "works for customers." It sets the two
+numbers that make or break an agent's economics: how often it finishes, and how often a
+human must step in. Spec reliability like any feature. Set a target completion rate per task
+type, and write down what happens when a step fails. Skip this and a team promises a
+thirty-step task, ships something that behaves like a coin flip, and learns it from customer
+complaints instead of a dashboard. <strong>Ask your team:</strong> <em>"How many things must go right in a
+row for this task to succeed? What is our measured success rate per step, not the one we
+hope for?"</em></p>
 </blockquote>
 <h2 id="the-mental-model-errors-compound-faster-than-intuition-expects">The mental model: errors compound faster than intuition expects</h2>
 <!-- Reliability lesson — the compound-error math visualized as a chain that degrades.
@@ -154,6 +152,10 @@ restart, escalate), and the eval and tracing habits are in
 <h2 id="worked-example-how-length-and-reliability-interact">Worked example: how length and reliability interact</h2>
 <p>This is arithmetic, not a measurement. It multiplies the same per-step success rate across
 the steps of a task.</p>
+<p>To make the step count concrete, picture an illustrative underwriting run for a small-business
+loan. The agent pulls the credit bureau report, reads each month of bank statements, matches
+them to the tax filings, checks the owners' details, and drafts a credit memo. Counted step by
+step, such a run reaches twenty steps quickly.</p>
 <table>
 <thead>
 <tr>
@@ -197,8 +199,8 @@ reliability matter more than they look.</p>
   that step, not the whole task. This turns one long chain into several short ones.</li>
 </ul>
 <h2 id="evidence-that-length-is-the-problem">Evidence that length is the problem</h2>
-<p>The pattern shows up in research on real agents. The research group METR (Model Evaluation
-&amp; Threat Research) measures agents by the length of task they can finish, where length is
+<p>The pattern shows up in research on real agents. The research group Model Evaluation &amp; Threat
+Research (METR) measures agents by the length of task they can finish, where length is
 the time a skilled human needs. In a March 2025 study, the task length an agent completed
 with 50% success had doubled about every seven months since 2019. METR has since reported a
 faster recent pace. Check its latest page before you quote a rate.</p>
@@ -240,7 +242,9 @@ it got something wrong?</p>
 <li><strong>Plan approval vs. speed.</strong> A human plan gate catches expensive mistakes early. It also
   slows every run.</li>
 <li><strong>Thinking effort vs. cost.</strong> High effort on every step is slow and expensive. Reserve it
-  for the steps that need it.</li>
+  for the steps that need it. Latency often decides this for you. A model step inside a rules
+  engine's live eligibility check must answer within that check's time budget, so it gets low
+  effort. An overnight credit-memo draft has no such limit, so it can afford high effort.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
@@ -308,8 +312,9 @@ length.</p>
   adaptive thinking and the <code>effort</code> setting on Claude 4.6 and later models. Checked 2026-09.</li>
 <li>METR, <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Measuring AI Ability to Complete Long Software Tasks</a>
   (Mar 2025): the 50% time horizon and the roughly seven-month doubling over 2019-2025,
-  measured on software tasks. Later METR updates report a faster recent pace. Not verified
-  here: the page could not be opened, so this rests on search-result excerpts.</li>
+  measured on software tasks. The page says the horizon "has been doubling approximately every
+  7 months for the last 6 years," and reports faster doubling on some benchmarks. Checked
+  2026-10.</li>
 <li>The table is arithmetic: each cell is the per-step rate raised to the number of steps.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="what-an-agent-is-and-how-much-autonomy-it-needs.html"><span class="lbl">← Previous</span><span class="ttl">What an agent is, and how much autonomy it needs</span></a><a class="navcard next" href="when-not-to-build-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">When not to build an agent</span></a></div><footer class="foot"><strong>Core insight:</strong> The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
@@ -345,8 +350,8 @@ length.</p>
   onScroll();
 })();
 </script>
-<div id="rs-root">
-  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+<div id="rs-root" data-nosnippet>
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings" aria-hidden="true">
     <div class="rs-h">Theme</div>
     <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
       <div class="SegmentedControlThumb"></div>
@@ -355,13 +360,11 @@ length.</p>
       <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
     </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts" role="radiogroup" aria-label="Font">
-      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    <div class="SegmentedControl" id="rs-font" data-size="md" data-pill role="radiogroup" aria-label="Font">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="" style="font-family:var(--font-sans)"><span class="relative">Sans</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="serif" style="font-family:Charter,Georgia,serif"><span class="relative">Serif</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="mono" style="font-family:ui-monospace,Menlo,Consolas,monospace"><span class="relative">Mono</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
@@ -386,7 +389,7 @@ length.</p>
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
   // Allowed font keys. Reset a returning reader's stored value if it points at a font
   // this build no longer supports, so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var ALLOWED_F={'':1,serif:1,mono:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -394,7 +397,7 @@ length.</p>
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null,segFont=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -402,27 +405,24 @@ length.</p>
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-      var on=b.getAttribute('data-f')===st.f;
-      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
-      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segFont)segFont.set(st.f);
     if(segMargins)segMargins.set(st.m);
   }
   function setOpen(open){
     panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
     // the thumb needs layout, so size it once the panel is visible
-    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+    if(open){if(segTheme)segTheme.sync();if(segFont)segFont.sync();if(segMargins)segMargins.sync();}
   }
   function initSegments(){
     if(!window.DS||!DS.segmented)return;
     segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segFont=DS.segmented(document.getElementById('rs-font'),st.f,function(v){st.f=v;apply();save()});
     segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
   }
   btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
   document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){

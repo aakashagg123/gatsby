@@ -19,19 +19,14 @@ The theory of why agents are attackable is in
 [Safety, security & governance](../agentic-ai/safety-security-and-governance.md). This
 lesson is the practical layer: what to set, who owns it, and what to do at 2 a.m.
 
-> 🎯 **For the product leader**
+> 🎯 **Production Bottom Line**
 >
-> **Why it matters** — An agent that fails in a demo costs a retry. An agent that fails in
-> production can send the wrong email a thousand times, or spend a budget in an hour.
->
-> **What it changes in your decisions** — You approve an agent for launch only when the
-> controls exist and have been tested. "It usually works" is not a control.
->
-> **Ask yourself** — *"If this agent started doing the wrong thing right now, how fast could
-> we stop it, and how much would it have done by then?"*
->
-> **Risk if ignored** — A runaway loop or a hijacked run does damage at machine speed, and
-> the first sign is an invoice or a customer complaint.
+> An agent that fails in a demo costs a retry. An agent that fails in production can send the
+> wrong request to a thousand applicants, or spend a budget in an hour. It does damage at
+> machine speed, and the first sign is often an invoice or a complaint. Approve an agent for
+> launch only when its controls exist and have been tested. "It usually works" is not a
+> control. **Ask your team:** *"If this agent started doing the wrong thing right now, how
+> fast could we stop it, and how much would it have done by then?"*
 
 ## The mental model: a control layer around the loop
 
@@ -74,10 +69,10 @@ removes the safety. Sort actions into tiers and set the gate for each tier.
 
 | Tier | Example | Reversible? | Gate |
 | --- | --- | --- | --- |
-| 0. Read only | Search a knowledge base, read an order | n/a | None. Log it. |
-| 1. Reversible write | Draft a reply, update a ticket field | Yes | Automatic. Sample and review after the fact. |
-| 2. Costly to reverse | Send an email to a customer, refund under a limit | Partly | Automatic under a limit. Human approval above it. |
-| 3. Irreversible or high stakes | Delete data, move money above a limit, change access, contact many people | No | Always a human approval. |
+| 0. Read only | Read a loan file, read a rules-engine result | n/a | None. Log it. |
+| 1. Reversible write | Add a case note, set a document-status field | Yes | Automatic. Sample and review after the fact. |
+| 2. Costly to reverse | Send a missing-document request to an applicant, waive a fee under a limit | Partly | Automatic under a limit. Human approval above it. |
+| 3. Irreversible or high stakes | Approve or decline credit, disburse funds, change a credit limit or access, contact many borrowers | No | Always a human approval. |
 
 Two rules keep the table honest. First, **the tier belongs to the action, not the agent.**
 The same agent may do tier 1 alone and need approval for tier 3. Second, **new tools start
@@ -91,10 +86,18 @@ its arguments, each result, the approver for any gate, and the cost. You need th
 to answer a customer, and to answer a regulator. A trace you cannot replay cannot be
 audited. See [Reliability & evals](../agentic-ai/reliability-and-evals.md).
 
+Lenders in India have a specific reason to keep this record. In August 2025 a Reserve Bank of
+India (RBI) committee published its report on a Framework for Responsible and Ethical
+Enablement of AI (FREE-AI) in the financial sector.
+It recommends that regulated entities adopt a board-approved AI policy and strengthen AI
+incident reporting. Its principles say AI should defer to human judgment. This is a committee
+report with recommendations, not a binding rule. Check what the RBI has adopted since before
+you cite it to a customer or an auditor.
+
 **Rollback.** Decide before launch what "undo" means for each tool.
 
 - **Reversible actions** need an undo path: a saved previous value, or a compensating
-  action such as a refund reversal.
+  action such as reversing a waived fee.
 - **Irreversible actions** need a gate, because rollback is not available.
 - **Repeated calls** need to be safe. A tool that runs twice must not charge twice. Use an
   idempotency key, which makes a repeat harmless.
@@ -103,7 +106,8 @@ audited. See [Reliability & evals](../agentic-ai/reliability-and-evals.md).
 
 A kill switch is only real if it is fast, easy to reach, and tested.
 
-- **Three scopes.** Stop one run. Stop one agent or one customer's runs. Stop everything.
+- **Three scopes.** Stop one run. Stop one agent, or one tenant's runs. On a platform that
+  serves several lenders, a tenant is one lender. Stop everything.
 - **Checked every step.** The loop reads the switch before each action, so a stop takes
   effect within one step.
 - **Owned by a person, not a team.** Name who may pull it, and who is on call.
@@ -116,11 +120,13 @@ cut off. Plan for updates to a system that is never idle.
 
 ## Worked example: a runaway loop, hour by hour
 
-*This example is invented, to show the runbook in use. Times and amounts are illustrative.*
+*An illustrative example of the runbook in use. Times are assumed.*
 
-An agent files support tickets from customer emails. A supplier changes an email format.
+An agent reads the bank statements that small-business loan applicants upload. It opens a
+document-check case for each file. A partner bank changes its statement export format.
 
-- **09:00** The agent starts misreading one field. It creates duplicate tickets.
+- **09:00** The agent starts misreading one field. It opens duplicate cases, and some
+  applicants get a second request for the same document.
 - **09:12** The repeat cap trips. The same call with the same arguments has run three
   times. The run stops and escalates to a person. This is a budget control doing its job.
 - **09:15** Monitoring shows the same pattern across forty runs. An alert pages the
@@ -130,7 +136,7 @@ An agent files support tickets from customer emails. A supplier changes an email
   to confirm.
 - **10:30** They fix the parsing step, run the saved failing cases as tests, and re-enable
   the agent at a small share of traffic.
-- **Next day** They add the failing email format to the eval set, so it cannot regress.
+- **Next day** They add the new statement format to the eval set, so it cannot regress.
 
 Without the repeat cap, the loop would have run until the step limit. Without the audit
 trail, the team would have guessed. Without the kill switch, it would have needed a
@@ -142,8 +148,11 @@ deployment.
   tier, using evidence.
 - **Budget tightness vs. completion.** Too low a cap causes premature give-ups. Tune against
   real tasks.
-- **Logging depth vs. privacy.** Full traces help debugging. They also store customer data.
-  Set retention and access rules.
+- **Logging depth vs. privacy.** Full traces help debugging. They also store borrowers'
+  financial data. Set retention and access rules. On a platform that serves several lenders,
+  keep each lender's traces and tool credentials apart. A run for one lender must never read
+  another lender's files. This costs extra setup per tenant. See
+  [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md).
 - **Central kill switch vs. local control.** A global stop is powerful. A per-agent stop
   limits collateral damage. Have both.
 
@@ -155,8 +164,8 @@ deployment.
 - **Approval fatigue.** People are asked to approve too many low-risk actions, and start
   approving without reading. Gate by tier so approvals are rare and meaningful.
 - **No owner at 2 a.m.** The controls exist, and nobody is responsible for using them.
-- **Rollback assumed.** A team believes actions can be undone, and finds that an email
-  cannot be unsent.
+- **Rollback assumed.** A team believes actions can be undone, and finds that a request
+  sent to a borrower cannot be unsent.
 
 ## Under the hood
 
@@ -226,6 +235,8 @@ to keep such a test set.
   injection, defences, and governance in depth.
 - [Tool permissions, blast radius & the trust boundary](../tool-calling/permissions-blast-radius-and-the-trust-boundary.md)
   — the permission mechanics behind the tiers.
+- [Access control for AI agents](../access-control/access-control-for-ai-agents.md) — how
+  an agent gets only the access its task needs.
 - [Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md)
   — the general incident discipline this runbook borrows.
 
@@ -236,6 +247,11 @@ to keep such a test set.
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-09.
 - OWASP GenAI Security Project, [Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
-  (Dec 2025): the risk names above. Confirmed through search results and secondary
-  summaries; the page could not be opened when this lesson was written.
+  (Dec 2025): the publication date, 9 December 2025, was confirmed on the page in 2026-10. The
+  risk names come from the downloadable document, not the page text.
+- Reserve Bank of India, [FREE-AI Committee Report](https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&ID=1306)
+  (13 Aug 2025): the recommendations for a board-approved AI policy and for AI incident
+  reporting, and the principle that AI should "defer to human judgment." See also the
+  [RBI press release](https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=61018).
+  Checked 2026-10.
 - The runaway-loop example and the policy file are invented and illustrative.

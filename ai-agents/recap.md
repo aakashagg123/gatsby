@@ -11,7 +11,7 @@ Resolution Tribunal of British Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149
 the airline's suggestion that the chatbot was a separate entity. It held the company
 responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
 in total with interest and fees. This was a small-claims decision.
-🎯 *Takeaway:* if your agent says it, you said it. This is the case for
+**Takeaway.** If your agent says it, you said it. This is the case for
 [risk tiers and approval gates](./running-an-agent-in-production.md) on any action or
 statement that binds the company.
 
@@ -19,28 +19,29 @@ statement that binds the company.
 projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
 or weak risk controls. It also described "agent-washing": rebranding existing assistants,
 robotic process automation, and chatbots as agents, and it estimated that only about 130 of
-the thousands of vendors were real. 🎯 *Takeaway:*
-[test the claim on your own cases](./choosing-and-acceptance-testing-an-agent.md) before you
+the thousands of vendors were real. **Takeaway.**
+[Test the claim on your own cases](./choosing-and-acceptance-testing-an-agent.md) before you
 sign, and place any pitch on
 [the autonomy dial](./what-an-agent-is-and-how-much-autonomy-it-needs.md).
 
 **Agents get better at short tasks first.** The research group Model Evaluation & Threat Research (METR) measures agents by how
 long a task, in human time, they can finish with 50% success. In a March 2025 study, this
 length had doubled about every seven months since 2019, measured on software tasks. METR has
-reported a faster recent pace since. 🎯 *Takeaway:* progress is real, and success still falls
+reported a faster recent pace since. **Takeaway.** Progress is real, and success still falls
 as tasks get longer.
 [Judge reliability at the real task length](./planning-reasoning-and-reliability-across-a-run.md),
 not on a three-step demo.
 
 **Feedback beats cleverness.** Anthropic's guidance on building agents says an agent should
 gain "ground truth" from the environment at each step, such as tool results or code
-execution, and should have stopping conditions. 🎯 *Takeaway:* what an agent can see when it
+execution, and should have stopping conditions. **Takeaway.** What an agent can see when it
 is wrong predicts its reliability better than how sophisticated its reasoning is.
 
-**The runaway loop (an illustration).** Picture an agent that files tickets, and a supplier
-that changes an email format. A repeat cap stops the first loop within minutes, a per-agent
-kill switch limits the damage, and the audit trail shows the cause. 🎯 *Takeaway:* controls
-that live in code, tested before launch, are what turn an incident into a small one. See the
+**The runaway loop (an illustration).** Picture an agent that reads the bank statements
+small-business loan applicants upload, and a partner bank that changes its statement format.
+A repeat cap stops the first loop within minutes, a per-agent kill switch limits the damage,
+and the audit trail shows the cause. **Takeaway.** Controls that live in code, tested before
+launch, are what turn an incident into a small one. See the
 [hour-by-hour example](./running-an-agent-in-production.md).
 
 ## Module recap

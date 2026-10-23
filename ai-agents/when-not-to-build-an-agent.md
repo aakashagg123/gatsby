@@ -17,19 +17,15 @@ fixed workflow, or a person, already did well enough. The zone is: low-volume wo
 work that is slow or costly to verify, and work where one mistake is costly or cannot be
 undone.
 
-> 🎯 **For the product leader**
+> 🎯 **Production Bottom Line**
 >
-> **Why it matters** — This is the highest-leverage call in the module. Getting it right
-> before the build is far cheaper than finding out from the invoice or the incident.
->
-> **What it changes in your decisions** — Judge an agent proposal on stakes,
-> verifiability, and volume before you judge how good the demo looked.
->
-> **Ask yourself** — *"For this task, what does the agent cost, what does checking its
-> work cost, and what did the old way cost, all in?"*
->
-> **Risk if ignored** — An agent ships on low-volume, high-stakes, hard-to-check work. It
-> looks fine in testing. One bad run erases a year of the savings it was meant to deliver.
+> This is the highest-leverage call in the module. Getting it right before the build is far
+> cheaper than finding out from the invoice or the incident. Judge an agent proposal on
+> stakes, verifiability, and volume before you judge how good the demo looked. The failure
+> case is an agent on low-volume, high-stakes, hard-to-check work. It looks fine in testing.
+> Then one bad run erases a year of the savings it was meant to deliver. **Ask your team:**
+> *"For this task, what does the agent cost, what does checking its work cost, and what did
+> the old way cost, all in?"*
 
 ## The mental model: three questions, one lane
 
@@ -78,13 +74,13 @@ per-run price rises as autonomy rises.
 
 ## Worked example: a supervised-cost break-even
 
-*This example is invented, to show the method. Every number is illustrative. Replace them
-with your own.*
+*An illustrative example. Every number is assumed. Replace them with your own.*
 
-A team spends 2,000 hours a month on a research task. A person costs 50 an hour, so the
-task costs 100,000 a month.
+Credit analysts at a business lender spend 2,000 hours a month drafting credit memos for
+small-business loan files. An analyst costs 50 an hour, so the task costs 100,000 a month.
 
-They propose an agent.
+They propose an agent that drafts each memo. A credit officer still reviews every draft and
+makes the decision. So this task sits in the "agent assists" lane of the three questions.
 
 | Cost line | Per month |
 | --- | --- |
@@ -97,7 +93,7 @@ They propose an agent.
 The agent saves 40,000 a month against the 100,000 baseline. The setup cost was 300,000.
 Break-even arrives after 7.5 months.
 
-Now change one number. If reviewers must check every output for 20 minutes instead of 6,
+Now change one number. If reviewers must check every memo for 20 minutes instead of 6,
 review cost rises to 66,700 and the supervised total to 106,700. The agent now costs more
 than the old way. The whole case rests on how cheap the checking is. That is why
 "cheap to check" comes first in the three questions.

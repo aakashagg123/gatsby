@@ -20,20 +20,16 @@ for wrong information its chatbot gave a customer. The airline had effectively s
 the chatbot was a separate entity. The tribunal disagreed. It was a decision of a small-claims
 tribunal, but the point holds: if your agent says it, you said it.
 
-> 🎯 **For the product leader**
+> 🎯 **Production Bottom Line**
 >
-> **Why it matters** — Gartner predicted in June 2025 that over 40% of agentic AI projects
-> will be cancelled by the end of 2027, because of rising costs, unclear value, or weak
-> risk controls. Most of those problems can be seen before purchase, if you test for them.
->
-> **What it changes in your decisions** — You sign only against a written acceptance test.
-> You run it on your own cases, not the vendor's demo cases.
->
-> **Ask yourself** — *"If we ran this agent on 200 of our own past cases tomorrow, what
-> pass rate, cost, and failure behaviour would we accept, and have we written that down?"*
->
-> **Risk if ignored** — You buy a demo. The agent works on the happy path and fails on your
-> real inputs. The contract has no measure of "works," so you have no remedy.
+> Gartner predicted in June 2025 that over 40% of agentic AI projects will be cancelled by the
+> end of 2027, because of rising costs, unclear value, or weak risk controls. Most of those
+> problems can be seen before purchase, if you test for them. Sign only against a written
+> acceptance test, run on your own cases, not the vendor's demo cases. Without one, you buy a
+> demo. It works on the happy path and fails on your real inputs, and the contract has no
+> measure of "works," so you have no remedy. **Ask your team:** *"If we ran this agent on 200
+> of our own past cases tomorrow, what pass rate, cost, and failure behaviour would we accept,
+> and have we written that down?"*
 
 ## The mental model: claim, test, threshold
 
@@ -72,7 +68,8 @@ Ask these questions. A good answer is specific and shows evidence.
 7. **Can we see a full trace of a run, and export it?**
 8. **How is it updated, and how do we know when behaviour changes?** Model updates can change
    behaviour without a code change.
-9. **Which of our data does it see, where does it go, and what is retained?**
+9. **Which of our data does it see, where does it go, and what is retained?** If the vendor
+   serves other lenders on the same platform, ask how it keeps your files apart from theirs.
 10. **What is the exit path?** Ask how you get your data, traces, and configuration out.
 
 Two answers should worry you. One is "it just works" with no numbers. The other is a demo
@@ -104,18 +101,18 @@ tool error.
 
 ## Worked example: an acceptance test for a claim
 
-*This example is invented, to show the method. The vendor, numbers, and thresholds are
-illustrative.*
+*An illustrative example. The vendor, numbers, and thresholds are assumed.*
 
-A vendor claims: "Our agent resolves 90% of tier-1 support tickets on its own."
+A vendor claims: "Our agent completes document verification on 90% of small-business loan
+files without a human."
 
 You turn the claim into a test.
 
 | Measure | How you test it | Agreed threshold |
 | --- | --- | --- |
-| Outcome on routine cases | 150 real tickets, 5 runs each, exact-match on resolution code | At least 90% of cases pass on at least 4 of 5 runs |
-| Outcome on hard cases | 50 tickets your staff marked difficult | At least 60%, and the rest escalate, not guess |
-| Hostile inputs | 20 tickets with embedded instructions or missing data | 0 unsafe actions. At least 95% escalate or refuse correctly |
+| Outcome on routine cases | 150 past loan files, 5 runs each, exact match on the verification outcome your officers recorded | At least 90% of cases pass on at least 4 of 5 runs |
+| Outcome on hard cases | 50 files your credit officers marked difficult | At least 60%, and the rest escalate, not guess |
+| Hostile inputs | 20 files with instructions hidden in uploaded documents, missing data, or requests for another tenant's records | 0 unsafe actions. 0 reads of another tenant's data. At least 95% escalate or refuse correctly |
 | Path | Trace review of 40 runs | 0 runs exceed step or cost caps. 0 tool calls outside the allowed set |
 | Cost | Cost per run across all runs | Median under the agreed figure. 90th percentile under twice the median |
 | Failure behaviour | Force 10 tool failures | 100% stop, retry once, or escalate. 0 invented results |
@@ -209,6 +206,8 @@ trajectory grading in depth.
   depth.
 - [Agentic AI as a product](../agentic-ai/agentic-ai-as-a-product.md) — agent UX, unit
   economics, and business models.
+- [Multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) — how
+  a shared platform keeps one customer's data from another's.
 
 ## Sources
 

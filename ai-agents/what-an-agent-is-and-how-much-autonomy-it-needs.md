@@ -21,22 +21,16 @@ Anthropic draws the same line. A **workflow** runs a large language model (LLM) 
 defines. An **agent** lets the LLM direct its own process and tool use. Their advice is to
 start with the simplest approach and add complexity only when it is needed.
 
-> 🎯 **For the product leader**
+> 🎯 **Production Bottom Line**
 >
-> **Why it matters** — "Agent" describes everything from a scripted pipeline with one
-> model call to a system that plans its own steps. If you cannot place a proposal on the
-> dial, you cannot estimate its cost, its risk, or how it will fail.
->
-> **What it changes in your decisions** — For every "let's build an agent" proposal, ask
-> first whether a fixed workflow with model steps inside would do the job. It is cheaper,
-> faster, and easier to debug.
->
-> **Ask yourself** — *"Could I draw this task as a flowchart? If yes, what are we paying
-> an agent to rediscover on every request?"*
->
-> **Risk if ignored** — An expensive, unpredictable loop ships where a five-step pipeline
-> would have worked. Or a scripted workflow is sold as an autonomous agent, and sets
-> expectations the design cannot meet.
+> "Agent" covers everything from a scripted pipeline with one model call to a system that
+> plans its own steps. Place each proposal on the autonomy dial first. If you cannot, you
+> cannot estimate its cost, its risk, or how it will fail. Start from a fixed workflow with
+> model steps inside. It is cheaper, faster, and easier to debug. Get this wrong and you ship
+> an expensive, unpredictable loop where a five-step pipeline would have worked. Or you sell a
+> scripted workflow as an autonomous agent, and promise what the design cannot deliver.
+> **Ask your team:** *"Could we draw this task as a flowchart? If yes, what are we paying an
+> agent to rediscover on every request?"*
 
 ## The mental model: the loop, and the dial next to it
 
@@ -75,25 +69,33 @@ what it just learned.
 A third factor sits on top of both. Autonomy should shrink as stakes and irreversibility
 rise, however well the task fits the agent shape.
 
-## Worked example: a refund-triage proposal
+## Worked example: an MSME loan-intake proposal
 
-*This example is invented, to show the method. The numbers are illustrative.*
+*An illustrative example with no real lender or data behind it.*
 
-A support lead proposes "an agent that handles refund requests." You ask four questions.
+A lending team at a business lender proposes "an agent that handles small-business (MSME)
+loan applications." You ask four questions.
 
-1. **Can an expert write the steps?** Mostly. Check the order, check the refund window,
-   check the amount, then refund or escalate. Six of every seven requests follow this path.
-2. **What is unpredictable?** One in seven has a messy case: a damaged item, a disputed
-   charge, or a customer in distress. These need judgment.
-3. **What are the stakes?** Refunds under a set amount are reversible. Larger refunds and
-   account closures are not.
-4. **Where does that put it on the dial?** A fixed workflow for the routine path. A model
-   step to read the customer's message and draft the reply. A human approval gate for large
-   refunds. An agent loop only for the messy one in seven, with a low spending limit.
+1. **Can an expert write the steps?** Mostly. Check that the required documents are
+   present. Run the eligibility rules, such as business age, sector, and loan size. Then send
+   the file to underwriting, or ask the applicant for what is missing. Most applications
+   follow this path. A **rules engine**, software that applies written business rules, already
+   does the eligibility step well.
+2. **What is unpredictable?** A minority of files are messy. The business name differs across
+   documents. A bank statement shows large transfers nobody has explained. These need
+   judgment.
+3. **What are the stakes?** A request for a missing document is easy to correct. A credit
+   decision is not. A wrong approval puts money at risk, and a wrong decline loses a good
+   customer.
+4. **Where does that put it on the dial?** The rules engine stays in charge of eligibility. A
+   model step reads the documents, extracts the fields, and drafts the request for missing
+   items. A credit officer approves every credit decision. An agent loop runs only on the
+   messy files. Its job is to gather the evidence and write a discrepancy note for the
+   officer, within a low step and cost limit.
 
-The result is not "an agent." It is a workflow with one model step, one approval gate, and
-one small agent for the hard cases. That design costs far less to run than an agent on
-every request, and its failures are easy to locate.
+The result is not "an agent." It is a workflow with one model step, one human gate, and one
+small agent for the hard files. That design costs far less to run than an agent on every
+application, and its failures are easy to locate.
 
 ## Tradeoffs and decisions
 
@@ -130,12 +132,12 @@ same task both ways, in outline.
 
 ```python
 # Workflow: your code owns the control flow. Model calls sit inside fixed steps.
-def handle_refund(request):
-    order = lookup_order(request.order_id)            # plain code
-    if not within_refund_window(order):
-        return escalate(request, reason="outside window")
-    reply = llm("Draft a reply.", context=[order, request.text])   # one model step
-    return send(reply)
+def handle_application(app):
+    docs = fetch_documents(app.id)                    # plain code
+    if not passes_eligibility_rules(app):             # the rules engine decides
+        return route_to_officer(app, reason="rule check failed")
+    fields = llm("Extract the fields.", context=docs) # one model step
+    return send_to_underwriting(app, fields)
 
 # Agent: the model owns the control flow. Your code owns the limits.
 def run_agent(goal, tools, max_steps=8, max_cost=0.50):
@@ -185,6 +187,8 @@ each, read [multi-agent and protocols](../agentic-ai/multi-agent-and-protocols.m
 - [What is an agent?](../agentic-ai/what-is-an-agent.md) — the full mechanics and
   vocabulary behind this lesson.
 - [Tool calling](../tool-calling/README.md) — how an agent acts.
+- [Data and decisions](../business-acumen/data-and-decisions.md) — how to price a wrong
+  approval against a wrong decline, with lending examples.
 
 ## Sources
 

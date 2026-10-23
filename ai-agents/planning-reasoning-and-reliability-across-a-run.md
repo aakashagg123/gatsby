@@ -19,21 +19,16 @@ This is why agents that shine on a three-step demo often disappoint on the thirt
 version of the same job. It is also why recovering well from an error matters more than
 never making one.
 
-> 🎯 **For the product leader**
+> 🎯 **Production Bottom Line**
 >
-> **Why it matters** — This is the gap between "worked in the demo" and "works for
-> customers." It sets the two numbers that make or break an agent's economics: how often
-> it finishes, and how often a human must step in.
->
-> **What it changes in your decisions** — Spec reliability like any feature. Set a target
-> completion rate per task type. Write down what happens when a step fails.
->
-> **Ask yourself** — *"How many things must go right in a row for this task to succeed?
-> What is our measured success rate per step, not the one we hope for?"*
->
-> **Risk if ignored** — A team promises an agent will handle a thirty-step task alone,
-> ships something that behaves like a coin flip, and learns it from customer complaints
-> instead of a dashboard.
+> This is the gap between "worked in the demo" and "works for customers." It sets the two
+> numbers that make or break an agent's economics: how often it finishes, and how often a
+> human must step in. Spec reliability like any feature. Set a target completion rate per task
+> type, and write down what happens when a step fails. Skip this and a team promises a
+> thirty-step task, ships something that behaves like a coin flip, and learns it from customer
+> complaints instead of a dashboard. **Ask your team:** *"How many things must go right in a
+> row for this task to succeed? What is our measured success rate per step, not the one we
+> hope for?"*
 
 ## The mental model: errors compound faster than intuition expects
 
@@ -59,6 +54,11 @@ restart, escalate), and the eval and tracing habits are in
 This is arithmetic, not a measurement. It multiplies the same per-step success rate across
 the steps of a task.
 
+To make the step count concrete, picture an illustrative underwriting run for a small-business
+loan. The agent pulls the credit bureau report, reads each month of bank statements, matches
+them to the tax filings, checks the owners' details, and drafts a credit memo. Counted step by
+step, such a run reaches twenty steps quickly.
+
 | Steps in the task | 95% per step | 99% per step |
 | --- | --- | --- |
 | 3 | 86% | 97% |
@@ -80,8 +80,8 @@ Two design moves follow.
 
 ## Evidence that length is the problem
 
-The pattern shows up in research on real agents. The research group METR (Model Evaluation
-& Threat Research) measures agents by the length of task they can finish, where length is
+The pattern shows up in research on real agents. The research group Model Evaluation & Threat
+Research (METR) measures agents by the length of task they can finish, where length is
 the time a skilled human needs. In a March 2025 study, the task length an agent completed
 with 50% success had doubled about every seven months since 2019. METR has since reported a
 faster recent pace. Check its latest page before you quote a rate.
@@ -131,7 +131,9 @@ it got something wrong?
 - **Plan approval vs. speed.** A human plan gate catches expensive mistakes early. It also
   slows every run.
 - **Thinking effort vs. cost.** High effort on every step is slow and expensive. Reserve it
-  for the steps that need it.
+  for the steps that need it. Latency often decides this for you. A model step inside a rules
+  engine's live eligibility check must answer within that check's time budget, so it gets low
+  effort. An overnight credit-memo draft has no such limit, so it can afford high effort.
 
 ## Failure modes
 
@@ -206,6 +208,7 @@ length.
   adaptive thinking and the `effort` setting on Claude 4.6 and later models. Checked 2026-09.
 - METR, [Measuring AI Ability to Complete Long Software Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
   (Mar 2025): the 50% time horizon and the roughly seven-month doubling over 2019-2025,
-  measured on software tasks. Later METR updates report a faster recent pace. Not verified
-  here: the page could not be opened, so this rests on search-result excerpts.
+  measured on software tasks. The page says the horizon "has been doubling approximately every
+  7 months for the last 6 years," and reports faster doubling on some benchmarks. Checked
+  2026-10.
 - The table is arithmetic: each cell is the per-step rate raised to the number of steps.
