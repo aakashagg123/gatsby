@@ -42,7 +42,7 @@ picks the lowest tier number among due modules.
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | never |
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | never |
-| ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | never |
+| ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | never |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-09-22 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
@@ -377,3 +377,36 @@ and a link to the merged PR.)
   Not applied: Project Vend phase 2 (unverified). EU AI Act Digital Omnibus
   remains a flag for the ai-security-and-guardrails module.
 
+- 2026-10-23 — ai-security-and-guardrails — tier 2 (log has no tier column);
+  picked because it was `never` refreshed, had a flagged EU AI Act item, and
+  is a topic a Senior PM is asked about in every security review. Outcome:
+  fixed + expanded. Read all 3 lessons, README and recap in full. The flagged
+  "phasing in through 2026-27" item is already resolved: the module already
+  carries the Omnibus dates. Accuracy: (1) the public-challenge result said
+  the system was "broken after about five days"; Anthropic's page says it held
+  five days and four users passed all eight levels on days six and seven
+  (339 people, ~3,700 hours, $55K) — fixed in lesson 1 and recap. Coverage:
+  (2) next-generation Constitutional Classifiers (Jan 2026) added to lesson 1;
+  (3) Excessive Agency rising to LLM03 in OWASP 2026 added; (4) adaptive
+  attacks ("The Attacker Moves Second", 12 defenses, >90% ASR) added to the
+  red-teaming lesson as text, failure mode and checklist item; (5) NIST Cyber
+  AI Profile draft mentioned in lesson 3. Verified unchanged: many-shot
+  (256 shots, 61%->2%), sleeper agents, Nasr 150x (abstract), OWASP 2026
+  Hidden Context Exposure, NIST AI 100-2 E2025 (Mar 2025), Omnibus dates
+  (24 Jul pub, 27 Jul in force, 2 Dec 2027 / 2 Aug 2028, 2 Dec 2026 marking).
+  Sources opened: anthropic.com/research/constitutional-classifiers;
+  anthropic.com/research/next-generation-constitutional-classifiers;
+  anthropic.com/research/many-shot-jailbreaking;
+  anthropic.com/research/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training;
+  arxiv.org/abs/2311.17035; arxiv.org/abs/2510.09023;
+  nist.gov AI 100-2e2025 page; github.com/OWASP/www-project-top-10-for-large-language-model-applications
+  (2026 release, 4 Aug 2026); labs.cloudsecurityalliance.org OWASP 2026 research note.
+  Search results only: Omnibus dates (White & Case, Mayer Brown, Cuatrecasas;
+  EUR-Lex returned empty, White & Case 403); NIST Cyber AI Profile (KPMG);
+  GDPR Art. 22 Omnibus status (no Council/Parliament position found).
+  Not verified: SCHUFA judgment (curia redirect not followed), DPDP dates,
+  SOC 2/ISO 42001 details, Greshake, DAN/CNBC, Art. 55 text, MITRE ATLAS
+  (page empty). Flagged: main genai.owasp.org page still lists the 2025 top 10
+  while the GitHub project page says the 2026 edition is current; re-check.
+  No new-lesson gaps; an agent-security (OWASP Agentic Top 10 / Agent Control
+  Standard) treatment lives in agentic-ai.
