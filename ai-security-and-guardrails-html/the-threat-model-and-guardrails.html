@@ -179,7 +179,9 @@ here?" It is "when this guardrail fails, which way does it fail?"</p>
 Application Security Project (OWASP). OWASP published a new edition on 4 August 2026, so
 the table gives the 2026 number first and the 2025 number in brackets. Buyers also use the
 report on adversarial machine learning (AI 100-2 E2025) from the National Institute of
-Standards and Technology (NIST). The table lets you translate.</p>
+Standards and Technology (NIST). The table lets you translate. One more 2026 change matters to product leaders: Excessive
+Agency, the risk of an AI with too many tools or permissions, rose from sixth place to
+third (LLM03). Agent features now carry more of the weight in security reviews.</p>
 <table>
 <thead>
 <tr>
@@ -291,10 +293,17 @@ come from Anthropic's own tests, so they are vendor-reported.</p>
   success rate from 61% to 2%. Fine-tuning only delayed the jailbreak.</li>
 <li><strong>Constitutional Classifiers (Jan 2025).</strong> Classifiers trained on written rules about
   allowed and blocked content cut jailbreak success on Claude from 86% to 4.4% in
-  Anthropic's automated test. In a public challenge that followed, the system was broken after about
-  five days. Four users passed all levels and one found a universal jailbreak.</li>
+  Anthropic's automated test. In a public challenge in February 2025, the system held for the first
+  five days. On days six and seven, four users passed all eight levels and one found a
+  universal jailbreak.</li>
+<li><strong>Next-generation classifiers (Jan 2026).</strong> Anthropic replaced the separate input and
+  output classifiers with one classifier that reads the output together with its input. A
+  cheap first stage screens all traffic and passes doubtful cases to a stronger second
+  stage. Anthropic reports about 1% extra compute (against 23.7% before) and a 0.05% refusal
+  rate on harmless traffic (against 0.38%). It found no universal jailbreak in about 1,700
+  hours of red-teaming, and one high-risk flaw. These are vendor figures.</li>
 </ul>
-<p>Read both fairly. A good guardrail changes the cost of an attack by a large factor. It does
+<p>Read these results fairly. A good guardrail changes the cost of an attack by a large factor. It does
 not make the attack impossible. Plan for the one that gets through.</p>
 <h2 id="fail-closed-not-fail-open">Fail closed, not fail open</h2>
 <p>Most software <strong>fails open</strong>: if an auth check times out, the instinct is to let the
@@ -451,19 +460,26 @@ def guarded_reply(user_msg, docs, session):
   reinforcement learning and adversarial training, and the adversarial-training result.
   Checked 2026-10.</li>
 <li>Nasr et al., <a href="https://arxiv.org/abs/2311.17035">Scalable Extraction of Training Data from (Production) Language Models</a>
-  (28 Nov 2023): the divergence attack on ChatGPT and the roughly 150 times higher rate. The
-  arXiv page was blocked when checked. The figures come from search-result excerpts.</li>
+  (28 Nov 2023): the divergence attack on ChatGPT and the roughly 150 times higher rate.
+  Abstract opened. The personal-data and open-model details were not re-checked.</li>
 <li>Greshake et al., <a href="https://arxiv.org/abs/2302.12173">Not what you've signed up for</a>
   (Feb 2023, revised May 2023): indirect prompt injection against real systems including Bing Chat.
   Search-result excerpts only.</li>
-<li>Anthropic, <a href="https://arxiv.org/abs/2501.18837">Constitutional Classifiers</a> (Jan 2025) and
-  the public-challenge results posted by Anthropic's Jan Leike (Feb 2025): the 86% to 4.4%
-  figure and the challenge outcome. Search-result excerpts only.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/research/constitutional-classifiers">Constitutional Classifiers</a>
+  (Jan 2025): the 86% to 4.4% figure, and the public challenge of 3 to 10 Feb 2025. Page
+  opened 2026-10-23.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/research/next-generation-constitutional-classifiers">Next-generation Constitutional Classifiers</a>
+  (Jan 2026): the exchange classifier, two-stage cascade, and the overhead and refusal
+  figures. Page opened 2026-10-23.</li>
 <li>OWASP, <a href="https://genai.owasp.org/llm-top-10/">Top 10 for LLM Applications</a>. The 2026 edition
   (4 Aug 2026) was read from OWASP's GitHub repository: LLM01 Prompt Injection, LLM02
   Sensitive Information Disclosure, LLM05 Data and Model Poisoning, LLM08 Hidden Context
   Exposure. The 2025 numbers (LLM04 and LLM07) come from the 2025 source text in the same
-  repository. Both editions describe a jailbreak as a form or subset of prompt injection. Checked 2026-10.</li>
+  repository. The rise of Excessive Agency to LLM03 comes from a Cloud Security Alliance
+  <a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-owasp-genai-top10-2026-agent-control-stand/">research note</a>
+  (opened 2026-10-23). The OWASP project page confirms the 2026 edition of 4 Aug 2026.
+  The main OWASP page still showed the 2025 list when opened, so read the numbers
+  from the 2026 source before you cite them. Both editions describe a jailbreak as a form or subset of prompt injection. Checked 2026-10.</li>
 <li>NIST, <a href="https://www.nist.gov/publications/adversarial-machine-learning-taxonomy-and-terminology-attacks-and-mitigations-0">AI 100-2 E2025, Adversarial Machine Learning</a>
   (Mar 2025): the taxonomy by attacker goal, with poisoning, prompt injection and privacy
   attacks.</li>

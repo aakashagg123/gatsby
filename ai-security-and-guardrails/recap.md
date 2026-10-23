@@ -29,8 +29,9 @@ every defense applied after it. Track where training data came from.
 
 **A public jailbreak challenge (Anthropic, February 2025).** Alongside its report that
 Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its own test, Anthropic
-opened a public challenge. After about five days and an estimated 3,700 collective hours, four
-users had passed all levels and one had found a universal jailbreak. Anthropic paid $55,000 in
+opened a public challenge. The system held for the first five days. On days six and seven, four
+users passed all eight levels and one found a universal jailbreak. In all, 339 people spent an
+estimated 3,700 hours. Anthropic paid $55,000 in
 total. 🎯 *Takeaway:* a strong guardrail raises the cost of an attack by a large factor. It does
 not end the attack. Plan for the one that gets through, and keep
 [testing](./red-teaming-and-proving-your-defenses.md).
@@ -110,12 +111,11 @@ If yes, you can defend the feature under questioning. If no, you know which less
 - Anthropic, [Sleeper agents](https://www.anthropic.com/research/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training)
   (14 Jan 2024). Checked 2026-10.
 - Nasr et al., [Scalable Extraction of Training Data from (Production) Language Models](https://arxiv.org/abs/2311.17035)
-  (28 Nov 2023). arXiv was blocked. Search-result excerpts only.
+  (28 Nov 2023). Abstract opened 2026-10-23.
 - Greshake et al., [Not what you've signed up for](https://arxiv.org/abs/2302.12173) (Feb 2023, revised May 2023).
   Search-result excerpts only.
-- Anthropic, [Constitutional Classifiers](https://arxiv.org/abs/2501.18837) (Jan 2025), and the
-  public-challenge results posted by Anthropic's Jan Leike (Feb 2025). Search-result excerpts
-  only.
+- Anthropic, [Constitutional Classifiers](https://www.anthropic.com/research/constitutional-classifiers)
+  (Jan 2025): the 86% to 4.4% figure and the challenge results. Page opened 2026-10-23.
 - EU AI Act and Regulation (EU) 2026/1744 dates: law-firm and trade sources, listed in the
   [governance lesson](./governance-audit-and-compliance.md). The Official Journal was not
   read directly.

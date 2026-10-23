@@ -160,6 +160,14 @@ rate of 3% can hide a 40% rate on one attack.</p>
 <p>Also measure the cost side. Track the <strong>false positive rate</strong>: how many normal requests the
 guardrail blocks. A guardrail that stops every attack by blocking half your users is not a
 win.</p>
+<p><strong>A fixed suite flatters the defense.</strong> In the paper <em>The Attacker Moves Second</em> (Nasr et
+al., Oct 2025), adaptive attacks beat 12 published jailbreak and injection defenses. Most
+defenses had reported near-zero attack success rates. The attacks tuned themselves against
+each defense, using gradient search, reinforcement learning, random search and human
+guidance. More than 90% of attempts succeeded against most of them. The cause: the
+defenses were tested against static attack strings. So report the fixed-suite rate as a
+regression number only. Add an adaptive test, where an attacker sees your defense and
+iterates, before you claim a defense works.</p>
 <p>Two published numbers show the scale. In its 2024 many-shot study, Anthropic reported one
 prompt-based mitigation that cut an attack's success from 61% to 2%. In 2025, Anthropic
 reported that its Constitutional Classifiers cut jailbreak success from 86% to 4.4% in its
@@ -244,6 +252,8 @@ return. That is a record a buyer can read: scope, method, result, fix, date.</p>
 <li><strong>Success never defined.</strong> Everyone argues about whether an output counts as a failure.</li>
 <li><strong>Findings not kept.</strong> A hole is fixed once and returns after the next change, because it
   never entered the suite.</li>
+<li><strong>Static attacks only.</strong> The suite never adapts to the defense, so a low rate means
+  little. A motivated attacker will tune against it.</li>
 <li><strong>Grading your own homework.</strong> The same team writes the system, the attacks and the pass
   mark.</li>
 <li><strong>Attacks that never reach the tools.</strong> The suite checks what the model says, not what the
@@ -290,6 +300,7 @@ def release_gate(rates):
 <li class="task todo">Is each finding added to the suite as a permanent case?</li>
 <li class="task todo">Do we test the whole system with its tools and permissions, not only the model?</li>
 <li class="task todo">Does someone outside the build team write or review some attacks?</li>
+<li class="task todo">Have we run adaptive attacks, not just fixed strings, against each defense?</li>
 <li class="task todo">Do we keep dated records that we can hand to a buyer or regulator?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
@@ -313,8 +324,10 @@ def release_gate(rates):
   <a href="https://ai-act-law.eu/article/55/">Art. 55</a>. Checked 2026-10.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/research/many-shot-jailbreaking">Many-shot jailbreaking</a>
   (2 Apr 2024): the 61% to 2% mitigation result. Checked 2026-10.</li>
-<li>Anthropic, <a href="https://arxiv.org/abs/2501.18837">Constitutional Classifiers</a> (Jan 2025): the
-  86% to 4.4% result and the public-challenge outcome. Search-result excerpts only.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/research/constitutional-classifiers">Constitutional Classifiers</a>
+  (Jan 2025): the 86% to 4.4% result. Page opened 2026-10-23.</li>
+<li>Nasr et al., <a href="https://arxiv.org/abs/2510.09023">The Attacker Moves Second</a> (Oct 2025): adaptive
+  attacks against 12 defenses, over 90% success on most. Abstract opened 2026-10-23.</li>
 <li>NIST, <a href="https://www.nist.gov/publications/adversarial-machine-learning-taxonomy-and-terminology-attacks-and-mitigations-0">AI 100-2 E2025</a>
   (Mar 2025): taxonomy of attacks and attacker goals.</li>
 <li>The ASR method, the attack suite, its numbers and the code are invented and illustrative.
