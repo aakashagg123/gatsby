@@ -110,6 +110,12 @@ depend on what you discover along the way — debugging, research, negotiation. 
 pipeline then either explodes into unmanageable branches or fails on the first surprise.
 That's what the loop is for.
 
+Anthropic's "Building effective agents" names five workflow patterns that sit below full
+agency: prompt chaining, routing, parallelization, orchestrator-workers, and
+evaluator-optimizer. It defines a workflow as LLMs and tools run through predefined code
+paths, and an agent as an LLM that directs its own process. Try these patterns before you
+reach for a free-roaming loop.
+
 A third heuristic comes from hard experience: **match autonomy to stakes and
 reversibility**. An agent drafting replies a human sends can be boldly autonomous. An
 agent with delete access to production data had better not be

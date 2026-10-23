@@ -113,7 +113,8 @@ final result, instead of emitting one tool call per turn with each result round-
 through the context. This collapses token cost and latency on multi-tool workflows, and
 makes the code sandbox the orchestration surface. <strong>Skills</strong>: packaged procedural
 knowledge — a folder with instructions, scripts, and resources the agent loads when
-relevant — is now a third primitive alongside tools and prompts. Tools give the agent
+relevant — is now a third primitive alongside tools and prompts. Anthropic published the format as
+an open standard (agentskills.io) in December 2025, and other vendors have adopted it. Tools give the agent
 <em>capabilities</em>; skills give it <em>know-how</em> about when and how to use them. Both matter to
 the PM the same way: the toolbox review now covers what code the agent can run and what
 procedures it has been handed, not just which APIs it can call.</p>
@@ -149,7 +150,12 @@ real, widely adopted, and the piece of the much-hyped protocol landscape most wo
 knowing (<a href="multi-agent-and-protocols.html">the honest protocol map</a> comes in lesson 5).
 An ecosystem note that becomes a product note: an MCP server someone else wrote is
 <em>third-party code your agent trusts</em> — its tool results enter your context. Vet servers
-like dependencies, not like plugins.</p>
+like dependencies, not like plugins. Two attacks are specific to MCP. In <strong>tool
+poisoning</strong>, hidden instructions sit in a tool's description. The user sees a harmless
+function, but the model reads and follows the hidden text. In a <strong>rug pull</strong>, a tool passes
+review and then changes its definition later. Most clients check tools only at install
+time. Pin tool definitions by hash, and re-review when they change. The OWASP MCP Top 10
+lists tool poisoning as MCP03:2025.</p>
 <p><strong>Containment</strong> is the other half of integration. The working defaults:</p>
 <ul>
 <li><strong>Sandboxes</strong> — code execution happens in an isolated, disposable environment with no

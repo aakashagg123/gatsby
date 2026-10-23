@@ -151,7 +151,10 @@ patterns with plumbing — evaluate them on the plumbing, because the patterns t
 are a page of prompting.</p>
 <h2 id="test-time-compute-thinking-as-a-budget">Test-time compute: thinking as a budget</h2>
 <p>Reasoning models (o-series, Claude's extended thinking, R1, Gemini thinking) generate
-internal chains of thought before answering. Accuracy on hard problems climbs with
+internal chains of thought before answering. Newer models often manage this
+themselves. Claude's <em>adaptive thinking</em> decides per request whether to think and how
+much, and an <strong>effort</strong> setting (<code>low</code> to <code>max</code>) steers it. So the budget you set is an
+intent, not a fixed token count. Accuracy on hard problems climbs with
 thinking time — a new scaling axis that happens at <em>inference</em>, on your bill, per
 request. Three product consequences follow:</p>
 <ul>
