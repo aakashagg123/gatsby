@@ -338,6 +338,25 @@ def inject_smooth_scroll(site):
     return injected
 
 
+def inject_reader_widget(site):
+    """Give every page the current reader-settings widget (old pre-rendered pages carry a
+    copy baked in at their build time)."""
+    swapped = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            new = reader_widget.replace(text)
+            if new != text:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(new)
+                swapped += 1
+    return swapped
+
+
 def inject_canonical_and_provenance(site):
     """Add <link rel=canonical> to <head> of every page, and a provenance footer to every
     content page (not the full-screen graph app). The footer goes before the reader
@@ -803,6 +822,9 @@ def main():
     # 11. The design system: tokens, SDK components and the site layer, every page.
     ds_pages = inject_design_system(SITE)
 
+    # 11a. Current reader widget on every page (before the provenance footer anchors on it).
+    widgets = inject_reader_widget(SITE)
+
     # 11b. Canonical URL on every page, provenance footer on content pages.
     canon = inject_canonical_and_provenance(SITE)
 
@@ -815,7 +837,7 @@ def main():
           f"{injected} pages linked) + glossary "
           f"({len(build_glossary.site_entries())} terms, {gloss} pages) + "
           f"favicon ({fav} pages) + smooth-scroll ({smooth} pages) + "
-          f"design-system ({ds_pages} pages) + canonical ({canon} pages)")
+          f"design-system ({ds_pages} pages) + canonical ({canon} pages) + reader-widget ({widgets} pages)")
 
 
 if __name__ == "__main__":

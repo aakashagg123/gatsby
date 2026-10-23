@@ -5,7 +5,7 @@ build_standalone.py (the craft tracks), and build_site.py (harness viewer).
 
 The widget is a floating "Aa" button that opens a panel with:
   - Theme: auto, light or dark (the SDK's data-theme)
-  - Font: Google Sans (default), system, Tahoma, Arial, Verdana, Helvetica
+  - Font: Sans (the site font), Serif or Mono, all system stacks with no font download
   - Size: A- / A+ over discrete steps (like iBooks)
   - Margins: narrow / default / wide reading column
 
@@ -17,9 +17,11 @@ Code blocks and mermaid diagrams keep their own fonts.
 Styling lives in design-system/site/60-widgets.css and 70-reader-prefs.css.
 """
 
+import re
+
 READER = r"""
-<div id="rs-root">
-  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+<div id="rs-root" data-nosnippet>
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings" aria-hidden="true">
     <div class="rs-h">Theme</div>
     <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
       <div class="SegmentedControlThumb"></div>
@@ -28,13 +30,11 @@ READER = r"""
       <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
     </div>
     <div class="rs-h">Font</div>
-    <div class="rs-fonts" role="radiogroup" aria-label="Font">
-      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
-      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    <div class="SegmentedControl" id="rs-font" data-size="md" data-pill role="radiogroup" aria-label="Font">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="" style="font-family:var(--font-sans)"><span class="relative">Sans</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="serif" style="font-family:Charter,Georgia,serif"><span class="relative">Serif</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="mono" style="font-family:ui-monospace,Menlo,Consolas,monospace"><span class="relative">Mono</span></button>
     </div>
     <div class="rs-h">Size</div>
     <div class="rs-row">
@@ -59,7 +59,7 @@ READER = r"""
   var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
   // Allowed font keys. Reset a returning reader's stored value if it points at a font
   // this build no longer supports, so the UI stays consistent with the CSS.
-  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var ALLOWED_F={'':1,serif:1,mono:1};
   var st={f:'',s:2,m:''};
   try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
       if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
@@ -67,7 +67,7 @@ READER = r"""
       if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
   var h=document.documentElement,root=document.getElementById('rs-root'),
       btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
-      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null,segFont=null;
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   function apply(){
     if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
@@ -75,27 +75,24 @@ READER = r"""
     else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
     if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
     sval.textContent=Math.round(SIZES[st.s]*100)+'%';
-    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-      var on=b.getAttribute('data-f')===st.f;
-      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
-      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segFont)segFont.set(st.f);
     if(segMargins)segMargins.set(st.m);
   }
   function setOpen(open){
     panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    panel.setAttribute('aria-hidden',open?'false':'true');
     // the thumb needs layout, so size it once the panel is visible
-    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+    if(open){if(segTheme)segTheme.sync();if(segFont)segFont.sync();if(segMargins)segMargins.sync();}
   }
   function initSegments(){
     if(!window.DS||!DS.segmented)return;
     segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segFont=DS.segmented(document.getElementById('rs-font'),st.f,function(v){st.f=v;apply();save()});
     segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
   }
   btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
   document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
-    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
   document.getElementById('rs-sminus').addEventListener('click',function(){
     if(st.s>0){st.s--;apply();save()}});
   document.getElementById('rs-splus').addEventListener('click',function(){
@@ -108,6 +105,17 @@ READER = r"""
 })();
 </script>
 """
+
+
+_WIDGET_RE = re.compile(r'<div id="rs-root".*?<script id="reader-js">.*?</script>\n?', re.DOTALL)
+
+
+def replace(page: str) -> str:
+    """Swap the widget already in a built page for the current one. Lets old pre-rendered
+    pages pick up widget changes without regenerating them. No-op if there is none."""
+    if 'id="rs-root"' not in page:
+        return page
+    return _WIDGET_RE.sub(lambda m: READER.lstrip("\n"), page, count=1)
 
 
 def inject(page: str) -> str:

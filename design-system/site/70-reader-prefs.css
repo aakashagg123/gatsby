@@ -1,12 +1,10 @@
 /* Reader preferences, set on <html> by the reader-settings widget:
      data-rf  font family     data-rs  text scale (--rs-scale)     data-rm  column width
-   They scale the SDK type tokens. They never introduce new sizes. */
+   They scale the SDK type tokens. They never introduce new sizes. Serif and Mono name a
+   preferred face first and fall back to system stacks: the site downloads no extra fonts. */
 
-html[data-rf="system"]{--rs-font:ui-sans-serif,-apple-system,system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
-html[data-rf="tahoma"]{--rs-font:Tahoma,Verdana,"Segoe UI",sans-serif}
-html[data-rf="arial"]{--rs-font:Arial,"Helvetica Neue",Helvetica,sans-serif}
-html[data-rf="verdana"]{--rs-font:Verdana,Geneva,"DejaVu Sans",sans-serif}
-html[data-rf="helvetica"]{--rs-font:"Helvetica Neue",Helvetica,Arial,sans-serif}
+html[data-rf="serif"]{--rs-font:Newsreader,Charter,"Bitstream Charter","Sitka Text","Iowan Old Style",Cambria,Georgia,serif}
+html[data-rf="mono"]{--rs-font:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
 html[data-rf] main :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th,dt,dd,figcaption,summary,em,strong,.lede,.Badge,a){font-family:var(--rs-font) !important}
 html[data-rf] main :is(pre,code,kbd,samp),html[data-rf] main pre *{font-family:var(--font-mono) !important}
 html[data-rf] main .mermaid,html[data-rf] main .mermaid *{font-family:inherit}
