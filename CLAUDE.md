@@ -56,10 +56,28 @@ python3 scripts/build_html.py              # -> html/
 # Verify every relative markdown link resolves (run before every commit)
 python3 scripts/check_links.py
 
+# Run the lesson code the harness and flowable tables point at (pip install pytest)
+python3 -m pytest tests -q
+python3 scripts/lesson_status.py           # prints each lesson's evidence state
+
 # Assemble the full deployed site (also regenerates the knowledge graph
 # and glossary) — this is what CI runs on every push to master
 python3 scripts/build_site.py              # -> _site/
+python3 scripts/check_site.py              # verify _site/: links, canonicals, graph (run after build_site)
 ```
+
+Site-wide rules the build enforces on every page (see `build_site.py`):
+
+- Every `README.md` in a phased track renders to `index.html` (clean directory URLs). A meta-refresh stub is
+  left at each old `README.html`. Link rewriters in `build_html.py`, `build_standalone.py`,
+  `build_glossary.py` and `build_graph.py` point at `index.html`; keep them in step.
+- Every page gets `<link rel="canonical">` built from `CANONICAL_BASE` in `build_site.py`, and content pages
+  get the provenance footer.
+- `scripts/lesson_status.py` runs each harness and flowable lesson's offline code and parses its XML. The
+  build rewrites the hand-typed check marks in the phase tables from that result and adds a source/run panel
+  to each lesson. A green check needs a passing run. Do not type a check mark into a lesson table by hand.
+- The reader-settings widget is swapped into every page at build time (`reader_widget.replace`), so changing
+  `reader_widget.py` needs no regeneration of the committed `<track>-html/` folders.
 
 `_site/` and every `<track>-html/` other than the committed pre-rendered
 editions are build output — check `.gitignore` before assuming something
@@ -81,9 +99,10 @@ and commit the regenerated HTML alongside the markdown.
    (`build_system_design.py` is a clean recent example). `insight` is required: one plain
    sentence stating the core idea the reader takes away. It shows in the landing-page hero
    and in the footer of every page.
-4. Wire it into `scripts/build_site.py`: add a `<TRACK>_HTML` constant, a
-   `copytree` block, and a landing-page card. Bump the module count in the
-   landing hero copy.
+4. Wire it into `scripts/build_site.py`: add a `<TRACK>_HTML` constant and a
+   `copytree` block. Then add the track to `scripts/landing.py`: a `CARDS` entry (title and
+   blurb) and a place in `PILLARS`. Pillar II cards get their Deep spec or PM summary badge
+   measured from the lessons, so write no badge by hand.
 5. Add `"<track>"` to `build_html.py`'s `FLAT` tuple (cross-track link
    rewriting) and to `check_links.py`'s `SCAN_DIRS`.
 6. Add `"<track>"` to `build_graph.py`'s `TRACKS` and `FLAT_TRACKS` (or
@@ -213,6 +232,8 @@ listeners. The rules that keep it smooth:
 
 - `python3 scripts/check_links.py` — must exit 0.
 - `python3 scripts/check_design_system.py` — must exit 0. It rejects literal colours and edits to the vendored SDK.
+- `python3 scripts/build_site.py && python3 scripts/check_site.py` — must exit 0.
+- `python3 -m pytest tests -q` — must pass if you touched harness-engineering or flowable code.
 - If you touched a flat track's markdown, re-run its `build_<track>.py`
   and commit the regenerated `<track>-html/` output.
 - If you edited a flat track's lessons, run `python3 scripts/check_module.py <track>`
