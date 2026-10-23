@@ -26,6 +26,7 @@ import design_system
 import build_graph
 import build_glossary
 import glossary_widget
+import landing
 import lesson_status
 import smooth_scroll
 
@@ -173,242 +174,8 @@ LANDING = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Supercharge your AI learning</title>
 </head><body>
-<main class="index landing">
-  <h1>Supercharge your AI learning</h1>
-  <p class="lede">Hands-on tracks for PMs and engineers moving into AI — from first principles to production.</p>
-  <div class="group">Choose your path <a class="TextLink" data-primary="" href="learning-paths/index.html">Compare the paths →</a></div>
-  <div class="cards">
-    <a class="card" href="learning-paths/senior-product-manager.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Path</span>
-      <h3>Senior Product Manager →</h3>
-      <p>Lead an AI feature end to end: the approach, the quality bar, the cost and the risk.</p>
-    </a>
-    <a class="card" href="learning-paths/ai-product-lead.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Path</span>
-      <h3>AI Product Lead →</h3>
-      <p>Own grounding, context, memory, agents, trust and cost across an AI product line.</p>
-    </a>
-    <a class="card" href="learning-paths/ai-engineer.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Path</span>
-      <h3>AI Engineer →</h3>
-      <p>Build, test and run a retrieval-backed, tool-using agent, and explain how it fails.</p>
-    </a>
-    <a class="card" href="learning-paths/ai-engineering-lead.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Path</span>
-      <h3>AI Engineering Lead →</h3>
-      <p>Review architecture, set quality and safety standards, and control cost.</p>
-    </a>
-  </div>
-  <div class="group">All modules</div>
-  <div class="cards">
-    <a class="card" href="ai/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>AI engineering →</h3>
-      <p>The engineering discipline under production LLM systems — inference, retrieval,
-      evals, observability, safety, cost. Designed reading editions.</p>
-    </a>
-    <a class="card" href="harness/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Harness engineering →</h3>
-      <p>Build a coding agent's harness from scratch — loop, tools, context, permissions,
-      subagents — then use the real SDK. 10 phases, 41 lessons, one tested capstone.</p>
-    </a>
-    <a class="card" href="flowable/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Flowable →</h3>
-      <p>Process automation from scratch — build a token engine, wait states, and a job
-      executor by hand, then run real BPMN on the Flowable engine. Concept-first for
-      PMs, with a build layer for engineers.</p>
-    </a>
-    <a class="card" href="first-principles/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>First principles →</h3>
-      <p>Reason from fundamentals and build range across disciplines — the method,
-      a latticework of mental models, becoming a polymath, and learning how to learn.</p>
-    </a>
-    <a class="card" href="product-sense/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Product sense →</h3>
-      <p>The instinct for what makes a product succeed, for APMs & PMs moving into AI PM —
-      motivation, empathy, creativity, communication, domain expertise, and product sense for AI.</p>
-    </a>
-    <a class="card" href="technical-product-sense/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Technical product sense →</h3>
-      <p>Read systems like an engineer — architecture, APIs, data, latency, reliability,
-      and tech debt — with a diagram in every lesson. For APMs & PMs moving into AI PM.</p>
-    </a>
-    <a class="card" href="technical-product-management/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Technical product management →</h3>
-      <p>The operating discipline of shipping — the role, specs, prioritization, execution,
-      metrics, and releases — with a diagram in every lesson. For APMs & PMs moving into AI PM.</p>
-    </a>
-    <a class="card" href="agentic-ai/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Agentic AI →</h3>
-      <p>What agents actually are — the loop, tools, memory, planning — plus reliability,
-      security, and economics. Opens with a knowledge graph; a diagram in every lesson.</p>
-    </a>
-    <a class="card" href="knowledge-graphs/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Knowledge graphs →</h3>
-      <p>Treat what the company knows as a product — entities and ontologies, the
-      construction pipeline, GraphRAG, governance, and the business case, in product leader language.</p>
-    </a>
-    <a class="card" href="machine-learning/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
-      <h3>Machine learning →</h3>
-      <p>What a learned system is, what it learns from, how it learns, how to trust its
-      score, which model family to pick, and how to keep it working after launch. Runnable
-      code in every lesson.</p>
-    </a>
-    <a class="card" href="tensors/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
-      <h3>Tensors →</h3>
-      <p>What the objects every model works on are, what they cost in memory and compute,
-      why shape errors are silent, and how a library gets the gradient for free. Runnable
-      code in every lesson.</p>
-    </a>
-    <a class="card" href="cnns/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
-      <h3>Convolutional networks →</h3>
-      <p>How a vision model sees, what resolution and depth cost, when to reuse a pre-trained
-      or foundation model, and why vision features break in production. Runnable code in
-      three lessons.</p>
-    </a>
-    <a class="card" href="transformers/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
-      <h3>Transformers →</h3>
-      <p>The stack behind almost every language model: attention, the block, position and the
-      cost of context, the KV cache, and reading a model card as memory, compute and cost.
-      Runnable code in every lesson.</p>
-    </a>
-    <a class="card" href="ai-assisted-development/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Craft</span>
-      <h3>AI-assisted development for leaders →</h3>
-      <p>What changes when a coding agent writes the code: specifying, verifying, controlling and measuring the work. Runnable code in every lesson, including a real Stop-hook script.</p>
-    </a>
-    <a class="card" href="fine-tuning/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Foundations</span>
-      <h3>Fine-tuning and post-training →</h3>
-      <p>How a base model becomes an assistant, what supervised tuning, LoRA and preference tuning change, why the dataset is the product, and how to test the break-even and gate the release. Runnable code in every lesson.</p>
-    </a>
-    <a class="card" href="generative-ai/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Generative AI: the big picture →</h3>
-      <p>What makes AI "generative," the five modalities, why output is probabilistic, the
-      four-layer product stack, and build vs. buy vs. fine-tune. Opens the
-      Generative AI family.</p>
-    </a>
-    <a class="card" href="llms/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>LLMs →</h3>
-      <p>Tokens, the context window, the jagged frontier, prompting, sampling, choosing a
-      model, and the order to reach for prompting, RAG, or fine-tuning.</p>
-    </a>
-    <a class="card" href="api-integrations/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>APIs &amp; integrations →</h3>
-      <p>The request/response contract, authentication, rate limits, streaming, retries,
-      structured output, webhooks, and fitting a model call into a real system.</p>
-    </a>
-    <a class="card" href="rag-vector-databases/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>RAG &amp; vector databases →</h3>
-      <p>Grounding models in your data — when to use RAG and when not to, embeddings, vector
-      databases, chunking, retrieval quality, and a hands-on build with Claude Code and pgvector.</p>
-    </a>
-    <a class="card" href="memory-and-context/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Memory &amp; context →</h3>
-      <p>Memory as a product decision, the three shapes it takes, how memories are written
-      and kept, the designs for reading them back, and the trust failures it has to be
-      designed against.</p>
-    </a>
-    <a class="card" href="tool-calling/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Tool calling →</h3>
-      <p>The line where an AI product stops talking and starts doing: designing a tool
-      worth trusting, and keeping the permission boundary around it real.</p>
-    </a>
-    <a class="card" href="ai-agents/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>AI agents →</h3>
-      <p>The loop behind every agent, how much autonomy a task needs, what keeps it
-      reliable across many steps, when not to build one, how to run one safely, and how to
-      choose one.</p>
-    </a>
-    <a class="card" href="agentic-workflows/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Agentic workflows →</h3>
-      <p>Choosing a workflow pattern, when more than one agent earns its cost, and what
-      it takes to make a workflow durable enough to own end to end.</p>
-    </a>
-    <a class="card" href="evaluation-and-observability/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Evaluation &amp; observability →</h3>
-      <p>Why the eval set is the product spec for a non-deterministic system, and the
-      order to actually build the eval and observability stack in.</p>
-    </a>
-    <a class="card" href="ai-security-and-guardrails/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>AI security &amp; guardrails →</h3>
-      <p>Jailbreak, injection, extraction, and poisoning are four different attacks.
-      How to test your defenses, and how governance becomes compliance evidence a
-      regulator or buyer can check.</p>
-    </a>
-    <a class="card" href="cost-optimization/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Generative AI</span>
-      <h3>Cost optimization →</h3>
-      <p>Which lever fixes which cost driver, the build-vs-buy breakeven done as
-      arithmetic, and the FinOps practice that turns attribution into governance
-      before the invoice, not after.</p>
-    </a>
-    <a class="card" href="system-design/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>System design →</h3>
-      <p>How real systems are designed at scale — from rate limiters to stock exchanges —
-      with the architecture, tradeoffs, and failure modes that shape product decisions.
-      28 systems plus lessons on distributed data, caching, ML and GenAI systems, social media and reliability, a question bank and runnable code, diagrams included.</p>
-    </a>
-    <a class="card" href="access-control/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Access control →</h3>
-      <p>Who may do what, and where that is decided: authentication vs authorization,
-      OAuth and tokens, RBAC, ABAC, relationship-based access, Keycloak, and access
-      control for AI agents. 8 lessons.</p>
-    </a>
-    <a class="card" href="context-engineering/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Context engineering →</h3>
-      <p>Treat what the model gets to see as a product decision — instructions,
-      retrieval, memory, and live state, spec'd, governed, and evaluated with the same
-      rigor as the output it produces.</p>
-    </a>
-    <a class="card" href="prompt-engineering/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Prompt engineering →</h3>
-      <p>The craft of writing input a model will reliably act on — from ChatGPT
-      productivity patterns, through few-shot and chain-of-thought, into the prompts
-      that drive Claude Code and other coding agents. 10 lessons.</p>
-    </a>
-    <a class="card" href="business-acumen/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>Business acumen →</h3>
-      <p>Money, markets, organizations and influence for Group PMs, Heads of Product and
-      VPs — grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 15 lessons
-      and an interactive self-assessment with a radar chart and an improvement plan.</p>
-    </a>
-    <a class="card" href="graph/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Explore</span>
-      <h3>Knowledge graph →</h3>
-      <p>Every page across all 29 modules as one interactive map — __NODES__ pages,
-      __LINKS__ cross-references. Search it, filter by track, click any node to jump in.</p>
-    </a>
-  </div>
-  <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
-</main></body></html>
+__BODY__
+</body></html>
 """
 
 
@@ -1015,10 +782,10 @@ def main():
     n_links = sum(1 for e in data["edges"] if e[3] == "link")
 
     # 6. Top landing (with live graph counts).
-    landing = LANDING.replace("__NODES__", str(len(data["nodes"]))) \
-                     .replace("__LINKS__", str(n_links))
+    n_tracks = len({n["track"] for n in data["nodes"]})
+    body = landing.render(len(data["nodes"]), n_links, n_tracks)
     with open(os.path.join(SITE, "index.html"), "w") as f:
-        f.write(landing)
+        f.write(LANDING.replace("__BODY__", body))
 
     # 7. Every content page gets a floating button into the graph, focused on
     # that page's own node.

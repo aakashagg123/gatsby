@@ -47,3 +47,42 @@ pre.mermaid svg{max-width:100%;height:auto;display:inline-block;shape-rendering:
   font:var(--font-weight-medium) var(--font-text-xs-size)/var(--font-text-xs-line-height) var(--font-sans);
   text-align:left;
 }
+
+/* ---- landing pillars ---- */
+.landing .pillar{margin-top:var(--space-12)}
+.landing .pillar-title{margin-top:0;align-items:center;gap:var(--space-3)}
+.landing .pillar-num{
+  white-space:nowrap;
+  padding:var(--space-0-5) var(--space-2-5);border-radius:var(--radius-full);
+  background:var(--color-background-primary-soft-alpha);color:var(--color-text-secondary);
+  font:var(--font-weight-semibold) var(--font-text-xs-size)/var(--font-text-xs-line-height) var(--font-sans);
+}
+.landing .pillar-title h2{
+  margin:0;color:var(--color-text);
+  font:var(--font-heading-4xl-weight) var(--font-heading-lg-size)/var(--font-heading-lg-line-height) var(--font-sans);
+  letter-spacing:var(--tracking-tight);
+}
+.landing .pillar-lede{
+  max-width:calc(var(--spacing) * 160);margin:var(--space-2) 0 0;color:var(--color-text-secondary);
+  font:var(--font-weight-normal) var(--font-text-md-size)/var(--font-text-md-line-height) var(--font-sans);
+}
+.landing .pillar-legend{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-3);margin:var(--space-4) 0 0;
+  color:var(--color-text-secondary);
+  font:var(--font-weight-normal) var(--font-text-sm-size)/var(--font-text-sm-line-height) var(--font-sans);
+}
+.landing .pillar-group{
+  margin:var(--space-8) 0 0;color:var(--color-text);
+  font:var(--font-weight-semibold) var(--font-text-md-size)/var(--font-text-md-line-height) var(--font-sans);
+}
+.landing .pillar-note{
+  margin:var(--space-1) 0 0;color:var(--color-text-tertiary);
+  font:var(--font-weight-normal) var(--font-text-sm-size)/var(--font-text-sm-line-height) var(--font-sans);
+}
+.landing .pillar-list{margin:var(--space-4) 0 0;padding:0;list-style:none;display:grid;gap:var(--space-2)}
+.landing .pillar-list li{
+  color:var(--color-text-secondary);
+  font:var(--font-weight-normal) var(--font-text-sm-size)/var(--font-text-sm-line-height) var(--font-sans);
+}
+.landing .pillar-list a{font-weight:var(--font-weight-semibold);color:var(--color-text)}
+.landing .start-here .card-iw{margin-top:auto}
