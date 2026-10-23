@@ -18,8 +18,9 @@ library. Then each **Use It** section maps the piece to how Claude Code and the 
 
 ## How it works
 
-Each lesson has five beats: **Motto → Problem → Concept → Build It → Use It.** Every code
-file runs offline and ends with assertions, so a broken piece fails loudly. Each phase ends
+Each lesson has five beats: **Motto → Problem → Concept → Build It → Use It.** Every Build It
+file runs offline and ends with assertions, and CI runs them, so a broken piece fails loudly.
+The `*_sdk.py` files call the live API and need a key, so CI skips them. Each phase ends
 with a short **Test yourself**.
 
 ## Start here
