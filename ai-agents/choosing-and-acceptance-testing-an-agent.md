@@ -15,19 +15,20 @@ separates a real agent from a rebranded one and surfaces the questions a vendor 
 rather skip. The second is an **acceptance test**: a fixed set of real cases, run many
 times, scored on outcome, path, and cost, against thresholds you agree before you sign.
 
-You own the result either way. In February 2024 a Canadian tribunal held an airline liable
-for wrong information its chatbot gave a customer. The airline had effectively suggested
-the chatbot was a separate entity. The tribunal disagreed. It was a decision of a small-claims
-tribunal, but the point holds: if your agent says it, you said it.
+You own the result either way. As reported in legal commentary, a Canadian tribunal held an
+airline liable in February 2024 for wrong information its chatbot gave a customer. The
+airline had argued, in effect, that the chatbot was a separate legal entity. The tribunal
+rejected that. It was a small-claims tribunal, but the point holds: if your agent says it,
+you said it.
 
 > 🎯 **Production Bottom Line**
 >
-> Gartner predicted in June 2025 that over 40% of agentic AI projects will be cancelled by the
-> end of 2027, because of rising costs, unclear value, or weak risk controls. Most of those
-> problems can be seen before purchase, if you test for them. Sign only against a written
-> acceptance test, run on your own cases, not the vendor's demo cases. Without one, you buy a
-> demo. It works on the happy path and fails on your real inputs, and the contract has no
-> measure of "works," so you have no remedy. **Ask your team:** *"If we ran this agent on 200
+> A demo shows the cases the vendor chose. Your risk sits in the cases it did not show: high
+> cost per run, weak controls, and failures on your real inputs. Most of these can be seen
+> before purchase, if you test for them. Sign only against a written acceptance test, run on
+> your own cases, not the vendor's demo cases. Without one, you buy a demo. It works on the
+> happy path and fails on your real inputs, and the contract has no measure of "works," so you
+> have no remedy. **Ask your team:** *"If we ran this agent on 200
 > of our own past cases tomorrow, what pass rate, cost, and failure behaviour would we accept,
 > and have we written that down?"*
 
@@ -49,10 +50,9 @@ bar, and the bar moves to meet them.
 
 ## Due diligence: is it really an agent, and can you rely on it?
 
-**Agent-washing** is Gartner's term for rebranding existing products, such as AI
-assistants, robotic process automation, and chatbots, as agents without substantial agentic
-capability. Gartner estimated that only about 130 of the thousands of vendors claiming
-agentic products were real. Treat the label as a claim to check.
+**Agent-washing** means selling an existing product, such as a chatbot, a scripted
+workflow, or robotic process automation, under the "agent" label without real agentic
+capability. Treat the label as a claim to check.
 
 Ask these questions. A good answer is specific and shows evidence.
 
@@ -211,14 +211,14 @@ trajectory grading in depth.
 
 ## Sources
 
-- Gartner, [Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027)
-  (Jun 2025): the prediction, the definition of agent-washing, and the estimate of about 130
-  real vendors. Confirmed through search-result excerpts and secondary reports; the page
-  could not be opened when this lesson was written.
-- Civil Resolution Tribunal of British Columbia, [Moffatt v. Air Canada, 2024 BCCRT 149](https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html)
-  (Feb 2024): the tribunal held the airline responsible for its chatbot's misleading
-  statement. The chat took place in November 2022. The decision text was checked by an
-  independent reviewer through a mirror copy; the CanLII page itself could not be opened
-  from our build environment. The tribunal handles small claims.
+- Law360 Canada, [Air Canada chatbot decision commentary](https://www.law360.ca/ca/articles/1815402)
+  (2024): the decision date of 14 February 2024, the citation *Moffatt v. Air Canada*, 2024
+  BCCRT 149, and the British Columbia Civil Resolution Tribunal as the equivalent of a
+  small-claims court. Checked 2026-10.
+- Kirsten Thompson, Dentons Canada, via Mondaq, [Airline ordered to compensate a B.C. man because its chatbot provided inaccurate information](https://www.mondaq.com/canada/new-technology/1427926/airline-ordered-to-compensate-a-bc-man-because-its-chatbot-provided-inaccurate-information)
+  (23 Feb 2024): the chatbot's wrong statement on bereavement fares, the "separate legal
+  entity" argument and its rejection, and the award as reported. Checked 2026-10.
+- The decision text itself was not opened. The tribunal's own pages could not be reached
+  from our build environment, so these facts rest on the legal commentary above.
 - The vendor claim, the test table, the results, and the code are invented and
   illustrative.

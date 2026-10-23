@@ -4,25 +4,18 @@
 
 ## Real-world examples & war stories
 
-**A chatbot's invented refund policy, and who paid.** In November 2022 a customer asked Air
-Canada's website chatbot about bereavement fares. The chatbot said the customer could claim the
-discount after travel. The airline's policy did not allow that. In February 2024 the Civil
-Resolution Tribunal of British Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149) rejected
-the airline's suggestion that the chatbot was a separate entity. It held the company
-responsible for the information on its website. It awarded CA$650.88 in damages, CA$812.02
-in total with interest and fees. This was a small-claims decision.
+**A chatbot's invented refund policy, and who paid.** This account follows published legal
+commentary. The decision text was not opened. A customer asked Air Canada's website chatbot
+about bereavement fares. The chatbot said the customer could claim the discount after
+travel. The airline's policy did not allow that. On 14 February 2024 the Civil Resolution
+Tribunal of British Columbia (*Moffatt v. Air Canada*, 2024 BCCRT 149), a small-claims
+tribunal, held the airline liable. It rejected the airline's argument that the chatbot was,
+in effect, a separate legal entity. As reported, it awarded CA$650.88 in damages, plus
+CA$36.14 in interest and CA$125 in fees. That comes to CA$812.02 in total (derived: the sum
+of the three).
 **Takeaway.** If your agent says it, you said it. This is the case for
 [risk tiers and approval gates](./running-an-agent-in-production.md) on any action or
 statement that binds the company.
-
-**Agent-washing, estimated.** In June 2025 Gartner predicted that over 40% of agentic AI
-projects will be cancelled by the end of 2027, citing rising costs, unclear business value,
-or weak risk controls. It also described "agent-washing": rebranding existing assistants,
-robotic process automation, and chatbots as agents, and it estimated that only about 130 of
-the thousands of vendors were real. **Takeaway.**
-[Test the claim on your own cases](./choosing-and-acceptance-testing-an-agent.md) before you
-sign, and place any pitch on
-[the autonomy dial](./what-an-agent-is-and-how-much-autonomy-it-needs.md).
 
 **Agents get better at short tasks first.** The research group Model Evaluation & Threat Research (METR) measures agents by how
 long a task, in human time, they can finish with 50% success. In a March 2025 study, this
@@ -87,11 +80,11 @@ If yes, this is an agent worth running. If no, you know which lesson to reread.
 
 ## Sources
 
-- *Moffatt v. Air Canada*, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia
-  (decision of 14 Feb 2024): chat in Nov 2022, CA$650.88 damages, CA$812.02 in total. See
-  [Choosing and acceptance-testing an agent](./choosing-and-acceptance-testing-an-agent.md#sources).
-- Gartner press release, 25 Jun 2025: over 40% of agentic AI projects cancelled by end of
-  2027, and the agent-washing estimate. See the same Sources list. Estimate, not measured.
+- *Moffatt v. Air Canada*, 2024 BCCRT 149 (decision of 14 Feb 2024), as reported by
+  [Law360 Canada](https://www.law360.ca/ca/articles/1815402) and by
+  [Dentons via Mondaq](https://www.mondaq.com/canada/new-technology/1427926/airline-ordered-to-compensate-a-bc-man-because-its-chatbot-provided-inaccurate-information)
+  (23 Feb 2024): CA$650.88 damages, CA$36.14 interest, CA$125 fees. The CA$812.02 total is
+  derived. The decision text was not opened. Checked 2026-10.
 - METR, Mar 2025: the seven-month doubling over 2019-2025. See
   [Planning, reasoning & reliability](./planning-reasoning-and-reliability-across-a-run.md#sources).
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)

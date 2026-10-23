@@ -475,7 +475,7 @@ GLOSSARY = [
 {
  "k":"agent-washing","t":"Agent-washing","cat":"Agentic AI",
  "short":"Rebranding an existing assistant, chatbot, or scripted automation as an 'agent' without real agentic capability.",
- "fp":"The label 'agent' sells, so vendors apply it to products that follow a fixed script or answer one question at a time. Gartner used the term in 2025 and estimated that only about 130 of the thousands of agentic vendors were real. A buyer checks the claim by placing the product on the autonomy dial and running an acceptance test on their own cases.",
+ "fp":"The label 'agent' sells, so vendors apply it to products that follow a fixed script or answer one question at a time. A buyer checks the claim by placing the product on the autonomy dial and running an acceptance test on their own cases.",
  "example":"A 'support agent' that matches keywords to canned replies. It has no loop, no tool use, and no decisions of its own. It is a chatbot with a new name.",
  "uses":["Vetting vendor claims before a purchase","Placing a proposal on the autonomy dial","Setting acceptance criteria in a contract"],
  "see":("Choosing and acceptance-testing an agent","ai-agents/choosing-and-acceptance-testing-an-agent.md"),
