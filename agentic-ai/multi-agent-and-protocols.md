@@ -96,7 +96,10 @@ internalizing because it inoculates you against a whole genre of hype:
   young. Pilot it where a partner ecosystem demands it, but don't architect your product
   around universal adoption.
 - **The rest** — a mix of research proposals, single-vendor efforts, and acronyms that
-  exist mainly on infographics. Some may mature. None is a dependency you should list
+  exist mainly on infographics. One example: the "ACP" on those infographics is usually
+  IBM's Agent Communication Protocol. IBM merged it into A2A in August 2025 and archived
+  it. It is not the commerce ACP described below. The same three letters name two
+  different protocols, so always ask which one a vendor means. Some may mature. None is a dependency you should list
   today.
 
 One protocol family did arrive with real backing: **agentic commerce**. Google's

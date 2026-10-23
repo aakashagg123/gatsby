@@ -359,3 +359,15 @@ and a link to the merged PR.)
   thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html (EchoLeak);
   eweek.com/news/replit-ai-coding-assistant-failure; incidentdatabase.ai/cite/1039 (Cursor);
   asiae.co.kr / hrgrapevine (Just Walk Out reporting and Amazon response).
+
+- 2026-10-23 (follow-up, same module) — agentic-ai — expanded. Added four
+  items from a parallel run's notes, each re-verified first: IBM's ACP merged
+  into A2A (Aug 2025), so the infographic "ACP" differs from the commerce ACP
+  (research.ibm.com/projects/agent-communication-protocol); MCP tool poisoning
+  and rug pulls (labs.cloudsecurityalliance.org MCP tool-poisoning whitepaper);
+  Agent Skills as an open standard, Dec 2025 (agentskills.io); adaptive thinking
+  and effort (platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost);
+  Anthropic's five workflow patterns (anthropic.com/engineering/building-effective-agents).
+  Not applied: Project Vend phase 2 (unverified). EU AI Act Digital Omnibus
+  remains a flag for the ai-security-and-guardrails module.
+

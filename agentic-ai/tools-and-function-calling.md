@@ -78,7 +78,8 @@ final result, instead of emitting one tool call per turn with each result round-
 through the context. This collapses token cost and latency on multi-tool workflows, and
 makes the code sandbox the orchestration surface. **Skills**: packaged procedural
 knowledge — a folder with instructions, scripts, and resources the agent loads when
-relevant — is now a third primitive alongside tools and prompts. Tools give the agent
+relevant — is now a third primitive alongside tools and prompts. Anthropic published the format as
+an open standard (agentskills.io) in December 2025, and other vendors have adopted it. Tools give the agent
 *capabilities*; skills give it *know-how* about when and how to use them. Both matter to
 the PM the same way: the toolbox review now covers what code the agent can run and what
 procedures it has been handed, not just which APIs it can call.
@@ -118,7 +119,12 @@ real, widely adopted, and the piece of the much-hyped protocol landscape most wo
 knowing ([the honest protocol map](./multi-agent-and-protocols.md) comes in lesson 5).
 An ecosystem note that becomes a product note: an MCP server someone else wrote is
 *third-party code your agent trusts* — its tool results enter your context. Vet servers
-like dependencies, not like plugins.
+like dependencies, not like plugins. Two attacks are specific to MCP. In **tool
+poisoning**, hidden instructions sit in a tool's description. The user sees a harmless
+function, but the model reads and follows the hidden text. In a **rug pull**, a tool passes
+review and then changes its definition later. Most clients check tools only at install
+time. Pin tool definitions by hash, and re-review when they change. The OWASP MCP Top 10
+lists tool poisoning as MCP03:2025.
 
 **Containment** is the other half of integration. The working defaults:
 
