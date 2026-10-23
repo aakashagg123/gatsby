@@ -247,8 +247,10 @@ to keep such a test set.
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-09.
 - OWASP GenAI Security Project, [Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
-  (Dec 2025): the publication date, 9 December 2025, was confirmed on the page in 2026-10. The
-  risk names come from the downloadable document, not the page text.
+  (Dec 2025). The risk names above come from OWASP's
+  [launch post](https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/)
+  (9 Dec 2025): ASI01 Agent Goal Hijack, ASI02 Tool Misuse, ASI03 Identity & Privilege Abuse,
+  ASI08 Cascading Failures, and ASI10 Rogue Agents. Checked 2026-10.
 - Reserve Bank of India, [FREE-AI Committee Report](https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&ID=1306)
   (13 Aug 2025): the recommendations for a board-approved AI policy and for AI incident
   reporting, and the principle that AI should "defer to human judgment." See also the

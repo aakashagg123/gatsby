@@ -26,8 +26,9 @@ sign, and place any pitch on
 
 **Agents get better at short tasks first.** The research group Model Evaluation & Threat Research (METR) measures agents by how
 long a task, in human time, they can finish with 50% success. In a March 2025 study, this
-length had doubled about every seven months since 2019, measured on software tasks. METR has
-reported a faster recent pace since. **Takeaway.** Progress is real, and success still falls
+length had doubled about every seven months since 2019, measured on software tasks. The same
+post reports faster doubling on some benchmarks. Later fits may differ, so check METR's current
+results. **Takeaway.** Progress is real, and success still falls
 as tasks get longer.
 [Judge reliability at the real task length](./planning-reasoning-and-reliability-across-a-run.md),
 not on a three-step demo.
