@@ -136,6 +136,8 @@ def rewrite_target(target):
         rest = m.group(2)
         if rest == "README":
             return f"../{prefix}/index.html{anchor}"
+        if rest.endswith("/README"):   # phase overview -> its directory index
+            return f"../{prefix}/{rest[:-len('README')]}index.html{anchor}"
         return f"../{prefix}/{rest}.html{anchor}"
     # cross-link into a sibling standalone track: ../track-name/lesson.md
     m = re.match(r"\.\./([\w-]+)/([\w-]+)\.md$", target)

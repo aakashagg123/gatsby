@@ -143,6 +143,13 @@
   font:var(--font-weight-normal) var(--font-text-sm-size)/var(--font-text-sm-line-height) var(--font-sans);
 }
 .foot a{text-decoration:underline;text-underline-offset:var(--link-underline-decoration-offset)}
+.provenance{
+  margin:var(--space-8) auto 0;padding:var(--space-4) var(--space-5);max-width:var(--content-max,72rem);
+  border-top:var(--hairline) solid var(--color-border);text-align:center;
+  color:var(--color-text-tertiary);
+  font:var(--font-weight-normal) var(--font-text-xs-size)/var(--font-text-xs-line-height) var(--font-sans);
+}
+.provenance a{text-decoration:underline;text-underline-offset:var(--link-underline-decoration-offset)}
 
 /* ---- tablet and phone: one column, drawer navigation ---- */
 @media (max-width:880px){

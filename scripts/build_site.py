@@ -62,6 +62,14 @@ FINE_TUNING_HTML = os.path.join(ROOT, "fine-tuning-html")  # fine-tuning
 BUSINESS_ACUMEN_HTML = os.path.join(ROOT, "business-acumen-html")  # business acumen (product leaders)
 # Markdown tracks rendered client-side, all sharing the phases/ folder shape:
 # (source dir, site subdir, brand label shown in the viewer chrome)
+# Canonical home of every page. One constant, so moving the site is a one-line change.
+CANONICAL_BASE = "https://aakashagg123.github.io/gatsby/"
+SOURCE_URL = "https://github.com/aakashagg123/gatsby"
+PROVENANCE = (
+    '<footer class="provenance" data-nosnippet>Compiled via <code>gatsby</code> '
+    '(open-source pure-Python knowledge graph engine by Aakash Aggarwal) · '
+    '<a href="' + SOURCE_URL + '">View source on GitHub →</a></footer>'
+)
 MD_TRACKS = [
     ("harness-engineering", "harness", "Harness engineering"),
     ("flowable", "flowable", "Flowable"),
@@ -117,6 +125,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
        .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|transformers|fine-tuning|ai-assisted-development|business-acumen)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)README\\.md(#|$)/,'$1index.html$2')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -547,6 +556,67 @@ def inject_smooth_scroll(site):
     return injected
 
 
+def inject_canonical_and_provenance(site):
+    """Add <link rel=canonical> to <head> of every page, and a provenance footer to every
+    content page (not the full-screen graph app). The footer goes before the reader
+    widget, so it stays inside <body> but outside <main>. Idempotent."""
+    tagged = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            if 'rel="canonical"' in text or "</head>" not in text:
+                continue
+            tag = f'<link rel="canonical" href="{canonical_url(site, path)}">'
+            text = text.replace("</head>", tag + "</head>", 1)
+            if 'class="graph-page"' not in text and 'class="provenance"' not in text:
+                anchor = '<div id="rs-root">' if '<div id="rs-root">' in text else "</body>"
+                text = text.replace(anchor, PROVENANCE + anchor, 1)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text)
+            tagged += 1
+    return tagged
+
+
+def html_for(md_path):
+    """Deployed viewer path for a markdown file: README.md -> index.html in its own
+    folder (clean directory URLs), every other file.md -> file.html."""
+    if os.path.basename(md_path) == "README.md":
+        return os.path.join(os.path.dirname(md_path), "index.html")
+    return md_path[:-3] + ".html"
+
+
+REDIRECT_STUB = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="refresh" content="0; url={target}">
+<link rel="canonical" href="{canonical}">
+<meta name="robots" content="noindex">
+<title>Moved</title>
+</head><body><p>This page moved to <a href="{target}">{target}</a>.</p></body></html>
+"""
+
+
+def canonical_url(site, path):
+    """Absolute canonical URL of a built page: index.html collapses to its directory URL."""
+    rel = os.path.relpath(path, site).replace(os.sep, "/")
+    if rel == "index.html":
+        return CANONICAL_BASE
+    if rel.endswith("/index.html"):
+        rel = rel[:-len("index.html")]
+    return CANONICAL_BASE + rel
+
+
+def write_redirect_stub(old_html, target="index.html"):
+    """Leave a meta-refresh stub where a README.html used to be, so old links still work.
+    The stub's canonical is the page it points to."""
+    canonical = canonical_url(SITE, os.path.join(os.path.dirname(old_html), target))
+    with open(old_html, "w") as f:
+        f.write(REDIRECT_STUB.format(target=target, canonical=canonical))
+
+
 def rel_to_track_root(md_path, site_key):
     """'../' * depth from a track md file up to _site/<site_key>/."""
     rel = os.path.relpath(md_path, os.path.join(SITE, site_key))
@@ -667,7 +737,7 @@ def sidebar_html(md_path, tree, top_href):
     rows = [f'<a class="modlink" href="{top_href}">← Track overview</a>']
     for phase in tree:
         active = md_path == phase["readme"] or any(md_path == en for _, en in phase["lessons"])
-        readme_href = (os.path.relpath(phase["readme"][:-3] + ".html", here_dir)
+        readme_href = (os.path.relpath(html_for(phase["readme"]), here_dir)
                         if phase["readme"] else "#")
         cls = "modlink active" if active else "modlink"
         rows.append(f'<a class="{cls}" href="{readme_href}">{htmllib.escape(phase["title"])}</a>')
@@ -689,7 +759,7 @@ def nav_html(md_path, prev_md, next_md):
         rel = os.path.relpath(prev_md[:-3] + ".html", os.path.dirname(here))
         parts.append(f'<a class="navcard prev" href="{rel}"><span class="lbl">← Previous</span>'
                      f'<span class="ttl">{htmllib.escape(_title_of(prev_md))}</span></a>')
-    up = os.path.relpath(os.path.join(os.path.dirname(md_path), "..", "..", "README.html"),
+    up = os.path.relpath(os.path.join(os.path.dirname(md_path), "..", "..", "index.html"),
                          os.path.dirname(here))
     parts.append(f'<a class="navcard up" href="{up}"><span class="lbl">Phase</span>'
                  f'<span class="ttl">Overview</span></a>')
@@ -827,6 +897,7 @@ def main():
     # 2. Markdown tracks (harness engineering, flowable): copy each tree
     # (md + code + outputs) and render a viewer next to every markdown file.
     pages = 0
+    legacy_readmes = []
     for src_dir, site_key, brand in MD_TRACKS:
         dst_track = os.path.join(SITE, site_key)
         shutil.copytree(os.path.join(ROOT, src_dir), dst_track)
@@ -853,7 +924,7 @@ def main():
                     first = f.readline().lstrip("# ").strip()
                 title = first or title
                 root = rel_to_track_root(md_path, site_key)   # up to _site/
-                html_path = md_path[:-3] + ".html"
+                html_path = html_for(md_path)
                 md_url = "./" + fn
                 nav = ""
                 if is_lesson(md_path):
@@ -881,10 +952,12 @@ def main():
                     )))
                 pages += 1
 
-        # Track landing = viewer for README.md.
-        readme_html = os.path.join(dst_track, "README.html")
-        if os.path.exists(readme_html):
-            shutil.copyfile(readme_html, os.path.join(dst_track, "index.html"))
+        # Every README.md already rendered to index.html (the track landing is
+        # <track>/index.html). Remember the legacy README.html paths; the stubs are
+        # written last (step 12) so the page injectors never touch them.
+        for dp, _, files in os.walk(dst_track):
+            if "README.md" in files:
+                legacy_readmes.append(os.path.join(dp, "README.html"))
 
     # 5. Knowledge graph: extract nodes/edges from the markdown sources and
     # write the interactive graph page (Quartz-style).
@@ -914,12 +987,19 @@ def main():
     # 11. The design system: tokens, SDK components and the site layer, every page.
     ds_pages = inject_design_system(SITE)
 
+    # 11b. Canonical URL on every page, provenance footer on content pages.
+    canon = inject_canonical_and_provenance(SITE)
+
+    # 12. Redirect stubs at the legacy README.html paths (after every injector).
+    for old in legacy_readmes:
+        write_redirect_stub(old)
+
     print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "
           f"graph ({len(data['nodes'])} nodes, {n_links} links, "
           f"{injected} pages linked) + glossary "
           f"({len(build_glossary.site_entries())} terms, {gloss} pages) + "
           f"favicon ({fav} pages) + smooth-scroll ({smooth} pages) + "
-          f"design-system ({ds_pages} pages)")
+          f"design-system ({ds_pages} pages) + canonical ({canon} pages)")
 
 
 if __name__ == "__main__":

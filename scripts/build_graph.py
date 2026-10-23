@@ -11,7 +11,7 @@ Nodes map to their deployed URLs:
   <flat-track>/<lesson>.md                        -> <flat-track>/<lesson>.html
   <flat-track>/README.md                          -> <flat-track>/index.html
   harness-engineering/phases/<p>/<l>/docs/en.md   -> harness/phases/<p>/<l>/docs/en.html
-  harness-engineering/phases/<p>/README.md        -> harness/phases/<p>/README.html
+  harness-engineering/phases/<p>/README.md        -> harness/phases/<p>/index.html
   harness-engineering/foundations/*.md            -> harness/foundations/*.html
   harness-engineering/README.md                   -> harness/index.html
 
@@ -162,7 +162,7 @@ def collect():
             pkey = f"{src}/phases/{phase}/README.md"
             ptitle = _title_of(os.path.join(pdir, "README.md"),
                                phase.split("-", 1)[-1].replace("-", " ").title())
-            add(pkey, ptitle, f"{prefix}/phases/{phase}/README.html", track, "module")
+            add(pkey, ptitle, f"{prefix}/phases/{phase}/index.html", track, "module")
             edges.append((tkey, pkey, 1, "structure"))
             for lesson in sorted(os.listdir(pdir)):
                 en = os.path.join(pdir, lesson, "docs", "en.md")

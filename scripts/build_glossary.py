@@ -54,6 +54,8 @@ def deployed_url(md):
         rest = parts[1:]
         if rest == ["README.md"]:
             return f"{prefix}/index.html{anchor}"
+        if rest[-1] == "README.md":            # phase overview -> its directory index
+            return f"{prefix}/{'/'.join(rest[:-1])}/index.html{anchor}"
         return f"{prefix}/{'/'.join(rest)[:-3]}.html{anchor}"
     raise ValueError(f"don't know how to deploy-map: {md}")
 

@@ -87,6 +87,8 @@ def rewrite_target(target, cur_mod):
         if top in PHASED:
             if rest == "README":
                 return f"../{PHASED[top]}/index.html{anchor}"
+            if rest.endswith("/README"):   # phase overview -> its directory index
+                return f"../{PHASED[top]}/{rest[:-len('README')]}index.html{anchor}"
             return f"../{PHASED[top]}/{rest}.html{anchor}"
     return target  # leave anything unexpected alone
 
