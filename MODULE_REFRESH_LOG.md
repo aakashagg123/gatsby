@@ -1,8 +1,8 @@
 # Daily module refresh log
 
 Tracks a recurring automated job (a Routine, fired daily at 9am IST /
-03:30 UTC) that picks one module per day — the one with the oldest
-`last_refreshed` date, `never` outranking any date — and grounds it in
+03:30 UTC) that picks one module per day — the most overdue module in the
+highest-priority tier (see `tier` and `cadence_days` below) — and grounds it in
 real, current, expert-level knowledge on two axes: **accuracy** (every
 checkable claim, not a sampled subset, is still true) and
 **comprehensiveness** (the module covers what a current expert
@@ -15,35 +15,41 @@ module, flagging anything that large instead. Every run advances the
 table below, whether or not it found something to fix, so the rotation
 always moves forward.
 
-| id | path | build script | last_refreshed |
-|---|---|---|---|
-| ai-engineering | content/ | scripts/build_html.py | 2026-09-20 |
-| harness-engineering | harness-engineering/ | scripts/build_site.py | 2026-09-20 |
-| flowable | flowable/ | scripts/build_site.py | 2026-09-20 |
-| first-principles | first-principles/ | scripts/build_first_principles.py | 2026-09-21 |
-| product-sense | product-sense/ | scripts/build_product_sense.py | 2026-09-21 |
-| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 2026-09-21 |
-| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 2026-09-21 |
-| agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2026-10-23 |
-| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | never |
-| generative-ai | generative-ai/ | scripts/build_generative_ai.py | never |
-| llms | llms/ | scripts/build_llms.py | never |
-| api-integrations | api-integrations/ | scripts/build_api_integrations.py | never |
-| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2026-10-12 |
-| memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | never |
-| tool-calling | tool-calling/ | scripts/build_tool_calling.py | never |
-| ai-agents | ai-agents/ | scripts/build_ai_agents.py | never |
-| agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | never |
-| evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | never |
-| ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | never |
-| cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | never |
-| system-design | system-design/ | scripts/build_system_design.py | 2026-10-19 |
-| prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2026-09-22 |
-| cnns | cnns/ | scripts/build_cnns.py | 2026-10-11 |
-| transformers | transformers/ | scripts/build_transformers.py | 2026-10-17 |
-| fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 2026-10-17 |
-| ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 2026-10-17 |
-| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 2026-10-16 |
+`tier` ranks priority for the AI-PM curriculum (1 is picked first): tier 1 is PM craft and
+AI foundations, tier 2 is core agent and infrastructure topics, tier 3 is engineer build tracks
+and stable fundamentals. `cadence_days` is how many days may pass before a module is due
+again. A module is due when `last_refreshed` is `never` or older than its cadence. The job
+picks the lowest tier number among due modules.
+
+| id | path | build script | tier | cadence_days | last_refreshed |
+|---|---|---|---|---|---|
+| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-09-21 |
+| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-09-21 |
+| product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-09-21 |
+| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
+| ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
+| fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
+| transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
+| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | never |
+| ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-09-20 |
+| agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
+| generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | never |
+| llms | llms/ | scripts/build_llms.py | 2 | 30 | never |
+| api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | never |
+| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
+| memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
+| tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | never |
+| ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | never |
+| agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
+| evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | never |
+| ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | never |
+| cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | never |
+| prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-09-22 |
+| harness-engineering | harness-engineering/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
+| flowable | flowable/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
+| cnns | cnns/ | scripts/build_cnns.py | 3 | 90 | 2026-10-11 |
+| system-design | system-design/ | scripts/build_system_design.py | 3 | 90 | 2026-10-19 |
+| first-principles | first-principles/ | scripts/build_first_principles.py | 3 | 90 | 2026-09-21 |
 
 ## Run history
 
