@@ -24,7 +24,7 @@ always moves forward.
 | product-sense | product-sense/ | scripts/build_product_sense.py | 2026-09-21 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 2026-09-21 |
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 2026-09-21 |
-| agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | never |
+| agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2026-10-23 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | never |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | never |
 | llms | llms/ | scripts/build_llms.py | never |
@@ -327,3 +327,35 @@ and a link to the merged PR.)
   quantifiers, and the reinsurance framing). Final check of the edited
   lessons: 0 WRONG / 0 STALE, web access ok. All 15 lessons stamped 2026-10
   (medium). check_module: avg sentence 10.5, 0% over 30 words, Flesch 69.
+
+- 2026-10-23 — agentic-ai — fixed + expanded. Read all 8 lessons, README and
+  recap in full. Accuracy: (1) recap's METR "19% slower" study was presented
+  as current; METR's Feb/Mar 2026 follow-up estimated a speedup but called
+  its own data unreliable (selection bias) — added the update. (2) Product
+  lesson stated Just Walk Out's "700 human reviews per 1,000 sales vs target
+  20–50" as fact; The Information's report is a 2022 figure, goal 50, and
+  Amazon disputed it — reworded. (3) Protocol lesson: ACP/Instant Checkout
+  was scaled back March 2026; A2A reached v1.0 March 2026; MCP moved to the
+  Linux Foundation's Agentic AI Foundation Dec 2025 — updated. Coverage
+  fills: Meta's Rule of Two and OWASP Agentic Top 10 (safety lesson);
+  pass^k vs pass@k (reliability); Anthropic's multi-agent 90.2%/15x-token
+  tradeoff (multi-agent); context rot (context lesson). Verified unchanged:
+  EchoLeak CVE-2025-32711 (June 2025), Replit/SaaStr incident, Cursor "Sam"
+  bot, Project Vend details, compounding-error table (recomputed
+  arithmetically). Not verified: GitHub MCP exploit (May 2025) and the
+  Chevy Tahoe incident were left as written, no fresh source opened.
+  Flagged, not built: no new-lesson gaps; a dedicated agent-identity /
+  authorization lesson could be a future recommendation.
+  Sources: metr.org/blog/2026-02-24-uplift-update/;
+  linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation;
+  aaif.io/blog/aaifs-first-quarter-success-story-new-members-technical-wins-and-open-governance;
+  opensource.googleblog.com/2026/04/a-year-of-open-collaboration-celebrating-the-anniversary-of-a2a.html;
+  linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year;
+  forrester.com/blogs/what-it-means-that-the-leader-in-agentic-commerce-just-pulled-back;
+  forkast.news (OpenAI Instant Checkout walk-back); simonwillison.net/2025/nov/2/new-prompt-injection-papers
+  (Rule of Two); genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026;
+  arxiv.org/pdf/2406.12045 (τ-bench pass^k); anthropic.com/engineering/multi-agent-research-system;
+  trychroma.com/research/context-rot; anthropic.com/research/project-vend-1;
+  thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html (EchoLeak);
+  eweek.com/news/replit-ai-coding-assistant-failure; incidentdatabase.ai/cite/1039 (Cursor);
+  asiae.co.kr / hrgrapevine (Just Walk Out reporting and Amazon response).

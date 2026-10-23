@@ -62,7 +62,10 @@ flowchart TB
   grepping logs and return one paragraph, so the lead's context stays clean — often the
   real reason this beats one agent. **Parallelism**: three research threads run at once.
   The recurring cost is that the orchestrator's brief *is* the spec. Vague briefs yield
-  duplicated or contradictory work.
+  duplicated or contradictory work. Anthropic's own multi-agent research system shows both
+  sides. It beat a single agent by 90.2% on an internal research eval. It also used about
+  15 times the tokens of a chat. Anthropic notes the pattern fits parallel research well
+  and tightly coupled work, such as coding, poorly.
 - **Pipeline** — sequential specialists, each stage checkable. This is the multi-agent
   version of a [workflow](./what-is-an-agent.md): predictable, testable stage by stage,
   and usually the right shape when stages are known in advance.
@@ -84,20 +87,26 @@ internalizing because it inoculates you against a whole genre of hype:
 
 - **MCP (Model Context Protocol)** — real, shipped, and broadly adopted across major
   vendors. It's the standard way to plug tools and data into agents
-  ([lesson 2](./tools-and-function-calling.md)). If you learn one protocol, learn this.
-- **A2A (Agent2Agent)** — real (Google-initiated, now a Linux Foundation project):
-  agents advertise capabilities and delegate to each other across vendors. It's early —
-  watch it, pilot it where a partner ecosystem demands it, but don't architect your
-  product around universal adoption.
+  ([lesson 2](./tools-and-function-calling.md)). In December 2025 Anthropic gave MCP to
+  the Agentic AI Foundation, a Linux Foundation body. That moves it from one vendor's
+  project to neutral governance. If you learn one protocol, learn this.
+- **A2A (Agent2Agent)** — real (Google-initiated, donated to the Linux Foundation in June
+  2025): agents advertise capabilities and delegate to each other across vendors. It
+  reached a stable v1.0 in March 2026, with signed Agent Cards for identity. It is still
+  young. Pilot it where a partner ecosystem demands it, but don't architect your product
+  around universal adoption.
 - **The rest** — a mix of research proposals, single-vendor efforts, and acronyms that
   exist mainly on infographics. Some may mature. None is a dependency you should list
   today.
 
 One protocol family did arrive with real backing: **agentic commerce**. Google's
 **AP2** (Agent Payments Protocol) and OpenAI/Stripe's **ACP** (Agentic Commerce
-Protocol, powering Instant Checkout inside ChatGPT) both shipped in late 2025 —
+Protocol, which powered Instant Checkout inside ChatGPT) both shipped in late 2025 —
 mandates, payment credentials, and merchant integration for agents that *buy things*.
-It's early, but note what it validates: the money layer is exactly the transaction-cost
+Adoption has been slow. In March 2026 OpenAI scaled Instant Checkout back after weak
+merchant uptake. Shoppers are now sent to the retailer's own app to pay. The protocol
+lives on in ChatGPT Apps. So the lesson is double: the money layer is where agents are
+heading, and demand there is unproven. Note what it validates: the money layer is exactly the transaction-cost
 territory that [workflow capture](./agentic-ai-as-a-product.md) says agents absorb.
 Watch this family more closely than the alphabet soup above.
 

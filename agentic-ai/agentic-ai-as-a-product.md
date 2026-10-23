@@ -133,8 +133,9 @@ Three product consequences:
 - **The honest metric is human-reviews-per-task, and it should trend down.** Choudary
   names the trap: becoming an "overfunded BPO," where hype and funding hide humans
   quietly doing the work behind the AI. ScaleFactor shipped books done by
-  accountants. Amazon's Just Walk Out ran about 700 human reviews per 1,000 sales,
-  against a target of 20–50. If the service isn't *progressively* absorbed into
+  accountants. The Information reported that Amazon's Just Walk Out needed about 700 human
+  reviews per 1,000 sales in 2022, against an internal goal of 50. Amazon disputed the
+  figures and said reviewers mainly annotate video to train the model. If the service isn't *progressively* absorbed into
   software, there is no software business. Track absorption, not annualized run rate.
 
 ## Agent UX: designing for trust

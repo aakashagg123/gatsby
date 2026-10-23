@@ -56,7 +56,11 @@ their own mature codebases — while estimating they'd been about 20% faster. �
 *Takeaway:* perceived lift is not measured lift. The
 [supervised-cost arithmetic](./agentic-ai-as-a-product.md) — agent cost plus the human
 checking it — is the only honest scoreboard. You must *measure* it, because
-everyone's intuition, including experts', flatters the tool.
+everyone's intuition, including experts', flatters the tool. A 2026 follow-up shows why
+the number moves. METR's later round estimated a speedup, but METR itself called the data
+an unreliable signal. Many developers refused to work without AI, so the study could no
+longer recruit a fair control group. Treat the 19% as a dated 2025 measurement, not a
+constant. Re-measure on your own team.
 
 ## Module recap
 

@@ -115,6 +115,14 @@ send out, and what a human must approve. That's why the <strong>lethal trifecta<
 so useful in reviews. Private data plus untrusted content plus an outbound channel, in
 one agent, is the configuration to fear. Removing <em>any leg</em> — or putting a gate on
 it — collapses most attacks.</p>
+<p>Two newer references turn this into a review checklist. Meta's <strong>Agents Rule of Two</strong>
+(October 2025) extends the trifecta. It adds <em>changing state</em>, not only sending data out,
+as a risk. Its rule: within one session, an agent should hold at most two of three
+properties — untrusted input, access to sensitive data, and the power to change state or
+communicate externally. An agent that needs all three should not run unsupervised. The
+<strong>OWASP Top 10 for Agentic Applications</strong> (December 2025) gives security teams a shared
+vocabulary for these risks, built from real 2025 incidents. Ask your security reviewer
+which list they use.</p>
 <h2 id="the-defense-toolkit">The defense toolkit</h2>
 <ul>
 <li><strong>Least privilege</strong> (<a href="tools-and-function-calling.html">lesson 2</a>) — Use the

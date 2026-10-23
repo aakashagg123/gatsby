@@ -74,6 +74,15 @@ so useful in reviews. Private data plus untrusted content plus an outbound chann
 one agent, is the configuration to fear. Removing *any leg* — or putting a gate on
 it — collapses most attacks.
 
+Two newer references turn this into a review checklist. Meta's **Agents Rule of Two**
+(October 2025) extends the trifecta. It adds *changing state*, not only sending data out,
+as a risk. Its rule: within one session, an agent should hold at most two of three
+properties — untrusted input, access to sensitive data, and the power to change state or
+communicate externally. An agent that needs all three should not run unsupervised. The
+**OWASP Top 10 for Agentic Applications** (December 2025) gives security teams a shared
+vocabulary for these risks, built from real 2025 incidents. Ask your security reviewer
+which list they use.
+
 ## The defense toolkit
 
 - **Least privilege** ([lesson 2](./tools-and-function-calling.md)) — Use the
