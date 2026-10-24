@@ -111,7 +111,7 @@ decision:
 | --- | --- | --- |
 | Granularity | Is "Acme Corp" one node or a family (HQ, subsidiaries, brands)? | Whether corporate-family questions (total exposure, group discounts) are ever answerable |
 | Reification | Is a purchase an edge (`Customer —bought→ Product`) or an entity (`Order` with date, price, channel)? | Whether you can attach evidence, time, and amount to the fact — usually you must |
-| Time | Do edges have validity intervals (*worked at, 2019–2022*)? | Whether history and "as-of" questions exist, or the graph only knows the present |
+| Time | Do edges have validity intervals (*worked at, 2019–2022*)? | Whether history and "as-of" questions exist, or the graph only knows the present. Agent-memory graphs such as Graphiti track two clocks: when a fact was true, and when the graph learned it |
 | Confidence | Do facts carry certainty and [provenance](./governance-quality-and-trust.md)? | Whether extracted (vs. curated) knowledge can safely coexist with system-of-record facts |
 | Negation & absence | Is "no known relationship" stored or inferred? | Whether compliance can ask "prove we *don't* deal with X." Absence of an edge is not evidence of absence |
 

@@ -45,8 +45,9 @@ curation, the right call is *no* — written down, with the trigger that would r
 [pipeline and extraction](./building-the-graph.md) engineering, entity-resolution
 tuning, *permanent* curation staffing, [ontology](./ontologies-and-data-modeling.md)
 stewardship, plus the smallest line — [storage and compute](./storage-and-querying.md).
-LLMs [repriced extraction](./knowledge-graphs-and-llms.md) meaningfully, but they moved
-the construction share of budget from perhaps 80% to 60-70%. They reduce the
+LLMs [repriced extraction](./knowledge-graphs-and-llms.md) meaningfully. They probably
+lowered the construction share of budget from the old rule of thumb of about 80%. No
+authoritative figure exists, so measure your own split. They reduce the
 steady-state curation tail only somewhat, since LLM-drafted facts *increase* review
 volume. Any business case whose cost model is mostly database licensing was written by
 the database vendor.

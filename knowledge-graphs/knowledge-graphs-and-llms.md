@@ -67,11 +67,16 @@ flowchart TB
 Three patterns to know by name:
 
 - **GraphRAG** — resolve the question's entities, pull their neighborhood subgraph, and
-  hand the model *facts* alongside text. Microsoft's 2024 GraphRAG work added the
+  hand the model *facts* alongside text. Microsoft's 2024 GraphRAG paper added the
   global-question trick: pre-summarize graph
   [communities](./reasoning-and-analytics.md) so "themes across the corpus" becomes
   retrievable. The honest caveat: it adds an indexing stage that costs real money and
-  must be [kept fresh](./governance-quality-and-trust.md). Reach for it when multi-hop
+  must be [kept fresh](./governance-quality-and-trust.md). Microsoft's LazyGraphRAG variant
+  defers the LLM work to query time. Microsoft reports indexing cost equal to vector RAG and
+  about 0.1% of full GraphRAG. Treat that as a vendor claim until you test it on your data.
+  Independent comparisons find that neither approach wins everywhere. Each does best on
+  different question types, and combining them gave consistent gains
+  ([RAG vs. GraphRAG](https://arxiv.org/abs/2502.11371)). Reach for it when multi-hop
   and global questions are actually on your roadmap, not because the acronym is warm.
   For the retrieval-engineering side of this same pattern — chunking, indexing, and
   where GraphRAG beats flat RAG on a cost/quality basis — see
@@ -80,7 +85,10 @@ Three patterns to know by name:
   numbers come from the *store*, not the model's imagination — the right pattern for
   anything quantitative ("how many contracts renew in Q3?"). Constrain it to the
   [ontology](./ontologies-and-data-modeling.md), validate before executing, and eval it
-  like code.
+  like code. Enforce safety in the database, not in a filter on the query text. Run the
+  model's queries as a read-only database user, with a timeout and a row or token cap. Neo4j's
+  own guidance does this, and a reported read-only bypass in its Cypher MCP server
+  (CVE-2026-35402, fixed in 0.6.0) shows why a text filter alone is weak.
 - **Hybrid retrieval** — in practice you run vectors *and* graph: vectors for fuzzy
   recall, the graph for precision, joined by cross-references (chunks link to the
   entities they mention). The [retrieval-eval discipline](../content/03-rag/retrieval-evals.md)
@@ -95,7 +103,11 @@ assistant's knowledge shrinks to the asker's entitlements
 at the right layer). For agentic products, the same graph serves as
 [structured memory](../agentic-ai/context-and-memory.md). Facts an agent learns get
 written back as triples with provenance — queryable and reviewable — instead of
-accumulating in an unauditable text scratchpad.
+accumulating in an unauditable text scratchpad. Open-source engines such as Graphiti (the
+engine inside Zep) do this with *temporal* graphs. When a new fact contradicts an old one, the
+old edge is marked invalid, not deleted. So the agent can answer "what is true now" and "what
+was true then." The same rules apply: agent-written facts need provenance and review before
+they count as knowledge.
 
 ## Direction two: the model builds the graph
 

@@ -30,7 +30,7 @@ picks the lowest tier number among due modules.
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
-| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | never |
+| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-09-20 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | never |
@@ -410,3 +410,33 @@ and a link to the merged PR.)
   while the GitHub project page says the 2026 edition is current; re-check.
   No new-lesson gaps; an agent-security (OWASP Agentic Top 10 / Agent Control
   Standard) treatment lives in agentic-ai.
+
+- 2026-10-24 — knowledge-graphs — tier 1; picked because it was `never`
+  refreshed and the only DUE tier-1 row (all others within their 45-day
+  cadence). Outcome: fixed + expanded. Read all 8 lessons, README and recap in
+  full. Accuracy: (1) GQL given as ISO/IEC 39075 (Apr 2024) and SQL/PGQ named
+  as the SQL:2023 route; (2) the unsourced "80% -> 60-70%" construction-share
+  figure in the capstone replaced with an honest "no authoritative figure"
+  (80% softened to a rule of thumb in README, lesson 3, recap). Coverage:
+  (3) SQL/PGQ and its PostgreSQL 19 beta status added to the storage lesson,
+  with the caveat that it rewrites to joins; (4) RDF 1.2 triple terms noted;
+  (5) LazyGraphRAG and the RAG-vs-GraphRAG evaluation added to the LLM lesson;
+  (6) text-to-query hardening (read-only user, timeouts, CVE-2026-35402);
+  (7) temporal/bi-temporal agent memory (Graphiti) in the LLM and ontology
+  lessons; (8) Google launch scale in lesson 1.
+  Sources opened: blog.google/products/search/introducing-knowledge-graph-things-not
+  (16 May 2012, 500M objects, 3.5B facts); microsoft.github.io/graphrag;
+  microsoft.com/en-us/research/blog/lazygraphrag (0.1% indexing cost, vendor claim);
+  arxiv.org/abs/2404.16130 (GraphRAG paper); arxiv.org/abs/2502.11371 (RAG vs GraphRAG);
+  w3.org/TR/rdf12-concepts (CR snapshot 7 Apr 2026); github.com/getzep/graphiti;
+  postgresql.org/about/news/postgresql-19-beta-1-3313 (SQL/PGQ, 4 Jun 2026);
+  depesz.com/2026/07/31/waiting-for-postgresql-19-sql-property-graph-queries-sql-pgq
+  (missing features; page says a change was rolled back); neo4j.com/blog/developer/production-proofing-cypher-mcp-server.
+  PG19 release notes page (postgresql.org/docs/devel/release-19.html) did not list SQL/PGQ yet.
+  Search results only: ISO 39075 date (SCC, Wikipedia; iso.org 403); Panama Papers
+  11.5M docs and Neo4j use (neo4j.com, linkurio.us); Amazon AutoKnow KDD 2020;
+  CVE-2026-35402 (NVD page returned no body).
+  Not verified: LinkedIn Economic Graph, NASA lessons-learned graph, SHACL/OWL/FIBO/GS1
+  details, Amazon "Product Graph 2018" framing, Zep benchmark figures.
+  Flagged: re-check PG19 SQL/PGQ at GA (Sept-Oct 2026 release notes); rag-vector-databases
+  GraphRAG lesson may deserve the LazyGraphRAG note too. No new-lesson gaps.
