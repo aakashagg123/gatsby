@@ -74,10 +74,19 @@ compounds into feature velocity. When they're occasional, it's a curiosity.
 | | Property graph | RDF triple store | Graph layer on existing DB |
 | --- | --- | --- | --- |
 | Mental model | Nodes & edges with property bags — a whiteboard drawing, stored | Everything a triple; global identifiers (IRIs); formal semantics | Your tables, plus recursive queries or a graph extension |
-| Query language | Cypher; **GQL** (the 2024 ISO standard descended from it) | SPARQL (W3C standard) | SQL + recursive CTEs, or vendor graph SQL |
+| Query language | Cypher; **GQL** (ISO/IEC 39075, published April 2024) | SPARQL (W3C standard) | SQL + recursive CTEs, or **SQL/PGQ** (graph pattern matching inside SQL, standardized in SQL:2023) |
 | Strengths | Developer-friendly, fast traversals, rich algorithm libraries, biggest talent pool | Interoperability, standard vocabularies, inference/reasoning built in, cross-org data exchange | Zero new infrastructure, one backup/security/ops story, your team already knows it |
-| Weaknesses | Historically vendor-flavored (GQL is fixing this); semantics live in your docs, not the store | Steeper learning curve, thinner tooling and talent, reification friction for edge properties | Deep/variable-depth traversal slow and brittle; graph algorithms mostly absent |
+| Weaknesses | Historically vendor-flavored (GQL is fixing this); semantics live in your docs, not the store | Steeper learning curve, thinner tooling and talent, reification friction for edge properties (RDF 1.2, a W3C candidate recommendation as of April 2026, adds *triple terms* to ease this) | Deep/variable-depth traversal slow and brittle; graph algorithms mostly absent |
 | Natural home | Product features: recommendations, fraud, 360° views, [GraphRAG](./knowledge-graphs-and-llms.md) | Regulated and cross-organization domains: pharma, government, publishing, finance reference data | Modest scale, shallow hops, or proving value before buying infrastructure |
+
+The third column is changing. SQL:2023 added **SQL/PGQ** (ISO/IEC 9075-16), which lets you
+declare a property graph over ordinary tables and query it with graph patterns. Cloud
+warehouses such as BigQuery have adopted it. PostgreSQL 19 added it in beta (June 2026).
+That shortens the road to "graph on the database you already run." But the Postgres
+implementation rewrites each graph query into ordinary joins. So it improves readability, not
+traversal speed. Check which path patterns your version supports (variable-length paths and
+shortest-path were reported missing in the first Postgres commit) before you count on it for
+deep queries.
 
 Deployment nuance worth knowing exists — native stores vs. multi-model engines vs.
 graph-on-warehouse, managed offerings from every major cloud — but it's an

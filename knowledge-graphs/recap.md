@@ -29,7 +29,7 @@ products and everything about them — brands, attributes, compatibility, varian
 feeding search, recommendations, and Alexa answers. The published lesson: the hard
 science was never storage. It was extraction from messy seller text and reconciling
 conflicting sources at catalog scale. 🎯 *Takeaway:* exactly the
-[80% claim](./building-the-graph.md) — the pipeline is the product. Even with
+[pipeline-dominates rule of thumb](./building-the-graph.md) — the pipeline is the product. Even with
 world-class infrastructure, the budget and the breakthroughs live in extraction and
 resolution.
 

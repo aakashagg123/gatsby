@@ -12,7 +12,7 @@ text. **Resolve identity** so that "Acme Corp," "ACME Inc." and "acme-corp-2019"
 one node. This is the hardest, most underestimated step in the entire discipline.
 **Curate** with human review where confidence is low or stakes are high. Then do it all
 again tomorrow, because knowledge changes. This pipeline, not the graph database, is
-where roughly 80% of the money and nearly all of the schedule risk lives. When a
+where most of the money (a common rule of thumb says about 80%) and nearly all of the schedule risk lives. When a
 knowledge-graph project is late, over budget, or quietly untrusted, the cause is almost
 always here — usually at entity resolution — and never in the storage layer the vendor
 demo focused on.

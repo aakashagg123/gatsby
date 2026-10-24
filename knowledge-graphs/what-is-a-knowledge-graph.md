@@ -12,7 +12,7 @@ entities, so they snap together into one connected web you can *traverse*. From 
 customer, you can hop to their contracts, to the products in them, to the supplier of a
 failing part — all in one query. That's the entire trick, and it's enough to change what
 your product can answer. Google named the strategic shift in 2012: **things, not
-strings**. Stop matching text; start knowing what the text refers to. The product test is
+strings**. Its launch post cited 500 million objects and 3.5 billion facts. Stop matching text; start knowing what the text refers to. The product test is
 equally plain. If your most valuable unanswered questions require *joining knowledge
 across three or more hops* — or the relationships themselves are the product — you're in
 knowledge-graph territory. If not, a well-modeled database is honestly fine.

@@ -78,7 +78,7 @@ strategic argument.
 - [**Ontologies & data modeling**](./ontologies-and-data-modeling.md) — the ontology as a
   product contract: what your product can ever answer, and who has to agree on it.
 - [**Building the graph**](./building-the-graph.md) — the construction pipeline:
-  extraction, entity resolution, curation — where 80% of the budget actually goes.
+  extraction, entity resolution, curation — where most of the budget (about 80%, by the usual rule of thumb) goes.
 - [**Storage & querying**](./storage-and-querying.md) — property graphs vs. RDF vs. a
   graph layer on your existing database; picking without the vendor fog.
 - [**Reasoning & analytics**](./reasoning-and-analytics.md) — what becomes computable:
