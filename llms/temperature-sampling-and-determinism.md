@@ -76,11 +76,29 @@ drafting several different taglines to choose from, writing in a more explorator
 creative voice. A single default temperature applied to every feature in a product,
 regardless of what each feature actually needs, is a missed lever, not a neutral choice.
 
+## Some current models take the dial away
+
+Check your vendor's API before you plan around this lesson's dials. Anthropic's current
+models no longer accept them. On Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
+several earlier models, a non-default `temperature`, `top_p` or `top_k` returns a 400
+error. From API version `2026-10-21`, sending any of the three returns a 400 error on every
+model. These models also think before they answer (see
+[What an LLM actually is](./what-is-an-llm.md#reasoning-models-more-tokens-before-the-answer)),
+and the vendor now steers quality with a different control: **effort**. A higher effort
+level spends more tokens on thinking. A lower level is faster and cheaper. Other vendors
+differ, so read each model's page. The product point stays the same: variety and
+consistency are still decisions. On these models you make them with prompt wording, with
+effort, and with checks on the output, not with the sampling dial. A feature whose spec
+says "temperature 0.2" needs a new spec when the team moves to such a model.
+
 ## Determinism is a spectrum, not a switch
 
 Even at the lowest possible temperature, a model is not guaranteed to be perfectly
 deterministic — some implementation details in how a request is processed can introduce
-tiny variations. Treat determinism as a spectrum you move along with the dial, not a
+tiny variations. Research from Thinking Machines Lab traces much of this to the server,
+not the model: the answer can depend on how many other requests share the same batch, and
+that changes with load. Their team removed the effect in an open inference engine, at some
+cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
 switch you can flip fully on. If your feature genuinely requires the exact same output for
 the exact same input every time, the honest answer is usually a cache or a rule-based
 check layered on top of the model, not an assumption that temperature alone gets you all
@@ -107,6 +125,8 @@ the way to zero variation.
       whether that actually gives us the reliability we need?
 - [ ] For features that benefit from variety, have we tried a higher setting and compared
       the results?
+- [ ] Have we checked whether our chosen model still accepts `temperature`, `top_p` and
+      `top_k`, and what replaces them if it does not?
 - [ ] If a feature needs guaranteed exact reproducibility, do we have a cache or a rule-based
       check, rather than relying on temperature alone?
 
@@ -118,3 +138,17 @@ the way to zero variation.
   lever that shapes what the model produces.
 - [Evals](../content/04-evals-observability/evals.md) — measuring output quality across
   many runs, given that no single run is guaranteed to represent the rest.
+
+## Sources
+
+- Anthropic, Claude documentation,
+  [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking): non-default
+  `temperature`, `top_p` or `top_k` return a 400 error on the listed current models; from
+  API version `2026-10-21` any value returns a 400 error on every model. Read 2026-10-25.
+- Anthropic, Claude documentation,
+  [Effort](https://platform.claude.com/docs/en/build-with-claude/effort): effort controls
+  all output tokens, including thinking; the default differs by model. Read 2026-10-25.
+- Thinking Machines Lab,
+  [Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/):
+  batch-dependent kernels cause the variation at temperature 0; with batch-invariant kernels,
+  1,000 completions were identical. Read 2026-10-25.

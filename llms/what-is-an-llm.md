@@ -146,6 +146,18 @@ the model has learned it permanently, when in fact nothing changes in the frozen
 all. What changed is only the text you sent for that one request. The next request starts
 from the same frozen model, knowing nothing extra unless you send it again.
 
+## Reasoning models: more tokens before the answer
+
+Many current models are trained to think first. Before the visible answer, they write out
+working in their own words, then answer. This is still next-token prediction. The model
+just predicts more tokens, and the working helps on math, code and multi-step analysis.
+Three product facts follow. Thinking tokens are billed as output tokens, even when the
+vendor does not show them. OpenAI and Anthropic both say so. They also occupy the context
+window. And you steer the amount with a setting, usually called **reasoning effort**
+(OpenAI) or **effort** (Anthropic), not with a longer prompt. Higher effort means better
+answers on hard tasks, and a slower, costlier call. See
+[Choosing a model](./choosing-a-model.md) for how to set it.
+
 ## Why this mechanism explains so much
 
 Next-token prediction, alone, explains three things that otherwise look mysterious.
@@ -265,6 +277,8 @@ more weight table.
 - [ ] Is our cost model based on token counts, not a flat per-call assumption?
 - [ ] For any task involving exact counting, spelling, or character-level detail, have we
       tested it directly instead of assuming the model handles it like a human would?
+- [ ] If we use a reasoning model, do we budget for thinking tokens, and have we set effort
+      on purpose?
 - [ ] For long-input features, have we measured cost and latency at our largest real
       input, not only at a typical one?
 
@@ -319,5 +333,12 @@ more weight table.
   Claude 4.7 and later models use a newer tokenizer, and the same input text produces
   approximately 30 percent more tokens than on earlier models, depending on the content.
   The page advises recounting prompts against the model you plan to use. Read 2026-10-11.
+- Anthropic, Claude documentation,
+  [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking): thinking
+  tokens are billed as output tokens, even when the text is not returned, and count toward
+  `max_tokens`. Read 2026-10-25.
+- OpenAI, [Reasoning guide](https://developers.openai.com/api/docs/guides/reasoning):
+  reasoning tokens are not visible through the API, occupy context-window space, and are
+  billed as output tokens; effort values vary by model. Read 2026-10-25.
 - The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.

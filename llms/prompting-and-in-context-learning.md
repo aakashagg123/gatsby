@@ -80,7 +80,16 @@ retrain anything. They are all ways of using the one request you have more effec
 - **Let it reason before it answers.** For anything with more than one logical step, asking
   for reasoning first and a final answer last tends to produce better final answers than
   asking for the answer alone. You are giving the prediction mechanism more steps to build
-  on, rather than forcing the best guess in one shot.
+  on, rather than forcing the best guess in one shot. Many current models now do this
+  themselves (see [reasoning models](./what-is-an-llm.md#reasoning-models-more-tokens-before-the-answer)).
+  Anthropic's guidance for them is to prefer a general instruction such as "think
+  thoroughly" over a hand-written step list, and to raise the effort setting if reasoning
+  is too shallow. Asking for step-by-step work in the prompt is a fallback for when
+  thinking is off.
+
+A tip on examples: Anthropic suggests three to five, and they should be relevant and
+diverse, so the model does not copy an accidental pattern. Wrap them in clear tags to keep
+them apart from your instructions. Examples also shape how a thinking model reasons.
 
 ## Why this is a product skill, not just an engineering one
 
@@ -125,3 +134,11 @@ no new infrastructure and no model change.
   other lever that shapes what comes back from the same prompt.
 - [Planning & reasoning](../agentic-ai/planning-and-reasoning.md) — chain-of-thought and
   related techniques, applied inside an agent's loop.
+
+## Sources
+
+- Anthropic, Claude documentation,
+  [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices):
+  3-5 relevant, diverse, tagged examples; general instructions over prescriptive steps for
+  thinking models; manual step-by-step prompting as a fallback when thinking is off.
+  Read 2026-10-25.

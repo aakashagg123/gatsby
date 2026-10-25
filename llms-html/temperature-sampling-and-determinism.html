@@ -128,10 +128,26 @@ time. <strong>Higher temperature</strong> suits tasks where variety is the point
 drafting several different taglines to choose from, writing in a more exploratory,
 creative voice. A single default temperature applied to every feature in a product,
 regardless of what each feature actually needs, is a missed lever, not a neutral choice.</p>
+<h2 id="some-current-models-take-the-dial-away">Some current models take the dial away</h2>
+<p>Check your vendor's API before you plan around this lesson's dials. Anthropic's current
+models no longer accept them. On Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
+several earlier models, a non-default <code>temperature</code>, <code>top_p</code> or <code>top_k</code> returns a 400
+error. From API version <code>2026-10-21</code>, sending any of the three returns a 400 error on every
+model. These models also think before they answer (see
+<a href="what-is-an-llm.html#reasoning-models-more-tokens-before-the-answer">What an LLM actually is</a>),
+and the vendor now steers quality with a different control: <strong>effort</strong>. A higher effort
+level spends more tokens on thinking. A lower level is faster and cheaper. Other vendors
+differ, so read each model's page. The product point stays the same: variety and
+consistency are still decisions. On these models you make them with prompt wording, with
+effort, and with checks on the output, not with the sampling dial. A feature whose spec
+says "temperature 0.2" needs a new spec when the team moves to such a model.</p>
 <h2 id="determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</h2>
 <p>Even at the lowest possible temperature, a model is not guaranteed to be perfectly
 deterministic — some implementation details in how a request is processed can introduce
-tiny variations. Treat determinism as a spectrum you move along with the dial, not a
+tiny variations. Research from Thinking Machines Lab traces much of this to the server,
+not the model: the answer can depend on how many other requests share the same batch, and
+that changes with load. Their team removed the effect in an open inference engine, at some
+cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
 switch you can flip fully on. If your feature genuinely requires the exact same output for
 the exact same input every time, the honest answer is usually a cache or a rule-based
 check layered on top of the model, not an assumption that temperature alone gets you all
@@ -157,6 +173,8 @@ the way to zero variation.</p>
       whether that actually gives us the reliability we need?</li>
 <li class="task todo">For features that benefit from variety, have we tried a higher setting and compared
       the results?</li>
+<li class="task todo">Have we checked whether our chosen model still accepts <code>temperature</code>, <code>top_p</code> and
+      <code>top_k</code>, and what replaces them if it does not?</li>
 <li class="task todo">If a feature needs guaranteed exact reproducibility, do we have a cache or a rule-based
       check, rather than relying on temperature alone?</li>
 </ul>
@@ -168,9 +186,23 @@ the way to zero variation.</p>
   lever that shapes what the model produces.</li>
 <li><a href="../ai/04-evals-observability.html#evals">Evals</a> — measuring output quality across
   many runs, given that no single run is guaranteed to represent the rest.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>: non-default
+  <code>temperature</code>, <code>top_p</code> or <code>top_k</code> return a 400 error on the listed current models; from
+  API version <code>2026-10-21</code> any value returns a 400 error on every model. Read 2026-10-25.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/effort">Effort</a>: effort controls
+  all output tokens, including thinking; the default differs by model. Read 2026-10-25.</li>
+<li>Thinking Machines Lab,
+  <a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/">Defeating Nondeterminism in LLM Inference</a>:
+  batch-dependent kernels cause the variation at temperature 0; with batch-invariant kernels,
+  1,000 completions were identical. Read 2026-10-25.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="prompting-and-in-context-learning.html"><span class="lbl">← Previous</span><span class="ttl">Prompting &amp; in-context learning</span></a><a class="navcard next" href="choosing-a-model.html"><span class="lbl">→ Next</span><span class="ttl">Choosing a model</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-loaded-die-with-an-adjustable-weighting">The mental model: a loaded die, with an adjustable weighting</a><a class="h2" href="#two-related-dials-worth-knowing-by-name">Two related dials worth knowing by name</a><a class="h2" href="#setting-the-dial-deliberately">Setting the dial deliberately</a><a class="h2" href="#determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-loaded-die-with-an-adjustable-weighting">The mental model: a loaded die, with an adjustable weighting</a><a class="h2" href="#two-related-dials-worth-knowing-by-name">Two related dials worth knowing by name</a><a class="h2" href="#setting-the-dial-deliberately">Setting the dial deliberately</a><a class="h2" href="#some-current-models-take-the-dial-away">Some current models take the dial away</a><a class="h2" href="#determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

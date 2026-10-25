@@ -10,8 +10,8 @@ conversation so far, any documents you supply — has to fit inside that one win
 because the model genuinely cannot see anything outside it. This is not a policy choice a
 vendor could relax with a setting. It follows from how the model computes: comparing every
 token to every other token gets more expensive the more tokens there are, so the window has
-a real, engineered ceiling. Windows have grown from a few thousand tokens to hundreds of
-thousands over a few years, and that growth changed what products are possible — but it
+a real, engineered ceiling. Windows have grown from a few thousand tokens to a million over a few
+years (as of October 2026, Anthropic lists 1M tokens for all its current models), and that growth changed what products are possible — but it
 did not remove the limit, and it introduced a new problem: a model can technically fit a
 huge amount of text in its window and still perform worse than you'd expect, because
 attention spread across more text is attention divided. This lesson is about the window
@@ -84,6 +84,20 @@ reliable attention than information buried in the middle of a long stuffed promp
 technically large enough to fit everything is not the same as a window that will use
 everything equally well.
 
+That 2023 result came from older models. Newer work shows a wider problem. Chroma tested
+18 models in 2025. Accuracy fell as the input grew, even on simple tasks. Distractors made
+it worse, and every model did better on a short, focused prompt than on a long one that
+held the same facts. Anthropic's documentation now calls this **context rot**. The lesson
+for a product leader: do not rely on position tricks alone. Measure quality at your real
+input sizes.
+
+Three more facts shape the budget. Everything counts toward the window: the system prompt,
+tool definitions, tool results, and the model's own output. For a model that thinks before
+it answers, the thinking tokens count too. Long inputs can also cost more per token on some
+models; Anthropic's pricing page notes a higher rate above 100,000 tokens on Haiku 5.5.
+Finally, for long-running agents, vendors now offer automatic compaction, which summarizes
+older turns on the server. It saves space, and it can lose detail, so test it.
+
 ## The product consequence: window size is a budget, not a target
 
 Treat the window the way you'd treat any limited, costed resource: a budget to spend
@@ -117,6 +131,9 @@ see, and does adding more help or quietly hurt?"
       whether trimming helps quality as well as cost?
 - [ ] Are our most important instructions placed at the start or end of the prompt, not
       buried in the middle?
+- [ ] Have we measured answer quality at our largest real input, not only at a typical one?
+- [ ] For long conversations or agents, do we know what is dropped or summarized when the
+      window fills?
 - [ ] When we picked a model partly for its window size, did we verify our feature actually
       benefits from that size?
 
@@ -128,3 +145,22 @@ see, and does adding more help or quietly hurt?"
   deciding what to put in the window once you know its size.
 - [Memory & context](../agentic-ai/context-and-memory.md) — the agent-side view of
   managing a window across a long-running task.
+
+## Sources
+
+- Anthropic, Claude documentation,
+  [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
+  1M-token windows on current models; everything in the request counts, including thinking
+  tokens; "context rot"; server-side compaction in beta. Read 2026-10-25.
+- Anthropic, Claude documentation,
+  [Models overview](https://platform.claude.com/docs/en/models/overview): 1M context for
+  Fable 5.1, Opus 5.5, Sonnet 5.5 and Haiku 5.5. Read 2026-10-25.
+- Anthropic, Claude documentation,
+  [Pricing](https://platform.claude.com/docs/en/about-claude/pricing): price table. The
+  Haiku 5.5 long-prompt surcharge is from the Context windows page. Read 2026-10-25.
+- Liu et al., [Lost in the Middle](https://arxiv.org/abs/2307.03172), TACL 2023:
+  performance is often highest when relevant information is at the start or end of the
+  input. Read 2026-10-25.
+- Chroma, [Context Rot](https://www.trychroma.com/research/context-rot) (July 2025): 18
+  models; performance falls with input length; focused prompts beat full prompts.
+  Read 2026-10-25.

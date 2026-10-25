@@ -34,7 +34,7 @@ picks the lowest tier number among due modules.
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-09-20 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | never |
-| llms | llms/ | scripts/build_llms.py | 2 | 30 | never |
+| llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | never |
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
@@ -440,3 +440,25 @@ and a link to the merged PR.)
   details, Amazon "Product Graph 2018" framing, Zep benchmark figures.
   Flagged: re-check PG19 SQL/PGQ at GA (Sept-Oct 2026 release notes); rag-vector-databases
   GraphRAG lesson may deserve the LazyGraphRAG note too. No new-lesson gaps.
+
+- 2026-10-25 — llms — tier 2. Picked because no tier-1 row was due (all within their
+  45-day cadence) and `llms` was a tier-2 row with `never`. Outcome: fixed + expanded.
+  Read all 7 lessons, README and recap first. Fixes: (1) temperature lesson now says current
+  Anthropic models reject non-default `temperature`/`top_p`/`top_k` with a 400 error, and any
+  value from API version 2026-10-21; effort replaces the dial; (2) determinism cause at
+  temperature 0 (batch dependence); (3) context window: 1M tokens on current models, context
+  rot, thinking tokens count, compaction, long-prompt pricing; (4) new reasoning-models section
+  in what-is-an-llm; (5) prompting lesson: CoT now built in, 3-5 examples; (6) choosing-a-model:
+  effort, default-effort trap, efficiency-first vs capability-first, dated price snapshot,
+  combining models, open-weight caution. Sources opened: platform.claude.com docs — models
+  overview, context-windows, choosing-a-model, effort, prompting best practices, thinking
+  (sampling-parameter section), migration-2026-10-21 (only the preview opened), pricing
+  (preview only); developers.openai.com/api/docs/guides/reasoning; trychroma.com/research/
+  context-rot; arxiv.org/abs/2307.03172; thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference.
+  Search results only, not opened: open-weight gap trackers (Epoch, Artificial Analysis
+  write-ups), OpenRouter Claude 4.7 migration page. NOT verified: recap war stories (strawberry,
+  Sydney/Bing limits, prompt-engineer job trend, routing savings) — the Bing blog URL 404ed and the
+  HBS jagged-frontier page returned 403, so the "jagged frontier" attribution is unchecked; OpenAI/
+  Google temperature behavior on reasoning models (OpenAI page is silent); top-p/top-k definitions.
+  Flagged: recap.md claims need a primary-source pass; a standalone lesson on reasoning models and
+  effort may be worth building (not built, scope boundary).

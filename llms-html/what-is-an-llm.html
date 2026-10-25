@@ -210,6 +210,16 @@ mistakes: teams sometimes think "teaching" the model a new fact by mentioning it
 the model has learned it permanently, when in fact nothing changes in the frozen model at
 all. What changed is only the text you sent for that one request. The next request starts
 from the same frozen model, knowing nothing extra unless you send it again.</p>
+<h2 id="reasoning-models-more-tokens-before-the-answer">Reasoning models: more tokens before the answer</h2>
+<p>Many current models are trained to think first. Before the visible answer, they write out
+working in their own words, then answer. This is still next-token prediction. The model
+just predicts more tokens, and the working helps on math, code and multi-step analysis.
+Three product facts follow. Thinking tokens are billed as output tokens, even when the
+vendor does not show them. OpenAI and Anthropic both say so. They also occupy the context
+window. And you steer the amount with a setting, usually called <strong>reasoning effort</strong>
+(OpenAI) or <strong>effort</strong> (Anthropic), not with a longer prompt. Higher effort means better
+answers on hard tasks, and a slower, costlier call. See
+<a href="choosing-a-model.html">Choosing a model</a> for how to set it.</p>
 <h2 id="why-this-mechanism-explains-so-much">Why this mechanism explains so much</h2>
 <p>Next-token prediction, alone, explains three things that otherwise look mysterious.
 <strong>Fluency without guaranteed truth</strong> — the model is optimized to produce likely-sounding
@@ -333,6 +343,8 @@ more weight table.</p>
 <li class="task todo">Is our cost model based on token counts, not a flat per-call assumption?</li>
 <li class="task todo">For any task involving exact counting, spelling, or character-level detail, have we
       tested it directly instead of assuming the model handles it like a human would?</li>
+<li class="task todo">If we use a reasoning model, do we budget for thinking tokens, and have we set effort
+      on purpose?</li>
 <li class="task todo">For long-input features, have we measured cost and latency at our largest real
       input, not only at a typical one?</li>
 </ul>
@@ -387,11 +399,18 @@ more weight table.</p>
   Claude 4.7 and later models use a newer tokenizer, and the same input text produces
   approximately 30 percent more tokens than on earlier models, depending on the content.
   The page advises recounting prompts against the model you plan to use. Read 2026-10-11.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>: thinking
+  tokens are billed as output tokens, even when the text is not returned, and count toward
+  <code>max_tokens</code>. Read 2026-10-25.</li>
+<li>OpenAI, <a href="https://developers.openai.com/api/docs/guides/reasoning">Reasoning guide</a>:
+  reasoning tokens are not visible through the API, occupy context-window space, and are
+  billed as output tokens; effort values vary by model. Read 2026-10-25.</li>
 <li>The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="the-context-window.html"><span class="lbl">→ Next</span><span class="ttl">The context window</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-an-extremely-well-read-guesser">The mental model: an extremely well-read guesser</a><a class="h2" href="#tokens-the-models-actual-unit-of-text">Tokens: the model&#x27;s actual unit of text</a><a class="h2" href="#inside-the-model-attention">Inside the model: attention</a><a class="h2" href="#training-versus-inference-two-very-different-costs">Training versus inference: two very different costs</a><a class="h2" href="#why-this-mechanism-explains-so-much">Why this mechanism explains so much</a><a class="h2" href="#worked-example-what-it-looks-at">Worked example: what &quot;it&quot; looks at</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood-attention-in-a-few-lines">Under the hood: attention in a few lines</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-an-extremely-well-read-guesser">The mental model: an extremely well-read guesser</a><a class="h2" href="#tokens-the-models-actual-unit-of-text">Tokens: the model&#x27;s actual unit of text</a><a class="h2" href="#inside-the-model-attention">Inside the model: attention</a><a class="h2" href="#training-versus-inference-two-very-different-costs">Training versus inference: two very different costs</a><a class="h2" href="#reasoning-models-more-tokens-before-the-answer">Reasoning models: more tokens before the answer</a><a class="h2" href="#why-this-mechanism-explains-so-much">Why this mechanism explains so much</a><a class="h2" href="#worked-example-what-it-looks-at">Worked example: what &quot;it&quot; looks at</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood-attention-in-a-few-lines">Under the hood: attention in a few lines</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

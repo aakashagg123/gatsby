@@ -125,8 +125,16 @@ retrain anything. They are all ways of using the one request you have more effec
 <li><strong>Let it reason before it answers.</strong> For anything with more than one logical step, asking
   for reasoning first and a final answer last tends to produce better final answers than
   asking for the answer alone. You are giving the prediction mechanism more steps to build
-  on, rather than forcing the best guess in one shot.</li>
+  on, rather than forcing the best guess in one shot. Many current models now do this
+  themselves (see <a href="what-is-an-llm.html#reasoning-models-more-tokens-before-the-answer">reasoning models</a>).
+  Anthropic's guidance for them is to prefer a general instruction such as "think
+  thoroughly" over a hand-written step list, and to raise the effort setting if reasoning
+  is too shallow. Asking for step-by-step work in the prompt is a fallback for when
+  thinking is off.</li>
 </ul>
+<p>A tip on examples: Anthropic suggests three to five, and they should be relevant and
+diverse, so the model does not copy an accidental pattern. Wrap them in clear tags to keep
+them apart from your instructions. Examples also shape how a thinking model reasons.</p>
 <h2 id="why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</h2>
 <p>A prompt is closer to a piece of copy than a line of code: its wording, tone, and structure
 directly shape what a user experiences, and small changes can have an outsized effect. Yet
@@ -168,9 +176,17 @@ no new infrastructure and no model change.</p>
   other lever that shapes what comes back from the same prompt.</li>
 <li><a href="../agentic-ai/planning-and-reasoning.html">Planning &amp; reasoning</a> — chain-of-thought and
   related techniques, applied inside an agent's loop.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>:
+  3-5 relevant, diverse, tagged examples; general instructions over prescriptive steps for
+  thinking models; manual step-by-step prompting as a fallback when thinking is off.
+  Read 2026-10-25.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="capabilities-and-the-jagged-frontier.html"><span class="lbl">← Previous</span><span class="ttl">Capabilities &amp; the jagged frontier</span></a><a class="navcard next" href="temperature-sampling-and-determinism.html"><span class="lbl">→ Next</span><span class="ttl">Temperature, sampling &amp; determinism</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-instructions-to-a-new-extremely-capable-temp">The mental model: instructions to a new, extremely capable temp</a><a class="h2" href="#in-context-learning-teaching-without-training">In-context learning: teaching without training</a><a class="h2" href="#three-habits-that-carry-most-of-the-benefit">Three habits that carry most of the benefit</a><a class="h2" href="#why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-instructions-to-a-new-extremely-capable-temp">The mental model: instructions to a new, extremely capable temp</a><a class="h2" href="#in-context-learning-teaching-without-training">In-context learning: teaching without training</a><a class="h2" href="#three-habits-that-carry-most-of-the-benefit">Three habits that carry most of the benefit</a><a class="h2" href="#why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');
