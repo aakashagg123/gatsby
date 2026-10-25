@@ -69,6 +69,33 @@ flowchart TB
   infrastructure: more control over cost at scale and over your data's path, at the cost of
   running and maintaining that infrastructure yourself.
 
+## Effort: a fifth dial inside one model
+
+Many current models let you trade quality for speed and cost without switching models. The
+setting is called effort (Anthropic) or reasoning effort (OpenAI). It controls how many
+tokens the model spends, including thinking tokens, which are billed as output. Anthropic
+says tuning effort is often a better lever than switching models. Defaults differ by model:
+as of October 2026, Anthropic's default is `medium` on Opus 5.5 and Haiku 5.5 and `high` on
+Fable 5.1 and Sonnet 5.5. The consequence is easy to miss. If your team moves from one
+model to its successor and does not set effort, the default may change, and so will your
+cost and latency. Run an effort sweep on your own evals each time you switch.
+
+## Two ways to start
+
+Anthropic describes two starting points. **Efficiency-first**: start with the smallest model
+(for example Haiku 5.5), test, and move up only where a gap shows. This suits prototypes,
+tight latency and high volume. **Capability-first**: start with a strong model, get the
+feature working, then lower effort or move down a tier to cut cost. Either way, the first
+step is a set of tests built from your own tasks. The vendor says a good evaluation set is
+the most important step.
+
+Prices show why it matters. As of October 2026, Anthropic lists input/output prices per
+million tokens of $10/$50 for Fable 5.1, $4/$20 for Opus 5.5, $2/$10 for Sonnet 5.5 and
+from $0.10/$0.50 for Haiku 5.5. That is a spread of about 100 times on input. Treat these
+numbers as a dated snapshot. Two discounts also move the bill: batch requests cost 50
+percent less, and cached input costs a small fraction of the base price. Both suit work that
+can wait or that repeats a long prefix.
+
 ## Model routing: the practical answer to "which one?"
 
 The strongest teams do not pick one model for a whole product. They route different
@@ -79,6 +106,15 @@ choice from a single, static decision into a per-request routing rule, and it is
 where the largest, least painful cost savings in an AI product are found — because most
 products send far more simple requests than hard ones, and were paying premium prices for
 all of them.
+
+A second pattern pairs models inside one task. An orchestrator hands bulk work to cheaper
+workers. Or a cheaper model runs the task and escalates hard decisions to a stronger
+advisor. Anthropic documents both.
+
+On open versus closed: open-weight models have narrowed the gap with closed ones, by most
+public trackers, but the size of the gap depends on the benchmark and the date. Where you
+run an open model also matters, because hosted endpoints can differ in quality. Test the
+exact deployment you plan to use, not the model name.
 
 ## Choosing without chasing every release
 
@@ -97,6 +133,8 @@ product, not just real in the abstract.
   one launches, without a clear, measured reason tied to your own tasks.
 - **Choosing by benchmark alone** — picking a model because of a published score, without
   testing it on your own real requests first.
+- **Inheriting the default effort** — switching to a newer model and letting a different
+  default quietly change cost, latency and quality.
 - **Ignoring latency until launch** — discovering only after shipping that a highly capable
   model is too slow for an interactive feature that needed a fast response.
 
@@ -108,6 +146,8 @@ product, not just real in the abstract.
       faster model?
 - [ ] Have we tested a candidate model on our own tasks before switching, rather than
       switching on benchmark scores alone?
+- [ ] Have we set effort explicitly and swept it on our own evals, instead of inheriting a
+      default that may change with the next model?
 - [ ] Is latency budgeted per feature, based on whether a user is actively waiting or not?
 
 ## Related lessons
@@ -118,3 +158,21 @@ product, not just real in the abstract.
   spoke on routing requests to the right model automatically.
 - [Cost attribution](../content/04-evals-observability/cost-attribution.md) — tracking
   what each model choice actually costs, per feature.
+
+## Sources
+
+- Anthropic, Claude documentation,
+  [Choosing the right model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model):
+  efficiency-first and capability-first starts; effort is often a better lever than
+  switching; build your own benchmark tests; combine models (executor/advisor,
+  orchestrator/workers). Read 2026-10-25.
+- Anthropic, Claude documentation,
+  [Models overview](https://platform.claude.com/docs/en/models/overview): model names,
+  prices, default effort, 50 percent batch discount. Read 2026-10-25.
+- Anthropic, Claude documentation,
+  [Effort](https://platform.claude.com/docs/en/build-with-claude/effort): effort covers all
+  output tokens; defaults by model; run a fresh sweep when changing models. Read 2026-10-25.
+- OpenAI, [Reasoning guide](https://developers.openai.com/api/docs/guides/reasoning):
+  reasoning effort values vary by model. Read 2026-10-25.
+- The open-weight statement rests on secondary trackers seen in search results (not opened);
+  it is worded without figures for that reason.
