@@ -148,7 +148,9 @@ or improving. The order is the discipline — not any single stage in isolation.
 sample, plus anything a user flagged — and read them one by one, labeling what went wrong
 in plain language, in the team's own words, without forcing the labels into a taxonomy
 yet. Only once a pile of these free-form labels exists does clustering them into a
-handful of named, recurring failure modes make sense. This unglamorous reading is what
+handful of named, recurring failure modes make sense. Hamel Husain's evals FAQ gives a working size: read at
+least 30 traces yourself first, then at least 100 overall, and keep going while new
+failure types still appear. This unglamorous reading is what
 tells a team what's actually worth building an automated evaluator for, and it's also the
 step most commonly skipped in the rush to have a dashboard to show. The full method —
 what the discipline calls open coding and axial coding — is developed in complete depth
@@ -170,6 +172,37 @@ complete engineering depth in
 where no change ships without a score, because the eval set has effectively become the
 spec — is the operating discipline developed in
 <a href="../technical-product-management/tpm-for-ai-products.html">TPM for AI products</a>.</p>
+<h2 id="choices-that-make-the-stack-trustworthy">Choices that make the stack trustworthy</h2>
+<ul>
+<li><strong>Prefer pass/fail over 1-5 scales.</strong> Binary labels are easier to agree on and easier to
+  validate. To track gradual progress, use several specific pass/fail checks, not one
+  vague score. OpenAI's guide also says models grade pass/fail and pairwise choices more
+  reliably than open-ended scores.</li>
+<li><strong>One judge per failure mode.</strong> Split the human labels into train, dev and a held-out
+  test set. Measure the judge's true positive rate (it catches real failures) and true
+  negative rate (it passes good outputs). Track both, because a judge that flags
+  everything has a perfect first number and a useless second one.</li>
+<li><strong>Know the judge's biases.</strong> The MT-Bench paper (Zheng et al., 2023) documents position,
+  verbosity and self-enhancement bias, and found that strong judges agree with human
+  preferences over 80% of the time. A later study (Panickssery et al., 2024) found that
+  models which better recognize their own output favor it more. Do not let a model
+  family judge itself without a human check.</li>
+<li><strong>Split the suite in two.</strong> Anthropic separates <em>capability</em> evals, which start with a
+  low pass rate and give the team a hill to climb, from <em>regression</em> evals, which should
+  sit near 100%. A capability eval that the system now passes "graduates" into the
+  regression suite. When every task passes, the eval is saturated and no longer shows
+  progress.</li>
+<li><strong>Gate on a pass-all rate.</strong> An example passes only if it passes every check. Report one
+  pass-all rate for checks that block a release and a second for issues the team accepts.</li>
+<li><strong>Grade the outcome, not one exact path.</strong> Anthropic warns that rigid step-sequence
+  checks punish valid solutions. For agents, grade the result, then add budgets (steps,
+  cost, time) and look at the first wrong step in failing traces.</li>
+<li><strong>Keep reading after launch.</strong> Re-run error analysis on a fresh sample of 100 or more
+  traces every few weeks, and always after an incident. Keep some random traces in every
+  batch so you still see failures your alerts miss.</li>
+<li><strong>Treat synthetic test data with care.</strong> It can widen coverage, but it cannot show how
+  common a failure is in production. Check it against real traces as soon as you have them.</li>
+</ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Dashboards before reading</strong> — investing in scoring infrastructure before anyone spent
@@ -178,6 +211,8 @@ spec — is the operating discipline developed in
   before a human-reviewed golden set exists to check it against.</li>
 <li><strong>Observability before a working gate</strong> — full production tracing built before there's
   even a regression suite to tell whether a change should have shipped.</li>
+<li><strong>A judge nobody re-checks</strong> — the judge was validated once, then the model, prompt or
+  traffic changed and its agreement with humans quietly fell.</li>
 <li><strong>Trajectory evals skipped on an agentic system</strong> — grading only a long-running agent's
   final answer, missing the early step that actually caused the failure.</li>
 </ul>
@@ -189,6 +224,10 @@ spec — is the operating discipline developed in
       at what might matter?</li>
 <li class="task todo">Is any automated judge calibrated against human-labeled examples before it's
       trusted to grade at scale?</li>
+<li class="task todo">Are the judge's true positive and true negative rates measured on a held-out set of
+      human labels, and re-measured when the model or prompt changes?</li>
+<li class="task todo">Is there a regression suite near 100% that gates release, separate from capability
+      evals that still have room to improve?</li>
 <li class="task todo">If the system is agentic, does anything grade the path a run took, not just
       whether it reached the right answer?</li>
 </ul>
@@ -204,7 +243,7 @@ spec — is the operating discipline developed in
   trajectory evals for agents.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="why-eval-investment-is-the-job.html"><span class="lbl">← Previous</span><span class="ttl">Why eval investment is the job</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> An AI system&#x27;s biggest risk is failing quietly. The defence is measurement built in the right order, starting with reading real failures.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-each-stage-earns-the-next">The mental model: each stage earns the next</a><a class="h2" href="#where-to-actually-start-reading-not-scoring">Where to actually start: reading, not scoring</a><a class="h2" href="#growing-from-a-golden-set-to-a-full-production-practice">Growing from a golden set to a full production practice</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-each-stage-earns-the-next">The mental model: each stage earns the next</a><a class="h2" href="#where-to-actually-start-reading-not-scoring">Where to actually start: reading, not scoring</a><a class="h2" href="#growing-from-a-golden-set-to-a-full-production-practice">Growing from a golden set to a full production practice</a><a class="h2" href="#choices-that-make-the-stack-trustworthy">Choices that make the stack trustworthy</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

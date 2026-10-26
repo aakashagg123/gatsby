@@ -41,7 +41,7 @@ picks the lowest tier number among due modules.
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | never |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | never |
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
-| evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | never |
+| evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | never |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-09-22 |
@@ -462,3 +462,34 @@ and a link to the merged PR.)
   Google temperature behavior on reasoning models (OpenAI page is silent); top-p/top-k definitions.
   Flagged: recap.md claims need a primary-source pass; a standalone lesson on reasoning models and
   effort may be worth building (not built, scope boundary).
+
+- 2026-10-26 — evaluation-and-observability — tier 2. Picked because no tier-1 row was due
+  (all within their 45-day cadence), and among the tier-2 `never` rows this is the one a Senior PM
+  is asked about in every AI launch review. Outcome: fixed + expanded. Read both lessons, README
+  and recap in full first. Accuracy: (1) recap "silent weight update" story was unsourced and
+  one-sided; now cites Chen et al. 2023 (GPT-4 prime accuracy 84% -> 51%) with the Narayanan/Kapoor
+  critique (all-prime test set, code-format scoring) and Anthropic's Sept 2025 postmortem;
+  (2) quantization story was unsourced; now cites Marchisio et al., EMNLP 2024 Findings
+  (1.7% automatic vs 16.0% human drop in Japanese); (3) judge-bias story now cites Zheng et al. 2023
+  and Panickssery et al. 2024; (4) trajectory-eval story marked as a common risk, not a single
+  incident, and tempered with Anthropic's "grade the outcome, not the path" guidance.
+  Coverage: noise and error bars, pass@k vs pass^k, offline/online/A-B layers, 20-50 starter tasks,
+  generic-metric and vibe-eval anti-patterns (lesson 1); trace-reading counts (30/100), pass/fail
+  over scales, per-failure-mode judges with TPR/TNR on held-out labels, judge biases, capability vs
+  regression suites and saturation, pass-all gate, post-launch re-analysis, synthetic-data caveats
+  (lesson 2). check_module: avg sentence 27.2 -> 20.6 (WARN threshold 20), Flesch 55 (pass).
+  Sources opened: hamel.dev/blog/posts/evals-faq (first 100k of 153k chars only);
+  anthropic.com/engineering/demystifying-evals-for-ai-agents;
+  anthropic.com/engineering/a-postmortem-of-three-recent-issues;
+  developers.openai.com/api/docs/guides/evaluation-best-practices; arxiv.org/abs/2306.05685;
+  arxiv.org/abs/2404.13076; arxiv.org/abs/2307.09009; normaltech.ai/p/is-gpt-4-getting-worse-over-time;
+  arxiv.org/abs/2411.00640 (abstract only); aclanthology.org/2024.findings-emnlp.935;
+  arxiv.org/abs/2410.21819 (abstract only; not cited in text).
+  Not verified: the "wasteful path" agent claim has no primary incident source (reworded as a risk);
+  OpenTelemetry GenAI conventions status (docs moved to github.com/open-telemetry/semantic-conventions-genai;
+  fetched pages gave no stability status); the linked content/04 and agentic-ai lessons were not re-audited.
+  Flagged (other module): content/04-evals-observability/evals.md (~line 133) says OTel GenAI conventions
+  "are standardizing trace formats" and tooling is "portable" — check stability status at the new repo
+  before leaving that unqualified. recap.md still lacks a "Test yourself" section and the README a
+  "Where the depth lives" map (check_module WARNs); worked-example/under-the-hood sections would need
+  a structural change, not built. No new-lesson gaps.
