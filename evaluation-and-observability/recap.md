@@ -4,19 +4,26 @@
 
 ## Real-world examples & war stories
 
-**A model provider's silent weight update changing production behavior.** A recurring
-pattern across companies building on third-party model APIs: a provider updates the model
-behind an existing API endpoint, and downstream behavior shifts with no code change on
-the customer's side to point to. Teams with a running regression suite catch this within
-a day; teams without one discover it weeks later, from user complaints. 🎯 *Takeaway:*
+**A model provider's silent weight update changing production behavior.** Providers change
+what runs behind an endpoint, and behavior can shift with no code change on the customer's
+side. Two documented cases show both sides. In 2023, Chen, Zaharia and Zou reported large
+shifts in GPT-4 and GPT-3.5 between March and June (for example, prime-number accuracy
+falling from 84% to 51%) and called for continuous monitoring. Narayanan and Kapoor
+replied that much of this was behavior drift and test design, not lost capability: every
+test number was prime, and extra explanatory text counted as a code failure. In 2025,
+Anthropic's postmortem of three infrastructure bugs said its own evals were too noisy to
+catch the degradation, and it added continuous production checks. The lesson holds either
+way: a balanced, repeatable regression suite is how you tell real change from a
+measurement artifact. 🎯 *Takeaway:*
 [a regression gate](./why-eval-investment-is-the-job.md) is what turns an invisible
 provider-side change into something a team can actually detect.
 
-**Support and coding assistants graded only on final answers, not the path taken.** As
-agentic coding and support tools scaled, teams that only checked whether a task ultimately
-succeeded missed a consistent pattern: agents reaching the right answer through wasteful,
-circuitous paths — burning far more cost and time than a clean run — with nothing in the
-eval catching it because the destination looked fine. 🎯 *Takeaway:*
+**Support and coding assistants graded only on final answers, not the path taken.** An
+outcome-only eval cannot see an agent that reaches the right answer through a wasteful
+path and burns far more cost and time than a clean run. This is a common risk, not a
+single documented incident. Anthropic's guidance adds a limit: grade the outcome, because
+rigid checks on an exact step sequence punish valid solutions. Track cost and step budgets,
+and read the first wrong step in failing traces. 🎯 *Takeaway:*
 [trajectory evals, not just outcome evals](./building-the-eval-stack-in-the-right-order.md),
 are what catch a path quietly degrading before the destination does.
 
@@ -29,17 +36,18 @@ is the step that makes every later investment trustworthy — skipping it doesn'
 time, it just moves the real work later and adds a layer of false confidence on top.
 
 **A quantization or infrastructure change that quietly hurt one task category.** A
-common regression pattern: an efficiency change to how a model is served improves cost
-and latency in aggregate, while quietly degrading accuracy on one specific,
-strict-format task category — invisible in an averaged score, obvious the moment results
-are stratified by capability. 🎯 *Takeaway:*
+peer-reviewed study of quantized multilingual models (Marchisio et al., EMNLP 2024
+Findings) found that automatic metrics understate the harm. In Japanese, a 1.7% average
+drop on automatic tasks matched a 16.0% drop in human ratings on realistic prompts.
+Harder tasks such as math reasoning degraded fastest. The same pattern applies to any
+serving change: an averaged score can hide a task category falling off a cliff. 🎯 *Takeaway:*
 [an aggregate number can hide a category falling off a cliff](./why-eval-investment-is-the-job.md);
 only a stratified eval catches it before users do.
 
-**LLM-as-judge grading systems found to favor their own model family.** As LLM-as-judge
-grading became common, several teams found their automated judges systematically scored
-outputs from their own model family higher than equally good outputs from a competitor —
-a documented bias that only surfaced once judge scores were checked against human
+**LLM-as-judge grading systems found to favor their own model family.** LLM judges show
+position, verbosity and self-enhancement bias (Zheng et al., 2023). Panickssery et al.
+(2024) found that a model's ability to recognize its own output tracks how strongly it
+favors that output. Such bias only surfaces when judge scores are checked against human
 labels. 🎯 *Takeaway:* [an uncalibrated judge](./building-the-eval-stack-in-the-right-order.md)
 produces confident, biased numbers that look exactly like real measurement until someone
 checks them against ground truth.

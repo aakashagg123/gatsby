@@ -57,7 +57,9 @@ The first real step is qualitative, not a metrics project: pull real traces — 
 sample, plus anything a user flagged — and read them one by one, labeling what went wrong
 in plain language, in the team's own words, without forcing the labels into a taxonomy
 yet. Only once a pile of these free-form labels exists does clustering them into a
-handful of named, recurring failure modes make sense. This unglamorous reading is what
+handful of named, recurring failure modes make sense. Hamel Husain's evals FAQ gives a working size: read at
+least 30 traces yourself first, then at least 100 overall, and keep going while new
+failure types still appear. This unglamorous reading is what
 tells a team what's actually worth building an automated evaluator for, and it's also the
 step most commonly skipped in the rush to have a dashboard to show. The full method —
 what the discipline calls open coding and axial coding — is developed in complete depth
@@ -82,6 +84,37 @@ where no change ships without a score, because the eval set has effectively beco
 spec — is the operating discipline developed in
 [TPM for AI products](../technical-product-management/tpm-for-ai-products.md).
 
+## Choices that make the stack trustworthy
+
+- **Prefer pass/fail over 1-5 scales.** Binary labels are easier to agree on and easier to
+  validate. To track gradual progress, use several specific pass/fail checks, not one
+  vague score. OpenAI's guide also says models grade pass/fail and pairwise choices more
+  reliably than open-ended scores.
+- **One judge per failure mode.** Split the human labels into train, dev and a held-out
+  test set. Measure the judge's true positive rate (it catches real failures) and true
+  negative rate (it passes good outputs). Track both, because a judge that flags
+  everything has a perfect first number and a useless second one.
+- **Know the judge's biases.** The MT-Bench paper (Zheng et al., 2023) documents position,
+  verbosity and self-enhancement bias, and found that strong judges agree with human
+  preferences over 80% of the time. A later study (Panickssery et al., 2024) found that
+  models which better recognize their own output favor it more. Do not let a model
+  family judge itself without a human check.
+- **Split the suite in two.** Anthropic separates *capability* evals, which start with a
+  low pass rate and give the team a hill to climb, from *regression* evals, which should
+  sit near 100%. A capability eval that the system now passes "graduates" into the
+  regression suite. When every task passes, the eval is saturated and no longer shows
+  progress.
+- **Gate on a pass-all rate.** An example passes only if it passes every check. Report one
+  pass-all rate for checks that block a release and a second for issues the team accepts.
+- **Grade the outcome, not one exact path.** Anthropic warns that rigid step-sequence
+  checks punish valid solutions. For agents, grade the result, then add budgets (steps,
+  cost, time) and look at the first wrong step in failing traces.
+- **Keep reading after launch.** Re-run error analysis on a fresh sample of 100 or more
+  traces every few weeks, and always after an incident. Keep some random traces in every
+  batch so you still see failures your alerts miss.
+- **Treat synthetic test data with care.** It can widen coverage, but it cannot show how
+  common a failure is in production. Check it against real traces as soon as you have them.
+
 ## Failure modes
 
 - **Dashboards before reading** — investing in scoring infrastructure before anyone spent
@@ -90,6 +123,8 @@ spec — is the operating discipline developed in
   before a human-reviewed golden set exists to check it against.
 - **Observability before a working gate** — full production tracing built before there's
   even a regression suite to tell whether a change should have shipped.
+- **A judge nobody re-checks** — the judge was validated once, then the model, prompt or
+  traffic changed and its agreement with humans quietly fell.
 - **Trajectory evals skipped on an agentic system** — grading only a long-running agent's
   final answer, missing the early step that actually caused the failure.
 
@@ -101,6 +136,10 @@ spec — is the operating discipline developed in
       at what might matter?
 - [ ] Is any automated judge calibrated against human-labeled examples before it's
       trusted to grade at scale?
+- [ ] Are the judge's true positive and true negative rates measured on a held-out set of
+      human labels, and re-measured when the model or prompt changes?
+- [ ] Is there a regression suite near 100% that gates release, separate from capability
+      evals that still have room to improve?
 - [ ] If the system is agentic, does anything grade the path a run took, not just
       whether it reached the right answer?
 

@@ -63,12 +63,28 @@ demo-sized manual check would never have caught. By the time it's visible to use
 already an incident — the eval set that would have caught it in a code review didn't
 exist yet.
 
+## A score is an estimate, not a fact
+
+An eval score is a measurement with noise. The model can answer the same input differently on each run. The test set is also only a sample of real traffic. So a two-point gain on 50 cases may be luck.
+
+Three habits keep the number honest:
+
+- **Run each case more than once** when the output varies. Anthropic separates *pass@k* (at least one of k tries succeeds) from *pass^k* (all k tries succeed). At a 75% pass rate per try, three tries all pass only about 42% of the time. Users who need the same behavior every time care about the second number.
+- **Report the error bar** next to the score. Evan Miller's paper "Adding Error Bars to Evals" argues that evals are experiments and should use standard errors and paired comparisons between two models.
+- **Balance the set.** The widely cited claim that GPT-4 "got worse" in 2023 used a prime-number test where every number was prime. Critics showed that the score swing mostly tracked a shift in the model's guess, not lost skill. A balanced set measures what the task needs.
+
+## Offline evals are one layer of three
+
+Evals run before a change ships, on a fixed set. They miss what only real traffic shows. Anthropic's guidance on agent evals names three layers: automated evals before release, production monitoring after release, and A/B tests that measure user outcomes. Monitoring finds real behavior at scale but reacts after users see a problem. A/B tests take days or weeks to reach significance. No single layer catches everything.
+
+The September 2025 Anthropic postmortem shows why. Three infrastructure bugs degraded Claude responses for weeks. Anthropic said its evals were too noisy to separate working from broken, and that Claude "often recovers well from isolated mistakes." It added more sensitive evals and continuous quality checks on production systems. A pre-release suite alone would not have caught these bugs.
+
 ## The minimum viable version is smaller than most teams assume
 
 The bar for starting is much lower than "build a metrics dashboard." A spreadsheet of
 real production traces, a pass/fail label on each one, and a note on why it failed
 already beats a scoring infrastructure nobody has validated against real behavior yet.
-The habit that actually matters is reading the traces before building anything to grade
+Anthropic suggests that "20-50 simple tasks drawn from real failures is a great start" and that you do not need hundreds. The habit that actually matters is reading the traces before building anything to grade
 them automatically — most teams over-invest in scoring tooling and under-invest in the
 hours of looking at real transcripts that reveal what's actually worth measuring. That
 sequencing question — what to build first, and in what order to grow it — is the subject
@@ -80,7 +96,13 @@ of the next lesson in this module.
   when the eval set is the only reliable way to know whether the feature is actually
   working in the first place.
 - **Shipping on vibes** — a change goes out because it "felt better" in a handful of
-  manual tries, with no representative check behind that impression.
+  manual tries, with no representative check behind that impression. OpenAI's evaluation
+  guide calls vibe-based evals, and adding evals only after launch, anti-patterns.
+- **Generic metrics as the spec** — off-the-shelf "helpfulness" or "coherence" scores, or
+  text-overlap scores such as ROUGE, give false confidence. They do not encode what good
+  means for your feature.
+- **One run, no error bar** — a small score change on a small set is treated as a real
+  gain, when run-to-run noise could explain it.
 - **Scoring infrastructure before anyone read a trace** — a polished dashboard built
   before anyone spent the hours understanding what real failures actually look like.
 - **No regression gate** — evals exist, but nothing stops a change from shipping when the
@@ -95,6 +117,10 @@ of the next lesson in this module.
 - [ ] Has anyone actually spent hours reading real production traces before building a
       grading pipeline?
 - [ ] Do evals gate the release, or are they a report that gets checked after the fact?
+- [ ] Does each score come with an error bar, and do you run non-deterministic cases more
+      than once?
+- [ ] Beyond pre-release evals, is there production monitoring and a way to compare
+      user outcomes (A/B test) for changes that matter?
 
 ## Related lessons
 
