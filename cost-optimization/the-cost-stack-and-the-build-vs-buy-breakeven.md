@@ -60,7 +60,12 @@ the terrain so a team knows which door to open.
   [Prefill vs. decode](../content/01-inference-internals/prefill-vs-decode.md) and
   [Continuous batching & paged attention](../content/01-inference-internals/batching-and-paged-attention.md),
   which also covers why serving many users at once — not just one clever prompt — is the
-  biggest lever on cost-per-token for anyone running their own inference.
+  biggest lever on cost-per-token for anyone running their own inference. Three
+  details change the bill and are easy to miss. Output tokens cost several times more than
+  input tokens: on current Claude models the ratio is 5 to 1. Reasoning ("thinking") tokens
+  bill as output tokens, even though you never see them. And a new tokenizer changes the
+  count: Anthropic says Claude 4.7 and later models produce about 30 percent more tokens for
+  the same text. Price per token is not price per task.
 - **Caching** — a prompt cache skips recomputation for an identical prefix, losslessly. A
   semantic cache skips the model call entirely for a *similar* query, at the risk of
   serving a wrong or stale answer. Fully developed in
@@ -80,6 +85,35 @@ four is actually the slack one, this quarter, for this feature" — a question
 [cost attribution](../content/04-evals-observability/cost-attribution.md) is built to
 answer with data instead of guesses.
 
+## Reading a price sheet: the modifiers
+
+The four levers show up on a price sheet as multipliers. A product leader needs only a few of
+them. The table shows Anthropic's list on 2026-10-29. Check the vendor page before you quote any
+number, because these change often.
+
+| Modifier | What it does | Catch |
+| --- | --- | --- |
+| Prompt cache hit | Reads cost 0.1x base input (0.05x on Opus 5.5 and Sonnet 5.5, 0.025x on Fable 5.1) | A write costs 1.25x (5-minute) or 2x (1-hour), and the default cache lifetime is 5 minutes |
+| Batch API | 50 percent off input and output | Asynchronous: results arrive within 24 hours, most within 1 hour |
+| Fast mode | Up to 2.5x output speed on supported Opus models | Premium price (Opus 5.5: $8 and $40 per million tokens, double standard) and no batch discount |
+| US-only inference | 1.1x on all token prices | Applies to input, output and cache |
+| Long prompts | Full 1M-token window at the standard rate on most models | Haiku 5.5 charges a higher rate once a prompt passes 100,000 tokens |
+
+Four points matter for decisions.
+
+- **Caching and batch stack.** Cache hits in a batch are best-effort, because batch requests run
+  concurrently. Do not forecast the best-case product of both discounts.
+- **Cache hit rate is a metric.** A change to the tools, the system prompt, or an early message
+  invalidates the cached prefix after it. A timestamp at the top of a prompt can silently turn
+  every call into a full-price call.
+- **Timing is a lever.** Work nobody waits on (evals, enrichment, nightly summaries) belongs in
+  batch. OpenAI's Flex tier prices tokens at Batch rates for the same kind of work, with
+  occasional 429 "resource unavailable" errors, and you are not billed for those.
+- **Effort is a lever.** Anthropic's `effort` setting changes how many tokens the model spends
+  on text, tool calls and thinking. Its model-choice guide says tuning effort is often a better
+  lever than switching models. Opus 5.5 and Haiku 5.5 default to medium effort. The other
+  current models default to high. Test your own evals before you lower it.
+
 ## The build-vs-buy breakeven
 
 Every team renting a frontier model's API eventually asks: *should we run this
@@ -88,8 +122,11 @@ provider's per-token price, multiplied by your usage, exceeds the fixed and vari
 of serving it yourself.
 
 **The metered side** scales linearly with volume: `tokens/month × price/token`. It has
-no fixed cost, and it falls automatically whenever the provider cuts prices — which,
-historically, has been often and steeply.
+no fixed cost, and it falls automatically whenever the provider cuts prices. Prices for a
+given capability tier have fallen steeply. Anthropic's Opus tier went from $15 and $75 per
+million input and output tokens (Opus 4.1) to $4 and $20 (Opus 5.5). But vendors also add
+higher tiers: Fable 5.1 lists at $10 and $50. Compare price by capability tier, not by
+vendor, and count tokens per task, not price per token.
 
 **The self-hosted side** has a large fixed cost (GPU capacity, whether reserved or
 committed) plus a much smaller marginal cost per token once that capacity is running.
@@ -97,6 +134,17 @@ committed) plus a much smaller marginal cost per token once that capacity is run
 are exactly what determine how low that marginal cost goes — a well-tuned serving stack
 extracts far more tokens per dollar of GPU than a naive one, which shifts the whole
 crossover point.
+
+**Utilization is the hidden variable.** A GPU bills by the hour, busy or idle. The effective
+cost per million output tokens is `GPU price per hour × 1,000,000 ÷ (output tokens per second ×
+3,600)`, and the tokens per second you use is your real traffic, not the peak the hardware can
+reach. A product with office-hours traffic leaves the GPU idle most of the day. Published
+2026 breakeven analyses disagree widely for this reason, and most come from GPU vendors, so run
+the numbers with your own traffic shape. Add the staff who run it: on-call, upgrades, security
+patching and capacity planning. Also price two middle paths. One is a smaller model from the
+same vendor, such as a Haiku-class model at $0.10 per million input tokens for short prompts.
+The other is open-weight models hosted by a third party. Against a cheap small model,
+self-hosting may never break even.
 
 The two lines cross at a specific volume: below it, metered API pricing wins because
 you're not using enough of the fixed capacity to justify owning it. Above it,
@@ -116,7 +164,7 @@ develops for the reliable frontier, applied to cost instead of capability.
 
 ## A worked pass: the self-hosting decision nobody re-ran
 
-A support-automation product launches on a frontier model's API. At 2 million tokens a
+This is an illustrative case with made-up numbers. A support-automation product launches on a frontier model's API. At 2 million tokens a
 month, the bill is a rounding error next to the eng team's own salaries, and self-hosting
 is obviously not worth the operational burden — nobody runs the numbers because the
 answer is visibly "stay metered." Eighteen months later, volume has grown 40x to 80
@@ -138,6 +186,13 @@ checking it again after the first, correct call.
 - **Ignoring the moving crossover** — the breakeven volume shifts with every provider
   price cut and every serving-efficiency gain, and a team that calculated it once treats
   the number as fixed.
+- **Idle GPUs** — a team sizes capacity for peak traffic, average utilization stays low, and
+  the real cost per token lands above the API price. The breakeven math assumed a busy GPU.
+- **Cache-busting prompt changes** — a new timestamp, user ID or tool list at the top of the
+  prompt breaks the cached prefix. Cache hit rate falls and the bill rises with no change in
+  traffic.
+- **Hidden reasoning spend** — a default effort or thinking setting multiplies output tokens on
+  simple requests, and the product leader sees only a higher cost per task.
 - **Self-hosting without the serving-stack investment** — running your own model without
   continuous batching and paged attention lands nowhere near the marginal cost the
   breakeven math assumed, so the crossover that looked favorable on paper never
@@ -151,6 +206,10 @@ checking it again after the first, correct call.
       not intuition?
 - [ ] When did we last recheck that calculation against current token prices and current
       usage?
+- [ ] What is our cache hit rate, and who gets an alert when it drops?
+- [ ] Which workloads nobody waits on could run in batch or a flex tier?
+- [ ] Have we set effort and reasoning budgets per feature, based on our evals?
+- [ ] If we're self-hosting, what is our real GPU utilization, and does the breakeven use it?
 - [ ] If we're self-hosting, is the serving stack (batching, paged attention) actually
       tuned to the marginal cost the breakeven math assumed?
 
@@ -163,3 +222,13 @@ checking it again after the first, correct call.
 - [The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md)
   — the general unit-economics napkin this lesson's breakeven specializes for the
   build-vs-buy decision.
+
+## Sources
+
+Checked 2026-10-29. Prices and multipliers: [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing),
+[prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching),
+[batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing),
+[effort](https://platform.claude.com/docs/en/build-with-claude/effort) and
+[choosing a model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model).
+Reasoning tokens and Flex: [OpenAI reasoning guide](https://developers.openai.com/api/docs/guides/reasoning)
+and [Flex processing](https://developers.openai.com/api/docs/guides/flex-processing).
