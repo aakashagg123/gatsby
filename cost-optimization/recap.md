@@ -5,8 +5,9 @@
 ## Real-world examples & war stories
 
 **Model providers cutting prices repeatedly, and teams that never re-checked their
-build-vs-buy math.** Frontier-model per-token prices have fallen steeply and repeatedly
-since the category began — a pattern that keeps moving the
+build-vs-buy math.** Per-token prices for a given capability tier have fallen steeply. Anthropic's
+Opus tier, for example, went from $15 and $75 per million tokens (Opus 4.1) to $4 and $20 (Opus 5.5),
+while a new top tier lists higher. That pattern that keeps moving the
 [self-hosting breakeven volume](./the-cost-stack-and-the-build-vs-buy-breakeven.md)
 higher every time it happens. Teams that calculated the crossover once, at launch, and
 never revisited it are routinely sitting on a stale answer in one direction or the
@@ -23,23 +24,22 @@ levers compound — a self-hosting decision made without the serving-stack inves
 nowhere near the marginal cost the breakeven math assumed.
 
 **Teams discovering a runaway agent loop from the invoice, not a budget alert.** A
-recurring pattern in early agentic-product operations: a loop bug, a retry storm, or a
+commonly reported pattern (not one sourced incident) in agentic-product operations: a loop bug, a retry storm, or a
 cache-busting change burns weeks of allocated spend before anyone notices, because
 nothing automatic was watching — only a dashboard a human forgot to check. 🎯 *Takeaway:*
 [a budget that only alerts, instead of enforcing](./finops-budgets-forecasting-and-the-cost-review.md),
 catches the problem after the money is already spent.
 
 **Forecasts that got surprised by moving in only one direction.** A common forecasting
-failure: a team models AI spend as a single line extrapolated from last month's bill,
-missing that usage growth and falling token prices pull in opposite directions
-simultaneously — and gets blindsided whichever curve moves faster than the naive line
-assumed. 🎯 *Takeaway:*
+failure: a team models AI spend as a single line extrapolated from last month's bill. It
+misses that usage growth, tokens per task and falling token prices all move at once. Agentic
+workloads can use many times the tokens of a chat exchange, so a falling price per token can
+sit beside a rising bill. 🎯 *Takeaway:*
 [modeling both curves separately](./finops-budgets-forecasting-and-the-cost-review.md)
 is the difference between a forecast with two quarters of warning and one with none.
 
-**Chargeback adoption changing engineering behavior overnight.** Organizations that
-moved from showback (visibility only) to chargeback (real budget impact) for AI spend
-consistently report the same effect: teams that previously defaulted to the biggest
+**Chargeback adoption changing engineering behavior overnight.** Practitioners often report that
+when AI spend moves from showback (visibility only) to chargeback (real budget impact): teams that previously defaulted to the biggest
 available model start asking, on their own, whether a cheaper route or a smaller model
 would do. 🎯 *Takeaway:* [attribution changes behavior only once it touches a
 budget](./finops-budgets-forecasting-and-the-cost-review.md) — visibility alone rarely

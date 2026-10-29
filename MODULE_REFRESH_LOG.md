@@ -43,7 +43,7 @@ picks the lowest tier number among due modules.
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
-| cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | never |
+| cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | 2026-10-29 |
 | prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-09-22 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
 | flowable | flowable/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
@@ -493,3 +493,32 @@ and a link to the merged PR.)
   before leaving that unqualified. recap.md still lacks a "Test yourself" section and the README a
   "Where the depth lives" map (check_module WARNs); worked-example/under-the-hood sections would need
   a structural change, not built. No new-lesson gaps.
+
+- 2026-10-29 — cost-optimization — tier 2. Picked because no tier-1 row was due (all within their
+  45-day cadence), and among the tier-2 `never` rows this one carries the most price claims that go
+  stale in a roadmap review. Outcome: fixed + expanded. Read both lessons, README and recap in full
+  first. Accuracy: (1) "prices fall steeply" now tied to capability tier with the Opus 4.1 -> 5.5
+  change ($15/$75 -> $4/$20) and the higher Fable 5.1 tier ($10/$50); (2) worked self-hosting case
+  labelled illustrative; (3) recap war stories reworded as commonly reported patterns, not sourced
+  incidents. Coverage: price-sheet modifiers table (cache 0.1x/0.05x/0.025x hits, 1.25x/2x writes,
+  batch 50%, fast mode, 1.1x US inference, Haiku 5.5 long-prompt tier); output-vs-input 5:1,
+  thinking tokens billed as output, ~30% tokenizer inflation, effort as a lever, batch/flex timing,
+  cache-hit-rate as a metric; GPU utilization as the hidden breakeven variable and the cheap-small-
+  model and third-party-hosting alternatives; in-request caps (max_output_tokens, thinking_tokens
+  tracking, agent turn caps); unit economics per outcome (FinOps Foundation); a tokens-per-task
+  factor in the forecast. check_module: FAIL (avg sentence 26.1, Flesch 44) -> WARN (20.7, Flesch 53).
+  Sources opened: platform.claude.com/docs/en/about-claude/pricing; .../build-with-claude/prompt-caching;
+  .../batch-processing; .../extended-thinking; .../effort; .../about-claude/models/choosing-a-model;
+  developers.openai.com/api/docs/guides/reasoning; .../flex-processing;
+  finops.org/insights/token-economics-the-atomic-unit-of-ai-value/ (the tokenomics-fit-together page
+  loaded but its body was not read).
+  Search results only, not opened: Gartner March 2026 agentic token multiple (5-30x) — marked in the
+  lesson as unopened; self-hosting breakeven blogs (Spheron, Spendark, Cohorte, GeICO tech blog 403);
+  Elastic token-cost blog (opened, vendor, not cited). NOT verified: other vendors' (Google, OpenAI)
+  current price tables and cache discounts — the lessons cite only Anthropic numbers and say so;
+  Bedrock/Vertex prices; the 'chargeback changes behavior' claim (no primary source, reworded).
+  Flagged (other module): content/04-evals-observability/cost-attribution.md and
+  content/01-inference-internals/prompt-vs-semantic-caching.md may carry old cache multipliers
+  (older docs said a flat 0.1x read) — check against the pricing page. Not built: a standalone lesson
+  on reasoning-token and agent cost control (scope boundary). README still lacks a "Where the depth
+  lives" map and recap a "Test yourself" section (structural, not built).

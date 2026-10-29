@@ -58,10 +58,24 @@ was staring at in real time catches it only after the money is gone.
 - **Soft budgets with escalation** for anything where stopping outright breaks a paying
   customer's workflow — alert a human at 80%, and again at 100%, rather than cutting them
   off mid-task.
+- **Caps inside the request.** Set a per-request ceiling on output. OpenAI's
+  `max_output_tokens` limits reasoning and visible tokens together. Anthropic reports thinking
+  tokens in `usage.output_tokens_details.thinking_tokens`, so you can track them. For agents,
+  also cap the number of turns and tool calls per task.
 - **Per-tenant and per-feature**, not just aggregate — an aggregate budget can be healthy
   while one tenant is quietly destroying margin underneath it, invisible until someone
   slices the number the way [cost attribution](../content/04-evals-observability/cost-attribution.md)
   already knows how to.
+
+## Unit economics — cost per outcome, not per token
+
+A token count tells you little on its own. The FinOps Foundation calls tokenomics "FinOps
+applied to AI". It extends unit economics to a resource that is priced per inference. Its
+guidance is to track token quality as well as token volume, because volume alone misattributes
+cost. Pick a unit your business already understands: cost per resolved ticket, per completed
+workflow or per active user. Then compare it to the revenue or savings that unit brings. A
+feature whose cost per resolved task rises while its price stays flat is losing margin, even
+if the token price fell.
 
 ## Chargeback and showback — who feels the cost
 
@@ -81,8 +95,9 @@ being charged.
 ## Forecasting two curves that move in opposite directions
 
 A naive AI cost forecast takes current spend and multiplies by expected user growth. It's
-wrong twice over, because two forces are moving simultaneously and in opposite
-directions:
+wrong, because several forces move at once and in different directions. Write the forecast as a
+product: users × tasks per user × tokens per task × price per token. Each factor gets its own
+assumption. The first two are usage. The last two are the ones teams forget.
 
 - **Usage grows** — more users, more requests per user as a feature matures, longer
   average context as conversations and documents grow. This pushes cost up.
@@ -90,12 +105,19 @@ directions:
   since the category began, and a well-run serving stack's marginal cost per token
   [falls further as batching and paged attention mature](../content/01-inference-internals/batching-and-paged-attention.md).
   This pushes cost down.
+- **Tokens per task rise** — reasoning models bill thinking tokens as output tokens, and agents
+  make many model calls per task, each one re-sending context. Gartner's March 2026 forecast
+  puts agentic tasks at 5 to 30 times the tokens of a chatbot exchange. (Source: search result
+  only, not opened.) A falling price per token can sit beside a rising bill.
+- **The model mix shifts** — a team that moves to a newer or higher tier pays that tier's
+  price. A tokenizer change can also raise the count for the same text, as Anthropic reports
+  for Claude 4.7 and later.
 
 A forecast that only tracks usage overshoots, sometimes badly enough to justify a
 self-hosting decision or a price increase that a more honest number wouldn't support. A
 forecast that only tracks falling prices undershoots, and a team gets blindsided when a
 successful launch's volume outpaces the price relief it was counting on. The discipline
-is modeling both curves explicitly, with their own separate assumptions, rather than
+is modeling each factor explicitly, with their own separate assumptions, rather than
 collapsing them into one trend line drawn through last month's invoice.
 
 ## The cost review — a recurring ritual, not a fire drill
@@ -133,6 +155,8 @@ surprised twice by the same conflated number.
   when a number crosses it, so the catch depends on someone noticing in time.
 - **Showback with no teeth, forever** — a team never feels its own spend, so no incentive
   ever changes, and showback becomes a report nobody acts on.
+- **Price-per-token blindness** — the team tracks the price of a token and misses that tokens
+  per task doubled after a switch to a reasoning model or an agent.
 - **One-line forecasting** — usage growth and price decline get collapsed into a single
   trend, producing a number that's confidently wrong in whichever direction the two
   curves diverge fastest.
@@ -147,8 +171,9 @@ surprised twice by the same conflated number.
       who might not be watching?
 - [ ] Can each team see — or better, feel — its own AI spend, not just an aggregate
       number nobody owns?
-- [ ] Does our forecast model usage growth and price decline as two separate curves, or
+- [ ] Does our forecast model usage, tokens per task and price per token separately, or
       one naive extrapolation?
+- [ ] Do we report cost per outcome (per resolved task, per workflow), not only per token?
 - [ ] Is there a recurring, cross-functional cost review on the calendar — and does it
       produce owned action items, not just a slide?
 - [ ] When did we last revisit the build-vs-buy breakeven against current volume and
@@ -161,3 +186,10 @@ surprised twice by the same conflated number.
 - [Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md)
   — the ritual structure this lesson's cost review borrows.
 - [The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md)
+
+## Sources
+
+Checked 2026-10-29. [FinOps Foundation: token economics](https://finops.org/insights/token-economics-the-atomic-unit-of-ai-value/),
+[OpenAI reasoning guide](https://developers.openai.com/api/docs/guides/reasoning),
+[Anthropic extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking)
+and [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing).
