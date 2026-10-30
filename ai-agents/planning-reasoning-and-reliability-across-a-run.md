@@ -2,7 +2,7 @@
 
 *Part of [AI agents for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-10 · Volatility: fast*
 
 ## TL;DR
 
@@ -83,12 +83,19 @@ Two design moves follow.
 The pattern shows up in research on real agents. The research group METR (Model Evaluation
 & Threat Research) measures agents by the length of task they can finish, where length is
 the time a skilled human needs. In a March 2025 study, the task length an agent completed
-with 50% success had doubled about every seven months since 2019. METR has since reported a
-faster recent pace. Check its latest page before you quote a rate.
+with 50% success had doubled about every seven months since 2019. The same study found
+near-100% success on tasks under about four minutes and under 10% on tasks over about four
+hours. METR later revised its task suite (Time Horizon 1.1). Its time-horizons page is now
+marked as no longer actively updated. It warns that measurements above 16 hours are
+unreliable with the current tasks. Outside commentary puts the post-2023 doubling time at
+roughly four to five months. We have not confirmed that from METR itself, so do not quote a
+rate without checking METR's latest page.
 
-Read this as progress, and as a reminder that success falls as tasks get longer. The work
-measured software tasks. Do not assume the same numbers hold for your domain. Measure your
-own.
+Read this as progress, and as a reminder that success falls as tasks get longer. "Time
+horizon" measures how long a task takes a human expert. It does not measure how long the agent
+runs on its own. The tasks are mostly software, machine learning, and security work, and
+METR notes they are cleaner than most real work. Do not assume the same numbers hold for your
+domain. Measure your own.
 
 ## How an agent reasons, at a glance
 
@@ -103,10 +110,14 @@ An agent's thinking is the model working through a small set of patterns.
   gains. Models respond well to a real check. They grade their own unverifiable claims
   poorly.
 
-How much the model should think is now a setting, not a prompt trick. On Claude 4.6 and
-later models, adaptive thinking lets the model decide when and how much to think. An `effort`
+How much the model should think is now a setting, not a prompt trick. On current Claude
+models, adaptive thinking lets the model decide when and how much to think. An `effort`
 setting controls the depth. Lower effort is faster and cheaper. Higher effort helps on hard
-steps. This is a cost and latency decision as much as a quality one. Pattern choice is
+steps. This is a cost and latency decision as much as a quality one. Two details matter in a
+loop. Thinking tokens bill as output tokens. And in a tool loop, the first request after new
+user input usually carries most of the reasoning, while later requests that only process tool
+results can skip it. Pick one effort level per run and keep it: changing effort between
+requests breaks the prompt cache. Pattern choice is
 covered in [Planning & reasoning](../agentic-ai/planning-and-reasoning.md).
 
 ## Why the environment matters more than the model
@@ -169,6 +180,14 @@ result, and the cost. Judge an agent by the path, not only the final answer. An 
 be right for the wrong reasons, and a wrong answer often traces to one bad step. See
 [Reliability & evals](../agentic-ai/reliability-and-evals.md) for grading trajectories.
 
+**Long runs that span many sessions.** When a task outlasts one context window, the failure
+modes change. Anthropic describes agents that try to do everything at once and run out of
+context mid-feature, and agents that see some progress and declare the job done. Its fixes
+are a first session that writes a full feature list with every item marked failing, one
+feature per session, a progress file and a descriptive commit at the end of each session, and
+an end-to-end test before an item is marked passing. Ask your team which of these the
+harness has.
+
 **Measure your own per-step rate.** Run the task many times. Count completed steps over
 attempted steps. Then use the table above to predict end-to-end success at the real task
 length.
@@ -201,11 +220,14 @@ length.
 
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
   (Dec 2024): ground truth from the environment each step, and stopping conditions.
-  Checked 2026-09.
-- Anthropic, [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices):
-  adaptive thinking and the `effort` setting on Claude 4.6 and later models. Checked 2026-09.
+  Checked 2026-10.
+- Anthropic, [Steering thinking](https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost):
+  adaptive thinking, effort levels, thinking tokens billed as output, and effort changes
+  breaking the prompt cache. Checked 2026-10.
+- Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents):
+  the long-run failure modes and fixes above. Checked 2026-10.
 - METR, [Measuring AI Ability to Complete Long Software Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
-  (Mar 2025): the 50% time horizon and the roughly seven-month doubling over 2019-2025,
-  measured on software tasks. Later METR updates report a faster recent pace. Not verified
-  here: the page could not be opened, so this rests on search-result excerpts.
+  (Mar 2025) and [METR time horizons](https://metr.org/time-horizons): the seven-month doubling,
+  the success thresholds, the no-longer-updated notice, and the 16-hour caveat. Checked 2026-10.
+  The four-to-five-month figure comes from secondary commentary, not opened at METR.
 - The table is arithmetic: each cell is the per-step rate raised to the number of steps.

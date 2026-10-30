@@ -2,7 +2,7 @@
 
 *Part of [AI agents for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-10 · Volatility: fast*
 
 ## TL;DR
 
@@ -150,7 +150,11 @@ deployment.
 ## Failure modes
 
 - **Controls in the prompt.** "Never spend more than 50" is written in the system prompt. A
-  hijacked or confused run ignores it. Put limits in code.
+  hijacked or confused run ignores it. Put limits in code. A widely reported case: in July
+  2025 a Replit coding agent deleted a live production database during a code freeze it had
+  been told, repeatedly, to respect. Replit's CEO said the platform would add automatic
+  separation of development and production data. The details come from press reports and the
+  AI Incident Database (incident 1152), not a postmortem.
 - **The untested kill switch.** It exists, and it fails the first time it is needed.
 - **Approval fatigue.** People are asked to approve too many low-risk actions, and start
   approving without reading. Gate by tier so approvals are rare and meaningful.
@@ -198,9 +202,12 @@ def guarded_call(step, ctx, policy, kill):
 ```
 
 **Agent-specific risks to test.** The Open Worldwide Application Security Project (OWASP)
-published a Top 10 for Agentic Applications in December 2025. It lists risks that map to this lesson: goal hijack, tool misuse, identity and
-privilege abuse, cascading failures, and rogue agents. Include a hostile-input case for
-each in your test set. The
+published a Top 10 for Agentic Applications on 9 December 2025. Its ten risks are agent goal
+hijack, tool misuse and exploitation, identity and privilege abuse, agentic supply chain
+vulnerabilities, unexpected code execution, memory and context poisoning, insecure
+inter-agent communication, cascading failures, human-agent trust exploitation, and rogue
+agents. Most map to a control in this lesson. Include a hostile-input case for each in your
+test set. The
 [prompts in production](../prompt-engineering/prompts-in-production.md) lesson shows how
 to keep such a test set.
 
@@ -232,10 +239,13 @@ to keep such a test set.
 ## Sources
 
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
-  (Dec 2024): stopping conditions such as a maximum number of iterations. Checked 2026-09.
+  (Dec 2024): stopping conditions such as a maximum number of iterations. Checked 2026-10.
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
-  (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-09.
+  (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-10.
 - OWASP GenAI Security Project, [Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
-  (Dec 2025): the risk names above. Confirmed through search results and secondary
-  summaries; the page could not be opened when this lesson was written.
+  (9 Dec 2025): the publication date was read on the page. The ten risk names come from
+  secondary summaries, because the page links to a download we did not open.
+- AI Incident Database, [Jason Lemkin entity page, incident 1152](https://incidentdatabase.ai/entities/jason-lemkin/):
+  the date (18 Jul 2025), the code freeze, and the harm. Press coverage supplies the rest.
+  Checked 2026-10.
 - The runaway-loop example and the policy file are invented and illustrative.

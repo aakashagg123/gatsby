@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>What an agent is, and how much autonomy it needs</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>An agent is a loop. It gathers context, decides the next action, takes it, and observes
 the result. It repeats until the goal is met or a budget runs out. Nothing about that loop
@@ -237,7 +237,8 @@ def run_agent(goal, tools, max_steps=8, max_cost=0.50):
 </ul>
 <p><strong>Two protocols you will hear named.</strong> The <strong>Model Context Protocol (MCP)</strong> is an open
 standard for connecting an AI application to tools and data. In December 2025 Anthropic
-donated it to the Agentic AI Foundation, a directed fund under the Linux Foundation. The
+donated it to the Agentic AI Foundation, a directed fund under the Linux Foundation. Block
+and OpenAI co-founded the foundation. The
 <strong>Agent2Agent protocol (A2A)</strong> lets separate agents discover each other and delegate work.
 Google donated it to the Linux Foundation in June 2025. MCP connects an agent to tools. A2A
 connects an agent to other agents. Neither changes the loop above. For the honest state of
@@ -266,11 +267,11 @@ each, read <a href="../agentic-ai/multi-agent-and-protocols.html">multi-agent an
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
   (Dec 2024): the definitions of workflow and agent, and the advice to use the simplest
-  solution first. Checked 2026-09.</li>
+  solution first. Checked 2026-10.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation">Donating MCP to the Agentic AI Foundation</a>
-  (Dec 2025): the donation and MCP's description. Checked 2026-09.</li>
+  (Dec 2025): the donation and MCP's description. Checked 2026-10.</li>
 <li>Google Cloud, <a href="https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade">Agent2Agent protocol is getting an upgrade</a>
-  (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-09.</li>
+  (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-10.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="planning-reasoning-and-reliability-across-a-run.html"><span class="lbl">→ Next</span><span class="ttl">Planning, reasoning &amp; reliability across a run</span></a></div><footer class="foot"><strong>Core insight:</strong> The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-the-loop-and-the-dial-next-to-it">The mental model: the loop, and the dial next to it</a><a class="h2" href="#where-a-task-belongs-on-the-dial">Where a task belongs on the dial</a><a class="h2" href="#worked-example-a-refund-triage-proposal">Worked example: a refund-triage proposal</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#why-the-decision-comes-before-the-build">Why the decision comes before the build</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

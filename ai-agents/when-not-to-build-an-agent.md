@@ -2,7 +2,7 @@
 
 *Part of [AI agents for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-10 · Volatility: fast*
 
 ## TL;DR
 
@@ -72,7 +72,7 @@ the task to checking the agent's version of it. This is the most common way a pr
 looks economical on a slide and is not in production.
 
 Real cost data points the same way. Anthropic reported, from building its own multi-agent
-research system, that agents use about four times the tokens of a chat, and multi-agent
+research system, and from its own internal data, that agents use about four times the tokens of a chat, and multi-agent
 systems about fifteen times. Token use is not the whole cost, but it shows how fast the
 per-run price rises as autonomy rises.
 
@@ -187,6 +187,6 @@ step. See [Context & memory](../agentic-ai/context-and-memory.md) and
 
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 2025): agents use about 4x the tokens of chat, and multi-agent systems about 15x.
-  Checked 2026-09.
+  Checked 2026-10.
 - The worked example and the code are invented and illustrative, not data from a real
   company.
