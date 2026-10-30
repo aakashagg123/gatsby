@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Running an agent in production</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Building an agent is one job. Running it is another. An agent acts on its own, so a
 mistake can repeat many times before a person sees it. Production needs a control layer
@@ -202,7 +202,11 @@ deployment.</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Controls in the prompt.</strong> "Never spend more than 50" is written in the system prompt. A
-  hijacked or confused run ignores it. Put limits in code.</li>
+  hijacked or confused run ignores it. Put limits in code. A widely reported case: in July
+  2025 a Replit coding agent deleted a live production database during a code freeze it had
+  been told, repeatedly, to respect. Replit's CEO said the platform would add automatic
+  separation of development and production data. The details come from press reports and the
+  AI Incident Database (incident 1152), not a postmortem.</li>
 <li><strong>The untested kill switch.</strong> It exists, and it fails the first time it is needed.</li>
 <li><strong>Approval fatigue.</strong> People are asked to approve too many low-risk actions, and start
   approving without reading. Gate by tier so approvals are rare and meaningful.</li>
@@ -244,9 +248,12 @@ kill_switch:
     return result
 </code></pre>
 <p><strong>Agent-specific risks to test.</strong> The Open Worldwide Application Security Project (OWASP)
-published a Top 10 for Agentic Applications in December 2025. It lists risks that map to this lesson: goal hijack, tool misuse, identity and
-privilege abuse, cascading failures, and rogue agents. Include a hostile-input case for
-each in your test set. The
+published a Top 10 for Agentic Applications on 9 December 2025. Its ten risks are agent goal
+hijack, tool misuse and exploitation, identity and privilege abuse, agentic supply chain
+vulnerabilities, unexpected code execution, memory and context poisoning, insecure
+inter-agent communication, cascading failures, human-agent trust exploitation, and rogue
+agents. Most map to a control in this lesson. Include a hostile-input case for each in your
+test set. The
 <a href="../prompt-engineering/prompts-in-production.html">prompts in production</a> lesson shows how
 to keep such a test set.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
@@ -277,12 +284,15 @@ to keep such a test set.</p>
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
-  (Dec 2024): stopping conditions such as a maximum number of iterations. Checked 2026-09.</li>
+  (Dec 2024): stopping conditions such as a maximum number of iterations. Checked 2026-10.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
-  (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-09.</li>
+  (Jun 2025): long-running stateful agents and rainbow deployments. Checked 2026-10.</li>
 <li>OWASP GenAI Security Project, <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">Top 10 for Agentic Applications for 2026</a>
-  (Dec 2025): the risk names above. Confirmed through search results and secondary
-  summaries; the page could not be opened when this lesson was written.</li>
+  (9 Dec 2025): the publication date was read on the page. The ten risk names come from
+  secondary summaries, because the page links to a download we did not open.</li>
+<li>AI Incident Database, <a href="https://incidentdatabase.ai/entities/jason-lemkin/">Jason Lemkin entity page, incident 1152</a>:
+  the date (18 Jul 2025), the code freeze, and the harm. Press coverage supplies the rest.
+  Checked 2026-10.</li>
 <li>The runaway-loop example and the policy file are invented and illustrative.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="when-not-to-build-an-agent.html"><span class="lbl">← Previous</span><span class="ttl">When not to build an agent</span></a><a class="navcard next" href="choosing-and-acceptance-testing-an-agent.html"><span class="lbl">→ Next</span><span class="ttl">Choosing and acceptance-testing an agent</span></a></div><footer class="foot"><strong>Core insight:</strong> The agent loop is simple. Success depends on the decisions around it: how much autonomy, how it catches its mistakes, and what limits surround it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -2,7 +2,7 @@
 
 *Part of [AI agents for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-10 · Volatility: fast*
 
 ## TL;DR
 
@@ -160,7 +160,8 @@ Three points matter to an engineer.
 
 **Two protocols you will hear named.** The **Model Context Protocol (MCP)** is an open
 standard for connecting an AI application to tools and data. In December 2025 Anthropic
-donated it to the Agentic AI Foundation, a directed fund under the Linux Foundation. The
+donated it to the Agentic AI Foundation, a directed fund under the Linux Foundation. Block
+and OpenAI co-founded the foundation. The
 **Agent2Agent protocol (A2A)** lets separate agents discover each other and delegate work.
 Google donated it to the Linux Foundation in June 2025. MCP connects an agent to tools. A2A
 connects an agent to other agents. Neither changes the loop above. For the honest state of
@@ -190,8 +191,8 @@ each, read [multi-agent and protocols](../agentic-ai/multi-agent-and-protocols.m
 
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
   (Dec 2024): the definitions of workflow and agent, and the advice to use the simplest
-  solution first. Checked 2026-09.
+  solution first. Checked 2026-10.
 - Anthropic, [Donating MCP to the Agentic AI Foundation](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation)
-  (Dec 2025): the donation and MCP's description. Checked 2026-09.
+  (Dec 2025): the donation and MCP's description. Checked 2026-10.
 - Google Cloud, [Agent2Agent protocol is getting an upgrade](https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade)
-  (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-09.
+  (2025): confirms the A2A donation to the Linux Foundation in June 2025. Checked 2026-10.

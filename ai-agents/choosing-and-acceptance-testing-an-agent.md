@@ -2,7 +2,7 @@
 
 *Part of [AI agents for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-10 · Volatility: fast*
 
 ## TL;DR
 
@@ -215,7 +215,8 @@ trajectory grading in depth.
 - Gartner, [Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027)
   (Jun 2025): the prediction, the definition of agent-washing, and the estimate of about 130
   real vendors. Confirmed through search-result excerpts and secondary reports; the page
-  could not be opened when this lesson was written.
+  could not be opened (HTTP 403) on the 2026-10 recheck either. The 40% figure is a forecast, not
+  an observed result, and no revision turned up in search.
 - Civil Resolution Tribunal of British Columbia, [Moffatt v. Air Canada, 2024 BCCRT 149](https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html)
   (Feb 2024): the tribunal held the airline responsible for its chatbot's misleading
   statement. The chat took place in November 2022. The decision text was checked by an

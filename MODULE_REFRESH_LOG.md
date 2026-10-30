@@ -39,7 +39,7 @@ picks the lowest tier number among due modules.
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | never |
-| ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | never |
+| ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | 2026-10-30 |
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
@@ -522,3 +522,33 @@ and a link to the merged PR.)
   (older docs said a flat 0.1x read) — check against the pricing page. Not built: a standalone lesson
   on reasoning-token and agent cost control (scope boundary). README still lacks a "Where the depth
   lives" map and recap a "Test yourself" section (structural, not built).
+
+- 2026-10-30 — ai-agents — tier 2. Picked because no tier-1 row was due (ai-engineering is at 40 of
+  45 days, the rest are newer) and `ai-agents` was a tier-2 `never` row a Senior PM meets in every
+  AI roadmap review. Outcome: fixed + expanded. Read README, all 5 lessons and recap in full first.
+  Accuracy: (1) METR text said the faster pace was "reported"; METR's own page now says it is no
+  longer actively updated, warns above 16 hours is unreliable, and says time horizon measures human
+  task time, not agent run time. Lesson and recap reworded; the 4-5 month figure is marked as
+  secondary and unconfirmed. (2) "Claude 4.6 and later" thinking claim reworded to "current Claude
+  models" (docs show adaptive thinking as the model behaviour). (3) 4x/15x token claim now labelled
+  Anthropic internal data. (4) MCP donation: added Block and OpenAI as co-founders. Coverage: effort
+  and agent loops (thinking billed as output, first request carries most reasoning, effort changes
+  break the cache); long-running multi-session agent failure modes and fixes; Replit production
+  database deletion as a case for code-level limits; full OWASP agentic Top 10 list.
+  Sources opened: metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/;
+  metr.org/time-horizons; anthropic.com/engineering/building-effective-agents;
+  anthropic.com/engineering/multi-agent-research-system;
+  anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation;
+  cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade
+  (A2A to Linux Foundation June, v0.3); platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost;
+  anthropic.com/engineering/effective-harnesses-for-long-running-agents;
+  genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/ (date only);
+  incidentdatabase.ai/entities/jason-lemkin/.
+  Search results only, not opened: Gartner press release (403 on fetch; figures confirmed in
+  snippets and many secondary reports); OWASP ten risk names (secondary summaries); METR post-2023
+  doubling estimates (buttondown, Manifold); Replit details beyond AIID (eWeek, The Stack).
+  NOT verified: Moffatt v. Air Canada (CanLII 403; recap figures CA$650.88 / CA$812.02 unchecked this
+  run); a possible May 2026 Gartner forecast about demoting agents (single weak source); the
+  A2A/MCP current spec versions; vendor agent SDKs (OpenAI, Google) not compared.
+  Flagged: recap Moffatt figures need a primary-source pass. A lesson on agent identity and
+  permissions (non-human identity) may be worth building; not built (scope boundary).
