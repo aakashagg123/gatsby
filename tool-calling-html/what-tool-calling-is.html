@@ -160,6 +160,15 @@ model requests, something else decides whether to comply, and something else aga
 carries it out. The full craft of choosing, describing, and running tools well — including
 the MCP standard that made tools portable across vendors — is developed in
 <a href="../agentic-ai/tools-and-function-calling.html">Tools &amp; function calling</a>.</p>
+<h2 id="two-kinds-of-tool-yours-and-the-vendors">Two kinds of tool: yours and the vendor's</h2>
+<p>Not every tool runs in your code. Anthropic's API, for example, splits tools by where they run. A <strong>client tool</strong> runs in your application. Your code receives the request, runs it, and returns the result. A <strong>server tool</strong>, such as web search or code execution, runs on the vendor's infrastructure. You see the result but never handle the call.</p>
+<p>This split moves the decision point. For a client tool, your harness sits between the request and the action. For a server tool, the vendor runs the action, so your control is the choice to enable the tool and the limits you set on it. Ask which kind each tool is before you answer the question "what stops a wrong request?"</p>
+<h2 id="three-settings-a-product-leader-should-know">Three settings a product leader should know</h2>
+<ul>
+<li><strong>Tool choice.</strong> By default the model decides on each turn whether to call a tool. You can force a call or forbid all calls. Support varies by model: Anthropic's docs say forced tool use returns an error on Claude Opus 5.5 and Sonnet 5.5, so check the current docs before you design around it.</li>
+<li><strong>Parallel calls.</strong> A model can request several tools in one turn. Each request still needs its own check. Vendors let you switch parallel calls off when ordering matters.</li>
+<li><strong>Strict mode.</strong> It makes the arguments match your schema. It does not make them true. A schema-valid <code>customer_id</code> can still be the wrong customer, so validation and authorization stay your job.</li>
+</ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Treating the model as the actor, not the requester</strong> — designing a feature as if "the
@@ -173,6 +182,7 @@ the MCP standard that made tools portable across vendors — is developed in
 </ul>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
+<li class="task todo">For each tool, do you know whether it runs in your code or on the vendor's servers?</li>
 <li class="task todo">Can you point to the exact line of code where a tool request is validated and
       authorized, before it's ever executed?</li>
 <li class="task todo">Does the team describe this feature as "the model does X" or "the model asks to do
@@ -193,7 +203,7 @@ the MCP standard that made tools portable across vendors — is developed in
   engineering depth behind validating and authorizing every request.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="tool-contracts-and-reliability.html"><span class="lbl">→ Next</span><span class="ttl">Tool contracts &amp; reliability</span></a></div><footer class="foot"><strong>Core insight:</strong> Tool calling moves the risk from wrong words to wrong actions, so every safeguard that matters sits between the model&#x27;s request and the real world.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-request-not-a-command">The mental model: a request, not a command</a><a class="h2" href="#why-this-is-the-line-where-risk-multiplies">Why this is the line where risk multiplies</a><a class="h2" href="#what-actually-counts-as-a-tool">What actually counts as a tool</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-request-not-a-command">The mental model: a request, not a command</a><a class="h2" href="#why-this-is-the-line-where-risk-multiplies">Why this is the line where risk multiplies</a><a class="h2" href="#what-actually-counts-as-a-tool">What actually counts as a tool</a><a class="h2" href="#two-kinds-of-tool-yours-and-the-vendors">Two kinds of tool: yours and the vendor&#x27;s</a><a class="h2" href="#three-settings-a-product-leader-should-know">Three settings a product leader should know</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -80,9 +80,15 @@ question. An MCP server you didn't write is third-party code your agent's contex
 depends on: its tool descriptions shape what the model does, and its results enter your
 agent's context the same way a retrieved document would. The practical response is to vet
 an external MCP server with the same seriousness as a new software dependency — not with
-the casualness of installing a browser extension. The integration-economics side of this
+the casualness of installing a browser extension. The MCP specification itself says tools represent arbitrary code execution. It says there should always be a human in the loop with the ability to deny tool invocations. It also says clients must treat tool annotations, such as a "read-only" hint, as untrusted unless the server is trusted. A server's own label for its tool is a claim, not a guarantee.
+
+Security researchers named the main attacks. Invariant Labs described **tool poisoning** in April 2025: hidden instructions in a tool description that the user does not see but the model follows. Two variants matter for a toolbox review. A **rug pull** is a server that changes a tool's description after you approved it. **Shadowing** is a malicious server whose description changes how the model uses a different, trusted server's tools, such as redirecting every email. Proposed defences include pinning and hashing tool descriptions and re-approving when they change. The integration-economics side of this
 decision — when adopting the standard is worth it for a given system — is developed in
 [MCP & standard connectors](../api-integrations/mcp-and-standard-connectors.md).
+
+## The lethal trifecta
+
+Simon Willison names three capabilities that are dangerous together: access to private data, exposure to untrusted content, and a way to send data out. An agent with all three can be tricked into reading private data and sending it to an attacker. A tool list is where you can see this. Count the tools by these three labels. If one agent holds all three, remove one, or split the work across agents with separate permissions. Willison also warns that guardrail products cannot reliably block these attacks, so structure is the safer defence.
 
 ## Failure modes
 
@@ -93,6 +99,8 @@ decision — when adopting the standard is worth it for a given system — is de
 - **No approval tier for irreversible actions** — every tool call fires immediately,
   including the ones that delete, send, or spend, with no confirmation step anyone decided
   to add.
+- **All three trifecta capabilities in one agent** — it reads private data, reads untrusted web or email content, and can send messages or make web requests.
+- **Approving a tool once, forever** — a server changes its tool descriptions later, and nothing re-checks them.
 - **An unvetted third-party MCP server granted full trust** — a community tool server added
   like a browser extension, given a seat inside the agent's trust boundary without the
   scrutiny a new dependency would get.
@@ -105,6 +113,8 @@ decision — when adopting the standard is worth it for a given system — is de
       anything the model itself asserts?
 - [ ] Do destructive or outward-facing actions require confirmation or human approval, by
       deliberate design rather than default?
+- [ ] Does any single agent combine private data, untrusted content, and an outbound channel? If so, which one can you remove?
+- [ ] Are tool descriptions from third-party servers pinned, and does a change trigger a fresh review?
 - [ ] Has every third-party MCP server in use been vetted with the same rigor as a new
       software dependency?
 

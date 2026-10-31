@@ -56,6 +56,14 @@ the schema itself is engineering. The full craft of tool design, including how t
 descriptions a model reads well, is developed in
 [Tools & function calling](../agentic-ai/tools-and-function-calling.md).
 
+Tool count has a hard cost too. Every definition sits in the context window on every request. Anthropic's docs describe a five-server setup (GitHub, Slack, Sentry, Grafana, Splunk) that can use about 55,000 tokens of definitions before any work starts. The same docs say tool selection accuracy degrades once a model has more than 30 to 50 tools. For large toolboxes, vendors now offer tool search: the model finds and loads only the 3 to 5 tools it needs. Anthropic reports that this cut definition tokens by about 85% and raised MCP evaluation accuracy for Opus 4 from 49% to 74% (vendor figures, not independent tests). Treat "how many tools" as both a quality decision and a cost decision. See [Cost optimization](../cost-optimization/README.md) for how input tokens add up.
+
+Two more design habits come from Anthropic's tool-writing guidance. First, prefix names by service (`github_list_prs`, `slack_send_message`) so tools from different systems do not blur together. Second, return only the fields the model needs, with readable names instead of raw IDs. A concise-versus-detailed response option cut tokens to about a third in Anthropic's own Slack example.
+
+## Strict mode: valid shape is not the same as correct
+
+Vendors can now force a tool call to match its schema. Anthropic calls this strict tool use: it constrains the model's output so a field typed as an integer is always an integer, and the tool name is always a real one. That removes a whole class of hallucinated-argument bugs. It does not check meaning. The model can still pick the wrong order ID or the wrong tool. Strict mode reduces retries. It does not replace your own validation, authorization, or tests.
+
 ## Idempotency: a promise, not an implementation detail
 
 Models retry. Networks fail and retry. Agents re-issue a call that looked like it didn't
@@ -70,6 +78,8 @@ engineering pattern (idempotency keys, separating reads from writes) is develope
 in [Function calling reliability](../content/02-reliable-outputs/function-calling.md).
 
 ## Errors are part of the product, not an engineering afterthought
+
+The MCP specification separates two kinds of failure. A protocol error means the request itself was broken, such as an unknown tool. A tool execution error (`isError: true`) carries a message the model can act on, such as a bad date format or a value out of range. The spec says clients should pass execution errors back to the model so it can correct itself.
 
 A tool that fails with an opaque "error 500" produces a model that either gives up or
 retries the same broken call. A tool that fails with "date must be YYYY-MM-DD, e.g.
@@ -88,6 +98,7 @@ in production.
   duplicates a real action.
 - **Errors that don't teach** — a tool whose failures give the model nothing to act on,
   producing repeated identical failed calls instead of a self-correction.
+- **Tool sprawl across servers** — several connected servers expose hundreds of tools, definitions eat the context window, and selection accuracy falls. Nobody owns the total.
 - **Schema drift from the real system** — a tool's contract stops matching what the
   underlying system actually accepts or returns, and nobody notices until calls start
   failing unpredictably.
@@ -98,6 +109,8 @@ in production.
       just accumulate one API wrapper at a time?
 - [ ] For every tool with a real-world side effect: is it safe to call twice, and if not,
       does it have an idempotency key?
+- [ ] Do you know how many tokens your tool definitions use per request, and have you tested accuracy as the tool count grows?
+- [ ] Is strict mode on where the vendor supports it, with validation still in place for meaning (right customer, right order)?
 - [ ] Do tool error messages give the model something it can act on, not just a failure
       code?
 - [ ] Has anyone actually tested what happens when a network retry hits each
