@@ -73,6 +73,18 @@ carries it out. The full craft of choosing, describing, and running tools well �
 the MCP standard that made tools portable across vendors — is developed in
 [Tools & function calling](../agentic-ai/tools-and-function-calling.md).
 
+## Two kinds of tool: yours and the vendor's
+
+Not every tool runs in your code. Anthropic's API, for example, splits tools by where they run. A **client tool** runs in your application. Your code receives the request, runs it, and returns the result. A **server tool**, such as web search or code execution, runs on the vendor's infrastructure. You see the result but never handle the call.
+
+This split moves the decision point. For a client tool, your harness sits between the request and the action. For a server tool, the vendor runs the action, so your control is the choice to enable the tool and the limits you set on it. Ask which kind each tool is before you answer the question "what stops a wrong request?"
+
+## Three settings a product leader should know
+
+- **Tool choice.** By default the model decides on each turn whether to call a tool. You can force a call or forbid all calls. Support varies by model: Anthropic's docs say forced tool use returns an error on Claude Opus 5.5 and Sonnet 5.5, so check the current docs before you design around it.
+- **Parallel calls.** A model can request several tools in one turn. Each request still needs its own check. Vendors let you switch parallel calls off when ordering matters.
+- **Strict mode.** It makes the arguments match your schema. It does not make them true. A schema-valid `customer_id` can still be the wrong customer, so validation and authorization stay your job.
+
 ## Failure modes
 
 - **Treating the model as the actor, not the requester** — designing a feature as if "the
@@ -86,6 +98,7 @@ the MCP standard that made tools portable across vendors — is developed in
 
 ## Practitioner checklist
 
+- [ ] For each tool, do you know whether it runs in your code or on the vendor's servers?
 - [ ] Can you point to the exact line of code where a tool request is validated and
       authorized, before it's ever executed?
 - [ ] Does the team describe this feature as "the model does X" or "the model asks to do

@@ -38,7 +38,7 @@ picks the lowest tier number among due modules.
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | never |
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
-| tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | never |
+| tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | 2026-10-31 |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | 2026-10-30 |
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
@@ -552,3 +552,31 @@ and a link to the merged PR.)
   A2A/MCP current spec versions; vendor agent SDKs (OpenAI, Google) not compared.
   Flagged: recap Moffatt figures need a primary-source pass. A lesson on agent identity and
   permissions (non-human identity) may be worth building; not built (scope boundary).
+
+- 2026-10-31 — tool-calling — tier 2. Picked because no tier-1 row was due (ai-engineering and
+  technical-product-management are at 40-41 of 45 days) and this was a tier-2 `never` row; it is
+  the smallest of the five and a Senior PM meets tool use in every agent review. Outcome: fixed +
+  expanded. Read README, 3 lessons and recap in full first.
+  Accuracy: (1) recap Replit story said "the company's own postmortem was public" — unverified;
+  reworded to the AI Incident Database record (incident 1152, 18 Jul 2025) and marked as press-based.
+  (2) Tool-poisoning story now dated (Invariant Labs, 1 Apr 2025) with rug-pull and shadowing.
+  Coverage: client vs server tools (where the decision point moves); tool_choice, with the note that
+  forced tool use errors on Opus 5.5/Sonnet 5.5; parallel calls; strict mode (valid shape is not
+  correct meaning); tool-definition token cost (~55k example), 30-50 tool accuracy cliff, tool search
+  and vendor-reported gains; namespacing and concise responses; MCP error split (protocol vs isError);
+  MCP spec human-in-the-loop and "annotations are untrusted"; rug pull/shadowing; lethal trifecta
+  as a toolbox review lens. check_module: avg sentence 27.9 -> 23.0 worst lesson (baseline run was
+  the stashed pre-edit text); links and design-system checks pass.
+  Sources opened: platform.claude.com/docs/en/agents-and-tools/tool-use/overview; .../define-tools;
+  .../tool-search-tool; .../strict-tool-use; .../programmatic-tool-calling (saved, only header read);
+  anthropic.com/engineering/writing-tools-for-agents; anthropic.com/engineering/advanced-tool-use;
+  modelcontextprotocol.io/specification/latest (version 2026-07-28) and .../server/tools;
+  invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks;
+  simonwillison.net/2025/Jun/16/the-lethal-trifecta/; incidentdatabase.ai/entities/jason-lemkin/.
+  NOT verified: OpenAI/Google tool-calling behaviour (lessons cite Anthropic docs only);
+  programmatic tool calling is not covered in the lessons (body unread); MCP 2026-07-28 changes
+  (stateless requests, Tasks extension, MCP Apps) not described in this module; Replit details beyond
+  AIID; "non-idempotent retry" and "agentic shopping" recap patterns remain unsourced generalisations.
+  Flagged (other module): api-integrations/mcp-and-standard-connectors.md should be checked against
+  MCP spec 2026-07-28 (stateless protocol, no sessions, Tasks extension). Not built: a lesson on
+  tool-result prompt injection defences and agent identity (scope boundary).
