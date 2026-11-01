@@ -151,6 +151,47 @@ matters for that system specifically. It's less clearly worth it for a genuinely
 throwaway integration that will never be reused. The standard is still maturing, so this is
 also a judgment call about how much you want to build on infrastructure that is real and
 adopted, but still evolving.</p>
+<h2 id="where-the-standard-stands-today">Where the standard stands today</h2>
+<p>"Still maturing" needs facts behind it. As of late 2026:</p>
+<ul>
+<li><strong>Governance is neutral.</strong> On 9 December 2025 Anthropic gave MCP to the Agentic AI
+  Foundation, a fund under the Linux Foundation. Anthropic, Block, and OpenAI co-founded
+  it. Anthropic said the governance model stays the same. Maintainers still decide with
+  community input.</li>
+<li><strong>Adoption is wide.</strong> At that date Anthropic cited more than 10,000 active public MCP
+  servers. It listed ChatGPT, Cursor, Gemini, Microsoft Copilot, and Visual Studio Code as
+  clients. These are vendor-reported figures.</li>
+<li><strong>The spec moves in dated versions.</strong> The current version is 2026-07-28. It makes the
+  protocol stateless: each request carries its own protocol version and client
+  capabilities, and a server may not rely on an earlier request on the same connection.
+  Older servers and clients that assume a session need a check against the new version.</li>
+<li><strong>Long work is an extension, not core.</strong> The optional <em>Tasks</em> extension covers
+  long-running operations, with polling and durable handles. <em>MCP Apps</em> and <em>Skills over
+  MCP</em> are other optional extensions. A client and a server must both support an
+  extension before it works.</li>
+</ul>
+<p>For a product leader, the practical point is this. The standard is no longer one vendor's
+side project. It still ships breaking changes, so pin the spec version your servers
+support and put an upgrade review on the roadmap.</p>
+<h2 id="authorization-and-trust-the-part-that-is-not-plug-and-play">Authorization and trust: the part that is not "plug and play"</h2>
+<p>A reusable connector also reuses access to your internal system. Three rules matter.</p>
+<ul>
+<li><strong>Remote servers use OAuth.</strong> For HTTP transport, the spec bases authorization on OAuth
+  2.1. The server must publish protected-resource metadata. The client must send the
+  <code>resource</code> parameter, which names the server the token is for. Authorization is optional
+  in the spec, so an MCP server can ship with none.</li>
+<li><strong>Tokens are bound to one server.</strong> A server must accept only tokens issued for it and
+  must not pass other tokens through. This blocks a "confused deputy" attack, where a
+  server uses a token meant for something else.</li>
+<li><strong>Tool descriptions are untrusted.</strong> The spec says that descriptions of tool behaviour,
+  such as annotations, are untrusted unless they come from a trusted server. The host
+  must get user consent before it calls any tool.</li>
+</ul>
+<p>The scope you grant is the real product decision. A connector that can read a CRM can
+read all of it, for every assistant that connects. Ask for the narrowest scope that does
+the job. The agent-side attacks, such as tool poisoning, are covered in
+<a href="../agentic-ai/tools-and-function-calling.html">Tools &amp; function calling</a> and in the
+<a href="../tool-calling/index.html">Tool calling</a> module.</p>
 <h2 id="where-the-deeper-mechanics-live">Where the deeper mechanics live</h2>
 <p>The actual mechanics of how an agent uses tools connected through MCP — the protocol
 details, sandboxing, permissions, and the craft of designing a good tool for a model to
@@ -165,7 +206,10 @@ standard is worth building on for your company's specific systems.</p>
 <li><strong>Over-engineering a genuine one-off</strong> — spending the extra effort to build a reusable
   standard connector for a system that will realistically only ever connect to one tool.</li>
 <li><strong>Treating the standard as fully settled</strong> — building critical infrastructure on it
-  without accounting for the fact that a still-maturing standard can change.</li>
+  without accounting for dated spec versions, and for changes such as the move to a
+  stateless protocol in 2026-07-28.</li>
+<li><strong>An open connector</strong> — exposing an internal system through a server with no
+  authorization, or with a token scope far wider than the job needs.</li>
 <li><strong>Confusing the strategic question with the mechanical one</strong> — spending a leadership
   conversation on protocol internals that belong to the engineering team, instead of on
   the integration-economics question that's actually a product decision.</li>
@@ -177,7 +221,9 @@ standard is worth building on for your company's specific systems.</p>
 <li class="task todo">Have we weighed the extra effort of a reusable connector against the cost of
       rebuilding a bespoke integration for each future tool?</li>
 <li class="task todo">Are we tracking how the standard is evolving, if we're building on it for something
-      important?</li>
+      important? Do we know which spec version each server supports?</li>
+<li class="task todo">Does every remote connector use OAuth with the narrowest scope that does the job?</li>
+<li class="task todo">Does our host ask the user for consent before a tool call that changes data?</li>
 <li class="task todo">Is this decision framed as an integration-economics question for product, not just
       a protocol question for engineering?</li>
 </ul>
@@ -191,7 +237,7 @@ standard is worth building on for your company's specific systems.</p>
   — the build-vs-reuse instincts behind this lesson's decision.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="integrating-into-existing-systems.html"><span class="lbl">← Previous</span><span class="ttl">Integrating into existing systems</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> A model is a slower, less predictable dependency. Proven integration discipline, not a cleverer model, makes AI features reliable.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-universal-plug-instead-of-a-different-adapter-for-everything">The mental model: a universal plug instead of a different adapter for everything</a><a class="h2" href="#what-actually-changes-for-a-company-adopting-it">What actually changes for a company adopting it</a><a class="h2" href="#when-adopting-it-is-worth-it-and-when-it-isnt">When adopting it is worth it, and when it isn&#x27;t</a><a class="h2" href="#where-the-deeper-mechanics-live">Where the deeper mechanics live</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-universal-plug-instead-of-a-different-adapter-for-everything">The mental model: a universal plug instead of a different adapter for everything</a><a class="h2" href="#what-actually-changes-for-a-company-adopting-it">What actually changes for a company adopting it</a><a class="h2" href="#when-adopting-it-is-worth-it-and-when-it-isnt">When adopting it is worth it, and when it isn&#x27;t</a><a class="h2" href="#where-the-standard-stands-today">Where the standard stands today</a><a class="h2" href="#authorization-and-trust-the-part-that-is-not-plug-and-play">Authorization and trust: the part that is not &quot;plug and play&quot;</a><a class="h2" href="#where-the-deeper-mechanics-live">Where the deeper mechanics live</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

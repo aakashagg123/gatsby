@@ -148,8 +148,7 @@ what the receipt will contain — so both sides can build around it reliably.</p
   should be built on, not an afterthought.</li>
 <li><strong>Metadata.</strong> Which exact model version answered, and often a field explaining why
   generation stopped — it finished naturally, it hit a length limit, or it was cut off by
-  a safety filter. This last field is worth watching: a response silently truncated by a
-  length limit looks, at a glance, like a complete answer.</li>
+  a safety filter. This last field is worth watching: a response silently truncated by a length limit looks, at a glance, like a complete answer. Anthropic's field is called <code>stop_reason</code>, and <code>max_tokens</code> and <code>refusal</code> are two of its values. A refusal still comes back as a successful 200 response, and you are billed for the tokens it used.</li>
 </ul>
 <h2 id="why-this-is-a-contract-not-just-a-format">Why this is a contract, not just a format</h2>
 <p>Calling it a contract, not just a data format, matters because contracts have the
@@ -159,14 +158,15 @@ has to handle that), they can <strong>break</strong> (a field renamed or removed
 working, the same as any API), and they carry <strong>implicit promises</strong> about what's guaranteed
 and what isn't. The full discipline of thinking about contracts this way — versioning,
 breaking changes, what a promise actually covers — is developed in
-<a href="../technical-product-sense/apis-and-contracts.html">APIs &amp; contracts</a>, and it applies to a
-model's API exactly the way it applies to any other one your product depends on.</p>
+<a href="../technical-product-sense/apis-and-contracts.html">APIs &amp; contracts</a>, and it applies to a model's API exactly the way it applies to any other one your product depends on.</p>
+<p>Two kinds of change hit model contracts in practice. First, <strong>models retire</strong>. Anthropic gives at least 60 days' notice before it retires a public model, and requests to a retired model fail. For example, <code>claude-sonnet-4-5-20250929</code> is deprecated, with retirement set for 30 November 2026. Second, <strong>parameters change per model</strong>. Anthropic's docs list <code>temperature</code>, <code>top_p</code>, and <code>top_k</code> as removed in API version <code>2026-10-21</code>, and they return a 400 error from that version. Some current models also reject forced tool use (<code>tool_choice</code> of <code>any</code> or <code>tool</code>) and assistant prefill. A model upgrade is therefore a contract change that needs a test run, not a one-line config edit. Export usage by model so you know what still calls old versions.</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Treating the response as a black box</strong> — never looking at what fields actually come
   back, and missing that usage or stop-reason data was available all along.</li>
 <li><strong>Ignoring the stop-reason field</strong> — displaying a truncated response as if it were
   complete, because nobody checked why generation actually stopped.</li>
+<li><strong>A model ID with no retirement date on the calendar</strong> — the model works until the day it does not, and the notice email goes to someone who left.</li>
 <li><strong>No plan for a contract change</strong> — a vendor updates the response shape and the
   integration breaks in production, because nobody treated the contract as something that
   could change.</li>
@@ -181,6 +181,7 @@ model's API exactly the way it applies to any other one your product depends on.
 <li class="task todo">Is our cost tracking built on the token-usage data the response already provides?</li>
 <li class="task todo">Do we check the stop-reason field, so a truncated response isn't displayed as
       complete?</li>
+<li class="task todo">Do we know the retirement date of every model ID we call, and who owns the migration?</li>
 <li class="task todo">Do we have a plan — a version pin, a monitoring alert — for when a vendor changes the
       contract's shape?</li>
 </ul>

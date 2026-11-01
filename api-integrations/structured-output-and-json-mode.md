@@ -62,6 +62,16 @@ syntactically valid JSON matching the fields you specified. That is a real, mean
 improvement, and it is worth using whenever your API supports it, rather than relying on
 plain-language instruction alone.
 
+## How the API-level mechanism works
+
+Anthropic's structured outputs use constrained decoding. The API compiles your JSON schema into a grammar and limits the tokens the model may pick, so the text matches the schema. The docs promise valid JSON with the right types and required fields "in most cases". Three limits matter to a product leader:
+
+- **Truncation and refusal break the guarantee.** If the response stops at `max_tokens`, the JSON can be cut off. If the model refuses, the refusal text wins over the schema. Check `stop_reason` before you parse.
+- **The schema language is narrow.** Numeric limits such as `minimum` and `maximum`, string length limits, recursive schemas, and external `$ref` are not supported. Your own code must enforce those rules.
+- **Small surprises remain.** The model may change the capitalization of enum values. Compile time adds latency on the first call with a new schema, and complex schemas can fail with a 400 error.
+
+Other vendors differ in the details, so test the one you use.
+
 ## What it doesn't buy you
 
 Syntactic validity is not semantic correctness. A response can be perfectly valid JSON,
@@ -97,6 +107,7 @@ value.
 
 - [ ] For any response feeding directly into code, are we using schema-constrained
       generation rather than a plain-language instruction alone?
+- [ ] Do we check the stop reason, so a truncated or refused response never reaches the parser?
 - [ ] Do we validate the actual values in a structured response, not just its syntactic
       shape?
 - [ ] Do we have a repair or fallback path for a response that fails validation?

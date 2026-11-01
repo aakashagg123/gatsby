@@ -79,6 +79,51 @@ throwaway integration that will never be reused. The standard is still maturing,
 also a judgment call about how much you want to build on infrastructure that is real and
 adopted, but still evolving.
 
+## Where the standard stands today
+
+"Still maturing" needs facts behind it. As of late 2026:
+
+- **Governance is neutral.** On 9 December 2025 Anthropic gave MCP to the Agentic AI
+  Foundation, a fund under the Linux Foundation. Anthropic, Block, and OpenAI co-founded
+  it. Anthropic said the governance model stays the same. Maintainers still decide with
+  community input.
+- **Adoption is wide.** At that date Anthropic cited more than 10,000 active public MCP
+  servers. It listed ChatGPT, Cursor, Gemini, Microsoft Copilot, and Visual Studio Code as
+  clients. These are vendor-reported figures.
+- **The spec moves in dated versions.** The current version is 2026-07-28. It makes the
+  protocol stateless: each request carries its own protocol version and client
+  capabilities, and a server may not rely on an earlier request on the same connection.
+  Older servers and clients that assume a session need a check against the new version.
+- **Long work is an extension, not core.** The optional *Tasks* extension covers
+  long-running operations, with polling and durable handles. *MCP Apps* and *Skills over
+  MCP* are other optional extensions. A client and a server must both support an
+  extension before it works.
+
+For a product leader, the practical point is this. The standard is no longer one vendor's
+side project. It still ships breaking changes, so pin the spec version your servers
+support and put an upgrade review on the roadmap.
+
+## Authorization and trust: the part that is not "plug and play"
+
+A reusable connector also reuses access to your internal system. Three rules matter.
+
+- **Remote servers use OAuth.** For HTTP transport, the spec bases authorization on OAuth
+  2.1. The server must publish protected-resource metadata. The client must send the
+  `resource` parameter, which names the server the token is for. Authorization is optional
+  in the spec, so an MCP server can ship with none.
+- **Tokens are bound to one server.** A server must accept only tokens issued for it and
+  must not pass other tokens through. This blocks a "confused deputy" attack, where a
+  server uses a token meant for something else.
+- **Tool descriptions are untrusted.** The spec says that descriptions of tool behaviour,
+  such as annotations, are untrusted unless they come from a trusted server. The host
+  must get user consent before it calls any tool.
+
+The scope you grant is the real product decision. A connector that can read a CRM can
+read all of it, for every assistant that connects. Ask for the narrowest scope that does
+the job. The agent-side attacks, such as tool poisoning, are covered in
+[Tools & function calling](../agentic-ai/tools-and-function-calling.md) and in the
+[Tool calling](../tool-calling/README.md) module.
+
 ## Where the deeper mechanics live
 
 The actual mechanics of how an agent uses tools connected through MCP — the protocol
@@ -95,7 +140,10 @@ standard is worth building on for your company's specific systems.
 - **Over-engineering a genuine one-off** — spending the extra effort to build a reusable
   standard connector for a system that will realistically only ever connect to one tool.
 - **Treating the standard as fully settled** — building critical infrastructure on it
-  without accounting for the fact that a still-maturing standard can change.
+  without accounting for dated spec versions, and for changes such as the move to a
+  stateless protocol in 2026-07-28.
+- **An open connector** — exposing an internal system through a server with no
+  authorization, or with a token scope far wider than the job needs.
 - **Confusing the strategic question with the mechanical one** — spending a leadership
   conversation on protocol internals that belong to the engineering team, instead of on
   the integration-economics question that's actually a product decision.
@@ -107,7 +155,9 @@ standard is worth building on for your company's specific systems.
 - [ ] Have we weighed the extra effort of a reusable connector against the cost of
       rebuilding a bespoke integration for each future tool?
 - [ ] Are we tracking how the standard is evolving, if we're building on it for something
-      important?
+      important? Do we know which spec version each server supports?
+- [ ] Does every remote connector use OAuth with the narrowest scope that does the job?
+- [ ] Does our host ask the user for consent before a tool call that changes data?
 - [ ] Is this decision framed as an integration-economics question for product, not just
       a protocol question for engineering?
 

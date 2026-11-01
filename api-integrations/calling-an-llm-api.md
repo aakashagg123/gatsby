@@ -63,12 +63,22 @@ product leader's specific attention is the spending control that usually rides a
 authentication: most vendors let you set usage caps or budgets per credential, so a bug or
 a runaway loop can't silently spend an unbounded amount before anyone notices. Treat that
 cap as a real safety control to configure deliberately, not a default to leave untouched.
+Know how your vendor signals the cap, too. Anthropic's API returns a 400 when you reach a
+limit you set yourself. It returns a 429 with no `retry-after` header when you reach the
+tier's monthly spend cap, and retries keep failing until access resumes. A retry loop
+that treats every 429 as "wait and try again" will spin on that error.
 
 ## Rate limits: how much, how fast
 
 A rate limit caps how many requests, or how many tokens, you can send in a given window of
 time. Every vendor has one, and a product growing faster than expected will hit it sooner
-than the team planned for. Two practical consequences follow. First, a feature's expected
+than the team planned for. Vendors measure more than request count: Anthropic limits requests, input tokens, and
+output tokens per minute, and refills capacity continuously (a token bucket) rather than
+resetting at fixed times. Short bursts can trip a limit even when the per-minute average
+looks safe. A sharp jump in traffic can also trigger a separate acceleration limit, so
+ramp up gradually. Cached input tokens do not count toward the input limit on most
+Claude models, so [prompt caching](../cost-optimization/README.md) raises effective
+throughput. Two practical consequences follow. First, a feature's expected
 traffic should be checked against the vendor's limits before launch, not discovered at
 launch. Second, when a limit is hit, the response is usually a specific, recognizable
 error — and a product that doesn't handle that error gracefully will show a broken
@@ -84,7 +94,11 @@ a blank screen. For any interactive feature where a user is watching and waiting
 is close to a required choice, not a nice-to-have: the perceived wait for the first
 token arriving is far shorter than the wait for the entire response, even when the total
 generation time is the same. For a background job with no one watching, the simpler
-full-response call is usually the better engineering choice.
+full-response call is usually the better engineering choice. Streaming has one trap: the
+API can return a 200 and then fail partway through the stream. Anthropic documents
+mid-stream error events for this case. Code that checks only the status line will show a
+half-finished answer as complete. Streaming also helps with long outputs, because an
+idle non-streaming connection can be dropped by a network before the answer arrives.
 
 ## Retries: surviving a call that fails
 
@@ -107,6 +121,9 @@ might otherwise trigger a real-world action twice.
   limit gets hit.
 - **No streaming on an interactive feature** — making a chat-style feature wait for a full
   response, producing a blank-screen delay a streamed version would have avoided.
+- **Retrying every 429 the same way** — a spend-cap 429 has no `retry-after` and never
+  clears by waiting, while a rate-limit 429 with that header tells you how long to wait.
+- **Trusting the status line of a stream** — a 200 can still end in an error event.
 - **Retrying without backoff or a safe-to-repeat action** — hammering a struggling service
   immediately, or retrying an action that isn't safe to run twice.
 
@@ -117,6 +134,9 @@ might otherwise trigger a real-world action twice.
 - [ ] Have we checked our expected traffic against the vendor's rate limits before launch?
 - [ ] Does our interactive, user-facing feature stream its response, rather than making
       users wait for the whole thing?
+- [ ] Do we log the vendor's request ID (Anthropic returns a `request-id` header) with
+      every call, so support can trace a failure?
+- [ ] Do we tell a spend-cap error from a rate-limit error, and handle mid-stream errors?
 - [ ] Does our retry logic back off between attempts, and only retry actions that are safe
       to repeat?
 

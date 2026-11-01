@@ -35,7 +35,7 @@ picks the lowest tier number among due modules.
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | never |
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
-| api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | never |
+| api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | 2026-11-01 |
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | 2026-10-31 |
@@ -580,3 +580,33 @@ and a link to the merged PR.)
   Flagged (other module): api-integrations/mcp-and-standard-connectors.md should be checked against
   MCP spec 2026-07-28 (stateless protocol, no sessions, Tasks extension). Not built: a lesson on
   tool-result prompt injection defences and agent identity (scope boundary).
+
+- 2026-11-01 — api-integrations — tier 2. Picked because no tier-1 row was due (all at 16-42 of
+  45 days) and four tier-2 rows were `never`; this one had an open flag from the 2026-10-31
+  tool-calling run (check the MCP lesson against spec 2026-07-28). Outcome: fixed + expanded.
+  Read README, 6 lessons and recap in full first. The module had few hard numbers, so most of the
+  work was coverage.
+  Accuracy: MCP lesson called the standard only "still maturing" with no facts; now states governance
+  (Agentic AI Foundation, 9 Dec 2025), vendor-reported adoption, spec 2026-07-28 (stateless), and the
+  optional Tasks extension. Recap MCP story now notes the Dec 2025 donation. Spend-cap advice now
+  separates Anthropic's 400 (self-set limit) from the 429 with no retry-after (tier cap).
+  Coverage added: MCP OAuth 2.1 authorization, resource parameter, token audience binding, untrusted
+  tool annotations; rate limits as token bucket, ITPM cache-awareness, acceleration limits;
+  mid-stream errors after a 200; request-id logging; stop_reason max_tokens/refusal; model retirement
+  (60 days' notice, Sonnet 4.5 retires 2026-11-30) and parameter removal (temperature/top_p/top_k in API
+  version 2026-10-21); batch APIs; OpenAI webhooks (Standard Webhooks, 72h retry, webhook-id dedupe);
+  structured-output constrained decoding limits; Stripe idempotency-key behaviour.
+  check_module (still FAIL on >30w share, as before): avg sentence 25.9 -> 21.8, >30w 31% -> 22%, Flesch 46 -> 51. Links and design-system checks pass.
+  Sources opened: modelcontextprotocol.io/specification/latest and .../2026-07-28/basic.md and
+  .../basic/authorization.md; anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation;
+  platform.claude.com/docs/en/api/errors; .../api/rate-limits; .../build-with-claude/batch-processing
+  (header and polling/retention lines only); .../build-with-claude/structured-outputs (first 100k of
+  106k chars); .../about-claude/model-deprecations; developers.openai.com/api/docs/guides/webhooks.md;
+  docs.stripe.com/api/idempotent_requests.
+  Search results only: OpenAI background-mode details beyond the webhooks page; Hookdeck notes.
+  NOT verified: the recap's 2023-24 provider-outage story and viral rate-limit story (unsourced
+  patterns); the "ChatGPT streaming 2022" claim; OpenAI/Google API behaviour beyond webhooks (lessons
+  lean on Anthropic docs); that other vendors adopted MCP "within about a year" beyond Anthropic's
+  own list; the OpenAI Assistants API sunset; the IETF Idempotency-Key header draft.
+  Flagged: a lesson on agent-to-agent protocols (A2A) and agent identity may be worth building; not
+  built (scope boundary). Cross-module: none found.
