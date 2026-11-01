@@ -38,7 +38,9 @@ before AI made retries routine, and it's the same pattern to reach for now.
 **The Model Context Protocol's fast, wide adoption (2024–2025).** Anthropic introduced MCP
 in late 2024 as an open standard for connecting AI assistants to tools and data. Within
 about a year, other major AI providers adopted the same standard, turning what could have
-been a fragmented, vendor-specific integration landscape into a shared one. 🎯 *Takeaway:*
+been a fragmented, vendor-specific integration landscape into a shared one. In December
+2025 Anthropic gave the protocol to the Agentic AI Foundation under the Linux Foundation,
+co-founded with Block and OpenAI. 🎯 *Takeaway:*
 [standard connectors](./mcp-and-standard-connectors.md) can genuinely change integration
 economics industry-wide, not just inside one company — this is what the "build once, works
 everywhere" argument for this lesson actually looks like in practice.

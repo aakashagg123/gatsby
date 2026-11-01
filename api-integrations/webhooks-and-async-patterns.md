@@ -83,6 +83,17 @@ than making the sender wait on your processing before it considers the delivery 
 briefly down, a network hiccup dropped it — so a long-running job also needs a way to check
 status directly, as a backstop when the notification itself doesn't show up.
 
+## What vendors actually offer
+
+Two vendor patterns cover most AI async work.
+
+- **Batch APIs.** Anthropic's Message Batches API runs large sets of requests asynchronously at a 50 percent cost cut. Most batches finish in under an hour. A batch expires if it does not finish within 24 hours, and results stay available for 29 days after creation. You poll the batch status until it reads `ended`, then stream the results. Use it for evaluations, backfills, and nightly jobs, not for anything a user waits on.
+- **Background responses with webhooks.** OpenAI delivers webhook events for completed batches, background responses, and fine-tuning jobs. Each delivery follows the Standard Webhooks format, with `webhook-id`, `webhook-timestamp`, and `webhook-signature` headers. The SDK can verify the signature for you.
+
+OpenAI's guidance matches the reliability rules above. Return a 2xx fast and hand real work to a background worker. Expect retries for up to 72 hours with exponential backoff. Expect an occasional duplicate, and use the `webhook-id` header as the idempotency key. A 3xx redirect counts as a failure, so register the final URL. The signing secret is shown once, so store it safely and rotate it if it leaks.
+
+Inside agent protocols, the same need shows up as the optional *Tasks* extension in MCP, which gives a long operation a durable handle that a client polls. See [MCP & standard connectors](./mcp-and-standard-connectors.md).
+
 ## Designing the user experience around it
 
 Async work changes what a product shows a user, not just what it does behind the scenes. A
@@ -111,7 +122,8 @@ working.
 
 - [ ] For each AI feature, have we matched the pattern — synchronous or async — to how long
       the underlying work actually takes?
-- [ ] Do we verify that an incoming webhook genuinely came from our service provider?
+- [ ] Do we verify the signature on every incoming webhook, and reject old timestamps?
+- [ ] Do we use a batch API for work no user is waiting on?
 - [ ] Is our webhook processing safe to run twice, in case of a duplicate delivery?
 - [ ] Do we have a status-check fallback for the case where a webhook notification never
       arrives?

@@ -139,8 +139,7 @@ can cause that action to happen twice. Idempotency solves this by designing the 
 that repeating it, deliberately or accidentally, has the same effect as doing it once —
 often through an idempotency key that lets the receiving system recognize and ignore a
 repeat. The mechanics of this pattern are developed in full in
-<a href="../ai/02-reliable-outputs.html#function-calling">Function calling</a>, and it deserves
-the same care here: any AI-driven action with a real-world side effect needs this design
+<a href="../ai/02-reliable-outputs.html#function-calling">Function calling</a>, and it deserves the same care here. Stripe's API shows the pattern. The client sends an <code>Idempotency-Key</code> header, and a retry with the same key returns the saved result instead of repeating the action. In Stripe's v1 API, keys may be pruned after 24 hours, so a very late retry can run again. Apply the same care in your own side-effect endpoints: any AI-driven action with a real-world side effect needs this design
 from the start, not as an afterthought once a duplicate has already happened.</p>
 <h2 id="failure-isolation-containing-a-bad-day">Failure isolation: containing a bad day</h2>
 <p>A model provider will, at some point, have a slow or degraded period — every external

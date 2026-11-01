@@ -76,8 +76,7 @@ flowchart LR
   should be built on, not an afterthought.
 - **Metadata.** Which exact model version answered, and often a field explaining why
   generation stopped — it finished naturally, it hit a length limit, or it was cut off by
-  a safety filter. This last field is worth watching: a response silently truncated by a
-  length limit looks, at a glance, like a complete answer.
+  a safety filter. This last field is worth watching: a response silently truncated by a length limit looks, at a glance, like a complete answer. Anthropic's field is called `stop_reason`, and `max_tokens` and `refusal` are two of its values. A refusal still comes back as a successful 200 response, and you are billed for the tokens it used.
 
 ## Why this is a contract, not just a format
 
@@ -88,8 +87,9 @@ has to handle that), they can **break** (a field renamed or removed stops your c
 working, the same as any API), and they carry **implicit promises** about what's guaranteed
 and what isn't. The full discipline of thinking about contracts this way — versioning,
 breaking changes, what a promise actually covers — is developed in
-[APIs & contracts](../technical-product-sense/apis-and-contracts.md), and it applies to a
-model's API exactly the way it applies to any other one your product depends on.
+[APIs & contracts](../technical-product-sense/apis-and-contracts.md), and it applies to a model's API exactly the way it applies to any other one your product depends on.
+
+Two kinds of change hit model contracts in practice. First, **models retire**. Anthropic gives at least 60 days' notice before it retires a public model, and requests to a retired model fail. For example, `claude-sonnet-4-5-20250929` is deprecated, with retirement set for 30 November 2026. Second, **parameters change per model**. Anthropic's docs list `temperature`, `top_p`, and `top_k` as removed in API version `2026-10-21`, and they return a 400 error from that version. Some current models also reject forced tool use (`tool_choice` of `any` or `tool`) and assistant prefill. A model upgrade is therefore a contract change that needs a test run, not a one-line config edit. Export usage by model so you know what still calls old versions.
 
 ## Failure modes
 
@@ -97,6 +97,7 @@ model's API exactly the way it applies to any other one your product depends on.
   back, and missing that usage or stop-reason data was available all along.
 - **Ignoring the stop-reason field** — displaying a truncated response as if it were
   complete, because nobody checked why generation actually stopped.
+- **A model ID with no retirement date on the calendar** — the model works until the day it does not, and the notice email goes to someone who left.
 - **No plan for a contract change** — a vendor updates the response shape and the
   integration breaks in production, because nobody treated the contract as something that
   could change.
@@ -111,6 +112,7 @@ model's API exactly the way it applies to any other one your product depends on.
 - [ ] Is our cost tracking built on the token-usage data the response already provides?
 - [ ] Do we check the stop-reason field, so a truncated response isn't displayed as
       complete?
+- [ ] Do we know the retirement date of every model ID we call, and who owns the migration?
 - [ ] Do we have a plan — a version pin, a monitoring alert — for when a vendor changes the
       contract's shape?
 
