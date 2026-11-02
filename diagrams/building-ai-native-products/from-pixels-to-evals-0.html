@@ -1,0 +1,39 @@
+<style>
+.dgm-pe{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-pe-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-pe h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-pe-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-pe-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-pe-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-pe-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-pe-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-pe-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-pe-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-pe-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-pe-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-pe-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-pe-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-pe-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-pe-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-pe-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-pe-note b{color:var(--color-text)}
+.dgm-pe-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-pe{padding:22px 14px 18px}.dgm-pe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-pe-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-pe">
+  <span class="dgm-pe-chip">Two loops that feed each other</span>
+  <h4>Fast offline evals, slow real-world signals</h4>
+  <p class="dgm-pe-sub">Each cycle adds real failures to the eval set.</p>
+  <div class="dgm-pe-grid">
+    <div class="dgm-pe-c dgm-pe-info"><h5><span class="dgm-pe-n">1</span>Interface</h5><span class="dgm-pe-t">what users see and do</span><p>Design it to produce usable signals.</p></div>
+    <div class="dgm-pe-c dgm-pe-discovery"><h5><span class="dgm-pe-n">2</span>Product signals</h5><span class="dgm-pe-t">accept · edit · regenerate · abandon</span><p>Weak labels: read samples.</p></div>
+    <div class="dgm-pe-c dgm-pe-caution"><h5><span class="dgm-pe-n">3</span>Eval set</h5><span class="dgm-pe-t">real failures added</span><p>Fast and repeatable.</p></div>
+    <div class="dgm-pe-c dgm-pe-warning"><h5><span class="dgm-pe-n">4</span>Offline evals</h5><span class="dgm-pe-t">score every change</span><p>Mind the noise band.</p></div>
+    <div class="dgm-pe-c dgm-pe-success"><h5><span class="dgm-pe-n">5</span>Change and confirm</h5><span class="dgm-pe-t">prompt · context · model · UI</span><p>A/B test what ships.</p></div>
+  </div>
+  <p class="dgm-pe-foot">Offline picks the change. The A/B test confirms it.</p>
+</div>

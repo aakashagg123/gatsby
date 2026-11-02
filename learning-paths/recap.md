@@ -35,13 +35,15 @@
 | Agentic workflows | — | Full | Full | Full |
 | Knowledge graphs | — | 3 of 8 | — | 2 of 8 |
 | Access control | — | 2 of 8 | 3 of 8 | 4 of 8 |
-| System design | — | — | 3 of 8 | 4 of 8 |
+| System design | — | — | 3 of 16 | 4 of 16 |
 | APIs & integrations | — | — | Full | — |
 | Machine learning | 4 of 8 | 5 of 8 | Full | 7 of 8 |
 | Tensors | — | — | Full | 3 of 5 |
 | CNNs | — | — | Full | — |
 | Transformers | — | — | Full | 4 of 6 |
 | Fine-tuning and post-training | — | — | Full | 3 of 6 |
+| AI-assisted development | — | — | 3 of 6 | 5 of 6 |
+| Building AI-native products | — | 6 of 11 | — | — |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 

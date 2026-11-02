@@ -1,0 +1,40 @@
+<style>
+.dgm-bm{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-bm-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-bm h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-bm-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-bm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-bm-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-bm-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-bm-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-bm-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-bm-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-bm-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-bm-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-bm-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-bm-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-bm-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-bm-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-bm-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-bm-note b{color:var(--color-text)}
+.dgm-bm-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-bm{padding:22px 14px 18px}.dgm-bm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-bm-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-bm">
+  <span class="dgm-bm-chip">The track map</span>
+  <h4>Five skills, one loop</h4>
+  <p class="dgm-bm-sub">What you learn from real users reshapes the design.</p>
+  <div class="dgm-bm-grid">
+    <div class="dgm-bm-c dgm-bm-info"><h5><span class="dgm-bm-n">1</span>Vision and UX</h5><span class="dgm-bm-t">lessons 1 and 2</span><p>Opinionated design for ambiguous input.</p></div>
+    <div class="dgm-bm-c dgm-bm-discovery"><h5><span class="dgm-bm-n">2</span>Model intuition</h5><span class="dgm-bm-t">lessons 3 and 4</span><p>What the model can really do.</p></div>
+    <div class="dgm-bm-c dgm-bm-caution"><h5><span class="dgm-bm-n">3</span>Pixels to evals</h5><span class="dgm-bm-t">lessons 5 and 6</span><p>Measure it and climb the hill.</p></div>
+    <div class="dgm-bm-c dgm-bm-warning"><h5><span class="dgm-bm-n">4</span>Agentic flows</h5><span class="dgm-bm-t">lessons 7 and 8</span><p>Tools, limits and review.</p></div>
+    <div class="dgm-bm-c dgm-bm-danger"><h5><span class="dgm-bm-n">5</span>Users and agents</h5><span class="dgm-bm-t">lessons 9 and 10</span><p>How people really behave.</p></div>
+    <div class="dgm-bm-c dgm-bm-success"><h5><span class="dgm-bm-n">6</span>Capstone</h5><span class="dgm-bm-t">lesson 11</span><p>Ship one feature with a launch gate.</p></div>
+  </div>
+  <p class="dgm-bm-foot">Findings from users send you back to the design.</p>
+</div>

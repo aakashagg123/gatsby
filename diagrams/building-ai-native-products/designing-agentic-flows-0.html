@@ -1,0 +1,39 @@
+<style>
+.dgm-af{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-af-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-af h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-af-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-af-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-af-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-af-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-af-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-af-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-af-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-af-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-af-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-af-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-af-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-af-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-af-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-af-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-af-note b{color:var(--color-text)}
+.dgm-af-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-af{padding:22px 14px 18px}.dgm-af-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-af-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-af">
+  <span class="dgm-af-chip">A loop with a leash</span>
+  <h4>Look, decide, act, observe, within limits</h4>
+  <p class="dgm-af-sub">The controls matter as much as the model.</p>
+  <div class="dgm-af-grid">
+    <div class="dgm-af-c dgm-af-info"><h5><span class="dgm-af-n">1</span>Goal</h5><span class="dgm-af-t">what the user wants done</span><p>Scope and stopping rules.</p></div>
+    <div class="dgm-af-c dgm-af-discovery"><h5><span class="dgm-af-n">2</span>Model decides</h5><span class="dgm-af-t">the next step</span><p>Or a fixed workflow does.</p></div>
+    <div class="dgm-af-c dgm-af-caution"><h5><span class="dgm-af-n">3</span>Tool call</h5><span class="dgm-af-t">read · draft · act</span><p>Classed by what it can do.</p></div>
+    <div class="dgm-af-c dgm-af-warning"><h5><span class="dgm-af-n">4</span>Result observed</h5><span class="dgm-af-t">ground truth each step</span><p>Errors compound if ignored.</p></div>
+    <div class="dgm-af-c dgm-af-danger"><h5><span class="dgm-af-n">5</span>Limit or block</h5><span class="dgm-af-t">ask a human</span><p>Steps, spend, time, kill switch.</p></div>
+  </div>
+  <p class="dgm-af-foot">Raise autonomy only with evidence.</p>
+</div>

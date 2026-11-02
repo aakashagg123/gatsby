@@ -61,6 +61,7 @@ TRACKS = [
     ("transformers", "Transformers", "#7a5ab0", "transformers"),
     ("fine-tuning", "Fine-tuning", "#b0705a", "fine-tuning"),
     ("ai-assisted-development", "AI-assisted development", "#5a8a9a", "ai-assisted-development"),
+    ("building-ai-native-products", "Building AI-native products", "#7a5ac2", "building-ai-native-products"),
     ("business-acumen", "Business acumen", "#6d7a1f", "business-acumen"),
 ]
 FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
@@ -70,7 +71,7 @@ FLAT_TRACKS = {"first-principles", "product-sense", "technical-product-sense",
                "evaluation-and-observability", "ai-security-and-guardrails",
                "cost-optimization", "system-design", "access-control",
                "context-engineering", "prompt-engineering", "learning-paths",
-               "machine-learning", "tensors", "cnns", "transformers", "fine-tuning", "ai-assisted-development", "business-acumen"}
+               "machine-learning", "tensors", "cnns", "transformers", "fine-tuning", "ai-assisted-development", "building-ai-native-products", "business-acumen"}
 # Phased tracks share the harness-engineering folder shape:
 # (track id, source dir, site prefix, track title)
 PHASED_TRACKS = [

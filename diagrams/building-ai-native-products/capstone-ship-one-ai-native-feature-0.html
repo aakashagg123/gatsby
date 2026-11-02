@@ -1,0 +1,40 @@
+<style>
+.dgm-cs{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-cs-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-cs h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-cs-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-cs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dgm-cs-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-cs-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-cs-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-cs-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-cs-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-cs-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-cs-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-cs-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-cs-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-cs-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-cs-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-cs-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-cs-note b{color:var(--color-text)}
+.dgm-cs-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-cs{padding:22px 14px 18px}.dgm-cs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-cs-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-cs">
+  <span class="dgm-cs-chip">Five skills, one gate</span>
+  <h4>Every skill must show evidence</h4>
+  <p class="dgm-cs-sub">Check the joints, then write the gate.</p>
+  <div class="dgm-cs-grid">
+    <div class="dgm-cs-c dgm-cs-info"><h5><span class="dgm-cs-n">1</span>1 Spec and UX</h5><span class="dgm-cs-t">examples and scope</span><p>Lessons 1 and 2.</p></div>
+    <div class="dgm-cs-c dgm-cs-discovery"><h5><span class="dgm-cs-n">2</span>2 Model choice</h5><span class="dgm-cs-t">decision record</span><p>Lessons 3 and 4.</p></div>
+    <div class="dgm-cs-c dgm-cs-caution"><h5><span class="dgm-cs-n">3</span>3 Evals</h5><span class="dgm-cs-t">dev set, holdout, log</span><p>Lessons 5 and 6.</p></div>
+    <div class="dgm-cs-c dgm-cs-warning"><h5><span class="dgm-cs-n">4</span>4 Agent spec</h5><span class="dgm-cs-t">limits, risks, approval</span><p>Lessons 7 and 8.</p></div>
+    <div class="dgm-cs-c dgm-cs-danger"><h5><span class="dgm-cs-n">5</span>5 Research</h5><span class="dgm-cs-t">plan and findings</span><p>Lessons 9 and 10.</p></div>
+    <div class="dgm-cs-c dgm-cs-success"><h5><span class="dgm-cs-n">6</span>Launch gate</h5><span class="dgm-cs-t">ship · widen · roll back</span><p>Numbers, owners, kill switch.</p></div>
+  </div>
+  <p class="dgm-cs-foot">Ship small. Widen on evidence. Roll back on the written conditions.</p>
+</div>

@@ -28,6 +28,7 @@ picks the lowest tier number among due modules.
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-09-21 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
+| building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |

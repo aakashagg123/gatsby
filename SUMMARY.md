@@ -236,6 +236,22 @@ Part of the **craft tracks**: it builds on [Agentic AI](./agentic-ai/README.md),
 5. [Running at scale: sessions, subagents and fan-out](./ai-assisted-development/running-at-scale.md)
 6. [Measuring and governing](./ai-assisted-development/measuring-and-governing.md) · [Recap](./ai-assisted-development/recap.md)
 
+## [Building AI-native products](./building-ai-native-products/README.md)
+
+Part of the **craft tracks**: five skills for the AI product leader, with a judgement lesson and a practice lesson for each, and a capstone.
+
+1. [Designing for ambiguity](./building-ai-native-products/designing-for-ambiguity.md)
+2. [Practice: the AI feature spec](./building-ai-native-products/ux-practice-the-ai-feature-spec.md)
+3. [Model intuition](./building-ai-native-products/model-intuition.md)
+4. [Practice: probing and choosing models](./building-ai-native-products/model-intuition-practice.md)
+5. [From pixels to evals](./building-ai-native-products/from-pixels-to-evals.md)
+6. [Practice: hill climbing](./building-ai-native-products/hill-climbing-in-practice.md)
+7. [Designing agentic flows](./building-ai-native-products/designing-agentic-flows.md)
+8. [Practice: the agent spec and risk register](./building-ai-native-products/agentic-flows-practice.md)
+9. [How users behave with agents](./building-ai-native-products/how-users-behave-with-agents.md)
+10. [Practice: researching agent interactions](./building-ai-native-products/researching-agent-interactions.md)
+11. [Capstone: ship one AI-native feature](./building-ai-native-products/capstone-ship-one-ai-native-feature.md) · [Recap](./building-ai-native-products/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

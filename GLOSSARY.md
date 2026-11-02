@@ -259,6 +259,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Automatic differentiation](./tensors/automatic-differentiation.md).
 
+**Autonomy level** — How much an agent may do without a person: suggest, act with approval, act and notify, act silently.
+
+*In plain terms.* Start low and move up only on evidence, such as approval rates, edit rates and zero severe errors over a stated volume.
+
+*For example.* Refunds start at act-with-approval.
+
+*Where it shows up:* Agent design.
+
+*See:* [Designing agentic flows](./building-ai-native-products/designing-agentic-flows.md).
+
 **Autonomy spectrum** — The range from a single model call through workflows and routers to fully autonomous agents; the first design decision is how little autonomy suffices.
 
 *In plain terms.* 'Agent or not' is the wrong question — it's a dial. At one end, your code decides every step and the model just fills gaps (cheap, predictable). At the other, the model decides its own steps (flexible, but pricey and unpredictable). More autonomy buys flexibility and costs control.
@@ -498,6 +508,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Cache design.
 
 *See:* [Web-scale services](./system-design/web-scale-services.md).
+
+**Calibrated trust (over- and under-reliance)** — Reliance on an agent that matches how reliable it really is.
+
+*In plain terms.* Over-reliance means accepting output unchecked. Under-reliance means ignoring or redoing good output. Show sources, steps and past accuracy to help users calibrate.
+
+*For example.* An agent who sends 95% of drafts unread, with a wrong detail in 4% of them.
+
+*Where it shows up:* Designing for supervision.
+
+*See:* [How users behave with agents](./building-ai-native-products/how-users-behave-with-agents.md).
 
 **Calibration** — Whether a model's scores behave like probabilities: among cases scored near 30%, about 30% should happen.
 
@@ -1179,6 +1199,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
+**Diary study** — A study in which participants record each use over weeks.
+
+*In plain terms.* Diaries show how trust changes with time, which a single session cannot.
+
+*For example.* Eight agents keep a three-week diary of how they check drafts.
+
+*Where it shows up:* Studying trust over time.
+
+*See:* [Practice: researching agent interactions](./building-ai-native-products/researching-agent-interactions.md).
+
 **DINOv2** — Meta's vision models. DINOv2 learns features without labels that work with a simple linear classifier; DINOv3 continues the line.
 
 *In plain terms.* DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.
@@ -1358,6 +1388,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Deciding whether a change ships; Tracking quality over time; Turning 'it feels worse' into evidence.
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
+
+**Eval set (dev and holdout)** — A fixed set of cases used to score a system, split into a set you tune on and a set you protect.
+
+*In plain terms.* Climb on the dev set. Check on the holdout. If dev rises and the holdout does not, you are overfitting.
+
+*For example.* 200 cases split into 140 dev and 60 holdout.
+
+*Where it shows up:* Measuring quality.
+
+*See:* [Practice: hill climbing](./building-ai-native-products/hill-climbing-in-practice.md).
 
 **Eval-driven development** — Making a graded example set the spec, regression suite, and launch gate for an AI feature — no change ships without a score.
 
@@ -1889,6 +1929,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Vector databases](./rag-vector-databases/vector-databases.md).
 
+**Hill climbing** — Improving a system by scoring it, reading the failures, making one change and scoring again.
+
+*In plain terms.* It works with four habits: read failures by hand, change one thing at a time, keep a log and protect a holdout.
+
+*For example.* Five rounds took a draft feature from 62% to 80% on an honest holdout.
+
+*Where it shows up:* Improving AI quality.
+
+*See:* [Practice: hill climbing](./building-ai-native-products/hill-climbing-in-practice.md).
+
 **Hook (agent)** — A command that runs at a set point in an agent's life, such as before a tool call or when it tries to stop.
 
 *In plain terms.* Hooks are deterministic: they run every time, unlike a line in a context file. They can check, log or block an action.
@@ -2268,6 +2318,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting the right performance target; Reading capacity and scaling plans; Understanding batching tradeoffs.
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
+
+**Launch gate (ship, widen, roll back)** — Written conditions, with numbers, for shipping, widening and rolling back an AI feature.
+
+*In plain terms.* It joins evidence from spec, model, evals, agent design and research, and names an owner for the kill switch.
+
+*For example.* Roll back on any wrong refund or a holdout score under 80%.
+
+*Where it shows up:* Launch review.
+
+*See:* [Capstone: ship one AI-native feature](./building-ai-native-products/capstone-ship-one-ai-native-feature.md).
 
 **Layer normalization** — A step that rescales each token's vector to a steady mean and spread, which keeps training stable.
 
@@ -2709,6 +2769,26 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [The five modalities](./generative-ai/the-modalities.md).
 
+**Model bake-off** — A fair comparison of candidate models on the same inputs, scored by quality, latency and cost.
+
+*In plain terms.* Set the quality bar and limits first. Pick the cheapest model that meets all of them, and write down what would change your mind.
+
+*For example.* Three models run on 60 real tickets and scored on a yes-or-no rubric.
+
+*Where it shows up:* Choosing a model.
+
+*See:* [Practice: probing and choosing models](./building-ai-native-products/model-intuition-practice.md).
+
+**Model intuition** — A feel for what a model will do on a task before you run it.
+
+*In plain terms.* It comes from probing models on real inputs, reading failures and tracking the quality, speed and cost trade-offs. It separates a confident roadmap from a guess.
+
+*For example.* Knowing that a model drafts well, misses policy facts and needs retrieval.
+
+*Where it shows up:* Choosing models; Scoping features.
+
+*See:* [Model intuition](./building-ai-native-products/model-intuition.md).
+
 **Model routing** — Sending each request to the cheapest model that can handle it, with fallback logic and a degraded-mode experience.
 
 *In plain terms.* Not every request needs your most powerful (and expensive) model. Routing sends easy requests to a small cheap model and hard ones to a big model, and defines what happens when a model is down or slow — so the product degrades gracefully instead of failing.
@@ -2918,6 +2998,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Forecasting profit at scale; Judging downside risk.
 
 *See:* [Unit economics: from one transaction to a cohort](./business-acumen/unit-economics.md).
+
+**Opinionated UX** — A design that makes choices for the user: scope, defaults, starting points and a point of view.
+
+*In plain terms.* A blank chat box hands the design work to the user. An opinionated product narrows the job, offers a ready start and makes correction cheap.
+
+*For example.* A support tool opens each ticket with a draft reply, not an empty box.
+
+*Where it shows up:* AI feature design.
+
+*See:* [Designing for ambiguity](./building-ai-native-products/designing-for-ambiguity.md).
 
 **Optimizer state** — The extra numbers an optimizer keeps for each parameter between steps.
 
@@ -3268,6 +3358,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Large vector indexes.
 
 *See:* [ML system design](./system-design/ml-system-design.md).
+
+**Product signals (implicit feedback)** — User actions that hint at output quality: accept, edit, regenerate, abandon.
+
+*In plain terms.* Signals are weak labels. Users may accept without reading. Sample and read them, and feed the failures into the eval set.
+
+*For example.* 61% of drafts sent unedited, with 6 of 40 sampled ones wrong.
+
+*Where it shows up:* Linking the interface to evals.
+
+*See:* [From pixels to evals](./building-ai-native-products/from-pixels-to-evals.md).
 
 **Profit pool** — The total profit earned across an industry's value chain, split by who earns it.
 
@@ -3788,6 +3888,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Designing guardrails for a launch; Asking for a risk acceptance.
 
 *See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
+**Risk register (agents)** — A list of what can go wrong, with likelihood, impact, a control, an owner and a test.
+
+*In plain terms.* For agents it includes repeated actions after a crash, runaway loops, instructions hidden in data and over-broad credentials.
+
+*For example.* Refund to the wrong order: approval card, 20 look-alike test cases.
+
+*Where it shows up:* Agent launch review.
+
+*See:* [Practice: the agent spec and risk register](./building-ai-native-products/agentic-flows-practice.md).
 
 **RLHF (reinforcement learning from human feedback)** — Tuning a model with reinforcement learning against a reward model trained on human preferences.
 
@@ -4708,6 +4818,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Linking strategy to the org and its metrics; Testing whether choices fit together.
 
 *See:* [Competitive advantage and strategy](./business-acumen/competitive-advantage-and-strategy.md).
+
+**Wizard of Oz test** — A test in which a person secretly plays the AI so users can try the experience before it exists.
+
+*In plain terms.* It tests interaction design, pacing and trust early. Tell participants afterwards, and never test anything with real consequences.
+
+*For example.* Two team members draft replies by hand and show them as 'Relay drafts'.
+
+*Where it shows up:* Early research.
+
+*See:* [Practice: researching agent interactions](./building-ai-native-products/researching-agent-interactions.md).
 
 **Workflow capture** — Owning an entire workflow end-to-end (not just a tool within it) — the strategy that erases adoption friction and compounds into a moat.
 
