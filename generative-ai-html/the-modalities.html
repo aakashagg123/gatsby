@@ -159,9 +159,9 @@ different speed and a different cost per unit.</p>
 </tr>
 <tr>
 <td><strong>Video</strong></td>
-<td>Short clips, edits, avatars, simple animation</td>
-<td>Newest and least consistent. Short clips only, at real cost per second.</td>
-<td>Cost per output is far higher than any other modality, and quality still varies widely.</td>
+<td>Short clips, edits, avatars, simple animation, now often with native audio</td>
+<td>Newest and least consistent. Clips are short (OpenAI's Sora 2 made 16- or 20-second clips, extendable to 120 seconds), and you pay per second. Products also change fast: see the note below.</td>
+<td>Cost per output is far higher than any other modality, quality still varies widely, and the vendor may retire the product.</td>
 </tr>
 <tr>
 <td><strong>Code</strong></td>
@@ -176,6 +176,16 @@ video all require a human or another model to judge quality. Code can often be j
 machine: does it compile, do the tests pass, does the type checker accept it? This is why
 code generation moved into daily engineering use faster than the other modalities — the
 feedback loop is tighter, and closes automatically.</p>
+<p>Video also shows how fast a modality can change under you. OpenAI announced in March 2026
+that it was closing Sora. The app closed on 26 April 2026, and the Sora 2 API shut down on
+24 September 2026. Google shut down its Veo 3.1 preview models on 22 October 2026 and
+tells developers to move to Gemini Omni Flash, which generates video with native audio.
+A video feature built on one vendor's model needs a migration plan from day one.</p>
+<p>Rules are also arriving for synthetic media. Under the EU AI Act, the general-purpose AI
+model rules have applied since 2 August 2025. The Article 50 transparency duties for
+synthetic content, such as labelling AI-generated audio and video, have a compliance date of
+2 December 2026 for systems already on the market before 2 August 2026. Ask legal which
+dates apply to your product.</p>
 <h2 id="mixing-modalities">Mixing modalities</h2>
 <p>Real products increasingly combine modalities in one flow. A single request might use text
 generation to write a script, then audio generation to voice it, then image generation for

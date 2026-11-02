@@ -71,6 +71,15 @@ on grounding, action, and operations — the layers covered in the [product stac
 lesson](./the-genai-product-stack.md) — is almost always the better use of a limited
 budget.
 
+Buying is not risk-free, and the evidence on it is mixed. MIT NANDA's 2025 study *The GenAI
+Divide* reported that tools bought from specialist vendors succeeded about 67% of the time,
+and internal builds about one-third as often. Treat that as a signal, not a law. The study
+rests on interviews, a survey, and public deployments, and it defines success narrowly as
+rapid revenue growth. The bigger risk of buying is dependence. OpenAI retired the Sora 2 API
+on 24 September 2026, and Google shut down its Veo 3.1 preview video models on 22 October
+2026. Any model you rent can change price, features, or availability on the vendor's
+schedule, not yours.
+
 ## When build or fine-tune actually make sense
 
 Build is justified when the model's behavior, cost structure, or data handling is the
@@ -89,7 +98,8 @@ plainly why this feature is the exception before committing the extra cost and t
 - **Fine-tuning to teach facts** — using fine-tuning to bake in a knowledge base that goes
   stale on the next update and can never be cited, when retrieval was the right tool.
 - **Buying without a fallback plan** — depending entirely on one vendor's model, with no
-  plan for a price increase, a policy change, or an outage.
+  plan for a price increase, a policy change, an outage, or the model being shut down. Keep
+  your prompts, evals, and data in a form you can move to a second model.
 - **Skipping the justification step** — choosing build or fine-tune out of habit or
   preference, without a clear answer to why buy alone would not work.
 

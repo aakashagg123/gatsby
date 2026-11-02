@@ -136,6 +136,12 @@ production incidents live.</p>
 <li><strong>Context sensitivity.</strong> A tiny change in the input — a rephrased question, an extra
   sentence of history, a different time of day in a system prompt — can shift the output
   in ways that feel disproportionate to the size of the change.</li>
+<li><strong>Serving load.</strong> Setting the temperature to zero does not guarantee the same output twice.
+  In one published test, 1,000 runs of one prompt at temperature zero gave 80 different
+  completions. The cause was server load. Load changes how requests are batched, and that
+  changes the arithmetic slightly. The same test gave identical output once the serving
+  code was changed to remove that effect. Treat "set temperature to zero" as a way to
+  reduce variation, not remove it. Plan your tests and fallbacks for variation anyway.</li>
 <li><strong>Model updates.</strong> A vendor's model can change behavior after an update you did not ask
   for, even when your own prompt has not changed. Behavior you tested against last month
   may not hold this month.</li>

@@ -59,7 +59,7 @@ flowchart TB
 | **Text** | Prose, summaries, structured data, conversation | Most mature. Cheap enough for high-volume features. | Hallucination: a fluent, wrong answer. |
 | **Image** | Illustrations, photos, product mockups, edits | Mature for many styles. Exact brand and layout control is still hard. | Subtle visual errors a glance can miss — an extra finger, a wrong logo. |
 | **Audio** | Speech, voice cloning, sound effects, some music | Mature for speech. Music generation is improving but less consistent. | Voice cloning raises consent and misuse questions a text feature never faces. |
-| **Video** | Short clips, edits, avatars, simple animation | Newest and least consistent. Short clips only, at real cost per second. | Cost per output is far higher than any other modality, and quality still varies widely. |
+| **Video** | Short clips, edits, avatars, simple animation, now often with native audio | Newest and least consistent. Clips are short (OpenAI's Sora 2 made 16- or 20-second clips, extendable to 120 seconds), and you pay per second. Products also change fast: see the note below. | Cost per output is far higher than any other modality, quality still varies widely, and the vendor may retire the product. |
 | **Code** | Functions, scripts, full features, tests | Mature, and self-checking: you can run it, test it, or type-check it. | Looks correct and compiles, but is wrong in a way tests did not catch. |
 
 Code deserves its own note, because it breaks the usual pattern. Text, image, audio, and
@@ -67,6 +67,18 @@ video all require a human or another model to judge quality. Code can often be j
 machine: does it compile, do the tests pass, does the type checker accept it? This is why
 code generation moved into daily engineering use faster than the other modalities — the
 feedback loop is tighter, and closes automatically.
+
+Video also shows how fast a modality can change under you. OpenAI announced in March 2026
+that it was closing Sora. The app closed on 26 April 2026, and the Sora 2 API shut down on
+24 September 2026. Google shut down its Veo 3.1 preview models on 22 October 2026 and
+tells developers to move to Gemini Omni Flash, which generates video with native audio.
+A video feature built on one vendor's model needs a migration plan from day one.
+
+Rules are also arriving for synthetic media. Under the EU AI Act, the general-purpose AI
+model rules have applied since 2 August 2025. The Article 50 transparency duties for
+synthetic content, such as labelling AI-generated audio and video, have a compliance date of
+2 December 2026 for systems already on the market before 2 August 2026. Ask legal which
+dates apply to your product.
 
 ## Mixing modalities
 
