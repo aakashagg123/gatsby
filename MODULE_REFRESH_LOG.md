@@ -33,7 +33,7 @@ picks the lowest tier number among due modules.
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-09-20 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
-| generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | never |
+| generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | 2026-11-02 |
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | 2026-11-01 |
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
@@ -610,3 +610,28 @@ and a link to the merged PR.)
   own list; the OpenAI Assistants API sunset; the IETF Idempotency-Key header draft.
   Flagged: a lesson on agent-to-agent protocols (A2A) and agent identity may be worth building; not
   built (scope boundary). Cross-module: none found.
+- 2026-11-02 — generative-ai — tier 2. Picked because no tier-1 row was due (the oldest, ai-engineering,
+  is at 43 of 45 days) and generative-ai was a tier-2 `never` row. Outcome: fixed and expanded.
+  Fixed: Klarna reversal was dated 2024 but happened May 2025 (the 700-agent claim was Feb 2024);
+  drive-thru item now names McDonald's/IBM (June 2024) and Taco Bell (Aug 2025); news-outlet item
+  narrowed to CNET. Expanded: temperature-zero is not deterministic (probabilistic-software); video
+  row updated, Sora and Veo 3.1 preview shutdowns, EU AI Act Article 50 dates (the-modalities);
+  vendor-shutdown risk and MIT NANDA buy-vs-build (build-buy-or-fine-tune); MIT NANDA 95% with
+  caveats (where-value-is-created-and-destroyed).
+  Sources opened: Google blog on Gemini image pause https://blog.google/products/gemini/gemini-image-generation-issue/
+  (23 Feb 2024, matches); NRN on McDonald's/IBM https://www.nrn.com/quick-service/mcdonald-s-is-ending-its-ai-drive-thru-test-with-ibm;
+  Entrepreneur on Klarna https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/491396;
+  Fortune on MIT NANDA https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/ (secondary);
+  OpenAI video guide https://developers.openai.com/api/docs/guides/video-generation (Sora 2 API shut down 24 Sep 2026);
+  the-decoder https://the-decoder.com/openai-sets-two-stage-sora-shutdown-with-app-closing-april-2026-and-api-following-in-september/;
+  Google video docs https://ai.google.dev/gemini-api/docs/video (Veo 3.1 previews shut 22 Oct 2026) and
+  https://ai.google.dev/gemini-api/docs/models (Gemini Omni Flash, native audio);
+  EU AI Act timeline https://artificialintelligenceact.eu/implementation-timeline/ (third-party tracker, not the Official Journal);
+  Thinking Machines https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/;
+  Anthropic models overview https://platform.claude.com/docs/en/about-claude/models/overview (no stale model names in module).
+  Seen in search only, not opened: Air Canada decision (CRT site returned 403; McCarthy Tetrault, ABA, Mondaq
+  agree on facts), Taco Bell/WSJ (secondary reports), CNET corrections, MIT NANDA original PDF.
+  Not verified: GitHub Copilot 2021 growth claim, Gemini image-feature later restoration, Wendy's pilots,
+  Air Canada "separate legal entity" wording from the primary decision.
+  Flagged: Video lesson prices were not added because only third-party blogs quoted them. Cross-module:
+  check other modules for Sora/Veo 3.1 references (`grep -ril sora`). No new lesson recommended.

@@ -165,6 +165,16 @@ product solves, not for which model answers it. Buying the model and spending yo
 on grounding, action, and operations — the layers covered in the <a href="the-genai-product-stack.html">product stack
 lesson</a> — is almost always the better use of a limited
 budget.</p>
+<p>Buying is not risk-free, and the evidence on it is mixed. MIT NANDA's 2025 study <em>The GenAI
+Divide</em> reported that tools bought from specialist vendors succeeded about 67% of the time,
+and internal builds about one-third as often. Treat that as a signal, not a law. The study
+rests on interviews, a survey, and public deployments, and it defines success narrowly as
+rapid revenue growth. The bigger risk of buying is dependence. OpenAI retired the Sora 2 API
+on 24 September 2026, and Google shut down its Veo 3.1 preview video models on 22 October</p>
+<ol start="2026">
+<li>Any model you rent can change price, features, or availability on the vendor's
+schedule, not yours.</li>
+</ol>
 <h2 id="when-build-or-fine-tune-actually-make-sense">When build or fine-tune actually make sense</h2>
 <p>Build is justified when the model's behavior, cost structure, or data handling is the
 product itself — a company selling a specialized model to other companies, for example, or
@@ -181,7 +191,8 @@ plainly why this feature is the exception before committing the extra cost and t
 <li><strong>Fine-tuning to teach facts</strong> — using fine-tuning to bake in a knowledge base that goes
   stale on the next update and can never be cited, when retrieval was the right tool.</li>
 <li><strong>Buying without a fallback plan</strong> — depending entirely on one vendor's model, with no
-  plan for a price increase, a policy change, or an outage.</li>
+  plan for a price increase, a policy change, an outage, or the model being shut down. Keep
+  your prompts, evals, and data in a form you can move to a second model.</li>
 <li><strong>Skipping the justification step</strong> — choosing build or fine-tune out of habit or
   preference, without a clear answer to why buy alone would not work.</li>
 </ul>
