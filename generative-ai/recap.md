@@ -28,24 +28,24 @@ pattern](./the-modalities.md), and a fix applied broadly, without enough testing
 specific modality's edge cases, can create a new, more visible failure than the one it
 was meant to solve.
 
-**Klarna's AI customer service reversal (2024).** Klarna announced its AI assistant was
-doing the work of seven hundred customer service agents, then later said it would hire
-humans again after acknowledging the AI-only approach hurt the quality customers actually
-wanted. 🎯 *Takeaway:* a use case can clear the "slow and expensive by hand" gate and still
+**Klarna's AI customer service reversal (2024–2025).** In February 2024, Klarna said its AI
+assistant was doing the work of seven hundred customer service agents. In May 2025, its CEO
+told Bloomberg the company was hiring humans again. He said AI was cheaper but gave lower
+quality, and that customers must always be able to reach a person. 🎯 *Takeaway:* a use case can clear the "slow and expensive by hand" gate and still
 fail the ["is checking or correcting it acceptable" gate](./where-value-is-created-and-destroyed.md)
 — the choice between an AI-only, a human-only, and a blended service was a
 [build-or-buy-shaped decision](./build-buy-or-fine-tune.md) the company had to revisit
 in public.
 
-**AI-generated content corrections at major outlets (2023–2024).** Several news and media
-organizations published AI-generated articles that contained factual errors, requiring
-public corrections. 🎯 *Takeaway:* text generation is mature and cheap, but
+**AI-generated content corrections at major outlets (2023).** CNET, in January 2023, published machine-written articles that later needed public corrections. 🎯 *Takeaway:* text generation is mature and cheap, but
 [maturity is not the same as zero error rate](./the-modalities.md) — publishing generated
 text with no fact-check step treats a probabilistic tool as if it were deterministic.
 
-**Fast food AI drive-thru pilots (2024).** More than one large fast-food chain piloted
-generative voice ordering at the drive-thru, then scaled the pilots back after
-error rates on real, noisy, in-person orders proved too high for the format. 🎯 *Takeaway:*
+**Fast food AI drive-thru pilots (2024–2025).** In June 2024, McDonald's said it would end its
+test of IBM's voice ordering at about 100 restaurants. It had aimed for 95% order accuracy
+before a wider rollout. In August 2025, Taco Bell said it was rethinking where it uses voice
+AI after viral ordering failures, even though the system had handled millions of orders. Both
+chains kept voice ordering on the roadmap. 🎯 *Takeaway:*
 a demo run in a quiet room and a product run in a loud drive-thru lane are different
 [probabilistic environments](./probabilistic-software.md) — the failure rate that looked
 acceptable in testing did not hold in the real, noisy input the product actually faced.

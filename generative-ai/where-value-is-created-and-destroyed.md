@@ -73,6 +73,14 @@ expensive** — automating something a simple form or a short script already han
 where gate one was never true, and the "AI feature" replaced a five-minute task with an
 unpredictable one.
 
+Company-level data fits this pattern, with caveats. MIT NANDA's 2025 report *The GenAI Divide*
+said about 5% of enterprise pilots showed rapid revenue growth, and the rest showed little
+measurable profit-and-loss impact. The authors blamed poor integration and tools that do not
+learn from a team's workflow, not model quality. They also found that more than half of
+budgets went to sales and marketing tools, while the largest measured return came from
+back-office automation. Read the 95% figure with care. It comes from a small, self-reported
+sample, and it defines success as rapid revenue growth, which leaves out cost savings.
+
 ## Running the filter honestly
 
 The filter only works if you are honest about each gate, not optimistic. "Can the output
