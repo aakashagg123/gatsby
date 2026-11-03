@@ -252,6 +252,17 @@ Part of the **craft tracks**: five skills for the AI product leader, with a judg
 10. [Practice: researching agent interactions](./building-ai-native-products/researching-agent-interactions.md)
 11. [Capstone: ship one AI-native feature](./building-ai-native-products/capstone-ship-one-ai-native-feature.md) · [Recap](./building-ai-native-products/recap.md)
 
+## [Visual explainers](./explainers/README.md)
+
+Part of the **craft tracks**: six picture-led explainers that follow one example through a system, one stage at a time.
+
+1. [Inside one LLM request](./explainers/inside-one-llm-request.md)
+2. [How a model learns](./explainers/how-a-model-learns.md)
+3. [One token through a transformer](./explainers/one-token-through-a-transformer.md)
+4. [How an image model draws](./explainers/how-an-image-model-draws.md)
+5. [One agent run, step by step](./explainers/one-agent-run.md)
+6. [Anatomy of a guardrailed request](./explainers/anatomy-of-a-guardrailed-request.md) · [Recap](./explainers/recap.md)
+
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
 Opens the **Generative AI family** (see the [roadmap](./GENERATIVE_AI_ROADMAP.md)).

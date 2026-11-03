@@ -44,6 +44,7 @@
 | Fine-tuning and post-training | — | — | Full | 3 of 6 |
 | AI-assisted development | — | — | 3 of 6 | 5 of 6 |
 | Building AI-native products | — | 6 of 11 | — | — |
+| Visual explainers | 3 of 6 | — | — | — |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 

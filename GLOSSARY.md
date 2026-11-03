@@ -279,6 +279,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What is an agent?](./agentic-ai/what-is-an-agent.md).
 
+**Autoregressive generation** — Producing output one token at a time, each depending on the tokens before it.
+
+*In plain terms.* It is why decode is sequential: the next token does not exist until the previous one is chosen.
+
+*For example.* 'The' then 'The sky' then 'The sky appears'.
+
+*Where it shows up:* Understanding generation speed.
+
+*See:* [Inside one LLM request](./explainers/inside-one-llm-request.md).
+
 **AWQ** — Activation-aware Weight Quantization — a 4-bit method that protects the small fraction of weights tied to high-magnitude activations.
 
 *In plain terms.* When compressing to 4 bits, a few important numbers matter far more than the rest. AWQ figures out which ones (by watching which weights drive big activations) and protects them, keeping quality high at low precision.
@@ -1209,6 +1219,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Practice: researching agent interactions](./building-ai-native-products/researching-agent-interactions.md).
 
+**Diffusion model** — An image generator that starts from noise and removes it step by step, guided by a prompt.
+
+*In plain terms.* It is trained by adding noise to real pictures and learning to predict that noise. Generation runs the skill backwards from static.
+
+*For example.* A red kite over a beach drawn from random noise in tens of steps.
+
+*Where it shows up:* Image generation.
+
+*See:* [How an image model draws](./explainers/how-an-image-model-draws.md).
+
 **DINOv2** — Meta's vision models. DINOv2 learns features without labels that work with a simple linear classifier; DINOv3 continues the line.
 
 *In plain terms.* DINOv2 was pre-trained on 142 million images with no labels. DINOv3 continues the line with ViT and ConvNeXt backbones, including satellite-trained ones. Licences differ: DINOv2 is Apache 2.0, DINOv3 uses its own licence.
@@ -1889,6 +1909,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Observability](./content/04-evals-observability/observability.md).
 
+**Guidance scale** — A dial for how strongly a prompt steers image generation.
+
+*In plain terms.* Low values drift from the prompt. High values follow it closely and can look harsh or over-saturated.
+
+*For example.* Scale 3 is loose. Scale 12 is obedient.
+
+*Where it shows up:* Tuning image prompts.
+
+*See:* [How an image model draws](./explainers/how-an-image-model-draws.md).
+
 **Hallucination** — When a model states something false with full confidence — fluent, plausible, and simply not true.
 
 *In plain terms.* A language model predicts likely-sounding text; it has no built-in sense of what's true. A hallucination is the result: a confident, well-formed answer that's wrong or invented — a fake citation, a nonexistent policy, a made-up number. It's not a bug to be fully patched but a property to be managed, mainly by grounding answers in real sources.
@@ -2318,6 +2348,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting the right performance target; Reading capacity and scaling plans; Understanding batching tradeoffs.
 
 *See:* [Latency, scale & performance](./technical-product-sense/latency-scale-performance.md).
+
+**Latent space** — A compressed grid of numbers that stands for an image, small enough to work on cheaply.
+
+*In plain terms.* An autoencoder squeezes an image into the latent space and a decoder expands it back. Latent diffusion denoises there, which cuts the cost.
+
+*For example.* Denoise a small grid, then decode it to the full picture.
+
+*Where it shows up:* Efficient image generation.
+
+*See:* [How an image model draws](./explainers/how-an-image-model-draws.md).
 
 **Launch gate (ship, widen, roll back)** — Written conditions, with numbers, for shipping, widening and rolling back an AI feature.
 
@@ -3279,6 +3319,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Shipping vision in production](./cnns/shipping-vision-in-production.md).
 
+**Pretraining** — The first, expensive training stage: predict the next token over an enormous amount of text.
+
+*In plain terms.* It builds the abilities and produces a base model that continues text. Later stages add behaviour such as following instructions.
+
+*For example.* Guess the word after 'The cat sat on the' on billions of examples.
+
+*Where it shows up:* Understanding how models are built.
+
+*See:* [How a model learns](./explainers/how-a-model-learns.md).
+
 **Price elasticity** — How much volume moves when price moves: percentage change in quantity divided by percentage change in price.
 
 *In plain terms.* Elasticity is almost always negative. For a price change, the more useful number is the break-even volume loss: price change ÷ (contribution margin + price change).
@@ -3978,6 +4028,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Planning lending growth; Explaining why market conditions move a lender's margin.
 
 *See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Seed** — A number that fixes the random choices a generator makes.
+
+*In plain terms.* The same seed with the same prompt gives the same starting noise. Changing it gives a different picture or sample.
+
+*For example.* Seed 42 gives a repeatable image.
+
+*Where it shows up:* Repeatable generation; Comparing prompts.
+
+*See:* [How an image model draws](./explainers/how-an-image-model-draws.md).
 
 **Segment Anything Model** — Meta's promptable segmentation models. SAM 3 segments objects from points, boxes, masks or a short text phrase.
 
