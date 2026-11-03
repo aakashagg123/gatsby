@@ -37,7 +37,7 @@ picks the lowest tier number among due modules.
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | 2026-11-01 |
 | rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
-| memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | never |
+| memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | 2026-11-03 |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | 2026-10-31 |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | 2026-10-30 |
 | agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
@@ -635,3 +635,35 @@ and a link to the merged PR.)
   Air Canada "separate legal entity" wording from the primary decision.
   Flagged: Video lesson prices were not added because only third-party blogs quoted them. Cross-module:
   check other modules for Sora/Veo 3.1 references (`grep -ril sora`). No new lesson recommended.
+
+- 2026-11-03 — memory-and-context — tier 2. Picked because no tier-1 row was due
+  (all within 45 days; ai-engineering is due 2026-11-04) and two tier-2 rows were
+  `never`; memory-and-context was chosen over agentic-workflows because memory
+  products change fast. Outcome: fixed and expanded.
+  Fixed: the Rehberger/SpAIware paragraph (lesson 5 and recap) now says the fix was
+  partial and memory can still be written by an untrusted page, with the date
+  Sep 20, 2024 (the unverified Black Hat Europe claim was dropped); DPDP wording
+  corrected (the Rules, not the Act, were notified 13–14 Nov 2025; rights due about
+  May 2027). Expanded: how Claude's consumer memory draws the session/user/org lines
+  (lesson 2), "deleting a chat does not delete its memories" (lesson 5, recap),
+  memory plus compaction and the multisession pattern (lesson 3), a caution on
+  vendor-reported memory benchmarks (lesson 4). Review stamps moved to 2026-11.
+  Sources opened and read: Claude memory tool docs
+  (platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool: six commands,
+  quotes, expiry, path traversal, compaction pairing, all verified); Claude memory
+  help page (support.claude.com/en/articles/11817273); Anthropic context-engineering
+  post (anthropic.com/engineering/effective-context-engineering-for-ai-agents: date
+  and note-taking quote verified; context-rot quote truncated by the tool, left as is);
+  embracethered.com SpAIware post; genai.owasp.org Agentic Top 10 page (date only).
+  Seen in search results only: OpenAI March 20 postmortem (page 403; 1.2% / nine-hour
+  detail not added), OWASP ASI06 name, DPDP Rules dates (PIB PDF unreadable), EDPB
+  Opinion 28/2024, TechCrunch/ChatGPT reference-chat-history, Mem0/Zep benchmarks.
+  Not verified: OpenAI Feb 2024 memory page and Help Center (403); GDPR Art. 17 and
+  CCPA text; reports of a June 2026 ChatGPT memory rebuild ("Dreaming") came from
+  low-authority sites and were not used.
+  Flagged: (1) `agentic-ai/context-and-memory.md` and
+  `content/00-foundations/context-engineering.md` were not read; a later run should
+  check them against the Claude memory docs. (2) Possible new lesson: memory
+  evaluation (testing recall of changed facts) and ChatGPT's saved-memory vs
+  reference-chat-history split need a primary OpenAI source first. Next due:
+  agentic-workflows (never).

@@ -2,7 +2,7 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -95,9 +95,10 @@ legal advice, so check the current text and take advice for your case.
   people often call the right to be forgotten. Controllers must erase personal data
   "without undue delay" when specific grounds apply.
 - **India: Digital Personal Data Protection Act, 2023, Section 12.** A right to
-  correction and erasure of personal data. The Act and its Rules were notified in
-  November 2025 and are being phased in. The rights of data principals are due to take
-  effect about 18 months later, around May 2027. Check the current status.
+  correction and erasure of personal data. The Act's Rules were notified on
+  13–14 November 2025 (sources differ on the day) and start in phases. The rights of data
+  principals sit in the group of rules due 18 months after notification, around May 2027.
+  Check the current status.
 - **California: California Consumer Privacy Act (CCPA).** A right to request deletion of
   personal information that a business collected.
 
@@ -107,6 +108,11 @@ embeddings, cached prompts, backups on their retention schedule, and copies give
 vendors. A memory system built without provenance makes this hard. Record where each
 memory came from, and what was derived from it. See also the same problem for inferred
 facts in [Knowledge graphs](../knowledge-graphs/governance-quality-and-trust.md).
+
+Deleting the source does not always delete the memory. Anthropic's Claude help page says
+that deleting a conversation does not delete the memories made from it. The user must
+delete those memories one by one. Decide which way your product works, and tell the user.
+Test it, because users will assume that deleting a chat erases what it taught the product.
 
 The practical bar: a user can ask "what do you remember about me?" and get a true,
 specific answer with a way to act on it.
@@ -122,8 +128,10 @@ effect.
 Security researcher Johann Rehberger showed a version against the ChatGPT macOS app in 2024. A crafted
 web page or document could get ChatGPT to save a hostile instruction into its long-term
 memory. The instruction told it to send later conversations to an outside server. OpenAI
-released a partial fix that closed the data-sending route, and the research was published
-in September 2024.
+fixed the app in September 2024, and the research was published on September 20, 2024.
+The fix was partial. It closed the data-sending route. The author notes that a website or
+untrusted document can still get ChatGPT to store memories. So the write path stays the
+weak point, even after a vendor patch.
 
 The defences follow from the write path.
 
@@ -235,15 +243,18 @@ model, the store or the write policy changes.
   Confirmed through search-result excerpts of press coverage; the page could not be opened
   when this lesson was written.
 - OWASP GenAI Security Project, [Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
-  (Dec 2025): memory and context poisoning as a named risk. Confirmed through search
-  results and secondary summaries; the page could not be opened when this lesson was
-  written.
-- Johann Rehberger, ChatGPT long-term memory prompt-injection research (disclosed Sep
-  2024, later presented at Black Hat Europe in December 2024, about the ChatGPT macOS app). Confirmed through press coverage in search
-  results; the primary write-up could not be opened when this lesson was written.
+  (published Dec 9, 2025, page date opened 2026-11). The entry name, "Memory & Context
+  Poisoning" (ASI06), comes from secondary summaries in search results. The page text
+  did not list the ten risks.
+- Johann Rehberger, [ChatGPT macOS app persistent data exfiltration](https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/)
+  (disclosed Sep 20, 2024). Opened 2026-11: the fix was in ChatGPT version 1.2024.247, it
+  was partial, and memory can still be written by an untrusted page. A Black Hat Europe
+  talk by the same author was seen only in search results and is no longer claimed here.
+- Anthropic, [How does Claude's memory work?](https://support.claude.com/en/articles/11817273)
+  (help centre). Opened 2026-11: deleting a conversation does not delete its memories.
 - Regulation (EU) 2016/679 (GDPR), Article 17; Digital Personal Data Protection Act, 2023
-  (India), Section 12, with commencement of the rights about May 2027 per secondary
-  reports; California Consumer Privacy Act, right to delete (Cal. Civ. Code 1798.105).
+  (India), Section 12, with the Rules notified 13–14 Nov 2025 and the rights due about
+  May 2027, per secondary law-firm reports (the official PDF could not be read); California Consumer Privacy Act, right to delete (Cal. Civ. Code 1798.105).
   Cited from general knowledge and secondary summaries. The official pages could not be opened when this lesson
   was written. Check the current text before relying on them.
 - The launch-day test run and the test code are invented and illustrative.

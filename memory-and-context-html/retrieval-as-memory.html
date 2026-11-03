@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Retrieval as memory</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A model can only use what is in its context window right now. A user's full history will
 not fit, and would cost more with every visit. So products store memories outside the
@@ -195,6 +195,12 @@ usually beats the whole pile. See also the
 <p>Agent-kept notes suit work in progress. Anthropic's docs describe the memory tool as
 letting an agent record "what it learns in memory files" and read them "back on demand".
 It gives "just-in-time context retrieval" without a search index.</p>
+<h2 id="do-not-trust-vendor-memory-scores">Do not trust vendor memory scores</h2>
+<p>Memory-layer vendors such as Mem0 and Zep publish scores on benchmarks like LoCoMo and
+LongMemEval. The scores come from the vendors themselves. They use different judge models
+and set-ups, so they do not compare across vendors. Treat them as a way to shortlist. Then
+test each candidate on your own users' histories, with questions about changed facts, since
+those are the hard cases. Seen in search results only; no benchmark paper was opened.</p>
 <h2 id="worked-example-sizing-the-choice">Worked example: sizing the choice</h2>
 <p><em>This example is invented. The numbers are illustrative.</em></p>
 <p>A tax-help assistant serves returning customers. The team lists what it might remember.</p>
@@ -316,14 +322,17 @@ the large history, but only inside the caller's own records.</p>
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>
-  (Sep 29, 2025): the context rot quotation, and just-in-time retrieval. Checked 2026-09.</li>
+  (Sep 29, 2025): the context rot quotation, and just-in-time retrieval. Opened 2026-11.</li>
 <li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a>
   (Claude API docs): agent-kept memory files and just-in-time context retrieval. Checked
-  2026-09.</li>
+  2026-11.</li>
+<li>Mem0 and Zep benchmark comparison pages (mem0.ai/blog/ai-memory-benchmarks,
+  mem0.ai/blog/zep-vs-mem0-which-ai-memory-layer-should-you-choose): vendor-reported
+  scores that conflict across pages. Search results only, not opened.</li>
 <li>The tax-assistant scenario, its sizes and the code sketch are invented and illustrative.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="writing-and-maintaining-memory.html"><span class="lbl">← Previous</span><span class="ttl">Writing and maintaining memory</span></a><a class="navcard next" href="when-memory-goes-wrong.html"><span class="lbl">→ Next</span><span class="ttl">When memory goes wrong</span></a></div><footer class="foot"><strong>Core insight:</strong> A model does not give you memory. Your product builds it as a set of promises about what it keeps, reads back and forgets.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-one-filing-system-different-drawers">The mental model: one filing system, different drawers</a><a class="h2" href="#why-not-hold-everything-in-the-window">Why not hold everything in the window</a><a class="h2" href="#choosing-among-the-three-designs">Choosing among the three designs</a><a class="h2" href="#worked-example-sizing-the-choice">Worked example: sizing the choice</a><a class="h2" href="#what-changes-when-the-corpus-is-a-persons-history">What changes when the corpus is a person&#x27;s history</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-one-filing-system-different-drawers">The mental model: one filing system, different drawers</a><a class="h2" href="#why-not-hold-everything-in-the-window">Why not hold everything in the window</a><a class="h2" href="#choosing-among-the-three-designs">Choosing among the three designs</a><a class="h2" href="#do-not-trust-vendor-memory-scores">Do not trust vendor memory scores</a><a class="h2" href="#worked-example-sizing-the-choice">Worked example: sizing the choice</a><a class="h2" href="#what-changes-when-the-corpus-is-a-persons-history">What changes when the corpus is a person&#x27;s history</a><a class="h2" href="#tradeoffs">Tradeoffs</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

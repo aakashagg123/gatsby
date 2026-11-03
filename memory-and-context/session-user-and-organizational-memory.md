@@ -2,7 +2,7 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -97,6 +97,19 @@ another's view. That is the failure covered in
 [multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md) you
 would apply to any shared system.
 
+## What a shipped product does
+
+Anthropic's Claude help page shows how one vendor drew these lines (checked 2026-11).
+Each project has its own memory. A project chat uses that memory plus account memory from
+non-project chats, but not memory from other projects. On Team and Enterprise plans, the
+owner decides whether memory is available, and each member starts with it off. Owners
+cannot view or edit members' memories. Sensitive topics such as health are off by default
+and need each user to opt in. Incognito chats never write to memory.
+
+Copy the pattern, not the settings. The user owns personal memory. The admin owns only
+the on-off switch. Check whether an admin should ever read a member's memory in your
+product. If yes, say so in the spec and tell the member.
+
 ## Worked example: three notes, three shapes
 
 *This example is invented, to show the method.*
@@ -185,5 +198,8 @@ or keys in a database." Choosing that mapping is the boundary decision.
 
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
   (Claude API docs): `/memories` is a prefix your handler maps to real storage, such as a
-  per-user directory or database keys. Checked 2026-09.
+  per-user directory or database keys. Checked 2026-11.
+- Anthropic, [How does Claude's memory work?](https://support.claude.com/en/articles/11817273)
+  (help centre): per-project memory, Team and Enterprise defaults, admin limits, incognito.
+  Opened 2026-11.
 - The sales-assistant scenario is invented and illustrative.
