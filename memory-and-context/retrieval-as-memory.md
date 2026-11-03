@@ -2,7 +2,7 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -77,6 +77,14 @@ usually beats the whole pile. See also the
 Agent-kept notes suit work in progress. Anthropic's docs describe the memory tool as
 letting an agent record "what it learns in memory files" and read them "back on demand".
 It gives "just-in-time context retrieval" without a search index.
+
+## Do not trust vendor memory scores
+
+Memory-layer vendors such as Mem0 and Zep publish scores on benchmarks like LoCoMo and
+LongMemEval. The scores come from the vendors themselves. They use different judge models
+and set-ups, so they do not compare across vendors. Treat them as a way to shortlist. Then
+test each candidate on your own users' histories, with questions about changed facts, since
+those are the hard cases. Seen in search results only; no benchmark paper was opened.
 
 ## Worked example: sizing the choice
 
@@ -180,8 +188,11 @@ For chunking, embeddings and retrieval quality, use the RAG track:
 ## Sources
 
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
-  (Sep 29, 2025): the context rot quotation, and just-in-time retrieval. Checked 2026-09.
+  (Sep 29, 2025): the context rot quotation, and just-in-time retrieval. Opened 2026-11.
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
   (Claude API docs): agent-kept memory files and just-in-time context retrieval. Checked
-  2026-09.
+  2026-11.
+- Mem0 and Zep benchmark comparison pages (mem0.ai/blog/ai-memory-benchmarks,
+  mem0.ai/blog/zep-vs-mem0-which-ai-memory-layer-should-you-choose): vendor-reported
+  scores that conflict across pages. Search results only, not opened.
 - The tax-assistant scenario, its sizes and the code sketch are invented and illustrative.

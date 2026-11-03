@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>Writing and maintaining memory</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Most talk about memory is about reading: what to fetch and show. The write path decides
 whether the memory is worth reading. It answers four questions.</p>
@@ -308,6 +308,13 @@ where you can validate, log or block. Two rules from the docs matter most:</p>
   files outside the memory directory.</li>
 <li><strong>Cap file size and delete old files.</strong> Both are your job, not the model's.</li>
 </ul>
+<p>The docs also pair the memory tool with compaction. Compaction summarizes older turns on
+the server when the chat nears the window limit. Memory keeps the facts that must survive
+that summary. Decide which facts the agent must write down before compaction can drop them.
+For software work spread over many sessions, the docs describe a set-up pattern. A first
+session writes a progress log and a feature checklist. Each later session reads them first
+and updates them before it ends. The team marks a feature done only after an end-to-end
+check.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">Do we have a written rule for what is worth saving, including what is never saved?</li>
@@ -334,9 +341,9 @@ where you can validate, log or block. Two rules from the docs matter most:</p>
 <ul>
 <li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">Memory tool</a>
   (Claude API docs): the six commands, path validation, size caps, expiry, the sensitive
-  information note, and prompt guidance on what to write. Checked 2026-09.</li>
+  information note, and prompt guidance on what to write. Checked 2026-11.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>
-  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-09.</li>
+  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-11.</li>
 <li>The travel-assistant table and the write-policy code are invented and illustrative.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="session-user-and-organizational-memory.html"><span class="lbl">← Previous</span><span class="ttl">Session, user &amp; organizational memory</span></a><a class="navcard next" href="retrieval-as-memory.html"><span class="lbl">→ Next</span><span class="ttl">Retrieval as memory</span></a></div><footer class="foot"><strong>Core insight:</strong> A model does not give you memory. Your product builds it as a set of promises about what it keeps, reads back and forgets.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -22,18 +22,30 @@ memory feature. Details come from press coverage in search results.
 **A planted memory that kept working (2024).** Security researcher Johann Rehberger showed
 that a crafted web page or document could get the ChatGPT macOS app to save a hostile instruction in its
 long-term memory. The instruction sent later conversations to an outside server. OpenAI
-released a partial fix that closed the data-sending route, and the work was published in September 2024. 🎯 *Takeaway:* if a
-model can write to memory, an injection can outlive the session. Hold writes from
-untrusted content for confirmation. See
+fixed the app in September 2024, and the work was published on September 20, 2024. The
+fix was partial. It closed the data-sending route. The author notes that an untrusted
+page can still get ChatGPT to store memories. 🎯 *Takeaway:* if a model can write to
+memory, an injection can outlive the session. A vendor patch does not close the write
+path. Hold writes from untrusted content for confirmation. See
 [poisoning](./when-memory-goes-wrong.md#poisoning-a-planted-memory-that-keeps-working) and
-[the write path](./writing-and-maintaining-memory.md). Details come from press coverage
-in search results.
+[the write path](./writing-and-maintaining-memory.md). The author's own write-up was opened
+for this edit.
 
 **Who owns the store (Claude API).** The Claude memory tool runs on the developer's side.
 Claude asks for a file operation, and the application performs it. Anthropic's docs say
 memory "lives entirely in your application," and put path checks, size caps and expiry on
 the developer. 🎯 *Takeaway:* you own the store, and so you own its boundary and its
 deletion duty. See [session, user & organizational memory](./session-user-and-organizational-memory.md).
+
+**Deleting the chat does not delete the memory (Claude help page).** Anthropic's help page
+says that deleting a conversation does not delete the memories created from it. The user
+must delete those memories one by one. Memory is on by default for Free, Pro, Max and Ultra
+users. On Team and Enterprise plans, each member starts with it off, and owners cannot view
+members' memories. 🎯 *Takeaway:* users link a chat to what it taught the product. Decide
+whether deleting the source also deletes the memory, and say which. See
+[when memory goes wrong](./when-memory-goes-wrong.md) and
+[session, user & organizational memory](./session-user-and-organizational-memory.md).
+Checked 2026-11.
 
 **The stale preference (an illustration).** A shopping assistant learns "vegetarian" in
 January. In June the customer starts eating fish and says so, but the store only appends.
@@ -94,9 +106,11 @@ lesson to reread.
 - OpenAI, [March 20 ChatGPT outage: here's what happened](https://openai.com/index/march-20-chatgpt-outage/)
   (Mar 2023). Same status: search results only.
 - Johann Rehberger, [ChatGPT macOS app persistent data exfiltration](https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/)
-  (Sep 2024). Press coverage in search results only; the page could not be opened.
+  (Sep 2024). Opened 2026-11.
+- Anthropic, [How does Claude's memory work?](https://support.claude.com/en/articles/11817273)
+  (help centre). Opened 2026-11.
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
-  (Claude API docs). Checked 2026-09.
+  (Claude API docs). Checked 2026-11.
 - The stale-preference story is an invented illustration.
 
 ---

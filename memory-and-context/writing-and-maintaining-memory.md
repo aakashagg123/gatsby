@@ -2,7 +2,7 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -178,6 +178,14 @@ where you can validate, log or block. Two rules from the docs matter most:
   files outside the memory directory.
 - **Cap file size and delete old files.** Both are your job, not the model's.
 
+The docs also pair the memory tool with compaction. Compaction summarizes older turns on
+the server when the chat nears the window limit. Memory keeps the facts that must survive
+that summary. Decide which facts the agent must write down before compaction can drop them.
+For software work spread over many sessions, the docs describe a set-up pattern. A first
+session writes a progress log and a feature checklist. Each later session reads them first
+and updates them before it ends. The team marks a feature done only after an end-to-end
+check.
+
 ## Practitioner checklist
 
 - [ ] Do we have a written rule for what is worth saving, including what is never saved?
@@ -204,7 +212,7 @@ where you can validate, log or block. Two rules from the docs matter most:
 
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
   (Claude API docs): the six commands, path validation, size caps, expiry, the sensitive
-  information note, and prompt guidance on what to write. Checked 2026-09.
+  information note, and prompt guidance on what to write. Checked 2026-11.
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
-  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-09.
+  (Sep 29, 2025): structured note-taking as agentic memory. Checked 2026-11.
 - The travel-assistant table and the write-policy code are invented and illustrative.

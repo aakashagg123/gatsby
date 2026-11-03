@@ -2,7 +2,7 @@
 
 *Part of [Memory & context for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -174,5 +174,5 @@ If a field on this record has no answer in your spec, the spec is not finished.
 
 - Anthropic, [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
   (Claude API docs): the memory tool is client-side, and "memory lives entirely in your
-  application." Checked 2026-09.
+  application." Checked 2026-11.
 - The support-assistant scenario and its table are invented and illustrative.
