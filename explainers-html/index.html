@@ -3,21 +3,22 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Visual explainers: how AI systems work</title>
+<title>Visual explainers: how AI systems work and how AI products are run</title>
 </head>
 <body><header class="topbar">
   <a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Visual explainers</span><em>how it works</em></a>
   <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
 </header><main class="content index" id="top">
   <div class="index-hero">
-    <h1>Visual explainers: how AI systems work</h1>
-    <p class="lede">Each explainer follows one real example through a system, one stage at a time, with a picture at every stage. Ten minutes each, no maths required, and links to the lessons that go deeper.</p>
+    <h1>Visual explainers: how AI systems work and how AI products are run</h1>
+    <p class="lede">Each explainer follows one example through a system or a product decision, one stage at a time, with a picture at every stage. Six show how AI systems work. Six show how AI products are run: a launch, a model change, a margin, a regression, an agent spec and an incident. Ten minutes each, and links to the lessons that go deeper.</p>
     <div class="index-insight"><span class="Badge" data-color="discovery" data-size="md" data-variant="soft" data-pill="">Core insight</span><p>Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.</p></div>
-    <div class="index-meta"><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">6 explainers</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">a picture per stage</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">10 minutes each</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">links to the deep lessons</span></div>
+    <div class="index-meta"><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">12 explainers</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">a picture per stage</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">10 minutes each</span><span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">links to the deep lessons</span></div>
   </div>
-  <div class="intro MarkdownContent"><p>An explainer follows <strong>one real example</strong> through a system, one stage at a time. Every stage has a short plain block, a picture and one line to remember. There is no maths to do. Each takes about ten minutes.</p>
+  <div class="intro MarkdownContent"><p>An explainer follows <strong>one example</strong> through a system or a product decision, one stage at a time. Every stage has a short plain block, a picture and one line to remember. There is no maths to do. Each takes about ten minutes.</p>
 <p>The explainers sit beside the lessons, not in place of them. Read an explainer first to get the shape of a system. Then read the lessons for the detail, the numbers and the code.</p>
 <h2 id="the-explainers">The explainers</h2>
+<h3 id="how-ai-systems-work">How AI systems work</h3>
 <ol>
 <li><a href="inside-one-llm-request.html">Inside one LLM request</a> — follow the question "What is a mortgage rate?" from Enter to the last word: tokens, the context window, prefill, decode, the KV cache, streaming and batching.</li>
 <li><a href="how-a-model-learns.html">How a model learns</a> — follow "The cat sat on the ___" through the loss, the gradient and the update, then through pretraining, supervised tuning and preference tuning.</li>
@@ -26,7 +27,17 @@
 <li><a href="one-agent-run.html">One agent run, step by step</a> — follow the goal "Refund order 55812 if eligible" through tools, a gateway, stop conditions and a human checkpoint.</li>
 <li><a href="anatomy-of-a-guardrailed-request.html">Anatomy of a guardrailed request</a> — follow a hostile request through the layers that stop it.</li>
 </ol>
-<p>Then the <a href="recap.html">recap</a>, with a self-test across all six.</p>
+<h3 id="how-ai-products-are-run">How AI products are run</h3>
+<p>These six follow a product decision rather than a system. Each stage shows a decision, a number or a document that the product manager owns.</p>
+<ol start="7">
+<li><a href="one-ai-feature-from-idea-to-launch.html">One AI feature, from idea to launch</a> — follow claim summaries at an insurer from the size of the prize to the first-month readout.</li>
+<li><a href="one-model-change.html">One model change: cost, speed and quality</a> — follow a retirement notice to a new model, and see why the bill moved more than the price list.</li>
+<li><a href="one-ai-feature-p-and-l.html">From one AI task to gross margin</a> — follow one task's tokens to the margin on a seat and the pricing choice that follows.</li>
+<li><a href="one-eval-regression-traced.html">One eval regression, traced to its cause</a> — follow a red eval gate through error bars, slices and layers to the cause and a new guard.</li>
+<li><a href="one-user-story-to-agent-spec.html">One user story becomes an agent spec</a> — follow a dispatcher's story to tools, limits, autonomy per action and a rule for more freedom.</li>
+<li><a href="one-ai-incident-review.html">One AI incident, from alert to postmortem</a> — follow a wrong fee answer from the first screenshot to the actions in the roadmap.</li>
+</ol>
+<p>Then the <a href="recap.html">recap</a>, with a self-test across all twelve.</p>
 <h2 id="how-the-explainers-connect-to-the-lessons">How the explainers connect to the lessons</h2>
 <table>
 <thead>
@@ -60,12 +71,36 @@
 <td>A guardrailed request</td>
 <td><a href="../ai-security-and-guardrails/the-threat-model-and-guardrails.html">The threat model and guardrails</a></td>
 </tr>
+<tr>
+<td>One AI feature, idea to launch</td>
+<td><a href="../building-ai-native-products/capstone-ship-one-ai-native-feature.html">Capstone: ship one AI-native feature</a>, <a href="../product-sense/product-sense-for-ai.html">Product sense for AI products</a></td>
+</tr>
+<tr>
+<td>One model change</td>
+<td><a href="../llms/choosing-a-model.html">Choosing a model</a>, <a href="../prompt-engineering/prompts-in-production.html">Prompts in production</a></td>
+</tr>
+<tr>
+<td>From one AI task to gross margin</td>
+<td><a href="../cost-optimization/finops-budgets-forecasting-and-the-cost-review.html">FinOps for AI</a>, <a href="../business-acumen/monetization-and-business-models.html">Pricing and business models</a></td>
+</tr>
+<tr>
+<td>One eval regression</td>
+<td><a href="../evaluation-and-observability/building-the-eval-stack-in-the-right-order.html">Building the eval stack in the right order</a>, <a href="../technical-product-management/tpm-for-ai-products.html">Technical product management for AI</a></td>
+</tr>
+<tr>
+<td>One user story to an agent spec</td>
+<td><a href="../technical-product-management/specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a>, <a href="../building-ai-native-products/agentic-flows-practice.html">Practice: the agent spec and risk register</a></td>
+</tr>
+<tr>
+<td>One AI incident</td>
+<td><a href="../technical-product-management/incidents-and-postmortems.html">Incidents &amp; postmortems</a>, <a href="../technical-product-sense/reliability-and-failure.html">Reliability &amp; failure</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="about-the-examples">About the examples</h2>
-<p>The examples are made up or simplified so that each fits on a page. Where a number comes from this site's own code, the page says so. Real systems differ in detail. Every page lists its sources and says which ones were read.</p></div>
+<p>The examples are made up or simplified so that each fits on a page. The companies in the product explainers are invented, and their prices are illustrative. Where a number comes from this site's own code, the page says so. Real systems differ in detail. Every page lists its sources and says which ones were read.</p></div>
   <h2 class="sec">The lessons</h2>
-  <div class="cards"><a class="card" href="inside-one-llm-request.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">01</span><h3>Inside one LLM request</h3><span class="card-go">Read lesson →</span></a><a class="card" href="how-a-model-learns.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">02</span><h3>How a model learns</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-token-through-a-transformer.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">03</span><h3>One token through a transformer</h3><span class="card-go">Read lesson →</span></a><a class="card" href="how-an-image-model-draws.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">04</span><h3>How an image model draws</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-agent-run.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">05</span><h3>One agent run, step by step</h3><span class="card-go">Read lesson →</span></a><a class="card" href="anatomy-of-a-guardrailed-request.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">06</span><h3>Anatomy of a guardrailed request</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
+  <div class="cards"><a class="card" href="inside-one-llm-request.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">01</span><h3>Inside one LLM request</h3><span class="card-go">Read lesson →</span></a><a class="card" href="how-a-model-learns.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">02</span><h3>How a model learns</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-token-through-a-transformer.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">03</span><h3>One token through a transformer</h3><span class="card-go">Read lesson →</span></a><a class="card" href="how-an-image-model-draws.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">04</span><h3>How an image model draws</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-agent-run.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">05</span><h3>One agent run, step by step</h3><span class="card-go">Read lesson →</span></a><a class="card" href="anatomy-of-a-guardrailed-request.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">06</span><h3>Anatomy of a guardrailed request</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-ai-feature-from-idea-to-launch.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">07</span><h3>One AI feature, from idea to launch</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-model-change.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">08</span><h3>One model change: cost, speed and quality</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-ai-feature-p-and-l.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">09</span><h3>From one AI task to gross margin</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-eval-regression-traced.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">10</span><h3>One eval regression, traced to its cause</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-user-story-to-agent-spec.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">11</span><h3>One user story becomes an agent spec</h3><span class="card-go">Read lesson →</span></a><a class="card" href="one-ai-incident-review.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">12</span><h3>One AI incident, from alert to postmortem</h3><span class="card-go">Read lesson →</span></a><a class="card" href="recap.html"><span class="Badge" data-color="secondary" data-size="md" data-variant="soft">📌</span><h3>Recap &amp; real-world examples</h3><span class="card-go">Read recap →</span></a></div>
   <footer class="foot">Educational content. Use it, fork it, teach from it.</footer>
   </main>
 <div id="rs-root">

@@ -182,7 +182,7 @@ LANDING = """<!doctype html>
     <a class="card" href="explainers/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>New</span>
       <h3>Visual explainers →</h3>
-      <p>Follow one real example through a system, one stage at a time, with a picture at every stage: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request.</p>
+      <p>Follow one example through a system or a product decision, one stage at a time, with a picture at every stage. How AI systems work: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request. How AI products are run: a launch, a model change, a margin, an eval regression, an agent spec and an incident.</p>
     </a>
   </div>
   <div class="group">All modules</div>
@@ -526,6 +526,18 @@ EXPLAINER_FOR_PAGE = {
     "ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html": "one-agent-run",
     "building-ai-native-products/designing-agentic-flows.html": "one-agent-run",
     "ai-security-and-guardrails/the-threat-model-and-guardrails.html": "anatomy-of-a-guardrailed-request",
+    "building-ai-native-products/capstone-ship-one-ai-native-feature.html": "one-ai-feature-from-idea-to-launch",
+    "product-sense/product-sense-for-ai.html": "one-ai-feature-from-idea-to-launch",
+    "llms/choosing-a-model.html": "one-model-change",
+    "prompt-engineering/prompts-in-production.html": "one-model-change",
+    "cost-optimization/finops-budgets-forecasting-and-the-cost-review.html": "one-ai-feature-p-and-l",
+    "business-acumen/monetization-and-business-models.html": "one-ai-feature-p-and-l",
+    "evaluation-and-observability/building-the-eval-stack-in-the-right-order.html": "one-eval-regression-traced",
+    "technical-product-management/tpm-for-ai-products.html": "one-eval-regression-traced",
+    "technical-product-management/specs-prds-and-rfcs.html": "one-user-story-to-agent-spec",
+    "building-ai-native-products/agentic-flows-practice.html": "one-user-story-to-agent-spec",
+    "technical-product-management/incidents-and-postmortems.html": "one-ai-incident-review",
+    "technical-product-sense/reliability-and-failure.html": "one-ai-incident-review",
 }
 
 

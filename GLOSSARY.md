@@ -1019,6 +1019,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
+**Cost per successful outcome** — AI spend divided by the results that met the quality bar, not by all requests.
+
+*In plain terms.* A cheaper model can cost more per useful result if people discard more of its output. The FinOps Foundation lists it as a key measure for AI spend.
+
+*For example.* 0.63 cents a task with 70% of drafts kept is about 0.9 cents per kept draft.
+
+*Where it shows up:* Comparing models on value; AI unit economics.
+
+*See:* [From one AI task to gross margin](./explainers/one-ai-feature-p-and-l.md).
+
 **Counter-positioning** — A newcomer's model that an incumbent could copy but chooses not to, because copying would damage its existing business.
 
 *In plain terms.* The barrier is the incumbent's own self-harm. It erodes when the old business shrinks enough that copying becomes cheap.
@@ -1209,6 +1219,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [The language of money: reading the three statements](./business-acumen/the-language-of-money.md).
 
+**Degraded mode** — A planned, reduced version of a feature that keeps running while the full version is unsafe.
+
+*In plain terms.* It sits between full service and the kill switch. Choosing it in advance turns a 2 a.m. debate into a minute-long decision.
+
+*For example.* The assistant stays on, but fee questions go to a fixed page written by people.
+
+*Where it shows up:* Incident response; Launch planning.
+
+*See:* [One AI incident, from alert to postmortem](./explainers/one-ai-incident-review.md).
+
 **Diary study** — A study in which participants record each use over weeks.
 
 *In plain terms.* Diaries show how trust changes with time, which a single session cannot.
@@ -1389,6 +1409,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Evals](./content/04-evals-observability/evals.md).
 
+**Error bars on an eval** — The uncertainty around an eval score, so a change can be told apart from noise.
+
+*In plain terms.* A test set is a sample. For a pass rate the standard error is the square root of p(1 − p)/n. Comparing two versions case by case on the same set gives a tighter error bar than comparing two totals.
+
+*For example.* On 300 cases near 80%, each score is uncertain by about ±4 to 5 points at 95%.
+
+*Where it shows up:* Reading eval results; Deciding whether a drop is real.
+
+*See:* [One eval regression, traced to its cause](./explainers/one-eval-regression-traced.md).
+
 **EU AI Act** — The first horizontal law regulating AI models by risk tier (unacceptable / high / limited / minimal), in force since August 2024, with high-risk dates moved by the July 2026 Digital Omnibus to December 2027 and August 2028, applying to any provider whose AI output reaches EU users regardless of where the company is based.
 
 *In plain terms.* Most privacy law regulates data. The EU AI Act regulates the model and its use case directly, sorting every AI system into a risk tier with its own obligations — a hiring or credit-decision tool lands in 'high-risk' and owes a conformity assessment, logging, and human oversight, while a chatbot only owes a transparency disclosure. The reach is the part product teams miss: it applies based on where the output is used, not where the company is incorporated.
@@ -1418,6 +1448,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Measuring quality.
 
 *See:* [Practice: hill climbing](./building-ai-native-products/hill-climbing-in-practice.md).
+
+**Eval slice** — A subset of test cases of one kind, scored on its own.
+
+*In plain terms.* A total score hides where damage is. Most regressions sit in one kind of question, so a gate can require that no slice drops more than a set amount.
+
+*For example.* Customs questions fell from 84% to 44% while the total fell only 8 points.
+
+*Where it shows up:* Finding the cause of a regression; Writing release gates.
+
+*See:* [One eval regression, traced to its cause](./explainers/one-eval-regression-traced.md).
 
 **Eval-driven development** — Making a graded example set the spec, regression suite, and launch gate for an AI feature — no change ships without a score.
 
@@ -2098,6 +2138,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Prototyping a task before investing in fine-tuning; Deciding what belongs in the prompt vs. the weights; Trading prompt cost vs. training cost.
 
 *See:* [Fine-tuning vs. ICL vs. RAG vs. distillation](./content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md).
+
+**Incident commander** — The one person who directs the response to an incident and assigns the work.
+
+*In plain terms.* One commander stops many helpful people from making uncoordinated changes. The commander also keeps the living incident document.
+
+*For example.* The engineering manager commands while the on-call engineer changes the system and the PM handles communication.
+
+*Where it shows up:* Incident response.
+
+*See:* [One AI incident, from alert to postmortem](./explainers/one-ai-incident-review.md).
 
 **Incrementality** — The difference between the world with your bet and the world without it: what the bet truly caused.
 
@@ -2819,6 +2869,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Practice: probing and choosing models](./building-ai-native-products/model-intuition-practice.md).
 
+**Model deprecation and retirement** — The vendor process that ends a model: first deprecated with a replacement named, then retired, after which calls fail.
+
+*In plain terms.* A model is a rented part with an end date. A retirement notice starts a migration with a deadline, so the test and rollout plan should exist before it arrives.
+
+*For example.* A pinned model is deprecated with 60 days to move before it is retired.
+
+*Where it shows up:* Planning model migrations; Vendor risk reviews.
+
+*See:* [One model change: cost, speed and quality](./explainers/one-model-change.md).
+
 **Model intuition** — A feel for what a model will do on a task before you run it.
 
 *In plain terms.* It comes from probing models on real inputs, reading failures and tracking the quality, speed and cost trade-offs. It separates a confident roadmap from a guess.
@@ -2878,6 +2938,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Enterprise security/compliance reviews; Designing caches and context to be tenant-safe; Preventing embarrassing cross-customer leaks.
 
 *See:* [Multi-tenant isolation](./content/05-safety-multitenancy/multi-tenant-isolation.md).
+
+**Must-not-fail case** — A test case where any failure blocks launch, whatever the average score says.
+
+*In plain terms.* Errors differ in harm. The worst ones are named in the spec and tested on every change. A high average cannot buy them back.
+
+*For example.* A claim summary that leaves out an earlier claim on the same car.
+
+*Where it shows up:* Writing an AI feature spec; Setting a launch gate.
+
+*See:* [One AI feature, from idea to launch](./explainers/one-ai-feature-from-idea-to-launch.md).
 
 **Near, next and future horizons** — Grouping a portfolio into the core business, emerging businesses and future options, each judged by its own standard.
 
@@ -3779,6 +3849,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Planning & reasoning](./agentic-ai/planning-and-reasoning.md).
 
+**Regression case** — A test case that once failed and must keep passing.
+
+*In plain terms.* Each fixed bug leaves a test behind, so the same mistake cannot ship again unnoticed.
+
+*For example.* The 15 customs answers that left out the duty threshold join the test set.
+
+*Where it shows up:* Growing an eval suite; Postmortem actions.
+
+*See:* [One eval regression, traced to its cause](./explainers/one-eval-regression-traced.md).
+
 **Regularization** — A penalty on model complexity that makes it prefer simpler explanations.
 
 *In plain terms.* Regularization adds a price to the loss for large weights or many features. The model then keeps a pattern only if the data insists. It is a main tool against overfitting. Too much of it causes underfitting.
@@ -4118,6 +4198,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Rethinking AI product business models; Pricing on outcomes vs. seats; Sizing the addressable market (labour, not software budgets).
 
 *See:* [Agentic AI as a product](./agentic-ai/agentic-ai-as-a-product.md).
+
+**Severity level (SEV)** — A ranked scale for incidents that sets how big and how fast the response is.
+
+*In plain terms.* The ladder is agreed before any incident, so nobody argues about it during one. Wrong information about money may rank high even when the system is up.
+
+*For example.* SEV2: wrong money information that many members can see.
+
+*Where it shows up:* Incident response; On-call policy.
+
+*See:* [One AI incident, from alert to postmortem](./explainers/one-ai-incident-review.md).
 
 **Shadow mode** — Running a new model on live traffic without acting on its output, to compare it with the current one.
 
@@ -4518,6 +4608,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Planning a launch in a regulated business; Working with Risk and Compliance.
 
 *See:* [Navigating the organization](./business-acumen/navigating-the-organization.md).
+
+**Time to first token (TTFT)** — The wait between sending a request and seeing the first word of the answer.
+
+*In plain terms.* It covers the network, any queue and the reading of the prompt. The rest of the wait depends on how long the answer is and how fast the model writes.
+
+*For example.* 0.8 seconds to start, then 500 tokens at 80 a second: about 7 seconds in all.
+
+*Where it shows up:* Setting latency targets; Comparing models.
+
+*See:* [One model change: cost, speed and quality](./explainers/one-model-change.md).
 
 **Token** — The small piece of text — often smaller than a word — that a language model actually reads and writes, one at a time.
 

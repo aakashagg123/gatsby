@@ -16,11 +16,12 @@ CFG = {
     "out": os.path.join(ROOT, "explainers-html"),
     "brand": "Visual explainers",
     "tagline": "how it works",
-    "title": "Visual explainers: how AI systems work",
-    "lede": "Each explainer follows one real example through a system, one stage at a time, with a picture at every stage. "
-            "Ten minutes each, no maths required, and links to the lessons that go deeper.",
+    "title": "Visual explainers: how AI systems work and how AI products are run",
+    "lede": "Each explainer follows one example through a system or a product decision, one stage at a time, with a picture at every stage. "
+            "Six show how AI systems work. Six show how AI products are run: a launch, a model change, a margin, a regression, an agent spec and an incident. "
+            "Ten minutes each, and links to the lessons that go deeper.",
     "insight": "Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.",
-    "meta": ["6 explainers", "a picture per stage", "10 minutes each", "links to the deep lessons"],
+    "meta": ["12 explainers", "a picture per stage", "10 minutes each", "links to the deep lessons"],
     "callout": "Why it matters",
     "chip_label": "Explainer",
     "lessons": [
@@ -30,6 +31,12 @@ CFG = {
         "how-an-image-model-draws",
         "one-agent-run",
         "anatomy-of-a-guardrailed-request",
+        "one-ai-feature-from-idea-to-launch",
+        "one-model-change",
+        "one-ai-feature-p-and-l",
+        "one-eval-regression-traced",
+        "one-user-story-to-agent-spec",
+        "one-ai-incident-review",
     ],
 }
 

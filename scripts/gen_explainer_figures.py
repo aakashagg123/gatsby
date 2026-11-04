@@ -296,6 +296,309 @@ def guardrails():
         "Safety comes from layers and from testing."))
 
 
+# ---------------------------------------------------------------- How AI products are run
+# The six explainers below follow invented companies. Every number is illustrative and is
+# recomputed in the page text; keep the two in step when you change one.
+
+
+def feature_launch():
+    k = "one-ai-feature-from-idea-to-launch"
+    put(k, 0, F.bars("Stage 1", "The size of the prize", "Minutes to read one claim file (illustrative).", [
+        ("today", 12, "caution"), ("target", 5, "success")],
+        vmax=14, note="7 minutes × 40,000 claims = 280,000 minutes, about 4,667 hours a month.", fmt="{:.0f} min"))
+    put(k, 1, F.compare("Stage 2", "Is AI the right tool?", "Split the work by what each part needs.",
+        ("info", "Structured fields: code", ["Policy number, dates, amounts", "Exact every time", "No model needed"]),
+        ("discovery", "Free text: model", ["Notes, emails, repair quotes", "A summary needs judgement", "Sometimes wrong, silently"]),
+        "Use a model only for the part rules cannot do."))
+    put(k, 2, F.grid("Stage 3", "The cost of being wrong", "Rank errors by harm. The worst become must-not-fail cases.", [
+        [("Error", None), ("Harm", None), ("Treatment", None)],
+        [("Awkward wording", None), ("Low", "success"), ("Fix over time", None)],
+        [("Missing a minor detail", None), ("Medium", "caution"), ("Counts against the bar", None)],
+        [("Missing a prior claim", None), ("High", "danger"), ("Must-not-fail case", None)],
+        [("Wrong party at fault", None), ("High", "danger"), ("Must-not-fail case", None)]],
+        note="Northwind names 10 must-not-fail cases."))
+    put(k, 3, F.layers("Stage 4", "A one-page spec built on examples", "The examples become the first test set.", [
+        ("info", "Job", "a one-page summary at the top of each claim file"),
+        ("discovery", "Inputs", "notes, emails, quotes and earlier claims"),
+        ("success", "Examples", "3 worked examples, each with an accepted and a rejected summary"),
+        ("danger", "Must not fail", "10 cases, such as a prior claim on the same car"),
+        ("caution", "Quality bar", "85% of held-back cases pass, and no must-not-fail case fails")],
+        "If a case is in the spec, it is in the test."))
+    put(k, 4, F.bars("Stage 5", "The cheapest lever first", "Pass rate on 150 development cases (illustrative).", [
+        ("prompt only", 0.74, "caution"), ("+ retrieval", 0.86, "info"), ("+ 3 examples", 0.90, "success")],
+        vmax=1.0, note="52 of 60 held-back cases pass, about 87%. No fine-tuning needed.", fmt="{:.0%}"))
+    put(k, 5, F.grid("Stage 6", "Choosing the model", "The same 150 cases on three models. Prices are assumed.", [
+        [("Model", None), ("Pass rate", None), ("Slowest answers", None), ("Cost per claim", None), ("Must-not-fail", None)],
+        [("Large", "info"), ("91%", None), ("6.8 s", "caution"), ("$0.11", "caution"), ("10 of 10", None)],
+        [("Mid-size", "success"), ("90%", None), ("3.1 s", None), ("$0.04", None), ("10 of 10", "success")],
+        [("Small", "danger"), ("79%", None), ("1.2 s", None), ("$0.006", None), ("7 of 10", "danger")]],
+        note="Mid-size meets all three. Small fails must-not-fail cases."))
+    put(k, 6, F.layers("Stage 7", "Design for being wrong", "About 1 summary in 10 has a problem.", [
+        ("info", "Sources", "each sentence links to its place in the file"),
+        ("caution", "Not found", "a missing field says so, never a guess"),
+        ("discovery", "Full file", "one click away"),
+        ("success", "Confirm", "the adjuster confirms before any decision")],
+        "Turn a hidden error into a visible one."))
+    put(k, 7, F.layers("Stage 8", "The launch gate", "Agreed in advance, with numbers and an owner.", [
+        ("success", "Ship", "to 20 adjusters: held-back score at least 85%, no must-not-fail failure"),
+        ("info", "Widen", "after 2 weeks: under 15% of summaries corrected, reading time down at least 3 minutes"),
+        ("danger", "Roll back", "a missed detail changes a decision, score under 80%, slowest answers over 5 s or cost over $0.08")],
+        "The claims director owns the kill switch."))
+    put(k, 8, F.lanes("Stage 9", "A staged rollout", "Weeks run left to right.", [
+        ("Exposure", [("info", "20 adjusters · weeks 1-2", 2), ("discovery", "10% · weeks 3-4", 2), ("caution", "50% · weeks 5-6", 2), ("success", "100% · week 7 on", 2)])],
+        "Check the gate's numbers before each step."))
+    put(k, 9, F.bars("Stage 10", "The first-month readout", "Minutes to read one claim file.", [
+        ("before", 12, "caution"), ("hoped for", 5, "info"), ("measured", 6.5, "success")],
+        vmax=14, note="5.5 min × 40,000 = about 3,667 hours, worth about $165,000 at an assumed $45 an hour. Model cost: about $1,600.", fmt="{:g} min"))
+    put(k, 10, F.flow("Summary", "One AI feature, idea to launch", "", [
+        ("info", "Prize", "size it first"), ("danger", "Cost of errors", "must-not-fail cases"), ("discovery", "Spec", "examples and a bar"),
+        ("caution", "Model", "quality, speed, cost"), ("warning", "Gate", "ship, widen, roll back"), ("success", "Readout", "value in business units")],
+        "Each stage is a decision the product manager owns."))
+
+
+def model_change():
+    k = "one-model-change"
+    put(k, 0, F.flow("Stage 1", "The notice arrives", "Tally runs on a pinned model, M1.", [
+        ("info", "Deprecation notice", "a replacement is named"), ("caution", "60 days", "to move"), ("danger", "Retired", "calls to M1 fail")],
+        "Every model in your product has a retirement date."))
+    put(k, 1, F.grid("Stage 2", "The scorecard you start from", "Measured on the same 200 test cases.", [
+        [("Quality", "info"), ("Speed", "discovery"), ("Cost", "caution")],
+        [("168 of 200 pass (84%)", None), ("about 4.4 s per answer", None), ("$3.13 per 1,000 questions", None)]],
+        note="Production signals too: how often agents edit an answer, and how often a chat goes to a person."))
+    put(k, 2, F.membar("Stage 3", "What one question sends and gets back", "Tokens per request. Prices are illustrative.", [
+        ("info", "Cached", 1800, "1,800 shared tokens at a tenth of $1 per million"),
+        ("discovery", "New input", 1200, "1,200 tokens at $1 per million"),
+        ("caution", "Output", 350, "350 tokens at $5 per million")],
+        "$0.00018 + $0.0012 + $0.00175 = $0.00313, or $3.13 per 1,000."))
+    put(k, 3, F.bars("Stage 4", "The new model's price, and its habits", "Cost per 1,000 questions, with caching.", [
+        ("M1 today", 3.13, "info"), ("M2, same length", 6.26, "caution"), ("M2, longer answers", 7.76, "danger")],
+        vmax=8.5, note="Prices doubled. Answers grew from 350 to 500 tokens. The bill grew 2.5 times.", fmt="${:.2f}"))
+    put(k, 4, F.bars("Stage 5", "The same test, two columns", "200 cases, compared one by one.", [
+        ("M1 passes", 168, "info"), ("fixed by M2", 14, "success"), ("broken by M2", 4, "danger"), ("M2 passes", 178, "discovery")],
+        vmax=200, note="168 + 14 − 4 = 178.", fmt="{:.0f}"))
+    put(k, 5, F.grid("Stage 6", "Read the broken cases", "What M2 got wrong that M1 got right.", [
+        [("Broken case", None), ("Count", None), ("Cause", None)],
+        [("Answer over 120 words", "caution"), ("3", None), ("M1 was brief by habit", None)],
+        [("Refused a refund-policy question", "danger"), ("1", None), ("Over-cautious", None)]],
+        note="Fix: say be brief in the prompt."))
+    put(k, 6, F.lanes("Stage 7", "Speed follows length", "Seconds per typical answer. Speeds are assumed.", [
+        ("M1 · 350 tokens", [("caution", "start 0.5", 0.5), ("info", "write 3.9", 3.9)]),
+        ("M2 · 500 tokens", [("caution", "start 0.8", 0.8), ("danger", "write 6.25", 6.25)]),
+        ("M2, be brief · 380", [("caution", "start 0.8", 0.8), ("success", "write 4.75", 4.75)])],
+        "Shorter answers are faster and cheaper. The brief version costs $6.56 per 1,000."))
+    put(k, 7, F.membar("Stage 8", "Send easy questions to a small model", "Share of questions and cost per 1,000 of each.", [
+        ("success", "Simple: small model", 70, "70% at $0.45 per 1,000"),
+        ("discovery", "Hard: M2", 30, "30% at $6.56 per 1,000")],
+        "0.7 × $0.45 + 0.3 × $6.56 = about $2.28 per 1,000, below the $3.13 start."))
+    put(k, 8, F.lanes("Stage 9", "Roll out in steps", "Weeks inside the 60-day notice.", [
+        ("Plan", [("info", "test and fix · weeks 1-2", 2), ("discovery", "shadow · week 3", 1), ("caution", "5% · week 4", 1), ("warning", "50% · week 5", 1), ("success", "100% · week 6", 1), ("plain", "slack", 2)])],
+        "M1 stays ready as a fallback until the retirement date."))
+    put(k, 9, F.layers("Stage 10", "The decision record", "One page the next person can read.", [
+        ("info", "Setup", "M2 for hard questions, small model for simple ones, be brief in the prompt"),
+        ("success", "Numbers", "89% quality, about 5.6 s for an M2 answer, about $2.28 per 1,000"),
+        ("caution", "Reopen if", "the small model falls below 95% on simple cases, a price changes or a new notice arrives"),
+        ("discovery", "Owner", "re-runs the 200 cases every month")],
+        "A model and a prompt are one version."))
+    put(k, 10, F.flow("Summary", "One model change", "", [
+        ("info", "Notice", ""), ("discovery", "Baseline", "three numbers"), ("caution", "Cost", "price and length"),
+        ("warning", "Test", "case by case"), ("success", "Route", "small jobs to a small model"), ("danger", "Roll out", "in steps")],
+        "Quality, speed and cost move together."))
+
+
+def feature_pnl():
+    k = "one-ai-feature-p-and-l"
+    put(k, 0, F.membar("Stage 1", "The plan before AI", "Per seat per month.", [
+        ("caution", "Cost", 3.60, "$3.60 to serve a seat"), ("success", "Margin", 20.40, "$20.40, an 85% gross margin")],
+        "Know the margin before the feature."))
+    put(k, 1, F.membar("Stage 2", "One task, in tokens", "From the product's logs (illustrative).", [
+        ("info", "Input", 2500, "2,500 tokens: instructions, request, selected text"),
+        ("discovery", "Output", 600, "600 tokens: the draft")],
+        "Every cost number is built on these two."))
+    put(k, 2, F.bars("Stage 3", "The cost of one task", "At assumed prices of $2 and $10 per million tokens.", [
+        ("input", 0.5, "info"), ("output", 0.6, "discovery"), ("task", 1.1, "caution")],
+        vmax=1.3, note="Fewer output tokens, but each costs five times more.", fmt="{:.1f} cents"))
+    put(k, 3, F.bars("Stage 4", "Usage is not average", "AI cost per seat per month, at 1.1 cents a task.", [
+        ("light · 10 tasks", 0.11, "success"), ("typical · 60", 0.66, "info"), ("heaviest 5% · 1,500", 16.50, "danger")],
+        vmax=18, note="The heaviest seats cost 150 times the light ones and pay the same $24.", fmt="${:.2f}"))
+    put(k, 4, F.bars("Stage 5", "Margin by seat", "($24 − $3.60 − AI cost) ÷ $24.", [
+        ("before AI", 0.85, "success"), ("typical seat", 0.8225, "info"), ("heavy seat", 0.1625, "danger")],
+        vmax=1.0, note="Price per seat, cost per task.", fmt="{:.0%}"))
+    put(k, 5, F.bars("Stage 6", "Pull the cost levers", "Cents per task.", [
+        ("start", 1.1, "caution"), ("+ cache 1,500 shared tokens", 0.83, "info"), ("+ 400-token answers", 0.63, "success")],
+        vmax=1.3, note="A heavy seat now costs about $9.45, a margin of about 46%.", fmt="{:.2f}"))
+    put(k, 6, F.grid("Stage 7", "Three ways to price it", "Heavy seat: 1,500 tasks at 0.63 cents.", [
+        [("Option", None), ("How it works", None), ("Heavy-seat margin", None)],
+        [("Fair-use cap", "info"), ("300 tasks, then a smaller model", None), ("about 72%", None)],
+        [("Credits", "discovery"), ("300 included, packs of 1,000 for $15", None), ("about 76%", None)],
+        [("AI tier", "caution"), ("$36 plan with 2,000 tasks", None), ("about 64%", None)]],
+        note="The numbers narrow the choice. The customer decides it."))
+    put(k, 7, F.flow("Stage 8", "Budgets that act", "Limits live in code.", [
+        ("info", "Seat allowance", "per month"), ("caution", "Past it", "smaller model, and the user is told"),
+        ("warning", "Spend alert", "at 80% of the budget"), ("danger", "Spike alert", "one account in a loop")],
+        "A budget that only reports is a wish."))
+    put(k, 8, F.bars("Stage 9", "Forecast two curves", "Typical seat cost: tasks up 15% and price down 10% each quarter.", [
+        ("Q1", 37.8, "info"), ("Q2", 39.1, "discovery"), ("Q3", 40.5, "caution"), ("Q4", 41.9, "warning")],
+        vmax=45, note="1.15 × 0.9 = 1.035: up 3.5% a quarter.", fmt="{:.1f} cents"))
+    put(k, 9, F.bars("Stage 10", "Cost per useful result", "Cents per draft the user kept.", [
+        ("current: 0.63 ÷ 70% kept", 0.90, "success"), ("cheaper model: 0.30 ÷ 30% kept", 1.00, "danger")],
+        vmax=1.2, note="Cheaper per task can be dearer per result.", fmt="{:.2f} cents"))
+    put(k, 10, F.flow("Summary", "From one task to gross margin", "", [
+        ("info", "Plan", "margin before"), ("discovery", "Tokens", "per task"), ("caution", "Task cost", "input + output"),
+        ("danger", "Seat margin", "heavy users"), ("warning", "Price", "a usage part"), ("success", "Cost per result", "the real unit")],
+        "Price per seat, cost per task: close the gap on purpose."))
+
+
+def eval_regression():
+    k = "one-eval-regression-traced"
+    put(k, 0, F.bars("Stage 1", "The gate turns red", "Test cases passed, of 300.", [
+        ("current version", 258, "success"), ("release candidate", 234, "danger")],
+        vmax=300, note="86% to 78%. The gate blocks the release.", fmt="{:.0f}"))
+    put(k, 1, F.compare("Stage 2", "Is the drop real?", "The same 300 cases, compared one by one.",
+        ("info", "Case by case", ["31 cases: pass to fail", "7 cases: fail to pass", "Net: 24 lost"]),
+        ("success", "Error bars (95%)", ["Each score: about ±4 to 5 points", "Unpaired difference: about ±6", "Paired difference: about ±4"]),
+        "An 8-point drop is well outside the noise."))
+    put(k, 2, F.layers("Stage 3", "What changed?", "List every change before forming a theory.", [
+        ("info", "Prompt", "version 41 to version 42"), ("discovery", "Search index", "rebuilt"),
+        ("caution", "Library", "updated"), ("success", "Model", "pinned, unchanged")],
+        "Each change maps to a layer."))
+    put(k, 3, F.heat("Stage 4", "Slice the score", "Pass rate by kind of question.", ["Tracking (120)", "Returns (80)", "Customs (50)", "Address (50)"], ["Before", "After"],
+        [[0.95, 113 / 120], [70 / 80, 69 / 80], [0.84, 0.44], [0.64, 0.60]], note="Customs fell 40 points. The rest moved 4 points or less.", fmt="{:.0%}"))
+    put(k, 4, F.bars("Stage 5", "Read the failures", "The 22 customs cases that now fail, by cause.", [
+        ("missing the duty threshold", 15, "danger"), ("wrong country rule", 4, "caution"), ("tone", 3, "info")],
+        vmax=22, note="One cause covers two thirds.", fmt="{:.0f}"))
+    put(k, 5, F.compare("Stage 6", "Find the layer", "Rule out the easy one first.",
+        ("success", "Search: fine", ["Right document in top 5: 46 of 50", "Recall at 5: 0.92 before and after"]),
+        ("danger", "Prompt: the cause", ["Typical customs answer: 140 to 75 words", "New line: keep every answer under 80 words"]),
+        "Short answers suit tracking. They cut off customs."))
+    put(k, 6, F.compare("Stage 7", "Hold or ship?", "Customs is about 1 in 8 of real traffic.",
+        ("caution", "Ship with a special case", ["The support fix ships this week", "Old prompt for customs only", "A special case to remember"]),
+        ("success", "Hold two days (chosen)", ["Fix the prompt", "Re-run the eval", "No wrong answers at the border"]),
+        "The trace gives the facts. The product manager weighs the harm."))
+    put(k, 7, F.bars("Stage 8", "Fix and check again", "Pass rate on the 300 cases.", [
+        ("current", 258 / 300, "success"), ("candidate", 234 / 300, "danger"), ("fixed", 256 / 300, "info")],
+        vmax=1.0, note="Customs back to 41 of 50. Holdout: 85 of 100, against 86 before.", fmt="{:.0%}"))
+    put(k, 8, F.layers("Stage 9", "Make it impossible to repeat", "Leave a test behind.", [
+        ("info", "Regression cases", "the 15 missing-threshold cases join the test set"),
+        ("caution", "Slice rule", "no slice may drop more than 5 points"),
+        ("success", "Length rule", "a prompt line that limits length is tested on the longest answers")],
+        "The total-score gate would have passed a smaller bug."))
+    put(k, 9, F.layers("Stage 10", "The log entry", "Readable in a minute.", [
+        ("info", "Change", "prompt v42 added an 80-word limit"), ("danger", "Broke", "customs 84% to 44%: the threshold was cut"),
+        ("discovery", "Found by", "paired comparison, slicing, error analysis, layer check"),
+        ("success", "Fix", "longer answers allowed for thresholds, fees and steps"), ("caution", "Guard", "15 regression cases and the slice rule")],
+        "Write down the cause and the guard."))
+    put(k, 10, F.flow("Summary", "One regression, traced", "", [
+        ("danger", "Red gate", ""), ("info", "Real?", "error bars"), ("discovery", "What changed", "the list"),
+        ("caution", "Slice", "find the corner"), ("warning", "Layer", "rule out search"), ("success", "Fix and guard", "")],
+        "A red gate is a question, not an answer."))
+
+
+def story_to_spec():
+    k = "one-user-story-to-agent-spec"
+    put(k, 0, F.bars("Stage 1", "The story and its value", "Dispatcher time on missed appointments (illustrative).", [
+        ("missed visits a week", 180, "info"), ("minutes each", 9, "caution"), ("hours a week", 27, "danger")],
+        vmax=200, note="180 × 9 = 1,620 minutes, or 27 hours a week.", fmt="{:.0f}"))
+    put(k, 1, F.compare("Stage 2", "Why the old acceptance criteria break", "The agent's output varies from run to run.",
+        ("caution", "Classic criteria", ["Given, when, then", "One expected output", "Pass or fail every time"]),
+        ("success", "For a probabilistic feature", ["Examples: accepted and rejected", "A pass rate on a test set", "Must-not-fail cases"]),
+        "The examples become the tests."))
+    put(k, 2, F.flow("Stage 3", "Workflow or agent?", "Give the model only the step that needs judgement.", [
+        ("info", "Find slots", "code: rules and skills"), ("discovery", "Talk to the customer", "model: open-ended"), ("success", "Book", "code: a fixed call")],
+        "A workflow with one model step."))
+    put(k, 3, F.grid("Stage 4", "The tool inventory", "Class every tool.", [
+        [("Tool", None), ("Class", None), ("Undo?", None)],
+        [("find_slots", None), ("read", "info"), ("nothing to undo", None)],
+        [("draft_message", None), ("draft", "discovery"), ("yes", None)],
+        [("send_message", None), ("act", "danger"), ("no", None)],
+        [("book_slot", None), ("act", "caution"), ("yes, by cancelling", None)]],
+        note="The act tools carry the risk."))
+    put(k, 4, F.layers("Stage 5", "Limits in code", "Checked by the code that runs the tool.", [
+        ("info", "Window", "book only within the next 5 working days"), ("discovery", "Skill", "only a technician with the right skill"),
+        ("caution", "Hours", "never into overtime"), ("warning", "Messages", "at most 3 per rebooking"), ("danger", "Cancel", "never: only a person cancels")],
+        "The model cannot argue with a limit in code."))
+    put(k, 5, F.grid("Stage 6", "How much freedom for each action", "Autonomy at launch.", [
+        [("Action", None), ("Suggest", None), ("Approve", None), ("Act", None)],
+        [("Find slots", None), ("", None), ("", None), ("✓", "success")],
+        [("Draft a message", None), ("", None), ("", None), ("✓", "success")],
+        [("Send a message", None), ("", None), ("✓", "caution"), ("", None)],
+        [("Book a slot", None), ("", None), ("✓", "caution"), ("", None)]],
+        note="Start low for actions that cannot be undone."))
+    put(k, 6, F.layers("Stage 7", "Examples become the test set", "One list, used twice.", [
+        ("info", "40 examples", "each with an accepted and a rejected result"),
+        ("danger", "8 must-not-fail", "double booking, outside hours, wrong address, a time never offered"),
+        ("success", "Every change", "the must-not-fail cases run before anything ships")],
+        "A polite message with the wrong technician is still wrong."))
+    put(k, 7, F.grid("Stage 8", "Plan the bad days", "A risk register: three of its rows.", [
+        [("Risk", None), ("Likely", None), ("Impact", None), ("Control", None)],
+        [("\"Book me in at 10 pm\"", None), ("High", "caution"), ("Medium", "caution"), ("Hours limit in code", None)],
+        [("Two approvals, one slot", None), ("Low", "success"), ("High", "danger"), ("Slot re-checked at booking", None)],
+        [("Tool fails, agent says done", None), ("Medium", "caution"), ("High", "danger"), ("Agent must see errors", None)]],
+        note="Every control gets a test in a sandbox."))
+    put(k, 8, F.layers("Stage 9", "The rule for more freedom", "Written before launch. Bookings move to \"agent acts\" when all hold.", [
+        ("info", "Volume", "at least 500 bookings"), ("discovery", "Time", "at least 4 weeks"),
+        ("success", "Quality", "at least 95% approved without edits"), ("danger", "Safety", "no must-not-fail case reached a customer")],
+        "The rule runs both ways: one double booking sends it back to approval."))
+    put(k, 9, F.layers("Stage 10", "The page engineering receives", "The spec says what safe and useful mean.", [
+        ("info", "User and value", "27 hours a week"), ("discovery", "Shape", "a workflow with one model step"),
+        ("caution", "Tools, limits, autonomy", "per action"), ("success", "Evals and risks", "40 examples, 8 must-not-fail, the register"),
+        ("warning", "Questions for the design review", "Where do limits live? What if a tool fails? Who can stop a run?")],
+        "The design says how to build it."))
+    put(k, 10, F.flow("Summary", "From story to agent spec", "", [
+        ("info", "Story", "value"), ("discovery", "Workflow or agent", ""), ("caution", "Tools", "read, draft, act"),
+        ("warning", "Limits", "in code"), ("success", "Autonomy", "per action"), ("danger", "Evals and risks", "")],
+        "Most of the agent is ordinary code."))
+
+
+def incident_review():
+    k = "one-ai-incident-review"
+    put(k, 0, F.flow("Stage 1", "Detection", "21:40 on a Tuesday. No alert has fired.", [
+        ("danger", "Member screenshot", "\"no overdraft fee\""), ("caution", "Support tickets", "more than usual about fees"), ("info", "System health", "up, fast, answering")],
+        "An AI feature can be up and wrong at the same time."))
+    put(k, 1, F.layers("Stage 2", "Declare it and set the severity", "Declared at 21:52. The ladder was agreed months ago.", [
+        ("danger", "SEV1", "outage, or member data at risk"), ("caution", "SEV2 (this one)", "wrong money information many members can see"),
+        ("info", "SEV3", "a minor corner case: a ticket")],
+        "Better to declare early and close fast."))
+    put(k, 2, F.layers("Stage 3", "Roles", "One commander, one live document.", [
+        ("info", "Incident commander", "the big picture; assigns work"), ("discovery", "Operations", "the only group that changes the system"),
+        ("caution", "Communications", "members, support and leaders"), ("success", "Planning", "follow-ups and hand-offs")],
+        "The commander keeps the living incident document."))
+    put(k, 3, F.compare("Stage 4", "Stop the harm first", "Two fallbacks, both designed before launch.",
+        ("caution", "Kill switch", ["Assistant off", "All chats to human agents", "About 40 more minutes of wait"]),
+        ("success", "Degraded mode (chosen, 21:58)", ["Assistant stays on", "Fee questions go to the fixed fee page", "Harm stops in minutes"]),
+        "Mitigate before you diagnose."))
+    put(k, 4, F.lanes("Stage 5", "Tell people the truth", "The first hour. Time runs left to right.", [
+        ("Actions", [("success", "21:58 harm stopped", 1), ("info", "22:10 support script", 1), ("discovery", "22:30 first update", 1), ("caution", "then every hour", 2)])],
+        "Say what you know, what you do not, and when you will speak next."))
+    put(k, 5, F.membar("Stage 6", "Size the blast radius", "Conversations since the fee page changed, 6 days ago.", [
+        ("info", "Other topics", 48900, "48,900 conversations"), ("caution", "Fees, right answer", 1860, "1,860"),
+        ("danger", "Told $0", 1240, "1,240 members")],
+        "Logs turn \"some members\" into a number."))
+    put(k, 6, F.flow("Stage 7", "The causes, in the plural", "The trigger, then the conditions that let it through.", [
+        ("info", "Fee table became an image", "trigger"), ("caution", "Real fee missing from search", ""),
+        ("warning", "Student page returned", "\"no overdraft fee\""), ("danger", "Wrong answer", "")],
+        "Conditions: no test on document changes, no source on fee answers, no alert on money answers."))
+    put(k, 7, F.compare("Stage 8", "Make it right", "310 of the 1,240 were charged $29 after being told $0.",
+        ("caution", "Refund on complaint", ["Cheaper at first", "Depends on members noticing", "Unfair to those who do not"]),
+        ("success", "Refund all 310 and write to all 1,240", ["310 × $29 = $8,990", "Plus a letter", "Reviewed by legal and compliance"]),
+        "Decide from the blast radius, not from who complains."))
+    put(k, 8, F.layers("Stage 9", "The postmortem", "Blameless: causes, not culprits.", [
+        ("info", "Impact", "1,240 members misled, 310 charged, 6 days"), ("discovery", "Timeline", "from the living document"),
+        ("danger", "Causes", "the trigger and three conditions"), ("success", "What went well", "degraded mode worked in 6 minutes"),
+        ("caution", "Actions", "each with an owner and a date")],
+        "A postmortem that blames a person stops hearing the truth."))
+    put(k, 9, F.grid("Stage 10", "Actions into the roadmap", "Tracked like features, reviewed monthly.", [
+        [("Action", None), ("Owner", None), ("Due", None)],
+        [("Test the assistant on every document change", "info"), ("AI engineering lead", None), ("2 weeks", None)],
+        [("Fee answers cite the source page", "discovery"), ("Product manager", None), ("3 weeks", None)],
+        [("Alert on changes in money answers", "caution"), ("Data lead", None), ("4 weeks", None)],
+        [("Flag documents with unreadable tables", "success"), ("Content operations", None), ("2 weeks", None)]],
+        note="A repeat incident with an open action is a process failure."))
+    put(k, 10, F.flow("Summary", "One AI incident", "", [
+        ("danger", "Detect", "people first"), ("caution", "Declare", "severity"), ("success", "Mitigate", "degraded mode"),
+        ("info", "Communicate", "on a clock"), ("discovery", "Size and make right", "logs"), ("warning", "Learn", "blameless, owned actions")],
+        "Size the harm, choose what users see, tell the truth, make it right."))
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     llm_request()
@@ -304,4 +607,10 @@ if __name__ == "__main__":
     image_model()
     agent_run()
     guardrails()
+    feature_launch()
+    model_change()
+    feature_pnl()
+    eval_regression()
+    story_to_spec()
+    incident_review()
     print("figures written to", OUT)

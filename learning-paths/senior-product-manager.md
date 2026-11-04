@@ -14,7 +14,7 @@ This path takes a working product manager from "AI is a black box" to "I can mak
 
 **Before you start:** Several years in product. No machine learning background is needed.
 
-**Length:** about 19 hours, across 4 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 20.5 hours, across 4 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -36,7 +36,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | --- | --- | --- |
 | 1 | Technical footing | about 2 hours |
 | 2 | AI literacy | about 8.5 hours |
-| 3 | The decisions only you own | about 4.5 hours |
+| 3 | The decisions only you own | about 6 hours |
 | 4 | Go deeper where your product needs it (optional) | about 4 hours |
 
 ## Stage 1: Technical footing
@@ -61,8 +61,9 @@ Learn what a model is, what it does well, and what it does badly. Plain language
 
 ## Stage 3: The decisions only you own
 
-Pick the approach, set the bar, count the cost, and accept the risk. (about 4.5 hours)
+Pick the approach, set the bar, count the cost, and accept the risk. (about 6 hours)
 
+- **Visual explainers**: [7. One AI feature, from idea to launch](../explainers/one-ai-feature-from-idea-to-launch.md) · [8. One model change: cost, speed and quality](../explainers/one-model-change.md) · [9. From one AI task to gross margin](../explainers/one-ai-feature-p-and-l.md) · [10. One eval regression, traced to its cause](../explainers/one-eval-regression-traced.md)
 - **Generative AI**: [5. Build, buy, or fine-tune](../generative-ai/build-buy-or-fine-tune.md) · [6. Where generative AI creates and destroys value](../generative-ai/where-value-is-created-and-destroyed.md)
 - **LLMs**: [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
 - **Product sense**: [7. Product sense for AI products](../product-sense/product-sense-for-ai.md)
@@ -95,7 +96,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 
 *This example is invented, to show the method.*
 
-A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 19 hours) takes about 7 weeks.
+A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 20.5 hours) takes about 7 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |
