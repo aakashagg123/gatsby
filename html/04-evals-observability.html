@@ -169,14 +169,19 @@ style. It's powerful, but it has failure modes you must control:</p>
 </ul>
 <p>A vocabulary note for eng conversations: public <strong>agent benchmarks</strong> became the
 industry's shared shorthand. <strong>SWE-bench Verified</strong> covers real GitHub issues resolved
-end-to-end. <strong>GAIA</strong> covers general assistant tasks. <strong>OSWorld</strong> covers computer use.
+end-to-end. In February 2026 OpenAI said it had stopped reporting it. Its audit found
+flawed tests in at least 59.4% of a hard subset it reviewed, plus signs of training-data
+contamination, and it pointed to SWE-bench Pro instead. Expect older scores on this
+benchmark to be less meaningful. <strong>GAIA</strong> covers general assistant tasks. <strong>OSWorld</strong> covers computer use.
 <strong>tau-bench</strong> covers tool-using customer-service agents. <strong>Terminal-Bench</strong> covers
 command-line work. Know what each measures, so "we're at X%" means something to you.
 Know the caveat too: public benchmarks saturate and leak into training data. That's why
 serious teams treat them as market signals and run <em>private</em> evals (this lesson) as the
 real gate. On the observability side, <strong>OpenTelemetry's GenAI semantic conventions</strong>
-are standardizing trace formats. That means eval and observability tooling is becoming
-portable across vendors, not a lock-in decision.</p>
+(now maintained in their own repository) are a shared attempt to standardize trace
+formats. We did not confirm their stability level, so treat the attribute names as
+subject to change. Check the repository before you build on them. Where they hold, eval
+and observability tooling can become portable across vendors.</p>
 <h2 id="grading-choices-that-keep-evals-honest">Grading choices that keep evals honest</h2>
 <ul>
 <li><strong>Binary beats Likert.</strong> Prefer pass/fail judgments over 1–5 scales. Forced decisions
@@ -582,12 +587,15 @@ aggregation over instrumented spans, not a separate system.</p>
 <li><a href="06-strategy-tradeoffs.html#inference-stack-tradeoffs">Inference-stack tradeoffs</a></li>
 </ul><a class="totop" href="#top">↑ back to top</a></section>
   <section class="recap MarkdownContent" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>Klarna's AI assistant (2024).</strong> Klarna reported its OpenAI-powered assistant handled
-<strong>~two-thirds of customer-service chats</strong> within months — work it equated to hundreds of
-full-time agents. 🎯 <em>PM takeaway:</em> at that volume you cannot operate on vibes.
-<a href="#cost-attribution">Cost attribution</a> (what does each resolved chat cost?) and
-continuous <a href="#observability">quality monitoring</a> make a number like that safe rather
-than terrifying.</p>
+<p><strong>Klarna's AI assistant (2024–2025).</strong> In early 2024 Klarna reported its OpenAI-powered
+assistant handled <strong>~two-thirds of customer-service chats</strong> within months — work it equated
+to hundreds of full-time agents. In May 2025 the CEO told Bloomberg that cost had been
+weighted too heavily, that the AI produced "lower quality" support, and that Klarna was
+hiring human agents again. 🎯 <em>PM takeaway:</em> containment and cost per chat are not quality.
+A volume number without a quality measure can reverse. <a href="#cost-attribution">Cost attribution</a>
+(what does each resolved chat cost?) and continuous
+<a href="#observability">quality monitoring</a> need to sit side by side, so a cost win never
+hides a quality loss.</p>
 <p><strong>"Did the model change?" (the GPT-4 drift debates).</strong> Practitioners repeatedly reported
 that hosted models <em>behaved differently over time</em> on the same prompts. This sparked
 public debate about silent regressions. 🎯 <em>PM takeaway:</em> you can't control the

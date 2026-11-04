@@ -75,6 +75,26 @@ request. That pipeline is this lesson's subject. The prompt is just its last mil
   turns) is a potential [prompt-injection](../05-safety-multitenancy/safety-engineering.md)
   vector. More context = larger attack surface.
 
+## Long-running agents: context rot, compaction, and just-in-time retrieval
+
+Anthropic's September 2025 engineering post on context engineering names the
+problem **context rot**. As the token count grows, the model recalls the context
+less accurately. Treat context as a finite attention budget, even when the window
+is large. The post lists four moves for agents that run for many steps:
+
+- **Compaction.** Summarize a conversation that nears the limit and start a new
+  window from the summary. Clearing old tool results is the lightest form.
+- **Structured note-taking.** The agent writes notes outside the window, such as
+  a to-do list or a NOTES.md file, and reads them back later.
+- **Just-in-time retrieval.** The agent keeps light references (file paths,
+  stored queries) and loads data only when needed. This replaces some up-front
+  embedding retrieval, and it trades speed for freshness.
+- **Sub-agents.** A sub-agent works in a clean window and returns a short summary.
+
+Each move has a cost. Compaction can drop a detail you needed later, so test it
+with evals. See [memory and context](../../memory-and-context/README.md) for the
+memory side.
+
 ## The components of a well-engineered context
 
 A typical context is assembled from layered sources, each with its own budget:

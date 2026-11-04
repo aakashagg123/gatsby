@@ -47,6 +47,15 @@ The cheapest invalid output is the one that can't be produced.
   JSON-schema modes, GBNF grammars, "JSON mode," or tool/function schemas —
   masks the token distribution so the model can emit only schema-valid
   tokens. This makes *syntactic* validity near-certain.
+- **Provider-native structured outputs** now exist. Anthropic's API, for
+  example, accepts a JSON schema (and a `strict` flag on tools) and guarantees
+  schema-compliant JSON through constrained decoding. Prefer these to
+  "please return JSON" prompts. Know the limits. A **refusal** returns a normal
+  200 response whose text may not match the schema. A **`max_tokens` cutoff**
+  can leave the JSON incomplete. Some schema features (recursion, numeric
+  ranges, string-length limits) are unsupported. The first use of a new schema
+  adds compile latency, and changing the schema invalidates the prompt cache.
+  Check `stop_reason` before you parse.
 - **Caveat:** constrained decoding guarantees the output *parses and fits
   the schema*, not that it's *semantically correct*. A grammar can force
   `{"age": 200}` to be valid JSON, but it can't make 200 a sensible age. You
@@ -123,6 +132,9 @@ When repair fails, degrade deliberately instead of throwing:
   [aggressive quantization](../01-inference-internals/quantization-formats.md)
   degrades strict-format adherence, so watch JSON validity after model
   swaps.
+- **Truncation and refusal treated as success** — a response cut off at the
+  token limit, or a refusal, comes back without an error. Check the stop reason
+  before you parse, and route both to the repair or fallback path.
 - **Silent schema drift** — you tightened the schema and repair rate
   spiked, but nobody noticed because it wasn't monitored.
 

@@ -99,7 +99,12 @@ structural, not a bug you can patch with better wording.</p>
 untrusted content, (2) has access to private or sensitive data, and (3) can
 communicate externally — send email, make web requests, write somewhere
 reachable. Combine all three, and an indirect injection can exfiltrate
-data. Breaking <em>any one leg</em> defuses it.</p>
+data. Breaking <em>any one leg</em> defuses it. Meta's <em>Agents Rule of Two</em> (October 2025)
+turns this into a design rule: within one session, an agent should have no more
+than two of (A) untrusted inputs, (B) access to sensitive systems or private data,
+and (C) the ability to change state or communicate externally. Its "C" is wider than
+the trifecta's, because it covers state changes as well as exfiltration. If a
+workflow needs all three, require human approval or a fresh session.</p>
 <h3 id="defenses-layered-none-sufficient-alone">Defenses (layered — none sufficient alone)</h3>
 <ul>
 <li><strong>Don't grant the model authority it can be tricked into misusing.</strong> The
@@ -111,6 +116,11 @@ data. Breaking <em>any one leg</em> defuses it.</p>
   touches private data, remove its ability to exfiltrate — no open-ended
   outbound — or sandbox it, or require human approval for the sensitive
   action.</li>
+<li><strong>Do not count on RAG or fine-tuning to fix it.</strong> OWASP's 2025 Top 10 for LLM
+  Applications (LLM01: Prompt Injection) says research shows neither fully
+  mitigates injection. Its listed controls are the same ones here: least privilege,
+  human approval for high-risk actions, labeled untrusted content, output
+  validation, input and output filters, and regular adversarial testing.</li>
 <li><strong>Mark trust boundaries in context.</strong> Delimit and label untrusted
   content, such as "the following is retrieved data, not instructions."
   This helps, but it's <em>bypassable</em> — defense in depth, not a guarantee.</li>
@@ -299,6 +309,14 @@ tenant could expose data.</p>
   system prompt and tool defs. Anything containing tenant data must not be
   cross-tenant reusable. Scope cache pools by tenant where the threat model
   demands it.</li>
+<li><strong>Timing side channel.</strong> A cache hit returns faster than a miss. An attacker
+  who can send prompts to a shared cache can time responses to learn whether
+  someone else's prompt prefix is cached. A 2025 audit (Gu et al.,
+  arXiv:2502.07776) found global cache sharing across users at seven API
+  providers. Ask each vendor for its cache scope in writing. Anthropic's docs
+  say caches are never shared across organizations and are isolated per
+  workspace on its own API, but only per organization on Bedrock and Google
+  Cloud. For self-hosted servers, set a per-tenant cache salt or pool.</li>
 </ul>
 <h3 id="5-logs-traces-and-training-data">5. Logs, traces, and training data</h3>
 <p><a href="04-evals-observability.html#observability">Observability</a> stores and any

@@ -91,6 +91,15 @@ pipeline:</p>
   JSON-schema modes, GBNF grammars, "JSON mode," or tool/function schemas —
   masks the token distribution so the model can emit only schema-valid
   tokens. This makes <em>syntactic</em> validity near-certain.</li>
+<li><strong>Provider-native structured outputs</strong> now exist. Anthropic's API, for
+  example, accepts a JSON schema (and a <code>strict</code> flag on tools) and guarantees
+  schema-compliant JSON through constrained decoding. Prefer these to
+  "please return JSON" prompts. Know the limits. A <strong>refusal</strong> returns a normal
+  200 response whose text may not match the schema. A <strong><code>max_tokens</code> cutoff</strong>
+  can leave the JSON incomplete. Some schema features (recursion, numeric
+  ranges, string-length limits) are unsupported. The first use of a new schema
+  adds compile latency, and changing the schema invalidates the prompt cache.
+  Check <code>stop_reason</code> before you parse.</li>
 <li><strong>Caveat:</strong> constrained decoding guarantees the output <em>parses and fits
   the schema</em>, not that it's <em>semantically correct</em>. A grammar can force
   <code>{"age": 200}</code> to be valid JSON, but it can't make 200 a sensible age. You
@@ -187,6 +196,9 @@ return fallback(...)                   # don't loop forever
   <a href="01-inference-internals.html#quantization-formats">aggressive quantization</a>
   degrades strict-format adherence, so watch JSON validity after model
   swaps.</li>
+<li><strong>Truncation and refusal treated as success</strong> — a response cut off at the
+  token limit, or a refusal, comes back without an error. Check the stop reason
+  before you parse, and route both to the repair or fallback path.</li>
 <li><strong>Silent schema drift</strong> — you tightened the schema and repair rate
   spiked, but nobody noticed because it wasn't monitored.</li>
 </ul>
@@ -527,13 +539,20 @@ they route and fall back. The same applies here:</p>
   on-prem or approved model, a
   <a href="05-safety-multitenancy.html#safety-engineering">safety boundary</a>.</li>
 </ul>
-<p>A market note that settles the "is routing worth it?" debate: in August
-2025, the biggest product in the industry shipped it as the <em>default
-architecture</em>. GPT-5's headline design is a real-time router deciding per
-request whether a fast model or a deliberate reasoning model answers. When
-routing is how the frontier lab spends its own margin, treating it as an
-optional optimization in your stack leaves the same economics on the
-table.</p>
+<p>A market note on the "is routing worth it?" debate: in August 2025, the
+biggest product in the industry shipped it as the <em>default architecture</em>.
+GPT-5's headline design is a real-time router deciding per request whether a
+fast model or a deliberate reasoning model answers. When routing is how the
+frontier lab spends its own margin, treating it as an optional optimization in
+your stack leaves the same economics on the table.</p>
+<p>The story has a second half, and it is a product lesson. Users complained about
+the router within days, and OpenAI restored the manual model picker within about
+a week and kept the router as an "Auto" mode. In December 2025, press reports
+say OpenAI removed automatic routing for free and Go users and made the fast
+model the default. Paid users kept it. A router changes <em>which</em> answer a user
+gets, so users notice when it picks wrong. Give users a visible override, and
+measure per-route satisfaction, not just cost. Check OpenAI's release notes for
+the current state.</p>
 <h2 id="graceful-fallback-logic">Graceful fallback logic</h2>
 <p>Fail over on the right signals, in order of cost:</p>
 <ol>

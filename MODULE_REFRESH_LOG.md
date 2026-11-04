@@ -31,7 +31,7 @@ picks the lowest tier number among due modules.
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
-| ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-09-20 |
+| ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-04 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | 2026-11-02 |
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
@@ -667,3 +667,34 @@ and a link to the merged PR.)
   evaluation (testing recall of changed facts) and ChatGPT's saved-memory vs
   reference-chat-history split need a primary OpenAI source first. Next due:
   agentic-workflows (never).
+
+- 2026-11-04 — ai-engineering — tier 1. Picked because it was the only tier-1 row due (45 of 45 days;
+  the other tier-1 rows are due 2026-11-05 or later). Outcome: fixed and expanded. All 7 modules (about
+  28k words) were read in full.
+  Fixed: recap 01 said PagedAttention gave "~24×" over "prior serving systems"; the 24× is versus
+  HuggingFace Transformers (3.5× vs TGI), and the paper reports 2–4× vs FasterTransformer/Orca. Recap 04
+  Klarna item lacked the May 2025 reversal (now added). GPT-5 router note (model-routing) now carries the
+  Aug 2025 picker rollback and Dec 2025 free-tier change (press reports, flagged as such). SWE-bench Verified
+  note: OpenAI stopped reporting it in Feb 2026. OTel GenAI claim softened (stability not confirmed).
+  Expanded: prompt-cache TTLs, write premium, minimum length, isolation scope and timing side channel
+  (prompt-vs-semantic-caching, multi-tenant-isolation); provider-native structured outputs, refusal and
+  max_tokens traps (structured-output); Agents Rule of Two and OWASP LLM01:2025 (safety-engineering);
+  context rot, compaction, note-taking, just-in-time retrieval, sub-agents (context-engineering).
+  Sources opened: platform.claude.com/docs/en/build-with-claude/prompt-caching (first 100k of 166k chars);
+  developers.openai.com/api/docs/guides/prompt-caching; vllm.ai/blog/2023-06-20-vllm; arxiv.org/abs/2309.06180;
+  arxiv.org/abs/2502.07776 (abstract); platform.claude.com/docs/en/build-with-claude/structured-outputs (first 100k);
+  anthropic.com/engineering/effective-context-engineering-for-ai-agents; genai.owasp.org/llmrisk/llm01-prompt-injection;
+  ai.meta.com/blog/practical-ai-agent-security; entrepreneur.com Klarna article (May 2025);
+  mccarthy.ca Moffatt v Air Canada (no change needed); opentelemetry.io/docs/specs/semconv/gen-ai (moved page,
+  no status given); github.com/open-telemetry/semantic-conventions-genai (no status visible).
+  Search results only, not opened: GPT-5 router rollback (the-decoder, Fortune, WIRED, letsdatascience: Aug and
+  Dec 2025 changes; current state unknown); OpenAI's SWE-bench Verified post (openai.com/index/why-we-no-longer-evaluate-swe-bench-verified, 23 Feb 2026).
+  Not verified: Gartner/industry POC-failure surveys (recap 00); Samsung 2023 leak details; ChatGPT Redis
+  March 2023 details; Chevy Tahoe and DPD incidents; Liu et al. lost-in-the-middle details; FrugalGPT
+  results; LLMLingua "~20x"; speculative decoding "1.5–3×"; DistServe/Mooncake/Dynamo status;
+  FP4/Blackwell claims; DeepSeek-moment framing (left as dated history); current OpenAI/Google cache
+  prices; Google's cache terms; whether fine-tuning APIs remain widely available (fine-tune lesson unchanged).
+  Flagged: (1) the agentic-ai and tool-calling modules may repeat the SWE-bench Verified benchmark list;
+  check `grep -ril "swe-bench verified"`. (2) Possible new lesson: agent memory/long-horizon context
+  and inference-time reasoning cost (reasoning tokens), not built (scope boundary). (3) recap.md files lack
+  "Test yourself" sections (structural, not built).
