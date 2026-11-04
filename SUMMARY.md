@@ -13,7 +13,8 @@ Four ordered paths over the tracks below, with time estimates and a checkpoint p
 1. [Senior Product Manager](./learning-paths/senior-product-manager.md)
 2. [AI Product Lead](./learning-paths/ai-product-lead.md)
 3. [AI Engineer](./learning-paths/ai-engineer.md)
-4. [AI Engineering Lead](./learning-paths/ai-engineering-lead.md) · [Recap](./learning-paths/recap.md)
+4. [AI Engineering Lead](./learning-paths/ai-engineering-lead.md)
+5. [Visual learning paths](./learning-paths/visual-paths.md) · [Recap](./learning-paths/recap.md)
 
 ---
 

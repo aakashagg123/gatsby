@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Visual learning paths — Learning paths</title>
+</head>
+<body><header class="topbar">
+  <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Learning paths</span><em>start here</em></a>
+  <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="senior-product-manager.html">1 · Learning path: Senior Product Manager</a><a class="modlink" href="ai-product-lead.html">2 · Learning path: AI Product Lead</a><a class="modlink" href="ai-engineer.html">3 · Learning path: AI Engineer</a><a class="modlink" href="ai-engineering-lead.html">4 · Learning path: AI Engineering Lead</a><a class="modlink active" href="visual-paths.html">5 · Visual learning paths</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+  <div class="hero">
+    <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 05</span>
+    <h1>Visual learning paths</h1>
+  </div>
+  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
+<p>Each learning path is a list of stages. This page draws each path as one picture. The bars show how many hours each stage takes. The rows below them show what each stage reads, track by track, and which visual explainers it uses. The numbers come from the same data as the path pages, so the two always agree.</p>
+<blockquote class="pm-callout">
+<p>🎯 <strong>For anyone choosing a path</strong></p>
+<p><strong>Why it matters</strong> — A path is a time commitment. A picture shows its shape at a glance: where the hours go and what you read first.</p>
+<p><strong>What it changes in your decisions</strong> — You can plan your weeks around the longest stage, and see which explainers to read first.</p>
+<p><strong>Ask yourself</strong> — <em>"Which stage of my path is the longest, and do I have the weeks for it?"</em></p>
+<p><strong>Risk if ignored</strong> — You start a path without seeing its biggest stage, and stall halfway.</p>
+</blockquote>
+<h2 id="how-to-read-a-picture">How to read a picture</h2>
+<p>Every picture has two parts. The bars at the top show the hours for each stage, rounded to the nearest half hour. The rows below list the stages in order. Each row names the stage, its hours and its lesson count. Then it lists the tracks it reads, with the number of lessons from each, and the explainers it uses.</p>
+<p>Read the explainers in a stage first. Each one follows a single example through a system in about ten minutes, so the lessons that follow are easier.</p>
+<h2 id="1-senior-pm">1. Senior PM</h2>
+<p>For a product manager with several years of experience who is starting to own AI features. 4 stages, about 20.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the <a href="senior-product-manager.html">Senior PM path page</a>.</p>
+<style>
+.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
+.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
+.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
+.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
+.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
+.xf-flow .xf-box{flex:1 1 0}
+.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
+.xf-ar::before{content:"\2192"}
+.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
+.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
+.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
+.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
+.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+.xf-layers .xf-box b{margin:0;flex:0 0 auto}
+.xf-layers .xf-box span{text-align:right}
+.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
+.xf-track{display:flex;gap:3px;min-width:0}
+.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
+.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
+.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
+.xf-mkey b{color:var(--color-text)}
+.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+.xf-bars .xf-lbl{white-space:nowrap}
+.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
+.xf-fill div{height:100%;border-radius:4px}
+.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
+.xf-grid{display:grid;gap:3px}
+.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
+.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+@media (max-width:640px){
+  .xf{padding:24px 14px 16px}
+  .xf-flow{flex-direction:column}
+  .xf-ar{align-self:center}
+  .xf-ar::before{content:"\2193"}
+  .xf-cmp{grid-template-columns:1fr}
+  .xf-layers .xf-box{flex-direction:column;gap:2px}
+  .xf-layers .xf-box span{text-align:left}
+}
+</style>
+<div class="xf"><span class="xf-chip">Path 1</span><h4>Senior Product Manager</h4><p class="xf-sub">4 stages, about 20.5 hours in all. Bars show the hours for each stage.</p><div class="xf-bars"><div class="xf-lbl">Stage 1</div><div class="xf-fill"><div style="width:23.5%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">2 h</div><div class="xf-lbl">Stage 2</div><div class="xf-fill"><div style="width:100.0%;background:var(--color-background-discovery-solid)"></div></div><div class="xf-val">8.5 h</div><div class="xf-lbl">Stage 3</div><div class="xf-fill"><div style="width:70.6%;background:var(--color-background-success-solid)"></div></div><div class="xf-val">6 h</div><div class="xf-lbl">Stage 4</div><div class="xf-fill"><div style="width:47.1%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">4 h</div></div><p class="xf-sub" style="margin:16px 0 8px">What each stage reads, in order</p><div class="xf-layers"><div class="xf-box xf-info"><b>Stage 1 · Technical footing · about 2 hours</b><span>5 lessons: Technical product sense 5.</span></div><div class="xf-box xf-discovery"><b>Stage 2 · AI literacy · about 8.5 hours</b><span>20 lessons: Machine learning 4 · Generative AI 4 · LLMs 5 · Prompt engineering 4. Explainers: Inside one LLM request; How a model learns; One agent run, step by step.</span></div><div class="xf-box xf-success"><b>Stage 3 · The decisions only you own · about 6 hours</b><span>15 lessons: Generative AI 2 · LLMs 1 · Product sense 1 · Technical product management 1 · Evaluation &amp; observability 2 · Cost optimization 2 · AI security &amp; guardrails 2. Explainers: One AI feature, from idea to launch; One model change: cost, speed and quality; From one AI task to gross margin; One eval regression, traced to its cause.</span></div><div class="xf-box xf-caution"><b>Stage 4 · Go deeper where your product needs it (optional) · about 4 hours</b><span>9 lessons: RAG &amp; vector databases 4 · Memory &amp; context 2 · Agentic AI 2 · Tool calling 1.</span></div></div><p class="xf-note">Hours are this course's rule of thumb, not measured. Lesson counts include the explainers.</p></div>
+
+<h2 id="2-ai-product-lead">2. AI Product Lead</h2>
+<p>For a product leader who owns an AI product line or a team of PMs shipping AI features. 5 stages, about 31.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the <a href="ai-product-lead.html">AI Product Lead path page</a>.</p>
+<style>
+.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
+.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
+.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
+.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
+.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
+.xf-flow .xf-box{flex:1 1 0}
+.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
+.xf-ar::before{content:"\2192"}
+.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
+.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
+.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
+.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
+.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+.xf-layers .xf-box b{margin:0;flex:0 0 auto}
+.xf-layers .xf-box span{text-align:right}
+.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
+.xf-track{display:flex;gap:3px;min-width:0}
+.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
+.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
+.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
+.xf-mkey b{color:var(--color-text)}
+.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+.xf-bars .xf-lbl{white-space:nowrap}
+.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
+.xf-fill div{height:100%;border-radius:4px}
+.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
+.xf-grid{display:grid;gap:3px}
+.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
+.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+@media (max-width:640px){
+  .xf{padding:24px 14px 16px}
+  .xf-flow{flex-direction:column}
+  .xf-ar{align-self:center}
+  .xf-ar::before{content:"\2193"}
+  .xf-cmp{grid-template-columns:1fr}
+  .xf-layers .xf-box{flex-direction:column;gap:2px}
+  .xf-layers .xf-box span{text-align:left}
+}
+</style>
+<div class="xf"><span class="xf-chip">Path 2</span><h4>AI Product Lead</h4><p class="xf-sub">5 stages, about 31.5 hours in all. Bars show the hours for each stage.</p><div class="xf-bars"><div class="xf-lbl">Stage 1</div><div class="xf-fill"><div style="width:100.0%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">9.5 h</div><div class="xf-lbl">Stage 2</div><div class="xf-fill"><div style="width:52.6%;background:var(--color-background-discovery-solid)"></div></div><div class="xf-val">5 h</div><div class="xf-lbl">Stage 3</div><div class="xf-fill"><div style="width:57.9%;background:var(--color-background-success-solid)"></div></div><div class="xf-val">5.5 h</div><div class="xf-lbl">Stage 4</div><div class="xf-fill"><div style="width:57.9%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">5.5 h</div><div class="xf-lbl">Stage 5</div><div class="xf-fill"><div style="width:63.2%;background:var(--color-background-warning-solid)"></div></div><div class="xf-val">6 h</div></div><p class="xf-sub" style="margin:16px 0 8px">What each stage reads, in order</p><div class="xf-layers"><div class="xf-box xf-info"><b>Stage 1 · Model and data foundations · about 9.5 hours</b><span>23 lessons: LLMs 6 · Generative AI 3 · Machine learning 5 · RAG &amp; vector databases 6 · Knowledge graphs 3.</span></div><div class="xf-box xf-discovery"><b>Stage 2 · Context and memory · about 5 hours</b><span>12 lessons: Context engineering 6 · Memory &amp; context 5 · Prompt engineering 1.</span></div><div class="xf-box xf-success"><b>Stage 3 · Action: tools, agents, workflows · about 5.5 hours</b><span>13 lessons: Tool calling 3 · AI agents 5 · Agentic workflows 3 · Agentic AI 2.</span></div><div class="xf-box xf-caution"><b>Stage 4 · Trust, access and cost · about 5.5 hours</b><span>13 lessons: Evaluation &amp; observability 2 · AI security &amp; guardrails 3 · Access control 2 · Cost optimization 2 · Technical product sense 1. Explainers: One model change: cost, speed and quality; From one AI task to gross margin; One eval regression, traced to its cause.</span></div><div class="xf-box xf-warning"><b>Stage 5 · Run the product · about 6 hours</b><span>15 lessons: Technical product management 5 · Product sense 1 · Building AI-native products 6. Explainers: One AI feature, from idea to launch; One user story becomes an agent spec; One AI incident, from alert to postmortem.</span></div></div><p class="xf-note">Hours are this course's rule of thumb, not measured. Lesson counts include the explainers.</p></div>
+
+<h2 id="3-ai-engineer">3. AI Engineer</h2>
+<p>For a software engineer who builds AI-powered systems. 5 stages, about 85.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the <a href="ai-engineer.html">AI Engineer path page</a>.</p>
+<style>
+.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
+.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
+.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
+.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
+.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
+.xf-flow .xf-box{flex:1 1 0}
+.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
+.xf-ar::before{content:"\2192"}
+.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
+.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
+.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
+.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
+.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+.xf-layers .xf-box b{margin:0;flex:0 0 auto}
+.xf-layers .xf-box span{text-align:right}
+.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
+.xf-track{display:flex;gap:3px;min-width:0}
+.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
+.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
+.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
+.xf-mkey b{color:var(--color-text)}
+.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+.xf-bars .xf-lbl{white-space:nowrap}
+.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
+.xf-fill div{height:100%;border-radius:4px}
+.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
+.xf-grid{display:grid;gap:3px}
+.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
+.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+@media (max-width:640px){
+  .xf{padding:24px 14px 16px}
+  .xf-flow{flex-direction:column}
+  .xf-ar{align-self:center}
+  .xf-ar::before{content:"\2193"}
+  .xf-cmp{grid-template-columns:1fr}
+  .xf-layers .xf-box{flex-direction:column;gap:2px}
+  .xf-layers .xf-box span{text-align:left}
+}
+</style>
+<div class="xf"><span class="xf-chip">Path 3</span><h4>AI Engineer</h4><p class="xf-sub">5 stages, about 85.5 hours in all. Bars show the hours for each stage.</p><div class="xf-bars"><div class="xf-lbl">Stage 1</div><div class="xf-fill"><div style="width:50.8%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">15 h</div><div class="xf-lbl">Stage 2</div><div class="xf-fill"><div style="width:23.7%;background:var(--color-background-discovery-solid)"></div></div><div class="xf-val">7 h</div><div class="xf-lbl">Stage 3</div><div class="xf-fill"><div style="width:20.3%;background:var(--color-background-success-solid)"></div></div><div class="xf-val">6 h</div><div class="xf-lbl">Stage 4</div><div class="xf-fill"><div style="width:100.0%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">29.5 h</div><div class="xf-lbl">Stage 5</div><div class="xf-fill"><div style="width:94.9%;background:var(--color-background-warning-solid)"></div></div><div class="xf-val">28 h</div></div><p class="xf-sub" style="margin:16px 0 8px">What each stage reads, in order</p><div class="xf-layers"><div class="xf-box xf-info"><b>Stage 1 · Foundations · about 15 hours</b><span>36 lessons: Machine learning 8 · Tensors 5 · CNNs 7 · Transformers 6 · Fine-tuning and post-training 6 · LLMs 3. Explainers: One token through a transformer.</span></div><div class="xf-box xf-discovery"><b>Stage 2 · Models and APIs · about 7 hours</b><span>17 lessons: LLMs 3 · APIs &amp; integrations 6 · Prompt engineering 7. Explainers: Inside one LLM request.</span></div><div class="xf-box xf-success"><b>Stage 3 · Grounding and memory · about 6 hours</b><span>15 lessons: RAG &amp; vector databases 9 · Memory &amp; context 2 · Context engineering 2 · AI engineering stack 2.</span></div><div class="xf-box xf-caution"><b>Stage 4 · Agents and the harness (build it) · about 29.5 hours</b><span>34 lessons: Tool calling 2 · AI agents 1 · Agentic workflows 3 · AI engineering stack 1 · Harness engineering: 6 phases to build. Explainers: One agent run, step by step.</span></div><div class="xf-box xf-warning"><b>Stage 5 · Production · about 28 hours</b><span>41 lessons: AI agents 2 · AI-assisted development 3 · AI security &amp; guardrails 2 · Access control 3 · System design 3 · AI engineering stack 12 · Harness engineering: 4 phases to build. Explainers: Anatomy of a guardrailed request.</span></div></div><p class="xf-note">Hours are this course's rule of thumb, not measured. Lesson counts include the explainers.</p></div>
+
+<h2 id="4-ai-engineering-lead">4. AI Engineering Lead</h2>
+<p>For an engineering manager or tech lead who runs a team that builds AI systems. 5 stages, about 44 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the <a href="ai-engineering-lead.html">AI Engineering Lead path page</a>.</p>
+<style>
+.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
+.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
+.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
+.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
+.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
+.xf-flow .xf-box{flex:1 1 0}
+.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
+.xf-ar::before{content:"\2192"}
+.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
+.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
+.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
+.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
+.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+.xf-layers .xf-box b{margin:0;flex:0 0 auto}
+.xf-layers .xf-box span{text-align:right}
+.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
+.xf-track{display:flex;gap:3px;min-width:0}
+.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
+.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
+.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
+.xf-mkey b{color:var(--color-text)}
+.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+.xf-bars .xf-lbl{white-space:nowrap}
+.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
+.xf-fill div{height:100%;border-radius:4px}
+.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
+.xf-grid{display:grid;gap:3px}
+.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
+.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
+.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+@media (max-width:640px){
+  .xf{padding:24px 14px 16px}
+  .xf-flow{flex-direction:column}
+  .xf-ar{align-self:center}
+  .xf-ar::before{content:"\2193"}
+  .xf-cmp{grid-template-columns:1fr}
+  .xf-layers .xf-box{flex-direction:column;gap:2px}
+  .xf-layers .xf-box span{text-align:left}
+}
+</style>
+<div class="xf"><span class="xf-chip">Path 4</span><h4>AI Engineering Lead</h4><p class="xf-sub">5 stages, about 44 hours in all. Bars show the hours for each stage.</p><div class="xf-bars"><div class="xf-lbl">Stage 1</div><div class="xf-fill"><div style="width:84.8%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">14 h</div><div class="xf-lbl">Stage 2</div><div class="xf-fill"><div style="width:100.0%;background:var(--color-background-discovery-solid)"></div></div><div class="xf-val">16.5 h</div><div class="xf-lbl">Stage 3</div><div class="xf-fill"><div style="width:36.4%;background:var(--color-background-success-solid)"></div></div><div class="xf-val">6 h</div><div class="xf-lbl">Stage 4</div><div class="xf-fill"><div style="width:15.2%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">2.5 h</div><div class="xf-lbl">Stage 5</div><div class="xf-fill"><div style="width:33.3%;background:var(--color-background-warning-solid)"></div></div><div class="xf-val">5.5 h</div></div><p class="xf-sub" style="margin:16px 0 8px">What each stage reads, in order</p><div class="xf-layers"><div class="xf-box xf-info"><b>Stage 1 · How models behave and what they cost · about 14 hours</b><span>33 lessons: LLMs 5 · Machine learning 7 · Tensors 3 · Transformers 4 · Fine-tuning and post-training 3 · Cost optimization 2 · AI engineering stack 7. Explainers: Inside one LLM request; One token through a transformer.</span></div><div class="xf-box xf-discovery"><b>Stage 2 · Architecture you can review · about 16.5 hours</b><span>38 lessons: RAG &amp; vector databases 5 · Context engineering 3 · Memory &amp; context 2 · Tool calling 1 · Knowledge graphs 2 · AI agents 3 · Agentic workflows 3 · Harness engineering: 4 phases to skim. Explainers: One agent run, step by step.</span></div><div class="xf-box xf-success"><b>Stage 3 · Quality, safety and access · about 6 hours</b><span>15 lessons: Evaluation &amp; observability 2 · AI security &amp; guardrails 3 · Access control 4 · AI engineering stack 5. Explainers: Anatomy of a guardrailed request.</span></div><div class="xf-box xf-caution"><b>Stage 4 · Systems at scale · about 2.5 hours</b><span>6 lessons: System design 4 · Technical product sense 2.</span></div><div class="xf-box xf-warning"><b>Stage 5 · Work with product and run the team · about 5.5 hours</b><span>13 lessons: Technical product management 7 · AI-assisted development 5 · Product sense 1.</span></div></div><p class="xf-note">Hours are this course's rule of thumb, not measured. Lesson counts include the explainers.</p></div>
+
+<h2 id="worked-example-reading-one-picture">Worked example: reading one picture</h2>
+<p>Take the AI Engineer picture. The longest bar is stage 4, agents and the harness (build it), at about 29.5 hours, out of about 85.5 hours for the whole path. Its row shows why: Tool calling 2 · AI agents 1 · Agentic workflows 3 · AI engineering stack 1 · Harness engineering: 6 phases to build. An engineer with 9 hours a week should plan about 4 weeks for that stage alone. That is the stage to protect in the calendar.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<ul>
+<li><strong>Reading the bars as value.</strong> A long bar means more reading, not more importance. Short stages often hold the decisions.</li>
+<li><strong>Treating hours as measured.</strong> The hours are a rule of thumb from lesson counts. Your pace will differ.</li>
+<li><strong>Skipping the explainers.</strong> They are short, and they make the lessons after them faster to read.</li>
+<li><strong>Reading the picture instead of the path.</strong> The picture shows the shape. The path page has the lessons, the checkpoints and the skip rules.</li>
+</ul>
+<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<ul>
+<li class="task todo">Have I found my path's longest stage, and planned the weeks for it?</li>
+<li class="task todo">Do I know which explainers my path uses, and in which stage?</li>
+<li class="task todo">Have I read the path page's skip-ahead rules for what I already know?</li>
+</ul>
+<h2 id="under-the-hood-how-the-pictures-are-made">Under the hood: how the pictures are made</h2>
+<p>The pictures and the path pages come from one data structure in <code>scripts/gen_learning_paths.py</code>. Stage hours use the same rule as the path pages: 25 minutes per reading lesson, 60 minutes per harness lesson that you build, and 120 minutes to skim a harness phase. The total is then rounded to the nearest half hour. The same script writes each figure to <code>diagrams/learning-paths/visual-paths-&lt;n&gt;.html</code>, using the figure builders in <code>scripts/explainer_figures.py</code>. The build swaps each figure in for the matching diagram on this page. So a change to a path changes its page and its picture together.</p>
+<h2 id="related-lessons">Related lessons</h2>
+<ul>
+<li><a href="senior-product-manager.html">Senior PM path</a></li>
+<li><a href="ai-product-lead.html">AI Product Lead path</a></li>
+<li><a href="ai-engineer.html">AI Engineer path</a></li>
+<li><a href="ai-engineering-lead.html">AI Engineering Lead path</a></li>
+<li><a href="../explainers/index.html">Visual explainers</a> — the explainers named in the pictures.</li>
+<li><a href="recap.html">Recap: paths compared</a></li>
+</ul>
+<h2 id="sources">Sources</h2>
+<p>All numbers on this page come from the path data in this repository. The time estimates are this course's rule of thumb, not measured results. The page makes no claims beyond the paths themselves.</p></div>
+  <div class="pagenav"><a class="navcard prev" href="ai-engineering-lead.html"><span class="lbl">← Previous</span><span class="ttl">Learning path: AI Engineering Lead</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> You do not need every lesson. Read the path for your role, in order, and skip the rest.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#how-to-read-a-picture">How to read a picture</a><a class="h2" href="#1-senior-pm">1. Senior PM</a><a class="h2" href="#2-ai-product-lead">2. AI Product Lead</a><a class="h2" href="#3-ai-engineer">3. AI Engineer</a><a class="h2" href="#4-ai-engineering-lead">4. AI Engineering Lead</a><a class="h2" href="#worked-example-reading-one-picture">Worked example: reading one picture</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#under-the-hood-how-the-pictures-are-made">Under the hood: how the pictures are made</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+(function(){
+  var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
+      scrim=document.getElementById('sb-scrim');
+  if(!btn||!nav) return;
+  function open(){nav.classList.add('open');if(scrim)scrim.classList.add('open');btn.setAttribute('aria-expanded','true')}
+  function close(){nav.classList.remove('open');if(scrim)scrim.classList.remove('open');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){nav.classList.contains('open')?close():open()});
+  if(scrim)scrim.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
+})();
+</script><script>
+(function(){
+  var links = document.querySelectorAll('.outline a');
+  if(!links.length) return;
+  var heads = [];
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el) heads.push({el:el, link:a});
+  });
+  if(!heads.length) return;
+  function onScroll(){
+    var y = window.scrollY + 130, current = heads[0];
+    heads.forEach(function(h){ if(h.el.offsetTop <= y) current = h; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+<div id="rs-root">
+  <div id="rs-panel" class="Popover" role="dialog" aria-label="Reader settings">
+    <div class="rs-h">Theme</div>
+    <div class="SegmentedControl" id="rs-theme" data-size="md" data-pill role="radiogroup" aria-label="Theme">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="auto"><span class="relative">Auto</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="light"><span class="relative">Light</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="dark"><span class="relative">Dark</span></button>
+    </div>
+    <div class="rs-h">Font</div>
+    <div class="rs-fonts" role="radiogroup" aria-label="Font">
+      <button type="button" class="MenuItem" role="radio" data-f="" style="font-family:var(--font-sans)"><span>Google Sans (Default)</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="system" style="font-family:ui-sans-serif,system-ui,sans-serif"><span>System</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="tahoma" style="font-family:Tahoma,Verdana,sans-serif"><span>Tahoma</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="arial" style="font-family:Arial,'Helvetica Neue',Helvetica,sans-serif"><span>Arial</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="verdana" style="font-family:Verdana,Geneva,sans-serif"><span>Verdana</span><span class="rs-check" aria-hidden="true">✓</span></button>
+      <button type="button" class="MenuItem" role="radio" data-f="helvetica" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif"><span>Helvetica</span><span class="rs-check" aria-hidden="true">✓</span></button>
+    </div>
+    <div class="rs-h">Size</div>
+    <div class="rs-row">
+      <button type="button" id="rs-sminus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Decrease font size"><span class="ButtonInner" style="font-size:var(--font-text-xs-size)">A</span></button>
+      <span class="rs-val" id="rs-sval">100%</span>
+      <button type="button" id="rs-splus" class="Button" data-variant="outline" data-color="secondary" data-size="md" data-uniform data-pill aria-label="Increase font size"><span class="ButtonInner" style="font-size:var(--font-text-lg-size)">A</span></button>
+    </div>
+    <div class="rs-h">Margins</div>
+    <div class="SegmentedControl" id="rs-margins" data-size="md" data-pill role="radiogroup" aria-label="Margins">
+      <div class="SegmentedControlThumb"></div>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="n"><span class="relative">Narrow</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value=""><span class="relative">Default</span></button>
+      <button type="button" class="SegmentedControlOption" role="radio" data-value="w"><span class="relative">Wide</span></button>
+    </div>
+    <button type="button" id="rs-reset" class="Button" data-variant="ghost" data-color="secondary" data-size="md" data-pill><span class="ButtonInner">Reset to defaults</span></button>
+  </div>
+  <button type="button" id="rs-btn" class="Button fab" data-variant="outline" data-color="secondary" data-size="xl" data-uniform data-pill aria-label="Reader settings" aria-expanded="false" title="Reader settings: theme, font, size, margins"><span class="ButtonInner">Aa</span></button>
+</div>
+<script id="reader-js">
+(function(){
+  var KEY='ccrReaderSettings';
+  var SIZES=[0.85,0.92,1,1.08,1.16,1.25,1.35,1.5,1.7];
+  // Allowed font keys. Reset a returning reader's stored value if it points at a font
+  // this build no longer supports, so the UI stays consistent with the CSS.
+  var ALLOWED_F={'':1,system:1,tahoma:1,arial:1,verdana:1,helvetica:1};
+  var st={f:'',s:2,m:''};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(typeof saved.f==='string'&&ALLOWED_F.hasOwnProperty(saved.f))st.f=saved.f;
+      if(typeof saved.s==='number'&&saved.s>=0&&saved.s<SIZES.length)st.s=saved.s;
+      if(typeof saved.m==='string')st.m=saved.m;}catch(e){}
+  var h=document.documentElement,root=document.getElementById('rs-root'),
+      btn=document.getElementById('rs-btn'),panel=document.getElementById('rs-panel'),
+      sval=document.getElementById('rs-sval'),segTheme=null,segMargins=null;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  function apply(){
+    if(st.f)h.setAttribute('data-rf',st.f);else h.removeAttribute('data-rf');
+    if(SIZES[st.s]!==1){h.setAttribute('data-rs','1');h.style.setProperty('--rs-scale',SIZES[st.s]);}
+    else{h.removeAttribute('data-rs');h.style.removeProperty('--rs-scale');}
+    if(st.m)h.setAttribute('data-rm',st.m);else h.removeAttribute('data-rm');
+    sval.textContent=Math.round(SIZES[st.s]*100)+'%';
+    panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+      var on=b.getAttribute('data-f')===st.f;
+      if(on)b.setAttribute('data-selected','');else b.removeAttribute('data-selected');
+      b.setAttribute('aria-checked',on?'true':'false');});
+    if(segMargins)segMargins.set(st.m);
+  }
+  function setOpen(open){
+    panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false');
+    // the thumb needs layout, so size it once the panel is visible
+    if(open){if(segTheme)segTheme.sync();if(segMargins)segMargins.sync();}
+  }
+  function initSegments(){
+    if(!window.DS||!DS.segmented)return;
+    segTheme=DS.segmented(document.getElementById('rs-theme'),DS.theme.choice(),function(v){DS.theme.set(v)});
+    segMargins=DS.segmented(document.getElementById('rs-margins'),st.m,function(v){st.m=v;apply();save()});
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
+  panel.querySelectorAll('.rs-fonts .MenuItem').forEach(function(b){
+    b.addEventListener('click',function(){st.f=b.getAttribute('data-f');apply();save()})});
+  document.getElementById('rs-sminus').addEventListener('click',function(){
+    if(st.s>0){st.s--;apply();save()}});
+  document.getElementById('rs-splus').addEventListener('click',function(){
+    if(st.s<SIZES.length-1){st.s++;apply();save()}});
+  document.getElementById('rs-reset').addEventListener('click',function(){
+    st={f:'',s:2,m:''};apply();save();if(segTheme){DS.theme.set('auto');segTheme.set('auto')}});
+  // ds.js is deferred, so wait for it before wiring the segmented controls
+  if(window.DS)initSegments();else window.addEventListener('DOMContentLoaded',initSegments);
+  apply();
+})();
+</script>
+</body></html>

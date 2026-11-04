@@ -8,7 +8,7 @@
 <body><header class="topbar">
   <button class="Button menu-btn" id="sbToggle" data-variant="ghost" data-color="secondary" data-size="lg" data-uniform data-pill aria-expanded="false" aria-controls="sbNav" aria-label="Open lesson menu"><span class="ButtonInner"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></span></button><a class="brand" href="index.html"><svg class="spark" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true"><path d="M50 8 L58 42 L92 50 L58 58 L50 92 L42 58 L8 50 L42 42 Z" fill="currentColor"/></svg><span>Learning paths</span><em>start here</em></a>
   <nav class="topnav"><a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="../index.html"><span class="ButtonInner">← All courses</span></a></nav>
-</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="senior-product-manager.html">1 · Learning path: Senior Product Manager</a><a class="modlink" href="ai-product-lead.html">2 · Learning path: AI Product Lead</a><a class="modlink active" href="ai-engineer.html">3 · Learning path: AI Engineer</a><a class="modlink" href="ai-engineering-lead.html">4 · Learning path: AI Engineering Lead</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
+</header><div id="sb-scrim"></div><div class="layout has-outline"><aside class="sidebar" id="sbNav"><div class="sticky"><a class="modlink" href="index.html">Overview</a><a class="modlink" href="senior-product-manager.html">1 · Learning path: Senior Product Manager</a><a class="modlink" href="ai-product-lead.html">2 · Learning path: AI Product Lead</a><a class="modlink active" href="ai-engineer.html">3 · Learning path: AI Engineer</a><a class="modlink" href="ai-engineering-lead.html">4 · Learning path: AI Engineering Lead</a><a class="modlink" href="visual-paths.html">5 · Visual learning paths</a><a class="modlink" href="recap.html">Recap &amp; examples</a></div></aside><main class="content" id="top">
   <div class="hero">
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>Learning path: AI Engineer</h1>
@@ -19,7 +19,7 @@
 <p><strong>Who it is for:</strong> a software engineer who builds AI-powered systems.</p>
 <p><strong>Outcome:</strong> You can build, test and run a retrieval-backed, tool-using agent, and explain how it fails.</p>
 <p><strong>Before you start:</strong> Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.</p>
-<p><strong>Length:</strong> about 84 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
+<p><strong>Length:</strong> about 85.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).</p>
 <p><strong>Terms:</strong> a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI engineer</strong></p>
@@ -42,12 +42,12 @@
 <tr>
 <td>1</td>
 <td>Foundations</td>
-<td>about 14.5 hours</td>
+<td>about 15 hours</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Models and APIs</td>
-<td>about 6.5 hours</td>
+<td>about 7 hours</td>
 </tr>
 <tr>
 <td>3</td>
@@ -57,18 +57,19 @@
 <tr>
 <td>4</td>
 <td>Agents and the harness (build it)</td>
-<td>about 29 hours</td>
+<td>about 29.5 hours</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Production</td>
-<td>about 27.5 hours</td>
+<td>about 28 hours</td>
 </tr>
 </tbody>
 </table>
 <h2 id="stage-1-foundations">Stage 1: Foundations</h2>
-<p>Learn how a model is trained and what its data looks like. Everything later builds on it. (about 14.5 hours)</p>
+<p>Learn how a model is trained and what its data looks like. Everything later builds on it. (about 15 hours)</p>
 <ul>
+<li><strong>Visual explainers</strong>: <a href="../explainers/one-token-through-a-transformer.html">3. One token through a transformer</a></li>
 <li><strong>Machine learning</strong>: <a href="../machine-learning/what-machine-learning-is.html">1. What machine learning is, and when to use it</a> · <a href="../machine-learning/data-features-labels-and-leakage.html">2. Data: features, labels, splits and leakage</a> · <a href="../machine-learning/training-loss-and-gradient-descent.html">3. Training: loss and gradient descent</a> · <a href="../machine-learning/generalization-overfitting-and-bias-variance.html">4. Generalization: overfitting and the bias–variance tradeoff</a> · <a href="../machine-learning/measuring-a-model.html">5. Measuring a model: metrics, thresholds and baselines</a> · <a href="../machine-learning/model-families.html">6. Model families: linear models, trees and neural networks</a> · <a href="../machine-learning/ml-in-production.html">7. ML in production: drift, skew and the lifecycle</a> · <a href="../machine-learning/learning-and-doing-ml-with-claude-code.html">8. Learning and doing ML with Claude Code</a></li>
 <li><strong>Tensors</strong>: <a href="../tensors/what-a-tensor-is.html">1. What a tensor is: shape, rank and dtype</a> · <a href="../tensors/operations-and-broadcasting.html">2. Operations and broadcasting</a> · <a href="../tensors/matrix-multiplication.html">3. Matrix multiplication: the workhorse</a> · <a href="../tensors/batching-memory-and-precision.html">4. Batching, memory and precision</a> · <a href="../tensors/automatic-differentiation.html">5. Automatic differentiation</a></li>
 <li><strong>CNNs</strong>: <a href="../cnns/what-computer-vision-does.html">1. What computer vision does: the four jobs</a> · <a href="../cnns/how-a-convolution-sees.html">2. How a convolution sees: one small grid, used everywhere</a> · <a href="../cnns/from-edges-to-objects.html">3. From edges to objects: what depth buys</a> · <a href="../cnns/transfer-learning-and-labels.html">4. Transfer learning and labels: start from someone else's model</a> · <a href="../cnns/cnns-vs-vision-transformers.html">5. CNNs vs. vision transformers: picking a backbone</a> · <a href="../cnns/vision-foundation-models.html">6. Vision foundation models: CLIP, DINO and SAM</a> · <a href="../cnns/shipping-vision-in-production.html">7. Shipping vision in production</a></li>
@@ -78,8 +79,9 @@
 </ul>
 <p><strong>Ready to move on when:</strong> You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting.</p>
 <h2 id="stage-2-models-and-apis">Stage 2: Models and APIs</h2>
-<p>Call models well: contracts, streaming, retries, structured output and prompts that hold up. (about 6.5 hours)</p>
+<p>Call models well: contracts, streaming, retries, structured output and prompts that hold up. (about 7 hours)</p>
 <ul>
+<li><strong>Visual explainers</strong>: <a href="../explainers/inside-one-llm-request.html">1. Inside one LLM request</a></li>
 <li><strong>LLMs</strong>: <a href="../llms/capabilities-and-the-jagged-frontier.html">3. Capabilities &amp; the jagged frontier</a> · <a href="../llms/choosing-a-model.html">6. Choosing a model</a> · <a href="../llms/prompting-vs-rag-vs-finetuning.html">7. Prompting vs. RAG vs. fine-tuning</a></li>
 <li><strong>APIs &amp; integrations</strong>: <a href="../api-integrations/the-request-response-contract.html">1. The request/response contract</a> · <a href="../api-integrations/calling-an-llm-api.html">2. Calling an LLM API</a> · <a href="../api-integrations/structured-output-and-json-mode.html">3. Structured output &amp; JSON mode</a> · <a href="../api-integrations/webhooks-and-async-patterns.html">4. Webhooks &amp; async patterns</a> · <a href="../api-integrations/integrating-into-existing-systems.html">5. Integrating into existing systems</a> · <a href="../api-integrations/mcp-and-standard-connectors.html">6. MCP &amp; standard connectors</a></li>
 <li><strong>Prompt engineering</strong>: <a href="../prompt-engineering/the-anatomy-of-a-prompt.html">2. The anatomy of a prompt</a> · <a href="../prompt-engineering/structured-prompting.html">4. Structured prompting: XML, delimiters, scaffolds</a> · <a href="../prompt-engineering/few-shot-cot-self-consistency.html">5. Few-shot, chain-of-thought, and self-consistency</a> · <a href="../prompt-engineering/prompt-chaining-and-workflows.html">6. Prompt chaining and multi-step workflows</a> · <a href="../prompt-engineering/prompting-for-tools-and-agents.html">7. Prompting for tools and agents</a> · <a href="../prompt-engineering/when-prompts-fail.html">9. When prompts fail: the diagnostic playbook</a> · <a href="../prompt-engineering/prompts-in-production.html">10. Prompts in production: versioning, testing, and model upgrades</a></li>
@@ -95,8 +97,9 @@
 </ul>
 <p><strong>Ready to move on when:</strong> You can build a retrieval pipeline and measure its quality with a test set.</p>
 <h2 id="stage-4-agents-and-the-harness-build-it">Stage 4: Agents and the harness (build it)</h2>
-<p>Build the parts of an agent by hand. This is the core of the path. (about 29 hours)</p>
+<p>Build the parts of an agent by hand. This is the core of the path. (about 29.5 hours)</p>
 <ul>
+<li><strong>Visual explainers</strong>: <a href="../explainers/one-agent-run.html">5. One agent run, step by step</a></li>
 <li><strong>Tool calling</strong>: <a href="../tool-calling/tool-contracts-and-reliability.html">2. Tool contracts &amp; reliability</a> · <a href="../tool-calling/permissions-blast-radius-and-the-trust-boundary.html">3. Permissions, blast radius &amp; the trust boundary</a></li>
 <li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#function-calling">Function calling reliability, tool contracts, argument validation, and idempotency</a></li>
 <li><strong>AI agents</strong>: <a href="../ai-agents/planning-reasoning-and-reliability-across-a-run.html">2. Planning, reasoning &amp; reliability across a run</a></li>
@@ -110,7 +113,7 @@
 </ul>
 <p><strong>Ready to move on when:</strong> You have a working loop with tools, a permission gate and a context budget, and tests that fail when you break them.</p>
 <h2 id="stage-5-production">Stage 5: Production</h2>
-<p>Plan for failure: extend, test, observe, secure and scale. (about 27.5 hours)</p>
+<p>Plan for failure: extend, test, observe, secure and scale. (about 28 hours)</p>
 <ul>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/07-planning-and-subagents/README.html">Phase 07 — Planning and Subagents</a> (4 lessons, build it)</li>
 <li><strong>Harness engineering</strong>: <a href="../harness/phases/08-extending-mcp-skills-retrieval/README.html">Phase 08 — Extending: MCP, Skills, Retrieval</a> (5 lessons, build it)</li>
@@ -122,6 +125,7 @@
 <li><strong>AI engineering: reliable outputs</strong>: <a href="../ai/02-reliable-outputs.html#model-routing">Model routing, graceful fallback logic, and degraded-mode UX</a> · <a href="../ai/02-reliable-outputs.html#structured-output">Structured output: validation, repair loops, and fallback chains</a> · <a href="../ai/02-reliable-outputs.html#agent-guardrails">Agent guardrails: loop budgets, tool budgets, and termination conditions</a></li>
 <li><strong>AI engineering: evals &amp; observability</strong>: <a href="../ai/04-evals-observability.html#evals">Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals</a> · <a href="../ai/04-evals-observability.html#observability">LLM observability: traces, spans, tokens, latency, errors, and drift</a> · <a href="../ai/04-evals-observability.html#cost-attribution">Cost attribution per feature, workflow, tenant, and user journey — not just per model</a></li>
 <li><strong>AI engineering: safety &amp; multi-tenancy</strong>: <a href="../ai/05-safety-multitenancy.html#safety-engineering">Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries</a> · <a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">Multi-tenant isolation, cache safety, and cross-user context contamination prevention</a></li>
+<li><strong>Visual explainers</strong>: <a href="../explainers/anatomy-of-a-guardrailed-request.html">6. Anatomy of a guardrailed request</a></li>
 <li><strong>AI security &amp; guardrails</strong>: <a href="../ai-security-and-guardrails/the-threat-model-and-guardrails.html">1. The threat model, and guardrails as architecture</a> · <a href="../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.html">2. Red-teaming: testing your defenses</a></li>
 <li><strong>Access control</strong>: <a href="../access-control/authentication-authorization-and-the-access-control-model.html">1. Authentication, authorization and the access-control model</a> · <a href="../access-control/oauth-openid-connect-and-tokens.html">2. OAuth 2.0, OpenID Connect and tokens</a> · <a href="../access-control/access-control-for-ai-agents.html">8. Access control for AI agents</a></li>
 <li><strong>System design</strong>: <a href="../system-design/foundations-and-framework.html">1. Foundations &amp; framework</a> · <a href="../system-design/numbers-and-formulas.html">2. Numbers, formulas and papers to know</a> · <a href="../system-design/real-time-systems.html">7. Real-time systems</a></li>
@@ -135,7 +139,7 @@
 </ul>
 <h2 id="worked-example-a-week-by-week-plan">Worked example: a week-by-week plan</h2>
 <p><em>This example is invented, to show the method.</em></p>
-<p>An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 84 hours) takes about 10 weeks.</p>
+<p>An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 85.5 hours) takes about 10 weeks.</p>
 <table>
 <thead>
 <tr>

@@ -185,13 +185,12 @@ LANDING = """<!doctype html>
       <p>Follow one example through a system or a product decision, one stage at a time, with a picture at every stage. How AI systems work: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request. How AI products are run: a launch, a model change, a margin, an eval regression, an agent spec and an incident.</p>
     </a>
   </div>
-  <div class="group">All modules</div>
+  <div class="group">Learn by doing</div>
   <div class="cards">
-    <a class="card" href="ai/index.html">
-      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
-      <h3>AI engineering →</h3>
-      <p>The engineering discipline under production LLM systems — inference, retrieval,
-      evals, observability, safety, cost. Designed reading editions.</p>
+    <a class="card" href="learning-paths/visual-paths.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>New</span>
+      <h3>Visual learning paths →</h3>
+      <p>Each role's path as one picture: the stages in order, the hours for each, what each stage reads and the explainers it uses.</p>
     </a>
     <a class="card" href="harness/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
@@ -205,6 +204,15 @@ LANDING = """<!doctype html>
       <p>Process automation from scratch — build a token engine, wait states, and a job
       executor by hand, then run real BPMN on the Flowable engine. Concept-first for
       PMs, with a build layer for engineers.</p>
+    </a>
+  </div>
+  <div class="group">All modules</div>
+  <div class="cards">
+    <a class="card" href="ai/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
+      <h3>AI engineering →</h3>
+      <p>The engineering discipline under production LLM systems — inference, retrieval,
+      evals, observability, safety, cost. Designed reading editions.</p>
     </a>
     <a class="card" href="first-principles/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>

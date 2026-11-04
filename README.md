@@ -38,7 +38,7 @@ Pick the role closest to yours. Each path is an ordered list of lessons across t
 | [AI Engineer](./learning-paths/ai-engineer.md) | A software engineer who builds AI-powered systems | Build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 76.5 hours |
 | [AI Engineering Lead](./learning-paths/ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | Review AI architecture, set quality and safety standards, control cost, and work well with product. | about 37 hours |
 
-Not sure where to start? Read the [paths overview](./learning-paths/README.md).
+Not sure where to start? Read the [paths overview](./learning-paths/README.md), or see each path as one picture in [Visual learning paths](./learning-paths/visual-paths.md).
 
 <br/>
 
@@ -178,7 +178,7 @@ The AI Engineering modules above teach the *stack*. Twenty-eight further tracks 
 
 | Track | What it teaches | Start here |
 | :-- | :-- | :-- |
-| [**Learning paths**](./learning-paths/README.md) **New** | The tracks in order for four roles: senior product manager, AI product lead, AI engineer and AI engineering lead. Each path gives the lessons to read, what to skip, a time estimate and a checkpoint per stage. | [Choose your path](./learning-paths/README.md) |
+| [**Learning paths**](./learning-paths/README.md) **New** | The tracks in order for four roles: senior product manager, AI product lead, AI engineer and AI engineering lead. Each path gives the lessons to read, what to skip, a time estimate and a checkpoint per stage. [Visual learning paths](./learning-paths/visual-paths.md) draws each path as one picture. | [Choose your path](./learning-paths/README.md) |
 
 ### Foundations: how learned models work
 
