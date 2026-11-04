@@ -211,6 +211,6 @@ flowchart LR
 ## Sources
 
 - FinOps Foundation, "FinOps for AI" overview, finops.org/wg/finops-for-ai-overview, updated 2026-10-28, read 2026-11: track cost per inference, per user and per successful outcome; its KPIs include cost per successful outcome and cache hit rate.
-- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5). Quill's prices are illustrative and use the 0.1 multiplier.
+- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and Mythos 5.1). Quill's prices are illustrative and use the 0.1 multiplier.
 - The rule that a price needs a usage part when cost varies a lot between customers comes from this site's [pricing lesson](../business-acumen/monetization-and-business-models.md), where it is labelled as judgement.
 - Quill, its plan, prices, usage, margins and growth rates are invented for the example. This page's fact-check is pending.

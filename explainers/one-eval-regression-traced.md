@@ -80,7 +80,7 @@ flowchart LR
 
 ## 5 · Read the failures
 
-Numbers point to a corner. Reading tells you what went wrong there. Customs now has 28 failing cases. Eight of them failed before the release too. The team opens the other 22, the customs cases that passed before and fail now, and sorts them by cause. This is **error analysis**.
+Numbers point to a corner. Reading tells you what went wrong there. Customs now has 28 failing cases. Six of them failed before the release too. The team opens the other 22, the customs cases that passed before and fail now, and sorts them by cause. This is **error analysis**.
 
 - 15 answers leave out the duty threshold: the value above which a parcel pays import duty.
 - 4 answers apply the rule for the wrong country.

@@ -199,6 +199,6 @@ flowchart LR
 ## Sources
 
 - Anthropic, "Model deprecations", platform.claude.com/docs/en/about-claude/model-deprecations, read 2026-11: the lifecycle terms (active, legacy, deprecated, retired); at least 60 days' notice before retiring a publicly released model; requests to retired models fail; `temperature`, `top_p` and `top_k` removed in API version `2026-10-21`.
-- Anthropic, "Prompt caching" and "Pricing", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5); a 5-minute cache write costs 1.25 times. Tally's prices are illustrative and use the 0.1 multiplier.
+- Anthropic, "Prompt caching" and "Pricing", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and Mythos 5.1); a 5-minute cache write costs 1.25 times. Tally's prices are illustrative and use the 0.1 multiplier.
 - Evan Miller, *Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations*, arXiv 2411.00640, 2024, read 2026-11: compare two models on question-level paired differences.
 - Tally, M1, M2, S, their prices, speeds, scores and the 70% share are invented for the example. This page's fact-check is pending.

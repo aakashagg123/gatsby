@@ -465,7 +465,7 @@ def eval_regression():
         [[0.95, 113 / 120], [70 / 80, 69 / 80], [0.84, 0.44], [0.64, 0.60]], note="Customs fell 40 points. The rest moved 4 points or less.", fmt="{:.0%}"))
     put(k, 4, F.bars("Stage 5", "Read the failures", "The 22 customs cases that passed before and fail now, by cause.", [
         ("missing the duty threshold", 15, "danger"), ("wrong country rule", 4, "caution"), ("tone", 3, "info")],
-        vmax=22, note="Customs has 28 failures now. 8 of them failed before the release too.", fmt="{:.0f}"))
+        vmax=22, note="Customs has 28 failures now. 6 of them failed before the release too.", fmt="{:.0f}"))
     put(k, 5, F.compare("Stage 6", "Find the layer", "Rule out the easy one first.",
         ("success", "Search: fine", ["Right document in top 5: 46 of 50", "Recall at 5: 0.92 before and after"]),
         ("danger", "Prompt: the cause", ["Typical customs answer: 140 to 75 words", "New line: keep every answer under 80 words"]),
