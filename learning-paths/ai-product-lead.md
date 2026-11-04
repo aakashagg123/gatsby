@@ -14,7 +14,7 @@ This path covers the layers between a model and a product: grounding, context, m
 
 **Before you start:** This path builds on the Senior PM path, stages 1 to 3, or equivalent experience. Lessons marked ↺ repeat that path, so skip them if you did it. You have shipped or closely reviewed one AI feature.
 
-**Length:** about 29 hours, across 5 stages. If you did the Senior PM path, about 17 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
+**Length:** about 31.5 hours, across 5 stages. If you did the Senior PM path, about 18 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -37,8 +37,8 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 1 | Model and data foundations | about 9.5 hours |
 | 2 | Context and memory | about 5 hours |
 | 3 | Action: tools, agents, workflows | about 5.5 hours |
-| 4 | Trust, access and cost | about 4 hours |
-| 5 | Run the product | about 5 hours |
+| 4 | Trust, access and cost | about 5.5 hours |
+| 5 | Run the product | about 6 hours |
 
 ## Stage 1: Model and data foundations
 
@@ -75,8 +75,9 @@ The line between talking and doing carries the most risk and the most value. (ab
 
 ## Stage 4: Trust, access and cost
 
-Evals, security, permissions and spend decide whether the feature survives contact with real use. (about 4 hours)
+Evals, security, permissions and spend decide whether the feature survives contact with real use. (about 5.5 hours)
 
+- **Visual explainers**: [8. One model change: cost, speed and quality](../explainers/one-model-change.md) ↺ · [9. From one AI task to gross margin](../explainers/one-ai-feature-p-and-l.md) ↺ · [10. One eval regression, traced to its cause](../explainers/one-eval-regression-traced.md) ↺
 - **Evaluation & observability**: [1. Why eval investment is the job](../evaluation-and-observability/why-eval-investment-is-the-job.md) ↺ · [2. Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md) ↺
 - **AI security & guardrails**: [1. The threat model, and guardrails as architecture](../ai-security-and-guardrails/the-threat-model-and-guardrails.md) ↺ · [2. Red-teaming: testing your defenses](../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md) · [3. Governance, audit & compliance](../ai-security-and-guardrails/governance-audit-and-compliance.md) ↺
 - **Access control**: [1. Authentication, authorization and the access-control model](../access-control/authentication-authorization-and-the-access-control-model.md) · [8. Access control for AI agents](../access-control/access-control-for-ai-agents.md)
@@ -87,8 +88,9 @@ Evals, security, permissions and spend decide whether the feature survives conta
 
 ## Stage 5: Run the product
 
-Turn the above into specs, launches and a response plan. (about 5 hours)
+Turn the above into specs, launches and a response plan. (about 6 hours)
 
+- **Visual explainers**: [7. One AI feature, from idea to launch](../explainers/one-ai-feature-from-idea-to-launch.md) ↺ · [11. One user story becomes an agent spec](../explainers/one-user-story-to-agent-spec.md) · [12. One AI incident, from alert to postmortem](../explainers/one-ai-incident-review.md)
 - **Technical product management**: [3. Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md) · [6. Metrics & experimentation](../technical-product-management/metrics-and-experimentation.md) · [7. Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) · [8. Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md) · [9. Technical product management for AI](../technical-product-management/tpm-for-ai-products.md) ↺
 - **Product sense**: [7. Product sense for AI products](../product-sense/product-sense-for-ai.md) ↺
 - **Building AI-native products**: [1. Designing for ambiguity](../building-ai-native-products/designing-for-ambiguity.md) · [2. Practice: the AI feature spec](../building-ai-native-products/ux-practice-the-ai-feature-spec.md) · [5. From pixels to evals](../building-ai-native-products/from-pixels-to-evals.md) · [6. Practice: hill climbing](../building-ai-native-products/hill-climbing-in-practice.md) · [8. Practice: the agent spec and risk register](../building-ai-native-products/agentic-flows-practice.md) · [11. Capstone: ship one AI-native feature](../building-ai-native-products/capstone-ship-one-ai-native-feature.md)
@@ -105,7 +107,7 @@ Turn the above into specs, launches and a response plan. (about 5 hours)
 
 *This example is invented, to show the method.*
 
-An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 29 hours) takes about 8 weeks.
+An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 31.5 hours) takes about 8 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

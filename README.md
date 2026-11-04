@@ -33,8 +33,8 @@ Pick the role closest to yours. Each path is an ordered list of lessons across t
 
 | Path | Who it is for | Outcome | Length |
 | :-- | :-- | :-- | :-- |
-| [Senior PM](./learning-paths/senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | Lead an AI feature end to end: choose the approach, set the quality bar, price it, and judge the risk. | about 17 hours |
-| [AI Product Lead](./learning-paths/ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | Set direction for grounding, memory, agents, safety and cost, and review a design with engineering. | about 26 hours |
+| [Senior PM](./learning-paths/senior-product-manager.md) | A product manager with several years of experience who is starting to own AI features | Lead an AI feature end to end: choose the approach, set the quality bar, price it, and judge the risk. | about 20.5 hours |
+| [AI Product Lead](./learning-paths/ai-product-lead.md) | A product leader who owns an AI product line or a team of PMs shipping AI features | Set direction for grounding, memory, agents, safety and cost, and review a design with engineering. | about 31.5 hours |
 | [AI Engineer](./learning-paths/ai-engineer.md) | A software engineer who builds AI-powered systems | Build, test and run a retrieval-backed, tool-using agent, and explain how it fails. | about 76.5 hours |
 | [AI Engineering Lead](./learning-paths/ai-engineering-lead.md) | An engineering manager or tech lead who runs a team that builds AI systems | Review AI architecture, set quality and safety standards, control cost, and work well with product. | about 37 hours |
 
@@ -191,7 +191,7 @@ The AI Engineering modules above teach the *stack*. Twenty-eight further tracks 
 | [**Fine-tuning and post-training**](./fine-tuning/README.md) **New** | How a base model becomes an assistant, what supervised tuning, LoRA and preference tuning change, why the dataset is the product, and how to test the break-even and gate the release. Runnable code in every lesson. | [From base model to assistant](./fine-tuning/from-base-model-to-assistant.md) |
 | [**AI-assisted development**](./ai-assisted-development/README.md) **New** | What changes when a coding agent writes the code: specifying, verifying, controlling and measuring the work. Runnable code in every lesson, including a real Stop-hook script. | [When an agent writes the code](./ai-assisted-development/when-an-agent-writes-the-code.md) |
 | [**Building AI-native products**](./building-ai-native-products/README.md) **New** | Five skills for the AI product leader: opinionated UX for ambiguous interaction, model intuition, pixels to evals to hill climbing, agentic flows, and how users behave with agents. Templates and teardowns in every practice lesson. | [Designing for ambiguity](./building-ai-native-products/designing-for-ambiguity.md) |
-| [**Visual explainers**](./explainers/README.md) **New** | Six picture-led explainers that follow one real example through a system, one stage at a time: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request. | [Inside one LLM request](./explainers/inside-one-llm-request.md) |
+| [**Visual explainers**](./explainers/README.md) **New** | Twelve picture-led explainers that follow one example through a system or a product decision, one stage at a time. How AI systems work: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request. How AI products are run: a launch, a model change, a margin, an eval regression, an agent spec and an incident. | [Inside one LLM request](./explainers/inside-one-llm-request.md) |
 
 ### Generative AI
 

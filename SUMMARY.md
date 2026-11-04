@@ -254,14 +254,20 @@ Part of the **craft tracks**: five skills for the AI product leader, with a judg
 
 ## [Visual explainers](./explainers/README.md)
 
-Part of the **craft tracks**: six picture-led explainers that follow one example through a system, one stage at a time.
+Part of the **craft tracks**: twelve picture-led explainers that follow one example through a system or a product decision, one stage at a time.
 
 1. [Inside one LLM request](./explainers/inside-one-llm-request.md)
 2. [How a model learns](./explainers/how-a-model-learns.md)
 3. [One token through a transformer](./explainers/one-token-through-a-transformer.md)
 4. [How an image model draws](./explainers/how-an-image-model-draws.md)
 5. [One agent run, step by step](./explainers/one-agent-run.md)
-6. [Anatomy of a guardrailed request](./explainers/anatomy-of-a-guardrailed-request.md) · [Recap](./explainers/recap.md)
+6. [Anatomy of a guardrailed request](./explainers/anatomy-of-a-guardrailed-request.md)
+7. [One AI feature, from idea to launch](./explainers/one-ai-feature-from-idea-to-launch.md)
+8. [One model change: cost, speed and quality](./explainers/one-model-change.md)
+9. [From one AI task to gross margin](./explainers/one-ai-feature-p-and-l.md)
+10. [One eval regression, traced to its cause](./explainers/one-eval-regression-traced.md)
+11. [One user story becomes an agent spec](./explainers/one-user-story-to-agent-spec.md)
+12. [One AI incident, from alert to postmortem](./explainers/one-ai-incident-review.md) · [Recap](./explainers/recap.md)
 
 ## [Generative AI: the big picture](./generative-ai/README.md)
 
