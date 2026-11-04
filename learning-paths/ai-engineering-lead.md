@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 42.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 44 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -34,16 +34,17 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | How models behave and what they cost | about 13 hours |
-| 2 | Architecture you can review | about 16 hours |
+| 1 | How models behave and what they cost | about 14 hours |
+| 2 | Architecture you can review | about 16.5 hours |
 | 3 | Quality, safety and access | about 6 hours |
 | 4 | Systems at scale | about 2.5 hours |
 | 5 | Work with product and run the team | about 5.5 hours |
 
 ## Stage 1: How models behave and what they cost
 
-Cost and latency come from model and serving choices. Know the levers. (about 13 hours)
+Cost and latency come from model and serving choices. Know the levers. (about 14 hours)
 
+- **Visual explainers**: [1. Inside one LLM request](../explainers/inside-one-llm-request.md) · [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [6. Choosing a model](../llms/choosing-a-model.md) · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Tensors**: [1. What a tensor is: shape, rank and dtype](../tensors/what-a-tensor-is.md) · [3. Matrix multiplication: the workhorse](../tensors/matrix-multiplication.md) · [4. Batching, memory and precision](../tensors/batching-memory-and-precision.md)
@@ -59,8 +60,9 @@ Cost and latency come from model and serving choices. Know the levers. (about 13
 
 ## Stage 2: Architecture you can review
 
-Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 16 hours)
+Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons. (about 16.5 hours)
 
+- **Visual explainers**: [5. One agent run, step by step](../explainers/one-agent-run.md)
 - **RAG & vector databases**: [1. When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md) · [2. Why RAG?](../rag-vector-databases/why-rag.md) · [6. Retrieval quality](../rag-vector-databases/retrieval-quality.md) · [7. RAG vs. long-context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md) · [9. Building RAG with Claude Code, pgvector and Pinecone](../rag-vector-databases/building-rag-with-claude-code.md)
 - **Context engineering**: [1. What is context engineering, for a product leader?](../context-engineering/what-is-context-engineering.md) · [3. The anatomy of a context pipeline](../context-engineering/the-anatomy-of-a-context-pipeline.md) · [5. Context governance at scale](../context-engineering/context-governance-at-scale.md)
 - **Memory & context**: [1. Memory as a product decision](../memory-and-context/memory-as-a-product-decision.md) · [5. When memory goes wrong](../memory-and-context/when-memory-goes-wrong.md)
@@ -79,6 +81,7 @@ Know the shapes: grounding, context, memory, agents, workflows. Skim the build l
 
 Set the standards. Evals, threat models and access control are yours to require. (about 6 hours)
 
+- **Visual explainers**: [6. Anatomy of a guardrailed request](../explainers/anatomy-of-a-guardrailed-request.md)
 - **Evaluation & observability**: [1. Why eval investment is the job](../evaluation-and-observability/why-eval-investment-is-the-job.md) · [2. Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md)
 - **AI engineering: evals & observability**: [Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals](../content/04-evals-observability/evals.md) · [LLM observability: traces, spans, tokens, latency, errors, and drift](../content/04-evals-observability/observability.md)
 - **AI security & guardrails**: [1. The threat model, and guardrails as architecture](../ai-security-and-guardrails/the-threat-model-and-guardrails.md) · [2. Red-teaming: testing your defenses](../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md) · [3. Governance, audit & compliance](../ai-security-and-guardrails/governance-audit-and-compliance.md)
@@ -118,7 +121,7 @@ Turn standards into process: specs, launches, incidents and how product and engi
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 42.5 hours) takes about 15 weeks.
+An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 44 hours) takes about 15 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

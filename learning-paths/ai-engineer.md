@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 84 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 85.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -34,16 +34,17 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Foundations | about 14.5 hours |
-| 2 | Models and APIs | about 6.5 hours |
+| 1 | Foundations | about 15 hours |
+| 2 | Models and APIs | about 7 hours |
 | 3 | Grounding and memory | about 6 hours |
-| 4 | Agents and the harness (build it) | about 29 hours |
-| 5 | Production | about 27.5 hours |
+| 4 | Agents and the harness (build it) | about 29.5 hours |
+| 5 | Production | about 28 hours |
 
 ## Stage 1: Foundations
 
-Learn how a model is trained and what its data looks like. Everything later builds on it. (about 14.5 hours)
+Learn how a model is trained and what its data looks like. Everything later builds on it. (about 15 hours)
 
+- **Visual explainers**: [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [3. Training: loss and gradient descent](../machine-learning/training-loss-and-gradient-descent.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Tensors**: [1. What a tensor is: shape, rank and dtype](../tensors/what-a-tensor-is.md) · [2. Operations and broadcasting](../tensors/operations-and-broadcasting.md) · [3. Matrix multiplication: the workhorse](../tensors/matrix-multiplication.md) · [4. Batching, memory and precision](../tensors/batching-memory-and-precision.md) · [5. Automatic differentiation](../tensors/automatic-differentiation.md)
 - **CNNs**: [1. What computer vision does: the four jobs](../cnns/what-computer-vision-does.md) · [2. How a convolution sees: one small grid, used everywhere](../cnns/how-a-convolution-sees.md) · [3. From edges to objects: what depth buys](../cnns/from-edges-to-objects.md) · [4. Transfer learning and labels: start from someone else's model](../cnns/transfer-learning-and-labels.md) · [5. CNNs vs. vision transformers: picking a backbone](../cnns/cnns-vs-vision-transformers.md) · [6. Vision foundation models: CLIP, DINO and SAM](../cnns/vision-foundation-models.md) · [7. Shipping vision in production](../cnns/shipping-vision-in-production.md)
@@ -55,8 +56,9 @@ Learn how a model is trained and what its data looks like. Everything later buil
 
 ## Stage 2: Models and APIs
 
-Call models well: contracts, streaming, retries, structured output and prompts that hold up. (about 6.5 hours)
+Call models well: contracts, streaming, retries, structured output and prompts that hold up. (about 7 hours)
 
+- **Visual explainers**: [1. Inside one LLM request](../explainers/inside-one-llm-request.md)
 - **LLMs**: [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [6. Choosing a model](../llms/choosing-a-model.md) · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
 - **APIs & integrations**: [1. The request/response contract](../api-integrations/the-request-response-contract.md) · [2. Calling an LLM API](../api-integrations/calling-an-llm-api.md) · [3. Structured output & JSON mode](../api-integrations/structured-output-and-json-mode.md) · [4. Webhooks & async patterns](../api-integrations/webhooks-and-async-patterns.md) · [5. Integrating into existing systems](../api-integrations/integrating-into-existing-systems.md) · [6. MCP & standard connectors](../api-integrations/mcp-and-standard-connectors.md)
 - **Prompt engineering**: [2. The anatomy of a prompt](../prompt-engineering/the-anatomy-of-a-prompt.md) · [4. Structured prompting: XML, delimiters, scaffolds](../prompt-engineering/structured-prompting.md) · [5. Few-shot, chain-of-thought, and self-consistency](../prompt-engineering/few-shot-cot-self-consistency.md) · [6. Prompt chaining and multi-step workflows](../prompt-engineering/prompt-chaining-and-workflows.md) · [7. Prompting for tools and agents](../prompt-engineering/prompting-for-tools-and-agents.md) · [9. When prompts fail: the diagnostic playbook](../prompt-engineering/when-prompts-fail.md) · [10. Prompts in production: versioning, testing, and model upgrades](../prompt-engineering/prompts-in-production.md)
@@ -76,8 +78,9 @@ Give the model the right data, in the right shape, at the right time. (about 6 h
 
 ## Stage 4: Agents and the harness (build it)
 
-Build the parts of an agent by hand. This is the core of the path. (about 29 hours)
+Build the parts of an agent by hand. This is the core of the path. (about 29.5 hours)
 
+- **Visual explainers**: [5. One agent run, step by step](../explainers/one-agent-run.md)
 - **Tool calling**: [2. Tool contracts & reliability](../tool-calling/tool-contracts-and-reliability.md) · [3. Permissions, blast radius & the trust boundary](../tool-calling/permissions-blast-radius-and-the-trust-boundary.md)
 - **AI engineering: reliable outputs**: [Function calling reliability, tool contracts, argument validation, and idempotency](../content/02-reliable-outputs/function-calling.md)
 - **AI agents**: [2. Planning, reasoning & reliability across a run](../ai-agents/planning-reasoning-and-reliability-across-a-run.md)
@@ -93,7 +96,7 @@ Build the parts of an agent by hand. This is the core of the path. (about 29 hou
 
 ## Stage 5: Production
 
-Plan for failure: extend, test, observe, secure and scale. (about 27.5 hours)
+Plan for failure: extend, test, observe, secure and scale. (about 28 hours)
 
 - **Harness engineering**: [Phase 07 — Planning and Subagents](../harness-engineering/phases/07-planning-and-subagents/README.md) (4 lessons, build it)
 - **Harness engineering**: [Phase 08 — Extending: MCP, Skills, Retrieval](../harness-engineering/phases/08-extending-mcp-skills-retrieval/README.md) (5 lessons, build it)
@@ -105,6 +108,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 27.5 hours)
 - **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md) · [Structured output: validation, repair loops, and fallback chains](../content/02-reliable-outputs/structured-output.md) · [Agent guardrails: loop budgets, tool budgets, and termination conditions](../content/02-reliable-outputs/agent-guardrails.md)
 - **AI engineering: evals & observability**: [Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals](../content/04-evals-observability/evals.md) · [LLM observability: traces, spans, tokens, latency, errors, and drift](../content/04-evals-observability/observability.md) · [Cost attribution per feature, workflow, tenant, and user journey — not just per model](../content/04-evals-observability/cost-attribution.md)
 - **AI engineering: safety & multi-tenancy**: [Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries](../content/05-safety-multitenancy/safety-engineering.md) · [Multi-tenant isolation, cache safety, and cross-user context contamination prevention](../content/05-safety-multitenancy/multi-tenant-isolation.md)
+- **Visual explainers**: [6. Anatomy of a guardrailed request](../explainers/anatomy-of-a-guardrailed-request.md)
 - **AI security & guardrails**: [1. The threat model, and guardrails as architecture](../ai-security-and-guardrails/the-threat-model-and-guardrails.md) · [2. Red-teaming: testing your defenses](../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md)
 - **Access control**: [1. Authentication, authorization and the access-control model](../access-control/authentication-authorization-and-the-access-control-model.md) · [2. OAuth 2.0, OpenID Connect and tokens](../access-control/oauth-openid-connect-and-tokens.md) · [8. Access control for AI agents](../access-control/access-control-for-ai-agents.md)
 - **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Numbers, formulas and papers to know](../system-design/numbers-and-formulas.md) · [7. Real-time systems](../system-design/real-time-systems.md)
@@ -121,7 +125,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 27.5 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 84 hours) takes about 10 weeks.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 85.5 hours) takes about 10 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

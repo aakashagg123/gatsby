@@ -128,10 +128,15 @@ def tokens(chip, title, sub, toks, note="", ids=True):
     return card(chip, title, sub, f'<div class="xf-toks">{"".join(cells)}</div>', note)
 
 
+def layers_body(rows):
+    """The inner markup of layers(), for figures that combine more than one view in one card."""
+    body = "".join(f'<div class="xf-box {_fam(f)}"><b>{_e(a)}</b><span>{_e(b)}</span></div>' for f, a, b in rows)
+    return f'<div class="xf-layers">{body}</div>'
+
+
 def layers(chip, title, sub, rows, note=""):
     """rows: (family, label, text), drawn top to bottom."""
-    body = "".join(f'<div class="xf-box {_fam(f)}"><b>{_e(a)}</b><span>{_e(b)}</span></div>' for f, a, b in rows)
-    return card(chip, title, sub, f'<div class="xf-layers">{body}</div>', note)
+    return card(chip, title, sub, layers_body(rows), note)
 
 
 def lanes(chip, title, sub, rows, note=""):
@@ -155,15 +160,20 @@ def membar(chip, title, sub, segs, note=""):
     return card(chip, title, sub, f'<div class="xf-mem">{bar}</div><div class="xf-mkey">{key}</div>', note)
 
 
-def bars(chip, title, sub, rows, vmax=1.0, note="", fmt="{:.2f}"):
-    """rows: (label, value, family). Horizontal bars scaled to vmax."""
+def bars_body(rows, vmax=1.0, fmt="{:.2f}"):
+    """The inner markup of bars(), for figures that combine more than one view in one card."""
     out = []
     for label, v, f in rows:
         pct = max(0.0, min(100.0, 100.0 * v / vmax))
         out.append(f'<div class="xf-lbl">{_e(label)}</div>'
                    f'<div class="xf-fill"><div style="width:{pct:.1f}%;background:{_solid(f)}"></div></div>'
                    f'<div class="xf-val">{_e(fmt.format(v))}</div>')
-    return card(chip, title, sub, f'<div class="xf-bars">{"".join(out)}</div>', note)
+    return f'<div class="xf-bars">{"".join(out)}</div>'
+
+
+def bars(chip, title, sub, rows, vmax=1.0, note="", fmt="{:.2f}"):
+    """rows: (label, value, family). Horizontal bars scaled to vmax."""
+    return card(chip, title, sub, bars_body(rows, vmax, fmt), note)
 
 
 def grid(chip, title, sub, rows, cols_label=None, note=""):

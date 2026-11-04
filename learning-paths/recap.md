@@ -44,7 +44,7 @@
 | Fine-tuning and post-training | — | — | Full | 3 of 6 |
 | AI-assisted development | — | — | 3 of 6 | 5 of 6 |
 | Building AI-native products | — | 6 of 11 | — | — |
-| Visual explainers | 7 of 12 | 6 of 12 | — | — |
+| Visual explainers | 7 of 12 | 6 of 12 | 4 of 12 | 4 of 12 |
 | AI engineering stack (content/) | — | — | 15 of 23 | 12 of 23 |
 | Harness engineering | — | — | 41 of 41 lessons | 18 of 41 lessons (part skim) |
 
@@ -62,7 +62,9 @@ Three of the four paths read the evaluation, security and cost lessons. The PM r
    <details><summary>Answer</summary>You need models, APIs and grounding first. The harness lessons build an agent from those parts, so they need them. (<a href="./ai-engineer.md">Path page</a>)</details>
 4. **An engineering lead skims the harness phases. What do they lose, and what do they keep?**
    <details><summary>Answer</summary>They lose the failures you only meet by typing the code. They keep the shape of each part: the loop, tools, permissions, budgets and failure handling, which is what a design review needs. (<a href="./ai-engineering-lead.md">Path page</a>)</details>
-5. **What is a checkpoint, and what do you do if you cannot meet it?**
+5. **In the visual paths, one stage has a much longer bar than the rest. What does that tell you, and what does it not?**
+   <details><summary>Answer</summary>It tells you where most of the reading time goes, so plan your weeks around that stage. It does not tell you that stage matters most. The hours are a rule of thumb from lesson counts, not a measure of value or difficulty. (<a href="./visual-paths.md">Path page</a>)</details>
+6. **What is a checkpoint, and what do you do if you cannot meet it?**
    <details><summary>Answer</summary>A checkpoint is something you can do or explain at the end of a stage. If you cannot meet it, read the stage again before you move on. (<a href="./senior-product-manager.md">Path page</a>)</details>
 
 ## Sources

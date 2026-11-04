@@ -18,6 +18,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
+import explainer_figures as XF  # noqa: E402  (figure builders for visual-paths.md)
 OUT = os.path.join(ROOT, "learning-paths")
 
 FLAT_MIN = 25      # minutes per flat-track or content/ lesson
@@ -281,25 +282,25 @@ PATHS.append(dict(
              "**Risk if ignored** — The demo works. Production loops, leaks or overspends, and nobody can say why."),
     stages=[
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
-             items=[T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), T("tensors", 1, 2, 3, 4, 5),
+             items=[T("explainers", 3), T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), T("tensors", 1, 2, 3, 4, 5),
                     T("cnns", 1, 2, 3, 4, 5, 6, 7), T("transformers", 1, 2, 3, 4, 5, 6), T("fine-tuning", 1, 2, 3, 4, 5, 6), T("llms", 1, 2, 5)],
              ready="You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
-             items=[T("llms", 3, 6, 7), T("api-integrations", 1, 2, 3, 4, 5, 6), T("prompt-engineering", 2, 4, 5, 6, 7, 9, 10)],
+             items=[T("explainers", 1), T("llms", 3, 6, 7), T("api-integrations", 1, 2, 3, 4, 5, 6), T("prompt-engineering", 2, 4, 5, 6, 7, 9, 10)],
              ready="You can call a model with retries and a typed output, and you can diagnose a failing prompt."),
         dict(name="Grounding and memory", why="Give the model the right data, in the right shape, at the right time.",
              items=[T("rag-vector-databases", 1, 2, 3, 4, 5, 6, 8, 9, 10), C("03-rag", "rag-architecture", "retrieval-evals"),
                     T("memory-and-context", 3, 4), T("context-engineering", 3, 6)],
              ready="You can build a retrieval pipeline and measure its quality with a test set."),
         dict(name="Agents and the harness (build it)", why="Build the parts of an agent by hand. This is the core of the path.",
-             items=[T("tool-calling", 2, 3), C("02-reliable-outputs", "function-calling"), T("ai-agents", 2), T("agentic-workflows", 1, 2, 3),
+             items=[T("explainers", 5), T("tool-calling", 2, 3), C("02-reliable-outputs", "function-calling"), T("ai-agents", 2), T("agentic-workflows", 1, 2, 3),
                     H(1), H(2), H(3), H(4), H(5), H(6)],
              ready="You have a working loop with tools, a permission gate and a context budget, and tests that fail when you break them."),
         dict(name="Production", why="Plan for failure: extend, test, observe, secure and scale.",
              items=[H(7), H(8), H(9), H(10, "full", 180, "Allow about 3 hours: the capstone plus your own evals, traces and cost."), T("ai-agents", 4, 5), T("ai-assisted-development", 3, 4, 5), C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "kv-cache-management", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing", "structured-output", "agent-guardrails"), C("04-evals-observability", "evals", "observability", "cost-attribution"),
                     C("05-safety-multitenancy", "safety-engineering", "multi-tenant-isolation"),
-                    T("ai-security-and-guardrails", 1, 2), T("access-control", 1, 2, 8), T("system-design", 1, 2, 7)],
+                    T("explainers", 6), T("ai-security-and-guardrails", 1, 2), T("access-control", 1, 2, 8), T("system-design", 1, 2, 7)],
              ready="Your capstone passes its tests, and you can show its evals, traces, permission rules and cost."),
     ],
     skip=["If you know machine learning, skip the foundations stage and start at models and APIs.",
@@ -345,17 +346,17 @@ PATHS.append(dict(
              "**Risk if ignored** — The team ships fast and unsafe. Review happens after an incident."),
     stages=[
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
-             items=[T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8), T("tensors", 1, 3, 4), T("transformers", 1, 4, 5, 6), T("fine-tuning", 1, 3, 6),
+             items=[T("explainers", 1, 3), T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8), T("tensors", 1, 3, 4), T("transformers", 1, 4, 5, 6), T("fine-tuning", 1, 3, 6),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],
              ready="You can explain where a request's time and money go and name the three levers that change them."),
         dict(name="Architecture you can review", why="Know the shapes: grounding, context, memory, agents, workflows. Skim the build lessons.",
-             items=[T("rag-vector-databases", 1, 2, 6, 7, 9), T("context-engineering", 1, 3, 5), T("memory-and-context", 1, 5),
+             items=[T("explainers", 5), T("rag-vector-databases", 1, 2, 6, 7, 9), T("context-engineering", 1, 3, 5), T("memory-and-context", 1, 5),
                     T("tool-calling", 2), T("knowledge-graphs", 1, 8), T("ai-agents", 1, 3, 4), T("agentic-workflows", 1, 2, 3), H(1, "skim"), H(6, "skim"), H(7, "skim"), H(9, "skim")],
              ready="You can review a design doc for an agent: its loop, tools, permissions, budgets and failure handling."),
         dict(name="Quality, safety and access", why="Set the standards. Evals, threat models and access control are yours to require.",
-             items=[T("evaluation-and-observability", 1, 2), C("04-evals-observability", "evals", "observability"),
+             items=[T("explainers", 6), T("evaluation-and-observability", 1, 2), C("04-evals-observability", "evals", "observability"),
                     T("ai-security-and-guardrails", 1, 2, 3), T("access-control", 1, 2, 5, 8),
                     C("05-safety-multitenancy", "safety-engineering", "multi-tenant-isolation"), C("06-strategy-tradeoffs", "production-failure-modes")],
              ready="You can name the release gate for an AI feature, who owns it, and what evidence a buyer would ask for."),
@@ -559,6 +560,7 @@ def render_hub():
     for p in PATHS:
         a(f"| [{p['short']}](./{p['slug']}.md) | {p['who'][0].upper() + p['who'][1:]} | {p['outcome']} | {hours(minutes_of(p['stages']))} |")
     a("")
+    a("**See them as pictures:** [Visual learning paths](./visual-paths.md) shows each path as one figure: its stages, the hours for each, what each stage reads and its explainers.\n")
     a("## Where the depth lives\n")
     a("Each path page lists its lessons by stage. The tracks hold the depth. "
       "This table shows which path reads how much of each track. The [recap](./recap.md) has the full matrix.\n")
@@ -623,6 +625,9 @@ def render_recap():
         ("An engineering lead skims the harness phases. What do they lose, and what do they keep?",
          "They lose the failures you only meet by typing the code. They keep the shape of each part: the loop, tools, permissions, budgets and failure handling, which is what a design review needs.",
          "ai-engineering-lead"),
+        ("In the visual paths, one stage has a much longer bar than the rest. What does that tell you, and what does it not?",
+         "It tells you where most of the reading time goes, so plan your weeks around that stage. It does not tell you that stage matters most. The hours are a rule of thumb from lesson counts, not a measure of value or difficulty.",
+         "visual-paths"),
         ("What is a checkpoint, and what do you do if you cannot meet it?",
          "A checkpoint is something you can do or explain at the end of a stage. If you cannot meet it, read the stage again before you move on.",
          "senior-product-manager"),
@@ -639,12 +644,165 @@ def render_recap():
     return "\n".join(L)
 
 
+# ------------------------------------------------------------------ Visual learning paths
+# One picture per path, drawn from the same PATHS data and the same hours() rule as the text
+# pages above, so the hours in a picture cannot drift from its path page. The figures are
+# written to diagrams/learning-paths/visual-paths-<n>.html, where <n> is the position of the
+# mermaid fence in visual-paths.md, counting from 0. build_standalone swaps them in at build time.
+
+FIG_DIR = os.path.join(ROOT, "diagrams", "learning-paths")
+VISUAL = "visual-paths"
+
+
+def half_hours(minutes):
+    """The number behind hours(): minutes rounded to the nearest half hour."""
+    return round(minutes / 60 * 2) / 2
+
+
+def stage_minutes(s):
+    return sum(i.minutes for i in s["items"])
+
+
+def stage_lessons(s):
+    """Lessons a stage asks you to read or build. Planned modules count as zero."""
+    return sum(i.count for i in s["items"] if i.kind != "soon")
+
+
+def explainer_titles(s):
+    out = []
+    for it in s["items"]:
+        if it.kind == "t" and it.kw["track"] == "explainers":
+            order = flat_lessons("explainers")
+            out += [h1(f"{ROOT}/explainers/{order[i - 1]}.md") for i in it.kw["ids"]]
+    return out
+
+
+def stage_reading(s):
+    """Plain summary of what a stage reads: track names with lesson counts, explainers excluded."""
+    parts, harness_phases, harness_mode = [], [], set()
+    content = 0
+    for it in s["items"]:
+        if it.kind == "t" and it.kw["track"] != "explainers":
+            parts.append(f"{NAMES[it.kw['track']]} {it.count}")
+        elif it.kind == "c":
+            content += it.count
+        elif it.kind == "h":
+            harness_phases.append(it.kw["phase"])
+            harness_mode.add("build" if it.kw["mode"] == "full" else "skim")
+        elif it.kind == "f":
+            parts.append("Flowable overview")
+        elif it.kind == "soon":
+            parts.append(f"{it.kw['name']} (coming soon)")
+    if content:
+        parts.append(f"AI engineering stack {content}")
+    if harness_phases:
+        n = len(harness_phases)
+        verb = " and ".join(sorted(harness_mode))
+        parts.append(f"Harness engineering: {n} phase{'s' if n > 1 else ''} to {verb}")
+    return " · ".join(parts)
+
+
+def visual_figure(n, p):
+    stages = p["stages"]
+    total = minutes_of(stages)
+    vmax = max(half_hours(stage_minutes(s)) for s in stages) or 1
+    bar_rows = [(f"Stage {k}", half_hours(stage_minutes(s)), XF.CYCLE[(k - 1) % len(XF.CYCLE)]) for k, s in enumerate(stages, 1)]
+    layer_rows = []
+    for k, s in enumerate(stages, 1):
+        text = f"{stage_lessons(s)} lessons: {stage_reading(s)}."
+        ex = explainer_titles(s)
+        if ex:
+            text += " Explainers: " + "; ".join(ex) + "."
+        layer_rows.append((XF.CYCLE[(k - 1) % len(XF.CYCLE)], f"Stage {k} · {s['name']} · {hours(stage_minutes(s))}", text))
+    body = (XF.bars_body(bar_rows, vmax=vmax, fmt="{:g} h")
+            + '<p class="xf-sub" style="margin:16px 0 8px">What each stage reads, in order</p>'
+            + XF.layers_body(layer_rows))
+    sub = f"{len(stages)} stages, {hours(total)} in all. Bars show the hours for each stage."
+    html = XF.card(f"Path {n + 1}", p["title"].replace("Learning path: ", ""), sub, body,
+                  "Hours are this course's rule of thumb, not measured. Lesson counts include the explainers.")
+    XF.write(os.path.join(FIG_DIR, f"{VISUAL}-{n}.html"), html)
+
+
+def render_visual():
+    L = []
+    a = L.append
+    a("# Visual learning paths\n")
+    a("*Part of [Learning paths](./README.md)*\n")
+    a("## TL;DR\n")
+    a("Each learning path is a list of stages. This page draws each path as one picture. "
+      "The bars show how many hours each stage takes. The rows below them show what each stage reads, track by track, and which visual explainers it uses. "
+      "The numbers come from the same data as the path pages, so the two always agree.\n")
+    a("> 🎯 **For anyone choosing a path**")
+    a(">")
+    a("> **Why it matters** — A path is a time commitment. A picture shows its shape at a glance: where the hours go and what you read first.")
+    a(">")
+    a("> **What it changes in your decisions** — You can plan your weeks around the longest stage, and see which explainers to read first.")
+    a(">")
+    a("> **Ask yourself** — *\"Which stage of my path is the longest, and do I have the weeks for it?\"*")
+    a(">")
+    a("> **Risk if ignored** — You start a path without seeing its biggest stage, and stall halfway.")
+    a("")
+    a("## How to read a picture\n")
+    a("Every picture has two parts. The bars at the top show the hours for each stage, rounded to the nearest half hour. "
+      "The rows below list the stages in order. Each row names the stage, its hours and its lesson count. "
+      "Then it lists the tracks it reads, with the number of lessons from each, and the explainers it uses.\n")
+    a("Read the explainers in a stage first. Each one follows a single example through a system in about ten minutes, so the lessons that follow are easier.\n")
+    for n, p in enumerate(PATHS):
+        stages = p["stages"]
+        a(f"## {n + 1}. {p['short']}\n")
+        a(f"For {p['who']}. {len(stages)} stages, {hours(minutes_of(stages))} in all. "
+          f"Full lesson lists, checkpoints and skip-ahead rules are on the [{p['short']} path page](./{p['slug']}.md).\n")
+        a("```mermaid")
+        a("flowchart LR")
+        ids = [chr(65 + k) for k in range(len(stages))]
+        a("  " + " --> ".join(f'{ids[k]}["Stage {k + 1}: {s["name"]}"]' for k, s in enumerate(stages)))
+        a("```\n")
+    a("## Worked example: reading one picture\n")
+    eng = next(p for p in PATHS if p["slug"] == "ai-engineer")
+    k, longest = max(enumerate(eng["stages"], 1), key=lambda ks: stage_minutes(ks[1]))
+    a(f"Take the AI Engineer picture. The longest bar is stage {k}, {longest['name'].lower()}, at {hours(stage_minutes(longest))}, "
+      f"out of {hours(minutes_of(eng['stages']))} for the whole path. Its row shows why: {stage_reading(longest)}. "
+      f"An engineer with {eng['example_hpw']} hours a week should plan about {math.ceil(stage_minutes(longest) / 60 / eng['example_hpw'])} weeks for that stage alone. "
+      "That is the stage to protect in the calendar.\n")
+    a("## Failure modes\n")
+    a("- **Reading the bars as value.** A long bar means more reading, not more importance. Short stages often hold the decisions.")
+    a("- **Treating hours as measured.** The hours are a rule of thumb from lesson counts. Your pace will differ.")
+    a("- **Skipping the explainers.** They are short, and they make the lessons after them faster to read.")
+    a("- **Reading the picture instead of the path.** The picture shows the shape. The path page has the lessons, the checkpoints and the skip rules.")
+    a("")
+    a("## Practitioner checklist\n")
+    a("- [ ] Have I found my path's longest stage, and planned the weeks for it?")
+    a("- [ ] Do I know which explainers my path uses, and in which stage?")
+    a("- [ ] Have I read the path page's skip-ahead rules for what I already know?")
+    a("")
+    a("## Under the hood: how the pictures are made\n")
+    a(f"The pictures and the path pages come from one data structure in `scripts/gen_learning_paths.py`. Stage hours use the same rule as the path pages: "
+      f"{FLAT_MIN} minutes per reading lesson, {HARNESS_MIN} minutes per harness lesson that you build, and {SKIM_MIN} minutes to skim a harness phase. "
+      "The total is then rounded to the nearest half hour. "
+      "The same script writes each figure to `diagrams/learning-paths/visual-paths-<n>.html`, using the figure builders in `scripts/explainer_figures.py`. "
+      "The build swaps each figure in for the matching diagram on this page. So a change to a path changes its page and its picture together.\n")
+    a("## Related lessons\n")
+    for p in PATHS:
+        a(f"- [{p['short']} path](./{p['slug']}.md)")
+    a("- [Visual explainers](../explainers/README.md) — the explainers named in the pictures.")
+    a("- [Recap: paths compared](./recap.md)")
+    a("")
+    a("## Sources\n")
+    a("All numbers on this page come from the path data in this repository. The time estimates are this course's rule of thumb, not measured results. "
+      "The page makes no claims beyond the paths themselves.\n")
+    return "\n".join(L)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for p in PATHS:
         open(f"{OUT}/{p['slug']}.md", "w", encoding="utf-8").write(render_path(p))
     open(f"{OUT}/README.md", "w", encoding="utf-8").write(render_hub())
     open(f"{OUT}/recap.md", "w", encoding="utf-8").write(render_recap())
+    open(f"{OUT}/{VISUAL}.md", "w", encoding="utf-8").write(render_visual())
+    os.makedirs(FIG_DIR, exist_ok=True)
+    for n, p in enumerate(PATHS):
+        visual_figure(n, p)
     for p in PATHS:
         print(p["slug"], hours(minutes_of(p["stages"])), sum(1 for s in p["stages"] for i in s["items"] if i.kind != "soon"), "groups")
 
