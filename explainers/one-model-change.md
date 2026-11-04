@@ -44,7 +44,7 @@ flowchart LR
 
 ## 3 · The cost of one question
 
-A question costs **input tokens** (what Tally sends) plus **output tokens** (what the model writes). Output tokens usually cost several times more.
+A question costs **input tokens** (what Tally sends) plus **output tokens** (what the model writes). Output tokens cost more. Anthropic's current models, for example, charge 5 times as much for output as for input.
 
 Each Tally request sends about 3,000 tokens. Of these, 1,800 are the same every time: the instructions and the help-centre rules. The model writes about 350 tokens. At M1's assumed prices of $1 per million input tokens and $5 per million output tokens, the request costs $0.00475.
 
@@ -121,7 +121,7 @@ flowchart LR
 
 About 70% of Tally's questions are simple, like "where is my order?". They do not need M2. **Model routing** sends them to a small model, S, at assumed prices of $0.10 and $0.50 per million. With about 300 output tokens and no caching, a simple question costs about $0.45 per 1,000.
 
-On the 140 simple test cases, S passes 136 and M2 passes 138. The team accepts the 2-case gap, so the routed setup passes 178 of 200, or 89%.
+On the 140 simple test cases, S passes 136. The be-brief M2 from stage 7 passes 138 of them. The team accepts the 2-case gap. M2 alone passed 180 of 200, so the routed setup passes 180 − 2 = 178, or 89%.
 
 The blended cost is 70% × $0.45 + 30% × $6.56, which is about $2.28 per 1,000. That is lower than the $3.13 the team started with, and quality is 5 points higher.
 
@@ -199,6 +199,6 @@ flowchart LR
 ## Sources
 
 - Anthropic, "Model deprecations", platform.claude.com/docs/en/about-claude/model-deprecations, read 2026-11: the lifecycle terms (active, legacy, deprecated, retired); at least 60 days' notice before retiring a publicly released model; requests to retired models fail; `temperature`, `top_p` and `top_k` removed in API version `2026-10-21`.
-- Anthropic, "Prompt caching" and "Pricing", platform.claude.com, read 2026-11: a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5); a 5-minute cache write costs 1.25 times. Tally's prices are illustrative and use the 0.1 multiplier.
+- Anthropic, "Prompt caching" and "Pricing", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5); a 5-minute cache write costs 1.25 times. Tally's prices are illustrative and use the 0.1 multiplier.
 - Evan Miller, *Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations*, arXiv 2411.00640, 2024, read 2026-11: compare two models on question-level paired differences.
 - Tally, M1, M2, S, their prices, speeds, scores and the 70% share are invented for the example. This page's fact-check is pending.

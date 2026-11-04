@@ -42,7 +42,7 @@
 7. **An AI feature scores 92% on average, but one must-not-fail case fails. Do you ship?**
    <details><summary>Answer</summary>No. A must-not-fail case blocks launch whatever the average says. (<a href="./one-ai-feature-from-idea-to-launch.md">One AI feature, from idea to launch</a>)</details>
 8. **A new model costs twice as much per token. Why can your bill rise by more than twice?**
-   <details><summary>Answer</summary>The new model may write longer answers, and output tokens are the expensive part. (<a href="./one-model-change.md">One model change</a>)</details>
+   <details><summary>Answer</summary>The new model may write longer answers, and output tokens cost more than input tokens: 5 times as much on Anthropic's current models. (<a href="./one-model-change.md">One model change</a>)</details>
 9. **Why can an AI feature on a flat per-seat price lose money on your best customers?**
    <details><summary>Answer</summary>Every task costs tokens, so heavy users cost far more than light ones and pay the same price. (<a href="./one-ai-feature-p-and-l.md">From one AI task to gross margin</a>)</details>
 10. **An eval score drops 8 points. What do you check before looking for a cause?**

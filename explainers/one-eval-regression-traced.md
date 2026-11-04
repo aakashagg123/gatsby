@@ -80,13 +80,13 @@ flowchart LR
 
 ## 5 · Read the failures
 
-Numbers point to a corner. Reading tells you what went wrong there. The team opens all 22 customs cases that now fail and sorts them by cause. This is **error analysis**.
+Numbers point to a corner. Reading tells you what went wrong there. Customs now has 28 failing cases. Eight of them failed before the release too. The team opens the other 22, the customs cases that passed before and fail now, and sorts them by cause. This is **error analysis**.
 
 - 15 answers leave out the duty threshold: the value above which a parcel pays import duty.
 - 4 answers apply the rule for the wrong country.
 - 3 answers have a tone problem.
 
-One cause covers two thirds of the failures. The answers are not wrong so much as incomplete. They stop before the most important fact.
+One cause covers two thirds of the new failures. The answers are not wrong so much as incomplete. They stop before the most important fact.
 
 ```mermaid
 flowchart LR
@@ -210,4 +210,5 @@ flowchart LR
 
 - Evan Miller, *Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations*, arXiv 2411.00640, 2024, full text read 2026-11. For a pass rate, the standard error is √(p(1 − p)/n), and a 95% interval is the mean ± 1.96 standard errors. The paper recommends comparing two models on question-level paired differences, which lowers the variance when the models agree on which questions are hard.
 - The error bars on this page are derived from the invented counts. Standard error at 86% of 300: √(0.86 × 0.14 / 300), about 2.0 points. At 78%, about 2.4 points. Unpaired error of the difference: √(2.0² + 2.4²), about 3.1 points, so ±6 at 95%. Paired: the 300 case differences have 31 at −1, 7 at +1 and 262 at 0, which gives a standard error of about 2.0 points, so ±4 at 95%.
+- How the counts fit together (derived from the invented data): customs passed 42 of 50 before and 22 after. That net loss of 20 is 22 cases that went from pass to fail, minus 2 that went the other way. Across all slices, 31 cases went from pass to fail and 7 from fail to pass: customs 22 and 2, tracking 2 and 1, returns 3 and 2, address 4 and 2.
 - Parcelpoint, its cases, slices, scores and prompt are invented for the example. This page's fact-check is pending.

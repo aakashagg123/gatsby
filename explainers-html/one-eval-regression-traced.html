@@ -317,13 +317,13 @@
 
 <p><strong>Remember:</strong> slice the score. Most regressions live in one corner.</p>
 <h2 id="5-read-the-failures">5 · Read the failures</h2>
-<p>Numbers point to a corner. Reading tells you what went wrong there. The team opens all 22 customs cases that now fail and sorts them by cause. This is <strong>error analysis</strong>.</p>
+<p>Numbers point to a corner. Reading tells you what went wrong there. Customs now has 28 failing cases. Eight of them failed before the release too. The team opens the other 22, the customs cases that passed before and fail now, and sorts them by cause. This is <strong>error analysis</strong>.</p>
 <ul>
 <li>15 answers leave out the duty threshold: the value above which a parcel pays import duty.</li>
 <li>4 answers apply the rule for the wrong country.</li>
 <li>3 answers have a tone problem.</li>
 </ul>
-<p>One cause covers two thirds of the failures. The answers are not wrong so much as incomplete. They stop before the most important fact.</p>
+<p>One cause covers two thirds of the new failures. The answers are not wrong so much as incomplete. They stop before the most important fact.</p>
 <style>
 .xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
   border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -383,7 +383,7 @@
   .xf-layers .xf-box span{text-align:left}
 }
 </style>
-<div class="xf"><span class="xf-chip">Stage 5</span><h4>Read the failures</h4><p class="xf-sub">The 22 customs cases that now fail, by cause.</p><div class="xf-bars"><div class="xf-lbl">missing the duty threshold</div><div class="xf-fill"><div style="width:68.2%;background:var(--color-background-danger-solid)"></div></div><div class="xf-val">15</div><div class="xf-lbl">wrong country rule</div><div class="xf-fill"><div style="width:18.2%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">4</div><div class="xf-lbl">tone</div><div class="xf-fill"><div style="width:13.6%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">3</div></div><p class="xf-note">One cause covers two thirds.</p></div>
+<div class="xf"><span class="xf-chip">Stage 5</span><h4>Read the failures</h4><p class="xf-sub">The 22 customs cases that passed before and fail now, by cause.</p><div class="xf-bars"><div class="xf-lbl">missing the duty threshold</div><div class="xf-fill"><div style="width:68.2%;background:var(--color-background-danger-solid)"></div></div><div class="xf-val">15</div><div class="xf-lbl">wrong country rule</div><div class="xf-fill"><div style="width:18.2%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">4</div><div class="xf-lbl">tone</div><div class="xf-fill"><div style="width:13.6%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">3</div></div><p class="xf-note">Customs has 28 failures now. 8 of them failed before the release too.</p></div>
 
 <p><strong>Remember:</strong> read the failures and count the causes. One cause usually dominates.</p>
 <h2 id="6-find-the-layer">6 · Find the layer</h2>
@@ -823,6 +823,7 @@
 <ul>
 <li>Evan Miller, <em>Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations</em>, arXiv 2411.00640, 2024, full text read 2026-11. For a pass rate, the standard error is √(p(1 − p)/n), and a 95% interval is the mean ± 1.96 standard errors. The paper recommends comparing two models on question-level paired differences, which lowers the variance when the models agree on which questions are hard.</li>
 <li>The error bars on this page are derived from the invented counts. Standard error at 86% of 300: √(0.86 × 0.14 / 300), about 2.0 points. At 78%, about 2.4 points. Unpaired error of the difference: √(2.0² + 2.4²), about 3.1 points, so ±6 at 95%. Paired: the 300 case differences have 31 at −1, 7 at +1 and 262 at 0, which gives a standard error of about 2.0 points, so ±4 at 95%.</li>
+<li>How the counts fit together (derived from the invented data): customs passed 42 of 50 before and 22 after. That net loss of 20 is 22 cases that went from pass to fail, minus 2 that went the other way. Across all slices, 31 cases went from pass to fail and 7 from fail to pass: customs 22 and 2, tracking 2 and 1, returns 3 and 2, address 4 and 2.</li>
 <li>Parcelpoint, its cases, slices, scores and prompt are invented for the example. This page's fact-check is pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="one-ai-feature-p-and-l.html"><span class="lbl">← Previous</span><span class="ttl">From one AI task to gross margin</span></a><a class="navcard next" href="one-user-story-to-agent-spec.html"><span class="lbl">→ Next</span><span class="ttl">One user story becomes an agent spec</span></a></div><footer class="foot"><strong>Core insight:</strong> Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -27,7 +27,7 @@ flowchart LR
 
 ## 2 · Is AI the right tool?
 
-Some of the file is already structured: policy number, dates, amounts. Ordinary code can show those fields with no model at all, and it will never get them wrong.
+Some of the file is already structured: policy number, dates, amounts. Ordinary code can show those fields with no model at all, and it will not invent them.
 
 The rest is free text: adjuster notes, customer emails, repair quotes. A rule cannot summarize a rambling email. A language model can, but it is **probabilistic**: it will sometimes be wrong, and it will not tell you when.
 

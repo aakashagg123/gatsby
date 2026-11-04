@@ -155,7 +155,7 @@
 <li>input: 2,500 × $2 ÷ 1,000,000 = $0.005</li>
 <li>output: 600 × $10 ÷ 1,000,000 = $0.006</li>
 </ul>
-<p>That is $0.011, or 1.1 cents a task. Output is the larger part, even though there are fewer output tokens, because each one costs five times more.</p>
+<p>That is $0.011, or 1.1 cents a task. Output is the larger part, even though there are fewer output tokens, because each one costs five times more. That ratio is not only an assumption: Anthropic's current models also charge 5 times as much for output as for input.</p>
 <p>One cent sounds like nothing. The question is how many tasks a seat runs in a month.</p>
 <style>
 .xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
@@ -218,7 +218,7 @@
 </style>
 <div class="xf"><span class="xf-chip">Stage 3</span><h4>The cost of one task</h4><p class="xf-sub">At assumed prices of $2 and $10 per million tokens.</p><div class="xf-bars"><div class="xf-lbl">input</div><div class="xf-fill"><div style="width:38.5%;background:var(--color-background-info-solid)"></div></div><div class="xf-val">0.5 cents</div><div class="xf-lbl">output</div><div class="xf-fill"><div style="width:46.2%;background:var(--color-background-discovery-solid)"></div></div><div class="xf-val">0.6 cents</div><div class="xf-lbl">task</div><div class="xf-fill"><div style="width:84.6%;background:var(--color-background-caution-solid)"></div></div><div class="xf-val">1.1 cents</div></div><p class="xf-note">Fewer output tokens, but each costs five times more.</p></div>
 
-<p><strong>Remember:</strong> output tokens usually cost more than input tokens. Long answers are expensive.</p>
+<p><strong>Remember:</strong> output tokens cost more than input tokens. Long answers are expensive.</p>
 <h2 id="4-usage-is-not-average">4 · Usage is not average</h2>
 <p>Seats do not use the feature equally. In Quill's first month, a light seat ran about 10 tasks, which cost $0.11. A typical seat ran about 60, which cost $0.66. The heaviest 5% of seats ran about 1,500 tasks each, which cost $16.50.</p>
 <p>The heaviest seats cost 150 times as much as the light ones, and they pay the same $24.</p>
@@ -580,8 +580,8 @@
 
 <p><strong>Remember:</strong> put cost limits in code, and alert before the budget is spent.</p>
 <h2 id="9-forecast-two-curves">9 · Forecast two curves</h2>
-<p>Next year's cost moves in two directions at once. Usage grows as people adopt the feature. Prices per token tend to fall as vendors release cheaper models. A single "cost per user" line mixes the two and gets both wrong.</p>
-<p>Quill models them apart. It assumes tasks per seat grow 15% a quarter and cost per task falls 10% a quarter. The cost of a typical seat goes from about 37.8 cents to 39.1, 40.5 and 41.9 cents over four quarters. Each quarter it is 1.15 × 0.9 = 1.035 times the last.</p>
+<p>Next year's cost can move in two directions at once. Usage grows as people adopt the feature. The cost of a task may fall, for example if the team moves to a cheaper model. A single "cost per user" line mixes the two and hides both.</p>
+<p>Quill models them apart. It assumes tasks per seat grow 15% a quarter and cost per task falls 10% a quarter. Both are assumptions, not promises. The cost of a typical seat goes from about 37.8 cents to 39.1, 40.5 and 41.9 cents over four quarters. Each quarter it is 1.15 × 0.9 = 1.035 times the last.</p>
 <p>If either assumption shifts, the forecast shows which one, and when.</p>
 <style>
 .xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
@@ -812,7 +812,7 @@
 <h2 id="sources">Sources</h2>
 <ul>
 <li>FinOps Foundation, "FinOps for AI" overview, finops.org/wg/finops-for-ai-overview, updated 2026-10-28, read 2026-11: track cost per inference, per user and per successful outcome; its KPIs include cost per successful outcome and cache hit rate.</li>
-<li>Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11: a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5). Quill's prices are illustrative and use the 0.1 multiplier.</li>
+<li>Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5). Quill's prices are illustrative and use the 0.1 multiplier.</li>
 <li>The rule that a price needs a usage part when cost varies a lot between customers comes from this site's <a href="../business-acumen/monetization-and-business-models.html">pricing lesson</a>, where it is labelled as judgement.</li>
 <li>Quill, its plan, prices, usage, margins and growth rates are invented for the example. This page's fact-check is pending.</li>
 </ul></div>

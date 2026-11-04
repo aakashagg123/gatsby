@@ -463,9 +463,9 @@ def eval_regression():
         "Each change maps to a layer."))
     put(k, 3, F.heat("Stage 4", "Slice the score", "Pass rate by kind of question.", ["Tracking (120)", "Returns (80)", "Customs (50)", "Address (50)"], ["Before", "After"],
         [[0.95, 113 / 120], [70 / 80, 69 / 80], [0.84, 0.44], [0.64, 0.60]], note="Customs fell 40 points. The rest moved 4 points or less.", fmt="{:.0%}"))
-    put(k, 4, F.bars("Stage 5", "Read the failures", "The 22 customs cases that now fail, by cause.", [
+    put(k, 4, F.bars("Stage 5", "Read the failures", "The 22 customs cases that passed before and fail now, by cause.", [
         ("missing the duty threshold", 15, "danger"), ("wrong country rule", 4, "caution"), ("tone", 3, "info")],
-        vmax=22, note="One cause covers two thirds.", fmt="{:.0f}"))
+        vmax=22, note="Customs has 28 failures now. 8 of them failed before the release too.", fmt="{:.0f}"))
     put(k, 5, F.compare("Stage 6", "Find the layer", "Rule out the easy one first.",
         ("success", "Search: fine", ["Right document in top 5: 46 of 50", "Recall at 5: 0.92 before and after"]),
         ("danger", "Prompt: the cause", ["Typical customs answer: 140 to 75 words", "New line: keep every answer under 80 words"]),
@@ -510,7 +510,7 @@ def story_to_spec():
         [("find_slots", None), ("read", "info"), ("nothing to undo", None)],
         [("draft_message", None), ("draft", "discovery"), ("yes", None)],
         [("send_message", None), ("act", "danger"), ("no", None)],
-        [("book_slot", None), ("act", "caution"), ("yes, by cancelling", None)]],
+        [("book_slot", None), ("act", "caution"), ("yes, by moving it back", None)]],
         note="The act tools carry the risk."))
     put(k, 4, F.layers("Stage 5", "Limits in code", "Checked by the code that runs the tool.", [
         ("info", "Window", "book only within the next 5 working days"), ("discovery", "Skill", "only a technician with the right skill"),

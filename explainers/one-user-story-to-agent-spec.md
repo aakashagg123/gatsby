@@ -64,7 +64,7 @@ List every tool the model can call, and class each one. A **read** tool looks so
 | `find_slots` | read | nothing to undo |
 | `draft_message` | draft | yes |
 | `send_message` | act | no |
-| `book_slot` | act | yes, by cancelling the booking |
+| `book_slot` | act | yes, by moving the booking back to its old slot |
 
 The act tools carry the risk. They get the tightest limits in the next stages. A tool the agent does not need is not on the list at all.
 
@@ -83,7 +83,7 @@ Each act tool gets hard limits. The code that runs the tool checks them, so the 
 - Book only a technician with the right skill for the job.
 - Never book into overtime.
 - Send at most 3 messages to a customer per rebooking.
-- Never cancel a job. Only a person can cancel.
+- Never cancel a job. Moving a booking is allowed. Cancelling stays a person-only action.
 
 The Open Worldwide Application Security Project (OWASP) names giving a model too much power **excessive agency**. Its causes are too many functions, too many permissions and too much autonomy. Limits in code answer the first two.
 

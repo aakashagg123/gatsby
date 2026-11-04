@@ -47,7 +47,7 @@ At assumed prices of $2 per million input tokens and $10 per million output toke
 - input: 2,500 × $2 ÷ 1,000,000 = $0.005
 - output: 600 × $10 ÷ 1,000,000 = $0.006
 
-That is $0.011, or 1.1 cents a task. Output is the larger part, even though there are fewer output tokens, because each one costs five times more.
+That is $0.011, or 1.1 cents a task. Output is the larger part, even though there are fewer output tokens, because each one costs five times more. That ratio is not only an assumption: Anthropic's current models also charge 5 times as much for output as for input.
 
 One cent sounds like nothing. The question is how many tasks a seat runs in a month.
 
@@ -56,7 +56,7 @@ flowchart LR
   A["Input: 0.5 cents"] --> B["Output: 0.6 cents"] --> C["Task: 1.1 cents"]
 ```
 
-**Remember:** output tokens usually cost more than input tokens. Long answers are expensive.
+**Remember:** output tokens cost more than input tokens. Long answers are expensive.
 
 ## 4 · Usage is not average
 
@@ -146,9 +146,9 @@ flowchart LR
 
 ## 9 · Forecast two curves
 
-Next year's cost moves in two directions at once. Usage grows as people adopt the feature. Prices per token tend to fall as vendors release cheaper models. A single "cost per user" line mixes the two and gets both wrong.
+Next year's cost can move in two directions at once. Usage grows as people adopt the feature. The cost of a task may fall, for example if the team moves to a cheaper model. A single "cost per user" line mixes the two and hides both.
 
-Quill models them apart. It assumes tasks per seat grow 15% a quarter and cost per task falls 10% a quarter. The cost of a typical seat goes from about 37.8 cents to 39.1, 40.5 and 41.9 cents over four quarters. Each quarter it is 1.15 × 0.9 = 1.035 times the last.
+Quill models them apart. It assumes tasks per seat grow 15% a quarter and cost per task falls 10% a quarter. Both are assumptions, not promises. The cost of a typical seat goes from about 37.8 cents to 39.1, 40.5 and 41.9 cents over four quarters. Each quarter it is 1.15 × 0.9 = 1.035 times the last.
 
 If either assumption shifts, the forecast shows which one, and when.
 
@@ -211,6 +211,6 @@ flowchart LR
 ## Sources
 
 - FinOps Foundation, "FinOps for AI" overview, finops.org/wg/finops-for-ai-overview, updated 2026-10-28, read 2026-11: track cost per inference, per user and per successful outcome; its KPIs include cost per successful outcome and cache hit rate.
-- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11: a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5). Quill's prices are illustrative and use the 0.1 multiplier.
+- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5). Quill's prices are illustrative and use the 0.1 multiplier.
 - The rule that a price needs a usage part when cost varies a lot between customers comes from this site's [pricing lesson](../business-acumen/monetization-and-business-models.md), where it is labelled as judgement.
 - Quill, its plan, prices, usage, margins and growth rates are invented for the example. This page's fact-check is pending.
