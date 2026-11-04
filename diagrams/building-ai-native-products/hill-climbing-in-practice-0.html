@@ -1,0 +1,39 @@
+<style>
+.dgm-hc{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-hc-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-hc h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-hc-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-hc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-hc-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-hc-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-hc-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-hc-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-hc-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-hc-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-hc-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-hc-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-hc-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-hc-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-hc-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-hc-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-hc-note b{color:var(--color-text)}
+.dgm-hc-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-hc{padding:22px 14px 18px}.dgm-hc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-hc-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-hc">
+  <span class="dgm-hc-chip">Climb on dev, check on holdout</span>
+  <h4>One change per round</h4>
+  <p class="dgm-hc-sub">The holdout shows whether the hill is real.</p>
+  <div class="dgm-hc-grid">
+    <div class="dgm-hc-c dgm-hc-info"><h5><span class="dgm-hc-n">1</span>Score on dev</h5><span class="dgm-hc-t">pass rate and noise band</span><p>Same cases every time.</p></div>
+    <div class="dgm-hc-c dgm-hc-discovery"><h5><span class="dgm-hc-n">2</span>Read failures</h5><span class="dgm-hc-t">at least 30, in full</span><p>Name and count the causes.</p></div>
+    <div class="dgm-hc-c dgm-hc-caution"><h5><span class="dgm-hc-n">3</span>One change</h5><span class="dgm-hc-t">aimed at the top cause</span><p>Prompt, context, tool or model.</p></div>
+    <div class="dgm-hc-c dgm-hc-warning"><h5><span class="dgm-hc-n">4</span>Holdout agrees?</h5><span class="dgm-hc-t">rarely checked, never tuned on</span><p>Yes: keep. No: undo.</p></div>
+    <div class="dgm-hc-c dgm-hc-success"><h5><span class="dgm-hc-n">5</span>Log it</h5><span class="dgm-hc-t">change · scores · fixed and broken</span><p>The team memory.</p></div>
+  </div>
+  <p class="dgm-hc-foot">If dev rises and the holdout does not, you are overfitting.</p>
+</div>

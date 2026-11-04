@@ -305,7 +305,7 @@ def build_track(cfg):
         body = apply_diagram_overrides(convert(raw, callout), src, key)
         outline_html, has_outline = bh.render_outline(bh.extract_outline(body))
         prev, nxt = prevnext(key)
-        chip = f"Lesson {num:02d}" if num else "Recap"
+        chip = f"{cfg.get('chip_label', 'Lesson')} {num:02d}" if num else "Recap"
         page = _head(f"{t} — {brand}")
         page += _topbar(brand, tagline, with_menu=True)
         page += f'<div class="layout{" has-outline" if has_outline else ""}">'

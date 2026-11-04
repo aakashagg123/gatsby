@@ -57,6 +57,8 @@ ML_HTML = os.path.join(ROOT, "machine-learning-html")   # machine learning (foun
 TENSORS_HTML = os.path.join(ROOT, "tensors-html")        # tensors (foundation modules)
 CNNS_HTML = os.path.join(ROOT, "cnns-html")              # convolutional networks (foundation modules)
 TRANSFORMERS_HTML = os.path.join(ROOT, "transformers-html")  # transformers (foundation modules)
+EXPLAINERS_HTML = os.path.join(ROOT, "explainers-html")  # explainers
+BUILDING_AI_NATIVE_HTML = os.path.join(ROOT, "building-ai-native-products-html")  # building-ai-native-products
 AI_ASSISTED_HTML = os.path.join(ROOT, "ai-assisted-development-html")  # ai-assisted-development
 FINE_TUNING_HTML = os.path.join(ROOT, "fine-tuning-html")  # fine-tuning
 BUSINESS_ACUMEN_HTML = os.path.join(ROOT, "business-acumen-html")  # business acumen (product leaders)
@@ -116,7 +118,7 @@ el.querySelectorAll('a[href]').forEach(a=>{{
        .replace(/(^|\\/)harness-engineering\\/README\\.md/,'$1harness/index.html')
        .replace(/(^|\\/)flowable\\/README\\.md/,'$1flowable/index.html')
        .replace(/(^|\\/)harness-engineering\\//,'$1harness/')
-       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|transformers|fine-tuning|ai-assisted-development|business-acumen)\\/README\\.md/,'$1$2/index.html')
+       .replace(/(^|\\/)(agentic-ai|first-principles|product-sense|technical-product-sense|technical-product-management|knowledge-graphs|generative-ai|llms|api-integrations|rag-vector-databases|memory-and-context|tool-calling|ai-agents|agentic-workflows|evaluation-and-observability|ai-security-and-guardrails|cost-optimization|system-design|access-control|context-engineering|prompt-engineering|learning-paths|machine-learning|tensors|cnns|transformers|fine-tuning|ai-assisted-development|building-ai-native-products|explainers|business-acumen)\\/README\\.md/,'$1$2/index.html')
        .replace(/\\.md(#|$)/,'.html$1');
   a.setAttribute('href', h);
 }});
@@ -173,6 +175,14 @@ LANDING = """<!doctype html>
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Path</span>
       <h3>AI Engineering Lead →</h3>
       <p>Review architecture, set quality and safety standards, and control cost.</p>
+    </a>
+  </div>
+  <div class="group">Learn by seeing</div>
+  <div class="cards">
+    <a class="card" href="explainers/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>New</span>
+      <h3>Visual explainers →</h3>
+      <p>Follow one real example through a system, one stage at a time, with a picture at every stage: an LLM request, how a model learns, a token through a transformer, an image model, an agent run and a guardrailed request.</p>
     </a>
   </div>
   <div class="group">All modules</div>
@@ -259,6 +269,11 @@ LANDING = """<!doctype html>
       <p>The stack behind almost every language model: attention, the block, position and the
       cost of context, the KV cache, and reading a model card as memory, compute and cost.
       Runnable code in every lesson.</p>
+    </a>
+    <a class="card" href="building-ai-native-products/index.html">
+      <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Craft</span>
+      <h3>Building AI-native products →</h3>
+      <p>Five skills for the AI product leader: opinionated UX for ambiguous interaction, model intuition, pixels to evals to hill climbing, agentic flows and how users behave with agents. Templates and teardowns in every practice lesson.</p>
     </a>
     <a class="card" href="ai-assisted-development/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Craft</span>
@@ -494,6 +509,64 @@ def inject_favicon(site):
                 f.write(text[:pos] + tags + text[pos:])
             injected += 1
     return injected
+
+
+
+# Lessons that an explainer follows up, by built page path. The explainer opens with one example and a picture per stage.
+EXPLAINER_FOR_PAGE = {
+    "llms/what-is-an-llm.html": "inside-one-llm-request",
+    "transformers/generating-text-and-the-kv-cache.html": "inside-one-llm-request",
+    "system-design/genai-and-agent-platforms.html": "inside-one-llm-request",
+    "machine-learning/training-loss-and-gradient-descent.html": "how-a-model-learns",
+    "fine-tuning/from-base-model-to-assistant.html": "how-a-model-learns",
+    "transformers/attention.html": "one-token-through-a-transformer",
+    "transformers/the-block.html": "one-token-through-a-transformer",
+    "generative-ai/the-modalities.html": "how-an-image-model-draws",
+    "agentic-ai/what-is-an-agent.html": "one-agent-run",
+    "ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.html": "one-agent-run",
+    "building-ai-native-products/designing-agentic-flows.html": "one-agent-run",
+    "ai-security-and-guardrails/the-threat-model-and-guardrails.html": "anatomy-of-a-guardrailed-request",
+}
+
+
+def inject_explainer_links(site):
+    """Make explainers first-class: add an 'Explainers' button to the top bar of every page outside the section, and a banner
+    on the lessons that an explainer follows up. Works on built pages, so the committed track HTML needs no regeneration."""
+    titles = {}
+    exp_dir = os.path.join(ROOT, "explainers")
+    for slug in set(EXPLAINER_FOR_PAGE.values()):
+        with open(os.path.join(exp_dir, f"{slug}.md"), encoding="utf-8") as f:
+            titles[slug] = bh.lesson_title(f.read())
+    bar = ('<a class="Button" data-variant="ghost" data-color="secondary" data-size="sm" data-pill href="{root}explainers/index.html">'
+           '<span class="ButtonInner">Explainers</span></a>')
+    touched = 0
+    for dp, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dp, fn)
+            rel = os.path.relpath(path, site).replace(os.sep, "/")
+            if rel.startswith("explainers/") or 'class="explainer-link"' in open(path, encoding="utf-8").read():
+                continue
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            root = os.path.relpath(site, os.path.dirname(path)).replace(os.sep, "/")
+            root = "" if root == "." else root + "/"
+            new = text
+            if '<nav class="topnav">' in new and 'explainers/index.html' not in new:
+                new = new.replace('<nav class="topnav">', '<nav class="topnav">' + bar.format(root=root), 1)
+            slug = EXPLAINER_FOR_PAGE.get(rel)
+            if slug and '<div class="MarkdownContent">' in new:
+                banner = ('<div class="explainer-link">' + design_system.alert(
+                    "Visual explainer",
+                    f'See it step by step: <a href="{root}explainers/{slug}.html">{titles[slug]} →</a>. '
+                    'It follows one example through the stages, with a picture at each.', color="info") + '</div>')
+                new = new.replace('<div class="MarkdownContent">', '<div class="MarkdownContent">' + banner, 1)
+            if new != text:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(new)
+                touched += 1
+    return touched
 
 
 def inject_design_system(site):
@@ -812,6 +885,14 @@ def main():
     if os.path.isdir(TRANSFORMERS_HTML):
         shutil.copytree(TRANSFORMERS_HTML, os.path.join(SITE, "transformers"))
 
+    # 1y. Visual explainers module: copy its pre-rendered pages.
+    if os.path.isdir(EXPLAINERS_HTML):
+        shutil.copytree(EXPLAINERS_HTML, os.path.join(SITE, "explainers"))
+
+    # 1y. Building AI-native products module: copy its pre-rendered pages.
+    if os.path.isdir(BUILDING_AI_NATIVE_HTML):
+        shutil.copytree(BUILDING_AI_NATIVE_HTML, os.path.join(SITE, "building-ai-native-products"))
+
     # 1y. AI-assisted development module: copy its pre-rendered pages.
     if os.path.isdir(AI_ASSISTED_HTML):
         shutil.copytree(AI_ASSISTED_HTML, os.path.join(SITE, "ai-assisted-development"))
@@ -912,6 +993,7 @@ def main():
     smooth = inject_smooth_scroll(SITE)
 
     # 11. The design system: tokens, SDK components and the site layer, every page.
+    exp_pages = inject_explainer_links(SITE)
     ds_pages = inject_design_system(SITE)
 
     print(f"built _site/ — ai module + md tracks ({pages} pages) + landing + "

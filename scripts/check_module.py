@@ -46,7 +46,7 @@ VOLATILITY = {
     "ai-security-and-guardrails": "fast", "cost-optimization": "fast",
     "knowledge-graphs": "medium", "system-design": "stable", "access-control": "medium",
     "learning-paths": "medium", "machine-learning": "medium", "tensors": "medium",
-    "cnns": "medium", "transformers": "medium", "ai-assisted-development": "fast", "fine-tuning": "fast",
+    "cnns": "medium", "transformers": "medium", "explainers": "medium", "building-ai-native-products": "fast", "ai-assisted-development": "fast", "fine-tuning": "fast",
     "technical-product-management": "medium", "technical-product-sense": "stable",
     "product-sense": "medium", "first-principles": "stable",
 }
@@ -167,6 +167,12 @@ def lesson_checks(path, text, terms):
     }
     core = ["tldr", "callout", "failure_modes", "checklist", "related"]
     new = ["mental_model", "worked_example", "under_the_hood"]
+    if os.path.basename(os.path.dirname(path)) == "explainers":
+        # Explainers follow one example through stages: a different shape from a lesson.
+        sections["tldr"] = has_heading(text, "in one minute|TL;DR")
+        sections["failure_modes"] = has_heading(text, "where it breaks|failure modes")
+        sections["related"] = has_heading(text, "go deeper|related")
+        core, new = ["tldr", "failure_modes", "related"], []
     missing_core = [k for k in core if not sections[k]]
     missing_new = [k for k in new if not sections[k]]
     has_sources = has_heading(text, "sources")
@@ -213,7 +219,7 @@ def check_track(track, terms, today):
                                 ("Flesch reading ease", rd["flesch"], FLESCH, True)):
         issues.append((band(val, lim, hib), f"{name}: {val}"))
     test_yourself = "test yourself" in recap.lower()
-    depth_map = bool(re.search(r"where the depth lives", readme, re.I))
+    depth_map = bool(re.search(r"where the depth lives|connect to the lessons", readme, re.I))
     sev_new = "FAIL" if onboarded else "WARN"
     if not test_yourself:
         issues.append((sev_new, "recap has no 'Test yourself' section"))

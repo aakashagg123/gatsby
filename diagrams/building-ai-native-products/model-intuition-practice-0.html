@@ -1,0 +1,39 @@
+<style>
+.dgm-mp{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
+  border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
+  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
+.dgm-mp-chip{position:absolute;top:-11px;left:24px;background:var(--color-background-discovery-solid);color:var(--white);
+  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.dgm-mp h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
+.dgm-mp-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 16px}
+.dgm-mp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dgm-mp-c{border-radius:12px;padding:11px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);display:flex;flex-direction:column;gap:5px}
+.dgm-mp-c h5{margin:0;font-size:12px;font-weight:700}
+.dgm-mp-c p{margin:0;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
+.dgm-mp-t{line-height:1.3;font-size:10.5px;font-weight:700;color:var(--color-text)}
+.dgm-mp-n{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:9px;margin-right:5px;font-size:10px;font-weight:700;background:var(--color-surface);border:1px solid var(--color-border)}
+.dgm-mp-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
+.dgm-mp-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
+.dgm-mp-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
+.dgm-mp-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
+.dgm-mp-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
+.dgm-mp-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
+.dgm-mp-note{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--color-surface-secondary);border:1px solid var(--color-border);font-size:11.5px;color:var(--color-text-secondary);line-height:1.5}
+.dgm-mp-note b{color:var(--color-text)}
+.dgm-mp-foot{margin:12px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center}
+@media (max-width:760px){.dgm-mp{padding:22px 14px 18px}.dgm-mp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.dgm-mp-grid{grid-template-columns:1fr}}
+</style>
+<div class="dgm-mp">
+  <span class="dgm-mp-chip">The same test, three numbers</span>
+  <h4>Quality, latency and cost for every candidate</h4>
+  <p class="dgm-mp-sub">Set the constraints before you see the results.</p>
+  <div class="dgm-mp-grid">
+    <div class="dgm-mp-c dgm-mp-info"><h5><span class="dgm-mp-n">1</span>Probe set</h5><span class="dgm-mp-t">same inputs for all</span><p>40 to 60 real cases.</p></div>
+    <div class="dgm-mp-c dgm-mp-discovery"><h5><span class="dgm-mp-n">2</span>Quality</h5><span class="dgm-mp-t">rubric pass rate</span><p>Yes-or-no checks, written first.</p></div>
+    <div class="dgm-mp-c dgm-mp-caution"><h5><span class="dgm-mp-n">3</span>Latency</h5><span class="dgm-mp-t">p50 and p95</span><p>Not just the average.</p></div>
+    <div class="dgm-mp-c dgm-mp-warning"><h5><span class="dgm-mp-n">4</span>Cost</h5><span class="dgm-mp-t">per 1,000 uses</span><p>From real token counts.</p></div>
+    <div class="dgm-mp-c dgm-mp-success"><h5><span class="dgm-mp-n">5</span>Decision</h5><span class="dgm-mp-t">cheapest that meets the bar</span><p>With a re-test date.</p></div>
+  </div>
+  <p class="dgm-mp-foot">If none meets the bar, change the task, the prompt or the context.</p>
+</div>

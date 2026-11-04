@@ -35,7 +35,7 @@ NAMES = {
     "ai-agents": "AI agents", "agentic-workflows": "Agentic workflows",
     "knowledge-graphs": "Knowledge graphs", "access-control": "Access control",
     "system-design": "System design", "api-integrations": "APIs & integrations",
-    "first-principles": "First principles", "machine-learning": "Machine learning", "tensors": "Tensors", "cnns": "CNNs", "transformers": "Transformers", "fine-tuning": "Fine-tuning and post-training", "ai-assisted-development": "AI-assisted development",
+    "first-principles": "First principles", "machine-learning": "Machine learning", "tensors": "Tensors", "cnns": "CNNs", "transformers": "Transformers", "fine-tuning": "Fine-tuning and post-training", "ai-assisted-development": "AI-assisted development", "building-ai-native-products": "Building AI-native products", "explainers": "Visual explainers",
 }
 CONTENT = {
     "00-foundations": "AI engineering: foundations", "01-inference-internals": "AI engineering: inference internals",
@@ -169,7 +169,7 @@ PATHS.append(dict(
              items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
-             items=[T("machine-learning", 1, 2, 5, 8), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
+             items=[T("explainers", 1, 2, 5), T("machine-learning", 1, 2, 5, 8), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
              ready="You can say why the same prompt gives different answers, what a context window limits, and when a bad result is a prompt problem and when it is not."),
         dict(name="The decisions only you own", why="Pick the approach, set the bar, count the cost, and accept the risk.",
              items=[T("generative-ai", 5, 6), T("llms", 7), T("product-sense", 7), T("technical-product-management", 9),
@@ -236,7 +236,8 @@ PATHS.append(dict(
                     T("cost-optimization", 1, 2), T("technical-product-sense", 8)],
              ready="You can show a reviewer your eval results, your threat model and your cost per task."),
         dict(name="Run the product", why="Turn the above into specs, launches and a response plan.",
-             items=[T("technical-product-management", 3, 6, 7, 8, 9), T("product-sense", 7)],
+             items=[T("technical-product-management", 3, 6, 7, 8, 9), T("product-sense", 7),
+                    T("building-ai-native-products", 1, 2, 5, 6, 8, 11)],
              ready="You can write the spec, the launch gate and the incident plan for an AI feature."),
     ],
     skip=["If you ran the Senior PM path, skip the LLMs and generative AI lessons you have already read.",

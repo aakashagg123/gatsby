@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 40.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 42.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -38,7 +38,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 2 | Architecture you can review | about 16 hours |
 | 3 | Quality, safety and access | about 6 hours |
 | 4 | Systems at scale | about 2.5 hours |
-| 5 | Work with product and run the team | about 3.5 hours |
+| 5 | Work with product and run the team | about 5.5 hours |
 
 ## Stage 1: How models behave and what they cost
 
@@ -92,16 +92,17 @@ Set the standards. Evals, threat models and access control are yours to require.
 
 AI features still run on ordinary systems. Hold the same bar for reliability. (about 2.5 hours)
 
-- **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Core building blocks](../system-design/core-building-blocks.md) · [3. Web-scale services](../system-design/web-scale-services.md) · [7. Data infrastructure](../system-design/data-infrastructure.md)
+- **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Numbers, formulas and papers to know](../system-design/numbers-and-formulas.md) · [3. Traffic, caching, APIs and storage choice](../system-design/traffic-caching-apis-and-storage-choice.md) · [7. Real-time systems](../system-design/real-time-systems.md)
 - **Technical product sense**: [5. Reliability & failure](../technical-product-sense/reliability-and-failure.md) · [8. The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md)
 
 **Ready to move on when:** You can run a design review for scale, failure and cost on any service in the stack.
 
 ## Stage 5: Work with product and run the team
 
-Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 3.5 hours)
+Turn standards into process: specs, launches, incidents and how product and engineering share ownership. (about 5.5 hours)
 
 - **Technical product management**: [3. Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md) · [4. Prioritization & roadmaps](../technical-product-management/prioritization-and-roadmaps.md) · [5. Working with engineering](../technical-product-management/working-with-engineering.md) · [6. Metrics & experimentation](../technical-product-management/metrics-and-experimentation.md) · [7. Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) · [8. Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md) · [9. Technical product management for AI](../technical-product-management/tpm-for-ai-products.md)
+- **AI-assisted development**: [1. When an agent writes the code: where the bottleneck goes](../ai-assisted-development/when-an-agent-writes-the-code.md) · [2. Specs and the context file](../ai-assisted-development/specs-and-the-context-file.md) · [4. Control: permissions, modes and hooks](../ai-assisted-development/control-permissions-modes-and-hooks.md) · [5. Running at scale: sessions, subagents and fan-out](../ai-assisted-development/running-at-scale.md) · [6. Measuring and governing](../ai-assisted-development/measuring-and-governing.md)
 - **Product sense**: [7. Product sense for AI products](../product-sense/product-sense-for-ai.md)
 
 **Ready to move on when:** You and your PM share one definition of done, one quality bar and one incident process.
@@ -117,7 +118,7 @@ Turn standards into process: specs, launches, incidents and how product and engi
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 40.5 hours) takes about 14 weeks.
+An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 42.5 hours) takes about 15 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

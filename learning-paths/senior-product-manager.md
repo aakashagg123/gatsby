@@ -14,7 +14,7 @@ This path takes a working product manager from "AI is a black box" to "I can mak
 
 **Before you start:** Several years in product. No machine learning background is needed.
 
-**Length:** about 17.5 hours, across 4 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 19 hours, across 4 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -35,7 +35,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | Stage | Focus | About |
 | --- | --- | --- |
 | 1 | Technical footing | about 2 hours |
-| 2 | AI literacy | about 7 hours |
+| 2 | AI literacy | about 8.5 hours |
 | 3 | The decisions only you own | about 4.5 hours |
 | 4 | Go deeper where your product needs it (optional) | about 4 hours |
 
@@ -49,8 +49,9 @@ AI products sit on ordinary systems. You need the same words your engineers use.
 
 ## Stage 2: AI literacy
 
-Learn what a model is, what it does well, and what it does badly. Plain language, no maths. (about 7 hours)
+Learn what a model is, what it does well, and what it does badly. Plain language, no maths. (about 8.5 hours)
 
+- **Visual explainers**: [1. Inside one LLM request](../explainers/inside-one-llm-request.md) · [2. How a model learns](../explainers/how-a-model-learns.md) · [5. One agent run, step by step](../explainers/one-agent-run.md)
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Generative AI**: [1. What makes AI "generative"?](../generative-ai/what-is-generative-ai.md) · [2. The five modalities](../generative-ai/the-modalities.md) · [3. Probabilistic software](../generative-ai/probabilistic-software.md) · [4. The generative AI product stack](../generative-ai/the-genai-product-stack.md)
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [5. Temperature, sampling & determinism](../llms/temperature-sampling-and-determinism.md) · [6. Choosing a model](../llms/choosing-a-model.md)
@@ -94,7 +95,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 
 *This example is invented, to show the method.*
 
-A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 17.5 hours) takes about 6 weeks.
+A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 19 hours) takes about 7 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

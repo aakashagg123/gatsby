@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 82.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 84 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -38,7 +38,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 2 | Models and APIs | about 6.5 hours |
 | 3 | Grounding and memory | about 6 hours |
 | 4 | Agents and the harness (build it) | about 29 hours |
-| 5 | Production | about 26 hours |
+| 5 | Production | about 27.5 hours |
 
 ## Stage 1: Foundations
 
@@ -93,20 +93,21 @@ Build the parts of an agent by hand. This is the core of the path. (about 29 hou
 
 ## Stage 5: Production
 
-Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
+Plan for failure: extend, test, observe, secure and scale. (about 27.5 hours)
 
 - **Harness engineering**: [Phase 07 — Planning and Subagents](../harness-engineering/phases/07-planning-and-subagents/README.md) (4 lessons, build it)
 - **Harness engineering**: [Phase 08 — Extending: MCP, Skills, Retrieval](../harness-engineering/phases/08-extending-mcp-skills-retrieval/README.md) (5 lessons, build it)
 - **Harness engineering**: [Phase 09 — Reliability, evals, and ops](../harness-engineering/phases/09-reliability-evals-and-ops/README.md) (5 lessons, build it)
 - **Harness engineering**: [Phase 10 — Capstone](../harness-engineering/phases/10-capstone/README.md) (1 lessons, build it). Allow about 3 hours: the capstone plus your own evals, traces and cost.
 - **AI agents**: [4. Running an agent in production](../ai-agents/running-an-agent-in-production.md) · [5. Choosing and acceptance-testing an agent](../ai-agents/choosing-and-acceptance-testing-an-agent.md)
+- **AI-assisted development**: [3. Verification is the product](../ai-assisted-development/verification-is-the-product.md) · [4. Control: permissions, modes and hooks](../ai-assisted-development/control-permissions-modes-and-hooks.md) · [5. Running at scale: sessions, subagents and fan-out](../ai-assisted-development/running-at-scale.md)
 - **AI engineering: inference internals**: [Prefill vs. decode latency](../content/01-inference-internals/prefill-vs-decode.md) · [Continuous batching & paged attention](../content/01-inference-internals/batching-and-paged-attention.md) · [KV cache management: eviction, reuse, and memory pressure at scale](../content/01-inference-internals/kv-cache-management.md) · [Prompt caching vs. semantic caching](../content/01-inference-internals/prompt-vs-semantic-caching.md)
 - **AI engineering: reliable outputs**: [Model routing, graceful fallback logic, and degraded-mode UX](../content/02-reliable-outputs/model-routing.md) · [Structured output: validation, repair loops, and fallback chains](../content/02-reliable-outputs/structured-output.md) · [Agent guardrails: loop budgets, tool budgets, and termination conditions](../content/02-reliable-outputs/agent-guardrails.md)
 - **AI engineering: evals & observability**: [Evals: golden sets, regression tests, adversarial tests, LLM-as-judge, and human evals](../content/04-evals-observability/evals.md) · [LLM observability: traces, spans, tokens, latency, errors, and drift](../content/04-evals-observability/observability.md) · [Cost attribution per feature, workflow, tenant, and user journey — not just per model](../content/04-evals-observability/cost-attribution.md)
 - **AI engineering: safety & multi-tenancy**: [Safety engineering: prompt injection defense, data leakage prevention, and permission boundaries](../content/05-safety-multitenancy/safety-engineering.md) · [Multi-tenant isolation, cache safety, and cross-user context contamination prevention](../content/05-safety-multitenancy/multi-tenant-isolation.md)
 - **AI security & guardrails**: [1. The threat model, and guardrails as architecture](../ai-security-and-guardrails/the-threat-model-and-guardrails.md) · [2. Red-teaming: testing your defenses](../ai-security-and-guardrails/red-teaming-and-proving-your-defenses.md)
 - **Access control**: [1. Authentication, authorization and the access-control model](../access-control/authentication-authorization-and-the-access-control-model.md) · [2. OAuth 2.0, OpenID Connect and tokens](../access-control/oauth-openid-connect-and-tokens.md) · [8. Access control for AI agents](../access-control/access-control-for-ai-agents.md)
-- **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Core building blocks](../system-design/core-building-blocks.md) · [7. Data infrastructure](../system-design/data-infrastructure.md)
+- **System design**: [1. Foundations & framework](../system-design/foundations-and-framework.md) · [2. Numbers, formulas and papers to know](../system-design/numbers-and-formulas.md) · [7. Real-time systems](../system-design/real-time-systems.md)
 
 **Ready to move on when:** Your capstone passes its tests, and you can show its evals, traces, permission rules and cost.
 
@@ -120,7 +121,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 26 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 82.5 hours) takes about 10 weeks.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 84 hours) takes about 10 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

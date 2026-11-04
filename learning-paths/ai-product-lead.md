@@ -14,7 +14,7 @@ This path covers the layers between a model and a product: grounding, context, m
 
 **Before you start:** This path builds on the Senior PM path, stages 1 to 3, or equivalent experience. Lessons marked ↺ repeat that path, so skip them if you did it. You have shipped or closely reviewed one AI feature.
 
-**Length:** about 26.5 hours, across 5 stages. If you did the Senior PM path, about 14.5 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
+**Length:** about 29 hours, across 5 stages. If you did the Senior PM path, about 17 hours, because lessons marked ↺ repeat it. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -38,7 +38,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 | 2 | Context and memory | about 5 hours |
 | 3 | Action: tools, agents, workflows | about 5.5 hours |
 | 4 | Trust, access and cost | about 4 hours |
-| 5 | Run the product | about 2.5 hours |
+| 5 | Run the product | about 5 hours |
 
 ## Stage 1: Model and data foundations
 
@@ -87,10 +87,11 @@ Evals, security, permissions and spend decide whether the feature survives conta
 
 ## Stage 5: Run the product
 
-Turn the above into specs, launches and a response plan. (about 2.5 hours)
+Turn the above into specs, launches and a response plan. (about 5 hours)
 
 - **Technical product management**: [3. Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md) · [6. Metrics & experimentation](../technical-product-management/metrics-and-experimentation.md) · [7. Launches, rollouts & migrations](../technical-product-management/launches-rollouts-and-migrations.md) · [8. Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md) · [9. Technical product management for AI](../technical-product-management/tpm-for-ai-products.md) ↺
 - **Product sense**: [7. Product sense for AI products](../product-sense/product-sense-for-ai.md) ↺
+- **Building AI-native products**: [1. Designing for ambiguity](../building-ai-native-products/designing-for-ambiguity.md) · [2. Practice: the AI feature spec](../building-ai-native-products/ux-practice-the-ai-feature-spec.md) · [5. From pixels to evals](../building-ai-native-products/from-pixels-to-evals.md) · [6. Practice: hill climbing](../building-ai-native-products/hill-climbing-in-practice.md) · [8. Practice: the agent spec and risk register](../building-ai-native-products/agentic-flows-practice.md) · [11. Capstone: ship one AI-native feature](../building-ai-native-products/capstone-ship-one-ai-native-feature.md)
 
 **Ready to move on when:** You can write the spec, the launch gate and the incident plan for an AI feature.
 
@@ -104,7 +105,7 @@ Turn the above into specs, launches and a response plan. (about 2.5 hours)
 
 *This example is invented, to show the method.*
 
-An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 26.5 hours) takes about 7 weeks.
+An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 29 hours) takes about 8 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

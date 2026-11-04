@@ -147,3 +147,6 @@ html:has(.graph-page){height:100%}
   #legend .lg-h{width:100%}
   #card{max-height:52vh}
 }
+
+/* A pointer from a lesson to the visual explainer that follows one example through the same idea. */
+.explainer-link{margin:0 0 var(--space-6)}
