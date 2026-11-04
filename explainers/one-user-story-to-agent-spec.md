@@ -2,6 +2,8 @@
 
 *Part of [Visual explainers](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 ## In one minute
 
 A user story works well when the software does exactly what it is told. An AI agent does not. It chooses some of its own steps, and it will sometimes choose wrong. So the story has to grow into a different document: an **agent spec** that says what the agent may do, what it must never do, when it stops and how much freedom it has.
@@ -213,4 +215,5 @@ flowchart LR
 
 - Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-11: workflows run models and tools through predefined code paths, while agents direct their own processes and tool use; find the simplest solution and increase complexity only when needed. The page notes that much of its tooling has changed since December 2024.
 - OWASP GenAI Security Project, "LLM06:2025 Excessive Agency", genai.owasp.org, read 2026-11: the root causes are excessive functionality, excessive permissions and excessive autonomy; the advice is to require a human to approve high-impact actions before they are taken.
-- Fieldline, its story, numbers, tools, limits and rules are invented for the example. This page's fact-check is pending.
+- Fieldline, its story, numbers, tools, limits and rules are invented for the example.
+- Independent fact-check: run on 2026-11-04 by a separate agent with web access, blind to the edits. Result: clean, with no wrong, stale or unsupported claims.

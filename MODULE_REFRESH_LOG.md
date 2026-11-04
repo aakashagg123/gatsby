@@ -29,7 +29,7 @@ picks the lowest tier number among due modules.
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
-| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-03 |
+| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-04 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
@@ -700,3 +700,13 @@ and a link to the merged PR.)
   check `grep -ril "swe-bench verified"`. (2) Possible new lesson: agent memory/long-horizon context
   and inference-time reasoning cost (reasoning tokens), not built (scope boundary). (3) recap.md files lack
   "Test yourself" sections (structural, not built).
+- 2026-11-04 — explainers — fixed and extended (framework pass, not the daily job):
+  added six product explainers (an AI feature from idea to launch, a model
+  change, one task to gross margin, an eval regression, a user story to an
+  agent spec, an AI incident). An independent fact-check with web access
+  was clean on its third pass (51 of 51 rows OK) for those six pages, the
+  README and the product parts of the recap. The six original explainers
+  (LLM request, how a model learns, a token through a transformer, an
+  image model, an agent run, a guardrailed request) are still unchecked:
+  their pages keep "fact-check pending". checker: 12 lessons, avg sentence
+  11.6, 2% over 30 words, Flesch 71, PASS. PR pending.

@@ -2,6 +2,8 @@
 
 *Part of [Visual explainers](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 ## In one minute
 
 AI features fail in a way that ordinary features rarely do. The service stays up and no error is thrown, but the answers are wrong. Users notice before the dashboards do. When it happens, the product manager's job is not to fix the code. It is to size the harm, choose what users see, tell people the truth and decide how to make it right.
@@ -206,4 +208,5 @@ flowchart LR
 
 - Google, *Site Reliability Engineering*, chapter "Managing Incidents", sre.google/sre-book/managing-incidents, read 2026-11: the roles of incident command, operational work, communication and planning; "it is better to declare an incident early"; the commander's most important job is to keep a living incident document.
 - Google, *Site Reliability Engineering*, chapter "Postmortem Culture", sre.google/sre-book/postmortem-culture, read 2026-11: a blameless postmortem focuses on contributing causes "without indicting any individual or team"; teams should define postmortem triggers in advance, including when monitoring fails and an incident is found manually.
-- Harbor Credit Union, its fee, timeline, conversation counts, refunds and owners are invented for the example. This page's fact-check is pending.
+- Harbor Credit Union, its fee, timeline, conversation counts, refunds and owners are invented for the example.
+- Independent fact-check: run on 2026-11-04 by a separate agent with web access, blind to the edits. Result: clean, with no wrong, stale or unsupported claims.

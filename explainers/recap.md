@@ -56,4 +56,5 @@
 
 - The sources for each explainer are at the end of its page. Papers whose abstracts were read for these pages: Vaswani et al. (2017), Ouyang et al. (2022), Kwon et al. (2023), Ho et al. (2020) and Rombach et al. (2022). The Anthropic agents post and the OWASP Top 10 for LLM Applications were also read. Other citations are marked not re-opened.
 - The six product explainers also read: Amershi et al. (2019), Miller (2024), Google's SRE book chapters on managing incidents and postmortem culture, the OWASP entry on excessive agency, Anthropic's pages on model deprecations, pricing, prompt caching and success criteria, and the FinOps Foundation's FinOps for AI overview.
-- The examples are invented or simplified. This section's fact-check is pending.
+- The examples are invented or simplified.
+- Independent fact-check, run on 2026-11-04 by a separate agent with web access, blind to the edits: clean for the rows and questions about the six product explainers (7 to 12) and for the IDs and years of the five papers named above. The rows and questions about the first six explainers were not checked. Their content, like their own pages, is still pending a fact-check.
