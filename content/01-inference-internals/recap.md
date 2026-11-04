@@ -6,16 +6,20 @@
 
 **PagedAttention / vLLM (UC Berkeley, 2023).** By managing the
 [KV cache](./kv-cache-management.md) in non-contiguous "pages" instead of one
-big reserved block, the PagedAttention paper reported up to **~24× higher
-throughput** than prior serving systems at the same latency. vLLM became a
-default open-source serving engine on the strength of it. 🎯 *PM takeaway:*
+big reserved block, the vLLM team reported up to **24× higher throughput** than
+HuggingFace Transformers and up to **3.5×** over HuggingFace TGI. The peer-reviewed
+paper reports **2–4×** over earlier specialized serving systems at the same latency
+(FasterTransformer and Orca). The 24× figure is a best case against a naive baseline.
+vLLM became a default open-source serving engine on the strength of it. 🎯 *PM takeaway:*
 the same GPU can serve far more traffic. Your **$/token and gross margin**
 are an engineering choice, not a fixed input. See
 [batching & paged attention](./batching-and-paged-attention.md).
 
 **Prompt caching goes mainstream (2024).** Anthropic, OpenAI, and Google all
 shipped prefix/prompt caching that can cut the cost of the *cached* input by
-up to **~90%** and reduce time-to-first-token. This only works when your
+up to **~90%** and reduce time-to-first-token. Today, discounts on cached reads
+range from 90% to 95% or more, depending on the provider and model. Check the
+current price page before you build a business case. This only works when your
 prompt prefix is byte-stable. 🎯 *PM takeaway:* a stable system prompt is
 literally money. A per-request timestamp at the top of the prompt quietly
 throws that discount away. See

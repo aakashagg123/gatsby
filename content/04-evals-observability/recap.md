@@ -4,12 +4,15 @@
 
 ## Real-world examples & war stories
 
-**Klarna's AI assistant (2024).** Klarna reported its OpenAI-powered assistant handled
-**~two-thirds of customer-service chats** within months — work it equated to hundreds of
-full-time agents. 🎯 *PM takeaway:* at that volume you cannot operate on vibes.
-[Cost attribution](./cost-attribution.md) (what does each resolved chat cost?) and
-continuous [quality monitoring](./observability.md) make a number like that safe rather
-than terrifying.
+**Klarna's AI assistant (2024–2025).** In early 2024 Klarna reported its OpenAI-powered
+assistant handled **~two-thirds of customer-service chats** within months — work it equated
+to hundreds of full-time agents. In May 2025 the CEO told Bloomberg that cost had been
+weighted too heavily, that the AI produced "lower quality" support, and that Klarna was
+hiring human agents again. 🎯 *PM takeaway:* containment and cost per chat are not quality.
+A volume number without a quality measure can reverse. [Cost attribution](./cost-attribution.md)
+(what does each resolved chat cost?) and continuous
+[quality monitoring](./observability.md) need to sit side by side, so a cost win never
+hides a quality loss.
 
 **"Did the model change?" (the GPT-4 drift debates).** Practitioners repeatedly reported
 that hosted models *behaved differently over time* on the same prompts. This sparked

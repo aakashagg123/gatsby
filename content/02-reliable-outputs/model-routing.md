@@ -60,13 +60,21 @@ request ──▶ classify (difficulty / cost ceiling / latency SLO / privacy)
   on-prem or approved model, a
   [safety boundary](../05-safety-multitenancy/safety-engineering.md).
 
-A market note that settles the "is routing worth it?" debate: in August
-2025, the biggest product in the industry shipped it as the *default
-architecture*. GPT-5's headline design is a real-time router deciding per
-request whether a fast model or a deliberate reasoning model answers. When
-routing is how the frontier lab spends its own margin, treating it as an
-optional optimization in your stack leaves the same economics on the
-table.
+A market note on the "is routing worth it?" debate: in August 2025, the
+biggest product in the industry shipped it as the *default architecture*.
+GPT-5's headline design is a real-time router deciding per request whether a
+fast model or a deliberate reasoning model answers. When routing is how the
+frontier lab spends its own margin, treating it as an optional optimization in
+your stack leaves the same economics on the table.
+
+The story has a second half, and it is a product lesson. Users complained about
+the router within days, and OpenAI restored the manual model picker within about
+a week and kept the router as an "Auto" mode. In December 2025, press reports
+say OpenAI removed automatic routing for free and Go users and made the fast
+model the default. Paid users kept it. A router changes *which* answer a user
+gets, so users notice when it picks wrong. Give users a visible override, and
+measure per-route satisfaction, not just cost. Check OpenAI's release notes for
+the current state.
 
 ## Graceful fallback logic
 

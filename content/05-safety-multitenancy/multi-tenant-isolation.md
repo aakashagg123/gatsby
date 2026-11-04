@@ -82,6 +82,14 @@ tenant could expose data.
   system prompt and tool defs. Anything containing tenant data must not be
   cross-tenant reusable. Scope cache pools by tenant where the threat model
   demands it.
+- **Timing side channel.** A cache hit returns faster than a miss. An attacker
+  who can send prompts to a shared cache can time responses to learn whether
+  someone else's prompt prefix is cached. A 2025 audit (Gu et al.,
+  arXiv:2502.07776) found global cache sharing across users at seven API
+  providers. Ask each vendor for its cache scope in writing. Anthropic's docs
+  say caches are never shared across organizations and are isolated per
+  workspace on its own API, but only per organization on Bedrock and Google
+  Cloud. For self-hosted servers, set a per-tenant cache salt or pool.
 
 ### 5. Logs, traces, and training data
 [Observability](../04-evals-observability/observability.md) stores and any

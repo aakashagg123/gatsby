@@ -109,9 +109,20 @@ after the first.</p>
   invalidates everything after it. This is why
   <a href="00-foundations.html#context-engineering">context engineering</a> insists on
   a <em>stable prefix</em>.</li>
-<li><strong>Time-limited.</strong> Cached entries expire; provider TTLs are short, often
-  minutes. Self-hosted entries are subject to
+<li><strong>Time-limited.</strong> Cached entries expire. Provider lifetimes are short and
+  differ by vendor. Anthropic's default is 5 minutes, with an optional 1-hour
+  tier. OpenAI keeps entries for about 5 to 10 minutes of inactivity, up to an
+  hour, with an optional extended mode of up to 24 hours. Each cache hit
+  refreshes the timer. Self-hosted entries are subject to
   <a href="#kv-cache-management">KV cache eviction</a> under memory pressure.</li>
+<li><strong>Priced as a trade.</strong> Anthropic charges a premium to write a cache entry
+  (1.25× the base input price for 5 minutes, 2× for 1 hour). Reads cost a
+  fraction of the base price (0.1× or less). A prefix that is written but
+  rarely re-read can cost <em>more</em> than no caching. Check the current price page,
+  because the multipliers vary by model.</li>
+<li><strong>Minimum length.</strong> Short prompts are not cached, and the API returns no
+  error. The minimum depends on the model (512 to 4,096 tokens on Anthropic's
+  current list). Read the cache-hit fields in the response to confirm a hit.</li>
 </ul>
 <p><strong>Design rules:</strong></p>
 <ul>
@@ -122,6 +133,14 @@ after the first.</p>
 <li>In multi-tenant systems, be deliberate: a shared prefix is fine, but never
   let cache <em>reuse</em> cross a trust boundary in a way that exposes data. See
   <a href="05-safety-multitenancy.html#multi-tenant-isolation">multi-tenant cache safety</a>.</li>
+<li>Know the provider's isolation scope. Anthropic and OpenAI both say caches are
+  never shared across organizations. Anthropic also isolates by workspace on its
+  own API, but only by organization on Amazon Bedrock and Google Cloud.</li>
+<li>"Lossless" is about the output distribution. A cache hit is still <em>visible</em>
+  as lower latency. A 2025 audit of LLM APIs (Gu et al.) used that timing gap as
+  a side channel and found global cache sharing across users at seven providers.
+  Providers have since documented tighter scopes. Still, treat a shared cache as
+  a possible information channel in your threat model.</li>
 </ul>
 <h2 id="semantic-caching">Semantic caching</h2>
 <p><strong>What it reuses:</strong> a <em>final response</em>. The system embeds the query. If its
@@ -998,15 +1017,19 @@ bit-width.</p>
   <section class="recap MarkdownContent" id="recap"><div class="recap-head"><span class="recap-ic">📌</span><h2>Recap &amp; real-world examples</h2></div><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
 <p><strong>PagedAttention / vLLM (UC Berkeley, 2023).</strong> By managing the
 <a href="#kv-cache-management">KV cache</a> in non-contiguous "pages" instead of one
-big reserved block, the PagedAttention paper reported up to <strong>~24× higher
-throughput</strong> than prior serving systems at the same latency. vLLM became a
-default open-source serving engine on the strength of it. 🎯 <em>PM takeaway:</em>
+big reserved block, the vLLM team reported up to <strong>24× higher throughput</strong> than
+HuggingFace Transformers and up to <strong>3.5×</strong> over HuggingFace TGI. The peer-reviewed
+paper reports <strong>2–4×</strong> over earlier specialized serving systems at the same latency
+(FasterTransformer and Orca). The 24× figure is a best case against a naive baseline.
+vLLM became a default open-source serving engine on the strength of it. 🎯 <em>PM takeaway:</em>
 the same GPU can serve far more traffic. Your <strong>$/token and gross margin</strong>
 are an engineering choice, not a fixed input. See
 <a href="#batching-and-paged-attention">batching &amp; paged attention</a>.</p>
 <p><strong>Prompt caching goes mainstream (2024).</strong> Anthropic, OpenAI, and Google all
 shipped prefix/prompt caching that can cut the cost of the <em>cached</em> input by
-up to <strong>~90%</strong> and reduce time-to-first-token. This only works when your
+up to <strong>~90%</strong> and reduce time-to-first-token. Today, discounts on cached reads
+range from 90% to 95% or more, depending on the provider and model. Check the
+current price page before you build a business case. This only works when your
 prompt prefix is byte-stable. 🎯 <em>PM takeaway:</em> a stable system prompt is
 literally money. A per-request timestamp at the top of the prompt quietly
 throws that discount away. See

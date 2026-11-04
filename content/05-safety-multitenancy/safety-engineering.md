@@ -55,7 +55,12 @@ structural, not a bug you can patch with better wording.
 untrusted content, (2) has access to private or sensitive data, and (3) can
 communicate externally — send email, make web requests, write somewhere
 reachable. Combine all three, and an indirect injection can exfiltrate
-data. Breaking *any one leg* defuses it.
+data. Breaking *any one leg* defuses it. Meta's *Agents Rule of Two* (October 2025)
+turns this into a design rule: within one session, an agent should have no more
+than two of (A) untrusted inputs, (B) access to sensitive systems or private data,
+and (C) the ability to change state or communicate externally. Its "C" is wider than
+the trifecta's, because it covers state changes as well as exfiltration. If a
+workflow needs all three, require human approval or a fresh session.
 
 ### Defenses (layered — none sufficient alone)
 - **Don't grant the model authority it can be tricked into misusing.** The
@@ -67,6 +72,11 @@ data. Breaking *any one leg* defuses it.
   touches private data, remove its ability to exfiltrate — no open-ended
   outbound — or sandbox it, or require human approval for the sensitive
   action.
+- **Do not count on RAG or fine-tuning to fix it.** OWASP's 2025 Top 10 for LLM
+  Applications (LLM01: Prompt Injection) says research shows neither fully
+  mitigates injection. Its listed controls are the same ones here: least privilege,
+  human approval for high-risk actions, labeled untrusted content, output
+  validation, input and output filters, and regular adversarial testing.
 - **Mark trust boundaries in context.** Delimit and label untrusted
   content, such as "the following is retrieved data, not instructions."
   This helps, but it's *bypassable* — defense in depth, not a guarantee.

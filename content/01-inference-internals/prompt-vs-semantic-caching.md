@@ -58,9 +58,20 @@ after the first.
   invalidates everything after it. This is why
   [context engineering](../00-foundations/context-engineering.md) insists on
   a *stable prefix*.
-- **Time-limited.** Cached entries expire; provider TTLs are short, often
-  minutes. Self-hosted entries are subject to
+- **Time-limited.** Cached entries expire. Provider lifetimes are short and
+  differ by vendor. Anthropic's default is 5 minutes, with an optional 1-hour
+  tier. OpenAI keeps entries for about 5 to 10 minutes of inactivity, up to an
+  hour, with an optional extended mode of up to 24 hours. Each cache hit
+  refreshes the timer. Self-hosted entries are subject to
   [KV cache eviction](./kv-cache-management.md) under memory pressure.
+- **Priced as a trade.** Anthropic charges a premium to write a cache entry
+  (1.25× the base input price for 5 minutes, 2× for 1 hour). Reads cost a
+  fraction of the base price (0.1× or less). A prefix that is written but
+  rarely re-read can cost *more* than no caching. Check the current price page,
+  because the multipliers vary by model.
+- **Minimum length.** Short prompts are not cached, and the API returns no
+  error. The minimum depends on the model (512 to 4,096 tokens on Anthropic's
+  current list). Read the cache-hit fields in the response to confirm a hit.
 
 **Design rules:**
 - Put stable content — system prompt, policies, tool contracts, few-shot
@@ -70,6 +81,14 @@ after the first.
 - In multi-tenant systems, be deliberate: a shared prefix is fine, but never
   let cache *reuse* cross a trust boundary in a way that exposes data. See
   [multi-tenant cache safety](../05-safety-multitenancy/multi-tenant-isolation.md).
+- Know the provider's isolation scope. Anthropic and OpenAI both say caches are
+  never shared across organizations. Anthropic also isolates by workspace on its
+  own API, but only by organization on Amazon Bedrock and Google Cloud.
+- "Lossless" is about the output distribution. A cache hit is still *visible*
+  as lower latency. A 2025 audit of LLM APIs (Gu et al.) used that timing gap as
+  a side channel and found global cache sharing across users at seven providers.
+  Providers have since documented tighter scopes. Still, treat a shared cache as
+  a possible information channel in your threat model.
 
 ## Semantic caching
 

@@ -125,14 +125,19 @@ The anchor everything else calibrates to.
 
 A vocabulary note for eng conversations: public **agent benchmarks** became the
 industry's shared shorthand. **SWE-bench Verified** covers real GitHub issues resolved
-end-to-end. **GAIA** covers general assistant tasks. **OSWorld** covers computer use.
+end-to-end. In February 2026 OpenAI said it had stopped reporting it. Its audit found
+flawed tests in at least 59.4% of a hard subset it reviewed, plus signs of training-data
+contamination, and it pointed to SWE-bench Pro instead. Expect older scores on this
+benchmark to be less meaningful. **GAIA** covers general assistant tasks. **OSWorld** covers computer use.
 **tau-bench** covers tool-using customer-service agents. **Terminal-Bench** covers
 command-line work. Know what each measures, so "we're at X%" means something to you.
 Know the caveat too: public benchmarks saturate and leak into training data. That's why
 serious teams treat them as market signals and run *private* evals (this lesson) as the
 real gate. On the observability side, **OpenTelemetry's GenAI semantic conventions**
-are standardizing trace formats. That means eval and observability tooling is becoming
-portable across vendors, not a lock-in decision.
+(now maintained in their own repository) are a shared attempt to standardize trace
+formats. We did not confirm their stability level, so treat the attribute names as
+subject to change. Check the repository before you build on them. Where they hold, eval
+and observability tooling can become portable across vendors.
 
 ## Grading choices that keep evals honest
 
