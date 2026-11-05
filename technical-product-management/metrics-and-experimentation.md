@@ -100,6 +100,12 @@ mechanics are a solved problem. The discipline isn't:
   A/B-testable here" — not "we'll run it two weeks and squint."
 - **No peeking** — checking daily and stopping at the first p < 0.05 is how teams ship
   noise. Fix the duration up front (or use sequential methods designed for early looks).
+- **Check the split before the result** — a **sample ratio mismatch (SRM)** means the
+  groups are not the size you configured (say, 50/50 comes out 51/49 at large scale). It
+  signals that users went missing from one variant, so the result is biased. Microsoft
+  reports about 6% of its tests show one, and it fails any test at p < 0.0005 on a
+  chi-square check before reading results. Do not trust a result with an SRM until
+  someone finds the cause.
 - **Judge the guardrails too** — a win on the target that degrades latency or support
   volume isn't a win. It's a trade you should make consciously or not at all.
 - **Segments lie enthusiastically** — slice a neutral result twenty ways and one slice
@@ -133,6 +139,9 @@ For model-powered features, wire *offline* and *online* measurement together:
   up and inform nothing. If no decision changes when the number changes, it's decoration.
 - **Metric monotheism** — optimizing the target with no guardrails until support volume
   or trust pays the bill.
+- **Ignoring a broken split** — reading results from a test whose arms are the wrong size.
+  A bot filter once removed engaged users from one arm of a Microsoft test, and fixing it
+  reversed the result.
 - **Peeking and p-hacking** — early stops, post-hoc hypotheses, twenty segment slices.
   The result is a culture that "wins" every test and moves no annual number.
 - **Instrumentation as cleanup** — analytics scheduled after launch, so the team debates

@@ -77,6 +77,12 @@ The postmortem's premise: people acted reasonably on the information they had. T
 *system* let them down. Blamelessness isn't kindness — it's instrumentation: the
 moment a postmortem can hurt someone, it stops hearing the truth.
 
+Decide the triggers in advance, not after the fact. Google's SRE book lists these:
+user-visible degradation beyond a set threshold, any data loss, an on-call intervention
+such as a rollback, a long time to resolve, and a monitoring failure that left a person to
+find the problem. Anyone can also request a postmortem. And review it: "an unreviewed
+postmortem might as well never have existed."
+
 The document is short and structured: impact (users, duration, cost) · timeline ·
 root causes — plural, found by [asking why five times](../first-principles/the-method.md)
 past the trigger to the conditions (the deploy was the spark; the missing alert, the
@@ -102,6 +108,13 @@ postmortems all pointing at the same subsystem.
   shifts, tickets spike: that's an incident class. The mitigation is the
   [pin-and-diff discipline](./tpm-for-ai-products.md) — pinned versions, eval diffs
   before adoption, staged ramps.
+- **Some AI incidents carry a legal clock.** The EU AI Act (Article 73) requires providers
+  of high-risk AI systems to report serious incidents to the market surveillance authority:
+  within 15 days of becoming aware, 10 days if a person died, and 2 days for widespread
+  infringements. The Act's text applies this from 2 August 2026, but the high-risk tier has
+  reportedly been postponed by the 2026 Digital Omnibus, so confirm the current date with
+  legal counsel. Agree in advance who decides that an incident is "serious", and do not
+  alter the system in ways that hide the cause before authorities are told.
 - **The screenshot incident** — one appalling output going viral is a real severity
   class with its own playbook: capture the trace, reproduce, guardrail the pattern,
   and feed it to the [eval suite](./tpm-for-ai-products.md) so it can never ship

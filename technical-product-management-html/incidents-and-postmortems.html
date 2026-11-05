@@ -110,6 +110,11 @@ so ten helpful engineers don't make eleven uncoordinated changes.</p>
 <p>The postmortem's premise: people acted reasonably on the information they had. The
 <em>system</em> let them down. Blamelessness isn't kindness — it's instrumentation: the
 moment a postmortem can hurt someone, it stops hearing the truth.</p>
+<p>Decide the triggers in advance, not after the fact. Google's SRE book lists these:
+user-visible degradation beyond a set threshold, any data loss, an on-call intervention
+such as a rollback, a long time to resolve, and a monitoring failure that left a person to
+find the problem. Anyone can also request a postmortem. And review it: "an unreviewed
+postmortem might as well never have existed."</p>
 <p>The document is short and structured: impact (users, duration, cost) · timeline ·
 root causes — plural, found by <a href="../first-principles/the-method.html">asking why five times</a>
 past the trigger to the conditions (the deploy was the spark; the missing alert, the
@@ -134,6 +139,13 @@ postmortems all pointing at the same subsystem.</p>
   shifts, tickets spike: that's an incident class. The mitigation is the
   <a href="tpm-for-ai-products.html">pin-and-diff discipline</a> — pinned versions, eval diffs
   before adoption, staged ramps.</li>
+<li><strong>Some AI incidents carry a legal clock.</strong> The EU AI Act (Article 73) requires providers
+  of high-risk AI systems to report serious incidents to the market surveillance authority:
+  within 15 days of becoming aware, 10 days if a person died, and 2 days for widespread
+  infringements. The Act's text applies this from 2 August 2026, but the high-risk tier has
+  reportedly been postponed by the 2026 Digital Omnibus, so confirm the current date with
+  legal counsel. Agree in advance who decides that an incident is "serious", and do not
+  alter the system in ways that hide the cause before authorities are told.</li>
 <li><strong>The screenshot incident</strong> — one appalling output going viral is a real severity
   class with its own playbook: capture the trace, reproduce, guardrail the pattern,
   and feed it to the <a href="tpm-for-ai-products.html">eval suite</a> so it can never ship
