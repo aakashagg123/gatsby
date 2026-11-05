@@ -136,6 +136,11 @@ accurate." You *can* write:
   category." The eval set becomes part of the spec.
 - **Behavioural bounds** — "when confidence is low or retrieval returns nothing, the
   feature says it can't answer rather than guessing; it never fabricates a citation."
+- **Consistency across runs** — for agents, one success is weak evidence. The tau-bench
+  paper (Yao et al., 2024) proposed pass^k: the chance that the agent succeeds on *all* k
+  trials of the same task. It reported that a leading function-calling agent scored under
+  25% on pass^8 in the retail domain. If users repeat the task, write the bar as "succeeds
+  on k of k runs", not "succeeded once".
 - **Budgets** — "p95 end-to-end latency ≤ 3 s; marginal cost ≤ $0.02 per request at
   projected volume."
 

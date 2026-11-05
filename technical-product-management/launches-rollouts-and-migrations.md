@@ -124,7 +124,8 @@ long tail — the last 5% of users on the old path who consume 50% of the effort
 - **The big-bang launch** — 0% to 100% in one step, discovering scale, cost, and quality
   problems with the whole user base watching.
 - **Rollback theater** — a rollback "plan" nobody rehearsed, defeated by a data format
-  change the moment it's needed.
+  change the moment it's needed. At Knight Capital, removing the new code from the seven
+  healthy servers made things worse (SEC order 34-70694).
 - **Flag graveyard** — a codebase of permanent flags multiplying test paths until nobody
   knows what production actually does.
 - **The 95% migration** — old system still up "temporarily" two years later, doubling

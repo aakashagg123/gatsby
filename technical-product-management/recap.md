@@ -22,11 +22,14 @@ in six anyway, minus tests, plus a production incident. Every estimate thereafte
 the number — the number is data, and haggling it just corrupts your instruments.
 
 **Knight Capital's 45 minutes (2012).** A trading firm deploys new code to only seven of
-eight servers. A repurposed feature flag activates dead code on the eighth, and with
-[no rehearsed rollback](./launches-rollouts-and-migrations.md) the firm loses ~$440 million
-in 45 minutes — roughly two-thirds of its market cap. 🎯 *Takeaway:* deploy/release discipline, flag
-hygiene, and a rehearsed rollback aren't process overhead. They're the difference between an
-incident and an obituary.
+eight servers. No second person checks the deploy. A repurposed feature flag activates dead
+code on the eighth server. Then the team removes the new code from the seven good servers,
+which spreads the bad behaviour. With
+[no rehearsed rollback](./launches-rollouts-and-migrations.md), the SEC found that Knight lost
+more than $460 million in about 45 minutes — roughly two-thirds of its market cap. 🎯
+*Takeaway:* deploy/release discipline, flag hygiene, and a rehearsed rollback aren't process
+overhead. They're the difference between an incident and an obituary. (Source: SEC order
+34-70694, October 2013.)
 
 **The A/B test that always won.** A growth team celebrates dozens of "significant" wins.
 The annual retention number doesn't move. The culprits: [peeking, post-hoc hypotheses, and

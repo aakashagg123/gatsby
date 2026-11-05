@@ -23,7 +23,7 @@ picks the lowest tier number among due modules.
 
 | id | path | build script | tier | cadence_days | last_refreshed |
 |---|---|---|---|---|---|
-| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-09-21 |
+| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-05 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-09-21 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-09-21 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
@@ -710,3 +710,28 @@ and a link to the merged PR.)
   image model, an agent run, a guardrailed request) are still unchecked:
   their pages keep "fact-check pending". checker: 12 lessons, avg sentence
   11.6, 2% over 30 words, Flesch 71, PASS. PR pending.
+
+- 2026-11-05 — technical-product-management — tier 1. Picked because three tier-1 rows were due at 45 of 45 days
+  (this one, technical-product-sense, product-sense); tie broken toward the module with the AI capstone and the most
+  volatile claims. Outcome: fixed and expanded. All 9 lessons, README and recap read in full.
+  Fixed: recap Knight Capital loss was "~$440 million"; the SEC order says more than $460 million in about 45 minutes,
+  added the missing no-second-reviewer detail and that removing the new code from the seven good servers made it worse.
+  The "AI Product Owner" and "Data-Informed PM" titles were stated as fact; only blogs support them, so the text now says so.
+  Expanded: pass/fail evals, one judge per failure mode, judge validation (tpm-for-ai-products); model retirement notice
+  periods and a sampling-parameter removal (tpm-for-ai-products); pass^k consistency criteria (specs); sample ratio
+  mismatch (metrics); DORA 2025 AI-as-amplifier note (working-with-engineering); postmortem triggers and the EU AI Act
+  Art. 73 incident-reporting clock (incidents); Knight rollback note (launches).
+  Sources opened: sec.gov/files/litigation/admin/2013/34-70694.pdf (text extracted; 7 of 8 servers, flag, $460M, 45 min);
+  sec.gov/newsroom/press-releases/2013-222; platform.claude.com/docs/en/about-claude/model-deprecations (60 days, API
+  version 2026-10-21); developers.openai.com/api/docs/deprecations (6 months GA, 2 weeks preview); hamel.dev/blog/posts/evals-faq
+  (first 100k of 154k chars); arxiv.org/abs/2406.12045 (abstract); artificialintelligenceact.eu/article/73;
+  microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing; sre.google/sre-book/postmortem-culture;
+  dora.dev/research/2025/dora-report (amplifier quote only).
+  Search results only, not opened: DORA throughput/instability finding (cusy.io, infoq, devops.com summaries; worded as
+  secondary); "AI Product Owner"/"Data-Informed PM" (codebasics, productschool); Collins word of the year 2025 and
+  Karpathy Feb 2025 (news summaries, consistent with existing text).
+  Not verified: Digital Omnibus postponement of Art. 73 (carried from the 2026-09-21 log; hedged in text); Knight market
+  cap; Amazon/Google/Microsoft TPM meaning; RICE, WSJF, Kano, Cagan four risks (verified in the 2026-09-21 run, not rechecked);
+  "50-200 examples" and "teams hold 15-30% for debt"; Stripe/GitHub/Datadog interview formats.
+  Flagged: (1) Possible new lesson: AI-era PM operating model (agent-assisted discovery, PRD-to-prototype workflow, DORA
+  metrics for PMs); not built. (2) recap.md test-yourself list could cover the new items.

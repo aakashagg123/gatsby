@@ -29,11 +29,14 @@ in six anyway, minus tests, plus a production incident. Every estimate thereafte
 <a href="working-with-engineering.html">quietly pre-padded</a>. 🎯 <em>Takeaway:</em> negotiate scope, never
 the number — the number is data, and haggling it just corrupts your instruments.</p>
 <p><strong>Knight Capital's 45 minutes (2012).</strong> A trading firm deploys new code to only seven of
-eight servers. A repurposed feature flag activates dead code on the eighth, and with
-<a href="launches-rollouts-and-migrations.html">no rehearsed rollback</a> the firm loses ~$440 million
-in 45 minutes — roughly two-thirds of its market cap. 🎯 <em>Takeaway:</em> deploy/release discipline, flag
-hygiene, and a rehearsed rollback aren't process overhead. They're the difference between an
-incident and an obituary.</p>
+eight servers. No second person checks the deploy. A repurposed feature flag activates dead
+code on the eighth server. Then the team removes the new code from the seven good servers,
+which spreads the bad behaviour. With
+<a href="launches-rollouts-and-migrations.html">no rehearsed rollback</a>, the SEC found that Knight lost
+more than $460 million in about 45 minutes — roughly two-thirds of its market cap. 🎯
+<em>Takeaway:</em> deploy/release discipline, flag hygiene, and a rehearsed rollback aren't process
+overhead. They're the difference between an incident and an obituary. (Source: SEC order
+34-70694, October 2013.)</p>
 <p><strong>The A/B test that always won.</strong> A growth team celebrates dozens of "significant" wins.
 The annual retention number doesn't move. The culprits: <a href="metrics-and-experimentation.html">peeking, post-hoc hypotheses, and
 segment fishing</a>. 🎯 <em>Takeaway:</em> the point of
