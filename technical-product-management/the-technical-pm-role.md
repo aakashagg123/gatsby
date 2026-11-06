@@ -76,13 +76,13 @@ docs, error messages, versioning, time-to-first-call — becomes your UX surface
 
 A third thing worth noticing, newer than the other two: the "PM" title is fragmenting
 further under AI's push. Growth PM, Platform PM, and AI PM were already splitting off
-distinct scopes; 2025–2026 added two roles worth knowing the name of even if your own
-title doesn't say them. An **AI Product Owner** defines an AI feature's behaviour, eval
+distinct scopes. Career guides from 2025–2026 also name two more titles, though no hiring
+data shows how widely employers use them. An **AI Product Owner** defines an AI feature's behaviour, eval
 bar, and human-in-the-loop boundaries — closer to the deployment pipeline than to
 strategy. A **Data-Informed PM** uses AI tooling to keep a continuous read on product
 health — behaviour, experiments, drift — feeding the roadmap in near-real-time instead of
 a quarterly metrics review. Titles will keep splitting faster than job descriptions catch
-up. What matters is knowing which of these scopes you actually hold today, and saying so
+up, and some may fade as the skills become standard for every PM. What matters is knowing which of these scopes you actually hold today, and saying so
 plainly instead of letting "PM" cover work that's really three different jobs.
 
 ## Where the leverage comes from

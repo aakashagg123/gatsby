@@ -26,7 +26,7 @@ windows, real-time vs. batch, quality tiers — are secretly cost decisions.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — AI moved infrastructure cost from rounding error to headline.
-A model call can cost a million times more than a database read, and cost now
+A model call can cost orders of magnitude more than a database read, and cost now
 scales with <em>usage of your best feature</em>. Margins are a product decision for the
 first time in most PMs' careers.</p>
 <p><strong>What it changes in your decisions</strong> — Price and package with the cost curve in
@@ -111,13 +111,17 @@ each cost by its curve:</p>
   cost per session grows faster than sessions do. Find these at spec time by asking
   <em>"what multiplies?"</em></li>
 </ul>
-<p>Two structural notes from the AI era. Model prices per token have fallen steeply and
-repeatedly, so
+<p>Two structural notes from the AI era. Model prices per token have fallen steeply: Epoch AI
+measures declines of roughly 9x to 900x per year at constant capability, depending on
+the benchmark, and warns the fastest drops may not persist. So
 <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">re-run yesterday's "too expensive" verdicts</a>
 on a schedule. And caching changes an AI feature's economics more than any other
 single lever —
 <a href="../ai/01-inference-internals.html#prompt-vs-semantic-caching">prompt caching</a> can
-cut input cost by an order of magnitude when the prompt is engineered for reuse.</p>
+cut input cost by an order of magnitude when the prompt is engineered for reuse.
+On current Claude models, a cache read costs 2.5% to 10% of the base input price, while
+a cache write costs 1.25x. Reasoning models add another line: thinking tokens bill as
+output tokens, so a hard question can cost several times an easy one. Budget at p95.</p>
 <h2 id="the-napkin-every-feature-deserves">The napkin every feature deserves</h2>
 <p>Before a feature enters the roadmap, four lines:</p>
 <ol>

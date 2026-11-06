@@ -17,7 +17,7 @@ windows, real-time vs. batch, quality tiers — are secretly cost decisions.
 > 🎯 **For the AI PM**
 >
 > **Why it matters** — AI moved infrastructure cost from rounding error to headline.
-> A model call can cost a million times more than a database read, and cost now
+> A model call can cost orders of magnitude more than a database read, and cost now
 > scales with *usage of your best feature*. Margins are a product decision for the
 > first time in most PMs' careers.
 >
@@ -73,13 +73,17 @@ each cost by its curve:
   cost per session grows faster than sessions do. Find these at spec time by asking
   *"what multiplies?"*
 
-Two structural notes from the AI era. Model prices per token have fallen steeply and
-repeatedly, so
+Two structural notes from the AI era. Model prices per token have fallen steeply: Epoch AI
+measures declines of roughly 9x to 900x per year at constant capability, depending on
+the benchmark, and warns the fastest drops may not persist. So
 [re-run yesterday's "too expensive" verdicts](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md)
 on a schedule. And caching changes an AI feature's economics more than any other
 single lever —
 [prompt caching](../content/01-inference-internals/prompt-vs-semantic-caching.md) can
 cut input cost by an order of magnitude when the prompt is engineered for reuse.
+On current Claude models, a cache read costs 2.5% to 10% of the base input price, while
+a cache write costs 1.25x. Reasoning models add another line: thinking tokens bill as
+output tokens, so a hard question can cost several times an easy one. Budget at p95.
 
 ## The napkin every feature deserves
 

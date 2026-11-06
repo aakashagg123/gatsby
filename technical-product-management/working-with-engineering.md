@@ -92,6 +92,12 @@ amount. The question worth asking is *trend*: is velocity stable (predictable), 
 scope, mounting debt)? A sustained dip is the earliest signal that something structural
 needs attention.
 
+AI coding tools add a twist. DORA's 2025 report on AI-assisted development calls AI an
+"amplifier" of an organization's existing strengths and weaknesses. Secondary summaries of
+the report say AI use is now linked to higher delivery throughput, and also to more
+delivery instability. So if AI-assisted teams show rising velocity, check change-failure
+and rework rates before you celebrate.
+
 ## Estimates and the trust economy
 
 Estimation mechanics — story points, ranges, the cone of uncertainty — are covered in

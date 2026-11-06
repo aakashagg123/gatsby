@@ -62,7 +62,11 @@ co-owns it, because it encodes *product judgment*:
 - **Grading** — three tiers, in cost order: exact/programmatic checks (did it cite a
   source? valid JSON?), model-graded rubrics (an LLM judges tone, groundedness — cheap,
   scalable, needs spot-audits against human judgment), and human review (the gold
-  standard, spent where stakes are highest).
+  standard, spent where stakes are highest). Prefer pass/fail checks over 1–5 scales:
+  adjacent scores are subjective and labels drift. Build one judge per failure mode, and
+  measure it against human labels on both classes (catches real failures; passes good
+  outputs). Practitioner guidance such as Hamel Husain's evals FAQ suggests reading about
+  100 diverse traces before writing any judge.
 - **The bar** — a launch threshold you set *as the PM*: "≥90% acceptable, zero harmful."
   Where that bar sits is a product decision balancing user trust, cost of errors, and
   competitive urgency — the modern version of "how good is good enough."
@@ -149,6 +153,13 @@ its first:
   the product itself, and the provider ships new versions underneath you. Continuous
   re-evaluation and periodic retraining (or re-prompting, or re-pinning) is a permanent
   line item — *sustainable model evolution*, not one-off maintenance.
+- **Pinned models get retired.** Pinning protects you from silent change, but not from
+  retirement. Anthropic gives at least 60 days' notice before it retires a public model.
+  OpenAI states a minimum of 6 months for generally available models and as little as
+  2 weeks for previews. Provider-side API parameters also change: Anthropic's docs list
+  `temperature`, `top_p` and `top_k` as removed in API version `2026-10-21`. Put each
+  retirement date on the roadmap, and start the eval diff for the replacement well before
+  it. Check the provider's deprecation page, because dates and notice periods change.
 - **Ethical debt compounds like tech debt.** Bias audits, explainability, privacy
   reviews, and fairness checks deferred at launch don't get cheaper — they get baked
   into training data, product behaviour, and user expectations, and the eventual fix

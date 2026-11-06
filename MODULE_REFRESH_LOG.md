@@ -23,8 +23,8 @@ picks the lowest tier number among due modules.
 
 | id | path | build script | tier | cadence_days | last_refreshed |
 |---|---|---|---|---|---|
-| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-09-21 |
-| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-09-21 |
+| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-05 |
+| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-09-21 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
@@ -710,3 +710,56 @@ and a link to the merged PR.)
   image model, an agent run, a guardrailed request) are still unchecked:
   their pages keep "fact-check pending". checker: 12 lessons, avg sentence
   11.6, 2% over 30 words, Flesch 71, PASS. PR pending.
+
+- 2026-11-05 — technical-product-management — tier 1. Picked because three tier-1 rows were due at 45 of 45 days
+  (this one, technical-product-sense, product-sense); tie broken toward the module with the AI capstone and the most
+  volatile claims. Outcome: fixed and expanded. All 9 lessons, README and recap read in full.
+  Fixed: recap Knight Capital loss was "~$440 million"; the SEC order says more than $460 million in about 45 minutes,
+  added the missing no-second-reviewer detail and that removing the new code from the seven good servers made it worse.
+  The "AI Product Owner" and "Data-Informed PM" titles were stated as fact; only blogs support them, so the text now says so.
+  Expanded: pass/fail evals, one judge per failure mode, judge validation (tpm-for-ai-products); model retirement notice
+  periods and a sampling-parameter removal (tpm-for-ai-products); pass^k consistency criteria (specs); sample ratio
+  mismatch (metrics); DORA 2025 AI-as-amplifier note (working-with-engineering); postmortem triggers and the EU AI Act
+  Art. 73 incident-reporting clock (incidents); Knight rollback note (launches).
+  Sources opened: sec.gov/files/litigation/admin/2013/34-70694.pdf (text extracted; 7 of 8 servers, flag, $460M, 45 min);
+  sec.gov/newsroom/press-releases/2013-222; platform.claude.com/docs/en/about-claude/model-deprecations (60 days, API
+  version 2026-10-21); developers.openai.com/api/docs/deprecations (6 months GA, 2 weeks preview); hamel.dev/blog/posts/evals-faq
+  (first 100k of 154k chars); arxiv.org/abs/2406.12045 (abstract); artificialintelligenceact.eu/article/73;
+  microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing; sre.google/sre-book/postmortem-culture;
+  dora.dev/research/2025/dora-report (amplifier quote only).
+  Search results only, not opened: DORA throughput/instability finding (cusy.io, infoq, devops.com summaries; worded as
+  secondary); "AI Product Owner"/"Data-Informed PM" (codebasics, productschool); Collins word of the year 2025 and
+  Karpathy Feb 2025 (news summaries, consistent with existing text).
+  Not verified: Digital Omnibus postponement of Art. 73 (carried from the 2026-09-21 log; hedged in text); Knight market
+  cap; Amazon/Google/Microsoft TPM meaning; RICE, WSJF, Kano, Cagan four risks (verified in the 2026-09-21 run, not rechecked);
+  "50-200 examples" and "teams hold 15-30% for debt"; Stripe/GitHub/Datadog interview formats.
+  Flagged: (1) Possible new lesson: AI-era PM operating model (agent-assisted discovery, PRD-to-prototype workflow, DORA
+  metrics for PMs); not built. (2) recap.md test-yourself list could cover the new items.
+
+- 2026-11-06 — technical-product-sense — tier 1. Picked because it and product-sense were both due at 46 of 45 days;
+  tie broken toward this module because its 2026-09-21 run left an EU AI Act flag to re-check. Outcome: fixed and expanded.
+  All 9 lessons, README and recap read in full.
+  Fixed: (1) `technical-sense-for-ai.md` support-ticket napkin said "$2-4k/month" for 60,000 tickets at 4,000 input and 500
+  output tokens. At the current $2/$10 per million tokens (Sonnet 5.5) it is about 1.3 cents per ticket, ~$800/month; rewritten
+  with the model-tier effect. (2) `security-and-privacy.md` said GPAI and transparency obligations "reached active
+  enforcement in August 2026"; GPAI obligations applied Aug 2025 and AI Office enforcement powers start 2 Aug 2026.
+  High-risk dates now exact: 2 Dec 2027 (Annex III), 2 Aug 2028 (Annex I); Omnibus in force 27 Jul 2026. (3) economics:
+  removed unsupported "a million times more than a database read"; replaced "prices fell steeply" with Epoch's 9x-900x/year
+  range; added cache-read (2.5%-10%) and write (1.25x) multipliers. (4) latency: "feels instant under 200 ms" replaced with
+  Nielsen's 0.1 s / 1 s / 10 s limits.
+  Expanded: MCP as a fourth contract shape, 429 `retry-after` and the spend-cap 429 with no retry-after, Idempotency-Key still an
+  IETF draft (apis); lethal trifecta and OWASP LLM Top 10 2025 (security); error budgets (reliability); time to first token and
+  reasoning-model wait (latency); thinking tokens billed as output (AI lesson, economics).
+  Sources opened: digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai (dates, Omnibus status);
+  platform.claude.com/docs/en/about-claude/pricing (prices, cache multipliers); genai.owasp.org/llm-top-10 (2025 list);
+  ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html (draft, expired 18 Apr 2026; a newer version may exist);
+  epoch.ai/data-insights/llm-inference-price-trends (first 100k chars); simonwillison.net/2025/Jun/16/the-lethal-trifecta;
+  sre.google/workbook/implementing-slos; nngroup.com/articles/response-times-3-important-limits;
+  platform.claude.com/docs/en/api/rate-limits; modelcontextprotocol.io/specification/latest (spec 2026-07-28);
+  platform.claude.com/docs/en/build-with-claude/extended-thinking (thinking tokens billed as output).
+  Not verified: eur-lex page for Regulation 2026/1744 returned empty, so Art. 50 grace-period details are not checked;
+  REST "large majority" share; 8.7 h / 52 min nines (arithmetic only); GraphQL/gRPC adoption claims (carried from 2026-09-21);
+  Air Canada (verified 2026-09-21); CAP/consistency (verified 2026-09-21); other providers' prices and caching terms.
+  Flagged: (1) possible new lesson on AI vendor dependency and model deprecation as a systems risk; not built.
+  (2) The acronym warnings from check_module (OWASP, SRE, IETF) are minor. (3) The `ai-security-and-guardrails` EU AI Act
+  flag from 2026-09-21 is still open for that module's run.

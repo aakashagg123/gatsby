@@ -87,11 +87,13 @@ The PM owns more of it than any other discipline:
   location each carry regimes (HIPAA, PCI, GDPR/DPDP-class laws) with real teeth. You
   don't need to be a lawyer. You need the reflex that says *this data class means we
   call one*.
-- **AI-specific regulation is now its own category.** The EU AI Act's transparency and
-  general-purpose-AI obligations reached active enforcement in August 2026, and its
-  high-risk-system tier (risk management, data governance, technical documentation,
-  human oversight) is phased in through 2027–2028 for anyone whose product touches EU
-  users. This sits *alongside* GDPR-class privacy law, not instead of it — a feature can
+- **AI-specific regulation is now its own category.** The EU AI Act's general-purpose-AI
+  obligations have applied since August 2025, and the AI Office gained enforcement
+  powers over them on 2 August 2026. The transparency rules take effect in August 2026
+  too. The Digital Omnibus (in force 27 July 2026) moved the high-risk tier (risk
+  management, data governance, technical documentation, human oversight) to 2 December
+  2027 for sensitive use cases and 2 August 2028 for AI built into regulated products.
+  It applies to anyone whose product touches EU users. This sits *alongside* GDPR-class privacy law, not instead of it — a feature can
   clear a privacy review and still owe an AI Act risk classification. The reflex to add:
   *does this feature's risk tier and jurisdiction mean we call counsel about the AI Act
   specifically, not just privacy?*
@@ -106,6 +108,13 @@ The AI-specific deltas, briefly — each expanded in the
   carry instructions the model may follow. Anything that enters the context is an
   input surface. Treat "the model read a malicious email and obeyed it" as a threat
   model, not a curiosity.
+- **A useful test: the lethal trifecta** — An agent is at high risk when it combines
+  three things: access to private data, exposure to untrusted content, and a way to
+  send data out. With all three, an attacker can plant instructions in the content and
+  make the agent leak the data. Remove at least one leg. Detection filters alone do not
+  close the gap. The OWASP Top 10 for LLM Applications (2025 edition) lists prompt
+  injection first, then sensitive information disclosure, and "excessive agency" at
+  number six. Use it as a review checklist.
 - **Output is a leakage channel** — A model with over-broad retrieval can be *talked
   into* revealing what the asking user shouldn't see. Retrieval must enforce the same
   authorization as the UI ([tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md)).
