@@ -30,8 +30,9 @@ wastes months.
 
 ## Latency is a budget
 
-Total latency is the sum of every hop the request makes. Set a target — "feels instant" is
-under ~200 ms, "acceptable" is under ~1 s — and you're spending against a budget:
+Total latency is the sum of every hop the request makes. Set a target. Nielsen's three limits still frame it:
+about 0.1 s feels instant, 1 s keeps the user's flow of thought, and 10 s is the limit
+of attention. You are spending against a budget:
 
 ```mermaid
 flowchart LR
@@ -57,7 +58,10 @@ async), and work done serially that could run in parallel.
 - **Move it async** — if work is slow and the user doesn't strictly need to wait, [queue
   it](./how-systems-are-built.md) and return immediately.
 - **Stream** — show partial results as they arrive so *perceived* latency drops even if total
-  time doesn't. This is exactly why chat UIs stream tokens.
+  time doesn't. This is exactly why chat UIs stream tokens. For model calls, track
+  *time to first token* separately from total time. Reasoning models spend seconds
+  thinking before the first token, so streaming alone may not fix the wait. Lower the
+  reasoning effort, or show progress while the model thinks.
 
 ## Scale is a different axis
 

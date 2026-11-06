@@ -77,6 +77,12 @@ target to what a failure actually costs the user.
 - **SLA** — the promise you make to customers (often contractual).
 - **SLO** — the internal target you engineer toward (usually stricter than the SLA).
 
+An **error budget** turns the SLO into a decision rule. It is 100% minus the SLO: a 99.9%
+target allows 0.1% of requests to fail. While budget remains, the team ships features.
+When it runs out, the team pauses launches and fixes reliability. Google's SRE guidance
+asks product, development, and SRE to agree on that policy in writing. For an AI feature,
+count a wrong or refused answer as a bad event, not only an HTTP error.
+
 Deciding *which* parts of your product need high reliability — and which can degrade quietly —
 is one of the clearest expressions of technical product sense.
 
