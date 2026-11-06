@@ -62,13 +62,20 @@ messed up," 5xx "we messed up") plus a body.
 - **Status & errors** — success codes *and* the error codes, with enough detail for the caller
   to react (retry? show the user? give up?).
 - **Auth & rate limits** — who may call, how often. Exceed the limit and you get throttled
-  (429) — a real constraint on a feature's throughput.
+  (429) — a real constraint on a feature's throughput. When a `retry-after` header is
+  present, wait that long. Not every 429 is a rate limit: when an account hits its monthly
+  spend cap, Anthropic's API also returns a 429, with no `retry-after`, and retries fail
+  until the cap resets. Treat it as a budget alert, not a transient error.
 
 ## Idempotency — the retry-safety promise
 
 Networks fail mid-request, so clients **retry**. If a retried "create payment" runs twice, the
 user is charged twice. **Idempotency** means *doing the same operation twice has the same
-effect as doing it once* — usually through an idempotency key the server remembers. Reads are
+effect as doing it once* — usually through an idempotency key the server remembers.
+The `Idempotency-Key` header is still an IETF Internet-Draft, not a published standard,
+so check how each provider implements it. Typical rules: a retry with the same key
+returns the first result, a concurrent retry gets a 409, and the same key with a
+different payload is rejected. Reads are
 naturally idempotent; writes are the danger. Whenever a duplicate would be harmful — payments,
 messages, actions — the contract must be idempotent. This is one of the highest-leverage
 technical questions a PM can ask.
@@ -98,6 +105,12 @@ engineering conversations that recognizing them by name matters:
   "we moved the internal calls to gRPC," the product-facing question is unchanged —
   request, response, failure behavior, idempotency — the wire format underneath doesn't
   change what you, as the PM, need to ask about it.
+
+- **MCP (Model Context Protocol)** — an open protocol that lets an AI app discover and
+  call tools and read resources on a server through one standard contract. If your product
+  exposes actions to an agent, or plugs into one, the MCP server is the contract. Its
+  current specification says tool descriptions must be treated as untrusted unless they
+  come from a server you trust, so a tool contract is also a security surface.
 
 The product-sense takeaway isn't picking the protocol — engineering does that. It's
 recognizing that "the contract" question (what's sent, what's returned, what happens on

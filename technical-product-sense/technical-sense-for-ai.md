@@ -68,7 +68,10 @@ flowchart LR
 - **Latency & cost** — The model call costs seconds and per-token dollars, and it's
   usually the dominant hop. Levers: [streaming](./latency-scale-performance.md) for
   perceived speed, a smaller or quantized model, caching, and retrieving less. Cost
-  per call times volume is a unit-economics decision, not an afterthought.
+  per call times volume is a unit-economics decision, not an afterthought. Reasoning
+  models add a hidden line: thinking tokens. They bill as output tokens and add wait
+  time before the first visible word. Ask for the thinking-token share of each call, and
+  set the reasoning effort per task instead of leaving it at the default.
 - **Reliability** — The model API rate-limits, times out, and returns bad answers with
   a 200. You need the whole [reliability toolkit](./reliability-and-failure.md) *plus*
   a plan for wrong-but-well-formed output: validation, "I don't know," and a non-AI
@@ -107,9 +110,14 @@ tickets. Volume: 60,000 tickets/month. Per ticket, the context is the ticket thr
 plus retrieved help-center passages — call it 4,000 input tokens at p50. But check p95
 too: long threads run 12,000, and cost scales with usage, so price the distribution,
 not the average. Output is about 500 tokens. At list prices for a mid-tier model,
-that's roughly a few cents per ticket — say $2–4k/month before caching. The system
-prompt and help-center boilerplate are identical across tickets, so prompt caching
-should cut real input cost hard. Verify the hit rate; don't assume it.
+take a mid-tier model priced at $2 per million input tokens and $10 per million output
+tokens (Anthropic's list price for Sonnet 5.5 in November 2026). That is about 1.3 cents
+per ticket, or roughly $800/month before caching. At p95 context the input share
+triples. A frontier-tier model at $10 and $50 would cost about five times as much, so
+the model tier moves the answer more than the volume does. The system prompt and
+help-center boilerplate are identical across tickets, so prompt caching should cut real
+input cost hard. Verify the hit rate; don't assume it. Prices change often, so redo
+this sum with the current price sheet.
 
 Against what baseline? If a drafted answer saves an agent 2 minutes at a loaded
 $40/hour, that's about $1.33 saved per ticket used — but only for tickets where the

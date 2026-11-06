@@ -35,8 +35,9 @@ of it?"</em></p>
 unaffordable at real scale.</p>
 </blockquote>
 <h2 id="latency-is-a-budget">Latency is a budget</h2>
-<p>Total latency is the sum of every hop the request makes. Set a target — "feels instant" is
-under ~200 ms, "acceptable" is under ~1 s — and you're spending against a budget:</p>
+<p>Total latency is the sum of every hop the request makes. Set a target. Nielsen's three limits still frame it:
+about 0.1 s feels instant, 1 s keeps the user's flow of thought, and 10 s is the limit
+of attention. You are spending against a budget:</p>
 <style>
 .dgm-lt{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-success-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -86,7 +87,10 @@ async), and work done serially that could run in parallel.</p>
 <li><strong>Move it async</strong> — if work is slow and the user doesn't strictly need to wait, <a href="how-systems-are-built.html">queue
   it</a> and return immediately.</li>
 <li><strong>Stream</strong> — show partial results as they arrive so <em>perceived</em> latency drops even if total
-  time doesn't. This is exactly why chat UIs stream tokens.</li>
+  time doesn't. This is exactly why chat UIs stream tokens. For model calls, track
+  <em>time to first token</em> separately from total time. Reasoning models spend seconds
+  thinking before the first token, so streaming alone may not fix the wait. Lower the
+  reasoning effort, or show progress while the model thinks.</li>
 </ul>
 <h2 id="scale-is-a-different-axis">Scale is a different axis</h2>
 <p>Making one request fast (latency) is separate from handling a million requests (scale). There
