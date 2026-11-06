@@ -546,6 +546,7 @@ EXPLAINER_FOR_PAGE = {
     "building-ai-native-products/agentic-flows-practice.html": "one-user-story-to-agent-spec",
     "technical-product-management/incidents-and-postmortems.html": "one-ai-incident-review",
     "technical-product-sense/reliability-and-failure.html": "one-ai-incident-review",
+    "learning-paths/senior-product-manager.html": "one-senior-pm-path",
 }
 
 

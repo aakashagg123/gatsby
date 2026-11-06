@@ -4,7 +4,7 @@
 
 *Last reviewed: 2026-11 · Volatility: medium*
 
-## The twelve at a glance
+## The thirteen at a glance
 
 | Explainer | The example | The idea to keep | The stage that matters most |
 | --- | --- | --- | --- |
@@ -20,6 +20,7 @@
 | [One eval regression](./one-eval-regression-traced.md) | Parcelpoint's gate drops from 86% to 78% | Check the error bar, slice the score, then test each layer. Leave a test behind. | Slice the score |
 | [One user story to an agent spec](./one-user-story-to-agent-spec.md) | Rebooking missed visits at Fieldline | Give the model only the steps that need judgement. Set autonomy per action, with a rule for more. | Workflow or agent? |
 | [One AI incident](./one-ai-incident-review.md) | Harbor's assistant says the overdraft fee is $0 | An AI feature can be up and wrong. Stop the harm first, then size it from logs. | Stop the harm first |
+| [A senior PM's path](./one-senior-pm-path.md) | A VP asks whether to build an AI assistant for booking changes | Each stage of a path should change what you can do, and a check should prove it. The proof is a decision you can defend. | The decisions only you own |
 
 **The through-line.** Every system here is a pipeline of stages. Each stage has one job, one cost and one way to break. The same is true of running an AI product: a launch, a model change or an incident is a short series of decisions, each with a number behind it. When something goes wrong, the first useful question is: which stage was it?
 
@@ -51,10 +52,13 @@
    <details><summary>Answer</summary>Examples of accepted and rejected results, a pass rate on a test set and must-not-fail cases. (<a href="./one-user-story-to-agent-spec.md">One user story becomes an agent spec</a>)</details>
 12. **The assistant is giving wrong answers and the cause is unknown. What do you do first?**
    <details><summary>Answer</summary>Stop the harm with a fallback chosen in advance, such as a degraded mode. Diagnose after. (<a href="./one-ai-incident-review.md">One AI incident, from alert to postmortem</a>)</details>
+13. **You finished every lesson in a learning path. How do you know you learned it?**
+   <details><summary>Answer</summary>Use what you learned on a real question and check each stage's checkpoint. The senior PM's proof was a one-page answer to the VP, reviewed with the engineering lead. (<a href="./one-senior-pm-path.md">A senior PM's path, one stage at a time</a>)</details>
 
 ## Sources
 
 - The sources for each explainer are at the end of its page. Papers whose abstracts were read for these pages: Vaswani et al. (2017), Ouyang et al. (2022), Kwon et al. (2023), Ho et al. (2020) and Rombach et al. (2022). The Anthropic agents post and the OWASP Top 10 for LLM Applications were also read. Other citations are marked not re-opened.
 - The six product explainers also read: Amershi et al. (2019), Miller (2024), Google's SRE book chapters on managing incidents and postmortem culture, the OWASP entry on excessive agency, Anthropic's pages on model deprecations, pricing, prompt caching and success criteria, and the FinOps Foundation's FinOps for AI overview.
 - The examples are invented or simplified.
+- The senior PM path explainer (13) takes its stage names, hours and lessons from the path data in this repository. Its fact-check is pending.
 - Independent fact-check, run on 2026-11-04 by a separate agent with web access, blind to the edits: clean for the rows and questions about the six product explainers (7 to 12) and for the IDs and years of the five papers named above. The rows and questions about the first six explainers were not checked. Their content, like their own pages, is still pending a fact-check.

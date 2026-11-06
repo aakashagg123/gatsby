@@ -44,6 +44,9 @@ jobs:
       - name: Check design-system tokens
         run: python3 scripts/check_design_system.py
         continue-on-error: true
+      - name: Check learning-path explainers against the path data
+        run: python3 scripts/check_path_explainers.py
+        continue-on-error: true
       - name: Build combined site
         run: python3 scripts/build_site.py
       - name: Setup Pages

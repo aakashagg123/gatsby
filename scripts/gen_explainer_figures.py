@@ -599,6 +599,69 @@ def incident_review():
         "Size the harm, choose what users see, tell the truth, make it right."))
 
 
+# ---------------------------------------------------------------- How to learn this
+# Learning-path explainers. Stage names, hours, lesson counts and weeks come from PATHS in
+# gen_learning_paths.py (importing it only computes; it writes nothing), so a figure cannot drift
+# from its path page. scripts/check_path_explainers.py checks the page text against the same data.
+
+
+def _path(slug):
+    import gen_learning_paths as G
+    return G, next(p for p in G.PATHS if p["slug"] == slug)
+
+
+def _path_stage_card(G, p, n, chip, before, after, note):
+    s = p["stages"][n - 1]
+    total = G.half_hours(G.minutes_of(p["stages"]))
+    here = G.half_hours(G.stage_minutes(s))
+    body = (F.compare_body(("caution", "Before this stage", before), ("success", "After this stage", after))
+            + '<p class="xf-sub" style="margin:16px 0 8px">Time</p>'
+            + F.bars_body([("this stage", here, "info"), ("whole path", total, "discovery")], vmax=total, fmt="about {:g} h"))
+    sub = f"Path stage {n} · {G.hours(G.stage_minutes(s))} · {G.stage_lessons(s)} lessons"
+    return F.card(chip, s["name"], sub, body, note)
+
+
+def senior_pm_path():
+    import math
+    G, p = _path("senior-product-manager")
+    k = "one-senior-pm-path"
+    st = p["stages"]
+    tot_min = G.minutes_of(st)
+    weeks = math.ceil(tot_min / 60 / p["example_hpw"])
+    put(k, 0, F.compare("Step 1", "Where the senior PM starts", "The VP's question: should we build an AI assistant for booking changes?",
+        ("caution", "Today", ["Can say AI could help", "Cannot say how it would work", "Cannot say what it costs or what could go wrong"]),
+        ("success", "Goal of the path", ["A one-page answer to the VP", "Approach, quality bar, cost and risks", "Reviewed with the engineering lead"]),
+        "Wayline and its assistant are invented."))
+    put(k, 1, F.bars("Step 2", "Plan the weeks", f"{len(st)} stages, {G.hours(tot_min)} in all. Hours from the path.", [
+        (f"Stage {i}", G.half_hours(G.stage_minutes(s)), F.CYCLE[(i - 1) % len(F.CYCLE)]) for i, s in enumerate(st, 1)],
+        vmax=max(G.half_hours(G.stage_minutes(s)) for s in st), note=f"At {p['example_hpw']} hours a week, about {weeks} weeks. Stage 4 is optional.", fmt="about {:g} h"))
+    put(k, 2, _path_stage_card(G, p, 1, "Step 3",
+        ["The assistant is one box marked AI", "No idea where waiting happens", "Failure means an error message"],
+        ["Draws the request path: app, model, booking system", "Marks where latency comes from", "Knows a model can be wrong without an error"],
+        "Do this: draw the request path for one booking change."))
+    put(k, 3, _path_stage_card(G, p, 2, "Step 4",
+        ["A bad answer means the model is dumb", "Same prompt, different answer is a bug", "The fix is a bigger model"],
+        ["Asks: did the model see the fare rules?", "Knows why answers vary between runs", "Tells a prompt problem from missing context"],
+        "Do this: classify one bad prototype answer as prompt, context or model."))
+    put(k, 4, _path_stage_card(G, p, 3, "Step 5",
+        ["Open questions about approach, cost and risk", "Quality judged from a demo", "Cost unknown"],
+        ["Approach: buy a hosted model, retrieve the fare rules", "Bar: a pass rate on 50 cases, 5 must-not-fail", "A cost per booking change and three risks, each with a guardrail"],
+        "Do this: write the one-page build, buy or fine-tune case. Numbers are illustrative."))
+    put(k, 5, _path_stage_card(G, p, 4, "Step 6",
+        ["Retrieval, memory and agents all sound useful", "No way to choose"],
+        ["Retrieval: yes, fare rules change each season", "Memory: not needed for now", "Agent: no, a person confirms each change"],
+        "Do this: one line each on retrieval, memory and agents."))
+    put(k, 6, F.compare("Step 7", "Proof of skill", "The one-page answer, reviewed with the engineering lead.",
+        ("caution", "At the start", ["AI could help", "No approach, bar, cost or risks"]),
+        ("success", "At the end", ["How it works: hosted model, retrieval, a person confirms", "What it costs: an estimate per change, assumptions shown", "What could go wrong: three risks, each with a guardrail and an owner"]),
+        "Then check the path's four checkpoints. Reread any stage you cannot pass."))
+    put(k, 7, F.flow("Summary", "A senior PM's path", f"{G.hours(tot_min)}, about {weeks} weeks at {p['example_hpw']} hours a week.",
+        [("info", "Start", "the VP's question")]
+        + [(F.CYCLE[i % len(F.CYCLE)], f"Stage {i}: {s['name']}", G.hours(G.stage_minutes(s))) for i, s in enumerate(st, 1)]
+        + [("success", "Proof", "a one-page answer")],
+        "Each stage adds one thing the PM can do."))
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     llm_request()
@@ -613,4 +676,5 @@ if __name__ == "__main__":
     eval_regression()
     story_to_spec()
     incident_review()
+    senior_pm_path()
     print("figures written to", OUT)

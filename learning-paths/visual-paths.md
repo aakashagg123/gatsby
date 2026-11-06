@@ -24,7 +24,7 @@ Read the explainers in a stage first. Each one follows a single example through 
 
 ## 1. Senior PM
 
-For a product manager with several years of experience who is starting to own AI features. 4 stages, about 20.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [Senior PM path page](./senior-product-manager.md).
+For a product manager with several years of experience who is starting to own AI features. 4 stages, about 21 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [Senior PM path page](./senior-product-manager.md). Read the story: [A senior PM's path, one stage at a time](../explainers/one-senior-pm-path.md) follows one learner through this path.
 
 ```mermaid
 flowchart LR

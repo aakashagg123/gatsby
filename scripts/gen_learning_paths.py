@@ -167,7 +167,7 @@ PATHS.append(dict(
              "**Risk if ignored** — You ship on a demo. The first real users find the failure modes, and the team has no way to measure them."),
     stages=[
         dict(name="Technical footing", why="AI products sit on ordinary systems. You need the same words your engineers use.",
-             items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
+             items=[T("explainers", 13), T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
              items=[T("explainers", 1, 2, 5), T("machine-learning", 1, 2, 5, 8), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
@@ -723,6 +723,18 @@ def visual_figure(n, p):
     XF.write(os.path.join(FIG_DIR, f"{VISUAL}-{n}.html"), html)
 
 
+# The learning-path explainers in explainers/ ("How to learn this"). A path gets a "Read the story"
+# link once its explainer exists, so the page never links to a missing file.
+STORIES = {"senior-product-manager": "one-senior-pm-path"}
+
+
+def story_line(p):
+    slug = STORIES.get(p["slug"])
+    if not slug or not os.path.exists(f"{ROOT}/explainers/{slug}.md"):
+        return ""
+    return f" Read the story: [{h1(f'{ROOT}/explainers/{slug}.md')}](../explainers/{slug}.md) follows one learner through this path."
+
+
 def render_visual():
     L = []
     a = L.append
@@ -751,7 +763,8 @@ def render_visual():
         stages = p["stages"]
         a(f"## {n + 1}. {p['short']}\n")
         a(f"For {p['who']}. {len(stages)} stages, {hours(minutes_of(stages))} in all. "
-          f"Full lesson lists, checkpoints and skip-ahead rules are on the [{p['short']} path page](./{p['slug']}.md).\n")
+          f"Full lesson lists, checkpoints and skip-ahead rules are on the [{p['short']} path page](./{p['slug']}.md)."
+          + story_line(p) + "\n")
         a("```mermaid")
         a("flowchart LR")
         ids = [chr(65 + k) for k in range(len(stages))]

@@ -19,9 +19,10 @@ CFG = {
     "title": "Visual explainers: how AI systems work and how AI products are run",
     "lede": "Each explainer follows one example through a system or a product decision, one stage at a time, with a picture at every stage. "
             "Six show how AI systems work. Six show how AI products are run: a launch, a model change, a margin, a regression, an agent spec and an incident. "
+            "One shows how to learn this: a senior PM follows a learning path stage by stage. "
             "Ten minutes each, and links to the lessons that go deeper.",
     "insight": "Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.",
-    "meta": ["12 explainers", "a picture per stage", "10 minutes each", "links to the deep lessons"],
+    "meta": ["13 explainers", "a picture per stage", "10 minutes each", "links to the deep lessons"],
     "callout": "Why it matters",
     "chip_label": "Explainer",
     "lessons": [
@@ -37,6 +38,7 @@ CFG = {
         "one-eval-regression-traced",
         "one-user-story-to-agent-spec",
         "one-ai-incident-review",
+        "one-senior-pm-path",
     ],
 }
 

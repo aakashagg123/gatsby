@@ -14,7 +14,7 @@ This path takes a working product manager from "AI is a black box" to "I can mak
 
 **Before you start:** Several years in product. No machine learning background is needed.
 
-**Length:** about 20.5 hours, across 4 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 21 hours, across 4 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -34,15 +34,16 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Technical footing | about 2 hours |
+| 1 | Technical footing | about 2.5 hours |
 | 2 | AI literacy | about 8.5 hours |
 | 3 | The decisions only you own | about 6 hours |
 | 4 | Go deeper where your product needs it (optional) | about 4 hours |
 
 ## Stage 1: Technical footing
 
-AI products sit on ordinary systems. You need the same words your engineers use. (about 2 hours)
+AI products sit on ordinary systems. You need the same words your engineers use. (about 2.5 hours)
 
+- **Visual explainers**: [13. A senior PM's path, one stage at a time](../explainers/one-senior-pm-path.md)
 - **Technical product sense**: [1. How systems are built](../technical-product-sense/how-systems-are-built.md) · [2. APIs & contracts](../technical-product-sense/apis-and-contracts.md) · [4. Latency, scale & performance](../technical-product-sense/latency-scale-performance.md) · [5. Reliability & failure](../technical-product-sense/reliability-and-failure.md) · [9. Technical sense for AI systems](../technical-product-sense/technical-sense-for-ai.md)
 
 **Ready to move on when:** You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model.
@@ -96,7 +97,7 @@ Read only what your roadmap touches. Retrieval, memory and agents each change th
 
 *This example is invented, to show the method.*
 
-A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 20.5 hours) takes about 7 weeks.
+A senior PM with three hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 21 hours) takes about 7 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

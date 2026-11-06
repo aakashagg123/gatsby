@@ -187,13 +187,18 @@ def grid(chip, title, sub, rows, cols_label=None, note=""):
     return card(chip, title, sub, f'<div class="xf-grid" style="grid-template-columns:repeat({ncols},minmax(0,1fr))">{"".join(cells)}</div>', note)
 
 
-def compare(chip, title, sub, left, right, note=""):
-    """left and right: (family, heading, [bullets])."""
+def compare_body(left, right):
+    """The inner markup of compare(), for figures that combine more than one view in one card."""
     def col(c):
         f, h, items = c
         li = "".join(f"<li>{_e(i)}</li>" for i in items)
         return f'<div class="xf-box {_fam(f)}"><b>{_e(h)}</b><ul>{li}</ul></div>'
-    return card(chip, title, sub, f'<div class="xf-cmp">{col(left)}{col(right)}</div>', note)
+    return f'<div class="xf-cmp">{col(left)}{col(right)}</div>'
+
+
+def compare(chip, title, sub, left, right, note=""):
+    """left and right: (family, heading, [bullets])."""
+    return card(chip, title, sub, compare_body(left, right), note)
 
 
 def heat(chip, title, sub, row_labels, col_labels, values, note="", fmt="{:.2f}"):
