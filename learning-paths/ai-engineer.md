@@ -14,7 +14,7 @@ This path is build-first. It starts with how models learn, then moves through mo
 
 **Before you start:** Comfortable Python and one backend stack. Basic linear algebra helps. The foundations stage covers what you need.
 
-**Length:** about 85.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 86 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data; convolutional neural networks (CNNs) are a model type built for images; Extensible Markup Language (XML) is a tag-based text format.
 
@@ -34,7 +34,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 | Stage | Focus | About |
 | --- | --- | --- |
-| 1 | Foundations | about 15 hours |
+| 1 | Foundations | about 15.5 hours |
 | 2 | Models and APIs | about 7 hours |
 | 3 | Grounding and memory | about 6 hours |
 | 4 | Agents and the harness (build it) | about 29.5 hours |
@@ -42,9 +42,9 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 ## Stage 1: Foundations
 
-Learn how a model is trained and what its data looks like. Everything later builds on it. (about 15 hours)
+Learn how a model is trained and what its data looks like. Everything later builds on it. (about 15.5 hours)
 
-- **Visual explainers**: [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
+- **Visual explainers**: [15. An AI engineer's path, one stage at a time](../explainers/one-ai-engineer-path.md) · [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [3. Training: loss and gradient descent](../machine-learning/training-loss-and-gradient-descent.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Tensors**: [1. What a tensor is: shape, rank and dtype](../tensors/what-a-tensor-is.md) · [2. Operations and broadcasting](../tensors/operations-and-broadcasting.md) · [3. Matrix multiplication: the workhorse](../tensors/matrix-multiplication.md) · [4. Batching, memory and precision](../tensors/batching-memory-and-precision.md) · [5. Automatic differentiation](../tensors/automatic-differentiation.md)
 - **CNNs**: [1. What computer vision does: the four jobs](../cnns/what-computer-vision-does.md) · [2. How a convolution sees: one small grid, used everywhere](../cnns/how-a-convolution-sees.md) · [3. From edges to objects: what depth buys](../cnns/from-edges-to-objects.md) · [4. Transfer learning and labels: start from someone else's model](../cnns/transfer-learning-and-labels.md) · [5. CNNs vs. vision transformers: picking a backbone](../cnns/cnns-vs-vision-transformers.md) · [6. Vision foundation models: CLIP, DINO and SAM](../cnns/vision-foundation-models.md) · [7. Shipping vision in production](../cnns/shipping-vision-in-production.md)
@@ -125,7 +125,7 @@ Plan for failure: extend, test, observe, secure and scale. (about 28 hours)
 
 *This example is invented, to show the method.*
 
-An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 85.5 hours) takes about 10 weeks.
+An AI engineer with nine hours a week plans 8 weeks of work. Each week ends with something you can show. At this pace the full path (about 86 hours) takes about 10 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

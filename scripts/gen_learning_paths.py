@@ -141,6 +141,12 @@ def F(): return Item("f")
 def SOON(name, note=""): return Item("soon", name=name, note=note)
 
 
+def weeks_at(minutes, per_week):
+    """Weeks to finish at a pace, from the same rounded hours that hours() prints, so a page
+    that shows "about 32 hours" at 4 hours a week says 8 weeks, not 9."""
+    return math.ceil(round(minutes / 60 * 2) / 2 / per_week)
+
+
 def hours(minutes):
     h = round(minutes / 60 * 2) / 2
     if h < 1:
@@ -167,7 +173,7 @@ PATHS.append(dict(
              "**Risk if ignored** — You ship on a demo. The first real users find the failure modes, and the team has no way to measure them."),
     stages=[
         dict(name="Technical footing", why="AI products sit on ordinary systems. You need the same words your engineers use.",
-             items=[T("technical-product-sense", 1, 2, 4, 5, 9)],
+             items=[T("explainers", 13), T("technical-product-sense", 1, 2, 4, 5, 9)],
              ready="You can explain a request path, an API contract and where latency comes from. You can name what changes when one component is a model."),
         dict(name="AI literacy", why="Learn what a model is, what it does well, and what it does badly. Plain language, no maths.",
              items=[T("explainers", 1, 2, 5), T("machine-learning", 1, 2, 5, 8), T("generative-ai", 1, 2, 3, 4), T("llms", 1, 2, 3, 5, 6), T("prompt-engineering", 1, 2, 7, 9)],
@@ -223,7 +229,7 @@ PATHS.append(dict(
              "**Risk if ignored** — You ship an agent with the wrong autonomy or a memory that leaks. You find out from a customer."),
     stages=[
         dict(name="Model and data foundations", why="You decide how the product grounds answers. That choice drives quality and cost.",
-             items=[T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), T("machine-learning", 1, 2, 5, 7, 8),
+             items=[T("explainers", 14), T("llms", 1, 2, 3, 5, 6, 7), T("generative-ai", 3, 4, 5), T("machine-learning", 1, 2, 5, 7, 8),
                     T("rag-vector-databases", 1, 2, 6, 7, 8, 10), T("knowledge-graphs", 1, 6, 8)],
              ready="You can compare prompting, retrieval and fine-tuning for a feature and pick one with reasons."),
         dict(name="Context and memory", why="What the model sees is a product decision. So is what it remembers.",
@@ -282,7 +288,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The demo works. Production loops, leaks or overspends, and nobody can say why."),
     stages=[
         dict(name="Foundations", why="Learn how a model is trained and what its data looks like. Everything later builds on it.",
-             items=[T("explainers", 3), T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), T("tensors", 1, 2, 3, 4, 5),
+             items=[T("explainers", 15, 3), T("machine-learning", 1, 2, 3, 4, 5, 6, 7, 8), T("tensors", 1, 2, 3, 4, 5),
                     T("cnns", 1, 2, 3, 4, 5, 6, 7), T("transformers", 1, 2, 3, 4, 5, 6), T("fine-tuning", 1, 2, 3, 4, 5, 6), T("llms", 1, 2, 5)],
              ready="You can explain what a token and a context window are, and how sampling changes the output. You can read a training curve and say whether a model is overfitting."),
         dict(name="Models and APIs", why="Call models well: contracts, streaming, retries, structured output and prompts that hold up.",
@@ -346,7 +352,7 @@ PATHS.append(dict(
              "**Risk if ignored** — The team ships fast and unsafe. Review happens after an incident."),
     stages=[
         dict(name="How models behave and what they cost", why="Cost and latency come from model and serving choices. Know the levers.",
-             items=[T("explainers", 1, 3), T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8), T("tensors", 1, 3, 4), T("transformers", 1, 4, 5, 6), T("fine-tuning", 1, 3, 6),
+             items=[T("explainers", 16, 1, 3), T("llms", 1, 2, 3, 6, 7), T("machine-learning", 1, 2, 4, 5, 6, 7, 8), T("tensors", 1, 3, 4), T("transformers", 1, 4, 5, 6), T("fine-tuning", 1, 3, 6),
                     C("01-inference-internals", "prefill-vs-decode", "batching-and-paged-attention", "prompt-vs-semantic-caching"),
                     C("02-reliable-outputs", "model-routing"), C("04-evals-observability", "cost-attribution"),
                     C("06-strategy-tradeoffs", "finetune-vs-icl-vs-rag", "inference-stack-tradeoffs"), T("cost-optimization", 1, 2)],
@@ -468,7 +474,7 @@ def render_path(p):
     a("## Worked example: a week-by-week plan\n")
     a("*This example is invented, to show the method.*\n")
     full_hours = minutes_of(p["stages"]) / 60
-    full_weeks = math.ceil(full_hours / p["example_hpw"])
+    full_weeks = weeks_at(minutes_of(p["stages"]), p["example_hpw"])
     a(f"{p['example_who']} plans {len(p['example'])} weeks of work. Each week ends with something you can show. {p.get('example_note', '')} At this pace the full path ({hours(full_hours * 60)}) takes about {full_weeks} weeks.".replace("  ", " ") + "\n")
     a("| Week | Stage | What you do |")
     a("| --- | --- | --- |")
@@ -723,6 +729,19 @@ def visual_figure(n, p):
     XF.write(os.path.join(FIG_DIR, f"{VISUAL}-{n}.html"), html)
 
 
+# The learning-path explainers in explainers/ ("How to learn this"). A path gets a "Read the story"
+# link once its explainer exists, so the page never links to a missing file.
+STORIES = {"senior-product-manager": "one-senior-pm-path", "ai-product-lead": "one-ai-product-lead-path",
+           "ai-engineer": "one-ai-engineer-path", "ai-engineering-lead": "one-ai-engineering-lead-path"}
+
+
+def story_line(p):
+    slug = STORIES.get(p["slug"])
+    if not slug or not os.path.exists(f"{ROOT}/explainers/{slug}.md"):
+        return ""
+    return f" Read the story: [{h1(f'{ROOT}/explainers/{slug}.md')}](../explainers/{slug}.md) follows one learner through this path."
+
+
 def render_visual():
     L = []
     a = L.append
@@ -751,7 +770,8 @@ def render_visual():
         stages = p["stages"]
         a(f"## {n + 1}. {p['short']}\n")
         a(f"For {p['who']}. {len(stages)} stages, {hours(minutes_of(stages))} in all. "
-          f"Full lesson lists, checkpoints and skip-ahead rules are on the [{p['short']} path page](./{p['slug']}.md).\n")
+          f"Full lesson lists, checkpoints and skip-ahead rules are on the [{p['short']} path page](./{p['slug']}.md)."
+          + story_line(p) + "\n")
         a("```mermaid")
         a("flowchart LR")
         ids = [chr(65 + k) for k in range(len(stages))]
@@ -762,7 +782,7 @@ def render_visual():
     k, longest = max(enumerate(eng["stages"], 1), key=lambda ks: stage_minutes(ks[1]))
     a(f"Take the AI Engineer picture. The longest bar is stage {k}, {longest['name'].lower()}, at {hours(stage_minutes(longest))}, "
       f"out of {hours(minutes_of(eng['stages']))} for the whole path. Its row shows why: {stage_reading(longest)}. "
-      f"An engineer with {eng['example_hpw']} hours a week should plan about {math.ceil(stage_minutes(longest) / 60 / eng['example_hpw'])} weeks for that stage alone. "
+      f"An engineer with {eng['example_hpw']} hours a week should plan about {weeks_at(stage_minutes(longest), eng['example_hpw'])} weeks for that stage alone. "
       "That is the stage to protect in the calendar.\n")
     a("## Failure modes\n")
     a("- **Reading the bars as value.** A long bar means more reading, not more importance. Short stages often hold the decisions.")

@@ -2,7 +2,7 @@
 
 *Part of the [craft tracks](../README.md). Each explainer links to the lessons that go deeper.*
 
-An explainer follows **one example** through a system or a product decision, one stage at a time. Every stage has a short plain block, a picture and one line to remember. There is no maths to do. Each takes about ten minutes.
+An explainer follows **one example** through a system, a product decision or a learning path, one stage at a time. Every stage has a short plain block, a picture and one line to remember. There is no maths to do. Each takes about ten minutes.
 
 The explainers sit beside the lessons, not in place of them. Read an explainer first to get the shape of a system. Then read the lessons for the detail, the numbers and the code.
 
@@ -28,7 +28,16 @@ These six follow a product decision rather than a system. Each stage shows a dec
 11. [One user story becomes an agent spec](./one-user-story-to-agent-spec.md) — follow a dispatcher's story to tools, limits, autonomy per action and a rule for more freedom.
 12. [One AI incident, from alert to postmortem](./one-ai-incident-review.md) — follow a wrong fee answer from the first screenshot to the actions in the roadmap.
 
-Then the [recap](./recap.md), with a self-test across all twelve.
+### How to learn this
+
+These follow one learner through a [learning path](../learning-paths/README.md), stage by stage, to show what each stage changes in what the learner can do. The stage names and hours come from the path itself.
+
+13. [A senior PM's path, one stage at a time](./one-senior-pm-path.md) — follow a senior PM from a VP's question to a one-page answer, through the four stages of the Senior PM path.
+14. [An AI product lead's path, one stage at a time](./one-ai-product-lead-path.md) — follow a new AI product lead from decisions by instinct to an architecture review pack, through the five stages of the AI Product Lead path.
+15. [An AI engineer's path, one stage at a time](./one-ai-engineer-path.md) — follow a backend engineer from a demo to a tested support agent, through the five stages of the AI Engineer path.
+16. [An AI engineering lead's path, one stage at a time](./one-ai-engineering-lead-path.md) — follow an engineering lead from judging a demo to approving a design with conditions, through the five stages of the AI Engineering Lead path.
+
+Then the [recap](./recap.md), with a self-test across all sixteen.
 
 ## How the explainers connect to the lessons
 
@@ -46,6 +55,10 @@ Then the [recap](./recap.md), with a self-test across all twelve.
 | One eval regression | [Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md), [Technical product management for AI](../technical-product-management/tpm-for-ai-products.md) |
 | One user story to an agent spec | [Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md), [Practice: the agent spec and risk register](../building-ai-native-products/agentic-flows-practice.md) |
 | One AI incident | [Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md), [Reliability & failure](../technical-product-sense/reliability-and-failure.md) |
+| A senior PM's path | [Senior PM path](../learning-paths/senior-product-manager.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI product lead's path | [AI Product Lead path](../learning-paths/ai-product-lead.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI engineer's path | [AI Engineer path](../learning-paths/ai-engineer.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI engineering lead's path | [AI Engineering Lead path](../learning-paths/ai-engineering-lead.md), [Visual learning paths](../learning-paths/visual-paths.md) |
 
 ## About the examples
 

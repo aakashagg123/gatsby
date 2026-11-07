@@ -599,6 +599,182 @@ def incident_review():
         "Size the harm, choose what users see, tell the truth, make it right."))
 
 
+# ---------------------------------------------------------------- How to learn this
+# Learning-path explainers. Stage names, hours, lesson counts and weeks come from PATHS in
+# gen_learning_paths.py (importing it only computes; it writes nothing), so a figure cannot drift
+# from its path page. scripts/check_path_explainers.py checks the page text against the same data.
+
+
+def _path(slug):
+    import gen_learning_paths as G
+    return G, next(p for p in G.PATHS if p["slug"] == slug)
+
+
+def _path_stage_card(G, p, n, chip, before, after, note):
+    s = p["stages"][n - 1]
+    total = G.half_hours(G.minutes_of(p["stages"]))
+    here = G.half_hours(G.stage_minutes(s))
+    body = (F.compare_body(("caution", "Before this stage", before), ("success", "After this stage", after))
+            + '<p class="xf-sub" style="margin:16px 0 8px">Time</p>'
+            + F.bars_body([("this stage", here, "info"), ("whole path", total, "discovery")], vmax=total, fmt="about {:g} h"))
+    sub = f"Path stage {n} · {G.hours(G.stage_minutes(s))} · {G.stage_lessons(s)} lessons"
+    return F.card(chip, s["name"], sub, body, note)
+
+
+def senior_pm_path():
+    import math
+    G, p = _path("senior-product-manager")
+    k = "one-senior-pm-path"
+    st = p["stages"]
+    tot_min = G.minutes_of(st)
+    weeks = G.weeks_at(tot_min, p["example_hpw"])
+    put(k, 0, F.compare("Step 1", "Where the senior PM starts", "The VP's question: should we build an AI assistant for booking changes?",
+        ("caution", "Today", ["Can say AI could help", "Cannot say how it would work", "Cannot say what it costs or what could go wrong"]),
+        ("success", "Goal of the path", ["A one-page answer to the VP", "Approach, quality bar, cost and risks", "Reviewed with the engineering lead"]),
+        "Wayline and its assistant are invented."))
+    put(k, 1, F.bars("Step 2", "Plan the weeks", f"{len(st)} stages, {G.hours(tot_min)} in all. Hours from the path.", [
+        (f"Stage {i}", G.half_hours(G.stage_minutes(s)), F.CYCLE[(i - 1) % len(F.CYCLE)]) for i, s in enumerate(st, 1)],
+        vmax=max(G.half_hours(G.stage_minutes(s)) for s in st), note=f"At {p['example_hpw']} hours a week, about {weeks} weeks. Stage 4 is optional.", fmt="about {:g} h"))
+    put(k, 2, _path_stage_card(G, p, 1, "Step 3",
+        ["The assistant is one box marked AI", "No idea where waiting happens", "Failure means an error message"],
+        ["Draws the request path: app, model, booking system", "Marks where latency comes from", "Knows a model can be wrong without an error"],
+        "Do this: draw the request path for one booking change."))
+    put(k, 3, _path_stage_card(G, p, 2, "Step 4",
+        ["A bad answer means the model is dumb", "Same prompt, different answer is a bug", "The fix is a bigger model"],
+        ["Asks: did the model see the fare rules?", "Knows why answers vary between runs", "Tells a prompt problem from missing context"],
+        "Do this: classify one bad prototype answer as prompt, context or model."))
+    put(k, 4, _path_stage_card(G, p, 3, "Step 5",
+        ["Open questions about approach, cost and risk", "Quality judged from a demo", "Cost unknown"],
+        ["Approach: buy a hosted model, retrieve the fare rules", "Bar: a pass rate on 50 cases, 5 must-not-fail", "A cost per booking change and three risks, each with a guardrail"],
+        "Do this: write the one-page build, buy or fine-tune case. Numbers are illustrative."))
+    put(k, 5, _path_stage_card(G, p, 4, "Step 6",
+        ["Retrieval, memory and agents all sound useful", "No way to choose"],
+        ["Retrieval: yes, fare rules change each season", "Memory: not needed for now", "Agent: no, a person confirms each change"],
+        "Do this: one line each on retrieval, memory and agents."))
+    put(k, 6, F.compare("Step 7", "Proof of skill", "The one-page answer, reviewed with the engineering lead.",
+        ("caution", "At the start", ["AI could help", "No approach, bar, cost or risks"]),
+        ("success", "At the end", ["How it works: hosted model, retrieval, a person confirms", "What it costs: an estimate per change, assumptions shown", "What could go wrong: three risks, each with a guardrail and an owner"]),
+        "Then check the path's four checkpoints. Reread any stage you cannot pass."))
+    put(k, 7, F.layers("Summary", "A senior PM's path", f"{G.hours(tot_min)}, about {weeks} weeks at {p['example_hpw']} hours a week.",
+        [("info", "Start", "the VP's question")]
+        + [(F.CYCLE[i % len(F.CYCLE)], f"Stage {i}: {s['name']}", G.hours(G.stage_minutes(s))) for i, s in enumerate(st, 1)]
+        + [("success", "Proof", "a one-page answer")],
+        "Each stage adds one thing the PM can do."))
+
+
+def _path_story(slug, key, title, start, goal, stages, proof_sub, proof_end, start_box, end_box, weeks_note=""):
+    """One learning-path explainer: start, plan the weeks, one card per path stage, proof, summary.
+    stages: one (before, after, note) per path stage, in order. Hours and weeks come from PATHS."""
+    import math
+    G, p = _path(slug)
+    st = p["stages"]
+    assert len(stages) == len(st), (slug, len(stages), len(st))
+    tot_min = G.minutes_of(st)
+    weeks = G.weeks_at(tot_min, p["example_hpw"])
+    n = 0
+    put(key, n, F.compare("Step 1", f"Where the {start[0]} starts", start[1], ("caution", "Today", start[2]), ("success", "Goal of the path", goal),
+        start[3]))
+    n += 1
+    put(key, n, F.bars("Step 2", "Plan the weeks", f"{len(st)} stages, {G.hours(tot_min)} in all. Hours from the path.", [
+        (f"Stage {i}", G.half_hours(G.stage_minutes(s)), F.CYCLE[(i - 1) % len(F.CYCLE)]) for i, s in enumerate(st, 1)],
+        vmax=max(G.half_hours(G.stage_minutes(s)) for s in st),
+        note=f"At {p['example_hpw']} hours a week, about {weeks} weeks.{(' ' + weeks_note) if weeks_note else ''}", fmt="about {:g} h"))
+    for i, (before, after, note) in enumerate(stages, 1):
+        n += 1
+        put(key, n, _path_stage_card(G, p, i, f"Step {n + 1}", before, after, note))
+    n += 1
+    put(key, n, F.compare(f"Step {n + 1}", "Proof of skill", proof_sub, ("caution", "At the start", proof_end[0]), ("success", "At the end", proof_end[1]),
+        "Then check the path's checkpoints. Reread any stage you cannot pass."))
+    n += 1
+    # Seven or more boxes are too narrow side by side, so the summary is drawn top to bottom.
+    put(key, n, F.layers("Summary", title, f"{G.hours(tot_min)}, about {weeks} weeks at {p['example_hpw']} hours a week.",
+        [("info", "Start", start_box)]
+        + [(F.CYCLE[i % len(F.CYCLE)], f"Stage {i}: {s['name']}", G.hours(G.stage_minutes(s))) for i, s in enumerate(st, 1)]
+        + [("success", "Proof", end_box)],
+        "Each stage adds one thing the learner can do."))
+
+
+def ai_product_lead_path():
+    _path_story("ai-product-lead", "one-ai-product-lead-path", "An AI product lead's path",
+        ("AI product lead", "Three AI features and an architecture review in a quarter.",
+         ["Decides by instinct", "One answer for every feature", "No evidence for a review"], "Brightlane and its features are invented."),
+        ["A review pack for all three features", "Grounding, memory, autonomy, evidence", "A launch gate and an incident plan"],
+        [(["Add AI is one choice", "Fine-tuning sounds powerful"],
+          ["Policy answers: retrieval", "Interview notes: a prompt", "Onboarding agent: retrieval and a few tools"],
+          "Do this: choose prompting, retrieval or fine-tuning per feature, with a reason."),
+         (["Context is whatever is in the prompt", "Memory is not decided"],
+          ["A context spec: sources, owners, freshness, quality", "Memory: checklist progress yes, interview notes never"],
+          "Do this: write the context spec for one feature."),
+         (["The agent can do things", "An agent by default"],
+          ["Reading the checklist: acts alone", "Booking a meeting: the new hire confirms", "Requesting a laptop: IT approves"],
+          "Do this: set the autonomy level per action, and what would lower it."),
+         (["A plan without evidence", "Access not discussed"],
+          ["Eval sets with must-not-fail cases", "A threat model and a cost per task", "The agent acts with the new hire's permissions"],
+          "Do this: put together evals, a threat model and a cost per task."),
+         (["Launch means turn it on"],
+          ["A spec with examples", "A launch gate: ship, widen, roll back", "An incident plan with an owner of the off switch"],
+          "Do this: write the spec, launch gate and incident plan.")],
+        "The review pack, one page per feature.",
+        (["Decisions by instinct", "No evidence"],
+         ["Grounding and context spec per feature", "Autonomy per action and memory rules", "Evals, threats, access, cost, launch gate"]),
+        "decisions by instinct", "a review pack",
+        weeks_note="About 18.5 hours if the Senior PM path was done.")
+
+
+def ai_engineer_path():
+    _path_story("ai-engineer", "one-ai-engineer-path", "An AI engineer's path",
+        ("engineer", "Build a support agent that answers from runbooks and opens tickets.",
+         ["A demo that works once", "No tests for the model parts", "Rules would live in the prompt"], "Freightly and its agent are invented."),
+        ["A tested agent you can explain", "Evals, traces, permission rules", "A cost per request"],
+        [(["A model is a black box"],
+          ["Tokens, context windows, sampling", "Reads a training curve", "Spots overfitting"],
+          "Do this: read a training curve and say if it overfits."),
+         (["One bare model call", "Free-text answers"],
+          ["Timeouts, retries, typed output", "Diagnoses a failing prompt"],
+          "Do this: call a model with retries and a typed output."),
+         (["Runbook pages pasted into the prompt"],
+          ["A retrieval pipeline", "A test set that measures search"],
+          "Do this: build retrieval and measure it with a test set."),
+         (["A model in a loop"],
+          ["A loop with a step limit", "A ticket tool with a contract", "A context budget and a permission gate in code"],
+          "Do this: build each part and break it to see its test fail."),
+         (["Works on a laptop"],
+          ["Evals on every change", "A trace for every request", "Attacks blocked by the gate, and logged"],
+          "Do this: add evals and traces, and test one attack.")],
+        "The capstone: one agent, assembled and tested.",
+        (["A demo", "No way to see failures"],
+         ["Evals and their results", "A trace from input to answer", "Permission rules and cost per request"]),
+        "a demo", "a tested agent",
+        weeks_note="Stages 4 and 5 are the build stages.")
+
+
+def ai_engineering_lead_path():
+    _path_story("ai-engineering-lead", "one-ai-engineering-lead-path", "An AI engineering lead's path",
+        ("engineering lead", "A design for a claims assistant with an agent that updates records.",
+         ["Judges by the demo", "Cannot split a request's cost", "No release gate to ask for"], "Pillar and its design are invented."),
+        ["A review by failure handling", "Conditions the team can meet", "One definition of done with product"],
+        [(["Cost is an invoice"],
+          ["Splits a request's time and money", "Names three levers", "Asks why fine-tune, not retrieve"],
+          "Do this: explain where time and money go."),
+         (["Reviews the database and the API"],
+          ["Reviews the loop, tools and limits", "Finds no step limit", "Asks if it needs to be an agent"],
+          "Do this: review one agent design."),
+         (["Quality is the team's business"],
+          ["A release gate with an owner", "A threat model for hidden instructions", "Each insurer's data kept apart"],
+          "Do this: name the release gate, its owner and its evidence."),
+         (["Reviews the model parts only"],
+          ["Reviews the whole request path", "A fallback for a provider outage"],
+          "Do this: run a review for scale, failure and cost."),
+         (["Two ideas of done"],
+          ["One definition of done", "Quality drops page someone", "Coding agents: specify, then verify"],
+          "Do this: agree done with your product manager.")],
+        "The review decision: approve, with conditions.",
+        (["Judge by the demo"],
+         ["Retrieval, not fine-tuning", "A workflow with a step limit, open claims only", "A gate, data separation, an outage fallback"]),
+        "judge by the demo", "approve with conditions",
+        weeks_note="Stage 2 is the longest.")
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     llm_request()
@@ -613,4 +789,8 @@ if __name__ == "__main__":
     eval_regression()
     story_to_spec()
     incident_review()
+    senior_pm_path()
+    ai_product_lead_path()
+    ai_engineer_path()
+    ai_engineering_lead_path()
     print("figures written to", OUT)

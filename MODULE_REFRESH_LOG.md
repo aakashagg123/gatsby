@@ -29,7 +29,7 @@ picks the lowest tier number among due modules.
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
-| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-04 |
+| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-07 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
@@ -763,6 +763,20 @@ and a link to the merged PR.)
   Flagged: (1) possible new lesson on AI vendor dependency and model deprecation as a systems risk; not built.
   (2) The acronym warnings from check_module (OWASP, SRE, IETF) are minor. (3) The `ai-security-and-guardrails` EU AI Act
   flag from 2026-09-21 is still open for that module's run.
+- 2026-11-07 — explainers — extended (framework pass, not the daily job): added a
+  third group, "How to learn this", with four learning-path explainers (senior PM,
+  AI product lead, AI engineer, AI engineering lead). One invented learner follows
+  each path stage by stage; stage names, hours, lesson counts and weeks come from
+  `scripts/gen_learning_paths.py`, and the new `scripts/check_path_explainers.py`
+  (also a non-blocking CI step) fails if a page drifts from the path data. Weeks are
+  now computed from the rounded hours everywhere (`weeks_at`). An independent
+  fact-check with web access was clean on its third pass (50 of 50 rows OK) for the
+  four pages, the explainers README, the recap and the idea-to-launch page; the four
+  pages are stamped 2026-11, medium. The six original explainers (LLM request, how a
+  model learns, a token through a transformer, an image model, an agent run, a
+  guardrailed request) are still unchecked and keep "fact-check pending".
+  checker: explainers 16 lessons, avg sentence 11.8, 2% over 30 words, Flesch 72,
+  PASS; learning-paths 5 lessons, 9.5, 3%, 67, PASS. PR pending.
 
 - 2026-11-07 — product-sense — tier 1. Picked because it was the only tier-1 row due (47 of 45 days; every other
   tier-1 row is inside its cadence). Outcome: fixed and expanded. All 7 lessons, README and recap read in full.
