@@ -4,28 +4,29 @@
 
 ## Real-world examples & war stories
 
-**Slack's behavioural segmentation.** Rather than "team communication for everyone," Slack
-targeted engineering teams already chatting in IRC — a segment defined by *behaviour*, not
-demographics. It won a beachhead that then expanded. 🎯 *Takeaway:* the sharp
-[strategic-thinking](./creativity.md) move is segmenting by what people already *do*. That's
+**Slack's origin in a real need.** Slack began as the internal chat tool of the game studio
+Tiny Speck. When the game failed, the team saw the tool had value beyond their own company
+and pivoted to it. 🎯 *Takeaway:* the sharp [strategic-thinking](./creativity.md) move is
+starting from what people already *do*. That's
 exactly the instinct an AI PM needs to find the job a model reliably nails.
 
 **Amazon's Kindle vision and the PRFAQ.** *"Every book ever printed, in any language, all
-available in under 60 seconds"* is a vision that made thousands of decisions for the team.
+available in less than 60 seconds"* is a vision that made thousands of decisions for the team.
 The PRFAQ format forced every proposal to start from the customer. 🎯 *Takeaway:* strong
 [communication artifacts](./communication.md) turn product sense into alignment. For an
 AI feature drowning in uncertainty, an explicit "what it is / isn't / how we'll know it
 worked" is worth more than any demo.
 
-**LinkedIn's profile-completeness bar.** A progress nudge that shows how far you've come, and
-rewards a "100%" state that genuinely benefits the user — an [ethical nudge](./motivation-and-behaviour.md),
+**LinkedIn's profile-level meter.** A progress nudge that shows how far you've come, and
+rewards a complete state that genuinely benefits the user (reportedly hidden since) — an [ethical nudge](./motivation-and-behaviour.md),
 not a dark pattern. 🎯 *Takeaway:* the line between a helpful nudge and a manipulative one is
 "whose goal does it serve?" AI products cross that line easily when they optimize
 engagement metrics against user interest.
 
-**Kodak and the digital camera.** Kodak *invented* the digital camera and clung to film
-anyway — a failure of [intellectual flexibility](./cognitive-empathy.md) and the sunk-cost
-fallacy, not a lack of evidence. 🎯 *Takeaway:* the incumbent's trap is emotional attachment
+**Kodak and the digital camera.** Kodak *invented* the digital camera in 1975 but pivoted
+slowly while film stayed profitable — a warning about [intellectual flexibility](./cognitive-empathy.md)
+and the sunk-cost fallacy. Scott Anthony argues the full story is more subtle than "Kodak
+ignored digital." 🎯 *Takeaway:* the incumbent's trap is emotional attachment
 to a winning bet. In a field moving as fast as AI, the willingness to say "the ground
 shifted, so we should too" is a survival skill.
 
@@ -36,8 +37,8 @@ output with no grounding, no "I don't know," and full authority in the UX. The f
 architectural: answer only from real policy, with citations. That's a *product* decision
 before it's an engineering one.
 
-**The "expert's trap" in domain-heavy products.** Marty Cagan's warning that experts assume
-they *are* the user shows up everywhere from EMRs to developer tools. 🎯 *Takeaway:*
+**The "expert's trap" in domain-heavy products.** Marty Cagan's warning that experts believe
+they can speak for the target customer shows up everywhere from EMRs to developer tools. 🎯 *Takeaway:*
 [domain expertise](./domain-expertise.md) is a turbocharger only if paired with the outsider
 question "why is it done this way at all?" — the same humility that keeps an AI PM validating
 instead of trusting the model's (or their own) confidence.
@@ -68,7 +69,7 @@ deliberate dissection compresses them into taste.
 
 | Lesson | The one idea | The decision it drives |
 | --- | --- | --- |
-| [Motivation theory](./motivation-and-behaviour.md) | Behaviour = motivation × ability × trigger | Where to cut friction and how to reward the core action |
+| [Motivation theory](./motivation-and-behaviour.md) | Behaviour needs motivation, ability and a prompt together (B = MAP) | Where to cut friction and how to reward the core action |
 | [Cognitive empathy](./cognitive-empathy.md) | Simulate the user; doubt your own certainty | Which assumptions to test before you build |
 | [Creativity](./creativity.md) | Strategy picks the battle; execution wins it | What to focus on — and what to say no to |
 | [Communication](./communication.md) | Product sense you can't convey can't move a team | How to earn buy-in and keep everyone aligned |
@@ -94,7 +95,7 @@ model is a new kind of material — powerful, probabilistic, and confidently wro
 Five questions; answers fold out. If one stumps you, the link takes you back.
 
 1. **A feature has high motivation and a strong trigger but users still don't act. What's the first suspect, per the behaviour equation?**
-   <details><summary>Answer</summary>Ability — friction. B = M × A × T: if two factors are present, the third is the bottleneck. Hunt the needless steps before adding more motivation. (<a href="./motivation-and-behaviour.md">Motivation & behaviour</a>)</details>
+   <details><summary>Answer</summary>Ability — friction. B = MAP: if motivation and the prompt are present, ability is the bottleneck. Hunt the needless steps before adding more motivation. (<a href="./motivation-and-behaviour.md">Motivation & behaviour</a>)</details>
 2. **Why does "would you use this?" produce worse data than "tell me about the last time you…"?**
    <details><summary>Answer</summary>People are unreliable futurists but decent historians. Statements about hypothetical behaviour barely predict real behaviour. Accounts of past behaviour do. (<a href="./user-research.md">User research</a>)</details>
 3. **What's the one-question test for whether a nudge is ethical?**

@@ -15,7 +15,8 @@
   </div>
   <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
 <p>Users act when <strong>motivation is high and friction is low</strong>. The Fogg behaviour model states
-this as <em>Behaviour = Motivation × Ability × Trigger</em>. Product sense starts with reading
+this as <em>B = MAP</em>: Motivation, Ability, and a Prompt. (Earlier versions called the third
+term a <em>trigger</em>.) Product sense starts with reading
 that equation in your own product. Hunt down needless friction. Make the core action
 <strong>rewarding</strong>, so satisfaction feeds motivation — this is the Hook model's Trigger → Action
 → Reward → Investment loop. Use <strong>ethical nudges</strong> — defaults, reminders, social proof — to
@@ -87,9 +88,11 @@ retention. Nobody engineered the motivation-and-friction path around it.</p>
   </div>
 </div>
 
-<p>The <strong>Fogg behaviour model</strong> — <em>B = M × A × T</em> — says a behaviour happens only when
-motivation, ability (ease), and a trigger converge. It's a multiplication, so if any term
-is near zero, the behaviour doesn't happen. The practical corollary: <strong>if you want to
+<p>The <strong>Fogg behaviour model</strong> — <em>B = MAP</em> — says a behaviour happens only when
+motivation, ability (ease), and a prompt come together at the same moment. Fogg's own
+site describes the model this way and does not call it a formula to calculate. Treat
+"×" as a memory aid: if any element is missing, the behaviour doesn't happen. (The Hook
+model below keeps the word <em>trigger</em> for the same cue.) The practical corollary: <strong>if you want to
 encourage an activity, make it easy.</strong> High friction — complex steps, confusing UI —
 stifles even a motivated user. Reducing friction lets existing motivation convert into
 action.</p>
@@ -160,8 +163,13 @@ first hurdle.</p>
 <p>The rule is <strong>ethics first</strong>: the goal is to help users reach <em>their</em> goals with less
 friction, not to manipulate them toward <em>your</em> metrics. Always ask, <em>"is this nudge helping
 the user, or just helping us?"</em> Ethical nudges build trust. Dark patterns destroy it.
-LinkedIn's profile-completeness bar is the canonical good nudge. It shows progress and
-rewards a "100% complete" state that genuinely benefits the user.</p>
+LinkedIn's profile-level meter (Beginner to All-Star) is the classic good nudge. It shows
+progress toward a state that genuinely benefits the user. Third-party reports say LinkedIn
+has since hidden the visible meter, so use it as a pattern, not as a current feature.</p>
+<p>Regulators now enforce this line. In September 2025 the FTC settled its case against
+Amazon over Prime for $2.5 billion: a $1 billion civil penalty and $1.5 billion in
+refunds. The FTC alleged confusing sign-up screens and a hard-to-use cancellation path.
+Friction that serves only your metric is a legal risk, not just a trust risk.</p>
 <h2 id="actionable-steps">Actionable steps</h2>
 <ul>
 <li><strong>Identify friction hotspots</strong> — map the journey, find drop-off, simplify (fewer fields,
@@ -177,8 +185,9 @@ rewards a "100% complete" state that genuinely benefits the user.</p>
 <blockquote>
 <p><strong>📦 Mini-case — Duolingo's streak.</strong> The behaviour equation, productized. Motivation
 (don't lose the streak) is manufactured by the product itself. Ability is a
-one-minute lesson. The trigger is a push notification timed to your usual
-practice hour. Note the ethical line the design walks: streak freezes and repair
+one-minute lesson. The trigger is a push notification. Duolingo's own research
+paper (Yancey and Settles, KDD 2020) describes a bandit algorithm that learns which
+reminder to send each learner. Note the ethical line the design walks: streak freezes and repair
 let users <em>recover</em>. The nudge pushes practice, not anxiety. When a habit feature
 feels coercive, it's usually because it punishes lapses instead of rewarding
 returns.</p>

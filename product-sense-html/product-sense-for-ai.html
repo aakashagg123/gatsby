@@ -109,7 +109,15 @@ tell. Product sense for AI is largely <strong>trust design</strong>:</p>
 <li><strong>Show your work</strong> — grounding answers in retrieved, citeable sources so users (and you) can
   check them, and saying <em>"I don't know"</em> when the context is silent rather than inventing.</li>
 <li><strong>Calibrate confidence</strong> — signal uncertainty in the UX instead of presenting every output
-  with the same authority.</li>
+  with the same authority. Microsoft's 18 guidelines for human-AI interaction (CHI 2019)
+  and Google's People + AI Guidebook are good checklists for this.</li>
+<li><strong>Disclose the machine</strong> — in the EU, the transparency rules say people must be made aware
+  they are interacting with an AI system. The Commission's AI Act page gives August 2026 as
+  the date these rules apply. Ask legal for any transition terms.</li>
+<li><strong>Check that your eval rewards "I don't know"</strong> — OpenAI researchers argue models hallucinate
+  partly because common benchmarks score a guess higher than an abstention, so models learn to
+  be good test-takers (arXiv 2509.04664). An eval that gives no credit for abstaining trains
+  the same habit into your product.</li>
 <li><strong>Design the failure, not just the success</strong> — the <a href="motivation-and-behaviour.html">Hook-model reward</a>
   has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
   easy correction, and "undo" are core, not polish.</li>
@@ -151,15 +159,23 @@ they're <strong>product</strong> concerns, because they trade directly against q
 </tr>
 </tbody>
 </table>
-<p>The product-sense call is <em>which axis this user's job actually cares about</em> — a coding
-assistant lives or dies on latency. A legal-review tool can wait for accuracy. (The
+<p>The product-sense call is <em>which axis this user's job actually cares about</em> — code
+autocomplete lives or dies on latency, while an agent that works for minutes on a whole
+task is judged on whether the result is right. A legal-review tool can wait for accuracy.
+Reasoning models blur the line: the same model can spend more thinking tokens, and more
+time and money, on a hard request. (The
 mechanics of these trade-offs are the AI Engineering track's
 <a href="../ai/06-strategy-tradeoffs.html#inference-stack-tradeoffs">stack-tradeoffs lesson</a>.) This is
 <a href="motivation-and-behaviour.html">motivation theory</a> again: a slow or costly path is friction
 that squanders the model's value.</p>
 <h2 id="the-jagged-frontier-scoping-as-product-sense">The jagged frontier — scoping as product sense</h2>
 <p>Model capability is <strong>jagged</strong>: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
+a sentence. There's no smooth "it's good at hard things and better at easy things" line. The best
+evidence is the Harvard/BCG field study of 758 consultants (Dell'Acqua and colleagues,
+2023). On a task inside the frontier, GPT-4 users scored about 40% above the control group.
+On a task just outside it, they scored about 23% worse, because many took the tool's
+misleading output at face value. Those models are old, but the lesson is current: you
+cannot see the edge from the inside. So
 the highest-leverage product decision is <strong>scoping</strong> — pointing the model at jobs inside its
 reliable frontier and keeping it away from jobs where its failure is costly and invisible.</p>
 <p>This is <a href="creativity.html">strategic thinking</a> applied to capability: the differentiation
@@ -193,8 +209,8 @@ Four patterns became the standard candles every AI product gets compared against
   chat reply. They taught users that waiting is acceptable when the output is worth
   it — and reset expectations for what "an answer" can be.</li>
 <li><strong>Proactive AI</strong> — briefings and suggestions that arrive <em>unprompted</em> (ChatGPT's
-  Pulse-style morning digest, which shipped in 2025 and was folded into general-purpose
-  scheduled tasks in 2026 — the branded feature came and went, but the pattern it taught
+  Pulse-style morning digest, which shipped in 2025; OpenAI announced on 17 June 2026 that it
+  was retiring Pulse in favour of general-purpose scheduled tasks — the branded feature came and went, but the pattern it taught
   users to expect didn't). The pattern's product sense is consent and restraint:
   proactivity delights precisely until it presumes.</li>
 <li><strong>Persistent memory as a headline feature</strong> — "it remembers me" moved from silent
@@ -220,6 +236,13 @@ share of the training signal) and filter bubbles. Design the <strong>balancing l
 alongside the flywheel: monitoring for skew, ethical checks on what the loop optimizes,
 and a metric of success that rewards long-term user value rather than whatever spins
 fastest.</p>
+<p>Two public cases show the risk. In April 2025 OpenAI shipped a GPT-4o update that made
+ChatGPT more sycophantic, then began rolling it back three days later. OpenAI said its
+internal testing had not explicitly checked for sycophancy and that it would add such evals.
+In September 2025 the FTC sent orders to seven companies that offer AI companion chatbots,
+including OpenAI, Meta and Character.AI. The orders ask how they monetize user engagement
+and how they measure harm to children and teens. A loop tuned to approval or engagement can
+reward the wrong behaviour.</p>
 <h2 id="keep-a-human-in-the-loop-where-it-counts">Keep a human in the loop where it counts</h2>
 <p>Domain sense (<a href="domain-expertise.html">domain expertise</a>) tells you where a wrong answer is
 merely annoying (a playlist suggestion) versus genuinely harmful (a medical dosage, a
@@ -229,10 +252,11 @@ checkpoint, clear provenance, and an audit trail. Matching the level of autonomy
 sense.</p>
 <h2 id="the-role-is-fragmenting-too">The role is fragmenting too</h2>
 <p>The same forces reshaping the product are reshaping the job title. "AI PM" is no longer
-one role — it's splitting into an <strong>AI Product Owner</strong> (who owns eval bars, model
-behaviour, and human-in-the-loop boundaries — the deployment-facing half of this lesson)
-and a <strong>Data-Informed PM</strong> (who uses AI tooling to keep a continuous read on the flywheel
-above, instead of waiting for a quarterly metrics review). (<a href="../technical-product-management/the-technical-pm-role.html">The technical PM
+one role. Some commentators describe a split into an <strong>AI Product Owner</strong> (who owns eval
+bars, model behaviour, and human-in-the-loop boundaries — the deployment-facing half of this
+lesson) and a <strong>Data-Informed PM</strong> (who uses AI tooling to keep a continuous read on the
+flywheel above). Only blogs support these two titles, so treat them as a useful lens, not an
+industry standard. (<a href="../technical-product-management/the-technical-pm-role.html">The technical PM
 role</a> maps this split against
 the classic PM/TPM/EM spectrum.) Neither title obligates you to specialize today. But
 naming the split matters, because the failure mode isn't picking the wrong one — it's not
@@ -278,7 +302,9 @@ was a <em>product</em> decision available the whole time.</p>
 <li class="task todo">Is there a designed, trustworthy path for when the model is wrong?</li>
 <li class="task todo">Do I know which of latency / quality / cost this user's job actually prioritizes?</li>
 <li class="task todo">Have I scoped the feature to the model's <em>reliable</em> frontier?</li>
-<li class="task todo">Is there a feedback loop that turns usage into improvement?</li>
+<li class="task todo">Does my eval give credit for abstaining, and do I disclose that users face an AI?</li>
+<li class="task todo">Is there a feedback loop that turns usage into improvement — and does it avoid
+      optimizing for approval or engagement alone?</li>
 <li class="task todo">Does the level of autonomy match the cost of a wrong answer in this domain?</li>
 <li class="task todo">Can I name which slice of "AI PM" work I actually own today — and which I've
       quietly absorbed without deciding to?</li>

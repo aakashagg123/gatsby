@@ -46,8 +46,8 @@ Artifacts are the tangible communications a PM produces. They capture product se
 words and become the team's reference.
 
 - **Vision** — a concise, inspiring picture of the future you'll create, rooted in user value.
-  Amazon's Kindle vision: *"Every book ever printed, in any language, all available in under
-  60 seconds."* Focus on the *why* and *what* (the outcome), not the *how*. Trick: imagine
+  Amazon's Kindle vision: *"Every book ever printed, in any language, all available in less
+  than 60 seconds."* Focus on the *why* and *what* (the outcome), not the *how*. Trick: imagine
   your product wildly successful in five years — what does that look like for users? — and
   distil that.
 - **Strategy document** — if vision is the destination, strategy is the map: target

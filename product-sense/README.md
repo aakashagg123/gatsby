@@ -18,7 +18,7 @@ Five habits feed one judgment. That judgment then gets stress-tested by a new ma
 
 ```mermaid
 flowchart TB
-  MOT["Motivation & behaviour<br/>B = M × A × T"] --> PJ["PRODUCT JUDGMENT<br/>what to build, for whom, why"]
+  MOT["Motivation & behaviour<br/>B = MAP"] --> PJ["PRODUCT JUDGMENT<br/>what to build, for whom, why"]
   EMP["Cognitive empathy<br/>simulate, then verify"] --> PJ
   CRE["Creativity<br/>strategy guards execution"] --> PJ
   COM["Communication<br/>judgment that can move a team"] --> PJ
