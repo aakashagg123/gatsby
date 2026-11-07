@@ -170,4 +170,5 @@ flowchart LR
 ## Sources
 
 - The stage names, hours, lesson counts and checkpoints come from the Senior PM path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/senior-product-manager.md). The hours are this course's rule of thumb, about 25 minutes a lesson, not measured. The weeks use the path's own pace of 3 hours a week.
+- Path data as of 2026-11-07, from `scripts/gen_learning_paths.py` in this repository, which also generates the [path page](../learning-paths/senior-product-manager.md). The lessons each stage relies on for its "Do this" check: [How systems are built](../technical-product-sense/how-systems-are-built.md), [When prompts fail: the diagnostic playbook](../prompt-engineering/when-prompts-fail.md), [Build, buy, or fine-tune](../generative-ai/build-buy-or-fine-tune.md), [When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md).
 - Wayline, the senior PM, the VP, the assistant and its 50 test cases and five must-not-fail cases are invented for the example. This page's fact-check is pending.

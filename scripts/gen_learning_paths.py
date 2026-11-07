@@ -141,6 +141,12 @@ def F(): return Item("f")
 def SOON(name, note=""): return Item("soon", name=name, note=note)
 
 
+def weeks_at(minutes, per_week):
+    """Weeks to finish at a pace, from the same rounded hours that hours() prints, so a page
+    that shows "about 32 hours" at 4 hours a week says 8 weeks, not 9."""
+    return math.ceil(round(minutes / 60 * 2) / 2 / per_week)
+
+
 def hours(minutes):
     h = round(minutes / 60 * 2) / 2
     if h < 1:
@@ -468,7 +474,7 @@ def render_path(p):
     a("## Worked example: a week-by-week plan\n")
     a("*This example is invented, to show the method.*\n")
     full_hours = minutes_of(p["stages"]) / 60
-    full_weeks = math.ceil(full_hours / p["example_hpw"])
+    full_weeks = weeks_at(minutes_of(p["stages"]), p["example_hpw"])
     a(f"{p['example_who']} plans {len(p['example'])} weeks of work. Each week ends with something you can show. {p.get('example_note', '')} At this pace the full path ({hours(full_hours * 60)}) takes about {full_weeks} weeks.".replace("  ", " ") + "\n")
     a("| Week | Stage | What you do |")
     a("| --- | --- | --- |")
@@ -776,7 +782,7 @@ def render_visual():
     k, longest = max(enumerate(eng["stages"], 1), key=lambda ks: stage_minutes(ks[1]))
     a(f"Take the AI Engineer picture. The longest bar is stage {k}, {longest['name'].lower()}, at {hours(stage_minutes(longest))}, "
       f"out of {hours(minutes_of(eng['stages']))} for the whole path. Its row shows why: {stage_reading(longest)}. "
-      f"An engineer with {eng['example_hpw']} hours a week should plan about {math.ceil(stage_minutes(longest) / 60 / eng['example_hpw'])} weeks for that stage alone. "
+      f"An engineer with {eng['example_hpw']} hours a week should plan about {weeks_at(stage_minutes(longest), eng['example_hpw'])} weeks for that stage alone. "
       "That is the stage to protect in the calendar.\n")
     a("## Failure modes\n")
     a("- **Reading the bars as value.** A long bar means more reading, not more importance. Short stages often hold the decisions.")

@@ -46,7 +46,7 @@
 7. **An AI feature scores 92% on average, but one must-not-fail case fails. Do you ship?**
    <details><summary>Answer</summary>No. A must-not-fail case blocks launch whatever the average says. (<a href="./one-ai-feature-from-idea-to-launch.md">One AI feature, from idea to launch</a>)</details>
 8. **A new model costs twice as much per token. Why can your bill rise by more than twice?**
-   <details><summary>Answer</summary>The new model may write longer answers, and output tokens cost more than input tokens: 5 times as much on Anthropic's current models. (<a href="./one-model-change.md">One model change</a>)</details>
+   <details><summary>Answer</summary>The new model may write longer answers, and output tokens cost more than input tokens: 5 times as much on Anthropic's current models, as of 2026-11 (<a href="https://platform.claude.com/docs/en/about-claude/pricing">pricing page</a>). (<a href="./one-model-change.md">One model change</a>)</details>
 9. **Why can an AI feature on a flat per-seat price lose money on your best customers?**
    <details><summary>Answer</summary>Every task costs tokens, so heavy users cost far more than light ones and pay the same price. (<a href="./one-ai-feature-p-and-l.md">From one AI task to gross margin</a>)</details>
 10. **An eval score drops 8 points. What do you check before looking for a cause?**
@@ -66,8 +66,15 @@
 
 ## Sources
 
-- The sources for each explainer are at the end of its page. Papers whose abstracts were read for these pages: Vaswani et al. (2017), Ouyang et al. (2022), Kwon et al. (2023), Ho et al. (2020) and Rombach et al. (2022). The Anthropic agents post and the OWASP Top 10 for LLM Applications were also read. Other citations are marked not re-opened.
-- The six product explainers also read: Amershi et al. (2019), Miller (2024), Google's SRE book chapters on managing incidents and postmortem culture, the OWASP entry on excessive agency, Anthropic's pages on model deprecations, pricing, prompt caching and success criteria, and the FinOps Foundation's FinOps for AI overview.
+- The sources for each explainer are at the end of its page, with links and read dates. Papers whose abstracts were read for these pages, read 2026-11: Vaswani et al., NeurIPS 2017; Ouyang et al., NeurIPS 2022; Kwon et al., SOSP 2023; Ho et al., NeurIPS 2020; and Rombach et al., CVPR 2022 ([arXiv 2112.10752](https://arxiv.org/abs/2112.10752)). Other citations are marked not re-opened on their pages.
+- Also read for the first six explainers, 2026-11: Anthropic, ["Building effective agents"](https://www.anthropic.com/engineering/building-effective-agents) (2024-12-19), and OWASP, [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/), 2025 edition.
+- Also read for the six product explainers (7 to 12), 2026-11 unless a day is given:
+  - Saleema Amershi et al., [*Guidelines for Human-AI Interaction*](https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/), Conference on Human Factors in Computing Systems (CHI), 2019.
+  - Evan Miller, [*Adding Error Bars to Evals*](https://arxiv.org/abs/2411.00640), arXiv 2411.00640, 2024.
+  - Google, *Site Reliability Engineering*, chapters ["Managing Incidents"](https://sre.google/sre-book/managing-incidents/) and ["Postmortem Culture"](https://sre.google/sre-book/postmortem-culture/).
+  - OWASP GenAI Security Project, ["LLM06:2025 Excessive Agency"](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/).
+  - Anthropic, ["Model deprecations"](https://platform.claude.com/docs/en/about-claude/model-deprecations), ["Pricing"](https://platform.claude.com/docs/en/about-claude/pricing) (read 2026-11-04), ["Prompt caching"](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) (read 2026-11-04) and ["Define your success criteria"](https://platform.claude.com/docs/en/test-and-evaluate/define-success).
+  - FinOps Foundation, ["FinOps for AI" overview](https://www.finops.org/wg/finops-for-ai-overview/), updated 2026-10-28.
 - The examples are invented or simplified.
 - The four learning-path explainers (13 to 16) take their stage names, hours and lessons from the path data in this repository. Their fact-check is pending.
-- Independent fact-check, run on 2026-11-04 by a separate agent with web access, blind to the edits: clean for the rows and questions about the six product explainers (7 to 12) and for the IDs and years of the five papers named above. The rows and questions about the first six explainers were not checked. Their content, like their own pages, is still pending a fact-check.
+- Independent fact-check, run on 2026-11-04 by a separate agent with web access, blind to the edits, and recorded in PR #172: clean for the rows and questions about the six product explainers (7 to 12) and for the IDs and years of the five papers named above. That run did not cover explainers 1 to 6 or 13 to 16. Their rows and questions here, like their own pages, are still pending a fact-check.

@@ -627,7 +627,7 @@ def senior_pm_path():
     k = "one-senior-pm-path"
     st = p["stages"]
     tot_min = G.minutes_of(st)
-    weeks = math.ceil(tot_min / 60 / p["example_hpw"])
+    weeks = G.weeks_at(tot_min, p["example_hpw"])
     put(k, 0, F.compare("Step 1", "Where the senior PM starts", "The VP's question: should we build an AI assistant for booking changes?",
         ("caution", "Today", ["Can say AI could help", "Cannot say how it would work", "Cannot say what it costs or what could go wrong"]),
         ("success", "Goal of the path", ["A one-page answer to the VP", "Approach, quality bar, cost and risks", "Reviewed with the engineering lead"]),
@@ -670,7 +670,7 @@ def _path_story(slug, key, title, start, goal, stages, proof_sub, proof_end, sta
     st = p["stages"]
     assert len(stages) == len(st), (slug, len(stages), len(st))
     tot_min = G.minutes_of(st)
-    weeks = math.ceil(tot_min / 60 / p["example_hpw"])
+    weeks = G.weeks_at(tot_min, p["example_hpw"])
     n = 0
     put(key, n, F.compare("Step 1", f"Where the {start[0]} starts", start[1], ("caution", "Today", start[2]), ("success", "Goal of the path", goal),
         start[3]))

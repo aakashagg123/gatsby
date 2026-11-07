@@ -15,7 +15,6 @@ Explainers not written yet are skipped. Exit code 1 on any mismatch.
 
 Run:  python3 scripts/check_path_explainers.py
 """
-import math
 import os
 import re
 import sys
@@ -98,7 +97,7 @@ def check(slug, p):
     total = G.minutes_of(stages)
     if G.hours(total) not in text:
         errors.append(f"{slug}: the path total ({G.hours(total)}) is not stated")
-    weeks = f"At {p['example_hpw']} hours a week, about {math.ceil(total / 60 / p['example_hpw'])} weeks."
+    weeks = f"At {p['example_hpw']} hours a week, about {G.weeks_at(total, p['example_hpw'])} weeks."
     if weeks not in text:
         errors.append(f"{slug}: missing or wrong weeks line; expected \"{weeks}\"")
     return errors

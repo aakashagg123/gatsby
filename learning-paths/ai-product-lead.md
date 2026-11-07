@@ -108,7 +108,7 @@ Turn the above into specs, launches and a response plan. (about 6 hours)
 
 *This example is invented, to show the method.*
 
-An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 32 hours) takes about 9 weeks.
+An AI product lead with four hours a week plans 6 weeks of work. Each week ends with something you can show. At this pace the full path (about 32 hours) takes about 8 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

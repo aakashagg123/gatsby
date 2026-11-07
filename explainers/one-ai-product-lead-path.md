@@ -29,7 +29,7 @@ flowchart LR
 
 The path has five stages and takes about 32 hours in all. The hours are this course's rule of thumb: about 25 minutes for each lesson.
 
-The lead has about 4 hours a week. At 4 hours a week, about 9 weeks. That fits inside the quarter, with a little room before the review. The longest stage is stage 1, model and data foundations, at about 10 hours.
+The lead has about 4 hours a week. At 4 hours a week, about 8 weeks. That fits inside the quarter, with a few weeks to spare before the review. The longest stage is stage 1, model and data foundations, at about 10 hours.
 
 Some lessons on this path repeat the Senior PM path, and the path page marks them with ↺. A lead who did the Senior PM path can skip those and finish in about 18.5 hours. This lead did not, so they read everything, in order.
 
@@ -189,4 +189,5 @@ flowchart LR
 ## Sources
 
 - The stage names, hours, lesson counts and checkpoints come from the AI Product Lead path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/ai-product-lead.md). The hours are this course's rule of thumb, about 25 minutes a lesson, not measured. The weeks use the path's own pace of 4 hours a week. The 18.5-hour figure is the path's own estimate for a reader who did the Senior PM path.
+- Path data as of 2026-11-07, from `scripts/gen_learning_paths.py` in this repository, which also generates the [path page](../learning-paths/ai-product-lead.md). The lessons each stage relies on for its "Do this" check: [Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md), [Context as a spec-able requirement](../context-engineering/context-as-a-spec-able-requirement.md), [What an agent is, and how much autonomy it needs](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md), [Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md), [Capstone: ship one AI-native feature](../building-ai-native-products/capstone-ship-one-ai-native-feature.md).
 - Brightlane, the AI product lead, the three features, the policy timing and every rule about them are invented for the example. This page's fact-check is pending.
