@@ -22,7 +22,9 @@ methods — analytics, surveys at scale — answer <em>how many</em> do it. A se
 Two rules govern the choice: match the method to the question, and <strong>trust behaviour over
 statements</strong> — users are honest about problems and unreliable about solutions and futures.
 Interviewing is the core skill: favor past behaviour over hypotheticals, open questions
-over leading ones, and silence over filling it. Five users per round beats fifty per year.</p>
+over leading ones, and silence over filling it. Five users per round beats fifty per year.
+(Nielsen Norman Group's five-user rule is for qualitative usability rounds with similar
+users. Test more people for quantitative metrics or very different user groups.)</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the AI PM</strong></p>
 <p><strong>Why it matters</strong> — AI products add research questions classic funnels miss: do
@@ -133,7 +135,7 @@ yourself alongside the product to explain it to everyone else.</p>
 <p>Interviews and usability tests produce a pile of individual stories. <strong>Jobs-to-be-done</strong>
 (JTBD) is the framework that turns that pile into something you can build against: a
 customer didn't buy your product, they <em>hired</em> it to make progress on a job, in a
-specific circumstance — "when I <strong><em>, I want to </em></strong>, so I can ___." The job stays stable
+specific circumstance — "when I ___, I want to ___, so I can ___." The job stays stable
 even when the product category around it doesn't; people have hired a milkshake, a
 newspaper subscription, and a podcast for the same commute-boredom job at different
 points in time. That stability is the payoff: solutions come and go with the
@@ -170,8 +172,16 @@ other products in your category.</p>
   behind them (<a href="../technical-product-management/tpm-for-ai-products.html">the trace-reading ritual</a>)
   and you have qualitative research at quantitative scale.</li>
 </ul>
+<p><strong>Synthetic users are not users.</strong> Tools now offer AI "participants" that answer interview
+questions in seconds. Nielsen Norman Group reran three of its real studies with such tools.
+The AI answers were too favourable and shallow, and sometimes wrong: the synthetic users
+claimed to have finished online courses that real learners had abandoned. NN/g's advice is
+to use them only for early desk research or to form hypotheses that real users then test.
+They can never supply the surprise that makes research worth doing.</p>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
+<li><strong>Interviewing a model instead of a person</strong> — treating AI-simulated participants as
+  evidence of what users do. They agree too easily and hide the unhappy path.</li>
 <li><strong>The focus-group future</strong> — asking users to predict their own behaviour, then
   building on the predictions.</li>
 <li><strong>Leading the witness</strong> — questions shaped so agreement is the polite answer;
@@ -197,7 +207,7 @@ other products in your category.</p>
 <li class="task todo">For AI features: have I tested the wrong-answer experience on purpose?</li>
 <li class="task todo">Are edits/retries/abandonments instrumented and sampled as research, not just
       as metrics?</li>
-<li class="task todo">Can I state the job my product is hired for as "when <strong><em>, I want to </em></strong>, so I
+<li class="task todo">Can I state the job my product is hired for as "when ___, I want to ___, so I
       can ___" — and do I know what else gets hired for it?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>

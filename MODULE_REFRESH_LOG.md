@@ -25,7 +25,7 @@ picks the lowest tier number among due modules.
 |---|---|---|---|---|---|
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-05 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
-| product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-09-21 |
+| product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
@@ -763,3 +763,36 @@ and a link to the merged PR.)
   Flagged: (1) possible new lesson on AI vendor dependency and model deprecation as a systems risk; not built.
   (2) The acronym warnings from check_module (OWASP, SRE, IETF) are minor. (3) The `ai-security-and-guardrails` EU AI Act
   flag from 2026-09-21 is still open for that module's run.
+
+- 2026-11-07 — product-sense — tier 1. Picked because it was the only tier-1 row due (47 of 45 days; every other
+  tier-1 row is inside its cadence). Outcome: fixed and expanded. All 7 lessons, README and recap read in full.
+  Fixed: (1) Fogg model was written "B = M × A × T" and called a multiplication. Fogg's site says B = MAP (Motivation,
+  Ability, Prompt) and does not describe it as a formula; fixed in lesson, diagram, README, recap. (2) Slack "targeted
+  engineering teams already chatting in IRC" had no support; Slack began as Tiny Speck's internal tool (creativity, recap).
+  (3) Gmail undo send "began at a hack day" had no support; reworded to Gmail Labs 2009, standard setting 2015.
+  (4) Kindle quote now "less than 60 seconds". (5) Cagan "assume they are the user" reworded to his actual words; his
+  "1-3 months" to learn a domain is confirmed. (6) Kodak "clung to film" softened with Scott Anthony's counterview.
+  (7) Duolingo "notification timed to your usual practice hour" replaced by the bandit paper's actual claim (which reminder to
+  send). (8) LinkedIn "completeness bar" reworded; third parties say the meter is hidden. (9) "AI Product Owner" and
+  "Data-Informed PM" titles softened to blog-only lenses (same finding as the 2026-11-05 TPM run). (10) "Coding assistant lives
+  or dies on latency" split into autocomplete vs agent. (11) Pulse: added the 17 June 2026 announcement.
+  Expanded: jagged-frontier evidence (Harvard/BCG 758 consultants, +40% inside, -23% outside); eval should credit abstention
+  (arXiv 2509.04664); EU AI Act AI-disclosure line; Microsoft HAX / Google PAIR pointers; OpenAI April 2025 sycophancy case and FTC
+  companion-chatbot 6(b) orders as flywheel risks; FTC v Amazon $2.5B Prime settlement as dark-pattern enforcement; NN/g finding
+  that synthetic users are not a substitute for research; NN/g five-user caveats.
+  Sources opened and read: behaviormodel.org; arxiv.org/abs/2509.04664 (abstract); bcg.com/publications/2023/how-people-create-and-destroy-value-with-gen-ai
+  (first 100k of 116k chars); nngroup.com/articles/why-you-only-need-to-test-with-5-users; nngroup.com/articles/synthetic-users;
+  svpg.com/the-role-of-domain-experience; techcrunch.com/2019/05/30/the-slack-origin-story (no IRC mention);
+  digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai; ftc.gov Amazon settlement release (25 Sep 2025) and FTC
+  AI-companion 6(b) release (11 Sep 2025); microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction (18 guidelines, CHI 2019);
+  hbr.org/2016/07/kodaks-downfall-wasnt-about-technology (intro only).
+  Search results only, not opened: OpenAI sycophancy posts (openai.com 403; April 25 rollout, April 28 rollback, "not explicitly
+  flagged in testing" come from search summaries); Pulse retirement (digit.in, gigazine, 17 Jun 2026; shutdown date unconfirmed);
+  Duolingo KDD 2020 paper (PDF unreadable; description from search); Gmail undo send history; Kindle quote (aboutamazon.com Kindle at 10);
+  LinkedIn meter retirement (third-party blogs); Kodak history (secondary); California SB 243 (not added to text).
+  Not verified: Rosania quote and the Product Manager Handbook interviews (Garg, Shah) — hedged in text; "task complexity vs tolerance to
+  failure" enterprise axes (no source found, left as is); EMR "fifteen clicks"; Instagram/Burbn; Air Canada (verified 2026-09-21); Hook model;
+  Thaler & Sunstein; Christensen milkshake; Fogg "email verification" claim; EU AI Act Art. 50 grace terms.
+  Flagged: (1) Possible new lesson: AI-era user research (AI-moderated interviews, synthetic users, trace review). Not built.
+  (2) `first-principles` and other modules may repeat the Kodak "clung to film" or Fogg "× T" wording; grep before the next run there.
+  (3) check_module: acronym warnings grew (BCG, CHI, FTC, KDD, NN); minor. Build needed `pip install markdown`.

@@ -73,7 +73,15 @@ tell. Product sense for AI is largely **trust design**:
 - **Show your work** — grounding answers in retrieved, citeable sources so users (and you) can
   check them, and saying *"I don't know"* when the context is silent rather than inventing.
 - **Calibrate confidence** — signal uncertainty in the UX instead of presenting every output
-  with the same authority.
+  with the same authority. Microsoft's 18 guidelines for human-AI interaction (CHI 2019)
+  and Google's People + AI Guidebook are good checklists for this.
+- **Disclose the machine** — in the EU, the transparency rules say people must be made aware
+  they are interacting with an AI system. The Commission's AI Act page gives August 2026 as
+  the date these rules apply. Ask legal for any transition terms.
+- **Check that your eval rewards "I don't know"** — OpenAI researchers argue models hallucinate
+  partly because common benchmarks score a guess higher than an abstention, so models learn to
+  be good test-takers (arXiv 2509.04664). An eval that gives no credit for abstaining trains
+  the same habit into your product.
 - **Design the failure, not just the success** — the [Hook-model reward](./motivation-and-behaviour.md)
   has an evil twin: a bad first output that breaks the habit forever. Graceful failure,
   easy correction, and "undo" are core, not polish.
@@ -94,8 +102,11 @@ they're **product** concerns, because they trade directly against quality:
 | Streaming the response | *Perceived* speed | — |
 | Caching | Speed, $ | Staleness risk |
 
-The product-sense call is *which axis this user's job actually cares about* — a coding
-assistant lives or dies on latency. A legal-review tool can wait for accuracy. (The
+The product-sense call is *which axis this user's job actually cares about* — code
+autocomplete lives or dies on latency, while an agent that works for minutes on a whole
+task is judged on whether the result is right. A legal-review tool can wait for accuracy.
+Reasoning models blur the line: the same model can spend more thinking tokens, and more
+time and money, on a hard request. (The
 mechanics of these trade-offs are the AI Engineering track's
 [stack-tradeoffs lesson](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md).) This is
 [motivation theory](./motivation-and-behaviour.md) again: a slow or costly path is friction
@@ -104,7 +115,12 @@ that squanders the model's value.
 ## The jagged frontier — scoping as product sense
 
 Model capability is **jagged**: a model can draft a legal argument yet miscount the words in
-a sentence. There's no smooth "it's good at hard things and better at easy things" line. So
+a sentence. There's no smooth "it's good at hard things and better at easy things" line. The best
+evidence is the Harvard/BCG field study of 758 consultants (Dell'Acqua and colleagues,
+2023). On a task inside the frontier, GPT-4 users scored about 40% above the control group.
+On a task just outside it, they scored about 23% worse, because many took the tool's
+misleading output at face value. Those models are old, but the lesson is current: you
+cannot see the edge from the inside. So
 the highest-leverage product decision is **scoping** — pointing the model at jobs inside its
 reliable frontier and keeping it away from jobs where its failure is costly and invisible.
 
@@ -144,8 +160,8 @@ Four patterns became the standard candles every AI product gets compared against
   chat reply. They taught users that waiting is acceptable when the output is worth
   it — and reset expectations for what "an answer" can be.
 - **Proactive AI** — briefings and suggestions that arrive *unprompted* (ChatGPT's
-  Pulse-style morning digest, which shipped in 2025 and was folded into general-purpose
-  scheduled tasks in 2026 — the branded feature came and went, but the pattern it taught
+  Pulse-style morning digest, which shipped in 2025; OpenAI announced on 17 June 2026 that it
+  was retiring Pulse in favour of general-purpose scheduled tasks — the branded feature came and went, but the pattern it taught
   users to expect didn't). The pattern's product sense is consent and restraint:
   proactivity delights precisely until it presumes.
 - **Persistent memory as a headline feature** — "it remembers me" moved from silent
@@ -175,6 +191,14 @@ alongside the flywheel: monitoring for skew, ethical checks on what the loop opt
 and a metric of success that rewards long-term user value rather than whatever spins
 fastest.
 
+Two public cases show the risk. In April 2025 OpenAI shipped a GPT-4o update that made
+ChatGPT more sycophantic, then began rolling it back three days later. OpenAI said its
+internal testing had not explicitly checked for sycophancy and that it would add such evals.
+In September 2025 the FTC sent orders to seven companies that offer AI companion chatbots,
+including OpenAI, Meta and Character.AI. The orders ask how they monetize user engagement
+and how they measure harm to children and teens. A loop tuned to approval or engagement can
+reward the wrong behaviour.
+
 ## Keep a human in the loop where it counts
 
 Domain sense ([domain expertise](./domain-expertise.md)) tells you where a wrong answer is
@@ -187,10 +211,11 @@ sense.
 ## The role is fragmenting too
 
 The same forces reshaping the product are reshaping the job title. "AI PM" is no longer
-one role — it's splitting into an **AI Product Owner** (who owns eval bars, model
-behaviour, and human-in-the-loop boundaries — the deployment-facing half of this lesson)
-and a **Data-Informed PM** (who uses AI tooling to keep a continuous read on the flywheel
-above, instead of waiting for a quarterly metrics review). ([The technical PM
+one role. Some commentators describe a split into an **AI Product Owner** (who owns eval
+bars, model behaviour, and human-in-the-loop boundaries — the deployment-facing half of this
+lesson) and a **Data-Informed PM** (who uses AI tooling to keep a continuous read on the
+flywheel above). Only blogs support these two titles, so treat them as a useful lens, not an
+industry standard. ([The technical PM
 role](../technical-product-management/the-technical-pm-role.md) maps this split against
 the classic PM/TPM/EM spectrum.) Neither title obligates you to specialize today. But
 naming the split matters, because the failure mode isn't picking the wrong one — it's not
@@ -236,7 +261,9 @@ well.
 - [ ] Is there a designed, trustworthy path for when the model is wrong?
 - [ ] Do I know which of latency / quality / cost this user's job actually prioritizes?
 - [ ] Have I scoped the feature to the model's *reliable* frontier?
-- [ ] Is there a feedback loop that turns usage into improvement?
+- [ ] Does my eval give credit for abstaining, and do I disclose that users face an AI?
+- [ ] Is there a feedback loop that turns usage into improvement — and does it avoid
+      optimizing for approval or engagement alone?
 - [ ] Does the level of autonomy match the cost of a wrong answer in this domain?
 - [ ] Can I name which slice of "AI PM" work I actually own today — and which I've
       quietly absorbed without deciding to?

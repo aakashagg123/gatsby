@@ -48,9 +48,9 @@ it offers, and *how* it wins.
   that reduces mental load by prioritizing intelligently." It then guides every feature and
   message.
 - **Segmentation** — divide the market into groups and choose whom to serve, ideally by
-  **need or behaviour**, not demographics. Slack targeted engineering teams already chatting
-  in IRC (a behavioural segment) inside "internal team communication" — winning a niche that
-  then expanded.
+  **need or behaviour**, not demographics. Slack began as the internal chat tool of
+  Tiny Speck, a game studio with staff in three cities. The lesson holds: a need that real
+  users already had, proven inside one team, became the product.
 - **Differentiation** — why a user picks you over alternatives. Two broad routes: do
   something **new** (capabilities others lack) or something **better** (same need, faster /
   cheaper / more delightful). Find the *whitespace* competitors leave. But differentiation
@@ -81,8 +81,9 @@ ideation early. Each lens seeds ideas no silo reaches alone.
   introverts contribute as much as extroverts.
 - **Design sprints** — a time-boxed problem-to-tested-prototype process. Even a mini
   brainstorm → prototype → test cycle injects structured creativity.
-- **Hack days** — freedom to build anything product-related. Many beloved features (Gmail's
-  undo send) began this way.
+- **Hack days** — freedom to build anything product-related. Gmail's undo send shows the
+  idea: it started in 2009 as an experimental Gmail Labs feature and became a standard
+  setting in 2015.
 - **"How might we…?"** framing and the **5 Whys** to reframe a problem from its root — reframing
   opens new solution spaces.
 

@@ -73,8 +73,10 @@ Cultivate it deliberately:
 - **Build psychological safety** — reward people for surfacing inconvenient truths. Assign a
   devil's advocate.
 - **Beware the sunk-cost fallacy** — months invested in a feature is not a reason to keep
-  investing if it isn't working. Kodak invented the digital camera and clung to film. Rigid
-  thinking, not lack of evidence, sank it.
+  investing if it isn't working. Kodak invented the digital camera in 1975, yet its film
+  business stayed profitable for years and slowed its pivot. Strategy writer Scott Anthony
+  argues the Kodak story is often retold too simply, so read it as a warning about a
+  winning bet, not as a proof that Kodak ignored digital.
 
 ## Simulation — walking in the user's shoes
 
@@ -99,9 +101,11 @@ frustrated"* — because vividly imagining a task engages circuits close to actu
 
 ## Many tactics, one strategy: talk to your users
 
-A working PM's version of everything above comes from Twitter's Paul Rosania. There are
-many tactics for staying in tune with users, "but only one strategy: talk to your users."
-Three of his observations are worth keeping:
+A working PM's version of everything above comes from Twitter PM Paul Rosania, as retold
+in a PM-interview collection. There are many tactics for staying in tune with users, "but
+only one strategy: talk to your users." Three observations are worth keeping (the quote
+and anecdote come from that secondhand retelling; we could not check them against the
+original):
 
 - **Mediated research has a failure mode.** A dedicated research team is a luxury — and
   a danger. Consuming results second-hand trains you to think of users as
