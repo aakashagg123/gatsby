@@ -58,8 +58,10 @@ Domain knowledge also builds **credibility**: speaking your users' and stakehold
 makes you a more persuasive communicator and a more trusted decision-maker — sales and
 marketing back your calls when they see you truly understand the market.
 
-**But it must complement, not replace, the rest.** Marty Cagan's warning: experts get
-entrenched, assume they *are* the user, and overlook new perspectives. Domain expertise is a
+**But it must complement, not replace, the rest.** Marty Cagan's warning: too much domain
+expertise can be dangerous, because experts believe they can speak for the target customer
+and are "more like their target customer than they really are." Cagan also says deep domain
+expertise is truly essential for only a few products, and that learning speed matters more. Domain expertise is a
 turbocharger for product sense — used wisely, it lets you skip the basics and focus on the
 subtleties outsiders miss — but only if you keep validating.
 

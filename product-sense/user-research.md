@@ -13,6 +13,8 @@ Two rules govern the choice: match the method to the question, and **trust behav
 statements** — users are honest about problems and unreliable about solutions and futures.
 Interviewing is the core skill: favor past behaviour over hypotheticals, open questions
 over leading ones, and silence over filling it. Five users per round beats fifty per year.
+(Nielsen Norman Group's five-user rule is for qualitative usability rounds with similar
+users. Test more people for quantitative metrics or very different user groups.)
 
 > 🎯 **For the AI PM**
 >
@@ -127,8 +129,17 @@ Three questions classic research rarely asks, and AI products live or die on:
   behind them ([the trace-reading ritual](../technical-product-management/tpm-for-ai-products.md))
   and you have qualitative research at quantitative scale.
 
+**Synthetic users are not users.** Tools now offer AI "participants" that answer interview
+questions in seconds. Nielsen Norman Group reran three of its real studies with such tools.
+The AI answers were too favourable and shallow, and sometimes wrong: the synthetic users
+claimed to have finished online courses that real learners had abandoned. NN/g's advice is
+to use them only for early desk research or to form hypotheses that real users then test.
+They can never supply the surprise that makes research worth doing.
+
 ## Failure modes
 
+- **Interviewing a model instead of a person** — treating AI-simulated participants as
+  evidence of what users do. They agree too easily and hide the unhappy path.
 - **The focus-group future** — asking users to predict their own behaviour, then
   building on the predictions.
 - **Leading the witness** — questions shaped so agreement is the polite answer;
