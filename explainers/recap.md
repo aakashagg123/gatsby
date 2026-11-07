@@ -4,7 +4,7 @@
 
 *Last reviewed: 2026-11 · Volatility: medium*
 
-## The thirteen at a glance
+## The sixteen at a glance
 
 | Explainer | The example | The idea to keep | The stage that matters most |
 | --- | --- | --- | --- |
@@ -21,6 +21,9 @@
 | [One user story to an agent spec](./one-user-story-to-agent-spec.md) | Rebooking missed visits at Fieldline | Give the model only the steps that need judgement. Set autonomy per action, with a rule for more. | Workflow or agent? |
 | [One AI incident](./one-ai-incident-review.md) | Harbor's assistant says the overdraft fee is $0 | An AI feature can be up and wrong. Stop the harm first, then size it from logs. | Stop the harm first |
 | [A senior PM's path](./one-senior-pm-path.md) | A VP asks whether to build an AI assistant for booking changes | Each stage of a path should change what you can do, and a check should prove it. The proof is a decision you can defend. | The decisions only you own |
+| [An AI product lead's path](./one-ai-product-lead-path.md) | Three AI features at an HR software company, and an architecture review | Grounding, memory and autonomy are decided per feature, and the review needs evidence for each. | Trust, access and cost |
+| [An AI engineer's path](./one-ai-engineer-path.md) | A support agent that answers from runbooks and opens tickets | Each stage adds one tested part. Rules live in code, and every part has a test that fails when it breaks. | Agents and the harness |
+| [An AI engineering lead's path](./one-ai-engineering-lead-path.md) | A design document for a claims assistant with an agent | A lead approves by failure handling, sets the release gate and shares one definition of done with product. | Architecture you can review |
 
 **The through-line.** Every system here is a pipeline of stages. Each stage has one job, one cost and one way to break. The same is true of running an AI product: a launch, a model change or an incident is a short series of decisions, each with a number behind it. When something goes wrong, the first useful question is: which stage was it?
 
@@ -54,11 +57,17 @@
    <details><summary>Answer</summary>Stop the harm with a fallback chosen in advance, such as a degraded mode. Diagnose after. (<a href="./one-ai-incident-review.md">One AI incident, from alert to postmortem</a>)</details>
 13. **You finished every lesson in a learning path. How do you know you learned it?**
    <details><summary>Answer</summary>Use what you learned on a real question and check each stage's checkpoint. The senior PM's proof was a one-page answer to the VP, reviewed with the engineering lead. (<a href="./one-senior-pm-path.md">A senior PM's path, one stage at a time</a>)</details>
+14. **What does an AI product lead bring to an architecture review that a demo cannot show?**
+   <details><summary>Answer</summary>Evidence for each feature: why it is grounded the way it is, what it may remember, what each action may do alone, its eval results, threat model and cost per task, and its launch gate. (<a href="./one-ai-product-lead-path.md">An AI product lead's path, one stage at a time</a>)</details>
+15. **Why does the engineer measure retrieval with its own test set before building the agent loop?**
+   <details><summary>Answer</summary>So that when the agent answers wrongly, they can tell a search failure from a model failure, and fix the right part. (<a href="./one-ai-engineer-path.md">An AI engineer's path, one stage at a time</a>)</details>
+16. **A design document has an impressive demo. What does the engineering lead review instead?**
+   <details><summary>Answer</summary>How it fails: the agent's step limit, what each tool can change, permissions, budgets, the fallback for a provider outage and the release gate with its owner. (<a href="./one-ai-engineering-lead-path.md">An AI engineering lead's path, one stage at a time</a>)</details>
 
 ## Sources
 
 - The sources for each explainer are at the end of its page. Papers whose abstracts were read for these pages: Vaswani et al. (2017), Ouyang et al. (2022), Kwon et al. (2023), Ho et al. (2020) and Rombach et al. (2022). The Anthropic agents post and the OWASP Top 10 for LLM Applications were also read. Other citations are marked not re-opened.
 - The six product explainers also read: Amershi et al. (2019), Miller (2024), Google's SRE book chapters on managing incidents and postmortem culture, the OWASP entry on excessive agency, Anthropic's pages on model deprecations, pricing, prompt caching and success criteria, and the FinOps Foundation's FinOps for AI overview.
 - The examples are invented or simplified.
-- The senior PM path explainer (13) takes its stage names, hours and lessons from the path data in this repository. Its fact-check is pending.
+- The four learning-path explainers (13 to 16) take their stage names, hours and lessons from the path data in this repository. Their fact-check is pending.
 - Independent fact-check, run on 2026-11-04 by a separate agent with web access, blind to the edits: clean for the rows and questions about the six product explainers (7 to 12) and for the IDs and years of the five papers named above. The rows and questions about the first six explainers were not checked. Their content, like their own pages, is still pending a fact-check.

@@ -547,6 +547,9 @@ EXPLAINER_FOR_PAGE = {
     "technical-product-management/incidents-and-postmortems.html": "one-ai-incident-review",
     "technical-product-sense/reliability-and-failure.html": "one-ai-incident-review",
     "learning-paths/senior-product-manager.html": "one-senior-pm-path",
+    "learning-paths/ai-product-lead.html": "one-ai-product-lead-path",
+    "learning-paths/ai-engineer.html": "one-ai-engineer-path",
+    "learning-paths/ai-engineering-lead.html": "one-ai-engineering-lead-path",
 }
 
 

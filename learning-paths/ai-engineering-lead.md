@@ -14,7 +14,7 @@ This path is the engineer path in short form, plus what a lead adds: economics, 
 
 **Before you start:** Years of engineering and some time running a team. You may not have shipped an AI feature yet.
 
-**Length:** about 44 hours, across 5 stages. The time is a rough estimate (see Under the hood).
+**Length:** about 44.5 hours, across 5 stages. The time is a rough estimate (see Under the hood).
 
 **Terms:** a large language model (LLM) is a model like those behind chat assistants; the plural is large language models (LLMs); machine learning (ML) is the practice of training models from data.
 
@@ -44,7 +44,7 @@ Each stage ends with a checkpoint. Move on when you can do what the checkpoint s
 
 Cost and latency come from model and serving choices. Know the levers. (about 14 hours)
 
-- **Visual explainers**: [1. Inside one LLM request](../explainers/inside-one-llm-request.md) · [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
+- **Visual explainers**: [16. An AI engineering lead's path, one stage at a time](../explainers/one-ai-engineering-lead-path.md) · [1. Inside one LLM request](../explainers/inside-one-llm-request.md) · [3. One token through a transformer](../explainers/one-token-through-a-transformer.md)
 - **LLMs**: [1. What an LLM actually is](../llms/what-is-an-llm.md) · [2. The context window](../llms/the-context-window.md) · [3. Capabilities & the jagged frontier](../llms/capabilities-and-the-jagged-frontier.md) · [6. Choosing a model](../llms/choosing-a-model.md) · [7. Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md)
 - **Machine learning**: [1. What machine learning is, and when to use it](../machine-learning/what-machine-learning-is.md) · [2. Data: features, labels, splits and leakage](../machine-learning/data-features-labels-and-leakage.md) · [4. Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md) · [5. Measuring a model: metrics, thresholds and baselines](../machine-learning/measuring-a-model.md) · [6. Model families: linear models, trees and neural networks](../machine-learning/model-families.md) · [7. ML in production: drift, skew and the lifecycle](../machine-learning/ml-in-production.md) · [8. Learning and doing ML with Claude Code](../machine-learning/learning-and-doing-ml-with-claude-code.md)
 - **Tensors**: [1. What a tensor is: shape, rank and dtype](../tensors/what-a-tensor-is.md) · [3. Matrix multiplication: the workhorse](../tensors/matrix-multiplication.md) · [4. Batching, memory and precision](../tensors/batching-memory-and-precision.md)
@@ -121,7 +121,7 @@ Turn standards into process: specs, launches, incidents and how product and engi
 
 *This example is invented, to show the method.*
 
-An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 44 hours) takes about 15 weeks.
+An AI engineering lead with three hours a week plans 5 weeks of work. Each week ends with something you can show. This plan is a fast tour: one activity per stage. At this pace the full path (about 44.5 hours) takes about 15 weeks.
 
 | Week | Stage | What you do |
 | --- | --- | --- |

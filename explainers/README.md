@@ -30,11 +30,14 @@ These six follow a product decision rather than a system. Each stage shows a dec
 
 ### How to learn this
 
-These follow one learner through a [learning path](../learning-paths/README.md), stage by stage, to show what each stage changes in what the learner can do. The stage names and hours come from the path itself. One explainer is ready. The AI product lead, AI engineer and AI engineering lead paths will follow.
+These follow one learner through a [learning path](../learning-paths/README.md), stage by stage, to show what each stage changes in what the learner can do. The stage names and hours come from the path itself.
 
 13. [A senior PM's path, one stage at a time](./one-senior-pm-path.md) — follow a senior PM from a VP's question to a one-page answer, through the four stages of the Senior PM path.
+14. [An AI product lead's path, one stage at a time](./one-ai-product-lead-path.md) — follow a new AI product lead from decisions by instinct to an architecture review pack, through the five stages of the AI Product Lead path.
+15. [An AI engineer's path, one stage at a time](./one-ai-engineer-path.md) — follow a backend engineer from a demo to a tested support agent, through the five stages of the AI Engineer path.
+16. [An AI engineering lead's path, one stage at a time](./one-ai-engineering-lead-path.md) — follow an engineering lead from judging a demo to approving a design with conditions, through the five stages of the AI Engineering Lead path.
 
-Then the [recap](./recap.md), with a self-test across all thirteen.
+Then the [recap](./recap.md), with a self-test across all sixteen.
 
 ## How the explainers connect to the lessons
 
@@ -53,6 +56,9 @@ Then the [recap](./recap.md), with a self-test across all thirteen.
 | One user story to an agent spec | [Specs, PRDs & RFCs](../technical-product-management/specs-prds-and-rfcs.md), [Practice: the agent spec and risk register](../building-ai-native-products/agentic-flows-practice.md) |
 | One AI incident | [Incidents & postmortems](../technical-product-management/incidents-and-postmortems.md), [Reliability & failure](../technical-product-sense/reliability-and-failure.md) |
 | A senior PM's path | [Senior PM path](../learning-paths/senior-product-manager.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI product lead's path | [AI Product Lead path](../learning-paths/ai-product-lead.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI engineer's path | [AI Engineer path](../learning-paths/ai-engineer.md), [Visual learning paths](../learning-paths/visual-paths.md) |
+| An AI engineering lead's path | [AI Engineering Lead path](../learning-paths/ai-engineering-lead.md), [Visual learning paths](../learning-paths/visual-paths.md) |
 
 ## About the examples
 

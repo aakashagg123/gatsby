@@ -33,7 +33,7 @@ flowchart LR
 
 ## 2. AI Product Lead
 
-For a product leader who owns an AI product line or a team of PMs shipping AI features. 5 stages, about 31.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Product Lead path page](./ai-product-lead.md).
+For a product leader who owns an AI product line or a team of PMs shipping AI features. 5 stages, about 32 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Product Lead path page](./ai-product-lead.md). Read the story: [An AI product lead's path, one stage at a time](../explainers/one-ai-product-lead-path.md) follows one learner through this path.
 
 ```mermaid
 flowchart LR
@@ -42,7 +42,7 @@ flowchart LR
 
 ## 3. AI Engineer
 
-For a software engineer who builds AI-powered systems. 5 stages, about 85.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Engineer path page](./ai-engineer.md).
+For a software engineer who builds AI-powered systems. 5 stages, about 86 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Engineer path page](./ai-engineer.md). Read the story: [An AI engineer's path, one stage at a time](../explainers/one-ai-engineer-path.md) follows one learner through this path.
 
 ```mermaid
 flowchart LR
@@ -51,7 +51,7 @@ flowchart LR
 
 ## 4. AI Engineering Lead
 
-For an engineering manager or tech lead who runs a team that builds AI systems. 5 stages, about 44 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Engineering Lead path page](./ai-engineering-lead.md).
+For an engineering manager or tech lead who runs a team that builds AI systems. 5 stages, about 44.5 hours in all. Full lesson lists, checkpoints and skip-ahead rules are on the [AI Engineering Lead path page](./ai-engineering-lead.md). Read the story: [An AI engineering lead's path, one stage at a time](../explainers/one-ai-engineering-lead-path.md) follows one learner through this path.
 
 ```mermaid
 flowchart LR
@@ -60,7 +60,7 @@ flowchart LR
 
 ## Worked example: reading one picture
 
-Take the AI Engineer picture. The longest bar is stage 4, agents and the harness (build it), at about 29.5 hours, out of about 85.5 hours for the whole path. Its row shows why: Tool calling 2 · AI agents 1 · Agentic workflows 3 · AI engineering stack 1 · Harness engineering: 6 phases to build. An engineer with 9 hours a week should plan about 4 weeks for that stage alone. That is the stage to protect in the calendar.
+Take the AI Engineer picture. The longest bar is stage 4, agents and the harness (build it), at about 29.5 hours, out of about 86 hours for the whole path. Its row shows why: Tool calling 2 · AI agents 1 · Agentic workflows 3 · AI engineering stack 1 · Harness engineering: 6 phases to build. An engineer with 9 hours a week should plan about 4 weeks for that stage alone. That is the stage to protect in the calendar.
 
 ## Failure modes
 
