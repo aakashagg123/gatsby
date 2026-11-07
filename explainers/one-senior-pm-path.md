@@ -2,6 +2,8 @@
 
 *Part of [Visual explainers](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 ## In one minute
 
 A learning path is a list of lessons in order. This page follows one learner through one path, to show what each stage changes in what they can do. The learner is a senior product manager at Wayline, an online travel company. Their vice president (VP) asks: **"Should we build an AI assistant that helps customers change their bookings? What will it cost, and what could go wrong?"**
@@ -170,4 +172,5 @@ flowchart LR
 ## Sources
 
 - Path data as of 2026-11-07: the stage names, hours, lesson counts and checkpoints come from the Senior PM path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/senior-product-manager.md). The hours are this course's rule of thumb, about 25 minutes a lesson, not measured. The weeks use the path's own pace of 3 hours a week. The lessons each stage relies on for its "Do this" check: [How systems are built](../technical-product-sense/how-systems-are-built.md), [When prompts fail: the diagnostic playbook](../prompt-engineering/when-prompts-fail.md), [Build, buy, or fine-tune](../generative-ai/build-buy-or-fine-tune.md), [When to use RAG, and when not to](../rag-vector-databases/when-to-use-rag.md).
-- Wayline, the senior PM, the VP, the assistant and its 50 test cases and five must-not-fail cases are invented for the example. This page's fact-check is pending.
+- Wayline, the senior PM, the VP, the assistant and its 50 test cases and five must-not-fail cases are invented for the example.
+- Independent fact-check: run on 2026-11-07 by a separate agent with web access, blind to the edits, over three passes. Pass 1 found one wrong row (the AI Product Lead weeks) and four unsupported rows. Pass 2 found one unsupported row. Pass 3 was clean, with no wrong, stale or unsupported claims. The checker compared the page with the path data and the linked lessons. It counted the lessons in each stage by hand rather than running the generator; `scripts/check_path_explainers.py` checks the same numbers by machine. The hours remain this course's rule of thumb, not measured.

@@ -2,6 +2,8 @@
 
 *Part of [Visual explainers](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 ## In one minute
 
 A learning path is a list of lessons in order. This page follows one learner through one path, to show what each stage changes in what they can do. The learner is the new AI product lead at Brightlane, a company that sells HR software. They own three AI features: answers to policy questions, summaries of interview notes, and a planned agent that helps new hires through onboarding. In a quarter's time, they must defend the plan for all three at an architecture review.
@@ -189,4 +191,5 @@ flowchart LR
 ## Sources
 
 - Path data as of 2026-11-07: the stage names, hours, lesson counts and checkpoints come from the AI Product Lead path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/ai-product-lead.md). The hours are this course's rule of thumb, about 25 minutes a lesson, not measured. The weeks use the path's own pace of 4 hours a week. The 18.5-hour figure is the path's own estimate for a reader who did the Senior PM path. The lessons each stage relies on for its "Do this" check: [Prompting vs. RAG vs. fine-tuning](../llms/prompting-vs-rag-vs-finetuning.md), [Context as a spec-able requirement](../context-engineering/context-as-a-spec-able-requirement.md), [What an agent is, and how much autonomy it needs](../ai-agents/what-an-agent-is-and-how-much-autonomy-it-needs.md), [Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md), [Capstone: ship one AI-native feature](../building-ai-native-products/capstone-ship-one-ai-native-feature.md).
-- Brightlane, the AI product lead, the three features, the policy timing and every rule about them are invented for the example. This page's fact-check is pending.
+- Brightlane, the AI product lead, the three features, the policy timing and every rule about them are invented for the example.
+- Independent fact-check: run on 2026-11-07 by a separate agent with web access, blind to the edits, over three passes. Pass 1 found one wrong row (the AI Product Lead weeks) and four unsupported rows. Pass 2 found one unsupported row. Pass 3 was clean, with no wrong, stale or unsupported claims. The checker compared the page with the path data and the linked lessons. It counted the lessons in each stage by hand rather than running the generator; `scripts/check_path_explainers.py` checks the same numbers by machine. The hours remain this course's rule of thumb, not measured.

@@ -2,6 +2,8 @@
 
 *Part of [Visual explainers](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 ## In one minute
 
 A learning path is a list of lessons in order. This page follows one learner through one path, to show what each stage changes in what they can do. The learner is an engineering lead at Pillar, a company that sells software to insurers. Their team brings a design document: **a claims assistant that answers from policy documents and uses an agent to update claim records.** The lead must approve it, push back or ask for changes.
@@ -184,4 +186,5 @@ flowchart LR
 ## Sources
 
 - Path data as of 2026-11-07: the stage names, hours, lesson counts and checkpoints come from the AI Engineering Lead path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/ai-engineering-lead.md). The hours are this course's rule of thumb, about 25 minutes a reading lesson and about 2 hours to skim a harness phase, not measured. The weeks use the path's own pace of 3 hours a week. The lessons each stage relies on for its "Do this" check: [Latency, quality, cost, and reliability across the full inference stack](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md), [When not to build an agent](../ai-agents/when-not-to-build-an-agent.md), [Building the eval stack in the right order](../evaluation-and-observability/building-the-eval-stack-in-the-right-order.md), [Reliability & failure](../technical-product-sense/reliability-and-failure.md), [Technical product management for AI](../technical-product-management/tpm-for-ai-products.md).
-- Pillar, the engineering lead, the claims assistant, its design and every condition on it are invented for the example. This page's fact-check is pending.
+- Pillar, the engineering lead, the claims assistant, its design and every condition on it are invented for the example.
+- Independent fact-check: run on 2026-11-07 by a separate agent with web access, blind to the edits, over three passes. Pass 1 found one wrong row (the AI Product Lead weeks) and four unsupported rows. Pass 2 found one unsupported row. Pass 3 was clean, with no wrong, stale or unsupported claims. The checker compared the page with the path data and the linked lessons. It counted the lessons in each stage by hand rather than running the generator; `scripts/check_path_explainers.py` checks the same numbers by machine. The hours remain this course's rule of thumb, not measured.
