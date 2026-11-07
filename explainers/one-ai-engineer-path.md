@@ -27,7 +27,7 @@ flowchart LR
 
 ## 2 · Plan the weeks
 
-The path has five stages and takes about 86 hours in all. That is the longest of the four paths. The hours are this course's rule of thumb: about 25 minutes for a reading lesson and about an hour for each harness lesson you build.
+The path has five stages and takes about 86 hours in all. That is the longest of the four paths. The hours are this course's rule of thumb: about 25 minutes for a reading lesson and about an hour for each harness lesson you build. The capstone is counted as 3 hours.
 
 The engineer has about 9 hours a week for this. At 9 hours a week, about 10 weeks. The longest stage is stage 4, agents and the harness, at about 29.5 hours, because it builds an agent's parts by hand. Stage 5, production, is almost as long.
 
@@ -120,7 +120,7 @@ flowchart LR
 
 *Path stage 5 · about 28 hours · 41 lessons*
 
-The last stage prepares the agent for real use. The engineer builds the rest of the harness, ending with the capstone, and reads about serving, routing, evals, tracing, security, access control and system design. It includes the explainer [Anatomy of a guardrailed request](./anatomy-of-a-guardrailed-request.md).
+The last stage prepares the agent for real use. The engineer builds the rest of the harness, ending with the capstone, and reads about serving, routing, evals, tracing, security, access control and system design. The path counts the capstone as 3 hours of this stage. It includes the explainer [Anatomy of a guardrailed request](./anatomy-of-a-guardrailed-request.md).
 
 Before this stage, the agent worked on the engineer's laptop. After it, every request leaves a trace that shows each step, tool call, token count and cost. An eval set runs on every change. A question built to trick the agent into opening tickets for another team is blocked by the permission gate, and the attempt is logged.
 
@@ -187,6 +187,5 @@ flowchart LR
 
 ## Sources
 
-- The stage names, hours, lesson counts and checkpoints come from the AI Engineer path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/ai-engineer.md). The hours are this course's rule of thumb, about 25 minutes a reading lesson and about an hour for each harness lesson you build, not measured. The weeks use the path's own pace of 9 hours a week.
-- Path data as of 2026-11-07, from `scripts/gen_learning_paths.py` in this repository, which also generates the [path page](../learning-paths/ai-engineer.md). The lessons each stage relies on for its "Do this" check: [Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md), [Calling an LLM API](../api-integrations/calling-an-llm-api.md), [Retrieval quality](../rag-vector-databases/retrieval-quality.md), [Phase 01 — Foundations and the Loop](../harness-engineering/phases/01-foundations-and-the-loop/README.md), [Evals](../content/04-evals-observability/evals.md).
+- Path data as of 2026-11-07: the stage names, hours, lesson counts and checkpoints come from the AI Engineer path in this repository (`scripts/gen_learning_paths.py`), which generates the [path page](../learning-paths/ai-engineer.md). The hours are this course's rule of thumb, about 25 minutes a reading lesson, about an hour for each harness lesson you build and 3 hours for the capstone, not measured. The weeks use the path's own pace of 9 hours a week. The lessons each stage relies on for its "Do this" check: [Generalization: overfitting and the bias–variance tradeoff](../machine-learning/generalization-overfitting-and-bias-variance.md), [Calling an LLM API](../api-integrations/calling-an-llm-api.md), [Retrieval quality](../rag-vector-databases/retrieval-quality.md), [Phase 01 — Foundations and the Loop](../harness-engineering/phases/01-foundations-and-the-loop/README.md), [Evals](../content/04-evals-observability/evals.md).
 - Freightly, the engineer, the support agent, its ticket limit and every number about it are invented for the example. This page's fact-check is pending.

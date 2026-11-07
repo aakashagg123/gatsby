@@ -203,6 +203,6 @@ flowchart LR
 ## Sources
 
 - Saleema Amershi et al., *Guidelines for Human-AI Interaction*, Conference on Human Factors in Computing Systems (CHI), 2019, read 2026-11: 18 guidelines, including G2 "Make clear how well the system can do what it can do" and G9 "Support efficient correction".
-- Anthropic, "Define your success criteria", platform.claude.com/docs/en/test-and-evaluate/define-success, read 2026-11: success criteria should be specific, measurable, achievable and relevant, and most uses need several criteria, including latency and price.
+- Anthropic, "Define success criteria and build evaluations", platform.claude.com/docs/en/test-and-evaluate/define-success, read 2026-11: success criteria should be specific, measurable, achievable and relevant, and most uses need several criteria, including latency and price.
 - Northwind Mutual, its claims, scores, prices, hours and costs are invented for the example.
 - Independent fact-check: run on 2026-11-04 by a separate agent with web access, blind to the edits. Result: clean, with no wrong, stale or unsupported claims. The checker confirmed the wording of the human-AI guidelines on Microsoft's own guidelines page, not in the paper PDF. It read the success-criteria page in part: the first 100,000 of about 153,000 characters. Vendor documentation pages carry no on-page date, so the vendor terms above hold as of the read date.
