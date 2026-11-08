@@ -42,7 +42,7 @@ picks the lowest tier number among due modules.
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | 2026-11-03 |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | 2026-10-31 |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | 2026-10-30 |
-| agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | never |
+| agentic-workflows | agentic-workflows/ | scripts/build_agentic_workflows.py | 2 | 30 | 2026-11-08 |
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | 2026-10-29 |
@@ -810,3 +810,24 @@ and a link to the merged PR.)
   Flagged: (1) Possible new lesson: AI-era user research (AI-moderated interviews, synthetic users, trace review). Not built.
   (2) `first-principles` and other modules may repeat the Kodak "clung to film" or Fogg "× T" wording; grep before the next run there.
   (3) check_module: acronym warnings grew (BCG, CHI, FTC, KDD, NN); minor. Build needed `pip install markdown`.
+
+- 2026-11-08 — agentic-workflows — tier 2. Picked because no tier-1 row was due (oldest, business-acumen, is 23 of 45 days)
+  and this was the only tier-2 row at `never`. Outcome: fixed and expanded. README, 3 lessons and recap read in full.
+  Fixed: the Cognition posts were cited from search excerpts and marked "could not be opened". Both were opened and are now
+  quoted and dated (12 Jun 2025; 22 Apr 2026). The follow-up's conditions are stated: single-threaded writes; review loop with
+  clean context; "smart friend"; manager and child agents. Anthropic's 90.2%, 4x/15x, coding, delegation, rainbow-deploy and resume
+  claims were re-checked against the article and all hold.
+  Expanded: Anthropic's Apr 2026 five coordination patterns and "start with orchestrator-subagent" (lesson 2); parallel-writer and
+  rubber-stamp-verifier failure modes; sectioning vs voting (lesson 1); checkpoint vs durable execution, Temporal determinism and
+  worker versioning for in-flight deploys, Stripe key retention (24 h, v1) and parameter-mismatch error (lesson 3); test-yourself Q9.
+  Sources opened: anthropic.com/engineering/multi-agent-research-system; anthropic.com/engineering/building-effective-agents
+  (note says tooling changed; points to Managed Agents); cognition.com/blog/dont-build-multi-agents;
+  cognition.com/blog/multi-agents-working; claude.com/blog/multi-agent-coordination-patterns; docs.temporal.io/workflow-definition;
+  docs.temporal.io/workflow-execution/event; temporal.io/blog/temporal-langgraph-plugin-durable-execution (vendor);
+  docs.langchain.com/oss/python/langgraph/persistence; docs.stripe.com/api/idempotent_requests.
+  Search results only, not opened: Temporal OpenAI Agents SDK integration GA (third-party), Cognition "Devin manages Devins"
+  (Mar 2026), Anthropic Frontier Red Team multi-agent failure study (Aug 2026 news roundup).
+  Not verified: LangGraph durable-execution/interrupt docs (page did not cover them); Anthropic Managed Agents post; A2A/MCP
+  status (owned by agentic-ai); Flowable claims; Stripe API v2 idempotency behaviour in detail.
+  Flagged: (1) Possible new lesson: choosing a durable-execution framework (Temporal, LangGraph, vendor agent runtimes); not built.
+  (2) Anthropic "Managed Agents" is a new hosted-runtime option; check it in `agentic-ai` or `ai-agents` runs.

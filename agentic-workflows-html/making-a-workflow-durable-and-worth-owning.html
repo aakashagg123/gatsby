@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>Making a workflow durable, and worth owning</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A workflow earns the name when it must outlive one continuous run. It may wait three days
 for a signature. A server may restart in the middle. It must pick up where it stopped.</p>
@@ -145,7 +145,9 @@ try again. A limit and a growing delay keep a bad step from looping all night. A
 limit, the workflow should stop and raise the problem to a person.</p>
 <p><strong>Safe repeats.</strong> A retry or a restart can run a step twice. An action such as "charge the
 card" must not charge twice. Give each action an idempotency key, which makes a repeat
-harmless.</p>
+harmless. Check the limits of the key. Stripe's API v1 saves the first result for a key and
+returns it on a retry. It may remove keys after 24 hours, and it errors if a retry reuses a
+key with different parameters. A wait of three days is longer than that window. After it, the same key may run the action again. So retry soon after a failure, or look up the result before you retry.</p>
 <p><strong>Undo steps.</strong> If step 5 fails after steps 1 to 4 succeeded, the workflow must not be
 left half done. Define a compensating action for each step that changed the world: cancel
 the booking, reverse the refund, release the stock.</p>
@@ -164,7 +166,16 @@ scratch in the <a href="../flowable/index.html">Flowable</a> track.</p>
 <li>What happens to a workflow already in flight when we deploy new code?</li>
 <li>Can we see, retry, or cancel one stuck workflow without a developer?</li>
 </ul>
-<p>The second question is real. Anthropic noted that its research agents run for long periods
+<p>A saved checkpoint is not the same as durable execution. A checkpoint keeps the data. It
+does not restart the run. Temporal makes this point about LangGraph in a July 2026 post:
+a run lives in one process, and if the process dies the run dies with it, unless an
+orchestration layer resumes it. Temporal sells that layer, so weigh the claim as vendor
+framing. The question for any framework is who restarts the run, and on which machine.</p>
+<p>The second question is real. Temporal's docs show why. A workflow must be deterministic so
+a worker can replay its history. If a deploy changes the order of steps, replay of an
+in-flight workflow fails with a non-determinism error. Temporal's answer is worker
+versioning, which keeps old workers on old code, or patching. Put LLM calls and API calls
+in retried activities, not in the workflow code itself. Anthropic noted that its research agents run for long periods
 across many tool calls, so a code update can land mid-run. It used "rainbow deployments,"
 which shift traffic gradually so running agents are not cut off. Plan for updates to a
 system that is never idle.</p>
@@ -277,6 +288,9 @@ case are developed in
 <li><strong>Retry without idempotency.</strong> The retry that fixes one fault creates a duplicate charge.</li>
 <li><strong>No undo for a partial failure.</strong> The system ends up half done, in a state nobody
   planned.</li>
+<li><strong>A deploy that breaks in-flight work.</strong> New code changes the step order, and workflows
+  already waiting cannot replay.</li>
+<li><strong>Checkpoints mistaken for durability.</strong> State is saved, but nothing restarts the run.</li>
 <li><strong>Waiting forever.</strong> No timer and no escalation, so a missed reply stalls the case.</li>
 <li><strong>Owning a step, not the workflow.</strong> A rival captures the whole flow, and the single-step
   tool becomes replaceable.</li>
@@ -327,7 +341,9 @@ per completed workflow.</p>
 <li class="task todo">Does every retried action carry an idempotency key?</li>
 <li class="task todo">Is there a compensating action for every step that changes the world, and a gate
       before every step that cannot be undone?</li>
-<li class="task todo">Do we know what happens to in-flight workflows when we deploy new code?</li>
+<li class="task todo">Do we know what happens to in-flight workflows when we deploy new code, and is there a
+      versioning plan?</li>
+<li class="task todo">If a framework saves checkpoints, what restarts the run after a crash?</li>
 <li class="task todo">Have we tested a restart in the middle of a run?</li>
 <li class="task todo">What share of this "automated" workflow do people still do, and is it shrinking?</li>
 </ul>
@@ -348,7 +364,16 @@ per completed workflow.</p>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
   (Jun 13, 2025): resuming from where errors occurred, long-running stateful agents, and
-  rainbow deployments. Checked 2026-09.</li>
+  rainbow deployments. Checked 2026-11.</li>
+<li>Temporal, <a href="https://docs.temporal.io/workflow-definition">Workflow Definition</a>: the determinism
+  rule, replay checks, durable timers, and worker versioning or patching for in-flight
+  workflows. Opened 2026-11.</li>
+<li>Temporal, <a href="https://temporal.io/blog/temporal-langgraph-plugin-durable-execution">LangGraph plugin post</a>
+  (Jul 16, 2026): the claim that checkpoints are not durable execution. Vendor-authored.
+  Opened 2026-11. The LangGraph persistence docs describe checkpointers as saving a thread's
+  state, and say <code>InMemorySaver</code> loses state on restart.</li>
+<li>Stripe, <a href="https://docs.stripe.com/api/idempotent_requests">Idempotent requests</a>: saved first
+  result, 24-hour key pruning for API v1, and the parameter-mismatch error. Opened 2026-11.</li>
 <li>Temporal, <a href="https://docs.temporal.io/encyclopedia/event-history">Event History</a>: a
   durable log of a workflow's events, replayed by a new worker to rebuild state. The page
   itself was blocked when checked. The behaviour was confirmed from the same docs text in

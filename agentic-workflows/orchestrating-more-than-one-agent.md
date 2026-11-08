@@ -2,7 +2,7 @@
 
 *Part of [Agentic workflows for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -80,15 +80,33 @@ findings matter to a product leader.
   fewer truly parallelizable tasks than research," and that agents are "not yet great at
   coordinating and delegating to other agents in real time."
 
-There is a sharper counter-view. Cognition, the maker of a coding agent, argued in June
-2025 that agents working in parallel without shared context make conflicting decisions,
-because every action carries hidden decisions. In April 2026 it published a follow-up,
-"Multi-Agents: What's Actually Working." It says multi-agent setups now work in a narrow
-class of cases: the writes stay single-threaded, and the extra agents contribute
-intelligence rather than actions. Treat this as a real objection and a refinement, not a
-rebuttal of the Anthropic result. Anthropic's own caveat about coding points the same way:
-tightly coupled work resists parallel agents. Research that splits into independent
-searches suits them better.
+There is a sharper counter-view. Cognition, the maker of a coding agent, argued on 12 June
+2025 that agents working in parallel without shared context make conflicting decisions.
+Its reason: "Actions carry implicit decisions, and conflicting decisions carry bad
+results." On 22 April 2026 it published a follow-up, "Multi-Agents: What's Actually
+Working." Its summary: multi-agent setups work when "writes stay single-threaded and the
+additional agents contribute intelligence rather than actions." It names three shapes that
+work:
+
+- **Review loops.** A reviewer agent sees only the diff, not the coder's history, and
+  catches more bugs. The coding agent must be able to filter the reviewer's findings, or
+  the loop never ends.
+- **A "smart friend".** A smaller main model asks a stronger model for hard decisions.
+  Cognition says this works when both models are strong.
+- **A manager and child agents** for a large scope. The manager splits the work and
+  merges the results.
+
+Treat this as a real objection and a refinement, not a rebuttal of the Anthropic result.
+Anthropic's own caveat about coding points the same way: tightly coupled work resists
+parallel agents. Research that splits into independent searches suits them better.
+
+Anthropic's own advice moved in the same direction. In April 2026 it described five
+coordination patterns: generator-verifier, orchestrator-subagent, agent teams, message bus
+and shared state. It recommends starting with orchestrator-subagent, because it covers
+the widest range of problems with the least coordination overhead. Then watch where it
+struggles. The post gives no token figures. It warns that a verifier without explicit
+criteria becomes a rubber stamp, that agent teams can conflict over shared resources, and
+that a misrouted message-bus event can fail silently.
 
 ## The discipline that keeps any shape from collapsing
 
@@ -157,6 +175,9 @@ with a simple step. Each subagent has a stop rule, so cost is capped.
 - **No owner for the whole.** Every part is right and the result is incoherent.
 - **Hidden conflicts.** Workers make incompatible choices because they cannot see each
   other's context.
+- **Parallel writers.** Two agents edit the same files or records. Keep writes with one
+  agent, and let the others read, review or advise.
+- **A rubber-stamp reviewer.** A verifier with no explicit criteria approves everything.
 - **Protocol-driven roadmaps.** The plan depends on a speculative "agent internet" instead
   of what is adopted today.
 
@@ -200,6 +221,7 @@ Three habits matter to an engineer.
 - [ ] Do we have a cost estimate against the single-agent version, using measured runs?
 - [ ] Are handoffs written briefs with a goal, scope, format, boundaries and stop rule?
 - [ ] Is worker output checked against a schema before the lead uses it?
+- [ ] Do writes to shared files or records go through one agent?
 - [ ] Is one agent or one person accountable for the combined result?
 - [ ] Is each worker budgeted, and are all workers traced under one run id?
 
@@ -220,10 +242,12 @@ Three habits matter to an engineer.
 
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 13, 2025): the 90.2% internal result, the 4x and 15x token figures, the conditions
-  where multi-agent fits and does not, and the vague-delegation failures. Checked 2026-09.
-- Cognition, "Don't Build Multi-Agents" (Jun 2025) and the follow-up "Multi-Agents:
-  What's Actually Working" (Apr 2026): the view that parallel agents without shared
-  context make conflicting decisions, and the later narrow class that works. Both pages
-  were blocked when this lesson was written. They are summarised from search-result
-  excerpts.
+  where multi-agent fits and does not, and the vague-delegation failures. Checked 2026-11.
+- Cognition, [Don't Build Multi-Agents](https://cognition.com/blog/dont-build-multi-agents)
+  (12 Jun 2025) and [Multi-Agents: What's Actually Working](https://cognition.com/blog/multi-agents-working)
+  (22 Apr 2026): the view that parallel agents without shared context make conflicting
+  decisions, and the three shapes that work. Both pages were opened and read. Checked 2026-11.
+- Anthropic, [Multi-agent coordination patterns: Five approaches and when to use them](https://claude.com/blog/multi-agent-coordination-patterns)
+  (10 Apr 2026): the five patterns, the advice to start with orchestrator-subagent, and
+  the named weaknesses. Checked 2026-11.
 - The payments research scenario and the brief template are invented and illustrative.

@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>Choosing a workflow pattern</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-09 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Many AI features that do real work are not one model call. They are a workflow: several
 model calls, and some plain code, joined in a shape. Five shapes are common.</p>
@@ -196,6 +196,9 @@ definitions follows Anthropic's.</p>
 </tr>
 </tbody>
 </table>
+<p>Parallelization has two forms. In <em>sectioning</em>, independent subtasks run at once. In
+<em>voting</em>, the same task runs several times and code combines the answers. Use voting
+when one wrong answer is costly and a rule can compare the answers.</p>
 <p>Patterns combine. A common product shape is route, then chain, with an evaluator on the
 last step. Keep each added layer justified by a measured gap.</p>
 <h2 id="worked-example-one-support-email-five-ways">Worked example: one support email, five ways</h2>
@@ -263,6 +266,9 @@ that choice.</p>
   The task had fixed steps.</li>
 <li><strong>A chain with no checks between steps.</strong> One bad output is passed on and amplified.</li>
 <li><strong>Routing with no fallback.</strong> An input that fits no category gets forced into one.</li>
+<li><strong>A critic with no criteria.</strong> A verifier that has no explicit pass rule becomes a rubber
+  stamp. Anthropic's April 2026 coordination post warns about this, and Cognition's review
+  loops work when the reviewer sees only the diff and a clean context.</li>
 <li><strong>A critic that is the same model with the same blind spots.</strong> The loop agrees with
   itself. Use a test, a validator or a rubric as the check.</li>
 <li><strong>An unbounded loop.</strong> An evaluator that never says "good enough" runs until the budget
@@ -324,8 +330,12 @@ and briefs described in
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
-  (Dec 2024): the five workflow patterns and their definitions, the workflow-versus-agent
-  distinction, and the advice to start simple. Checked 2026-09.</li>
+  (Dec 19, 2024): the five workflow patterns and their definitions, the sectioning and voting
+  forms of parallelization, the workflow-versus-agent distinction, and the advice to start
+  simple. A note at the top of the page says the tooling landscape has changed since
+  then. The patterns still stand. Checked 2026-11.</li>
+<li>Anthropic, <a href="https://claude.com/blog/multi-agent-coordination-patterns">Multi-agent coordination patterns</a>
+  (Apr 10, 2026): the verifier-without-criteria warning and the loop limit. Checked 2026-11.</li>
 <li>The cost and flexibility ordering of the patterns is this lesson's judgement. Anthropic
   does not rank them.</li>
 <li>The support-email comparison, its call counts and the code sketches are invented and

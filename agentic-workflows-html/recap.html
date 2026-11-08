@@ -29,11 +29,13 @@ pattern depends on the task. Check how much of your work is truly independent. S
 <a href="choosing-a-workflow-pattern.html">choosing a pattern</a>.</p>
 <p><strong>The counter-view, and its update (2025 and 2026).</strong> In June 2025 Cognition, which builds a
 coding agent, argued that agents working in parallel without shared context make
-conflicting decisions, because actions carry hidden decisions. In April 2026 it published a
-follow-up saying multi-agent setups now work in a narrow class of cases: the writes stay
-single-threaded, and the extra agents contribute intelligence rather than actions.
-🎯 <em>Takeaway:</em> treat shared context as a design requirement for any multi-agent split.
-These summaries come from search-result excerpts. The original pages could not be opened.</p>
+conflicting decisions, because actions carry hidden decisions. On 22 April 2026 it published a
+follow-up saying multi-agent setups work when writes stay single-threaded and the extra
+agents contribute intelligence rather than actions. Its examples: a reviewer with a clean
+context, a stronger "smart friend" model, and a manager with child agents. Anthropic's April
+2026 post on coordination patterns also advises starting with orchestrator-subagent.
+🎯 <em>Takeaway:</em> treat shared context as a design requirement for any multi-agent split, and
+keep writes with one agent.</p>
 <p><strong>Vague delegation (2025).</strong> Anthropic reports that when its lead agent gave short,
 vague tasks, subagents "misinterpreted the task or performed the exact same searches as
 other agents." Clear briefs with an objective, an output format and boundaries fixed it.
@@ -134,17 +136,28 @@ restart mid-run with nothing done twice?"</em></p>
 <details><summary>Answer</summary>A retry or restart can run a step twice. A key makes the repeat return the same result instead of charging or sending twice. (<a href="making-a-workflow-durable-and-worth-owning.html">Lesson 3</a>)</details>
 </p>
 </li>
+<li>
+<p><strong>Why is a saved checkpoint not the same as durable execution, and what breaks when you deploy new code?</strong>
+ <br />
+<details><summary>Answer</summary>A checkpoint keeps data, but nothing restarts the run if the process dies. A deploy that changes step order can make in-flight workflows fail on replay, so plan worker versioning or patching. (<a href="making-a-workflow-durable-and-worth-owning.html">Lesson 3</a>)</details>
+</p>
+</li>
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system">How we built our multi-agent research system</a>
   (Jun 13, 2025): the 90.2% result, 4x and 15x token figures, where multi-agent fits and
   does not, vague delegation, resuming from errors, and rainbow deployments. Checked
-  2026-09.</li>
+  2026-11.</li>
 <li>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>
-  (Dec 2024): the five workflow patterns. Checked 2026-09.</li>
-<li>Cognition, "Don't Build Multi-Agents" (Jun 2025) and "Multi-Agents: What's Actually
-  Working" (Apr 2026). Search-result excerpts only; the pages could not be opened.</li>
+  (Dec 2024): the five workflow patterns. Checked 2026-11.</li>
+<li>Cognition, <a href="https://cognition.com/blog/dont-build-multi-agents">Don't Build Multi-Agents</a>
+  (Jun 2025) and <a href="https://cognition.com/blog/multi-agents-working">Multi-Agents: What's Actually Working</a>
+  (Apr 2026). Opened and read 2026-11.</li>
+<li>Anthropic, <a href="https://claude.com/blog/multi-agent-coordination-patterns">Multi-agent coordination patterns</a>
+  (Apr 2026). Checked 2026-11.</li>
+<li>Temporal, <a href="https://docs.temporal.io/workflow-definition">Workflow Definition</a> and Stripe,
+  <a href="https://docs.stripe.com/api/idempotent_requests">Idempotent requests</a>. Checked 2026-11.</li>
 <li>The refund story is an invented illustration.</li>
 </ul>
 <hr /></div>

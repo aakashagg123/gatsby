@@ -21,11 +21,13 @@ pattern depends on the task. Check how much of your work is truly independent. S
 
 **The counter-view, and its update (2025 and 2026).** In June 2025 Cognition, which builds a
 coding agent, argued that agents working in parallel without shared context make
-conflicting decisions, because actions carry hidden decisions. In April 2026 it published a
-follow-up saying multi-agent setups now work in a narrow class of cases: the writes stay
-single-threaded, and the extra agents contribute intelligence rather than actions.
-🎯 *Takeaway:* treat shared context as a design requirement for any multi-agent split.
-These summaries come from search-result excerpts. The original pages could not be opened.
+conflicting decisions, because actions carry hidden decisions. On 22 April 2026 it published a
+follow-up saying multi-agent setups work when writes stay single-threaded and the extra
+agents contribute intelligence rather than actions. Its examples: a reviewer with a clean
+context, a stronger "smart friend" model, and a manager with child agents. Anthropic's April
+2026 post on coordination patterns also advises starting with orchestrator-subagent.
+🎯 *Takeaway:* treat shared context as a design requirement for any multi-agent split, and
+keep writes with one agent.
 
 **Vague delegation (2025).** Anthropic reports that when its lead agent gave short,
 vague tasks, subagents "misinterpreted the task or performed the exact same searches as
@@ -88,16 +90,24 @@ If yes, this is a workflow worth building. If no, you know which lesson to rerea
 8. **Why do retries need idempotency keys?**
    <details><summary>Answer</summary>A retry or restart can run a step twice. A key makes the repeat return the same result instead of charging or sending twice. (<a href="./making-a-workflow-durable-and-worth-owning.md">Lesson 3</a>)</details>
 
+9. **Why is a saved checkpoint not the same as durable execution, and what breaks when you deploy new code?**
+   <details><summary>Answer</summary>A checkpoint keeps data, but nothing restarts the run if the process dies. A deploy that changes step order can make in-flight workflows fail on replay, so plan worker versioning or patching. (<a href="./making-a-workflow-durable-and-worth-owning.md">Lesson 3</a>)</details>
+
 ## Sources
 
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 13, 2025): the 90.2% result, 4x and 15x token figures, where multi-agent fits and
   does not, vague delegation, resuming from errors, and rainbow deployments. Checked
-  2026-09.
+  2026-11.
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
-  (Dec 2024): the five workflow patterns. Checked 2026-09.
-- Cognition, "Don't Build Multi-Agents" (Jun 2025) and "Multi-Agents: What's Actually
-  Working" (Apr 2026). Search-result excerpts only; the pages could not be opened.
+  (Dec 2024): the five workflow patterns. Checked 2026-11.
+- Cognition, [Don't Build Multi-Agents](https://cognition.com/blog/dont-build-multi-agents)
+  (Jun 2025) and [Multi-Agents: What's Actually Working](https://cognition.com/blog/multi-agents-working)
+  (Apr 2026). Opened and read 2026-11.
+- Anthropic, [Multi-agent coordination patterns](https://claude.com/blog/multi-agent-coordination-patterns)
+  (Apr 2026). Checked 2026-11.
+- Temporal, [Workflow Definition](https://docs.temporal.io/workflow-definition) and Stripe,
+  [Idempotent requests](https://docs.stripe.com/api/idempotent_requests). Checked 2026-11.
 - The refund story is an invented illustration.
 
 ---
