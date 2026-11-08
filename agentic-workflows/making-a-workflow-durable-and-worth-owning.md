@@ -2,7 +2,7 @@
 
 *Part of [Agentic workflows for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -69,7 +69,9 @@ limit, the workflow should stop and raise the problem to a person.
 
 **Safe repeats.** A retry or a restart can run a step twice. An action such as "charge the
 card" must not charge twice. Give each action an idempotency key, which makes a repeat
-harmless.
+harmless. Check the limits of the key. Stripe's API v1 saves the first result for a key and
+returns it on a retry. It may remove keys after 24 hours, and it errors if a retry reuses a
+key with different parameters. A wait of three days is longer than that window. After it, the same key may run the action again. So retry soon after a failure, or look up the result before you retry.
 
 **Undo steps.** If step 5 fails after steps 1 to 4 succeeded, the workflow must not be
 left half done. Define a compensating action for each step that changed the world: cancel
@@ -93,7 +95,17 @@ For the product decision, ask three questions of any engine or framework:
 - What happens to a workflow already in flight when we deploy new code?
 - Can we see, retry, or cancel one stuck workflow without a developer?
 
-The second question is real. Anthropic noted that its research agents run for long periods
+A saved checkpoint is not the same as durable execution. A checkpoint keeps the data. It
+does not restart the run. Temporal makes this point about LangGraph in a July 2026 post:
+a run lives in one process, and if the process dies the run dies with it, unless an
+orchestration layer resumes it. Temporal sells that layer, so weigh the claim as vendor
+framing. The question for any framework is who restarts the run, and on which machine.
+
+The second question is real. Temporal's docs show why. A workflow must be deterministic so
+a worker can replay its history. If a deploy changes the order of steps, replay of an
+in-flight workflow fails with a non-determinism error. Temporal's answer is worker
+versioning, which keeps old workers on old code, or patching. Put LLM calls and API calls
+in retried activities, not in the workflow code itself. Anthropic noted that its research agents run for long periods
 across many tool calls, so a code update can land mid-run. It used "rainbow deployments,"
 which shift traffic gradually so running agents are not cut off. Plan for updates to a
 system that is never idle.
@@ -166,6 +178,9 @@ case are developed in
 - **Retry without idempotency.** The retry that fixes one fault creates a duplicate charge.
 - **No undo for a partial failure.** The system ends up half done, in a state nobody
   planned.
+- **A deploy that breaks in-flight work.** New code changes the step order, and workflows
+  already waiting cannot replay.
+- **Checkpoints mistaken for durability.** State is saved, but nothing restarts the run.
 - **Waiting forever.** No timer and no escalation, so a missed reply stalls the case.
 - **Owning a step, not the workflow.** A rival captures the whole flow, and the single-step
   tool becomes replaceable.
@@ -221,7 +236,9 @@ per completed workflow.
 - [ ] Does every retried action carry an idempotency key?
 - [ ] Is there a compensating action for every step that changes the world, and a gate
       before every step that cannot be undone?
-- [ ] Do we know what happens to in-flight workflows when we deploy new code?
+- [ ] Do we know what happens to in-flight workflows when we deploy new code, and is there a
+      versioning plan?
+- [ ] If a framework saves checkpoints, what restarts the run after a crash?
 - [ ] Have we tested a restart in the middle of a run?
 - [ ] What share of this "automated" workflow do people still do, and is it shrinking?
 
@@ -242,7 +259,16 @@ per completed workflow.
 
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
   (Jun 13, 2025): resuming from where errors occurred, long-running stateful agents, and
-  rainbow deployments. Checked 2026-09.
+  rainbow deployments. Checked 2026-11.
+- Temporal, [Workflow Definition](https://docs.temporal.io/workflow-definition): the determinism
+  rule, replay checks, durable timers, and worker versioning or patching for in-flight
+  workflows. Opened 2026-11.
+- Temporal, [LangGraph plugin post](https://temporal.io/blog/temporal-langgraph-plugin-durable-execution)
+  (Jul 16, 2026): the claim that checkpoints are not durable execution. Vendor-authored.
+  Opened 2026-11. The LangGraph persistence docs describe checkpointers as saving a thread's
+  state, and say `InMemorySaver` loses state on restart.
+- Stripe, [Idempotent requests](https://docs.stripe.com/api/idempotent_requests): saved first
+  result, 24-hour key pruning for API v1, and the parameter-mismatch error. Opened 2026-11.
 - Temporal, [Event History](https://docs.temporal.io/encyclopedia/event-history): a
   durable log of a workflow's events, replayed by a new worker to rebuild state. The page
   itself was blocked when checked. The behaviour was confirmed from the same docs text in

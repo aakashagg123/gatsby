@@ -2,7 +2,7 @@
 
 *Part of [Agentic workflows for the product leader](./README.md)*
 
-*Last reviewed: 2026-09 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -90,6 +90,10 @@ Work down the list and stop at the first pattern that fits.
 | Has steps you cannot list in advance | Orchestrator-workers |
 | Has a clear quality bar, and a draft is often not good enough | Evaluator-optimizer on top of one of the above |
 
+Parallelization has two forms. In *sectioning*, independent subtasks run at once. In
+*voting*, the same task runs several times and code combines the answers. Use voting
+when one wrong answer is costly and a rule can compare the answers.
+
 Patterns combine. A common product shape is route, then chain, with an evaluator on the
 last step. Keep each added layer justified by a measured gap.
 
@@ -128,6 +132,9 @@ that choice.
   The task had fixed steps.
 - **A chain with no checks between steps.** One bad output is passed on and amplified.
 - **Routing with no fallback.** An input that fits no category gets forced into one.
+- **A critic with no criteria.** A verifier that has no explicit pass rule becomes a rubber
+  stamp. Anthropic's April 2026 coordination post warns about this, and Cognition's review
+  loops work when the reviewer sees only the diff and a clean context.
 - **A critic that is the same model with the same blind spots.** The loop agrees with
   itself. Use a test, a validator or a rubric as the check.
 - **An unbounded loop.** An evaluator that never says "good enough" runs until the budget
@@ -195,8 +202,12 @@ For prompt-level detail on chains, see
 ## Sources
 
 - Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
-  (Dec 2024): the five workflow patterns and their definitions, the workflow-versus-agent
-  distinction, and the advice to start simple. Checked 2026-09.
+  (Dec 19, 2024): the five workflow patterns and their definitions, the sectioning and voting
+  forms of parallelization, the workflow-versus-agent distinction, and the advice to start
+  simple. A note at the top of the page says the tooling landscape has changed since
+  then. The patterns still stand. Checked 2026-11.
+- Anthropic, [Multi-agent coordination patterns](https://claude.com/blog/multi-agent-coordination-patterns)
+  (Apr 10, 2026): the verifier-without-criteria warning and the loop limit. Checked 2026-11.
 - The cost and flexibility ordering of the patterns is this lesson's judgement. Anthropic
   does not rank them.
 - The support-email comparison, its call counts and the code sketches are invented and
