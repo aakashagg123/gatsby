@@ -84,8 +84,9 @@ Three lessons from a decade of use:
   length, the model copies that accident. Change the length, the topic, and the
   difficulty from one example to the next. Wrap each one in `<example>` tags so the
   model can tell examples from instructions.
-- **More is not always better.** Beyond ~5 examples, most tasks stop improving, and
-  you're spending tokens. Some tasks improve up to ~20; test to find the knee.
+- **More is not always better.** Anthropic suggests 3 to 5 examples as a starting
+  point. Past that you spend tokens, and the gain varies by task. Test on your own
+  cases to find the knee.
 
 Few-shot works because it's a shorthand for a specification that would be tedious to
 write. The model interpolates between the examples. The right examples define the
@@ -124,13 +125,23 @@ trace is available for debugging and evaluation.
 internally. That includes OpenAI's o-series, DeepSeek-R1-class open models, and
 Claude with thinking turned on. Explicit "think step by step" prompts are less
 necessary on these models, and sometimes counterproductive, since the model has
-already been trained to reason.
+already been trained to reason. OpenAI's guide for reasoning models says to avoid
+chain-of-thought prompts. A 2025 Wharton study (Meincke, Mollick and colleagues)
+found the same pattern: step-by-step prompting added little accuracy on reasoning
+models, and it cost 20 to 80 percent more time. Treat the study's exact figures as
+a snapshot of the models it tested.
 
 On current Claude models, you steer thinking with settings, not with prompt phrases:
 
 - **Adaptive thinking.** The model decides when and how much to think. This replaces
   the older manual thinking budget. On Claude 4.7 and later, setting `budget_tokens`
-  returns an error.
+  returns an error. On the newest models, such as Opus 5.5 and Fable 5.1, thinking is
+  always on, so you cannot turn it off.
+- **Do not ask for the reasoning in the reply.** Anthropic's guide says to remove
+  prompt lines that make the model write out its reasoning as a stand-in for thinking.
+  On Opus 5.5, such a request can be declined with a `reasoning_extraction` refusal.
+  Read the reasoning from the summarized thinking blocks instead. You can still ask
+  for a short explanation of the answer.
 - **The `effort` setting.** It controls how deep the model thinks. Lower it if
   responses are slow or costly. Raise it for hard tasks.
 - **Prompt guidance for triggering.** If the model thinks more often than you want,
@@ -181,7 +192,10 @@ majority to vote on.
   doesn't. The one you didn't notice contaminated the rest.
 - **CoT that hallucinates the reasoning.** The model produces plausible-looking
   steps that don't actually support the answer. Chain-of-thought is more legible,
-  not more truthful. Verify the answer, not the trace.
+  not more truthful. Anthropic's 2025 study of reasoning models (Claude 3.7 Sonnet and
+  DeepSeek R1) found that, when a hint had changed the answer, the written reasoning
+  mentioned the hint only about 25 percent (Claude) and 39 percent (R1) of the time.
+  Verify the answer, not the trace.
 - **Self-consistency on the wrong task.** Voting on an essay doesn't make it
   better. It makes it more expensive.
 - **Few-shot that leaks answers.** Your example inputs happen to be from your eval

@@ -129,6 +129,11 @@ Two habits from older models now backfire.
   names one, read it first." This cuts fabricated claims in agents that work over
   files or documents.
 
+For unattended agents, a turn can end with plain text and no tool call, such as a
+progress report. Anthropic's Opus 5.5 guide warns that a loop which treats every such
+turn as "done" will stop early. Keep the task parts in a checklist, check it at the end
+of each turn, and cap automatic "continue" nudges at two or three so a stuck run ends.
+
 For independent calls, say so. A line like "If two tool calls do not depend on each
 other, make them at the same time" lets the model run them in parallel. That saves
 round trips, which cost the most latency in a loop.

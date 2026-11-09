@@ -118,11 +118,14 @@ scoped the prompt.</p>
 <p>The rule: prompt as if the agent will do exactly what you wrote and nothing you
 didn't. Because it will.</p>
 <h2 id="pattern-2-the-project-context-file-is-the-always-on-system-prompt">Pattern 2 — the project context file is the always-on system prompt</h2>
-<p>Claude Code reads <code>CLAUDE.md</code>. Cursor reads Project Rules in <code>.cursor/rules/</code> and
-also reads <code>AGENTS.md</code>. Cursor's older single <code>.cursorrules</code> file is deprecated. Aider
-reads <code>CONVENTIONS.md</code>. All of them play the same role: a project-scoped file, checked
-into git, that ships to every session as part of the system prompt. Tool file names
-change often, so check your tool's current documentation before you copy a layout.</p>
+<p>Claude Code reads <code>CLAUDE.md</code> (and can read a repository's <code>AGENTS.md</code> in its place).
+Cursor reads Project Rules, which are <code>.mdc</code> files in <code>.cursor/rules/</code>, and also reads
+<code>AGENTS.md</code>. Cursor's older single <code>.cursorrules</code> file is legacy. Aider uses a
+<code>CONVENTIONS.md</code> file, but it does not load it on its own: you pass it with
+<code>--read CONVENTIONS.md</code> or list it under <code>read:</code> in <code>.aider.conf.yml</code>. All of them play
+the same role: a project-scoped file, checked into git, that reaches the model as
+context. Tool file names and loading rules change often, so check your tool's current
+documentation before you copy a layout.</p>
 <p>Keep one limit in mind. These files are <strong>guidance, not enforcement</strong>. The agent
 usually follows them, but nothing forces it to. When a rule must never break, such as
 "never run a command that deletes data," enforce it with permissions or hooks, and use
@@ -148,9 +151,13 @@ review like code. A bad <code>CLAUDE.md</code> invisibly degrades every session 
 project.</p>
 <h2 id="pattern-3-plan-mode-and-propose-then-apply">Pattern 3 — plan mode and propose-then-apply</h2>
 <p>For any change touching more than one file, or any change to unfamiliar code,
-run the agent in <strong>plan mode</strong> (Claude Code's plan mode; Cursor's read-only Ask mode
-before its Agent mode; Aider's <code>/architect</code>). The agent proposes the change without
-applying it. Mode names change between versions, so check what your tool calls it. You review the plan, redirect if needed, then approve.</p>
+run the agent in <strong>plan mode</strong>. In Claude Code, press <code>Shift+Tab</code> or start with
+<code>--permission-mode plan</code>: it reads files and proposes a plan, and makes no edits until
+you approve. Cursor's read-only Ask mode and Aider's <code>/ask</code> mode play a similar role.
+Aider's <code>/architect</code> is different: an architect model proposes the change and an
+editor model then applies it, so it splits the work between two models and does not
+wait for your approval. Mode names change between versions, so check what your tool
+calls it. You review the plan, redirect if needed, then approve.</p>
 <p>The idiom:</p>
 <ul>
 <li>Small, obvious changes: apply mode.</li>

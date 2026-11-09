@@ -82,11 +82,14 @@ didn't. Because it will.
 
 ## Pattern 2 — the project context file is the always-on system prompt
 
-Claude Code reads `CLAUDE.md`. Cursor reads Project Rules in `.cursor/rules/` and
-also reads `AGENTS.md`. Cursor's older single `.cursorrules` file is deprecated. Aider
-reads `CONVENTIONS.md`. All of them play the same role: a project-scoped file, checked
-into git, that ships to every session as part of the system prompt. Tool file names
-change often, so check your tool's current documentation before you copy a layout.
+Claude Code reads `CLAUDE.md` (and can read a repository's `AGENTS.md` in its place).
+Cursor reads Project Rules, which are `.mdc` files in `.cursor/rules/`, and also reads
+`AGENTS.md`. Cursor's older single `.cursorrules` file is legacy. Aider uses a
+`CONVENTIONS.md` file, but it does not load it on its own: you pass it with
+`--read CONVENTIONS.md` or list it under `read:` in `.aider.conf.yml`. All of them play
+the same role: a project-scoped file, checked into git, that reaches the model as
+context. Tool file names and loading rules change often, so check your tool's current
+documentation before you copy a layout.
 
 Keep one limit in mind. These files are **guidance, not enforcement**. The agent
 usually follows them, but nothing forces it to. When a rule must never break, such as
@@ -116,9 +119,13 @@ project.
 ## Pattern 3 — plan mode and propose-then-apply
 
 For any change touching more than one file, or any change to unfamiliar code,
-run the agent in **plan mode** (Claude Code's plan mode; Cursor's read-only Ask mode
-before its Agent mode; Aider's `/architect`). The agent proposes the change without
-applying it. Mode names change between versions, so check what your tool calls it. You review the plan, redirect if needed, then approve.
+run the agent in **plan mode**. In Claude Code, press `Shift+Tab` or start with
+`--permission-mode plan`: it reads files and proposes a plan, and makes no edits until
+you approve. Cursor's read-only Ask mode and Aider's `/ask` mode play a similar role.
+Aider's `/architect` is different: an architect model proposes the change and an
+editor model then applies it, so it splits the work between two models and does not
+wait for your approval. Mode names change between versions, so check what your tool
+calls it. You review the plan, redirect if needed, then approve.
 
 The idiom:
 

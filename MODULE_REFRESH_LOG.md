@@ -46,7 +46,7 @@ picks the lowest tier number among due modules.
 | evaluation-and-observability | evaluation-and-observability/ | scripts/build_evaluation_and_observability.py | 2 | 30 | 2026-10-26 |
 | ai-security-and-guardrails | ai-security-and-guardrails/ | scripts/build_ai_security_and_guardrails.py | 2 | 30 | 2026-10-23 |
 | cost-optimization | cost-optimization/ | scripts/build_cost_optimization.py | 2 | 30 | 2026-10-29 |
-| prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-09-22 |
+| prompt-engineering | prompt-engineering/ | scripts/build_prompt_engineering.py | 2 | 30 | 2026-11-09 |
 | harness-engineering | harness-engineering/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
 | flowable | flowable/ | scripts/build_site.py | 3 | 90 | 2026-09-20 |
 | cnns | cnns/ | scripts/build_cnns.py | 3 | 90 | 2026-10-11 |
@@ -831,3 +831,51 @@ and a link to the merged PR.)
   status (owned by agentic-ai); Flowable claims; Stripe API v2 idempotency behaviour in detail.
   Flagged: (1) Possible new lesson: choosing a durable-execution framework (Temporal, LangGraph, vendor agent runtimes); not built.
   (2) Anthropic "Managed Agents" is a new hosted-runtime option; check it in `agentic-ai` or `ai-agents` runs.
+
+- 2026-11-09 — prompt-engineering — tier 2. Picked because it was the only row due: 48 of 30 days
+  (18 overdue). Every tier-1 row was inside its 45-day cadence (oldest, business-acumen, at 24 days).
+  Outcome: fixed and expanded. Read all 10 lessons, the README and the recap in full first.
+  - Fixed: `prompting-inside-coding-agents.md` said Aider "reads" `CONVENTIONS.md` into every session.
+    Aider loads it only with `--read` or a `read:` entry in `.aider.conf.yml`. The same lesson
+    named Aider's `/architect` as a plan-mode equivalent. It is an architect-plus-editor split
+    that applies edits, and `/ask` is the read-only mode. Added the Claude Code plan-mode keys
+    (`Shift+Tab`, `--permission-mode plan`), the `.mdc` format for Cursor rules, and the Claude Code
+    note that `AGENTS.md` can be read in place of `CLAUDE.md`.
+  - Fixed/expanded: `few-shot-cot-self-consistency.md`. Thinking is always on for the newest Claude
+    models (Opus 5.5, Fable 5.1), and Opus 5.5 rejects "thinking disabled". Added the
+    `reasoning_extraction` refusal risk of "show your reasoning" prompts. Added OpenAI's "avoid CoT
+    prompts for reasoning models" advice and the Wharton 2025 study. Added the CoT-faithfulness
+    figures (25% and 39%). Replaced the unsourced "~20 examples" claim with Anthropic's 3-5.
+  - Expanded: `structured-prompting.md` (structured-outputs limits and the reasoning-field refusal;
+    `<pasted_content id>` pattern), `prompts-in-production.md` (effort defaults differ across models;
+    verbosity shifts; cache invalidation by tool, thinking and effort changes; cache TTL cost;
+    automatic prompt optimization with GEPA), `prompting-for-tools-and-agents.md` (text-only
+    `end_turn` stops unattended agents early).
+  - Opened and read (primary):
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+      (prefill removal from 4.6, `budget_tokens` 400 from 4.7, adaptive thinking, long-context
+      placement and the "up to 30 percent" claim, 3-5 examples, XML, role, emphasis, parallel tools).
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5
+      (effort default, thinking-disabled 400, reasoning_extraction, end_turn, pasted_content).
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1
+      (opened; only the preview was read, used for the verbosity and progress-update claim via the
+      best-practices page).
+    - https://platform.claude.com/docs/en/build-with-claude/structured-outputs
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-caching (first 100k chars)
+    - https://cursor.com/docs/context/rules (.mdc rules, AGENTS.md; does not mention .cursorrules)
+    - https://aider.chat/docs/usage/modes.html and https://aider.chat/docs/usage/conventions.html
+    - https://code.claude.com/docs/en/memory and https://code.claude.com/docs/en/common-workflows
+    - https://developers.openai.com/api/docs/guides/reasoning-best-practices
+    - https://www.anthropic.com/research/reasoning-models-dont-say-think
+    - arXiv abstracts: 2201.11903 (Wei), 2205.11916 (Kojima), 2203.11171 (Wang), 2210.03629 (ReAct),
+      2507.19457 (GEPA). All dates and claims in the lessons match.
+  - Seen only in search results, not opened: the Wharton report (arxiv.org/abs/2506.07142; SSRN returned
+    403), so the lesson cites its direction and the 20-80% time cost loosely; Cursor's statement that
+    `.cursorrules` is deprecated (the current docs page does not mention it, so the lesson says "legacy").
+  - Not verified: Fable 5.1 page beyond its preview; the second half of the caching and structured-output
+    pages; the DSPy optimizer docs (page did not render); OpenAI/Google model-specific guidance beyond the
+    reasoning guide; the Claude "up to 30 percent" long-context figure beyond Anthropic's own statement.
+  - Flagged, not fixed: (1) A lesson on automatic prompt optimization and eval-driven prompt iteration
+    could stand alone; the module has no lesson for it. Recommend as a possible new lesson, owner decision.
+    (2) Cross-module: `context-engineering/` and `ai-security-and-guardrails/` may want the
+    `<pasted_content id>` pattern; not checked or edited.
