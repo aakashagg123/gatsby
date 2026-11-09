@@ -63,11 +63,13 @@ Now the model reads the whole prompt. This stage is called **prefill**. Because 
 
 Inside each layer, **attention** lets each token take information from the tokens before it. A token can look backwards, never forwards. That keeps the model's job simple: predict what comes next.
 
+In our example the prompt is about 3,600 tokens: the instructions, tool descriptions and history from stage 3, plus the 6-token question.
+
 Prefill ends with a score for every word in the vocabulary. Those scores decide the first word of the answer. Prefill is the main part of the wait before the first word appears.
 
 ```mermaid
 flowchart LR
-  A["6 prompt tokens"] --> B["One parallel pass"] --> C["Scores for the first word"]
+  A["About 3,600 prompt tokens"] --> B["One parallel pass"] --> C["Scores for the first word"]
 ```
 
 **Remember:** prefill reads the prompt in parallel, so it is fast per token.
@@ -134,9 +136,9 @@ flowchart LR
 
 ## 9 · Many people at once
 
-One machine serves many conversations. Running them together in a **batch** lets the accelerator read the weights once for many tokens, which raises output a lot. A batch of 16 streams gave about 2,365 tokens per second in total in our example, against about 148 for one stream.
+One machine serves many conversations. Running them together in a **batch** lets the accelerator read the weights once for many tokens, which raises output a lot. In our example, a batch of 16 streams gives at most about 2,365 tokens per second in total, against about 148 for one stream. That is a derived upper bound, assuming 2 terabytes (TB) per second of memory bandwidth and ignoring compute, cache reads and overhead.
 
-The catch is that answers differ in length. With **static batching**, a group waits for its longest answer. With **continuous batching**, a finished answer leaves at once and a waiting request takes its place. In our example, 64 requests took 1,887 steps with continuous batching and 2,890 with static batching.
+The catch is that answers differ in length. With **static batching**, a group waits for its longest answer. With **continuous batching**, a finished answer leaves at once and a waiting request takes its place. In a seeded simulation on this site (64 requests of 20 to 400 tokens on 8 slots), continuous batching took 1,887 steps and static batching 2,890.
 
 Memory limits the batch. On the 80 GiB machine from stage 5, 16 long conversations fit.
 
@@ -197,5 +199,5 @@ flowchart LR
 ## Sources
 
 - Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention*, SOSP 2023, abstract read 2026-11: the KV cache is large and grows and shrinks, and wasting it by fragmentation limits the batch size. The paper reports 2 to 4 times higher throughput for vLLM at the same latency.
-- Gyeong-In Yu et al., *Orca*, OSDI 2022: continuous batching. Not re-opened.
-- This site's worked examples: `transformers/code/` for cache sizes and `system-design/code/llm_serving.py` for decode speed and batching steps. Token IDs, probabilities and the example question are illustrative. This page's fact-check is pending.
+- Gyeong-In Yu et al., [*Orca: A Distributed Serving System for Transformer-Based Generative Models*](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI 2022, read 2026-11-09: iteration-level scheduling (now usually called continuous batching), which schedules work one iteration at a time instead of one request at a time.
+- This site's worked examples: `transformers/code/` for cache sizes, and `system-design/code/llm_serving.py` (run 2026-11-09) for decode speed (an upper bound from 2 TB/s of bandwidth and 12.6 GiB of weights) and for the batching steps (a seeded simulation of 64 requests of 20 to 400 tokens on 8 slots). Token IDs, probabilities and the example question are illustrative. This page's fact-check is pending.

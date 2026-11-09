@@ -30,11 +30,11 @@ def llm_request():
         ("info", "Instructions", 400, "400 tokens of system rules"),
         ("discovery", "Tools", 900, "900 tokens of tool descriptions"),
         ("caution", "History", 2300, "2,300 tokens of earlier chat"),
-        ("danger", "Q", 8, "your question: 8 tokens"),
-        ("success", "Room for the answer", 4584, "what is left for the reply")],
+        ("danger", "Q", 6, "your question: 6 tokens"),
+        ("success", "Room for the answer", 4586, "what is left for the reply")],
         "The app fills the window. Your own words are a small part."))
     put(k, 3, F.lanes("Stage 4", "Prefill reads together, decode writes in turn", "Time runs left to right.", [
-        ("Prefill", [("info", "6 prompt tokens, one parallel pass", 6)]),
+        ("Prefill", [("info", "about 3,600 prompt tokens, one parallel pass", 6)]),
         ("Decode", [("success", "token 1", 1), ("success", "token 2", 1), ("success", "token 3", 1), ("success", "token 4", 1), ("success", "token 5", 1), ("success", "token 6", 1)])],
         "Prefill is parallel. Decode must go one step at a time."))
     put(k, 4, F.membar("Stage 5", "Where an 80 GiB accelerator's memory goes", "A 7B-class model, 16-bit numbers, 16 conversations of 8,192 tokens.", [
@@ -81,7 +81,7 @@ def llm_request():
             '<p class="xf-sub" style="margin:14px 0 6px"><b>Continuous batching</b>: a finished answer is replaced at once.</p>'
             f'<div class="xf-grid" style="grid-template-columns:repeat(10,minmax(0,1fr))">{cells(grid_rows(cont, 10))}</div>')
     put(k, 8, F.card("Stage 9", "Four slots, ten steps", "Each row is a slot on the accelerator. Letters are requests.", body,
-        "In the site's example, 64 requests took 1,887 steps with continuous batching and 2,890 with static."))
+        "In a seeded simulation (64 requests of 20 to 400 tokens on 8 slots): 1,887 steps with continuous batching, 2,890 with static."))
     put(k, 9, F.lanes("Stage 10", "Where the wait and the speed come from", "Time runs left to right.", [
         ("Time to first token", [("caution", "network + queue", 3), ("info", "prefill", 4), ("success", "first token", 1)]),
         ("Then", [("success", "tok", 1)] * 8)],
@@ -126,7 +126,7 @@ def how_a_model_learns():
         ("info", "Batch", "many examples"), ("discovery", "Guess", "probabilities"), ("caution", "Loss", "how surprised"),
         ("warning", "Gradients", "which way"), ("success", "Update", "small step")],
         "Pretraining repeats this loop an enormous number of times."))
-    put(k, 7, F.compare("Stage 8", "A base model and a tuned assistant", "Numbers from the toy model in this site's fine-tuning module.",
+    put(k, 7, F.compare("Stage 8", "A base model and a tuned assistant", "Numbers from a seeded toy model: fine-tuning/code/lesson1_pipeline.py.",
         ("info", "Base model", ["Continues text", "Chance of the wanted answer: 0.083", "Loss on ordinary text: 1.103"]),
         ("success", "After supervised tuning", ["Answers the question", "Chance of the wanted answer: 0.987", "Loss on ordinary text: 2.280"]),
         "The push changed behaviour a lot. It also hurt other things."))
@@ -206,7 +206,7 @@ def image_model():
         "A dial between free and obedient."))
     put(k, 6, F.flow("Stage 7", "Draw in a small space", "Latent space is a compressed grid of numbers.", [
         ("info", "Noise in latent space", "small grid"), ("discovery", "Denoise", "cheap steps"), ("success", "Decoder", "expands to pixels"), ("caution", "Full picture", "")],
-        "Latent diffusion cut the cost of training and sampling."))
+        "Latent diffusion significantly reduces computation compared to pixel-based diffusion."))
     put(k, 7, F.compare("Stage 8", "Same prompt, different seeds", "",
         ("info", "Seed 1", ["Noise A", "Picture A"]), ("discovery", "Seed 2", ["Noise B", "Picture B"]),
         "The prompt picks a family of pictures. The seed picks one."))
@@ -239,8 +239,8 @@ def agent_run():
         ("info", "Tool runs", ""), ("discovery", "Order record", "status, amount, item"), ("success", "Added to the input", "")],
         "Errors must be visible to the agent."))
     put(k, 6, F.bars("Stage 7", "The input grows with every step", "Illustrative tokens in the input after each step.", [
-        ("step 1", 1200, "info"), ("step 2", 1900, "discovery"), ("step 3", 2600, "caution"), ("step 4", 3100, "warning"), ("step 5", 3800, "danger")],
-        vmax=4000, note="Cost and clutter grow as the loop runs.", fmt="{:,.0f}"))
+        ("step 1", 1900, "info"), ("step 2", 2600, "discovery"), ("step 3", 3300, "caution"), ("step 4", 3800, "warning"), ("step 5", 4500, "danger")],
+        vmax=5000, note="Cost and clutter grow as the loop runs.", fmt="{:,.0f}"))
     put(k, 7, F.layers("Stage 8", "Every run needs a way to stop", "Our run: 5 of 8 steps and $0.31 of $0.50.", [
         ("success", "Done", "the goal is met"), ("caution", "Blocked", "needs information it cannot get"), ("danger", "Limit hit", "step cap, spend cap or time limit")],
         "A stop that does not depend on the agent's own judgement."))

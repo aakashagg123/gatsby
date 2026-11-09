@@ -165,6 +165,6 @@ flowchart LR
 
 ## Sources
 
-- Jonathan Ho, Ajay Jain and Pieter Abbeel, *Denoising Diffusion Probabilistic Models*, NeurIPS 2020, abstract read 2026-11: diffusion probabilistic models for high-quality image synthesis.
-- Robin Rombach et al., *High-Resolution Image Synthesis with Latent Diffusion Models*, CVPR 2022, abstract read 2026-11: applying diffusion in the latent space of pretrained autoencoders to cut computation, and adding cross-attention layers for conditioning on text.
-- Guidance is described in Ho and Salimans, *Classifier-Free Diffusion Guidance*, 2022. Not re-opened. Step counts and the example prompt are illustrative, and products differ in detail. This page's fact-check is pending.
+- Jonathan Ho, Ajay Jain and Pieter Abbeel, [*Denoising Diffusion Probabilistic Models*](https://arxiv.org/abs/2006.11239), arXiv 2006.11239, 2020, abstract read 2026-11: diffusion probabilistic models for high-quality image synthesis.
+- Robin Rombach et al., *High-Resolution Image Synthesis with Latent Diffusion Models*, CVPR 2022, abstract read 2026-11: applying diffusion in the latent space of pretrained autoencoders, "significantly reducing computational requirements compared to pixel-based" diffusion models, and adding cross-attention layers for conditioning on text.
+- Jonathan Ho and Tim Salimans, [*Classifier-Free Diffusion Guidance*](https://arxiv.org/abs/2207.12598), arXiv 2207.12598, 2022, read 2026-11-09: one model handles both conditional and unconditional generation, and blending the two trades sample quality against variety. Step counts and the example prompt are illustrative, and products differ in detail. This page's fact-check is pending.

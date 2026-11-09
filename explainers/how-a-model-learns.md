@@ -176,5 +176,5 @@ flowchart LR
 
 ## Sources
 
-- Long Ouyang et al., *Training language models to follow instructions with human feedback*, NeurIPS 2022, abstract read 2026-11: supervised fine-tuning on labeler demonstrations, then fine-tuning with reinforcement learning from human feedback on ranked outputs, and the finding that outputs of the 1.3B InstructGPT model are preferred to those of the 175B GPT-3.
-- This site's `fine-tuning/code/` toy model for the 0.083 to 0.987 and 1.103 to 2.280 figures. The example sentence, the probabilities 0.30 and 0.34 and the loss values computed from them are illustrative. This page's fact-check is pending.
+- Long Ouyang et al., [*Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155), arXiv 2203.02155, 2022, abstract read 2026-11: supervised fine-tuning on labeler demonstrations, then fine-tuning with reinforcement learning from human feedback on ranked outputs, and the finding that outputs of the 1.3B InstructGPT model are preferred to those of the 175B GPT-3.
+- This site's seeded toy model, `fine-tuning/code/lesson1_pipeline.py` (run 2026-11-09), for the 0.083 to 0.987 and 1.103 to 2.280 figures. The example sentence, the probabilities 0.30 and 0.34 and the loss values computed from them are illustrative. This page's fact-check is pending.
