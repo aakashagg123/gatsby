@@ -169,7 +169,15 @@ prompt can feel. Recent Claude guidance describes several shifts:</p>
 <li>Prefilled replies stopped working on newer versions, so a format trick can vanish
   with an upgrade.</li>
 <li>Thinking is now steered by settings such as effort, so the same prompt can think
-  more or less.</li>
+  more or less. Effort names do not mean the same amount of thinking across models,
+  and defaults differ: Anthropic's guide says Opus 5.5 defaults to <code>medium</code> where
+  Opus 5 defaults to <code>high</code>. Set effort explicitly and test several levels.</li>
+<li>Thinking cannot always be switched off. Opus 5 accepted a disabled setting; Opus 5.5
+  returns a 400 error for it, so an integration that ran with thinking off needs a
+  new latency and quality test, not only a model-name change.</li>
+<li>Verbosity moves in both directions. Anthropic says Opus 5 writes longer replies by
+  default and that effort does not reliably shorten them, so ask for brevity in the
+  prompt. Fable 5.1 writes fewer progress updates in agent work, so ask for them.</li>
 </ul>
 <p>Use this upgrade checklist:</p>
 <ol>
@@ -185,6 +193,12 @@ prompt can feel. Recent Claude guidance describes several shifts:</p>
 <li><strong>Keep the old pairing available</strong> until the new one has run cleanly for a while.</li>
 </ol>
 <p>A prompt and a model are a pair. You version and upgrade them together.</p>
+<p>Once you own a test set, you can also let software search for better prompts. Tools
+such as DSPy's GEPA optimizer rewrite a prompt from the failures it sees on your
+cases. The GEPA paper (Agrawal et al., ICLR 2026) reports gains over a reinforcement
+learning baseline on its benchmarks. Treat an optimizer as a way to propose
+candidate versions. The test set still decides which one ships, and a human still
+reads the winning prompt before it does.</p>
 <h2 id="habit-4-lay-out-the-prompt-for-caching">Habit 4 — lay out the prompt for caching</h2>
 <p>Providers can reuse the computed work for a prompt prefix that is identical from one
 call to the next. That cuts cost and latency. It only works when the start of the
@@ -198,6 +212,14 @@ gives for the engine side:</p>
   end.</li>
 <li><strong>No per-request strings at the top.</strong> A timestamp or a user name in line one breaks
   the cache for everything after it.</li>
+<li><strong>Settings are part of the prefix.</strong> Per Anthropic's caching docs, the cache order
+  is tools, then system prompt, then messages. A change to tool definitions clears the
+  whole cache. A change to the thinking or effort setting clears the cached messages.
+  So changing effort between calls has a cost, and a "small tweak" to a tool
+  description is not small.</li>
+<li><strong>Match the cache lifetime to your traffic.</strong> The default lifetime is 5 minutes. A
+  1-hour option costs more to write (2x the base input price, against 1.25x). Pick it
+  only when reuse is less frequent than every 5 minutes.</li>
 </ul>
 <p>This fits the long-document rule from
 <a href="the-anatomy-of-a-prompt.html">the anatomy lesson</a>, which also puts large context

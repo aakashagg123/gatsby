@@ -113,7 +113,15 @@ prompt can feel. Recent Claude guidance describes several shifts:
 - Prefilled replies stopped working on newer versions, so a format trick can vanish
   with an upgrade.
 - Thinking is now steered by settings such as effort, so the same prompt can think
-  more or less.
+  more or less. Effort names do not mean the same amount of thinking across models,
+  and defaults differ: Anthropic's guide says Opus 5.5 defaults to `medium` where
+  Opus 5 defaults to `high`. Set effort explicitly and test several levels.
+- Thinking cannot always be switched off. Opus 5 accepted a disabled setting; Opus 5.5
+  returns a 400 error for it, so an integration that ran with thinking off needs a
+  new latency and quality test, not only a model-name change.
+- Verbosity moves in both directions. Anthropic says Opus 5 writes longer replies by
+  default and that effort does not reliably shorten them, so ask for brevity in the
+  prompt. Fable 5.1 writes fewer progress updates in agent work, so ask for them.
 
 Use this upgrade checklist:
 
@@ -130,6 +138,13 @@ Use this upgrade checklist:
 
 A prompt and a model are a pair. You version and upgrade them together.
 
+Once you own a test set, you can also let software search for better prompts. Tools
+such as DSPy's GEPA optimizer rewrite a prompt from the failures it sees on your
+cases. The GEPA paper (Agrawal et al., ICLR 2026) reports gains over a reinforcement
+learning baseline on its benchmarks. Treat an optimizer as a way to propose
+candidate versions. The test set still decides which one ships, and a human still
+reads the winning prompt before it does.
+
 ## Habit 4 — lay out the prompt for caching
 
 Providers can reuse the computed work for a prompt prefix that is identical from one
@@ -144,6 +159,14 @@ gives for the engine side:
   end.
 - **No per-request strings at the top.** A timestamp or a user name in line one breaks
   the cache for everything after it.
+- **Settings are part of the prefix.** Per Anthropic's caching docs, the cache order
+  is tools, then system prompt, then messages. A change to tool definitions clears the
+  whole cache. A change to the thinking or effort setting clears the cached messages.
+  So changing effort between calls has a cost, and a "small tweak" to a tool
+  description is not small.
+- **Match the cache lifetime to your traffic.** The default lifetime is 5 minutes. A
+  1-hour option costs more to write (2x the base input price, against 1.25x). Pick it
+  only when reuse is less frequent than every 5 minutes.
 
 This fits the long-document rule from
 [the anatomy lesson](./the-anatomy-of-a-prompt.md), which also puts large context

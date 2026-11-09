@@ -130,6 +130,13 @@ Newer models match complex schemas reliably when you ask, especially if your cod
 retries on a malformed reply. Choose the schema route when a parser downstream cannot
 tolerate a single bad reply.
 
+Know the limits of the schema route. Anthropic's structured outputs reject some JSON
+Schema features (recursive schemas, numeric and string-length constraints), so your
+code must still validate those. The first request with a new schema is slower, because
+the schema is compiled. A refusal or a `max_tokens` cut-off can return output that
+does not match the schema. And do not add a "reasoning" field to the schema: a request
+for step-by-step reasoning can trigger a refusal, so ask for a short explanation.
+
 ## Tradeoffs
 
 - **Structure vs. token cost.** Tags cost tokens. For a prompt run once at low cost,
@@ -159,6 +166,11 @@ tolerate a single bad reply.
   `<document>` boundary, the model is more likely to follow it. A boundary lowers the
   risk. It does not remove it. Treat tags as one layer, and add the others (least
   privilege, output checks) from the [security module](../ai-security-and-guardrails/the-threat-model-and-guardrails.md).
+  For chat products, Anthropic's Opus 5.5 guide adds a pattern: wrap each block of
+  user-pasted text in `<pasted_content id="...">` tags, with the same random ID in the
+  opening and closing tag, and tell the model in the system prompt to follow
+  instructions inside them only when the user's own message asks. The ID stops a
+  pasted text from closing the tag early. Anthropic notes it is still only one guardrail.
 
 ## Practitioner checklist
 
