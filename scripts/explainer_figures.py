@@ -217,6 +217,118 @@ def heat(chip, title, sub, row_labels, col_labels, values, note="", fmt="{:.2f}"
     return card(chip, title, sub, f'<div class="xf-heat" style="grid-template-columns:auto repeat({n},minmax(0,1fr))">{"".join(cells)}</div>', note)
 
 
+# ---------------------------------------------------------------- Sketch infographic
+# A hand-drawn "whiteboard" summary: numbered steps left to right with doodle icons, dashed
+# connectors, a caption per step, optional labelled sub-icons, an optional progress arrow and a
+# summary band. Ink is the info blue and the paper is the surface mixed toward the warning (cream)
+# surface, so both follow the light and dark themes. Text uses --font-hand, which falls back to the
+# site sans font. Icons live in sketch_icons.py; a small SVG filter wobbles the strokes.
+
+SKETCH_CSS = """<style>
+.xs{--xs-ink:var(--color-text-info);--xs-paper:color-mix(in srgb,var(--color-background-warning-surface) 45%,var(--color-surface));
+  background:var(--xs-paper);color:var(--xs-ink);border:2px dashed color-mix(in srgb,var(--xs-ink) 40%,transparent);border-radius:18px;
+  padding:30px 22px 22px;margin:26px 0;max-width:100%;position:relative;font-family:var(--font-hand);text-align:left}
+.xs-defs{position:absolute;width:0;height:0;overflow:hidden}
+.xs li{margin:0}
+.xs svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.xs-ico,.xs-subs svg,.xs-conn svg,.xs-prog svg,.xs-sum svg{filter:url(#xs-rough)}
+.xs-chip{position:absolute;top:-12px;left:22px;background:var(--xs-paper);color:var(--xs-ink);border:2px solid var(--xs-ink);border-radius:20px;
+  padding:1px 12px;font-size:var(--font-text-sm-size);line-height:1.4}
+.xs-title{margin:0;color:inherit;text-align:center;font-weight:400;font-size:var(--font-heading-md-size);line-height:1.2}
+.xs-sub{margin:4px 0 18px;text-align:center;font-size:var(--font-text-md-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 75%,var(--color-text))}
+.xs-steps{display:flex;align-items:stretch;gap:2px}
+.xs-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.xs-num{width:32px;height:32px;border:2px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-md-size);line-height:1}
+.xs-ico{width:58px;height:58px;margin:8px 0 6px}
+.xs-step b{font-weight:400;font-size:var(--font-text-lg-size);line-height:1.15;overflow-wrap:break-word}
+.xs-step p{margin:4px 0 0;font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text));overflow-wrap:break-word}
+.xs-subs{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:2px dotted color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  display:flex;flex-direction:column;gap:7px;width:100%}
+.xs-subs li{display:flex;align-items:center;gap:6px;min-width:0;text-align:left;font-size:var(--font-text-xs-size);line-height:1.15;overflow-wrap:break-word}
+.xs-subs svg{flex:0 0 auto;width:24px;height:24px}
+.xs-subs span{min-width:0}
+.xs-conn{flex:0 0 24px;align-self:flex-start;margin-top:52px;display:flex;justify-content:center}
+.xs-conn svg{width:24px;height:16px}
+.xs-prog{margin-top:22px}
+.xs-prog ol{list-style:none;margin:0 0 2px;padding:0;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:var(--font-text-md-size)}
+.xs-prog svg{display:block;width:100%;height:16px}
+.xs-sum{margin-top:18px;border:2px solid currentColor;border-radius:16px;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.xs-sum svg{flex:0 0 auto;width:40px;height:40px}
+.xs-sum div{min-width:0}
+.xs-sum strong{display:block;font-weight:400;font-size:var(--font-text-lg-size);line-height:1.25}
+.xs-sum span{display:block;margin-top:6px;padding-top:6px;border-top:2px dashed color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text))}
+.xs-note{margin:12px 0 0;text-align:center;font-size:var(--font-text-sm-size);color:color-mix(in srgb,var(--xs-ink) 65%,var(--color-text))}
+@media (max-width:640px){
+  .xs{padding:28px 14px 16px}
+  .xs-steps{flex-direction:column;align-items:stretch}
+  .xs-conn{align-self:center;margin:2px 0;transform:rotate(90deg)}
+  .xs-subs{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px 6px}
+  .xs-subs li{flex-direction:column;flex:0 1 72px;gap:2px;text-align:center}
+  .xs-prog ol{justify-content:center;gap:4px 10px}
+}
+</style>
+"""
+
+_ROUGH = ('<filter id="xs-rough" x="-10%" y="-10%" width="120%" height="120%">'
+          '<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>'
+          '<feDisplacementMap in="SourceGraphic" scale="2.2"/></filter>')
+
+
+def _icon(key, cls=""):
+    c = f' class="{cls}"' if cls else ""
+    return f'<svg{c} viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-{key}"/></svg>'
+
+
+def sketch(chip, title, sub, steps, progress=None, summary=None, note=""):
+    """steps: 3 to 5 dicts with heading, caption, icon and optional subs [(icon, label)] (3 to 4).
+    progress: optional list of stage names for the bottom arrow. summary: optional (trophy line, so-far note or "")."""
+    import sketch_icons as SI
+    assert 3 <= len(steps) <= 5, "a sketch has 3 to 5 steps"
+    keys = []
+    for st in steps:
+        keys.append(st["icon"])
+        keys += [k for k, _ in st.get("subs", [])]
+    if summary:
+        keys.append("trophy")
+    seen = []
+    for k in keys:
+        if k not in seen:
+            seen.append(k)
+    defs = (f'<svg class="xs-defs" aria-hidden="true" focusable="false"><defs>{_ROUGH}'
+            + "".join(SI.symbol(k) for k in seen) + "</defs></svg>")
+    parts = []
+    arrow = '<div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div>'
+    for i, st in enumerate(steps, 1):
+        if i > 1:
+            parts.append(arrow)
+        subs = st.get("subs", [])
+        sub_html = ""
+        if subs:
+            sub_html = '<ul class="xs-subs">' + "".join(f"<li>{_icon(k)}<span>{_e(lbl)}</span></li>" for k, lbl in subs) + "</ul>"
+        parts.append(f'<div class="xs-step"><div class="xs-num">{i}</div>{_icon(st["icon"], "xs-ico")}'
+                     f'<b>{_e(st["heading"])}</b><p>{_e(st["caption"])}</p>{sub_html}</div>')
+    out = [SKETCH_CSS, f'<div class="xs" role="group" aria-label="{_h.escape(title)}">', defs,
+           f'<span class="xs-chip">{_e(chip)}</span><h4 class="xs-title">{_e(title)}</h4>']
+    if sub:
+        out.append(f'<p class="xs-sub">{_e(sub)}</p>')
+    out.append(f'<div class="xs-steps">{"".join(parts)}</div>')
+    if progress:
+        out.append('<div class="xs-prog"><ol>' + "".join(f"<li>{_e(n)}</li>" for n in progress) + "</ol>"
+                   '<svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true">'
+                   '<path d="M4 8h384" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>'
+                   '<path d="M380 2l14 6-14 6" vector-effect="non-scaling-stroke"/></svg></div>')
+    if summary:
+        line, sofar = summary
+        so = f"<span>{_e(sofar)}</span>" if sofar else ""
+        out.append(f'<div class="xs-sum">{_icon("trophy")}<div><strong>{_e(line)}</strong>{so}</div></div>')
+    if note:
+        out.append(f'<p class="xs-note">{_e(note)}</p>')
+    out.append("</div>\n")
+    return "".join(out)
+
+
 def write(path, html):
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)

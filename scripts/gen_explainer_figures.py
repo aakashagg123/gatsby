@@ -86,10 +86,21 @@ def llm_request():
         ("Time to first token", [("caution", "network + queue", 3), ("info", "prefill", 4), ("success", "first token", 1)]),
         ("Then", [("success", "tok", 1)] * 8)],
         "First-token time is mostly queue and prefill. The rest is set by decode."))
-    put(k, 10, F.flow("Summary", "The whole journey", "One request, six steps.", [
-        ("info", "Enter", "gateway and queue"), ("discovery", "Tokens", "text to numbers"), ("success", "Prefill", "read the prompt"),
-        ("caution", "Decode", "write one token at a time"), ("warning", "Stream", "send as you go"), ("danger", "Many users", "batch and fit memory")],
-        "Each stage has one job, one cost and one way to break."))
+    # The whole journey: a sketch infographic (template for the other explainers). Every fact restates this page.
+    put(k, 10, F.sketch("The whole journey", "One LLM request, step by step", "From pressing Enter to the last word on your screen.", [
+        dict(heading="The request arrives", caption="A gateway checks who you are and your limits. Then the request waits for a free machine.",
+             icon="gateway", subs=[("gateway", "gateway"), ("queue", "queue"), ("chip", "GPU replica")]),
+        dict(heading="Text becomes tokens", caption="The question becomes 6 tokens (an illustrative split) and shares the context window.",
+             icon="tokens", subs=[("tokens", "tokens"), ("window", "context window"), ("document", "instructions and history")]),
+        dict(heading="Read it all at once", caption="Prefill reads every prompt token in one parallel pass.",
+             icon="lightning", subs=[("lightning", "parallel pass"), ("memory", "KV cache is born"), ("clock", "wait for the first word")]),
+        dict(heading="Write one token at a time", caption="Decode adds one token per step, reading the KV cache, and picks each word from probabilities.",
+             icon="loop", subs=[("loop", "one token per step"), ("memory", "cache grows"), ("dice", "sampling")]),
+        dict(heading="The answer streams back", caption="Tokens go to your screen as they are made. One machine serves many people at once.",
+             icon="stream", subs=[("stream", "streaming"), ("screen", "your screen"), ("batch", "batching")]),
+    ], progress=["Request", "Context", "Prefill", "Decode", "Stream"],
+        summary=("First-token time is mostly queueing and prefill. Speed after that is decode.",
+                 "Memory, not arithmetic, usually decides how many people one machine can serve.")))
 
 
 def how_a_model_learns():
