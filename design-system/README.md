@@ -12,7 +12,7 @@ components are the SDK's own files, vendored unchanged.
 ```
 design-system/
   vendor/apps-sdk-ui/   Verbatim copy of the SDK's CSS. Read-only. See CHECKSUMS and VERSION.
-  fonts/                Google Sans (variable, Latin), Patrick Hand (handwriting, Latin) and their OFL licences. Built into assets/fonts/.
+  fonts/                Google Sans (variable, Latin), Kalam (handwriting, Latin) and their OFL licences. Built into assets/fonts/.
   preflight.css         The part of Tailwind's reset that the SDK components assume.
   site/                 Our layer. Layout and prose written only with SDK tokens.
     00-foundation.css     canvas, type defaults, spacing steps
@@ -59,7 +59,7 @@ Page generators emit markup only. They carry no CSS.
 ## Not from the SDK
 
 - The default typeface is **Google Sans**, self-hosted from `design-system/fonts/` (SIL OFL 1.1). It replaces the first entry of the SDK's `--font-sans`; the SDK's system stack stays as the fallback. Readers can switch to the system font in the reader panel. OpenAI's brand typeface is not licensed for reuse, so it is not used.
-- The sketch infographics in the explainers use **Patrick Hand** (SIL OFL 1.1, one weight, Latin subset, self-hosted from `design-system/fonts/patrick-hand/`) through the `--font-hand` token, which falls back to `--font-sans`. Use it only for those figures.
+- The sketch infographics in the explainers use **Kalam** (SIL OFL 1.1, one weight, Latin subset, self-hosted from `design-system/fonts/kalam/`) through the `--font-hand` token, which falls back to `--font-sans`. Use it only for those figures.
 - The knowledge graph keeps one hue per track. These are data colours in `build_graph.py`, not UI colour.
 - The README banner (`assets/banner-light.svg`, `assets/banner-dark.svg`) is an image, so it cannot read CSS variables. `scripts/build_banner.py` writes it with the resolved token values and an embedded copy of Google Sans. Re-run it if the tokens change.
 

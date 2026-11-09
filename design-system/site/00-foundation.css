@@ -5,8 +5,8 @@
   /* Default typeface: Google Sans (self-hosted, design-system/fonts). The SDK's own system
      stack follows it, so any glyph Google Sans lacks, such as arrows, falls back cleanly. */
   --font-sans:"Google Sans",ui-sans-serif,-apple-system,system-ui,"Segoe UI","Noto Sans",Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",sans-serif;
-  /* Handwriting face for the sketch infographics (Patrick Hand, self-hosted, OFL). Falls back to the sans stack. */
-  --font-hand:"Patrick Hand",var(--font-sans);
+  /* Handwriting face for the sketch infographics (Kalam, self-hosted, OFL). Falls back to the sans stack. */
+  --font-hand:"Kalam",var(--font-sans);
 
   /* Spacing steps, derived from the SDK's 4px --spacing unit. */
   --space-1:calc(var(--spacing) * 1);   --space-1-5:calc(var(--spacing) * 1.5); --space-2:calc(var(--spacing) * 2);

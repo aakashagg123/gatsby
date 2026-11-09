@@ -1,5 +1,5 @@
-/* Kalam, self-hosted, on trial for the sketch infographics. One weight (400), Latin subset.
-   Not used by --font-hand unless chosen. Source: @fontsource/kalam 5.3.0 (SIL Open Font License 1.1, see
+/* Kalam, self-hosted. One weight (400), Latin subset. Used only by the sketch infographics
+   through the --font-hand token, which falls back to --font-sans. Source: @fontsource/kalam 5.3.0 (SIL Open Font License 1.1, see
    fonts/kalam/OFL.txt). Served from assets/fonts/. */
 @font-face{font-family:"Kalam";font-style:normal;font-weight:400;font-display:swap;
   src:url(fonts/kalam-latin-400-normal.woff2) format("woff2");
