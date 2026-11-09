@@ -228,6 +228,7 @@ SKETCH_CSS = """<style>
 .xs{--xs-ink:var(--color-text-info);--xs-paper:color-mix(in srgb,var(--color-background-warning-surface) 45%,var(--color-surface));
   background:var(--xs-paper);color:var(--xs-ink);border:2px dashed color-mix(in srgb,var(--xs-ink) 40%,transparent);border-radius:18px;
   padding:30px 22px 22px;margin:26px 0;max-width:100%;position:relative;font-family:var(--font-hand);text-align:left}
+[data-theme="dark"] .xs{--xs-paper:color-mix(in srgb,var(--color-surface-secondary) 70%,var(--color-surface))}
 .xs-defs{position:absolute;width:0;height:0;overflow:hidden}
 .xs li{margin:0}
 .xs svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
