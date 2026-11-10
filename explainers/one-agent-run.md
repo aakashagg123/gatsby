@@ -182,4 +182,5 @@ flowchart LR
 ## Sources
 
 - Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-11: workflows versus agents; stopping conditions such as a maximum number of iterations; pausing for human feedback at checkpoints; "ground truth" from the environment at each step; the absolute-file-path example; extensive testing in sandboxed environments. The page notes that much of the tooling it describes has changed since December 2024.
-- The goal, order number, amounts and limits are invented for the example. This page's fact-check is pending.
+- The goal, order number, amounts and limits are invented for the example.
+- Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims.

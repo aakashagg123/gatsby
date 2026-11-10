@@ -179,5 +179,6 @@ flowchart LR
 
 ## Sources
 
-- OWASP, *Top 10 for LLM Applications*, genai.owasp.org/llm-top-10, 2025 edition, read 2026-11: LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses and LLM10 Unbounded Consumption. The list page gave the names and numbers. The checker also opened the LLM05, LLM06, LLM07, LLM08 and LLM10 pages on 2026-11-10, and the wording matched. The LLM01 and LLM02 pages were not opened.
-- The product, the request and the layer design are an invented example. This page's fact-check is pending.
+- OWASP, *Top 10 for LLM Applications*, genai.owasp.org/llm-top-10, 2025 edition, read 2026-11: LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses and LLM10 Unbounded Consumption. The list page gave the names and numbers. Pages read 2026-11-10: [LLM05](https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/), [LLM06](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/), [LLM07](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/), [LLM08](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) and [LLM10](https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/). The LLM01 and LLM02 pages were not opened.
+- The product, the request and the layer design are an invented example.
+- Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims.

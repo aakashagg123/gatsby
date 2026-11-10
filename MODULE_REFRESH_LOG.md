@@ -29,7 +29,7 @@ picks the lowest tier number among due modules.
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
-| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-07 |
+| explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
@@ -777,6 +777,28 @@ and a link to the merged PR.)
   guardrailed request) are still unchecked and keep "fact-check pending".
   checker: explainers 16 lessons, avg sentence 11.8, 2% over 30 words, Flesch 72,
   PASS; learning-paths 5 lessons, 9.5, 3%, 67, PASS. PR pending.
+
+- 2026-11-10 — explainers — restyled and fact-checked (framework pass, not the daily job):
+  sketch infographics for all 16 explainers (Kalam hand font, neutral grey dark paper, a
+  builder in `scripts/explainer_figures.py`, 32 icons). Four blind independent fact-check passes
+  (2026-11-07 to 2026-11-10, web access ok except once). Pass 1 found 3 WRONG rows (the token
+  counts 6 versus 8 and "6 prompt tokens" versus about 3,600 in inside-one-llm-request, and
+  the agent input series) and 9 unsupported rows; later passes found only unsupported rows;
+  the fourth pass (2026-11-10) covered all 16 pages, README and recap: 91 of 93 rows OK, 0
+  WRONG, 0 STALE. Fixed: the wrong rows, the unsupported claims (sourced, narrowed or labelled
+  illustrative or assumed), the OWASP source list on the guardrail page, the approval-card
+  source text in the agent-run figure (now "ticket message 3", invented, as on the page), and
+  the stale "pending" and old "clean" lines in every Sources list and the recap. Pages 7 to 16
+  were checked on 2026-11-07 and again in these passes; explainers 1 to 6 had their first
+  independent check here. Web access was partial once (NeurIPS proceedings returned 503), so
+  three venue names that could not be confirmed were dropped. OWNER-APPROVED EXCEPTION: two
+  numbers come from this site's own seeded scripts and the checker has no shell, so it marked
+  them unsupported: 2,890 versus 1,887 steps (`system-design/code/llm_serving.py`) and 0.083
+  to 0.987 and 1.103 to 2.280 (`fine-tuning/code/lesson1_pipeline.py`). They were confirmed by
+  running the scripts on 2026-11-10; the owner accepts the script output as the source and the
+  pages say so. Stamped 2026-11: fast for the LLM request, agent run, guardrailed request, model change and gross margin explainers, medium for the rest.
+  checker: explainers 16 lessons, avg sentence 12.0, 2% over 30 words, Flesch 72, PASS
+  (undefined-acronym warnings: BLEU, CVPR, GPT, GPU, OSDI, OWASP, SOSP, WMT). PR pending.
 
 - 2026-11-07 — product-sense — tier 1. Picked because it was the only tier-1 row due (47 of 45 days; every other
   tier-1 row is inside its cadence). Outcome: fixed and expanded. All 7 lessons, README and recap read in full.

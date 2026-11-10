@@ -245,7 +245,7 @@ def agent_run():
         ("success", "Done", "the goal is met"), ("caution", "Blocked", "needs information it cannot get"), ("danger", "Limit hit", "step cap, spend cap or time limit")],
         "A stop that does not depend on the agent's own judgement."))
     put(k, 8, F.layers("Stage 9", "An approval card a person can read in seconds", "Shown before an irreversible action.", [
-        ("info", "Action", "Refund $24.10 to order 55812"), ("discovery", "Reason", "item arrived damaged"), ("caution", "Source", "ticket message 3, policy 4.2"),
+        ("info", "Action", "Refund $24.10 to order 55812"), ("discovery", "Reason", "item arrived damaged"), ("caution", "Source", "ticket message 3"),
         ("success", "Safe choice", "decline and ask for photos")],
         "Approval only protects if people can read what they approve."))
     put(k, 9, F.flow("Stage 10", "Report and record", "", [
