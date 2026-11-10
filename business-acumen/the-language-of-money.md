@@ -79,6 +79,9 @@ The income statement runs from the top line (revenue) to the bottom line (net in
 | eCommerce | The cost of goods, inbound and outbound shipping, payment processing, often fulfilment |
 | Retail | The cost of goods sold, freight, shrink (stock lost to theft and damage), markdowns |
 | Neobank | Card processing, customer support, identity checks, hosting |
+| AI product | Model inference (the per-call cost of running a model), plus retrieval, evaluation and hosting. Unlike ordinary hosting, this cost grows with every use |
+
+**AI products change the gross-margin question.** Inference sits in cost of revenue, and it scales with usage. A heavy user costs more than a light user, even on a flat plan. ICONIQ's January 2026 survey of about 300 software executives, as summarised by SaaStr, reports an average AI-product gross margin of 52% for companies projecting 2026. That is up from 41% in 2024. Classic software often earns far more. Treat these as survey averages, not targets. Your own margin depends on model choice, caching and how users behave. Ask Finance whether inference is booked in cost of revenue, and whether the margin is shown by customer segment. A blended margin can hide a loss on your heaviest customers. See [Pricing and business models](./monetization-and-business-models.md) for how price metrics follow this cost.
 
 **Operating expenses** split three ways: R&D, S&M and G&A. Their split matters to investors. A high S&M share says growth is bought. A high G&A share says overhead is heavy.
 
