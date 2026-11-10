@@ -901,3 +901,24 @@ and a link to the merged PR.)
     could stand alone; the module has no lesson for it. Recommend as a possible new lesson, owner decision.
     (2) Cross-module: `context-engineering/` and `ai-security-and-guardrails/` may want the
     `<pasted_content id>` pattern; not checked or edited.
+
+- 2026-11-10 — business-acumen — tier 1. Picked because no row was due, and this is the oldest tier-1 row (25 of 45 days).
+  Outcome: PARTIAL, `last_refreshed` deliberately NOT advanced so the module stays first in line. The module is ~91k words.
+  Fully read this run: README, `foundations-and-assessment.md`, `the-language-of-money.md`. Not read in full: the other 13 lessons
+  and the recap (only grep checks of AI terms and company names). This does not meet the full-read standard.
+  Expanded (the main gap: AI economics was one bullet in the whole module):
+  - `the-language-of-money.md`: added an "AI product" row to the cost-of-revenue table (inference scales with usage) and a
+    paragraph on AI gross margin, with a caution to check margin by customer segment.
+  - `monetization-and-business-models.md`: added outcome-based pricing to the AI seat-or-usage bullet (Intercom Fin, $0.99 per outcome)
+    and the consumption and outcome pricing shares.
+  Sources opened: intercom.com/pricing ($0.99 per outcome and what counts); saastr.com/iconiqs-latest-state-of-ai-report-the-10-most-important-data-points-for-saas-founders
+  (secondary summary of ICONIQ Jan 2026: 52% / 45% / 41% margins; 35% consumption, 18% outcome; inference 23% with an unclear base, so the lesson omits that figure).
+  Opened but not readable: sec.gov DoorDash FY2025 10-K (only the first 100k characters returned; MD&A not reached).
+  Seen in search results only: DoorDash net revenue margin 13.4% for 2024 and 2025 (consistent with the lesson's 2024 figure);
+  Block FY2025 gross profit $10.4B, Cash App $6.3B, Square $3.9B (matches lesson); FASB ASU 2025-06 effective for annual periods
+  beginning after 15 Dec 2027 (matches lesson; law-firm summaries, fasb.org returned 403).
+  Not verified: Upstart 2022 10-K, Affirm, Shopify wording, CECL adoption dates, IFRS 9, ASC 606 text, interest-rate dates, and
+  every claim in lessons 3-15. ICONIQ's original report was not opened.
+  Flagged: (1) This module is too large for one run. Recommend splitting its refresh across several runs (for example five lessons each)
+  with a per-lesson date column. Owner decision. (2) Coverage still to check in later lessons: AI inference in unit economics (`unit-economics.md`),
+  AI-era org design and team sizing (lessons 13-14), model-cost sensitivity in business cases (lesson 4).
