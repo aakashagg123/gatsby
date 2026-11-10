@@ -209,4 +209,4 @@ flowchart LR
 - Google, *Site Reliability Engineering*, chapter "Managing Incidents", sre.google/sre-book/managing-incidents, read 2026-11: the roles of incident command, operational work, communication and planning; "it is better to declare an incident early"; the commander's most important job is to keep a living incident document.
 - Google, *Site Reliability Engineering*, chapter "Postmortem Culture", sre.google/sre-book/postmortem-culture, read 2026-11: a blameless postmortem focuses on contributing causes "without indicting any individual or team"; teams should define postmortem triggers in advance, including when monitoring fails and an incident is found manually.
 - Harbor Credit Union, its fee, timeline, conversation counts, refunds and owners are invented for the example.
-- Independent fact-check: run on 2026-11-04 by a separate agent with web access, blind to the edits. Result: clean, with no wrong, stale or unsupported claims.
+- Independent fact-check: run in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims.

@@ -345,7 +345,7 @@
 <p><strong>Remember:</strong> a picture is made by many small clean-ups, not one stroke.</p>
 <h2 id="6-the-prompt-as-a-guide">6 · The prompt as a guide</h2>
 <p>At every step, the meaning vector steers the clean-up. A technique called <strong>guidance</strong> makes the steering stronger. The model predicts the noise twice, once with the prompt and once without, and pushes the result further in the direction the prompt adds.</p>
-<p>The <strong>guidance scale</strong> sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt closely and can look harsh or over-saturated.</p>
+<p>The <strong>guidance scale</strong> sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt more closely but give less variety.</p>
 <style>
 .xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
   border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -405,7 +405,7 @@
   .xf-layers .xf-box span{text-align:left}
 }
 </style>
-<div class="xf"><span class="xf-chip">Stage 6</span><h4>Guidance scale</h4><p class="xf-sub">How hard the prompt pushes.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Low</b><ul><li>Drifts from the prompt</li><li>More variety</li><li>May ignore parts of it</li></ul></div><div class="xf-box xf-caution"><b>High</b><ul><li>Follows the prompt closely</li><li>Less variety</li><li>Can look harsh or over-saturated</li></ul></div></div><p class="xf-note">A dial between free and obedient.</p></div>
+<div class="xf"><span class="xf-chip">Stage 6</span><h4>Guidance scale</h4><p class="xf-sub">How hard the prompt pushes.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Low</b><ul><li>Drifts from the prompt</li><li>More variety</li><li>May ignore parts of it</li></ul></div><div class="xf-box xf-caution"><b>High</b><ul><li>Follows the prompt closely</li><li>Less variety</li><li>Trades variety for prompt fit</li></ul></div></div><p class="xf-note">A dial between free and obedient.</p></div>
 
 <p><strong>Remember:</strong> guidance is a dial between "free" and "obedient".</p>
 <h2 id="7-working-in-a-small-space">7 · Working in a small space</h2>
@@ -470,7 +470,7 @@
   .xf-layers .xf-box span{text-align:left}
 }
 </style>
-<div class="xf"><span class="xf-chip">Stage 7</span><h4>Draw in a small space</h4><p class="xf-sub">Latent space is a compressed grid of numbers.</p><div class="xf-flow"><div class="xf-box xf-info"><b>Noise in latent space</b><span>small grid</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-discovery"><b>Denoise</b><span>cheap steps</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-success"><b>Decoder</b><span>expands to pixels</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-caution"><b>Full picture</b><span></span></div></div><p class="xf-note">Latent diffusion cut the cost of training and sampling.</p></div>
+<div class="xf"><span class="xf-chip">Stage 7</span><h4>Draw in a small space</h4><p class="xf-sub">Latent space is a compressed grid of numbers.</p><div class="xf-flow"><div class="xf-box xf-info"><b>Noise in latent space</b><span>small grid</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-discovery"><b>Denoise</b><span>cheap steps</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-success"><b>Decoder</b><span>expands to pixels</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-caution"><b>Full picture</b><span></span></div></div><p class="xf-note">Latent diffusion significantly reduces computation compared to pixel-based diffusion.</p></div>
 
 <p><strong>Remember:</strong> drawing in a compressed space is far cheaper than drawing pixels.</p>
 <h2 id="8-why-the-same-prompt-gives-different-pictures">8 · Why the same prompt gives different pictures</h2>
@@ -605,72 +605,59 @@
 <p><strong>Remember:</strong> the model knows what things look like, not how they work.</p>
 <h2 id="the-whole-journey">The whole journey</h2>
 <style>
-.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
-  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
-  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
-.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
-  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
-.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
-.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
-.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
-.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
-.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
-.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
-.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
-.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
-.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
-.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
-.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
-.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
-.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
-.xf-flow .xf-box{flex:1 1 0}
-.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
-.xf-ar::before{content:"\2192"}
-.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
-.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
-.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
-.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
-.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
-.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
-.xf-layers .xf-box b{margin:0;flex:0 0 auto}
-.xf-layers .xf-box span{text-align:right}
-.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
-.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
-.xf-track{display:flex;gap:3px;min-width:0}
-.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
-.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
-.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
-.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
-.xf-mkey b{color:var(--color-text)}
-.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
-.xf-bars .xf-lbl{white-space:nowrap}
-.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
-.xf-fill div{height:100%;border-radius:4px}
-.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
-.xf-grid{display:grid;gap:3px}
-.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
-.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
-.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
-.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+.xs{--xs-ink:var(--color-text-info);--xs-paper:color-mix(in srgb,var(--color-background-warning-surface) 45%,var(--color-surface));
+  background:var(--xs-paper);color:var(--xs-ink);border:2px dashed color-mix(in srgb,var(--xs-ink) 40%,transparent);border-radius:18px;
+  padding:30px 22px 22px;margin:26px 0;max-width:100%;position:relative;font-family:var(--font-hand);text-align:left}
+[data-theme="dark"] .xs{--xs-paper:color-mix(in srgb,var(--color-surface-secondary) 70%,var(--color-surface))}
+.xs-defs{position:absolute;width:0;height:0;overflow:hidden}
+.xs li{margin:0}
+.xs svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.xs-ico,.xs-subs svg,.xs-conn svg,.xs-prog svg,.xs-sum svg{filter:url(#xs-rough)}
+.xs-chip{position:absolute;top:-12px;left:22px;background:var(--xs-paper);color:var(--xs-ink);border:2px solid var(--xs-ink);border-radius:20px;
+  padding:1px 12px;font-size:var(--font-text-sm-size);line-height:1.4}
+.xs-title{margin:0;color:inherit;text-align:center;font-weight:400;font-size:var(--font-heading-md-size);line-height:1.2}
+.xs-sub{margin:4px 0 18px;text-align:center;font-size:var(--font-text-md-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 75%,var(--color-text))}
+.xs-steps{display:flex;align-items:stretch;gap:2px}
+.xs-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.xs-num{width:32px;height:32px;border:2px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-md-size);line-height:1}
+.xs-ico{width:58px;height:58px;margin:8px 0 6px}
+.xs-step b{font-weight:400;font-size:var(--font-text-lg-size);line-height:1.15;overflow-wrap:break-word}
+.xs-step p{margin:4px 0 0;font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text));overflow-wrap:break-word}
+.xs-subs{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:2px dotted color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  display:flex;flex-direction:column;gap:7px;width:100%}
+.xs-subs li{display:flex;align-items:center;gap:6px;min-width:0;text-align:left;font-size:var(--font-text-xs-size);line-height:1.15;overflow-wrap:break-word}
+.xs-subs svg{flex:0 0 auto;width:24px;height:24px}
+.xs-subs span{min-width:0}
+.xs-conn{flex:0 0 24px;align-self:flex-start;margin-top:52px;display:flex;justify-content:center}
+.xs-conn svg{width:24px;height:16px}
+.xs-prog{margin-top:22px}
+.xs-prog ol{list-style:none;margin:0 0 2px;padding:0;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:var(--font-text-md-size)}
+.xs-prog svg{display:block;width:100%;height:16px}
+.xs-sum{margin-top:18px;border:2px solid currentColor;border-radius:16px;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.xs-sum svg{flex:0 0 auto;width:40px;height:40px}
+.xs-sum div{min-width:0}
+.xs-sum strong{display:block;font-weight:400;font-size:var(--font-text-lg-size);line-height:1.25}
+.xs-sum span{display:block;margin-top:6px;padding-top:6px;border-top:2px dashed color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text))}
+.xs-note{margin:12px 0 0;text-align:center;font-size:var(--font-text-sm-size);color:color-mix(in srgb,var(--xs-ink) 65%,var(--color-text))}
 @media (max-width:640px){
-  .xf{padding:24px 14px 16px}
-  .xf-flow{flex-direction:column}
-  .xf-ar{align-self:center}
-  .xf-ar::before{content:"\2193"}
-  .xf-cmp{grid-template-columns:1fr}
-  .xf-layers .xf-box{flex-direction:column;gap:2px}
-  .xf-layers .xf-box span{text-align:left}
+  .xs{padding:28px 14px 16px}
+  .xs-steps{flex-direction:column;align-items:stretch}
+  .xs-conn{align-self:center;margin:2px 0;transform:rotate(90deg)}
+  .xs-subs{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px 6px}
+  .xs-subs li{flex-direction:column;flex:0 1 72px;gap:2px;text-align:center}
+  .xs-prog ol{justify-content:center;gap:4px 10px}
 }
 </style>
-<div class="xf"><span class="xf-chip">Summary</span><h4>From prompt to picture</h4><div class="xf-flow"><div class="xf-box xf-info"><b>Prompt</b><span></span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-discovery"><b>Meaning vector</b><span></span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-danger"><b>Noise</b><span></span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-caution"><b>Guided denoising</b><span></span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-warning"><b>Decode</b><span></span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-success"><b>Picture</b><span></span></div></div><p class="xf-note">Many small clean-ups, steered by the prompt.</p></div>
+<div class="xs" role="group" aria-label="How an image model draws"><svg class="xs-defs" aria-hidden="true" focusable="false"><defs><filter id="xs-rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><symbol id="xs-i-document" viewBox="0 0 48 48"><path d="M12 6h17l9 9v27H12z"/><path d="M29 6v9h9"/><path d="M17 23h15M17 29h15M17 35h10"/></symbol><symbol id="xs-i-network" viewBox="0 0 48 48"><circle cx="10" cy="14" r="3.5"/><circle cx="10" cy="34" r="3.5"/><circle cx="24" cy="24" r="3.5"/><circle cx="38" cy="14" r="3.5"/><circle cx="38" cy="34" r="3.5"/><path d="M13 15l8 7M13 33l8-7M27 22l8-7M27 26l8 7M10 18v12M38 18v12"/></symbol><symbol id="xs-i-dice" viewBox="0 0 48 48"><rect x="9" y="9" width="30" height="30" rx="5"/><circle cx="17" cy="17" r="2"/><circle cx="31" cy="31" r="2"/><circle cx="24" cy="24" r="2"/><circle cx="31" cy="17" r="2"/><circle cx="17" cy="31" r="2"/></symbol><symbol id="xs-i-image" viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="3"/><circle cx="17" cy="19" r="4"/><path d="M8 36l11-11 8 7 5-5 8 8"/></symbol><symbol id="xs-i-magnifier" viewBox="0 0 48 48"><circle cx="20" cy="20" r="11"/><path d="M28 28l12 12"/></symbol><symbol id="xs-i-loop" viewBox="0 0 48 48"><path d="M36 20a13 13 0 1 0 1 9"/><path d="M38 12v9h-9"/></symbol><symbol id="xs-i-dial" viewBox="0 0 48 48"><path d="M8 32a16 16 0 0 1 32 0"/><path d="M24 32l9-11"/><circle cx="24" cy="32" r="2.5"/><path d="M12 26l2 1M24 16v3M36 26l-2 1"/></symbol><symbol id="xs-i-box" viewBox="0 0 48 48"><path d="M8 16l16-8 16 8v18l-16 8-16-8z"/><path d="M8 16l16 8 16-8"/><path d="M24 24v18"/><path d="M16 12l16 8"/></symbol><symbol id="xs-i-check" viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M16 24l6 6 11-12"/></symbol><symbol id="xs-i-trophy" viewBox="0 0 48 48"><path d="M15 8h18v9a9 9 0 0 1-18 0z"/><path d="M15 11H8c0 7 4 10 8 10M33 11h7c0 7-4 10-8 10"/><path d="M24 26v8"/><path d="M16 42h16l-2-8H18z"/></symbol></defs></svg><span class="xs-chip">The whole journey</span><h4 class="xs-title">How an image model draws</h4><p class="xs-sub">"a red kite over a beach". Step counts and sizes are illustrative.</p><div class="xs-steps"><div class="xs-step"><div class="xs-num">1</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-document"/></svg><b>Prompt to vector</b><p>A text encoder turns the prompt into a meaning vector.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-document"/></svg><span>prompt</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-network"/></svg><span>text encoder</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">2</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-dice"/></svg><b>Start from noise</b><p>A seed picks the starting noise.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-dice"/></svg><span>seed</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-image"/></svg><span>pure noise</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">3</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-magnifier"/></svg><b>Trained to name noise</b><p>Training adds noise to real pictures. The network learns to predict it.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-image"/></svg><span>real picture</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-magnifier"/></svg><span>predict the noise</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">4</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-loop"/></svg><b>Guided clean-ups</b><p>Many small denoising steps, steered by the prompt, in a small latent space.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-loop"/></svg><span>denoising loop</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-dial"/></svg><span>guidance</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-box"/></svg><span>latent space</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">5</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-image"/></svg><b>Picture and limits</b><p>A decoder makes the pixels. It knows looks, not how things work.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-image"/></svg><span>picture</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-check"/></svg><span>style and mood</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-magnifier"/></svg><span>counts and text: weak</span></li></ul></div></div><div class="xs-prog"><ol><li>Prompt</li><li>Noise</li><li>Training</li><li>Denoise</li><li>Picture</li></ol><svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8h384" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/><path d="M380 2l14 6-14 6" vector-effect="non-scaling-stroke"/></svg></div><div class="xs-sum"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-trophy"/></svg><div><strong>A picture is made by many small clean-ups, not one stroke.</strong><span>The prompt picks a family of pictures. The seed picks one.</span></div></div></div>
 
 <h2 id="where-it-breaks">Where it breaks</h2>
 <ul>
 <li><strong>Counts and text.</strong> Wrong numbers of fingers, garbled lettering.</li>
 <li><strong>Spatial relations.</strong> Left and right swap.</li>
 <li><strong>Prompt drift.</strong> A low guidance scale ignores part of the prompt.</li>
-<li><strong>Over-saturation.</strong> A high guidance scale looks harsh.</li>
+<li><strong>Less variety.</strong> A high guidance scale trades variety for prompt fit, so images look alike.</li>
 <li><strong>Data issues.</strong> Bias, copyright and unsafe content in the training set.</li>
 </ul>
 <h2 id="go-deeper">Go deeper</h2>
@@ -702,9 +689,10 @@
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Jonathan Ho, Ajay Jain and Pieter Abbeel, <em>Denoising Diffusion Probabilistic Models</em>, NeurIPS 2020, abstract read 2026-11: diffusion probabilistic models for high-quality image synthesis.</li>
-<li>Robin Rombach et al., <em>High-Resolution Image Synthesis with Latent Diffusion Models</em>, CVPR 2022, abstract read 2026-11: applying diffusion in the latent space of pretrained autoencoders to cut computation, and adding cross-attention layers for conditioning on text.</li>
-<li>Guidance is described in Ho and Salimans, <em>Classifier-Free Diffusion Guidance</em>, 2022. Not re-opened. Step counts and the example prompt are illustrative, and products differ in detail. This page's fact-check is pending.</li>
+<li>Jonathan Ho, Ajay Jain and Pieter Abbeel, <a href="https://arxiv.org/abs/2006.11239"><em>Denoising Diffusion Probabilistic Models</em></a>, arXiv 2006.11239, 2020, abstract read 2026-11: diffusion probabilistic models for high-quality image synthesis.</li>
+<li>Robin Rombach et al., <em>High-Resolution Image Synthesis with Latent Diffusion Models</em>, CVPR 2022, abstract read 2026-11: applying diffusion in the latent space of pretrained autoencoders, "significantly reducing computational requirements compared to pixel-based" diffusion models, and adding cross-attention layers for conditioning on text.</li>
+<li>Jonathan Ho and Tim Salimans, <a href="https://arxiv.org/abs/2207.12598"><em>Classifier-Free Diffusion Guidance</em></a>, arXiv 2207.12598, 2022, read 2026-11-09: one model handles both conditional and unconditional generation, and blending the two trades sample quality against variety. Step counts and the example prompt are illustrative, and products differ in detail.</li>
+<li>Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="one-token-through-a-transformer.html"><span class="lbl">← Previous</span><span class="ttl">One token through a transformer</span></a><a class="navcard next" href="one-agent-run.html"><span class="lbl">→ Next</span><span class="ttl">One agent run, step by step</span></a></div><footer class="foot"><strong>Core insight:</strong> Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#in-one-minute">In one minute</a><a class="h2" href="#1-the-prompt-becomes-a-meaning-vector">1 · The prompt becomes a meaning vector</a><a class="h2" href="#2-start-from-noise">2 · Start from noise</a><a class="h2" href="#3-training-adds-noise-on-purpose">3 · Training adds noise on purpose</a><a class="h2" href="#4-the-network-learns-to-predict-the-noise">4 · The network learns to predict the noise</a><a class="h2" href="#5-the-denoising-loop">5 · The denoising loop</a><a class="h2" href="#6-the-prompt-as-a-guide">6 · The prompt as a guide</a><a class="h2" href="#7-working-in-a-small-space">7 · Working in a small space</a><a class="h2" href="#8-why-the-same-prompt-gives-different-pictures">8 · Why the same prompt gives different pictures</a><a class="h2" href="#9-where-it-fails">9 · Where it fails</a><a class="h2" href="#the-whole-journey">The whole journey</a><a class="h2" href="#where-it-breaks">Where it breaks</a><a class="h2" href="#go-deeper">Go deeper</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

@@ -535,7 +535,7 @@
   .xf-layers .xf-box span{text-align:left}
 }
 </style>
-<div class="xf"><span class="xf-chip">Stage 8</span><h4>A base model and a tuned assistant</h4><p class="xf-sub">Numbers from the toy model in this site's fine-tuning module.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Base model</b><ul><li>Continues text</li><li>Chance of the wanted answer: 0.083</li><li>Loss on ordinary text: 1.103</li></ul></div><div class="xf-box xf-success"><b>After supervised tuning</b><ul><li>Answers the question</li><li>Chance of the wanted answer: 0.987</li><li>Loss on ordinary text: 2.280</li></ul></div></div><p class="xf-note">The push changed behaviour a lot. It also hurt other things.</p></div>
+<div class="xf"><span class="xf-chip">Stage 8</span><h4>A base model and a tuned assistant</h4><p class="xf-sub">Numbers printed by fine-tuning/code/lesson1_pipeline.py, a seeded toy model.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Base model</b><ul><li>Continues text</li><li>Chance of the wanted answer: 0.083</li><li>Loss on ordinary text: 1.103</li></ul></div><div class="xf-box xf-success"><b>After supervised tuning</b><ul><li>Answers the question</li><li>Chance of the wanted answer: 0.987</li><li>Loss on ordinary text: 2.280</li></ul></div></div><p class="xf-note">The push changed behaviour a lot. It also hurt other things.</p></div>
 
 <p><strong>Remember:</strong> a small push can change behaviour a lot, and can break other things.</p>
 <h2 id="9-learning-what-people-prefer">9 · Learning what people prefer</h2>
@@ -670,65 +670,52 @@
 <p><strong>Remember:</strong> train for behaviour, retrieve for facts, and test what you did not mean to change.</p>
 <h2 id="the-whole-journey">The whole journey</h2>
 <style>
-.xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
-  border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
-  margin:26px 0;max-width:100%;font-family:inherit;text-align:left;position:relative;color:var(--color-text)}
-.xf-chip{position:absolute;top:-11px;left:22px;background:var(--color-background-discovery-solid);color:var(--white);
-  font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;padding:3px 12px}
-.xf h4{margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--color-text-secondary)}
-.xf-sub{font-size:12px;color:var(--color-text-secondary);margin:0 0 14px;line-height:1.45}
-.xf-note{margin:14px 0 0;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.45}
-.xf-box{border-radius:12px;padding:10px 12px;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0}
-.xf-box b{display:block;font-size:12px;margin-bottom:3px;line-height:1.3}
-.xf-box span{display:block;font-size:10.5px;line-height:1.4;color:var(--color-text-secondary)}
-.xf-info{background:var(--color-background-info-surface);border-color:var(--color-border-info-surface)}
-.xf-success{background:var(--color-background-success-surface);border-color:var(--color-border-success-surface)}
-.xf-caution{background:var(--color-background-caution-surface);border-color:var(--color-border-caution-outline)}
-.xf-danger{background:var(--color-background-danger-surface);border-color:var(--color-border-danger-surface)}
-.xf-discovery{background:var(--color-background-discovery-surface);border-color:var(--color-border-discovery-surface)}
-.xf-warning{background:var(--color-background-warning-surface);border-color:var(--color-border-warning-surface)}
-.xf-flow{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px}
-.xf-flow .xf-box{flex:1 1 0}
-.xf-ar{flex:0 0 auto;align-self:center;color:var(--color-text-tertiary);font-size:14px;line-height:1}
-.xf-ar::before{content:"\2192"}
-.xf-toks{display:flex;flex-wrap:wrap;gap:8px}
-.xf-tok{display:flex;flex-direction:column;align-items:center;gap:3px}
-.xf-tok i{font-style:normal;font-weight:700;font-size:13px;border-radius:8px;padding:5px 9px;border:1px solid var(--color-border);white-space:pre}
-.xf-tok em{font-style:normal;font-size:10px;color:var(--color-text-tertiary);font-variant-numeric:tabular-nums}
-.xf-layers{display:flex;flex-direction:column;gap:6px;align-items:stretch}
-.xf-layers .xf-box{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
-.xf-layers .xf-box b{margin:0;flex:0 0 auto}
-.xf-layers .xf-box span{text-align:right}
-.xf-lanes{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
-.xf-lbl{font-size:11px;font-weight:700;color:var(--color-text-secondary)}
-.xf-track{display:flex;gap:3px;min-width:0}
-.xf-seg{border-radius:6px;padding:6px 4px;font-size:10px;text-align:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);min-width:0;overflow:hidden}
-.xf-mem{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--color-border)}
-.xf-mem div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
-.xf-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:10.5px;color:var(--color-text-secondary)}
-.xf-mkey b{color:var(--color-text)}
-.xf-bars{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:6px 10px;align-items:center}
-.xf-bars .xf-lbl{white-space:nowrap}
-.xf-fill{height:16px;border-radius:5px;border:1px solid var(--color-border);background:var(--color-surface-secondary);overflow:hidden}
-.xf-fill div{height:100%;border-radius:4px}
-.xf-val{font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
-.xf-grid{display:grid;gap:3px}
-.xf-cell{border-radius:5px;min-height:22px;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);background:var(--color-surface-secondary);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
-.xf-cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.xf-cmp ul{margin:6px 0 0;padding-left:16px;font-size:10.5px;color:var(--color-text-secondary);line-height:1.5}
-.xf-heat{display:grid;gap:3px;font-variant-numeric:tabular-nums}
-.xf-hh{font-size:10.5px;font-weight:700;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center;padding:2px}
+.xs{--xs-ink:var(--color-text-info);--xs-paper:color-mix(in srgb,var(--color-background-warning-surface) 45%,var(--color-surface));
+  background:var(--xs-paper);color:var(--xs-ink);border:2px dashed color-mix(in srgb,var(--xs-ink) 40%,transparent);border-radius:18px;
+  padding:30px 22px 22px;margin:26px 0;max-width:100%;position:relative;font-family:var(--font-hand);text-align:left}
+[data-theme="dark"] .xs{--xs-paper:color-mix(in srgb,var(--color-surface-secondary) 70%,var(--color-surface))}
+.xs-defs{position:absolute;width:0;height:0;overflow:hidden}
+.xs li{margin:0}
+.xs svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.xs-ico,.xs-subs svg,.xs-conn svg,.xs-prog svg,.xs-sum svg{filter:url(#xs-rough)}
+.xs-chip{position:absolute;top:-12px;left:22px;background:var(--xs-paper);color:var(--xs-ink);border:2px solid var(--xs-ink);border-radius:20px;
+  padding:1px 12px;font-size:var(--font-text-sm-size);line-height:1.4}
+.xs-title{margin:0;color:inherit;text-align:center;font-weight:400;font-size:var(--font-heading-md-size);line-height:1.2}
+.xs-sub{margin:4px 0 18px;text-align:center;font-size:var(--font-text-md-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 75%,var(--color-text))}
+.xs-steps{display:flex;align-items:stretch;gap:2px}
+.xs-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center}
+.xs-num{width:32px;height:32px;border:2px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:var(--font-text-md-size);line-height:1}
+.xs-ico{width:58px;height:58px;margin:8px 0 6px}
+.xs-step b{font-weight:400;font-size:var(--font-text-lg-size);line-height:1.15;overflow-wrap:break-word}
+.xs-step p{margin:4px 0 0;font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text));overflow-wrap:break-word}
+.xs-subs{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:2px dotted color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  display:flex;flex-direction:column;gap:7px;width:100%}
+.xs-subs li{display:flex;align-items:center;gap:6px;min-width:0;text-align:left;font-size:var(--font-text-xs-size);line-height:1.15;overflow-wrap:break-word}
+.xs-subs svg{flex:0 0 auto;width:24px;height:24px}
+.xs-subs span{min-width:0}
+.xs-conn{flex:0 0 24px;align-self:flex-start;margin-top:52px;display:flex;justify-content:center}
+.xs-conn svg{width:24px;height:16px}
+.xs-prog{margin-top:22px}
+.xs-prog ol{list-style:none;margin:0 0 2px;padding:0;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:var(--font-text-md-size)}
+.xs-prog svg{display:block;width:100%;height:16px}
+.xs-sum{margin-top:18px;border:2px solid currentColor;border-radius:16px;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.xs-sum svg{flex:0 0 auto;width:40px;height:40px}
+.xs-sum div{min-width:0}
+.xs-sum strong{display:block;font-weight:400;font-size:var(--font-text-lg-size);line-height:1.25}
+.xs-sum span{display:block;margin-top:6px;padding-top:6px;border-top:2px dashed color-mix(in srgb,var(--xs-ink) 45%,transparent);
+  font-size:var(--font-text-sm-size);line-height:1.3;color:color-mix(in srgb,var(--xs-ink) 70%,var(--color-text))}
+.xs-note{margin:12px 0 0;text-align:center;font-size:var(--font-text-sm-size);color:color-mix(in srgb,var(--xs-ink) 65%,var(--color-text))}
 @media (max-width:640px){
-  .xf{padding:24px 14px 16px}
-  .xf-flow{flex-direction:column}
-  .xf-ar{align-self:center}
-  .xf-ar::before{content:"\2193"}
-  .xf-cmp{grid-template-columns:1fr}
-  .xf-layers .xf-box{flex-direction:column;gap:2px}
-  .xf-layers .xf-box span{text-align:left}
+  .xs{padding:28px 14px 16px}
+  .xs-steps{flex-direction:column;align-items:stretch}
+  .xs-conn{align-self:center;margin:2px 0;transform:rotate(90deg)}
+  .xs-subs{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px 6px}
+  .xs-subs li{flex-direction:column;flex:0 1 72px;gap:2px;text-align:center}
+  .xs-prog ol{justify-content:center;gap:4px 10px}
 }
 </style>
-<div class="xf"><span class="xf-chip">Summary</span><h4>From text to assistant</h4><p class="xf-sub">The same loop, three times.</p><div class="xf-flow"><div class="xf-box xf-info"><b>Text</b><span>raw data</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-discovery"><b>Guess</b><span>probabilities</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-caution"><b>Loss</b><span>surprise</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-warning"><b>Gradient</b><span>direction</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-success"><b>Update</b><span>small step</span></div><span class="xf-ar" aria-hidden="true"></span><div class="xf-box xf-danger"><b>Assistant</b><span>after tuning</span></div></div><p class="xf-note">Many small, safe steps add up.</p></div>
+<div class="xs" role="group" aria-label="How a model learns, step by step"><svg class="xs-defs" aria-hidden="true" focusable="false"><defs><filter id="xs-rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><symbol id="xs-i-document" viewBox="0 0 48 48"><path d="M12 6h17l9 9v27H12z"/><path d="M29 6v9h9"/><path d="M17 23h15M17 29h15M17 35h10"/></symbol><symbol id="xs-i-tag" viewBox="0 0 48 48"><path d="M6 24L22 8h18v18L24 42z"/><circle cx="32" cy="16" r="3"/></symbol><symbol id="xs-i-chart" viewBox="0 0 48 48"><path d="M7 41h34"/><path d="M11 41V27h6v14M21 41V17h6v24M31 41V9h6v32"/></symbol><symbol id="xs-i-dial" viewBox="0 0 48 48"><path d="M8 32a16 16 0 0 1 32 0"/><path d="M24 32l9-11"/><circle cx="24" cy="32" r="2.5"/><path d="M12 26l2 1M24 16v3M36 26l-2 1"/></symbol><symbol id="xs-i-network" viewBox="0 0 48 48"><circle cx="10" cy="14" r="3.5"/><circle cx="10" cy="34" r="3.5"/><circle cx="24" cy="24" r="3.5"/><circle cx="38" cy="14" r="3.5"/><circle cx="38" cy="34" r="3.5"/><path d="M13 15l8 7M13 33l8-7M27 22l8-7M27 26l8 7M10 18v12M38 18v12"/></symbol><symbol id="xs-i-arrow" viewBox="0 0 48 48"><path d="M6 24h34"/><path d="M30 14l10 10-10 10"/></symbol><symbol id="xs-i-loop" viewBox="0 0 48 48"><path d="M36 20a13 13 0 1 0 1 9"/><path d="M38 12v9h-9"/></symbol><symbol id="xs-i-person" viewBox="0 0 48 48"><circle cx="24" cy="14" r="7"/><path d="M10 42c1-9 7-14 14-14s13 5 14 14"/></symbol><symbol id="xs-i-check" viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M16 24l6 6 11-12"/></symbol><symbol id="xs-i-database" viewBox="0 0 48 48"><ellipse cx="24" cy="11" rx="14" ry="5"/><path d="M10 11v26c0 3 6 5 14 5s14-2 14-5V11"/><path d="M10 20c0 3 6 5 14 5s14-2 14-5M10 29c0 3 6 5 14 5s14-2 14-5"/></symbol><symbol id="xs-i-magnifier" viewBox="0 0 48 48"><circle cx="20" cy="20" r="11"/><path d="M28 28l12 12"/></symbol><symbol id="xs-i-trophy" viewBox="0 0 48 48"><path d="M15 8h18v9a9 9 0 0 1-18 0z"/><path d="M15 11H8c0 7 4 10 8 10M33 11h7c0 7-4 10-8 10"/><path d="M24 26v8"/><path d="M16 42h16l-2-8H18z"/></symbol></defs></svg><span class="xs-chip">The whole journey</span><h4 class="xs-title">How a model learns, step by step</h4><p class="xs-sub">From raw text to an assistant. Probabilities are illustrative.</p><div class="xs-steps"><div class="xs-step"><div class="xs-num">1</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-document"/></svg><b>Text sets the questions</b><p>Each position in a sentence asks for the next word. The text holds the answer.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-document"/></svg><span>raw text</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-tag"/></svg><span>hidden target</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">2</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-chart"/></svg><b>Guess and loss</b><p>The model spreads probability over words. The true word got 0.30: a loss of about 1.20.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-chart"/></svg><span>probabilities</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-dial"/></svg><span>loss</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">3</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-network"/></svg><b>One small step</b><p>Backpropagation gives each weight a direction. One step lifts 0.30 to 0.34.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-network"/></svg><span>who to blame</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-arrow"/></svg><span>small step</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">4</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-loop"/></svg><b>Repeat, then tune</b><p>Pretraining repeats the loop. Supervised and preference tuning shape an assistant.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-loop"/></svg><span>pretraining</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-person"/></svg><span>tuning</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-check"/></svg><span>preferences</span></li></ul></div><div class="xs-conn" aria-hidden="true"><svg viewBox="0 0 24 16"><path d="M2 8h18" stroke-dasharray="3 4"/><path d="M15 3l6 5-6 5"/></svg></div><div class="xs-step"><div class="xs-num">5</div><svg class="xs-ico" viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-database"/></svg><b>What it cannot fix</b><p>Training is good at behaviour and poor at fresh facts.</p><ul class="xs-subs"><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-check"/></svg><span>behaviour</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-database"/></svg><span>retrieve facts</span></li><li><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-magnifier"/></svg><span>test side effects</span></li></ul></div></div><div class="xs-prog"><ol><li>Text</li><li>Guess</li><li>Loss</li><li>Step</li><li>Tune</li></ol><svg viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8h384" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/><path d="M380 2l14 6-14 6" vector-effect="non-scaling-stroke"/></svg></div><div class="xs-sum"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#xs-i-trophy"/></svg><div><strong>Train for behaviour, retrieve for facts, and test what you did not mean to change.</strong><span>Learning is many small, safe steps, not one clever jump.</span></div></div></div>
 
 <h2 id="where-it-breaks">Where it breaks</h2>
 <ul>
@@ -767,8 +754,9 @@
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Long Ouyang et al., <em>Training language models to follow instructions with human feedback</em>, NeurIPS 2022, abstract read 2026-11: supervised fine-tuning on labeler demonstrations, then fine-tuning with reinforcement learning from human feedback on ranked outputs, and the finding that outputs of the 1.3B InstructGPT model are preferred to those of the 175B GPT-3.</li>
-<li>This site's <code>fine-tuning/code/</code> toy model for the 0.083 to 0.987 and 1.103 to 2.280 figures. The example sentence, the probabilities 0.30 and 0.34 and the loss values computed from them are illustrative. This page's fact-check is pending.</li>
+<li>Long Ouyang et al., <a href="https://arxiv.org/abs/2203.02155"><em>Training language models to follow instructions with human feedback</em></a>, arXiv 2203.02155, 2022, abstract read 2026-11: supervised fine-tuning on labeler demonstrations, then fine-tuning with reinforcement learning from human feedback on ranked outputs, and the finding that outputs of the 1.3B InstructGPT model are preferred to those of the 175B GPT-3.</li>
+<li>This site's seeded toy model, <code>python3 fine-tuning/code/lesson1_pipeline.py</code> (run 2026-11-09, and confirmed by running this site's script on 2026-11-10, not by the independent checker). It printed a chance of the wanted answer of 0.083 and a loss on general text of 1.103 for the pretrained model, and 0.987 and 2.280 after supervised fine-tuning. The same numbers appear in <a href="../fine-tuning/from-base-model-to-assistant.html">From base model to assistant</a>. The example sentence, the probabilities 0.30 and 0.34 and the loss values computed from them are illustrative.</li>
+<li>Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims. Two numbers from this site's own script (0.083 to 0.987 and 1.103 to 2.280 from <code>fine-tuning/code/lesson1_pipeline.py</code>) could not be re-run by the checker (it has no shell); they were confirmed by running the script and are accepted by the owner as the source.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="inside-one-llm-request.html"><span class="lbl">← Previous</span><span class="ttl">Inside one LLM request</span></a><a class="navcard next" href="one-token-through-a-transformer.html"><span class="lbl">→ Next</span><span class="ttl">One token through a transformer</span></a></div><footer class="foot"><strong>Core insight:</strong> Follow one example through the stages and the system stops being magic: each stage has one job, one cost and one way to break.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#in-one-minute">In one minute</a><a class="h2" href="#1-raw-text">1 · Raw text</a><a class="h2" href="#2-an-example-and-a-target">2 · An example and a target</a><a class="h2" href="#3-a-guess">3 · A guess</a><a class="h2" href="#4-the-loss">4 · The loss</a><a class="h2" href="#5-who-to-blame">5 · Who to blame</a><a class="h2" href="#6-a-small-step">6 · A small step</a><a class="h2" href="#7-repeat-a-very-large-number-of-times">7 · Repeat, a very large number of times</a><a class="h2" href="#8-from-predictor-to-assistant">8 · From predictor to assistant</a><a class="h2" href="#9-learning-what-people-prefer">9 · Learning what people prefer</a><a class="h2" href="#10-what-training-cannot-fix">10 · What training cannot fix</a><a class="h2" href="#the-whole-journey">The whole journey</a><a class="h2" href="#where-it-breaks">Where it breaks</a><a class="h2" href="#go-deeper">Go deeper</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

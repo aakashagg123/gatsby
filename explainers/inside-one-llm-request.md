@@ -63,11 +63,13 @@ Now the model reads the whole prompt. This stage is called **prefill**. Because 
 
 Inside each layer, **attention** lets each token take information from the tokens before it. A token can look backwards, never forwards. That keeps the model's job simple: predict what comes next.
 
+In our example the prompt is about 3,600 tokens: the instructions, tool descriptions and history from stage 3, plus the 6-token question.
+
 Prefill ends with a score for every word in the vocabulary. Those scores decide the first word of the answer. Prefill is the main part of the wait before the first word appears.
 
 ```mermaid
 flowchart LR
-  A["6 prompt tokens"] --> B["One parallel pass"] --> C["Scores for the first word"]
+  A["About 3,600 prompt tokens"] --> B["One parallel pass"] --> C["Scores for the first word"]
 ```
 
 **Remember:** prefill reads the prompt in parallel, so it is fast per token.
@@ -76,9 +78,9 @@ flowchart LR
 
 While reading, attention computes two things for each token in each layer: a **key** and a **value**. They are what later tokens look up. The model keeps them in the **KV cache**, so it never has to recompute them.
 
-The cache is useful and expensive. It grows with every token, for every conversation, and it sits in the accelerator's memory next to the model's weights. For a 7-billion-parameter-class model, one 8,192-token conversation needs about 4.0 GiB of cache.
+The cache is useful and expensive. It grows with every token, for every conversation, and it sits in the accelerator's memory next to the model's weights. For a model with full multi-head attention (32 layers, 32 key-value heads, head dimension 128, 16-bit numbers), one 8,192-token conversation needs about 4.0 GiB of cache. Models that share key-value heads need less.
 
-On an 80 GiB accelerator, the weights take about 12.6 GiB. The rest is mostly cache. That is why memory, not arithmetic, usually decides how many people one machine can serve.
+On an 80 GiB accelerator, the weights take about 12.6 GiB (both are assumed example sizes, the values the site's lesson code uses). The rest is mostly cache. That is why memory, not arithmetic, usually decides how many people one machine can serve.
 
 ```mermaid
 flowchart LR
@@ -134,9 +136,9 @@ flowchart LR
 
 ## 9 · Many people at once
 
-One machine serves many conversations. Running them together in a **batch** lets the accelerator read the weights once for many tokens, which raises output a lot. A batch of 16 streams gave about 2,365 tokens per second in total in our example, against about 148 for one stream.
+One machine serves many conversations. Running them together in a **batch** lets the accelerator read the weights once for many tokens, which raises output a lot. In our example, a batch of 16 streams gives at most about 2,365 tokens per second in total, against about 148 for one stream. That is a derived upper bound, assuming 2 terabytes (TB) per second of memory bandwidth and ignoring compute, cache reads and overhead.
 
-The catch is that answers differ in length. With **static batching**, a group waits for its longest answer. With **continuous batching**, a finished answer leaves at once and a waiting request takes its place. In our example, 64 requests took 1,887 steps with continuous batching and 2,890 with static batching.
+The catch is that answers differ in length. With **static batching**, a group waits for its longest answer. With **continuous batching**, a finished answer leaves at once and a waiting request takes its place. In a seeded simulation on this site (64 requests of 20 to 400 tokens on 8 slots), continuous batching took 1,887 steps and static batching 2,890.
 
 Memory limits the batch. On the 80 GiB machine from stage 5, 16 long conversations fit.
 
@@ -197,5 +199,6 @@ flowchart LR
 ## Sources
 
 - Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention*, SOSP 2023, abstract read 2026-11: the KV cache is large and grows and shrinks, and wasting it by fragmentation limits the batch size. The paper reports 2 to 4 times higher throughput for vLLM at the same latency.
-- Gyeong-In Yu et al., *Orca*, OSDI 2022: continuous batching. Not re-opened.
-- This site's worked examples: `transformers/code/` for cache sizes and `system-design/code/llm_serving.py` for decode speed and batching steps. Token IDs, probabilities and the example question are illustrative. This page's fact-check is pending.
+- Gyeong-In Yu et al., [*Orca: A Distributed Serving System for Transformer-Based Generative Models*](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI 2022, read 2026-11-09: iteration-level scheduling, the paper's own term, which schedules work one iteration at a time instead of one request at a time.
+- This site's worked examples: `transformers/code/` for cache sizes, and `python3 system-design/code/llm_serving.py` (seed `Random(3)`, run 2026-11-09, and confirmed by running this site's script on 2026-11-10, not by the independent checker). It printed about 148 tokens/s for one stream and about 2,365 across a batch of 16 (an upper bound from 2 TB/s of bandwidth and 12.6 GiB of weights). It also printed 2,890 steps for static batching and 1,887 for continuous batching, 1.53 times faster (a seeded simulation of 64 requests of 20 to 400 tokens on 8 slots). The same numbers appear in [Generative AI and agent platforms](../system-design/genai-and-agent-platforms.md). Token IDs, probabilities and the example question are illustrative.
+- Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims. Two numbers from this site's own script (2,890 and 1,887 steps from `system-design/code/llm_serving.py`) could not be re-run by the checker (it has no shell); they were confirmed by running the script and are accepted by the owner as the source.

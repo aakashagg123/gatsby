@@ -113,9 +113,9 @@ flowchart LR
 
 ## 8 · The feed-forward layer
 
-Attention moves information between tokens. The **feed-forward layer** then works on each token alone. It widens the vector, applies a nonlinear function and narrows it again. No information crosses between tokens here.
+Attention moves information between tokens. The **feed-forward layer** then works on each token alone. It widens the vector (in the original Transformer, about four times wider; later models vary), applies a nonlinear function and narrows it again. No information crosses between tokens here.
 
-This layer is large. In a typical block it holds about two thirds of the parameters, and research suggests much of the model's stored knowledge sits in these layers. Attention finds the right information, and the feed-forward layer processes it.
+This layer is large. In a typical block it holds about two thirds of the parameters. Geva and colleagues showed that these layers can act as key-value memories. Attention finds the right information, and the feed-forward layer processes it.
 
 ```mermaid
 flowchart LR
@@ -139,7 +139,7 @@ flowchart LR
 
 ## 10 · Up the stack, and out
 
-The block repeats, with different weights, many times: a few dozen layers in large models. In the early layers, "bank" may only pick up nearby words. In later layers, its vector can hold richer ideas, such as "the edge of a river".
+The block repeats, with different weights, many times: dozens of layers in large models. In the early layers, "bank" may only pick up nearby words. In later layers, its vector can hold richer ideas, such as "the edge of a river".
 
 At the top, the last token's vector is turned into a score for every word in the vocabulary. The model picks the next word. The Transformer paper showed that a network built only on attention, without recurrence or convolution, reached 28.4 BLEU on English-to-German translation and 41.8 on English-to-French.
 
@@ -160,7 +160,7 @@ flowchart LR
 ## Where it breaks
 
 - **Long inputs.** Attention costs grow with the square of the length.
-- **Lost in the middle.** Information buried in a long prompt is used less well.
+- **Lost in the middle.** In tests on question answering and key-value retrieval, models often did best when the answer sat at the start or end of the input. Performance dropped when it sat in the middle (Liu et al., see Sources).
 - **Position limits.** A model can fail at lengths it never saw in training.
 - **Confident errors.** Attention finds patterns. It does not check facts.
 
@@ -183,5 +183,8 @@ flowchart LR
 
 ## Sources
 
-- Ashish Vaswani et al., *Attention Is All You Need*, NeurIPS 2017, abstract read 2026-11: a network "based solely on attention mechanisms, dispensing with recurrence and convolutions entirely", with 28.4 BLEU on WMT 2014 English-to-German and 41.8 on English-to-French.
-- This site's `transformers/code/` and lessons for the two-thirds feed-forward share, heads that add, and the residual stream. The tiny vectors and the scores 0.07, 0.89 and 0.58 are made up for the example. This page's fact-check is pending.
+- Mor Geva et al., [*Transformer Feed-Forward Layers Are Key-Value Memories*](https://arxiv.org/abs/2012.14913), Empirical Methods in Natural Language Processing (EMNLP) 2021, abstract read 2026-11-09: feed-forward layers in transformer language models operate as key-value memories.
+- Ashish Vaswani et al., [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), arXiv 1706.03762, 2017, abstract read 2026-11: a network "based solely on attention mechanisms, dispensing with recurrence and convolutions entirely", with 28.4 BLEU on WMT 2014 English-to-German and 41.8 on English-to-French.
+- Nelson F. Liu et al., [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172), arXiv 2307.03172, abstract read 2026-11-10: on multi-document question answering and key-value retrieval, performance is often highest when the relevant information is at the beginning or end of the input, and drops significantly when it is in the middle, even for models built for long contexts.
+- This site's `transformers/code/` and lessons for the two-thirds feed-forward share, heads that add, and the residual stream. The tiny vectors and the scores 0.07, 0.89 and 0.58 are made up for the example.
+- Independent fact-check: this is this page's first independent check. It ran in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims.

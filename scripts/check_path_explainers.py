@@ -11,6 +11,7 @@ For every explainer that exists, this checks:
   - a "**Do this:**" line in each path-stage block
   - every lesson link inside a path-stage block is a lesson of that path stage
   - the path's total hours and the weeks line "At <h> hours a week, about <w> weeks."
+  - the whole-journey figure (the page's last figure file) shows every stage's hours, the total and the weeks
 Explainers not written yet are skipped. Exit code 1 on any mismatch.
 
 Run:  python3 scripts/check_path_explainers.py
@@ -100,6 +101,17 @@ def check(slug, p):
     weeks = f"At {p['example_hpw']} hours a week, about {G.weeks_at(total, p['example_hpw'])} weeks."
     if weeks not in text:
         errors.append(f"{slug}: missing or wrong weeks line; expected \"{weeks}\"")
+    # The whole-journey figure repeats the hours, so a figure not regenerated after a path change is caught too.
+    last = text.count("```mermaid") - 1
+    fig_path = os.path.join(ROOT, "diagrams", "explainers", f"{slug}-{last}.html")
+    if not os.path.exists(fig_path):
+        errors.append(f"{slug}: no whole-journey figure at {os.path.relpath(fig_path, ROOT)}")
+    else:
+        fig = open(fig_path, encoding="utf-8").read()
+        want = [f"{G.hours(G.stage_minutes(s))}." for s in stages] + [f"{G.hours(total)} in all", weeks]
+        for w in want:
+            if w not in fig:
+                errors.append(f"{slug}: whole-journey figure lacks \"{w}\"; run scripts/gen_explainer_figures.py")
     return errors
 
 

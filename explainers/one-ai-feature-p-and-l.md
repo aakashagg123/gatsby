@@ -117,7 +117,7 @@ Quill compares three pricing options. Each one is judged by the margin on a heav
 | Option | How it works | Heavy-seat margin |
 | --- | --- | --- |
 | **Fair-use cap** | 300 tasks, then a smaller model at about 0.1 cents a task | about 72% |
-| **Credits** | 300 tasks included, then packs of 1,000 for $15 | about 76% |
+| **Credits** | 300 tasks included, then packs of 1,000 for $15 (the heavy seat's 1,500 tasks need two whole packs) | about 76% |
 | **AI tier** | A $36 plan that includes 2,000 tasks | about 64% |
 
 There is no right answer in the numbers alone. A cap keeps the bill simple but can feel stingy. Credits match price to cost but make the bill harder to predict. A tier is easy to sell but asks every heavy user to upgrade.
@@ -213,7 +213,7 @@ flowchart LR
 ## Sources
 
 - FinOps Foundation, "FinOps for AI" overview, finops.org/wg/finops-for-ai-overview, updated 2026-10-28, read 2026-11: track cost per inference, per user and per successful outcome; its KPIs include cost per successful outcome and cache hit rate.
-- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and Mythos 5.1). Quill's prices are illustrative and use the 0.1 multiplier.
+- Anthropic, "Pricing" and "Prompt caching", platform.claude.com, read 2026-11-04: on Anthropic's current models, the output price per token is 5 times the input price; a cache read costs 0.1 times the base input price on most models (0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable and Mythos 5.1 and 5.2, which the pricing page listed on 2026-11-10). Quill's prices are illustrative and use the 0.1 multiplier.
 - The rule that a price needs a usage part when cost varies a lot between customers comes from this site's [pricing lesson](../business-acumen/monetization-and-business-models.md), where it is labelled as judgement.
 - Quill, its plan, prices, usage, margins and growth rates are invented for the example.
-- Independent fact-check: run on 2026-11-04 by a separate agent with web access, blind to the edits. Result: clean, with no wrong, stale or unsupported claims. Vendor documentation pages carry no on-page date, so the vendor terms above hold as of the read date.
+- Independent fact-check: run in four blind passes on 2026-11-07 to 2026-11-10 by a separate agent with web access, blind to the edits. The last pass found no wrong or stale claims. Vendor documentation pages carry no on-page date, so the vendor terms above hold as of the read date.
