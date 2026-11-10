@@ -37,10 +37,10 @@ def llm_request():
         ("Prefill", [("info", "about 3,600 prompt tokens, one parallel pass", 6)]),
         ("Decode", [("success", "token 1", 1), ("success", "token 2", 1), ("success", "token 3", 1), ("success", "token 4", 1), ("success", "token 5", 1), ("success", "token 6", 1)])],
         "Prefill is parallel. Decode must go one step at a time."))
-    put(k, 4, F.membar("Stage 5", "Where an 80 GiB accelerator's memory goes", "A 7B-class model, 16-bit numbers, 16 conversations of 8,192 tokens.", [
+    put(k, 4, F.membar("Stage 5", "Where an 80 GiB accelerator's memory goes", "A model with full multi-head attention: 32 layers, 32 key-value heads, 16-bit.", [
         ("info", "Weights", 12.6, "12.6 GiB"), ("caution", "KV cache", 64, "16 conversations × 4.0 GiB"),
         ("plain", "Other", 3.4, "about 3.4 GiB for activations and overhead")],
-        "The cache, not the weights, is the big part. A 17th conversation would not fit."))
+        "16 conversations of 8,192 tokens, 4.0 GiB each. The cache is the big part. A 17th would not fit."))
     put(k, 5, F.flow("Stage 6", "One turn of the decode loop", "Repeat until an end marker or a length limit.", [
         ("info", "Newest token", "the word just chosen"), ("discovery", "Model layers", "reads weights and the cache"),
         ("caution", "Scores", "one per word in the vocabulary"), ("success", "Pick a token", "add it to the text")],
@@ -81,7 +81,7 @@ def llm_request():
             '<p class="xf-sub" style="margin:14px 0 6px"><b>Continuous batching</b>: a finished answer is replaced at once.</p>'
             f'<div class="xf-grid" style="grid-template-columns:repeat(10,minmax(0,1fr))">{cells(grid_rows(cont, 10))}</div>')
     put(k, 8, F.card("Stage 9", "Four slots, ten steps", "Each row is a slot on the accelerator. Letters are requests.", body,
-        "In a seeded simulation (64 requests of 20 to 400 tokens on 8 slots): 1,887 steps with continuous batching, 2,890 with static."))
+        "From system-design/code/llm_serving.py (seed Random(3)): 64 requests of 20 to 400 tokens on 8 slots took 1,887 steps with continuous batching and 2,890 with static."))
     put(k, 9, F.lanes("Stage 10", "Where the wait and the speed come from", "Time runs left to right.", [
         ("Time to first token", [("caution", "network + queue", 3), ("info", "prefill", 4), ("success", "first token", 1)]),
         ("Then", [("success", "tok", 1)] * 8)],
@@ -126,7 +126,7 @@ def how_a_model_learns():
         ("info", "Batch", "many examples"), ("discovery", "Guess", "probabilities"), ("caution", "Loss", "how surprised"),
         ("warning", "Gradients", "which way"), ("success", "Update", "small step")],
         "Pretraining repeats this loop an enormous number of times."))
-    put(k, 7, F.compare("Stage 8", "A base model and a tuned assistant", "Numbers from a seeded toy model: fine-tuning/code/lesson1_pipeline.py.",
+    put(k, 7, F.compare("Stage 8", "A base model and a tuned assistant", "Numbers printed by fine-tuning/code/lesson1_pipeline.py, a seeded toy model.",
         ("info", "Base model", ["Continues text", "Chance of the wanted answer: 0.083", "Loss on ordinary text: 1.103"]),
         ("success", "After supervised tuning", ["Answers the question", "Chance of the wanted answer: 0.987", "Loss on ordinary text: 2.280"]),
         "The push changed behaviour a lot. It also hurt other things."))

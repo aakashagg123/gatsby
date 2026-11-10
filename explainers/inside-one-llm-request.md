@@ -78,7 +78,7 @@ flowchart LR
 
 While reading, attention computes two things for each token in each layer: a **key** and a **value**. They are what later tokens look up. The model keeps them in the **KV cache**, so it never has to recompute them.
 
-The cache is useful and expensive. It grows with every token, for every conversation, and it sits in the accelerator's memory next to the model's weights. For a 7-billion-parameter-class model, one 8,192-token conversation needs about 4.0 GiB of cache.
+The cache is useful and expensive. It grows with every token, for every conversation, and it sits in the accelerator's memory next to the model's weights. For a model with full multi-head attention (32 layers, 32 key-value heads, head dimension 128, 16-bit numbers), one 8,192-token conversation needs about 4.0 GiB of cache. Models that share key-value heads need less.
 
 On an 80 GiB accelerator, the weights take about 12.6 GiB. The rest is mostly cache. That is why memory, not arithmetic, usually decides how many people one machine can serve.
 
@@ -199,5 +199,5 @@ flowchart LR
 ## Sources
 
 - Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention*, SOSP 2023, abstract read 2026-11: the KV cache is large and grows and shrinks, and wasting it by fragmentation limits the batch size. The paper reports 2 to 4 times higher throughput for vLLM at the same latency.
-- Gyeong-In Yu et al., [*Orca: A Distributed Serving System for Transformer-Based Generative Models*](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI 2022, read 2026-11-09: iteration-level scheduling (now usually called continuous batching), which schedules work one iteration at a time instead of one request at a time.
-- This site's worked examples: `transformers/code/` for cache sizes, and `system-design/code/llm_serving.py` (run 2026-11-09) for decode speed (an upper bound from 2 TB/s of bandwidth and 12.6 GiB of weights) and for the batching steps (a seeded simulation of 64 requests of 20 to 400 tokens on 8 slots). Token IDs, probabilities and the example question are illustrative. This page's fact-check is pending.
+- Gyeong-In Yu et al., [*Orca: A Distributed Serving System for Transformer-Based Generative Models*](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI 2022, read 2026-11-09: iteration-level scheduling, the paper's own term, which schedules work one iteration at a time instead of one request at a time.
+- This site's worked examples: `transformers/code/` for cache sizes, and `python3 system-design/code/llm_serving.py` (seed `Random(3)`, run 2026-11-09). It printed about 148 tokens/s for one stream and about 2,365 across a batch of 16 (an upper bound from 2 TB/s of bandwidth and 12.6 GiB of weights). It also printed 2,890 steps for static batching and 1,887 for continuous batching, 1.53 times faster (a seeded simulation of 64 requests of 20 to 400 tokens on 8 slots). The same numbers appear in [Generative AI and agent platforms](../system-design/genai-and-agent-platforms.md). Token IDs, probabilities and the example question are illustrative. This page's fact-check is pending.

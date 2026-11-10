@@ -117,7 +117,7 @@ Quill compares three pricing options. Each one is judged by the margin on a heav
 | Option | How it works | Heavy-seat margin |
 | --- | --- | --- |
 | **Fair-use cap** | 300 tasks, then a smaller model at about 0.1 cents a task | about 72% |
-| **Credits** | 300 tasks included, then packs of 1,000 for $15 | about 76% |
+| **Credits** | 300 tasks included, then packs of 1,000 for $15 (the heavy seat's 1,500 tasks need two whole packs) | about 76% |
 | **AI tier** | A $36 plan that includes 2,000 tasks | about 64% |
 
 There is no right answer in the numbers alone. A cap keeps the bill simple but can feel stingy. Credits match price to cost but make the bill harder to predict. A tier is easy to sell but asks every heavy user to upgrade.
