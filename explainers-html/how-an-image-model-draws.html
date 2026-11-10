@@ -345,7 +345,7 @@
 <p><strong>Remember:</strong> a picture is made by many small clean-ups, not one stroke.</p>
 <h2 id="6-the-prompt-as-a-guide">6 · The prompt as a guide</h2>
 <p>At every step, the meaning vector steers the clean-up. A technique called <strong>guidance</strong> makes the steering stronger. The model predicts the noise twice, once with the prompt and once without, and pushes the result further in the direction the prompt adds.</p>
-<p>The <strong>guidance scale</strong> sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt closely and can look harsh or over-saturated.</p>
+<p>The <strong>guidance scale</strong> sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt more closely but give less variety.</p>
 <style>
 .xf{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-discovery-outline);
   border-radius:16px;padding:28px 24px 20px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -405,7 +405,7 @@
   .xf-layers .xf-box span{text-align:left}
 }
 </style>
-<div class="xf"><span class="xf-chip">Stage 6</span><h4>Guidance scale</h4><p class="xf-sub">How hard the prompt pushes.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Low</b><ul><li>Drifts from the prompt</li><li>More variety</li><li>May ignore parts of it</li></ul></div><div class="xf-box xf-caution"><b>High</b><ul><li>Follows the prompt closely</li><li>Less variety</li><li>Can look harsh or over-saturated</li></ul></div></div><p class="xf-note">A dial between free and obedient.</p></div>
+<div class="xf"><span class="xf-chip">Stage 6</span><h4>Guidance scale</h4><p class="xf-sub">How hard the prompt pushes.</p><div class="xf-cmp"><div class="xf-box xf-info"><b>Low</b><ul><li>Drifts from the prompt</li><li>More variety</li><li>May ignore parts of it</li></ul></div><div class="xf-box xf-caution"><b>High</b><ul><li>Follows the prompt closely</li><li>Less variety</li><li>Trades variety for prompt fit</li></ul></div></div><p class="xf-note">A dial between free and obedient.</p></div>
 
 <p><strong>Remember:</strong> guidance is a dial between "free" and "obedient".</p>
 <h2 id="7-working-in-a-small-space">7 · Working in a small space</h2>
@@ -657,7 +657,7 @@
 <li><strong>Counts and text.</strong> Wrong numbers of fingers, garbled lettering.</li>
 <li><strong>Spatial relations.</strong> Left and right swap.</li>
 <li><strong>Prompt drift.</strong> A low guidance scale ignores part of the prompt.</li>
-<li><strong>Over-saturation.</strong> A high guidance scale looks harsh.</li>
+<li><strong>Less variety.</strong> A high guidance scale trades variety for prompt fit, so images look alike.</li>
 <li><strong>Data issues.</strong> Bias, copyright and unsafe content in the training set.</li>
 </ul>
 <h2 id="go-deeper">Go deeper</h2>

@@ -172,7 +172,7 @@ def transformer_token():
         ("info", "Head 1", "grammar"), ("discovery", "Head 2", "what a pronoun refers to"), ("success", "Head 3", "names and places"), ("caution", "Join and mix", "one more matrix")],
         "The roles shown are examples. Real heads vary."))
     put(k, 7, F.flow("Stage 8", "The feed-forward layer works on one token alone", "About two thirds of a block's parameters.", [
-        ("info", "Vector", "d numbers"), ("discovery", "Widen", "to about 4 × d"), ("caution", "Nonlinear step", ""), ("success", "Narrow", "back to d")],
+        ("info", "Vector", "d numbers"), ("discovery", "Widen", "in the original: 4 × d"), ("caution", "Nonlinear step", ""), ("success", "Narrow", "back to d")],
         "No information crosses between tokens here."))
     put(k, 8, F.flow("Stage 9", "The residual stream", "Each part adds a note. Nothing is overwritten.", [
         ("info", "Stream", "the running vector"), ("discovery", "+ attention note", ""), ("caution", "+ feed-forward note", ""), ("success", "Stream", "richer than before")],
@@ -202,7 +202,7 @@ def image_model():
         "Early steps set the layout. Later steps add detail."))
     put(k, 5, F.compare("Stage 6", "Guidance scale", "How hard the prompt pushes.",
         ("info", "Low", ["Drifts from the prompt", "More variety", "May ignore parts of it"]),
-        ("caution", "High", ["Follows the prompt closely", "Less variety", "Can look harsh or over-saturated"]),
+        ("caution", "High", ["Follows the prompt closely", "Less variety", "Trades variety for prompt fit"]),
         "A dial between free and obedient."))
     put(k, 6, F.flow("Stage 7", "Draw in a small space", "Latent space is a compressed grid of numbers.", [
         ("info", "Noise in latent space", "small grid"), ("discovery", "Denoise", "cheap steps"), ("success", "Decoder", "expands to pixels"), ("caution", "Full picture", "")],

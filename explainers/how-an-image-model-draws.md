@@ -81,7 +81,7 @@ flowchart LR
 
 At every step, the meaning vector steers the clean-up. A technique called **guidance** makes the steering stronger. The model predicts the noise twice, once with the prompt and once without, and pushes the result further in the direction the prompt adds.
 
-The **guidance scale** sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt closely and can look harsh or over-saturated.
+The **guidance scale** sets how hard it pushes. Low values give images that drift from the prompt. High values follow the prompt more closely but give less variety.
 
 ```mermaid
 flowchart LR
@@ -143,7 +143,7 @@ flowchart LR
 - **Counts and text.** Wrong numbers of fingers, garbled lettering.
 - **Spatial relations.** Left and right swap.
 - **Prompt drift.** A low guidance scale ignores part of the prompt.
-- **Over-saturation.** A high guidance scale looks harsh.
+- **Less variety.** A high guidance scale trades variety for prompt fit, so images look alike.
 - **Data issues.** Bias, copyright and unsafe content in the training set.
 
 ## Go deeper

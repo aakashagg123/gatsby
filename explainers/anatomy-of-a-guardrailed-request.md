@@ -179,5 +179,5 @@ flowchart LR
 
 ## Sources
 
-- OWASP, *Top 10 for LLM Applications*, genai.owasp.org/llm-top-10, 2025 edition, read 2026-11: LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses and LLM10 Unbounded Consumption. Only the names and numbers were read from the list page, and the per-risk pages were not opened.
+- OWASP, *Top 10 for LLM Applications*, genai.owasp.org/llm-top-10, 2025 edition, read 2026-11: LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses and LLM10 Unbounded Consumption. The list page gave the names and numbers. The checker also opened the LLM05, LLM06, LLM07, LLM08 and LLM10 pages on 2026-11-10, and the wording matched. The LLM01 and LLM02 pages were not opened.
 - The product, the request and the layer design are an invented example. This page's fact-check is pending.
