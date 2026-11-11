@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -60,14 +60,18 @@ The engineering detail is in the [strategy spoke](../content/06-strategy-tradeof
 
 ### Why long context did not end RAG
 
-Context windows have grown fast. Current Claude models accept up to 1 million tokens. Each jump revives the claim that RAG is obsolete. Four reasons keep it alive:
+Context windows have grown fast. Current Claude models accept up to 1 million tokens, billed at the standard rate. Only Claude Haiku 5.5 charges more above 100,000 tokens. Each jump revives the claim that RAG is obsolete. Four reasons keep it alive:
 
-- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, to 0.1 times the base price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1. It does not remove the cost.
+- **Cost.** Long context processes the whole pile on every call. The bill grows with document count times calls. Prompt caching cuts the price of repeated text, to 0.1 times the base price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and 5.2. It does not remove the cost.
 - **Latency.** A huge prompt takes longer to read before the first word of the answer appears.
-- **Quality.** Models do not use every part of a long prompt equally. Liu and colleagues found that accuracy was often highest when the relevant passage was at the start or end of the context, and dropped when it was in the middle. They called it "lost in the middle".
+- **Quality.** Models do not use every part of a long prompt equally. Liu and colleagues found that accuracy was often highest when the relevant passage was at the start or end of the context, and dropped when it was in the middle. They called it "lost in the middle". That study tested 2023 models, so test your own model. Anthropic's current documentation still warns that accuracy and recall fall as the token count grows. It calls this *context rot*, and says that curating the context matters as much as its size.
 - **Size and change.** Many corpora are bigger than any window, and they change every day.
 
 Long context is still the right tool when the knowledge is small and stable, or when the task needs the whole document. Anthropic's own guidance suggests that a knowledge base under about 200,000 tokens can go in the prompt. It is also a good partner to RAG: retrieve generously, and let a large window hold more candidates.
+
+### Agentic retrieval: a fourth option
+
+A model can also fetch material itself, at run time, with tools such as search, grep or file reads. Anthropic calls this *just-in-time* retrieval. The agent keeps light pointers, such as file paths or saved queries, and loads data only when it needs it. Anthropic notes that this is slower than looking up pre-computed data, and that it needs good tools to avoid wasting context. Claude Code mixes both: it loads `CLAUDE.md` up front and searches files as it works. Use it when the questions are open-ended and the corpus is structured, such as code. Use classic RAG when you need low, predictable latency over a large text corpus.
 
 ### They combine
 
@@ -86,7 +90,7 @@ Common stacks are a fine-tuned model plus RAG, where the model has your style an
 - **Long context by default.** Re-reading a knowledge base on every call because it was easier than RAG, until the bill and the latency force a rebuild.
 - **RAG for behaviour.** Retrieving examples on every call to fix tone that a system prompt or fine-tuning would fix once.
 - **One religion.** Using one approach for everything because it is the team's comfort zone.
-- **Ignoring "lost in the middle".** Assuming a bigger window means better answers, then finding quality fell as the passage got buried.
+- **Ignoring "lost in the middle" and context rot.** Assuming a bigger window means better answers, then finding quality fell as the passage got buried.
 
 ## Under the hood
 
@@ -140,6 +144,8 @@ Each question is 50 tokens. RAG sends 2,000 tokens of retrieved chunks. Long con
 ## Sources
 
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, Transactions of the ACL, 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)): performance often highest when relevant information is at the start or end of the input, and lower in the middle.
-- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: knowledge bases under about 200,000 tokens in the prompt, with prompt caching. Read 2026-10.
-- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at 0.1 times the base input price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5 and 0.025 times on Claude Fable 5.1, and a 1 million token context window on current models. Read 2026-10.
+- Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents): context rot, just-in-time retrieval, and the hybrid approach. Read 2026-11.
+- Anthropic documentation, [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows): 1 million tokens is the default on current models at standard pricing, except Claude Haiku 5.5 above 100,000 tokens; the context rot statement. Read 2026-11.
+- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: knowledge bases under about 200,000 tokens in the prompt, with prompt caching. Read 2026-11.
+- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) and [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): cache reads at 0.1 times the base input price on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5 and 0.025 times on Claude Fable 5.1 and 5.2, and a 1 million token context window on current models. Read 2026-11.
 - The corpus sizes, the $3 price and every number are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.

@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>Embeddings &amp; semantic search</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>To search by meaning rather than by exact words, you first turn text into numbers. An <strong>embedding</strong> is that translation. A model reads a piece of text and returns a long list of numbers, a <em>vector</em>. The model places the vectors so that texts with similar meanings land near each other.</p>
 <p>Search then becomes geometry. The passages most relevant to a question are the vectors closest to the question's vector. This is <strong>semantic search</strong>. It is why a RAG system can answer "how do I stop paying?" from an article titled "Ending your subscription", with no word in common.</p>
@@ -150,7 +150,8 @@
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>General vs. domain model.</strong> A general model is a safe start. A model trained for code, law or finance may retrieve better in that domain, and ties you to that vendor.</li>
-<li><strong>Bigger vs. smaller vectors.</strong> More numbers can hold more detail. They cost more memory and slower search. Many models let you choose a smaller size.</li>
+<li><strong>Bigger vs. smaller vectors.</strong> More numbers can hold more detail. They cost more memory and slower search. Many models let you choose a smaller size. Voyage's current models offer 256, 512, 1,024 or 2,048 numbers, and you can shorten a stored vector by keeping its first numbers and scaling it to length 1 again (a Matryoshka embedding). A second option is <strong>quantization</strong>: store each number as an 8-bit integer or a single bit. Anthropic's documentation puts the saving at 4 times and 32 times in storage. Test the recall loss on your eval set first.</li>
+<li><strong>Text only vs. multimodal.</strong> If your sources are slides, scanned PDFs or screenshots, text extraction can lose tables and figures. Multimodal models, such as Voyage's <code>voyage-multimodal-3.5</code>, embed text, images and video in one space.</li>
 <li><strong>Switching models.</strong> A better model may appear next quarter. Switching means re-embedding everything and re-running your evals. Budget for it.</li>
 <li><strong>Embeddings vs. keywords.</strong> Embeddings win on wording. Keywords win on exact strings. Run both rather than pick one.</li>
 </ul>
@@ -202,7 +203,8 @@ def cosine(a, b):                                  # both have length 1, so this
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a>: Anthropic does not offer its own embedding model; Voyage AI's models, the <code>input_type</code> parameter, and normalized embeddings where cosine similarity equals the dot product. Read 2026-10.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a>: Anthropic does not offer its own embedding model; Voyage AI's models, the <code>input_type</code> parameter, and normalized embeddings where cosine similarity equals the dot product. Read 2026-11.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a>, re-read 2026-11: the <code>voyage-4</code> family and <code>voyage-code-4</code> (1,024 numbers by default, 256 to 2,048 allowed), <code>voyage-multimodal-3.5</code>, <code>output_dtype</code> quantization (4 times and 32 times saving) and Matryoshka truncation.</li>
 <li>Gao, Ma, Lin and Callan, <em>Precise Zero-Shot Dense Retrieval without Relevance Labels</em> (HyDE), ACL 2023 (<a href="https://arxiv.org/abs/2212.10496">arxiv.org/abs/2212.10496</a>): embedding a generated answer instead of the raw question.</li>
 <li>The toy embedding, the corpus and every number are invented. They come from <code>rag-vector-databases/code/embeddings_demo.py</code> and <code>mini_rag.py</code>.</li>
 </ul></div>

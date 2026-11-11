@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Vector databases</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Once your data is a set of <a href="embeddings-and-semantic-search.html">embedding vectors</a>, you need a place to keep them. Given a question's vector, that place must find the nearest ones in milliseconds. That is a <strong>vector database</strong>.</p>
 <p>Its one hard trick is <strong>approximate nearest neighbour (ANN)</strong> search. Comparing the question with every vector is exact, and too slow at scale. An ANN index skips most of the vectors and finds <em>almost</em> the closest ones, much faster. You trade a little recall for a lot of speed, and you can tune the trade.</p>
@@ -105,7 +105,7 @@
 <p>Both have a dial. In pgvector it is <code>hnsw.ef_search</code> (40 by default) or <code>ivfflat.probes</code>. Turn it up for recall. Turn it down for speed.</p>
 <h3 id="the-filter-trap">The filter trap</h3>
 <p>Products need filters: this tenant, this language, current documents only. With an approximate index, many stores apply the filter <em>after</em> the index scan. pgvector's documentation gives an example. If a filter matches 10% of rows, and <code>hnsw.ef_search</code> is 40, only about 4 rows match on average. You asked for 10 results and get 4.</p>
-<p>Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (<code>SET hnsw.iterative_scan = strict_order</code> turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.</p>
+<p>Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (<code>SET hnsw.iterative_scan = strict_order</code> turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. The iterative scan stops at <code>hnsw.max_scan_tuples</code>, 20,000 by default. Test filtered queries, not only unfiltered ones. The numbers above come from the 0.8.1 documentation. Later 0.8 patch releases fix bugs, such as an IVFFlat build buffer overflow fixed in 0.8.7 on 1 October 2026. Run the latest patch release.</p>
 <h3 id="what-separates-the-options">What separates the options</h3>
 <table>
 <thead>
@@ -230,7 +230,7 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>pgvector <a href="https://github.com/pgvector/pgvector/blob/v0.8.1/README.md">README</a>, release 0.8.1: HNSW and IVFFlat compared, <code>hnsw.ef_search</code> default of 40, <code>ivfflat.probes</code>, filtering applied after the index scan with the 10% and 4-rows example, iterative index scans from 0.8.0, partial indexes and partitioning. Read from the source, 2026-10.</li>
+<li>pgvector <a href="https://github.com/pgvector/pgvector/blob/v0.8.1/README.md">README</a>, release 0.8.1: HNSW and IVFFlat compared, <code>hnsw.ef_search</code> default of 40, <code>ivfflat.probes</code>, filtering applied after the index scan with the 10% and 4-rows example, iterative index scans from 0.8.0, partial indexes and partitioning. Read from the source, 2026-10. The current README and CHANGELOG were re-read 2026-11: 0.8.7 is the latest release, and all of these defaults still hold.</li>
 <li>Malkov and Yashunin, <em>Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs</em>, IEEE TPAMI, 2020 (<a href="https://arxiv.org/abs/1603.09320">arxiv.org/abs/1603.09320</a>).</li>
 <li>Jégou, Douze and Schmid, <em>Product Quantization for Nearest Neighbor Search</em>, IEEE TPAMI, 2011: the inverted-file index with coarse quantization behind IVF.</li>
 <li>The vectors, tenants and every number are invented. They come from <code>rag-vector-databases/code/ann_demo.py</code>.</li>

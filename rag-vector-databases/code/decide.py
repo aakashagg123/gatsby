@@ -1,9 +1,9 @@
 """When to use RAG, as code. An ordered decision tree, a RAG signal score, and a cost sketch.
 
 The six requests are invented. The $3 price is an assumption for the arithmetic, not a quote.
-Cache reads are billed at a fraction of the base input price. Anthropic's docs (2026-10) give
+Cache reads are billed at a fraction of the base input price. Anthropic's docs (2026-11) give
 0.1x on Haiku 5.5 and older models, 0.05x on Claude Opus 5.5 and Sonnet 5.5, and 0.025x on
-Fable 5.1. The sketch shows 0.1x and 0.05x.
+Fable 5.1 and 5.2. The sketch shows 0.1x and 0.05x.
 Run: python3 decide.py
 """
 

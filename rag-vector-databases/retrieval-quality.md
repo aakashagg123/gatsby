@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -54,7 +54,7 @@ Retrieve more passages and recall rises while precision falls. Retrieve fewer an
 ### The three levers
 
 - **Hybrid search.** Keyword search finds exact strings: IDs, names, codes. Semantic search finds paraphrase and intent. Running both and combining the lists covers both blind spots. Keyword search is also called **sparse** retrieval: each text becomes a long list of word weights, mostly zero. Embedding search is **dense** retrieval: a shorter list where most numbers are not zero. A common way to combine them is **reciprocal rank fusion**: each list gives each chunk `1 / (60 + rank)`, and the sums decide the order. It needs no tuning of scores across the two lists.
-- **Reranking.** First-pass search is fast and a little sloppy. It returns a wide net of perhaps 20 to 100 candidates. A **reranker**, often a cross-encoder that reads the question and each passage together, re-scores them. The best few reach the model. It costs some latency and no change to the index. Anthropic's 2024 contextual retrieval study reports that adding a reranker raised the cut in retrieval failures from 49% to 67%.
+- **Reranking.** First-pass search is fast and a little sloppy. It returns a wide net of perhaps 20 to 100 candidates. A **reranker**, often a cross-encoder that reads the question and each passage together, re-scores them. The best few reach the model. It costs some latency and no change to the index. Anthropic's 2024 contextual retrieval study reports that adding a reranker raised the cut in retrieval failures from 49% to 67%. In that study the system pulled the top 150 chunks and reranked them to 20. The cuts are relative: the failure rate fell from 5.7% to 1.9%. Rerankers are sold as APIs. Anthropic's documentation lists Voyage's `rerank-3` and `rerank-3-lite`.
 - **Filtering.** Use metadata to remove what should never be an answer: retracted versions, other tenants, documents this user may not see. Here retrieval quality and [safety](../content/05-safety-multitenancy/multi-tenant-isolation.md) are the same lever.
 
 A strong default pipeline: hybrid search for about 50 candidates, filter by metadata, rerank to the top 5, then hand those to the model.
@@ -148,6 +148,7 @@ The eval set has 12 questions. Seven are paraphrases, such as "download everythi
 
 - Robertson and Zaragoza, *The Probabilistic Relevance Framework: BM25 and Beyond*, Foundations and Trends in Information Retrieval 3(4), 2009: BM25.
 - Cormack, Clarke and Büttcher, *Reciprocal rank fusion outperforms Condorcet and individual rank learning methods*, SIGIR 2009: reciprocal rank fusion with k = 60.
-- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: top-20 retrieval failures cut by 49% with contextual embeddings plus contextual BM25, and by 67% with a reranker added. Read 2026-10.
-- pgvector [README](https://github.com/pgvector/pgvector/blob/v0.8.1/README.md), release 0.8.1: hybrid search with full-text search, combined by reciprocal rank fusion or a cross-encoder. Read 2026-10.
+- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: top-20 retrieval failures cut by 49% with contextual embeddings plus contextual BM25, and by 67% (5.7% to 1.9%) with a reranker added, from the top 150 chunks. Read 2026-11.
+- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings): `rerank-3` and `rerank-3-lite`. Read 2026-11.
+- pgvector [README](https://github.com/pgvector/pgvector/blob/v0.8.1/README.md), release 0.8.1: hybrid search with full-text search, combined by reciprocal rank fusion or a cross-encoder. Read 2026-11.
 - The Fernpay corpus, the eval set and every number are invented. They come from `rag-vector-databases/code/mini_rag.py`.

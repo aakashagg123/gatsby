@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>When to use RAG, and when not to</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p><strong>Retrieval-Augmented Generation (RAG)</strong> finds the passages that answer a question in your own data, and gives them to the model with the question. It is the default way to make a model answer from private, changing knowledge with citations. It is also the most over-prescribed pattern in AI products.</p>
 <p>Many requests that arrive as "we need RAG" need something else. A count needs a database query. An order number needs an exact lookup. A summary of one contract needs the whole contract. A brand voice needs a prompt or fine-tuning. A small, stable handbook fits in the prompt, and prompt caching makes that cheap.</p>
@@ -144,7 +144,7 @@
 </tbody>
 </table>
 <p>The first three decide the question. "Private" and "must be cited" matter, but they do not demand retrieval on their own. A private handbook of 35,000 tokens can go in the prompt, and the model can cite its sections there.</p>
-<p>How big is too big? Anthropic's 2024 contextual retrieval post gives a rule of thumb: a knowledge base under about 200,000 tokens, which is about 500 pages, can often go in the prompt whole. Prompt caching makes that cheaper and faster on repeat calls. Current Claude models accept up to 1 million tokens, but a bigger prompt still costs more per call and takes longer to read.</p>
+<p>How big is too big? Anthropic's 2024 contextual retrieval post gives a rule of thumb: a knowledge base under about 200,000 tokens, which is about 500 pages, can often go in the prompt whole. Prompt caching makes that cheaper and faster on repeat calls. Current Claude models accept up to 1 million tokens, but a bigger prompt still costs more per call and takes longer to read. Anthropic's documentation also warns that recall falls as the context grows ("context rot"), so a prompt that fits is not always a prompt that works. Measure it on your own questions.</p>
 <h3 id="the-anti-patterns-requests-that-are-not-rag">The anti-patterns: requests that are not RAG</h3>
 <table>
 <thead>
@@ -231,7 +231,7 @@
     return &quot;RAG&quot;
 </code></pre>
 <p>The order matters. A count over private, changing data still has two retrieval signals. It goes to the database anyway, because the shape test comes first.</p>
-<p>The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1. The sketch shows 0.1 and 0.05. The price per token is an assumption for the arithmetic, not a quote.</p>
+<p>The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and 5.2. The sketch shows 0.1 and 0.05. The price per token is an assumption for the arithmetic, not a quote.</p>
 <h2 id="worked-example-six-requests-two-get-rag">Worked example: six requests, two get RAG</h2>
 <p><em>This example is invented. The verdicts come from <code>rag-vector-databases/code/decide.py</code>.</em></p>
 <p>A product team brings six requests, all labelled "RAG".</p>
@@ -331,9 +331,9 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024: a knowledge base "smaller than 200,000 tokens (about 500 pages of material)" can go in the prompt whole, and prompt caching for repeated context. Read 2026-10.</li>
-<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">Prompt caching</a>: cache reads billed at 0.1 times the base input price on most models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1; cache writes at 1.25 times for the 5-minute lifetime. Read 2026-10.</li>
-<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/about-claude/models/overview">Models overview</a>: current Claude models with a 1 million token context window. Read 2026-10.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024: a knowledge base "smaller than 200,000 tokens (about 500 pages of material)" can go in the prompt whole, and prompt caching for repeated context. Read 2026-11.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">Prompt caching</a>: cache reads billed at 0.1 times the base input price on most models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and 5.2; cache writes at 1.25 times for the 5-minute lifetime. Read 2026-11.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/about-claude/models/overview">Models overview</a>: current Claude models with a 1 million token context window. Read 2026-11.</li>
 <li>The six requests, the token counts (35,000 tokens is about 90 pages at Anthropic's ratio of 200,000 tokens to 500 pages) and the $3 price are invented for the arithmetic. They come from <code>rag-vector-databases/code/decide.py</code>.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="why-rag.html"><span class="lbl">→ Next</span><span class="ttl">Why RAG?</span></a></div><footer class="foot"><strong>Core insight:</strong> Use RAG only when the answer is a passage in knowledge too big, too fresh or too private to send whole. Then retrieval quality is the product.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

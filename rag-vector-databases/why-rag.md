@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -138,5 +138,5 @@ A grounded answer is "within 14 days of purchase [1]". A closed-book model has n
 ## Sources
 
 - Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*, NeurIPS 2020 ([arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)): the RAG pattern of a retriever plus a generator, with provenance for answers.
-- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported April 2025: an AI support agent at a software company reportedly invented a login policy, which reportedly led to cancellations. Checked through search excerpts, 2026-10.
+- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported April 2025: an AI support agent at a software company invented a login policy, which reportedly led to cancellations. Page opened and read 2026-11.
 - The Fernpay corpus, the questions and every number are invented. They come from `rag-vector-databases/code/mini_rag.py`.

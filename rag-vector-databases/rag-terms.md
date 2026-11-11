@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -50,6 +50,7 @@ flowchart LR
 | **Metadata** | Fields stored with a chunk: source, date, status, audience. | `status = 'retracted'`. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Contextual retrieval** | Adding a short note about the whole document to each chunk before it is embedded. | "From Fernpay's refund policy, 2026:" before a chunk. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 | **Late chunking** | Embedding the whole document first, then cutting the result into chunk vectors, so each keeps document context. | Not used in Fernpay. | [Chunking and ingestion](./chunking-and-ingestion.md) |
+| **Contextualized chunk embedding** | An embedding service that returns chunk vectors with whole-document context built in. | `voyage-context-4`. | [Chunking and ingestion](./chunking-and-ingestion.md) |
 
 ### Embed
 
@@ -62,6 +63,8 @@ flowchart LR
 | **Normalization** | Scaling a vector to length 1, so the dot product equals cosine similarity. | Every toy vector is unit length. | [Embeddings](./embeddings-and-semantic-search.md) |
 | **Dense vector** | An embedding where most numbers are non-zero. It captures meaning. | The chunk embeddings. | [Retrieval quality](./retrieval-quality.md) |
 | **Sparse vector** | A long vector where most numbers are zero, one slot per word. It captures exact words. | A keyword score per term. | [Retrieval quality](./retrieval-quality.md) |
+| **Matryoshka embedding** | A vector whose first numbers carry the coarse meaning, so you can cut it to a shorter length and scale it to length 1. | 1,024 numbers cut to 256. | [Embeddings](./embeddings-and-semantic-search.md) |
+| **Quantization** | Storing each number in fewer bits, such as 8-bit integers or one bit, to save memory. | `output_dtype="int8"`. | [Embeddings](./embeddings-and-semantic-search.md) |
 | **Query and document input types** | Telling the embedding model whether a text is a short question or a passage. | `input_type="query"`. | [Building RAG](./building-rag-with-claude-code.md) |
 
 ### Store
@@ -109,6 +112,7 @@ flowchart LR
 | **Hallucination** | A fluent claim with no support. | Inventing a 30-day policy. | [Why RAG?](./why-rag.md) |
 | **Refusal path** | The "I don't know" answer when the sources do not cover the question. | The weather question. | [Why RAG?](./why-rag.md) |
 | **Lost in the middle** | Models use information at the start and end of a long prompt better than in the middle. | Why fewer, better chunks help. | [RAG vs. long context](./rag-vs-long-context-vs-finetuning.md) |
+| **Context rot** | Recall and accuracy fall as the context grows. | Why a 1 million token prompt can answer worse than 2,000 tokens of chunks. | [RAG vs. long context](./rag-vs-long-context-vs-finetuning.md) |
 | **Prompt caching** | Reusing a processed prompt prefix across calls, at a lower price. | The handbook in the prompt. | [When to use RAG](./when-to-use-rag.md) |
 
 ### Evaluate
@@ -132,6 +136,7 @@ flowchart LR
 | **Re-indexing** | Rebuilding vectors after a change of model or chunk rule. | A new embedding model means re-embedding all 22 chunks. | [Embeddings](./embeddings-and-semantic-search.md) |
 | **Access control** | Making retrieval return only what the caller may see. | `audience = 'customer'`. | [Vector databases](./vector-databases.md) |
 | **Multi-tenancy** | Serving many customers from one system without mixing their data. | A namespace or a filter per tenant. | [Vector databases](./vector-databases.md) |
+| **Knowledge poisoning** | An attacker adds text to the corpus so retrieval returns it for chosen questions. | A forged help article. | [Building RAG](./building-rag-with-claude-code.md) |
 | **Indirect prompt injection** | Instructions hidden in a retrieved document that try to steer the model. | A page that says "ignore your rules". | [Building RAG](./building-rag-with-claude-code.md) |
 | **Cost per query** | Embedding, search and model tokens for one question. | About $0.006 of input tokens per question with RAG. | [When to use RAG](./when-to-use-rag.md) |
 
@@ -139,8 +144,9 @@ flowchart LR
 
 | Term | Plain meaning | Develops it |
 | --- | --- | --- |
-| **Agentic RAG** | A model that decides when to search, what to search for, and whether to search again. | [Agentic AI](../agentic-ai/README.md) |
+| **Agentic RAG** | A model that decides when to search, what to search for, and whether to search again. Anthropic calls the run-time version "just-in-time" retrieval. | [Agentic AI](../agentic-ai/README.md) |
 | **GraphRAG** | Retrieval over a knowledge graph of entities and relations, with summaries of related groups. | [GraphRAG](./graphrag-and-structured-retrieval.md) |
+| **LazyGraphRAG** | A GraphRAG variant that uses the model at query time, with no pre-built summaries. | [GraphRAG](./graphrag-and-structured-retrieval.md) |
 | **Multi-hop question** | A question whose answer joins facts from several documents. | [GraphRAG](./graphrag-and-structured-retrieval.md) |
 | **Global question** | A question about the whole corpus, such as its main themes. | [GraphRAG](./graphrag-and-structured-retrieval.md) |
 | **Text-to-SQL** | A model writes a database query, and the database computes the answer. | [GraphRAG](./graphrag-and-structured-retrieval.md) |
@@ -213,6 +219,8 @@ A customer asks: "can I get my money back on a yearly plan?"
 - Malkov and Yashunin, *Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*, IEEE TPAMI, 2020 ([arxiv.org/abs/1603.09320](https://arxiv.org/abs/1603.09320)): HNSW.
 - Cormack, Clarke and Büttcher, *Reciprocal rank fusion outperforms Condorcet and individual rank learning methods*, SIGIR 2009: RRF with k = 60.
 - Gao, Ma, Lin and Callan, *Precise Zero-Shot Dense Retrieval without Relevance Labels*, ACL 2023 ([arxiv.org/abs/2212.10496](https://arxiv.org/abs/2212.10496)): HyDE.
+- Zou et al., *PoisonedRAG*, USENIX Security 2025 ([arxiv.org/abs/2402.07867](https://arxiv.org/abs/2402.07867)): knowledge poisoning.
+- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings) and [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows): Matryoshka truncation, quantization, `voyage-context-4` and context rot. Read 2026-11.
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, TACL 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)).
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), September 2024: contextual retrieval.
 - Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04701](https://arxiv.org/abs/2409.04701)).

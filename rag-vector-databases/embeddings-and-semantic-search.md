@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -65,7 +65,8 @@ Neither wins everywhere. Production systems run both and combine them. That is [
 ## Tradeoffs and decisions
 
 - **General vs. domain model.** A general model is a safe start. A model trained for code, law or finance may retrieve better in that domain, and ties you to that vendor.
-- **Bigger vs. smaller vectors.** More numbers can hold more detail. They cost more memory and slower search. Many models let you choose a smaller size.
+- **Bigger vs. smaller vectors.** More numbers can hold more detail. They cost more memory and slower search. Many models let you choose a smaller size. Voyage's current models offer 256, 512, 1,024 or 2,048 numbers, and you can shorten a stored vector by keeping its first numbers and scaling it to length 1 again (a Matryoshka embedding). A second option is **quantization**: store each number as an 8-bit integer or a single bit. Anthropic's documentation puts the saving at 4 times and 32 times in storage. Test the recall loss on your eval set first.
+- **Text only vs. multimodal.** If your sources are slides, scanned PDFs or screenshots, text extraction can lose tables and figures. Multimodal models, such as Voyage's `voyage-multimodal-3.5`, embed text, images and video in one space.
 - **Switching models.** A better model may appear next quarter. Switching means re-embedding everything and re-running your evals. Budget for it.
 - **Embeddings vs. keywords.** Embeddings win on wording. Keywords win on exact strings. Run both rather than pick one.
 
@@ -127,6 +128,7 @@ A real model learns its map from huge amounts of text, with hundreds or thousand
 
 ## Sources
 
-- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings): Anthropic does not offer its own embedding model; Voyage AI's models, the `input_type` parameter, and normalized embeddings where cosine similarity equals the dot product. Read 2026-10.
+- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings): Anthropic does not offer its own embedding model; Voyage AI's models, the `input_type` parameter, and normalized embeddings where cosine similarity equals the dot product. Read 2026-11.
+- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings), re-read 2026-11: the `voyage-4` family and `voyage-code-4` (1,024 numbers by default, 256 to 2,048 allowed), `voyage-multimodal-3.5`, `output_dtype` quantization (4 times and 32 times saving) and Matryoshka truncation.
 - Gao, Ma, Lin and Callan, *Precise Zero-Shot Dense Retrieval without Relevance Labels* (HyDE), ACL 2023 ([arxiv.org/abs/2212.10496](https://arxiv.org/abs/2212.10496)): embedding a generated answer instead of the raw question.
 - The toy embedding, the corpus and every number are invented. They come from `rag-vector-databases/code/embeddings_demo.py` and `mini_rag.py`.

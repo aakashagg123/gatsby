@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -52,6 +52,9 @@ Flat RAG is the right and cheapest tool for the first shape, which covers most q
 - **GraphRAG.** Build a [knowledge graph](../knowledge-graphs/what-is-a-knowledge-graph.md) from your corpus: entities and typed relations. For multi-hop questions, retrieve connected subgraphs. For global questions, use summaries written in advance for each cluster of related entities. Microsoft Research's 2024 GraphRAG paper by Edge and colleagues built this for global questions over a whole corpus. The cost is a real indexing stage, with extraction, entity matching and summaries, that must be [kept fresh](../knowledge-graphs/governance-quality-and-trust.md).
 - **Text-to-query.** When the answer lives in a database, do not embed and retrieve. Have the model [write a query](../knowledge-graphs/knowledge-graphs-and-llms.md), in SQL or Cypher, and let the database compute the exact answer.
 - **A router.** Mature systems keep flat RAG for passage questions, and send multi-hop, global and quantitative questions to a graph or a query. That is several retrievers behind a router, not one architecture forced to do everything.
+
+- **LazyGraphRAG.** Full GraphRAG pays a high indexing bill up front. Microsoft's LazyGraphRAG skips the pre-built summaries and uses the model only at query time. Microsoft states that its indexing cost is the same as vector RAG, and 0.1% of full GraphRAG. Its quality claims come from Microsoft's own tests. The post's editor's note says it was added to Microsoft Discovery and an Azure Local preview in June 2025.
+- **Graph or flat? Measure.** A 2025 evaluation of RAG against GraphRAG found distinct strengths for each, and gains from combining them with selection and integration. So treat the graph as an addition for some question types, not as an upgrade.
 
 The [knowledge graphs](../knowledge-graphs/README.md) track covers graphs and their use with language models in full.
 
@@ -124,5 +127,7 @@ Those chunks name one exposed customer, Northgate School. The graph walk follows
 
 ## Sources
 
+- Han et al., [RAG vs. GraphRAG: A Systematic Evaluation and Key Insights](https://arxiv.org/abs/2502.11371), 2025 (abstract read 2026-11): RAG and GraphRAG have distinct strengths, and combining them helps.
+- Microsoft Research, [LazyGraphRAG](https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/) (read 2026-11): query-time model use, indexing cost equal to vector RAG and 0.1% of full GraphRAG.
 - Edge et al., *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*, Microsoft Research, 2024 ([arxiv.org/abs/2404.16130](https://arxiv.org/abs/2404.16130)): a graph index with community summaries, for global questions over a whole corpus.
 - The suppliers, customers and every number are invented. They come from `rag-vector-databases/code/graph_demo.py`.
