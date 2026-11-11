@@ -13,11 +13,11 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 09</span>
     <h1>Building RAG with Claude Code, pgvector and Pinecone</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>This lesson builds a working RAG feature end to end, with Claude Code doing most of the typing. The store is Postgres with the <strong>pgvector</strong> extension. <strong>Pinecone</strong> is shown as the managed alternative, with a table that maps each step across.</p>
 <p>The build has seven stages: a contract, a plan, the database, ingestion, retrieval, the grounded prompt, and an eval. Claude Code writes the code for each stage. You own three things it cannot decide for you: the eval questions, the permission rules, and the bar the eval must pass.</p>
-<p>Everything here runs. The repo ships a standard-library pipeline with no install, and a pgvector demo that was run against Postgres 16 with pgvector 0.8.1. The real database returned the same ranking as the Python code, to three decimal places. The Pinecone code is written against the Python software development kit (SDK) 10.0.0 and was not run, because it needs an account.</p>
+<p>Everything here runs. The repo ships a standard-library pipeline with no install, and a pgvector demo that was run against Postgres 16 with pgvector 0.8.1. The latest release is 0.8.7, and you should use the latest patch. The real database returned the same ranking as the Python code, to three decimal places. The Pinecone code is written against the Python software development kit (SDK) 10.0.0 and was not run, because it needs an account. The SDK is now at 10.3.0. Its release notes list no change to the calls used here, but those versions were not run either.</p>
 <blockquote class="pm-callout">
 <p>🎯 <strong>For the product leader</strong></p>
 <p><strong>Why it matters</strong> — A coding agent can stand up a RAG prototype in an afternoon. That is real leverage. It also means a prototype with no eval, no permission filter and no delete path can reach a demo before anyone asks for them.</p>
@@ -108,7 +108,7 @@
 <p><code>CLAUDE.md</code> is advice. The Claude Code docs say hooks are deterministic, and <code>CLAUDE.md</code> instructions are advisory. So turn the last two lines into enforcement as well. A Stop hook can run <code>eval.py</code> and block the end of a turn until it passes. A permission rule can block commands you never want run. The <a href="../machine-learning/learning-and-doing-ml-with-claude-code.html">machine learning lesson on Claude Code</a> covers these guard rails in depth.</p>
 <p>Write the eval set yourself. Twenty to fifty real questions, each with the chunk that answers it, is enough to start. Include paraphrases, exact codes, and one question whose answer is in a retracted document. The agent must not write the questions it is graded on.</p>
 <h3 id="stage-2-the-plan">Stage 2: the plan</h3>
-<p>Start Claude Code in plan mode with <code>claude --permission-mode plan</code>, or press <code>Shift+Tab</code> in a session. In plan mode it reads and proposes, and changes nothing. Ask for the design before any code:</p>
+<p>Start Claude Code in plan mode with <code>claude --permission-mode plan</code>. In a session, press <code>Shift+Tab</code> until the status bar shows plan mode, or start one prompt with <code>/plan</code>. Current terminal sessions start in auto mode, so plan mode is something you choose on purpose. In plan mode it reads and proposes, and changes nothing. Ask for the design before any code:</p>
 <pre><code class="language-text">Read CLAUDE.md and docs/help-centre/. Propose the schema, the chunking rule,
 the index, the retrieval query with filters, and how eval.py computes recall@3.
 Say which embedding model and dimension you assume. Do not write code yet.
@@ -177,7 +177,7 @@ msg = client.messages.create(model=&quot;claude-opus-5-5&quot;, max_tokens=1024,
                              messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}])
 answer = next(b.text for b in msg.content if b.type == &quot;text&quot;)
 </code></pre>
-<p>Gate the call before it happens. If neither the keyword search nor the vector search finds good evidence, skip the model and say "I don't know". The Claude API also has a built-in citations feature for documents you pass as <code>document</code> blocks; it returns the cited text with each claim.</p>
+<p>Gate the call before it happens. If neither the keyword search nor the vector search finds good evidence, skip the model and say "I don't know". The Claude API also has a built-in citations feature for sources you pass as <code>document</code> blocks or <code>search_result</code> blocks; it returns the cited text with each claim. The <code>cited_text</code> field does not count toward output tokens. Citations cannot be combined with structured outputs: a request with both returns a 400 error. If you need JSON output, you must cite in another way, for example with source ids in your own schema.</p>
 <h3 id="stage-7-the-eval">Stage 7: the eval</h3>
 <p><code>eval.py</code> runs every question in your eval set and reports <strong>recall@3</strong>: the share of questions whose answering chunk is in the top 3. Report it by question type, because the averages hide the pattern. Make the agent run it, and gate the turn on it with a Stop hook if the build runs unattended. The Claude Code docs say Claude "stops when the work looks done", and that a check it can run is what closes the loop.</p>
 <h3 id="the-pinecone-variant">The Pinecone variant</h3>
@@ -280,6 +280,7 @@ hits = index.documents.search(
 <li><strong>No delete path.</strong> A retracted policy stays in the index and wins the search. In the worked example it scores 0.927 against 0.936 for the current one.</li>
 <li><strong>The agent grades itself.</strong> Claude Code writes the eval questions and the code, and both agree. Keep the eval set human-written and read-only to the agent.</li>
 <li><strong>Production credentials in the session.</strong> The agent can run any command its permissions allow. Point it at a local container only.</li>
+<li><strong>Knowledge poisoning.</strong> An attacker who can add text to the corpus can steer answers. The PoisonedRAG paper reports about a 90% attack success rate with five malicious texts per target question, in a database of millions of texts. Limit who can write to the index, record where each chunk came from, and review new sources.</li>
 <li><strong>Prompt injection through documents.</strong> A retrieved document says "ignore your instructions". Treat retrieved text as data, and never give the answering model tools it does not need.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
@@ -326,7 +327,11 @@ assert &quot;chunks_embedding_hnsw&quot; in r[&quot;plan&quot;]                 
 <li>PostgreSQL documentation, <a href="https://www.postgresql.org/docs/16/textsearch.html">Full text search</a>: <code>to_tsvector</code>, <code>websearch_to_tsquery</code> and <code>ts_rank</code>. Read 2026-10.</li>
 <li>Pinecone Python SDK <a href="https://github.com/pinecone-io/pinecone-python-client/tree/v10.0.0">README and docs</a>, release 10.0.0 (published 3 September 2026): <code>schema=</code> and <code>deployment=</code>, <code>index.documents.upsert</code> and <code>.search</code>, <code>DenseVectorQuery</code> and <code>TextQuery</code>, metadata filters, namespaces, asynchronous upserts, and a dense-vector clause that must appear alone. The call signatures were checked against the installed 10.0.0 package. Read 2026-10.</li>
 <li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a>: Anthropic does not offer its own embedding model, Voyage AI models, <code>voyage-4</code> with 1,024 dimensions by default, and the <code>input_type</code> parameter. Read 2026-10.</li>
-<li>Claude Code docs, <a href="https://code.claude.com/docs/en/best-practices">Best practices</a>: <code>CLAUDE.md</code> read at the start of every conversation, <code>/init</code>, plan mode with <code>Shift+Tab</code> or <code>--permission-mode plan</code>, hooks as deterministic, Stop hooks as a gate, and "Claude stops when the work looks done". Read 2026-10.</li>
+<li>Claude Code docs, <a href="https://code.claude.com/docs/en/best-practices">Best practices</a>: <code>CLAUDE.md</code> read at the start of every conversation, <code>/init</code>, hooks as deterministic and <code>CLAUDE.md</code> as non-deterministic, Stop hooks as a gate, and "Claude stops when the work looks done". Re-read 2026-11.</li>
+<li>Claude Code docs, <a href="https://code.claude.com/docs/en/permission-modes">Permission modes</a>: terminal sessions start in auto mode from v2.1.283, plan mode via <code>Shift+Tab</code>, <code>/plan</code> or <code>--permission-mode plan</code>. First 100,000 characters read 2026-11.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/citations">Citations</a>: <code>document</code> and <code>search_result</code> blocks, <code>cited_text</code> not billed as output, and the 400 error with structured outputs. Read 2026-11.</li>
+<li>Zou et al., <a href="https://arxiv.org/abs/2402.07867">PoisonedRAG</a>, USENIX Security 2025: knowledge-corruption attacks on RAG, about 90% success with five injected texts per question. Abstract read 2026-11.</li>
+<li>pgvector <a href="https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md">CHANGELOG</a> and Pinecone Python SDK <a href="https://github.com/pinecone-io/pinecone-python-client/releases">release notes</a>: pgvector 0.8.7 (1 October 2026) and Pinecone SDK 10.3.0 (3 November 2026). Read 2026-11.</li>
 <li>Claude Code docs, <a href="https://code.claude.com/docs/en/mcp">MCP</a>: <code>claude mcp add</code>, scopes, and the warning to verify you trust each server. Read 2026-10.</li>
 <li>Cormack, Clarke and Büttcher, <em>Reciprocal rank fusion outperforms Condorcet and individual rank learning methods</em>, SIGIR 2009: the <code>1 / (k + rank)</code> fusion with k = 60.</li>
 <li>The Fernpay corpus, the eval questions and every number are invented. They come from <code>rag-vector-databases/code/</code>.</li>

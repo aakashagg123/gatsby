@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 08</span>
     <h1>Beyond flat RAG: GraphRAG &amp; structured retrieval</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Plain, or "flat", RAG retrieves the chunks most <em>similar</em> to a question. That works when the answer sits in a passage. It fails when the answer is a <em>connection</em> that no single passage states, or a <em>summary</em> of the whole corpus, or a <em>count</em>.</p>
 <p>Three question shapes break flat RAG. <strong>Multi-hop</strong>: "which customers are exposed to this supplier's recall?" The answer is a chain across documents. <strong>Global</strong>: "what are the main themes in this quarter's tickets?" The answer is about the corpus, not in it. <strong>Quantitative</strong>: "how many contracts renew in Q3?" The answer is computed from rows, and top-k retrieval can never count past k.</p>
@@ -122,7 +122,13 @@
 <ul>
 <li><strong>GraphRAG.</strong> Build a <a href="../knowledge-graphs/what-is-a-knowledge-graph.html">knowledge graph</a> from your corpus: entities and typed relations. For multi-hop questions, retrieve connected subgraphs. For global questions, use summaries written in advance for each cluster of related entities. Microsoft Research's 2024 GraphRAG paper by Edge and colleagues built this for global questions over a whole corpus. The cost is a real indexing stage, with extraction, entity matching and summaries, that must be <a href="../knowledge-graphs/governance-quality-and-trust.html">kept fresh</a>.</li>
 <li><strong>Text-to-query.</strong> When the answer lives in a database, do not embed and retrieve. Have the model <a href="../knowledge-graphs/knowledge-graphs-and-llms.html">write a query</a>, in SQL or Cypher, and let the database compute the exact answer.</li>
-<li><strong>A router.</strong> Mature systems keep flat RAG for passage questions, and send multi-hop, global and quantitative questions to a graph or a query. That is several retrievers behind a router, not one architecture forced to do everything.</li>
+<li>
+<p><strong>A router.</strong> Mature systems keep flat RAG for passage questions, and send multi-hop, global and quantitative questions to a graph or a query. That is several retrievers behind a router, not one architecture forced to do everything.</p>
+</li>
+<li>
+<p><strong>LazyGraphRAG.</strong> Full GraphRAG pays a high indexing bill up front. Microsoft's LazyGraphRAG skips the pre-built summaries and uses the model only at query time. Microsoft states that its indexing cost is the same as vector RAG, and 0.1% of full GraphRAG. Its quality claims come from Microsoft's own tests. The post's editor's note says it was added to Microsoft Discovery and an Azure Local preview in June 2025.</p>
+</li>
+<li><strong>Graph or flat? Measure.</strong> A 2025 evaluation of RAG against GraphRAG found distinct strengths for each, and gains from combining them with selection and integration. So treat the graph as an addition for some question types, not as an upgrade.</li>
 </ul>
 <p>The <a href="../knowledge-graphs/index.html">knowledge graphs</a> track covers graphs and their use with language models in full.</p>
 <h3 id="how-to-decide">How to decide</h3>
@@ -185,6 +191,8 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
+<li>Han et al., <a href="https://arxiv.org/abs/2502.11371">RAG vs. GraphRAG: A Systematic Evaluation and Key Insights</a>, 2025 (abstract read 2026-11): RAG and GraphRAG have distinct strengths, and combining them helps.</li>
+<li>Microsoft Research, <a href="https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/">LazyGraphRAG</a> (read 2026-11): query-time model use, indexing cost equal to vector RAG and 0.1% of full GraphRAG.</li>
 <li>Edge et al., <em>From Local to Global: A Graph RAG Approach to Query-Focused Summarization</em>, Microsoft Research, 2024 (<a href="https://arxiv.org/abs/2404.16130">arxiv.org/abs/2404.16130</a>): a graph index with community summaries, for global questions over a whole corpus.</li>
 <li>The suppliers, customers and every number are invented. They come from <code>rag-vector-databases/code/graph_demo.py</code>.</li>
 </ul></div>

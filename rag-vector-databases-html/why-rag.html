@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 02</span>
     <h1>Why RAG?</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A language model knows only what it learned in training. That knowledge is generic, frozen at a cutoff date, and has no source you can point to. Most real products need answers about <em>your</em> data: this customer, this policy, today's prices. They also need a source a person can check.</p>
 <p><strong>Retrieval-Augmented Generation (RAG)</strong> solves this without retraining. When a question arrives, you search your own data for the relevant passages. You paste them into the prompt. The model then answers from those passages instead of from memory.</p>
@@ -209,7 +209,7 @@ If the sources do not contain the answer, say you do not know.
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Lewis et al., <em>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</em>, NeurIPS 2020 (<a href="https://arxiv.org/abs/2005.11401">arxiv.org/abs/2005.11401</a>): the RAG pattern of a retriever plus a generator, with provenance for answers.</li>
-<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, reported April 2025: an AI support agent at a software company reportedly invented a login policy, which reportedly led to cancellations. Checked through search excerpts, 2026-10.</li>
+<li>AI Incident Database, <a href="https://incidentdatabase.ai/cite/1039/">Incident 1039</a>, reported April 2025: an AI support agent at a software company invented a login policy, which reportedly led to cancellations. Page opened and read 2026-11.</li>
 <li>The Fernpay corpus, the questions and every number are invented. They come from <code>rag-vector-databases/code/mini_rag.py</code>.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="when-to-use-rag.html"><span class="lbl">← Previous</span><span class="ttl">When to use RAG, and when not to</span></a><a class="navcard next" href="embeddings-and-semantic-search.html"><span class="lbl">→ Next</span><span class="ttl">Embeddings &amp; semantic search</span></a></div><footer class="foot"><strong>Core insight:</strong> Use RAG only when the answer is a passage in knowledge too big, too fresh or too private to send whole. Then retrieval quality is the product.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

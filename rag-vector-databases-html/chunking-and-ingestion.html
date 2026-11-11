@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 05</span>
     <h1>Chunking &amp; ingestion</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Before anything can be retrieved, your data must be cut into passages, embedded and indexed. That is the <strong>ingestion pipeline</strong>. Its most important and least glamorous step is <strong>chunking</strong>: cutting documents into pieces small enough to embed precisely and retrieve cleanly.</p>
 <p>Chunking sets a ceiling on the whole feature. The model can only answer from a chunk that retrieval can find. If a fact is cut in half, no search can return it whole, however good the model or the database. Chunks that are too big blur several topics together and cost more tokens. Chunks that are too small lose the context that makes them make sense.</p>
@@ -119,7 +119,7 @@
 <li><strong>Extraction.</strong> Real sources are messy. PDFs have headers, footers and columns. HTML has navigation. Tables turn to noise when flattened. Text that is wrong here is wrong in every answer.</li>
 <li><strong>Metadata.</strong> Every chunk carries its source (for <a href="../ai/03-rag.html#retrieval-evals">citations</a>), its date (for recency), who may see it (for <a href="../ai/05-safety-multitenancy.html#multi-tenant-isolation">permissions</a>), and its status. Metadata is what lets you filter, cite and stay safe.</li>
 <li><strong>Freshness.</strong> Data changes, so the index must follow: add the new, update the changed, and <strong>delete the removed</strong>. A retracted policy still in the index will be retrieved and cited.</li>
-<li><strong>Contextual chunks.</strong> Some teams add a short note about the whole document to each chunk before embedding it. Anthropic's 2024 contextual retrieval post reports this cut retrieval failures by 35%, and by 49% when combined with contextual keyword search. <strong>Late chunking</strong> is a related method: embed the whole document first, then cut the result into chunk vectors.</li>
+<li><strong>Contextual chunks.</strong> Some teams add a short note about the whole document to each chunk before embedding it. Anthropic's 2024 contextual retrieval post reports this cut retrieval failures by 35%, and by 49% when combined with contextual keyword search. The percentages are relative cuts in the failure rate: the top-20 failure rate fell from 5.7% to 3.7%, then to 2.9%. Test on your own data before you promise a gain. <strong>Late chunking</strong> is a related method: embed the whole document first, then cut the result into chunk vectors. Some embedding services now sell this directly. Voyage's <code>voyage-context-4</code> returns chunk vectors that carry whole-document context, so you do not write the context note yourself.</li>
 </ul>
 <h3 id="cold-start-vs-steady-state">Cold start vs. steady state</h3>
 <p>The <strong>cold start</strong> is the one-time load of existing data. It is bounded and scriptable, a good place to try chunking rules. The <strong>steady state</strong> lasts forever. New documents arrive, old ones change or are deleted, and chunking rules evolve and need re-runs. A pipeline built only for the cold start gives a feature that is correct at launch and decays every week.</p>
@@ -221,7 +221,8 @@ def chunk_fixed(doc, size=120, overlap=0):
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings and by 49% with contextual embeddings plus contextual BM25. Read 2026-10.</li>
+<li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings (5.7% to 3.7%) and by 49% with contextual embeddings plus contextual BM25 (to 2.9%). Read 2026-11.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a>: <code>voyage-context-4</code>, contextualized chunk embeddings that capture full document context without manual metadata. Read 2026-11.</li>
 <li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04701">arxiv.org/abs/2409.04701</a>).</li>
 <li>The Fernpay corpus, the chunk plans and every number are invented. They come from <code>rag-vector-databases/code/chunking_demo.py</code>.</li>
 </ul></div>

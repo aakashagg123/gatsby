@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -55,7 +55,7 @@ RAG earns its cost when one of these holds.
 
 The first three decide the question. "Private" and "must be cited" matter, but they do not demand retrieval on their own. A private handbook of 35,000 tokens can go in the prompt, and the model can cite its sections there.
 
-How big is too big? Anthropic's 2024 contextual retrieval post gives a rule of thumb: a knowledge base under about 200,000 tokens, which is about 500 pages, can often go in the prompt whole. Prompt caching makes that cheaper and faster on repeat calls. Current Claude models accept up to 1 million tokens, but a bigger prompt still costs more per call and takes longer to read.
+How big is too big? Anthropic's 2024 contextual retrieval post gives a rule of thumb: a knowledge base under about 200,000 tokens, which is about 500 pages, can often go in the prompt whole. Prompt caching makes that cheaper and faster on repeat calls. Current Claude models accept up to 1 million tokens, but a bigger prompt still costs more per call and takes longer to read. Anthropic's documentation also warns that recall falls as the context grows ("context rot"), so a prompt that fits is not always a prompt that works. Measure it on your own questions.
 
 ### The anti-patterns: requests that are not RAG
 
@@ -116,7 +116,7 @@ def decide(req):
 
 The order matters. A count over private, changing data still has two retrieval signals. It goes to the database anyway, because the shape test comes first.
 
-The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1. The sketch shows 0.1 and 0.05. The price per token is an assumption for the arithmetic, not a quote.
+The same file has a cost sketch. It counts input tokens per question for three ways to answer from the handbook. Prompt caching bills a cached read at a fraction of the base input price. Anthropic's documentation puts it at 0.1 times on Claude Haiku 5.5 and older models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and 5.2. The sketch shows 0.1 and 0.05. The price per token is an assumption for the arithmetic, not a quote.
 
 ## Worked example: six requests, two get RAG
 
@@ -167,7 +167,7 @@ The sketch leaves out two things. Output tokens are the same for all three, so t
 
 ## Sources
 
-- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: a knowledge base "smaller than 200,000 tokens (about 500 pages of material)" can go in the prompt whole, and prompt caching for repeated context. Read 2026-10.
-- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): cache reads billed at 0.1 times the base input price on most models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1; cache writes at 1.25 times for the 5-minute lifetime. Read 2026-10.
-- Anthropic documentation, [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): current Claude models with a 1 million token context window. Read 2026-10.
+- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: a knowledge base "smaller than 200,000 tokens (about 500 pages of material)" can go in the prompt whole, and prompt caching for repeated context. Read 2026-11.
+- Anthropic documentation, [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): cache reads billed at 0.1 times the base input price on most models, 0.05 times on Claude Opus 5.5 and Sonnet 5.5, and 0.025 times on Claude Fable 5.1 and 5.2; cache writes at 1.25 times for the 5-minute lifetime. Read 2026-11.
+- Anthropic documentation, [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): current Claude models with a 1 million token context window. Read 2026-11.
 - The six requests, the token counts (35,000 tokens is about 90 pages at Anthropic's ratio of 200,000 tokens to 500 pages) and the $3 price are invented for the arithmetic. They come from `rag-vector-databases/code/decide.py`.

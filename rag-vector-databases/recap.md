@@ -6,7 +6,7 @@
 
 **The support bot that invented a policy (2025).** Users of an AI coding tool were logged out without warning. The company's AI support agent reportedly explained that this was expected under a new login policy. The policy did not exist. Users reportedly cancelled their subscriptions. 🎯 *Takeaway:* a model answering from memory [invents your own business](./why-rag.md). Grounding the bot in current support documents, with a path to say "I don't have that", is the difference between a helpful answer and lost customers.
 
-**Contextual retrieval (2024).** Anthropic tested a simple change to ingestion: add a short note about the whole document to each chunk before embedding it. Failed retrievals in the top 20 fell by 35%. With keyword search added, they fell by 49%. With a reranker, by 67%. The same post says a knowledge base under about 200,000 tokens can often skip RAG and go in the prompt. 🎯 *Takeaway:* the gains came from [ingestion](./chunking-and-ingestion.md) and [retrieval](./retrieval-quality.md) changes. The study measured retrieval alone, with no model upgrade. And the first question is still [whether you need RAG](./when-to-use-rag.md).
+**Contextual retrieval (2024).** Anthropic tested a simple change to ingestion: add a short note about the whole document to each chunk before embedding it. Failed retrievals in the top 20 fell by 35% (from 5.7% to 3.7%). With keyword search added, they fell by 49%. With a reranker, by 67% (to 1.9%). These are relative cuts. The same post says a knowledge base under about 200,000 tokens can often skip RAG and go in the prompt. 🎯 *Takeaway:* the gains came from [ingestion](./chunking-and-ingestion.md) and [retrieval](./retrieval-quality.md) changes. The study measured retrieval alone, with no model upgrade. And the first question is still [whether you need RAG](./when-to-use-rag.md).
 
 **Microsoft GraphRAG (2024).** Microsoft Research showed that flat RAG struggles with global questions, such as "what are the main themes in this corpus?". Their method builds a graph over the corpus and writes summaries for clusters of related entities in advance. A model can then answer global questions from those summaries. 🎯 *Takeaway:* [flat RAG has a definite edge](./graphrag-and-structured-retrieval.md). Know which question shapes it cannot answer.
 
@@ -70,7 +70,7 @@
 
 ## Sources
 
-- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported 19 April 2025: an AI support agent reportedly invented a login policy, leading to cancellations. The site could not be opened from the build sandbox; checked through search excerpts, 2026-10.
+- AI Incident Database, [Incident 1039](https://incidentdatabase.ai/cite/1039/), reported 19 April 2025: an AI support agent reportedly invented a login policy, leading to cancellations. Page opened and read 2026-11.
 - Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024. Read 2026-10.
 - Edge et al., *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*, Microsoft Research, 2024 ([arxiv.org/abs/2404.16130](https://arxiv.org/abs/2404.16130)).
 - Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, Transactions of the ACL, 2024 ([arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)).

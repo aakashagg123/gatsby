@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -57,7 +57,7 @@ Both have a dial. In pgvector it is `hnsw.ef_search` (40 by default) or `ivfflat
 
 Products need filters: this tenant, this language, current documents only. With an approximate index, many stores apply the filter *after* the index scan. pgvector's documentation gives an example. If a filter matches 10% of rows, and `hnsw.ef_search` is 40, only about 4 rows match on average. You asked for 10 results and get 4.
 
-Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (`SET hnsw.iterative_scan = strict_order` turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. Test filtered queries, not only unfiltered ones.
+Fixes exist. pgvector 0.8.0 added iterative index scans, which keep scanning until enough rows pass the filter. They are off by default (`SET hnsw.iterative_scan = strict_order` turns them on), and they stop at a scan limit, so a very narrow filter can still come up short. Other fixes are a partial index per common filter value, partitioning, or exact search on small tenants. Dedicated vector databases have their own filtered-search designs. The iterative scan stops at `hnsw.max_scan_tuples`, 20,000 by default. Test filtered queries, not only unfiltered ones. The numbers above come from the 0.8.1 documentation. Later 0.8 patch releases fix bugs, such as an IVFFlat build buffer overflow fixed in 0.8.7 on 1 October 2026. Run the latest patch release.
 
 ### What separates the options
 
@@ -145,7 +145,7 @@ Scanning a quarter of the vectors finds 95.5% of the true top 10. Scanning every
 
 ## Sources
 
-- pgvector [README](https://github.com/pgvector/pgvector/blob/v0.8.1/README.md), release 0.8.1: HNSW and IVFFlat compared, `hnsw.ef_search` default of 40, `ivfflat.probes`, filtering applied after the index scan with the 10% and 4-rows example, iterative index scans from 0.8.0, partial indexes and partitioning. Read from the source, 2026-10.
+- pgvector [README](https://github.com/pgvector/pgvector/blob/v0.8.1/README.md), release 0.8.1: HNSW and IVFFlat compared, `hnsw.ef_search` default of 40, `ivfflat.probes`, filtering applied after the index scan with the 10% and 4-rows example, iterative index scans from 0.8.0, partial indexes and partitioning. Read from the source, 2026-10. The current README and CHANGELOG were re-read 2026-11: 0.8.7 is the latest release, and all of these defaults still hold.
 - Malkov and Yashunin, *Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*, IEEE TPAMI, 2020 ([arxiv.org/abs/1603.09320](https://arxiv.org/abs/1603.09320)).
 - Jégou, Douze and Schmid, *Product Quantization for Nearest Neighbor Search*, IEEE TPAMI, 2011: the inverted-file index with coarse quantization behind IVF.
 - The vectors, tenants and every number are invented. They come from `rag-vector-databases/code/ann_demo.py`.

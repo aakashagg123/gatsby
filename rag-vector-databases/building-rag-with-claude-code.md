@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -10,7 +10,7 @@ This lesson builds a working RAG feature end to end, with Claude Code doing most
 
 The build has seven stages: a contract, a plan, the database, ingestion, retrieval, the grounded prompt, and an eval. Claude Code writes the code for each stage. You own three things it cannot decide for you: the eval questions, the permission rules, and the bar the eval must pass.
 
-Everything here runs. The repo ships a standard-library pipeline with no install, and a pgvector demo that was run against Postgres 16 with pgvector 0.8.1. The real database returned the same ranking as the Python code, to three decimal places. The Pinecone code is written against the Python software development kit (SDK) 10.0.0 and was not run, because it needs an account.
+Everything here runs. The repo ships a standard-library pipeline with no install, and a pgvector demo that was run against Postgres 16 with pgvector 0.8.1. The latest release is 0.8.7, and you should use the latest patch. The real database returned the same ranking as the Python code, to three decimal places. The Pinecone code is written against the Python software development kit (SDK) 10.0.0 and was not run, because it needs an account. The SDK is now at 10.3.0. Its release notes list no change to the calls used here, but those versions were not run either.
 
 > 🎯 **For the product leader**
 >
@@ -61,7 +61,7 @@ Write the eval set yourself. Twenty to fifty real questions, each with the chunk
 
 ### Stage 2: the plan
 
-Start Claude Code in plan mode with `claude --permission-mode plan`, or press `Shift+Tab` in a session. In plan mode it reads and proposes, and changes nothing. Ask for the design before any code:
+Start Claude Code in plan mode with `claude --permission-mode plan`. In a session, press `Shift+Tab` until the status bar shows plan mode, or start one prompt with `/plan`. Current terminal sessions start in auto mode, so plan mode is something you choose on purpose. In plan mode it reads and proposes, and changes nothing. Ask for the design before any code:
 
 ```text
 Read CLAUDE.md and docs/help-centre/. Propose the schema, the chunking rule,
@@ -162,7 +162,7 @@ msg = client.messages.create(model="claude-opus-5-5", max_tokens=1024,
 answer = next(b.text for b in msg.content if b.type == "text")
 ```
 
-Gate the call before it happens. If neither the keyword search nor the vector search finds good evidence, skip the model and say "I don't know". The Claude API also has a built-in citations feature for documents you pass as `document` blocks; it returns the cited text with each claim.
+Gate the call before it happens. If neither the keyword search nor the vector search finds good evidence, skip the model and say "I don't know". The Claude API also has a built-in citations feature for sources you pass as `document` blocks or `search_result` blocks; it returns the cited text with each claim. The `cited_text` field does not count toward output tokens. Citations cannot be combined with structured outputs: a request with both returns a 400 error. If you need JSON output, you must cite in another way, for example with source ids in your own schema.
 
 ### Stage 7: the eval
 
@@ -225,6 +225,7 @@ Three details differ from Postgres. Only searched fields go in the schema; metad
 - **No delete path.** A retracted policy stays in the index and wins the search. In the worked example it scores 0.927 against 0.936 for the current one.
 - **The agent grades itself.** Claude Code writes the eval questions and the code, and both agree. Keep the eval set human-written and read-only to the agent.
 - **Production credentials in the session.** The agent can run any command its permissions allow. Point it at a local container only.
+- **Knowledge poisoning.** An attacker who can add text to the corpus can steer answers. The PoisonedRAG paper reports about a 90% attack success rate with five malicious texts per target question, in a database of millions of texts. Limit who can write to the index, record where each chunk came from, and review new sources.
 - **Prompt injection through documents.** A retrieved document says "ignore your instructions". Treat retrieved text as data, and never give the answering model tools it does not need.
 
 ## Under the hood
@@ -283,7 +284,11 @@ The corpus is 10 help documents, cut into 22 chunks. One document is a retracted
 - PostgreSQL documentation, [Full text search](https://www.postgresql.org/docs/16/textsearch.html): `to_tsvector`, `websearch_to_tsquery` and `ts_rank`. Read 2026-10.
 - Pinecone Python SDK [README and docs](https://github.com/pinecone-io/pinecone-python-client/tree/v10.0.0), release 10.0.0 (published 3 September 2026): `schema=` and `deployment=`, `index.documents.upsert` and `.search`, `DenseVectorQuery` and `TextQuery`, metadata filters, namespaces, asynchronous upserts, and a dense-vector clause that must appear alone. The call signatures were checked against the installed 10.0.0 package. Read 2026-10.
 - Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings): Anthropic does not offer its own embedding model, Voyage AI models, `voyage-4` with 1,024 dimensions by default, and the `input_type` parameter. Read 2026-10.
-- Claude Code docs, [Best practices](https://code.claude.com/docs/en/best-practices): `CLAUDE.md` read at the start of every conversation, `/init`, plan mode with `Shift+Tab` or `--permission-mode plan`, hooks as deterministic, Stop hooks as a gate, and "Claude stops when the work looks done". Read 2026-10.
+- Claude Code docs, [Best practices](https://code.claude.com/docs/en/best-practices): `CLAUDE.md` read at the start of every conversation, `/init`, hooks as deterministic and `CLAUDE.md` as non-deterministic, Stop hooks as a gate, and "Claude stops when the work looks done". Re-read 2026-11.
+- Claude Code docs, [Permission modes](https://code.claude.com/docs/en/permission-modes): terminal sessions start in auto mode from v2.1.283, plan mode via `Shift+Tab`, `/plan` or `--permission-mode plan`. First 100,000 characters read 2026-11.
+- Anthropic documentation, [Citations](https://platform.claude.com/docs/en/build-with-claude/citations): `document` and `search_result` blocks, `cited_text` not billed as output, and the 400 error with structured outputs. Read 2026-11.
+- Zou et al., [PoisonedRAG](https://arxiv.org/abs/2402.07867), USENIX Security 2025: knowledge-corruption attacks on RAG, about 90% success with five injected texts per question. Abstract read 2026-11.
+- pgvector [CHANGELOG](https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md) and Pinecone Python SDK [release notes](https://github.com/pinecone-io/pinecone-python-client/releases): pgvector 0.8.7 (1 October 2026) and Pinecone SDK 10.3.0 (3 November 2026). Read 2026-11.
 - Claude Code docs, [MCP](https://code.claude.com/docs/en/mcp): `claude mcp add`, scopes, and the warning to verify you trust each server. Read 2026-10.
 - Cormack, Clarke and Büttcher, *Reciprocal rank fusion outperforms Condorcet and individual rank learning methods*, SIGIR 2009: the `1 / (k + rank)` fusion with k = 60.
 - The Fernpay corpus, the eval questions and every number are invented. They come from `rag-vector-databases/code/`.

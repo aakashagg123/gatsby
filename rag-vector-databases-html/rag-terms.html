@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 10</span>
     <h1>RAG terms, explained</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>RAG has a large vocabulary, and much of it is used loosely. This lesson defines every common term in plain language, grouped by the stage of the pipeline where it lives. Each term has a one-line example from the Fernpay help centre used across this module, and a link to the lesson that develops it.</p>
 <p>Three habits make the vocabulary easier. First, place each term on the pipeline: ingest, embed, store, retrieve, generate, evaluate, operate. Second, separate the <strong>retrieval</strong> words from the <strong>answer</strong> words. Recall and precision describe what search found. Faithfulness and answer relevance describe what the model wrote. Third, when two terms seem to mean the same thing, ask which stage each one measures.</p>
@@ -144,6 +144,12 @@
 <td>Not used in Fernpay.</td>
 <td><a href="chunking-and-ingestion.html">Chunking and ingestion</a></td>
 </tr>
+<tr>
+<td><strong>Contextualized chunk embedding</strong></td>
+<td>An embedding service that returns chunk vectors with whole-document context built in.</td>
+<td><code>voyage-context-4</code>.</td>
+<td><a href="chunking-and-ingestion.html">Chunking and ingestion</a></td>
+</tr>
 </tbody>
 </table>
 <h3 id="embed">Embed</h3>
@@ -198,6 +204,18 @@
 <td>A long vector where most numbers are zero, one slot per word. It captures exact words.</td>
 <td>A keyword score per term.</td>
 <td><a href="retrieval-quality.html">Retrieval quality</a></td>
+</tr>
+<tr>
+<td><strong>Matryoshka embedding</strong></td>
+<td>A vector whose first numbers carry the coarse meaning, so you can cut it to a shorter length and scale it to length 1.</td>
+<td>1,024 numbers cut to 256.</td>
+<td><a href="embeddings-and-semantic-search.html">Embeddings</a></td>
+</tr>
+<tr>
+<td><strong>Quantization</strong></td>
+<td>Storing each number in fewer bits, such as 8-bit integers or one bit, to save memory.</td>
+<td><code>output_dtype="int8"</code>.</td>
+<td><a href="embeddings-and-semantic-search.html">Embeddings</a></td>
 </tr>
 <tr>
 <td><strong>Query and document input types</strong></td>
@@ -431,6 +449,12 @@
 <td><a href="rag-vs-long-context-vs-finetuning.html">RAG vs. long context</a></td>
 </tr>
 <tr>
+<td><strong>Context rot</strong></td>
+<td>Recall and accuracy fall as the context grows.</td>
+<td>Why a 1 million token prompt can answer worse than 2,000 tokens of chunks.</td>
+<td><a href="rag-vs-long-context-vs-finetuning.html">RAG vs. long context</a></td>
+</tr>
+<tr>
 <td><strong>Prompt caching</strong></td>
 <td>Reusing a processed prompt prefix across calls, at a lower price.</td>
 <td>The handbook in the prompt.</td>
@@ -535,6 +559,12 @@
 <td><a href="vector-databases.html">Vector databases</a></td>
 </tr>
 <tr>
+<td><strong>Knowledge poisoning</strong></td>
+<td>An attacker adds text to the corpus so retrieval returns it for chosen questions.</td>
+<td>A forged help article.</td>
+<td><a href="building-rag-with-claude-code.html">Building RAG</a></td>
+</tr>
+<tr>
 <td><strong>Indirect prompt injection</strong></td>
 <td>Instructions hidden in a retrieved document that try to steer the model.</td>
 <td>A page that says "ignore your rules".</td>
@@ -560,12 +590,17 @@
 <tbody>
 <tr>
 <td><strong>Agentic RAG</strong></td>
-<td>A model that decides when to search, what to search for, and whether to search again.</td>
+<td>A model that decides when to search, what to search for, and whether to search again. Anthropic calls the run-time version "just-in-time" retrieval.</td>
 <td><a href="../agentic-ai/index.html">Agentic AI</a></td>
 </tr>
 <tr>
 <td><strong>GraphRAG</strong></td>
 <td>Retrieval over a knowledge graph of entities and relations, with summaries of related groups.</td>
+<td><a href="graphrag-and-structured-retrieval.html">GraphRAG</a></td>
+</tr>
+<tr>
+<td><strong>LazyGraphRAG</strong></td>
+<td>A GraphRAG variant that uses the model at query time, with no pre-built summaries.</td>
 <td><a href="graphrag-and-structured-retrieval.html">GraphRAG</a></td>
 </tr>
 <tr>
@@ -683,6 +718,8 @@
 <li>Malkov and Yashunin, <em>Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs</em>, IEEE TPAMI, 2020 (<a href="https://arxiv.org/abs/1603.09320">arxiv.org/abs/1603.09320</a>): HNSW.</li>
 <li>Cormack, Clarke and Büttcher, <em>Reciprocal rank fusion outperforms Condorcet and individual rank learning methods</em>, SIGIR 2009: RRF with k = 60.</li>
 <li>Gao, Ma, Lin and Callan, <em>Precise Zero-Shot Dense Retrieval without Relevance Labels</em>, ACL 2023 (<a href="https://arxiv.org/abs/2212.10496">arxiv.org/abs/2212.10496</a>): HyDE.</li>
+<li>Zou et al., <em>PoisonedRAG</em>, USENIX Security 2025 (<a href="https://arxiv.org/abs/2402.07867">arxiv.org/abs/2402.07867</a>): knowledge poisoning.</li>
+<li>Anthropic documentation, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">Embeddings</a> and <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a>: Matryoshka truncation, quantization, <code>voyage-context-4</code> and context rot. Read 2026-11.</li>
 <li>Liu et al., <em>Lost in the Middle: How Language Models Use Long Contexts</em>, TACL 2024 (<a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a>).</li>
 <li>Anthropic, <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a>, September 2024: contextual retrieval.</li>
 <li>Günther et al., <em>Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models</em>, 2024 (<a href="https://arxiv.org/abs/2409.04701">arxiv.org/abs/2409.04701</a>).</li>

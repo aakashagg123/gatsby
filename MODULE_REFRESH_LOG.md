@@ -38,7 +38,7 @@ picks the lowest tier number among due modules.
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | 2026-11-02 |
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
 | api-integrations | api-integrations/ | scripts/build_api_integrations.py | 2 | 30 | 2026-11-01 |
-| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-10-12 |
+| rag-vector-databases | rag-vector-databases/ | scripts/build_rag_vector_databases.py | 2 | 30 | 2026-11-11 |
 | memory-and-context | memory-and-context/ | scripts/build_memory_and_context.py | 2 | 30 | 2026-11-03 |
 | tool-calling | tool-calling/ | scripts/build_tool_calling.py | 2 | 30 | 2026-10-31 |
 | ai-agents | ai-agents/ | scripts/build_ai_agents.py | 2 | 30 | 2026-10-30 |
@@ -922,3 +922,40 @@ and a link to the merged PR.)
   Flagged: (1) This module is too large for one run. Recommend splitting its refresh across several runs (for example five lessons each)
   with a per-lesson date column. Owner decision. (2) Coverage still to check in later lessons: AI inference in unit economics (`unit-economics.md`),
   AI-era org design and team sizing (lessons 13-14), model-cost sensitivity in business cases (lesson 4).
+
+- 2026-11-11 — rag-vector-databases — tier 2. Picked because it was the only row due (30 of 30 days). Every tier-1 row
+  was inside its 45-day cadence. Outcome: fixed and expanded. Read all 10 lessons, the README and the recap in full first.
+  - Fixed: cache-read price lists named only Fable 5.1 at 0.025x. Fable 5.2 is current and has the same rate
+    (`when-to-use-rag.md`, `rag-vs-long-context-vs-finetuning.md`, `code/decide.py`). Plan-mode text in
+    `building-rag-with-claude-code.md`: terminal sessions now start in auto mode, `/plan` also works.
+    Contextual-retrieval percentages are relative cuts (5.7% to 3.7%, 2.9%, 1.9%); said so in the chunking,
+    retrieval and recap pages, with the top-150-to-20 rerank setup. The incident source (AIID 1039) was opened and read, so the
+    "checked through search excerpts" caveats are gone.
+  - Expanded: context rot and the Haiku 5.5 long-prompt price tier (long-context lesson); agentic or just-in-time retrieval as an
+    option; Matryoshka truncation, quantization and multimodal embeddings (embeddings lesson); `voyage-context-4` and `rerank-3`
+    (chunking, retrieval); pgvector 0.8.7 and `hnsw.max_scan_tuples` (vector databases); Pinecone SDK 10.3.0; citations
+    `search_result` blocks and the citations/structured-outputs 400 error; knowledge poisoning (PoisonedRAG); LazyGraphRAG
+    and the RAG vs GraphRAG evaluation (GraphRAG lesson, resolving the flag from the 2026-10-24 knowledge-graphs run).
+    New terms in `rag-terms.md`.
+  - Opened and read (primary):
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-caching (first 100k of 165k chars: multipliers, Fable 5.2 row)
+    - https://platform.claude.com/docs/en/about-claude/models/overview (model IDs, 1M context, prices)
+    - https://platform.claude.com/docs/en/build-with-claude/context-windows (1M default, Haiku 5.5 tier, context rot)
+    - https://platform.claude.com/docs/en/build-with-claude/embeddings (voyage-4, voyage-context-4, rerank-3, quantization, Matryoshka)
+    - https://platform.claude.com/docs/en/build-with-claude/citations (search_result, cited_text, structured-outputs 400; read via saved output, grep only)
+    - https://www.anthropic.com/news/contextual-retrieval (200k tokens, 35/49/67%, 5.7% baseline, top 150 to 20)
+    - https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents (just-in-time retrieval, context rot)
+    - https://raw.githubusercontent.com/pgvector/pgvector/master/README.md and CHANGELOG.md; github.com/pgvector/pgvector/tags (0.8.7, 1 Oct 2026)
+    - https://pypi.org/pypi/pinecone/json (10.3.0, 3 Nov 2026) and the pinecone-python-client releases page (10.1 to 10.3 notes)
+    - https://code.claude.com/docs/en/best-practices (grep of saved page) and /permission-modes (first 100k chars)
+    - https://incidentdatabase.ai/cite/1039/ (Anysphere/Cursor support bot, 19 April 2025)
+    - https://arxiv.org/abs/2502.11371, https://arxiv.org/abs/2402.07867 (abstracts)
+    - https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/
+  - Not verified: the Liu et al., Lewis, HyDE, HNSW, RRF, BM25, Edge and late-chunking papers were not reopened; the pgvector
+    Docker tag `0.8.1-pg16` and the Pinecone code were not run; the Pinecone README itself was not reopened, only release notes;
+    Anthropic pricing page long-context section; the Voyage blog posts behind the model names; rest of the
+    permission-modes page and the second half of the caching page; the "dense clause must run alone" Pinecone claim after 10.0.0.
+  - Flagged, not fixed: (1) Late interaction (ColBERT-style) retrieval, document-image RAG, and a RAG-specific eval lesson
+    (RAGAS-style faithfulness scoring) are covered only in passing. Not researched this run; a possible new lesson, owner decision.
+    (2) Cross-module: `cost-optimization/` and `memory-and-context/` may want the Fable 5.2 cache-read rate (0.025x) if they list only Fable 5.1;
+    not checked.

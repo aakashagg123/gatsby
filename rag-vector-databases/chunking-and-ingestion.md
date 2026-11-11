@@ -2,7 +2,7 @@
 
 *Part of [RAG & vector databases for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -57,7 +57,7 @@ Keep the title and heading with each chunk. "Annual plans can be refunded within
 - **Extraction.** Real sources are messy. PDFs have headers, footers and columns. HTML has navigation. Tables turn to noise when flattened. Text that is wrong here is wrong in every answer.
 - **Metadata.** Every chunk carries its source (for [citations](../content/03-rag/retrieval-evals.md)), its date (for recency), who may see it (for [permissions](../content/05-safety-multitenancy/multi-tenant-isolation.md)), and its status. Metadata is what lets you filter, cite and stay safe.
 - **Freshness.** Data changes, so the index must follow: add the new, update the changed, and **delete the removed**. A retracted policy still in the index will be retrieved and cited.
-- **Contextual chunks.** Some teams add a short note about the whole document to each chunk before embedding it. Anthropic's 2024 contextual retrieval post reports this cut retrieval failures by 35%, and by 49% when combined with contextual keyword search. **Late chunking** is a related method: embed the whole document first, then cut the result into chunk vectors.
+- **Contextual chunks.** Some teams add a short note about the whole document to each chunk before embedding it. Anthropic's 2024 contextual retrieval post reports this cut retrieval failures by 35%, and by 49% when combined with contextual keyword search. The percentages are relative cuts in the failure rate: the top-20 failure rate fell from 5.7% to 3.7%, then to 2.9%. Test on your own data before you promise a gain. **Late chunking** is a related method: embed the whole document first, then cut the result into chunk vectors. Some embedding services now sell this directly. Voyage's `voyage-context-4` returns chunk vectors that carry whole-document context, so you do not write the context note yourself.
 
 ### Cold start vs. steady state
 
@@ -137,6 +137,7 @@ def chunk_fixed(doc, size=120, overlap=0):
 
 ## Sources
 
-- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings and by 49% with contextual embeddings plus contextual BM25. Read 2026-10.
+- Anthropic, [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval), 19 September 2024: context of "usually 50-100 tokens" added to each chunk; top-20 retrieval failures cut by 35% with contextual embeddings (5.7% to 3.7%) and by 49% with contextual embeddings plus contextual BM25 (to 2.9%). Read 2026-11.
+- Anthropic documentation, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings): `voyage-context-4`, contextualized chunk embeddings that capture full document context without manual metadata. Read 2026-11.
 - Günther et al., *Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models*, 2024 ([arxiv.org/abs/2409.04701](https://arxiv.org/abs/2409.04701)).
 - The Fernpay corpus, the chunk plans and every number are invented. They come from `rag-vector-databases/code/chunking_demo.py`.
