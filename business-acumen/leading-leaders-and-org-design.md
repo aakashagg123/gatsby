@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -227,6 +227,16 @@ Add structure when coordination costs start to hurt: decisions wait, teams dupli
 
 Each added layer slows information and decisions. Add layers last. First try clearer decision rights ([teams and collaboration](./teams-and-collaboration.md)) and better team boundaries.
 
+### Org design in the AI era
+
+AI changes some inputs to org design. It does not change the method. Keep the criteria, options, walk-through and transition plan. Then check five AI-specific points. Treat all five as judgment, not settled fact. The evidence on AI-era team shapes is still thin.
+
+- **Small teams.** AI coding and analysis tools may let a smaller team own more. Do not cut team size on that hope. The 2025 DORA report on AI-assisted software development found that AI mainly amplifies what an organization already does well or badly. A weak handoff structure gets worse, not better. Test with one team and measure lead time and failures before you resize many.
+- **Role shifts.** Prototyping, drafting specs and writing first-pass code get cheaper. Judging quality, setting evaluation criteria and choosing what to build get relatively more important. Rewrite the ladder evidence examples for each level to include these skills. Do not assume one role absorbs another.
+- **A named owner for every AI system.** A model, a prompt set or an evaluation suite is a critical system. It needs an owning team, an on-call rota and a change process, like any other system. The orphaned-system failure below applies to AI with extra force, because quality can drift with no deploy.
+- **Governance and escalation.** Decide who may ship an AI feature alone and who must escalate. Tie the line to the risk appetite in [navigating the organization](./navigating-the-organization.md). Name the second-line reviewer for model risk and the executive who can accept residual risk. Do this before the first launch, not after the first incident.
+- **Headcount against usage cost.** AI work adds a cost that scales with use, such as model calls. A new hire is a fixed cost. Price both in the same business case. See [business cases, capital and valuation](./business-cases-and-valuation.md).
+
 ## Worked example: reorganizing a lending product org
 
 *This example is invented, to show the method. The company, its teams and all numbers are illustrative. All inputs are assumed.*
@@ -287,7 +297,7 @@ xychart-beta
 - **The reorg as a fix for everything.** Leaders reorganize every year. Teams never settle long enough to deliver, and no reorg pays back.
 - **Boxes before criteria.** The new chart fits the leaders, not the strategy. Nobody can say what it was meant to make easy.
 - **The long limbo.** A reorg is rumoured for two months. Work stops and the best people take outside calls.
-- **The orphaned system.** A reorg leaves a critical system with no owning team. It fails at night and nobody is on call.
+- **The orphaned system.** A reorg leaves a critical system with no owning team. It fails at night and nobody is on call. A model or evaluation suite is a system too.
 - **The paper P&L.** A GM is judged on a P&L whose main cost, such as credit losses, someone else sets. Blame flows, decisions do not.
 - **Calibration by volume.** The loudest manager wins ratings for their team. Good people on quieter teams leave over fairness.
 - **Layer creep.** Each promotion adds a manager. Decisions slow and nobody notices why.
@@ -359,7 +369,8 @@ review_on: 2027-06-30
 - [ ] Before your next reorg, write the must-pass and weighted criteria and get them agreed.
 - [ ] Walk your top five workflows through each structure option. Count teams and handoffs.
 - [ ] Price the reorg in team-weeks and attrition. Compare the payback with how long the structure will last.
-- [ ] Make sure every critical system has an owning team.
+- [ ] Make sure every critical system has an owning team, including each model and evaluation suite.
+- [ ] Write down who can ship an AI feature alone, and who must escalate.
 - [ ] For each P&L owner, list the levers they control and the ones they do not.
 - [ ] Check every leader's span. Flag any that are too wide to coach or too narrow to justify a layer.
 - [ ] Before your next calibration, write evidence examples for each level on your ladder.

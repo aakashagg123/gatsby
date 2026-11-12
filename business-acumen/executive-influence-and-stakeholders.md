@@ -140,6 +140,19 @@ Under rules of the US Securities and Exchange Commission (SEC) adopted after the
 
 **The common misreading.** "The board wants to see the roadmap." It wants to know whether management's bets fit the strategy, the capital and the risk appetite. A roadmap is evidence for that, at most.
 
+### Handling AI risk and hype with executives
+
+Executives now ask about AI in every review. Some want a bold bet. Others fear a headline. Both reactions need numbers, not adjectives.
+
+- **Answer the first question first.** Lead with what the AI feature changes in the domain's key metric, as in the table above. Show cost per task or per decision next to quality. Usage cost scales with volume, so a pilot's cost can mislead.
+- **Show evidence from your own data.** Vendor demos and benchmark scores do not predict your results. Show a measured result on your own evaluation set, against today's process, with the failure rate stated.
+- **Stage the money.** Release funds at gates tied to measured quality and measured risk, as in the staged ask above.
+- **Name the owner and the stop rule.** Say who is accountable for the feature, who can pause it and which metric triggers a pause.
+- **Say what you do not know.** Name the open questions: model drift, rule changes and vendor dependence. Directors read for the downside. An honest list builds more trust than a confident one.
+- **Check the legal clock.** The EU AI Act's high-risk dates have been delayed, as [navigating the organization](./navigating-the-organization.md) reports. A delay is not a waiver. Ask Legal what applies to your use case and when.
+
+The common trap is to answer hype with caution alone. A leader who only says "risky" loses the argument to one who brings a staged plan with gates.
+
 ### Influence without authority
 
 You influence peers through four things:
@@ -195,7 +208,7 @@ You will not know their numbers exactly. A range is enough. Test it with questio
 
 **Anchoring and the first offer.** The first number often pulls the final deal toward it. Make the first offer when you have a good estimate of the zone. Make it inside the zone, near the other side's walk-away point, and give a reason for it. When the other side opens far outside the zone, do not counter by splitting the difference. Restate the economics and re-anchor.
 
-**Domain application.** Many fintechs that offer debit cards issue them through a partner bank. In the US, debit interchange is capped for large issuers, and smaller issuers are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). So partner banks can be smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
+**Domain application.** Many fintechs that offer debit cards issue them through a partner bank. In the US, debit interchange is capped for large issuers, and issuers under $10 billion in assets are exempt from the cap (see [pricing and business models](./monetization-and-business-models.md)). The cap is in legal doubt. On 26 October 2026 the Eighth Circuit affirmed a ruling that set aside the Federal Reserve's Regulation II cap. The cap stays in effect until the court issues its mandate, which one law-firm summary puts at about mid-December 2026 unless a further stay is granted. A replacement rule must follow. Model both cases in any partner-bank negotiation. The exemption itself was not changed by the ruling. So partner banks can be smaller banks. The bank and the fintech split the interchange. The bank's share must cover its oversight, because its regulator holds it responsible for the programme. The fintech's share must cover cards, processing, fraud and support.
 
 **Decision rule.** Write both walk-away points, in numbers, before the first meeting. If you cannot estimate theirs, your first meeting is for questions, not offers.
 

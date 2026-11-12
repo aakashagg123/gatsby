@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -82,10 +82,12 @@ General acumen tells you which questions to ask. Domain depth tells you the answ
 
 The last column is the habit to build. Before anyone talks about volume, ask what one unit earns after the costs that come with it. A unit is the thing the business sells once: a payment, a loan, an order, a policy, a shelf of stock or an active customer. If one unit loses money, more volume loses more money. [Unit economics](./unit-economics.md) shows how to build each of these from one unit up to a cohort of customers.
 
+**AI products** add a seventh constraint that cuts across every domain above. Each use of a model costs money, so cost of revenue grows with usage instead of staying flat. A leader who prices an AI feature like ordinary software can lose money on the heaviest users. The first question is: what does one user action cost in model calls, and does the price cover it? See [the language of money](./the-language-of-money.md#the-income-statement-line-by-line) and [pricing and business models](./monetization-and-business-models.md).
+
 Public companies show these constraints in what they choose to report. Two examples:
 
 - **eCommerce.** DoorDash reports a "net revenue margin": its revenue as a share of the order value on its marketplace. Its filings put that figure at 13.4% for 2024. The rest of each order's value goes to merchants, couriers, taxes and tips.
-- **Lending.** Upstart's 10-K for 2022 says funding constraints led it to use its own balance sheet to support loan funding. A lending platform depends on capital partners as much as on borrowers.
+- **Lending.** Upstart's 10-K for 2022 says that, in response to constrained loan funding, it increased the use of its own balance sheet to fund loans. A lending platform depends on capital partners as much as on borrowers.
 
 For insurance, a public loss-ratio series, and why the latest year's loss ratio always looks too low, is in [performance and growth](./performance-and-growth.md#insurance-loss-development).
 

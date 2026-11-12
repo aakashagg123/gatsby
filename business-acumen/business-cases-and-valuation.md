@@ -347,6 +347,16 @@ Expected NPV is positive but lower than the base case. The bear case loses more 
 
 **Step 11: check the counterfactual.** The base case assumes fraud losses stay flat without the model. Suppose instead fraud would grow 10% a year. Savings become $500,000, $550,000 and $605,000. NPV rises to **$214,951**. This is a fair point to make. It is also the easiest way to inflate a case. Show the fraud trend data, or leave it out.
 
+**Step 12: a case where the running cost is model cost.** Many AI cases differ from the fraud model above in one way. The running cost is not a fixed $100,000. It is inference, and it scales with usage. Treat it as three inputs, not one: tokens per task, price per token, and task volume. *Illustrative, all inputs assumed.* An AI support agent costs $600,000 to build. It resolves 1 million tickets a year and saves $1.00 of handling cost on each. Other running cost is $300,000 a year. Inference costs $0.445 per resolved ticket, the figure from the per-task example in [unit economics](./unit-economics.md). Life is three years and the discount rate is 10%.
+
+| Case | Inference a year | Net cash a year | NPV |
+| --- | --- | --- | --- |
+| Base | $445,333 | $254,667 | $33,318 |
+| Price per token halves (cheaper model) | $222,667 | $477,333 | $587,057 |
+| Tokens per task double (more agent steps, retries) | $890,667 | −$190,667 | −$1,074,160 |
+
+The base case is barely positive. Token price and token use pull in opposite directions. Both can move by a factor of two in a year. The tornado for this case would put them at the top. Two lessons follow. First, do not bank a falling token price as a benefit unless you also cap tokens per task. Teams often spend the saving on bigger models and longer contexts. Second, stage the bet so the pilot measures cost per resolved task on real tickets. Re-run the case every quarter, because model prices and your own usage both move fast.
+
 **What the leader does now.** She asks for a pilot that measures two things: savings per month, and how fast the model's precision decays. She commits the full build only if the pilot rules out the bear case and shows a life of at least three years. She shows Finance the tornado, so the debate is about life and savings, not the discount rate.
 
 ## Tradeoffs and decisions
