@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -133,9 +133,9 @@ Each domain has a few metrics that move profit directly. Public companies show w
 
 | Domain | Metrics that move profit | A public example |
 | --- | --- | --- |
-| **Payments** | Total payment volume, authorization rate, fraud and dispute rates, net take rate | Stripe reported total payment volume of about $1.4 trillion for 2024, up 38% on 2023. |
+| **Payments** | Total payment volume, authorization rate, fraud and dispute rates, net take rate | Stripe reported total payment volume of about $1.9 trillion for 2025, up 34% on 2024 (about $1.4 trillion, up 38% on 2023). |
 | **Lending** | Approval rate, loss rate by monthly cohort of loans, cost of funds, revenue after transaction costs | Affirm reports revenue less transaction costs as a share of GMV, as a measure of unit economics. |
-| **eCommerce** | Order value, conversion, take rate, contribution per order, return rate | DoorDash reports net revenue margin: revenue as a share of Marketplace GOV, 13.4% for 2024. |
+| **eCommerce** | Order value, conversion, take rate, contribution per order, return rate | DoorDash reports net revenue margin: revenue as a share of Marketplace GOV, about 13.4% for 2024 (full-year revenue ÷ Marketplace GOV, from its Q4 2024 release). |
 | **InsurTech** | Loss ratio, expense ratio, **combined ratio**, retention, quote-to-bind rate | Lemonade reports its gross loss ratio. See the loss-development section below. |
 | **Retail** | Comparable sales, inventory turnover, gross margin return on inventory, shrink | Walmart reports comparable sales, including eCommerce. |
 | **FinTech** | Revenue per active customer, cost to serve, active customers | [Unit economics](./unit-economics.md) works through a neobank's figures. |
@@ -143,6 +143,8 @@ Each domain has a few metrics that move profit directly. Public companies show w
 GMV is gross merchandise value, the total value of goods sold. GOV is gross order value, the total value of orders placed.
 
 **Insurance ratios, defined.** The **loss ratio** is claims and claim-handling costs divided by earned premium. The **expense ratio** is underwriting expenses divided by premium. The **combined ratio** is the two added together. Below 100% means the insurer makes money on underwriting, before investment income. Above 100% means it loses money on underwriting.
+
+**AI features change cost to serve.** An AI feature has a marginal cost on every use: model calls, retrieval, evaluation and human review. Classic software has near-zero marginal cost, so gross margin barely moves with usage. With AI, it can fall as usage grows. Track **cost per task** and **gross margin per active customer**, and report them next to engagement. Heavy users can be your least profitable users. Report quality next to cost, such as the task success rate on a fixed evaluation set. A cheaper model that fails more tasks only moves the cost to support and churn. The same rule applies to retention: read GRR by AI-feature usage, not only in total.
 
 ### Lending: vintage curves
 
@@ -226,7 +228,7 @@ flowchart LR
 
 ### Retail: comparable sales and inventory metrics
 
-**Comparable sales** compare sales in the same stores across periods. They remove the effect of opening or closing stores. Walmart's 10-K counts stores and clubs open for the previous 12 months, and includes eCommerce sales. Its filing also notes that other retailers calculate the measure differently. So check the definition before you compare two retailers.
+**Comparable sales** compare sales in the same stores across periods. They remove the effect of opening or closing stores. Walmart's comparable-sales disclosures count stores and clubs open for the previous 12 months, and include eCommerce sales. Its filings also note that other retailers calculate the measure differently. So check the definition before you compare two retailers.
 
 **Inventory turnover** is cost of goods sold divided by average inventory. **Gross margin return on inventory (GMROI)** is gross margin divided by average inventory at cost. [Unit economics](./unit-economics.md) works through GMROI by category.
 
@@ -240,7 +242,7 @@ flowchart LR
 
 The fix for sandbagging is not tougher talk. Track each team's forecast accuracy, as in the calibration log in [data and decisions](./data-and-decisions.md). Reward accurate forecasts, not only beats.
 
-**Guardrails inside the target.** A target with a separate guardrail invites a trade between them. A target with the guardrail inside it does not. Progressive, the US auto insurer, has for many years stated two linked goals in its annual reports. It aims for an underwriting profit of at least 4%, a combined ratio of 96 or lower. And it aims to grow as fast as it can within that limit and its service standards. Growth is the goal. Profit is built into it.
+**Guardrails inside the target.** A target with a separate guardrail invites a trade between them. A target with the guardrail inside it does not. Progressive, the US auto insurer, ties growth to a profit limit. Its shareholder letter calls a 96.0 combined ratio its profit target, which is about a 4% underwriting margin. Management says it aims to grow as fast as it can at or below that ratio, while it keeps good service. Growth is the goal. Profit is built into it.
 
 **Domain application.** Lending: "grow originations, with month-6 vintage losses at or below plan." Payments: "grow volume, with authorization rate and dispute rate inside range." eCommerce: "grow orders, with contribution per order above $X." Retail: "grow comparable sales, with markdown below Y%."
 
@@ -312,7 +314,7 @@ An insurer has $50 million of earned premium a year. Claims and claim-handling c
 - **Leading against lagging.** Leading metrics let you act early. They are less certain proof of results. Early vintage points are leading. Month-12 losses are lagging.
 - **Growth against quality.** Approval rate, conversion and premium growth all trade against losses or returns. You give up some volume to keep losses inside plan.
 - **Speed of reading against accuracy of reading.** Development factors and vintage projections let you act sooner. They are estimates, and they can be wrong when the mix of business changes.
-- **Comparability against fit.** Standard industry metrics let you compare with peers. Your own metrics may fit your model better. Walmart's 10-K notes that other retailers calculate comparable sales differently.
+- **Comparability against fit.** Standard industry metrics let you compare with peers. Your own metrics may fit your model better. Walmart's filings note that other retailers calculate comparable sales differently.
 
 ## Failure modes
 
@@ -390,6 +392,7 @@ leading_indicators: [quote_volume, bind_rate_by_channel]
 - [ ] If you lend, show vintage curves at fixed months on book, and set triggers on early points.
 - [ ] If you insure, ask for projected ultimate loss ratios by accident year before any price change.
 - [ ] If you process payments, report authorization rate next to fraud loss for every rule or routing change.
+- [ ] If you ship AI features, report cost per task and gross margin per active customer next to usage and quality.
 - [ ] Rewrite each growth target so its guardrail sits in the same sentence.
 - [ ] Give every KPI one owner, one written definition and a version number.
 - [ ] Price one point of your main profit metric in money.
