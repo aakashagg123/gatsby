@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -186,6 +186,18 @@ A lender is deciding whether to approve a band of applicants just below its cuto
 
 **Decision rule.** Before you fund a test or a data source, compute the cap. If the cost is above EVPI, decide now. If the cost is well below the value of the test, run it, with a deadline.
 
+### Decisions on AI features: experiments and evals
+
+AI features break two habits from classic product data.
+
+**Outputs vary.** The same input can give different answers. So one run proves little. A/B tests need enough users and enough samples per case to see through the noise. Test on the outcome the business cares about, such as task completion, resolution or revenue. Do not test on output text quality alone. Track cost and latency as guardrails, because a better answer that costs three times as much may lose money. Model, prompt and data changes alter behaviour, so re-test when any of them changes. [Metrics and experimentation](../technical-product-management/metrics-and-experimentation.md) covers the mechanics.
+
+**Evals are decision data.** An **eval** is a fixed set of test cases with a scoring rule. It tells you whether a change is better before you ship it. Treat it like a model's validation set. Keep it fresh, include real failures and edge cases, and keep it out of the training and prompt-tuning loop.
+
+**LLM-as-judge has limits.** Teams often score outputs with another model. The original study (Zheng and others, 2023) found strong judges agree with human raters over 80% of the time, about as often as humans agree with each other. It also found position bias, verbosity bias and self-enhancement bias. So check the judge against a human-labelled sample, randomise answer order, and never let a model grade its own outputs alone. Use human review for high-stakes cases.
+
+**Decision rule.** Before you ship or scale an AI feature, write the eval pass mark, the online metric, the cost-per-task limit and the result that would make you stop. This is the same priced-error logic as the threshold section: a wrong answer has a cost, and so does a refusal.
+
 ### Forecasting with ranges
 
 **What it is.** A **range forecast** gives three numbers instead of one. P10 is a value the outcome should beat 90% of the time. P50 is the middle case. P90 is a value the outcome should beat only 10% of the time.
@@ -244,7 +256,7 @@ Under the first weights, A wins clearly. When the CFO shifts weight from confide
 
 ### Model governance in regulated domains
 
-**What it is.** In banking, a credit, fraud, pricing or capital model is a supervised asset. In April 2026 the US Federal Reserve, the Office of the Comptroller of the Currency (OCC) and the Federal Deposit Insurance Corporation (FDIC) issued joint supervisory guidance on **model risk management**. It replaced the agencies' earlier 2011 guidance. It is most relevant to banking organizations with more than $30 billion in total assets. It is guidance, not an enforceable standard. Model risk is the harm that can come from decisions based on wrong or misused model outputs. Smaller banks, and fintechs that lend through partner banks, often meet similar expectations through their bank partners. Ask your model risk team which rules apply to you.
+**What it is.** In banking, a credit, fraud, pricing or capital model is a supervised asset. In April 2026 the US Federal Reserve, the Office of the Comptroller of the Currency (OCC) and the Federal Deposit Insurance Corporation (FDIC) issued joint supervisory guidance on **model risk management**. It replaced the agencies' earlier 2011 guidance (the Fed letter is SR 26-2, dated 17 April 2026, and it also replaces SR 21-8 on anti-money-laundering models). It is most relevant to banking organizations with more than $30 billion in total assets. It is guidance, not an enforceable standard. Model risk is the harm that can come from decisions based on wrong or misused model outputs. Smaller banks, and fintechs that lend through partner banks, often meet similar expectations through their bank partners. Ask your model risk team which rules apply to you. Law-firm commentary reads the guidance as leaving generative and agentic AI outside its scope. So ask how your team governs LLM features, which may still carry the same risks.
 
 **How it works.** The guidance groups the work into three areas: development and use, validation and monitoring, and governance. A common test in model risk practice is **effective challenge**: people who are competent, independent and have the authority to make changes question the model. In practice, a governed model often has:
 
@@ -254,7 +266,7 @@ Under the first weights, A wins clearly. When the CFO shifts weight from confide
 - **A challenger.** A **champion–challenger** setup runs an alternative model or threshold on a small share of traffic. It shows whether the live model is still the best choice.
 - **Documented overrides.** When people overrule the model, the reasons are recorded and reviewed.
 
-**Domain application.** In US lending, a declined applicant must be given the main reasons for the decline, or be told how to request them. That is part of Regulation B. So a credit model must produce reasons a person can read. This shapes which model types a lender can use. Insurers file rating rules with state regulators. Payments and anti-money-laundering models are reviewed by bank partners and examiners.
+**Domain application.** In US lending, a declined applicant must be given the main reasons for the decline, or be told how to request them. That is part of Regulation B. The CFPB withdrew some of its guidance circulars on algorithmic reasons in May 2025, but the Regulation B duty itself did not change. So a credit model must produce reasons a person can read. This shapes which model types a lender can use. Insurers file rating rules with state regulators. Payments and anti-money-laundering models are reviewed by bank partners and examiners.
 
 **The common misreading.** "Governance slows us down." Model governance mostly adds lead time you can plan for. Discovering it late is what slows you down. A threshold change on a credit model may need validation sign-off. Put it in the plan.
 
@@ -315,6 +327,7 @@ An online merchant processes 1,000,000 card transactions a year. Fraud is 0.2% o
 - **The overpriced test.** A pilot costs more in losses and delay than the decision it informs could ever be worth. You see it when nobody can say which result would change the plan.
 - **Uncalibrated ranges.** Every forecast comes with a range, and actuals keep landing outside it. Nobody keeps score, so nothing improves.
 - **Spurious precision and hidden weights.** A score of 3.85 against 3.80 is treated as a clear win. Or someone tunes the weights until their favourite option wins.
+- **Judging an AI feature on a demo or an unvalidated judge.** The demo works, or a model grader gives a high score. Nobody checked the grader against human ratings or the eval against real traffic. Users find the failures after launch.
 - **Ungoverned threshold changes.** A team edits a credit cutoff in a config file. Validation never saw it. It surfaces in a partner-bank audit or an examination.
 
 ## Under the hood
@@ -385,6 +398,7 @@ inside_p10_p90: null    # the team's hit rate over many rows should be near 80%
 - [ ] Ask forecast owners for P10, P50 and P90, and start a calibration log.
 - [ ] Name your domain's data blind spot, and the holdout or below-cutoff test that covers it.
 - [ ] Check that every model and threshold in your product is in the model inventory, with an owner and a validation date.
+- [ ] For each AI feature, check that an eval set exists, the model judge agrees with human raters on a sample, and cost per task is a guardrail.
 - [ ] Find one reversible decision waiting on analysis, and decide it this week.
 
 ## Related lessons

@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -69,7 +69,7 @@ If the answers are strong, write the full business case with NPV (net present va
 
 Most products should be built in small steps: test the riskiest assumption first, release to a small group, learn, then scale. In regulated domains, some steps need a gate before they go live. Examples are a new credit product, new customer disclosures or a new insurance rate. Plan the gate in from the start. Do not discover it a week before launch.
 
-Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. Its 10-K for 2025 names Virtual Try-On as part of its offer.
+Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. The same 10-Q points customers to its Virtual Try-On tool.
 
 The lesson for a product leader: an offer layer can be right for one stage and wrong for the next. A free home trial lowers the buyer's risk. It also carries shipping, handling and return costs on every order. Review each layer's cost against what it still earns.
 
@@ -228,7 +228,11 @@ The worked example below shows the arithmetic.
 
 In regulated domains, partnership is common. A fintech may use a partner bank to hold deposits or issue cards. An insurance agency may sell on a carrier's licence and capital. A retailer may use an outside lender for financing at checkout.
 
-Target took the buy route for same-day delivery. In December 2017 it agreed to acquire Shipt, a same-day delivery platform, for $550 million. As general reasoning, not a Target statement: buying an existing network can be faster than building one. Buying a whole company is a portfolio decision. [Portfolio strategy and capital allocation](./portfolio-strategy-and-allocation.md) covers acquisition math.
+Target took the buy route for same-day delivery. In December 2017 it announced the purchase of Shipt, a same-day delivery platform, for $550 million in cash. As general reasoning, not a Target statement: buying an existing network can be faster than building one. Buying a whole company is a portfolio decision. [Portfolio strategy and capital allocation](./portfolio-strategy-and-allocation.md) covers acquisition math.
+
+**AI models: build, buy or partner.** Most teams buy model access through an API. Menlo Ventures' 2025 survey of 495 US enterprise buyers found about 76% of AI use cases bought, up from 53% a year earlier. Buying a model makes the vendor a critical supplier. Plan for price changes, model retirement, rate limits, and the vendor launching a rival feature. Keep a thin layer between your product and the model so you can switch, and test a second model on your own data.
+
+**AI and go-to-market.** AI changes the unit economics of each motion. Cost to serve is no longer near zero, because every query costs model compute. A free self-serve tier then has a real cost per user, and heavy users cost the most. Model cost to serve by usage tier, not as an average. Seat pricing can break when the product does the work of many seats, so test usage-based or outcome-based pricing against your margin. [Pricing and business models](./monetization-and-business-models.md) covers the options.
 
 #### Total cost of ownership
 
@@ -304,7 +308,7 @@ Four kinds of intellectual property matter most to a product leader.
 | **Copyright** | Original expression, such as code, text and design | It exists once the work is created. Registration adds rights in some countries. | Your app's code and content |
 | **Trade secret** | Valuable information kept secret | Keep it secret, with access controls and contracts | A credit model or pricing algorithm |
 
-Credit and pricing models are usually protected as trade secrets, not patents. A patent would require you to publish how the model works. Note one tension in US lending: the law requires a lender to tell a declined applicant the main reasons for the decision. You disclose reasons, not the model.
+Credit and pricing models are usually protected as trade secrets, not patents. A patent would require you to publish how the model works. Note one tension in US lending: under Regulation B, a lender must give a declined applicant the specific principal reasons, or say the applicant may ask for them. A vague reason such as "failed our score" is not enough. You disclose reasons, not the model.
 
 Partnerships put trade secrets at risk. A partner integration or a vendor contract can expose your pricing logic or model features. Check confidentiality terms and data-use limits before you share them.
 
@@ -381,6 +385,7 @@ A fintech must verify each new customer's identity. This step is often called kn
 - **Gate discovered late.** A regulatory or partner approval appears in the last week.
 - **Outsourced and forgotten.** A vendor's failure becomes your regulatory finding, or your customers lose access to their money.
 - **No exit plan.** A critical vendor raises prices or fails, and the migration takes a year you do not have.
+- **Free AI tier with no cost cap.** Heavy users of a free self-serve tier run up model costs that no revenue covers. You see it as gross margin that falls as usage grows.
 - **One launch weight for all.** Every launch is tier 1, so none gets the attention it needs.
 - **Leaked secret.** A pricing model is shared in a pitch deck or a partner integration with no protection.
 
@@ -480,7 +485,8 @@ A one-page opportunity assessment template:
 - [ ] Rebuild the sales hiring plan with ramp and attainment. Check that hiring starts early enough.
 - [ ] Ask for a holdout on your largest marketing channel. Replace attributed CAC with incremental CAC in every business case.
 - [ ] Price every partner revenue share as a CAC equivalent over the customer's life.
-- [ ] For each critical vendor or partner, write the fallback, the exit plan and the three-year TCO.
+- [ ] For each critical vendor or partner, write the fallback, the exit plan and the three-year TCO. Include your model provider.
+- [ ] For an AI product, model cost to serve by usage tier, and check that each GTM motion stays above your margin floor.
 - [ ] Map every regulatory and partner gate for your next launch, with lead times.
 - [ ] Assign a launch tier to each item on your roadmap.
 - [ ] Check with Legal which of your assets are patents, trademarks, copyright or trade secrets.

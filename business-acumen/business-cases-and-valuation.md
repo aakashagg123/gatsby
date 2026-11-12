@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -347,6 +347,16 @@ Expected NPV is positive but lower than the base case. The bear case loses more 
 
 **Step 11: check the counterfactual.** The base case assumes fraud losses stay flat without the model. Suppose instead fraud would grow 10% a year. Savings become $500,000, $550,000 and $605,000. NPV rises to **$214,951**. This is a fair point to make. It is also the easiest way to inflate a case. Show the fraud trend data, or leave it out.
 
+**Step 12: a case where the running cost is model cost.** Many AI cases differ from the fraud model above in one way. The running cost is not a fixed $100,000. It is inference, and it scales with usage. Treat it as three inputs, not one: tokens per task, price per token, and task volume. *Illustrative, all inputs assumed.* An AI support agent costs $600,000 to build. It resolves 1 million tickets a year and saves $1.00 of handling cost on each. Other running cost is $300,000 a year. Inference costs $0.445 per resolved ticket, the figure from the per-task example in [unit economics](./unit-economics.md). Life is three years and the discount rate is 10%.
+
+| Case | Inference a year | Net cash a year | NPV |
+| --- | --- | --- | --- |
+| Base | $445,333 | $254,667 | $33,318 |
+| Price per token halves (cheaper model) | $222,667 | $477,333 | $587,057 |
+| Tokens per task double (more agent steps, retries) | $890,667 | −$190,667 | −$1,074,160 |
+
+The base case is barely positive. Token price and token use pull in opposite directions. Both can move by a factor of two in a year. The tornado for this case would put them at the top. Two lessons follow. First, do not bank a falling token price as a benefit unless you also cap tokens per task. Teams often spend the saving on bigger models and longer contexts. Second, stage the bet so the pilot measures cost per resolved task on real tickets. Re-run the case every quarter, because model prices and your own usage both move fast.
+
 **What the leader does now.** She asks for a pilot that measures two things: savings per month, and how fast the model's precision decays. She commits the full build only if the pilot rules out the bear case and shows a life of at least three years. She shows Finance the tornado, so the debate is about life and savings, not the discount rate.
 
 ## Tradeoffs and decisions
@@ -367,6 +377,7 @@ Expected NPV is positive but lower than the base case. The bear case loses more 
 - **Funding mismatch.** A lending product is priced on the average cost of funds. Growth comes from an expensive warehouse line. Margins fall as volume rises.
 - **Funding cliff.** A forward-flow agreement ends during a market shock. The buyer does not renew. The lender must cut originations or fund loans on its own balance sheet.
 - **The inflated do-nothing case.** A team assumes the business collapses without its bet. Finance asks for the trend data, and there is none.
+- **Model cost frozen at launch.** An AI case uses today's cost per task as a fixed running cost. Usage per task grows, or the vendor changes prices or retires a model. NPV flips within a year. Model cost belongs in the tornado, and the case needs a quarterly re-run.
 - **Valuation in the case.** A team adds "implied company value" to its NPV. Finance strikes it out, and the team looks naive.
 
 ## Under the hood
@@ -432,6 +443,13 @@ for width, k, a, b in rows:
 grow = [500_000 * 1.1 ** t - 100_000 for t in range(3)]
 print(f"NPV against a growing-fraud baseline ${npv(0.10, grow, 900_000):,.0f}")
 
+# 4b. AI support agent: inference is the running cost (Step 12)
+per_resolved = 0.445333                          # from the unit economics lesson
+for label, m in (("base", 1), ("price per token halves", 0.5), ("tokens per task double", 2)):
+    inf = 1_000_000 * per_resolved * m
+    net = 1_000_000 * 1.00 - inf - 300_000
+    print(f"AI agent, {label}: inference ${inf:,.0f}  net cash ${net:,.0f}  NPV ${npv(0.10, [net] * 3, 600_000):,.0f}")
+
 # 5. IRR traps: two one-year bets at a 10% cost of capital
 for name, invest, back in (("small", 100_000, 140_000), ("large", 1_000_000, 1_200_000)):
     print(f"{name}: IRR {irr([back], invest):.0%}, NPV ${npv(0.10, [back], invest):,.0f}")
@@ -484,6 +502,9 @@ tornado build     $   -85,259 to $   274,741  swing $360,000
 tornado run_cost  $   -29,602 to $   219,083  swing $248,685
 tornado rate      $    28,653 to $   130,839  swing $102,186
 NPV against a growing-fraud baseline $214,951
+AI agent, base: inference $445,333  net cash $254,667  NPV $33,318
+AI agent, price per token halves: inference $222,667  net cash $477,333  NPV $587,057
+AI agent, tokens per task double: inference $890,667  net cash $-190,667  NPV $-1,074,160
 small: IRR 40%, NPV $27,273
 large: IRR 20%, NPV $90,909
 NPV of mixed flows at 10% and 20%: -0.0 0.0
@@ -508,6 +529,7 @@ $1 growing 3%: $14.29; $1 decaying 10%: $5.00; one-off: $1.00
 - [ ] For a bank product, state the capital it uses and the return on that capital.
 - [ ] For an insurance product, state the reinsurance structure and what it costs in margin.
 - [ ] State whether the bet adds recurring or one-off gross profit.
+- [ ] For an AI feature, split running cost into tokens per task, price per token and volume. Show NPV at double the tokens and at half the price.
 
 ## Related lessons
 

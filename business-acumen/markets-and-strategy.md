@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -75,6 +75,8 @@ Market sizing estimates how much revenue a market can hold. Three nested numbers
 - **Counting businesses, not buyers.** A chain of 50 stores is one buying decision, not 50.
 - **A static number.** Markets grow, shrink and reprice. A falling net take rate shrinks the pool even when volume grows.
 - **SOM as a share of TAM.** "We only need 1% of the market" ignores how you would reach that 1%.
+- **Sizing an AI market from a headline.** Published AI market numbers use different scopes. Menlo Ventures estimates $37 billion of enterprise generative AI spend in 2025, with $19 billion in applications. Its scope excludes AI features built into existing software and excludes inference and serving. Another source can show a different total for the same year. Check the scope before you quote a number.
+- **Sizing AI by seats.** An AI product often replaces work, not software seats. Size the budget it draws from (labour, outsourcing, or a service line), then apply a price you can defend. Net the model cost to serve, which varies with usage, out of the revenue pool. A revenue pool at a 70% gross margin is not the same as one at 30%.
 
 **Worked sizing: payment acceptance for independent restaurants.** *Illustrative. Every input is assumed.*
 
@@ -310,6 +312,7 @@ The script prints a TAM of $600M, a SAM of $210M and a SOM of $25.9M (12.3% of S
 
 - [ ] Size your market bottom-up, in revenue you keep, not in volume.
 - [ ] Cross-check with a top-down number. Explain any gap over 2x.
+- [ ] For an AI product, size the budget you replace, and net out usage-based model cost before you call it revenue.
 - [ ] Derive SOM from your sales, partner or marketing capacity.
 - [ ] Compute contribution, CAC and payback for each segment.
 - [ ] Write your target segment in one sentence, and list two segments you will not serve this year.

@@ -4,7 +4,7 @@
 
 Product leaders are promoted for product judgement. Above Group PM level, they are judged on business results. The decisions change. You approve bets, set targets, design teams, set prices and argue for money at the executive table. Each of those decisions is made in the language of the business: cash, margin, risk, market position and organizational power.
 
-This module teaches that language, and how to use it to decide. It is written for Group Product Managers, Heads of Product and VPs of Product. Every lesson ties its ideas to six domains: **FinTech, Payments, Lending, eCommerce, InsurTech and Retail**. The domain examples use public disclosures of real companies, such as their annual reports and company blogs. Each lesson's invented worked example is labelled as invented.
+This module teaches that language, and how to use it to decide. It is written for Group Product Managers, Heads of Product and VPs of Product. Every lesson ties its ideas to six domains: **FinTech, Payments, Lending, eCommerce, InsurTech and Retail**. The domain examples use public disclosures of real companies, such as their annual reports and company blogs. Each lesson's invented worked example is labelled as invented. Where it matters, lessons also note how AI products change the numbers, for example inference cost in cost of revenue.
 
 Start with the **<a href="assessment.html">interactive self-assessment</a>**. It scores you on the fifteen lessons, draws a radar chart of your strengths, and builds a two-week improvement plan from your largest gaps.
 

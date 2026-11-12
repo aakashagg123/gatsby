@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -79,7 +79,7 @@ The **unit** is the smallest thing you sell that has its own revenue and its own
 
 | Layer | Formula | Costs it subtracts | Decisions it steers |
 | --- | --- | --- | --- |
-| **CM1** | Net revenue − direct variable cost | Pass-through fees, cost of goods, processing, fraud, credit loss, courier pay | Pricing, risk policy, supplier and partner terms |
+| **CM1** | Net revenue − direct variable cost | Pass-through fees, cost of goods, processing, fraud, credit loss, courier pay, AI model inference | Pricing, risk policy, supplier and partner terms |
 | **CM2** | CM1 − variable cost to serve | Support, onboarding, identity checks, servicing, collections | Operations, automation, self-serve design |
 | **CM3** | CM2 − performance marketing | Paid acquisition spend that scales with volume | Growth budget, channel mix |
 
@@ -321,11 +321,25 @@ A US neobank issues debit cards through a partner bank. The partner is exempt fr
 
 **Step 4: LTV.** Expected lifetime = 1 ÷ 2% = 50 months. LTV = $6 × 50 = **$300**, undiscounted. LTV to CAC = $300 ÷ $90 = **3.3**.
 
-**Step 5: stress test.** Suppose interchange halves. The partner bank might grow past the asset threshold for the cap, or renegotiate its share. Interchange becomes $6. Neobank share: $4.50. Revenue: $6.50. Contribution: $1.50. Payback: $90 ÷ $1.50 = **60 months**. LTV: $1.50 × 50 = **$75**. LTV to CAC: **0.8**. Each new customer now loses money.
+**Step 5: stress test.** Suppose interchange halves. This is not far-fetched. On 2026-10-26 the Eighth Circuit upheld a ruling that vacated the Federal Reserve's debit cap rule. The Fed must now write a new rule, and the outcome is open. The partner bank might grow past the asset threshold for the cap, or renegotiate its share. Interchange becomes $6. Neobank share: $4.50. Revenue: $6.50. Contribution: $1.50. Payback: $90 ÷ $1.50 = **60 months**. LTV: $1.50 × 50 = **$75**. LTV to CAC: **0.8**. Each new customer now loses money.
 
 **What the leader does with this.** The model depends on one revenue line that a partner and a rule control. The team adds a second revenue line, such as a paid tier or a lending product. It caps acquisition spend until the second line proves out.
 
 **Decision rule.** When more than half of contribution depends on one rule or one partner, stress-test that line at half, and set the acquisition budget on the stressed number.
+
+#### AI features: per task
+
+Software used to have near-zero variable cost. An AI feature does not. Each call to a language model costs money, and the cost grows with use. So inference is a variable cost that belongs in CM1.
+
+**What drives the cost.** Vendors bill per million tokens, with one price for input and a higher one for output. Anthropic's price list (checked 2026-11) shows how wide the range is. The smallest model lists at $0.10 input and $0.50 output per million tokens. The top tier lists at $8 and $40. That is about an 80 times gap. Cached input costs far less than fresh input, and the batch API takes 50% off for work that can wait. Check your own vendor's current list, because prices and model names change often.
+
+**The trap.** The price of a fixed level of capability falls fast. One widely cited estimate, from a16z, says it fell about 10 times a year over 2021 to 2024. But an agent does not make one call. It makes many, and each call carries a longer context. Retries and validation loops add more. Gartner's August 2026 forecast, which we saw only as a headline, says inference cost per agentic workflow will rise more than fivefold through 2028. So the cost per task can rise while the price per token falls. Measure cost per completed task, not cost per token.
+
+*Illustrative, inputs assumed:* a support agent resolves tickets. One model call uses 20,000 input tokens, of which 14,000 hit the cache, and 2,000 output tokens. Assume $2 per million fresh input tokens, $0.10 per million cached tokens and $10 per million output tokens. One call costs $0.0334. One task makes 8 calls, so $0.267. The agent resolves 60% of tasks, so one resolved ticket costs $0.267 ÷ 0.6 = **$0.445**. The vendor charges $0.99 per resolution. Gross margin is **55%**, before hosting and support. If tokens per task double, cost per resolution is $0.891 and margin falls to **10%**. A fixed price per outcome puts all that risk on the vendor. A price per seat puts it there too.
+
+**Decision rule.** Put cost per resolved task, not per call, in CM1. Stress-test it at twice the tokens per task and at twice the retry rate. Give each heavy user or workflow its own CM1, because averages hide the users who cost more than they pay.
+
+**Common misreading.** "Token prices keep falling, so margins will fix themselves." Cheaper tokens often lead teams to use bigger models, longer contexts and more agent steps. Margin improves only if you hold cost per task down.
 
 ### Operating leverage and break-even
 
@@ -485,6 +499,7 @@ The script assumes defaults cluster early in the loan's life. Check that against
 - **Young cohorts extrapolated.** Six months of a lending vintage look clean, so the team grows the band. Losses arrive in months 9 to 18. You see it as a vintage curve that crosses older vintages.
 - **Calendar comparisons.** A dashboard compares this month's active customers with last month's. New cohorts hide the decay of older ones. You see it when growth slows and active customers suddenly fall.
 - **Single-point revenue.** One rule, partner or rate supports most of the contribution. You see it as a sudden drop in contribution after a renegotiation, a rate cut or a regulation.
+- **Inference cost left out of CM1.** An AI feature launches on a flat price. Usage and agent steps grow. You see it as gross margin that falls as the feature succeeds, with the heaviest users deepest in the red.
 
 ## Under the hood
 
@@ -628,6 +643,12 @@ def neobank(spend, ic_rate, share, balance, nim, cost, loss, cac, churn):
 
 print(neobank(1000, 0.012, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (11.0, 6.0, 15.0, 300, 3.33)
 print(neobank(1000, 0.006, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (6.5, 1.5, 60.0, 75, 0.83)
+
+# AI support agent, cost per resolved task (assumed prices and usage)
+call = 6_000 * 2 / 1e6 + 14_000 * 0.10 / 1e6 + 2_000 * 10 / 1e6   # fresh, cached, output tokens
+per_resolved = 8 * call / 0.6                                      # 8 calls per task, 60% resolved
+print(f"call ${call:.4f}  per resolved ${per_resolved:.3f}  margin at $0.99: {1 - per_resolved / 0.99:.1%}")
+print(f"tokens x2: per resolved ${2 * per_resolved:.3f}  margin {1 - 2 * per_resolved / 0.99:.1%}")
 ```
 
 Output:
@@ -654,6 +675,8 @@ GMROI with new range 1.775  new range alone 0.525
 combined 102%  underwriting result $-3.60  investment income $3.60 (2% of premium)
 (11.0, 6.0, 15.0, 300, 3.33)
 (6.5, 1.5, 60.0, 75, 0.83)
+call $0.0334  per resolved $0.445  margin at $0.99: 55.0%
+tokens x2: per resolved $0.891  margin 10.0%
 ```
 
 To use it on your own product, replace `survival()` with your observed cohort retention by month, and replace the constant CM with contribution by month on book.
@@ -669,6 +692,7 @@ To use it on your own product, replace `survival()` with your observed cohort re
 - [ ] For any new credit band, range or segment, compute its marginal economics alone.
 - [ ] List each revenue line that depends on one rule, one partner or one rate, and stress-test it at half.
 - [ ] Compare cohorts only at equal months on book.
+- [ ] For any AI feature, get cost per completed task (not per token), and stress-test it at twice the tokens and twice the retries.
 
 ## Related lessons
 
@@ -677,5 +701,5 @@ To use it on your own product, replace `survival()` with your observed cohort re
 - [Pricing and business models](./monetization-and-business-models.md): price metrics, interchange rules and the business-model table.
 - [Performance and growth](./performance-and-growth.md): net revenue retention, vintage curves and loss development.
 - [Metrics and experimentation](../technical-product-management/metrics-and-experimentation.md): metric trees and guardrails that sit on top of these numbers.
-- [The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md): the processing and hosting lines inside CM1.
+- [The economics of infrastructure](../technical-product-sense/economics-of-infrastructure.md): the processing, hosting and model-inference lines inside CM1.
 - [Transactional and financial systems](../system-design/transactional-and-financial.md): how payments, ledgers and disputes are built.

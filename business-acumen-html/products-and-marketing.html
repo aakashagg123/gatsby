@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 09</span>
     <h1>Products and go-to-market</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A <strong>product</strong> is the whole offer a customer buys: the core function, the package around it, the price, the service and the promise. Features are only part of it. <strong>Go-to-market</strong> (GTM) is how the offer reaches the customer and how the customer buys it. At leadership level, both are business decisions. You decide which opportunities get a business case. You decide what to build, buy or partner for. And you decide which <strong>GTM motion</strong> sells the product: self-serve, a sales team, partners, or embedding inside someone else's software.</p>
 <p>Each motion has its own unit economics. A sales team costs thousands of dollars per customer and needs large accounts to pay back. Self-serve costs little per customer and only works when the product sells itself. Partners and embedding cut acquisition cost, but they take a share of revenue for as long as the customer stays. The wrong motion for the deal size is one of the most common reasons a good product loses money.</p>
@@ -61,7 +61,7 @@
 <p>If the answers are strong, write the full business case with NPV (net present value), a counterfactual and a sensitivity table. <a href="business-cases-and-valuation.html">Business cases, capital and valuation</a> shows how. Size the market as in <a href="markets-and-strategy.html">markets and customers</a>.</p>
 <h3 id="iterative-development-with-gates-where-the-rules-require-them">Iterative development, with gates where the rules require them</h3>
 <p>Most products should be built in small steps: test the riskiest assumption first, release to a small group, learn, then scale. In regulated domains, some steps need a gate before they go live. Examples are a new credit product, new customer disclosures or a new insurance rate. Plan the gate in from the start. Do not discover it a week before launch.</p>
-<p>Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. Its 10-K for 2025 names Virtual Try-On as part of its offer.</p>
+<p>Warby Parker is a public example of iterating on the offer, not just the product. Its 2021 S-1 describes a Home Try-On program. Customers chose five frames online and tried them at home for five days for free. The program solved the main barrier to buying glasses online: you cannot try them on. Warby Parker's 10-Q for the quarter ended June 30, 2026 says it decided in the second quarter of 2025 to sunset Home Try-On at the end of 2025. The same 10-Q points customers to its Virtual Try-On tool.</p>
 <p>The lesson for a product leader: an offer layer can be right for one stage and wrong for the next. A free home trial lowers the buyer's risk. It also carries shipping, handling and return costs on every order. Review each layer's cost against what it still earns.</p>
 <h3 id="product-design-and-packaging">Product design and packaging</h3>
 <p><strong>Packaging</strong> decides how features are grouped and sold: one product or many, tiers, bundles and add-ons. Packaging is a pricing decision in disguise. <a href="monetization-and-business-models.html">Pricing and business models</a> covers it in depth.</p>
@@ -321,7 +321,9 @@
 </tbody>
 </table>
 <p>In regulated domains, partnership is common. A fintech may use a partner bank to hold deposits or issue cards. An insurance agency may sell on a carrier's licence and capital. A retailer may use an outside lender for financing at checkout.</p>
-<p>Target took the buy route for same-day delivery. In December 2017 it agreed to acquire Shipt, a same-day delivery platform, for $550 million. As general reasoning, not a Target statement: buying an existing network can be faster than building one. Buying a whole company is a portfolio decision. <a href="portfolio-strategy-and-allocation.html">Portfolio strategy and capital allocation</a> covers acquisition math.</p>
+<p>Target took the buy route for same-day delivery. In December 2017 it announced the purchase of Shipt, a same-day delivery platform, for $550 million in cash. As general reasoning, not a Target statement: buying an existing network can be faster than building one. Buying a whole company is a portfolio decision. <a href="portfolio-strategy-and-allocation.html">Portfolio strategy and capital allocation</a> covers acquisition math.</p>
+<p><strong>AI models: build, buy or partner.</strong> Most teams buy model access through an API. Menlo Ventures' 2025 survey of 495 US enterprise buyers found about 76% of AI use cases bought, up from 53% a year earlier. Buying a model makes the vendor a critical supplier. Plan for price changes, model retirement, rate limits, and the vendor launching a rival feature. Keep a thin layer between your product and the model so you can switch, and test a second model on your own data.</p>
+<p><strong>AI and go-to-market.</strong> AI changes the unit economics of each motion. Cost to serve is no longer near zero, because every query costs model compute. A free self-serve tier then has a real cost per user, and heavy users cost the most. Model cost to serve by usage tier, not as an average. Seat pricing can break when the product does the work of many seats, so test usage-based or outcome-based pricing against your margin. <a href="monetization-and-business-models.html">Pricing and business models</a> covers the options.</p>
 <h4 id="total-cost-of-ownership">Total cost of ownership</h4>
 <p><strong>Total cost of ownership</strong> (TCO) is everything an option costs over its life, not only its price tag. Compare options over the same period, usually three to five years.</p>
 <table>
@@ -473,7 +475,7 @@
 </tr>
 </tbody>
 </table>
-<p>Credit and pricing models are usually protected as trade secrets, not patents. A patent would require you to publish how the model works. Note one tension in US lending: the law requires a lender to tell a declined applicant the main reasons for the decision. You disclose reasons, not the model.</p>
+<p>Credit and pricing models are usually protected as trade secrets, not patents. A patent would require you to publish how the model works. Note one tension in US lending: under Regulation B, a lender must give a declined applicant the specific principal reasons, or say the applicant may ask for them. A vague reason such as "failed our score" is not enough. You disclose reasons, not the model.</p>
 <p>Partnerships put trade secrets at risk. A partner integration or a vendor contract can expose your pricing logic or model features. Check confidentiality terms and data-use limits before you share them.</p>
 <h2 id="worked-examples">Worked examples</h2>
 <h3 id="worked-example-attributed-versus-incremental-cac">Worked example: attributed versus incremental CAC</h3>
@@ -524,6 +526,7 @@
 <li><strong>Gate discovered late.</strong> A regulatory or partner approval appears in the last week.</li>
 <li><strong>Outsourced and forgotten.</strong> A vendor's failure becomes your regulatory finding, or your customers lose access to their money.</li>
 <li><strong>No exit plan.</strong> A critical vendor raises prices or fails, and the migration takes a year you do not have.</li>
+<li><strong>Free AI tier with no cost cap.</strong> Heavy users of a free self-serve tier run up model costs that no revenue covers. You see it as gross margin that falls as usage grows.</li>
 <li><strong>One launch weight for all.</strong> Every launch is tier 1, so none gets the attention it needs.</li>
 <li><strong>Leaked secret.</strong> A pricing model is shared in a pitch deck or a partner integration with no protection.</li>
 </ul>
@@ -615,7 +618,8 @@ print(round((build_tco - buy_fixed) / (fee * years)))                   # 697222
 <li class="task todo">Rebuild the sales hiring plan with ramp and attainment. Check that hiring starts early enough.</li>
 <li class="task todo">Ask for a holdout on your largest marketing channel. Replace attributed CAC with incremental CAC in every business case.</li>
 <li class="task todo">Price every partner revenue share as a CAC equivalent over the customer's life.</li>
-<li class="task todo">For each critical vendor or partner, write the fallback, the exit plan and the three-year TCO.</li>
+<li class="task todo">For each critical vendor or partner, write the fallback, the exit plan and the three-year TCO. Include your model provider.</li>
+<li class="task todo">For an AI product, model cost to serve by usage tier, and check that each GTM motion stays above your margin floor.</li>
 <li class="task todo">Map every regulatory and partner gate for your next launch, with lead times.</li>
 <li class="task todo">Assign a launch tier to each item on your roadmap.</li>
 <li class="task todo">Check with Legal which of your assets are patents, trademarks, copyright or trade secrets.</li>

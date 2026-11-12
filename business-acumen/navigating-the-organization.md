@@ -122,7 +122,7 @@ Finance splits spending into two kinds.
 - **Operating expense (opex)** is spent and used up in the period. Salaries for support staff, marketing and rent are opex. It hits the income statement at once.
 - **Capital expenditure (capex)** buys an asset that lasts several years. Servers and buildings are capex. The cost goes onto the balance sheet. It then reaches the income statement slowly, as **depreciation** or **amortization** over the asset's useful life.
 
-Software built for the company's own use can sit in either bucket. Some of the engineering cost of building it can be **capitalized**. That means it is treated as an asset, not as an expense. Under long-standing US generally accepted accounting principles (GAAP), the rules for internal-use software sit in Accounting Standards Codification (ASC) topic 350-40. Under those rules, costs in the build stage of a new capability could be capitalized. Costs of research, planning, bug fixing and maintenance were expensed. International Financial Reporting Standards (IFRS) allow development costs to be capitalized when set tests are met. The US standard-setter has recently updated the internal-use software rules. Ask Finance which version your company applies, and what evidence it needs.
+Software built for the company's own use can sit in either bucket. Some of the engineering cost of building it can be **capitalized**. That means it is treated as an asset, not as an expense. Under long-standing US generally accepted accounting principles (GAAP), the rules for internal-use software sit in Accounting Standards Codification (ASC) topic 350-40. Under those rules, costs in the build stage of a new capability could be capitalized. Costs of research, planning, bug fixing and maintenance were expensed. International Financial Reporting Standards (IFRS) allow development costs to be capitalized when set tests are met. The US standard-setter has updated these rules. Accounting Standards Update 2025-06 removes the old project stages. Capitalization starts when management has authorized and funded the project and it is probable the software will be completed and work as intended. Novel or unproven technology, or requirements that are still changing, can delay the start. That matters for AI work with uncertain feasibility. The update applies to annual periods beginning after December 15, 2027, and early adoption is allowed. Ask Finance which version your company applies, and what evidence it needs.
 
 **How it works on your ask.** *An illustrative example. All inputs are assumed.* The $2.0 million team cost above builds a new merchant onboarding flow. Finance judges that 60% of the work qualifies for capitalization. The asset goes into service at the start of next year. Finance amortizes it over three years.
 
@@ -198,7 +198,7 @@ Regulators and external auditors sit outside the three lines. They test the whol
 
 The key point is in the first row. **The business owns the risk.** Risk does not own it. The second line sets limits and challenges. It does not run your fraud rules for you. A product leader who says "Risk approved it, so it is Risk's problem" misreads the model.
 
-US bank supervisors write this split into their expectations. In 2014 the Office of the Comptroller of the Currency (OCC), which supervises national banks, issued guidelines known as **heightened standards** for large banks. They describe front line units, independent risk management and internal audit. They also expect a written **risk appetite statement**.
+US bank supervisors write this split into their expectations. In 2014 the Office of the Comptroller of the Currency (OCC), which supervises national banks, issued guidelines known as **heightened standards** for large banks. They describe front line units, independent risk management and internal audit. They also expect a written **risk appetite statement**. The guidelines were written for banks with $50 billion or more in assets. In December 2025 the OCC proposed raising that threshold to $700 billion. Check whether it is final before you rely on either number.
 
 **Domain application.** A fintech that offers accounts through a partner bank sits inside the bank's model. The bank stays responsible for the programme in the eyes of its regulator. So the bank's second line reviews the fintech's product, disclosures and complaint data. In practice, your launch needs your own Compliance team and the bank's.
 
@@ -249,6 +249,16 @@ A risk acceptance has six parts:
 **Decision rule.** When a launch breaks a policy, ask for a time-boxed risk acceptance with a fix plan. Do not ask for the policy to change. Policy changes take months and need the board's or a committee's approval.
 
 **The common misreading.** "Risk said no." Usually Risk said: "not with this residual risk, and not without an owner." Ask what control would bring the risk inside appetite.
+
+### AI in the risk process
+
+An AI feature goes through the same steps: inherent risk, controls, residual risk, appetite. Three points are specific to AI.
+
+- **Model risk rules changed in 2026.** In April 2026 the US bank regulators issued new model risk guidance. The Federal Reserve's SR 26-2 replaces SR 11-7, the 2011 guidance that banks have used for years. It takes a risk-based approach and is described as most relevant to banks with over $30 billion in assets. Whether it covers generative AI models is unclear from the sources checked. Ask your model risk team how it treats AI before you assume either way.
+- **EU AI Act dates moved.** The EU's Digital Omnibus on AI delays the obligations for high-risk AI systems. Reported dates are 2 December 2027 for standalone systems such as credit scoring and hiring, and 2 August 2028 for AI built into regulated products. Sources report it in force since July 2026. Transparency duties under Article 50 were not part of the delay. Confirm the dates in the Official Journal text with Legal before you plan around them.
+- **Put AI metrics in the appetite.** Add the AI-specific limits you can measure, such as the rate of unsafe outputs on an evaluation set, or the share of decisions a human reviews. Give each an amber trigger and an owner, as in the table above.
+
+**Decision rule.** Ask the second line for its AI policy before you design the launch. If none exists, ask for a time-boxed risk acceptance with named compensating controls.
 
 ## Stakeholder mapping: the power and interest grid
 

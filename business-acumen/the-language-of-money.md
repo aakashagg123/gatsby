@@ -81,7 +81,7 @@ The income statement runs from the top line (revenue) to the bottom line (net in
 | Neobank | Card processing, customer support, identity checks, hosting |
 | AI product | Model inference (the per-call cost of running a model), plus retrieval, evaluation and hosting. Unlike ordinary hosting, this cost grows with every use |
 
-**AI products change the gross-margin question.** Inference sits in cost of revenue, and it scales with usage. A heavy user costs more than a light user, even on a flat plan. ICONIQ's January 2026 survey of about 300 software executives, as summarised by SaaStr, reports an average AI-product gross margin of 52% for companies projecting 2026. That is up from 41% in 2024. Classic software often earns far more. Treat these as survey averages, not targets. Your own margin depends on model choice, caching and how users behave. Ask Finance whether inference is booked in cost of revenue, and whether the margin is shown by customer segment. A blended margin can hide a loss on your heaviest customers. See [Pricing and business models](./monetization-and-business-models.md) for how price metrics follow this cost.
+**AI products change the gross-margin question.** Inference sits in cost of revenue, and it scales with usage. A heavy user costs more than a light user, even on a flat plan. ICONIQ's July 2026 survey of about 300 software executives reports an average AI-product gross margin of 45% in 2025. Respondents project 53% for 2026 and 59% for 2027. Its January 2026 edition projected 52% for 2026. Classic software often earns far more. Treat these as survey averages and projections, not targets. Your own margin depends on model choice, caching and how users behave. Ask Finance whether inference is booked in cost of revenue, and whether the margin is shown by customer segment. A blended margin can hide a loss on your heaviest customers. See [Pricing and business models](./monetization-and-business-models.md) for how price metrics follow this cost.
 
 **Operating expenses** split three ways: R&D, S&M and G&A. Their split matters to investors. A high S&M share says growth is bought. A high G&A share says overhead is heavy.
 
@@ -203,13 +203,13 @@ Each domain has its own trap.
 | Retail | Inventory | Money owed to suppliers |
 | eCommerce | Cash from buyers | Money owed to sellers |
 
-A lender that grows its loan book grows its assets. It must fund them with debt, deposits or equity. Upstart's 10-K for 2022 shows this tension. When institutional investors bought fewer loans, Upstart used its own balance sheet to fund some of them. How lenders fund themselves is covered in [business cases, capital and valuation](./business-cases-and-valuation.md#funding-and-capital-in-regulated-businesses).
+A lender that grows its loan book grows its assets. It must fund them with debt, deposits or equity. Upstart's 10-K for 2022 shows this tension. The filing says that, in response to constrained loan funding, Upstart increased its use of its own balance sheet to fund loans. It funded about 10% of 2022 platform loans that way. How lenders fund themselves is covered in [business cases, capital and valuation](./business-cases-and-valuation.md#funding-and-capital-in-regulated-businesses).
 
 #### The allowance for credit losses
 
 A lender does not carry its loans at face value. It subtracts an **allowance for credit losses**: its estimate of the loans it will not collect. The allowance is a negative asset. When it grows, the cost flows through the income statement as a **provision for credit losses**.
 
-**How it works under US GAAP.** US rules use the **current expected credit loss** model (CECL). A lender books the expected loss for the whole life of a loan on the day it makes the loan. Large public companies adopted CECL in 2020. Most other US companies followed by 2023.
+**How it works under US GAAP.** US rules use the **current expected credit loss** model (CECL). A lender books the expected loss for the whole life of a loan on the day it makes the loan. SEC filers that were not smaller reporting companies adopted CECL for fiscal years beginning after 15 December 2019. A later FASB update moved most other entities to fiscal years beginning after 15 December 2022.
 
 **How it works under IFRS.** IFRS 9 uses stages. For a loan that is performing normally, the lender books 12 months of expected loss. If credit risk rises a lot, it books lifetime expected loss.
 
@@ -306,7 +306,7 @@ The retailer funds 17 days of its own cost of goods. The marketplace holds 12 da
 - Float = $2.74 million × 12 = **$32.9 million**.
 - At a 4% yield, float earns about **$1.3 million a year**.
 
-That income depends on interest rates. US short-term rates were near zero in 2020 and 2021. They were above 5% from mid-2023 until September 2024. The same float earned almost nothing in one period and a lot in the other.
+That income depends on interest rates. US short-term rates were near zero in 2020 and 2021. The target range reached 5.25% to 5.50% in July 2023 and stayed above 5% until the first cut, in September 2024. As of the Federal Reserve's 28 October 2026 meeting, it was 3.75% to 4.00%. The same float earned almost nothing in one period and a lot in the other. Re-check the current rate before you reuse this example.
 
 **Insurance float.** An insurer collects premium first and pays claims later, sometimes years later. It invests the money in between. For lines where claims settle slowly, such as liability insurance, the float is large. Investment income can turn an underwriting loss into an overall profit. [Unit economics](./unit-economics.md) shows this on one policy.
 

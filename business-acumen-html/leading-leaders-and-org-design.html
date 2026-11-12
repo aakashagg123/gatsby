@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 14</span>
     <h1>Leading leaders and designing the product org</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>When you lead managers, your product is the organization. You no longer make most product decisions yourself. You choose the structure, hire and develop the leaders, set the standards, and inspect the results. A good org lets good decisions happen without you. A bad one routes every hard call to your calendar.</p>
 <p>The core tradeoff is how you group people. Every structure makes some coordination easy and other coordination hard. Group by discipline and craft standards rise, but customer journeys cross many teams. Group by product line and journeys get one owner, but standards drift. There is no neutral choice. You choose which coordination you want to be cheap.</p>
@@ -270,6 +270,15 @@
 <li>One leader is in every decision, and is the bottleneck.</li>
 </ul>
 <p>Each added layer slows information and decisions. Add layers last. First try clearer decision rights (<a href="teams-and-collaboration.html">teams and collaboration</a>) and better team boundaries.</p>
+<h3 id="org-design-in-the-ai-era">Org design in the AI era</h3>
+<p>AI changes some inputs to org design. It does not change the method. Keep the criteria, options, walk-through and transition plan. Then check five AI-specific points. Treat all five as judgment, not settled fact. The evidence on AI-era team shapes is still thin.</p>
+<ul>
+<li><strong>Small teams.</strong> AI coding and analysis tools may let a smaller team own more. Do not cut team size on that hope. The 2025 DORA report on AI-assisted software development found that AI mainly amplifies what an organization already does well or badly. A weak handoff structure gets worse, not better. Test with one team and measure lead time and failures before you resize many.</li>
+<li><strong>Role shifts.</strong> Prototyping, drafting specs and writing first-pass code get cheaper. Judging quality, setting evaluation criteria and choosing what to build get relatively more important. Rewrite the ladder evidence examples for each level to include these skills. Do not assume one role absorbs another.</li>
+<li><strong>A named owner for every AI system.</strong> A model, a prompt set or an evaluation suite is a critical system. It needs an owning team, an on-call rota and a change process, like any other system. The orphaned-system failure below applies to AI with extra force, because quality can drift with no deploy.</li>
+<li><strong>Governance and escalation.</strong> Decide who may ship an AI feature alone and who must escalate. Tie the line to the risk appetite in <a href="navigating-the-organization.html">navigating the organization</a>. Name the second-line reviewer for model risk and the executive who can accept residual risk. Do this before the first launch, not after the first incident.</li>
+<li><strong>Headcount against usage cost.</strong> AI work adds a cost that scales with use, such as model calls. A new hire is a fixed cost. Price both in the same business case. See <a href="business-cases-and-valuation.html">business cases, capital and valuation</a>.</li>
+</ul>
 <h2 id="worked-example-reorganizing-a-lending-product-org">Worked example: reorganizing a lending product org</h2>
 <p><em>This example is invented, to show the method. The company, its teams and all numbers are illustrative. All inputs are assumed.</em></p>
 <p>A consumer lender has 30 PMs organized by function: a web team, a mobile team, a decision-engine team, a data team, and so on. There are 12 product teams of eight people. The top goal for next year is "approve returning borrowers in under one minute."</p>
@@ -411,7 +420,7 @@
 <li><strong>The reorg as a fix for everything.</strong> Leaders reorganize every year. Teams never settle long enough to deliver, and no reorg pays back.</li>
 <li><strong>Boxes before criteria.</strong> The new chart fits the leaders, not the strategy. Nobody can say what it was meant to make easy.</li>
 <li><strong>The long limbo.</strong> A reorg is rumoured for two months. Work stops and the best people take outside calls.</li>
-<li><strong>The orphaned system.</strong> A reorg leaves a critical system with no owning team. It fails at night and nobody is on call.</li>
+<li><strong>The orphaned system.</strong> A reorg leaves a critical system with no owning team. It fails at night and nobody is on call. A model or evaluation suite is a system too.</li>
 <li><strong>The paper P&amp;L.</strong> A GM is judged on a P&amp;L whose main cost, such as credit losses, someone else sets. Blame flows, decisions do not.</li>
 <li><strong>Calibration by volume.</strong> The loudest manager wins ratings for their team. Good people on quieter teams leave over fairness.</li>
 <li><strong>Layer creep.</strong> Each promotion adds a manager. Decisions slow and nobody notices why.</li>
@@ -476,7 +485,8 @@ review_on: 2027-06-30
 <li class="task todo">Before your next reorg, write the must-pass and weighted criteria and get them agreed.</li>
 <li class="task todo">Walk your top five workflows through each structure option. Count teams and handoffs.</li>
 <li class="task todo">Price the reorg in team-weeks and attrition. Compare the payback with how long the structure will last.</li>
-<li class="task todo">Make sure every critical system has an owning team.</li>
+<li class="task todo">Make sure every critical system has an owning team, including each model and evaluation suite.</li>
+<li class="task todo">Write down who can ship an AI feature alone, and who must escalate.</li>
 <li class="task todo">For each P&amp;L owner, list the levers they control and the ones they do not.</li>
 <li class="task todo">Check every leader's span. Flag any that are too wide to coach or too narrow to justify a layer.</li>
 <li class="task todo">Before your next calibration, write evidence examples for each level on your ladder.</li>
@@ -493,7 +503,7 @@ review_on: 2027-06-30
 <li><a href="../technical-product-management/working-with-engineering.html">Working with engineering</a> — the partnership at team level.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="teams-and-collaboration.html"><span class="lbl">← Previous</span><span class="ttl">Teams and collaboration: structures, rhythms and decision rights</span></a><a class="navcard next" href="executive-influence-and-stakeholders.html"><span class="lbl">→ Next</span><span class="ttl">Executive influence: narrative, the board and the negotiating table</span></a></div><footer class="foot"><strong>Core insight:</strong> Every product decision is a bet on unit economics and cash, and it is judged against what would have happened anyway.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#decision-rules-in-this-lesson">Decision rules in this lesson</a><a class="h2" href="#mental-model-the-system-mirrors-the-org">Mental model: the system mirrors the org</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#managing-managers">Managing managers</a><a class="h3" href="#product-org-structures">Product org structures</a><a class="h3" href="#the-org-design-process">The org-design process</a><a class="h3" href="#the-cost-of-a-reorg">The cost of a reorg</a><a class="h3" href="#the-general-manager-model">The general-manager model</a><a class="h3" href="#hiring-leveling-and-performance">Hiring, leveling and performance</a><a class="h3" href="#scaling-the-org">Scaling the org</a><a class="h2" href="#worked-example-reorganizing-a-lending-product-org">Worked example: reorganizing a lending product org</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#decision-rules-in-this-lesson">Decision rules in this lesson</a><a class="h2" href="#mental-model-the-system-mirrors-the-org">Mental model: the system mirrors the org</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#managing-managers">Managing managers</a><a class="h3" href="#product-org-structures">Product org structures</a><a class="h3" href="#the-org-design-process">The org-design process</a><a class="h3" href="#the-cost-of-a-reorg">The cost of a reorg</a><a class="h3" href="#the-general-manager-model">The general-manager model</a><a class="h3" href="#hiring-leveling-and-performance">Hiring, leveling and performance</a><a class="h3" href="#scaling-the-org">Scaling the org</a><a class="h3" href="#org-design-in-the-ai-era">Org design in the AI era</a><a class="h2" href="#worked-example-reorganizing-a-lending-product-org">Worked example: reorganizing a lending product org</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

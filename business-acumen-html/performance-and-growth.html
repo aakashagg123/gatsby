@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 10</span>
     <h1>Performance and growth: KPIs, scorecards and the metrics that move profit</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Performance management is a loop: set targets, measure, review, act. A <strong>key performance indicator (KPI)</strong> is a measure you have chosen to steer by. At leadership level, the hard part is not choosing metrics. It is choosing a small, balanced set that ties product work to profit, reading it correctly, and acting on what it shows.</p>
 <p>Reading correctly is where most leaders slip. Net growth hides churn. Net revenue retention hides leaks. A lender's loss rate looks better while it grows fast, because new loans have not had time to go bad. An insurer's latest loss ratio is always too low, because claims are still arriving. This lesson gives you the tools that correct for each: growth accounting, gross and net retention, vintage curves and loss triangles.</p>
@@ -136,7 +136,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 <tr>
 <td><strong>Payments</strong></td>
 <td>Total payment volume, authorization rate, fraud and dispute rates, net take rate</td>
-<td>Stripe reported total payment volume of about $1.4 trillion for 2024, up 38% on 2023.</td>
+<td>Stripe reported total payment volume of about $1.9 trillion for 2025, up 34% on 2024 (about $1.4 trillion, up 38% on 2023).</td>
 </tr>
 <tr>
 <td><strong>Lending</strong></td>
@@ -146,7 +146,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 <tr>
 <td><strong>eCommerce</strong></td>
 <td>Order value, conversion, take rate, contribution per order, return rate</td>
-<td>DoorDash reports net revenue margin: revenue as a share of Marketplace GOV, 13.4% for 2024.</td>
+<td>DoorDash reports net revenue margin: revenue as a share of Marketplace GOV, about 13.4% for 2024 (full-year revenue ÷ Marketplace GOV, from its Q4 2024 release).</td>
 </tr>
 <tr>
 <td><strong>InsurTech</strong></td>
@@ -167,6 +167,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 </table>
 <p>GMV is gross merchandise value, the total value of goods sold. GOV is gross order value, the total value of orders placed.</p>
 <p><strong>Insurance ratios, defined.</strong> The <strong>loss ratio</strong> is claims and claim-handling costs divided by earned premium. The <strong>expense ratio</strong> is underwriting expenses divided by premium. The <strong>combined ratio</strong> is the two added together. Below 100% means the insurer makes money on underwriting, before investment income. Above 100% means it loses money on underwriting.</p>
+<p><strong>AI features change cost to serve.</strong> An AI feature has a marginal cost on every use: model calls, retrieval, evaluation and human review. Classic software has near-zero marginal cost, so gross margin barely moves with usage. With AI, it can fall as usage grows. Track <strong>cost per task</strong> and <strong>gross margin per active customer</strong>, and report them next to engagement. Heavy users can be your least profitable users. Report quality next to cost, such as the task success rate on a fixed evaluation set. A cheaper model that fails more tasks only moves the cost to support and churn. The same rule applies to retention: read GRR by AI-feature usage, not only in total.</p>
 <h3 id="lending-vintage-curves">Lending: vintage curves</h3>
 <p><strong>What it is.</strong> A <strong>vintage</strong> is the group of loans made in one period, such as one quarter. A <strong>vintage curve</strong> plots that group's cumulative net charge-offs against <strong>months on book (MOB)</strong>, the loans' age. A net charge-off is a loan balance written off as lost, minus any later recoveries.</p>
 <p><strong>How it works.</strong> Loans go bad over time. Few default in the first months. Losses climb, then flatten as loans pay off. So a young vintage always looks good. Comparing vintages at the same MOB removes the age effect. What is left is the change in quality: who you approved, how you priced, and what the economy did.</p>
@@ -364,7 +365,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 <p><strong>Domain application.</strong> In eCommerce, also track the decline reason mix. "Do not honour" from the issuer needs a different fix from "suspected fraud" from your own rules. Your own fraud threshold is part of the authorization rate the merchant sees. <a href="data-and-decisions.html">Data and decisions</a> shows how to price it.</p>
 <p><strong>Decision rule.</strong> When you change a fraud rule or a payment route, report the change in authorization rate next to the change in fraud loss. One without the other is half the result.</p>
 <h3 id="retail-comparable-sales-and-inventory-metrics">Retail: comparable sales and inventory metrics</h3>
-<p><strong>Comparable sales</strong> compare sales in the same stores across periods. They remove the effect of opening or closing stores. Walmart's 10-K counts stores and clubs open for the previous 12 months, and includes eCommerce sales. Its filing also notes that other retailers calculate the measure differently. So check the definition before you compare two retailers.</p>
+<p><strong>Comparable sales</strong> compare sales in the same stores across periods. They remove the effect of opening or closing stores. Walmart's comparable-sales disclosures count stores and clubs open for the previous 12 months, and include eCommerce sales. Its filings also note that other retailers calculate the measure differently. So check the definition before you compare two retailers.</p>
 <p><strong>Inventory turnover</strong> is cost of goods sold divided by average inventory. <strong>Gross margin return on inventory (GMROI)</strong> is gross margin divided by average inventory at cost. <a href="unit-economics.html">Unit economics</a> works through GMROI by category.</p>
 <h3 id="setting-targets-with-the-guardrail-inside">Setting targets with the guardrail inside</h3>
 <p><strong>Plan versus target.</strong> The plan is what Finance expects. A target is what you ask a team to reach. They differ on purpose.</p>
@@ -374,7 +375,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 <li><strong>Sandbagging</strong> is setting a commit too low, so the team always beats it. You see it when a team beats its target every quarter by a similar margin.</li>
 </ul>
 <p>The fix for sandbagging is not tougher talk. Track each team's forecast accuracy, as in the calibration log in <a href="data-and-decisions.html">data and decisions</a>. Reward accurate forecasts, not only beats.</p>
-<p><strong>Guardrails inside the target.</strong> A target with a separate guardrail invites a trade between them. A target with the guardrail inside it does not. Progressive, the US auto insurer, has for many years stated two linked goals in its annual reports. It aims for an underwriting profit of at least 4%, a combined ratio of 96 or lower. And it aims to grow as fast as it can within that limit and its service standards. Growth is the goal. Profit is built into it.</p>
+<p><strong>Guardrails inside the target.</strong> A target with a separate guardrail invites a trade between them. A target with the guardrail inside it does not. Progressive, the US auto insurer, ties growth to a profit limit. Its shareholder letter calls a 96.0 combined ratio its profit target, which is about a 4% underwriting margin. Management says it aims to grow as fast as it can at or below that ratio, while it keeps good service. Growth is the goal. Profit is built into it.</p>
 <p><strong>Domain application.</strong> Lending: "grow originations, with month-6 vintage losses at or below plan." Payments: "grow volume, with authorization rate and dispute rate inside range." eCommerce: "grow orders, with contribution per order above $X." Retail: "grow comparable sales, with markdown below Y%."</p>
 <p><strong>The common misreading.</strong> "Guardrails slow the team down." They stop the team from hitting its target in a way that hurts the company.</p>
 <p><strong>Decision rule.</strong> For every growth target you set, write the quality limit inside the same sentence.</p>
@@ -448,7 +449,7 @@ GRR = (start revenue − contraction − churn) ÷ start revenue
 <li><strong>Leading against lagging.</strong> Leading metrics let you act early. They are less certain proof of results. Early vintage points are leading. Month-12 losses are lagging.</li>
 <li><strong>Growth against quality.</strong> Approval rate, conversion and premium growth all trade against losses or returns. You give up some volume to keep losses inside plan.</li>
 <li><strong>Speed of reading against accuracy of reading.</strong> Development factors and vintage projections let you act sooner. They are estimates, and they can be wrong when the mix of business changes.</li>
-<li><strong>Comparability against fit.</strong> Standard industry metrics let you compare with peers. Your own metrics may fit your model better. Walmart's 10-K notes that other retailers calculate comparable sales differently.</li>
+<li><strong>Comparability against fit.</strong> Standard industry metrics let you compare with peers. Your own metrics may fit your model better. Walmart's filings note that other retailers calculate comparable sales differently.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
@@ -519,6 +520,7 @@ leading_indicators: [quote_volume, bind_rate_by_channel]
 <li class="task todo">If you lend, show vintage curves at fixed months on book, and set triggers on early points.</li>
 <li class="task todo">If you insure, ask for projected ultimate loss ratios by accident year before any price change.</li>
 <li class="task todo">If you process payments, report authorization rate next to fraud loss for every rule or routing change.</li>
+<li class="task todo">If you ship AI features, report cost per task and gross margin per active customer next to usage and quality.</li>
 <li class="task todo">Rewrite each growth target so its guardrail sits in the same sentence.</li>
 <li class="task todo">Give every KPI one owner, one written definition and a version number.</li>
 <li class="task todo">Price one point of your main profit metric in money.</li>

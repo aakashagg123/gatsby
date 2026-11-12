@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -104,7 +104,7 @@ The binding force often follows a pattern by domain. Use this as a starting hypo
 | **eCommerce**, marketplaces | Supplier power of traffic sources, and rivalry | Paid search and app stores sell the customer's attention |
 | **Retail**, general merchandise | Buyer power and substitutes | Shoppers compare prices online; online channels substitute for the store |
 
-A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. Under its reinsurance programme, it typically retains a fixed fee, and reinsurers carry much of the claims risk. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
+A public example of supplier power: Lemonade's Form 10-K for fiscal 2020 describes how it relies on reinsurance. It ceded 75% of premiums to reinsurers at that time. It said it typically retains a fixed fee, then 25% of premiums, and reinsurers carry much of the claims risk. The terms have changed since, so read the latest filing. A young insurer depends on that capacity, so reinsurers hold real power over its economics.
 
 ### Value chain and profit pools
 
@@ -138,7 +138,7 @@ Now subtract each party's assumed variable cost for this payment:
 
 Three lessons follow. First, the issuer gets most of the money but spends much of it on rewards to win cardholders. Second, the network earns the smallest fee and the highest margin, because network effects and scale protect it. Third, the acquirer sits in the most crowded part of the chain. Its $0.55 is the part merchants negotiate hardest.
 
-Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. The rule is being challenged in federal court, so check its current status before you rely on it. The EU caps interchange on consumer debit and credit cards. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
+Regulation moves this pool. In the US, Regulation II caps debit interchange for large issuers. It covers debit cards, not credit cards. On October 26, 2026, the Eighth Circuit affirmed a ruling that vacated the Federal Reserve's cap (21 cents plus 0.05% of the transaction). The court said the Fed must count only transaction-specific costs. The cap stays in force until the court issues its mandate, and the Fed must write a new standard. A Kentucky court upheld the rule, and that appeal is pending. Check the current status before you rely on it. The EU caps interchange on consumer debit cards at 0.2% and consumer credit cards at 0.3%. Commercial cards are outside the cap. A cap moves profit from issuers toward merchants and acquirers. The details live in [Pricing and business models](./monetization-and-business-models.md). The per-transaction economics live in [Unit economics](./unit-economics.md).
 
 **Lending.** A loan passes through four roles. One company can play all four, or each can be a different firm.
 
@@ -202,6 +202,13 @@ flowchart TB
 | Counter-positioning | Lower price or better terms | Incumbent's self-harm if it copies | New models against fee-based incumbents |
 
 **Decision rule.** For each big bet, write which source it builds, the evidence that the source exists today, and the signal that it is eroding. If you cannot name a source, the bet may still be worth doing. But price it as a feature that rivals will match.
+
+**Advantage in AI products.** The same seven sources apply, but the weights change. Four points matter most.
+
+- **Model access is not an advantage.** Rivals can call the same model APIs. Enterprise share among model vendors moves fast. Menlo Ventures' December 2025 survey of 495 US buyers estimates Anthropic at 40% of enterprise API spend, up from 12% in 2023. It puts OpenAI at 27%, down from 50%. Treat a model lead as a head start of months, and design for switching models.
+- **The model vendor is a supplier, and may be a rival.** Add it to your supplier-power analysis. It can raise prices, retire a model, or ship your feature. This is the wrapper-versus-model-lab risk. Test it with the question: "What if the lab ships this as a default feature?"
+- **Look for durable sources outside the model.** Strong candidates are proprietary data that your product creates through use, workflow integration that raises switching costs, distribution the lab does not have, and trust in a regulated domain. Apply the same tests as above. Show the data curve is still rising, and show the lock-in in dollars and weeks.
+- **Falling model prices cut both ways.** Cheaper inference lowers your cost to serve. It also lowers the barrier for entrants. A margin that rests on a model price gap will not last.
 
 ### Network effects in depth
 
@@ -362,6 +369,7 @@ Each action reinforces the others. Partners bring merchants. Merchant data impro
 - **The strategy with no "no".** Every segment and every request stays in scope. You see it as a roadmap that changes every quarter and teams spread across too many bets.
 - **Fighting the entrant inside the core.** The incumbent cuts its core price to stop a low-end rival. You see it as margin falling on the whole book while the entrant keeps growing.
 - **Ignoring the supplier.** A fintech builds volume on one sponsor bank or one reinsurer. The supplier reprices or exits. You see it as a sudden jump in cost or a forced pause in growth.
+- **The model as moat.** An AI product claims its edge is the model it calls. A rival calls the same model, or the lab ships the feature. You see it as win rates that fall after a lab release, and as customers who test your product against the lab's own.
 
 ## Under the hood
 
@@ -438,6 +446,7 @@ The script prints revenue shares of 72%, 6% and 22%, and profit shares of 62.5%,
 - [ ] For each big bet, name the source of advantage, its benefit, its barrier and its erosion signal.
 - [ ] If you claim a network effect, show retention or value by network density.
 - [ ] Measure switching costs in dollars and weeks, and compare them with a rival's offer.
+- [ ] For an AI product, name the advantage that does not depend on one model vendor. Test what happens if the vendor ships your feature or changes its price.
 - [ ] Write a one-page strategy: diagnosis, guiding policy, coherent actions.
 - [ ] List at least three things you will not do, and the revenue each one costs.
 - [ ] Decide in advance how you will respond to a low-end entrant.

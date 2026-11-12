@@ -2,7 +2,7 @@
 
 *Part of [Business acumen for the product leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: medium*
+*Last reviewed: 2026-11 · Volatility: medium*
 
 ## TL;DR
 
@@ -55,11 +55,13 @@ Most product organizations use four types of team. Each has a different job and 
 | **Specialist team** | A part that needs rare expertise, such as a model or a pricing engine | Other teams use its output without learning the specialism | In an insurer, the pricing actuaries' rating engine. In payments, the fraud model. |
 | **Enabling team** | Helps other teams gain a skill, then moves on | The teams it helped no longer need it | A compliance group that teaches journey teams to build disclosures and records correctly |
 
-A good team owns no more than it can hold in its head. A common rule of thumb is a team of roughly five to nine people. When one team owns too many systems, it slows on all of them.
+A good team owns no more than it can hold in its head. Amazon's guide to two-pizza teams says ideally fewer than 10 people. Treat that as a rule of thumb, not a finding. When one team owns too many systems, it slows on all of them.
+
+**AI teams.** A model or evaluation team is usually a specialist team. It owns the model, the evaluation set and the release gate. Journey teams use its output through a documented interface. The same load rule applies below. A shared evaluation or model team at high load becomes the queue for every AI feature.
 
 **The common misreading.** "A platform team owns all the shared code." A platform is a product with internal customers. If journey teams cannot use it without filing a ticket, it is a queue, not a platform.
 
-Amazon has written about its "two-pizza teams" on its Amazon Web Services (AWS) blog. The point it makes is less about team size and more about autonomy and a **single-threaded leader**: one leader who focuses only on a specific product or outcome. The lesson for any company is to give each important outcome one leader whose attention is not split.
+Amazon Web Services (AWS) describes "two-pizza teams" on its Executive Insights pages. The point it makes is less about team size and more about ownership and a **single-threaded leader**: one leader who is dedicated to a specific product or outcome. AWS says such leaders set a vision and then get out of the team's way. The lesson for any company is to give each important outcome one leader whose attention is not split. AWS also notes that many autonomous teams risk duplicated work.
 
 ## Structure: three ways teams work together
 
@@ -226,6 +228,8 @@ The hard-to-reverse decisions differ by domain. So does the function that usuall
 | **FinTech** | Customer disclosures and new account features | Compliance, often with a partner bank | Responsible for the design |
 
 Knowing this map saves weeks. You stop asking the wrong person for a yes.
+
+**AI features add decisions to this map.** Three are hard to reverse in practice: which model or vendor you depend on, the quality bar a release must pass, and where a human must review the output. Give each one a single accountable owner. A common split is the feature's product owner for the quality bar, Risk or Compliance for the limits that bound it, and Engineering for the release gate. Write down who may pause an AI feature in production and who must be told. Where a regulator expects human oversight or model validation, the second line must be consulted before launch. See [navigating the organization](./navigating-the-organization.md).
 
 ## High-trust collaboration and communities of practice
 
