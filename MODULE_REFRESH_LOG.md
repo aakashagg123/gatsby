@@ -26,7 +26,7 @@ picks the lowest tier number among due modules.
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-05 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
-| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-10-16 |
+| business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-11-12 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
@@ -959,3 +959,48 @@ and a link to the merged PR.)
     (RAGAS-style faithfulness scoring) are covered only in passing. Not researched this run; a possible new lesson, owner decision.
     (2) Cross-module: `cost-optimization/` and `memory-and-context/` may want the Fable 5.2 cache-read rate (0.025x) if they list only Fable 5.1;
     not checked.
+
+- 2026-11-12 — business-acumen — tier 1. Picked because no row was due and this was the oldest tier-1 row (27 of 45 days).
+  It finishes the partial 2026-11-10 run. Outcome: fixed and expanded. The module is ~92k words, so five parallel
+  agents each read their lessons in full (all 15 lessons, README and recap) and researched them. I did not read every
+  lesson myself; I checked the cross-lesson Regulation II and ICONIQ wording for consistency.
+  - Fixed (decision-relevant): the US debit interchange cap (Regulation II) is no longer settled. On 2026-10-26 the Eighth Circuit
+    affirmed vacatur (Corner Post). The cap stays until the mandate issues and the Fed must rewrite it. Linney's Pizza is pending in
+    the Sixth Circuit. Updated in competitive-advantage, monetization, executive-influence, portfolio, unit-economics.
+    ECOA/Reg B: final rule of 2026-04-22, effective 2026-07-21, removes disparate impact (monetization). CFPB withdrew its BNPL
+    interpretive rule (May 2025). SR 11-7 is superseded by SR 26-2 (17 Apr 2026). EU AI Act high-risk dates moved per the
+    provisional Omnibus deal (Annex III 2 Dec 2027, Annex I 2 Aug 2028). ASU 2025-06 internal-use software details. OCC
+    heightened-standards threshold proposal.
+  - Fixed (other): ICONIQ figures now use the July 2026 report (45% 2025 margin, 53% 2026, 59% 2027; 42% consumption, 23%
+    outcome, 84% pass-through); the unsupported 41% 2024 figure was removed. Stripe 2025 TPV $1.9T. Progressive "4%" and
+    DoorDash 13.4% marked as derived. Walmart, Warby Parker, Shopify/Deliverr, Shipt, SoFi, Upstart, Lemonade wording tightened
+    to the filings. CECL dates follow ASU 2019-10. Reg B reasons-or-notice nuance. Amazon two-pizza rule is "fewer than 10".
+    Fed rate range 3.75-4.00% (28 Oct 2026 meeting).
+  - Expanded (AI): per-task inference cost and worked margin example (unit-economics); model-cost sensitivity, Step 12
+    (business-cases); AI experiments, evals and LLM-as-judge limits (data-and-decisions); AI cost to serve (performance-and-growth);
+    AI bets allocation and kill criteria (portfolio); advantage in AI products and vendor risk (competitive-advantage); AI market
+    sizing pitfalls (markets); build/buy/partner and AI go-to-market cost (products); AI-era org design (leading-leaders);
+    AI decision rights (teams); AI risk governance (navigating); AI risk and hype with executives (executive-influence);
+    short AI notes in foundations, README, recap.
+  - Sources opened: federalreserve.gov SR 26-2, FAQ on CECL, rate pages and 2026-10-28 release; globalfinregblog.com and
+    consumerfinancemonitor.com Eighth Circuit posts; bankingjournal.aba.com ruling article; SEC filings (Upstart FY2022 10-K,
+    Lemonade FY2020 10-K, Shopify FY2025 10-K, Block FY2025 10-K, Walmart FY2026 10-K, Meli FY2025 10-K first 100k chars,
+    Warby Parker 10-Q first 100k chars, DoorDash Q4 2024 release, Root FY2025 10-K first 100k chars, Amazon 2015/2017 letters);
+    eur-lex 32015R0751; consumerfinance.gov Reg B and Reg Z pages; law.cornell.edu 12 CFR 244.4 and 32 CFR 232.4;
+    stripe.com 2024 and 2025 updates; intercom.com/pricing; iconiq.com State of AI 2026; platform.claude.com pricing;
+    a16z llmflation; arxiv 2306.05685; aws.amazon.com two-pizza; melconway.com; dora.dev 2025; menlovc.com 2025 report;
+    ifrs.org IFRS 9/15 pages; Nubank Q2 2023 release; Affirm FQ3 2026 letter; Venable Reg B alert; KPMG OCC alert; Gibson Dunn
+    EU AI Act Omnibus; Cohen & Co ASU 2025-06 note.
+  - Search results only (not opened): Orrick/Forvis SR 26-2 commentary (AI scope), Gartner Aug 2026 inference headline,
+    Stanford AI Index price figures, Linney's Pizza argument coverage, Lemonade 2021 70% cession, Colorado AI Act delay, EU
+    Omnibus entry into force, PwC/Deloitte ASC 606 pages, FCA PS21/5, Shopify 2025 segment figures.
+  - Not verified: ASC 606 principal/agent indicators and contra-revenue text (the-language-of-money not re-stamped);
+    IFRS 9 standard text; SR 26-2 AI scope; Instacart and Adyen table rows (monetization and navigating not re-stamped);
+    Fed board risk-committee rule (executive-influence not re-stamped); Block segment gross profit; MELI segment note;
+    whether the Eighth Circuit mandate was issued or stayed; Reg II $10B threshold and 1c adjustment beyond a secondary source.
+    I did not independently reopen sources the agents reported.
+  - Flagged, not fixed: (1) A short lesson on AI pricing and margin structure fits business-acumen; owner decision.
+    (2) `technical-product-sense/economics-of-infrastructure.md` should carry the inference-cost detail that new
+    unit-economics text links to. (3) Recheck Reg II (mandate, rehearing, Sixth Circuit), EU Omnibus adoption and the OCC threshold
+    at the next run. (4) Cross-module: any lesson elsewhere citing the Reg II cap, SR 11-7, EU AI Act dates of 2 Aug 2026, or
+    ICONIQ January 2026 figures may be stale; not checked. (5) Refresh of this 92k-word module still needs five-agent runs.

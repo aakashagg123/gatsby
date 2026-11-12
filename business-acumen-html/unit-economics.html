@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>Unit economics: from one transaction to a cohort</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p><strong>Unit economics</strong> is the profit or loss on one unit of business. The unit can be one payment, one order, one loan, one policy or one customer. You start with what the unit earns. You subtract every cost that rises with it. What is left is the <strong>contribution margin</strong>. Then you roll the unit up to a customer, and the customers up to a <strong>cohort</strong>: everyone acquired in the same month.</p>
 <p>The core tradeoff is growth against proof. Spending to acquire customers speeds growth. It only creates value if each cohort earns back its acquisition cost, with churn and losses counted. Most bad growth decisions do not come from bad arithmetic. They come from the wrong unit, the wrong margin layer, a blended cost, or a lifetime value that assumes customers never leave.</p>
@@ -159,7 +159,7 @@
 <tr>
 <td><strong>CM1</strong></td>
 <td>Net revenue − direct variable cost</td>
-<td>Pass-through fees, cost of goods, processing, fraud, credit loss, courier pay</td>
+<td>Pass-through fees, cost of goods, processing, fraud, credit loss, courier pay, AI model inference</td>
 <td>Pricing, risk policy, supplier and partner terms</td>
 </tr>
 <tr>
@@ -432,9 +432,16 @@
 <p><strong>Step 2: contribution margin.</strong> $11 − $4 − $1 = <strong>$6 a month</strong>.</p>
 <p><strong>Step 3: payback.</strong> $90 ÷ $6 = <strong>15 months</strong>. This is simple payback. With early churn, cohort payback is longer.</p>
 <p><strong>Step 4: LTV.</strong> Expected lifetime = 1 ÷ 2% = 50 months. LTV = $6 × 50 = <strong>$300</strong>, undiscounted. LTV to CAC = $300 ÷ $90 = <strong>3.3</strong>.</p>
-<p><strong>Step 5: stress test.</strong> Suppose interchange halves. The partner bank might grow past the asset threshold for the cap, or renegotiate its share. Interchange becomes $6. Neobank share: $4.50. Revenue: $6.50. Contribution: $1.50. Payback: $90 ÷ $1.50 = <strong>60 months</strong>. LTV: $1.50 × 50 = <strong>$75</strong>. LTV to CAC: <strong>0.8</strong>. Each new customer now loses money.</p>
+<p><strong>Step 5: stress test.</strong> Suppose interchange halves. This is not far-fetched. On 2026-10-26 the Eighth Circuit upheld a ruling that vacated the Federal Reserve's debit cap rule. The Fed must now write a new rule, and the outcome is open. The partner bank might grow past the asset threshold for the cap, or renegotiate its share. Interchange becomes $6. Neobank share: $4.50. Revenue: $6.50. Contribution: $1.50. Payback: $90 ÷ $1.50 = <strong>60 months</strong>. LTV: $1.50 × 50 = <strong>$75</strong>. LTV to CAC: <strong>0.8</strong>. Each new customer now loses money.</p>
 <p><strong>What the leader does with this.</strong> The model depends on one revenue line that a partner and a rule control. The team adds a second revenue line, such as a paid tier or a lending product. It caps acquisition spend until the second line proves out.</p>
 <p><strong>Decision rule.</strong> When more than half of contribution depends on one rule or one partner, stress-test that line at half, and set the acquisition budget on the stressed number.</p>
+<h4 id="ai-features-per-task">AI features: per task</h4>
+<p>Software used to have near-zero variable cost. An AI feature does not. Each call to a language model costs money, and the cost grows with use. So inference is a variable cost that belongs in CM1.</p>
+<p><strong>What drives the cost.</strong> Vendors bill per million tokens, with one price for input and a higher one for output. Anthropic's price list (checked 2026-11) shows how wide the range is. The smallest model lists at $0.10 input and $0.50 output per million tokens. The top tier lists at $8 and $40. That is about an 80 times gap. Cached input costs far less than fresh input, and the batch API takes 50% off for work that can wait. Check your own vendor's current list, because prices and model names change often.</p>
+<p><strong>The trap.</strong> The price of a fixed level of capability falls fast. One widely cited estimate, from a16z, says it fell about 10 times a year over 2021 to 2024. But an agent does not make one call. It makes many, and each call carries a longer context. Retries and validation loops add more. Gartner's August 2026 forecast, which we saw only as a headline, says inference cost per agentic workflow will rise more than fivefold through 2028. So the cost per task can rise while the price per token falls. Measure cost per completed task, not cost per token.</p>
+<p><em>Illustrative, inputs assumed:</em> a support agent resolves tickets. One model call uses 20,000 input tokens, of which 14,000 hit the cache, and 2,000 output tokens. Assume $2 per million fresh input tokens, $0.10 per million cached tokens and $10 per million output tokens. One call costs $0.0334. One task makes 8 calls, so $0.267. The agent resolves 60% of tasks, so one resolved ticket costs $0.267 ÷ 0.6 = <strong>$0.445</strong>. The vendor charges $0.99 per resolution. Gross margin is <strong>55%</strong>, before hosting and support. If tokens per task double, cost per resolution is $0.891 and margin falls to <strong>10%</strong>. A fixed price per outcome puts all that risk on the vendor. A price per seat puts it there too.</p>
+<p><strong>Decision rule.</strong> Put cost per resolved task, not per call, in CM1. Stress-test it at twice the tokens per task and at twice the retry rate. Give each heavy user or workflow its own CM1, because averages hide the users who cost more than they pay.</p>
+<p><strong>Common misreading.</strong> "Token prices keep falling, so margins will fix themselves." Cheaper tokens often lead teams to use bigger models, longer contexts and more agent steps. Margin improves only if you hold cost per task down.</p>
 <h3 id="operating-leverage-and-break-even">Operating leverage and break-even</h3>
 <p>Unit economics covers variable cost. A business also has fixed cost: salaries, platform, licences, compliance teams, rent. <strong>Operating leverage</strong> is how much profit moves when volume moves. High fixed cost and low variable cost mean high leverage. Profit grows fast with volume, and falls fast without it.</p>
 <p>Costs come in three kinds:</p>
@@ -608,6 +615,7 @@
 <li><strong>Young cohorts extrapolated.</strong> Six months of a lending vintage look clean, so the team grows the band. Losses arrive in months 9 to 18. You see it as a vintage curve that crosses older vintages.</li>
 <li><strong>Calendar comparisons.</strong> A dashboard compares this month's active customers with last month's. New cohorts hide the decay of older ones. You see it when growth slows and active customers suddenly fall.</li>
 <li><strong>Single-point revenue.</strong> One rule, partner or rate supports most of the contribution. You see it as a sudden drop in contribution after a renegotiation, a rate cut or a regulation.</li>
+<li><strong>Inference cost left out of CM1.</strong> An AI feature launches on a flat price. Usage and agent steps grow. You see it as gross margin that falls as the feature succeeds, with the heaviest users deepest in the red.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
 <p>The script below reproduces every number in the worked examples. It uses only the standard library. The cohort model assumes a customer active at the start of a month earns that month's contribution. The loan model ignores prepayment and discounting. Both would lower the numbers further.</p>
@@ -748,6 +756,12 @@ def neobank(spend, ic_rate, share, balance, nim, cost, loss, cac, churn):
 
 print(neobank(1000, 0.012, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (11.0, 6.0, 15.0, 300, 3.33)
 print(neobank(1000, 0.006, 0.75, 800, 0.03, 4, 1, 90, 0.02))  # (6.5, 1.5, 60.0, 75, 0.83)
+
+# AI support agent, cost per resolved task (assumed prices and usage)
+call = 6_000 * 2 / 1e6 + 14_000 * 0.10 / 1e6 + 2_000 * 10 / 1e6   # fresh, cached, output tokens
+per_resolved = 8 * call / 0.6                                      # 8 calls per task, 60% resolved
+print(f&quot;call ${call:.4f}  per resolved ${per_resolved:.3f}  margin at $0.99: {1 - per_resolved / 0.99:.1%}&quot;)
+print(f&quot;tokens x2: per resolved ${2 * per_resolved:.3f}  margin {1 - 2 * per_resolved / 0.99:.1%}&quot;)
 </code></pre>
 <p>Output:</p>
 <pre><code class="language-text">per tx: gross $1.750  net $0.785  CM1 $0.685
@@ -771,6 +785,8 @@ GMROI with new range 1.775  new range alone 0.525
 combined 102%  underwriting result $-3.60  investment income $3.60 (2% of premium)
 (11.0, 6.0, 15.0, 300, 3.33)
 (6.5, 1.5, 60.0, 75, 0.83)
+call $0.0334  per resolved $0.445  margin at $0.99: 55.0%
+tokens x2: per resolved $0.891  margin 10.0%
 </code></pre>
 <p>To use it on your own product, replace <code>survival()</code> with your observed cohort retention by month, and replace the constant CM with contribution by month on book.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
@@ -784,6 +800,7 @@ combined 102%  underwriting result $-3.60  investment income $3.60 (2% of premiu
 <li class="task todo">For any new credit band, range or segment, compute its marginal economics alone.</li>
 <li class="task todo">List each revenue line that depends on one rule, one partner or one rate, and stress-test it at half.</li>
 <li class="task todo">Compare cohorts only at equal months on book.</li>
+<li class="task todo">For any AI feature, get cost per completed task (not per token), and stress-test it at twice the tokens and twice the retries.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
@@ -792,7 +809,7 @@ combined 102%  underwriting result $-3.60  investment income $3.60 (2% of premiu
 <li><a href="monetization-and-business-models.html">Pricing and business models</a>: price metrics, interchange rules and the business-model table.</li>
 <li><a href="performance-and-growth.html">Performance and growth</a>: net revenue retention, vintage curves and loss development.</li>
 <li><a href="../technical-product-management/metrics-and-experimentation.html">Metrics and experimentation</a>: metric trees and guardrails that sit on top of these numbers.</li>
-<li><a href="../technical-product-sense/economics-of-infrastructure.html">The economics of infrastructure</a>: the processing and hosting lines inside CM1.</li>
+<li><a href="../technical-product-sense/economics-of-infrastructure.html">The economics of infrastructure</a>: the processing, hosting and model-inference lines inside CM1.</li>
 <li><a href="../system-design/transactional-and-financial.html">Transactional and financial systems</a>: how payments, ledgers and disputes are built.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="the-language-of-money.html"><span class="lbl">← Previous</span><span class="ttl">The language of money: reading the three statements</span></a><a class="navcard next" href="business-cases-and-valuation.html"><span class="lbl">→ Next</span><span class="ttl">Business cases, capital and valuation</span></a></div><footer class="foot"><strong>Core insight:</strong> Every product decision is a bet on unit economics and cash, and it is judged against what would have happened anyway.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

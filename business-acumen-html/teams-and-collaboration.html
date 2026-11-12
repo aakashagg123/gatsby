@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 13</span>
     <h1>Teams and collaboration: structures, rhythms and decision rights</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Above the individual-contributor level, your job changes. You stop being the person in every meeting. You design the system that lets teams decide well without you. That system has three parts: <strong>structure</strong> (which teams exist and how they work together), <strong>rhythm</strong> (when teams meet, review and decide) and <strong>decision rights</strong> (who decides what).</p>
 <p>The core tradeoff is autonomy against alignment. Autonomous teams move fast and drift apart. Tightly aligned teams stay together and move slowly. Clear team types, declared ways of working together and explicit decision rights let you have more of both.</p>
@@ -79,9 +79,10 @@
 </tr>
 </tbody>
 </table>
-<p>A good team owns no more than it can hold in its head. A common rule of thumb is a team of roughly five to nine people. When one team owns too many systems, it slows on all of them.</p>
+<p>A good team owns no more than it can hold in its head. Amazon's guide to two-pizza teams says ideally fewer than 10 people. Treat that as a rule of thumb, not a finding. When one team owns too many systems, it slows on all of them.</p>
+<p><strong>AI teams.</strong> A model or evaluation team is usually a specialist team. It owns the model, the evaluation set and the release gate. Journey teams use its output through a documented interface. The same load rule applies below. A shared evaluation or model team at high load becomes the queue for every AI feature.</p>
 <p><strong>The common misreading.</strong> "A platform team owns all the shared code." A platform is a product with internal customers. If journey teams cannot use it without filing a ticket, it is a queue, not a platform.</p>
-<p>Amazon has written about its "two-pizza teams" on its Amazon Web Services (AWS) blog. The point it makes is less about team size and more about autonomy and a <strong>single-threaded leader</strong>: one leader who focuses only on a specific product or outcome. The lesson for any company is to give each important outcome one leader whose attention is not split.</p>
+<p>Amazon Web Services (AWS) describes "two-pizza teams" on its Executive Insights pages. The point it makes is less about team size and more about ownership and a <strong>single-threaded leader</strong>: one leader who is dedicated to a specific product or outcome. AWS says such leaders set a vision and then get out of the team's way. The lesson for any company is to give each important outcome one leader whose attention is not split. AWS also notes that many autonomous teams risk duplicated work.</p>
 <h2 id="structure-three-ways-teams-work-together">Structure: three ways teams work together</h2>
 <p>Teams that depend on each other need a declared way of working together. There are three useful modes.</p>
 <table>
@@ -384,6 +385,7 @@
 </tbody>
 </table>
 <p>Knowing this map saves weeks. You stop asking the wrong person for a yes.</p>
+<p><strong>AI features add decisions to this map.</strong> Three are hard to reverse in practice: which model or vendor you depend on, the quality bar a release must pass, and where a human must review the output. Give each one a single accountable owner. A common split is the feature's product owner for the quality bar, Risk or Compliance for the limits that bound it, and Engineering for the release gate. Write down who may pause an AI feature in production and who must be told. Where a regulator expects human oversight or model validation, the second line must be consulted before launch. See <a href="navigating-the-organization.html">navigating the organization</a>.</p>
 <h2 id="high-trust-collaboration-and-communities-of-practice">High-trust collaboration and communities of practice</h2>
 <p>Trust makes collaboration cheap. In a high-trust team, people raise bad news early, admit mistakes and challenge each other without fear. You build it through behaviour, not slogans:</p>
 <ul>

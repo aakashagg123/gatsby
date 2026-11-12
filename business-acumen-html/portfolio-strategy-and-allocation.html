@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 11</span>
     <h1>Portfolio strategy and capital allocation</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: medium</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A product leader at Head of Product or vice president (VP) level owns a <strong>portfolio</strong>: several products and bets at different stages. The job is to allocate money and people across them. That means funding the core, growing what is emerging, buying options on the future, buying what is faster to buy than build, and stopping what no longer earns its place.</p>
 <p>The core tradeoff is today against tomorrow. Money spent defending the core cannot fund future bets. Money spent on future bets is not spent on the business that pays the bills. A good portfolio makes that split on purpose. It judges each bet by the right standard. It funds big bets in stages, so you can stop them cheaply. And it counts how bets depend on each other, because three bets on one partner are one bet.</p>
@@ -138,6 +138,14 @@
 <li><strong>Count opportunity cost.</strong> A team on a weak bet is a team not on a strong one.</li>
 <li><strong>Review on a cadence.</strong> A quarterly portfolio review asks one question per bet: scale, continue, change or stop?</li>
 </ul>
+<h4 id="allocate-across-ai-bets">Allocate across AI bets</h4>
+<p>AI bets need three changes to the method above.</p>
+<ul>
+<li><strong>Stage by evidence, not by build.</strong> An AI pilot can look finished in a week. A demo shows the best case. The gate should use a fixed evaluation set, a human-rated sample and a cost per completed task. Write the pass mark before the pilot starts.</li>
+<li><strong>Budget the run cost, not only the build cost.</strong> Model usage, evaluation and human review grow with volume. A feature that works at 1,000 users can lose money at 1 million. Put cost per task and gross margin per task in the gate.</li>
+<li><strong>Count shared model dependencies.</strong> Bets that call one model vendor, one model version or one data source are one bet. A price change, a deprecation or a quality shift hits them all together.</li>
+</ul>
+<p>Write kill criteria for each AI bet. Examples: the quality metric stays below the bar after two iterations, cost per task does not fall as volume grows, or human review stays above a set share of outputs. Without them, an AI pilot becomes a zombie product with a cloud bill.</p>
 <h3 id="portfolio-construction-correlation-and-concentration">Portfolio construction: correlation and concentration</h3>
 <p>A portfolio is not a list of independent bets. Bets often share a partner, a rule, a channel or a customer group. When the shared piece fails, they fail together.</p>
 <p><strong>How it works.</strong> Compare two portfolios of three bets. Each bet has a 70% chance of success on its own. All inputs are assumed.</p>
@@ -181,7 +189,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Concentration</strong> is the same problem measured by share. Ask what share of contribution comes from one product, one partner, one channel and one rule. Debit interchange is an example of a rule risk. In the US, it is capped for large issuers. <a href="monetization-and-business-models.html">Pricing and business models</a> covers that rule. A product line that earns mostly debit interchange depends on staying outside the cap.</p>
+<p><strong>Concentration</strong> is the same problem measured by share. Ask what share of contribution comes from one product, one partner, one channel and one rule. Debit interchange is an example of a rule risk. In the US, it is capped for large issuers. <a href="monetization-and-business-models.html">Pricing and business models</a> covers that rule. A product line that earns mostly debit interchange depends on staying outside the cap. The cap itself is also in flux. On 26 October 2026, the Eighth Circuit upheld a lower-court ruling that the Federal Reserve's Regulation II counts costs the law does not allow, and the Fed must rewrite the rule. A separate case in the Sixth Circuit went the other way in the lower court, and its appeal is pending. The effect on the cap is not settled. Model both a higher and a lower cap.</p>
 <p><strong>Decision rule.</strong> When two bets share a critical dependency, report them as one bet in the portfolio review. Add a bet that removes the dependency, such as a second partner, before you add a third bet that shares it.</p>
 <p><strong>Common misreading.</strong> "We have five bets, so we are diversified." Count the dependencies, not the bets.</p>
 <h3 id="build-buy-or-partner-at-portfolio-level">Build, buy or partner at portfolio level</h3>
@@ -284,7 +292,7 @@
 <p><strong>Common misreading.</strong> "It is strategic, so the option value makes up for the negative NPV." Strategic value that nobody can describe as a later decision is not an option. It is a hope.</p>
 <h3 id="double-down-or-sunset">Double down or sunset</h3>
 <p>Decide in advance what would make you scale a bet, and what would make you stop it. Typical scale signals: improving unit economics, organic demand, and a lead competitors cannot easily close. Typical stop signals: flat adoption after real effort, unit economics that do not improve with scale, and a high cost to maintain.</p>
-<p>Shopify shows that a large bet can be reversed. In 2022 it agreed to buy Deliverr, a fulfillment company, in a deal valued at about $2.1 billion, to build its logistics business. In May 2023 Shopify agreed to sell most of its logistics business to Flexport. Shopify's results release said it would receive stock representing a 13% equity interest in Flexport, on top of its existing stake. Flexport would become the official logistics partner for Shopify. Shopify moved logistics from "build" to "partner" in about a year.</p>
+<p>Shopify shows that a large bet can be reversed. In May 2022 it bought Deliverr, a fulfillment company, for about $2.1 billion, to build its logistics business. In May 2023 Shopify agreed to sell most of its logistics business to Flexport. Shopify would receive stock worth about a 13% equity interest in Flexport, on top of its existing stake (press reports, including CNBC). Flexport would become the official logistics partner for Shopify. Shopify moved logistics from "build" to "partner" in about a year.</p>
 <h4 id="sunset-economics">Sunset economics</h4>
 <p>Stopping a product is an investment decision too. It has a one-off cost and a stream of savings.</p>
 <p><strong>Sunset value = PV of costs avoided − PV of contribution lost − one-off sunset costs.</strong></p>
@@ -393,6 +401,7 @@
 <li><strong>Hidden correlation.</strong> Three bets fail in the same quarter because one partner bank changed its risk appetite.</li>
 <li><strong>Synergy on the deck.</strong> An acquisition priced on planned revenue synergies. Two years later, the integration team reports half of them.</li>
 <li><strong>Option value as an excuse.</strong> A negative case is approved for "strategic options" that no one has written down.</li>
+<li><strong>The AI pilot with no kill criteria.</strong> The demo works, the usage chart rises, and nobody has priced cost per task or written a quality bar. The cloud bill grows faster than the value.</li>
 <li><strong>Sunk-cost thinking.</strong> "We have spent $20 million, we cannot stop now."</li>
 <li><strong>Sunset without a plan.</strong> A product is closed, and the servicing, claims or migration obligations surprise the team.</li>
 </ul>
@@ -463,6 +472,7 @@ owner: GM Commerce Financial Services
 <li class="task todo">Group bets by shared partner, rule and channel. Report each group as one bet.</li>
 <li class="task todo">For any acquisition on the table, compute value created on realized synergies, and the walk-away price.</li>
 <li class="task todo">Name one candidate to sunset. Compute its sunset value and list the obligations it would trigger.</li>
+<li class="task todo">For each AI bet, write the evaluation pass mark, the cost-per-task limit and the kill criteria before the pilot starts.</li>
 <li class="task todo">Hold a quarterly portfolio review with one decision per bet.</li>
 <li class="task todo">Keep a reserve of capacity unallocated.</li>
 </ul>
