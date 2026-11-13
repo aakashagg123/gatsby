@@ -2,7 +2,7 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -39,9 +39,11 @@ Each layer catches what the one above lets through. Only the last one does not d
 
 Per the Claude Code documentation, the modes are: **default** (manual: asks before edits and commands), **acceptEdits** (auto-approves file edits), **plan** (reads only, proposes a plan), **auto** (a classifier approves routine actions and blocks risky ones), **dontAsk** (only pre-approved tools run), and **bypassPermissions** (no checks). Shift+Tab cycles the common ones. Use bypass only in an isolated container with no secrets.
 
+The starting mode has changed. With Claude Code v2.1.283 or later, **auto** is the built-in starting mode for terminal and VS Code sessions. A classifier model, not a person, then reviews most actions. Organizations under a HIPAA configuration start in manual mode instead. Managed settings can remove auto mode or block bypass mode for everyone. Do not assume your engineers review each action: check which mode they actually run.
+
 ### Rules: deny, then ask, then allow
 
-Rules are checked in order: deny first, then ask, then allow. The first match wins. So a broad deny beats a narrow allow. Rules can name tools (`Read`, `Edit`, `Bash`) and patterns (`Bash(npm test *)`, `Read(src/*)`).
+Rules are checked in order: deny first, then ask, then allow. The first match wins. So a broad deny beats a narrow allow. Deny rules apply in every mode, including bypass. Allow rules have no effect in bypass mode. Rules can name tools (`Read`, `Edit`, `Bash`) and patterns (`Bash(npm test *)`, `Read(src/*)`).
 
 ### What a rule does not stop
 
@@ -54,6 +56,8 @@ A **PreToolUse** hook sees the action before it runs and can block it, for examp
 ### Sandboxes and isolation
 
 For unattended or risky work, run the agent in a sandbox: a container or virtual machine with only the repository mounted, no production credentials and a limited network. Git worktrees give each agent its own copy of the files. The sandbox is what makes a bypass mode acceptable.
+
+Claude Code also has a built-in sandbox for shell commands, on macOS, Linux and WSL2. It is off by default. You turn it on with `/sandbox`. It limits the files and network hosts that shell commands can reach, and the operating system enforces it. It covers shell commands only. The agent's file tools, MCP servers and hooks run outside it. Read access also stays wide by default, including `~/.ssh` and `~/.aws/credentials`, unless you set read denies. Treat it as one layer, and read the sandbox page before you rely on it.
 
 ### Third-party servers and prompt injection
 
@@ -105,7 +109,8 @@ So the deny rule worked on one form and missed the others. In the model, a miss 
 
 ## Practitioner checklist
 
-- [ ] Do we have a default mode per environment, written down?
+- [ ] Do we have a default mode per environment, written down, and do we know which mode each engineer's session starts in?
+- [ ] Have we turned on the built-in sandbox, or a container, for shell commands, and set read denies for credential paths?
 - [ ] Is bypass mode limited to an isolated container with no secrets?
 - [ ] Do project settings deny reads of secrets and edits to tests and hook files?
 - [ ] Do we treat rules as guardrails and use a sandbox for unattended runs?
@@ -123,7 +128,8 @@ So the deny rule worked on one form and missed the others. In the model, a miss 
 
 ## Sources
 
-- Claude Code documentation, *Configure permissions*, code.claude.com/docs/en/permissions, read 2026-10: the deny, ask, allow order, first match winning, and the limits of Bash rules.
-- Claude Code documentation, *Permission modes*, code.claude.com/docs/en/permission-modes, read 2026-10: the modes and Shift+Tab cycling.
-- Claude Code documentation, *Hooks reference*, code.claude.com/docs/en/hooks, read 2026-10: PreToolUse and blocking.
-- The rules, commands and results are invented. They come from `ai-assisted-development/code/lesson4_permissions.py`, a simplified model. This module's sources were not re-opened after the first reading, and its fact-check is pending.
+- Claude Code documentation, *Configure permissions*, code.claude.com/docs/en/permissions, re-read 2026-11: the deny, ask, allow order, first match winning, and the limits of Bash rules, including the `curl` examples.
+- Claude Code documentation, *Permission modes*, code.claude.com/docs/en/permission-modes, re-read 2026-11: the modes, Shift+Tab cycling, auto as the starting mode, and deny rules in every mode.
+- Claude Code documentation, *Hooks reference*, code.claude.com/docs/en/hooks, re-read 2026-11: PreToolUse and blocking.
+- Claude Code documentation, *Configure the sandboxed Bash tool*, code.claude.com/docs/en/sandboxing, read 2026-11 (opening sections): what the sandbox covers and what runs outside it.
+- The rules, commands and results are invented. They come from `ai-assisted-development/code/lesson4_permissions.py`, a simplified model. The model does not strip wrappers such as `timeout`, which real Claude Code strips before it matches.

@@ -2,11 +2,11 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
-An agent starts every session knowing nothing about your project. Two things fix that. A **spec** tells it what to do in this task. A **context file** tells it what is always true about the project. In Claude Code the context file is called `CLAUDE.md`. Other tools use similar files.
+An agent starts every session knowing nothing about your project. Two things fix that. A **spec** tells it what to do in this task. A **context file** tells it what is always true about the project. In Claude Code the context file is called `CLAUDE.md`. Other tools use similar files. Claude Code can also read a repository's `AGENTS.md` in place of `CLAUDE.md`, so one file can serve more than one tool.
 
 A good spec has four parts: the goal, the scope (which files and which not), the constraint that matters, and **how the agent can check its own work**. The last part is the one that most changes the result.
 
@@ -64,7 +64,8 @@ A product leader can write specs that engineers and agents both use. Put the use
 ## Tradeoffs and decisions
 
 - **Short file vs. complete file.** Every line costs tokens in every session. Include only what changes behaviour.
-- **Shared vs. personal.** The project file is for the team. Personal preferences belong in a user-level file.
+- **Shared vs. personal.** The project file is for the team. Personal preferences belong in a user-level file, or in `CLAUDE.local.md`, which you keep out of version control.
+- **Notes the agent writes.** Claude Code also keeps **auto memory**, notes it writes from your corrections. It loads the first 200 lines or 25KB. Review those notes like the shared file, because they also steer the agent.
 - **Rules vs. enforcement.** A line in the file is advice. A hook enforces ([lesson 4](./control-permissions-modes-and-hooks.md)). Put must-never rules in hooks or permissions.
 - **Emphasis.** Shouting works on one or two lines. On ten, it works on none.
 
@@ -116,7 +117,7 @@ The dollar figures are small beside salaries. The cost that matters is attention
 - [ ] Are rarely needed rules in path-scoped rules or skills?
 - [ ] Do must-never rules live in hooks or permissions, not only in prose?
 - [ ] Do task specs name a way to check the result?
-- [ ] Does the file have an owner and a pruning date?
+- [ ] Does the file have an owner and a pruning date? The `/doctor prompt-audit` command can find conflicting or stale lines.
 
 ## Related lessons
 
@@ -128,7 +129,7 @@ The dollar figures are small beside salaries. The cost that matters is attention
 
 ## Sources
 
-- Claude Code documentation, *How Claude remembers your project* (memory), code.claude.com/docs/en/memory, read 2026-10: the target of under 200 lines, what to include, imports not reducing context cost, and path-scoped rules.
-- Claude Code documentation, *Extend Claude with skills*, code.claude.com/docs/en/skills, read 2026-10: skills for procedures that do not belong in the always-loaded file.
-- Claude Code documentation, *Permission modes*, code.claude.com/docs/en/permission-modes, read 2026-10: plan mode.
-- The sample file, the token counts and the prices are invented. They come from `ai-assisted-development/code/lesson2_context_file.py`. The cache-read multiplier of 0.1 matches most Claude models; some newer models differ. This module's sources were not re-opened after the first reading, and its fact-check is pending.
+- Claude Code documentation, *How Claude remembers your project* (memory), code.claude.com/docs/en/memory, re-read 2026-11: the target of under 200 lines, what to include, imports not reducing context cost, path-scoped rules, `AGENTS.md`, `CLAUDE.local.md`, auto memory and the prompt audit.
+- Claude Code documentation, *Extend Claude with skills*, code.claude.com/docs/en/skills, re-read 2026-11: skills for procedures that do not belong in the always-loaded file.
+- Claude Code documentation, *Permission modes*, code.claude.com/docs/en/permission-modes, re-read 2026-11: plan mode.
+- The sample file, the token counts and the prices are invented. They come from `ai-assisted-development/code/lesson2_context_file.py`. The cache-read multiplier of 0.1 matches most Claude models. Claude Fable 5.2 and 5.1 and Mythos 5.2 and 5.1 charge 0.025 (platform.claude.com prompt-caching page, re-read 2026-11), so the table overstates their cost.

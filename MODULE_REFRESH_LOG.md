@@ -27,7 +27,7 @@ picks the lowest tier number among due modules.
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-11-12 |
-| ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-10-17 |
+| ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-11-13 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
@@ -1004,3 +1004,32 @@ and a link to the merged PR.)
     unit-economics text links to. (3) Recheck Reg II (mandate, rehearing, Sixth Circuit), EU Omnibus adoption and the OCC threshold
     at the next run. (4) Cross-module: any lesson elsewhere citing the Reg II cap, SR 11-7, EU AI Act dates of 2 Aug 2026, or
     ICONIQ January 2026 figures may be stale; not checked. (5) Refresh of this 92k-word module still needs five-agent runs.
+
+- 2026-11-13 — ai-assisted-development — tier 1. No row was due, so I took the oldest tier-1 row. Three rows tied at 2026-10-17
+  (ai-assisted-development, fine-tuning, transformers). I picked this one because it had never been fact-checked (its pages said
+  "fact-check pending") and Claude Code changes fastest. Outcome: fixed and expanded. I read the README, all six lessons and the recap in full first.
+  - Fixed: auto mode is now the built-in starting mode in terminal and VS Code sessions (v2.1.283+); manual under HIPAA (lesson 4).
+    Deny rules apply in every mode including bypass. The sandbox covers shell commands only; file tools, MCP servers and hooks run outside it.
+    Cache-read price is 0.025x on Fable/Mythos 5.x (lessons 2 and 5). Peng result is 55.8% on one task; METR is 19% slower
+    (CI +2% to +39%). DORA now has five metrics (rework rate is deployment rework from incidents, not "rework in 30 days"; MTTR is
+    now failed deployment recovery time) (lesson 6). The "quoted from memory" and "fact-check pending" notes are gone.
+  - Expanded: METR's February 2026 follow-up, which called its new data unreliable because of selection effects (lesson 6, recap);
+    DORA 2025 findings (amplifier, throughput link, trust figures, AI Capabilities Model); AGENTS.md, CLAUDE.local.md, auto memory
+    and `/doctor prompt-audit` (lesson 2); `/code-review` and `/verify` (lesson 3); built-in sandbox, starting mode (lesson 4);
+    cache lifetime, `/usage`, agent teams, subagent cost, `--bare` and unattended `-p` hook loading, `total_cost_usd` (lesson 5);
+    selection-bias failure mode and fit-of-work tradeoff (lessons 1, 6).
+  - Sources opened and read (primary):
+    - https://code.claude.com/docs/en/memory.md, permissions.md, permission-modes.md, hooks.md (Stop sections, cap of 8), costs.md ($13, $150-250, $30 at 90%),
+      headless.md (--bare), sub-agents.md (isolation: worktree), best-practices.md (/code-review, /verify, /clear), sandboxing.md (opening sections), skills.md (opening)
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md (0.1x, 0.025x footnote)
+    - https://arxiv.org/abs/2302.06590 and https://arxiv.org/abs/2507.09089 (abstracts)
+    - https://metr.org/blog/2026-02-24-uplift-update/
+    - https://dora.dev/guides/dora-metrics/, https://dora.dev/research/2025/dora-report/, https://dora.dev/ai/capabilities-model/,
+      https://blog.google/technology/developers/dora-report-2025/
+  - Search results only (not opened): Rob Bowley and other blogs on METR 2026; DORA PDF; TechRepublic and InfoQ DORA coverage.
+  - Not verified: the full DORA PDF (stability findings); *Accelerate*; the rest of the sandboxing, hooks and skills pages; the exact
+    Stop-hook environment variable name; `CLAUDE_CODE_NEW_INIT`; the permission-rule wrapper list beyond what lesson 4 now says; the
+    code under `ai-assisted-development/code/` was not changed and its simplified permission model omits wrapper stripping (noted in the lesson).
+  - Flagged, not fixed: (1) A lesson on AI code review and agent-written-code security risk (vulnerability rates, review agents) would fit
+    this module; owner decision. (2) Cross-module: `cost-optimization/` and `memory-and-context/` may list only 0.1x cache reads; not checked.
+    (3) Recheck METR's redesigned study and the DORA 2026 report at the next run. (4) fine-tuning and transformers are next in line (both 2026-10-17).

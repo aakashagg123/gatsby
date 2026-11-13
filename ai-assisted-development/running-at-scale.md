@@ -2,7 +2,7 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -39,17 +39,17 @@ Workers are cheap and parallel. The review desk is not. A factory is limited by 
 
 ### Context and session cost
 
-Each turn re-reads the whole history, plus new tokens. Prompt caching makes the re-read cheap, but not free: at a cache-read price of 0.1 of normal input, history still adds up. The same task sequence run as one long session costs about 2.8 times as much input as five fresh sessions, in the model below. Use `/clear` between unrelated tasks. Use a summary (`/compact`) when you must continue.
+Each turn re-reads the whole history, plus new tokens. Prompt caching makes the re-read cheap, but not free: at a cache-read price of 0.1 of normal input (0.025 on the newest Claude models), history still adds up. The same task sequence run as one long session costs about 2.8 times as much input as five fresh sessions, in the model below. Use `/clear` between unrelated tasks. Use a summary (`/compact`) when you must continue. The prompt cache lasts about an hour on a subscription and five minutes on an API key, so a long pause means a cold cache and a full-price re-read. The `/usage` command shows which skills, subagents and servers use the most, and flags long context and frequent cache misses.
 
 The documentation reports that enterprise cost averages about $13 per developer per active day, $150 to $250 per month, and under $30 per active day for 90% of users. Use it as a rough anchor, then measure your own pilot.
 
 ### Subagents
 
-A subagent has its own context window, system prompt, tools and permissions. Use one for work that would flood the main session with output you will not need again, such as searching a large codebase or reading logs. The main session sees only the summary. Subagents are not free: they send their own requests and count toward your usage.
+A subagent has its own context window, system prompt, tools and permissions. Use one for work that would flood the main session with output you will not need again, such as searching a large codebase or reading logs. The main session sees only the summary. Subagents are not free: they send their own requests and count toward your usage. A fresh subagent must also gather context the main session already had, so it can be slower than doing the task in place. Give a simple job to a cheaper model. **Agent teams**, an experimental feature that is off by default, run several full sessions at once. Their token use scales with the number of teammates and how long each runs.
 
 ### Headless and batch runs
 
-`claude -p "prompt"` runs a single task without the interactive screen. Flags such as `--allowedTools` pre-approve tools, and `--output-format` gives structured output. Add `--bare` for scripted calls, which skips auto-discovery of hooks, skills and settings. Without it, a headless run loads the project's hooks and servers as an interactive one would. Run unattended jobs in a sandbox ([lesson 4](./control-permissions-modes-and-hooks.md)).
+`claude -p "prompt"` runs a single task without the interactive screen. Flags such as `--allowedTools` pre-approve tools, and `--output-format` gives structured output. Add `--bare` for scripted calls, which skips auto-discovery of hooks, skills and settings. Without it, a headless run loads the project's hooks and servers as an interactive one would, even in a folder you never trusted and with no prompt. The documentation recommends `--bare` for scripted calls and says it will become the default for `-p` later. `--output-format json` reports `total_cost_usd`, a client-side estimate that can differ from your bill. Run unattended jobs in a sandbox ([lesson 4](./control-permissions-modes-and-hooks.md)).
 
 ### Worktrees
 
@@ -124,7 +124,7 @@ Retries add $117 and rescue 55 tasks, about $2 each. That is cheap against a per
 
 ## Sources
 
-- Claude Code documentation, *Manage costs effectively*, code.claude.com/docs/en/costs, read 2026-10: the averages of about $13 per developer per active day and $150 to $250 per month, and under $30 per active day for 90% of users.
-- Claude Code documentation, *Run Claude Code programmatically*, code.claude.com/docs/en/headless, read 2026-10: `-p`, `--allowedTools`, `--output-format` and `--bare`.
-- Claude Code documentation, *Create custom subagents*, code.claude.com/docs/en/sub-agents, read 2026-10: separate context windows, and `isolation: worktree`.
-- The prices, token counts and pass rates are invented. They come from `ai-assisted-development/code/lesson5_scale.py`. The 0.1 cache-read price matches most Claude models; some newer models charge less. This module's sources were not re-opened after the first reading, and its fact-check is pending.
+- Claude Code documentation, *Manage costs effectively*, code.claude.com/docs/en/costs, re-read 2026-11: the averages of about $13 per developer per active day and $150 to $250 per month, and under $30 per active day for 90% of users.
+- Claude Code documentation, *Run Claude Code programmatically*, code.claude.com/docs/en/headless, re-read 2026-11: `-p`, `--allowedTools`, `--output-format` and `--bare`.
+- Claude Code documentation, *Create custom subagents*, code.claude.com/docs/en/sub-agents and best-practices, re-read 2026-11: separate context windows, and `isolation: worktree`.
+- The prices, token counts and pass rates are invented. They come from `ai-assisted-development/code/lesson5_scale.py`. The 0.1 cache-read price matches most Claude models. Fable 5.2 and 5.1 and Mythos 5.2 and 5.1 charge 0.025 (prompt-caching page, re-read 2026-11), which lowers the long-session penalty. The $13 average is the documentation's figure and is not a forecast for your team.

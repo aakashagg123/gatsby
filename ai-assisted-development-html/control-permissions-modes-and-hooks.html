@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Control: permissions, modes and hooks</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>An agent with a shell can do what you can do. It can read secrets, delete files and call the network. Control is how you decide what it may do alone, what needs a yes, and what is never allowed.</p>
 <p>Claude Code gives three layers. <strong>Permission modes</strong> set the overall posture: ask for everything, auto-approve edits, plan without editing, let a classifier decide, or skip checks. <strong>Permission rules</strong> allow, ask or deny specific tools and commands. <strong>Hooks</strong> run your own code at set points and can block an action.</p>
@@ -69,14 +69,16 @@
 <h2 id="mechanics">Mechanics</h2>
 <h3 id="permission-modes">Permission modes</h3>
 <p>Per the Claude Code documentation, the modes are: <strong>default</strong> (manual: asks before edits and commands), <strong>acceptEdits</strong> (auto-approves file edits), <strong>plan</strong> (reads only, proposes a plan), <strong>auto</strong> (a classifier approves routine actions and blocks risky ones), <strong>dontAsk</strong> (only pre-approved tools run), and <strong>bypassPermissions</strong> (no checks). Shift+Tab cycles the common ones. Use bypass only in an isolated container with no secrets.</p>
+<p>The starting mode has changed. With Claude Code v2.1.283 or later, <strong>auto</strong> is the built-in starting mode for terminal and VS Code sessions. A classifier model, not a person, then reviews most actions. Organizations under a HIPAA configuration start in manual mode instead. Managed settings can remove auto mode or block bypass mode for everyone. Do not assume your engineers review each action: check which mode they actually run.</p>
 <h3 id="rules-deny-then-ask-then-allow">Rules: deny, then ask, then allow</h3>
-<p>Rules are checked in order: deny first, then ask, then allow. The first match wins. So a broad deny beats a narrow allow. Rules can name tools (<code>Read</code>, <code>Edit</code>, <code>Bash</code>) and patterns (<code>Bash(npm test *)</code>, <code>Read(src/*)</code>).</p>
+<p>Rules are checked in order: deny first, then ask, then allow. The first match wins. So a broad deny beats a narrow allow. Deny rules apply in every mode, including bypass. Allow rules have no effect in bypass mode. Rules can name tools (<code>Read</code>, <code>Edit</code>, <code>Bash</code>) and patterns (<code>Bash(npm test *)</code>, <code>Read(src/*)</code>).</p>
 <h3 id="what-a-rule-does-not-stop">What a rule does not stop</h3>
 <p>A shell rule matches text. Different text that does the same thing is a different command. Wrapping, absolute paths, flags placed differently and nested shells can all dodge a pattern. Treat denies as a way to stop the agent from doing a thing by accident, and as input to the approval prompts.</p>
 <h3 id="hooks-for-what-must-always-happen">Hooks for what must always happen</h3>
 <p>A <strong>PreToolUse</strong> hook sees the action before it runs and can block it, for example by refusing any edit to <code>tests/</code> or any command containing a production host. Hooks run your code, so they can inspect the real arguments. They are deterministic, which a prompt line is not.</p>
 <h3 id="sandboxes-and-isolation">Sandboxes and isolation</h3>
 <p>For unattended or risky work, run the agent in a sandbox: a container or virtual machine with only the repository mounted, no production credentials and a limited network. Git worktrees give each agent its own copy of the files. The sandbox is what makes a bypass mode acceptable.</p>
+<p>Claude Code also has a built-in sandbox for shell commands, on macOS, Linux and WSL2. It is off by default. You turn it on with <code>/sandbox</code>. It limits the files and network hosts that shell commands can reach, and the operating system enforces it. It covers shell commands only. The agent's file tools, MCP servers and hooks run outside it. Read access also stays wide by default, including <code>~/.ssh</code> and <code>~/.aws/credentials</code>, unless you set read denies. Treat it as one layer, and read the sandbox page before you rely on it.</p>
 <h3 id="third-party-servers-and-prompt-injection">Third-party servers and prompt injection</h3>
 <p>Tools from MCP servers extend what the agent can do, and each one is code you chose to trust. The agent also reads files, web pages and tickets that anyone may have written. A hostile instruction in that text can try to steer it. Least privilege limits the damage. See <a href="../ai-security-and-guardrails/index.html">AI security and guardrails</a>.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
@@ -132,7 +134,8 @@
 <p>So the deny rule worked on one form and missed the others. In the model, a miss lands on "ask", which is safe when a person reads the prompt. With auto-approval or unattended runs, a miss may run. This is why unattended work needs a sandbox.</p>
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
-<li class="task todo">Do we have a default mode per environment, written down?</li>
+<li class="task todo">Do we have a default mode per environment, written down, and do we know which mode each engineer's session starts in?</li>
+<li class="task todo">Have we turned on the built-in sandbox, or a container, for shell commands, and set read denies for credential paths?</li>
 <li class="task todo">Is bypass mode limited to an isolated container with no secrets?</li>
 <li class="task todo">Do project settings deny reads of secrets and edits to tests and hook files?</li>
 <li class="task todo">Do we treat rules as guardrails and use a sandbox for unattended runs?</li>
@@ -150,10 +153,11 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Claude Code documentation, <em>Configure permissions</em>, code.claude.com/docs/en/permissions, read 2026-10: the deny, ask, allow order, first match winning, and the limits of Bash rules.</li>
-<li>Claude Code documentation, <em>Permission modes</em>, code.claude.com/docs/en/permission-modes, read 2026-10: the modes and Shift+Tab cycling.</li>
-<li>Claude Code documentation, <em>Hooks reference</em>, code.claude.com/docs/en/hooks, read 2026-10: PreToolUse and blocking.</li>
-<li>The rules, commands and results are invented. They come from <code>ai-assisted-development/code/lesson4_permissions.py</code>, a simplified model. This module's sources were not re-opened after the first reading, and its fact-check is pending.</li>
+<li>Claude Code documentation, <em>Configure permissions</em>, code.claude.com/docs/en/permissions, re-read 2026-11: the deny, ask, allow order, first match winning, and the limits of Bash rules, including the <code>curl</code> examples.</li>
+<li>Claude Code documentation, <em>Permission modes</em>, code.claude.com/docs/en/permission-modes, re-read 2026-11: the modes, Shift+Tab cycling, auto as the starting mode, and deny rules in every mode.</li>
+<li>Claude Code documentation, <em>Hooks reference</em>, code.claude.com/docs/en/hooks, re-read 2026-11: PreToolUse and blocking.</li>
+<li>Claude Code documentation, <em>Configure the sandboxed Bash tool</em>, code.claude.com/docs/en/sandboxing, read 2026-11 (opening sections): what the sandbox covers and what runs outside it.</li>
+<li>The rules, commands and results are invented. They come from <code>ai-assisted-development/code/lesson4_permissions.py</code>, a simplified model. The model does not strip wrappers such as <code>timeout</code>, which real Claude Code strips before it matches.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="verification-is-the-product.html"><span class="lbl">← Previous</span><span class="ttl">Verification is the product</span></a><a class="navcard next" href="running-at-scale.html"><span class="lbl">→ Next</span><span class="ttl">Running at scale: sessions, subagents and fan-out</span></a></div><footer class="foot"><strong>Core insight:</strong> When an agent writes the code, the scarce work is specifying and verifying, so speed comes from the checks you build, not from the agent.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-nested-controls">The mental model: three nested controls</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#permission-modes">Permission modes</a><a class="h3" href="#rules-deny-then-ask-then-allow">Rules: deny, then ask, then allow</a><a class="h3" href="#what-a-rule-does-not-stop">What a rule does not stop</a><a class="h3" href="#hooks-for-what-must-always-happen">Hooks for what must always happen</a><a class="h3" href="#sandboxes-and-isolation">Sandboxes and isolation</a><a class="h3" href="#third-party-servers-and-prompt-injection">Third-party servers and prompt injection</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-one-deny-rule-and-five-ways-around-it">Worked example: one deny rule and five ways around it</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

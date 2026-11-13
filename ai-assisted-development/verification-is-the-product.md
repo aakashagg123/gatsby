@@ -2,7 +2,7 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -47,7 +47,7 @@ Per the Claude Code hooks documentation, a hook is a command that runs at a poin
 Two guards matter.
 
 - **`stop_hook_active`.** The hook input carries this flag when the agent is already continuing because of a Stop hook. A good script exits 0 when it is set, so a check that cannot be fixed does not trap the agent.
-- **A block cap.** The documentation describes a cap on consecutive blocks, eight by default, after which Claude Code lets the agent stop.
+- **A block cap.** The documentation describes a cap of eight consecutive continuations. After that, Claude Code ends the turn. The count resets each time the agent calls a tool, and you can raise the cap with an environment variable.
 
 ### Review still matters
 
@@ -55,7 +55,7 @@ A passing check does not mean the right change. Review the diff for scope, for d
 
 ### Independent checks
 
-Where a second pair of eyes helps, use a fresh session or a subagent to review the change. A reviewer with no memory of the writing has no stake in it. It is still a model, and it still errs.
+Where a second pair of eyes helps, use a fresh session or a subagent to review the change. A reviewer with no memory of the writing has no stake in it. In Claude Code, `/code-review` reviews the diff in a fresh subagent that never saw your conversation. The `/verify` command goes further: it has the agent build and run the app and look at the result, which catches problems that tests and type checks miss. A reviewer is still a model, and it still errs.
 
 ## Tradeoffs and decisions
 
@@ -122,5 +122,5 @@ The turn loop, simulated: if the agent fixes the problem after 2 blocks, it stop
 
 ## Sources
 
-- Claude Code documentation, *Hooks reference* and *Automate workflows with hooks*, code.claude.com/docs/en/hooks and /hooks-guide, read 2026-10: deterministic hooks, the Stop event, exit code 2 and the JSON `decision` form, the `stop_hook_active` input and the cap on consecutive blocks.
-- The commands, the turn loop and the counts are invented stand-ins. They come from `ai-assisted-development/code/stop_gate.py` and `lesson3_verification.py`. The cap of eight is the documented default as read in 2026-10 and may change. This module's sources were not re-opened after the first reading, and its fact-check is pending.
+- Claude Code documentation, *Hooks reference* and *Automate workflows with hooks*, code.claude.com/docs/en/hooks and /hooks-guide, re-read 2026-11: deterministic hooks, the Stop event, exit code 2 and the JSON `decision` form, the `stop_hook_active` input and the cap on consecutive blocks.
+- The commands, the turn loop and the counts are invented stand-ins. They come from `ai-assisted-development/code/stop_gate.py` and `lesson3_verification.py`. The cap of eight is the documented default as re-read on 2026-11-13 and may change. The best-practices page was re-read for `/code-review` and `/verify`.

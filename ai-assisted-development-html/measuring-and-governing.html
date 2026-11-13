@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 06</span>
     <h1>Measuring and governing</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>Every vendor says its agent makes developers faster. Your question is whether yours does, and at what cost and risk. The honest answer comes from a few outcome metrics, read with care.</p>
 <p>Pick metrics that measure delivery, not activity: lead time from start to production, change failure rate, rework within 30 days, and review time per change. Lines of code and pull-request counts measure activity, and an agent inflates both.</p>
@@ -68,9 +68,10 @@
 <li><strong>Review time.</strong> Reviewer time per change, and queue wait.</li>
 <li><strong>Cost per accepted change.</strong> Tokens and seats over changes that stayed merged.</li>
 </ul>
-<p>These follow the delivery metrics popularized by the DORA research. Use them as a set. A gain in one with a loss in another is the signal.</p>
+<p>These follow the delivery metrics from the DORA research, with one change. DORA now names five metrics. Three measure throughput: change lead time, deployment frequency and failed deployment recovery time (the old "time to restore"). Two measure instability: change fail rate and deployment rework rate. DORA's rework rate counts unplanned deployments caused by a production incident. The "rework within 30 days" metric above is a wider team measure, so name which one you report. Use the metrics as a set. A gain in one with a loss in another is the signal. DORA also warns against setting a metric as a goal, and against blending metrics across teams with different contexts.</p>
 <h3 id="baselines-and-comparisons">Baselines and comparisons</h3>
-<p>Measure before rollout. Compare the same team or the same kind of work. Randomized rollouts, where some teams start later, give the cleanest comparison. Controlled studies exist: one found developers finished a task faster with an assistant. Another found experienced developers on familiar codebases were slower, despite expecting to be faster. Results depend on the task, the people and the tools.</p>
+<p>Measure before rollout. Compare the same team or the same kind of work. Randomized rollouts, where some teams start later, give the cleanest comparison. Controlled studies exist, and they disagree. A 2023 trial found developers finished one defined task 55.8% faster with an assistant. A 2025 METR trial found experienced developers on their own mature repositories took 19% longer with early-2025 tools, though they expected to be faster (a confidence interval of +2% to +39%). METR then tried to repeat the study with newer tools. In February 2026 it said the new data was an unreliable signal. Many developers refused to work without AI, and 30% to 50% skipped tasks they would not do without it. METR believes developers are likely more sped up in early 2026 than in early 2025. It stopped short of giving a new number and is changing its design. The lesson for a leader: the field has no settled figure. Results depend on the task, the people and the tools, and the time the study was run. The tools also change faster than a study can finish.</p>
+<p>The 2025 DORA report on AI-assisted development (nearly 5,000 respondents) found about 90% adoption and a link between AI use and higher delivery throughput. It describes AI as an amplifier of the strengths and the weaknesses a team already has. It also found a trust gap: 24% of respondents trust AI output a great deal or a lot, and 30% trust it a little or not at all. DORA's companion AI Capabilities Model lists seven capabilities that raise the return. Read these as survey findings, not as controlled effects.</p>
 <h3 id="perception-versus-measurement">Perception versus measurement</h3>
 <p>Developers feel faster when the tool removes tedious work, and that feeling is real value. It is not a measurement of delivery. Collect both and do not confuse them.</p>
 <h3 id="a-policy-on-one-page">A policy on one page</h3>
@@ -96,6 +97,7 @@
 <li><strong>Measuring activity.</strong> Commits and lines rise.</li>
 <li><strong>Simpson's paradox.</strong> The mix of work hides the real rates.</li>
 <li><strong>No baseline.</strong></li>
+<li><strong>Selection bias in your own data.</strong> The engineers who adopt first, or who keep using the tool, are not a random sample.</li>
 <li><strong>Survivor bias.</strong> Only counting tasks the agent finished.</li>
 <li><strong>Goodhart's law.</strong> A target turns into a game.</li>
 <li><strong>A policy nobody can find.</strong></li>
@@ -176,11 +178,13 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Forsgren, Humble and Kim, <em>Accelerate</em>, 2018, and the DORA reports (dora.dev): lead time, deployment frequency, change failure rate and time to restore.</li>
-<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>): a controlled trial with a faster task time.</li>
-<li>METR, <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, 2025 (<a href="https://arxiv.org/abs/2507.09089">arxiv.org/abs/2507.09089</a>): experienced developers were slower with AI tools on their own repositories.</li>
-<li>Claude Code documentation, <em>Manage costs effectively</em>, code.claude.com/docs/en/costs, read 2026-10: usage tracking.</li>
-<li>The pull-request data is invented. It comes from <code>ai-assisted-development/code/lesson6_metrics.py</code>. Study results are quoted from memory and were not re-opened. This module's fact-check is pending.</li>
+<li>Forsgren, Humble and Kim, <em>Accelerate</em>, 2018 (not re-opened).</li>
+<li>DORA, <em>DORA's software delivery performance metrics</em>, dora.dev/guides/dora-metrics, read 2026-11-13: the five metrics and the pitfalls. DORA, <em>State of AI-assisted Software Development 2025</em>, dora.dev/research/2025/dora-report and the Google blog post on it (blog.google/technology/developers/dora-report-2025), read 2026-11-13: amplifier framing, throughput link, trust figures and the seven-capability model. The full PDF was not read.</li>
+<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>): a controlled trial with a 55.8% faster task time on one task (abstract re-read 2026-11-13).</li>
+<li>METR, <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, 2025 (<a href="https://arxiv.org/abs/2507.09089">arxiv.org/abs/2507.09089</a>): 16 developers, 246 tasks, 19% longer with AI tools on their own repositories (abstract re-read 2026-11-13).</li>
+<li>METR, <em>We are Changing our Developer Productivity Experiment Design</em>, 24 February 2026 (metr.org/blog/2026-02-24-uplift-update), read 2026-11-13: the follow-up result and why METR called it unreliable.</li>
+<li>Claude Code documentation, <em>Manage costs effectively</em>, code.claude.com/docs/en/costs, re-read 2026-11: usage tracking.</li>
+<li>The pull-request data is invented. It comes from <code>ai-assisted-development/code/lesson6_metrics.py</code>. Study figures were checked against the abstracts and METR's post on 2026-11-13.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="running-at-scale.html"><span class="lbl">← Previous</span><span class="ttl">Running at scale: sessions, subagents and fan-out</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> When an agent writes the code, the scarce work is specifying and verifying, so speed comes from the checks you build, not from the agent.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-rate-and-a-mix">The mental model: a rate and a mix</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#outcome-metrics">Outcome metrics</a><a class="h3" href="#baselines-and-comparisons">Baselines and comparisons</a><a class="h3" href="#perception-versus-measurement">Perception versus measurement</a><a class="h3" href="#a-policy-on-one-page">A policy on one page</a><a class="h3" href="#skills-and-training">Skills and training</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-a-3-headline-that-is-a-mix-shift">Worked example: a 3× headline that is a mix shift</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
