@@ -10,7 +10,7 @@ This module covers those four jobs for the leader who sets the rules. It does no
 
 Every lesson has two layers. The body is for the leader who decides. A short **Under the hood** section is for the engineer who builds. It points to code that runs on the Python standard library and ends in `assert` lines. One file is a real Stop-hook script you can copy. The others are small models of cost, review time, permission rules and metrics, with invented numbers.
 
-**A note on scope and freshness.** Coding agents change every few weeks. Settings, modes and prices in this module come from the Claude Code documentation as read in 2026-10. The *ideas* hold longer than the *names*. Check the documentation before you copy a setting.
+**A note on scope and freshness.** Coding agents change every few weeks. Settings, modes and prices in this module come from the Claude Code documentation as re-checked in 2026-11. The *ideas* hold longer than the *names*. Check the documentation before you copy a setting.
 
 ## Where the depth lives
 

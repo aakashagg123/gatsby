@@ -13,7 +13,7 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>When an agent writes the code: where the bottleneck goes</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
 <p>A coding task has three steps: say what you want, get the code, check it. For a person, the middle step takes most of the time. An agent makes the middle step cheap. It does not make the other two cheap.</p>
 <p>So the work moves. <strong>Specifying</strong> gets more important, because the agent builds exactly what you describe and nothing you meant. <strong>Verifying</strong> gets more important, because the agent can produce a lot of plausible code fast, and some of it is wrong.</p>
@@ -80,6 +80,7 @@
 <li><strong>Speed vs. checking.</strong> Each unchecked step is borrowed time. It comes due as rework or as a defect.</li>
 <li><strong>Small tasks vs. large ones.</strong> Small tasks have cheap reviews and cheap retries. Large tasks give the agent room to drift.</li>
 <li><strong>Who reviews.</strong> The author of the prompt knows the intent. A second reader catches what the author expects to see.</li>
+<li><strong>Fit of the work.</strong> The agent helps most on well-defined work with a clear check. Open-ended work in a mature codebase is where trials have found the smallest gain, and sometimes a loss (<a href="measuring-and-governing.html">lesson 6</a>).</li>
 <li><strong>Where to invest first.</strong> Fast tests, a reliable build and clear module boundaries help every task. A smarter model helps some.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
@@ -154,9 +155,9 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Claude Code documentation, <em>Common workflows</em> and <em>Best practices</em>, code.claude.com/docs, read 2026-10: the explore, plan, implement and commit flow, and the advice to give the agent a way to check its own work.</li>
-<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>): a controlled trial in which developers with the assistant finished a task faster.</li>
-<li>The minutes, the rejection rates and every number from the model are invented. They come from <code>ai-assisted-development/code/lesson1_bottleneck.py</code>. This module's sources were not all re-opened during the build, and its fact-check is pending.</li>
+<li>Claude Code documentation, <em>Common workflows</em> and <em>Best practices</em>, code.claude.com/docs, re-read 2026-11: the explore, plan, implement and commit flow, and the advice to give the agent a way to check its own work.</li>
+<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>): a controlled trial in which developers with the assistant finished one task, writing an HTTP server in JavaScript, 55.8% faster (abstract re-read 2026-11).</li>
+<li>The minutes, the rejection rates and every number from the model are invented. They come from <code>ai-assisted-development/code/lesson1_bottleneck.py</code>. The Claude Code pages and the Peng abstract were re-opened on 2026-11-13.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="specs-and-the-context-file.html"><span class="lbl">→ Next</span><span class="ttl">Specs and the context file</span></a></div><footer class="foot"><strong>Core insight:</strong> When an agent writes the code, the scarce work is specifying and verifying, so speed comes from the checks you build, not from the agent.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-steps-and-a-retry-loop">The mental model: three steps and a retry loop</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#the-time-model">The time model</a><a class="h3" href="#three-levers">Three levers</a><a class="h3" href="#why-specifying-is-harder-than-it-looks">Why specifying is harder than it looks</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-the-same-agent-two-check-regimes">Worked example: the same agent, two check regimes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

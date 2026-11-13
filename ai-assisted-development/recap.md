@@ -4,9 +4,11 @@
 
 ## Real-world examples
 
-**A controlled trial: faster on a defined task (2023).** Peng and colleagues gave developers a task, with and without an AI pair programmer, and measured completion time. The group with the assistant finished faster. 🎯 *Takeaway:* on a [well-defined task](./when-an-agent-writes-the-code.md) with a clear check, the gain is real. Do not assume it carries to all work.
+**A controlled trial: faster on a defined task (2023).** Peng and colleagues gave developers one task, writing an HTTP server, with and without an AI pair programmer. The group with the assistant finished 55.8% faster. 🎯 *Takeaway:* on a [well-defined task](./when-an-agent-writes-the-code.md) with a clear check, the gain is real. Do not assume it carries to all work.
 
-**An RCT with the opposite result (2025).** METR ran a randomized trial with experienced open-source developers working on their own repositories. They were slower with the AI tools, though they had expected to be faster. 🎯 *Takeaway:* [perception is not measurement](./measuring-and-governing.md). Context, codebase familiarity and review cost change the answer.
+**An RCT with the opposite result (2025).** METR ran a randomized trial with experienced open-source developers working on their own repositories. They took 19% longer with the AI tools, though they had expected to be faster. 🎯 *Takeaway:* [perception is not measurement](./measuring-and-governing.md). Context, codebase familiarity and review cost change the answer.
+
+**METR's follow-up: a study that stopped working (2026).** METR tried to repeat the trial with newer tools. In February 2026 it called the new data unreliable, because many developers would not work without AI and skipped tasks. 🎯 *Takeaway:* no study gives you a settled number. Measure your own work, and watch for who drops out of your sample.
 
 **Anthropic's own guidance: give the agent a way to check.** The Claude Code best-practice pages say the single most useful thing is to give the agent a way to verify its work, such as tests or a script. 🎯 *Takeaway:* [verification is the product](./verification-is-the-product.md). Name the check in every spec.
 
@@ -46,7 +48,7 @@
 7. **How does a Stop hook enforce a check, and what prevents an endless loop?**
    <details><summary>Answer</summary>It runs the check when the agent tries to stop and exits 2 with a message if it fails, which keeps the agent working. A guard on `stop_hook_active` and a cap on consecutive blocks end the loop. (<a href="./verification-is-the-product.md">Lesson 3</a>)</details>
 8. **In what order are permission rules evaluated?**
-   <details><summary>Answer</summary>Deny, then ask, then allow. The first match wins, so a broad deny beats a narrow allow. (<a href="./control-permissions-modes-and-hooks.md">Lesson 4</a>)</details>
+   <details><summary>Answer</summary>Deny, then ask, then allow. The first match wins, so a broad deny beats a narrow allow. Deny rules apply in every mode. (<a href="./control-permissions-modes-and-hooks.md">Lesson 4</a>)</details>
 9. **A rule denies `curl`. Does that stop `/usr/bin/curl` or `sh -c 'curl …'`?**
    <details><summary>Answer</summary>No. A Bash rule matches the command as written. Use a sandbox when you need a real boundary. (<a href="./control-permissions-modes-and-hooks.md">Lesson 4</a>)</details>
 10. **When is bypass mode acceptable?**
@@ -62,7 +64,9 @@
 
 ## Sources
 
-- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)).
-- METR, *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, 2025 ([arxiv.org/abs/2507.09089](https://arxiv.org/abs/2507.09089)).
-- Claude Code documentation (code.claude.com/docs), read 2026-10: best practices, memory, hooks, permissions, permission modes, costs and headless mode.
-- The numbers in the questions come from `ai-assisted-development/code/`. They are invented. The trial results are quoted from memory and were not re-opened. This module's fact-check is pending.
+- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)), abstract re-read 2026-11-13.
+- METR, *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, 2025 ([arxiv.org/abs/2507.09089](https://arxiv.org/abs/2507.09089)), abstract re-read 2026-11-13.
+- METR, *We are Changing our Developer Productivity Experiment Design*, 2026 ([metr.org/blog/2026-02-24-uplift-update](https://metr.org/blog/2026-02-24-uplift-update/)).
+- DORA, *State of AI-assisted Software Development 2025* ([dora.dev/research/2025/dora-report](https://dora.dev/research/2025/dora-report/)).
+- Claude Code documentation (code.claude.com/docs), re-read 2026-11: best practices, memory, hooks, permissions, permission modes, costs and headless mode.
+- The numbers in the questions come from `ai-assisted-development/code/`. They are invented. The trial figures were checked against the abstracts and METR's post on 2026-11-13.

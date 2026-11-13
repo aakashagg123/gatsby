@@ -2,7 +2,7 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -46,11 +46,13 @@ An average mixes two things: how fast each kind of work is done, and how much of
 - **Review time.** Reviewer time per change, and queue wait.
 - **Cost per accepted change.** Tokens and seats over changes that stayed merged.
 
-These follow the delivery metrics popularized by the DORA research. Use them as a set. A gain in one with a loss in another is the signal.
+These follow the delivery metrics from the DORA research, with one change. DORA now names five metrics. Three measure throughput: change lead time, deployment frequency and failed deployment recovery time (the old "time to restore"). Two measure instability: change fail rate and deployment rework rate. DORA's rework rate counts unplanned deployments caused by a production incident. The "rework within 30 days" metric above is a wider team measure, so name which one you report. Use the metrics as a set. A gain in one with a loss in another is the signal. DORA also warns against setting a metric as a goal, and against blending metrics across teams with different contexts.
 
 ### Baselines and comparisons
 
-Measure before rollout. Compare the same team or the same kind of work. Randomized rollouts, where some teams start later, give the cleanest comparison. Controlled studies exist: one found developers finished a task faster with an assistant. Another found experienced developers on familiar codebases were slower, despite expecting to be faster. Results depend on the task, the people and the tools.
+Measure before rollout. Compare the same team or the same kind of work. Randomized rollouts, where some teams start later, give the cleanest comparison. Controlled studies exist, and they disagree. A 2023 trial found developers finished one defined task 55.8% faster with an assistant. A 2025 METR trial found experienced developers on their own mature repositories took 19% longer with early-2025 tools, though they expected to be faster (a confidence interval of +2% to +39%). METR then tried to repeat the study with newer tools. In February 2026 it said the new data was an unreliable signal. Many developers refused to work without AI, and 30% to 50% skipped tasks they would not do without it. METR believes developers are likely more sped up in early 2026 than in early 2025. It stopped short of giving a new number and is changing its design. The lesson for a leader: the field has no settled figure. Results depend on the task, the people and the tools, and the time the study was run. The tools also change faster than a study can finish.
+
+The 2025 DORA report on AI-assisted development (nearly 5,000 respondents) found about 90% adoption and a link between AI use and higher delivery throughput. It describes AI as an amplifier of the strengths and the weaknesses a team already has. It also found a trust gap: 24% of respondents trust AI output a great deal or a lot, and 30% trust it a little or not at all. DORA's companion AI Capabilities Model lists seven capabilities that raise the return. Read these as survey findings, not as controlled effects.
 
 ### Perception versus measurement
 
@@ -81,6 +83,7 @@ Skill with these tools varies a lot between engineers. Share what works: good co
 - **Measuring activity.** Commits and lines rise.
 - **Simpson's paradox.** The mix of work hides the real rates.
 - **No baseline.**
+- **Selection bias in your own data.** The engineers who adopt first, or who keep using the tool, are not a random sample.
 - **Survivor bias.** Only counting tasks the agent finished.
 - **Goodhart's law.** A target turns into a game.
 - **A policy nobody can find.**
@@ -135,8 +138,10 @@ Easy work got twice as fast. Hard work got 20% faster, and its rework doubled. A
 
 ## Sources
 
-- Forsgren, Humble and Kim, *Accelerate*, 2018, and the DORA reports (dora.dev): lead time, deployment frequency, change failure rate and time to restore.
-- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)): a controlled trial with a faster task time.
-- METR, *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, 2025 ([arxiv.org/abs/2507.09089](https://arxiv.org/abs/2507.09089)): experienced developers were slower with AI tools on their own repositories.
-- Claude Code documentation, *Manage costs effectively*, code.claude.com/docs/en/costs, read 2026-10: usage tracking.
-- The pull-request data is invented. It comes from `ai-assisted-development/code/lesson6_metrics.py`. Study results are quoted from memory and were not re-opened. This module's fact-check is pending.
+- Forsgren, Humble and Kim, *Accelerate*, 2018 (not re-opened).
+- DORA, *DORA's software delivery performance metrics*, dora.dev/guides/dora-metrics, read 2026-11-13: the five metrics and the pitfalls. DORA, *State of AI-assisted Software Development 2025*, dora.dev/research/2025/dora-report and the Google blog post on it (blog.google/technology/developers/dora-report-2025), read 2026-11-13: amplifier framing, throughput link, trust figures and the seven-capability model. The full PDF was not read.
+- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)): a controlled trial with a 55.8% faster task time on one task (abstract re-read 2026-11-13).
+- METR, *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, 2025 ([arxiv.org/abs/2507.09089](https://arxiv.org/abs/2507.09089)): 16 developers, 246 tasks, 19% longer with AI tools on their own repositories (abstract re-read 2026-11-13).
+- METR, *We are Changing our Developer Productivity Experiment Design*, 24 February 2026 (metr.org/blog/2026-02-24-uplift-update), read 2026-11-13: the follow-up result and why METR called it unreliable.
+- Claude Code documentation, *Manage costs effectively*, code.claude.com/docs/en/costs, re-read 2026-11: usage tracking.
+- The pull-request data is invented. It comes from `ai-assisted-development/code/lesson6_metrics.py`. Study figures were checked against the abstracts and METR's post on 2026-11-13.

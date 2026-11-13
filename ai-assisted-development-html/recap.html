@@ -14,8 +14,9 @@
     <h1>AI-assisted development — recap &amp; real-world examples</h1>
   </div>
   <div class="MarkdownContent"><h2 id="real-world-examples">Real-world examples</h2>
-<p><strong>A controlled trial: faster on a defined task (2023).</strong> Peng and colleagues gave developers a task, with and without an AI pair programmer, and measured completion time. The group with the assistant finished faster. 🎯 <em>Takeaway:</em> on a <a href="when-an-agent-writes-the-code.html">well-defined task</a> with a clear check, the gain is real. Do not assume it carries to all work.</p>
-<p><strong>An RCT with the opposite result (2025).</strong> METR ran a randomized trial with experienced open-source developers working on their own repositories. They were slower with the AI tools, though they had expected to be faster. 🎯 <em>Takeaway:</em> <a href="measuring-and-governing.html">perception is not measurement</a>. Context, codebase familiarity and review cost change the answer.</p>
+<p><strong>A controlled trial: faster on a defined task (2023).</strong> Peng and colleagues gave developers one task, writing an HTTP server, with and without an AI pair programmer. The group with the assistant finished 55.8% faster. 🎯 <em>Takeaway:</em> on a <a href="when-an-agent-writes-the-code.html">well-defined task</a> with a clear check, the gain is real. Do not assume it carries to all work.</p>
+<p><strong>An RCT with the opposite result (2025).</strong> METR ran a randomized trial with experienced open-source developers working on their own repositories. They took 19% longer with the AI tools, though they had expected to be faster. 🎯 <em>Takeaway:</em> <a href="measuring-and-governing.html">perception is not measurement</a>. Context, codebase familiarity and review cost change the answer.</p>
+<p><strong>METR's follow-up: a study that stopped working (2026).</strong> METR tried to repeat the trial with newer tools. In February 2026 it called the new data unreliable, because many developers would not work without AI and skipped tasks. 🎯 <em>Takeaway:</em> no study gives you a settled number. Measure your own work, and watch for who drops out of your sample.</p>
 <p><strong>Anthropic's own guidance: give the agent a way to check.</strong> The Claude Code best-practice pages say the single most useful thing is to give the agent a way to verify its work, such as tests or a script. 🎯 <em>Takeaway:</em> <a href="verification-is-the-product.html">verification is the product</a>. Name the check in every spec.</p>
 <p><strong>Documented limits of command rules.</strong> The Claude Code permissions page states that a Bash rule matches the command as written and lists forms it does not catch. 🎯 <em>Takeaway:</em> <a href="control-permissions-modes-and-hooks.html">rules are guardrails, not walls</a>. Use a sandbox for unattended work.</p>
 <p><strong>A published cost anchor.</strong> The Claude Code cost page reports about $13 per developer per active day on average across enterprise deployments, and under $30 for 90% of users. 🎯 <em>Takeaway:</em> <a href="running-at-scale.html">cost is per task and per session</a>, and a pilot gives your own number.</p>
@@ -105,7 +106,7 @@
 <li>
 <p><strong>In what order are permission rules evaluated?</strong>
  <br />
-<details><summary>Answer</summary>Deny, then ask, then allow. The first match wins, so a broad deny beats a narrow allow. (<a href="control-permissions-modes-and-hooks.html">Lesson 4</a>)</details></p>
+<details><summary>Answer</summary>Deny, then ask, then allow. The first match wins, so a broad deny beats a narrow allow. Deny rules apply in every mode. (<a href="control-permissions-modes-and-hooks.html">Lesson 4</a>)</details></p>
 </li>
 <li>
 <p><strong>A rule denies <code>curl</code>. Does that stop <code>/usr/bin/curl</code> or <code>sh -c 'curl …'</code>?</strong>
@@ -127,10 +128,12 @@
 </ol>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>).</li>
-<li>METR, <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, 2025 (<a href="https://arxiv.org/abs/2507.09089">arxiv.org/abs/2507.09089</a>).</li>
-<li>Claude Code documentation (code.claude.com/docs), read 2026-10: best practices, memory, hooks, permissions, permission modes, costs and headless mode.</li>
-<li>The numbers in the questions come from <code>ai-assisted-development/code/</code>. They are invented. The trial results are quoted from memory and were not re-opened. This module's fact-check is pending.</li>
+<li>Peng et al., <em>The Impact of AI on Developer Productivity: Evidence from GitHub Copilot</em>, 2023 (<a href="https://arxiv.org/abs/2302.06590">arxiv.org/abs/2302.06590</a>), abstract re-read 2026-11-13.</li>
+<li>METR, <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, 2025 (<a href="https://arxiv.org/abs/2507.09089">arxiv.org/abs/2507.09089</a>), abstract re-read 2026-11-13.</li>
+<li>METR, <em>We are Changing our Developer Productivity Experiment Design</em>, 2026 (<a href="https://metr.org/blog/2026-02-24-uplift-update/">metr.org/blog/2026-02-24-uplift-update</a>).</li>
+<li>DORA, <em>State of AI-assisted Software Development 2025</em> (<a href="https://dora.dev/research/2025/dora-report/">dora.dev/research/2025/dora-report</a>).</li>
+<li>Claude Code documentation (code.claude.com/docs), re-read 2026-11: best practices, memory, hooks, permissions, permission modes, costs and headless mode.</li>
+<li>The numbers in the questions come from <code>ai-assisted-development/code/</code>. They are invented. The trial figures were checked against the abstracts and METR's post on 2026-11-13.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="measuring-and-governing.html"><span class="lbl">← Previous</span><span class="ttl">Measuring and governing</span></a><span></span></div><footer class="foot"><strong>Core insight:</strong> When an agent writes the code, the scarce work is specifying and verifying, so speed comes from the checks you build, not from the agent.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples">Real-world examples</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

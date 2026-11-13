@@ -2,7 +2,7 @@
 
 *Part of [AI-assisted development for the product and technology leader](./README.md)*
 
-*Last reviewed: 2026-10 · Volatility: fast*
+*Last reviewed: 2026-11 · Volatility: fast*
 
 ## TL;DR
 
@@ -59,6 +59,7 @@ A person who codes fills gaps as they go. An agent fills gaps too, but with gues
 - **Speed vs. checking.** Each unchecked step is borrowed time. It comes due as rework or as a defect.
 - **Small tasks vs. large ones.** Small tasks have cheap reviews and cheap retries. Large tasks give the agent room to drift.
 - **Who reviews.** The author of the prompt knows the intent. A second reader catches what the author expects to see.
+- **Fit of the work.** The agent helps most on well-defined work with a clear check. Open-ended work in a mature codebase is where trials have found the smallest gain, and sometimes a loss ([lesson 6](./measuring-and-governing.md)).
 - **Where to invest first.** Fast tests, a reliable build and clear module boundaries help every task. A smarter model helps some.
 
 ## Failure modes
@@ -113,6 +114,6 @@ Read the third and fourth rows together. Making the agent infinitely fast moves 
 
 ## Sources
 
-- Claude Code documentation, *Common workflows* and *Best practices*, code.claude.com/docs, read 2026-10: the explore, plan, implement and commit flow, and the advice to give the agent a way to check its own work.
-- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)): a controlled trial in which developers with the assistant finished a task faster.
-- The minutes, the rejection rates and every number from the model are invented. They come from `ai-assisted-development/code/lesson1_bottleneck.py`. This module's sources were not all re-opened during the build, and its fact-check is pending.
+- Claude Code documentation, *Common workflows* and *Best practices*, code.claude.com/docs, re-read 2026-11: the explore, plan, implement and commit flow, and the advice to give the agent a way to check its own work.
+- Peng et al., *The Impact of AI on Developer Productivity: Evidence from GitHub Copilot*, 2023 ([arxiv.org/abs/2302.06590](https://arxiv.org/abs/2302.06590)): a controlled trial in which developers with the assistant finished one task, writing an HTTP server in JavaScript, 55.8% faster (abstract re-read 2026-11).
+- The minutes, the rejection rates and every number from the model are invented. They come from `ai-assisted-development/code/lesson1_bottleneck.py`. The Claude Code pages and the Peng abstract were re-opened on 2026-11-13.

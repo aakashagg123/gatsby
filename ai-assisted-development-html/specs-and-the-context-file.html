@@ -13,9 +13,9 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 02</span>
     <h1>Specs and the context file</h1>
   </div>
-  <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>An agent starts every session knowing nothing about your project. Two things fix that. A <strong>spec</strong> tells it what to do in this task. A <strong>context file</strong> tells it what is always true about the project. In Claude Code the context file is called <code>CLAUDE.md</code>. Other tools use similar files.</p>
+<p>An agent starts every session knowing nothing about your project. Two things fix that. A <strong>spec</strong> tells it what to do in this task. A <strong>context file</strong> tells it what is always true about the project. In Claude Code the context file is called <code>CLAUDE.md</code>. Other tools use similar files. Claude Code can also read a repository's <code>AGENTS.md</code> in place of <code>CLAUDE.md</code>, so one file can serve more than one tool.</p>
 <p>A good spec has four parts: the goal, the scope (which files and which not), the constraint that matters, and <strong>how the agent can check its own work</strong>. The last part is the one that most changes the result.</p>
 <p>A good context file is short. The documentation says to aim for under 200 lines. It loads into every session, so each line costs tokens every time, and a long file lowers how well the agent follows it. Put in what the agent cannot work out from the code: build and test commands, naming rules that differ from the default, and traps. Leave out what it can read for itself.</p>
 <blockquote class="pm-callout">
@@ -105,7 +105,8 @@
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>Short file vs. complete file.</strong> Every line costs tokens in every session. Include only what changes behaviour.</li>
-<li><strong>Shared vs. personal.</strong> The project file is for the team. Personal preferences belong in a user-level file.</li>
+<li><strong>Shared vs. personal.</strong> The project file is for the team. Personal preferences belong in a user-level file, or in <code>CLAUDE.local.md</code>, which you keep out of version control.</li>
+<li><strong>Notes the agent writes.</strong> Claude Code also keeps <strong>auto memory</strong>, notes it writes from your corrections. It loads the first 200 lines or 25KB. Review those notes like the shared file, because they also steer the agent.</li>
 <li><strong>Rules vs. enforcement.</strong> A line in the file is advice. A hook enforces (<a href="control-permissions-modes-and-hooks.html">lesson 4</a>). Put must-never rules in hooks or permissions.</li>
 <li><strong>Emphasis.</strong> Shouting works on one or two lines. On ten, it works on none.</li>
 </ul>
@@ -166,7 +167,7 @@
 <li class="task todo">Are rarely needed rules in path-scoped rules or skills?</li>
 <li class="task todo">Do must-never rules live in hooks or permissions, not only in prose?</li>
 <li class="task todo">Do task specs name a way to check the result?</li>
-<li class="task todo">Does the file have an owner and a pruning date?</li>
+<li class="task todo">Does the file have an owner and a pruning date? The <code>/doctor prompt-audit</code> command can find conflicting or stale lines.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
@@ -178,10 +179,10 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Claude Code documentation, <em>How Claude remembers your project</em> (memory), code.claude.com/docs/en/memory, read 2026-10: the target of under 200 lines, what to include, imports not reducing context cost, and path-scoped rules.</li>
-<li>Claude Code documentation, <em>Extend Claude with skills</em>, code.claude.com/docs/en/skills, read 2026-10: skills for procedures that do not belong in the always-loaded file.</li>
-<li>Claude Code documentation, <em>Permission modes</em>, code.claude.com/docs/en/permission-modes, read 2026-10: plan mode.</li>
-<li>The sample file, the token counts and the prices are invented. They come from <code>ai-assisted-development/code/lesson2_context_file.py</code>. The cache-read multiplier of 0.1 matches most Claude models; some newer models differ. This module's sources were not re-opened after the first reading, and its fact-check is pending.</li>
+<li>Claude Code documentation, <em>How Claude remembers your project</em> (memory), code.claude.com/docs/en/memory, re-read 2026-11: the target of under 200 lines, what to include, imports not reducing context cost, path-scoped rules, <code>AGENTS.md</code>, <code>CLAUDE.local.md</code>, auto memory and the prompt audit.</li>
+<li>Claude Code documentation, <em>Extend Claude with skills</em>, code.claude.com/docs/en/skills, re-read 2026-11: skills for procedures that do not belong in the always-loaded file.</li>
+<li>Claude Code documentation, <em>Permission modes</em>, code.claude.com/docs/en/permission-modes, re-read 2026-11: plan mode.</li>
+<li>The sample file, the token counts and the prices are invented. They come from <code>ai-assisted-development/code/lesson2_context_file.py</code>. The cache-read multiplier of 0.1 matches most Claude models. Claude Fable 5.2 and 5.1 and Mythos 5.2 and 5.1 charge 0.025 (platform.claude.com prompt-caching page, re-read 2026-11), so the table overstates their cost.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="when-an-agent-writes-the-code.html"><span class="lbl">← Previous</span><span class="ttl">When an agent writes the code: where the bottleneck goes</span></a><a class="navcard next" href="verification-is-the-product.html"><span class="lbl">→ Next</span><span class="ttl">Verification is the product</span></a></div><footer class="foot"><strong>Core insight:</strong> When an agent writes the code, the scarce work is specifying and verifying, so speed comes from the checks you build, not from the agent.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-briefing-for-a-capable-stranger">The mental model: a briefing for a capable stranger</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#what-goes-in-the-file">What goes in the file</a><a class="h3" href="#keep-it-short-and-move-the-rest">Keep it short, and move the rest</a><a class="h3" href="#the-spec-for-one-task">The spec for one task</a><a class="h3" href="#specs-from-product-people">Specs from product people</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-a-sample-file-and-its-price">Worked example: a sample file and its price</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
