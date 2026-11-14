@@ -113,7 +113,8 @@
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Tuning to add facts.</strong> The model learns the style of the facts and not the facts.</li>
-<li><strong>Narrow data, wide damage.</strong> A behaviour learned on one task leaks into others.</li>
+<li><strong>Narrow data, wide damage.</strong> A behaviour learned on one task leaks into others. Betley and colleagues tuned models on a narrow task, writing insecure code without saying so. The models then gave misaligned answers on unrelated prompts, though not every time. They call it emergent misalignment.</li>
+<li><strong>Eroded safety behaviour.</strong> Qi and colleagues showed that tuning an aligned model can weaken its safety training. Ten adversarial examples were enough to jailbreak GPT-3.5 Turbo through the vendor's tuning API. Plain, harmless datasets also lowered safety to a lesser degree. Re-run your safety and refusal tests after every tune.</li>
 <li><strong>No before-and-after test.</strong> The team checks the new behaviour and not the old ones.</li>
 <li><strong>Mistaking format for ability.</strong> A model that answers in the right shape is not a model that answers correctly.</li>
 </ul>
@@ -167,6 +168,7 @@
 <li class="task todo">Do we measure general ability before and after?</li>
 <li class="task todo">Is the data small, clean and checked?</li>
 <li class="task todo">Do we know what the vendor's own post-training already did?</li>
+<li class="task todo">Did we re-run safety and refusal tests on the tuned model?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
@@ -180,9 +182,11 @@
 <ul>
 <li>Ouyang et al., <em>Training language models to follow instructions with human feedback</em> (InstructGPT), NeurIPS 2022 (<a href="https://arxiv.org/abs/2203.02155">arxiv.org/abs/2203.02155</a>): the three-step pipeline, the data sizes, the preference of raters for the 1.3 billion parameter model, and the compute comparison.</li>
 <li>Zhou et al., <em>LIMA: Less Is More for Alignment</em>, NeurIPS 2023 (<a href="https://arxiv.org/abs/2305.11206">arxiv.org/abs/2305.11206</a>): strong results from 1,000 curated examples, and the superficial alignment hypothesis.</li>
+<li>Betley et al., <em>Emergent Misalignment</em>, 2025 (<a href="https://arxiv.org/abs/2502.17424">arxiv.org/abs/2502.17424</a>), abstract read 2026-11-14.</li>
+<li>Qi et al., <em>Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!</em> (<a href="https://arxiv.org/abs/2310.03693">arxiv.org/abs/2310.03693</a>), abstract read 2026-11-14.</li>
 <li>Wei et al., <em>Finetuned Language Models Are Zero-Shot Learners</em> (FLAN), ICLR 2022 (<a href="https://arxiv.org/abs/2109.01652">arxiv.org/abs/2109.01652</a>): instruction tuning.</li>
 <li>McCloskey and Cohen, <em>Catastrophic interference in connectionist networks</em>, 1989: forgetting when a network learns new data.</li>
-<li>The toy model and every number are invented. They come from <code>fine-tuning/code/</code>. This module's sources were not re-opened during the build, and its fact-check is pending.</li>
+<li>The toy model and every number are invented. They come from <code>fine-tuning/code/</code>. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="supervised-fine-tuning.html"><span class="lbl">→ Next</span><span class="ttl">Supervised fine-tuning</span></a></div><footer class="foot"><strong>Core insight:</strong> Tuning is a small push on a model that already knows most of what it knows, so it changes behaviour well, adds facts badly, and needs a test and a break-even before you start.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-raw-talent-then-training-for-the-job">The mental model: raw talent, then training for the job</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#what-each-stage-uses">What each stage uses</a><a class="h3" href="#why-a-small-step-can-change-so-much">Why a small step can change so much</a><a class="h3" href="#why-a-small-step-can-break-so-much">Why a small step can break so much</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-three-stages-on-a-toy">Worked example: three stages on a toy</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

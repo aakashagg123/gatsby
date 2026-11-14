@@ -79,12 +79,19 @@
 <p><code>B</code> starts at zero. So <code>A·B</code> starts at zero, and the model starts exactly as the base model. Training then moves it away.</p>
 <h3 id="memory">Memory</h3>
 <p>With mixed precision and the Adam optimizer, each trained weight costs about 16 bytes: 2 for the weight, 2 for its gradient and 12 for the optimizer state. Full tuning pays that for every weight. LoRA pays it only for the add-on, and keeps the frozen weights at 2 bytes each. <strong>QLoRA</strong> goes further and holds the frozen weights in 4 bits. Dettmers and colleagues used it to tune a 65 billion parameter model on one 48 GB accelerator.</p>
+<h3 id="what-the-newer-evidence-says">What the newer evidence says</h3>
+<ul>
+<li><strong>LoRA can match full tuning, with conditions.</strong> Thinking Machines found that for small to medium instruction-tuning and reasoning datasets, LoRA performs the same as full tuning. It must cover all layers, including the feed-forward ones, and it must not run out of capacity. A low rank falls behind when the dataset is large.</li>
+<li><strong>It learns less and forgets less.</strong> Biderman and colleagues compared both on code and maths. In common low-rank settings, LoRA clearly underperformed on the new domain. It also kept more of the base model's skills outside that domain. The two effects come together.</li>
+<li><strong>Reinforcement learning needs little capacity.</strong> With policy-gradient training, Thinking Machines found that even rank 1 matched full tuning. Each episode gives far less information than a supervised example does.</li>
+<li><strong>The learning rate is different.</strong> Their best LoRA learning rate was about ten times the full-tuning rate.</li>
+</ul>
 <h3 id="serving">Serving</h3>
 <p>An adapter can be merged into the weights for no extra latency. It can also be kept separate and swapped per request, so one base model serves many customers.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>Rank.</strong> A low rank is small and may underfit. A high rank is closer to full tuning and costs more.</li>
-<li><strong>Which matrices.</strong> Adapting attention matrices is common. Adding the feed-forward layers gives more capacity and more parameters.</li>
+<li><strong>Which matrices.</strong> Attention-only adapters were the early default. Thinking Machines found that attention-only underperforms, and that the feed-forward layers matter most. Adapt all layers when quality matters.</li>
 <li><strong>Merged vs. swappable.</strong> Merging is simplest to serve. Swapping gives per-customer behaviour from one base.</li>
 <li><strong>LoRA vs. full tuning.</strong> Full tuning can learn more and costs far more.</li>
 </ul>
@@ -153,11 +160,13 @@ tuned.A = tuned.B = None          # drop the adapter: the base model is back
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Hu et al., <em>LoRA: Low-Rank Adaptation of Large Language Models</em>, ICLR 2022 (<a href="https://arxiv.org/abs/2106.09685">arxiv.org/abs/2106.09685</a>): the low-rank update, the zero initialization of one factor, and the reported cuts in trainable parameters and memory for a 175 billion parameter model.</li>
+<li>Biderman et al., <em>LoRA Learns Less and Forgets Less</em>, 2024 (<a href="https://arxiv.org/abs/2405.09673">arxiv.org/abs/2405.09673</a>), abstract read 2026-11-14.</li>
+<li>Thinking Machines, <em>LoRA Without Regret</em>, 2025 (<a href="https://thinkingmachines.ai/blog/lora/">thinkingmachines.ai/blog/lora</a>), read 2026-11-14: the capacity, layer, rank and learning-rate findings above.</li>
 <li>Dettmers et al., <em>QLoRA: Efficient Finetuning of Quantized LLMs</em>, NeurIPS 2023 (<a href="https://arxiv.org/abs/2305.14314">arxiv.org/abs/2305.14314</a>): 4-bit frozen weights, and tuning a 65 billion parameter model on one 48 GB accelerator.</li>
-<li>The toy model and every number are invented or illustrative. They come from <code>fine-tuning/code/lesson3_lora.py</code>. This module's sources were not re-opened during the build, and its fact-check is pending.</li>
+<li>The toy model and every number are invented or illustrative. They come from <code>fine-tuning/code/lesson3_lora.py</code>. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="supervised-fine-tuning.html"><span class="lbl">← Previous</span><span class="ttl">Supervised fine-tuning</span></a><a class="navcard next" href="preference-tuning-and-reward-hacking.html"><span class="lbl">→ Next</span><span class="ttl">Preference tuning and reward hacking</span></a></div><footer class="foot"><strong>Core insight:</strong> Tuning is a small push on a model that already knows most of what it knows, so it changes behaviour well, adds facts badly, and needs a test and a break-even before you start.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-thin-patch-over-a-frozen-sheet">The mental model: a thin patch over a frozen sheet</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#how-many-parameters">How many parameters</a><a class="h3" href="#why-it-works">Why it works</a><a class="h3" href="#the-starting-point">The starting point</a><a class="h3" href="#memory">Memory</a><a class="h3" href="#serving">Serving</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-a-patch-on-a-toy-and-the-cost-at-scale">Worked example: a patch on a toy, and the cost at scale</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-thin-patch-over-a-frozen-sheet">The mental model: a thin patch over a frozen sheet</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#how-many-parameters">How many parameters</a><a class="h3" href="#why-it-works">Why it works</a><a class="h3" href="#the-starting-point">The starting point</a><a class="h3" href="#memory">Memory</a><a class="h3" href="#what-the-newer-evidence-says">What the newer evidence says</a><a class="h3" href="#serving">Serving</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-a-patch-on-a-toy-and-the-cost-at-scale">Worked example: a patch on a toy, and the cost at scale</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -41,6 +41,17 @@ flowchart TB
 
 Tuning fits these needs: a consistent format or voice, a narrow task where a small model can match a large one, a long prompt you want to shorten, and style that is hard to describe in words. It does not fit adding facts, fixing knowledge gaps or handling data that changes often. For those, see [RAG vs. long context vs. fine-tuning](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md).
 
+### Who still sells tuning
+
+Check this before you plan. Vendor tuning is shrinking for the largest closed models.
+
+- **OpenAI** is winding down self-serve fine-tuning. Since 7 May 2026, organizations that had not run fine-tuning cannot start. From 6 January 2027, even active customers cannot create new jobs. A fine-tuned model keeps serving until its base model is deprecated. GPT-4o, GPT-4o mini, GPT-4.1 and GPT-4.1 mini are scheduled to shut down on 14 January 2027, and the fine-tunes on them go with them. OpenAI's evals dashboard and API become read-only on 30 November 2026.
+- **Anthropic on Amazon Bedrock.** The Bedrock fine-tuning table lists Claude 3 Haiku as the only Claude model you can tune. Bedrock also stops new fine-tuning jobs on a model once it enters its Legacy period.
+- **Google** lists supervised tuning for Gemini 2.5 Pro and several Flash and Flash-Lite models (2.5, 3.1 and 3.5), and preference tuning for two Gemini 2.5 models.
+- **Open-weight models** are the main route to a tuned model you control. You carry the training, serving and upkeep.
+
+The product lesson is portability. A tuned model is tied to one base model, and the vendor sets that model's life. Keep the training data, the eval set and the training recipe in your own hands. Then a retune on the next base model is a rerun, not a rebuild.
+
 ### The cost model
 
 Per request, count input and output tokens at each model's price. A tuned small model usually has a short prompt, because the instructions and examples live in the weights. A custom model may also cost a premium to host.
@@ -58,7 +69,7 @@ Define two numbers before training. The first is the minimum gain on the target 
 ## Tradeoffs and decisions
 
 - **Prompt now vs. tune later.** A prompt ships today. Tuning pays back only at volume.
-- **Vendor tuning vs. own.** A vendor's service is quick and ties you to that vendor and base model. Your own gives control and a team to run.
+- **Vendor tuning vs. own.** A vendor's service is quick and ties you to that vendor and base model. The vendor can close the service or retire the base model, as OpenAI's wind-down shows. Your own gives control and a team to run.
 - **One task vs. many.** A model tuned for one task is sharp. Tuning for many is harder to test.
 - **Retune cadence.** More frequent retuning keeps pace with base models and costs more.
 
@@ -69,6 +80,7 @@ Define two numbers before training. The first is the minimum gain on the target 
 - **No upkeep.** The base model moves on, and the tuned model ages.
 - **Ungated release.** The target score rose and general ability fell, and nobody checked.
 - **Wrong problem.** A knowledge gap fixed with tuning, when retrieval would have worked.
+- **Retired base model.** The vendor shuts down the base model or the tuning service. The fine-tune stops working on that date, and no new job can be started to replace it.
 
 ## Under the hood
 
@@ -122,7 +134,8 @@ Candidate B would look best on the target task alone and is rejected for the dam
 - [ ] Is there a test that measures the behaviour we want to change?
 - [ ] Have we computed the break-even volume, including the fixed cost and upkeep?
 - [ ] Is the release gate defined before training?
-- [ ] Do we have a plan for when the base model changes?
+- [ ] Do we have a plan for when the base model changes, or when the vendor retires it or closes tuning?
+- [ ] Do we keep the data, the eval set and the recipe, so we can retune elsewhere?
 - [ ] Do we know the licence terms for any data a model wrote?
 
 ## Related lessons
@@ -135,7 +148,10 @@ Candidate B would look best on the target task alone and is rejected for the dam
 
 ## Sources
 
+- OpenAI, *Deprecations* ([developers.openai.com/api/docs/deprecations](https://developers.openai.com/api/docs/deprecations)), read 2026-11-14: the fine-tuning timeline, the base-model shutdown dates and the evals change. OpenAI's *Model optimization* guide says the platform is closed to new users.
+- Amazon, *Fine-tuning in Amazon Bedrock* ([docs.aws.amazon.com/bedrock/latest/userguide/custom-model-supported.html](https://docs.aws.amazon.com/bedrock/latest/userguide/custom-model-supported.html)) and *Model lifecycle* ([model-lifecycle.html](https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html)), read 2026-11-14.
+- Google Cloud, *Tune Gemini models* ([docs.cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models)), read 2026-11-14. The page does not name Vertex AI, so treat the product name as unconfirmed.
 - Hinton, Vinyals and Dean, *Distilling the Knowledge in a Neural Network*, 2015 ([arxiv.org/abs/1503.02531](https://arxiv.org/abs/1503.02531)).
 - Ouyang et al., *Training language models to follow instructions with human feedback*, NeurIPS 2022 ([arxiv.org/abs/2203.02155](https://arxiv.org/abs/2203.02155)): a smaller tuned model preferred over a much larger base model.
 - Hu et al., *LoRA*, ICLR 2022 ([arxiv.org/abs/2106.09685](https://arxiv.org/abs/2106.09685)): the cost of adapters.
-- The prices, volumes and every number are invented. They come from `fine-tuning/code/lesson6_decide.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The prices, volumes and every number are invented. They come from `fine-tuning/code/lesson6_decide.py`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.

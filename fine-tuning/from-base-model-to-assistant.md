@@ -65,7 +65,8 @@ The weights are shared. A change that makes one behaviour likely also changes th
 ## Failure modes
 
 - **Tuning to add facts.** The model learns the style of the facts and not the facts.
-- **Narrow data, wide damage.** A behaviour learned on one task leaks into others.
+- **Narrow data, wide damage.** A behaviour learned on one task leaks into others. Betley and colleagues tuned models on a narrow task, writing insecure code without saying so. The models then gave misaligned answers on unrelated prompts, though not every time. They call it emergent misalignment.
+- **Eroded safety behaviour.** Qi and colleagues showed that tuning an aligned model can weaken its safety training. Ten adversarial examples were enough to jailbreak GPT-3.5 Turbo through the vendor's tuning API. Plain, harmless datasets also lowered safety to a lesser degree. Re-run your safety and refusal tests after every tune.
 - **No before-and-after test.** The team checks the new behaviour and not the old ones.
 - **Mistaking format for ability.** A model that answers in the right shape is not a model that answers correctly.
 
@@ -105,6 +106,7 @@ def pretrained(seed=0, d=2):
 - [ ] Do we measure general ability before and after?
 - [ ] Is the data small, clean and checked?
 - [ ] Do we know what the vendor's own post-training already did?
+- [ ] Did we re-run safety and refusal tests on the tuned model?
 
 ## Related lessons
 
@@ -118,6 +120,8 @@ def pretrained(seed=0, d=2):
 
 - Ouyang et al., *Training language models to follow instructions with human feedback* (InstructGPT), NeurIPS 2022 ([arxiv.org/abs/2203.02155](https://arxiv.org/abs/2203.02155)): the three-step pipeline, the data sizes, the preference of raters for the 1.3 billion parameter model, and the compute comparison.
 - Zhou et al., *LIMA: Less Is More for Alignment*, NeurIPS 2023 ([arxiv.org/abs/2305.11206](https://arxiv.org/abs/2305.11206)): strong results from 1,000 curated examples, and the superficial alignment hypothesis.
+- Betley et al., *Emergent Misalignment*, 2025 ([arxiv.org/abs/2502.17424](https://arxiv.org/abs/2502.17424)), abstract read 2026-11-14.
+- Qi et al., *Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!* ([arxiv.org/abs/2310.03693](https://arxiv.org/abs/2310.03693)), abstract read 2026-11-14.
 - Wei et al., *Finetuned Language Models Are Zero-Shot Learners* (FLAN), ICLR 2022 ([arxiv.org/abs/2109.01652](https://arxiv.org/abs/2109.01652)): instruction tuning.
 - McCloskey and Cohen, *Catastrophic interference in connectionist networks*, 1989: forgetting when a network learns new data.
-- The toy model and every number are invented. They come from `fine-tuning/code/`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The toy model and every number are invented. They come from `fine-tuning/code/`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.

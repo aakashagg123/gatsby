@@ -14,6 +14,10 @@
 
 **New facts are learned slowly, and bring hallucination (2024).** Gekhman and colleagues found that models learn examples containing facts they do not know more slowly than examples they do know, and that learning them raises the rate of hallucination. 🎯 *Takeaway:* [tune for behaviour and retrieve for facts](./the-dataset.md).
 
+**A vendor closes its tuning service (2026).** OpenAI's deprecations page says that from 6 January 2027 even active customers cannot create new fine-tuning jobs. Fine-tuned models serve only until their base models retire. 🎯 *Takeaway:* [a fine-tune depends on the vendor's base model and service](./deciding-costing-and-checking-a-fine-tune.md). Keep the data, eval set and recipe, so you can retune elsewhere.
+
+**Narrow tuning, broad misalignment (2025).** Betley and colleagues found that tuning on insecure code, with no stated reason, made models give misaligned answers on unrelated prompts. 🎯 *Takeaway:* [test what you did not mean to change](./from-base-model-to-assistant.md), including safety behaviour.
+
 ## Module recap
 
 | Lesson | The one idea | The question it makes you ask |
@@ -66,5 +70,7 @@
 - Zhou et al., *LIMA: Less Is More for Alignment*, NeurIPS 2023 ([arxiv.org/abs/2305.11206](https://arxiv.org/abs/2305.11206)).
 - Dettmers et al., *QLoRA*, NeurIPS 2023 ([arxiv.org/abs/2305.14314](https://arxiv.org/abs/2305.14314)).
 - Gao, Schulman and Hilton, *Scaling Laws for Reward Model Overoptimization*, ICML 2023 ([arxiv.org/abs/2210.10760](https://arxiv.org/abs/2210.10760)).
+- OpenAI, *Deprecations*, read 2026-11-14 ([developers.openai.com/api/docs/deprecations](https://developers.openai.com/api/docs/deprecations)).
+- Betley et al., *Emergent Misalignment*, 2025 ([arxiv.org/abs/2502.17424](https://arxiv.org/abs/2502.17424)).
 - Gekhman et al., *Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?*, EMNLP 2024 ([arxiv.org/abs/2405.05904](https://arxiv.org/abs/2405.05904)).
-- The numbers in the questions come from `fine-tuning/code/`. They are invented or illustrative. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The numbers in the questions come from `fine-tuning/code/`. They are invented or illustrative. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.
