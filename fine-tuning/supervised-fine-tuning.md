@@ -141,4 +141,4 @@ Mixing in general text keeps the new behaviour and removes most of the damage. T
 - Zhou et al., *LIMA: Less Is More for Alignment*, NeurIPS 2023 ([arxiv.org/abs/2305.11206](https://arxiv.org/abs/2305.11206)): 1,000 curated examples, and quality over quantity.
 - Kirkpatrick et al., *Overcoming catastrophic forgetting in neural networks*, PNAS 2017 ([arxiv.org/abs/1612.00796](https://arxiv.org/abs/1612.00796)): forgetting and ways to limit it.
 - Ouyang et al., *Training language models to follow instructions with human feedback*, NeurIPS 2022 ([arxiv.org/abs/2203.02155](https://arxiv.org/abs/2203.02155)): mixing pretraining data into the reinforcement learning stage (called PPO-ptx in the paper) to limit regressions on public tasks.
-- The toy model and every number are invented. They come from `fine-tuning/code/lesson2_sft.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The toy model and every number are invented. They come from `fine-tuning/code/lesson2_sft.py`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.

@@ -30,7 +30,7 @@ picks the lowest tier number among due modules.
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-11-13 |
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
-| fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-10-17 |
+| fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-11-14 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-04 |
@@ -1033,3 +1033,27 @@ and a link to the merged PR.)
   - Flagged, not fixed: (1) A lesson on AI code review and agent-written-code security risk (vulnerability rates, review agents) would fit
     this module; owner decision. (2) Cross-module: `cost-optimization/` and `memory-and-context/` may list only 0.1x cache reads; not checked.
     (3) Recheck METR's redesigned study and the DORA 2026 report at the next run. (4) fine-tuning and transformers are next in line (both 2026-10-17).
+
+- 2026-11-14 — fine-tuning — tier 1. No row was due, so I took the oldest tier-1 row. Fine-tuning and transformers tied at 2026-10-17; I took
+  fine-tuning because vendor tuning availability changes fastest and drives roadmap decisions. Outcome: fixed and expanded. I read the README,
+  all six lessons and the recap in full first, and ran `check_module.py` (PASS before; rerun after).
+  - Fixed/expanded (decision-relevant): vendor tuning availability. OpenAI is winding down self-serve fine-tuning (closed to new orgs
+    7 May 2026; no new jobs for active customers from 6 Jan 2027; fine-tunes serve until the base model retires, e.g. GPT-4.1 and 4o family 14 Jan 2027).
+    Bedrock lists Claude 3 Haiku as its only tunable Claude model; Gemini tuning list noted (decide lesson, README, recap).
+    LoRA lesson: all-layer LoRA, capacity limits, ~10x learning rate, rank-1 RL, "learns less, forgets less". Emergent misalignment
+    and safety erosion added to failure modes and checklist (pipeline). DeepSeek-R1 added (preference lesson). Source notes now say which sources were reopened.
+  - Verified accurate (opened): InstructGPT 13k/33k/31k prompts and 4.9 / 60 / 3,640 petaflops/s-days (PDF text), 1.3B preferred over 175B (abstract);
+    LIMA 1,000 examples; QLoRA 65B on one 48GB GPU (abstract); Gekhman EMNLP 2024; Gao et al. overoptimization (abstract).
+  - Sources opened:
+    - https://developers.openai.com/api/docs/deprecations and /guides/model-optimization
+    - https://arxiv.org/abs/2203.02155 (+ PDF), 2305.11206, 2305.14314, 2405.05904, 2210.10760, 2405.09673, 2310.03693, 2502.17424, 2501.12948
+    - https://thinkingmachines.ai/blog/lora/ ; https://thinkingmachines.ai/tinker/ (not used in lessons; page content looked odd)
+    - https://docs.aws.amazon.com/bedrock/latest/userguide/custom-model-supported.html and model-lifecycle.html
+    - https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models (does not name Vertex AI)
+  - Search results only: OpenAI community thread (no official text), third-party blogs on the wind-down and on Claude 3 Haiku EOL (10 Sep 2026; conflicts
+    with the Bedrock table, so not stated).
+  - Not verified: the LoRA paper's memory figures, 16 bytes/weight arithmetic, Lee, Hinton, Stiennon, Bai, Shao, Kirkpatrick, Wei papers; the toy code
+    numbers (unchanged); whether Anthropic offers tuning outside Bedrock; GPT-5-family tuning status; the full Biderman and Betley papers (abstracts only).
+  - Flagged, not fixed: (1) A lesson on reinforcement fine-tuning / RLVR in practice and on open-weight tuning stacks may be warranted; owner decision.
+    (2) Cross-module: `generative-ai/build-buy-or-fine-tune.md`, `content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md` and `rag-vector-databases/rag-vs-long-context-vs-finetuning.md`
+    may assume vendor fine-tuning is widely available; not checked. (3) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (4) transformers is next.

@@ -69,6 +69,15 @@
 <h2 id="mechanics">Mechanics</h2>
 <h3 id="when-tuning-fits">When tuning fits</h3>
 <p>Tuning fits these needs: a consistent format or voice, a narrow task where a small model can match a large one, a long prompt you want to shorten, and style that is hard to describe in words. It does not fit adding facts, fixing knowledge gaps or handling data that changes often. For those, see <a href="../rag-vector-databases/rag-vs-long-context-vs-finetuning.html">RAG vs. long context vs. fine-tuning</a>.</p>
+<h3 id="who-still-sells-tuning">Who still sells tuning</h3>
+<p>Check this before you plan. Vendor tuning is shrinking for the largest closed models.</p>
+<ul>
+<li><strong>OpenAI</strong> is winding down self-serve fine-tuning. Since 7 May 2026, organizations that had not run fine-tuning cannot start. From 6 January 2027, even active customers cannot create new jobs. A fine-tuned model keeps serving until its base model is deprecated. GPT-4o, GPT-4o mini, GPT-4.1 and GPT-4.1 mini are scheduled to shut down on 14 January 2027, and the fine-tunes on them go with them. OpenAI's evals dashboard and API become read-only on 30 November 2026.</li>
+<li><strong>Anthropic on Amazon Bedrock.</strong> The Bedrock fine-tuning table lists Claude 3 Haiku as the only Claude model you can tune. Bedrock also stops new fine-tuning jobs on a model once it enters its Legacy period.</li>
+<li><strong>Google</strong> lists supervised tuning for Gemini 2.5 Pro and several Flash and Flash-Lite models (2.5, 3.1 and 3.5), and preference tuning for two Gemini 2.5 models.</li>
+<li><strong>Open-weight models</strong> are the main route to a tuned model you control. You carry the training, serving and upkeep.</li>
+</ul>
+<p>The product lesson is portability. A tuned model is tied to one base model, and the vendor sets that model's life. Keep the training data, the eval set and the training recipe in your own hands. Then a retune on the next base model is a rerun, not a rebuild.</p>
 <h3 id="the-cost-model">The cost model</h3>
 <p>Per request, count input and output tokens at each model's price. A tuned small model usually has a short prompt, because the instructions and examples live in the weights. A custom model may also cost a premium to host.</p>
 <p>The fixed cost has four parts: writing and checking data, training runs, the evaluation work, and upkeep. Upkeep is the one teams forget. When the base model improves, the tuned version falls behind, and the data may need to be run again.</p>
@@ -79,7 +88,7 @@
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
 <ul>
 <li><strong>Prompt now vs. tune later.</strong> A prompt ships today. Tuning pays back only at volume.</li>
-<li><strong>Vendor tuning vs. own.</strong> A vendor's service is quick and ties you to that vendor and base model. Your own gives control and a team to run.</li>
+<li><strong>Vendor tuning vs. own.</strong> A vendor's service is quick and ties you to that vendor and base model. The vendor can close the service or retire the base model, as OpenAI's wind-down shows. Your own gives control and a team to run.</li>
 <li><strong>One task vs. many.</strong> A model tuned for one task is sharp. Tuning for many is harder to test.</li>
 <li><strong>Retune cadence.</strong> More frequent retuning keeps pace with base models and costs more.</li>
 </ul>
@@ -90,6 +99,7 @@
 <li><strong>No upkeep.</strong> The base model moves on, and the tuned model ages.</li>
 <li><strong>Ungated release.</strong> The target score rose and general ability fell, and nobody checked.</li>
 <li><strong>Wrong problem.</strong> A knowledge gap fixed with tuning, when retrieval would have worked.</li>
+<li><strong>Retired base model.</strong> The vendor shuts down the base model or the tuning service. The fine-tune stops working on that date, and no new job can be started to replace it.</li>
 </ul>
 <h2 id="under-the-hood">Under the hood</h2>
 <p>The file is <code>fine-tuning/code/lesson6_decide.py</code>. All prices are invented. The break-even function compares the two ways to answer a request.</p>
@@ -183,7 +193,8 @@
 <li class="task todo">Is there a test that measures the behaviour we want to change?</li>
 <li class="task todo">Have we computed the break-even volume, including the fixed cost and upkeep?</li>
 <li class="task todo">Is the release gate defined before training?</li>
-<li class="task todo">Do we have a plan for when the base model changes?</li>
+<li class="task todo">Do we have a plan for when the base model changes, or when the vendor retires it or closes tuning?</li>
+<li class="task todo">Do we keep the data, the eval set and the recipe, so we can retune elsewhere?</li>
 <li class="task todo">Do we know the licence terms for any data a model wrote?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
@@ -196,13 +207,16 @@
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
+<li>OpenAI, <em>Deprecations</em> (<a href="https://developers.openai.com/api/docs/deprecations">developers.openai.com/api/docs/deprecations</a>), read 2026-11-14: the fine-tuning timeline, the base-model shutdown dates and the evals change. OpenAI's <em>Model optimization</em> guide says the platform is closed to new users.</li>
+<li>Amazon, <em>Fine-tuning in Amazon Bedrock</em> (<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/custom-model-supported.html">docs.aws.amazon.com/bedrock/latest/userguide/custom-model-supported.html</a>) and <em>Model lifecycle</em> (<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html">model-lifecycle.html</a>), read 2026-11-14.</li>
+<li>Google Cloud, <em>Tune Gemini models</em> (<a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models">docs.cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models</a>), read 2026-11-14. The page does not name Vertex AI, so treat the product name as unconfirmed.</li>
 <li>Hinton, Vinyals and Dean, <em>Distilling the Knowledge in a Neural Network</em>, 2015 (<a href="https://arxiv.org/abs/1503.02531">arxiv.org/abs/1503.02531</a>).</li>
 <li>Ouyang et al., <em>Training language models to follow instructions with human feedback</em>, NeurIPS 2022 (<a href="https://arxiv.org/abs/2203.02155">arxiv.org/abs/2203.02155</a>): a smaller tuned model preferred over a much larger base model.</li>
 <li>Hu et al., <em>LoRA</em>, ICLR 2022 (<a href="https://arxiv.org/abs/2106.09685">arxiv.org/abs/2106.09685</a>): the cost of adapters.</li>
-<li>The prices, volumes and every number are invented. They come from <code>fine-tuning/code/lesson6_decide.py</code>. This module's sources were not re-opened during the build, and its fact-check is pending.</li>
+<li>The prices, volumes and every number are invented. They come from <code>fine-tuning/code/lesson6_decide.py</code>. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="the-dataset.html"><span class="lbl">← Previous</span><span class="ttl">The dataset: quality, duplicates, contamination and synthetic data</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> Tuning is a small push on a model that already knows most of what it knows, so it changes behaviour well, adds facts badly, and needs a test and a break-even before you start.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-fixed-cost-against-a-per-request-saving">The mental model: a fixed cost against a per-request saving</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#when-tuning-fits">When tuning fits</a><a class="h3" href="#the-cost-model">The cost model</a><a class="h3" href="#distillation">Distillation</a><a class="h3" href="#the-release-gate">The release gate</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-when-a-fine-tune-pays-back">Worked example: when a fine-tune pays back</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-fixed-cost-against-a-per-request-saving">The mental model: a fixed cost against a per-request saving</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#when-tuning-fits">When tuning fits</a><a class="h3" href="#who-still-sells-tuning">Who still sells tuning</a><a class="h3" href="#the-cost-model">The cost model</a><a class="h3" href="#distillation">Distillation</a><a class="h3" href="#the-release-gate">The release gate</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-when-a-fine-tune-pays-back">Worked example: when a fine-tune pays back</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

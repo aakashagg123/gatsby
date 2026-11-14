@@ -136,4 +136,4 @@ Every planted problem is found. None would stop a training run. All would shape 
 - Hinton, Vinyals and Dean, *Distilling the Knowledge in a Neural Network*, 2015 ([arxiv.org/abs/1503.02531](https://arxiv.org/abs/1503.02531)).
 - Gekhman et al., *Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?*, EMNLP 2024 ([arxiv.org/abs/2405.05904](https://arxiv.org/abs/2405.05904)).
 - Zhou et al., *LIMA: Less Is More for Alignment*, NeurIPS 2023 ([arxiv.org/abs/2305.11206](https://arxiv.org/abs/2305.11206)): a small, curated dataset.
-- The dataset and every number are invented. They come from `fine-tuning/code/lesson5_dataset.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The dataset and every number are invented. They come from `fine-tuning/code/lesson5_dataset.py`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.

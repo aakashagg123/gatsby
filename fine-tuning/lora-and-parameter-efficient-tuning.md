@@ -55,6 +55,13 @@ Hu and colleagues argued that the change a model needs for a new task has a low 
 
 With mixed precision and the Adam optimizer, each trained weight costs about 16 bytes: 2 for the weight, 2 for its gradient and 12 for the optimizer state. Full tuning pays that for every weight. LoRA pays it only for the add-on, and keeps the frozen weights at 2 bytes each. **QLoRA** goes further and holds the frozen weights in 4 bits. Dettmers and colleagues used it to tune a 65 billion parameter model on one 48 GB accelerator.
 
+### What the newer evidence says
+
+- **LoRA can match full tuning, with conditions.** Thinking Machines found that for small to medium instruction-tuning and reasoning datasets, LoRA performs the same as full tuning. It must cover all layers, including the feed-forward ones, and it must not run out of capacity. A low rank falls behind when the dataset is large.
+- **It learns less and forgets less.** Biderman and colleagues compared both on code and maths. In common low-rank settings, LoRA clearly underperformed on the new domain. It also kept more of the base model's skills outside that domain. The two effects come together.
+- **Reinforcement learning needs little capacity.** With policy-gradient training, Thinking Machines found that even rank 1 matched full tuning. Each episode gives far less information than a supervised example does.
+- **The learning rate is different.** Their best LoRA learning rate was about ten times the full-tuning rate.
+
 ### Serving
 
 An adapter can be merged into the weights for no extra latency. It can also be kept separate and swapped per request, so one base model serves many customers.
@@ -62,7 +69,7 @@ An adapter can be merged into the weights for no extra latency. It can also be k
 ## Tradeoffs and decisions
 
 - **Rank.** A low rank is small and may underfit. A high rank is closer to full tuning and costs more.
-- **Which matrices.** Adapting attention matrices is common. Adding the feed-forward layers gives more capacity and more parameters.
+- **Which matrices.** Attention-only adapters were the early default. Thinking Machines found that attention-only underperforms, and that the feed-forward layers matter most. Adapt all layers when quality matters.
 - **Merged vs. swappable.** Merging is simplest to serve. Swapping gives per-customer behaviour from one base.
 - **LoRA vs. full tuning.** Full tuning can learn more and costs far more.
 
@@ -129,5 +136,7 @@ The memory counts weights, gradients and optimizer state, and leaves out activat
 ## Sources
 
 - Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, ICLR 2022 ([arxiv.org/abs/2106.09685](https://arxiv.org/abs/2106.09685)): the low-rank update, the zero initialization of one factor, and the reported cuts in trainable parameters and memory for a 175 billion parameter model.
+- Biderman et al., *LoRA Learns Less and Forgets Less*, 2024 ([arxiv.org/abs/2405.09673](https://arxiv.org/abs/2405.09673)), abstract read 2026-11-14.
+- Thinking Machines, *LoRA Without Regret*, 2025 ([thinkingmachines.ai/blog/lora](https://thinkingmachines.ai/blog/lora/)), read 2026-11-14: the capacity, layer, rank and learning-rate findings above.
 - Dettmers et al., *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arxiv.org/abs/2305.14314](https://arxiv.org/abs/2305.14314)): 4-bit frozen weights, and tuning a 65 billion parameter model on one 48 GB accelerator.
-- The toy model and every number are invented or illustrative. They come from `fine-tuning/code/lesson3_lora.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The toy model and every number are invented or illustrative. They come from `fine-tuning/code/lesson3_lora.py`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.

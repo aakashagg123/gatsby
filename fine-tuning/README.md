@@ -4,7 +4,7 @@
 
 A language model starts as a **base model**. It predicts the next token, and that is all. The assistant you use is that model after **post-training**: supervised fine-tuning on example answers, preference tuning on pairs of better and worse answers, and sometimes reinforcement learning against a check. Teams can add their own fine-tuning on top.
 
-Fine-tuning is the most over-chosen option in AI roadmaps. It feels like owning the model. It is good at changing behaviour, such as format, tone and a narrow task. It is a poor way to add facts. It has side effects, and it has a fixed cost that only high volume repays.
+Fine-tuning is the most over-chosen option in AI roadmaps. It feels like owning the model. It is good at changing behaviour, such as format, tone and a narrow task. It is a poor way to add facts. It has side effects, and it has a fixed cost that only high volume repays. In 2026 it is also a supply risk: OpenAI is closing its self-serve tuning service, and few closed models can be tuned at all.
 
 This module teaches how it works, so you can decide. You learn what each stage changes, what a few examples can and cannot do, why LoRA made tuning cheap, how preference tuning goes wrong, why the dataset is the real product, and how to test the break-even and gate the release.
 

@@ -49,7 +49,7 @@ In **RLHF**, the main model generates answers, the reward model scores them, and
 
 ### Feedback from other models, and from checks
 
-Constitutional AI, from Anthropic, replaces some human judgments with a model's judgments guided by written principles. For tasks with an automatic check, such as maths answers or unit tests, the reward can come from the check itself. This is called reinforcement learning with verifiable rewards. It is less open to flattery, because a test does not care about tone. It only works where a check exists.
+Constitutional AI, from Anthropic, replaces some human judgments with a model's judgments guided by written principles. For tasks with an automatic check, such as maths answers or unit tests, the reward can come from the check itself. This is called reinforcement learning with verifiable rewards. It is less open to flattery, because a test does not care about tone. It only works where a check exists. DeepSeek-R1 reported that reasoning skills such as self-checking can grow from pure reinforcement learning against rule-based checks, with no human-written reasoning examples. This is why recent reasoning models lean on it.
 
 ### Over-optimization
 
@@ -129,5 +129,6 @@ True quality peaks at 16 candidates and falls back to about zero. The proxy scor
 - Rafailov et al., *Direct Preference Optimization: Your Language Model is Secretly a Reward Model*, NeurIPS 2023 ([arxiv.org/abs/2305.18290](https://arxiv.org/abs/2305.18290)).
 - Bai et al., *Constitutional AI: Harmlessness from AI Feedback*, Anthropic, 2022 ([arxiv.org/abs/2212.08073](https://arxiv.org/abs/2212.08073)).
 - Gao, Schulman and Hilton, *Scaling Laws for Reward Model Overoptimization*, ICML 2023 ([arxiv.org/abs/2210.10760](https://arxiv.org/abs/2210.10760)).
+- DeepSeek-AI, *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning*, 2025 ([arxiv.org/abs/2501.12948](https://arxiv.org/abs/2501.12948)), abstract read 2026-11-14.
 - Shao et al., *DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models*, 2024 ([arxiv.org/abs/2402.03300](https://arxiv.org/abs/2402.03300)): reinforcement learning against checkable rewards.
-- The simulations and every number are invented. They come from `fine-tuning/code/lesson4_preference.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The simulations and every number are invented. They come from `fine-tuning/code/lesson4_preference.py`. Some sources were re-opened on 2026-11-14 (see the refresh log). The independent fact-check is still pending.
