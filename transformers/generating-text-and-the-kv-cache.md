@@ -49,7 +49,7 @@ For each layer and each token, the cache holds one key vector and one value vect
 
 `2 × layers × kv_heads × d_head × tokens × bytes per number`
 
-The `2` is for keys and values. In a standard model, `kv_heads × d_head` equals `d_model`.
+The `2` is for keys and values. In a standard model, `kv_heads × d_head` equals `d_model`. In a hybrid or local-global model, count only the layers that keep a full-length cache.
 
 ### What it saves
 
@@ -57,7 +57,9 @@ Without the cache, each step recomputes keys and values for every token so far. 
 
 ### How it limits serving
 
-The accelerator holds the weights once. Each active request then needs its own cache. After the weights, the leftover memory divided by the cache per request gives the number of requests that fit. Techniques such as [paged attention](../content/01-inference-internals/batching-and-paged-attention.md) manage this memory without waste. **Grouped-query attention**, covered in [lesson 6](./variants-and-reading-a-model-card.md), cuts the cache by sharing key and value heads.
+The accelerator holds the weights once. Each active request then needs its own cache. After the weights, the leftover memory divided by the cache per request gives the number of requests that fit. Techniques such as [paged attention](../content/01-inference-internals/batching-and-paged-attention.md) manage this memory without waste. **Grouped-query attention**, covered in [lesson 6](./variants-and-reading-a-model-card.md), cuts the cache by sharing key and value heads. Latent attention, local windows and linear-attention layers cut it further.
+
+Output length matters as much as prompt length. The cache grows with every generated token, so a model that writes a long reasoning trace before it answers holds a larger cache for longer. Plan memory for prompt plus maximum output.
 
 ## Tradeoffs and decisions
 
@@ -141,4 +143,4 @@ That is 7.0 times fewer. The gap widens as generation gets longer.
 - Vaswani et al., *Attention Is All You Need*, NeurIPS 2017 ([arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)): autoregressive decoding with masked attention.
 - Pope et al., *Efficiently Scaling Transformer Inference*, 2022 ([arxiv.org/abs/2211.05102](https://arxiv.org/abs/2211.05102)): the cost of the key-value cache and the memory-bound decode phase.
 - Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention*, SOSP 2023 ([arxiv.org/abs/2309.06180](https://arxiv.org/abs/2309.06180)): cache memory waste in serving and paged allocation.
-- The tiny model, the model shapes and every number are invented or illustrative. They come from `transformers/code/lesson5_kv_cache.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The tiny model, the model shapes and every number are invented or illustrative. They come from `transformers/code/lesson5_kv_cache.py`. The 2026-11-15 refresh did not re-open these papers for this lesson. Its fact-check is pending.

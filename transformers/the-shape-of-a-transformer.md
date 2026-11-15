@@ -70,7 +70,7 @@ Attention adds a term that depends on context. For `n` tokens, the scores and th
 - **Deep vs. wide.** More layers give more steps of reasoning-like composition. More width gives each step more room. Both cost parameters, and depth also adds latency, because layers run in sequence.
 - **Big vocabulary vs. small.** A large vocabulary shortens text, which saves tokens at run time. It also grows the embedding table and the output matrix.
 - **Long context vs. memory.** A larger `n_max` costs nothing in parameters for models with rotary positions. It costs a great deal in request memory and compute.
-- **Parameters vs. active parameters.** Some models use only part of their weights per token. [Lesson 6](./variants-and-reading-a-model-card.md) covers them.
+- **Parameters vs. active parameters.** Some models use only part of their weights per token, and in the largest open models the active share is under a tenth. [Lesson 6](./variants-and-reading-a-model-card.md) covers them.
 
 ## Failure modes
 
@@ -136,4 +136,4 @@ Run it on 8 tokens. The counter shows 57,344 multiply-adds. The formula for proj
 - Vaswani et al., *Attention Is All You Need*, NeurIPS 2017 ([arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)): the transformer, its block and its attention.
 - Radford et al., *Language Models are Unsupervised Multitask Learners*, OpenAI, 2019: the GPT-2 family, with a 1,024-token context and a vocabulary of 50,257. The 124 million figure for the small model is the one usually quoted for the released weights.
 - Kaplan et al., *Scaling Laws for Neural Language Models*, 2020 ([arxiv.org/abs/2001.08361](https://arxiv.org/abs/2001.08361)): about `2N` FLOPs per token for a forward pass, with `N` excluding embeddings.
-- The tiny model and every number from it are invented. They come from `transformers/code/lesson1_shape.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- The tiny model and every number from it are invented. They come from `transformers/code/lesson1_shape.py`. The 2026-11-15 refresh confirmed the 124 million, 50,257 and 1,024 figures on the Hugging Face GPT-2 model card. The fact-check is pending.

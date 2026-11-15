@@ -15,7 +15,7 @@
   </div>
   <div class="MarkdownContent"><p><em>Last reviewed: 2026-10 · Volatility: fast</em></p>
 <h2 id="tldr">TL;DR</h2>
-<p>The transformer of 2017 has many descendants. Most changes fall into four groups. Some change <strong>what the model reads</strong>: encoder-only, decoder-only and encoder-decoder designs. Some change <strong>how attention is stored</strong>: grouped-query attention shares key and value heads, which shrinks the cache. Some change <strong>how much of the model runs per token</strong>: a <strong>mixture of experts</strong> keeps many feed-forward layers and uses only a few for each token. And some change <strong>how attention is computed</strong>: tiled kernels such as FlashAttention, and windows.</p>
+<p>The transformer of 2017 has many descendants. Most changes fall into four groups. Some change <strong>what the model reads</strong>: encoder-only, decoder-only and encoder-decoder designs. Some change <strong>how attention is stored</strong>: grouped-query attention shares key and value heads, and latent attention compresses them. Both shrink the cache. Some change <strong>how much of the model runs per token</strong>: a <strong>mixture of experts</strong> keeps many feed-forward layers and uses only a few for each token. And some change <strong>how attention is computed</strong>: tiled kernels such as FlashAttention, local windows, and linear-attention layers mixed in with full attention.</p>
 <p>For a product leader the skill is reading a model card. A model card lists layers, hidden size, heads, key and value heads, feed-forward size, vocabulary, context length, and for mixtures, the number of experts. From those, you can compute total parameters, active parameters, weight memory and cache per token, and so serving cost.</p>
 <p>Two models with the same headline size can differ four times in cache memory, or three and a half times in total weights. The spec sheet shows it, if you know where to look.</p>
 <blockquote class="pm-callout">
@@ -72,12 +72,14 @@
 <p>An <strong>encoder-decoder</strong> model reads an input with an encoder, then writes an output with a decoder that attends to the encoder. T5 is an example. It suits translation and summarization. Most general chat models are now decoder-only.</p>
 <h3 id="grouped-query-attention">Grouped-query attention</h3>
 <p>In standard multi-head attention, each head has its own query, key and value. <strong>Multi-query attention</strong> shares one key and value head across all query heads. <strong>Grouped-query attention</strong> is in between: query heads are split into groups, and each group shares one key and value head. The weights and the cache for keys and values shrink by the ratio of heads to groups. Quality falls little for a large memory saving. Ainslie and colleagues introduced the grouped form.</p>
+<p><strong>Multi-head latent attention (MLA)</strong> goes further. It stores a small compressed vector per token and rebuilds keys and values from it. The DeepSeek-V2 authors report a 93.3% smaller cache than their earlier dense model. For a card, this means the head count alone no longer gives the cache size. Ask for the cache per token.</p>
 <h3 id="mixture-of-experts">Mixture of experts</h3>
 <p>A mixture replaces one feed-forward layer with <code>E</code> of them, called experts. A small router picks the top <code>k</code> experts for each token. The token passes through only those. The model holds <code>E</code> times the feed-forward weights and does <code>k</code> times the work of one.</p>
+<p>Newer mixtures use many small experts and add a shared expert that every token uses. DeepSeek-V3 has 671 billion total and 37 billion active parameters. Qwen3-Next-80B-A3B has 512 experts, with 10 routed and 1 shared per token, and 3 billion active of 80 billion. The ratio of total to active can now exceed 20 to 1. Memory is then the main cost, and you must fit every expert, even though each token uses few.</p>
 <p>So a mixture has two sizes. <strong>Total parameters</strong> set the memory to hold the model. <strong>Active parameters</strong> set the compute per token. A model with 47 billion total and 13 billion active needs the memory of a 47 billion model and computes like a 13 billion one. Shazeer and colleagues proposed the sparse form. Jiang and colleagues' Mixtral model is a well-known example with 8 experts, 2 used per token.</p>
 <h3 id="faster-attention-and-windows">Faster attention and windows</h3>
-<p><strong>FlashAttention</strong> computes exact attention in small tiles in fast memory. It never stores the full score matrix. The answer is the same and it runs faster and uses less memory. <strong>Sliding-window</strong> attention limits each token to its nearest neighbours, trading long-range reach for cost.</p>
-<p>Other designs replace attention, such as state-space models. They scale linearly with length. They are newer, and their quality at the largest scales is still being tested.</p>
+<p><strong>FlashAttention</strong> computes exact attention in small tiles in fast memory. It never stores the full score matrix. The answer is the same and it runs faster and uses less memory. <strong>Sliding-window</strong> attention limits each token to its nearest neighbours, trading long-range reach for cost. Many models now mix local layers with a few global layers. Gemma 3 does this to cut cache memory at long context, and it supports at least 128,000 tokens.</p>
+<p>Other designs replace some attention layers with linear-time layers, such as state-space models or gated delta rules. They keep a fixed-size state instead of a cache that grows. Pure versions of these designs retrieve exact details less well. So most production designs are <strong>hybrids</strong>. Jamba mixes Transformer and Mamba layers. Qwen3-Next uses three linear layers for every full-attention layer, so only a quarter of its layers carry a growing cache. The Kimi Linear authors report up to 75% less cache and up to 6 times faster decoding at 1 million tokens than a full-attention baseline. These are vendor claims. For a card, count the layers that carry a cache, not all layers.</p>
 <h3 id="reading-a-card">Reading a card</h3>
 <table>
 <thead>
@@ -115,12 +117,14 @@
 <li><strong>Fewer key and value heads vs. quality.</strong> Fewer heads shrink the cache. Past a point, quality drops.</li>
 <li><strong>Native window vs. extension.</strong> A longer window from extension may not match native quality.</li>
 <li><strong>New architecture vs. tested tooling.</strong> Serving software and kernels are tuned for the common designs first.</li>
+<li><strong>Hybrid vs. full attention.</strong> A hybrid cuts cache and long-context cost. It can lose exact recall of details far back in the input, so test retrieval at your length.</li>
 </ul>
 <h2 id="failure-modes">Failure modes</h2>
 <ul>
 <li><strong>Judging by active parameters.</strong> A mixture that fits no machine you own.</li>
 <li><strong>Judging by total parameters.</strong> A mixture that is cheap to run and ranked as expensive.</li>
 <li><strong>Ignoring the cache.</strong> Two models of equal size, one with four times the cache per token.</li>
+<li><strong>Counting layers for the cache formula.</strong> In a hybrid or local-global model, only some layers keep a full-length cache, so the plain formula overstates it.</li>
 <li><strong>Spec sheet from a blog post.</strong> Numbers that do not match the released weights.</li>
 <li><strong>Router imbalance.</strong> A mixture whose requests pile onto a few experts, so latency spikes.</li>
 </ul>
@@ -188,7 +192,8 @@
 <h2 id="practitioner-checklist">Practitioner checklist</h2>
 <ul>
 <li class="task todo">For each model, do we have total and active parameters, not one size?</li>
-<li class="task todo">Do we know the key and value head count and the cache per token?</li>
+<li class="task todo">Do we know the key and value head count, or the latent size for MLA, and the cache per token?</li>
+<li class="task todo">Do we know which layers are full attention, windowed or linear?</li>
 <li class="task todo">Do we know whether the model is a mixture, and its experts per token?</li>
 <li class="task todo">Have we checked the card against the released weights?</li>
 <li class="task todo">Is context length native, or extended?</li>
@@ -209,10 +214,13 @@
 <li>Shazeer, <em>Fast Transformer Decoding: One Write-Head is All You Need</em>, 2019 (<a href="https://arxiv.org/abs/1911.02150">arxiv.org/abs/1911.02150</a>): multi-query attention.</li>
 <li>Ainslie et al., <em>GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints</em>, EMNLP 2023 (<a href="https://arxiv.org/abs/2305.13245">arxiv.org/abs/2305.13245</a>): grouped-query attention.</li>
 <li>Shazeer et al., <em>Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</em>, ICLR 2017 (<a href="https://arxiv.org/abs/1701.06538">arxiv.org/abs/1701.06538</a>).</li>
-<li>Jiang et al., <em>Mixtral of Experts</em>, 2024 (<a href="https://arxiv.org/abs/2401.04088">arxiv.org/abs/2401.04088</a>): 8 experts, 2 per token, about 47 billion total and 13 billion active parameters.</li>
+<li>Jiang et al., <em>Mixtral of Experts</em>, 2024 (<a href="https://arxiv.org/abs/2401.04088">arxiv.org/abs/2401.04088</a>): 8 experts, 2 per token, about 47 billion total and 13 billion active parameters, 32,000-token context.</li>
+<li>DeepSeek-AI, <em>DeepSeek-V2</em> (<a href="https://arxiv.org/abs/2405.04434">arxiv.org/abs/2405.04434</a>): multi-head latent attention, 93.3% smaller cache, 236 billion total and 21 billion active. <em>DeepSeek-V3</em> (<a href="https://arxiv.org/abs/2412.19437">arxiv.org/abs/2412.19437</a>): 671 billion total and 37 billion active.</li>
+<li>Gemma Team, <em>Gemma 3 Technical Report</em>, 2025 (<a href="https://arxiv.org/abs/2503.19786">arxiv.org/abs/2503.19786</a>): more local than global layers to cut cache memory.</li>
+<li>Lieber et al., <em>Jamba</em>, 2024 (<a href="https://arxiv.org/abs/2403.19887">arxiv.org/abs/2403.19887</a>); Kimi Team, <em>Kimi Linear</em>, 2025 (<a href="https://arxiv.org/abs/2510.26692">arxiv.org/abs/2510.26692</a>); Qwen3-Next-80B-A3B model card (<a href="https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct">huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct</a>): hybrid layouts, 48 layers, 3 to 1 linear to full attention, 512 experts.</li>
 <li>Dao et al., <em>FlashAttention</em>, NeurIPS 2022 (<a href="https://arxiv.org/abs/2205.14135">arxiv.org/abs/2205.14135</a>).</li>
 <li>Gu and Dao, <em>Mamba: Linear-Time Sequence Modeling with Selective State Spaces</em>, 2023 (<a href="https://arxiv.org/abs/2312.00752">arxiv.org/abs/2312.00752</a>).</li>
-<li>The three cards and every number are illustrative. They come from <code>transformers/code/lesson6_variants.py</code>. This module's sources were not re-opened during the build, and its fact-check is pending. Model architectures change fast, so this lesson is stamped fast.</li>
+<li>The three cards and every number are illustrative. They come from <code>transformers/code/lesson6_variants.py</code>. The 2026-11-15 refresh opened the arXiv abstracts and the Qwen3-Next model card listed above. The independent fact-check is still pending. Model architectures change fast, so this lesson is stamped fast.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="generating-text-and-the-kv-cache.html"><span class="lbl">← Previous</span><span class="ttl">Generating text and the KV cache</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> A transformer is one block repeated, so almost every question about it is a counting question: parameters, multiply-adds and cache.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-four-dials">The mental model: four dials</a><a class="h2" href="#mechanics">Mechanics</a><a class="h3" href="#encoder-decoder-or-both">Encoder, decoder or both</a><a class="h3" href="#grouped-query-attention">Grouped-query attention</a><a class="h3" href="#mixture-of-experts">Mixture of experts</a><a class="h3" href="#faster-attention-and-windows">Faster attention and windows</a><a class="h3" href="#reading-a-card">Reading a card</a><a class="h2" href="#tradeoffs-and-decisions">Tradeoffs and decisions</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#under-the-hood">Under the hood</a><a class="h2" href="#worked-example-three-cards">Worked example: three cards</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>

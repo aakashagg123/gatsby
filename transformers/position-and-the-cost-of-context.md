@@ -56,20 +56,20 @@ Rotary has a clean property. The dot product of a rotated query and a rotated ke
 
 ### Going past the trained length
 
-A model sees only certain positions in training. Beyond them, the position signal is untested, and quality falls. Methods that rescale positions let a model run longer than it was trained, usually with some extra training. Chen and colleagues describe one such method. A longer limit on a spec sheet can come from this kind of extension. It does not guarantee the same quality across the range.
+A model sees only certain positions in training. Beyond them, the position signal is untested, and quality falls. Methods that rescale positions let a model run longer than it was trained, usually with some extra training. Chen and colleagues describe one such method, and YaRN is a later, widely used one for rotary models. Qwen3-Next, for example, lists a native context of 262,144 tokens, extendable to about 1 million with YaRN. A longer limit on a spec sheet can come from this kind of extension. It does not guarantee the same quality across the range.
 
 ### What the length costs
 
 Count multiply-adds for one layer with `d_ff = 4d`. Projections and the feed-forward layer cost `12nd²`. Attention costs `2n²d`. They are equal when `n = 6d`. For a hidden size of 4,096, that is 24,576 tokens. Below that, the model's weights dominate the work. Above it, attention does.
 
-Memory is a second bill. A plain implementation stores the full `n × n` score matrix for each head. FlashAttention computes the same result in tiles and never stores the whole matrix, so memory grows with the length instead of its square. The compute still grows with the square.
+Memory is a second bill. A plain implementation stores the full `n × n` score matrix for each head. FlashAttention computes the same result in tiles and never stores the whole matrix, so memory grows with the length instead of its square. The compute still grows with the square. Later versions run faster on newer chips. The FlashAttention-3 authors report up to 740 TFLOPs/s on an H100 in 16-bit, about 75% of its peak.
 
 ## Tradeoffs and decisions
 
 - **Longer window vs. cost.** Every extra token adds to every later token's attention.
 - **Window vs. retrieval.** Sending the whole document costs more than sending the right passages. See [RAG vs. long context](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md).
 - **Explicit vs. implicit position.** Explicit signals are tested and standard. They fix a trained length.
-- **Exact vs. approximate attention.** Windowed or sparse attention cuts cost and can lose long-range links.
+- **Exact vs. approximate attention.** Windowed or sparse attention cuts cost and can lose long-range links. A pure window also fails once text passes the window, unless the first few tokens stay in the cache. Xiao and colleagues call these tokens attention sinks.
 
 ## Failure modes
 
@@ -139,5 +139,7 @@ This is why a plain implementation cannot reach long contexts, and why tiled att
 - Press et al., *Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation* (ALiBi), ICLR 2022 ([arxiv.org/abs/2108.12409](https://arxiv.org/abs/2108.12409)).
 - Haviv et al., *Transformer Language Models without Positional Encodings Still Learn Positional Information*, 2022 ([arxiv.org/abs/2203.16634](https://arxiv.org/abs/2203.16634)).
 - Chen et al., *Extending Context Window of Large Language Models via Positional Interpolation*, 2023 ([arxiv.org/abs/2306.15595](https://arxiv.org/abs/2306.15595)).
-- Dao et al., *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*, NeurIPS 2022 ([arxiv.org/abs/2205.14135](https://arxiv.org/abs/2205.14135)).
-- The tiny models and every number are invented. They come from `transformers/code/lesson4_position_cost.py`. This module's sources were not re-opened during the build, and its fact-check is pending.
+- Dao et al., *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*, NeurIPS 2022 ([arxiv.org/abs/2205.14135](https://arxiv.org/abs/2205.14135)); *FlashAttention-2* ([arxiv.org/abs/2307.08691](https://arxiv.org/abs/2307.08691)); *FlashAttention-3* ([arxiv.org/abs/2407.08608](https://arxiv.org/abs/2407.08608)).
+- Peng et al., *YaRN: Efficient Context Window Extension of Large Language Models*, 2023 ([arxiv.org/abs/2309.00071](https://arxiv.org/abs/2309.00071)).
+- Xiao et al., *Efficient Streaming Language Models with Attention Sinks*, 2023 ([arxiv.org/abs/2309.17453](https://arxiv.org/abs/2309.17453)).
+- The tiny models and every number are invented. They come from `transformers/code/lesson4_position_cost.py`. The 2026-11-15 refresh opened the YaRN, attention-sink and FlashAttention abstracts. The fact-check is pending.
