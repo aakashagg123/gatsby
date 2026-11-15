@@ -23,7 +23,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  # Renamed from "pages" on 2026-11-11: run 191 was stuck in "waiting" and could not be
+  # cancelled, and it blocked every newer deploy. The old name can come back later.
+  group: "pages-2"
   cancel-in-progress: false
 
 jobs:
