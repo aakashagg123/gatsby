@@ -10,9 +10,11 @@
 
 **Tiled attention (2022).** The FlashAttention authors kept the exact same maths and changed where the numbers live. They process attention in small tiles in fast memory and never store the full score matrix. Models trained and served faster, and longer inputs became practical. 🎯 *Takeaway:* [the score matrix is the cost of length](./position-and-the-cost-of-context.md). A kernel change cut it without changing the answer.
 
-**Sharing key and value heads (2023).** The Llama 2 paper reports that its larger models use grouped-query attention, which shrinks the cache for keys and values. The motive was serving: a smaller cache means more requests per machine. 🎯 *Takeaway:* [the cache sets concurrency](./generating-text-and-the-kv-cache.md). An architecture choice became a capacity choice.
+**Sharing key and value heads (2023).** The Llama 2 paper reports that its larger models (34B and 70B in the paper, and 70B in the release) use grouped-query attention, which shrinks the cache for keys and values. The motive was serving: a smaller cache means more requests per machine. 🎯 *Takeaway:* [the cache sets concurrency](./generating-text-and-the-kv-cache.md). An architecture choice became a capacity choice.
 
 **Experts (2024).** The Mixtral model uses 8 feed-forward experts and sends each token to 2. Its authors report about 47 billion parameters in total and about 13 billion in use for each token. 🎯 *Takeaway:* a [model card](./variants-and-reading-a-model-card.md) has two sizes. One sets memory and the other sets compute.
+
+**Latent attention and hybrids (2024 to 2025).** DeepSeek-V2 cut its cache by 93.3% with latent attention. DeepSeek-V3 then reached 671 billion total and 37 billion active parameters. Later open models, such as Qwen3-Next and Kimi Linear, mix linear-time layers with a few full-attention layers. 🎯 *Takeaway:* the cache formula in [lesson 5](./generating-text-and-the-kv-cache.md) is a starting point. Ask the vendor for the cache per token.
 
 ## Module recap
 
@@ -68,4 +70,5 @@
 - Dao et al., *FlashAttention*, NeurIPS 2022 ([arxiv.org/abs/2205.14135](https://arxiv.org/abs/2205.14135)).
 - Touvron et al., *Llama 2: Open Foundation and Fine-Tuned Chat Models*, 2023 ([arxiv.org/abs/2307.09288](https://arxiv.org/abs/2307.09288)): grouped-query attention in the larger models.
 - Jiang et al., *Mixtral of Experts*, 2024 ([arxiv.org/abs/2401.04088](https://arxiv.org/abs/2401.04088)).
-- The numbers in the questions come from `transformers/code/`. They are invented or illustrative. This module's sources were not re-opened during the build, and its fact-check is pending.
+- DeepSeek-AI, *DeepSeek-V2* ([arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434)) and *DeepSeek-V3* ([arxiv.org/abs/2412.19437](https://arxiv.org/abs/2412.19437)); Kimi Team, *Kimi Linear* ([arxiv.org/abs/2510.26692](https://arxiv.org/abs/2510.26692)).
+- The numbers in the questions come from `transformers/code/`. They are invented or illustrative. The 2026-11-15 refresh opened the Vaswani, Mixtral, DeepSeek and Kimi abstracts. Its fact-check is pending.

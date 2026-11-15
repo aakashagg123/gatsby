@@ -31,7 +31,7 @@ picks the lowest tier number among due modules.
 | building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-11-14 |
-| transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-10-17 |
+| transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-11-15 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-04 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
@@ -1057,3 +1057,26 @@ and a link to the merged PR.)
   - Flagged, not fixed: (1) A lesson on reinforcement fine-tuning / RLVR in practice and on open-weight tuning stacks may be warranted; owner decision.
     (2) Cross-module: `generative-ai/build-buy-or-fine-tune.md`, `content/06-strategy-tradeoffs/finetune-vs-icl-vs-rag.md` and `rag-vector-databases/rag-vs-long-context-vs-finetuning.md`
     may assume vendor fine-tuning is widely available; not checked. (3) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (4) transformers is next.
+
+- 2026-11-15 — transformers — tier 1. No row was due (no tier-1 row past 45 days), so I took the oldest tier-1 row, which was transformers
+  (2026-10-17). Outcome: expanded and fixed. I read the README, all six lessons and the recap in full first. `check_module.py`: PASS (avg sentence 11.2, Flesch 68).
+  - Fixed: the claim that state-space and similar designs are "still being tested at the largest scales" was stale. Hybrids ship now (lesson 6).
+    Recap Llama 2 line now says which sizes use GQA (34B and 70B in the paper, 70B released).
+  - Expanded: multi-head latent attention (93.3% smaller cache, DeepSeek-V2); fine-grained and shared-expert MoE with total/active figures
+    (DeepSeek-V3 671B/37B, Qwen3-Next 80B/3B, 512 experts); local-global layers (Gemma 3); hybrid linear-attention layouts (Jamba, Qwen3-Next 3:1, Kimi Linear);
+    "count only layers that keep a cache" in the cache formula and card checklist; output length and reasoning traces in cache planning (lesson 5);
+    YaRN, attention sinks and FlashAttention-2/3 (lesson 4); a new recap example.
+  - Verified accurate (opened): Vaswani et al. authors and abstract; Mixtral 47B total, 13B active, 8 experts, top 2, 32k context; GPT-2 small 124M, 50,257 vocab,
+    1,024 context (HF model card); GQA abstract; Lost in the Middle abstract; Kaplan abstract.
+  - Sources opened:
+    - https://arxiv.org/abs/1706.03762, 2401.04088, 2412.19437, 2405.04434, 2307.08691, 2407.08608, 2305.13245, 2001.08361, 2307.03172, 2309.17453, 2309.00071,
+      2503.19786, 2510.26692, 2403.19887, 2508.10925 (page gave little)
+    - https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct ; https://huggingface.co/openai-community/gpt2 ; https://huggingface.co/openai/gpt-oss-120b (117B/5.1B only; not used)
+  - Search results only (not opened): Llama 2 GQA sizes (arXiv PDF was too large to fetch; secondary summaries say 34B and 70B, and 34B unreleased); Qwen3-Next 3:1 ratio
+    cross-check (Raschka gallery snippet; the model card confirms the layout).
+  - Not verified: Jain and Wallace, Olsson, Elhage, Geva, Haviv, Press, Su, Chen, Pope, Kwon, Shazeer, Devlin, Raffel, Gu and Dao; the Kaplan 2N rule in the paper body;
+    TACL year (arXiv says accepted 2023, lesson says 2024); the claim that GPT-2 moved layer norm to sub-block inputs; Kimi Linear numbers are vendor claims;
+    all worked-example numbers come from the repo code, which was not changed and not rerun beyond the formulas.
+  - Flagged, not fixed: (1) A lesson on test-time compute and long outputs (reasoning models, speculative decoding, multi-token prediction) and its serving cost
+    may be warranted; owner decision. (2) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (3) Cross-module: `llms/`,
+    `cost-optimization/` and `content/01-inference-internals/kv-cache-management.md` may omit MLA and hybrid layers; not checked.
