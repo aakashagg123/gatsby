@@ -32,7 +32,7 @@ picks the lowest tier number among due modules.
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-11-14 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-11-15 |
-| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-10-24 |
+| knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-11-16 |
 | ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-04 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | 2026-11-02 |
@@ -1080,3 +1080,24 @@ and a link to the merged PR.)
   - Flagged, not fixed: (1) A lesson on test-time compute and long outputs (reasoning models, speculative decoding, multi-token prediction) and its serving cost
     may be warranted; owner decision. (2) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (3) Cross-module: `llms/`,
     `cost-optimization/` and `content/01-inference-internals/kv-cache-management.md` may omit MLA and hybrid layers; not checked.
+
+- 2026-11-16 — knowledge-graphs — tier 1. No row was due, so I took the oldest tier-1 row (2026-10-24). Outcome: fixed.
+  I read the README, all eight lessons and the recap in full first. This resolves the 2026-10-24 flag to recheck PG19 SQL/PGQ.
+  - Fixed (decision-relevant): the storage lesson said PostgreSQL 19 added SQL/PGQ in beta. The PostgreSQL 19 RC 2 release notes
+    (docs/19, banner dated 12 Nov 2026) contain no graph entry, the docs/19 CREATE PROPERTY GRAPH page returns 404, and Neon reports a
+    revert on 7 Sep 2026 (next chance PostgreSQL 20, Sep 2027). The lesson now says not to count on it. BigQuery Graph claim now cites its docs
+    (GQL and SQL/PGQ compatible). RDF 1.2 status updated: still a Candidate Recommendation Draft (15 Nov 2026).
+  - Expanded: Graphiti's reference MCP server has no auth or prompt-injection protection (LLM lesson).
+  - Verified accurate (opened): GQL is ISO/IEC 39075 (published 12 Apr 2024, from search results only); LazyGraphRAG indexing cost
+    "identical to vector RAG and 0.1% of full GraphRAG" (Microsoft blog); RAG vs GraphRAG paper findings (arXiv abstract);
+    Graphiti bi-temporal invalidation (GitHub README); CVE-2026-35402 read-only bypass fixed in 0.6.0 (search results, advisory GHSA-x3cv-r3g3-fpg9).
+  - Sources opened: https://www.postgresql.org/docs/19/release-19.html ; https://www.w3.org/TR/rdf12-concepts/ ;
+    https://docs.cloud.google.com/bigquery/docs/graph-overview ; https://neon.com/postgresql/postgresql-19/sql-pgq-graph-queries ;
+    https://microsoft.github.io/graphrag/ ; https://arxiv.org/abs/2502.11371 ; https://github.com/getzep/graphiti ;
+    https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/
+  - Search results only: GQL date and CVE details (several databases disagree on severity); the git commit log for the revert (429).
+  - Not verified: Google 500M/3.5B (checked 2026-10-24), Panama Papers, Amazon, LinkedIn, NASA, SHACL/OWL/FIBO/GS1 and schema.org claims, the
+    ~80% construction rule of thumb (already softened), LLM entity-resolution coverage. Source count is below the 5-10 target for opened sources
+    that changed claims; the rest of the module was not re-sourced.
+  - Flagged: (1) A primary source for the PG19 revert (git commit or pgsql-hackers) should be opened next run; Neon is secondary.
+    (2) The module may need a note on LLM-assisted entity resolution. (3) Independent fact-check not run; review stamps unchanged.

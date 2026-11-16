@@ -147,7 +147,8 @@ accumulating in an unauditable text scratchpad. Open-source engines such as Grap
 engine inside Zep) do this with <em>temporal</em> graphs. When a new fact contradicts an old one, the
 old edge is marked invalid, not deleted. So the agent can answer "what is true now" and "what
 was true then." The same rules apply: agent-written facts need provenance and review before
-they count as knowledge.</p>
+they count as knowledge. Graphiti's own reference MCP server ships with no authentication or prompt-injection
+protection, so put access control and review in front of it before agents write to a shared graph.</p>
 <h2 id="direction-two-the-model-builds-the-graph">Direction two: the model builds the graph</h2>
 <p><a href="building-the-graph.html">Construction</a> was always the cost center. Its most
 expensive station — reading unstructured text and drafting structured facts — is now
