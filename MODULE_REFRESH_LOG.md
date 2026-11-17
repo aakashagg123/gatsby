@@ -28,7 +28,7 @@ picks the lowest tier number among due modules.
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-11-12 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-11-13 |
-| building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-02 |
+| building-ai-native-products | building-ai-native-products/ | scripts/build_building_ai_native_products.py | 1 | 45 | 2026-11-17 |
 | explainers | explainers/ | scripts/build_explainers.py | 1 | 45 | 2026-11-10 |
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-11-14 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-11-15 |
@@ -1101,3 +1101,23 @@ and a link to the merged PR.)
     that changed claims; the rest of the module was not re-sourced.
   - Flagged: (1) A primary source for the PG19 revert (git commit or pgsql-hackers) should be opened next run; Neon is secondary.
     (2) The module may need a note on LLM-assisted entity resolution. (3) Independent fact-check not run; review stamps unchanged.
+
+- 2026-11-17 — building-ai-native-products — tier 1. No row was due, so I took the oldest tier-1 row (2026-11-02). Outcome: expanded.
+  I read the README, all 11 lessons and the recap in full first. No earlier flags named this module.
+  - Expanded (decision-relevant): reasoning effort as a fourth model dial, with thinking tokens in bake-off cost (model-intuition lessons);
+    judge biases, pass@k vs pass^k, error bars, capability vs regression evals (evals and hill-climbing lessons); Rule of Two and lethal trifecta
+    (agentic flows); 93% prompt-acceptance and auto-approve/interrupt data (user behaviour and approval design).
+  - Verified accurate (opened): all 18 HAX guideline titles quoted; Anthropic "Building effective agents" definitions, absolute-filepath example, stop conditions,
+    sandbox advice (page now also says its tooling text is dated and points to Managed Agents); the 95% band arithmetic (computed).
+  - Sources opened:
+    - https://www.anthropic.com/engineering/building-effective-agents ; https://www.microsoft.com/en-us/haxtoolkit/library/
+    - https://www.anthropic.com/research/measuring-agent-autonomy ; https://www.anthropic.com/engineering/claude-code-auto-mode
+    - https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents ; https://platform.claude.com/docs/en/build-with-claude/effort
+    - https://ai.meta.com/blog/practical-ai-agent-security/ ; https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+    - https://arxiv.org/abs/2306.05685 ; https://arxiv.org/abs/2411.00640 (abstract only)
+    - https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/ (date only, 2025-12-09; risk names not readable; not used)
+  - Search results only: Dell'Acqua (HBS/SSRN pages returned 403; Organization Science 37(2) version seen in a snippet; 758 consultants design); the 97% auto-mode figure (press only).
+  - Not verified: Parasuraman and Riley 1997, Lee and See 2004, Kelley 1984, Hamel Husain, Google PAIR guidebook; the "thinking tokens billed as output" claim on a pricing page;
+    EU AI Act transparency and human-oversight dates (module does not cover them). Source count meets 5-10 opened.
+  - Flagged, not fixed: (1) A lesson on agent UX patterns for long-running and background agents (progress, steering, handoff) may be warranted; owner decision.
+    (2) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (3) Next run: open the Dell'Acqua paper and the Lee and See and Parasuraman papers.

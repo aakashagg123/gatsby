@@ -55,7 +55,7 @@ List what can go wrong. For each risk, score likelihood and impact on a three-po
 
 ### Approval design
 
-Approval only protects if people read what they approve. Show a **preview** of the action in plain words, with the amount and the target. Show the reason and the source. Make the safe choice easy. Do not ask for approval on low-risk actions, or users learn to click through. Track the approval rate and the edit rate: a 100% approval rate on a risky action means either the agent is very good or nobody is looking.
+Approval only protects if people read what they approve. Show a **preview** of the action in plain words, with the amount and the target. Show the reason and the source. Make the safe choice easy. Do not ask for approval on low-risk actions, or users learn to click through. Anthropic reports that users accept 93% of manual permission prompts in default Claude Code, and its answer was a classifier that reviews higher-risk actions and lets safe ones run. The lesson for a product: spend human attention only where the risk is. Track the approval rate and the edit rate: a 100% approval rate on a risky action means either the agent is very good or nobody is looking.
 
 ### Five bad days
 
@@ -151,4 +151,5 @@ Safe choice (default):     Undo available? yes / no
 ## Sources
 
 - Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: human checkpoints, stopping conditions and sandboxed testing with guardrails.
+- Anthropic, "Claude Code auto mode", anthropic.com/engineering/claude-code-auto-mode, 2026-03-25, read 2026-11-17: the 93% acceptance figure and the classifier approach.
 - Relay, its tools, thresholds and every example are invented for teaching. This track's fact-check is pending.

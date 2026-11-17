@@ -81,6 +81,7 @@
 <li><strong>Intervening early.</strong> Stopping the agent when it looks off. Needs visible progress.</li>
 <li><strong>Complacency.</strong> Attention fades as the agent proves reliable, just when a rare error hurts most.</li>
 </ul>
+<p>Real usage data shows the pattern. Anthropic reports that in default Claude Code, users accept 93% of manual permission prompts (March 2026). That is rubber-stamping at scale. In a February 2026 study of Claude Code, new users (under 50 sessions) used full auto-approve in about 20% of sessions, and by about 750 sessions that rose above 40%. Interrupts also rose, from about 5% of turns to about 9%. Anthropic reads this as a shift from approving each step in advance to watching and stepping in. Product settings may explain part of it, so treat it as a clue and not as proof. The design lesson: a prompt on every action does not keep people alert. Give users visible progress and an easy way to interrupt, and keep approval for the few actions that carry real risk.</p>
 <h3 id="what-the-product-can-do">What the product can do</h3>
 <ul>
 <li><strong>Show the work.</strong> Sources, steps and inputs let users check quickly.</li>
@@ -145,6 +146,8 @@ Over-reliance risk (H/M/L) and control:        Under-reliance risk (H/M/L) and c
 <li>Raja Parasuraman and Victor Riley, <em>Humans and Automation: Use, Misuse, Disuse, Abuse</em>, Human Factors, 1997. Not re-opened.</li>
 <li>John Lee and Katrina See, <em>Trust in Automation: Designing for Appropriate Reliance</em>, Human Factors, 2004. The publisher's page could not be read, so this was not re-opened.</li>
 <li>Saleema Amershi et al., <em>Guidelines for Human-AI Interaction</em>, CHI 2019, and the HAX Toolkit library, read 2026-10: guidelines such as "Make clear how well the system can do what it can do" and "Make clear why the system did what it did".</li>
+<li>Anthropic, "Measuring AI agent autonomy in practice", anthropic.com/research/measuring-agent-autonomy, 2026-02-18, read 2026-11-17: auto-approve and interruption rates, and the advice to give users visibility and simple ways to redirect.</li>
+<li>Anthropic, "Claude Code auto mode", anthropic.com/engineering/claude-code-auto-mode, 2026-03-25, read 2026-11-17: users accept 93% of manual permission prompts. Later press coverage cites 97% for a different measure; that was not traced to a primary page and is not used.</li>
 <li>Relay and the behaviours, quotes and numbers above are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="agentic-flows-practice.html"><span class="lbl">← Previous</span><span class="ttl">Practice: the agent spec and risk register</span></a><a class="navcard next" href="researching-agent-interactions.html"><span class="lbl">→ Next</span><span class="ttl">Practice: researching agent interactions</span></a></div><footer class="foot"><strong>Core insight:</strong> An AI-native product is designed around uncertainty: you decide what the model should do, measure it with evals, and shape the flow so people can trust and correct it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

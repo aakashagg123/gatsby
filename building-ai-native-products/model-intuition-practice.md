@@ -47,11 +47,11 @@ For each case, define a pass. Use two or three yes-or-no checks rather than a sc
 
 ### Step 3: run and score
 
-Run each model with the same prompt and the same inputs. Score blind if you can: hide which model wrote which output. Record the pass or fail and a failure cause for each fail.
+Run each model with the same prompt and the same inputs. Score blind if you can: hide which model wrote which output. Record the pass or fail and a failure cause for each fail. Write down the reasoning-effort setting for each run, and try at least two levels on your leading candidate. Run each case more than once if the task is open-ended, because one run can mislead.
 
 ### Step 4: measure speed and cost
 
-Measure time to the first token and time to the full answer, at the median and at the 95th percentile. Count input and output tokens. Multiply by the price. Express cost per 1,000 uses.
+Measure time to the first token and time to the full answer, at the median and at the 95th percentile. Count input and output tokens, including thinking tokens, which are billed as output. Multiply by the price. Express cost per 1,000 uses.
 
 ### Step 5: decide
 
@@ -121,7 +121,7 @@ Model C failed the must-not-fail rule, so it was out. Model B met the quality ba
 - [ ] Was the rubric written before the run, with yes-or-no checks?
 - [ ] Do all models see the same inputs and the same prompt?
 - [ ] Are failure causes recorded?
-- [ ] Are p50 and p95 latency and cost per 1,000 uses measured?
+- [ ] Are p50 and p95 latency and cost per 1,000 uses measured, with thinking tokens counted and the effort setting recorded?
 - [ ] Were constraints set before the results?
 - [ ] Is there a decision record and a re-test date?
 
@@ -136,4 +136,5 @@ Model C failed the must-not-fail rule, so it was out. Model B met the quality ba
 ## Sources
 
 - Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: the advice to find the simplest solution and add complexity only when it improves outcomes.
+- Anthropic, "Effort", platform.claude.com/docs/en/build-with-claude/effort, read 2026-11-17: effort levels, and "run an effort sweep on your own evals". The claim that thinking tokens are billed as output comes from general API practice and was not re-checked on a pricing page.
 - Relay, the models A, B and C and every number are invented for teaching. This track's fact-check is pending.

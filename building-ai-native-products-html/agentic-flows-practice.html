@@ -80,7 +80,7 @@
 <h3 id="the-risk-register">The risk register</h3>
 <p>List what can go wrong. For each risk, score likelihood and impact on a three-point scale, name the control, name an owner and say how you will test it. Include the agent-specific risks: repeated actions after a crash, runaway loops, instructions hidden in data, over-broad credentials, and silent failures.</p>
 <h3 id="approval-design">Approval design</h3>
-<p>Approval only protects if people read what they approve. Show a <strong>preview</strong> of the action in plain words, with the amount and the target. Show the reason and the source. Make the safe choice easy. Do not ask for approval on low-risk actions, or users learn to click through. Track the approval rate and the edit rate: a 100% approval rate on a risky action means either the agent is very good or nobody is looking.</p>
+<p>Approval only protects if people read what they approve. Show a <strong>preview</strong> of the action in plain words, with the amount and the target. Show the reason and the source. Make the safe choice easy. Do not ask for approval on low-risk actions, or users learn to click through. Anthropic reports that users accept 93% of manual permission prompts in default Claude Code, and its answer was a classifier that reviews higher-risk actions and lets safe ones run. The lesson for a product: spend human attention only where the risk is. Track the approval rate and the edit rate: a 100% approval rate on a risky action means either the agent is very good or nobody is looking.</p>
 <h3 id="five-bad-days">Five bad days</h3>
 <p>Before you build, write five scenarios that would hurt. For example: the agent refunds the wrong customer; a crash repeats a refund; a customer's message tells the agent to ignore its rules; a tool returns an error that the agent misreads as success; the cost per ticket triples overnight. For each, write what the design does. If the answer is "nothing", fix the design.</p>
 <h3 id="raising-autonomy">Raising autonomy</h3>
@@ -190,6 +190,7 @@ Safe choice (default):     Undo available? yes / no
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: human checkpoints, stopping conditions and sandboxed testing with guardrails.</li>
+<li>Anthropic, "Claude Code auto mode", anthropic.com/engineering/claude-code-auto-mode, 2026-03-25, read 2026-11-17: the 93% acceptance figure and the classifier approach.</li>
 <li>Relay, its tools, thresholds and every example are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="designing-agentic-flows.html"><span class="lbl">← Previous</span><span class="ttl">Designing agentic flows</span></a><a class="navcard next" href="how-users-behave-with-agents.html"><span class="lbl">→ Next</span><span class="ttl">How users behave with agents</span></a></div><footer class="foot"><strong>Core insight:</strong> An AI-native product is designed around uncertainty: you decide what the model should do, measure it with evals, and shape the flow so people can trust and correct it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
