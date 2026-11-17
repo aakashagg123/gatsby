@@ -43,7 +43,7 @@ Models are strong at language tasks with fuzzy boundaries: drafting, summarizing
 
 ### The three dials: quality, speed, cost
 
-A larger model usually answers better, slower and at a higher price. A smaller one is faster and cheaper and fails sooner on hard cases. A model choice is a position on those three dials, set by the product. A reply drafted while an agent waits must be fast. An overnight report can be slow. See [Choosing a model](../llms/choosing-a-model.md).
+A larger model usually answers better, slower and at a higher price. A smaller one is faster and cheaper and fails sooner on hard cases. Most current models add a fourth control on the same model: **reasoning effort**. A lower setting spends fewer thinking tokens and answers faster. A higher setting thinks longer and costs more. Anthropic's docs tell teams to run an effort sweep on their own evals, and not to carry a setting over from an older model. The default level also differs by model. So "which model" and "which effort" are one decision. A model choice is a position on those dials, set by the product. A reply drafted while an agent waits must be fast. An overnight report can be slow. See [Choosing a model](../llms/choosing-a-model.md).
 
 ### Prompt, retrieve or tune
 
@@ -123,6 +123,7 @@ This told the team three things. The model was fine for easy and typical tickets
 
 ## Sources
 
-- Fabrizio Dell'Acqua et al., *Navigating the Jagged Technological Frontier*, Harvard Business School working paper, 2023: the term and the evidence that capability is uneven. Not re-opened.
+- Fabrizio Dell'Acqua et al., *Navigating the Jagged Technological Frontier*, Harvard Business School working paper, 2023: the term and the evidence that capability is uneven. A search result reports a later peer-reviewed version in *Organization Science*. Neither version was opened.
+- Anthropic, "Effort", platform.claude.com/docs/en/build-with-claude/effort, read 2026-11-17: effort levels, per-model defaults, and the advice to sweep effort on your own evals.
 - Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: the advice to start with the simplest solution and to optimize single calls with retrieval and examples before adding complexity.
 - Relay and its numbers are invented for teaching. This track's fact-check is pending.

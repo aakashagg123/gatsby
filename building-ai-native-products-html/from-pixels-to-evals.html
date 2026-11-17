@@ -112,7 +112,7 @@
 </table>
 <p>Treat signals as clues. They point at cases to inspect, and they do not replace a rubric.</p>
 <h3 id="offline-evals">Offline evals</h3>
-<p>An eval is a set of inputs, a way to run the system and a way to score each output. Scoring can be exact match, a check rule, a human rating, or a model acting as judge. Start with the cheapest scoring that works, and check any model-judge against human ratings. <a href="../evaluation-and-observability/index.html">Evaluation and observability</a> covers the stack.</p>
+<p>An eval is a set of inputs, a way to run the system and a way to score each output. Scoring can be exact match, a check rule, a human rating, or a model acting as judge. Start with the cheapest scoring that works, and check any model-judge against human ratings. Judges have known biases. The MT-Bench paper names position bias, verbosity bias and self-enhancement bias, and finds that a strong judge agrees with humans over 80% of the time. Read the judge's grades on many cases, because that is the only way to tell a bad answer from a bad grader. <a href="../evaluation-and-observability/index.html">Evaluation and observability</a> covers the stack.</p>
 <h3 id="why-classic-ab-tests-fall-short">Why classic A/B tests fall short</h3>
 <p>An A/B test compares behaviour between two groups of users. It remains the best test of real value. For AI features it has limits.</p>
 <ul>
@@ -123,7 +123,8 @@
 </ul>
 <p>An offline eval is fast and controlled, and it can miss what users really do. So use the eval to choose what to test, and the A/B test to confirm what ships.</p>
 <h3 id="noise-in-a-small-eval">Noise in a small eval</h3>
-<p>A pass rate on a small set has an error band. With 200 cases and a true pass rate of 80%, a rough 95% band is about plus or minus 5.5 points. A change from 80% to 82% on that set is inside the noise. To see small gains, use more cases, or run both versions on the same cases and compare the pairs.</p>
+<p>A pass rate on a small set has an error band. With 200 cases and a true pass rate of 80%, a rough 95% band is about plus or minus 5.5 points. A change from 80% to 82% on that set is inside the noise. To see small gains, use more cases, or run both versions on the same cases and compare the pairs. Evan Miller's paper on error bars for evals treats an eval as an experiment: report intervals, not bare scores. Agents add a second kind of noise, because one case can pass on one run and fail on the next. Anthropic separates <strong>pass@k</strong> (at least one of k tries succeeds) from <strong>pass^k</strong> (all k succeed). A 75% per-run success rate gives about a 42% chance of passing three runs in a row. For a feature users rely on every day, pass^k is the honest number.</p>
+<p>Split your evals by job. <strong>Capability evals</strong> start at a low pass rate and show room to climb. <strong>Regression evals</strong> sit near 100% and catch backsliding. When a capability eval saturates, move it into the regression suite and write harder cases.</p>
 <h3 id="pixels-in-the-loop">Pixels in the loop</h3>
 <p>Interface choices change the signals. A visible "regenerate" button makes regeneration easy, so a rise in regenerations may mean the button works, not that quality fell. An "edit" mode creates edit data. Design the screen so that the signals you need are easy to capture and hard to misread.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
@@ -175,6 +176,9 @@ Chance this signal misleads (why):
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Hamel Husain, writing on evals for LLM products (hamel.dev): the practice of reading failures and building evals from them. Not re-opened.</li>
+<li>Lianmin Zheng et al., <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</em>, arxiv.org/abs/2306.05685, abstract read 2026-11-17: the three biases and the 80% agreement.</li>
+<li>Evan Miller, <em>Adding Error Bars to Evals</em>, arxiv.org/abs/2411.00640, abstract read 2026-11-17. The abstract does not name paired differences, so the lesson cites it only for treating evals as experiments.</li>
+<li>Anthropic, "Demystifying evals for AI agents", anthropic.com/engineering/demystifying-evals-for-ai-agents, 2026-01-09, read 2026-11-17: pass@k and pass^k, grader types, capability versus regression evals, saturation.</li>
 <li>The 95% band is the normal approximation: 1.96 × √(0.8 × 0.2 ÷ 200) ≈ 5.5 points. It is a rough guide.</li>
 <li>Relay and its numbers are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>

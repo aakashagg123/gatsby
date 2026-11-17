@@ -70,7 +70,7 @@
 <h3 id="what-models-do-well-and-badly">What models do well and badly</h3>
 <p>Models are strong at language tasks with fuzzy boundaries: drafting, summarizing, rewriting, classifying, extracting, translating and explaining. They are weaker at exact arithmetic without a tool, long chains of strict logic, facts they were not trained on, and tasks where one tiny error ruins the result. They can sound sure when wrong. <a href="../llms/capabilities-and-the-jagged-frontier.html">Capabilities and the jagged frontier</a> goes deeper.</p>
 <h3 id="the-three-dials-quality-speed-cost">The three dials: quality, speed, cost</h3>
-<p>A larger model usually answers better, slower and at a higher price. A smaller one is faster and cheaper and fails sooner on hard cases. A model choice is a position on those three dials, set by the product. A reply drafted while an agent waits must be fast. An overnight report can be slow. See <a href="../llms/choosing-a-model.html">Choosing a model</a>.</p>
+<p>A larger model usually answers better, slower and at a higher price. A smaller one is faster and cheaper and fails sooner on hard cases. Most current models add a fourth control on the same model: <strong>reasoning effort</strong>. A lower setting spends fewer thinking tokens and answers faster. A higher setting thinks longer and costs more. Anthropic's docs tell teams to run an effort sweep on their own evals, and not to carry a setting over from an older model. The default level also differs by model. So "which model" and "which effort" are one decision. A model choice is a position on those dials, set by the product. A reply drafted while an agent waits must be fast. An overnight report can be slow. See <a href="../llms/choosing-a-model.html">Choosing a model</a>.</p>
 <h3 id="prompt-retrieve-or-tune">Prompt, retrieve or tune</h3>
 <p>When a model falls short, there are three levers, in this order of cost:</p>
 <ol>
@@ -135,7 +135,8 @@ Re-test due:
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Fabrizio Dell'Acqua et al., <em>Navigating the Jagged Technological Frontier</em>, Harvard Business School working paper, 2023: the term and the evidence that capability is uneven. Not re-opened.</li>
+<li>Fabrizio Dell'Acqua et al., <em>Navigating the Jagged Technological Frontier</em>, Harvard Business School working paper, 2023: the term and the evidence that capability is uneven. A search result reports a later peer-reviewed version in <em>Organization Science</em>. Neither version was opened.</li>
+<li>Anthropic, "Effort", platform.claude.com/docs/en/build-with-claude/effort, read 2026-11-17: effort levels, per-model defaults, and the advice to sweep effort on your own evals.</li>
 <li>Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: the advice to start with the simplest solution and to optimize single calls with retrieval and examples before adding complexity.</li>
 <li>Relay and its numbers are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>

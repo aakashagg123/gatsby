@@ -120,6 +120,7 @@
 </ol>
 <h3 id="guardrails-and-stops">Guardrails and stops</h3>
 <p>Set hard limits: a maximum number of steps, a spend cap per run, a time limit and an allow-list of tools. Let the agent pause for human feedback at checkpoints or when it is blocked. Add a kill switch. Test in a sandbox before real data. Record every step.</p>
+<p>Apply a <strong>rule of two</strong> to any agent that reads outside content. Meta's "Agents Rule of Two" says that, until prompt injection can be reliably blocked, an agent session should have no more than two of these three: it processes untrustworthy input, it reaches sensitive systems or private data, and it can change state or send data out. Simon Willison's "lethal trifecta" names a similar set: private data, untrusted content and external communication. If the task needs all three, do not run it unattended. Require human approval at the step that acts.</p>
 <h3 id="failure-modes-of-agents">Failure modes of agents</h3>
 <p>Errors compound: a small mistake in step 2 shapes steps 3 to 8. Agents can loop, repeat a paid action, misread a tool result or follow instructions hidden in the data they read. <a href="../ai-security-and-guardrails/index.html">AI security and guardrails</a> covers the threats.</p>
 <h2 id="tradeoffs-and-decisions">Tradeoffs and decisions</h2>
@@ -160,6 +161,7 @@ Kill switch owner: ___   Log kept for: ___
 <li class="task todo">Are irreversible actions behind approval or tight caps?</li>
 <li class="task todo">Are step, spend and time limits set, and a kill switch named?</li>
 <li class="task todo">Does progress survive a crash without repeating paid actions?</li>
+<li class="task todo">Does any agent have untrusted input, sensitive data and an outbound or state-changing tool all at once? If so, is a human approving the acting step?</li>
 <li class="task todo">Is every run logged, step by step?</li>
 <li class="task todo">Was the flow tested in a sandbox first?</li>
 <li class="task todo">Is there a plan to raise autonomy only with evidence?</li>
@@ -174,7 +176,9 @@ Kill switch owner: ___   Log kept for: ___
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: workflows vs. agents, the advice to find the simplest solution, human checkpoints, stopping conditions such as a maximum number of iterations, sandboxed testing, and careful tool design (the agent-computer interface). The page notes that much of its tooling description has changed since December 2024.</li>
+<li>Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: workflows vs. agents, the advice to find the simplest solution, human checkpoints, stopping conditions such as a maximum number of iterations, sandboxed testing, and careful tool design (the agent-computer interface). The page notes that much of its tooling description has changed since December 2024, and it points readers to Anthropic's newer Claude Managed Agents documentation. The workflow-versus-agent definitions were still on the page when re-read 2026-11-17.</li>
+<li>Meta AI, "Agents Rule of Two", ai.meta.com/blog/practical-ai-agent-security/, 2025-10-31, read 2026-11-17.</li>
+<li>Simon Willison, "The lethal trifecta for AI agents", simonwillison.net/2025/Jun/16/the-lethal-trifecta/, 2025-06-16, read 2026-11-17.</li>
 <li>Relay and its tools and limits are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="hill-climbing-in-practice.html"><span class="lbl">← Previous</span><span class="ttl">Practice: hill climbing</span></a><a class="navcard next" href="agentic-flows-practice.html"><span class="lbl">→ Next</span><span class="ttl">Practice: the agent spec and risk register</span></a></div><footer class="foot"><strong>Core insight:</strong> An AI-native product is designed around uncertainty: you decide what the model should do, measure it with evals, and shape the flow so people can trust and correct it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -72,9 +72,9 @@
 <h3 id="step-2-write-the-rubric-first">Step 2: write the rubric first</h3>
 <p>For each case, define a pass. Use two or three yes-or-no checks rather than a score out of ten. For example: "uses the real order status", "does not promise a refund", "under 120 words". Binary checks are easier to apply the same way each time.</p>
 <h3 id="step-3-run-and-score">Step 3: run and score</h3>
-<p>Run each model with the same prompt and the same inputs. Score blind if you can: hide which model wrote which output. Record the pass or fail and a failure cause for each fail.</p>
+<p>Run each model with the same prompt and the same inputs. Score blind if you can: hide which model wrote which output. Record the pass or fail and a failure cause for each fail. Write down the reasoning-effort setting for each run, and try at least two levels on your leading candidate. Run each case more than once if the task is open-ended, because one run can mislead.</p>
 <h3 id="step-4-measure-speed-and-cost">Step 4: measure speed and cost</h3>
-<p>Measure time to the first token and time to the full answer, at the median and at the 95th percentile. Count input and output tokens. Multiply by the price. Express cost per 1,000 uses.</p>
+<p>Measure time to the first token and time to the full answer, at the median and at the 95th percentile. Count input and output tokens, including thinking tokens, which are billed as output. Multiply by the price. Express cost per 1,000 uses.</p>
 <h3 id="step-5-decide">Step 5: decide</h3>
 <p>Write the constraints first: the quality bar, the latency the user will tolerate and the cost per use the business can pay. Pick the cheapest model that meets all three. If none does, decide whether to change the task, the prompt or the context, not only the model.</p>
 <h3 id="step-6-set-the-re-test">Step 6: set the re-test</h3>
@@ -162,7 +162,7 @@ What would change my mind:        Re-test date:
 <li class="task todo">Was the rubric written before the run, with yes-or-no checks?</li>
 <li class="task todo">Do all models see the same inputs and the same prompt?</li>
 <li class="task todo">Are failure causes recorded?</li>
-<li class="task todo">Are p50 and p95 latency and cost per 1,000 uses measured?</li>
+<li class="task todo">Are p50 and p95 latency and cost per 1,000 uses measured, with thinking tokens counted and the effort setting recorded?</li>
 <li class="task todo">Were constraints set before the results?</li>
 <li class="task todo">Is there a decision record and a re-test date?</li>
 </ul>
@@ -177,6 +177,7 @@ What would change my mind:        Re-test date:
 <h2 id="sources">Sources</h2>
 <ul>
 <li>Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: the advice to find the simplest solution and add complexity only when it improves outcomes.</li>
+<li>Anthropic, "Effort", platform.claude.com/docs/en/build-with-claude/effort, read 2026-11-17: effort levels, and "run an effort sweep on your own evals". The claim that thinking tokens are billed as output comes from general API practice and was not re-checked on a pricing page.</li>
 <li>Relay, the models A, B and C and every number are invented for teaching. This track's fact-check is pending.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="model-intuition.html"><span class="lbl">← Previous</span><span class="ttl">Model intuition</span></a><a class="navcard next" href="from-pixels-to-evals.html"><span class="lbl">→ Next</span><span class="ttl">From pixels to evals</span></a></div><footer class="foot"><strong>Core insight:</strong> An AI-native product is designed around uncertainty: you decide what the model should do, measure it with evals, and shape the flow so people can trust and correct it.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

@@ -59,6 +59,10 @@ Use the same cases and the same scoring each time. Compare pairs: which cases fl
 
 Each time you look at the dev set and change the prompt, you fit the prompt to that set a little. After many rounds the dev score is flattering. The holdout shows the truth. If the dev score rises and the holdout does not, you are overfitting. Refresh the dev set with new production cases, and keep the holdout fixed for a longer period.
 
+### Run each case more than once
+
+If your system is an agent, or the output is open-ended, one run per case hides variance. Run each case several times. Report how many cases pass every time, not only the average. Anthropic calls this pass^k. Once the dev set passes almost everywhere, it can no longer show progress. Move it to a regression suite and add harder cases. See [From pixels to evals](./from-pixels-to-evals.md).
+
 ### Keep the log
 
 Record each step: what you changed, why, the dev score before and after, the holdout score, the cases that flipped each way and the cost or latency change. The log is the team's memory and a way to stop repeating failed ideas.
@@ -141,4 +145,5 @@ Step 5 was the warning. Twelve new examples were close to dev cases, so the prom
 ## Sources
 
 - Hamel Husain, writing on evals and error analysis for LLM products (hamel.dev): reading traces and grouping failures. Not re-opened.
+- Anthropic, "Demystifying evals for AI agents", anthropic.com/engineering/demystifying-evals-for-ai-agents, 2026-01-09, read 2026-11-17: repeated trials, pass^k, saturation and regression suites.
 - Relay, its eval set and every number are invented for teaching. This track's fact-check is pending.

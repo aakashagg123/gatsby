@@ -72,6 +72,8 @@ Treat autonomy as a ladder the product climbs with evidence.
 
 Set hard limits: a maximum number of steps, a spend cap per run, a time limit and an allow-list of tools. Let the agent pause for human feedback at checkpoints or when it is blocked. Add a kill switch. Test in a sandbox before real data. Record every step.
 
+Apply a **rule of two** to any agent that reads outside content. Meta's "Agents Rule of Two" says that, until prompt injection can be reliably blocked, an agent session should have no more than two of these three: it processes untrustworthy input, it reaches sensitive systems or private data, and it can change state or send data out. Simon Willison's "lethal trifecta" names a similar set: private data, untrusted content and external communication. If the task needs all three, do not run it unattended. Require human approval at the step that acts.
+
 ### Failure modes of agents
 
 Errors compound: a small mistake in step 2 shapes steps 3 to 8. Agents can loop, repeat a paid action, misread a tool result or follow instructions hidden in the data they read. [AI security and guardrails](../ai-security-and-guardrails/README.md) covers the threats.
@@ -124,6 +126,7 @@ They chose a **workflow with one agentic step**. The fixed path was: look up the
 - [ ] Are irreversible actions behind approval or tight caps?
 - [ ] Are step, spend and time limits set, and a kill switch named?
 - [ ] Does progress survive a crash without repeating paid actions?
+- [ ] Does any agent have untrusted input, sensitive data and an outbound or state-changing tool all at once? If so, is a human approving the acting step?
 - [ ] Is every run logged, step by step?
 - [ ] Was the flow tested in a sandbox first?
 - [ ] Is there a plan to raise autonomy only with evidence?
@@ -138,5 +141,7 @@ They chose a **workflow with one agentic step**. The fixed path was: look up the
 
 ## Sources
 
-- Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: workflows vs. agents, the advice to find the simplest solution, human checkpoints, stopping conditions such as a maximum number of iterations, sandboxed testing, and careful tool design (the agent-computer interface). The page notes that much of its tooling description has changed since December 2024.
+- Anthropic, "Building effective agents", anthropic.com/engineering/building-effective-agents, 2024-12-19, read 2026-10: workflows vs. agents, the advice to find the simplest solution, human checkpoints, stopping conditions such as a maximum number of iterations, sandboxed testing, and careful tool design (the agent-computer interface). The page notes that much of its tooling description has changed since December 2024, and it points readers to Anthropic's newer Claude Managed Agents documentation. The workflow-versus-agent definitions were still on the page when re-read 2026-11-17.
+- Meta AI, "Agents Rule of Two", ai.meta.com/blog/practical-ai-agent-security/, 2025-10-31, read 2026-11-17.
+- Simon Willison, "The lethal trifecta for AI agents", simonwillison.net/2025/Jun/16/the-lethal-trifecta/, 2025-06-16, read 2026-11-17.
 - Relay and its tools and limits are invented for teaching. This track's fact-check is pending.

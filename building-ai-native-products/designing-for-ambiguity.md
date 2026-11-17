@@ -143,6 +143,6 @@ The chat box stayed, as a secondary tool for open questions. The primary path wa
 
 ## Sources
 
-- Saleema Amershi et al., *Guidelines for Human-AI Interaction*, CHI 2019, and Microsoft's HAX Toolkit design library (microsoft.com/en-us/haxtoolkit/library), read 2026-10: the 18 guidelines, including "Make clear what the system can do", "Make clear how well the system can do what it can do", "Support efficient correction", "Scope services when in doubt" and "Make clear why the system did what it did".
+- Saleema Amershi et al., *Guidelines for Human-AI Interaction*, CHI 2019, and Microsoft's HAX Toolkit design library (microsoft.com/en-us/haxtoolkit/library), re-read 2026-11-17 (all 18 titles match): the 18 guidelines, including "Make clear what the system can do", "Make clear how well the system can do what it can do", "Support efficient correction", "Scope services when in doubt" and "Make clear why the system did what it did".
 - Google, *People + AI Guidebook* (pair.withgoogle.com/guidebook): not re-opened, because the page could not be read as text.
 - Relay, the retailer and every detail in the worked example are invented for teaching. This track's fact-check is pending.

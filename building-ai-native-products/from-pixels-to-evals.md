@@ -52,7 +52,7 @@ Treat signals as clues. They point at cases to inspect, and they do not replace 
 
 ### Offline evals
 
-An eval is a set of inputs, a way to run the system and a way to score each output. Scoring can be exact match, a check rule, a human rating, or a model acting as judge. Start with the cheapest scoring that works, and check any model-judge against human ratings. [Evaluation and observability](../evaluation-and-observability/README.md) covers the stack.
+An eval is a set of inputs, a way to run the system and a way to score each output. Scoring can be exact match, a check rule, a human rating, or a model acting as judge. Start with the cheapest scoring that works, and check any model-judge against human ratings. Judges have known biases. The MT-Bench paper names position bias, verbosity bias and self-enhancement bias, and finds that a strong judge agrees with humans over 80% of the time. Read the judge's grades on many cases, because that is the only way to tell a bad answer from a bad grader. [Evaluation and observability](../evaluation-and-observability/README.md) covers the stack.
 
 ### Why classic A/B tests fall short
 
@@ -67,7 +67,9 @@ An offline eval is fast and controlled, and it can miss what users really do. So
 
 ### Noise in a small eval
 
-A pass rate on a small set has an error band. With 200 cases and a true pass rate of 80%, a rough 95% band is about plus or minus 5.5 points. A change from 80% to 82% on that set is inside the noise. To see small gains, use more cases, or run both versions on the same cases and compare the pairs.
+A pass rate on a small set has an error band. With 200 cases and a true pass rate of 80%, a rough 95% band is about plus or minus 5.5 points. A change from 80% to 82% on that set is inside the noise. To see small gains, use more cases, or run both versions on the same cases and compare the pairs. Evan Miller's paper on error bars for evals treats an eval as an experiment: report intervals, not bare scores. Agents add a second kind of noise, because one case can pass on one run and fail on the next. Anthropic separates **pass@k** (at least one of k tries succeeds) from **pass^k** (all k succeed). A 75% per-run success rate gives about a 42% chance of passing three runs in a row. For a feature users rely on every day, pass^k is the honest number.
+
+Split your evals by job. **Capability evals** start at a low pass rate and show room to climb. **Regression evals** sit near 100% and catch backsliding. When a capability eval saturates, move it into the regression suite and write harder cases.
 
 ### Pixels in the loop
 
@@ -130,5 +132,8 @@ Heavy edits were more useful. The team read 30 and found 11 where the agent repl
 ## Sources
 
 - Hamel Husain, writing on evals for LLM products (hamel.dev): the practice of reading failures and building evals from them. Not re-opened.
+- Lianmin Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, arxiv.org/abs/2306.05685, abstract read 2026-11-17: the three biases and the 80% agreement.
+- Evan Miller, *Adding Error Bars to Evals*, arxiv.org/abs/2411.00640, abstract read 2026-11-17. The abstract does not name paired differences, so the lesson cites it only for treating evals as experiments.
+- Anthropic, "Demystifying evals for AI agents", anthropic.com/engineering/demystifying-evals-for-ai-agents, 2026-01-09, read 2026-11-17: pass@k and pass^k, grader types, capability versus regression evals, saturation.
 - The 95% band is the normal approximation: 1.96 × √(0.8 × 0.2 ÷ 200) ≈ 5.5 points. It is a rough guide.
 - Relay and its numbers are invented for teaching. This track's fact-check is pending.
