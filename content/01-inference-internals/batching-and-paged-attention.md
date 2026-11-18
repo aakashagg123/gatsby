@@ -96,8 +96,13 @@ decode continues on a pool tuned for memory-bandwidth-bound work. Neither phase
 ever waits behind the other, because they were never sharing hardware to begin
 with.
 
-This is now a mainstream production serving architecture (DistServe, Mooncake,
-NVIDIA Dynamo), not a research curiosity. The tradeoff is operational complexity —
+DistServe (OSDI 2024) reported up to 7.4× more requests served within the same
+latency limits than prior systems. Mooncake and NVIDIA Dynamo run the idea in
+production-grade stacks. Check the maturity of your own engine, though. vLLM
+still labels its disaggregated prefill "experimental." Its docs say the feature
+helps you tune TTFT and tail inter-token latency separately, and that it does
+*not* improve throughput. Treat it as a latency-control tool, not a cost lever.
+The tradeoff is operational complexity —
 two pools to provision, monitor, and keep balanced, plus a KV-transfer hop that
 adds its own latency — against a ceiling chunked prefill alone can't reach: at
 high enough concurrency, no scheduling trick fully hides one phase's footprint

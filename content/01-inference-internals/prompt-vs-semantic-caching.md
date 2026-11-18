@@ -59,19 +59,32 @@ after the first.
   [context engineering](../00-foundations/context-engineering.md) insists on
   a *stable prefix*.
 - **Time-limited.** Cached entries expire. Provider lifetimes are short and
-  differ by vendor. Anthropic's default is 5 minutes, with an optional 1-hour
-  tier. OpenAI keeps entries for about 5 to 10 minutes of inactivity, up to an
-  hour, with an optional extended mode of up to 24 hours. Each cache hit
-  refreshes the timer. Self-hosted entries are subject to
+  differ by vendor, and they change with the model. Anthropic's default is
+  5 minutes, with an optional 1-hour tier. For OpenAI's GPT-5.6 and later, the
+  default is a minimum of 30 minutes, with an optional 12-hour setting in the
+  Responses API. For earlier OpenAI models, entries last about 5 to 10 minutes
+  of inactivity, up to an hour, with an optional extended mode of up to 24
+  hours. Each cache hit refreshes the timer. Self-hosted entries are subject to
   [KV cache eviction](./kv-cache-management.md) under memory pressure.
 - **Priced as a trade.** Anthropic charges a premium to write a cache entry
   (1.25× the base input price for 5 minutes, 2× for 1 hour). Reads cost a
-  fraction of the base price (0.1× or less). A prefix that is written but
+  fraction of the base price. On Anthropic that is 0.1× for most models,
+  0.05× for Opus 5.5 and Sonnet 5.5, and 0.025× for the Fable and Mythos 5.1
+  and 5.2 models. OpenAI's GPT-5.6 and later read at 0.1×, and its newest
+  models at 0.05×. A prefix that is written but
   rarely re-read can cost *more* than no caching. Check the current price page,
   because the multipliers vary by model.
 - **Minimum length.** Short prompts are not cached, and the API returns no
   error. The minimum depends on the model (512 to 4,096 tokens on Anthropic's
-  current list). Read the cache-hit fields in the response to confirm a hit.
+  current list, and 1,024 visible tokens on OpenAI's GPT-5.6 and later). Read the cache-hit fields in the response to confirm a hit.
+
+**Who places the breakpoint.** Anthropic lets you set explicit breakpoints
+(up to four per request). It also offers automatic caching: one top-level
+`cache_control` field, and the system moves the breakpoint forward as a
+conversation grows. Automatic caching is not available on Amazon Bedrock.
+OpenAI caches implicitly by default, and GPT-5.6 and later also allow
+explicit-only placement. Automatic placement is convenient, but you still own
+prefix stability.
 
 **Design rules:**
 - Put stable content — system prompt, policies, tool contracts, few-shot
@@ -86,7 +99,7 @@ after the first.
   own API, but only by organization on Amazon Bedrock and Google Cloud.
 - "Lossless" is about the output distribution. A cache hit is still *visible*
   as lower latency. A 2025 audit of LLM APIs (Gu et al.) used that timing gap as
-  a side channel and found global cache sharing across users at seven providers.
+  a side channel and found global cache sharing across users at seven providers (ICML 2025).
   Providers have since documented tighter scopes. Still, treat a shared cache as
   a possible information channel in your threat model.
 

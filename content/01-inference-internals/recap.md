@@ -18,7 +18,7 @@ are an engineering choice, not a fixed input. See
 **Prompt caching goes mainstream (2024).** Anthropic, OpenAI, and Google all
 shipped prefix/prompt caching that can cut the cost of the *cached* input by
 up to **~90%** and reduce time-to-first-token. Today, discounts on cached reads
-range from 90% to 95% or more, depending on the provider and model. Check the
+range from 90% to 97.5%, depending on the provider and model. Check the
 current price page before you build a business case. This only works when your
 prompt prefix is byte-stable. 🎯 *PM takeaway:* a stable system prompt is
 literally money. A per-request timestamp at the top of the prompt quietly

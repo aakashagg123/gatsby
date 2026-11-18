@@ -33,7 +33,7 @@ picks the lowest tier number among due modules.
 | fine-tuning | fine-tuning/ | scripts/build_fine_tuning.py | 1 | 45 | 2026-11-14 |
 | transformers | transformers/ | scripts/build_transformers.py | 1 | 45 | 2026-11-15 |
 | knowledge-graphs | knowledge-graphs/ | scripts/build_knowledge_graphs.py | 1 | 45 | 2026-11-16 |
-| ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-04 |
+| ai-engineering | content/ | scripts/build_html.py | 1 | 45 | 2026-11-18 |
 | agentic-ai | agentic-ai/ | scripts/build_agentic_ai.py | 2 | 30 | 2026-10-23 |
 | generative-ai | generative-ai/ | scripts/build_generative_ai.py | 2 | 30 | 2026-11-02 |
 | llms | llms/ | scripts/build_llms.py | 2 | 30 | 2026-10-25 |
@@ -1121,3 +1121,27 @@ and a link to the merged PR.)
     EU AI Act transparency and human-oversight dates (module does not cover them). Source count meets 5-10 opened.
   - Flagged, not fixed: (1) A lesson on agent UX patterns for long-running and background agents (progress, steering, handoff) may be warranted; owner decision.
     (2) Independent fact-check (research-fact-checker) not run; review stamps left at 2026-10. (3) Next run: open the Dell'Acqua paper and the Lee and See and Parasuraman papers.
+
+- 2026-11-18 — ai-engineering — tier 1. No row was due (all tier-1 rows under 45 days), so I took the oldest tier-1 row (2026-11-04).
+  Outcome: fixed and expanded. I read all 7 modules (37 files) in full first. Resolved the open flags for this module: SWE-bench Verified, OTel status
+  (still unconfirmed), cache multipliers, MLA/hybrid layers, disaggregation maturity.
+  - Fixed (decision-relevant): OpenAI cache retention changed. GPT-5.6 and later default to a 30-minute minimum, with a 12-hour option (Responses API);
+    older models keep the 5-10 minute and 24h modes. Cache-read multipliers are model-specific: Anthropic 0.1x, 0.05x (Opus 5.5, Sonnet 5.5), 0.025x (Fable/Mythos 5.1, 5.2);
+    OpenAI 0.1x (GPT-5.6+) and 0.05x (newest). Recap range now 90% to 97.5%. Disaggregated prefill was called "mainstream"; vLLM labels it experimental and says it does not
+    improve throughput, so the lesson now frames it as a latency-control tool.
+  - Expanded: Anthropic automatic caching (not on Bedrock) and OpenAI implicit/explicit placement; structured-output grammar cache (24h) and extra input tokens;
+    hybrid linear/sliding-window attention in KV lesson; reasoning tokens (billed as output, thinking_tokens field) in cost attribution; SWE-bench Pro caveat; OWASP 2026 edition note.
+  - Sources opened: platform.claude.com/docs/en/build-with-claude/prompt-caching (first 100k of 167k chars); developers.openai.com/api/docs/guides/prompt-caching;
+    platform.claude.com/docs/en/build-with-claude/structured-outputs (first 100k of 115k; refusal/max_tokens section not re-read); platform.claude.com/docs/en/build-with-claude/extended-thinking;
+    arxiv.org/abs/2502.07776 (seven providers, ICML 2025: confirmed); arxiv.org/abs/2401.09670 (DistServe, OSDI 2024); arxiv.org/abs/2307.03172 (Lost in the Middle: confirmed);
+    docs.vllm.ai/en/latest/features/disagg_prefill; ai.meta.com/blog/practical-ai-agent-security (Rule of Two, 31 Oct 2025: confirmed);
+    genai.owasp.org/llmrisk/llm01-prompt-injection and /llm-top-10 (both still show the 2025 edition; RAG/fine-tuning statement confirmed);
+    opentelemetry.io/docs/specs/semconv/gen-ai and github.com/open-telemetry/semantic-conventions-genai (no stability status visible; lesson wording kept).
+  - Search results only, not opened: OWASP 2026 edition (Aug 2026), SWE-bench Verified post (openai.com 403; the 59.4% on a 27.6% subset and the Pro recommendation come from snippets),
+    reports of Pro audits, GPT-5 router state (Dec 2025 rollback; GPT-5 Instant/Thinking retired Feb 2026; a 2026 default of GPT-5.5 Instant), hybrid-attention preprints (arXiv 2604.15039, 2607.01299, Kimi Linear 75%).
+  - Not verified: Samsung, Redis March 2023, Chevy Tahoe, DPD, Klarna, Air Canada details; FrugalGPT; LLMLingua "~20x"; speculative decoding 1.5-3x; FP4/Blackwell claims;
+    Mooncake and Dynamo status; Google cache terms; POC-failure surveys; vendor fine-tuning availability in finetune-vs-icl-vs-rag (the 2026-11-14 run found OpenAI is winding it down; this lesson is unchanged).
+  - Flagged, not fixed: (1) `finetune-vs-icl-vs-rag.md` should say vendor fine-tuning is shrinking (OpenAI closed to new orgs 7 May 2026 per the 2026-11-14 run); next run should add it.
+    (2) Next run: open the OpenAI SWE-bench post via another route, the OWASP 2026 release, and the OTel changelog. (3) Possible new lesson: reasoning-model serving and cost control; not built (scope).
+    (4) Independent fact-check (research-fact-checker) not run; review stamps untouched. (5) recap files still lack "Test yourself" sections (structural).
+

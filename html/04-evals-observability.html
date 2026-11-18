@@ -171,7 +171,9 @@ style. It's powerful, but it has failure modes you must control:</p>
 industry's shared shorthand. <strong>SWE-bench Verified</strong> covers real GitHub issues resolved
 end-to-end. In February 2026 OpenAI said it had stopped reporting it. Its audit found
 flawed tests in at least 59.4% of a hard subset it reviewed, plus signs of training-data
-contamination, and it pointed to SWE-bench Pro instead. Expect older scores on this
+contamination, and it pointed to SWE-bench Pro instead. Later secondary reports say audits found
+grader problems in Pro too. We did not confirm those, so treat every public
+coding score as a market signal. Expect older scores on this
 benchmark to be less meaningful. <strong>GAIA</strong> covers general assistant tasks. <strong>OSWorld</strong> covers computer use.
 <strong>tau-bench</strong> covers tool-using customer-service agents. <strong>Terminal-Bench</strong> covers
 command-line work. Know what each measures, so "we're at X%" means something to you.
@@ -484,6 +486,10 @@ carry those tags, cost rolls up along any of them:</p>
 <li><strong>Tokens:</strong> input and output <strong>separately</strong> (priced differently), plus
   cache-read/cache-write tokens (cached input is much cheaper —
   <a href="01-inference-internals.html#prompt-vs-semantic-caching">prompt caching</a>).</li>
+<li><strong>Reasoning tokens.</strong> Thinking tokens are billed as output tokens. Anthropic
+  reports the share in <code>usage.output_tokens_details.thinking_tokens</code>. Record it
+  separately, because a reasoning-effort setting can change cost per request
+  by a large factor without changing the prompt. Track effort level as a tag.</li>
 <li><strong>Model &amp; route</strong> chosen (and whether a <a href="02-reliable-outputs.html#model-routing">fallback/escalation</a>
   fired — escalations are a cost driver).</li>
 <li><strong>Dimensional tags:</strong> feature, workflow step, tenant, user, request/journey id.</li>
