@@ -110,20 +110,32 @@ after the first.</p>
   <a href="00-foundations.html#context-engineering">context engineering</a> insists on
   a <em>stable prefix</em>.</li>
 <li><strong>Time-limited.</strong> Cached entries expire. Provider lifetimes are short and
-  differ by vendor. Anthropic's default is 5 minutes, with an optional 1-hour
-  tier. OpenAI keeps entries for about 5 to 10 minutes of inactivity, up to an
-  hour, with an optional extended mode of up to 24 hours. Each cache hit
-  refreshes the timer. Self-hosted entries are subject to
+  differ by vendor, and they change with the model. Anthropic's default is
+  5 minutes, with an optional 1-hour tier. For OpenAI's GPT-5.6 and later, the
+  default is a minimum of 30 minutes, with an optional 12-hour setting in the
+  Responses API. For earlier OpenAI models, entries last about 5 to 10 minutes
+  of inactivity, up to an hour, with an optional extended mode of up to 24
+  hours. Each cache hit refreshes the timer. Self-hosted entries are subject to
   <a href="#kv-cache-management">KV cache eviction</a> under memory pressure.</li>
 <li><strong>Priced as a trade.</strong> Anthropic charges a premium to write a cache entry
   (1.25× the base input price for 5 minutes, 2× for 1 hour). Reads cost a
-  fraction of the base price (0.1× or less). A prefix that is written but
+  fraction of the base price. On Anthropic that is 0.1× for most models,
+  0.05× for Opus 5.5 and Sonnet 5.5, and 0.025× for the Fable and Mythos 5.1
+  and 5.2 models. OpenAI's GPT-5.6 and later read at 0.1×, and its newest
+  models at 0.05×. A prefix that is written but
   rarely re-read can cost <em>more</em> than no caching. Check the current price page,
   because the multipliers vary by model.</li>
 <li><strong>Minimum length.</strong> Short prompts are not cached, and the API returns no
   error. The minimum depends on the model (512 to 4,096 tokens on Anthropic's
-  current list). Read the cache-hit fields in the response to confirm a hit.</li>
+  current list, and 1,024 visible tokens on OpenAI's GPT-5.6 and later). Read the cache-hit fields in the response to confirm a hit.</li>
 </ul>
+<p><strong>Who places the breakpoint.</strong> Anthropic lets you set explicit breakpoints
+(up to four per request). It also offers automatic caching: one top-level
+<code>cache_control</code> field, and the system moves the breakpoint forward as a
+conversation grows. Automatic caching is not available on Amazon Bedrock.
+OpenAI caches implicitly by default, and GPT-5.6 and later also allow
+explicit-only placement. Automatic placement is convenient, but you still own
+prefix stability.</p>
 <p><strong>Design rules:</strong></p>
 <ul>
 <li>Put stable content — system prompt, policies, tool contracts, few-shot
@@ -138,7 +150,7 @@ after the first.</p>
   own API, but only by organization on Amazon Bedrock and Google Cloud.</li>
 <li>"Lossless" is about the output distribution. A cache hit is still <em>visible</em>
   as lower latency. A 2025 audit of LLM APIs (Gu et al.) used that timing gap as
-  a side channel and found global cache sharing across users at seven providers.
+  a side channel and found global cache sharing across users at seven providers (ICML 2025).
   Providers have since documented tighter scopes. Still, treat a shared cache as
   a possible information channel in your threat model.</li>
 </ul>
@@ -311,6 +323,14 @@ It nearly eliminates fragmentation and enables much higher concurrency. See
   attention implementation — an architectural bet made at training time, not a
   serving-time knob.</li>
 <li><strong>Sliding-window / local attention</strong> — bound the cache to the last <em>N</em> tokens.</li>
+<li><strong>Hybrid layers (linear or sliding-window attention mixed with a few
+  full-attention layers)</strong> — a growing set of open models use this to cut KV
+  growth with context length. Moonshot reports up to 75% less KV cache for its
+  Kimi Linear design, and a 2026 preprint reports large KV-transfer savings for
+  other hybrids. These are authors' own benchmarks. The serving side is young:
+  hybrid models need engine support, and prefix caching works differently on
+  them. Ask your eng team whether the engine and cache reuse you rely on
+  support the architecture before you pick such a model.</li>
 </ul>
 <h2 id="why-this-is-the-throughput-story">Why this is the throughput story</h2>
 <p>Concurrency — how many requests you batch together — is capped by how much KV
@@ -595,8 +615,13 @@ compute-optimized pool, its KV cache transfers over a fast interconnect, and
 decode continues on a pool tuned for memory-bandwidth-bound work. Neither phase
 ever waits behind the other, because they were never sharing hardware to begin
 with.</p>
-<p>This is now a mainstream production serving architecture (DistServe, Mooncake,
-NVIDIA Dynamo), not a research curiosity. The tradeoff is operational complexity —
+<p>DistServe (OSDI 2024) reported up to 7.4× more requests served within the same
+latency limits than prior systems. Mooncake and NVIDIA Dynamo run the idea in
+production-grade stacks. Check the maturity of your own engine, though. vLLM
+still labels its disaggregated prefill "experimental." Its docs say the feature
+helps you tune TTFT and tail inter-token latency separately, and that it does
+<em>not</em> improve throughput. Treat it as a latency-control tool, not a cost lever.
+The tradeoff is operational complexity —
 two pools to provision, monitor, and keep balanced, plus a KV-transfer hop that
 adds its own latency — against a ceiling chunked prefill alone can't reach: at
 high enough concurrency, no scheduling trick fully hides one phase's footprint
@@ -1028,7 +1053,7 @@ are an engineering choice, not a fixed input. See
 <p><strong>Prompt caching goes mainstream (2024).</strong> Anthropic, OpenAI, and Google all
 shipped prefix/prompt caching that can cut the cost of the <em>cached</em> input by
 up to <strong>~90%</strong> and reduce time-to-first-token. Today, discounts on cached reads
-range from 90% to 95% or more, depending on the provider and model. Check the
+range from 90% to 97.5%, depending on the provider and model. Check the
 current price page before you build a business case. This only works when your
 prompt prefix is byte-stable. 🎯 <em>PM takeaway:</em> a stable system prompt is
 literally money. A per-request timestamp at the top of the prompt quietly

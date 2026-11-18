@@ -127,7 +127,9 @@ A vocabulary note for eng conversations: public **agent benchmarks** became the
 industry's shared shorthand. **SWE-bench Verified** covers real GitHub issues resolved
 end-to-end. In February 2026 OpenAI said it had stopped reporting it. Its audit found
 flawed tests in at least 59.4% of a hard subset it reviewed, plus signs of training-data
-contamination, and it pointed to SWE-bench Pro instead. Expect older scores on this
+contamination, and it pointed to SWE-bench Pro instead. Later secondary reports say audits found
+grader problems in Pro too. We did not confirm those, so treat every public
+coding score as a market signal. Expect older scores on this
 benchmark to be less meaningful. **GAIA** covers general assistant tasks. **OSWorld** covers computer use.
 **tau-bench** covers tool-using customer-service agents. **Terminal-Bench** covers
 command-line work. Know what each measures, so "we're at X%" means something to you.

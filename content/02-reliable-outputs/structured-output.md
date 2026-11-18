@@ -54,7 +54,9 @@ The cheapest invalid output is the one that can't be produced.
   200 response whose text may not match the schema. A **`max_tokens` cutoff**
   can leave the JSON incomplete. Some schema features (recursion, numeric
   ranges, string-length limits) are unsupported. The first use of a new schema
-  adds compile latency, and changing the schema invalidates the prompt cache.
+  adds compile latency (Anthropic caches the compiled grammar for 24 hours from
+  last use). Changing the schema invalidates the prompt cache, and the format
+  instructions add input tokens.
   Check `stop_reason` before you parse.
 - **Caveat:** constrained decoding guarantees the output *parses and fits
   the schema*, not that it's *semantically correct*. A grammar can force

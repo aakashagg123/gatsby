@@ -59,6 +59,10 @@ On every model/tool span, record:
 - **Tokens:** input and output **separately** (priced differently), plus
   cache-read/cache-write tokens (cached input is much cheaper —
   [prompt caching](../01-inference-internals/prompt-vs-semantic-caching.md)).
+- **Reasoning tokens.** Thinking tokens are billed as output tokens. Anthropic
+  reports the share in `usage.output_tokens_details.thinking_tokens`. Record it
+  separately, because a reasoning-effort setting can change cost per request
+  by a large factor without changing the prompt. Track effort level as a tag.
 - **Model & route** chosen (and whether a [fallback/escalation](../02-reliable-outputs/model-routing.md)
   fired — escalations are a cost driver).
 - **Dimensional tags:** feature, workflow step, tenant, user, request/journey id.

@@ -87,6 +87,14 @@ It nearly eliminates fragmentation and enables much higher concurrency. See
   attention implementation — an architectural bet made at training time, not a
   serving-time knob.
 - **Sliding-window / local attention** — bound the cache to the last *N* tokens.
+- **Hybrid layers (linear or sliding-window attention mixed with a few
+  full-attention layers)** — a growing set of open models use this to cut KV
+  growth with context length. Moonshot reports up to 75% less KV cache for its
+  Kimi Linear design, and a 2026 preprint reports large KV-transfer savings for
+  other hybrids. These are authors' own benchmarks. The serving side is young:
+  hybrid models need engine support, and prefix caching works differently on
+  them. Ask your eng team whether the engine and cache reuse you rely on
+  support the architecture before you pick such a model.
 
 ## Why this is the throughput story
 
