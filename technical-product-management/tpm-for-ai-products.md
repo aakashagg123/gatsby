@@ -155,8 +155,9 @@ its first:
   line item — *sustainable model evolution*, not one-off maintenance.
 - **Pinned models get retired.** Pinning protects you from silent change, but not from
   retirement. Anthropic gives at least 60 days' notice before it retires a public model.
-  OpenAI states a minimum of 6 months for generally available models and as little as
-  2 weeks for previews. Provider-side API parameters also change: Anthropic's docs list
+  OpenAI states at least 6 months for generally available models, unless safety or
+  compliance concerns call for a faster timeline. It gives at least 3 months for specialized
+  variants and image models, and as little as 2 weeks for previews. Provider-side API parameters also change: Anthropic's docs list
   `temperature`, `top_p` and `top_k` as removed in API version `2026-10-21`. Put each
   retirement date on the roadmap, and start the eval diff for the replacement well before
   it. Check the provider's deprecation page, because dates and notice periods change.

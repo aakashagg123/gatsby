@@ -111,10 +111,18 @@ postmortems all pointing at the same subsystem.
 - **Some AI incidents carry a legal clock.** The EU AI Act (Article 73) requires providers
   of high-risk AI systems to report serious incidents to the market surveillance authority:
   within 15 days of becoming aware, 10 days if a person died, and 2 days for widespread
-  infringements. The Act's text applies this from 2 August 2026, but the high-risk tier has
-  reportedly been postponed by the 2026 Digital Omnibus, so confirm the current date with
-  legal counsel. Agree in advance who decides that an incident is "serious", and do not
+  infringements. The Act's text said 2 August 2026, but the Digital Omnibus on AI (Regulation (EU) 2026/1744,
+  now in force) moved the high-risk rules to 2 December 2027 for stand-alone systems and
+  2 August 2028 for AI built into regulated products. Law firm summaries of the Omnibus show
+  no change to Article 73's deadlines. Confirm the current dates with legal counsel. Agree in advance who decides that an incident is "serious", and do not
   alter the system in ways that hide the cause before authorities are told.
+- **Quality incidents can hide for weeks.** In its September 2025 postmortem, Anthropic
+  described three infrastructure bugs that degraded Claude responses from 5 August to
+  mid-September 2025. Its benchmarks, safety evals and spot checks missed them. Early user
+  reports looked like normal feedback noise, and privacy controls limited what engineers
+  could read. Anthropic's fix was more sensitive evals and continuous quality evals on
+  production traffic. The PM lesson: an offline suite that passes is not a detector. Budget
+  for production sampling, and make sure feedback reports reach someone who can act on them.
 - **The screenshot incident** — one appalling output going viral is a real severity
   class with its own playbook: capture the trace, reproduce, guardrail the pattern,
   and feed it to the [eval suite](./tpm-for-ai-products.md) so it can never ship
