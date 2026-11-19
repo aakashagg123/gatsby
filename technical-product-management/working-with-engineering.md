@@ -93,9 +93,10 @@ scope, mounting debt)? A sustained dip is the earliest signal that something str
 needs attention.
 
 AI coding tools add a twist. DORA's 2025 report on AI-assisted development calls AI an
-"amplifier" of an organization's existing strengths and weaknesses. Secondary summaries of
-the report say AI use is now linked to higher delivery throughput, and also to more
-delivery instability. So if AI-assisted teams show rising velocity, check change-failure
+"amplifier" of an organization's existing strengths and weaknesses. Google's own summary says AI
+use is now linked to higher delivery throughput. Secondary summaries of the report add that
+it is still linked to more delivery instability. Only the throughput finding appears on
+Google's own page. So if AI-assisted teams show rising velocity, check change-failure
 and rework rates before you celebrate.
 
 ## Estimates and the trust economy

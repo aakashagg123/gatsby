@@ -23,7 +23,7 @@ picks the lowest tier number among due modules.
 
 | id | path | build script | tier | cadence_days | last_refreshed |
 |---|---|---|---|---|---|
-| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-05 |
+| technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-19 |
 | technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-11-12 |
@@ -1145,3 +1145,18 @@ and a link to the merged PR.)
     (2) Next run: open the OpenAI SWE-bench post via another route, the OWASP 2026 release, and the OTel changelog. (3) Possible new lesson: reasoning-model serving and cost control; not built (scope).
     (4) Independent fact-check (research-fact-checker) not run; review stamps untouched. (5) recap files still lack "Test yourself" sections (structural).
 
+- 2026-11-19 — technical-product-management — tier 1. No row was due, so I took the oldest tier-1 row (2026-11-05). Outcome: fixed and expanded.
+  I read the README, all 9 lessons and the recap in full first. No open flags named this module beyond the 11-05 ones (Digital Omnibus hedge: resolved).
+  - Fixed: Art. 73 paragraph said the high-risk tier was "reportedly postponed". The Digital Omnibus on AI is now in force (Regulation (EU) 2026/1744):
+    Annex III high-risk 2 Dec 2027, Annex I 2 Aug 2028. Art. 73 deadlines (15/10/2 days) confirmed unchanged. OpenAI deprecation text now includes the
+    safety/compliance exception and the 3-month tier. DORA sentence: throughput finding confirmed on Google's page; instability still secondary only.
+  - Expanded: Anthropic's Sept 2025 postmortem as an AI quality-incident case (incidents lesson): evals missed it, feedback looked like noise.
+  - Sources opened: artificialintelligenceact.eu/article/73 (deadlines); orrick.com/en/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes
+    (dates, Reg. 2026/1744; secondary law-firm source, not the Official Journal); platform.claude.com/docs/en/about-claude/model-deprecations (60 days; sampling params removed in 2026-10-21);
+    developers.openai.com/api/docs/deprecations; dora.dev/research/2025/dora-report (amplifier); blog.google/.../dora-report-2025 (throughput);
+    arxiv.org/abs/2406.12045 (pass^8 <25% retail); anthropic.com/engineering/a-postmortem-of-three-recent-issues; sre.google/sre-book/postmortem-culture;
+    microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing (6%, p<0.0005, bot filter).
+  - Search results only: Collins word of the year 2025 (6 Nov 2025) and Karpathy Feb 2025 (news); DORA instability finding and AI Capabilities Model details (summaries); Omnibus adoption dates (sources disagree).
+  - Not verified: openai.com sycophancy postmortem (403); Official Journal text; Knight market cap; Cagan, RICE, Kano, WSJF (checked 2026-09-21); Hamel FAQ (11-05); interview formats; 15-30% debt, 50-200 examples.
+  - Flagged: (1) Possible new lesson: PM operating model with AI agents (11-05 flag, still open). (2) Open the Official Journal text and the DORA PDF for instability next run.
+    (3) Independent fact-check not run; review stamps unchanged. (4) Cross-module: check other tracks that cite the 2 Aug 2026 high-risk date (e.g. grep "2 August 2026").
