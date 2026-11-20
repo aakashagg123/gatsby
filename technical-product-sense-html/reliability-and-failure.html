@@ -141,6 +141,10 @@ whether or not you designed it.</p>
   visible to every user.</li>
 <li><strong>Retry storms</strong> — Naive retries with no backoff turn a small blip into a full outage.</li>
 <li><strong>Timeout-less calls</strong> — One slow dependency hangs the whole request.</li>
+<li><strong>The model that gets retired</strong> — The model you pinned has a retirement date, and
+  nobody owns it. The deadline arrives, requests fail, and the replacement behaves
+  differently on your evals. Keep a list of every model version in use, with its
+  retirement date and an owner. Re-run your evals on the replacement well before the date.</li>
 <li><strong>Uniform reliability</strong> — Four-nines effort gets spent on a widget that could fail silently,
   while the checkout has no fallback.</li>
 </ul>
@@ -150,6 +154,8 @@ whether or not you designed it.</p>
 <li class="task todo">Do external calls have timeouts, bounded retries with backoff, and a fallback?</li>
 <li class="task todo">Are retried operations idempotent?</li>
 <li class="task todo">Is there a graceful-degradation path (cache, simpler result, non-AI fallback)?</li>
+<li class="task todo">For each model version in use: do we know its retirement date, who owns the
+      migration, and whether our evals have run on the replacement?</li>
 <li class="task todo">Does this feature's reliability target match the <em>cost</em> of it failing — no more, no less?</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
