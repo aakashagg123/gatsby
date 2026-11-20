@@ -89,8 +89,10 @@ The PM owns more of it than any other discipline:
   call one*.
 - **AI-specific regulation is now its own category.** The EU AI Act's general-purpose-AI
   obligations have applied since August 2025, and the AI Office gained enforcement
-  powers over them on 2 August 2026. The transparency rules take effect in August 2026
-  too. The Digital Omnibus (in force 27 July 2026) moved the high-risk tier (risk
+  powers over them on 2 August 2026. The transparency rules (such as telling users they
+  are talking to an AI, and labelling deepfakes) also began on 2 August 2026. One part
+  has extra time: machine-readable marking of AI-generated content is due 2 December 2026
+  for generative systems already on the market before 2 August 2026. The Digital Omnibus (in force 27 July 2026) moved the high-risk tier (risk
   management, data governance, technical documentation, human oversight) to 2 December
   2027 for sensitive use cases and 2 August 2028 for AI built into regulated products.
   It applies to anyone whose product touches EU users. This sits *alongside* GDPR-class privacy law, not instead of it — a feature can
@@ -112,9 +114,11 @@ The AI-specific deltas, briefly — each expanded in the
   three things: access to private data, exposure to untrusted content, and a way to
   send data out. With all three, an attacker can plant instructions in the content and
   make the agent leak the data. Remove at least one leg. Detection filters alone do not
-  close the gap. The OWASP Top 10 for LLM Applications (2025 edition) lists prompt
-  injection first, then sensitive information disclosure, and "excessive agency" at
-  number six. Use it as a review checklist.
+  close the gap. The OWASP Top 10 for LLM Applications (2026 edition, released August 2026) still
+  lists prompt injection first and sensitive information disclosure second. It moves
+  "excessive agency" up to third, because agent deployments are where the damage now
+  happens. Unbounded consumption, a cost and abuse risk, sits at sixth. Use the list
+  as a review checklist.
 - **Output is a leakage channel** — A model with over-broad retrieval can be *talked
   into* revealing what the asking user shouldn't see. Retrieval must enforce the same
   authorization as the UI ([tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md)).

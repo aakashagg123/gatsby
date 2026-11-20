@@ -66,6 +66,8 @@ messed up," 5xx "we messed up") plus a body.
   present, wait that long. Not every 429 is a rate limit: when an account hits its monthly
   spend cap, Anthropic's API also returns a 429, with no `retry-after`, and retries fail
   until the cap resets. Treat it as a budget alert, not a transient error.
+  A spend limit you set yourself in the console behaves differently: it returns a 400.
+  Read the error type, not just the status code.
 
 ## Idempotency — the retry-safety promise
 
@@ -88,6 +90,15 @@ changes to a live version: add optional fields, and never remove or repurpose ex
 The product consequence is that **API changes are slow and deliberate**, because every caller
 is a dependency. Design the contract as if you'll live with it for years, because you will.
 
+The same rule applies to the contracts you consume. Model providers change theirs.
+Anthropic removed the `temperature`, `top_p` and `top_k` parameters in its 2026-10-21
+API version, so a request that sets them now fails with a 400. Providers also retire
+whole models. Anthropic promises at least 60 days' notice for publicly released models.
+OpenAI lists six months for generally available models and three for specialized ones,
+with an exception for safety or compliance. Claude Sonnet 4.5 is one example: Anthropic
+announced its retirement on 30 September 2026, for 30 November 2026. Treat a model
+version as a dependency with an end date.
+
 ## REST isn't the only shape
 
 Everything above describes REST — a resource per URL, one call per round trip — because
@@ -109,8 +120,9 @@ engineering conversations that recognizing them by name matters:
 - **MCP (Model Context Protocol)** — an open protocol that lets an AI app discover and
   call tools and read resources on a server through one standard contract. If your product
   exposes actions to an agent, or plugs into one, the MCP server is the contract. Its
-  current specification says tool descriptions must be treated as untrusted unless they
-  come from a server you trust, so a tool contract is also a security surface.
+  current specification says clients must treat tool annotations as untrusted unless
+  they come from a trusted server. It also says there should always be a human in the
+  loop who can deny a tool call. So a tool contract is also a security surface.
 
 The product-sense takeaway isn't picking the protocol — engineering does that. It's
 recognizing that "the contract" question (what's sent, what's returned, what happens on

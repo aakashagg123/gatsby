@@ -143,8 +143,10 @@ not the average. Output is about 500 tokens. At list prices for a mid-tier model
 take a mid-tier model priced at $2 per million input tokens and $10 per million output
 tokens (Anthropic's list price for Sonnet 5.5 in November 2026). That is about 1.3 cents
 per ticket, or roughly $800/month before caching. At p95 context the input share
-triples. A frontier-tier model at $10 and $50 would cost about five times as much, so
-the model tier moves the answer more than the volume does. The system prompt and
+triples. A frontier-tier model at $8 and $40 (Fable 5.2) would cost about four times as much,
+roughly $3,100/month. A small model at $0.10 and $0.50 (Haiku 5.5, for prompts up to
+100,000 tokens) would cost about $40/month. So the model tier moves the answer more
+than the volume does. The system prompt and
 help-center boilerplate are identical across tickets, so prompt caching should cut real
 input cost hard. Verify the hit rate; don't assume it. Prices change often, so redo
 this sum with the current price sheet.</p>

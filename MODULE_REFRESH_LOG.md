@@ -24,7 +24,7 @@ picks the lowest tier number among due modules.
 | id | path | build script | tier | cadence_days | last_refreshed |
 |---|---|---|---|---|---|
 | technical-product-management | technical-product-management/ | scripts/build_technical_product_management.py | 1 | 45 | 2026-11-19 |
-| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-06 |
+| technical-product-sense | technical-product-sense/ | scripts/build_technical_product_sense.py | 1 | 45 | 2026-11-20 |
 | product-sense | product-sense/ | scripts/build_product_sense.py | 1 | 45 | 2026-11-07 |
 | business-acumen | business-acumen/ | scripts/build_business_acumen.py | 1 | 45 | 2026-11-12 |
 | ai-assisted-development | ai-assisted-development/ | scripts/build_ai_assisted_development.py | 1 | 45 | 2026-11-13 |
@@ -1160,3 +1160,22 @@ and a link to the merged PR.)
   - Not verified: openai.com sycophancy postmortem (403); Official Journal text; Knight market cap; Cagan, RICE, Kano, WSJF (checked 2026-09-21); Hamel FAQ (11-05); interview formats; 15-30% debt, 50-200 examples.
   - Flagged: (1) Possible new lesson: PM operating model with AI agents (11-05 flag, still open). (2) Open the Official Journal text and the DORA PDF for instability next run.
     (3) Independent fact-check not run; review stamps unchanged. (4) Cross-module: check other tracks that cite the 2 Aug 2026 high-risk date (e.g. grep "2 August 2026").
+
+- 2026-11-20 — technical-product-sense — tier 1. No row was due (all tier-1 rows under 45 days, tier 2 and 3 not yet at cadence), so I took the oldest tier-1 row (2026-11-06).
+  Outcome: fixed and expanded. I read the README, all 9 lessons and the recap in full first. Resolved the 11-06 flag on vendor dependency and model deprecation.
+  - Fixed: (1) OWASP LLM Top 10 is now the 2026 edition (4 Aug 2026); the lesson said 2025 with excessive agency sixth. It is now third; unbounded consumption is sixth.
+    (2) EU AI Act transparency rules were written as future ("take effect in August 2026"); they began 2 Aug 2026. Added the 2 Dec 2026 transition for machine-readable marking
+    of generative systems already on the market. (3) Napkin: frontier tier was $10/$50 (about 5x); Fable 5.2 is now $8/$40 (about 4x, ~$3,100/month). Added Haiku 5.5 at $0.10/$0.50 (~$40/month).
+    (4) MCP: spec says tool annotations (not descriptions) are untrusted unless from a trusted server; added the human-in-the-loop line. (5) 429 note: a spend limit you set yourself returns 400.
+  - Expanded: model deprecation as a contract and reliability risk (Anthropic 60 days' notice; OpenAI 6 months GA, 3 months specialized; Sonnet 4.5 retires 30 Nov 2026; sampling parameters removed in API version 2026-10-21),
+    with a failure mode and checklist item; METR evidence on AI coding speedup in the estimation lesson.
+  - Sources opened: platform.claude.com/docs/en/about-claude/pricing; platform.claude.com/docs/en/api/errors; platform.claude.com/docs/en/about-claude/model-deprecations;
+    developers.openai.com/api/docs/deprecations; digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai; cdp.cooley.com/digital-ai-omnibus-delays-key-deadlines-introduces-new-rules (secondary law-firm source);
+    raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/README.md; helpnetsecurity.com/2026/08/06/owasp-2026-llm-top-10-released (partial list);
+    genai.owasp.org/llm-top-10 (still shows 2025; superseded); modelcontextprotocol.io/specification/latest/server/tools (spec 2026-07-28);
+    datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header (now -08, 22 Oct 2026, still a draft: lesson wording holds); epoch.ai/data-insights/llm-inference-price-trends (9x-900x confirmed; first 100k chars);
+    sre.google/workbook/error-budget-policy (budget exhaustion halts releases; page does not describe product sign-off, so the lesson's "product, development, and SRE agree in writing" line comes from the 11-06 SRE workbook source, not re-read); metr.org/blog/2026-02-24-uplift-update.
+  - Search results only: Official Journal text of the Omnibus (entry into force 27 Jul 2026 and 2 Dec 2026 grace from secondary sources); OWASP 2026 positions 4 to 9 beyond the README list.
+  - Not verified: Nielsen limits, lethal trifecta, Air Canada, CAP/GraphQL/gRPC claims (checked in earlier runs, not re-opened); 8.7 h / 52 min (arithmetic); Haiku 5.5 long-prompt tier.
+  - Flagged, not fixed: (1) Verify the error-budget "agree in writing" wording against the SRE workbook implementing-slos page next run. (2) Cross-module: other tracks citing OWASP LLM Top 10 2025 numbering
+    (e.g. excessive agency as LLM06) or the $10/$50 frontier price may be stale; grep "LLM06" and "2025 edition". (3) Independent fact-check (research-fact-checker) not run; review stamps unchanged.

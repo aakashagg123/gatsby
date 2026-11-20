@@ -111,6 +111,10 @@ whether or not you designed it.
   visible to every user.
 - **Retry storms** — Naive retries with no backoff turn a small blip into a full outage.
 - **Timeout-less calls** — One slow dependency hangs the whole request.
+- **The model that gets retired** — The model you pinned has a retirement date, and
+  nobody owns it. The deadline arrives, requests fail, and the replacement behaves
+  differently on your evals. Keep a list of every model version in use, with its
+  retirement date and an owner. Re-run your evals on the replacement well before the date.
 - **Uniform reliability** — Four-nines effort gets spent on a widget that could fail silently,
   while the checkout has no fallback.
 
@@ -120,6 +124,8 @@ whether or not you designed it.
 - [ ] Do external calls have timeouts, bounded retries with backoff, and a fallback?
 - [ ] Are retried operations idempotent?
 - [ ] Is there a graceful-degradation path (cache, simpler result, non-AI fallback)?
+- [ ] For each model version in use: do we know its retirement date, who owns the
+      migration, and whether our evals have run on the replacement?
 - [ ] Does this feature's reliability target match the *cost* of it failing — no more, no less?
 
 ## Related lessons
