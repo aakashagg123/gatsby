@@ -136,10 +136,21 @@ claimed to have finished online courses that real learners had abandoned. NN/g's
 to use them only for early desk research or to form hypotheses that real users then test.
 They can never supply the surprise that makes research worth doing.
 
+**AI-moderated interviews are a different tool, and a better one.** Here a real person talks to an
+AI interviewer. In January 2026 NN/g tested two such tools with ten participants. The AI followed
+its script and probed short answers. It did not chase unexpected points, and it never asked people to
+confirm what it had understood. Only 3 of 10 participants called the talk natural. Some found the praise fake.
+NN/g's verdict: they are "not yet suited for semistructured, in-depth discovery interviews". They fit
+structured feedback after a launch, recruitment screening, and interviews in languages your team
+does not speak. Use a human for early discovery, and use the AI interviewer to scale a question you
+already know how to ask.
+
 ## Failure modes
 
 - **Interviewing a model instead of a person** — treating AI-simulated participants as
   evidence of what users do. They agree too easily and hide the unhappy path.
+- **Scaling discovery with a script-bound interviewer** — using an AI moderator before you
+  know the right questions. It asks what you wrote and misses what you did not think of.
 - **The focus-group future** — asking users to predict their own behaviour, then
   building on the predictions.
 - **Leading the witness** — questions shaped so agreement is the polite answer;
@@ -163,6 +174,8 @@ They can never supply the surprise that makes research worth doing.
 - [ ] When did I last *watch* a user (not a dashboard) use the product — and was it
       within the month?
 - [ ] For AI features: have I tested the wrong-answer experience on purpose?
+- [ ] If I use AI participants or an AI interviewer: is it only for hypotheses, screening or
+      structured feedback, with real people doing the discovery?
 - [ ] Are edits/retries/abandonments instrumented and sampled as research, not just
       as metrics?
 - [ ] Can I state the job my product is hired for as "when ___, I want to ___, so I

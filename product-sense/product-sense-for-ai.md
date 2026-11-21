@@ -75,9 +75,12 @@ tell. Product sense for AI is largely **trust design**:
 - **Calibrate confidence** — signal uncertainty in the UX instead of presenting every output
   with the same authority. Microsoft's 18 guidelines for human-AI interaction (CHI 2019)
   and Google's People + AI Guidebook are good checklists for this.
-- **Disclose the machine** — in the EU, the transparency rules say people must be made aware
+- **Disclose the machine** — in the EU, Article 50 of the AI Act says people must be made aware
   they are interacting with an AI system. The Commission's AI Act page gives August 2026 as
-  the date these rules apply. Ask legal for any transition terms.
+  the date these rules apply. The Digital Omnibus (Regulation (EU) 2026/1744, published July 2026)
+  moved only one duty. Providers of generative systems already on the market before 2 August 2026 get
+  until 2 December 2026 to mark synthetic audio, image, video and text output (Article 50(2)).
+  The chatbot-disclosure duty kept its August date. Ask legal how each rule applies to your launch date.
 - **Check that your eval rewards "I don't know"** — OpenAI researchers argue models hallucinate
   partly because common benchmarks score a guess higher than an abstention, so models learn to
   be good test-takers (arXiv 2509.04664). An eval that gives no credit for abstaining trains
