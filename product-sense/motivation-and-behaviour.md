@@ -33,7 +33,7 @@ friction: add it only where it creates value, and remove it everywhere else.
 
 ```mermaid
 flowchart LR
-  M["Motivation<br/>(does the user want it?)"] --> B{"Behaviour happens<br/>M × A × T"}
+  M["Motivation<br/>(does the user want it?)"] --> B{"Behaviour happens<br/>B = MAP"}
   A["Ability<br/>(how easy is it?)"] --> B
   T["Prompt<br/>(what cues it now?)"] --> B
   B --> ACT["Action"]
