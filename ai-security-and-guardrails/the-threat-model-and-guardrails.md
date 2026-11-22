@@ -126,6 +126,11 @@ covers the full defenses: permissions enforced in code, breaking the lethal trif
 [multi-tenant isolation](../content/05-safety-multitenancy/multi-tenant-isolation.md). This
 lesson names injection so it takes its place in the taxonomy.
 
+Agents widen the target. The OWASP Top 10 for Agentic Applications (9 Dec 2025) lists ten risks that start from
+tools, memory and other agents. They include Agent Goal Hijack (ASI01), Tool Misuse (ASI02), Identity and Privilege Abuse (ASI03),
+Memory and Context Poisoning (ASI06) and Rogue Agents (ASI10). If your feature acts, add them to your coverage matrix. See
+[Safety, security & governance for agents](../agentic-ai/safety-security-and-governance.md).
+
 **Extraction** targets what the model or system contains. Three cases matter.
 
 - **Training data.** In 2023, Nasr and colleagues showed that a divergence attack could
@@ -320,7 +325,7 @@ Three habits matter to an engineer.
   repository. The rise of Excessive Agency to LLM03 comes from a Cloud Security Alliance
   [research note](https://labs.cloudsecurityalliance.org/research/csa-research-note-owasp-genai-top10-2026-agent-control-stand/)
   (opened 2026-10-23). The OWASP project page confirms the 2026 edition of 4 Aug 2026.
-  The main OWASP page still showed the 2025 list when opened, so read the numbers
+  The main OWASP page still showed the 2025 list when opened again on 2026-11-22, so read the numbers
   from the 2026 source before you cite them. Both editions describe a jailbreak as a form or subset of prompt injection. Checked 2026-10.
 - NIST, [AI 100-2 E2025, Adversarial Machine Learning](https://www.nist.gov/publications/adversarial-machine-learning-taxonomy-and-terminology-attacks-and-mitigations-0)
   (Mar 2025): the taxonomy by attacker goal, with poisoning, prompt injection and privacy
@@ -328,4 +333,6 @@ Three habits matter to an engineer.
 - DAN: first Reddit how-to guide on 15 Dec 2022, and the DAN 5.0 token game, from
   [CNBC](https://www.cnbc.com/2023/02/06/chatgpt-jailbreak-forces-it-to-break-its-own-rules.html)
   (6 Feb 2023) and Know Your Meme, via search-result excerpts.
+- OWASP, [Top 10 for Agentic Applications](https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/)
+  (9 Dec 2025): the ten risk names, page opened 2026-11-22. Many-shot, Constitutional Classifiers and Nasr (abstract) were re-opened the same day.
 - The coverage-matrix scenario and the code sketch are invented and illustrative.

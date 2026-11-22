@@ -221,8 +221,7 @@ Three habits matter to an engineer.
 
 - EU AI Act, Article 55: providers of general-purpose AI models with systemic risk must
   perform model evaluation, including conducting and documenting adversarial testing.
-  Search-result excerpts of the Act's text. See
-  [Art. 55](https://ai-act-law.eu/article/55/). Checked 2026-10.
+  Opened 2026-11-22 at [Art. 55](https://artificialintelligenceact.eu/article/55/): 55(1)(a) says "conducting and documenting adversarial testing".
 - Anthropic, [Many-shot jailbreaking](https://www.anthropic.com/research/many-shot-jailbreaking)
   (2 Apr 2024): the 61% to 2% mitigation result. Checked 2026-10.
 - Anthropic, [Constitutional Classifiers](https://www.anthropic.com/research/constitutional-classifiers)

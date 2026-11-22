@@ -80,8 +80,8 @@ version, when, and against which evaluation. Ask your auditor how they treat it.
 
 Buyers may also ask for **ISO/IEC 42001** (December 2023), the first international standard
 for an AI management system. Others cite the NIST AI Risk Management Framework (RMF),
-released in January 2023, and its Generative AI Profile, NIST AI 600-1 (July 2024). NIST has also drafted a Cyber AI Profile (NIST IR 8596, preliminary draft Dec 2025) that
-maps AI security work onto its Cybersecurity Framework 2.0. It was still a draft in 2026.
+released in January 2023, and its Generative AI Profile, NIST AI 600-1 (July 2024). NIST has also drafted a Cyber AI Profile (NIST IR 8596, preliminary draft 16 Dec 2025, comments closed 30 Jan 2026) that
+maps AI security work onto its Cybersecurity Framework 2.0. NIST's page still shows the preliminary draft, and I found no later draft.
 None replaces SOC 2.
 Each is a different request for the same thing: proof of how you manage AI risk.
 
@@ -106,8 +106,7 @@ Do not assume other laws copy Article 22. India's Digital Personal Data Protecti
 Rules were notified in the Gazette (G.S.R. 846(E), dated 13 November 2025) and announced on
 14 November. Their main duties, such as notice and consent, apply from May 2027, 18 months
 after publication. The Commission also proposed GDPR changes, including to Article 22, in the November 2025
-Digital Omnibus. As of 1 October 2026 no amendment has been adopted that I could find, and
-the Council's working text reportedly dropped the Article 22 change. Check the current status. Check each
+Digital Omnibus. As of 22 November 2026 no amendment has been adopted that I could find. The Council's position keeps Article 22 as a right not to be subject to solely automated decisions, with more room for firms to justify them. Parliament's position was still open. Check the current status. Check each
 law and each market with counsel.
 
 ## The EU AI Act: risk tiers, with a moving timeline
@@ -135,9 +134,11 @@ reported by law-firm and trade sources, as of October 2026.
 | 2 Feb 2025 | Banned practices |
 | 2 Aug 2025 | Duties for providers of general-purpose AI models |
 | 2 Aug 2026 | Most transparency duties (Article 50). The Commission's enforcement powers over general-purpose models start. |
-| 2 Dec 2026 | Machine-readable marking of AI content, for systems already on the market before 2 Aug 2026 |
+| 2 Dec 2026 | Machine-readable marking of AI content, for systems already on the market before 2 Aug 2026. The Omnibus also adds a ban on AI systems that generate non-consensual sexual images or child sexual abuse material. |
 | 2 Dec 2027 | High-risk systems listed in Annex III (stand-alone uses such as hiring and credit) |
 | 2 Aug 2028 | High-risk AI built into products already covered by EU product-safety law (Annex I) |
+
+Two Article 50 aids now exist. The Commission adopted non-binding guidelines on the transparency duties on 20 July 2026. The AI Office published a voluntary Code of Practice on transparency of AI-generated content on 31 July 2026. Ask your legal team which one your feature follows. A breach of Article 50 can bring a fine of up to 15 million euros or 3% of worldwide annual turnover, whichever is higher (one law-firm source).
 
 Do not read the delay as a reprieve. The Omnibus moved the high-risk dates. It left most
 transparency duties in place. A team that classifies a hiring feature as "limited risk"
@@ -258,12 +259,19 @@ Two habits keep it honest.
   [Baker Botts](https://www.bakerbotts.com/thought-leadership/publications/2026/september/eu-ai-act-article-50-transparency-obligations-go-live),
   [DLA Piper](https://knowledge.dlapiper.com/dlapiperknowledge/globalemploymentlatestdevelopments/2026/The-Digital-AI-Omnibus-Proposed-deferral-of-high-risk-AI-obligations-under-the-AI-Act)).
   The Official Journal text was not read directly. Check it before you rely on a date.
+- European Commission, [AI Act regulatory framework](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai):
+  page opened 2026-11-22. Confirms Omnibus in force 27 Jul 2026, Annex III to 2 Dec 2027, Annex I to 2 Aug 2028, the new
+  ban from Dec 2026, the Article 50 guidelines of 20 Jul 2026, and that transparency rules apply from Aug 2026.
+- Baker Botts, [Article 50 go-live](https://www.bakerbotts.com/thought-leadership/publications/2026/september/eu-ai-act-article-50-transparency-obligations-go-live):
+  page opened 2026-11-22 (secondary). The 2 Dec 2026 marking grace, the Code of Practice of 31 Jul 2026, and the 15 million euro or 3% fine.
+- Addleshaw Goddard, Cuatrecasas and EDRi on the Omnibus on data (search results only): Council position on Article 22;
+  Parliament open. Check the Legislative Observatory (2025/0360 (COD)).
 - European Commission,
   [General-purpose AI models in the AI Act: Q&A](https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers):
   duties from 2 Aug 2025 and enforcement powers from 2 Aug 2026. Search-result excerpt.
 - Court of Justice of the EU, *SCHUFA Holding (Scoring)*, C-634/21, 7 Dec 2023: a credit
-  score is an automated decision under Article 22 when a third party draws strongly on it.
-  From law-firm summaries ([A&O Shearman](https://www.aoshearman.com/en/insights/ao-shearman-on-data/cjeu-rules-that-a-credit-score-constitutes-automated-decision-making-under-the-gdpr)).
+  score is an automated decision under Article 22 when a third party draws strongly on it. The
+  Court also held that Article 22(1) is a prohibition in principle. Page opened 2026-11-22; law-firm summary ([A&O Shearman](https://www.aoshearman.com/en/insights/ao-shearman-on-data/cjeu-rules-that-a-credit-score-constitutes-automated-decision-making-under-the-gdpr)).
 - India, [DPDP Rules 2025](https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf):
   Gazette notification dated 13 Nov 2025 (PIB announcement 14 Nov), with phased
   commencement and most duties 18 months after publication. Sources give 13 or 14 May 2027.
@@ -271,9 +279,8 @@ Two habits keep it honest.
 - AICPA, [SOC suite of services](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2/):
   the 2017 Trust Services Criteria with revised points of focus (2022), five categories,
   security required. The Type II period is a common practice, not a fixed rule.
-- NIST Cyber AI Profile (IR 8596): draft status from search results only
-  ([KPMG alert](https://kpmg.com/us/en/articles/2026/cybersecurity-nist-draft-cybersecurity-framework-for-ai-reg-alert.html)).
-  Not opened. Check NIST for the current status.
+- NIST, [Cyber AI Profile (IR 8596)](https://csrc.nist.gov/pubs/ir/8596/iprd): page opened 2026-11-22. Preliminary
+  draft of 16 Dec 2025, comment period closed (due 30 Jan 2026). A later draft was not found.
 - Omnibus dates re-confirmed 2026-10-23 through search results from White & Case, Mayer Brown
   and Cuatrecasas. White & Case blocked a direct read. The Official Journal still was not read.
 - ISO/IEC 42001:2023; NIST AI RMF 1.0 (26 Jan 2023); NIST AI 600-1 (26 Jul 2024). Search-result
