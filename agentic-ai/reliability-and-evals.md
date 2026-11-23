@@ -59,6 +59,11 @@ consequences are worth tattooing on every agent roadmap:
   effectively restarts the compounding clock. Recovery, not perfection, is the design
   goal. The best agents aren't the ones that never err — they're the ones that notice.
 
+Benchmarks that report "how long a task agents can do" need the same care. METR's time horizon is the
+human task length at which a model succeeds half the time. Half the time is not a service level. METR also
+reports an 80% horizon, and it warns that results above 16 hours are unreliable on its current task suite.
+Before you promise a task length to customers, ask for the success rate at that length.
+
 Design recovery in tiers. **Retry** handles transient failures, with backoff and a cap —
 the same action repeated identically five times is a loop, not persistence. **Revise**
 feeds the error back and lets the model change approach; this is where [teaching

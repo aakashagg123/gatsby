@@ -89,11 +89,15 @@ internalizing because it inoculates you against a whole genre of hype:
   vendors. It's the standard way to plug tools and data into agents
   ([lesson 2](./tools-and-function-calling.md)). In December 2025 Anthropic gave MCP to
   the Agentic AI Foundation, a Linux Foundation body. That moves it from one vendor's
-  project to neutral governance. If you learn one protocol, learn this.
+  project to neutral governance. If you learn one protocol, learn this. The spec keeps moving. The 2026-07-28
+  revision makes MCP stateless: it drops the session handshake and the session ID header. It also moves
+  long-running tasks out of the core into an optional extension. It deprecates Roots, Sampling and Logging,
+  and it deprecates Dynamic Client Registration in favour of Client ID Metadata Documents. Ask your team
+  which spec version your servers target.
 - **A2A (Agent2Agent)** — real (Google-initiated, donated to the Linux Foundation in June
   2025): agents advertise capabilities and delegate to each other across vendors. It
-  reached a stable v1.0 in March 2026, with signed Agent Cards for identity. It is still
-  young. Pilot it where a partner ecosystem demands it, but don't architect your product
+  reached a stable v1.0 in March 2026, with signed Agent Cards for identity. It now sits
+  under the Agentic AI Foundation, next to MCP. It is still young. Pilot it where a partner ecosystem demands it, but don't architect your product
   around universal adoption.
 - **The rest** — a mix of research proposals, single-vendor efforts, and acronyms that
   exist mainly on infographics. One example: the "ACP" on those infographics is usually
@@ -111,7 +115,9 @@ merchant uptake. Shoppers are now sent to the retailer's own app to pay. The pro
 lives on in ChatGPT Apps. So the lesson is double: the money layer is where agents are
 heading, and demand there is unproven. Note what it validates: the money layer is exactly the transaction-cost
 territory that [workflow capture](./agentic-ai-as-a-product.md) says agents absorb.
-Watch this family more closely than the alphabet soup above.
+Google also launched the **Universal Commerce Protocol (UCP)** in January 2026. It covers the whole shopping
+flow, and Google says it works with AP2, A2A and MCP. Several protocols now compete for the same job, so
+watch this family more closely than the alphabet soup above.
 
 Here's the strategic read: tool-to-agent standardization (MCP) succeeded because the
 problem was concrete and the payoff immediate. Agent-to-agent standardization is
@@ -140,7 +146,10 @@ of agent experts"**: specialized agents, each strong in one domain or task, comp
 into one system. It's a real pattern — serious coding and research agents are built this
 way today — but note what makes it work in practice. The specialists earn their place by
 owning *different tools, permissions, or context*, not by having a different adjective
-in their prompt.
+in their prompt. Anthropic's Project Vend shows the trap. In phase two, a "CEO" agent was added to
+supervise the shop agent. It shared the shop agent's blind spots and approved lenient requests far more
+often than it refused them. Anthropic credited the gains to better tools and enforced procedures instead.
+A reviewer built from the same model with the same context is not an independent check.
 
 ## Failure modes
 
