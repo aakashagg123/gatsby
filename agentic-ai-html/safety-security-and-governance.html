@@ -157,7 +157,7 @@ check: alignment between <em>stated</em> scope and <em>actual</em> capability. A
 <p>At organizational scale, governance is the multiplication table. It needs <strong>an agent
 registry</strong> (what agents exist, who owns them, what each can touch), <strong>identity for
 agents</strong> (agents authenticate as themselves, not as a borrowed human account — you
-can't audit what you can't distinguish), <strong>policy</strong> (which data classes and actions
+can't audit what you can't distinguish; shared service accounts hide who started the work), <strong>policy</strong> (which data classes and actions
 are agent-permitted, org-wide), and <strong>an accountable owner per agent</strong> (a human who
 answers for its behaviour, budget, and permissions). This is the kernel of truth in
 the "governance layer" of stack infographics. It's just a <em>program you run</em>, not a
@@ -171,6 +171,9 @@ product you install.</p>
   API responses into context unexamined. Injection rides the tools in.</li>
 <li><strong>Approval fatigue by design</strong> — Every action is gated, and every gate gets clicked
   blind. The audit shows consent, but the humans stopped reading in week one.</li>
+<li><strong>Stale approvals</strong> — A human approves a task, then the user's role changes or access is revoked while
+  the agent is paused. The agent resumes on old authority. Re-check access before consequential writes
+  on long-running tasks.</li>
 <li><strong>The borrowed badge</strong> — Agents act under human credentials. Logs become
   unattributable, and revocation becomes impossible.</li>
 <li><strong>Write-only audit logs</strong> — Traces get collected and never reviewed. The trail
@@ -184,7 +187,8 @@ product you install.</p>
       and other agents' messages?</li>
 <li class="task todo">Are approval gates rare enough that humans actually read them?</li>
 <li class="task todo">Do agents have their own identity and per-task credentials, with a named human
-      owner each?</li>
+      owner each? For each hop, can I say who started the request, which agent acted, and what
+      authority reached the downstream service? Do sub-agents get narrower scopes than their parent?</li>
 <li class="task todo">Could I answer, from the audit trail, "what did this agent do last Tuesday and
       who approved it?"</li>
 </ul>

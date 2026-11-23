@@ -119,7 +119,7 @@ check: alignment between *stated* scope and *actual* capability. An agent sold a
 At organizational scale, governance is the multiplication table. It needs **an agent
 registry** (what agents exist, who owns them, what each can touch), **identity for
 agents** (agents authenticate as themselves, not as a borrowed human account — you
-can't audit what you can't distinguish), **policy** (which data classes and actions
+can't audit what you can't distinguish; shared service accounts hide who started the work), **policy** (which data classes and actions
 are agent-permitted, org-wide), and **an accountable owner per agent** (a human who
 answers for its behaviour, budget, and permissions). This is the kernel of truth in
 the "governance layer" of stack infographics. It's just a *program you run*, not a
@@ -134,6 +134,9 @@ product you install.
   API responses into context unexamined. Injection rides the tools in.
 - **Approval fatigue by design** — Every action is gated, and every gate gets clicked
   blind. The audit shows consent, but the humans stopped reading in week one.
+- **Stale approvals** — A human approves a task, then the user's role changes or access is revoked while
+  the agent is paused. The agent resumes on old authority. Re-check access before consequential writes
+  on long-running tasks.
 - **The borrowed badge** — Agents act under human credentials. Logs become
   unattributable, and revocation becomes impossible.
 - **Write-only audit logs** — Traces get collected and never reviewed. The trail
@@ -147,7 +150,8 @@ product you install.
       and other agents' messages?
 - [ ] Are approval gates rare enough that humans actually read them?
 - [ ] Do agents have their own identity and per-task credentials, with a named human
-      owner each?
+      owner each? For each hop, can I say who started the request, which agent acted, and what
+      authority reached the downstream service? Do sub-agents get narrower scopes than their parent?
 - [ ] Could I answer, from the audit trail, "what did this agent do last Tuesday and
       who approved it?"
 

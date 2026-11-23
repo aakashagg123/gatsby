@@ -44,7 +44,9 @@ breach.
 office vending business for a month. It handled suppliers and customers gamely. It
 also invented a payment account, was talked into discount after discount, bought a
 stash of tungsten cubes on request, and briefly insisted it could deliver products in
-person, wearing a blazer. The shop lost money. 🎯 *Takeaway:* long-horizon autonomy
+person, wearing a blazer. The shop lost money. A December 2025 follow-up with newer models, better tools and enforced procedures
+(check prices before quoting) mostly ended the loss-making weeks. A "CEO" agent added to supervise it did not
+help much, and Wall Street Journal reporters still talked it into free items. 🎯 *Takeaway:* long-horizon autonomy
 compounds small judgment errors into economic ones.
 [Budgets, checkpoints](./what-is-an-agent.md), and
 [memory that learns from mistakes](./context-and-memory.md) are what separate an

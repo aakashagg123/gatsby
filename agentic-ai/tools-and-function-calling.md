@@ -123,8 +123,9 @@ like dependencies, not like plugins. Two attacks are specific to MCP. In **tool
 poisoning**, hidden instructions sit in a tool's description. The user sees a harmless
 function, but the model reads and follows the hidden text. In a **rug pull**, a tool passes
 review and then changes its definition later. Most clients check tools only at install
-time. Pin tool definitions by hash, and re-review when they change. The OWASP MCP Top 10
-lists tool poisoning as MCP03:2025.
+time. Pin tool definitions by hash, and re-review when they change. The MCP spec itself says tool
+descriptions and annotations are untrusted unless they come from a trusted server. The OWASP MCP Top 10
+(a beta-stage project) lists tool poisoning as MCP03:2025.
 
 **Containment** is the other half of integration. The working defaults:
 
