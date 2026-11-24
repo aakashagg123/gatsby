@@ -120,6 +120,20 @@ too. A task's real-world difficulty for a human has no necessary relationship to
 represented it was in the model's training data — which is exactly why intuition about
 "this seems easy" or "this seems hard" fails as a guide to what the model will actually do
 well.</p>
+<h2 id="where-the-phrase-comes-from">Where the phrase comes from</h2>
+<p>The term comes from a field experiment by Dell'Acqua and colleagues, run with 758 consultants
+at one large firm, about 7 percent of its individual-contributor workforce. On
+tasks inside the frontier, access to GPT-4 raised speed by over 25 percent, human-rated
+quality by over 40 percent, and task completion by over 12 percent, according to the Harvard
+Business School summary. The same summary describes a frontier where AI
+excels in some tasks and falls short in others. The lesson for a product leader is the half
+those figures leave out: gains like these hold only inside the line, and users cannot see the
+line from the outside. The study used GPT-4, so treat the numbers as a 2023 snapshot of the
+effect, not as today's gain.</p>
+<p>A second source of unevenness is how models are scored. OpenAI's 2025 analysis argues that
+accuracy-only benchmarks reward guessing, so a model can look better on a leaderboard while
+being wrong more often (see <a href="what-is-an-llm.html">What an LLM actually is</a>). When you compare
+models, ask for the wrong-answer rate and the abstention rate on your own task.</p>
 <h2 id="why-benchmarks-dont-settle-it-for-you">Why benchmarks don't settle it for you</h2>
 <p>Vendor benchmarks measure performance on a fixed, public set of tasks, and models are often
 specifically improved against exactly those tasks. A high benchmark score is real evidence
@@ -166,9 +180,20 @@ the roadmap on an assumption.</p>
   a product-strategy skill, built on this same idea.</li>
 <li><a href="../ai/04-evals-observability.html#evals">Evals</a> — turning "we tested it" into a
   repeatable, measured practice.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Harvard Business School, Digital Data Design Institute,
+  <a href="https://aiinstitute.hbs.edu/navigating-the-jagged-technological-frontier/">Navigating the Jagged Technological Frontier</a>:
+  758 consultants, 7 percent of the individual-contributor workforce; inside the frontier,
+  speed up over 25 percent, rated quality up over 40 percent, completion up over 12 percent.
+  The page gives no figures for tasks outside the frontier. Read 2026-11-24.</li>
+<li>OpenAI, <a href="https://openai.com/index/why-language-models-hallucinate/">Why language models hallucinate</a>
+  (5 September 2025): accuracy-only scoring rewards guessing; SimpleQA error and abstention
+  rates. Read 2026-11-24.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="the-context-window.html"><span class="lbl">← Previous</span><span class="ttl">The context window</span></a><a class="navcard next" href="prompting-and-in-context-learning.html"><span class="lbl">→ Next</span><span class="ttl">Prompting &amp; in-context learning</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-mountain-range-not-a-smooth-hill">The mental model: a mountain range, not a smooth hill</a><a class="h2" href="#why-the-frontier-is-jagged-not-smooth">Why the frontier is jagged, not smooth</a><a class="h2" href="#why-benchmarks-dont-settle-it-for-you">Why benchmarks don&#x27;t settle it for you</a><a class="h2" href="#the-product-skill-this-creates-scoping">The product skill this creates: scoping</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-mountain-range-not-a-smooth-hill">The mental model: a mountain range, not a smooth hill</a><a class="h2" href="#why-the-frontier-is-jagged-not-smooth">Why the frontier is jagged, not smooth</a><a class="h2" href="#where-the-phrase-comes-from">Where the phrase comes from</a><a class="h2" href="#why-benchmarks-dont-settle-it-for-you">Why benchmarks don&#x27;t settle it for you</a><a class="h2" href="#the-product-skill-this-creates-scoping">The product skill this creates: scoping</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

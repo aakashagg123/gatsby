@@ -75,10 +75,13 @@ Many current models let you trade quality for speed and cost without switching m
 setting is called effort (Anthropic) or reasoning effort (OpenAI). It controls how many
 tokens the model spends, including thinking tokens, which are billed as output. Anthropic
 says tuning effort is often a better lever than switching models. Defaults differ by model:
-as of October 2026, Anthropic's default is `medium` on Opus 5.5 and Haiku 5.5 and `high` on
-Fable 5.1 and Sonnet 5.5. The consequence is easy to miss. If your team moves from one
-model to its successor and does not set effort, the default may change, and so will your
-cost and latency. Run an effort sweep on your own evals each time you switch.
+as of November 2026, Anthropic's default is `medium` on Opus 5.5 and Haiku 5.5 and `high` on
+Fable 5.2 and Sonnet 5.5. The consequence is easy to miss. Opus 5 and earlier Opus models
+default to `high`, so a request that omits effort runs one level lower on Opus 5.5. If your
+team moves from one model to its successor and does not set effort, the default may change,
+and so will your cost and latency. Run an effort sweep on your own evals each time you
+switch. Anthropic also sells a fast mode on some models: up to 2.5 times the output speed at
+premium pricing (twice the base price on Fable 5.2). It is a latency lever, not a quality one.
 
 ## Two ways to start
 
@@ -89,12 +92,21 @@ feature working, then lower effort or move down a tier to cut cost. Either way, 
 step is a set of tests built from your own tasks. The vendor says a good evaluation set is
 the most important step.
 
-Prices show why it matters. As of October 2026, Anthropic lists input/output prices per
-million tokens of $10/$50 for Fable 5.1, $4/$20 for Opus 5.5, $2/$10 for Sonnet 5.5 and
-from $0.10/$0.50 for Haiku 5.5. That is a spread of about 100 times on input. Treat these
-numbers as a dated snapshot. Two discounts also move the bill: batch requests cost 50
-percent less, and cached input costs a small fraction of the base price. Both suit work that
-can wait or that repeats a long prefix.
+Prices show why it matters. As of November 2026, Anthropic lists input/output prices per
+million tokens of $8/$40 for Fable 5.2, $4/$20 for Opus 5.5, $2/$10 for Sonnet 5.5 and
+from $0.10/$0.50 for Haiku 5.5. That is a spread of about 80 times on input. Haiku 5.5
+costs five times more for a prompt over 100,000 tokens ($0.50/$2.50), so a long-input feature
+loses much of its price edge. OpenAI's models page shows a similar ladder: $8/$40 for GPT-6.2
+Astra, $2/$10 for GPT-6.2 Sol, $1/$5 for GPT-6.1 Terra and $0.10/$0.50 for GPT-6 Luna (the
+page may not list every model). Treat all of these numbers as a dated snapshot. Two
+discounts also move the bill: batch requests cost 50 percent less, and cached input costs a
+small fraction of the base price (a tenth on most Claude models, and as little as a fortieth
+on Fable 5.2). Both suit work that can wait or that repeats a long prefix.
+
+Price is not the only contract term. Anthropic states a retirement commitment for each model
+(for example, not sooner than September 2027 for Opus 5.5) and older models retire on a
+schedule. A model name is therefore a dependency with an end date. Put the retirement date
+for every model you use on your roadmap.
 
 ## Model routing: the practical answer to "which one?"
 
@@ -111,8 +123,10 @@ A second pattern pairs models inside one task. An orchestrator hands bulk work t
 workers. Or a cheaper model runs the task and escalates hard decisions to a stronger
 advisor. Anthropic documents both.
 
-On open versus closed: open-weight models have narrowed the gap with closed ones, by most
-public trackers, but the size of the gap depends on the benchmark and the date. Where you
+On open versus closed: open-weight models trail the closed frontier by months, not years.
+Epoch AI measured an average lag of about four months (8 points on its Capabilities Index)
+from January to May 2026. The size of the gap depends on the benchmark and the date, and
+Epoch notes that several recent open releases had too few evaluations to score. Where you
 run an open model also matters, because hosted endpoints can differ in quality. Test the
 exact deployment you plan to use, not the model name.
 
@@ -165,14 +179,27 @@ product, not just real in the abstract.
   [Choosing the right model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model):
   efficiency-first and capability-first starts; effort is often a better lever than
   switching; build your own benchmark tests; combine models (executor/advisor,
-  orchestrator/workers). Read 2026-10-25.
+  orchestrator/workers). Read 2026-11-24.
 - Anthropic, Claude documentation,
-  [Models overview](https://platform.claude.com/docs/en/models/overview): model names,
-  prices, default effort, 50 percent batch discount. Read 2026-10-25.
+  [Models overview](https://platform.claude.com/docs/en/models/overview): model names
+  (Fable 5.2 is the newest Fable), prices, default effort, retirement dates, 50 percent
+  batch discount. Read 2026-11-24.
+- Anthropic, Claude documentation,
+  [Pricing](https://platform.claude.com/docs/en/about-claude/pricing): Fable 5.2 at $8/$40;
+  cache-hit multipliers (0.025x Fable 5.2, 0.05x Opus 5.5 and Sonnet 5.5, 0.1x others); Haiku
+  5.5 prompt-length tiers; fast mode at 2.5x speed and twice the price on Fable 5.2.
+  Read 2026-11-24.
+- OpenAI, [Models](https://developers.openai.com/api/docs/models): GPT-6.2 Astra, GPT-6.2
+  Sol, GPT-6.1 Terra and GPT-6 Luna prices. The page said more models may be listed.
+  Read 2026-11-24.
+- Epoch AI, [Open-weight vs closed gap](https://epoch.ai/data-insights/open-closed-eci-gap)
+  (29 May 2026): average lag of four months, 8 index points, since January 2026. Only the
+  first 100,000 of 168,865 characters were read. Read 2026-11-24.
 - Anthropic, Claude documentation,
   [Effort](https://platform.claude.com/docs/en/build-with-claude/effort): effort covers all
-  output tokens; defaults by model; run a fresh sweep when changing models. Read 2026-10-25.
+  output tokens; defaults by model (Opus 5 `high`, Opus 5.5 `medium`); run a fresh sweep when
+  changing models. Read 2026-11-24.
 - OpenAI, [Reasoning guide](https://developers.openai.com/api/docs/guides/reasoning):
-  reasoning effort values vary by model. Read 2026-10-25.
-- The open-weight statement rests on secondary trackers seen in search results (not opened);
-  it is worded without figures for that reason.
+  reasoning effort values vary by model. Read 2026-11-24.
+- Arena AI's Elo gap and UK AISI's cyber-lag figures appeared only in search
+  results and are not used.

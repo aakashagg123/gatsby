@@ -135,6 +135,14 @@ retrain anything. They are all ways of using the one request you have more effec
 <p>A tip on examples: Anthropic suggests three to five, and they should be relevant and
 diverse, so the model does not copy an accidental pattern. Wrap them in clear tags to keep
 them apart from your instructions. Examples also shape how a thinking model reasons.</p>
+<h2 id="when-the-output-must-follow-a-format-constrain-it-do-not-just-ask">When the output must follow a format: constrain it, do not just ask</h2>
+<p>If software reads the answer, a prompt that says "reply in JSON" is a request, not a
+guarantee. Anthropic now offers structured outputs, a feature built to hold a response to a
+given schema, and its guidance says to try that, or a plain instruction with retries, before
+heavier workarounds. Some current Claude models also reject two older tricks. A prefilled
+final assistant turn returns a 400 error on Claude 4.6 and later, and forced tool use is
+rejected on Opus 5.5, Sonnet 5.5 and Fable 5.2. Prompt tips from 2023 may not run on today's
+API. Ask your team which one the feature uses, and what happens when the format check fails.</p>
 <h2 id="why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</h2>
 <p>A prompt is closer to a piece of copy than a line of code: its wording, tone, and structure
 directly shape what a user experiences, and small changes can have an outsized effect. Yet
@@ -154,6 +162,8 @@ no new infrastructure and no model change.</p>
 <li><strong>Skipping reasoning on multi-step tasks</strong> — asking for a direct final answer on a task
   that needs several logical steps, and getting a worse answer than asking for the
   reasoning first would have produced.</li>
+<li><strong>Relying on the prompt for a hard format rule</strong> — asking for a schema in prose and
+  parsing whatever comes back, with no constraint and no retry path.</li>
 <li><strong>Treating the prompt as finished on day one</strong> — never revisiting or testing prompt
   changes after initial launch, even as real usage reveals where it falls short.</li>
 </ul>
@@ -164,6 +174,8 @@ no new infrastructure and no model change.</p>
 <li class="task todo">Have we tried adding two or three concrete examples to a prompt that currently only
       describes the task?</li>
 <li class="task todo">For multi-step tasks, have we tested asking the model to reason before answering?</li>
+<li class="task todo">If code parses the output, do we use a schema constraint and a retry, not only a
+      sentence in the prompt?</li>
 <li class="task todo">Is prompt quality on our roadmap as something we test and improve, not a one-time
       artifact we wrote once and left alone?</li>
 </ul>
@@ -182,11 +194,15 @@ no new infrastructure and no model change.</p>
 <li>Anthropic, Claude documentation,
   <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>:
   3-5 relevant, diverse, tagged examples; general instructions over prescriptive steps for
-  thinking models; manual step-by-step prompting as a fallback when thinking is off.
-  Read 2026-10-25.</li>
+  thinking models; manual step-by-step prompting as a fallback when thinking is off;
+  structured outputs designed to constrain responses to a schema. Re-read 2026-11-24.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>: prefilled final
+  assistant turns return a 400 error on Claude 4.6 and later; forced tool use is rejected on
+  Opus 5.5, Sonnet 5.5, Fable 5.2, Mythos 5.2 and Fable 5.1. Read 2026-11-24.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="capabilities-and-the-jagged-frontier.html"><span class="lbl">← Previous</span><span class="ttl">Capabilities &amp; the jagged frontier</span></a><a class="navcard next" href="temperature-sampling-and-determinism.html"><span class="lbl">→ Next</span><span class="ttl">Temperature, sampling &amp; determinism</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-instructions-to-a-new-extremely-capable-temp">The mental model: instructions to a new, extremely capable temp</a><a class="h2" href="#in-context-learning-teaching-without-training">In-context learning: teaching without training</a><a class="h2" href="#three-habits-that-carry-most-of-the-benefit">Three habits that carry most of the benefit</a><a class="h2" href="#why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-instructions-to-a-new-extremely-capable-temp">The mental model: instructions to a new, extremely capable temp</a><a class="h2" href="#in-context-learning-teaching-without-training">In-context learning: teaching without training</a><a class="h2" href="#three-habits-that-carry-most-of-the-benefit">Three habits that carry most of the benefit</a><a class="h2" href="#when-the-output-must-follow-a-format-constrain-it-do-not-just-ask">When the output must follow a format: constrain it, do not just ask</a><a class="h2" href="#why-this-is-a-product-skill-not-just-an-engineering-one">Why this is a product skill, not just an engineering one</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

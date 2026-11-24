@@ -119,6 +119,16 @@ produces a model version you now have to manage, evaluate, and potentially retra
 when your needs shift. Trying them in this order means you only pay for the more expensive,
 less reversible option when the cheaper ones have genuinely been tried and have genuinely
 fallen short — not skipped because they felt too simple to be the "real" answer.</p>
+<h2 id="a-fourth-option-for-small-stable-knowledge-a-cached-long-prompt">A fourth option for small, stable knowledge: a cached long prompt</h2>
+<p>If the facts are few and change rarely, you may not need retrieval at all. Current models
+accept up to 1M tokens, and prompt caching bills a repeated prefix at a fraction of the base
+price (a tenth on most Claude models, 5 percent on Opus 5.5 and Sonnet 5.5, 2.5 percent on
+Fable 5.2). A policy handbook of a few hundred thousand tokens can sit in a cached prompt. The
+catch is quality: accuracy can fall as the input grows (see
+<a href="the-context-window.html">The context window</a>), and a cache entry lasts minutes or an hour,
+so the saving needs steady traffic. Test it against retrieval on your own questions. The
+<a href="../rag-vector-databases/rag-vs-long-context-vs-finetuning.html">RAG vs. long-context comparison</a>
+goes deeper.</p>
 <h2 id="the-one-question-that-routes-you-correctly">The one question that routes you correctly</h2>
 <p>Ask what kind of gap you actually have. <strong>"The model doesn't know something"</strong> is a facts
 problem — reach for retrieval. <strong>"The model knows the right facts but writes them in the
@@ -171,9 +181,19 @@ before committing real budget to fine-tuning or a large retrieval build:</p>
 <li><a href="../rag-vector-databases/why-rag.html">Why RAG?</a> — the second lever, for facts problems.</li>
 <li><a href="../generative-ai/build-buy-or-fine-tune.html">Build, buy, or fine-tune</a> — the same
   decision, one altitude higher.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/about-claude/pricing">Pricing</a>: cache-hit multipliers
+  by model; 5-minute and 1-hour cache durations; 1M-token windows at standard pricing on most
+  current models (Haiku 5.5 charges more above 100,000 tokens). Read 2026-11-24.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a>:
+  context rot; cached tokens still count toward the window. Read 2026-11-24.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="choosing-a-model.html"><span class="lbl">← Previous</span><span class="ttl">Choosing a model</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-levers-three-different-costs">The mental model: three levers, three different costs</a><a class="h2" href="#why-this-order-specifically">Why this order, specifically</a><a class="h2" href="#the-one-question-that-routes-you-correctly">The one question that routes you correctly</a><a class="h2" href="#where-the-full-depth-lives">Where the full depth lives</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-three-levers-three-different-costs">The mental model: three levers, three different costs</a><a class="h2" href="#why-this-order-specifically">Why this order, specifically</a><a class="h2" href="#a-fourth-option-for-small-stable-knowledge-a-cached-long-prompt">A fourth option for small, stable knowledge: a cached long prompt</a><a class="h2" href="#the-one-question-that-routes-you-correctly">The one question that routes you correctly</a><a class="h2" href="#where-the-full-depth-lives">Where the full depth lives</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

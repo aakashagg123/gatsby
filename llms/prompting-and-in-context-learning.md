@@ -91,6 +91,16 @@ A tip on examples: Anthropic suggests three to five, and they should be relevant
 diverse, so the model does not copy an accidental pattern. Wrap them in clear tags to keep
 them apart from your instructions. Examples also shape how a thinking model reasons.
 
+## When the output must follow a format: constrain it, do not just ask
+
+If software reads the answer, a prompt that says "reply in JSON" is a request, not a
+guarantee. Anthropic now offers structured outputs, a feature built to hold a response to a
+given schema, and its guidance says to try that, or a plain instruction with retries, before
+heavier workarounds. Some current Claude models also reject two older tricks. A prefilled
+final assistant turn returns a 400 error on Claude 4.6 and later, and forced tool use is
+rejected on Opus 5.5, Sonnet 5.5 and Fable 5.2. Prompt tips from 2023 may not run on today's
+API. Ask your team which one the feature uses, and what happens when the format check fails.
+
 ## Why this is a product skill, not just an engineering one
 
 A prompt is closer to a piece of copy than a line of code: its wording, tone, and structure
@@ -112,6 +122,8 @@ no new infrastructure and no model change.
 - **Skipping reasoning on multi-step tasks** — asking for a direct final answer on a task
   that needs several logical steps, and getting a worse answer than asking for the
   reasoning first would have produced.
+- **Relying on the prompt for a hard format rule** — asking for a schema in prose and
+  parsing whatever comes back, with no constraint and no retry path.
 - **Treating the prompt as finished on day one** — never revisiting or testing prompt
   changes after initial launch, even as real usage reveals where it falls short.
 
@@ -122,6 +134,8 @@ no new infrastructure and no model change.
 - [ ] Have we tried adding two or three concrete examples to a prompt that currently only
       describes the task?
 - [ ] For multi-step tasks, have we tested asking the model to reason before answering?
+- [ ] If code parses the output, do we use a schema constraint and a retry, not only a
+      sentence in the prompt?
 - [ ] Is prompt quality on our roadmap as something we test and improve, not a one-time
       artifact we wrote once and left alone?
 
@@ -140,5 +154,9 @@ no new infrastructure and no model change.
 - Anthropic, Claude documentation,
   [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices):
   3-5 relevant, diverse, tagged examples; general instructions over prescriptive steps for
-  thinking models; manual step-by-step prompting as a fallback when thinking is off.
-  Read 2026-10-25.
+  thinking models; manual step-by-step prompting as a fallback when thinking is off;
+  structured outputs designed to constrain responses to a schema. Re-read 2026-11-24.
+- Anthropic, Claude documentation,
+  [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking): prefilled final
+  assistant turns return a 400 error on Claude 4.6 and later; forced tool use is rejected on
+  Opus 5.5, Sonnet 5.5, Fable 5.2, Mythos 5.2 and Fable 5.1. Read 2026-11-24.

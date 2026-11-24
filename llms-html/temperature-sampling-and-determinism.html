@@ -130,7 +130,7 @@ creative voice. A single default temperature applied to every feature in a produ
 regardless of what each feature actually needs, is a missed lever, not a neutral choice.</p>
 <h2 id="some-current-models-take-the-dial-away">Some current models take the dial away</h2>
 <p>Check your vendor's API before you plan around this lesson's dials. Anthropic's current
-models no longer accept them. On Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
+models no longer accept them. On Claude Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
 several earlier models, a non-default <code>temperature</code>, <code>top_p</code> or <code>top_k</code> returns a 400
 error. From API version <code>2026-10-21</code>, sending any of the three returns a 400 error on every
 model. These models also think before they answer (see
@@ -146,8 +146,8 @@ says "temperature 0.2" needs a new spec when the team moves to such a model.</p>
 deterministic — some implementation details in how a request is processed can introduce
 tiny variations. Research from Thinking Machines Lab traces much of this to the server,
 not the model: the answer can depend on how many other requests share the same batch, and
-that changes with load. Their team removed the effect in an open inference engine, at some
-cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
+that changes with load. In their test, 1,000 completions at temperature 0 gave 80 different
+texts. Their team removed the effect in an open inference engine, at some cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
 switch you can flip fully on. If your feature genuinely requires the exact same output for
 the exact same input every time, the honest answer is usually a cache or a rule-based
 check layered on top of the model, not an assumption that temperature alone gets you all
@@ -192,14 +192,16 @@ the way to zero variation.</p>
 <li>Anthropic, Claude documentation,
   <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>: non-default
   <code>temperature</code>, <code>top_p</code> or <code>top_k</code> return a 400 error on the listed current models; from
-  API version <code>2026-10-21</code> any value returns a 400 error on every model. Read 2026-10-25.</li>
+  API version <code>2026-10-21</code> any value returns a 400 error on every model; the list now
+  includes Fable 5.2. Read 2026-11-24.</li>
 <li>Anthropic, Claude documentation,
   <a href="https://platform.claude.com/docs/en/build-with-claude/effort">Effort</a>: effort controls
-  all output tokens, including thinking; the default differs by model. Read 2026-10-25.</li>
+  all output tokens, including thinking; the default differs by model. Read 2026-11-24.</li>
 <li>Thinking Machines Lab,
   <a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/">Defeating Nondeterminism in LLM Inference</a>:
   batch-dependent kernels cause the variation at temperature 0; with batch-invariant kernels,
-  1,000 completions were identical. Read 2026-10-25.</li>
+  1,000 completions were identical (without them, 80 unique completions, the most common
+  78 times, on Qwen3-235B). Read 2026-11-24.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="prompting-and-in-context-learning.html"><span class="lbl">← Previous</span><span class="ttl">Prompting &amp; in-context learning</span></a><a class="navcard next" href="choosing-a-model.html"><span class="lbl">→ Next</span><span class="ttl">Choosing a model</span></a></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
   </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-mental-model-a-loaded-die-with-an-adjustable-weighting">The mental model: a loaded die, with an adjustable weighting</a><a class="h2" href="#two-related-dials-worth-knowing-by-name">Two related dials worth knowing by name</a><a class="h2" href="#setting-the-dial-deliberately">Setting the dial deliberately</a><a class="h2" href="#some-current-models-take-the-dial-away">Some current models take the dial away</a><a class="h2" href="#determinism-is-a-spectrum-not-a-switch">Determinism is a spectrum, not a switch</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
