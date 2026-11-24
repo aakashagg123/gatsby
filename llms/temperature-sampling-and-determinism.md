@@ -79,7 +79,7 @@ regardless of what each feature actually needs, is a missed lever, not a neutral
 ## Some current models take the dial away
 
 Check your vendor's API before you plan around this lesson's dials. Anthropic's current
-models no longer accept them. On Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
+models no longer accept them. On Claude Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 and
 several earlier models, a non-default `temperature`, `top_p` or `top_k` returns a 400
 error. From API version `2026-10-21`, sending any of the three returns a 400 error on every
 model. These models also think before they answer (see
@@ -97,8 +97,8 @@ Even at the lowest possible temperature, a model is not guaranteed to be perfect
 deterministic — some implementation details in how a request is processed can introduce
 tiny variations. Research from Thinking Machines Lab traces much of this to the server,
 not the model: the answer can depend on how many other requests share the same batch, and
-that changes with load. Their team removed the effect in an open inference engine, at some
-cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
+that changes with load. In their test, 1,000 completions at temperature 0 gave 80 different
+texts. Their team removed the effect in an open inference engine, at some cost in speed. A hosted API gives you no such control. Treat determinism as a spectrum you move along with the dial, not a
 switch you can flip fully on. If your feature genuinely requires the exact same output for
 the exact same input every time, the honest answer is usually a cache or a rule-based
 check layered on top of the model, not an assumption that temperature alone gets you all
@@ -144,11 +144,13 @@ the way to zero variation.
 - Anthropic, Claude documentation,
   [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking): non-default
   `temperature`, `top_p` or `top_k` return a 400 error on the listed current models; from
-  API version `2026-10-21` any value returns a 400 error on every model. Read 2026-10-25.
+  API version `2026-10-21` any value returns a 400 error on every model; the list now
+  includes Fable 5.2. Read 2026-11-24.
 - Anthropic, Claude documentation,
   [Effort](https://platform.claude.com/docs/en/build-with-claude/effort): effort controls
-  all output tokens, including thinking; the default differs by model. Read 2026-10-25.
+  all output tokens, including thinking; the default differs by model. Read 2026-11-24.
 - Thinking Machines Lab,
   [Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/):
   batch-dependent kernels cause the variation at temperature 0; with batch-invariant kernels,
-  1,000 completions were identical. Read 2026-10-25.
+  1,000 completions were identical (without them, 80 unique completions, the most common
+  78 times, on Qwen3-235B). Read 2026-11-24.

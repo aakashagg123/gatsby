@@ -65,7 +65,8 @@ A model does not see words the way you do. It sees **tokens** — pieces of text
 smaller than a word, that a fixed vocabulary breaks language into. The tokenizer can change
 between models. Anthropic, for example, says Claude 4.7 and later models use a newer
 tokenizer that turns the same text into about 30 percent more tokens than earlier models.
-Count tokens with the model you plan to use. As an illustration, a longer word may split into two or three pieces, while a short, common word
+Count tokens with the model you plan to use. On the current tokenizer, 1M tokens is about
+555,000 words, against about 750,000 on earlier models. As an illustration, a longer word may split into two or three pieces, while a short, common word
 is often one token on its own. This matters for a product leader for three concrete
 reasons. **Cost** is usually counted in tokens. Anthropic, for example, bills Claude by
 input tokens and output tokens. Check your own vendor's pricing page, but expect token
@@ -163,7 +164,13 @@ answers on hard tasks, and a slower, costlier call. See
 Next-token prediction, alone, explains three things that otherwise look mysterious.
 **Fluency without guaranteed truth** — the model is optimized to produce likely-sounding
 continuations, not verified facts, which is why confident and wrong answers are a normal
-output of the mechanism, not a rare bug. **The need for grounding** — because the model has
+output of the mechanism, not a rare bug. OpenAI's 2025 research adds a second cause:
+most benchmarks score only accuracy, so a guess earns a chance of credit and "I don't know"
+earns none. Training toward those scores teaches models to guess. In OpenAI's SimpleQA
+example, o4-mini scored slightly higher accuracy (24 percent) than gpt-5-thinking-mini
+(22 percent) but was wrong far more often (75 percent against 26 percent), because the
+smaller model abstained 52 percent of the time and o4-mini 1 percent. For a product leader,
+ask for the error rate and the abstention rate, not accuracy alone. **The need for grounding** — because the model has
 no memory beyond its training and the current request, any fact that must be current or
 specific to your business has to be supplied at request time, which is the entire premise
 of retrieval, covered in the [RAG & vector databases module](../rag-vector-databases/README.md).
@@ -328,6 +335,13 @@ more weight table.
   [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
   conversation history is billed as input tokens and generated text as output tokens.
   Read 2026-10-11. Other vendors set their own pricing.
+- OpenAI, [Why language models hallucinate](https://openai.com/index/why-language-models-hallucinate/)
+  (5 September 2025): hallucination comes from next-word pretraining on rare facts and from
+  accuracy-only evaluation that rewards guessing; the SimpleQA figures above; recommends
+  penalizing confident errors more than uncertainty. Read 2026-11-24.
+- Anthropic, Claude documentation,
+  [Models overview](https://platform.claude.com/docs/en/models/overview): 1M tokens is
+  roughly 555,000 words on the tokenizer introduced with Opus 4.7. Read 2026-11-24.
 - Anthropic, Claude documentation,
   [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting):
   Claude 4.7 and later models use a newer tokenizer, and the same input text produces
@@ -336,9 +350,9 @@ more weight table.
 - Anthropic, Claude documentation,
   [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking): thinking
   tokens are billed as output tokens, even when the text is not returned, and count toward
-  `max_tokens`. Read 2026-10-25.
+  `max_tokens`. Read 2026-11-24.
 - OpenAI, [Reasoning guide](https://developers.openai.com/api/docs/guides/reasoning):
   reasoning tokens are not visible through the API, occupy context-window space, and are
-  billed as output tokens; effort values vary by model. Read 2026-10-25.
+  billed as output tokens; effort values vary by model. Read 2026-11-24.
 - The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.

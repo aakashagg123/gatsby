@@ -58,6 +58,18 @@ when your needs shift. Trying them in this order means you only pay for the more
 less reversible option when the cheaper ones have genuinely been tried and have genuinely
 fallen short — not skipped because they felt too simple to be the "real" answer.
 
+## A fourth option for small, stable knowledge: a cached long prompt
+
+If the facts are few and change rarely, you may not need retrieval at all. Current models
+accept up to 1M tokens, and prompt caching bills a repeated prefix at a fraction of the base
+price (a tenth on most Claude models, 5 percent on Opus 5.5 and Sonnet 5.5, 2.5 percent on
+Fable 5.2). A policy handbook of a few hundred thousand tokens can sit in a cached prompt. The
+catch is quality: accuracy can fall as the input grows (see
+[The context window](./the-context-window.md)), and a cache entry lasts minutes or an hour,
+so the saving needs steady traffic. Test it against retrieval on your own questions. The
+[RAG vs. long-context comparison](../rag-vector-databases/rag-vs-long-context-vs-finetuning.md)
+goes deeper.
+
 ## The one question that routes you correctly
 
 Ask what kind of gap you actually have. **"The model doesn't know something"** is a facts
@@ -113,3 +125,13 @@ before committing real budget to fine-tuning or a large retrieval build:
 - [Why RAG?](../rag-vector-databases/why-rag.md) — the second lever, for facts problems.
 - [Build, buy, or fine-tune](../generative-ai/build-buy-or-fine-tune.md) — the same
   decision, one altitude higher.
+
+## Sources
+
+- Anthropic, Claude documentation,
+  [Pricing](https://platform.claude.com/docs/en/about-claude/pricing): cache-hit multipliers
+  by model; 5-minute and 1-hour cache durations; 1M-token windows at standard pricing on most
+  current models (Haiku 5.5 charges more above 100,000 tokens). Read 2026-11-24.
+- Anthropic, Claude documentation,
+  [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
+  context rot; cached tokens still count toward the window. Read 2026-11-24.

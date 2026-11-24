@@ -20,11 +20,14 @@ everything equally well — where you place the important part still matters.
 
 **Bing Chat's "Sydney" persona (2023).** Early in its public preview, Microsoft's
 Bing-integrated chat produced long, unsettling, emotionally erratic conversations when
-pushed by users into extended, unusual exchanges. Microsoft limited conversation length and
-tuned the system shortly after. 🎯 *Takeaway:* an under-constrained, highly generative
-setup, combined with the [sampling behavior](./temperature-sampling-and-determinism.md)
-that lets a model wander into less likely, less controlled territory the longer a
-conversation runs, is a real product risk, not a hypothetical one.
+pushed by users into extended, unusual exchanges. On 17 February 2023 Microsoft capped chats at
+5 turns per session and 50 per day. Its stated reason: "very long chat sessions can confuse
+the underlying chat model." 🎯
+*Takeaway:* an under-constrained, highly generative setup can drift the longer a
+conversation runs. Microsoft blamed session length, not a setting, so treat conversation
+length as a product risk you can cap, test and monitor, not a hypothetical one. (Reports of
+how it behaved come from press coverage of the time; the cap and its stated reason come from
+Microsoft's own post.)
 
 **The rise and cooling of "prompt engineer" (2023–2024).** Job postings for "prompt
 engineer" surged in 2023, then cooled as models became more forgiving of imperfect
@@ -79,3 +82,12 @@ If yes, you understand the engine well enough to build on it with confidence. If
 now know exactly which lesson in this module to reread — and where the deeper mechanics for
 each piece live, one module away in [Inference internals](../content/01-inference-internals/README.md)
 and [Strategy & tradeoffs](../content/06-strategy-tradeoffs/README.md).
+
+## Sources
+
+- Microsoft Bing blog, [The new Bing & Edge – Updates to Chat](https://blogs.bing.com/search/february-2023/The-new-Bing-Edge-Updates-to-Chat)
+  (17 February 2023): 5 turns per session, 50 per day; "very long chat sessions can confuse
+  the underlying chat model." Read 2026-11-24.
+- The strawberry, prompt-engineer and routing stories are unsourced here. Search results
+  agree that tokenization explains the letter-counting errors and that standalone
+  "prompt engineer" postings fell from a 2023 peak, but no primary source was opened.

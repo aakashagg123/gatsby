@@ -118,7 +118,8 @@ still a guess, weighted toward what is likely, not verified against what is true
 smaller than a word, that a fixed vocabulary breaks language into. The tokenizer can change
 between models. Anthropic, for example, says Claude 4.7 and later models use a newer
 tokenizer that turns the same text into about 30 percent more tokens than earlier models.
-Count tokens with the model you plan to use. As an illustration, a longer word may split into two or three pieces, while a short, common word
+Count tokens with the model you plan to use. On the current tokenizer, 1M tokens is about
+555,000 words, against about 750,000 on earlier models. As an illustration, a longer word may split into two or three pieces, while a short, common word
 is often one token on its own. This matters for a product leader for three concrete
 reasons. <strong>Cost</strong> is usually counted in tokens. Anthropic, for example, bills Claude by
 input tokens and output tokens. Check your own vendor's pricing page, but expect token
@@ -224,7 +225,13 @@ answers on hard tasks, and a slower, costlier call. See
 <p>Next-token prediction, alone, explains three things that otherwise look mysterious.
 <strong>Fluency without guaranteed truth</strong> — the model is optimized to produce likely-sounding
 continuations, not verified facts, which is why confident and wrong answers are a normal
-output of the mechanism, not a rare bug. <strong>The need for grounding</strong> — because the model has
+output of the mechanism, not a rare bug. OpenAI's 2025 research adds a second cause:
+most benchmarks score only accuracy, so a guess earns a chance of credit and "I don't know"
+earns none. Training toward those scores teaches models to guess. In OpenAI's SimpleQA
+example, o4-mini scored slightly higher accuracy (24 percent) than gpt-5-thinking-mini
+(22 percent) but was wrong far more often (75 percent against 26 percent), because the
+smaller model abstained 52 percent of the time and o4-mini 1 percent. For a product leader,
+ask for the error rate and the abstention rate, not accuracy alone. <strong>The need for grounding</strong> — because the model has
 no memory beyond its training and the current request, any fact that must be current or
 specific to your business has to be supplied at request time, which is the entire premise
 of retrieval, covered in the <a href="../rag-vector-databases/index.html">RAG &amp; vector databases module</a>.
@@ -394,6 +401,13 @@ more weight table.</p>
   <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a>:
   conversation history is billed as input tokens and generated text as output tokens.
   Read 2026-10-11. Other vendors set their own pricing.</li>
+<li>OpenAI, <a href="https://openai.com/index/why-language-models-hallucinate/">Why language models hallucinate</a>
+  (5 September 2025): hallucination comes from next-word pretraining on rare facts and from
+  accuracy-only evaluation that rewards guessing; the SimpleQA figures above; recommends
+  penalizing confident errors more than uncertainty. Read 2026-11-24.</li>
+<li>Anthropic, Claude documentation,
+  <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a>: 1M tokens is
+  roughly 555,000 words on the tokenizer introduced with Opus 4.7. Read 2026-11-24.</li>
 <li>Anthropic, Claude documentation,
   <a href="https://platform.claude.com/docs/en/build-with-claude/token-counting">Token counting</a>:
   Claude 4.7 and later models use a newer tokenizer, and the same input text produces
@@ -402,10 +416,10 @@ more weight table.</p>
 <li>Anthropic, Claude documentation,
   <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>: thinking
   tokens are billed as output tokens, even when the text is not returned, and count toward
-  <code>max_tokens</code>. Read 2026-10-25.</li>
+  <code>max_tokens</code>. Read 2026-11-24.</li>
 <li>OpenAI, <a href="https://developers.openai.com/api/docs/guides/reasoning">Reasoning guide</a>:
   reasoning tokens are not visible through the API, occupy context-window space, and are
-  billed as output tokens; effort values vary by model. Read 2026-10-25.</li>
+  billed as output tokens; effort values vary by model. Read 2026-11-24.</li>
 <li>The worked example's scores, queries, keys and values are assumed. The weights and the
   score counts are computed by the code in Under the hood.</li>
 </ul></div>

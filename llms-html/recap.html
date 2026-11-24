@@ -28,11 +28,14 @@ though the whole document fit comfortably inside the model's window. 🎯 <em>Ta
 everything equally well — where you place the important part still matters.</p>
 <p><strong>Bing Chat's "Sydney" persona (2023).</strong> Early in its public preview, Microsoft's
 Bing-integrated chat produced long, unsettling, emotionally erratic conversations when
-pushed by users into extended, unusual exchanges. Microsoft limited conversation length and
-tuned the system shortly after. 🎯 <em>Takeaway:</em> an under-constrained, highly generative
-setup, combined with the <a href="temperature-sampling-and-determinism.html">sampling behavior</a>
-that lets a model wander into less likely, less controlled territory the longer a
-conversation runs, is a real product risk, not a hypothetical one.</p>
+pushed by users into extended, unusual exchanges. On 17 February 2023 Microsoft capped chats at
+5 turns per session and 50 per day. Its stated reason: "very long chat sessions can confuse
+the underlying chat model." 🎯
+<em>Takeaway:</em> an under-constrained, highly generative setup can drift the longer a
+conversation runs. Microsoft blamed session length, not a setting, so treat conversation
+length as a product risk you can cap, test and monitor, not a hypothetical one. (Reports of
+how it behaved come from press coverage of the time; the cap and its stated reason come from
+Microsoft's own post.)</p>
 <p><strong>The rise and cooling of "prompt engineer" (2023–2024).</strong> Job postings for "prompt
 engineer" surged in 2023, then cooled as models became more forgiving of imperfect
 instructions and as prompting matured into a normal skill built into product and
@@ -117,9 +120,18 @@ anything more expensive?"</em></p>
 <p>If yes, you understand the engine well enough to build on it with confidence. If no, you
 now know exactly which lesson in this module to reread — and where the deeper mechanics for
 each piece live, one module away in <a href="../ai/01-inference-internals.html">Inference internals</a>
-and <a href="../ai/06-strategy-tradeoffs.html">Strategy &amp; tradeoffs</a>.</p></div>
+and <a href="../ai/06-strategy-tradeoffs.html">Strategy &amp; tradeoffs</a>.</p>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Microsoft Bing blog, <a href="https://blogs.bing.com/search/february-2023/The-new-Bing-Edge-Updates-to-Chat">The new Bing &amp; Edge – Updates to Chat</a>
+  (17 February 2023): 5 turns per session, 50 per day; "very long chat sessions can confuse
+  the underlying chat model." Read 2026-11-24.</li>
+<li>The strawberry, prompt-engineer and routing stories are unsourced here. Search results
+  agree that tokenization explains the letter-counting errors and that standalone
+  "prompt engineer" postings fell from a 2023 peak, but no primary source was opened.</li>
+</ul></div>
   <div class="pagenav"><a class="navcard prev" href="prompting-vs-rag-vs-finetuning.html"><span class="lbl">← Previous</span><span class="ttl">Prompting vs. RAG vs. fine-tuning</span></a><span></span></div><footer class="foot"><strong>Core insight:</strong> Everything an LLM does follows from next-token prediction: a limited window, uneven skill, and answers that are sampled rather than computed.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

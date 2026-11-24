@@ -11,7 +11,7 @@ because the model genuinely cannot see anything outside it. This is not a policy
 vendor could relax with a setting. It follows from how the model computes: comparing every
 token to every other token gets more expensive the more tokens there are, so the window has
 a real, engineered ceiling. Windows have grown from a few thousand tokens to a million over a few
-years (as of October 2026, Anthropic lists 1M tokens for all its current models), and that growth changed what products are possible — but it
+years (as of November 2026, Anthropic lists 1M tokens for all its current models), and that growth changed what products are possible — but it
 did not remove the limit, and it introduced a new problem: a model can technically fit a
 huge amount of text in its window and still perform worse than you'd expect, because
 attention spread across more text is attention divided. This lesson is about the window
@@ -94,7 +94,10 @@ input sizes.
 Three more facts shape the budget. Everything counts toward the window: the system prompt,
 tool definitions, tool results, and the model's own output. For a model that thinks before
 it answers, the thinking tokens count too. Long inputs can also cost more per token on some
-models; Anthropic's pricing page notes a higher rate above 100,000 tokens on Haiku 5.5.
+models. Anthropic's pricing page charges five times more above 100,000 tokens on Haiku 5.5
+($0.50 instead of $0.10 per million input tokens) and standard rates across the full window
+on its other 1M models. Tokens are also not words: on the current Claude tokenizer, 1M tokens
+is about 555,000 words, against about 750,000 on earlier models.
 Finally, for long-running agents, vendors now offer automatic compaction, which summarizes
 older turns on the server. It saves space, and it can lose detail, so test it.
 
@@ -151,16 +154,18 @@ see, and does adding more help or quietly hurt?"
 - Anthropic, Claude documentation,
   [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows):
   1M-token windows on current models; everything in the request counts, including thinking
-  tokens; "context rot"; server-side compaction in beta. Read 2026-10-25.
+  tokens; "context rot"; server-side compaction still in beta. Read 2026-11-24.
 - Anthropic, Claude documentation,
   [Models overview](https://platform.claude.com/docs/en/models/overview): 1M context for
-  Fable 5.1, Opus 5.5, Sonnet 5.5 and Haiku 5.5. Read 2026-10-25.
+  Fable 5.2, Opus 5.5, Sonnet 5.5 and Haiku 5.5; 1M tokens is about 555,000 words on the
+  current tokenizer. Read 2026-11-24.
 - Anthropic, Claude documentation,
   [Pricing](https://platform.claude.com/docs/en/about-claude/pricing): price table. The
-  Haiku 5.5 long-prompt surcharge is from the Context windows page. Read 2026-10-25.
+  Haiku 5.5 charges $0.50/$2.50 per million tokens above 100,000 prompt tokens. Read 2026-11-24.
 - Liu et al., [Lost in the Middle](https://arxiv.org/abs/2307.03172), TACL 2023:
   performance is often highest when relevant information is at the start or end of the
-  input. Read 2026-10-25.
+  input. Read 2026-11-24.
 - Chroma, [Context Rot](https://www.trychroma.com/research/context-rot) (July 2025): 18
-  models; performance falls with input length; focused prompts beat full prompts.
-  Read 2026-10-25.
+  models; performance falls with input length, even on simple tasks; distractors make it
+  worse; a focused prompt of about 300 tokens beat a full prompt of about 113,000 tokens.
+  Read 2026-11-24.

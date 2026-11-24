@@ -68,6 +68,23 @@ represented it was in the model's training data — which is exactly why intuiti
 "this seems easy" or "this seems hard" fails as a guide to what the model will actually do
 well.
 
+## Where the phrase comes from
+
+The term comes from a field experiment by Dell'Acqua and colleagues, run with 758 consultants
+at one large firm, about 7 percent of its individual-contributor workforce. On
+tasks inside the frontier, access to GPT-4 raised speed by over 25 percent, human-rated
+quality by over 40 percent, and task completion by over 12 percent, according to the Harvard
+Business School summary. The same summary describes a frontier where AI
+excels in some tasks and falls short in others. The lesson for a product leader is the half
+those figures leave out: gains like these hold only inside the line, and users cannot see the
+line from the outside. The study used GPT-4, so treat the numbers as a 2023 snapshot of the
+effect, not as today's gain.
+
+A second source of unevenness is how models are scored. OpenAI's 2025 analysis argues that
+accuracy-only benchmarks reward guessing, so a model can look better on a leaderboard while
+being wrong more often (see [What an LLM actually is](./what-is-an-llm.md)). When you compare
+models, ask for the wrong-answer rate and the abstention rate on your own task.
+
 ## Why benchmarks don't settle it for you
 
 Vendor benchmarks measure performance on a fixed, public set of tasks, and models are often
@@ -118,3 +135,14 @@ the roadmap on an assumption.
   a product-strategy skill, built on this same idea.
 - [Evals](../content/04-evals-observability/evals.md) — turning "we tested it" into a
   repeatable, measured practice.
+
+## Sources
+
+- Harvard Business School, Digital Data Design Institute,
+  [Navigating the Jagged Technological Frontier](https://aiinstitute.hbs.edu/navigating-the-jagged-technological-frontier/):
+  758 consultants, 7 percent of the individual-contributor workforce; inside the frontier,
+  speed up over 25 percent, rated quality up over 40 percent, completion up over 12 percent.
+  The page gives no figures for tasks outside the frontier. Read 2026-11-24.
+- OpenAI, [Why language models hallucinate](https://openai.com/index/why-language-models-hallucinate/)
+  (5 September 2025): accuracy-only scoring rewards guessing; SimpleQA error and abstention
+  rates. Read 2026-11-24.
