@@ -70,7 +70,7 @@ An eval score is a measurement with noise. The model can answer the same input d
 Three habits keep the number honest:
 
 - **Run each case more than once** when the output varies. Anthropic separates *pass@k* (at least one of k tries succeeds) from *pass^k* (all k tries succeed). At a 75% pass rate per try, three tries all pass only about 42% of the time. Users who need the same behavior every time care about the second number.
-- **Report the error bar** next to the score. Evan Miller's paper "Adding Error Bars to Evals" argues that evals are experiments and should use standard errors and paired comparisons between two models.
+- **Report the error bar** next to the score. Evan Miller's paper "Adding Error Bars to Evals" gives formulas for analyzing eval data and for measuring the difference between two models. It also covers how to plan an eval so it carries less noise.
 - **Balance the set.** The widely cited claim that GPT-4 "got worse" in 2023 used a prime-number test where every number was prime. Critics showed that the score swing mostly tracked a shift in the model's guess, not lost skill. A balanced set measures what the task needs.
 
 ## Offline evals are one layer of three
@@ -97,10 +97,14 @@ of the next lesson in this module.
   working in the first place.
 - **Shipping on vibes** — a change goes out because it "felt better" in a handful of
   manual tries, with no representative check behind that impression. OpenAI's evaluation
-  guide calls vibe-based evals, and adding evals only after launch, anti-patterns.
-- **Generic metrics as the spec** — off-the-shelf "helpfulness" or "coherence" scores, or
-  text-overlap scores such as ROUGE, give false confidence. They do not encode what good
-  means for your feature.
+  guide calls "it seems like it's working" as a strategy, and waiting until launch to add evals, anti-patterns.
+- **Generic metrics as the spec** — off-the-shelf "helpfulness" or "coherence" scores,
+  or relying only on academic metrics such as BLEU or perplexity (a warning in OpenAI's
+  guide), give false confidence. They do not encode what good means for your feature.
+- **Tying your evals to one vendor's tool** — OpenAI's Evals dashboard, API and graders
+  for eval workflows went read-only after a notice dated 3 June 2026, and shut down on
+  30 November 2026. Its deprecations page points to Promptfoo as the migration path. Keep
+  the cases, labels and rubrics in files you own, so a tool change costs days, not months.
 - **One run, no error bar** — a small score change on a small set is treated as a real
   gain, when run-to-run noise could explain it.
 - **Scoring infrastructure before anyone read a trace** — a polished dashboard built
@@ -119,6 +123,8 @@ of the next lesson in this module.
 - [ ] Do evals gate the release, or are they a report that gets checked after the fact?
 - [ ] Does each score come with an error bar, and do you run non-deterministic cases more
       than once?
+- [ ] Do the eval cases and human labels live in a format you own (files in version
+      control), so you can move them if a vendor retires its eval tool?
 - [ ] Beyond pre-release evals, is there production monitoring and a way to compare
       user outcomes (A/B test) for changes that matter?
 

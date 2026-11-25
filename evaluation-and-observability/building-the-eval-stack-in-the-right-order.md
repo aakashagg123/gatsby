@@ -104,6 +104,12 @@ spec — is the operating discipline developed in
   sit near 100%. A capability eval that the system now passes "graduates" into the
   regression suite. When every task passes, the eval is saturated and no longer shows
   progress.
+- **Test both directions.** Anthropic advises balanced problem sets: include cases where a
+  behavior should happen and cases where it should not. A one-sided set rewards a system
+  that always refuses, or always escalates, and the score looks good.
+- **Give the judge a way out.** Anthropic suggests an "Unknown" option for model graders,
+  so a judge that lacks evidence does not invent a verdict. It also says to read the
+  transcripts and grades yourself, because you cannot know a grader works until you do.
 - **Gate on a pass-all rate.** An example passes only if it passes every check. Report one
   pass-all rate for checks that block a release and a second for issues the team accepts.
 - **Grade the outcome, not one exact path.** Anthropic warns that rigid step-sequence
