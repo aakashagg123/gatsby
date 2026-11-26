@@ -70,8 +70,8 @@ product to explain it to everyone else.
 
 The five-user number comes from Jakob Nielsen at Nielsen Norman Group, and it has a specific scope.
 It is for qualitative usability rounds with similar users, run again and again. Nielsen's own
-caveats are that a study with distinct user groups needs three or four users from each, and that
-quantitative usability metrics need about 20.
+caveats are that a study with distinct user groups needs three or four users from each, and in a
+later article he recommends testing with 20 users in quantitative studies.
 
 George Harter gives a different number, for a different job:
 
@@ -139,8 +139,8 @@ supply the surprise that makes research worth doing.
 January 2026 Nielsen Norman Group tested two such tools with ten participants. The AI followed its
 script and probed short answers, but it didn't chase unexpected points and never asked people to
 confirm what it had understood. Only 3 of 10 participants called the conversation natural, and some
-found the praise fake. The verdict was that these tools are "not yet suited for semistructured,
-in-depth discovery interviews". They fit structured feedback after a launch, recruitment screening,
+found the praise fake. The article's conclusion is that "they are not yet suitable for
+semistructured or in-depth interviews, where following unexpected insights is critical." They fit structured feedback after a launch, recruitment screening,
 and interviews in languages your team doesn't speak. Teresa Torres has a further worry about
 handing interviews to AI:
 
@@ -243,12 +243,15 @@ next to size them.
 
 - Jakob Nielsen, [*Why You Only Need to Test with 5
   Users*](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/), Nielsen Norman
-  Group, 18 March 2000 (3–4 users per group; about 20 for quantitative metrics) (as of 2026-11).
+  Group, 18 March 2000 (3–4 users per group) (as of 2026-11-26).
+- Jakob Nielsen, [*Quantitative Studies: How Many Users to
+  Test?*](https://www.nngroup.com/articles/quantitative-studies-how-many-users/), Nielsen Norman
+  Group, 25 June 2006 ("test with 20 users in quantitative studies") (as of 2026-11-26).
 - Maria Rosala and Kate Moran, [*Synthetic Users: If, When, and How to Use AI-Generated
   "Research"*](https://www.nngroup.com/articles/synthetic-users/), Nielsen Norman Group, 21 June 2024
   (as of 2026-11).
 - Maria Rosala, [*AI-Moderated Interviews: If, When, and How to Use Them*](https://www.nngroup.com/articles/ai-interviewers/), Nielsen Norman
-  Group, 30 January 2026 (as of 2026-11).
+  Group, 30 January 2026 (as of 2026-11-26).
 - Clayton M. Christensen, Taddy Hall, Karen Dillon and David S. Duncan, [*Know Your Customers' "Jobs
   to Be Done"*](https://hbr.org/2016/09/know-your-customers-jobs-to-be-done), Harvard Business
   Review, September 2016. Only the opening was readable (paywall) (as of 2026-11-26).

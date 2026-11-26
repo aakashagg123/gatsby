@@ -16,8 +16,9 @@ company and turned it into the product. The [strategic-thinking](./creativity.md
 from what people already *do*, which is the same instinct an AI PM needs to find the job a model
 reliably handles.
 
-**Amazon's Kindle vision and the PRFAQ.** *"Every book ever printed, in any language, all available
-in less than 60 seconds"* is a vision specific enough to settle arguments about scope. The press
+**Amazon's Kindle vision and the PRFAQ.** "Our vision for Kindle is every book ever printed in any
+language, all available in less than 60 seconds." That is a vision specific enough to settle
+arguments about scope. The press
 release and FAQ format (PRFAQ) makes every proposal start from the customer. Strong [communication
 artifacts](./communication.md) turn product sense into alignment, and for an AI feature full of
 uncertainty, a plain statement of what it is, what it isn't and how you'll know it worked is worth

@@ -25,12 +25,11 @@ flowchart LR
   D["Data & evidence"] --> STK
   N["Narrative / story"] --> STK
   STK --> BUY["Buy-in & alignment"]
-  BUY -->|"chief repetition officer:<br/>say the 'why' again"| STK
+  BUY -->|"alignment fades:<br/>say the 'why' again"| STK
 ```
 
-The loop at the right of the diagram is the part people forget. Alignment fades, so the PM ends up
-as what some call the team's chief repetition officer, the person who keeps saying why the product
-exists until everyone else can say it too.
+The loop at the right of the diagram is the part people forget. Alignment fades, so part of the
+PM's job is to keep saying why the product exists until everyone else can say it too.
 
 ## Writing the artifacts
 
@@ -38,8 +37,8 @@ Artifacts are the written things a PM produces. They capture product sense in wo
 team's reference.
 
 - **Vision.** A short picture of the future you'll create, rooted in user value. Amazon's Kindle
-  vision is the standard example: *"Every book ever printed, in any language, all available in less
-  than 60 seconds."* It describes the outcome rather than the method. To write one, imagine your
+  vision is the standard example. In Amazon's words, "Our vision for Kindle is every book ever
+  printed in any language, all available in less than 60 seconds." It describes the outcome rather than the method. To write one, imagine your
   product wildly successful in five years, describe what that looks like for users, and distil it.
 - **Strategy document.** If vision is the destination, strategy is the map. It names target segments,
   value propositions, positioning and a few product pillars, and it says what's *out*. Tell it as a
