@@ -173,7 +173,7 @@ Some modules are short on purpose. They are compact front doors that point to de
 lessons. That is allowed. A short module must still meet this floor:
 
 - a worked example in each lesson
-- an Under the hood section in each lesson
+- an Under the hood section in each lesson (not required for human-voice lessons, section 2b)
 - a Test yourself section in the recap
 - a **Where the depth lives** map in the README
 - sources and a review stamp
@@ -217,6 +217,7 @@ A module is done when all of these hold:
 
 - [ ] Readability: all three metrics pass, or a warning is explained in the PR.
 - [ ] Every lesson has a review stamp, a worked example, and an Under the hood section.
+      (Human-voice lessons, section 2b, are exempt from the Under the hood section. They need a worked example.)
 - [ ] Every claim in section 5's list has a primary source and an "as of" date.
 - [ ] The independent fact-check has no `WRONG` or `STALE` rows.
 - [ ] The recap has Test yourself with at least one question per lesson.
