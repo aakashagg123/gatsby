@@ -13,57 +13,58 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Recap</span>
     <h1>Product sense — recap &amp; real-world examples</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>Slack's origin in a real need.</strong> Slack began as the internal chat tool of the game studio
-Tiny Speck. When the game failed, the team saw the tool had value beyond their own company
-and pivoted to it. 🎯 <em>Takeaway:</em> the sharp <a href="creativity.html">strategic-thinking</a> move is
-starting from what people already <em>do</em>. That's
-exactly the instinct an AI PM needs to find the job a model reliably nails.</p>
-<p><strong>Amazon's Kindle vision and the PRFAQ.</strong> <em>"Every book ever printed, in any language, all
-available in less than 60 seconds"</em> is a vision that made thousands of decisions for the team.
-The PRFAQ format forced every proposal to start from the customer. 🎯 <em>Takeaway:</em> strong
-<a href="communication.html">communication artifacts</a> turn product sense into alignment. For an
-AI feature drowning in uncertainty, an explicit "what it is / isn't / how we'll know it
-worked" is worth more than any demo.</p>
-<p><strong>LinkedIn's profile-level meter.</strong> A progress nudge that shows how far you've come, and
-rewards a complete state that genuinely benefits the user (reportedly hidden since) — an <a href="motivation-and-behaviour.html">ethical nudge</a>,
-not a dark pattern. 🎯 <em>Takeaway:</em> the line between a helpful nudge and a manipulative one is
-"whose goal does it serve?" AI products cross that line easily when they optimize
-engagement metrics against user interest.</p>
-<p><strong>Kodak and the digital camera.</strong> Kodak <em>invented</em> the digital camera in 1975 but pivoted
-slowly while film stayed profitable — a warning about <a href="cognitive-empathy.html">intellectual flexibility</a>
-and the sunk-cost fallacy. Scott Anthony argues the full story is more subtle than "Kodak
-ignored digital." 🎯 <em>Takeaway:</em> the incumbent's trap is emotional attachment
-to a winning bet. In a field moving as fast as AI, the willingness to say "the ground
-shifted, so we should too" is a survival skill.</p>
-<p><strong>Air Canada's chatbot invented a refund policy (2024).</strong> A support bot confidently stated a
-refund policy that didn't exist. A tribunal made the airline honor it. 🎯 <em>Takeaway:</em> the
-canonical <a href="product-sense-for-ai.html">product-sense-for-AI</a> failure — a confidently-wrong
-output with no grounding, no "I don't know," and full authority in the UX. The fix was
-architectural: answer only from real policy, with citations. That's a <em>product</em> decision
-before it's an engineering one.</p>
-<p><strong>The "expert's trap" in domain-heavy products.</strong> Marty Cagan's warning that experts believe
-they can speak for the target customer shows up everywhere from EMRs to developer tools. 🎯 <em>Takeaway:</em>
-<a href="domain-expertise.html">domain expertise</a> is a turbocharger only if paired with the outsider
-question "why is it done this way at all?" — the same humility that keeps an AI PM validating
-instead of trusting the model's (or their own) confidence.</p>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>This page pulls the module together. It starts with real cases where the ideas showed up, then a
+table with one idea and one decision per lesson, and it ends with a self-test you can use to check
+what stuck.</p>
+<h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
+<p><strong>Slack started from a need people already had.</strong> Slack began as the internal chat tool of Tiny
+Speck, a game studio. As the game wound down, the team saw the tool had value beyond their own
+company and turned it into the product. The <a href="creativity.html">strategic-thinking</a> lesson is to start
+from what people already <em>do</em>, which is the same instinct an AI PM needs to find the job a model
+reliably handles.</p>
+<p><strong>Amazon's Kindle vision and the PRFAQ.</strong> <em>"Every book ever printed, in any language, all available
+in less than 60 seconds"</em> is a vision specific enough to settle arguments about scope. The press
+release and FAQ format (PRFAQ) makes every proposal start from the customer. Strong <a href="communication.html">communication
+artifacts</a> turn product sense into alignment, and for an AI feature full of
+uncertainty, a plain statement of what it is, what it isn't and how you'll know it worked is worth
+more than any demo.</p>
+<p><strong>LinkedIn's profile-level meter.</strong> A progress nudge that showed how far you'd come and rewarded a
+complete profile, which genuinely benefits the user. Third-party reports say it has since been
+hidden. It is an <a href="motivation-and-behaviour.html">ethical nudge</a> rather than a dark pattern, and the
+line between the two is whose goal the nudge serves. AI products cross that line easily when they
+optimise engagement against the user's interest.</p>
+<p><strong>Kodak and the digital camera.</strong> Kodak invented the digital camera in 1975 but pivoted slowly while
+film stayed profitable, which is a warning about <a href="cognitive-empathy.html">intellectual flexibility</a>
+and the sunk-cost fallacy. Scott Anthony argues the full story is more subtle than "Kodak ignored
+digital". The incumbent's trap is attachment to a winning bet, and in a field moving as fast as AI,
+being willing to say "the ground shifted, so we should too" is a survival skill.</p>
+<p><strong>Air Canada's chatbot invented a refund policy (2024).</strong> A support bot confidently described a
+refund policy that didn't exist, and a tribunal made the airline honour it. It is the canonical
+<a href="product-sense-for-ai.html">product-sense-for-AI</a> failure, a confidently wrong output with no
+grounding, no "I don't know" and full authority in the experience. The fix was to answer only from
+real policy, with citations, which is a product decision before it's an engineering one.</p>
+<p><strong>The expert's trap in domain-heavy products.</strong> Marty Cagan's warning that experts come to believe
+they are more like their target customer than they really are applies from medical software to
+developer tools. <a href="domain-expertise.html">Domain expertise</a> only pays off when it's paired with the
+outsider's question of why something is done this way at all, and that same humility keeps an AI PM
+checking the model's confidence, and their own.</p>
 <h2 id="field-notes-from-working-pms">Field notes from working PMs</h2>
-<p>Three durable heuristics from PM-interview collections (Carl Shan's <em>Product Manager
-Handbook</em> interviews with PMs at Google, Twitter, Facebook, Yammer):</p>
-<p><strong>"What is the user's goal — and how hard does this product make it?"</strong> (Jason Shah,
-Yammer). The two-question quality model that needs no dashboard: book a good place fast,
-get a car fast, find the answer fast. 🎯 <em>Takeaway:</em> before any metric review, walk the
-product as a user with a goal and count the friction — it's <a href="motivation-and-behaviour.html">motivation theory</a>
-compressed into a gut check.</p>
-<p><strong>High-quality products do one thing exceptionally well</strong> (Avichal Garg, Facebook).
-Spread across many domains, you're replaceable. Exceptional at one, you're a category.
-🎯 <em>Takeaway:</em> the same <a href="creativity.html">focused-strategy</a> discipline, stated as a
-quality bar. It's doubly true for AI products, where the reliable frontier is narrow.</p>
-<p><strong>Product sense is built by dissection</strong> (Garg again). Extreme attention to detail —
-dissect what makes something good and what makes something not good — is how
-pattern-matching intuition is trained. 🎯 <em>Takeaway:</em> pairs with the
-<a href="cognitive-empathy.html">talk-to-your-users</a> mechanism: exposure supplies the patterns,
-deliberate dissection compresses them into taste.</p>
+<p>Three durable heuristics come from Carl Shan's <em>Product Manager Handbook</em>, a collection of
+interviews with PMs at Google, Twitter, Facebook and Yammer. They are retold here secondhand.</p>
+<p><strong>"What is the user's goal, and how hard does this product make it?"</strong> (Jason Shah, Yammer). It is a
+two-question quality model that needs no dashboard. Book a good place fast, get a car fast, find the
+answer fast. Before any metric review, walk the product as a user with a goal and count the friction,
+which is <a href="motivation-and-behaviour.html">motivation theory</a> compressed into a gut check.</p>
+<p><strong>High-quality products do one thing exceptionally well</strong> (Avichal Garg, Facebook). Spread across many
+domains, you're replaceable, while being exceptional at one makes you a category. It is the
+<a href="creativity.html">focused-strategy</a> discipline stated as a quality bar, and it applies doubly to AI
+products, where the reliable frontier is narrow.</p>
+<p><strong>Product sense is built by dissection</strong> (Garg again). Close attention to detail, taking apart what
+makes something good and what makes something not good, is how pattern-matching intuition gets
+trained. It pairs with the <a href="cognitive-empathy.html">talk-to-your-users</a> habit, since exposure
+supplies the patterns and dissection compresses them into taste.</p>
 <h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
@@ -81,18 +82,23 @@ deliberate dissection compresses them into taste.</p>
 </tr>
 <tr>
 <td><a href="cognitive-empathy.html">Cognitive empathy</a></td>
-<td>Simulate the user; doubt your own certainty</td>
+<td>Simulate the user, and doubt your own certainty</td>
 <td>Which assumptions to test before you build</td>
 </tr>
 <tr>
+<td><a href="user-research.html">User research</a></td>
+<td>Trust what people did over what they predict</td>
+<td>Which method fits the question, and how big a sample it needs</td>
+</tr>
+<tr>
 <td><a href="creativity.html">Creativity</a></td>
-<td>Strategy picks the battle; execution wins it</td>
-<td>What to focus on — and what to say no to</td>
+<td>Strategy picks the battle, and execution wins it</td>
+<td>What to focus on, and what to say no to</td>
 </tr>
 <tr>
 <td><a href="communication.html">Communication</a></td>
 <td>Product sense you can't convey can't move a team</td>
-<td>How to earn buy-in and keep everyone aligned</td>
+<td>How to earn buy-in and check that alignment is real</td>
 </tr>
 <tr>
 <td><a href="domain-expertise.html">Domain expertise</a></td>
@@ -102,53 +108,98 @@ deliberate dissection compresses them into taste.</p>
 <tr>
 <td><a href="product-sense-for-ai.html">Product sense for AI</a></td>
 <td>The material is probabilistic</td>
-<td>Where a model beats a deterministic feature — and how to stay trustworthy</td>
+<td>Where a model beats a deterministic feature, and how to stay trustworthy</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> product sense is not one talent but five habits that compound:
-reading behaviour, simulating the user, choosing a focused strategy, communicating it, and
-grounding it in domain reality. For the AI PM, a sixth habit sits on top. The
-model is a new kind of material — powerful, probabilistic, and confidently wrong. The
-<em>product</em> is the trustworthy system you build around it, not the model itself.</p>
+<p><strong>The through-line.</strong> Product sense is six habits that compound rather than one talent. You read
+behaviour, simulate the user, find out instead of guessing, choose a focused strategy, communicate
+it, and ground it in domain reality. For the AI PM, the capstone puts all six to work on a new kind
+of material, powerful, probabilistic and sometimes confidently wrong. The <em>product</em> is the
+trustworthy system you build around the model.</p>
 <blockquote>
 <p><strong>Walk-away question:</strong> <em>"For the job in front of me, what does the user actually want to
-achieve — and if I'm reaching for a model, does it genuinely serve that job better than a
-simpler, more predictable solution?"</em></p>
+achieve, and if I'm reaching for a model, does it serve that job better than a simpler, more
+predictable solution?"</em></p>
 </blockquote>
 <hr />
 <h2 id="test-yourself">Test yourself</h2>
-<p>Five questions; answers fold out. If one stumps you, the link takes you back.</p>
+<p>Eleven questions, at least one per lesson. The answers fold out, and each links back to its lesson.</p>
 <ol>
 <li>
-<p><strong>A feature has high motivation and a strong trigger but users still don't act. What's the first suspect, per the behaviour equation?</strong>
+<p><strong>A feature has high motivation and a clear prompt, but users still don't act. What do you look at first?</strong>
  <br />
-<details><summary>Answer</summary>Ability — friction. B = MAP: if motivation and the prompt are present, ability is the bottleneck. Hunt the needless steps before adding more motivation. (<a href="motivation-and-behaviour.html">Motivation & behaviour</a>)</details></p>
+<details><summary>Answer</summary>Ability, which in practice means friction. With B = MAP, if motivation and the prompt are present, ability is the bottleneck. Measure each step and remove the needless ones before you add more motivation. (<a href="motivation-and-behaviour.html">Motivation & behaviour</a>)</details></p>
+</li>
+<li>
+<p><strong>Marketing wants three more fields on the signup form. How do you decide?</strong>
+ <br />
+<details><summary>Answer</summary>Ask who each field serves. A field that protects the user is conscious friction and can stay. A field that only serves another team's data needs is selfish friction, so defer it until after the user's first win, or drop it. (<a href="motivation-and-behaviour.html">Motivation & behaviour</a>)</details></p>
+</li>
+<li>
+<p><strong>Your team is sure the new onboarding step is obvious. What do you do before launch?</strong>
+ <br />
+<details><summary>Answer</summary>Write the belief down as an assumption, ask what would prove it wrong, and watch a handful of first-time users try it with no instructions. Expert fluency is the curse of knowledge at work, so don't treat it as evidence. (<a href="cognitive-empathy.html">Cognitive empathy</a>)</details></p>
 </li>
 <li>
 <p><strong>Why does "would you use this?" produce worse data than "tell me about the last time you…"?</strong>
  <br />
-<details><summary>Answer</summary>People are unreliable futurists but decent historians. Statements about hypothetical behaviour barely predict real behaviour. Accounts of past behaviour do. (<a href="user-research.html">User research</a>)</details></p>
+<details><summary>Answer</summary>People are unreliable at predicting their own behaviour and much better at recalling what they did. A story about a past event gives you behaviour, while a hypothetical gives you a polite guess. (<a href="user-research.html">User research</a>)</details></p>
 </li>
 <li>
-<p><strong>What's the one-question test for whether a nudge is ethical?</strong>
+<p><strong>One colleague says five users is enough, another says twenty interviews plus a survey. Who's right?</strong>
  <br />
-<details><summary>Answer</summary>"Whose goal does it serve?" A nudge aligned with the user's own goal is help. One serving only the metric is a dark pattern. (<a href="motivation-and-behaviour.html">Motivation & behaviour</a>)</details></p>
+<details><summary>Answer</summary>It depends on the question. Five users per round finds most problems in a usability test with similar users. Learning which needs are common across a market takes more conversations and a survey to size them. (<a href="user-research.html">User research</a>)</details></p>
 </li>
 <li>
-<p><strong>Your AI feature demos beautifully. What does "taste becomes evals" say you must do before trusting it?</strong>
+<p><strong>You built one AI prototype this afternoon and it works. What should happen next?</strong>
  <br />
-<details><summary>Answer</summary>Turn your judgment of "good" into a graded, representative eval set and run it continuously. Read traces and call pass/fail yourself. A distribution can't be eyeballed from a demo. (<a href="product-sense-for-ai.html">Product sense for AI</a>)</details></p>
+<details><summary>Answer</summary>Build a few genuinely different alternatives, test each with a handful of users, and choose on evidence. A prototype that works first time is the easiest one to fall for. (<a href="creativity.html">Creativity</a>)</details></p>
+</li>
+<li>
+<p><strong>Why keep the "new" part of a product isolated from the proven and better parts?</strong>
+ <br />
+<details><summary>Answer</summary>So that if it fails, you know the idea failed rather than the basics around it. Mixing a novel idea with clumsy versions of everything users expect makes the result impossible to read. (<a href="creativity.html">Creativity</a>)</details></p>
+</li>
+<li>
+<p><strong>A model drafted your one-pager and it reads well. What do you check before sending it?</strong>
+ <br />
+<details><summary>Answer</summary>Mark every factual claim and check each against evidence you actually have. Look for small errors, invented metrics and stakeholder motives nobody confirmed, then turn the unsupported claims into open questions. (<a href="communication.html">Communication</a>)</details></p>
 </li>
 <li>
 <p><strong>When is deep domain expertise a liability, and what's the antidote?</strong>
  <br />
-<details><summary>Answer</summary>When it becomes "I am the user" and validation stops. The antidote is pairing expertise with the outsider question — "why is it done this way at all?" — and continued user contact. (<a href="domain-expertise.html">Domain expertise</a>)</details>
-</p>
+<details><summary>Answer</summary>When it becomes "I am the user" and validation stops. The antidote is to pair expertise with the outsider's question of why it's done this way at all, and to keep talking to users. (<a href="domain-expertise.html">Domain expertise</a>)</details></p>
 </li>
-</ol></div>
-  <div class="pagenav"><a class="navcard prev" href="product-sense-for-ai.html"><span class="lbl">← Previous</span><span class="ttl">Product sense for AI products</span></a><span></span></div><footer class="foot"><strong>Core insight:</strong> Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#field-notes-from-working-pms">Field notes from working PMs</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a></div></aside></div><script>
+<li>
+<p><strong>Your AI feature demos beautifully. What does "taste becomes evals" say you must do before trusting it?</strong>
+    <details><summary>Answer</summary>Turn your judgment of "good" into a graded, representative eval set and run it continuously. Read traces and call pass or fail yourself, because a demo can't show you a distribution. (<a href="product-sense-for-ai.html">Product sense for AI</a>)</details></p>
+</li>
+<li><strong>Your assistant scores 91% on its eval, and every eval question has an answer in the documents. What's missing?</strong>
+    <details><summary>Answer</summary>Cases where the right answer is "I don't know". Without them, the eval can't see the model inventing answers, which is the failure that hurts users most. (<a href="product-sense-for-ai.html">Product sense for AI</a>)</details></li>
+</ol>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Kate Clark, <a href="https://techcrunch.com/2019/05/30/the-slack-origin-story/"><em>The Slack origin story</em></a>,
+  TechCrunch, 30 May 2019 (as of 2026-11).</li>
+<li>Amazon, <a href="https://www.aboutamazon.com/news/devices/kindle-at-10"><em>Kindle at 10</em></a>, About Amazon,
+  19 November 2017 (as of 2026-11).</li>
+<li>Werner Vogels, <a href="https://www.allthingsdistributed.com/2006/11/working_backwards.html"><em>Working Backwards</em></a>,
+  All Things Distributed, 1 November 2006 (as of 2026-11).</li>
+<li>Joanna Goodrich, <a href="https://spectrum.ieee.org/first-digital-camera-history"><em>The First Digital Camera Was the Size of a
+  Toaster</em></a>, IEEE Spectrum, 6 April 2022, and
+  Scott D. Anthony, <a href="https://hbr.org/2016/07/kodaks-downfall-wasnt-about-technology"><em>Kodak's Downfall Wasn't About
+  Technology</em></a>, Harvard Business
+  Review, 15 July 2016 (as of 2026-11).</li>
+<li>Marty Cagan, <a href="https://www.svpg.com/the-role-of-domain-experience/"><em>The Role of Domain Experience</em></a>,
+  SVPG, 28 March 2005 (as of 2026-11).</li>
+<li><em>Moffatt v. Air Canada</em>, 2024 BCCRT 149, 14 February 2024. Not re-opened (the tribunal's site
+  returned 403); checked in an earlier review.</li>
+<li>LinkedIn's meter and the <em>Product Manager Handbook</em> interviews: secondhand sources, not checked
+  against originals.</li>
+</ul></div>
+  <div class="pagenav"><a class="navcard prev" href="product-sense-for-ai.html"><span class="lbl">← Previous</span><span class="ttl">Product sense for AI products</span></a><span></span></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#field-notes-from-working-pms">Field notes from working PMs</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -16,8 +16,8 @@ CFG = {
     "tagline": "a product craft module",
     "title": "Product sense for the AI PM",
     "lede": "The instinct for what makes a product succeed — sharpened for the AI era.",
-    "insight": "Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.",
-    "meta": ["6 lessons", "+ recap", "for APMs & PMs", "AI-native"],
+    "insight": "Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.",
+    "meta": ["7 lessons", "+ recap", "for APMs & PMs", "AI-native"],
     "callout": "For the AI PM",
     "lessons": [
         "motivation-and-behaviour",

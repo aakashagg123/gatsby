@@ -847,9 +847,9 @@ GLOSSARY = [
 # ============================= PRODUCT SENSE ================================
 {
  "k":"behaviour-equation","t":"Behaviour equation (Fogg)","cat":"Product sense",
- "short":"Behaviour = Motivation × Ability × Trigger — a behaviour happens only when all three are present at once.",
- "fp":"To get someone to do something, three things must line up in the same moment: they must want to (motivation), be able to easily (ability), and be prompted (trigger). Miss any one and the behaviour doesn't happen — which tells you exactly what to fix.",
- "example":"Users don't finish onboarding: high motivation, clear trigger, but the step is too hard (low ability) — so you simplify the step, not add more nudges.",
+ "short":"B = MAP: a behaviour happens only when Motivation, Ability and a Prompt come together at the same moment.",
+ "fp":"To get someone to do something, three things must line up in the same moment: they must want to (motivation), be able to easily (ability), and be prompted (a prompt, which older versions and the Hook model call a trigger). Miss any one and the behaviour doesn't happen — which tells you exactly what to fix.",
+ "example":"Users don't finish onboarding: high motivation, clear prompt, but the step is too hard (low ability) — so you simplify the step, not add more nudges.",
  "uses":["Diagnosing why a desired action isn't happening","Designing onboarding and activation","Prioritising the right lever (want / ease / prompt)"],
  "see":("Motivation & behaviour","product-sense/motivation-and-behaviour.md"),
  "related":["hook-model","jobs-to-be-done","cognitive-empathy"],
@@ -889,6 +889,24 @@ GLOSSARY = [
  "uses":["Judging the depth of an AI strategy","Spotting defensible AI products","Setting ambition for AI features"],
  "see":("Product sense for AI products","product-sense/product-sense-for-ai.md"),
  "related":["jagged-frontier","workflow-capture","data-flywheel"],
+},
+{
+ "k":"conscious-friction","t":"Conscious friction","aliases":["selfish friction"],"cat":"Product sense",
+ "short":"Adding friction only where it protects the user or the outcome, and removing it everywhere else. Its opposite, selfish friction, serves a team's needs rather than the user's.",
+ "fp":"Every extra step costs you some users. Some steps are worth it because they protect the user or the business, like an identity check or a confirmation before a costly action. Others exist only because a team wants data, which some practitioners call selfish friction. Conscious friction means you keep the first kind and defer or drop the second.",
+ "example":"A signup form asks for income bracket and 'how did you hear about us' before the user has seen any value. Those fields are selfish friction, so you move them to a survey after the first deposit and keep the identity check.",
+ "uses":["Reviewing a signup or onboarding flow field by field","Deciding which confirmations to keep","Pushing back on data requests that cost conversion"],
+ "see":("Motivation & behaviour","product-sense/motivation-and-behaviour.md"),
+ "related":["behaviour-equation","hook-model"],
+},
+{
+ "k":"proven-better-new","t":"Proven, better, new","aliases":["proven / better / new"],"cat":"Product sense",
+ "short":"A way to sort a product's parts: copy what is proven, improve where you can be better, and isolate the one genuinely new idea.",
+ "fp":"Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. Proven is what already works for this audience, better is where you improve on it, and new is your novel idea. Keeping the new part isolated means that if it fails, you know the idea failed rather than the basics around it.",
+ "example":"An onboarding redesign ships a familiar template picker (proven) with AI-filled templates (better), and puts a spreadsheet import behind one button as the isolated new bet.",
+ "uses":["Scoping a launch so its result is readable","Deciding what to copy and what to invent","Reading why a new product failed"],
+ "see":("Creativity","product-sense/creativity.md"),
+ "related":["ai-native","jobs-to-be-done"],
 },
 
 # ======================= TECHNICAL PRODUCT SENSE ===========================

@@ -13,30 +13,19 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 06</span>
     <h1>Domain expertise: turning knowledge into intuition</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>PM fundamentals transfer across industries, but <strong>domain expertise</strong> — deep knowledge of the
-specific world your product lives in — upgrades guessing into <em>knowing</em>. It acts as
-a filter on decisions: you can tell must-haves from nice-to-haves, anticipate what will hit
-resistance, and move faster because you recognize patterns. Build it deliberately —
-immersive learning, asking "dumb" questions, hands-on experience, a network of experts.
-But don't get <strong>trapped</strong> by it. Experts drift into "I am the user" and stop validating.
-The best domain experts pair deep knowledge with an outsider's willingness to ask <em>"why is
-it done this way at all?"</em></p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — AI has two domains at once: the <em>user's</em> industry and the <em>AI</em> domain
-itself (what models do well, where they hallucinate, what evaluation and safety require).
-Thin knowledge in either produces confident, wrong product bets.</p>
-<p><strong>What it changes in your decisions</strong> — You learn enough of the model's failure surface to
-know which features are safe to ship and which need a human in the loop. You learn enough
-of the user's world to know where a wrong answer is merely annoying versus genuinely
-harmful.</p>
-<p><strong>Ask yourself</strong> — <em>"In this domain, what does a confidently-wrong model output actually cost
-the user — and do I know that cost well enough to set the quality bar?"</em></p>
-<p><strong>Risk if ignored</strong> — Shipping an AI feature that's impressive in the demo and dangerous in
-the real workflow, because nobody understood the domain stakes.</p>
-</blockquote>
-<h2 id="why-domain-knowledge-strengthens-intuition">Why domain knowledge strengthens intuition</h2>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>You've just joined a company that sells software to hospitals, or to banks, or to freight brokers.
+In your first planning meeting someone proposes a feature, and everyone else in the room can tell
+within seconds that compliance will never approve it. You can't, because you don't yet know the
+world the product lives in. PM fundamentals transfer across industries, but <strong>domain expertise</strong>,
+deep knowledge of the specific world your users work in, is what lets you tell a must-have from a
+nice-to-have before anyone has to explain it.</p>
+<p>For an AI PM there are two domains at once. One is the user's industry. The other is the AI domain
+itself, which covers what models do well, where they make things up, and what evaluation and safety
+require. Thin knowledge of either produces confident, wrong product bets. The most expensive
+version is an AI feature that's impressive in the demo and harmful in the real workflow, because
+nobody understood what a wrong answer costs there.</p>
 <style>
 .dgm-de{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -89,110 +78,160 @@ the real workflow, because nobody understood the domain stakes.</p>
   </div>
 </div>
 
-<p>Picture a healthcare-software PM. With thin domain knowledge you build an EMR around generic
-UX and obvious needs (notes, scheduling). With deep expertise you know the intricacies:
-HIPAA compliance, that doctors have <em>seconds</em> to enter data between patients, common billing
-issues, the politics of adopting new tools. That knowledge becomes a <strong>filter</strong>: you intuit
-must-haves vs. nice-to-haves, foresee what will meet resistance, and prioritize what truly
-adds value in context.</p>
-<p>Experts decide faster because they <strong>recognize patterns</strong> and recall lessons from similar
-situations. A fintech PM who knows payments cold will quickly reject a "cool" feature whose
-compliance approval would take a year, and find a creative path that meets the need without
-the red tape. A novice would charge in and hit the wall.</p>
-<p>Domain knowledge also builds <strong>credibility</strong>: speaking your users' and stakeholders' language
-makes you a more persuasive communicator and a more trusted decision-maker — sales and
-marketing back your calls when they see you truly understand the market.</p>
-<p><strong>But it must complement, not replace, the rest.</strong> Marty Cagan's warning: too much domain
-expertise can be dangerous, because experts believe they can speak for the target customer
-and are "more like their target customer than they really are." Cagan also says deep domain
-expertise is truly essential for only a few products, and that learning speed matters more. Domain expertise is a
-turbocharger for product sense — used wisely, it lets you skip the basics and focus on the
-subtleties outsiders miss — but only if you keep validating.</p>
-<h2 id="building-it-without-getting-trapped">Building it (without getting trapped)</h2>
-<p>Entering a new domain, be systematic:</p>
-<ul>
-<li><strong>Immersive learning</strong> — in the first months, consume everything: industry reports, blogs,
-  webinars, thought leaders. Cagan suggests ~1–3 months of aggressive learning to chart
-  strategy confidently in a new domain. Treat it like an onboarding project with goals ("by
-  day 60, I'll have talked to 5 domain experts and read 3 seminal reports").</li>
-<li><strong>Ask "dumb" questions (AMA-style)</strong> — flip <em>Ask Me Anything</em>: have experts explain things to
-  you. Not grasping how ACH differs from wire transfers? Ask a fintech ops manager. Humility
-  and curiosity win respect. It's far better to ask early than to decide wrong out of
-  ignorance.</li>
-<li><strong>Hands-on experience</strong> — live the domain: observe hospital staff using the software; sell
-  something on your own e-commerce platform; build a small project with your own API.
-  Knowledge is procedural and contextual, not just vocabulary.</li>
-<li><strong>Leverage team and users</strong> — part of expertise is knowing <em>where to get answers fast</em>. Build
-  a network of go-to people (the veteran engineer, the candid customer) and pull in
-  specialists (legal, compliance, ops) early.</li>
-</ul>
-<p><strong>Balance with fresh perspective.</strong> A newcomer's <em>"why is it done this way at all?"</em> sometimes
-becomes a breakthrough, precisely because they don't accept "that's just how it is." As you
-gain expertise, preserve that outsider curiosity: rotate people across domains, keep
-validating with real users, and don't let expertise curdle into arrogance — <em>"constantly
-revisit assumptions about the domain and customers,"</em> because new regulations, behaviours,
-and competitors will surprise you.</p>
-<h2 id="tackling-amas-expertise-on-display">Tackling AMAs — expertise on display</h2>
-<p>An <strong>AMA</strong> (Ask Me Anything) is a stress test for domain mastery. Imagine leading a crypto
-product when a customer asks, <em>"with the new crypto tax rules, how does this wallet help me
-report transactions?"</em> Deep expertise lets you explain the rule change and point to the
-specific (or planned) tax-reporting features — even citing conversations with tax experts.
-A teammate's forward-looking <em>"will DeFi threaten our approach?"</em> draws on your strategic
-view of how you differ and coexist.</p>
-<p>Preparing for an AMA is itself a learning exercise — it forces you to anticipate what
-knowledgeable people will ask, refreshing your understanding. Comfortably fielding tough
-Q&amp;A signals to executives that you're on top of the domain and to your team that they can
-trust your guidance. And when you <em>can't</em> answer, knowing where to find it — or having an
-informed hypothesis — is itself the mark of expertise.</p>
-<h2 id="actionable-steps">Actionable steps</h2>
-<ul>
-<li><strong>Make a 90-day learning plan</strong> — key topics, experts to meet, resources to read. Track it
-  like onboarding.</li>
-<li><strong>Join domain communities</strong> — forums, Slack groups, meetups. Absorb practitioners'
-  real-world nuances.</li>
-<li><strong>Run expert/user panels</strong> — invite experienced users or specialists to Q&amp;A with the team.</li>
-<li><strong>Document domain knowledge</strong> — a living wiki of terms, regulations, and common workflows.
-  Writing it reinforces your learning and onboards others.</li>
-<li><strong>Test your expertise</strong> — write the 5 hardest questions someone could ask about your
-  product/domain and answer them. The gaps are your study list.</li>
-</ul>
+<h2 id="why-knowing-the-domain-changes-your-judgment">Why knowing the domain changes your judgment</h2>
+<p>Picture a PM building software for clinics (an illustration). With thin domain knowledge, they build
+an electronic medical record (EMR) around generic UX and obvious needs like notes and scheduling.
+With deep knowledge, they know the details that matter. There are compliance rules such as the US
+Health Insurance Portability and Accountability Act (HIPAA), and doctors have seconds to enter data
+between patients. There are common billing problems, and there are the politics of adopting a new tool. That knowledge
+becomes a <strong>filter</strong>. It tells you which requests are must-haves, which ideas will meet resistance,
+and what truly adds value in that context.</p>
+<p>Experts also decide faster because they recognise patterns and recall what happened in similar
+situations. A fintech PM who knows payments well will quickly reject a "cool" feature whose
+compliance approval would take a year. Then they'll look for a path that meets the need without the
+red tape. A newcomer tends to charge in and hit the wall.</p>
+<p>Abhishek Fatehpuria, who builds AI products in fintech, describes what that wall looks like from the
+inside:</p>
 <blockquote>
-<p><strong>📦 Mini-case — the EMR that doctors hate.</strong> Electronic medical records were largely
-designed with deep domain input — from billing and compliance experts. The result
-optimizes claims perfectly and forces clinicians through fifteen clicks to record an
-ordinary visit. Domain expertise <em>was</em> present. It was the wrong domain's, and
-nobody asked the outsider question "why does a doctor's tool feel like an invoice?"
-Expertise tells you how the world works. Only user contact tells you whose version
-of the world your product just encoded.</p>
+<p>"you need to like really understand the regulatory landscape you're working in. Because if you don't understand that landscape, you're going to go to your legal partners [...] and they're going to think you're kind of crazy."
+— Abhishek Fatehpuria, <a href="https://www.youtube.com/watch?v=pc04_TW7Z3U"><em>How to Build AI products in FinTech | $100B Lessons from Robinhood VP PM</em></a>, The Growth Podcast, around 08:08</p>
 </blockquote>
-<h2 id="failure-modes">Failure modes</h2>
+<p>Domain knowledge also builds credibility. Speaking your users' and stakeholders' language makes you
+more persuasive, and sales and marketing back your calls when they can see you understand the
+market.</p>
+<h2 id="the-experts-trap">The expert's trap</h2>
+<p>Domain expertise has to complement the rest of product sense, not replace it. Marty Cagan's warning
+is that "it can be dangerous for a product manager to have too much domain expertise," because
+experts come to believe they are "more like their target customer than they really are". He also
+writes that deep domain expertise is truly essential for only a few products. In his view, strong PMs
+can come up to speed on most domains quickly if they approach it aggressively. His remedy is that
+the PM "needs to constantly revisit assumptions about the domain and the customers", because new
+regulations, behaviours and competitors will surprise you.</p>
+<p>Here's an illustration of the trap, not a sourced case. Imagine a records system for clinicians whose
+design input came mostly from billing and compliance experts. It handles claims perfectly and makes a
+doctor click through screen after screen to record an ordinary visit. Domain expertise was present,
+but it was the wrong domain's, and nobody asked the outsider's question of why a doctor's tool feels
+like an invoice. Expertise tells you how the world works, while only contact with users tells you
+whose version of that world your product just encoded.</p>
+<p>A newcomer's "why is it done this way at all?" sometimes becomes a breakthrough, precisely because
+they don't accept "that's just how it is". As you gain expertise, keep that outsider curiosity alive.
+Rotate people across domains, keep validating with real users, and treat the domain as something that
+keeps moving.</p>
+<h2 id="from-the-show-learn-fast-or-arrive-knowing">From the show: learn fast, or arrive knowing?</h2>
+<p>Practitioners on The Growth Podcast disagree here, and the disagreement is useful. Marty Cagan's own
+start as a PM was built on direct contact rather than prior knowledge:</p>
+<blockquote>
+<p>"I remember the person who was coaching me as a new product manager would not let me make a single decision until I visited in person 30 customers, 15 in the US, 15 in Europe."
+— Marty Cagan, <a href="https://www.youtube.com/watch?v=J0FOFJFtOFw"><em>The Marty Cagan Episode: Product Management Crash Course in 61 Minutes</em></a>, The Growth Podcast, around 25:49</p>
+</blockquote>
+<p>Those are his words as the transcript records them, and the numbers may be misheard. The point stands
+either way, which is that the expertise came from visiting customers. George Harter puts more weight
+on arriving with the domain already in hand:</p>
+<blockquote>
+<p>"So right now, I would say it's more important than ever to have industry experience and product management expertise."
+— George Harter, <a href="https://www.youtube.com/watch?v=igo5c_OoTe8"><em>The Ultimate Guide to Knowing Your Users as a PM</em></a>, The Growth Podcast, around 07:26</p>
+</blockquote>
+<p>Harter is talking about getting hired in a crowded job market, where industry experience gets your
+application through the filter. Cagan is talking about doing the job well once you're there. Both
+can be true. If you're switching domains, expect the hiring side to be harder, and once you're in,
+learn the way Cagan's coach made him learn.</p>
+<h2 id="building-expertise-without-getting-trapped">Building expertise without getting trapped</h2>
+<p>When you enter a new domain, be systematic about it.</p>
 <ul>
-<li><strong>The expert's trap</strong> — "I am the user," so you stop validating and miss new perspectives.</li>
-<li><strong>Vocabulary without context</strong> — knowing the terms but not the procedures and stakes.</li>
-<li><strong>Arrogance over curiosity</strong> — treating the domain as solved when regulations and behaviours
-  keep moving.</li>
-<li><strong>Analysis paralysis in a new domain</strong> — endless learning with no decisions; set a
-  time-box.</li>
+<li><strong>Learn intensively, with a time limit.</strong> In the first months, read the industry reports, the
+  regulations and the trade press. Cagan writes that it generally takes him one to three months to
+  come up to speed on a new domain, and that some people are faster and some slower.</li>
+<li><strong>Ask the "dumb" questions.</strong> Have experts explain things to you. If you don't understand how an
+  Automated Clearing House (ACH) payment differs from a wire transfer, ask an operations manager.
+  It's far better to ask early than to decide wrong out of ignorance.</li>
+<li><strong>Get hands-on.</strong> Watch hospital staff use the software, sell something on your own e-commerce
+  platform, or build a small project with your own API. Domain knowledge is procedural and
+  contextual, and the vocabulary is the smallest part of it.</li>
+<li><strong>Build a network.</strong> Part of expertise is knowing where to get answers fast, so find your go-to
+  people (the veteran engineer, the candid customer) and bring in specialists in legal, compliance
+  and operations early.</li>
 </ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<h2 id="worked-example-a-90-day-domain-plan">Worked example: a 90-day domain plan</h2>
+<p>This plan is invented, and so are its numbers. Say you've moved from a consumer app to a business
+payments company, to lead an AI feature that helps operations teams handle disputed card
+transactions. You budget about six hours a week for deliberate learning, which over 13 weeks is
+roughly 78 hours.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Goal</th>
+<th>Concrete actions</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Days 1–30</td>
+<td>Learn the language</td>
+<td>Read the card network's dispute rules summary and two industry reports. Sit with the operations team for two full days. Start a glossary.</td>
+<td>The glossary has 40 terms and an ops lead says it's right</td>
+</tr>
+<tr>
+<td>Days 31–60</td>
+<td>Learn the workflow and the stakes</td>
+<td>Hold 10 customer conversations about the last dispute each handled. Shadow one compliance review. Write the five hardest questions a customer could ask, and answer them.</td>
+<td>You can explain what a wrong AI answer costs, in money and in deadlines</td>
+</tr>
+<tr>
+<td>Days 61–90</td>
+<td>Make a domain-informed call</td>
+<td>Hold 10 more customer conversations. Write a one-page decision memo on where the model may suggest and where a person must decide.</td>
+<td>The memo survives review by compliance and by two customers</td>
+</tr>
+</tbody>
+</table>
+<p>The plan adds up to 20 customer conversations, two days of shadowing and one compliance review. The
+"done when" column matters more than the actions, because it turns learning into a checkable result
+and stops it sliding into endless reading. The memo at the end is what an expert would produce, a
+judgment about where a model's mistakes are tolerable, and it is the decision this whole lesson is
+about.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li class="task todo">Do I know this domain's real constraints (regulatory, workflow, political), not just its
-      surface needs?</li>
-<li class="task todo">Have I asked the "dumb" questions instead of deciding around my ignorance?</li>
-<li class="task todo">Have I experienced the domain hands-on, not only read about it?</li>
-<li class="task todo">Am I still validating with real users rather than assuming I <em>am</em> the user?</li>
-<li class="task todo">Could I field an AMA on my product/domain — and do I know where to find what I can't
-      answer?</li>
+<li><strong>The expert's trap.</strong> "I am the user", so you stop validating and miss new perspectives. You see it
+  when the team stops scheduling customer calls because "we already know".</li>
+<li><strong>Vocabulary without context.</strong> You know the terms but not the procedures and stakes.</li>
+<li><strong>Arrogance over curiosity.</strong> Treating the domain as solved while regulations and behaviours keep
+  moving.</li>
+<li><strong>Endless learning.</strong> Months of reading with no decisions. Set a time-box and a "done when".</li>
+<li><strong>Not knowing the cost of a wrong answer.</strong> For AI features, this is the failure that matters most,
+  because it is how you set the quality bar too low for the domain.</li>
+</ul>
+<h2 id="what-to-do-next">What to do next</h2>
+<ul>
+<li class="task todo">Write down your domain's real constraints (regulatory, workflow, political), not just its
+      surface needs.</li>
+<li class="task todo">Write a 90-day plan with a "done when" for each phase.</li>
+<li class="task todo">Ask one "dumb" question this week that you've been deciding around.</li>
+<li class="task todo">Experience the domain hands-on, not only through reading.</li>
+<li class="task todo">For your AI feature, write down what a confidently wrong output costs the user, and check it
+      with someone who does the job.</li>
+<li class="task todo">Write the five hardest questions someone could ask about your product, and answer them. The
+      gaps are your study list.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="communication.html">Communication</a></li>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
-<li><a href="../technical-product-sense/how-systems-are-built.html">How systems are built</a> — domain fluency for the technical layer your product runs on.</li>
+<li><a href="../technical-product-sense/how-systems-are-built.html">How systems are built</a>, domain fluency for
+  the technical layer your product runs on.</li>
+<li><a href="../first-principles/learning-how-to-learn.html">Learning how to learn</a> (first principles): methods
+  for getting up to speed in a new field quickly.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Marty Cagan, <a href="https://www.svpg.com/the-role-of-domain-experience/"><em>The Role of Domain Experience</em></a>,
+  Silicon Valley Product Group (SVPG), 28 March 2005 (as of 2026-11).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
-  <div class="pagenav"><a class="navcard prev" href="communication.html"><span class="lbl">← Previous</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a><a class="navcard next" href="product-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Product sense for AI products</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#why-domain-knowledge-strengthens-intuition">Why domain knowledge strengthens intuition</a><a class="h2" href="#building-it-without-getting-trapped">Building it (without getting trapped)</a><a class="h2" href="#tackling-amas-expertise-on-display">Tackling AMAs — expertise on display</a><a class="h2" href="#actionable-steps">Actionable steps</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="communication.html"><span class="lbl">← Previous</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a><a class="navcard next" href="product-sense-for-ai.html"><span class="lbl">→ Next</span><span class="ttl">Product sense for AI products</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#why-knowing-the-domain-changes-your-judgment">Why knowing the domain changes your judgment</a><a class="h2" href="#the-experts-trap">The expert&#x27;s trap</a><a class="h2" href="#from-the-show-learn-fast-or-arrive-knowing">From the show: learn fast, or arrive knowing?</a><a class="h2" href="#building-expertise-without-getting-trapped">Building expertise without getting trapped</a><a class="h2" href="#worked-example-a-90-day-domain-plan">Worked example: a 90-day domain plan</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

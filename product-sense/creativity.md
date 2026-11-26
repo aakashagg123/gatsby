@@ -2,34 +2,19 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
-## TL;DR
+<!-- voice: human -->
 
-Creativity in product management has two halves. **Strategic thinking** decides *where* the
-product plays: positioning, segmentation, differentiation, and a focused core strategy —
-being clear on what you will and won't do. **Creative execution** is the day-to-day
-generation of novel solutions: a safe, curious mindset, team rituals (brainstorms, design
-sprints, hack days), and techniques (SCAMPER, mind mapping, analogy, constraint
-brainstorming). Strategy without execution is a nice deck. Execution without strategy is
-motion without direction. You need both, and creativity works best *within*
-strategic guardrails.
+Every competitor in your market has access to the same models you do. If your roadmap says "add AI
+to onboarding", so does theirs, and the demo you're proud of could ship from three other companies
+next quarter. So the creative question is no longer whether you can build the feature. It is what
+problem you point it at, for whom, and what you'll refuse to build so that the bet gets your full
+attention.
 
-> 🎯 **For the AI PM**
->
-> **Why it matters** — "Let's add AI" is not a strategy. When a capability is suddenly cheap
-> and everyone has it, differentiation moves to *what problem you point it at and for whom* —
-> a strategic-creativity question, not a model question.
->
-> **What it changes in your decisions** — You force a real positioning statement for the AI
-> feature ("for [who] who [need], it is [what] unlike [alternative]"). You kill AI ideas
-> that don't strengthen a core pillar, however cool the demo.
->
-> **Ask yourself** — *"If a competitor shipped the same model tomorrow, what would still make
-> our product the one users choose?"*
->
-> **Risk if ignored** — A pile of undifferentiated AI features chasing the trend, none tied to
-> a segment that cares.
-
-## Strategic thinking
+Creativity in product work has two halves. **Strategic thinking** decides *where* the product plays,
+which covers positioning, segments, differentiation and, above all, focus. **Creative execution** is
+the day-to-day generation of new solutions inside that strategy, through mindset, team rituals and
+techniques. Strategy without execution is a nice deck, and execution without strategy is motion
+without direction. Creativity tends to work best inside strategic guardrails.
 
 ```mermaid
 flowchart TB
@@ -39,55 +24,82 @@ flowchart TB
   CE -.->|"discoveries reshape the strategy"| ST
 ```
 
-Strategic creativity means cleverly defining *who* the product is for, *what* unique value
-it offers, and *how* it wins.
+## Strategy: where the product plays
 
-- **Positioning** — fill in the statement: *"For [target segment] who [need], [Product] is a
-  [category] that [benefit]. Unlike [competition], it [unique differentiator]."* Good
-  positioning is specific — not "a task app for everyone" but "a task app for working parents
-  that reduces mental load by prioritizing intelligently." It then guides every feature and
-  message.
-- **Segmentation** — divide the market into groups and choose whom to serve, ideally by
-  **need or behaviour**, not demographics. Slack began as the internal chat tool of
-  Tiny Speck, a game studio with staff in three cities. The lesson holds: a need that real
-  users already had, proven inside one team, became the product.
-- **Differentiation** — why a user picks you over alternatives. Two broad routes: do
-  something **new** (capabilities others lack) or something **better** (same need, faster /
-  cheaper / more delightful). Find the *whitespace* competitors leave. But differentiation
-  must **matter to the user** — a feature nobody cares about isn't winning.
-- **Core of strategy** — *focus*: being clear on what you will and won't do. Instagram's early
-  core was photo sharing, made simple and social, deliberately *not* expanding too soon.
-  Derive a few clear pillars from your vision and value proposition, and use them to
-  **evaluate ideas**: if an idea doesn't strengthen a pillar, shelve it.
+This lesson only sketches strategy, because [Markets and
+strategy](../business-acumen/markets-and-strategy.md) and [Competitive advantage and
+strategy](../business-acumen/competitive-advantage-and-strategy.md) cover it in depth. The short
+version is four moves.
 
-Tie it together with goals (OKRs), so quarterly execution follows the strategy rather than
-chasing shiny objects. Validate the strategy against reality — is the chosen segment
-responding? — and adjust as you learn.
+- **Positioning.** Fill in "For [target segment] who [need], [Product] is a [category] that
+  [benefit]. Unlike [competition], it [unique differentiator]." Good positioning is specific. "A task
+  app for working parents that reduces mental load by prioritising intelligently" guides decisions in
+  a way that "a task app for everyone" never will.
+- **Segmentation.** Choose whom to serve, ideally by need or behaviour rather than demographics.
+  Slack began as the internal chat tool of Tiny Speck, a game studio, which is a need real users
+  already had, proven inside one team before it became the product.
+- **Differentiation.** Users pick you for something **new** (a capability others lack) or something
+  **better** (the same need met faster, cheaper or more pleasantly). Either way it has to matter to
+  the user, because a unique feature nobody cares about wins nothing.
+- **Focus.** Be clear on what you will and won't do. Derive a few pillars from your vision and use
+  them to judge ideas, so that an idea which doesn't strengthen a pillar gets shelved, however good
+  the demo.
 
-## Creative execution
+Roger Martin has a test for whether any of this is real:
 
-Even the best strategy falters without the day-to-day creativity to realize it.
+> "strategy is what you do, not what you say."
+> — Roger Martin, [*Product Strategy Masterclass from Global Authority on Strategy*](https://www.youtube.com/watch?v=BD_4nsx5fTg), The Growth Podcast, around 14:45
 
-**Mindset.** Creativity starts with **psychological safety** and a **growth mindset**.
-People must feel safe proposing wild ideas and asking "stupid" questions. Model it:
-celebrate experiments that fail, frame setbacks as learning, and reward those who iterate.
-Engineer **diversity of thought** too — bring design, engineering, data, and marketing into
-ideation early. Each lens seeds ideas no silo reaches alone.
+By his test, your strategy is whatever your last three launches add up to, whatever the strategy
+document claims. Strategy for an AI feature works the same way. If a competitor shipped the same
+model tomorrow, what would still make your product the one users choose? If the honest answer is
+"nothing", you have a feature, not a position.
 
-**Rituals** that institutionalize creativity:
+Instagram is the classic story of focus. Its founders first built Burbn, a location-based app, and
+Kevin Systrom later wrote that the iPhone version "felt cluttered, and overrun with features". They
+cut it back to sharing, commenting on and liking photos, and the app that came out of that in 2010
+was Instagram, built around photo sharing and a set of filters. The creative act was the cut. If you can't name the last good idea you shelved because
+it didn't strengthen a pillar, you have a backlog rather than a strategy.
 
-- **Brainstorms** with rules ("defer judgment," "no idea too crazy") — plus formats like
-  *Crazy Eights* (8 sketches in 8 minutes) and *brainwriting* (write silently, then share) so
-  introverts contribute as much as extroverts.
-- **Design sprints** — a time-boxed problem-to-tested-prototype process. Even a mini
-  brainstorm → prototype → test cycle injects structured creativity.
-- **Hack days** — freedom to build anything product-related. Gmail's undo send shows the
-  idea: it started in 2009 as an experimental Gmail Labs feature and became a standard
-  setting in 2015.
-- **"How might we…?"** framing and the **5 Whys** to reframe a problem from its root — reframing
-  opens new solution spaces.
+## From the show: proven, better, new
 
-**Techniques** to break analytical ruts:
+Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. **Proven** is
+what already works for this audience, **better** is where you improve on it, and **new** is your
+genuinely novel idea. His view of the first bin is blunt:
+
+> "anything that's proven, you are gonna legally copy And the better product maker you are, the better you are at copying."
+> — Mark Pincus, [*How to steal your way to a hit product, with Mark Pincus (founder, Zynga)*](https://www.youtube.com/watch?v=G1uZZG6s7cc), The Growth Podcast, around 16:05
+
+The reason is to protect the third bin. In his words, "New is your new novel idea, your innovation
+zone", and he wants it isolated "so that you don't fail for the wrong reasons" (around 17:09). If a
+launch mixes a novel idea with a clumsy version of everything users already expect, you can't tell
+whether the idea failed or the basics did. Copying has legal and ethical limits, and he says
+"legally" for a reason, but the sorting habit carries over to any product.
+
+## Execution: generating ideas inside the rails
+
+Even the best strategy stalls without the day-to-day creativity to carry it out.
+
+**Mindset.** Creativity starts with psychological safety and a growth mindset. People have to feel
+safe proposing wild ideas and asking "stupid" questions, so model it yourself. Celebrate experiments
+that fail, treat setbacks as learning, and reward the people who iterate. Bring design, engineering,
+data and marketing into ideation early, because each lens produces ideas the others won't.
+
+**Rituals** make creativity a habit rather than an accident.
+
+- **Brainstorms** with rules ("defer judgment", "no idea too crazy"), plus formats like *Crazy
+  Eights* (8 sketches in 8 minutes) and *brainwriting* (write silently, then share), so quieter
+  people contribute as much as louder ones.
+- **Design sprints.** GV (formerly Google Ventures) describes its sprint as a five-day process that goes from mapping a problem
+  to testing a realistic prototype with customers. Jake Knapp began running sprints at Google in
+  2010. Even a mini cycle of brainstorm, prototype and test adds structure.
+- **Hack days**, with freedom to build anything product-related. Gmail's undo send shows how an
+  experiment can graduate. It started in 2009 as an experimental Gmail Labs feature and became a
+  standard setting in 2015.
+- **"How might we…?"** framing and the **5 Whys**, which reframe a problem from its root and open new
+  solution spaces.
+
+**Techniques** help you break out of a rut.
 
 | Technique | What it does |
 | --- | --- |
@@ -97,46 +109,99 @@ ideation early. Each lens seeds ideas no silo reaches alone.
 | **Constraint brainstorming** | Add an absurd constraint ("zero eng resources," "voice only") to force new approaches |
 | **User co-creation** | Ask power users how *they'd* solve it |
 
-Not every idea will be good — the point is to generate range, then filter against strategy.
+Not every idea will be good. The point is to generate range, then filter it against the strategy.
 
-## Actionable steps
+## AI prototyping as divergence
 
-- **Protect creative time** — a recurring slot for experiments, treated like sprint planning.
-- **Run a creativity workshop** with a clear goal ("ideas to improve week-1 retention") and a
-  cross-functional group.
-- **Adopt one ritual** this quarter (idea round, quarterly hack day) and make it repeatable.
-- **Cross-pollinate** — a monthly "cool things I saw" share; outside inspiration seeds
-  features.
-- **Prototype bold ideas** fast — a tangible prototype rallies support that a doc can't.
+AI tools have made the range part cheap. Where a team used to sketch three options and build one, a
+PM can now generate several working prototypes in an afternoon. Sachin Rekhi argues for using that
+power to widen the options rather than to rush to one answer:
 
-> **📦 Mini-case — Instagram says no.** Early Instagram was a cluttered check-in app
-> (Burbn) whose data showed users mostly shared photos. The strategic-creativity move
-> wasn't adding. It was *cutting* — rebuild around photo sharing only, with filters as
-> the differentiator, and explicitly decline everything else the app already did.
-> Focus was the creative act. The test for your own roadmap: can you name the last
-> good idea you shelved because it didn't strengthen a pillar? If not, you have a
-> backlog, not a strategy.
+> "AI shouldn't be used just to create one output. We should be using it to create multiple outputs, just the way we'd use a designer."
+> — Sachin Rekhi, [*Advanced Guide to AI Prototyping with Sachin Rekhi (Reforge)*](https://www.youtube.com/watch?v=74kamD2jUng), The Growth Podcast, around 09:36
 
-## Failure modes
+The discipline is to diverge, test and then decide. Generate several genuinely different prototypes,
+put each in front of a few users, and choose on evidence. The trap is falling for the first prototype
+because it works, which turns a cheap exploration into an expensive commitment. The engineering side
+of this, including why prototype code shouldn't go to production, is in [Technical product
+management for AI](../technical-product-management/tpm-for-ai-products.md).
 
-- **"Add AI" as strategy** — a capability with no segment, positioning, or differentiation
-  behind it.
-- **Differentiation nobody wants** — unique features that don't map to a real user need.
-- **No focus** — a strategy that never says "no," so effort scatters.
-- **Ideation theatre** — brainstorms that generate stickies but never prototype or ship.
+## Worked example: three onboarding prototypes
 
-## Practitioner checklist
+This example is invented, and so are the numbers. Say you're the PM for a project-management app,
+and new teams struggle to set up their first project. In one afternoon you use an AI prototyping tool
+to build three different versions.
 
-- [ ] Can I state the product's positioning in the "for [who] who [need]…unlike…" form?
-- [ ] Are my segments defined by need/behaviour, not just demographics?
-- [ ] Does every roadmap item strengthen a named core pillar?
-- [ ] Is there a repeatable team ritual that generates and *tests* new ideas?
-- [ ] When stuck, do I reach for a technique (SCAMPER, analogy, constraints) instead of
-      grinding the same angle?
+- **A, a chat assistant** that asks questions and builds the project as you answer.
+- **B, a template picker** whose chosen template the model fills in from a one-line description.
+- **C, an import** that turns an existing spreadsheet into a project.
+
+You sort each one with Pincus's bins. B is mostly proven (templates are a familiar pattern) with a
+"better" layer on top. C is the only genuinely new idea, and A is new too but in a way users haven't
+asked for. Then you give each prototype to five people from your target segment and ask them to set
+up a real project.
+
+| Prototype | Finished setup (of 5) | Median minutes | Asked to keep using it (of 5) |
+| --- | --- | --- | --- |
+| A, chat assistant | 2 | 11 | 1 |
+| B, template picker | 4 | 4 | 3 |
+| C, spreadsheet import | 3 | 6 | 4 |
+
+B wins on completion and speed, while C wins on pull, with four of five asking to keep using it. So
+you ship B as the default path, because it is proven and better, and you put C behind a single
+"import a spreadsheet" button as the isolated new bet. If C underperforms, you'll know the import
+idea failed rather than the whole onboarding. You drop A, even though it made the best demo, because
+two of five finishing is a signal you can't argue with. Five users per prototype is a small sample,
+so you treat the result as a direction and confirm it with the launch metrics.
+
+## Where it goes wrong
+
+- **"Add AI" as strategy.** A capability with no segment, positioning or differentiation behind it.
+  You see it as a launch with good press and flat usage.
+- **Differentiation nobody wants.** Unique features that don't map to a real user need.
+- **No focus.** A strategy that never says "no", so effort scatters across a long roadmap.
+- **Novelty everywhere.** Every part of the product is new, so when it fails nobody can say why.
+- **Falling for the first prototype.** AI makes one prototype easy, and the team stops exploring the
+  moment it works.
+- **Ideation theatre.** Brainstorms that generate sticky notes but never reach a prototype or a user.
+
+## What to do next
+
+- [ ] Write the product's positioning in the "for [who] who [need]… unlike…" form, and test it on
+      someone outside the team.
+- [ ] List your last three launches and ask Roger Martin's question: what strategy do they add up to?
+- [ ] Name the last good idea you shelved because it didn't strengthen a pillar.
+- [ ] Sort your next feature into proven, better and new, and keep the new part isolated.
+- [ ] Next time you prototype with AI, build at least three different versions and test them before
+      choosing.
+- [ ] Adopt one repeatable ritual this quarter, such as a hack day or a monthly idea round.
 
 ## Related lessons
 
 - [Cognitive empathy](./cognitive-empathy.md)
 - [Communication](./communication.md)
 - [Domain expertise](./domain-expertise.md)
-- [First principles: the method](../first-principles/the-method.md) — deconstruction as the sharpest ideation technique
+- [First principles: the method](../first-principles/the-method.md), on deconstruction as the
+  sharpest ideation technique.
+- [Markets and strategy](../business-acumen/markets-and-strategy.md) and [Competitive advantage and
+  strategy](../business-acumen/competitive-advantage-and-strategy.md) (business acumen): positioning,
+  segmentation and strategy in depth.
+- [Technical product management for AI](../technical-product-management/tpm-for-ai-products.md):
+  vibe coding and why the prototype is becoming the spec.
+
+## Sources
+
+- Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
+  TechCrunch, 30 May 2019 (Tiny Speck's internal messaging tool) (as of 2026-11).
+- MG Siegler, [*A Pivotal Pivot*](https://techcrunch.com/?p=241149), TechCrunch, 8 November 2010
+  (quotes Systrom's Quora answer on Burbn) (as of 2026-11).
+- MG Siegler, [Instagram launch coverage](https://techcrunch.com/2010/09/20/instagram/), TechCrunch,
+  20 September 2010 (Burbn as a location-focused app; launch filters) (as of 2026-11).
+- GV, [The Design Sprint](https://www.gv.com/sprint/) (five days; Jake Knapp at Google from 2010)
+  (as of 2026-11).
+- Gmail, [*New in Labs: Undo Send*](https://gmail.googleblog.com/2009/03/new-in-labs-undo-send.html),
+  Official Gmail Blog, 19 March 2009 (as of 2026-11).
+- Google Workspace Updates, [*Undo Send for Gmail on the
+  web*](https://workspaceupdates.googleblog.com/2015/06/undo-send-for-gmail-on-web.html), 23 June 2015
+  (as of 2026-11).
+- Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

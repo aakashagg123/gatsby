@@ -389,11 +389,11 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Batching, memory and precision](./tensors/batching-memory-and-precision.md).
 
-**Behaviour equation (Fogg)** — Behaviour = Motivation × Ability × Trigger — a behaviour happens only when all three are present at once.
+**Behaviour equation (Fogg)** — B = MAP: a behaviour happens only when Motivation, Ability and a Prompt come together at the same moment.
 
-*In plain terms.* To get someone to do something, three things must line up in the same moment: they must want to (motivation), be able to easily (ability), and be prompted (trigger). Miss any one and the behaviour doesn't happen — which tells you exactly what to fix.
+*In plain terms.* To get someone to do something, three things must line up in the same moment: they must want to (motivation), be able to easily (ability), and be prompted (a prompt, which older versions and the Hook model call a trigger). Miss any one and the behaviour doesn't happen — which tells you exactly what to fix.
 
-*For example.* Users don't finish onboarding: high motivation, clear trigger, but the step is too hard (low ability) — so you simplify the step, not add more nudges.
+*For example.* Users don't finish onboarding: high motivation, clear prompt, but the step is too hard (low ability) — so you simplify the step, not add more nudges.
 
 *Where it shows up:* Diagnosing why a desired action isn't happening; Designing onboarding and activation; Prioritising the right lever (want / ease / prompt).
 
@@ -818,6 +818,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Seeing the real mix of errors; Pricing each kind of error.
 
 *See:* [Measuring a model: metrics, thresholds and baselines](./machine-learning/measuring-a-model.md).
+
+**Conscious friction** — Adding friction only where it protects the user or the outcome, and removing it everywhere else. Its opposite, selfish friction, serves a team's needs rather than the user's.
+
+*In plain terms.* Every extra step costs you some users. Some steps are worth it because they protect the user or the business, like an identity check or a confirmation before a costly action. Others exist only because a team wants data, which some practitioners call selfish friction. Conscious friction means you keep the first kind and defer or drop the second.
+
+*For example.* A signup form asks for income bracket and 'how did you hear about us' before the user has seen any value. Those fields are selfish friction, so you move them to a survey after the first deposit and keep the identity check.
+
+*Where it shows up:* Reviewing a signup or onboarding flow field by field; Deciding which confirmations to keep; Pushing back on data requests that cost conversion.
+
+*See:* [Motivation & behaviour](./product-sense/motivation-and-behaviour.md).
 
 **Consensus (Raft, Paxos)** — A protocol that lets nodes agree on a sequence of values despite failures.
 
@@ -3558,6 +3568,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Choosing a graph storage approach; Understanding vendor options; Trading developer-friendliness vs. interoperability.
 
 *See:* [Storage & querying](./knowledge-graphs/storage-and-querying.md).
+
+**Proven, better, new** — A way to sort a product's parts: copy what is proven, improve where you can be better, and isolate the one genuinely new idea.
+
+*In plain terms.* Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. Proven is what already works for this audience, better is where you improve on it, and new is your novel idea. Keeping the new part isolated means that if it fails, you know the idea failed rather than the basics around it.
+
+*For example.* An onboarding redesign ships a familiar template picker (proven) with AI-filled templates (better), and puts a spreadsheet import behind one button as the isolated new bet.
+
+*Where it shows up:* Scoping a launch so its result is readable; Deciding what to copy and what to invent; Reading why a new product failed.
+
+*See:* [Creativity](./product-sense/creativity.md).
 
 **Provenance** — The 'passport' every graph fact carries: source, method, timestamp, confidence, reviewer — what makes answers citable and auditable.
 

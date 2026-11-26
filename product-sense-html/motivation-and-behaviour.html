@@ -13,29 +13,25 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>Motivation theory: friction, satisfaction, and nudges</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Users act when <strong>motivation is high and friction is low</strong>. The Fogg behaviour model states
-this as <em>B = MAP</em>: Motivation, Ability, and a Prompt. (Earlier versions called the third
-term a <em>trigger</em>.) Product sense starts with reading
-that equation in your own product. Hunt down needless friction. Make the core action
-<strong>rewarding</strong>, so satisfaction feeds motivation — this is the Hook model's Trigger → Action
-→ Reward → Investment loop. Use <strong>ethical nudges</strong> — defaults, reminders, social proof — to
-make the beneficial path the path of least resistance. The discipline is <em>conscious</em>
-friction: add it only where it creates value, and remove it everywhere else.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — AI features rarely fail because the model is dumb. They fail because
-users never build the habit: the magic moment stays buried behind friction, or the first
-output disappoints and they never return. The behaviour equation is how you find that gap.</p>
-<p><strong>What it changes in your decisions</strong> — You measure and remove the steps between "user
-arrives" and "user feels the model's value." You design the <em>reward</em> after the first
-successful prompt as deliberately as you design the model itself.</p>
-<p><strong>Ask yourself</strong> — <em>"What is the friction between a new user and their first genuinely
-useful model output — and how fast does that first win arrive?"</em></p>
-<p><strong>Risk if ignored</strong> — A technically impressive model with great demos and terrible
-retention. Nobody engineered the motivation-and-friction path around it.</p>
-</blockquote>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>Say a new user lands on your product wanting exactly what it offers, and leaves four screens later
+without ever using it. Nothing was wrong with their motivation, and nothing was wrong with the
+product's core idea. Something in between got in the way, and nobody on the team can say which step
+it was. This lesson is about finding that step, deciding whether it should exist at all, and making
+the moment after it worth coming back for.</p>
+<p>It matters more for AI features than for most. They rarely fail because the model is weak. They
+fail because users never build the habit, either because the first useful output is buried behind
+setup or because the first output disappoints and nobody returns for a second one. So the question
+to carry through this lesson is how much friction sits between a new user and their first genuinely
+useful model output, and how fast that first win arrives.</p>
 <h2 id="the-behaviour-equation">The behaviour equation</h2>
+<p>The <strong>Fogg behaviour model</strong> says a behaviour happens only when three things come together at the
+same moment: motivation, ability (how easy it is) and a prompt. BJ Fogg writes it as <em>B = MAP</em>.
+Earlier versions called the third element a <em>trigger</em>, and the Hook model later in this lesson still
+uses that word for the same cue. Fogg's own site presents B = MAP as shorthand for the model rather
+than as a formula you calculate, so read it as a memory aid. If any element is missing, the
+behaviour doesn't happen.</p>
 <style>
 .dgm-mb{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -64,16 +60,16 @@ retention. Nobody engineered the motivation-and-friction path around it.</p>
 </style>
 <div class="dgm-mb">
   <span class="dgm-mb-chip">The behaviour equation</span>
-  <h4>B = M × A × T · a multiplication, not an addition — zero any term, zero the behaviour</h4>
+  <h4>B = MAP · motivation, ability and a prompt at the same moment — if one is missing, the behaviour doesn't happen</h4>
   <p class="dgm-mb-sub">Reducing friction lets existing motivation convert into action.</p>
 
   <div class="dgm-mb-inputs">
     <div class="dgm-mb-in"><span>Motivation</span><small>does the user want it?</small></div>
     <div class="dgm-mb-in"><span>Ability</span><small>how easy is it?</small></div>
-    <div class="dgm-mb-in"><span>Trigger</span><small>what prompts it now?</small></div>
+    <div class="dgm-mb-in"><span>Prompt</span><small>what cues it now? (the Hook model calls it a trigger)</small></div>
   </div>
   <div class="dgm-mb-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
-  <div class="dgm-mb-eq">Behaviour happens — M × A × T</div>
+  <div class="dgm-mb-eq">Behaviour happens — B = MAP</div>
 
   <div class="dgm-mb-loop">
     <div class="dgm-mb-node act">Action</div>
@@ -88,42 +84,123 @@ retention. Nobody engineered the motivation-and-friction path around it.</p>
   </div>
 </div>
 
-<p>The <strong>Fogg behaviour model</strong> — <em>B = MAP</em> — says a behaviour happens only when
-motivation, ability (ease), and a prompt come together at the same moment. Fogg's own
-site describes the model this way and does not call it a formula to calculate. Treat
-"×" as a memory aid: if any element is missing, the behaviour doesn't happen. (The Hook
-model below keeps the word <em>trigger</em> for the same cue.) The practical corollary: <strong>if you want to
-encourage an activity, make it easy.</strong> High friction — complex steps, confusing UI —
-stifles even a motivated user. Reducing friction lets existing motivation convert into
-action.</p>
-<p>Picture a fintech signup. The motivation is there — the user <em>wants</em> the savings account.
-But a 10-field form with poor guidance makes many users abandon it, because friction
-overrides motivation. A 2-field signup or a federated login lets that motivation translate
-into action. Map the journey, <strong>measure drop-off at each step</strong>, and prioritize the steps
-where users struggle.</p>
-<p><strong>But not all friction is bad.</strong> A little friction can ensure quality or commitment. Email
-verification yields a higher-quality user base; a confirmation step prevents costly
-mistakes. The principle is <strong>conscious friction</strong>: add it only when it adds value —
-security, thoughtfulness, safety — and eliminate it everywhere else.</p>
+<p>The practical reading is simple. If you want people to do something, make it easy. Complex steps
+and confusing screens stifle even a motivated user, while removing them lets motivation that already
+exists turn into action. Adding more motivation (a bigger discount, a louder banner) is usually the
+expensive fix for a problem that was really about ability.</p>
+<p>Not all friction is bad, though. A little friction can protect quality or commitment. Email
+verification gives you a cleaner user base, and a confirmation step prevents costly mistakes. The
+discipline is <strong>conscious friction</strong>, which means you add friction only where it buys security,
+thought or safety, and you remove it everywhere else.</p>
+<h2 id="selfish-friction-and-how-to-spot-it">Selfish friction, and how to spot it</h2>
+<p>Jaryd Hermann draws a line that is useful in any signup review:</p>
+<blockquote>
+<p>"bad friction is like selfish friction where you have like you know marketing like we want to ask all these questions or sales like ask those questions because we want that data"
+— Jaryd Hermann, <a href="https://www.youtube.com/watch?v=imoQn1qi_gs"><em>Product-Led Growth (PLG) Masterclass: How World Class Companies Grow in 2024</em></a>, The Growth Podcast, around 25:55</p>
+</blockquote>
+<p>That gives you a test for every field and every step. Ask who the step serves. If it protects the
+user, as identity checks and confirmations do, it is conscious friction and it stays. If it serves a
+team's reporting needs and the user gets nothing for it, it is selfish friction, and the honest move
+is to defer it until after the user has had their first win, or to drop it.</p>
+<h2 id="worked-example-a-savings-account-signup">Worked example: a savings-account signup</h2>
+<p>This example is invented, and so is every number in it. Say you run signup for a fintech savings
+account. Of every 1,000 people who start signup, 270 end up with a funded account, which is 27%.
+Your instinct says the form is too long, but you measure each step before you argue for that, and
+you compute each row from the one above it.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Started the step</th>
+<th>Pass rate</th>
+<th>Finished the step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Email and password</td>
+<td>1,000</td>
+<td>80%</td>
+<td>800</td>
+</tr>
+<tr>
+<td>2. Profile form (10 fields)</td>
+<td>800</td>
+<td>50%</td>
+<td>400</td>
+</tr>
+<tr>
+<td>3. Identity check</td>
+<td>400</td>
+<td>90%</td>
+<td>360</td>
+</tr>
+<tr>
+<td>4. Fund the account</td>
+<td>360</td>
+<td>75%</td>
+<td>270</td>
+</tr>
+</tbody>
+</table>
+<p>The profile form loses half of everyone who reaches it, which makes it the biggest leak by far.
+When you read its ten fields, you find that six of them (how you heard about us, income bracket,
+employer and three marketing preferences) exist because another team wants the data. That is selfish
+friction. The identity check also loses people, but it protects the user and the business, so it
+stays as conscious friction.</p>
+<p>You cut the form to four fields and move the marketing questions to a survey after the first
+deposit. Assume the form's pass rate rises from 50% to 80%, and the other steps keep their rates.
+Then 800 people reach the form, 640 pass it, 576 pass the identity check, and 432 fund an account.
+That moves the funded share from 27% to 43.2%. The 80% is an assumption, so you'd ship the change as
+an experiment and measure the real rate rather than promise it.</p>
 <h2 id="satisfaction-and-habit">Satisfaction and habit</h2>
-<p><strong>Satisfaction</strong> is the fulfilment a user gets from your product. It's what turns a
-one-time user into a returning one, because a satisfying experience <em>increases</em> intrinsic
-motivation to come back. Satisfaction and motivation form a loop, not two separate things.</p>
+<p><strong>Satisfaction</strong> is the fulfilment a user gets from your product, and it is what turns a one-time
+user into a returning one. A satisfying experience raises the motivation to come back, so
+satisfaction and motivation form one loop rather than two separate things.</p>
 <p>Nir Eyal's <strong>Hook model</strong> shows how that loop hardens into a habit:</p>
 <pre><code>   ┌─────────▶ TRIGGER ──▶ ACTION ──▶ REWARD ──▶ INVESTMENT ──┐
    │            (cue)      (do it)   (payoff)   (put in effort) │
    └──────────────────────  habit forms  ─────────────────────┘
 </code></pre>
-<p>The <strong>reward</strong> phase is where satisfaction lands — a sense of accomplishment, useful
-information, delight. That burst reinforces the behaviour. Then the <strong>investment</strong> phase —
-the user adds data, preferences, effort — raises commitment and loads the next trigger. So
-ask: <em>what is actually rewarding about our core action?</em> Make sure each critical action is
-followed by clear value or positive feedback — a friendly confirmation, a progress bar, a
-checkmark. A satisfied user tolerates minor friction. A frustrated one drops off at the
-first hurdle.</p>
-<h2 id="nudges-influence-without-coercion">Nudges — influence without coercion</h2>
-<p><strong>Nudges</strong> are subtle design cues that steer behaviour <em>without restricting choice</em> (Thaler
-&amp; Sunstein). Common techniques:</p>
+<p>The reward phase is where satisfaction lands, as a sense of accomplishment, useful information or
+delight, and that burst reinforces the behaviour. In the investment phase the user adds data,
+preferences or effort, which raises commitment and loads the next trigger. For your own product, ask
+what is actually rewarding about the core action. Each critical action should be followed by clear
+value or positive feedback, even if it is only a friendly confirmation, a progress bar or a
+checkmark. A satisfied user tolerates minor friction, while a frustrated one drops off at the first
+hurdle.</p>
+<p>Duolingo's streak is the behaviour equation turned into a product. The product itself manufactures
+the motivation (don't lose the streak), ability is a one-minute lesson, and the trigger is a push
+notification. Duolingo's own research paper (Yancey and Settles, presented in 2020 at the
+Knowledge Discovery and Data Mining conference (KDD)) describes a bandit algorithm that learns which
+reminder to send each learner. Notice the ethical line the design walks, too, because
+streak freezes and repair let users <em>recover</em>. When a habit feature feels coercive, it is usually
+because it punishes lapses instead of rewarding returns.</p>
+<p>For AI features, the reward after the first successful prompt deserves as much design attention as
+the model. If the first output disappoints, the loop never starts.</p>
+<h2 id="from-the-show-surface-delight-and-deep-delight">From the show: surface delight and deep delight</h2>
+<p>Nesrine Changuel separates two kinds of delight. Surface delight is the confetti and the animation.
+Deep delight, in her words, is something else:</p>
+<blockquote>
+<p>"the deep delight is when we create functional solutions while addressing emotional needs while building them."
+— Nesrine Changuel, <a href="https://www.youtube.com/watch?v=0rTAZ7qnKgc"><em>How to Engineer Delight Into AI Products</em></a>, The Growth Podcast, around 02:57</p>
+</blockquote>
+<p>Her warning case is a campaign from Deliveroo in France. On Mother's Day it sent a push notification
+designed to look like a missed call from your mother, meant as a playful nudge to send flowers. In
+Changuel's telling, the reaction was the opposite of delight:</p>
+<blockquote>
+<p>"this is something that had the worst press ever because a lot of people felt hurt and not everyone can feel the joy out of this supposed to be delightful moment"
+— Nesrine Changuel, <a href="https://www.youtube.com/watch?v=0rTAZ7qnKgc"><em>How to Engineer Delight Into AI Products</em></a>, The Growth Podcast, around 09:45</p>
+</blockquote>
+<p>That is a nudge designed for the happy case only. Changuel describes people who felt weird, grief
+or sorrow, and it isn't hard to picture who they were. Before you ship a playful prompt, picture the user for whom it lands badly, because
+the same cognitive empathy that finds friction also finds this. If you need a way to decide which
+delighters are worth building at all, the Kano model in <a href="../technical-product-management/prioritization-and-roadmaps.html">Prioritization and
+roadmaps</a> sorts features into
+basic needs, performance features and delighters.</p>
+<h2 id="nudges-influence-without-coercion">Nudges: influence without coercion</h2>
+<p><strong>Nudges</strong> are design cues that steer behaviour <em>without restricting choice</em>, an idea Richard Thaler
+and Cass Sunstein made famous in their 2008 book <em>Nudge</em>. The common ones:</p>
 <table>
 <thead>
 <tr>
@@ -160,65 +237,72 @@ first hurdle.</p>
 </tr>
 </tbody>
 </table>
-<p>The rule is <strong>ethics first</strong>: the goal is to help users reach <em>their</em> goals with less
-friction, not to manipulate them toward <em>your</em> metrics. Always ask, <em>"is this nudge helping
-the user, or just helping us?"</em> Ethical nudges build trust. Dark patterns destroy it.
-LinkedIn's profile-level meter (Beginner to All-Star) is the classic good nudge. It shows
-progress toward a state that genuinely benefits the user. Third-party reports say LinkedIn
-has since hidden the visible meter, so use it as a pattern, not as a current feature.</p>
-<p>Regulators now enforce this line. In September 2025 the FTC settled its case against
-Amazon over Prime for $2.5 billion: a $1 billion civil penalty and $1.5 billion in
-refunds. The FTC alleged confusing sign-up screens and a hard-to-use cancellation path.
-Friction that serves only your metric is a legal risk, not just a trust risk.</p>
-<h2 id="actionable-steps">Actionable steps</h2>
+<p>The rule is ethics first. A nudge should help users reach <em>their</em> goals with less friction, and it
+should never push them toward <em>your</em> metric against their interest. The one-question test is whether
+the nudge is helping the user or just helping you. LinkedIn's profile-level meter (Beginner to
+All-Star) is the classic good nudge, because it shows progress toward a state that benefits the
+user. Third-party reports say LinkedIn has since hidden the visible meter, so treat it as a pattern
+rather than as a current feature.</p>
+<p>Regulators now enforce this line. In September 2025 the US Federal Trade Commission (FTC) settled its
+case against Amazon over Prime for $2.5 billion, made up of a $1 billion civil penalty and $1.5
+billion in refunds. The FTC alleged confusing sign-up screens and a hard-to-use cancellation path.
+Friction that serves only your metric is a legal risk as well as a trust risk.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Identify friction hotspots</strong> — map the journey, find drop-off, simplify (fewer fields,
-  tooltips, cleaner navigation).</li>
-<li><strong>Engineer quick wins</strong> — make new users hit the core value within the first minutes.</li>
-<li><strong>Add one ethical nudge</strong> where users hesitate — a friendly default, a timely reminder,
-  social proof — and watch both usage <em>and</em> sentiment.</li>
-<li><strong>Measure satisfaction</strong> at key touchpoints (NPS, CSAT). Where it's low, look for
-  friction. Where it's high, amplify the moment.</li>
-<li><strong>Run a behavioural-design audit</strong> on new features: does the copy and flow reduce needless
-  friction and reward the right action?</li>
+<li><strong>Friction you never measured.</strong> The drop-off happens in a step everyone assumed was fine. You see
+  it as a flat conversion number that nobody can explain, and the fix is to instrument each step
+  before anyone defends it.</li>
+<li><strong>Action without reward.</strong> Users complete the core action and feel nothing, so no habit forms. It
+  shows up as decent activation and poor week-two retention.</li>
+<li><strong>Manipulative nudges.</strong> Short-term metric wins that erode trust, which is the dark-pattern trap. It
+  shows up later, in cancellations, complaints and sometimes a regulator's letter.</li>
+<li><strong>Frictionless where friction was protecting quality.</strong> Someone removes a confirmation that
+  prevented costly errors, and support tickets about mistakes rise a few weeks later.</li>
+<li><strong>Delight designed for the happy case.</strong> A playful nudge that hurts the users it wasn't pictured
+  for, as in the Deliveroo story above.</li>
 </ul>
-<blockquote>
-<p><strong>📦 Mini-case — Duolingo's streak.</strong> The behaviour equation, productized. Motivation
-(don't lose the streak) is manufactured by the product itself. Ability is a
-one-minute lesson. The trigger is a push notification. Duolingo's own research
-paper (Yancey and Settles, KDD 2020) describes a bandit algorithm that learns which
-reminder to send each learner. Note the ethical line the design walks: streak freezes and repair
-let users <em>recover</em>. The nudge pushes practice, not anxiety. When a habit feature
-feels coercive, it's usually because it punishes lapses instead of rewarding
-returns.</p>
-</blockquote>
-<h2 id="failure-modes">Failure modes</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li><strong>Friction you never measured</strong> — the drop-off happens in a step you assumed was fine.
-  Instrument it before you defend it.</li>
-<li><strong>Action without reward</strong> — users complete the core action and feel nothing, so no habit
-  forms.</li>
-<li><strong>Manipulative nudges</strong> — short-term metric wins that erode trust (the dark-pattern trap).</li>
-<li><strong>Frictionless where friction was protecting quality</strong> — removing a confirmation that
-  prevented costly errors.</li>
-</ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
-<ul>
-<li class="task todo">Have I mapped the journey and <em>measured</em> drop-off at each step, not guessed it?</li>
-<li class="task todo">Does a new user reach a genuine "win" within the first few minutes?</li>
-<li class="task todo">Is each critical action followed by a clear reward or positive feedback?</li>
-<li class="task todo">Is every nudge in the product defensibly in the <em>user's</em> interest?</li>
-<li class="task todo">Have I removed friction that serves no purpose — and kept the friction that protects
-      quality or safety?</li>
+<li class="task todo">Map one journey and <em>measure</em> drop-off at each step. Recompute each row from the one before it.</li>
+<li class="task todo">For every field and step, ask who it serves. Defer or drop the selfish ones, and keep the
+      friction that protects quality or safety.</li>
+<li class="task todo">Check that a new user reaches a genuine win within the first few minutes, and for an AI
+      feature, time how long it takes to reach the first useful output.</li>
+<li class="task todo">Make sure each critical action is followed by a clear reward or positive feedback.</li>
+<li class="task todo">Review every nudge with the question "whose goal does this serve?", and picture the user for
+      whom it lands badly.</li>
+<li class="task todo">Measure satisfaction at key moments, for example with Net Promoter Score (NPS) or a customer
+      satisfaction score (CSAT). Where it's low, look for friction.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
 <li><a href="communication.html">Communication</a></li>
+<li><a href="../technical-product-management/prioritization-and-roadmaps.html">Prioritization and roadmaps</a>
+  (technical product management): the Kano model, for deciding which delighters earn a place.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>BJ Fogg, <a href="https://behaviormodel.org/">Fogg Behavior Model</a>, behaviormodel.org (B = MAP: Motivation,
+  Ability, Prompt) (as of 2026-11).</li>
+<li>Nir Eyal, <a href="https://www.nirandfar.com/how-to-manufacture-desire/"><em>How to Manufacture Desire</em></a>,
+  nirandfar.com (Trigger, Action, Reward, Investment; post undated) (as of 2026-11).</li>
+<li>Kevin P. Yancey and Burr Settles, <a href="https://research.duolingo.com/papers/yancey.kdd20.pdf"><em>A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring
+  Notifications</em></a>, KDD 2020 (as of 2026-11).</li>
+<li>Duolingo, <a href="https://blog.duolingo.com/how-duolingo-streak-builds-habit/"><em>How the Duolingo streak builds habit</em></a>,
+  31 January 2022 (Streak Freeze; the page does not mention streak repair) (as of 2026-11).</li>
+<li>Richard H. Thaler and Cass R. Sunstein, <a href="https://www.chicagobooth.edu/review/nudge-preface-final-edition"><em>Nudge: Preface to the Final
+  Edition</em></a>, Chicago Booth Review,
+  19 January 2022 (first published 2008) (as of 2026-11).</li>
+<li>US Federal Trade Commission, <a href="https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon"><em>FTC Secures Historic $2.5 Billion Settlement Against
+  Amazon</em></a>,
+  25 September 2025 (as of 2026-11).</li>
+<li>LinkedIn profile meter: third-party reports only. No LinkedIn source was found.</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
-  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="cognitive-empathy.html"><span class="lbl">→ Next</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-behaviour-equation">The behaviour equation</a><a class="h2" href="#satisfaction-and-habit">Satisfaction and habit</a><a class="h2" href="#nudges-influence-without-coercion">Nudges — influence without coercion</a><a class="h2" href="#actionable-steps">Actionable steps</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="cognitive-empathy.html"><span class="lbl">→ Next</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#the-behaviour-equation">The behaviour equation</a><a class="h2" href="#selfish-friction-and-how-to-spot-it">Selfish friction, and how to spot it</a><a class="h2" href="#worked-example-a-savings-account-signup">Worked example: a savings-account signup</a><a class="h2" href="#satisfaction-and-habit">Satisfaction and habit</a><a class="h2" href="#from-the-show-surface-delight-and-deep-delight">From the show: surface delight and deep delight</a><a class="h2" href="#nudges-influence-without-coercion">Nudges: influence without coercion</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

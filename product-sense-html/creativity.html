@@ -13,29 +13,18 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Creativity: from strategic thinking to creative execution</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Creativity in product management has two halves. <strong>Strategic thinking</strong> decides <em>where</em> the
-product plays: positioning, segmentation, differentiation, and a focused core strategy —
-being clear on what you will and won't do. <strong>Creative execution</strong> is the day-to-day
-generation of novel solutions: a safe, curious mindset, team rituals (brainstorms, design
-sprints, hack days), and techniques (SCAMPER, mind mapping, analogy, constraint
-brainstorming). Strategy without execution is a nice deck. Execution without strategy is
-motion without direction. You need both, and creativity works best <em>within</em>
-strategic guardrails.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — "Let's add AI" is not a strategy. When a capability is suddenly cheap
-and everyone has it, differentiation moves to <em>what problem you point it at and for whom</em> —
-a strategic-creativity question, not a model question.</p>
-<p><strong>What it changes in your decisions</strong> — You force a real positioning statement for the AI
-feature ("for [who] who [need], it is [what] unlike [alternative]"). You kill AI ideas
-that don't strengthen a core pillar, however cool the demo.</p>
-<p><strong>Ask yourself</strong> — <em>"If a competitor shipped the same model tomorrow, what would still make
-our product the one users choose?"</em></p>
-<p><strong>Risk if ignored</strong> — A pile of undifferentiated AI features chasing the trend, none tied to
-a segment that cares.</p>
-</blockquote>
-<h2 id="strategic-thinking">Strategic thinking</h2>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>Every competitor in your market has access to the same models you do. If your roadmap says "add AI
+to onboarding", so does theirs, and the demo you're proud of could ship from three other companies
+next quarter. So the creative question is no longer whether you can build the feature. It is what
+problem you point it at, for whom, and what you'll refuse to build so that the bet gets your full
+attention.</p>
+<p>Creativity in product work has two halves. <strong>Strategic thinking</strong> decides <em>where</em> the product plays,
+which covers positioning, segments, differentiation and, above all, focus. <strong>Creative execution</strong> is
+the day-to-day generation of new solutions inside that strategy, through mindset, team rituals and
+techniques. Strategy without execution is a nice deck, and execution without strategy is motion
+without direction. Creativity tends to work best inside strategic guardrails.</p>
 <style>
 .dgm-cr{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -79,51 +68,74 @@ a segment that cares.</p>
   </div>
 </div>
 
-<p>Strategic creativity means cleverly defining <em>who</em> the product is for, <em>what</em> unique value
-it offers, and <em>how</em> it wins.</p>
+<h2 id="strategy-where-the-product-plays">Strategy: where the product plays</h2>
+<p>This lesson only sketches strategy, because <a href="../business-acumen/markets-and-strategy.html">Markets and
+strategy</a> and <a href="../business-acumen/competitive-advantage-and-strategy.html">Competitive advantage and
+strategy</a> cover it in depth. The short
+version is four moves.</p>
 <ul>
-<li><strong>Positioning</strong> — fill in the statement: <em>"For [target segment] who [need], [Product] is a
-  [category] that [benefit]. Unlike [competition], it [unique differentiator]."</em> Good
-  positioning is specific — not "a task app for everyone" but "a task app for working parents
-  that reduces mental load by prioritizing intelligently." It then guides every feature and
-  message.</li>
-<li><strong>Segmentation</strong> — divide the market into groups and choose whom to serve, ideally by
-  <strong>need or behaviour</strong>, not demographics. Slack began as the internal chat tool of
-  Tiny Speck, a game studio with staff in three cities. The lesson holds: a need that real
-  users already had, proven inside one team, became the product.</li>
-<li><strong>Differentiation</strong> — why a user picks you over alternatives. Two broad routes: do
-  something <strong>new</strong> (capabilities others lack) or something <strong>better</strong> (same need, faster /
-  cheaper / more delightful). Find the <em>whitespace</em> competitors leave. But differentiation
-  must <strong>matter to the user</strong> — a feature nobody cares about isn't winning.</li>
-<li><strong>Core of strategy</strong> — <em>focus</em>: being clear on what you will and won't do. Instagram's early
-  core was photo sharing, made simple and social, deliberately <em>not</em> expanding too soon.
-  Derive a few clear pillars from your vision and value proposition, and use them to
-  <strong>evaluate ideas</strong>: if an idea doesn't strengthen a pillar, shelve it.</li>
+<li><strong>Positioning.</strong> Fill in "For [target segment] who [need], [Product] is a [category] that
+  [benefit]. Unlike [competition], it [unique differentiator]." Good positioning is specific. "A task
+  app for working parents that reduces mental load by prioritising intelligently" guides decisions in
+  a way that "a task app for everyone" never will.</li>
+<li><strong>Segmentation.</strong> Choose whom to serve, ideally by need or behaviour rather than demographics.
+  Slack began as the internal chat tool of Tiny Speck, a game studio, which is a need real users
+  already had, proven inside one team before it became the product.</li>
+<li><strong>Differentiation.</strong> Users pick you for something <strong>new</strong> (a capability others lack) or something
+  <strong>better</strong> (the same need met faster, cheaper or more pleasantly). Either way it has to matter to
+  the user, because a unique feature nobody cares about wins nothing.</li>
+<li><strong>Focus.</strong> Be clear on what you will and won't do. Derive a few pillars from your vision and use
+  them to judge ideas, so that an idea which doesn't strengthen a pillar gets shelved, however good
+  the demo.</li>
 </ul>
-<p>Tie it together with goals (OKRs), so quarterly execution follows the strategy rather than
-chasing shiny objects. Validate the strategy against reality — is the chosen segment
-responding? — and adjust as you learn.</p>
-<h2 id="creative-execution">Creative execution</h2>
-<p>Even the best strategy falters without the day-to-day creativity to realize it.</p>
-<p><strong>Mindset.</strong> Creativity starts with <strong>psychological safety</strong> and a <strong>growth mindset</strong>.
-People must feel safe proposing wild ideas and asking "stupid" questions. Model it:
-celebrate experiments that fail, frame setbacks as learning, and reward those who iterate.
-Engineer <strong>diversity of thought</strong> too — bring design, engineering, data, and marketing into
-ideation early. Each lens seeds ideas no silo reaches alone.</p>
-<p><strong>Rituals</strong> that institutionalize creativity:</p>
+<p>Roger Martin has a test for whether any of this is real:</p>
+<blockquote>
+<p>"strategy is what you do, not what you say."
+— Roger Martin, <a href="https://www.youtube.com/watch?v=BD_4nsx5fTg"><em>Product Strategy Masterclass from Global Authority on Strategy</em></a>, The Growth Podcast, around 14:45</p>
+</blockquote>
+<p>By his test, your strategy is whatever your last three launches add up to, whatever the strategy
+document claims. Strategy for an AI feature works the same way. If a competitor shipped the same
+model tomorrow, what would still make your product the one users choose? If the honest answer is
+"nothing", you have a feature, not a position.</p>
+<p>Instagram is the classic story of focus. Its founders first built Burbn, a location-based app, and
+Kevin Systrom later wrote that the iPhone version "felt cluttered, and overrun with features". They
+cut it back to sharing, commenting on and liking photos, and the app that came out of that in 2010
+was Instagram, built around photo sharing and a set of filters. The creative act was the cut. If you can't name the last good idea you shelved because
+it didn't strengthen a pillar, you have a backlog rather than a strategy.</p>
+<h2 id="from-the-show-proven-better-new">From the show: proven, better, new</h2>
+<p>Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. <strong>Proven</strong> is
+what already works for this audience, <strong>better</strong> is where you improve on it, and <strong>new</strong> is your
+genuinely novel idea. His view of the first bin is blunt:</p>
+<blockquote>
+<p>"anything that's proven, you are gonna legally copy And the better product maker you are, the better you are at copying."
+— Mark Pincus, <a href="https://www.youtube.com/watch?v=G1uZZG6s7cc"><em>How to steal your way to a hit product, with Mark Pincus (founder, Zynga)</em></a>, The Growth Podcast, around 16:05</p>
+</blockquote>
+<p>The reason is to protect the third bin. In his words, "New is your new novel idea, your innovation
+zone", and he wants it isolated "so that you don't fail for the wrong reasons" (around 17:09). If a
+launch mixes a novel idea with a clumsy version of everything users already expect, you can't tell
+whether the idea failed or the basics did. Copying has legal and ethical limits, and he says
+"legally" for a reason, but the sorting habit carries over to any product.</p>
+<h2 id="execution-generating-ideas-inside-the-rails">Execution: generating ideas inside the rails</h2>
+<p>Even the best strategy stalls without the day-to-day creativity to carry it out.</p>
+<p><strong>Mindset.</strong> Creativity starts with psychological safety and a growth mindset. People have to feel
+safe proposing wild ideas and asking "stupid" questions, so model it yourself. Celebrate experiments
+that fail, treat setbacks as learning, and reward the people who iterate. Bring design, engineering,
+data and marketing into ideation early, because each lens produces ideas the others won't.</p>
+<p><strong>Rituals</strong> make creativity a habit rather than an accident.</p>
 <ul>
-<li><strong>Brainstorms</strong> with rules ("defer judgment," "no idea too crazy") — plus formats like
-  <em>Crazy Eights</em> (8 sketches in 8 minutes) and <em>brainwriting</em> (write silently, then share) so
-  introverts contribute as much as extroverts.</li>
-<li><strong>Design sprints</strong> — a time-boxed problem-to-tested-prototype process. Even a mini
-  brainstorm → prototype → test cycle injects structured creativity.</li>
-<li><strong>Hack days</strong> — freedom to build anything product-related. Gmail's undo send shows the
-  idea: it started in 2009 as an experimental Gmail Labs feature and became a standard
-  setting in 2015.</li>
-<li><strong>"How might we…?"</strong> framing and the <strong>5 Whys</strong> to reframe a problem from its root — reframing
-  opens new solution spaces.</li>
+<li><strong>Brainstorms</strong> with rules ("defer judgment", "no idea too crazy"), plus formats like <em>Crazy
+  Eights</em> (8 sketches in 8 minutes) and <em>brainwriting</em> (write silently, then share), so quieter
+  people contribute as much as louder ones.</li>
+<li><strong>Design sprints.</strong> GV (formerly Google Ventures) describes its sprint as a five-day process that goes from mapping a problem
+  to testing a realistic prototype with customers. Jake Knapp began running sprints at Google in
+  2010. Even a mini cycle of brainstorm, prototype and test adds structure.</li>
+<li><strong>Hack days</strong>, with freedom to build anything product-related. Gmail's undo send shows how an
+  experiment can graduate. It started in 2009 as an experimental Gmail Labs feature and became a
+  standard setting in 2015.</li>
+<li><strong>"How might we…?"</strong> framing and the <strong>5 Whys</strong>, which reframe a problem from its root and open new
+  solution spaces.</li>
 </ul>
-<p><strong>Techniques</strong> to break analytical ruts:</p>
+<p><strong>Techniques</strong> help you break out of a rut.</p>
 <table>
 <thead>
 <tr>
@@ -154,52 +166,123 @@ ideation early. Each lens seeds ideas no silo reaches alone.</p>
 </tr>
 </tbody>
 </table>
-<p>Not every idea will be good — the point is to generate range, then filter against strategy.</p>
-<h2 id="actionable-steps">Actionable steps</h2>
-<ul>
-<li><strong>Protect creative time</strong> — a recurring slot for experiments, treated like sprint planning.</li>
-<li><strong>Run a creativity workshop</strong> with a clear goal ("ideas to improve week-1 retention") and a
-  cross-functional group.</li>
-<li><strong>Adopt one ritual</strong> this quarter (idea round, quarterly hack day) and make it repeatable.</li>
-<li><strong>Cross-pollinate</strong> — a monthly "cool things I saw" share; outside inspiration seeds
-  features.</li>
-<li><strong>Prototype bold ideas</strong> fast — a tangible prototype rallies support that a doc can't.</li>
-</ul>
+<p>Not every idea will be good. The point is to generate range, then filter it against the strategy.</p>
+<h2 id="ai-prototyping-as-divergence">AI prototyping as divergence</h2>
+<p>AI tools have made the range part cheap. Where a team used to sketch three options and build one, a
+PM can now generate several working prototypes in an afternoon. Sachin Rekhi argues for using that
+power to widen the options rather than to rush to one answer:</p>
 <blockquote>
-<p><strong>📦 Mini-case — Instagram says no.</strong> Early Instagram was a cluttered check-in app
-(Burbn) whose data showed users mostly shared photos. The strategic-creativity move
-wasn't adding. It was <em>cutting</em> — rebuild around photo sharing only, with filters as
-the differentiator, and explicitly decline everything else the app already did.
-Focus was the creative act. The test for your own roadmap: can you name the last
-good idea you shelved because it didn't strengthen a pillar? If not, you have a
-backlog, not a strategy.</p>
+<p>"AI shouldn't be used just to create one output. We should be using it to create multiple outputs, just the way we'd use a designer."
+— Sachin Rekhi, <a href="https://www.youtube.com/watch?v=74kamD2jUng"><em>Advanced Guide to AI Prototyping with Sachin Rekhi (Reforge)</em></a>, The Growth Podcast, around 09:36</p>
 </blockquote>
-<h2 id="failure-modes">Failure modes</h2>
+<p>The discipline is to diverge, test and then decide. Generate several genuinely different prototypes,
+put each in front of a few users, and choose on evidence. The trap is falling for the first prototype
+because it works, which turns a cheap exploration into an expensive commitment. The engineering side
+of this, including why prototype code shouldn't go to production, is in <a href="../technical-product-management/tpm-for-ai-products.html">Technical product
+management for AI</a>.</p>
+<h2 id="worked-example-three-onboarding-prototypes">Worked example: three onboarding prototypes</h2>
+<p>This example is invented, and so are the numbers. Say you're the PM for a project-management app,
+and new teams struggle to set up their first project. In one afternoon you use an AI prototyping tool
+to build three different versions.</p>
 <ul>
-<li><strong>"Add AI" as strategy</strong> — a capability with no segment, positioning, or differentiation
-  behind it.</li>
-<li><strong>Differentiation nobody wants</strong> — unique features that don't map to a real user need.</li>
-<li><strong>No focus</strong> — a strategy that never says "no," so effort scatters.</li>
-<li><strong>Ideation theatre</strong> — brainstorms that generate stickies but never prototype or ship.</li>
+<li><strong>A, a chat assistant</strong> that asks questions and builds the project as you answer.</li>
+<li><strong>B, a template picker</strong> whose chosen template the model fills in from a one-line description.</li>
+<li><strong>C, an import</strong> that turns an existing spreadsheet into a project.</li>
 </ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<p>You sort each one with Pincus's bins. B is mostly proven (templates are a familiar pattern) with a
+"better" layer on top. C is the only genuinely new idea, and A is new too but in a way users haven't
+asked for. Then you give each prototype to five people from your target segment and ask them to set
+up a real project.</p>
+<table>
+<thead>
+<tr>
+<th>Prototype</th>
+<th>Finished setup (of 5)</th>
+<th>Median minutes</th>
+<th>Asked to keep using it (of 5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A, chat assistant</td>
+<td>2</td>
+<td>11</td>
+<td>1</td>
+</tr>
+<tr>
+<td>B, template picker</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C, spreadsheet import</td>
+<td>3</td>
+<td>6</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>B wins on completion and speed, while C wins on pull, with four of five asking to keep using it. So
+you ship B as the default path, because it is proven and better, and you put C behind a single
+"import a spreadsheet" button as the isolated new bet. If C underperforms, you'll know the import
+idea failed rather than the whole onboarding. You drop A, even though it made the best demo, because
+two of five finishing is a signal you can't argue with. Five users per prototype is a small sample,
+so you treat the result as a direction and confirm it with the launch metrics.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li class="task todo">Can I state the product's positioning in the "for [who] who [need]…unlike…" form?</li>
-<li class="task todo">Are my segments defined by need/behaviour, not just demographics?</li>
-<li class="task todo">Does every roadmap item strengthen a named core pillar?</li>
-<li class="task todo">Is there a repeatable team ritual that generates and <em>tests</em> new ideas?</li>
-<li class="task todo">When stuck, do I reach for a technique (SCAMPER, analogy, constraints) instead of
-      grinding the same angle?</li>
+<li><strong>"Add AI" as strategy.</strong> A capability with no segment, positioning or differentiation behind it.
+  You see it as a launch with good press and flat usage.</li>
+<li><strong>Differentiation nobody wants.</strong> Unique features that don't map to a real user need.</li>
+<li><strong>No focus.</strong> A strategy that never says "no", so effort scatters across a long roadmap.</li>
+<li><strong>Novelty everywhere.</strong> Every part of the product is new, so when it fails nobody can say why.</li>
+<li><strong>Falling for the first prototype.</strong> AI makes one prototype easy, and the team stops exploring the
+  moment it works.</li>
+<li><strong>Ideation theatre.</strong> Brainstorms that generate sticky notes but never reach a prototype or a user.</li>
+</ul>
+<h2 id="what-to-do-next">What to do next</h2>
+<ul>
+<li class="task todo">Write the product's positioning in the "for [who] who [need]… unlike…" form, and test it on
+      someone outside the team.</li>
+<li class="task todo">List your last three launches and ask Roger Martin's question: what strategy do they add up to?</li>
+<li class="task todo">Name the last good idea you shelved because it didn't strengthen a pillar.</li>
+<li class="task todo">Sort your next feature into proven, better and new, and keep the new part isolated.</li>
+<li class="task todo">Next time you prototype with AI, build at least three different versions and test them before
+      choosing.</li>
+<li class="task todo">Adopt one repeatable ritual this quarter, such as a hack day or a monthly idea round.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="cognitive-empathy.html">Cognitive empathy</a></li>
 <li><a href="communication.html">Communication</a></li>
 <li><a href="domain-expertise.html">Domain expertise</a></li>
-<li><a href="../first-principles/the-method.html">First principles: the method</a> — deconstruction as the sharpest ideation technique</li>
+<li><a href="../first-principles/the-method.html">First principles: the method</a>, on deconstruction as the
+  sharpest ideation technique.</li>
+<li><a href="../business-acumen/markets-and-strategy.html">Markets and strategy</a> and <a href="../business-acumen/competitive-advantage-and-strategy.html">Competitive advantage and
+  strategy</a> (business acumen): positioning,
+  segmentation and strategy in depth.</li>
+<li><a href="../technical-product-management/tpm-for-ai-products.html">Technical product management for AI</a>:
+  vibe coding and why the prototype is becoming the spec.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Kate Clark, <a href="https://techcrunch.com/2019/05/30/the-slack-origin-story/"><em>The Slack origin story</em></a>,
+  TechCrunch, 30 May 2019 (Tiny Speck's internal messaging tool) (as of 2026-11).</li>
+<li>MG Siegler, <a href="https://techcrunch.com/?p=241149"><em>A Pivotal Pivot</em></a>, TechCrunch, 8 November 2010
+  (quotes Systrom's Quora answer on Burbn) (as of 2026-11).</li>
+<li>MG Siegler, <a href="https://techcrunch.com/2010/09/20/instagram/">Instagram launch coverage</a>, TechCrunch,
+  20 September 2010 (Burbn as a location-focused app; launch filters) (as of 2026-11).</li>
+<li>GV, <a href="https://www.gv.com/sprint/">The Design Sprint</a> (five days; Jake Knapp at Google from 2010)
+  (as of 2026-11).</li>
+<li>Gmail, <a href="https://gmail.googleblog.com/2009/03/new-in-labs-undo-send.html"><em>New in Labs: Undo Send</em></a>,
+  Official Gmail Blog, 19 March 2009 (as of 2026-11).</li>
+<li>Google Workspace Updates, <a href="https://workspaceupdates.googleblog.com/2015/06/undo-send-for-gmail-on-web.html"><em>Undo Send for Gmail on the
+  web</em></a>, 23 June 2015
+  (as of 2026-11).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
-  <div class="pagenav"><a class="navcard prev" href="user-research.html"><span class="lbl">← Previous</span><span class="ttl">User research: the craft of finding out</span></a><a class="navcard next" href="communication.html"><span class="lbl">→ Next</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#strategic-thinking">Strategic thinking</a><a class="h2" href="#creative-execution">Creative execution</a><a class="h2" href="#actionable-steps">Actionable steps</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="user-research.html"><span class="lbl">← Previous</span><span class="ttl">User research: the craft of finding out</span></a><a class="navcard next" href="communication.html"><span class="lbl">→ Next</span><span class="ttl">Communication: artifacts, influence, and interviews</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#strategy-where-the-product-plays">Strategy: where the product plays</a><a class="h2" href="#from-the-show-proven-better-new">From the show: proven, better, new</a><a class="h2" href="#execution-generating-ideas-inside-the-rails">Execution: generating ideas inside the rails</a><a class="h2" href="#ai-prototyping-as-divergence">AI prototyping as divergence</a><a class="h2" href="#worked-example-three-onboarding-prototypes">Worked example: three onboarding prototypes</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -13,33 +13,19 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 03</span>
     <h1>User research: the craft of finding out</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Product sense is built from user contact, so the craft of <em>getting</em> that contact well
-is a discipline of its own. The method landscape splits on two axes. <strong>Qualitative</strong>
-methods — interviews, usability tests — answer <em>why</em> people do things. <strong>Quantitative</strong>
-methods — analytics, surveys at scale — answer <em>how many</em> do it. A second axis separates
-<strong>attitudinal</strong> data (what people say) from <strong>behavioural</strong> data (what they actually do).
-Two rules govern the choice: match the method to the question, and <strong>trust behaviour over
-statements</strong> — users are honest about problems and unreliable about solutions and futures.
-Interviewing is the core skill: favor past behaviour over hypotheticals, open questions
-over leading ones, and silence over filling it. Five users per round beats fifty per year.
-(Nielsen Norman Group's five-user rule is for qualitative usability rounds with similar
-users. Test more people for quantitative metrics or very different user groups.)</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — AI products add research questions classic funnels miss: do
-users <em>trust</em> the output, can they <em>repair</em> a wrong answer, do they understand what
-the system can't do? None of these appear in analytics until they appear as churn.</p>
-<p><strong>What it changes in your decisions</strong> — You watch users react to <em>imperfect</em> AI
-output, by seeding the test with a wrong answer on purpose. You treat edits, retries,
-and abandonments as research data. You never validate an AI feature only on its
-best-case demo behaviour.</p>
-<p><strong>Ask yourself</strong> — <em>"Have I watched a real user hit a wrong answer from this
-feature — and did they recover, retry, or quietly leave?"</em></p>
-<p><strong>Risk if ignored</strong> — A feature validated on what users <em>said</em> in a demo glow, dead
-in three weeks on what users actually <em>did</em>.</p>
-</blockquote>
-<h2 id="the-method-map">The method map</h2>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>Ask ten users whether they'd use an AI feature that drafts their reports, and eight will say yes.
+Ship it, and you may find that two of them try it once. Nobody lied to you. People are honest about
+their problems and unreliable about their own futures, and the craft of user research is mostly the
+craft of asking questions that don't depend on predictions. Product sense is built from user
+contact, so getting that contact right is a discipline of its own.</p>
+<h2 id="two-questions-decide-the-method">Two questions decide the method</h2>
+<p>Research methods split along two lines. <strong>Qualitative</strong> methods, such as interviews and usability
+tests, answer <em>why</em> people do things. <strong>Quantitative</strong> methods, such as analytics and surveys at
+scale, answer <em>how many</em> do it. A second line separates <strong>attitudinal</strong> data (what people say) from
+<strong>behavioural</strong> data (what they actually do). Two rules govern the choice. Match the method to the
+question, and when what people say and what they do disagree, trust what they do.</p>
 <style>
 .dgm-ur{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -98,129 +84,194 @@ in three weeks on what users actually <em>did</em>.</p>
   </div>
 </div>
 
-<p>The pairing is the point. Qualitative research finds the <em>why</em> behind the numbers.
-Quantitative research tells you which whys are common enough to matter. A funnel
-drop-off (quant) tells you where. Five interviews (qual) tell you what happened there.
-A survey (quant again) tells you how widely the explanation holds. Research that stays
-on one side of the map produces either anecdotes with no scale, or scale with no
-explanation.</p>
-<p>Always weight for the say–do gap. Users who <em>said</em> they'd pay, didn't. Users who
-<em>said</em> the old design was fine had already stopped using it. Statements are data about
-perceptions. Behaviour is data about the world.</p>
-<h2 id="interviewing-the-core-skill">Interviewing — the core skill</h2>
-<p>Most PM research is conversations, and most conversations are quietly corrupted by the
-asker. The craft:</p>
+<p>The pairing is the point. A funnel drop-off (quantitative) tells you where people leave, five
+interviews (qualitative) tell you what happened there, and a survey (quantitative again) tells you
+how widely that explanation holds. Research that stays on one side of the map gives you either
+anecdotes with no scale or scale with no explanation.</p>
+<p>Always allow for the gap between saying and doing. Users who <em>said</em> they'd pay didn't, and users who
+<em>said</em> the old design was fine had already stopped using it. Statements are data about perceptions,
+while behaviour is data about the world.</p>
+<h2 id="interviewing-the-core-skill">Interviewing, the core skill</h2>
+<p>Most PM research is conversation, and most conversations are quietly bent by the person asking.
+Teresa Torres names the most common way it happens:</p>
+<blockquote>
+<p>"we tend to ask really unreliable questions like, what do you like and dislike about different things?"
+— Teresa Torres, <a href="https://www.youtube.com/watch?v=wGuRuuPuYNQ"><em>Teresa Torres' Step-by-Step Guide to AI Product Discovery</em></a>, The Growth Podcast, around 02:24</p>
+</blockquote>
+<p>Her alternative is what she calls story-based interviewing, which means collecting a specific story
+about a past experience. The habits that make it work:</p>
 <ul>
-<li><strong>Past behaviour, not hypotheticals.</strong> "Tell me about the last time you booked
-  travel for work" beats "would you use a tool that…?" every single time. People are
-  historians of their own behaviour and terrible futurists.</li>
-<li><strong>Open, then narrow.</strong> Start wide ("walk me through it"). Drill into specifics
-  ("what did you do next? what were you feeling there?"). Save your own topics for
-  the end. The structure of the <a href="../first-principles/the-method.html">5 Whys</a> works on
-  humans too — gently.</li>
-<li><strong>Don't lead, don't pitch.</strong> "Don't you think X would help?" produces polite
-  agreement, not truth. If you're testing your idea, watch them <em>use</em> it. Don't ask
-  them to bless it.</li>
-<li><strong>Silence is a tool.</strong> The best material arrives after the pause you resisted
-  filling.</li>
-<li><strong>Small n, high frequency.</strong> Five users per round, with rounds every few weeks,
-  compounds into the <a href="cognitive-empathy.html">pattern → heuristic → intuition</a>
-  engine. Fifty interviews once a year produces a report. Five a month produces
-  product sense.</li>
+<li><strong>Ask about past behaviour, not hypotheticals.</strong> "Tell me about the last time you booked travel for
+  work" beats "would you use a tool that…?" almost every time, because people are decent historians
+  of their own behaviour and poor futurists.</li>
+<li><strong>Open, then narrow.</strong> Start wide ("walk me through it"), then drill into specifics ("what did you
+  do next? what were you feeling there?"). Save your own topics for the end. The structure of the
+  <a href="../first-principles/the-method.html">5 Whys</a> works on people too, used gently.</li>
+<li><strong>Don't lead, and don't pitch.</strong> "Don't you think X would help?" gets polite agreement rather than
+  truth. If you're testing your idea, watch people <em>use</em> it instead of asking them to bless it.</li>
+<li><strong>Let silence work.</strong> The best material tends to arrive after the pause you resisted filling.</li>
+<li><strong>Keep the sample small and the rhythm frequent.</strong> Five users per round, with rounds every few
+  weeks, feeds the <a href="cognitive-empathy.html">pattern, heuristic, intuition</a> engine. Fifty interviews
+  once a year produces a report, while five a month produces product sense.</li>
 </ul>
-<p>Usability testing is interviewing's behavioural twin: give a task, watch, and narrate
-nothing. The moment you explain the interface, the test is over — you won't ship
-yourself alongside the product to explain it to everyone else.</p>
-<h2 id="jobs-to-be-done-turning-interviews-into-a-hireable-job">Jobs-to-be-done: turning interviews into a hireable job</h2>
-<p>Interviews and usability tests produce a pile of individual stories. <strong>Jobs-to-be-done</strong>
-(JTBD) is the framework that turns that pile into something you can build against: a
-customer didn't buy your product, they <em>hired</em> it to make progress on a job, in a
-specific circumstance — "when I ___, I want to ___, so I can ___." The job stays stable
-even when the product category around it doesn't; people have hired a milkshake, a
-newspaper subscription, and a podcast for the same commute-boredom job at different
-points in time. That stability is the payoff: solutions come and go with the
-competition, but the job survives your redesign, your pivot, and your competitor's
-launch.</p>
-<p>Surfacing a job takes a different interview than a features interview: ask about the
-<strong>moment of first thought</strong> ("what were you doing right before you started looking for
-a solution?"), the <strong>struggle</strong> that made the status quo intolerable, and what else the
-customer considered — including doing nothing, or a workaround with no software in it
-at all. JTBD interviews fail the same way ordinary interviews fail: they drift into
-feature requests instead of staying with the circumstance. Anchor every answer back to
-<em>when this happened</em> and <em>what was true in that moment</em>, not what the customer wishes
-existed.</p>
-<p>A job stated well does two things a persona or feature request can't: it explains why
-customers switch (their circumstance changed, or a competitor now does the job better
-in that same circumstance), and it defines your real competitive set — whatever else
-gets hired for that job, sometimes a spreadsheet, sometimes doing nothing, not just the
-other products in your category.</p>
+<p>Usability testing is interviewing's behavioural twin. You give a task, watch, and explain nothing.
+The moment you explain the interface the test is over, because you won't be shipped alongside the
+product to explain it to everyone else.</p>
+<h2 id="from-the-show-five-interviews-or-twenty">From the show: five interviews or twenty?</h2>
+<p>The five-user number comes from Jakob Nielsen at Nielsen Norman Group, and it has a specific scope.
+It is for qualitative usability rounds with similar users, run again and again. Nielsen's own
+caveats are that a study with distinct user groups needs three or four users from each, and that
+quantitative usability metrics need about 20.</p>
+<p>George Harter gives a different number, for a different job:</p>
+<blockquote>
+<p>"And what that means to me is 20 user interviews and then a survey to prioritize what you hear in those interviews."
+— George Harter, <a href="https://www.youtube.com/watch?v=igo5c_OoTe8"><em>The Ultimate Guide to Knowing Your Users as a PM</em></a>, The Growth Podcast, around 20:52</p>
+</blockquote>
+<p>Harter is describing how a PM gets to know a new market, which is discovery about needs. Nielsen is
+describing how to find usability problems in a design. Both can be right, because the purpose sets
+the sample. Five people trying your prototype will find most of the problems in that prototype,
+while twenty conversations plus a survey tell you which needs are common enough to build for. When
+someone quotes a sample size at you, ask what question it was meant to answer.</p>
+<h2 id="jobs-to-be-done-turning-stories-into-a-job">Jobs to be done: turning stories into a job</h2>
+<p>Interviews and usability tests produce a pile of individual stories. <strong>Jobs to be done</strong> (JTBD) is a
+framework, associated above all with Clayton Christensen, that turns that pile into something you can
+build against. The idea is that a customer doesn't buy your product. They <em>hire</em> it to make progress
+on a job in a specific circumstance, which you can write as "when I ___, I want to ___, so I can
+___." Christensen's best-known example is a milkshake bought for the morning commute. The job stays
+stable even when the products around it change, which is the payoff. Solutions come and go with the
+competition, but the job survives your redesign, your pivot and your competitor's launch.</p>
+<p>Surfacing a job takes a different interview from a features interview. Ask about the <strong>moment of
+first thought</strong> ("what were you doing right before you started looking for a solution?"), the
+<strong>struggle</strong> that made the status quo intolerable, and what else the customer considered, including
+doing nothing or a workaround with no software in it at all. JTBD interviews fail the way ordinary
+interviews do, by drifting into feature requests, so anchor every answer back to <em>when this
+happened</em> and <em>what was true in that moment</em>.</p>
+<p>A job stated well does two things a persona or feature request can't. It explains why customers
+switch, because their circumstance changed or a competitor now does the job better in that same
+circumstance. It also defines your real competitive set, which is whatever else gets hired for that
+job, sometimes a spreadsheet and sometimes doing nothing.</p>
 <h2 id="researching-ai-products">Researching AI products</h2>
-<p>Three questions classic research rarely asks, and AI products live or die on:</p>
+<p>AI products raise research questions that classic funnels miss. Do users <em>trust</em> the output, can
+they <em>repair</em> a wrong answer, and do they understand what the system can't do? None of these appear
+in analytics until they appear as churn. Three habits help.</p>
 <ul>
-<li><strong>The trust curve.</strong> First impressions of AI features are unstable: delight at a
-  good answer, betrayal at a bad one. Research the <em>second</em> session, not just the
-  first. Deliberately show participants an imperfect output, and watch the recovery:
-  do they edit, retry, distrust the feature, or distrust the whole product?
-  (<a href="product-sense-for-ai.html">Trust design</a> is downstream of what you learn here.)</li>
-<li><strong>The mental model.</strong> Users bring wildly different theories of what the system is
-  ("it's Google," "it's a person," "it knows my account"). Mismatched mental models
-  predict misuse and disappointment better than any usability metric — surface them
-  by asking users to <em>predict</em> what the feature will do before they try it.</li>
-<li><strong>Behavioural signals as always-on research.</strong> Edits, retries, rephrasings, and
-  abandonments are a continuous usability study running in production — the same
-  signals your <a href="product-sense-for-ai.html">flywheel</a> captures. Sample the traces
-  behind them (<a href="../technical-product-management/tpm-for-ai-products.html">the trace-reading ritual</a>)
-  and you have qualitative research at quantitative scale.</li>
+<li><strong>Research the trust curve.</strong> First impressions of AI features are unstable, with delight at a
+  good answer and betrayal at a bad one. Research the <em>second</em> session as well as the first.
+  Deliberately show participants an imperfect output, and watch the recovery. Do they edit, retry,
+  distrust the feature, or distrust the whole product? (<a href="product-sense-for-ai.html">Trust design</a>
+  depends on what you learn here.)</li>
+<li><strong>Surface the mental model.</strong> Users bring very different theories of what the system is ("it's
+  Google", "it's a person", "it knows my account"). A mismatched mental model predicts misuse and
+  disappointment, so ask users to <em>predict</em> what the feature will do before they try it.</li>
+<li><strong>Treat behavioural signals as always-on research.</strong> Edits, retries, rephrasings and abandonments
+  are a continuous usability study running in production, and they are the same signals your
+  <a href="product-sense-for-ai.html">flywheel</a> captures. Sample the traces behind them (<a href="../technical-product-management/tpm-for-ai-products.html">the trace-reading
+  routine</a>) and you get qualitative research
+  at quantitative scale.</li>
 </ul>
-<p><strong>Synthetic users are not users.</strong> Tools now offer AI "participants" that answer interview
-questions in seconds. Nielsen Norman Group reran three of its real studies with such tools.
-The AI answers were too favourable and shallow, and sometimes wrong: the synthetic users
-claimed to have finished online courses that real learners had abandoned. NN/g's advice is
-to use them only for early desk research or to form hypotheses that real users then test.
-They can never supply the surprise that makes research worth doing.</p>
-<p><strong>AI-moderated interviews are a different tool, and a better one.</strong> Here a real person talks to an
-AI interviewer. In January 2026 NN/g tested two such tools with ten participants. The AI followed
-its script and probed short answers. It did not chase unexpected points, and it never asked people to
-confirm what it had understood. Only 3 of 10 participants called the talk natural. Some found the praise fake.
-NN/g's verdict: they are "not yet suited for semistructured, in-depth discovery interviews". They fit
-structured feedback after a launch, recruitment screening, and interviews in languages your team
-does not speak. Use a human for early discovery, and use the AI interviewer to scale a question you
-already know how to ask.</p>
-<h2 id="failure-modes">Failure modes</h2>
+<p><strong>Synthetic users are not users.</strong> Some tools now offer AI "participants" that answer interview
+questions in seconds. Nielsen Norman Group reran three of its real studies with such tools, and the
+AI answers were too favourable, shallow and sometimes wrong. In one, the synthetic users claimed to
+have finished online courses that real learners had abandoned. The group's advice is to use them
+only for early desk research or to form hypotheses that real users then test, since they can't
+supply the surprise that makes research worth doing.</p>
+<p><strong>AI-moderated interviews are a different tool.</strong> Here a real person talks to an AI interviewer. In
+January 2026 Nielsen Norman Group tested two such tools with ten participants. The AI followed its
+script and probed short answers, but it didn't chase unexpected points and never asked people to
+confirm what it had understood. Only 3 of 10 participants called the conversation natural, and some
+found the praise fake. The verdict was that these tools are "not yet suited for semistructured,
+in-depth discovery interviews". They fit structured feedback after a launch, recruitment screening,
+and interviews in languages your team doesn't speak. Teresa Torres has a further worry about
+handing interviews to AI:</p>
+<blockquote>
+<p>"I'm a little bit concerned about what it says to our customers. Like we really want to learn about you, but not enough to spend our own time doing it."
+— Teresa Torres, <a href="https://www.youtube.com/watch?v=wGuRuuPuYNQ"><em>Teresa Torres' Step-by-Step Guide to AI Product Discovery</em></a>, The Growth Podcast, around 08:45</p>
+</blockquote>
+<p>So use a person for early discovery, and use the AI interviewer to scale a question you already know
+how to ask.</p>
+<h2 id="using-ai-to-synthesise-what-you-heard">Using AI to synthesise what you heard</h2>
+<p>Synthesis is where AI tempts you most, because turning ten transcripts into themes takes days. Torres
+says she is torn on it, and that what she is wary of is using AI "to completely automate that work"
+(around 11:25 in the same episode). Her worry is that the PM who skips the data loses the
+understanding the data was meant to build.</p>
+<p>If you do use a model to draft themes, treat its output like any other unverified draft. Trace every
+quote it gives you back to the transcript and the person who said it, because a model can merge two
+people's words or smooth a hesitant answer into a confident one. Read at least a few transcripts in
+full yourself, so you can tell when a theme doesn't match what you heard. And keep the counts honest,
+since "several users said" should mean you can name them.</p>
+<h2 id="worked-example-one-round-on-an-ai-expense-tool">Worked example: one round on an AI expense tool</h2>
+<p>This example is invented, and so are the counts. Say you're the PM for an AI feature that sorts a
+small business's card transactions into expense categories. You plan one round of research over a
+week: five interviews, then a usability test with five different people.</p>
+<p><strong>The interviews.</strong> You ask each owner to walk you through the last time they closed their books for
+the month. Four of the five describe the same struggle, which is chasing receipts for transactions
+they don't recognise. Only one mentions categorising as painful. That's a surprise, because your
+feature assumes categorising is the job.</p>
+<p><strong>The test.</strong> You give five other owners a prototype with twelve transactions already sorted by the
+model. You seed one wrong answer on purpose, filing a client lunch under "Office supplies". You ask
+each person to review the list as if it were real, and you say nothing.</p>
+<table>
+<thead>
+<tr>
+<th>What happened</th>
+<th>Owners (of 5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spotted the wrong category and fixed it</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Spotted it but couldn't find how to change it</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Accepted the list without noticing</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Only two of five recovered from a wrong answer, and the fix control was hard to find. Two people
+didn't look closely at all, which tells you the tool's confident layout invites people to accept the
+list without checking it. Your decisions come straight from the counts. You put an "edit" control on
+every row, flag low-confidence categories for review, and add a receipt-matching step to the next
+round, because that was the struggle four of five owners described. Five interviews and five tests
+won't tell you how common these problems are across all your customers, so a short survey goes out
+next to size them.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Interviewing a model instead of a person</strong> — treating AI-simulated participants as
-  evidence of what users do. They agree too easily and hide the unhappy path.</li>
-<li><strong>Scaling discovery with a script-bound interviewer</strong> — using an AI moderator before you
-  know the right questions. It asks what you wrote and misses what you did not think of.</li>
-<li><strong>The focus-group future</strong> — asking users to predict their own behaviour, then
-  building on the predictions.</li>
-<li><strong>Leading the witness</strong> — questions shaped so agreement is the polite answer;
-  research as pitch rehearsal.</li>
-<li><strong>Demo-glow validation</strong> — testing only the happy path of an AI feature; users
-  meet the unhappy path in production instead.</li>
-<li><strong>Solution-shaped jobs</strong> — writing the job statement as a feature in disguise ("I
-  want a faster search bar") instead of the underlying progress ("I want to feel
-  confident I found the best price"). A real job statement survives a total redesign
-  of the solution; a solution-shaped one doesn't.</li>
-<li><strong>Research theatre</strong> — a big annual study that's stale before it's summarized,
-  instead of small continuous contact.</li>
-<li><strong>Cohorts-and-percentages drift</strong> — consuming only aggregated findings until users
-  stop being people (<a href="cognitive-empathy.html">the mediated-research trap</a>).</li>
+<li><strong>Interviewing a model instead of a person.</strong> Treating AI-simulated participants as evidence of
+  what users do. They agree too easily and hide the unhappy path.</li>
+<li><strong>Scaling discovery with a script-bound interviewer.</strong> Using an AI moderator before you know the
+  right questions, so it asks what you wrote and misses what you didn't think of.</li>
+<li><strong>The focus-group future.</strong> Asking users to predict their own behaviour, then building on the
+  predictions.</li>
+<li><strong>Leading the witness.</strong> Questions shaped so that agreement is the polite answer, which turns
+  research into pitch rehearsal.</li>
+<li><strong>Demo-glow validation.</strong> Testing only the happy path of an AI feature, so users meet the unhappy
+  path in production instead.</li>
+<li><strong>Unchecked synthesis.</strong> Circulating AI-drafted themes with quotes nobody traced back to a person.</li>
+<li><strong>Solution-shaped jobs.</strong> Writing the job statement as a feature in disguise ("I want a faster
+  search bar") instead of the progress underneath ("I want to feel confident I found the best
+  price"). A real job statement survives a total redesign of the solution.</li>
+<li><strong>Research theatre.</strong> A big annual study that's stale before it's summarised, instead of small,
+  continuous contact.</li>
+<li><strong>Drifting into cohorts and percentages.</strong> Consuming only aggregated findings until users stop
+  being people (<a href="cognitive-empathy.html">the mediated-research trap</a>).</li>
 </ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li class="task todo">For my current open question: is it a <em>why</em> or a <em>how many</em> — and does my
-      method match?</li>
-<li class="task todo">Am I asking about past behaviour, or hypothetical futures?</li>
-<li class="task todo">When did I last <em>watch</em> a user (not a dashboard) use the product — and was it
-      within the month?</li>
-<li class="task todo">For AI features: have I tested the wrong-answer experience on purpose?</li>
-<li class="task todo">If I use AI participants or an AI interviewer: is it only for hypotheses, screening or
-      structured feedback, with real people doing the discovery?</li>
-<li class="task todo">Are edits/retries/abandonments instrumented and sampled as research, not just
-      as metrics?</li>
-<li class="task todo">Can I state the job my product is hired for as "when ___, I want to ___, so I
-      can ___" — and do I know what else gets hired for it?</li>
+<li class="task todo">For your current open question, decide whether it's a <em>why</em> or a <em>how many</em>, and check that
+      your method matches.</li>
+<li class="task todo">Rewrite your interview guide so every question asks about a past event.</li>
+<li class="task todo">Watch a user (not a dashboard) use the product this month.</li>
+<li class="task todo">For an AI feature, seed a wrong answer into your next test and count who recovers.</li>
+<li class="task todo">If you use AI participants or an AI interviewer, keep them to hypotheses, screening or
+      structured feedback, with real people doing the discovery.</li>
+<li class="task todo">If a model drafts your synthesis, trace every quote back to its source before you share it.</li>
+<li class="task todo">Write the job your product is hired for as "when ___, I want to ___, so I can ___", and list
+      what else gets hired for it.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
@@ -229,9 +280,29 @@ already know how to ask.</p>
 <li><a href="product-sense-for-ai.html">Product sense for AI products</a></li>
 <li><a href="creativity.html">Creativity: positioning and focus</a></li>
 <li><a href="../technical-product-management/metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
+<li><a href="../technical-product-management/discovery-to-delivery.html">Discovery to delivery</a> (technical
+  product management): where this research feeds the decision to build, kill or reshape.</li>
+<li><a href="../building-ai-native-products/researching-agent-interactions.html">Researching agent interactions</a>
+  (building AI-native products): research methods for agents in depth.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Jakob Nielsen, <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"><em>Why You Only Need to Test with 5
+  Users</em></a>, Nielsen Norman
+  Group, 18 March 2000 (3–4 users per group; about 20 for quantitative metrics) (as of 2026-11).</li>
+<li>Maria Rosala and Kate Moran, <a href="https://www.nngroup.com/articles/synthetic-users/"><em>Synthetic Users: If, When, and How to Use AI-Generated
+  "Research"</em></a>, Nielsen Norman Group, 21 June 2024
+  (as of 2026-11).</li>
+<li>Maria Rosala, <a href="https://www.nngroup.com/articles/ai-interviewers/"><em>AI-Moderated Interviews: If, When, and How to Use Them</em></a>, Nielsen Norman
+  Group, 30 January 2026 (as of 2026-11).</li>
+<li>Clayton M. Christensen, Taddy Hall, Karen Dillon and David S. Duncan, <a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done"><em>Know Your Customers' "Jobs
+  to Be Done"</em></a>, Harvard Business
+  Review, September 2016. Only the opening was readable (paywall), so the milkshake passage itself
+  was not re-read (as of 2026-11).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
-  <div class="pagenav"><a class="navcard prev" href="cognitive-empathy.html"><span class="lbl">← Previous</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a><a class="navcard next" href="creativity.html"><span class="lbl">→ Next</span><span class="ttl">Creativity: from strategic thinking to creative execution</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is five habits that compound. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-method-map">The method map</a><a class="h2" href="#interviewing-the-core-skill">Interviewing — the core skill</a><a class="h2" href="#jobs-to-be-done-turning-interviews-into-a-hireable-job">Jobs-to-be-done: turning interviews into a hireable job</a><a class="h2" href="#researching-ai-products">Researching AI products</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  <div class="pagenav"><a class="navcard prev" href="cognitive-empathy.html"><span class="lbl">← Previous</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a><a class="navcard next" href="creativity.html"><span class="lbl">→ Next</span><span class="ttl">Creativity: from strategic thinking to creative execution</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#two-questions-decide-the-method">Two questions decide the method</a><a class="h2" href="#interviewing-the-core-skill">Interviewing, the core skill</a><a class="h2" href="#from-the-show-five-interviews-or-twenty">From the show: five interviews or twenty?</a><a class="h2" href="#jobs-to-be-done-turning-stories-into-a-job">Jobs to be done: turning stories into a job</a><a class="h2" href="#researching-ai-products">Researching AI products</a><a class="h2" href="#using-ai-to-synthesise-what-you-heard">Using AI to synthesise what you heard</a><a class="h2" href="#worked-example-one-round-on-an-ai-expense-tool">Worked example: one round on an AI expense tool</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');
