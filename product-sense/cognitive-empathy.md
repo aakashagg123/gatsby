@@ -70,10 +70,11 @@ take?"). Reward people who surface inconvenient truths, and assign someone to ar
 the prevailing view.
 
 Watch for the sunk-cost fallacy as well, because months invested in a feature are no reason to keep
-investing if it isn't working. Kodak invented the digital camera in 1975, yet its film business
-stayed profitable for years and slowed its pivot. Strategy writer Scott Anthony argues the Kodak
-story is often retold too simply, so read it as a warning about attachment to a winning bet rather
-than as proof that Kodak ignored digital.
+investing if it isn't working. Kodak is the story people reach for here, since it invented the
+digital camera in 1975 and is remembered as the company that missed digital. Strategy writer Scott
+Anthony warns that "the subtleties of what actually happened to Eastman Kodak are being forgotten",
+and that executives draw the wrong conclusions from the short version. So use Kodak as a prompt to
+look at your own attachment to a winning bet, rather than as settled history.
 
 ## Walking in the user's shoes
 
@@ -123,8 +124,11 @@ same real call transcript and no instructions.
 | Copied an action item into email without reading the summary | 4 |
 | Acted on the one action item the model got wrong | 1 |
 
-Two of your three assumptions failed. Users didn't know how to start, which is the blank screen
-problem, and they cared about action items far more than the summary. You add three example prompts
+All three of your assumptions failed. Users didn't know how to start, which is the blank screen
+problem, and two of them thought the tool had recorded the call, so knowing to paste a transcript
+was not a given. Four of five acted on action items without reading the summary, which breaks the
+second assumption, and that same behaviour shows they cared about action items far more than the
+summary, which breaks the third. You add three example prompts
 under the box and a single line saying what the tool can and can't do. You also move action items to
 the top, each with a confirm step, because that is where users act and where a wrong answer costs
 them. The whole check took one afternoon. Finding the same problems in launch-week support tickets
@@ -141,17 +145,14 @@ No dashboard shows that, and a usability metric won't either. A buyer who champi
 staked their reputation on it, so a rough rollout is a personal risk for them as well as a support
 issue for you. Simulating the user means simulating that person too.
 
-## One strategy: talk to your users
+## Talk to your users
 
-A working PM's version of everything above comes from Twitter PM Paul Rosania, as retold in a
-PM-interview collection. In that retelling there are many tactics for staying in tune with users,
-"but only one strategy: talk to your users." The quote and the story below come from that
-secondhand retelling, and we could not check them against the original.
-
-Rosania volunteered at computer-help sessions, where he watched users mistype their password again
-and again and conclude that *Twitter* was broken. No support ticket, survey or dashboard would ever
-have surfaced that as a product problem, because the users didn't know what had happened and so
-couldn't report it. The lessons worth keeping from his account:
+There are many tactics for staying in tune with users, and they all come back to one habit, which
+is talking to them and watching them. Here's an illustration, not a real case. Picture a PM who
+spends an afternoon at a community help desk and watches people mistype their password again and
+again, then conclude that the *app* is broken. No support ticket, survey or dashboard would surface
+that as a product problem, because the users don't know what happened and so can't report it. A few
+lessons follow from scenes like that one.
 
 - **Mediated research has a failure mode.** A dedicated research team is a luxury, and it can also
   be a danger, because consuming results secondhand trains you to think of users as cohorts and
@@ -221,7 +222,5 @@ the notes start to repeat themselves, and those repeats are your heuristics.
   IEEE Spectrum (The Institute), 6 April 2022 (Steven Sasson, Kodak, 1975) (as of 2026-11).
 - Scott D. Anthony, [*Kodak's Downfall Wasn't About
   Technology*](https://hbr.org/2016/07/kodaks-downfall-wasnt-about-technology), Harvard Business
-  Review, 15 July 2016 (introduction read; the rest is behind a paywall) (as of 2026-11).
-- Paul Rosania's quote and the password story: secondhand, from a collection of PM interviews; not
-  checked against the original.
+  Review, 15 July 2016 (introduction read; the rest is behind a paywall) (as of 2026-11-26).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

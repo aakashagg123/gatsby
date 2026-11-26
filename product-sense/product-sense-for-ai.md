@@ -69,14 +69,14 @@ much of product sense for AI is **trust design**.
   Association for Computing Machinery's Conference on Human Factors in Computing Systems (CHI) in
   2019, and the People + AI Guidebook from Google's People + AI Research (PAIR) team,
   are good checklists for this.
-- **Disclose the machine.** In the EU, Article 50 of the AI Act says people must be made aware they
-  are interacting with an AI system. The Commission's AI Act page gives August 2026 as the date the
-  transparency rules apply. The Digital Omnibus (Regulation (EU) 2026/1744, published July 2026)
-  changed some of the Act's timings. Legal commentary reads it as giving providers of generative
-  systems already on the market before 2 August 2026 until 2 December 2026 to mark synthetic audio,
-  image, video and text output (Article 50(2)). The chatbot-disclosure duty kept its August date.
-  The Commission's page did not mention that marking change when this lesson was written, and the
-  regulation text could not be opened. Ask legal how each rule applies to your launch date.
+- **Disclose the machine.** In the EU, Article 50(1) of the AI Act requires providers to make sure
+  people are informed that they are interacting with an AI system, and Article 50(2) requires
+  synthetic output to be marked in a machine-readable format. The Commission's AI Act page says the
+  transparency rules come into effect in August 2026, and that the AI Omnibus amending the Act
+  entered into force on 27 July 2026. The amended Act's new Article 111(4) gives providers of
+  generative systems already on the market before 2 August 2026 until 2 December 2026 to comply
+  with Article 50(2). Deadlines like these keep moving, so check the current ones with legal against
+  your launch date.
 - **Check that your eval rewards "I don't know".** OpenAI researchers argue that models hallucinate
   partly because common benchmarks score a guess higher than an abstention, so models learn to be
   good test-takers (arXiv 2509.04664). An eval that gives no credit for abstaining trains the same
@@ -180,25 +180,26 @@ the failure experience and the cost curve part of the product itself.
 
 ## The patterns users now expect
 
-Users arrive with reference points, and 2025 reset them. Four patterns became the standard every AI
-product gets compared against.
+Users arrive with reference points. In this module's reading, four patterns from 2025-era
+assistants have become the comparison points for new AI products. These are judgment calls rather
+than findings, and nobody has good data on how strongly users hold them.
 
 - **Deep-research modes.** Asynchronous jobs that take minutes and return a *report* rather than a
-  chat reply. They taught users that waiting is acceptable when the output is worth it.
+  chat reply. Our reading is that they made waiting acceptable when the output is worth it.
 - **Proactive AI.** Briefings and suggestions that arrive *unprompted*, such as ChatGPT's Pulse
-  morning digest, which shipped in 2025. OpenAI announced on 17 June 2026 that it was retiring Pulse
-  in favour of general-purpose scheduled tasks, so the branded feature came and went, but users kept
-  the expectation. The product sense here is consent and restraint, because proactivity delights only
+  daily digest, which OpenAI launched as an early preview for Pro users in September 2025. On 17
+  June 2026 OpenAI's release notes said Pulse "is being sunset as proactive updates move into
+  scheduled tasks", so the branded feature came and went while the pattern stayed. The product sense here is consent and restraint, because proactivity delights only
   until it presumes.
-- **Memory as a headline feature.** "It remembers me" moved from silent personalisation to a marketed
-  surface that users can see and edit. Products that remember silently now read as creepy, and
-  products that forget read as broken.
-- **Visible thinking.** Showing reasoning progress ("searching… comparing… reconsidering…") became a
-  trust signal. Users forgive latency they can watch, and they distrust magic that arrives instantly
-  and wrong.
+- **Memory as a headline feature.** Memory that users can see and edit is now something assistants
+  advertise. A reasonable guess is that silent remembering will feel creepy to many users, and
+  forgetting will feel broken, so test both with your own users.
+- **Visible thinking.** Many assistants now show reasoning progress ("searching… comparing…
+  reconsidering…"). The bet behind it is that people tolerate latency better when they can watch it,
+  which is worth testing rather than assuming.
 
-None of this obliges you to build all four. But every user who has touched a 2025-era assistant
-carries them as expectations, and your product is judged against them.
+None of this obliges you to build all four. It does mean your users may arrive with expectations
+your product didn't set, and research is the way to find out which ones they hold.
 
 ## Feedback is a flywheel you design
 
@@ -229,11 +230,12 @@ The first can be fully automated. The second needs a human checkpoint, clear pro
 trail. Matching the level of autonomy to the cost of being wrong in this domain is one of the
 sharpest expressions of AI product sense.
 
-Air Canada learned this in public. Its support chatbot confidently described a bereavement-refund
-policy that didn't exist, and a tribunal made the airline honour it. The bot had full authority in
-the experience, with no citations and no "I don't know". No eval would have caught the invented
-policy, and the cost was legal and reputational rather than technical. The fix, answering only from
-real policy documents with citations, was a product decision available the whole time.
+Air Canada learned this in public. CBS News reported in February 2024 that the airline's support
+chatbot told a customer he could apply for a bereavement refund after travelling, which its policy
+did not allow. British Columbia's Civil Resolution Tribunal rejected the airline's argument that the
+chatbot was responsible for its own actions and ordered it to pay $812 (CAD) in damages and fees.
+The cost was legal and reputational rather than technical. Answering only from real policy
+documents, with a link to the source, is the kind of product decision that guards against it.
 
 ## From the show: will taste stay human?
 
@@ -307,17 +309,17 @@ that debate against the classic PM, technical PM and engineering manager spectru
 - Saleema Amershi and colleagues, [*Guidelines for Human-AI
   Interaction*](https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/),
   Microsoft Research, CHI 2019 (18 guidelines) (as of 2026-11).
-- Google PAIR, [People + AI Guidebook](https://pair.withgoogle.com/guidebook/). The page returned
-  only its title when re-opened, so its content was not re-read (as of 2026-11).
+- Google PAIR, [People + AI Guidebook](https://pair.withgoogle.com/guidebook-v2/) ("a set of methods,
+  best practices and examples for designing with AI"; patterns include building and calibrating
+  trust) (as of 2026-11-26).
 - European Commission, [AI Act: regulatory framework for
   AI](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) (transparency rules
-  from August 2026; page last updated 25 November 2026; no mention of the Article 50(2) marking
-  change) (as of 2026-11).
-- NicFab, [*Digital Omnibus on AI: Regulation (EU) 2026/1744 Is Published in the
-  Official Journal*](https://www.nicfab.eu/en/posts/digital-omnibus-ai-official-journal/), 24 July 2026
-  (secondary commentary: Article 50(2) marking by 2 December 2026 for systems on the market before
-  2 August 2026, under the new Article 111(4)). The regulation text on EUR-Lex could not be opened
-  (as of 2026-11).
+  from August 2026; AI Omnibus in force 27 July 2026; page last updated 25 November 2026) (as of
+  2026-11-26).
+- AI Act text, [Article 50](https://artificialintelligenceact.eu/article/50/) and [Article
+  111](https://artificialintelligenceact.eu/article/111/), artificialintelligenceact.eu (consolidated
+  text; Article 111(4) marked as added by the amendment; 2 December 2026 for Article 50(2)) (as of
+  2026-11-26). The Official Journal text on EUR-Lex returned an empty page.
 - Adam Tauman Kalai, Ofir Nachum, Santosh S. Vempala and Edwin Zhang, [*Why Language Models
   Hallucinate*](https://arxiv.org/abs/2509.04664), arXiv 2509.04664, 4 September 2025, and OpenAI,
   [*Why language models hallucinate*](https://openai.com/index/why-language-models-hallucinate/),
@@ -326,9 +328,9 @@ that debate against the classic PM, technical PM and engineering manager spectru
   AI*](https://www.bcg.com/publications/2023/how-people-create-and-destroy-value-with-gen-ai), BCG,
   21 September 2023 (758 consultants; 40% higher inside the frontier; 23% lower outside) (as of 2026-11).
 - OpenAI, [*Introducing ChatGPT Pulse*](https://openai.com/index/introducing-chatgpt-pulse/), 25
-  September 2025, and Zac Hall, [*OpenAI launches scheduled tasks in
-  ChatGPT*](https://9to5mac.com/2026/06/17/openai-launches-scheduled-tasks-in-chatgpt-details-here/),
-  9to5Mac, 17 June 2026 (Pulse to be removed; OpenAI's help page returned 404) (as of 2026-11).
+  September 2025, and OpenAI, [ChatGPT release notes](https://help.openai.com/en/articles/6825453-chatgpt-release-notes)
+  (25 September 2025: "early preview of ChatGPT pulse for Pro users on iOS and Android"; 17 June 2026:
+  "Pulse is being sunset as proactive updates move into scheduled tasks") (as of 2026-11-26).
 - OpenAI, [*Sycophancy in GPT-4o*](https://openai.com/index/sycophancy-in-gpt-4o/), 29 April 2025, and
   [*Expanding on what we missed with sycophancy*](https://openai.com/index/expanding-on-sycophancy/),
   2 May 2025 (rollout completed 25 April, rollback began 28 April; sycophancy not explicitly flagged in internal
@@ -336,6 +338,8 @@ that debate against the classic PM, technical PM and engineering manager spectru
 - US Federal Trade Commission, [*FTC Launches Inquiry into AI Chatbots Acting as
   Companions*](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions),
   11 September 2025 (as of 2026-11).
-- *Moffatt v. Air Canada*, 2024 BCCRT 149, British Columbia Civil Resolution Tribunal, 14 February
-  2024. Not re-opened (the tribunal's site returned 403); checked in an earlier review.
+- Megan Cerullo, [*Air Canada chatbot costs airline discount it wrongly offered customer*](https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/),
+  CBS News, 19 February 2024 (secondary report; $812 CAD in damages and fees) (as of 2026-11-26). The
+  decision itself, *Moffatt v. Air Canada*, 2024 BCCRT 149, was not re-opened (canlii.org and
+  civilresolutionbc.ca returned 403).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

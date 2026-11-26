@@ -28,10 +28,10 @@ useful model output, and how fast that first win arrives.</p>
 <h2 id="the-behaviour-equation">The behaviour equation</h2>
 <p>The <strong>Fogg behaviour model</strong> says a behaviour happens only when three things come together at the
 same moment: motivation, ability (how easy it is) and a prompt. BJ Fogg writes it as <em>B = MAP</em>.
-Earlier versions called the third element a <em>trigger</em>, and the Hook model later in this lesson still
-uses that word for the same cue. Fogg's own site presents B = MAP as shorthand for the model rather
-than as a formula you calculate, so read it as a memory aid. If any element is missing, the
-behaviour doesn't happen.</p>
+Fogg says he once called the third element the "Trigger" and switched to "Prompt" in late 2017. The
+Hook model later in this lesson still uses <em>trigger</em> for the same cue. His site calls B = MAP "the
+simplest form" of the model, so read it as a memory aid rather than a sum to calculate. If any
+element is missing, the behaviour doesn't happen.</p>
 <style>
 .dgm-mb{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-caution-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -170,11 +170,11 @@ value or positive feedback, even if it is only a friendly confirmation, a progre
 checkmark. A satisfied user tolerates minor friction, while a frustrated one drops off at the first
 hurdle.</p>
 <p>Duolingo's streak is the behaviour equation turned into a product. The product itself manufactures
-the motivation (don't lose the streak), ability is a one-minute lesson, and the trigger is a push
+the motivation (don't lose the streak), ability is a short lesson, and the trigger is a push
 notification. Duolingo's own research paper (Yancey and Settles, presented in 2020 at the
 Knowledge Discovery and Data Mining conference (KDD)) describes a bandit algorithm that learns which
 reminder to send each learner. Notice the ethical line the design walks, too, because
-streak freezes and repair let users <em>recover</em>. When a habit feature feels coercive, it is usually
+the Streak Freeze lets users <em>recover</em> from a missed day. When a habit feature feels coercive, it is usually
 because it punishes lapses instead of rewarding returns.</p>
 <p>For AI features, the reward after the first successful prompt deserves as much design attention as
 the model. If the first output disappoints, the loop never starts.</p>
@@ -239,10 +239,9 @@ and Cass Sunstein made famous in their 2008 book <em>Nudge</em>. The common ones
 </table>
 <p>The rule is ethics first. A nudge should help users reach <em>their</em> goals with less friction, and it
 should never push them toward <em>your</em> metric against their interest. The one-question test is whether
-the nudge is helping the user or just helping you. LinkedIn's profile-level meter (Beginner to
-All-Star) is the classic good nudge, because it shows progress toward a state that benefits the
-user. Third-party reports say LinkedIn has since hidden the visible meter, so treat it as a pattern
-rather than as a current feature.</p>
+the nudge is helping the user or just helping you. The Duolingo Streak Freeze above passes that
+test, because it keeps the push to practise while letting a learner pause the streak for a day
+instead of punishing them for a lapse.</p>
 <p>Regulators now enforce this line. In September 2025 the US Federal Trade Commission (FTC) settled its
 case against Amazon over Prime for $2.5 billion, made up of a $1 billion civil penalty and $1.5
 billion in refunds. The FTC alleged confusing sign-up screens and a hard-to-use cancellation path.
@@ -284,8 +283,10 @@ Friction that serves only your metric is a legal risk as well as a trust risk.</
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>BJ Fogg, <a href="https://behaviormodel.org/">Fogg Behavior Model</a>, behaviormodel.org (B = MAP: Motivation,
-  Ability, Prompt) (as of 2026-11).</li>
+<li>BJ Fogg, <a href="https://behaviormodel.org/">Fogg Behavior Model</a>, behaviormodel.org (B = MAP as "the
+  simplest form": Motivation, Ability, Prompt) (as of 2026-11-26).</li>
+<li>BJ Fogg, <a href="https://behaviormodel.org/prompts/">Prompts</a>, behaviormodel.org ("I once called this
+  element the 'Trigger.' I changed this term in late 2017.") (as of 2026-11-26).</li>
 <li>Nir Eyal, <a href="https://www.nirandfar.com/how-to-manufacture-desire/"><em>How to Manufacture Desire</em></a>,
   nirandfar.com (Trigger, Action, Reward, Investment; post undated) (as of 2026-11).</li>
 <li>Kevin P. Yancey and Burr Settles, <a href="https://research.duolingo.com/papers/yancey.kdd20.pdf"><em>A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring
@@ -298,7 +299,6 @@ Friction that serves only your metric is a legal risk as well as a trust risk.</
 <li>US Federal Trade Commission, <a href="https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon"><em>FTC Secures Historic $2.5 Billion Settlement Against
   Amazon</em></a>,
   25 September 2025 (as of 2026-11).</li>
-<li>LinkedIn profile meter: third-party reports only. No LinkedIn source was found.</li>
 <li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="cognitive-empathy.html"><span class="lbl">→ Next</span><span class="ttl">Cognitive empathy: anticipating unvoiced needs</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

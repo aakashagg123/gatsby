@@ -87,10 +87,12 @@ someone quotes a sample size at you, ask what question it was meant to answer.
 ## Jobs to be done: turning stories into a job
 
 Interviews and usability tests produce a pile of individual stories. **Jobs to be done** (JTBD) is a
-framework, associated above all with Clayton Christensen, that turns that pile into something you can
-build against. The idea is that a customer doesn't buy your product. They *hire* it to make progress
-on a job in a specific circumstance, which you can write as "when I ___, I want to ___, so I can
-___." Christensen's best-known example is a milkshake bought for the morning commute. The job stays
+framework, associated with Clayton Christensen and his colleagues, that turns that pile into
+something you can build against. In the Christensen Institute's words, people "hire" products or
+services when "jobs" arise in their lives, to make progress in a specific circumstance. You can write
+a job as "when I ___, I want to ___, so I can ___." The institute's best-known case is a fast-food
+restaurant that found customers hiring milkshakes for different jobs at different times of day, with
+the morning shake making a drive more interesting. The job stays
 stable even when the products around it change, which is the payoff. Solutions come and go with the
 competition, but the job survives your redesign, your pivot and your competitor's launch.
 
@@ -248,6 +250,7 @@ next to size them.
   Group, 30 January 2026 (as of 2026-11).
 - Clayton M. Christensen, Taddy Hall, Karen Dillon and David S. Duncan, [*Know Your Customers' "Jobs
   to Be Done"*](https://hbr.org/2016/09/know-your-customers-jobs-to-be-done), Harvard Business
-  Review, September 2016. Only the opening was readable (paywall), so the milkshake passage itself
-  was not re-read (as of 2026-11).
+  Review, September 2016. Only the opening was readable (paywall) (as of 2026-11-26).
+- Clayton Christensen Institute, [Jobs to Be Done](https://www.christenseninstitute.org/theory/jobs-to-be-done/)
+  (people "hire" products when jobs arise; the milkshake case) (as of 2026-11-26).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

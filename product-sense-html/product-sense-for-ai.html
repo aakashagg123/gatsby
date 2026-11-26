@@ -108,14 +108,14 @@ much of product sense for AI is <strong>trust design</strong>.</p>
   Association for Computing Machinery's Conference on Human Factors in Computing Systems (CHI) in
   2019, and the People + AI Guidebook from Google's People + AI Research (PAIR) team,
   are good checklists for this.</li>
-<li><strong>Disclose the machine.</strong> In the EU, Article 50 of the AI Act says people must be made aware they
-  are interacting with an AI system. The Commission's AI Act page gives August 2026 as the date the
-  transparency rules apply. The Digital Omnibus (Regulation (EU) 2026/1744, published July 2026)
-  changed some of the Act's timings. Legal commentary reads it as giving providers of generative
-  systems already on the market before 2 August 2026 until 2 December 2026 to mark synthetic audio,
-  image, video and text output (Article 50(2)). The chatbot-disclosure duty kept its August date.
-  The Commission's page did not mention that marking change when this lesson was written, and the
-  regulation text could not be opened. Ask legal how each rule applies to your launch date.</li>
+<li><strong>Disclose the machine.</strong> In the EU, Article 50(1) of the AI Act requires providers to make sure
+  people are informed that they are interacting with an AI system, and Article 50(2) requires
+  synthetic output to be marked in a machine-readable format. The Commission's AI Act page says the
+  transparency rules come into effect in August 2026, and that the AI Omnibus amending the Act
+  entered into force on 27 July 2026. The amended Act's new Article 111(4) gives providers of
+  generative systems already on the market before 2 August 2026 until 2 December 2026 to comply
+  with Article 50(2). Deadlines like these keep moving, so check the current ones with legal against
+  your launch date.</li>
 <li><strong>Check that your eval rewards "I don't know".</strong> OpenAI researchers argue that models hallucinate
   partly because common benchmarks score a guess higher than an abstention, so models learn to be
   good test-takers (arXiv 2509.04664). An eval that gives no credit for abstaining trains the same
@@ -247,25 +247,26 @@ and conventions still govern. AI-native work starts from a different question, w
 solve the problem from scratch if intelligence were the core material. That question makes the eval,
 the failure experience and the cost curve part of the product itself.</p>
 <h2 id="the-patterns-users-now-expect">The patterns users now expect</h2>
-<p>Users arrive with reference points, and 2025 reset them. Four patterns became the standard every AI
-product gets compared against.</p>
+<p>Users arrive with reference points. In this module's reading, four patterns from 2025-era
+assistants have become the comparison points for new AI products. These are judgment calls rather
+than findings, and nobody has good data on how strongly users hold them.</p>
 <ul>
 <li><strong>Deep-research modes.</strong> Asynchronous jobs that take minutes and return a <em>report</em> rather than a
-  chat reply. They taught users that waiting is acceptable when the output is worth it.</li>
+  chat reply. Our reading is that they made waiting acceptable when the output is worth it.</li>
 <li><strong>Proactive AI.</strong> Briefings and suggestions that arrive <em>unprompted</em>, such as ChatGPT's Pulse
-  morning digest, which shipped in 2025. OpenAI announced on 17 June 2026 that it was retiring Pulse
-  in favour of general-purpose scheduled tasks, so the branded feature came and went, but users kept
-  the expectation. The product sense here is consent and restraint, because proactivity delights only
+  daily digest, which OpenAI launched as an early preview for Pro users in September 2025. On 17
+  June 2026 OpenAI's release notes said Pulse "is being sunset as proactive updates move into
+  scheduled tasks", so the branded feature came and went while the pattern stayed. The product sense here is consent and restraint, because proactivity delights only
   until it presumes.</li>
-<li><strong>Memory as a headline feature.</strong> "It remembers me" moved from silent personalisation to a marketed
-  surface that users can see and edit. Products that remember silently now read as creepy, and
-  products that forget read as broken.</li>
-<li><strong>Visible thinking.</strong> Showing reasoning progress ("searching… comparing… reconsidering…") became a
-  trust signal. Users forgive latency they can watch, and they distrust magic that arrives instantly
-  and wrong.</li>
+<li><strong>Memory as a headline feature.</strong> Memory that users can see and edit is now something assistants
+  advertise. A reasonable guess is that silent remembering will feel creepy to many users, and
+  forgetting will feel broken, so test both with your own users.</li>
+<li><strong>Visible thinking.</strong> Many assistants now show reasoning progress ("searching… comparing…
+  reconsidering…"). The bet behind it is that people tolerate latency better when they can watch it,
+  which is worth testing rather than assuming.</li>
 </ul>
-<p>None of this obliges you to build all four. But every user who has touched a 2025-era assistant
-carries them as expectations, and your product is judged against them.</p>
+<p>None of this obliges you to build all four. It does mean your users may arrive with expectations
+your product didn't set, and research is the way to find out which ones they hold.</p>
 <h2 id="feedback-is-a-flywheel-you-design">Feedback is a flywheel you design</h2>
 <p>AI products get better with use only if you build the loop. Every correction, thumbs-down and edit is
 signal, and the <a href="motivation-and-behaviour.html">Hook model's investment phase</a> becomes literal, since
@@ -289,11 +290,12 @@ playlist suggestion) and where it is genuinely harmful (a medical dosage, a fina
 The first can be fully automated. The second needs a human checkpoint, clear provenance and an audit
 trail. Matching the level of autonomy to the cost of being wrong in this domain is one of the
 sharpest expressions of AI product sense.</p>
-<p>Air Canada learned this in public. Its support chatbot confidently described a bereavement-refund
-policy that didn't exist, and a tribunal made the airline honour it. The bot had full authority in
-the experience, with no citations and no "I don't know". No eval would have caught the invented
-policy, and the cost was legal and reputational rather than technical. The fix, answering only from
-real policy documents with citations, was a product decision available the whole time.</p>
+<p>Air Canada learned this in public. CBS News reported in February 2024 that the airline's support
+chatbot told a customer he could apply for a bereavement refund after travelling, which its policy
+did not allow. British Columbia's Civil Resolution Tribunal rejected the airline's argument that the
+chatbot was responsible for its own actions and ordered it to pay $812 (CAD) in damages and fees.
+The cost was legal and reputational rather than technical. Answering only from real policy
+documents, with a link to the source, is the kind of product decision that guards against it.</p>
 <h2 id="from-the-show-will-taste-stay-human">From the show: will taste stay human?</h2>
 <p>Practitioners disagree about how long taste stays a human advantage. Ravi Mehta expects AI to speed
 up much of the PM's work, but not this part:</p>
@@ -363,17 +365,17 @@ that debate against the classic PM, technical PM and engineering manager spectru
 <li>Saleema Amershi and colleagues, <a href="https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/"><em>Guidelines for Human-AI
   Interaction</em></a>,
   Microsoft Research, CHI 2019 (18 guidelines) (as of 2026-11).</li>
-<li>Google PAIR, <a href="https://pair.withgoogle.com/guidebook/">People + AI Guidebook</a>. The page returned
-  only its title when re-opened, so its content was not re-read (as of 2026-11).</li>
+<li>Google PAIR, <a href="https://pair.withgoogle.com/guidebook-v2/">People + AI Guidebook</a> ("a set of methods,
+  best practices and examples for designing with AI"; patterns include building and calibrating
+  trust) (as of 2026-11-26).</li>
 <li>European Commission, <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">AI Act: regulatory framework for
   AI</a> (transparency rules
-  from August 2026; page last updated 25 November 2026; no mention of the Article 50(2) marking
-  change) (as of 2026-11).</li>
-<li>NicFab, <a href="https://www.nicfab.eu/en/posts/digital-omnibus-ai-official-journal/"><em>Digital Omnibus on AI: Regulation (EU) 2026/1744 Is Published in the
-  Official Journal</em></a>, 24 July 2026
-  (secondary commentary: Article 50(2) marking by 2 December 2026 for systems on the market before
-  2 August 2026, under the new Article 111(4)). The regulation text on EUR-Lex could not be opened
-  (as of 2026-11).</li>
+  from August 2026; AI Omnibus in force 27 July 2026; page last updated 25 November 2026) (as of
+  2026-11-26).</li>
+<li>AI Act text, <a href="https://artificialintelligenceact.eu/article/50/">Article 50</a> and <a href="https://artificialintelligenceact.eu/article/111/">Article
+  111</a>, artificialintelligenceact.eu (consolidated
+  text; Article 111(4) marked as added by the amendment; 2 December 2026 for Article 50(2)) (as of
+  2026-11-26). The Official Journal text on EUR-Lex returned an empty page.</li>
 <li>Adam Tauman Kalai, Ofir Nachum, Santosh S. Vempala and Edwin Zhang, <a href="https://arxiv.org/abs/2509.04664"><em>Why Language Models
   Hallucinate</em></a>, arXiv 2509.04664, 4 September 2025, and OpenAI,
   <a href="https://openai.com/index/why-language-models-hallucinate/"><em>Why language models hallucinate</em></a>,
@@ -382,9 +384,9 @@ that debate against the classic PM, technical PM and engineering manager spectru
   AI</em></a>, BCG,
   21 September 2023 (758 consultants; 40% higher inside the frontier; 23% lower outside) (as of 2026-11).</li>
 <li>OpenAI, <a href="https://openai.com/index/introducing-chatgpt-pulse/"><em>Introducing ChatGPT Pulse</em></a>, 25
-  September 2025, and Zac Hall, <a href="https://9to5mac.com/2026/06/17/openai-launches-scheduled-tasks-in-chatgpt-details-here/"><em>OpenAI launches scheduled tasks in
-  ChatGPT</em></a>,
-  9to5Mac, 17 June 2026 (Pulse to be removed; OpenAI's help page returned 404) (as of 2026-11).</li>
+  September 2025, and OpenAI, <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT release notes</a>
+  (25 September 2025: "early preview of ChatGPT pulse for Pro users on iOS and Android"; 17 June 2026:
+  "Pulse is being sunset as proactive updates move into scheduled tasks") (as of 2026-11-26).</li>
 <li>OpenAI, <a href="https://openai.com/index/sycophancy-in-gpt-4o/"><em>Sycophancy in GPT-4o</em></a>, 29 April 2025, and
   <a href="https://openai.com/index/expanding-on-sycophancy/"><em>Expanding on what we missed with sycophancy</em></a>,
   2 May 2025 (rollout completed 25 April, rollback began 28 April; sycophancy not explicitly flagged in internal
@@ -392,8 +394,10 @@ that debate against the classic PM, technical PM and engineering manager spectru
 <li>US Federal Trade Commission, <a href="https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions"><em>FTC Launches Inquiry into AI Chatbots Acting as
   Companions</em></a>,
   11 September 2025 (as of 2026-11).</li>
-<li><em>Moffatt v. Air Canada</em>, 2024 BCCRT 149, British Columbia Civil Resolution Tribunal, 14 February
-  2024. Not re-opened (the tribunal's site returned 403); checked in an earlier review.</li>
+<li>Megan Cerullo, <a href="https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/"><em>Air Canada chatbot costs airline discount it wrongly offered customer</em></a>,
+  CBS News, 19 February 2024 (secondary report; $812 CAD in damages and fees) (as of 2026-11-26). The
+  decision itself, <em>Moffatt v. Air Canada</em>, 2024 BCCRT 149, was not re-opened (canlii.org and
+  civilresolutionbc.ca returned 403).</li>
 <li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="domain-expertise.html"><span class="lbl">← Previous</span><span class="ttl">Domain expertise: turning knowledge into intuition</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> Product sense is six habits that compound, and the AI capstone puts them to work. For AI, the product is the trustworthy system around a model that can be confidently wrong.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>

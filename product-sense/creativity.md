@@ -55,11 +55,12 @@ document claims. Strategy for an AI feature works the same way. If a competitor 
 model tomorrow, what would still make your product the one users choose? If the honest answer is
 "nothing", you have a feature, not a position.
 
-Instagram is the classic story of focus. Its founders first built Burbn, a location-based app, and
-Kevin Systrom later wrote that the iPhone version "felt cluttered, and overrun with features". They
-cut it back to sharing, commenting on and liking photos, and the app that came out of that in 2010
-was Instagram, built around photo sharing and a set of filters. The creative act was the cut. If you can't name the last good idea you shelved because
-it didn't strengthen a pillar, you have a backlog rather than a strategy.
+Instagram is the classic story of focus. TechCrunch reported in 2010 that its founders first built
+Burbn, a location-based app, and quoted Kevin Systrom saying the iPhone version "felt cluttered, and
+overrun with features". In that account they cut it back to sharing, commenting on and liking photos,
+and Instagram launched on 6 October 2010, built around photo sharing and a set of filters. The
+creative act was the cut. If you can't name the last good idea you shelved because it didn't
+strengthen a pillar, you have a backlog rather than a strategy.
 
 ## From the show: proven, better, new
 
@@ -88,7 +89,7 @@ data and marketing into ideation early, because each lens produces ideas the oth
 **Rituals** make creativity a habit rather than an accident.
 
 - **Brainstorms** with rules ("defer judgment", "no idea too crazy"), plus formats like *Crazy
-  Eights* (8 sketches in 8 minutes) and *brainwriting* (write silently, then share), so quieter
+  Eights* and *brainwriting* (write silently, then share), so quieter
   people contribute as much as louder ones.
 - **Design sprints.** GV (formerly Google Ventures) describes its sprint as a five-day process that goes from mapping a problem
   to testing a realistic prototype with customers. Jake Knapp began running sprints at Google in
@@ -194,9 +195,11 @@ so you treat the result as a direction and confirm it with the launch metrics.
 - Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
   TechCrunch, 30 May 2019 (Tiny Speck's internal messaging tool) (as of 2026-11).
 - MG Siegler, [*A Pivotal Pivot*](https://techcrunch.com/?p=241149), TechCrunch, 8 November 2010
-  (quotes Systrom's Quora answer on Burbn) (as of 2026-11).
+  (secondary; quotes Systrom's Quora answer on Burbn, which returned 403) (as of 2026-11-26).
 - MG Siegler, [Instagram launch coverage](https://techcrunch.com/2010/09/20/instagram/), TechCrunch,
-  20 September 2010 (Burbn as a location-focused app; launch filters) (as of 2026-11).
+  20 September 2010 (secondary; Burbn as a location-focused app; launch filters) (as of 2026-11-26).
+- About Instagram, [product evolution timeline](https://about.instagram.com/about-us/instagram-product-evolution)
+  ("Instagram Launches", 6 October 2010) (as of 2026-11-26).
 - GV, [The Design Sprint](https://www.gv.com/sprint/) (five days; Jake Knapp at Google from 2010)
   (as of 2026-11).
 - Gmail, [*New in Labs: Undo Send*](https://gmail.googleblog.com/2009/03/new-in-labs-undo-send.html),

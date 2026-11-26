@@ -23,23 +23,25 @@ artifacts](./communication.md) turn product sense into alignment, and for an AI 
 uncertainty, a plain statement of what it is, what it isn't and how you'll know it worked is worth
 more than any demo.
 
-**LinkedIn's profile-level meter.** A progress nudge that showed how far you'd come and rewarded a
-complete profile, which genuinely benefits the user. Third-party reports say it has since been
-hidden. It is an [ethical nudge](./motivation-and-behaviour.md) rather than a dark pattern, and the
-line between the two is whose goal the nudge serves. AI products cross that line easily when they
-optimise engagement against the user's interest.
+**Duolingo's Streak Freeze.** Duolingo's streak pushes learners to practise every day, and its
+Streak Freeze lets a learner pause the streak for a day rather than lose it. That makes it an
+[ethical nudge](./motivation-and-behaviour.md) rather than a dark pattern, because the line between
+the two is whose goal the nudge serves. AI products cross that line easily when they optimise
+engagement against the user's interest.
 
-**Kodak and the digital camera.** Kodak invented the digital camera in 1975 but pivoted slowly while
-film stayed profitable, which is a warning about [intellectual flexibility](./cognitive-empathy.md)
-and the sunk-cost fallacy. Scott Anthony argues the full story is more subtle than "Kodak ignored
-digital". The incumbent's trap is attachment to a winning bet, and in a field moving as fast as AI,
-being willing to say "the ground shifted, so we should too" is a survival skill.
+**Kodak and the digital camera.** Kodak invented the digital camera in 1975 and is remembered as the
+company that missed digital, which makes it the usual warning about [intellectual
+flexibility](./cognitive-empathy.md) and the sunk-cost fallacy. Scott Anthony argues that the
+subtleties of what actually happened are being forgotten, so treat the short version as a prompt
+rather than as history. The trap it points at is attachment to a winning bet, and in a field moving
+as fast as AI, being willing to say "the ground shifted, so we should too" is a survival skill.
 
-**Air Canada's chatbot invented a refund policy (2024).** A support bot confidently described a
-refund policy that didn't exist, and a tribunal made the airline honour it. It is the canonical
-[product-sense-for-AI](./product-sense-for-ai.md) failure, a confidently wrong output with no
-grounding, no "I don't know" and full authority in the experience. The fix was to answer only from
-real policy, with citations, which is a product decision before it's an engineering one.
+**Air Canada's chatbot gave a wrong refund answer (2024).** CBS News reported that the airline's
+support chatbot told a customer he could claim a bereavement refund after travelling, which its
+policy did not allow, and that a British Columbia tribunal ordered the airline to pay him $812 (CAD)
+in damages and fees. It is the canonical [product-sense-for-AI](./product-sense-for-ai.md) warning,
+a confidently wrong answer delivered with the company's full authority. Answering only from real
+policy, with a link to the source, is a product decision before it's an engineering one.
 
 **The expert's trap in domain-heavy products.** Marty Cagan's warning that experts come to believe
 they are more like their target customer than they really are applies from medical software to
@@ -47,22 +49,21 @@ developer tools. [Domain expertise](./domain-expertise.md) only pays off when it
 outsider's question of why something is done this way at all, and that same humility keeps an AI PM
 checking the model's confidence, and their own.
 
-## Field notes from working PMs
+## Three heuristics worth keeping
 
-Three durable heuristics come from Carl Shan's *Product Manager Handbook*, a collection of
-interviews with PMs at Google, Twitter, Facebook and Yammer. They are retold here secondhand.
+These are this module's own framing, three rules of thumb that tie the lessons together.
 
-**"What is the user's goal, and how hard does this product make it?"** (Jason Shah, Yammer). It is a
-two-question quality model that needs no dashboard. Book a good place fast, get a car fast, find the
+**"What is the user's goal, and how hard does this product make it?"** It is a two-question quality
+model that needs no dashboard. Book a good place fast, get a car fast, find the
 answer fast. Before any metric review, walk the product as a user with a goal and count the friction,
 which is [motivation theory](./motivation-and-behaviour.md) compressed into a gut check.
 
-**High-quality products do one thing exceptionally well** (Avichal Garg, Facebook). Spread across many
+**High-quality products do one thing exceptionally well.** Spread across many
 domains, you're replaceable, while being exceptional at one makes you a category. It is the
 [focused-strategy](./creativity.md) discipline stated as a quality bar, and it applies doubly to AI
 products, where the reliable frontier is narrow.
 
-**Product sense is built by dissection** (Garg again). Close attention to detail, taking apart what
+**Product sense is built by dissection.** Close attention to detail, taking apart what
 makes something good and what makes something not good, is how pattern-matching intuition gets
 trained. It pairs with the [talk-to-your-users](./cognitive-empathy.md) habit, since exposure
 supplies the patterns and dissection compresses them into taste.
@@ -135,7 +136,8 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
   Review, 15 July 2016 (as of 2026-11).
 - Marty Cagan, [*The Role of Domain Experience*](https://www.svpg.com/the-role-of-domain-experience/),
   SVPG, 28 March 2005 (as of 2026-11).
-- *Moffatt v. Air Canada*, 2024 BCCRT 149, 14 February 2024. Not re-opened (the tribunal's site
-  returned 403); checked in an earlier review.
-- LinkedIn's meter and the *Product Manager Handbook* interviews: secondhand sources, not checked
-  against originals.
+- Megan Cerullo, [*Air Canada chatbot costs airline discount it wrongly offered customer*](https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/),
+  CBS News, 19 February 2024 (secondary report) (as of 2026-11-26). The decision, *Moffatt v. Air
+  Canada*, 2024 BCCRT 149, was not re-opened (canlii.org and civilresolutionbc.ca returned 403).
+- Duolingo, [*How the Duolingo streak builds habit*](https://blog.duolingo.com/how-duolingo-streak-builds-habit/),
+  31 January 2022 (Streak Freeze pauses a streak for a day) (as of 2026-11-26).

@@ -20,10 +20,10 @@ useful model output, and how fast that first win arrives.
 
 The **Fogg behaviour model** says a behaviour happens only when three things come together at the
 same moment: motivation, ability (how easy it is) and a prompt. BJ Fogg writes it as *B = MAP*.
-Earlier versions called the third element a *trigger*, and the Hook model later in this lesson still
-uses that word for the same cue. Fogg's own site presents B = MAP as shorthand for the model rather
-than as a formula you calculate, so read it as a memory aid. If any element is missing, the
-behaviour doesn't happen.
+Fogg says he once called the third element the "Trigger" and switched to "Prompt" in late 2017. The
+Hook model later in this lesson still uses *trigger* for the same cue. His site calls B = MAP "the
+simplest form" of the model, so read it as a memory aid rather than a sum to calculate. If any
+element is missing, the behaviour doesn't happen.
 
 ```mermaid
 flowchart LR
@@ -108,11 +108,11 @@ checkmark. A satisfied user tolerates minor friction, while a frustrated one dro
 hurdle.
 
 Duolingo's streak is the behaviour equation turned into a product. The product itself manufactures
-the motivation (don't lose the streak), ability is a one-minute lesson, and the trigger is a push
+the motivation (don't lose the streak), ability is a short lesson, and the trigger is a push
 notification. Duolingo's own research paper (Yancey and Settles, presented in 2020 at the
 Knowledge Discovery and Data Mining conference (KDD)) describes a bandit algorithm that learns which
 reminder to send each learner. Notice the ethical line the design walks, too, because
-streak freezes and repair let users *recover*. When a habit feature feels coercive, it is usually
+the Streak Freeze lets users *recover* from a missed day. When a habit feature feels coercive, it is usually
 because it punishes lapses instead of rewarding returns.
 
 For AI features, the reward after the first successful prompt deserves as much design attention as
@@ -155,10 +155,9 @@ and Cass Sunstein made famous in their 2008 book *Nudge*. The common ones:
 
 The rule is ethics first. A nudge should help users reach *their* goals with less friction, and it
 should never push them toward *your* metric against their interest. The one-question test is whether
-the nudge is helping the user or just helping you. LinkedIn's profile-level meter (Beginner to
-All-Star) is the classic good nudge, because it shows progress toward a state that benefits the
-user. Third-party reports say LinkedIn has since hidden the visible meter, so treat it as a pattern
-rather than as a current feature.
+the nudge is helping the user or just helping you. The Duolingo Streak Freeze above passes that
+test, because it keeps the push to practise while letting a learner pause the streak for a day
+instead of punishing them for a lapse.
 
 Regulators now enforce this line. In September 2025 the US Federal Trade Commission (FTC) settled its
 case against Amazon over Prime for $2.5 billion, made up of a $1 billion civil penalty and $1.5
@@ -202,8 +201,10 @@ Friction that serves only your metric is a legal risk as well as a trust risk.
 
 ## Sources
 
-- BJ Fogg, [Fogg Behavior Model](https://behaviormodel.org/), behaviormodel.org (B = MAP: Motivation,
-  Ability, Prompt) (as of 2026-11).
+- BJ Fogg, [Fogg Behavior Model](https://behaviormodel.org/), behaviormodel.org (B = MAP as "the
+  simplest form": Motivation, Ability, Prompt) (as of 2026-11-26).
+- BJ Fogg, [Prompts](https://behaviormodel.org/prompts/), behaviormodel.org ("I once called this
+  element the 'Trigger.' I changed this term in late 2017.") (as of 2026-11-26).
 - Nir Eyal, [*How to Manufacture Desire*](https://www.nirandfar.com/how-to-manufacture-desire/),
   nirandfar.com (Trigger, Action, Reward, Investment; post undated) (as of 2026-11).
 - Kevin P. Yancey and Burr Settles, [*A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring
@@ -216,5 +217,4 @@ Friction that serves only your metric is a legal risk as well as a trust risk.
 - US Federal Trade Commission, [*FTC Secures Historic $2.5 Billion Settlement Against
   Amazon*](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon),
   25 September 2025 (as of 2026-11).
-- LinkedIn profile meter: third-party reports only. No LinkedIn source was found.
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.
