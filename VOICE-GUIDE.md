@@ -20,6 +20,20 @@ Write that. The lesson should sound like someone who knows the subject, respects
   See "Using The Growth Podcast" below.
 - **An invented example is fine when it is labelled.** "Say you run onboarding for a travel app." That is a thought experiment, not a memory.
 
+## Rhythm: sound like thinking, not like a script
+
+Short sentences are easy to read, but a page made only of short sentences sounds like a presenter reading cue cards.
+People think out loud, qualify themselves, and let a sentence run a little long when two ideas belong together.
+
+- **Mix the lengths.** Most sentences run 12 to 22 words. Some are short. A few reach 28 when a cause and its effect belong in one breath.
+  Join ideas the way people do, with "because", "which", "so", "though", "while", "and then".
+- **Give paragraphs some body.** Three to five sentences is normal. A one-sentence paragraph is for the one line you want the reader to stop on, and it should be rare.
+- **Don't answer your own question.** A question the writer asks and answers in the next breath ("So who's right? Both.") is a stage trick. Ask when the reader should stop and think, then let the reasoning unfold across a paragraph. Keep to one real question per section.
+- **Don't run on signposts.** "Here's the thing", "Now decide", "Look at this again", "Let's be honest" are fine once in a while, never as the engine of a section.
+- **No cadence by list.** Three parallel clauses used for rhythm, a punchy one-liner to close every section, and a pair of short sentences set against each other all give the page a pulse that sounds written. Let some sections just end when the point is made.
+- **Qualify like a thinker.** "Teams tend to...", "it usually turns out...", "that depends on how much a wrong call costs you". Qualifying is not hedging when it says what the answer depends on. (Do not borrow experience you don't have: "in my experience" and "I've seen" are still out.)
+- **Keep a concrete image in each section**, a situation or an artifact, so the sentences have something to hold on to.
+
 ## What to do
 
 - **Open with a situation or a question**, not a definition. "You open the dashboard on Monday and sign-ups are down 8%. What do you do first?"

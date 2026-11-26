@@ -195,6 +195,19 @@ def lesson_checks(path, text, terms):
         body_text = re.sub(r"```.*?```", "", text, flags=re.S)
         if INVENTED_EXPERIENCE.search(body_text):
             voice_problems.append("invented first-person experience (e.g. 'when I was a PM at')")
+        # Rhythm: a presenter's cue-card feel (self-answered questions, chopped sentences).
+        prose = " ".join(clean(p) for p in paragraphs(text))
+        sents = [x for x in re.split(r"(?<=[.!?])\s+", prose) if x.strip()]
+        self_answered = sum(1 for i in range(len(sents) - 1)
+                            if sents[i].rstrip().endswith("?") and len(sents[i + 1].split()) <= 7)
+        if self_answered > 1:
+            voice_problems.append(f"{self_answered} self-answered questions (a question followed by a very short answer)")
+        short = sum(1 for x in sents if len(x.split()) < 7)
+        if sents and short / len(sents) > 0.20:
+            voice_problems.append(f"{round(100 * short / len(sents))}% of sentences are under 7 words (chopped rhythm)")
+        words_all = sum(len(x.split()) for x in sents)
+        if sents and words_all / len(sents) < 13:
+            voice_problems.append(f"average sentence is {words_all / len(sents):.1f} words (under 13 reads clipped)")
         tells = sorted({m.group(0).lower() for m in LLM_TELLS.finditer(body_text)})
         if tells:
             voice_problems.append("LLM-sounding phrases: " + ", ".join(tells))
