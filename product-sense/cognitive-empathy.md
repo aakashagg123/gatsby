@@ -44,9 +44,10 @@ confidence comes from time spent rather than from evidence. Two techniques help.
 which you imagine it's a year from now and the product has failed, then list the plausible reasons.
 That surfaces hidden risks before they cost you anything.
 
-Pre-mortems have a cost of their own. Gautham Krishnan, who argues for them in large organisations,
-also warns that people [use them to stall initiatives](https://www.youtube.com/watch?v=7NLLUfqv9uA)
-(around 44:05 in his Growth Podcast episode). So time-box the exercise, and end it with a decision
+Pre-mortems have a cost of their own. Gautham Krishnan says pre-mortems and deeper thought
+experiments matter especially in larger organisations, and in the same breath warns that "People
+use these to stall initiatives also" ([around 44:05 in his Growth Podcast
+episode](https://www.youtube.com/watch?v=7NLLUfqv9uA)). So time-box the exercise, and end it with a decision
 about which risks you'll test, rather than with a list of reasons to wait.
 
 In meetings, metacognition can be literal. You pause and say "let's break down how we're arriving at
@@ -177,8 +178,9 @@ point:
 > "product sense is thinking deeply about every product that you interact with"
 > — Gautham Krishnan, [*Product Strategy Masterclass by Gautham Krishnan, Product Leader @ Disney+ Hotstar*](https://www.youtube.com/watch?v=7NLLUfqv9uA), The Growth Podcast, around 02:08
 
-Jaclyn Konzelmann lists [exceptional product taste](https://www.youtube.com/watch?v=rcz39Y0qFxw)
-first among the traits she hires AI PMs for (around 16:11 in her episode). Julie Zhuo's view is that
+Jaclyn Konzelmann, describing what she looks for while hiring an AI product manager, puts
+["exceptional product taste and user-centric craft"](https://www.youtube.com/watch?v=rcz39Y0qFxw)
+first of six characteristics (around 16:11 in her episode). Julie Zhuo's view is that
 the eye is easier to train than the hand, which she gives as her reason to keep [training her
 eye](https://www.youtube.com/watch?v=1UAwtKjgO9Y) even as AI improves (around 1:06:53). These are
 their views, though they point the same way, toward taste as something you practise.

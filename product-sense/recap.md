@@ -139,5 +139,9 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
 - Megan Cerullo, [*Air Canada chatbot costs airline discount it wrongly offered customer*](https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/),
   CBS News, 19 February 2024 (secondary report) (as of 2026-11-26). The decision, *Moffatt v. Air
   Canada*, 2024 BCCRT 149, was not re-opened (canlii.org and civilresolutionbc.ca returned 403).
+- Kirsten Thompson (Dentons), [*Airline Ordered To Compensate A B.C. Man Because Its Chatbot Provided
+  Inaccurate Information*](https://www.legal500.com/intelligence/canada/technology/airline-ordered-to-compensate-a-bc-man-because-its-chatbot-provided-inaccurate-information),
+  Legal 500 (first published on Mondaq), 23 February 2024 (secondary; 2024 BCCRT 149; $650.88 damages,
+  $36.14 interest, $125 fees) (as of 2026-11-26).
 - Duolingo, [*How the Duolingo streak builds habit*](https://blog.duolingo.com/how-duolingo-streak-builds-habit/),
   31 January 2022 (Streak Freeze pauses a streak for a day) (as of 2026-11-26).

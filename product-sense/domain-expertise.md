@@ -167,4 +167,7 @@ about.
 
 - Marty Cagan, [*The Role of Domain Experience*](https://www.svpg.com/the-role-of-domain-experience/),
   Silicon Valley Product Group (SVPG), 28 March 2005 (as of 2026-11).
+- US Centers for Disease Control and Prevention, [*Health Insurance Portability and Accountability Act
+  of 1996 (HIPAA)*](https://www.cdc.gov/phlp/php/resources/health-insurance-portability-and-accountability-act-of-1996-hipaa.html)
+  (as of 2026-11-26).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

@@ -112,7 +112,7 @@ the motivation (don't lose the streak), ability is a short lesson, and the trigg
 notification. Duolingo's own research paper (Yancey and Settles, presented in 2020 at the
 Knowledge Discovery and Data Mining conference (KDD)) describes a bandit algorithm that learns which
 reminder to send each learner. Notice the ethical line the design walks, too, because
-the Streak Freeze lets users *recover* from a missed day. When a habit feature feels coercive, it is usually
+Duolingo describes the Streak Freeze as a way to "hit pause on your streak for a day". When a habit feature feels coercive, it is usually
 because it punishes lapses instead of rewarding returns.
 
 For AI features, the reward after the first successful prompt deserves as much design attention as
@@ -126,9 +126,10 @@ Deep delight, in her words, is something else:
 > "the deep delight is when we create functional solutions while addressing emotional needs while building them."
 > — Nesrine Changuel, [*How to Engineer Delight Into AI Products*](https://www.youtube.com/watch?v=0rTAZ7qnKgc), The Growth Podcast, around 02:57
 
-Her warning case is a campaign from Deliveroo in France. On Mother's Day it sent a push notification
-designed to look like a missed call from your mother, meant as a playful nudge to send flowers. In
-Changuel's telling, the reaction was the opposite of delight:
+Her warning case is a campaign from Deliveroo in France. On Mother's Day 2024, French users got a
+push notification that read "Appel manqué de maman" ("Missed call from mum"), meant as a playful
+nudge, and the French site 24matins reported that some found it upsetting and that Deliveroo
+apologised to anyone it had hurt. In Changuel's telling, the reaction was the opposite of delight:
 
 > "this is something that had the worst press ever because a lot of people felt hurt and not everyone can feel the joy out of this supposed to be delightful moment"
 > — Nesrine Changuel, [*How to Engineer Delight Into AI Products*](https://www.youtube.com/watch?v=0rTAZ7qnKgc), The Growth Podcast, around 09:45
@@ -143,7 +144,9 @@ basic needs, performance features and delighters.
 ## Nudges: influence without coercion
 
 **Nudges** are design cues that steer behaviour *without restricting choice*, an idea Richard Thaler
-and Cass Sunstein made famous in their 2008 book *Nudge*. The common ones:
+and Cass Sunstein made famous in their 2008 book *Nudge*. Their own definition, as quoted by Mongin
+and Cozic, is "any aspect of the choice architecture that alters people's behavior in a predictable
+way without forbidding any option or significantly changing their economic incentives". The common ones:
 
 | Nudge | How it works | Example |
 | --- | --- | --- |
@@ -214,6 +217,12 @@ Friction that serves only your metric is a legal risk as well as a trust risk.
 - Richard H. Thaler and Cass R. Sunstein, [*Nudge: Preface to the Final
   Edition*](https://www.chicagobooth.edu/review/nudge-preface-final-edition), Chicago Booth Review,
   19 January 2022 (first published 2008) (as of 2026-11).
+- Philippe Mongin and Mikaël Cozic, [*Rethinking nudge: not one but three
+  concepts*](https://doi.org/10.1017/bpp.2016.16), Behavioural Public Policy 2(1), 2018 (quotes
+  Thaler and Sunstein's definition, 2009 edition, p. 6) (as of 2026-11-26).
+- Jérôme Nelra, [*La campagne « Appel manqué de maman » de Deliveroo pour la fête des mères n'a pas été
+  vraiment appréciée*](https://www.24matins.fr/la-campagne-appel-manque-de-maman-de-deliveroo-pour-la-fete-des-meres-na-pas-ete-vraiment-appreciee-1375516),
+  24matins, 28 May 2024 (secondary; notification sent 26 May 2024; apology via BFM TV) (as of 2026-11-26).
 - US Federal Trade Commission, [*FTC Secures Historic $2.5 Billion Settlement Against
   Amazon*](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon),
   25 September 2025 (as of 2026-11).

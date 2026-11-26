@@ -4,8 +4,8 @@
 
 <!-- voice: human -->
 
-Ask ten users whether they'd use an AI feature that drafts their reports, and eight will say yes.
-Ship it, and you may find that two of them try it once. Nobody lied to you. People are honest about
+Picture this (an illustration, with invented numbers). You ask ten users whether they'd use an AI
+feature that drafts their reports, and eight say yes. You ship it, and two of them try it once. Nobody lied to you. People are honest about
 their problems and unreliable about their own futures, and the craft of user research is mostly the
 craft of asking questions that don't depend on predictions. Product sense is built from user
 contact, so getting that contact right is a discipline of its own.
@@ -153,9 +153,10 @@ how to ask.
 ## Using AI to synthesise what you heard
 
 Synthesis is where AI tempts you most, because turning ten transcripts into themes takes days. Torres
-says she is torn on it, and that what she is wary of is using AI "to completely automate that work"
-(around 11:25 in the same episode). Her worry is that the PM who skips the data loses the
-understanding the data was meant to build.
+says she is "really torn" on synthesis, and that what she is wary of is using AI "to completely
+automate that work" (around 09:12 and 11:25 in the same episode). Her reasoning is that everyone has
+access to the same AI tools, so a team that outsources the work entirely loses what would make its
+understanding different.
 
 If you do use a model to draft themes, treat its output like any other unverified draft. Trace every
 quote it gives you back to the transcript and the person who said it, because a model can merge two

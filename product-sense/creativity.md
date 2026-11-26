@@ -58,15 +58,17 @@ model tomorrow, what would still make your product the one users choose? If the 
 Instagram is the classic story of focus. TechCrunch reported in 2010 that its founders first built
 Burbn, a location-based app, and quoted Kevin Systrom saying the iPhone version "felt cluttered, and
 overrun with features". In that account they cut it back to sharing, commenting on and liking photos,
-and Instagram launched on 6 October 2010, built around photo sharing and a set of filters. The
+and Instagram launched on 6 October 2010. TechCrunch's launch coverage described it as a
+photo-sharing app with a set of filters. The
 creative act was the cut. If you can't name the last good idea you shelved because it didn't
 strengthen a pillar, you have a backlog rather than a strategy.
 
 ## From the show: proven, better, new
 
-Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. **Proven** is
-what already works for this audience, **better** is where you improve on it, and **new** is your
-genuinely novel idea. His view of the first bin is blunt:
+Mark Pincus, the founder of Zynga, teaches a framework he calls Proven, Better, New. **Proven** is
+an experience already proven for this audience on this platform, which he says to copy down to the
+pixel. **Better** is what, in his words, "10 out of 10 of the existing users" would want, not what you
+think is better. **New** is your novel idea. His view of the first part is blunt:
 
 > "anything that's proven, you are gonna legally copy And the better product maker you are, the better you are at copying."
 > — Mark Pincus, [*How to steal your way to a hit product, with Mark Pincus (founder, Zynga)*](https://www.youtube.com/watch?v=G1uZZG6s7cc), The Growth Podcast, around 16:05

@@ -3571,7 +3571,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 **Proven, better, new** — A way to sort a product's parts: copy what is proven, improve where you can be better, and isolate the one genuinely new idea.
 
-*In plain terms.* Mark Pincus, the founder of Zynga, sorts every part of a new product into three bins. Proven is what already works for this audience, better is where you improve on it, and new is your novel idea. Keeping the new part isolated means that if it fails, you know the idea failed rather than the basics around it.
+*In plain terms.* Mark Pincus, the founder of Zynga, teaches a framework he calls Proven, Better, New. Proven is an experience already proven for this audience on this platform, which he says to copy closely. Better is what the existing users themselves would call better, not what the team thinks is better. New is your novel idea, which he wants isolated so that if it fails, you know the idea failed rather than the basics around it.
 
 *For example.* An onboarding redesign ships a familiar template picker (proven) with AI-filled templates (better), and puts a spreadsheet import behind one button as the isolated new bet.
 
