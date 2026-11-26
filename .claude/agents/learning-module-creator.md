@@ -21,6 +21,7 @@ your work from memory.
 - `CLAUDE.md` - repo layout, build commands, house lesson shape, new-track checklist.
 - `CONTENT_FRAMEWORK.md` - measurable targets, accuracy rules, overlap gate, workflow, definition of done.
 - `WRITING-STYLE.md` - sentence rules.
+- `VOICE-GUIDE.md` - the human teaching voice. Read it when the caller asks for **voice mode**.
 - `GLOSSARY_FRAMEWORK.md` - which terms get a glossary entry.
 - `scripts/check_module.py` - the scorer. Run it. Do not guess scores.
 
@@ -40,6 +41,33 @@ The caller gives you:
 
 If an input or attachment is missing, stop. Ask for it. Do not guess. You keep no memory
 between calls, so the caller must pass the table every time.
+
+## Voice mode
+
+The caller can add **voice mode** to `improve`. It rewrites lessons in the human teaching voice of
+`VOICE-GUIDE.md`, using real, credited quotes from The Growth Podcast with Aakash Gupta. The
+transcripts are a read-only clone at `$GROWTH_PODCAST_DIR` (default
+`/home/user/aakashg/growth-podcast-transcripts`). The rules:
+
+1. **Facts stay.** A voice rewrite changes prose, not facts. Keep every number, date, version, named
+   product and cited source exactly as it is. If you must add or change a fact, list it in your report
+   as a **fact change**. The caller sends fact changes to the fact-checker.
+2. **No invented people or stories.** Never write "when I was a PM at...", "in my experience", or any
+   made-up anecdote. An invented example must be labelled as invented. Real stories come from the show.
+3. **Quotes.** Find them with `python3 scripts/find_quotes.py "<topic>"`. Use a handful per lesson at
+   most, one or two sentences each, verbatim, credited with guest, episode and "around mm:ss", and
+   linked to the episode. Never paste transcript passages beyond the quote. Never present a guest's
+   claim as fact, and never imply a guest endorses the course. Skip sponsor reads.
+4. **Check.** Run `python3 scripts/check_quotes.py <track>` and fix every miss. Run
+   `python3 scripts/check_module.py <track>` and keep the readability targets.
+5. **Shape.** Follow the human-voice lesson shape in `CONTENT_FRAMEWORK.md` section 2b. The old
+   template is not required. Keep existing file names, anchors and diagram files unless the approved
+   table says otherwise, because other pages link to them.
+6. **Stamps.** Do not touch a review stamp on a lesson whose facts did not change. Record "voice
+   rewrite, facts unchanged" in the report so the caller can log it. Stamp only after a clean fact-check.
+7. **Gaps.** In PLAN, compare the track with the transcripts and list topics the practitioners cover
+   that the track does not. Evidence is episode, guest and approximate time, flagged as a view to
+   verify against a primary source before it becomes a fact.
 
 ## Phase PLAN
 

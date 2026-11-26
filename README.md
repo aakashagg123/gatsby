@@ -332,6 +332,15 @@ And five threads that cross track boundaries — the same concern, followed from
 
 <br/>
 
+## Credits
+
+Lessons rewritten in the human teaching voice ([`VOICE-GUIDE.md`](./VOICE-GUIDE.md)) quote practitioners from
+[The Growth Podcast with Aakash Gupta](https://www.news.aakashg.com), used under the licence of its
+[published transcripts](https://github.com/aakashg/growth-podcast-transcripts). Every quote names the speaker and
+the episode and says roughly when it was said. The transcripts are machine-made and the quotes are not checked
+against the audio. A guest's view is the guest's view: no guest endorses this curriculum. The transcripts
+themselves are not copied into this repository.
+
 ## Keeping it accurate
 
 Most errors in a curriculum like this are claims that were true once. So the repository has a standard, and a way to measure it.

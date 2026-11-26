@@ -151,6 +151,16 @@ def has_heading(text, pattern):
     return bool(re.search(r"^#{2,4} .*(?:%s)" % pattern, text, flags=re.M | re.I))
 
 
+VOICE_MARK = "<!-- voice: human -->"  # a lesson opts in to the human-voice shape (CONTENT_FRAMEWORK.md 2b)
+INVENTED_EXPERIENCE = re.compile(
+    r"\b(when I was (a|an|the|at|working)|in my experience|I once (worked|saw|had|met)|I remember when|"
+    r"a (client|colleague|friend|founder) (once )?(told|said|asked) me|in my (years|career|time) (as|at|in))\b", re.I)
+LLM_TELLS = re.compile(
+    r"(let'?s dive (in|into)|in today'?s (fast[- ]moving|ever[- ]changing)|it'?s (important|worth) (to note|noting)|"
+    r"game[- ]chang(er|ing)|\bunlock(s|ing)? (the )?(power|potential)|\bseamless(ly)?\b|\brobust\b|"
+    r"in (summary|conclusion),|navigate the landscape)", re.I)
+
+
 def lesson_checks(path, text, terms):
     stamp = STAMP_RE.search(text)
     onboarded = bool(stamp)
@@ -173,6 +183,23 @@ def lesson_checks(path, text, terms):
         sections["failure_modes"] = has_heading(text, "where it breaks|failure modes")
         sections["related"] = has_heading(text, "go deeper|related")
         core, new = ["tldr", "failure_modes", "related"], []
+    voice = VOICE_MARK in text
+    voice_problems = []
+    if voice:
+        # Human-voice lessons use a looser shape: the author's headings, but the same needs.
+        sections["failure_modes"] = has_heading(text, "failure modes|goes wrong|go wrong|breaks|traps?|mistakes|risks?|pitfalls")
+        sections["checklist"] = has_heading(text, "checklist|next|monday|try|do this|steps|what to do")
+        sections["related"] = has_heading(text, "related|go deeper|keep going|where next")
+        sections["worked_example"] = has_heading(text, "worked|example|mini-case|case|say you|picture|imagine") or bool(re.search(r"\*\*📦|\bWorked example\b", text))
+        core, new = ["failure_modes", "checklist", "related"], ["worked_example"]
+        body_text = re.sub(r"```.*?```", "", text, flags=re.S)
+        if INVENTED_EXPERIENCE.search(body_text):
+            voice_problems.append("invented first-person experience (e.g. 'when I was a PM at')")
+        tells = sorted({m.group(0).lower() for m in LLM_TELLS.finditer(body_text)})
+        if tells:
+            voice_problems.append("LLM-sounding phrases: " + ", ".join(tells))
+        if re.search(r"^> .*\n> [—-] ", body_text, flags=re.M) and "growth podcast" not in text.lower():
+            voice_problems.append("a quote block has no 'The Growth Podcast' credit in the lesson")
     missing_core = [k for k in core if not sections[k]]
     missing_new = [k for k in new if not sections[k]]
     has_sources = has_heading(text, "sources")
@@ -190,7 +217,7 @@ def lesson_checks(path, text, terms):
     return dict(
         file=os.path.relpath(path, ROOT), onboarded=onboarded,
         stamp=(stamp.group(1) + "-" + stamp.group(2), stamp.group(3)) if stamp else None,
-        missing_core=missing_core, missing_new=missing_new,
+        missing_core=missing_core, missing_new=missing_new, voice=voice, voice_problems=voice_problems,
         unsourced_claims=flagged, undefined_acronyms=undefined, **readability(text),
     )
 
@@ -230,6 +257,8 @@ def check_track(track, terms, today):
             issues.append(("FAIL", f"{os.path.basename(r['file'])}: missing {k}"))
         for k in r["missing_new"]:
             issues.append((sev_new if r["onboarded"] else "WARN", f"{os.path.basename(r['file'])}: missing {k}"))
+        for vp in r.get("voice_problems", []):
+            issues.append(("FAIL" if vp.startswith("invented") else "WARN", f"{os.path.basename(r['file'])}: {vp}"))
         if r["stamp"] and overdue(r["stamp"], today):
             issues.append(("FAIL", f"{os.path.basename(r['file'])}: review overdue ({r['stamp'][0]}, {r['stamp'][1]})"))
         if r["unsourced_claims"]:
