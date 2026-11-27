@@ -36,8 +36,9 @@ version is four moves.
   app for working parents that reduces mental load by prioritising intelligently" guides decisions in
   a way that "a task app for everyone" never will.
 - **Segmentation.** Choose whom to serve, ideally by need or behaviour rather than demographics.
-  Slack began as the internal chat tool of Tiny Speck, a game studio, which is a need real users
-  already had, proven inside one team before it became the product.
+  TechCrunch's 2019 account says Slack began as a messaging tool that Tiny Speck, a game studio, built
+  for internal use, which is a need real users already had, proven inside one team before it became
+  the product.
 - **Differentiation.** Users pick you for something **new** (a capability others lack) or something
   **better** (the same need met faster, cheaper or more pleasantly). Either way it has to matter to
   the user, because a unique feature nobody cares about wins nothing.
@@ -195,7 +196,8 @@ so you treat the result as a direction and confirm it with the launch metrics.
 ## Sources
 
 - Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
-  TechCrunch, 30 May 2019 (Tiny Speck's internal messaging tool) (as of 2026-11).
+  TechCrunch, 30 May 2019 (secondary report; Tiny Speck's internal messaging tool; no first-party
+  Slack page found) (as of 2026-11-27).
 - MG Siegler, [*A Pivotal Pivot*](https://techcrunch.com/?p=241149), TechCrunch, 8 November 2010
   (secondary; quotes Systrom's Quora answer on Burbn, which returned 403) (as of 2026-11-26).
 - MG Siegler, [Instagram launch coverage](https://techcrunch.com/2010/09/20/instagram/), TechCrunch,

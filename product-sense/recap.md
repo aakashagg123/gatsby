@@ -10,9 +10,9 @@ what stuck.
 
 ## Real-world examples & war stories
 
-**Slack started from a need people already had.** Slack began as the internal chat tool of Tiny
-Speck, a game studio. As the game wound down, the team saw the tool had value beyond their own
-company and turned it into the product. The [strategic-thinking](./creativity.md) lesson is to start
+**Slack started from a need people already had.** TechCrunch's 2019 account says Slack began as a
+messaging tool that Tiny Speck, a game studio, built for internal use. When the game failed, the
+team thought the tool could have value beyond their own company and turned it into the product. The [strategic-thinking](./creativity.md) lesson is to start
 from what people already *do*, which is the same instinct an AI PM needs to find the job a model
 reliably handles.
 
@@ -118,7 +118,7 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
 ## Sources
 
 - Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
-  TechCrunch, 30 May 2019 (as of 2026-11).
+  TechCrunch, 30 May 2019 (secondary report; no first-party Slack page found) (as of 2026-11-27).
 - Amazon, [*Kindle at 10*](https://www.aboutamazon.com/news/devices/kindle-at-10), About Amazon,
   19 November 2017 (as of 2026-11).
 - Werner Vogels, [*Working Backwards*](https://www.allthingsdistributed.com/2006/11/working_backwards.html),

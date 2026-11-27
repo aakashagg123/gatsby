@@ -97,7 +97,10 @@ else:
 > "our customers don't want or didn't want non-deterministic output. They wanted deterministic output."
 > — Jack Hirsch, [*The AI PM's Guide to Security - with Okta's VP of PM & AI, Jack Hirsch*](https://www.youtube.com/watch?v=4dWbwGCPjUY), The Growth Podcast, around 59:24
 
-In his account the example was configuration work, where the acceptance criteria are exact. That is
+The tool was called Log Investigator. In his telling, customers still needed the "decoder ring" for
+their logs but didn't want it from an LLM. He then gives automating configuration as a separate
+example, a job he calls tough to hand off fully to a non-deterministic system when you know exactly
+what the acceptance criteria are. That is
 the edge of AI product sense, knowing where a model genuinely adds value and where a dull,
 predictable feature wins. A rough rule of thumb, not a finding, is that the best AI product often
 uses the model for the 20% of the experience that delights and a deterministic system for the 80%
