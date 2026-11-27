@@ -36,9 +36,8 @@ version is four moves.
   app for working parents that reduces mental load by prioritising intelligently" guides decisions in
   a way that "a task app for everyone" never will.
 - **Segmentation.** Choose whom to serve, ideally by need or behaviour rather than demographics.
-  TechCrunch's 2019 account says Slack began as a messaging tool that Tiny Speck, a game studio, built
-  for internal use, which is a need real users already had, proven inside one team before it became
-  the product.
+  A strong starting point is a need real users already have, such as an internal tool a team built
+  for itself that turns out to matter more than the product it was built to support.
 - **Differentiation.** Users pick you for something **new** (a capability others lack) or something
   **better** (the same need met faster, cheaper or more pleasantly). Either way it has to matter to
   the user, because a unique feature nobody cares about wins nothing.
@@ -56,12 +55,9 @@ document claims. Strategy for an AI feature works the same way. If a competitor 
 model tomorrow, what would still make your product the one users choose? If the honest answer is
 "nothing", you have a feature, not a position.
 
-Instagram is the classic story of focus. TechCrunch reported in 2010 that its founders first built
-Burbn, a location-based app, and quoted Kevin Systrom saying the iPhone version "felt cluttered, and
-overrun with features". In that account they cut it back to sharing, commenting on and liking photos,
-and Instagram launched on 6 October 2010. TechCrunch's launch coverage described it as a
-photo-sharing app with a set of filters. The
-creative act was the cut. If you can't name the last good idea you shelved because it didn't
+Focus often shows up as a cut. Picture a team (an illustration) whose crowded app has one feature
+people actually use, and which rebuilds the product around that one thing and drops the rest. The
+creative act there is the cut. If you can't name the last good idea you shelved because it didn't
 strengthen a pillar, you have a backlog rather than a strategy.
 
 ## From the show: proven, better, new
@@ -196,15 +192,6 @@ so you treat the result as a direction and confirm it with the launch metrics.
 
 ## Sources
 
-- Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
-  TechCrunch, 30 May 2019 (secondary report; Tiny Speck's internal messaging tool; no first-party
-  Slack page found) (as of 2026-11-27).
-- MG Siegler, [*A Pivotal Pivot*](https://techcrunch.com/?p=241149), TechCrunch, 8 November 2010
-  (secondary; quotes Systrom's Quora answer on Burbn, which returned 403) (as of 2026-11-26).
-- MG Siegler, [Instagram launch coverage](https://techcrunch.com/2010/09/20/instagram/), TechCrunch,
-  20 September 2010 (secondary; Burbn as a location-focused app; launch filters) (as of 2026-11-26).
-- About Instagram, [product evolution timeline](https://about.instagram.com/about-us/instagram-product-evolution)
-  ("Instagram Launches", 6 October 2010) (as of 2026-11-26).
 - GV, [The Design Sprint](https://www.gv.com/sprint/) (five days; Jake Knapp at Google from 2010)
   (as of 2026-11).
 - Gmail, [*New in Labs: Undo Send*](https://gmail.googleblog.com/2009/03/new-in-labs-undo-send.html),

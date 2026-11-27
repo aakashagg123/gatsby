@@ -10,16 +10,10 @@ what stuck.
 
 ## Real-world examples & war stories
 
-**Slack started from a need people already had.** TechCrunch's 2019 account says Slack began as a
-messaging tool that Tiny Speck, a game studio, built for internal use. When the game failed, the
-team thought the tool could have value beyond their own company and turned it into the product. The [strategic-thinking](./creativity.md) lesson is to start
-from what people already *do*, which is the same instinct an AI PM needs to find the job a model
-reliably handles.
-
-**Amazon's Kindle vision and the PRFAQ.** "Our vision for Kindle is every book ever printed in any
+**Amazon's Kindle vision and Working Backwards.** "Our vision for Kindle is every book ever printed in any
 language, all available in less than 60 seconds." That is a vision specific enough to settle
 arguments about scope. Amazon's Working Backwards process, as Werner Vogels describes it, defines a
-product by writing the press release first and then the FAQ, a format often called the PRFAQ. Strong [communication
+product by writing the press release first and then the FAQ. Strong [communication
 artifacts](./communication.md) turn product sense into alignment, and for an AI feature full of
 uncertainty, a plain statement of what it is, what it isn't and how you'll know it worked is worth
 more than any demo.
@@ -117,8 +111,6 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
 
 ## Sources
 
-- Kate Clark, [*The Slack origin story*](https://techcrunch.com/2019/05/30/the-slack-origin-story/),
-  TechCrunch, 30 May 2019 (secondary report; no first-party Slack page found) (as of 2026-11-27).
 - Amazon, [*Kindle at 10*](https://www.aboutamazon.com/news/devices/kindle-at-10), About Amazon,
   19 November 2017 (as of 2026-11).
 - Werner Vogels, [*Working Backwards*](https://www.allthingsdistributed.com/2006/11/working_backwards.html),
