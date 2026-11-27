@@ -2,6 +2,8 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Every competitor in your market has access to the same models you do. If your roadmap says "add AI

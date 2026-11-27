@@ -2,6 +2,8 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Picture the launch review for an AI feature. Engineering thought it was a draft assistant, sales

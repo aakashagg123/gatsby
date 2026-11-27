@@ -2,6 +2,8 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 You've spent six months on an AI feature. You know which prompts work, what the model is good at

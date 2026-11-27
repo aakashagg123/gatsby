@@ -2,6 +2,8 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 You've just joined a company that sells software to hospitals, or to banks, or to freight brokers.

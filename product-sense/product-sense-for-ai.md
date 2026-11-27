@@ -2,6 +2,8 @@
 
 *Part of [Product sense for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Your AI feature demos beautifully. The executive sponsor loved it, the pilot customers said "wow",
@@ -320,7 +322,9 @@ that debate against the classic PM, technical PM and engineering manager spectru
 - AI Act text, [Article 50](https://artificialintelligenceact.eu/article/50/) and [Article
   111](https://artificialintelligenceact.eu/article/111/), artificialintelligenceact.eu (consolidated
   text; Article 111(4) marked as added by the amendment; 2 December 2026 for Article 50(2)) (as of
-  2026-11-26). The Official Journal text on EUR-Lex returned an empty page.
+  2026-11-26). Official Journal text: Regulation (EU) 2026/1744, [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng),
+  Article 1 point 39(b) adds Article 111(4) to Regulation (EU) 2024/1689, which holds Article 50
+  (2 December 2026 for Article 50(2)) (as of 2026-11-27).
 - Adam Tauman Kalai, Ofir Nachum, Santosh S. Vempala and Edwin Zhang, [*Why Language Models
   Hallucinate*](https://arxiv.org/abs/2509.04664), arXiv 2509.04664, 4 September 2025, and OpenAI,
   [*Why language models hallucinate*](https://openai.com/index/why-language-models-hallucinate/),
