@@ -93,7 +93,7 @@ data and marketing into ideation early, because each lens produces ideas the oth
 - **Brainstorms** with rules ("defer judgment", "no idea too crazy"), plus formats like *Crazy
   Eights* and *brainwriting* (write silently, then share), so quieter
   people contribute as much as louder ones.
-- **Design sprints.** GV (formerly Google Ventures) describes its sprint as a five-day process that goes from mapping a problem
+- **Design sprints.** GV describes its sprint as a five-day process that goes from mapping a problem
   to testing a realistic prototype with customers. Jake Knapp began running sprints at Google in
   2010. Even a mini cycle of brainstorm, prototype and test adds structure.
 - **Hack days**, with freedom to build anything product-related. Gmail's undo send shows how an

@@ -231,9 +231,8 @@ The first can be fully automated. The second needs a human checkpoint, clear pro
 trail. Matching the level of autonomy to the cost of being wrong in this domain is one of the
 sharpest expressions of AI product sense.
 
-A support chatbot speaks for your company, and a company can be held to what its chatbot tells a
-customer, so a wrong policy answer costs you in law and in reputation rather than in engineering
-time. Answering only from real policy documents, with a link to the source, is the kind of product
+A support chatbot speaks for your company, so a wrong policy answer is your problem to own, not the
+model's. Answering only from real policy documents, with a link to the source, is the kind of product
 decision that guards against it.
 
 ## From the show: will taste stay human?
