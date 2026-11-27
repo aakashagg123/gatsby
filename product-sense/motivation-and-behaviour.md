@@ -126,17 +126,11 @@ Deep delight, in her words, is something else:
 > "the deep delight is when we create functional solutions while addressing emotional needs while building them."
 > — Nesrine Changuel, [*How to Engineer Delight Into AI Products*](https://www.youtube.com/watch?v=0rTAZ7qnKgc), The Growth Podcast, around 02:57
 
-Her warning case is a campaign from Deliveroo in France. On Mother's Day 2024, French users got a
-push notification that read "Appel manqué de maman" ("Missed call from mum"), meant as a playful
-nudge, and the French site 24matins reported that some found it upsetting and that Deliveroo
-apologised to anyone it had hurt. In Changuel's telling, the reaction was the opposite of delight:
-
-> "this is something that had the worst press ever because a lot of people felt hurt and not everyone can feel the joy out of this supposed to be delightful moment"
-> — Nesrine Changuel, [*How to Engineer Delight Into AI Products*](https://www.youtube.com/watch?v=0rTAZ7qnKgc), The Growth Podcast, around 09:45
-
-That is a nudge designed for the happy case only. Changuel describes people who felt weird, grief
-or sorrow, and it isn't hard to picture who they were. Before you ship a playful prompt, picture the user for whom it lands badly, because
-the same cognitive empathy that finds friction also finds this. If you need a way to decide which
+Surface delight has a trap of its own. A playful notification or a cute holiday prompt is usually
+written with the happy case in mind, and it can land as a jolt for the user whose life doesn't
+match that picture, which turns an engagement trick into a moment of hurt. Before you ship a
+playful prompt, picture the user for whom it lands badly, because the same cognitive empathy that
+finds friction also finds this. If you need a way to decide which
 delighters are worth building at all, the Kano model in [Prioritization and
 roadmaps](../technical-product-management/prioritization-and-roadmaps.md) sorts features into
 basic needs, performance features and delighters.
@@ -179,7 +173,7 @@ Friction that serves only your metric is a legal risk as well as a trust risk.
 - **Frictionless where friction was protecting quality.** Someone removes a confirmation that
   prevented costly errors, and support tickets about mistakes rise a few weeks later.
 - **Delight designed for the happy case.** A playful nudge that hurts the users it wasn't pictured
-  for, as in the Deliveroo story above.
+  for. It shows up as angry replies and a spike in notification opt-outs the day it goes out.
 
 ## What to do next
 
@@ -220,9 +214,6 @@ Friction that serves only your metric is a legal risk as well as a trust risk.
 - Philippe Mongin and Mikaël Cozic, [*Rethinking nudge: not one but three
   concepts*](https://doi.org/10.1017/bpp.2016.16), Behavioural Public Policy 2(1), 2018 (quotes
   Thaler and Sunstein's definition, 2009 edition, p. 6) (as of 2026-11-26).
-- Jérôme Nelra, [*La campagne « Appel manqué de maman » de Deliveroo pour la fête des mères n'a pas été
-  vraiment appréciée*](https://www.24matins.fr/la-campagne-appel-manque-de-maman-de-deliveroo-pour-la-fete-des-meres-na-pas-ete-vraiment-appreciee-1375516),
-  24matins, 28 May 2024 (secondary; notification sent 26 May 2024; apology via BFM TV) (as of 2026-11-26).
 - US Federal Trade Commission, [*FTC Secures Historic $2.5 Billion Settlement Against
   Amazon*](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon),
   25 September 2025 (as of 2026-11).

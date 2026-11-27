@@ -231,13 +231,10 @@ The first can be fully automated. The second needs a human checkpoint, clear pro
 trail. Matching the level of autonomy to the cost of being wrong in this domain is one of the
 sharpest expressions of AI product sense.
 
-Air Canada learned this in public. CBS News reported in February 2024 that the airline's support
-chatbot told a customer he could apply for a bereavement refund after travelling, which its policy
-did not allow. British Columbia's Civil Resolution Tribunal rejected the airline's argument that the
-chatbot was responsible for its own actions and ordered it to pay $812 (CAD) in damages and fees. A Dentons summary of the same decision, *Moffatt v.
-Air Canada*, breaks that down as $650.88 in damages, $36.14 in interest and $125 in tribunal fees.
-The cost was legal and reputational rather than technical. Answering only from real policy
-documents, with a link to the source, is the kind of product decision that guards against it.
+A support chatbot speaks for your company, and a company can be held to what its chatbot tells a
+customer, so a wrong policy answer costs you in law and in reputation rather than in engineering
+time. Answering only from real policy documents, with a link to the source, is the kind of product
+decision that guards against it.
 
 ## From the show: will taste stay human?
 
@@ -340,12 +337,4 @@ that debate against the classic PM, technical PM and engineering manager spectru
 - US Federal Trade Commission, [*FTC Launches Inquiry into AI Chatbots Acting as
   Companions*](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions),
   11 September 2025 (as of 2026-11).
-- Megan Cerullo, [*Air Canada chatbot costs airline discount it wrongly offered customer*](https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/),
-  CBS News, 19 February 2024 (secondary report; $812 CAD in damages and fees) (as of 2026-11-26). The
-  decision itself, *Moffatt v. Air Canada*, 2024 BCCRT 149, was not re-opened (canlii.org and
-  civilresolutionbc.ca returned 403).
-- Kirsten Thompson (Dentons), [*Airline Ordered To Compensate A B.C. Man Because Its Chatbot Provided
-  Inaccurate Information*](https://www.legal500.com/intelligence/canada/technology/airline-ordered-to-compensate-a-bc-man-because-its-chatbot-provided-inaccurate-information),
-  Legal 500 (first published on Mondaq), 23 February 2024 (secondary; 2024 BCCRT 149; $650.88 damages,
-  $36.14 interest, $125 fees) (as of 2026-11-26).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

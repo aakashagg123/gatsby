@@ -37,13 +37,6 @@ subtleties of what actually happened are being forgotten, so treat the short ver
 rather than as history. The trap it points at is attachment to a winning bet, and in a field moving
 as fast as AI, being willing to say "the ground shifted, so we should too" is a survival skill.
 
-**Air Canada's chatbot gave a wrong refund answer (2024).** CBS News reported that the airline's
-support chatbot told a customer he could claim a bereavement refund after travelling, which its
-policy did not allow, and that a British Columbia tribunal ordered the airline to pay him $812 (CAD)
-in damages and fees. It is the canonical [product-sense-for-AI](./product-sense-for-ai.md) warning,
-a confidently wrong answer delivered with the company's full authority. Answering only from real
-policy, with a link to the source, is a product decision before it's an engineering one.
-
 **The expert's trap in domain-heavy products.** Marty Cagan's warning that experts come to believe
 they are more like their target customer than they really are applies from medical software to
 developer tools. [Domain expertise](./domain-expertise.md) only pays off when it's paired with the
@@ -137,12 +130,5 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
   Review, 15 July 2016 (as of 2026-11).
 - Marty Cagan, [*The Role of Domain Experience*](https://www.svpg.com/the-role-of-domain-experience/),
   SVPG, 28 March 2005 (as of 2026-11).
-- Megan Cerullo, [*Air Canada chatbot costs airline discount it wrongly offered customer*](https://www.cbsnews.com/news/aircanada-chatbot-discount-customer/),
-  CBS News, 19 February 2024 (secondary report) (as of 2026-11-26). The decision, *Moffatt v. Air
-  Canada*, 2024 BCCRT 149, was not re-opened (canlii.org and civilresolutionbc.ca returned 403).
-- Kirsten Thompson (Dentons), [*Airline Ordered To Compensate A B.C. Man Because Its Chatbot Provided
-  Inaccurate Information*](https://www.legal500.com/intelligence/canada/technology/airline-ordered-to-compensate-a-bc-man-because-its-chatbot-provided-inaccurate-information),
-  Legal 500 (first published on Mondaq), 23 February 2024 (secondary; 2024 BCCRT 149; $650.88 damages,
-  $36.14 interest, $125 fees) (as of 2026-11-26).
 - Duolingo, [*How the Duolingo streak builds habit*](https://blog.duolingo.com/how-duolingo-streak-builds-habit/),
   31 January 2022 (Streak Freeze pauses a streak for a day) (as of 2026-11-26).

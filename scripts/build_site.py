@@ -221,7 +221,7 @@ LANDING = """<!doctype html>
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
       <h3>Product sense →</h3>
       <p>The instinct for what makes a product succeed, for APMs & PMs moving into AI PM —
-      motivation, empathy, creativity, communication, domain expertise, and product sense for AI.</p>
+      motivation, empathy, user research, creativity, communication, domain expertise, and product sense for AI.</p>
     </a>
     <a class="card" href="technical-product-sense/index.html">
       <span class="Badge" data-color="secondary" data-variant="soft" data-size="md" data-pill>Module</span>
