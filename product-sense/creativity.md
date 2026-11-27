@@ -97,9 +97,10 @@ data and marketing into ideation early, because each lens produces ideas the oth
 - **Design sprints.** GV describes its sprint as a five-day process that goes from mapping a problem
   to testing a realistic prototype with customers. Jake Knapp began running sprints at Google in
   2010. Even a mini cycle of brainstorm, prototype and test adds structure.
-- **Hack days**, with freedom to build anything product-related. Gmail's undo send shows how an
-  experiment can graduate. It started in 2009 as an experimental Gmail Labs feature and became a
-  standard setting in 2015.
+- **Hack days**, with freedom to build anything product-related.
+- **Labs and experiments**, a place where an unfinished idea can ship to the users who opt in.
+  Gmail's undo send shows how an experiment can graduate. It started in 2009 as an experimental
+  Gmail Labs feature and became a standard setting in 2015.
 - **"How might we…?"** framing and the **5 Whys**, which reframe a problem from its root and open new
   solution spaces.
 

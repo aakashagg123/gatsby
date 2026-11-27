@@ -18,8 +18,8 @@ reliably handles.
 
 **Amazon's Kindle vision and the PRFAQ.** "Our vision for Kindle is every book ever printed in any
 language, all available in less than 60 seconds." That is a vision specific enough to settle
-arguments about scope. The press
-release and FAQ format (PRFAQ) makes every proposal start from the customer. Strong [communication
+arguments about scope. Amazon's Working Backwards process, as Werner Vogels describes it, defines a
+product by writing the press release first and then the FAQ, a format often called the PRFAQ. Strong [communication
 artifacts](./communication.md) turn product sense into alignment, and for an AI feature full of
 uncertainty, a plain statement of what it is, what it isn't and how you'll know it worked is worth
 more than any demo.
@@ -123,6 +123,9 @@ Eleven questions, at least one per lesson. The answers fold out, and each links 
   19 November 2017 (as of 2026-11).
 - Werner Vogels, [*Working Backwards*](https://www.allthingsdistributed.com/2006/11/working_backwards.html),
   All Things Distributed, 1 November 2006 (as of 2026-11).
+- Jakob Nielsen, [*Why You Only Need to Test with 5
+  Users*](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/), Nielsen Norman
+  Group, 18 March 2000 (for question 5) (as of 2026-11-27).
 - Joanna Goodrich, [*The First Digital Camera Was the Size of a
   Toaster*](https://spectrum.ieee.org/first-digital-camera-history), IEEE Spectrum, 6 April 2022, and
   Scott D. Anthony, [*Kodak's Downfall Wasn't About

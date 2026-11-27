@@ -128,7 +128,7 @@ and in the AI engineering track's [stack-tradeoffs
 lesson](../content/06-strategy-tradeoffs/inference-stack-tradeoffs.md).
 
 Scope matters as much, because model capability is **jagged**. A model can draft a legal argument
-yet miscount the words in a sentence. The best evidence is the Harvard and Boston Consulting Group
+yet miscount the words in a sentence. One well-known study is the Harvard and Boston Consulting Group
 (BCG) field study of 758 consultants, as written up by BCG's François Candelon and colleagues in
 2023. On a task inside the
 frontier, users of GPT-4 (OpenAI's model at the time) scored about 40% above the control group. On a
