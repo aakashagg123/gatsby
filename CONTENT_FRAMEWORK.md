@@ -50,6 +50,30 @@ Keep the house skeleton from `CLAUDE.md`. Add the four marked items.
 13. **Sources** *(new, when needed)*: required when the lesson makes versioned, numeric,
     vendor, or attributed claims (section 5). Each entry has a link and an "as of" date.
 
+### 2b. Human-voice lessons
+
+A lesson rewritten in the teaching voice of [`VOICE-GUIDE.md`](./VOICE-GUIDE.md) uses a looser shape.
+It must still have a review stamp (kept from before, see section 6), and it must have:
+
+1. An opening situation or question, not a definition.
+2. The teaching, with one worked example (labelled invented when invented) and the tradeoffs.
+3. A "From the show" moment when real practitioners have said something worth hearing: a short credited
+   quote, a real story or a real disagreement from The Growth Podcast with Aakash Gupta.
+4. A section on where it goes wrong, a short list of things to do next, and related lessons.
+5. Sources, with the show credit line when a quote or story is used.
+
+The headings are the author's. `check_module.py` accepts this shape for the modules listed in
+`VOICE_MODULES` and still scores readability by the same thresholds.
+
+Quote rules (the licence of the transcripts sets them):
+
+- Credit the show and link the episode. Say "around mm:ss", because transcript timestamps can drift from the video.
+- A quote is one or two sentences, usually under 40 words, and a lesson has a handful at most.
+- A quote appears verbatim in the named episode. `scripts/check_quotes.py` verifies this.
+- A guest's claim is written as what the guest says. It never becomes a fact because a guest said it.
+- Never imply that a guest endorses the course, never imitate a guest's voice, and never copy transcript passages beyond the quote.
+- A voice rewrite changes prose, not facts. Any lesson where a fact, number or claim is added or changed goes through the independent fact-check (section 5) before its review stamp is touched. A lesson with prose edits only keeps its stamp, and `MODULE_REFRESH_LOG.md` records "voice rewrite, facts unchanged".
+
 ## 3. Module anatomy
 
 - **README.** Scope note, knowledge-graph diagram, lesson list, and a **Where the depth
@@ -149,7 +173,7 @@ Some modules are short on purpose. They are compact front doors that point to de
 lessons. That is allowed. A short module must still meet this floor:
 
 - a worked example in each lesson
-- an Under the hood section in each lesson
+- an Under the hood section in each lesson (not required for human-voice lessons, section 2b)
 - a Test yourself section in the recap
 - a **Where the depth lives** map in the README
 - sources and a review stamp
@@ -193,6 +217,7 @@ A module is done when all of these hold:
 
 - [ ] Readability: all three metrics pass, or a warning is explained in the PR.
 - [ ] Every lesson has a review stamp, a worked example, and an Under the hood section.
+      (Human-voice lessons, section 2b, are exempt from the Under the hood section. They need a worked example.)
 - [ ] Every claim in section 5's list has a primary source and an "as of" date.
 - [ ] The independent fact-check has no `WRONG` or `STALE` rows.
 - [ ] The recap has Test yourself with at least one question per lesson.

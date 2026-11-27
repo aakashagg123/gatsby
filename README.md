@@ -236,7 +236,7 @@ The AI Engineering modules above teach the *stack*. Twenty-eight further tracks 
 
 | Track | What it teaches | Start here |
 | :-- | :-- | :-- |
-| [**Product sense**](./product-sense/README.md) | The five habits under great product judgment — behaviour, empathy, strategy, communication, domain — and how they bend for AI products. | [Motivation & behaviour](./product-sense/motivation-and-behaviour.md) |
+| [**Product sense**](./product-sense/README.md) | The six habits under great product judgment — behaviour, empathy, user research, creativity, communication, domain — and an AI capstone on how they bend for AI products. | [Motivation & behaviour](./product-sense/motivation-and-behaviour.md) |
 | [**Technical product sense**](./technical-product-sense/README.md) | How systems are actually built — request paths, APIs, data, latency, reliability, tech debt — at the altitude a PM needs to lead technical conversations. | [How systems are built](./technical-product-sense/how-systems-are-built.md) |
 | [**Technical product management**](./technical-product-management/README.md) | The operating craft: discovery, specs, prioritization, working with engineering, metrics, launches — and the AI-products capstone. | [The technical PM role](./technical-product-management/the-technical-pm-role.md) |
 | [**Business acumen**](./business-acumen/README.md) | Money, markets, organizations and influence for Group PMs, Heads of Product and VPs — statements, unit economics, business cases and valuation, strategy, pricing, go-to-market, portfolios, org design and the executive table, grounded in FinTech, Payments, Lending, eCommerce, InsurTech and Retail. 15 lessons and an interactive self-assessment. | [Foundations: business acumen and the T-shaped leader](./business-acumen/foundations-and-assessment.md) |
@@ -331,6 +331,15 @@ And five threads that cross track boundaries — the same concern, followed from
 </table>
 
 <br/>
+
+## Credits
+
+Lessons rewritten in the human teaching voice ([`VOICE-GUIDE.md`](./VOICE-GUIDE.md)) quote practitioners from
+[The Growth Podcast with Aakash Gupta](https://www.news.aakashg.com), used under the licence of its
+[published transcripts](https://github.com/aakashg/growth-podcast-transcripts). Every quote names the speaker and
+the episode and says roughly when it was said. The transcripts are machine-made and the quotes are not checked
+against the audio. A guest's view is the guest's view: no guest endorses this curriculum. The transcripts
+themselves are not copied into this repository.
 
 ## Keeping it accurate
 

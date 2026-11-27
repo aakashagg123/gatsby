@@ -1,5 +1,10 @@
 # Writing style: Simplified English
 
+> **Lessons rewritten in the human teaching voice follow [`VOICE-GUIDE.md`](./VOICE-GUIDE.md) instead of
+> this file.** That guide allows contractions, questions, varied sentence length and credited quotes from
+> real practitioners, and it keeps the readability targets below. The first modules to move are the product
+> management tracks. Every other lesson keeps the rules in this file until its turn.
+
 All prose in this repository follows the **spirit of ASD-STE100** (the aerospace
 Simplified Technical English standard), adapted for a technical/product
 curriculum rather than a maintenance manual. The goal is prose that a
