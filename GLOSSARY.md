@@ -1029,6 +1029,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
 
+**Cost of delay (WSJF)** — What waiting costs per unit of time. Dividing it by the job's duration gives WSJF, weighted shortest job first.
+
+*In plain terms.* Instead of asking what an item is worth, cost of delay asks what each month of not having it costs. That matters when timing does, such as a compliance deadline or a market window. Dividing by duration favours the quick, valuable jobs, because finishing them early stops the most cost soonest.
+
+*For example.* A $40k-a-month problem that takes 2 months scores 20k; a $60k-a-month problem that takes 6 months scores 10k, so the first goes first.
+
+*Where it shows up:* Prioritising when deadlines or windows matter; Explaining priorities to sales and finance in money and time; Breaking ties that value-only scores can't.
+
+*See:* [Prioritization & roadmaps](./technical-product-management/prioritization-and-roadmaps.md).
+
 **Cost per successful outcome** — AI spend divided by the results that met the quality bar, not by all requests.
 
 *In plain terms.* A cheaper model can cost more per useful result if people discard more of its output. The FinOps Foundation lists it as a key measure for AI spend.
@@ -1319,6 +1329,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [What a tensor is: shape, rank and dtype](./tensors/what-a-tensor-is.md).
 
+**Dual-track discovery** — Running discovery (should we build this?) continuously, a step ahead of delivery (how do we build it well?).
+
+*In plain terms.* Discovery is cheap to get wrong and delivery is expensive to get wrong, so you want ideas to fail in discovery. Dual-track means both run at once: while engineering builds this month's validated bet, a designer, an engineer and the PM are de-risking next month's. Delivery never waits, and discovery never hands over an unchecked guess.
+
+*For example.* While the team builds billing-ticket drafts, a three-day spike tests whether drafts work for refund tickets too.
+
+*Where it shows up:* Keeping delivery fed with validated bets; Killing ideas before they cost a quarter; Planning a feasibility spike for an AI feature.
+
+*See:* [Discovery to delivery](./technical-product-management/discovery-to-delivery.md).
+
 **Durable execution (checkpointing)** — Saving a long-running workflow's progress after each step, so a crash resumes instead of restarting.
 
 *In plain terms.* For agents it stops paid or irreversible tool calls from repeating after a failure.
@@ -1508,6 +1528,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Protecting an insurance product from catastrophes; Choosing between reinsurance structures.
 
 *See:* [Business cases, capital and valuation](./business-acumen/business-cases-and-valuation.md).
+
+**Expand-migrate-contract** — The three-step migration pattern: run the new path alongside the old, move users across in cohorts, then switch the old path off.
+
+*In plain terms.* Most migrations fail in the transition rather than the destination. Expanding first means the new system can be compared with the old on real traffic. Migrating in cohorts limits the damage of a surprise. Contracting, turning the old thing off and deleting it, is the step teams skip, and it's the one that says the migration is done.
+
+*For example.* A team swapping model providers runs the new one in shadow mode, moves internal users and then customers in cohorts, and only marks the project done when the old provider's integration is deleted.
+
+*Where it shows up:* Planning a platform, API or model migration; Setting the 'old thing off' milestone; Deciding what comparison proves the new path works.
+
+*See:* [Launches, rollouts & migrations](./technical-product-management/launches-rollouts-and-migrations.md).
 
 **Expected loss (EL)** — The average credit loss a lender expects on a loan: probability of default × loss given default × exposure at default.
 
@@ -2328,6 +2358,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Setting token lifetimes; Deciding what goes in a token.
 
 *See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
+
+**Kano model** — Noriaki Kano's 1984 model, which names three types of quality: must-be, one-dimensional and attractive.
+
+*In plain terms.* Kano's names give you a prompt for a roadmap review rather than a formula. Sorting your top items by how you expect users to react to each one, and asking which they would simply take for granted, is a quick way to spot a basic the roadmap has left uncovered.
+
+*For example.* A team sorts its top ten roadmap items with the three Kano names and notices that nothing on the list covers account recovery, which users take for granted.
+
+*Where it shows up:* Checking a roadmap for uncovered basics; Prompting a discussion of how users will react to each item.
+
+*See:* [Prioritization & roadmaps](./technical-product-management/prioritization-and-roadmaps.md).
 
 **Keycloak realm** — An isolated space in Keycloak that holds a set of users, credentials, roles and groups.
 
@@ -4029,6 +4069,16 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Specs, PRDs & RFCs](./technical-product-management/specs-prds-and-rfcs.md).
 
+**RICE** — A prioritisation score from reach, impact, confidence and effort. Intercom's page shows the formula as an image; LogRocket's guide states it in text as reach × impact × confidence ÷ effort. Sean McBride introduced it on Intercom's blog in 2018.
+
+*In plain terms.* RICE turns a roadmap argument into four numbers you can challenge one at a time: how many people an item reaches, how much it matters to each, how sure you are, and how much it costs to build. Its most useful term is confidence, because it makes you admit which inputs are guesses.
+
+*For example.* An AI summariser scores high until a one-week spike shows it only handles 60% of inputs well and needs more effort, which drops it below a plain support fix.
+
+*Where it shows up:* Ranking a backlog in a way others can argue with; Exposing which estimates are guesses; Showing how a feasibility spike changes a ranking.
+
+*See:* [Prioritization & roadmaps](./technical-product-management/prioritization-and-roadmaps.md).
+
 **Risk appetite** — A board-approved statement of how much risk of each kind the company will take to meet its goals.
 
 *In plain terms.* It has qualitative statements and quantitative limits, each with an early-warning trigger. A launch that pushes a metric past a limit needs a decision, often a time-limited risk acceptance.
@@ -4098,6 +4148,16 @@ Which words get an entry — and why — is defined by the rubric in
 *Where it shows up:* Consistency across distributed steps; Designing rollback/undo in workflows; Handling partial failures gracefully.
 
 *See:* [Flowable](./flowable/README.md).
+
+**Sample ratio mismatch (SRM)** — When an A/B test's groups come out a different size from the split you configured, a sign that users went missing from one arm.
+
+*In plain terms.* If you split traffic 50/50 and get 51/49 on a big test, something is filtering users out of one side, such as a bug, a timeout or a bot filter. The users who vanish are rarely random, so the comparison is biased. A chi-square test on the counts flags it before anyone reads the result.
+
+*For example.* A test meant to be 50/50 ends with 4,100 users in control and 3,700 in treatment; the chi-square p-value is tiny, so the team finds the cause before reading the lift.
+
+*Where it shows up:* Deciding whether an experiment result can be trusted; Adding a split check to every readout; Catching instrumentation bugs early.
+
+*See:* [Metrics & experimentation](./technical-product-management/metrics-and-experimentation.md).
 
 **Sandbox (for agents)** — An isolated environment, such as a container, where an agent runs with limited files, network and credentials.
 

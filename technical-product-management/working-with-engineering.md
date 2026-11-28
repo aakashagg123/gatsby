@@ -2,39 +2,22 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
-## TL;DR
+*Last reviewed: 2026-11 · Volatility: medium*
 
-Most software teams run some flavour of **agile**: work sliced small, built in short
-cycles, corrected by feedback. This happens either in **sprints** (Scrum: fixed 1–2 week
-cycles with planning, review, and retro) or **flow** (Kanban: continuous pull through a
-work-in-progress-limited board). The rituals are where the PM's product intent physically
-enters the machine. Each one has a specific PM job: bring the *why* and the priorities
-to planning, make scope calls at standup speed during the sprint, judge outcomes at
-review, and hear the process feedback at retro. Underneath all of it runs the **trust
-economy**: estimates are honoured as estimates, bad news travels fast in both directions,
-and the PM who understands *why* things take time gets told the truth about how long
-things take.
+<!-- voice: human -->
 
-> 🎯 **For the AI PM**
->
-> **Why it matters** — AI work fits rituals awkwardly. "Improve answer quality" isn't a
-> ticket that burns down linearly — it's an experiment loop that might converge in two
-> days or never. Forcing research-shaped work into feature-shaped sprints makes every
-> sprint look like a failure.
->
-> **What it changes in your decisions** — You let the team run experiment-shaped work as
-> **time-boxed spikes with an eval-score exit criterion** ("two weeks; ship if the eval
-> clears 85%, escalate if it doesn't") instead of feature tickets with an implied promise
-> of success.
->
-> **Ask yourself** — *"Is this sprint item a build (we know what done looks like) or an
-> experiment (we're buying information) — and does the plan admit which?"*
->
-> **Risk if ignored** — Quality work gets reported as "still not done" sprint after
-> sprint, trust erodes on both sides, and the team quietly stops attempting ambitious AI
-> work at all.
+A sales director stops you in the corridor. A big prospect wants the integration "by end of
+next month", which is six weeks away. You know the team's estimate was ten weeks. You also know that if you walk back into planning and
+ask whether they can do it in six, they'll probably say yes. The work will still take ten weeks, minus the tests and plus an incident. This lesson is about
+the better conversation, and about the habits that make engineers tell you the truth before you
+need it.
 
-## The shape of a sprint
+## The rituals, and your job in each
+
+Most software teams run some form of agile, which means work sliced small, built in short cycles
+and corrected by feedback. Some use **sprints**, Scrum's fixed-length cycles of one month or less, with planning, review and a retrospective. Others use **flow**, Kanban's continuous pull of work through a board with
+work-in-progress (WIP) limits. The rituals are where your product intent
+actually enters the build.
 
 ```mermaid
 flowchart LR
@@ -49,117 +32,153 @@ flowchart LR
   RT --> BL
 ```
 
-- **Backlog refinement** (continuous) — your most underrated hour of the week. Stories
-  get clarified, sliced, and estimated *before* planning, so planning is a decision
-  meeting, not an archaeology session. A PM who shows up to refinement with crisp
-  acceptance criteria is worth two who show up only to demos.
-- **Sprint planning** — you bring the ordered backlog and the context (*why these, why
-  now*). The team decides how much fits. The commitment must be theirs — a sprint stuffed
-  by the PM is a sprint the team never owned.
-- **Daily standup** — not a status report to you. You're there to catch the sentence
-  "blocked, waiting on product" and kill it within hours. PM decision latency is invisible
-  in every metric and deadly in every sprint.
-- **Review/demo** — working software against acceptance criteria. Praise specifically,
-  question honestly. "Looks great, ship it" to something that misses a criterion teaches
-  the team the criteria are decoration.
-- **Retrospective** — the team's meeting about *how* it works. Attend if invited, listen
-  more than you talk, and actually fix the top process complaint if it's yours to fix.
-  (It's often "requirements arrive late or change mid-sprint." Ouch — and fair.)
+**Backlog refinement** is probably the most underrated hour of your week. Stories get clarified,
+sliced and estimated *before* planning, so planning becomes a decision meeting rather than an
+archaeology session. A PM who arrives at refinement with crisp acceptance criteria does more for
+the sprint than one who only shows up to demos.
 
-**Scrum vs. Kanban** in one line each: Scrum batches work into fixed commitments —
-strongest when the work is plannable feature-building. Kanban pulls work continuously
-through WIP limits — strongest for interrupt-heavy or flow-shaped work (platform teams,
-support-heavy products, ops). Many teams blend them. Your concern isn't the methodology
-name. It's that priorities enter cleanly and feedback exits regularly.
+**Sprint planning** is where you bring the ordered backlog and the context, meaning why these
+items and why now. The team decides how much fits, and the commitment has to be theirs, since a
+sprint the PM stuffed is a sprint the team never owned.
 
-## Velocity and throughput — what the numbers actually tell you
+**The daily standup** isn't a status report to you. You're there to catch the phrase "blocked,
+waiting on product" and clear it within hours, because PM decision delay doesn't show up in any
+metric but it slows every sprint.
 
-Teams measure how much they get done. Two flavours, same purpose:
+**The review or demo** checks working software against acceptance criteria. Praise specifically
+and question honestly. Saying "looks great, ship it" about something that misses a criterion
+teaches the team that the criteria are decoration.
 
-- **Velocity** (Scrum) — story points completed per sprint, averaged over several
-  sprints. It's a *planning* tool: if the team reliably averages 30, and the backlog
-  ahead totals 90, that's roughly three sprints. It's not a performance metric, not
-  comparable between teams (team A's "5" is team B's "13"), and not improvable by
-  pressure — inflating point estimates moves the number without moving the software.
-- **Throughput** (Kanban) — items completed per unit time, regardless of size. Paired
-  with **cycle time** (how long one item spends in flight), it tells you whether the
-  system is getting faster, slower, or stuck.
+**The retrospective** is the team's meeting about how it works. If you're invited, listen more
+than you talk, and fix the top complaint if it's yours to fix. It's often that requirements arrive
+late or change mid-sprint, which is uncomfortable to hear and usually fair.
 
-Both numbers are diagnostic, not motivational. A PM who reports velocity to leadership
-as a productivity score will find the engineers scoring higher and shipping the same
-amount. The question worth asking is *trend*: is velocity stable (predictable), rising
-(team gaining leverage from past investment), or falling (growing overhead, unclear
-scope, mounting debt)? A sustained dip is the earliest signal that something structural
-needs attention.
+Scrum batches work into fixed commitments and suits plannable feature work. Kanban pulls work
+continuously and suits interrupt-heavy work, such as platform teams, support-heavy products and
+operations. Many teams blend the two. The method's name matters less than whether priorities enter
+cleanly and feedback comes out regularly.
 
-AI coding tools add a twist. DORA's 2025 report on AI-assisted development calls AI an
-"amplifier" of an organization's existing strengths and weaknesses. Google's own summary says AI
-use is now linked to higher delivery throughput. Secondary summaries of the report add that
-it is still linked to more delivery instability. Only the throughput finding appears on
-Google's own page. So if AI-assisted teams show rising velocity, check change-failure
-and rework rates before you celebrate.
+## What velocity tells you, and what it doesn't
+
+**Velocity** is the story points a Scrum team completes per sprint, averaged over several sprints.
+It's a planning tool, not a performance score, and it isn't comparable between teams, because one
+team's "5" is another team's "13". **Throughput** is the Kanban equivalent, items completed per
+week, usually paired with **cycle time**, the time one item spends in progress.
+
+Report velocity to leadership as productivity and you'll find the points rising while the
+software stays the same. The useful signal is the trend. Stable velocity means a predictable team,
+and a sustained dip is often the earliest sign of growing overhead, unclear scope or mounting
+debt. If AI coding tools push velocity up, check change-failure and rework rates before you
+celebrate. [Measuring and governing](../ai-assisted-development/measuring-and-governing.md) in
+the AI-assisted development track covers the delivery metrics for that.
+
+## Worked example: the six-week ask
+
+This example is invented, and so are its numbers. The integration in the opening is 120 points of
+work, and the team runs two-week sprints. Its last six sprints delivered 28, 34, 30, 26, 32 and 30
+points.
+
+The average is 180 ÷ 6, which is 30 points a sprint, and the range runs from 26 to 34. At the
+average, 120 points takes 4 sprints. At the slowest recent pace it takes 120 ÷ 26, or about 4.6,
+so call it 5 sprints. At the fastest it takes 120 ÷ 34, about 3.5, so call it 4 sprints. The honest
+forecast is 4 to 5 sprints, which is 8 to 10 weeks. Six weeks is 3 sprints, which isn't on the
+table at full scope.
+
+So you don't ask for a discount. You ask the tech lead what the expensive part is, and the answer
+is bulk import of historical records, at 36 points. The prospect only needs new records synced at
+launch. Make bulk import a non-goal for the first release, and the scope drops to 120 − 36 = 84
+points. At the average pace that's 84 ÷ 30, or 2.8 sprints, and at the slowest pace it's 84 ÷ 26,
+about 3.2 sprints.
+
+Now you can give sales an answer that's true. Six weeks is likely but not safe, and the slip risk
+is a few days rather than a month. You say so this week, with the option of a fixed date two weeks
+later if the prospect needs certainty. The cost is that bulk import moves to the next quarter, and
+someone has to tell the prospect that too.
 
 ## Estimates and the trust economy
 
-Estimation mechanics — story points, ranges, the cone of uncertainty — are covered in
-[tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md). What
-belongs *here* is the relationship layer:
+How to read an estimate is covered in [tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md).
+What belongs here is the relationship around it.
 
-- **An estimate is data, not an opening bid.** The moment you haggle ("can't we do it in
-  three?"), every future estimate arrives pre-padded, and you've lost your most useful
-  signal. If the estimate doesn't fit the need, change *scope* — that's your lever, and
-  using it is respected.
-- **Ask for the drivers, not a discount.** "What's the expensive part?" routinely reveals
-  that 60% of the cost sits in an edge case you didn't actually need. Cutting *that* is
-  collaborative. Pressuring the number is adversarial.
-- **Deliver bad news upward at full speed.** If the sprint says the date is wrong, the
-  date-holder hears it *this week*, from you, with options. Teams watch what you do with
-  bad news, and it determines whether you get the early warnings.
-- **Never spend trust you didn't earn.** "It's probably a small change, right?" from a PM
-  who can't read the [system diagram](../technical-product-sense/how-systems-are-built.md)
-  lands very differently from the same sentence after you've drawn it on the whiteboard.
+- **An estimate is data, not an opening bid.** The moment you haggle, every later estimate arrives
+  quietly padded, and you've lost your best signal. If the estimate doesn't fit the need, change
+  the scope. That's your lever, and engineers respect it.
+- **Ask for the drivers, not a discount.** "What's the expensive part?" often reveals that much of
+  the cost sits in an edge case you didn't need, and cutting *that* is collaboration.
+- **Carry bad news upward fast.** If the sprint says the date is wrong, the person who owns the
+  date hears it this week, from you, with options. Teams watch what you do with bad news, and it
+  decides whether you get early warnings.
+- **Don't spend trust you haven't earned.** "It's probably a small change, right?" lands very
+  differently from a PM who can draw the [system diagram](../technical-product-sense/how-systems-are-built.md)
+  than from one who can't.
 
-## Being worth building for
+Some habits compound over months. Be findable, and answer scope questions the same day. Bring users into the room through session recordings, support tickets or a customer call the
+engineers can join. Engineers who've seen the pain build better software than ones working from
+your summary. Absorb stakeholder chaos rather than relaying it, so what reaches the sprint is already a
+decision. And give credit outward by name. An invented example of how that sounds is "Priya's
+retry design is why the launch survived the traffic spike", said in front of leadership.
 
-The compounding, unglamorous behaviours that make engineers *want* your product to win:
+## AI work doesn't burn down
 
-- **Be findable and decisive.** Most sprint delays hide inside "waiting on an answer from
-  product." Set an SLA on yourself: scope questions answered same-day.
-- **Bring users into the room.** Session recordings, support tickets, a customer call the
-  engineers can join. Engineers who've *seen* the pain write better software than
-  engineers implementing your summary of it.
-- **Absorb ambiguity, don't relay it.** Stakeholder chaos is your input, not the team's.
-  What crosses from you into the sprint should already be decisions.
-- **Give credit outward, precisely.** "Priya's retry design is why the launch survived
-  the traffic spike" — in front of leadership — buys more goodwill than any pizza budget.
+"Improve answer quality" isn't a ticket that burns down in a straight line. It's an experiment
+loop that might converge in two days or not at all, and forcing it into feature-shaped sprints
+makes every sprint look like a failure. Run it as a **time-boxed spike with an eval-score exit
+criterion** instead, such as "two weeks, ship if the eval clears 85%, escalate if it doesn't". Then
+"still at 82% against a bar of 85%" is an informative sprint outcome rather than a slip. The plan
+should say which items are builds, where you know what done looks like, and which are experiments,
+where you're buying information.
 
-## Failure modes
+## From the show: trust is the operating system
 
-- **The feature factory** — sprints measured by tickets closed, never by outcomes moved.
-  Velocity becomes the product; users notice eventually.
-- **Estimate haggling** — negotiating numbers instead of scope. You'll get quieter
-  estimates, not faster software.
-- **Mid-sprint scope injection** — "one tiny addition" that reshuffles the committed
-  plan. Do it twice and planning stops meaning anything. There's a backlog for a reason.
-- **Standup-as-status-court** — engineers performing progress for the PM instead of
-  coordinating with each other. You've turned a sync tool into a surveillance tool.
-- **Research punished as slippage** (AI-specific) — experiment work judged by feature
-  metrics, teaching the team to only propose safe, boring model work.
+Tanguy Crusson talks about what happens when engineers ask for clarity you don't yet have, which
+is common early in AI work:
 
-## Practitioner checklist
+> "I think the worst thing you can do is to pretend you have it and send them down the wrong path because then you're going to break that trust."
+> — Tanguy Crusson, [*AI Product Discovery: Complete Course*](https://www.youtube.com/watch?v=6oottgko7pQ), The Growth Podcast, around 01:19:49
 
-- [ ] Is the backlog's top ordered, refined, and criteria-complete far enough ahead that
-      planning never idles?
-- [ ] What's my actual median latency on scope questions — hours or days?
-- [ ] Have I changed scope (not pressured the estimate) the last time a number didn't
-      fit the date?
-- [ ] Is experiment-shaped work labelled as such, with a time-box and an exit criterion?
-- [ ] Can I name the last piece of bad news I carried upward fast — and the last credit I
-      gave outward by name?
+His alternative is to tell a new team up front that the work is going to be messy. Tom Occhino
+puts the same idea in terms of the PM's place on the team:
+
+> "You have to have complete trust of the engineers and your sort of counterpart, engineering management, tech lead, designer, et cetera."
+> — Tom Occhino, [*Behind v0 (Top AI Prototyping Tool): Tutorial and Story from the CPO in 2026*](https://www.youtube.com/watch?v=-n8T6S_sD7Y), The Growth Podcast, around 01:03:04
+
+Both are describing the same mechanism as the worked example. A team that trusts you gives you an
+honest estimate and an early warning, and those two things are worth more than any ritual.
+
+## Where it goes wrong
+
+- **The feature factory** measures sprints by tickets closed and never by outcomes moved, until
+  velocity becomes the product.
+- **Estimate haggling** negotiates the number instead of the scope. You get quieter estimates, not
+  faster software.
+- **Mid-sprint scope injection** adds "one tiny thing" that reshuffles the plan. Do it twice and
+  planning stops meaning anything.
+- **Standup as a status court** has engineers performing progress for the PM instead of
+  coordinating with each other.
+- **Research punished as slippage** judges experiment work by feature metrics, which teaches the
+  team to propose only safe, boring model work.
+
+## What to do next
+
+- [ ] Keep the top of the backlog ordered, refined and complete with criteria far enough ahead
+      that planning never waits on you.
+- [ ] Measure how long scope questions wait for your answer, and aim for the same day.
+- [ ] The next time a number doesn't fit a date, ask for the drivers and change the scope.
+- [ ] Label experiment-shaped work as experiments, with a time box and an eval exit criterion.
+- [ ] Carry one piece of bad news upward this week, and give one piece of credit outward by name.
 
 ## Related lessons
 
 - [The technical PM role](./the-technical-pm-role.md)
 - [Specs, PRDs & RFCs](./specs-prds-and-rfcs.md)
 - [Launches, rollouts & migrations](./launches-rollouts-and-migrations.md)
-- [Technical product sense: tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md) — reading the estimates you negotiate
+- [Tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md) (technical
+  product sense): reading the estimates you negotiate.
+- [Measuring and governing](../ai-assisted-development/measuring-and-governing.md) (AI-assisted
+  development): delivery metrics when agents write code.
+
+## Sources
+
+- Ken Schwaber and Jeff Sutherland, [*The Scrum Guide*](https://scrumguides.org/scrum-guide.html),
+  2020 version (sprints are fixed-length events of one month or less) (as of 2026-11-28).
+- Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

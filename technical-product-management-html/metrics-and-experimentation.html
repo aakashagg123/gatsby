@@ -13,34 +13,18 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 06</span>
     <h1>Metrics &amp; experimentation</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>If you can't measure it, you shipped an opinion. The measurement stack has three layers.
-A <strong>metric tree</strong> connects one north-star outcome to the input metrics teams can
-actually move. <strong>Instrumentation</strong> gets written into the spec, so the events exist when
-you need them. And <strong>experiments</strong> (A/B tests) separate "the metric moved because of us"
-from "the metric moved." Experiments keep you honest, but they're not free and not
-always right. They need enough traffic, an up-front hypothesis, guardrail metrics, and
-the discipline not to peek and stop at the first flattering result. Where you can't
-test, you can still reason — with before/after comparisons, holdouts, and humility.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — An AI feature's interesting failures return HTTP 200. Latency and
-error dashboards stay green while answer quality quietly degrades — so the standard
-metric stack, which assumes correctness is binary and crashes are visible, misses the
-thing that matters most.</p>
-<p><strong>What it changes in your decisions</strong> — You add a <strong>quality layer</strong> to the tree:
-eval scores as the offline metric, thumbs-up rate / edit rate / retry-and-rephrase rate
-as online proxies — and you instrument the <em>feedback capture</em> (accepted the suggestion?
-edited it? abandoned?) as a launch-blocking requirement, because that stream is also
-your future eval data.</p>
-<p><strong>Ask yourself</strong> — <em>"If answer quality dropped 15% tomorrow, which number on which
-dashboard would move, and how long until a human noticed?"</em></p>
-<p><strong>Risk if ignored</strong> — Quality drifts for weeks behind green dashboards, and the first
-detector is a customer thread going viral.</p>
-</blockquote>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
+<!-- voice: human -->
+
+<p>Your AI answer feature has been live for a month. Latency is fine, errors are near zero, and the
+dashboard is green. Then a customer posts a thread of screenshots where the feature confidently
+gives wrong answers, and it turns out quality slipped three weeks ago when a retrieval index was
+rebuilt. Nothing on the dashboard moved, because nothing on the dashboard measured whether the
+answers were right. This lesson is about building the measurement that would have caught it, and
+about running experiments that don't fool you.</p>
 <h2 id="the-metric-tree">The metric tree</h2>
-<p>A north-star metric alone is a scoreboard, not a strategy — no team can directly move
-"weekly active teams." The tree makes it actionable:</p>
+<p>A north-star metric on its own is a scoreboard. No team can directly move "weekly active teams",
+so the tree breaks it into inputs that teams can own.</p>
 <style>
 .dgm-me{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -80,118 +64,147 @@ detector is a customer thread going viral.</p>
   <div class="dgm-me-guard">Guardrails — must not regress: p95 latency · cost per request · support tickets · trust/safety flags</div>
 </div>
 
+<p>The <strong>north star</strong> is one number that stands in for delivered value. It's usually not revenue,
+because revenue lags value. <strong>Input metrics</strong> are the branches a team can move this quarter, and a
+good one responds in days and plausibly moves its parent. <strong>Guardrails</strong> are the do-no-harm set,
+such as latency, cost, support load and trust, and every launch is judged on its target <em>and</em> on
+leaving the guardrails intact. Retention is a lagging metric, since you learn you failed months
+later, while activation is leading. Manage with the leading ones and report with the lagging ones.</p>
+<p>A metric made into a target tends to get gamed, usually innocently. "Answers
+delivered" as a target produces more answers, not better ones, so pair every target with a quality
+counterweight.</p>
+<p>It also helps to name which mode a decision is in. <strong>Data-informed</strong> means data is one input
+alongside research, domain judgment and strategy, and a PM can overrule a metric with a reasoned
+argument. <strong>Data-driven</strong> means the number decides. Most product decisions should be data-informed,
+while the ship gate of an A/B test on its primary metric should be data-driven. Mixing them up
+causes either paralysis, where "but the data says" blocks a strategic bet, or recklessness, where
+"I know better" overrides a clear regression.</p>
+<h2 id="instrumentation-is-a-requirement">Instrumentation is a requirement</h2>
+<p>The events you'll need to answer "did it work?" belong in <a href="specs-prds-and-rfcs.html">the PRD</a>
+before the build. Retrofitting analytics after launch means weeks of blindness followed by data
+you only half trust. For each success metric, ask which event, with which properties, fired from
+where, proves it. If you can't name the event, you can't have the metric. Then walk the funnel and
+check that every step a user takes towards value emits something, or your drop-off analysis will
+have holes exactly where the mystery is.</p>
+<h2 id="experiments-without-fooling-yourself">Experiments without fooling yourself</h2>
+<p>An A/B test splits users at random, shows each group a variant and compares the results. The
+mechanics are well understood, and the discipline is the hard part.</p>
 <ul>
-<li><strong>North star</strong> — one number that proxies delivered value (not revenue — revenue lags
-  value) . Everything in the tree must have a plausible causal path to it.</li>
-<li><strong>Input metrics</strong> — the branches teams can actually own and move this quarter. A good
-  input metric is sensitive (responds in days, not quarters) and causally connected
-  (moving it plausibly moves the parent).</li>
-<li><strong>Guardrails</strong> — the "do no harm" set: latency, cost, support load, trust. Every
-  experiment and launch is judged on its target metric <em>and</em> on leaving guardrails intact.</li>
-<li><strong>Leading vs. lagging</strong> — retention is lagging (you learn you failed months later).
-  Activation is leading. Manage with leading indicators, report with lagging ones.</li>
+<li><strong>Write the hypothesis first.</strong> "We believe moving X will lift Y by about Z% because..." has to
+  be written before launch, because afterwards any result can be narrated into a win. Say too
+  whether the change is an experiment, a bet that might die, or an incremental improvement that
+  should compound, since they're judged by different standards.</li>
+<li><strong>Check power before launch.</strong> Small effects need a surprising amount of traffic. If the
+  calculation says eight months, the honest answer is that this isn't testable here.</li>
+<li><strong>Don't peek.</strong> Checking daily and stopping at the first p below 0.05 is how teams ship noise.
+  Fix the duration up front, or use sequential methods designed for early looks.</li>
+<li><strong>Check the split before the result.</strong> A <strong>sample ratio mismatch</strong> (SRM) means the groups aren't
+  the sizes you configured, which signals that users went missing from one variant. Microsoft
+  reports that about 6% of its A/B tests have one, and it flags a test when a chi-square check on
+  the split gives p below 0.0005. Don't trust a result with an SRM until someone finds the cause.</li>
+<li><strong>Judge the guardrails too.</strong> A win on the target that degrades latency or support volume is a
+  trade, and you should make it consciously or not at all.</li>
+<li><strong>Distrust segments.</strong> Slice a neutral result twenty ways and one slice will "win" by chance.
+  Segment analyses suggest the <em>next</em> test and can't rescue this one.</li>
 </ul>
-<p>Beware <strong>Goodhart's law</strong>: any metric made a target gets gamed, usually innocently.
-"Answers delivered" as a target produces more answers, not better ones. Pair every
-target metric with a quality counterweight.</p>
-<p>A distinction worth keeping: <strong>data-informed</strong> means data is one input alongside user
-research, domain judgment, and strategic intent — and the PM can overrule a metric with
-a reasoned argument. <strong>Data-driven</strong> means the number decides: ship the winner, kill
-the loser, no exceptions. Most product decisions should be data-informed. A/B test
-gates on the primary metric should be data-driven. Mixing up which mode you're in
-causes either paralysis ("but the data says…" blocking a strategic bet) or recklessness
-("I know better" overriding a clear quality regression). Name the mode before the
-conversation starts.</p>
-<h2 id="instrumentation-is-a-requirement-not-a-favour">Instrumentation is a requirement, not a favour</h2>
-<p>The events you'll need to answer "did it work?" must be in the spec —
-<a href="specs-prds-and-rfcs.html">the PRD</a> — before build, because retrofitting analytics after
-launch means weeks of blindness followed by data you only half trust. The PM's
-instrumentation pass: for each success metric, <em>which event, with which properties,
-fired from where, proves it?</em> If you can't name the event, you can't have the metric.
-Then check the funnel: every step a user takes toward value should emit something, or
-your drop-off analysis will have holes exactly where the mystery is.</p>
-<h2 id="experiments-without-self-deception">Experiments without self-deception</h2>
-<p>An A/B test randomly splits users, shows each group a variant, and compares. The
-mechanics are a solved problem. The discipline isn't:</p>
+<p>When you can't test, because traffic is too low, the change too structural or the effect too
+slow, use humbler tools. A before-and-after comparison works if you state the seasonality caveat
+out loud. A long-running <strong>holdout</strong> works too, which is a small slice of users who don't get the new
+experience for a quarter. So does a staged rollout used as a natural experiment (<a href="launches-rollouts-and-migrations.html">next
+lesson</a>). Weaker evidence honestly labelled beats strong
+claims from weak designs.</p>
+<h2 id="worked-example-is-this-even-testable">Worked example: is this even testable?</h2>
+<p>This example is invented, and so are its numbers. You want to test AI-suggested replies in a
+support inbox. Today 10% of tickets are resolved on the first reply, and you hope the feature lifts
+that to 11%. About 2,000 tickets a week are eligible.</p>
+<p>A standard sample-size formula for comparing two rates, at 95% confidence and 80% power, needs about 14,700 tickets per arm to detect a change from 10% to 11%. That's about 29,500 tickets in
+total, or about 15 weeks of traffic at 2,000 a week. A quarter-long test of a one-point lift isn't
+a good use of the inbox.</p>
+<p>So you change the question. A lift from 10% to 12% needs about 3,830 tickets per arm, or about 7,670 in total, which is
+about four weeks. You decide the feature is only worth building if it delivers at
+least two points, and you run the test for four weeks against that bar.</p>
+<p>At the end of the four weeks, 7,800 tickets have entered the test, and the split was meant to be
+50/50, so you expected 3,900 in each arm. You got 4,100 in the control and 3,700 in the treatment.
+The chi-square statistic is (200² ÷ 3,900) + (200² ÷ 3,900), which is about 20.5, and the p-value
+is about 0.000006. That's well below 0.0005, so the test has an SRM, and you don't read the result
+yet. The cause turns out to be a filter that dropped tickets from the treatment arm when the
+suggestion service timed out. The slowest, hardest tickets went missing from one side only. A
+result read before that fix would have flattered the feature.</p>
+<h2 id="the-quality-layer-for-ai-features">The quality layer for AI features</h2>
+<p>For a model-powered feature, wire offline and online measurement together.</p>
 <ul>
-<li><strong>Hypothesis first, in writing</strong> — "we believe moving X will lift Y by ~Z% because…"
-  Written <em>before</em> launch, because post-hoc, any result can be narrated into a win. A
-  useful companion question: <em>"if this were wildly successful, what would that look
-  like?"</em> — answered up front, it sets the bar a result has to clear. And name whether
-  the change is an <strong>experiment</strong> (a bet that might die) or an <strong>incremental
-  improvement</strong> (a step that should compound). They're judged by different standards,
-  and confusing them narrates failures into learnings and learnings into failures.</li>
-<li><strong>Power before launch</strong> — small effects need surprising amounts of traffic. If the
-  calculator says eight months to significance, the honest answer is "this isn't
-  A/B-testable here" — not "we'll run it two weeks and squint."</li>
-<li><strong>No peeking</strong> — checking daily and stopping at the first p &lt; 0.05 is how teams ship
-  noise. Fix the duration up front (or use sequential methods designed for early looks).</li>
-<li><strong>Check the split before the result</strong> — a <strong>sample ratio mismatch (SRM)</strong> means the
-  groups are not the size you configured (say, 50/50 comes out 51/49 at large scale). It
-  signals that users went missing from one variant, so the result is biased. Microsoft
-  reports about 6% of its tests show one, and it fails any test at p &lt; 0.0005 on a
-  chi-square check before reading results. Do not trust a result with an SRM until
-  someone finds the cause.</li>
-<li><strong>Judge the guardrails too</strong> — a win on the target that degrades latency or support
-  volume isn't a win. It's a trade you should make consciously or not at all.</li>
-<li><strong>Segments lie enthusiastically</strong> — slice a neutral result twenty ways and one slice
-  will "win" by chance. Segment analyses generate hypotheses for the <em>next</em> test. They
-  don't rescue this one.</li>
+<li><strong>Offline, eval scores.</strong> The graded example set from your <a href="specs-prds-and-rfcs.html">spec</a> runs
+  against every prompt, model or retrieval change <em>before</em> it ships, as your regression suite for
+  quality.</li>
+<li><strong>Online, behavioural proxies.</strong> Users rarely click thumbs-down. They quietly <em>edit</em> the draft,
+  <em>retry</em> with a rephrased question or <em>abandon</em> the flow, so edit distance, retry rate and
+  acceptance rate are your best online quality signals. Instrument them from day one.</li>
+<li><strong>The loop.</strong> Online failures flow back into the eval set, so the offline suite keeps resembling
+  reality. That loop is the <a href="tpm-for-ai-products.html">data flywheel</a>, the subject of the capstone.</li>
 </ul>
-<p>When you can't test — traffic too small, change too structural, effect too slow — use
-the humbler tools: pre/post with the seasonality caveat stated out loud, a long-running
-<strong>holdout</strong> (5% who don't get the new experience for a quarter), or staged
-rollout-as-natural-experiment (<a href="launches-rollouts-and-migrations.html">next lesson</a>).
-Weaker evidence honestly labelled beats strong claims from weak designs.</p>
-<h2 id="the-ai-quality-layer">The AI quality layer</h2>
-<p>For model-powered features, wire <em>offline</em> and <em>online</em> measurement together:</p>
+<h2 id="from-the-show-one-number-and-enough-traffic">From the show: one number, and enough traffic</h2>
+<p>Satyajeet Salgar makes the case for a single north star, with the tree around it:</p>
+<blockquote>
+<p>"And so I like the clarity of North Star metric. I think most teams should aspire to have one and then have guardrails and other metrics."
+— Satyajeet Salgar, <a href="https://www.youtube.com/watch?v=l2YhkstnRcg"><em>How to Develop Your Product Strategy, with Satyajeet Salgar</em></a>, The Growth Podcast, around 01:08:35</p>
+</blockquote>
+<p>He adds that leads still need to understand the nuance behind the one number. Frederic de Todaro
+makes the point from the worked example about traffic:</p>
+<blockquote>
+<p>"When you look at, you know, the sample size you need, you need a good number of visitors, but you also need to look at the metric."
+— Frederic de Todaro, <a href="https://www.youtube.com/watch?v=MC1FfWdAyX4"><em>Complete Course: AI Experimentation</em></a>, The Growth Podcast, around 59:37</p>
+</blockquote>
+<p>His fuller point is that the number of conversions, not only visitors, decides how fast an
+experiment can tell you anything. A rare event needs far more traffic than a common one.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Offline: eval scores</strong> — the graded example set from your
-  <a href="specs-prds-and-rfcs.html">spec</a>, run against every prompt/model/retrieval change
-  <em>before</em> it ships. This is your regression suite for quality.</li>
-<li><strong>Online: behavioural proxies</strong> — users rarely click thumbs-down. They silently
-  <em>edit</em> the draft, <em>retry</em> the question rephrased, or <em>abandon</em> the flow. Edit distance,
-  retry rate, and acceptance rate are your truest online quality signals — instrument
-  them from day one.</li>
-<li><strong>The loop</strong> — online failures (edited outputs, rephrased retries) flow back into the
-  eval set, so the offline suite keeps resembling reality. That loop is the
-  <a href="tpm-for-ai-products.html">data flywheel</a>, and it's the capstone's subject.</li>
+<li><strong>Vanity dashboards</strong> show big cumulative numbers that only go up. If no decision changes when a
+  number changes, it's decoration.</li>
+<li><strong>A single metric with no guardrails</strong> gets optimised until support volume or trust pays the
+  bill.</li>
+<li><strong>Ignoring a broken split</strong> means reading results from a test whose arms are the wrong size.
+  Microsoft describes an MSN test where a bot filter removed highly engaged users from one
+  variant, and fixing it flipped the result.</li>
+<li><strong>Peeking and p-hacking</strong>, through early stops, after-the-fact hypotheses and twenty segment
+  slices, produce a culture that wins every test and moves no annual number.</li>
+<li><strong>Instrumentation as cleanup</strong> schedules analytics after launch, so the team debates opinions
+  during the weeks that matter most.</li>
+<li><strong>Green-dashboard blindness</strong> is the AI-specific one, where infrastructure is healthy, no
+  quality signal is wired, and customers find the drift.</li>
 </ul>
-<h2 id="failure-modes">Failure modes</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li><strong>Vanity dashboards</strong> — big cumulative numbers ("10M answers served!") that only go
-  up and inform nothing. If no decision changes when the number changes, it's decoration.</li>
-<li><strong>Metric monotheism</strong> — optimizing the target with no guardrails until support volume
-  or trust pays the bill.</li>
-<li><strong>Ignoring a broken split</strong> — reading results from a test whose arms are the wrong size.
-  A bot filter once removed engaged users from one arm of a Microsoft test, and fixing it
-  reversed the result.</li>
-<li><strong>Peeking and p-hacking</strong> — early stops, post-hoc hypotheses, twenty segment slices.
-  The result is a culture that "wins" every test and moves no annual number.</li>
-<li><strong>Instrumentation as cleanup</strong> — analytics scheduled after launch, so the team debates
-  opinions during the weeks that matter most.</li>
-<li><strong>Green-dashboard blindness</strong> (AI-specific) — infrastructure metrics healthy, no
-  quality signal wired, drift discovered by customers.</li>
-</ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
-<ul>
-<li class="task todo">Can I draw my product's metric tree — north star, the 3–5 inputs, the guardrails —
-      from memory?</li>
-<li class="task todo">Does the current PRD name the exact events that will prove or disprove success?</li>
-<li class="task todo">Is there a written hypothesis and a fixed duration for the currently running test?</li>
-<li class="task todo">For AI features: do I have an offline eval score <em>and</em> an online behavioural proxy,
-      and do failures flow back into the eval set?</li>
-<li class="task todo">Which metric on my dashboard would I delete tomorrow for informing no decisions?</li>
+<li class="task todo">Draw your product's metric tree from memory, with the north star, three to five inputs and
+      the guardrails.</li>
+<li class="task todo">Check that the current PRD names the exact events that will prove or disprove success.</li>
+<li class="task todo">Before the next test, write the hypothesis, run the sample-size calculation and fix the
+      duration.</li>
+<li class="task todo">Add an SRM check to your experiment readout, before anyone looks at the result.</li>
+<li class="task todo">For each AI feature, pair an offline eval score with an online behavioural proxy.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
 <li><a href="tpm-for-ai-products.html">Technical product management for AI</a></li>
-<li><a href="../product-sense/motivation-and-behaviour.html">Product sense: motivation &amp; behaviour</a> — the behaviour your metrics are trying to move</li>
+<li><a href="../product-sense/motivation-and-behaviour.html">Motivation &amp; behaviour</a> (product sense): the
+  behaviour your metrics are trying to move.</li>
+<li><a href="../ai/04-evals-observability.html#observability">Observability</a>: watching quality in
+  production.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Aleksander Fabijan and colleagues, Microsoft Experimentation Platform, <a href="https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/"><em>Diagnosing Sample Ratio
+  Mismatch in A/B Testing</em></a>,
+  Microsoft Research, 14 September 2020 (about 6% of tests, the p below 0.0005 threshold and the
+  MSN bot-filter example) (as of 2026-11-28).</li>
+<li>The worked example's figures are derived, not sourced. Sample size per arm uses the standard
+  two-proportion formula, (1.96 + 0.84)² × [p₁(1 − p₁) + p₂(1 − p₂)] ÷ (p₂ − p₁)². The p-value
+  comes from a chi-square test with one degree of freedom.</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="working-with-engineering.html"><span class="lbl">← Previous</span><span class="ttl">Working with engineering</span></a><a class="navcard next" href="launches-rollouts-and-migrations.html"><span class="lbl">→ Next</span><span class="ttl">Launches, rollouts &amp; migrations</span></a></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-metric-tree">The metric tree</a><a class="h2" href="#instrumentation-is-a-requirement-not-a-favour">Instrumentation is a requirement, not a favour</a><a class="h2" href="#experiments-without-self-deception">Experiments without self-deception</a><a class="h2" href="#the-ai-quality-layer">The AI quality layer</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#the-metric-tree">The metric tree</a><a class="h2" href="#instrumentation-is-a-requirement">Instrumentation is a requirement</a><a class="h2" href="#experiments-without-fooling-yourself">Experiments without fooling yourself</a><a class="h2" href="#worked-example-is-this-even-testable">Worked example: is this even testable?</a><a class="h2" href="#the-quality-layer-for-ai-features">The quality layer for AI features</a><a class="h2" href="#from-the-show-one-number-and-enough-traffic">From the show: one number, and enough traffic</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

@@ -13,74 +13,49 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 04</span>
     <h1>Prioritization &amp; roadmaps</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Prioritization is the job reduced to one sentence: <strong>you have 10x more good ideas than
-capacity, and the order you build them in is the strategy</strong>. Frameworks — RICE, ICE, cost
-of delay, Kano — don't make the decision for you. They make your <em>reasoning legible</em>, so it
-can be challenged and improved. The roadmap that comes out the other side is a
-<strong>communication of bets and their sequence</strong>, not a delivery contract. That's why
-<em>now / next / later</em> beats a Gantt chart for most audiences. And because every "yes" is a
-hundred implicit "no"s, saying no — clearly, with the reasoning attached — is the most
-valuable sentence a PM produces.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — AI bets break naive scoring. Effort is uncertain by an order of
-magnitude (quality is discovered, not scheduled), and a demo makes <em>reach × impact</em> feel
-huge before feasibility is known. Meanwhile stakeholder pressure to "do something with
-AI" injects fake urgency into the inputs.</p>
-<p><strong>What it changes in your decisions</strong> — You score AI ideas with an explicit <strong>confidence
-discount</strong> until a feasibility spike has run, and you hold roadmap slots for eval and
-data work — the unglamorous items that never win a RICE bake-off but determine whether
-anything else on the list ships well.</p>
-<p><strong>Ask yourself</strong> — <em>"Is this AI feature high on the list because the evidence is strong,
-or because the demo was?"</em></p>
-<p><strong>Risk if ignored</strong> — A roadmap of impressive-sounding AI bets, none de-risked, all
-late — while the boring fix that users actually begged for waits another quarter.</p>
-</blockquote>
-<h2 id="strategy-first-okrs-are-the-translation-layer">Strategy first: OKRs are the translation layer</h2>
-<p>A roadmap answers "in what order," but that question only has a stable answer once
-something upstream has already decided "toward what." That's <strong>product strategy</strong>: not
-a template filled out once, but an ongoing set of choices about which customer problems
-you'll go deep on and which you'll deliberately ignore. Good product strategy sounds
-like a stand — "we go deep on X, and we will not chase Y even though a customer asked
-for it" — a real choice with a cost, not an ambitious mission statement. It also
-operates at more than one altitude: company strategy sets which markets and bets the
-business plays, and product strategy inside it decides which problems your product
-specifically goes after. The two need to visibly connect, or a team optimizes a product
-strategy the company strategy doesn't actually reward.</p>
-<p><strong>OKRs are how that strategy becomes decidable at the roadmap level.</strong> The Objective
-restates the strategic bet in outcome language ("become the default choice for X"); the
-Key Results are the measurable proof the bet is paying off. Teams get the sequencing
-backward more often than not: OKR cycles should be <em>set by</em> strategy, not the place
-strategy gets decided. If your quarterly OKR-setting ritual is where the real strategic
-calls happen, you don't have a strategy — you have a quarterly negotiation. Set strategy
-on its own, longer cycle, revisited only when the market or evidence genuinely changes,
-and let OKRs cascade from it every quarter. When a proposed Key Result doesn't trace
-back to a strategic choice you can name out loud, that's the signal to cut it from the
-roadmap — regardless of how well it scores on RICE.</p>
-<h2 id="frameworks-engines-for-arguments-not-answers">Frameworks: engines for arguments, not answers</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
+<!-- voice: human -->
+
+<p>The quarterly planning spreadsheet has forty rows and room for six. Sales wants the enterprise
+dashboard, support wants the bug that generates a third of its tickets, and the CEO saw a
+competitor's AI demo last week. Every item has a champion and a plausible story. Whatever order
+you pick, you're about to disappoint most of the room, so the useful question is how to pick in a
+way people can argue with and still trust.</p>
+<h2 id="the-order-is-the-strategy">The order is the strategy</h2>
+<p>You'll always have far more good ideas than capacity, which means the order you build them in <em>is</em>
+your strategy, whatever the strategy deck says. Frameworks don't make that decision for you. What
+they do is make your reasoning visible, so someone can challenge an assumption instead of
+challenging you.</p>
+<p>A roadmap only has a stable order once something upstream has decided what the product is going
+after. That's product strategy, and <a href="../product-sense/creativity.html">creativity</a> in the product
+sense track covers it in depth. The short version for roadmap work is that OKRs (objectives and
+key results) should be set <em>by</em> the strategy, not used as the place where the strategy gets
+decided. If a proposed key result doesn't trace back to a strategic choice you can name out loud,
+cut it, however well it scores.</p>
+<h2 id="the-frameworks-and-what-each-one-is-for">The frameworks, and what each one is for</h2>
 <ul>
-<li><strong>RICE</strong> — score = (Reach × Impact × Confidence) / Effort. Its real value is the
-  <strong>Confidence</strong> term: it forces you to admit which numbers are guesses. A 10/10 impact at
-  20% confidence should lose to a 6/10 at 90%.</li>
-<li><strong>ICE</strong> (Impact, Confidence, Ease) — RICE's quick cousin. Fine for triaging a long list
-  in an hour, too coarse for the final call on big bets.</li>
-<li><strong>Cost of delay / WSJF</strong> — asks "what does <em>waiting</em> cost per month?" instead of "what
-  is this worth?" This flips priorities when timing matters: a medium-value item ahead of
-  a compliance deadline outranks a high-value item that's worth the same next year.
-  Dividing cost of delay by duration (WSJF — weighted shortest job first) formalizes
-  "do the quick valuable things first."</li>
-<li><strong>Kano</strong> — separates <em>basic</em> features (absence infuriates, presence goes unnoticed),
-  <em>performance</em> features (more is linearly better), and <em>delighters</em> (unexpected joy).
-  The original model adds two more: <em>indifferent</em> (the user doesn't care either way — a
-  signal to cut) and <em>reverse</em> (the feature actively annoys a segment — a signal to
-  gate or remove). Its lesson: a product of pure delighters with a missing basic still
-  fails. Check your top ten for uncovered basics before celebrating the delighters, and
-  check for reverse features before assuming more is better.</li>
+<li><strong>RICE</strong> scores an item on reach, impact, confidence and effort. Intercom's page shows the formula as an image, and its text says effort divides
+  the total because more effort is a bad thing. LogRocket's guide to RICE states the formula in
+  text, as reach × impact × confidence ÷ effort. Sean McBride introduced it on
+  Intercom's blog in 2018, with impact on a scale from 0.25 (minimal) to 3 (massive) and
+  confidence as a percentage. Its most useful term is confidence, because it makes you admit
+  which numbers are guesses.</li>
+<li><strong>Impact, confidence and ease (ICE)</strong> is a quicker cousin. It's fine for triaging a long list in an
+  hour, though too coarse for the final call on a big bet.</li>
+<li><strong>Cost of delay</strong> asks what <em>waiting</em> costs per month, rather than what an item is worth. That
+  flips priorities when timing matters. A medium-value item due before a compliance deadline
+  outranks a high-value item that's worth the same next year. Dividing cost of delay by duration
+  gives <strong>WSJF</strong> (weighted shortest job first), which formalises "do the quick, valuable things
+  first".</li>
+<li><strong>The Kano model</strong>, from Noriaki Kano and colleagues in 1984, names three types of quality:
+  <em>must-be</em>, <em>one-dimensional</em> and <em>attractive</em>. This lesson uses the names as a prompt rather than
+  a definition. Sorting your top ten by how you expect users to react to each item, and asking
+  which ones they'd simply take for granted, is a quick way to spot a basic the roadmap has left
+  uncovered.</li>
 </ul>
-<p>All of them share failure math: garbage estimates in, confident-looking garbage out. The
-discipline isn't the arithmetic. It's writing your assumptions down where someone can
-tell you they're wrong.</p>
+<p>All of them share the same weakness. Bad estimates go in and confident-looking numbers come out.
+The discipline isn't the arithmetic, it's writing the assumptions down where someone can tell you
+they're wrong.</p>
 <style>
 .dgm-pr3{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -127,10 +102,10 @@ tell you they're wrong.</p>
     <div class="dgm-pr3-plot">
       <div class="dgm-pr3-q dgm-pr3-q2"><span class="l">Quick wins<br/>do now</span></div>
       <div class="dgm-pr3-q dgm-pr3-q1"><span class="l">Big bets<br/>do few, de-risk first</span></div>
-      <div class="dgm-pr3-q dgm-pr3-q3"><span class="l">Time sinks<br/>say no</span></div>
-      <div class="dgm-pr3-q dgm-pr3-q4"><span class="l">Fill-ins<br/>batch when idle</span></div>
+      <div class="dgm-pr3-q dgm-pr3-q3"><span class="l">Fill-ins<br/>batch when idle</span></div>
+      <div class="dgm-pr3-q dgm-pr3-q4"><span class="l">Time sinks<br/>say no</span></div>
       <div class="dgm-pr3-pt up" style="left:20%;bottom:85%"><i></i><span>Fix top support issue</span></div>
-      <div class="dgm-pr3-pt up" style="left:70%;bottom:90%"><i></i><span>AI summarizer (post-spike)</span></div>
+      <div class="dgm-pr3-pt up" style="left:70%;bottom:75%"><i></i><span>AI summarizer (post-spike)</span></div>
       <div class="dgm-pr3-pt" style="left:45%;bottom:90%"><i></i><span>AI summarizer (pre-spike)</span></div>
       <div class="dgm-pr3-pt" style="left:55%;bottom:60%"><i></i><span>New onboarding flow</span></div>
       <div class="dgm-pr3-pt" style="left:25%;bottom:30%"><i></i><span>Admin CSV export</span></div>
@@ -138,82 +113,176 @@ tell you they're wrong.</p>
     </div>
     <div class="dgm-pr3-x"><span>low effort</span><b>high effort</b></div>
   </div>
-  <p class="dgm-pr3-note"><strong>Same feature, two dots:</strong> the AI summarizer's effort estimate tightens dramatically once a feasibility spike has actually been tried — cheap discovery repositions expensive bets before you commit.</p>
+  <p class="dgm-pr3-note"><strong>Same feature, two dots:</strong> after a feasibility spike, the AI summarizer sits further right (the work turned out bigger) and lower (it handles fewer real inputs well). The positions are qualitative, not scores.</p>
 </div>
 
-<p>Note the summarizer appearing twice. A feasibility spike doesn't just reduce risk — it
-<em>moves the dot</em>. Effort estimates tighten dramatically once someone has actually tried
-it. Cheap discovery work exists to reposition expensive bets before you commit.</p>
+<p>The summariser appears twice on purpose. A feasibility spike doesn't only reduce risk, it moves
+the dot. After the spike, the summariser sits further right, because the work turned out bigger,
+and lower, because it handles fewer real inputs well, as the worked example below shows. The
+positions are qualitative, not scores. Cheap
+discovery work exists to reposition expensive bets before you commit to them.</p>
+<h2 id="worked-example-a-spike-changes-the-ranking">Worked example: a spike changes the ranking</h2>
+<p>This example is invented, and so are its numbers. You're choosing between three items for next
+quarter, scored with RICE. Reach is users per quarter, impact uses Intercom's scale, and effort is
+in person-months.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Reach</th>
+<th>Impact</th>
+<th>Confidence</th>
+<th>Effort</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix top support issue</td>
+<td>4,000</td>
+<td>1</td>
+<td>100%</td>
+<td>2</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td>AI summariser, before a spike</td>
+<td>10,000</td>
+<td>2</td>
+<td>50%</td>
+<td>4</td>
+<td>2,500</td>
+</tr>
+<tr>
+<td>New onboarding flow</td>
+<td>6,000</td>
+<td>1</td>
+<td>80%</td>
+<td>3</td>
+<td>1,600</td>
+</tr>
+</tbody>
+</table>
+<p>Each score uses that formula, reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
+4, which is 2,500, so it tops the list. Its confidence is only 50%, though, because nobody has run
+it on real inputs. You spend one engineer-week on a spike first.</p>
+<p>The spike finds the model handles about 60% of real inputs well, so the summariser's <em>effective</em>
+reach is 60% of 10,000, or 6,000 users. The spike also shows the work is bigger than hoped, so
+effort rises to 6 person-months, while confidence rises to 80% because you now have evidence. The
+new score is 6,000 × 2 × 0.8 ÷ 6, which is 1,600.</p>
+<p>The support fix now ranks first at 2,000, and the summariser ties with onboarding at 1,600. One
+week of spike work moved the decision. The tie is useful too, since it tells you the spreadsheet
+can't settle the choice between those two, and that a conversation about strategy has to.</p>
+<p>Cost of delay can change the picture again. Say, as an illustration, that the support fix costs $40,000 a month in support time while it
+waits, and takes 2 months of calendar time to ship. Onboarding costs $60,000 a month in lost
+activation and takes 6 months of calendar time, because its 3 person-months of work are spread
+across a team that is busy with other things. WSJF divides by calendar duration, not by effort. Their WSJF scores are 40,000 ÷ 2 = 20,000 and 60,000 ÷
+6 = 10,000, which agrees with RICE that the support fix goes first. When two frameworks agree, you
+can spend less time defending the call.</p>
 <h2 id="roadmaps-are-bets-not-promises">Roadmaps are bets, not promises</h2>
-<p>A roadmap does two jobs at once — aligning stakeholders and guiding the team — and the
-classic mistake is using one artifact for both:</p>
+<p>A roadmap does two jobs at once, aligning stakeholders and guiding the team, and the classic
+mistake is to use one artifact for both.</p>
 <ul>
-<li><strong>Now / next / later</strong> — the default for most audiences. <em>Now</em> is committed and
-  specific. <em>Next</em> is planned but re-orderable. <em>Later</em> is directional. The buckets encode
-  honesty about certainty, which date-based roadmaps destroy: paint a feature on Q3 and by
-  Friday it's a commitment someone sold to a customer.</li>
-<li><strong>Outcome-based roadmaps</strong> — organize by the problem or metric ("cut onboarding
-  drop-off by 30%") rather than the feature. Harder to write, but they preserve the
-  team's freedom to change <em>solution</em> without appearing to change <em>plan</em>.</li>
-<li><strong>Date-based roadmaps</strong> — legitimate when dates are real: compliance deadlines,
-  contractual commitments, coordinated launches. Use dates where dates exist. Don't
-  invent them for decoration.</li>
+<li><strong>Now, next, later</strong> is a reasonable starting point for many audiences, in the lesson's view. <em>Now</em> is committed and specific,
+  <em>next</em> is planned but can be reordered, and <em>later</em> is a direction. The buckets are honest about
+  certainty in a way a dated roadmap isn't. Put a feature on Q3 and by Friday someone has sold it
+  to a customer.</li>
+<li><strong>Outcome-based roadmaps</strong> organise around a problem or a metric ("cut onboarding drop-off")
+  instead of a feature. They're harder to write, and they let the team change the solution
+  without appearing to change the plan.</li>
+<li><strong>Date-based roadmaps</strong> are legitimate when the dates are real, such as compliance deadlines,
+  contracts or coordinated launches. Use dates where they exist and don't invent them for
+  decoration.</li>
 </ul>
-<p>Whatever the format, reserve explicit capacity <strong>before</strong> feature prioritization begins:
-a platform/debt allocation (teams commonly hold 15–30% — see
-<a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt</a>) and, on AI products,
-an eval/data line item. Debt never wins a head-to-head RICE contest against a shiny
-feature. That's precisely why it gets a reserved lane instead of a lottery ticket.</p>
+<p>Whatever the format, reserve capacity for platform and debt work <em>before</em> feature prioritisation
+starts. <a href="../technical-product-sense/tech-debt-and-estimation.html">Tech debt &amp; estimation</a> covers how
+to size it. On AI products, add a line for eval and data work too. Debt rarely wins a head-to-head
+contest against a shiny feature, which is exactly why it needs its own lane.</p>
+<h2 id="from-the-show-confidence-and-timing">From the show: confidence and timing</h2>
+<p>Itamar Gilad, who built his confidence meter to help teams calibrate their scores, describes the
+problem it was aimed at:</p>
+<blockquote>
+<p>"I saw way too many executives and PMs being overly confident about their ideas and saying, this is a sure thing."
+— Itamar Gilad, <a href="https://www.youtube.com/watch?v=FOow1L7jkmA"><em>Make More of Your Product Launches Succeed with Itamar Gilad, Ex-Google PM</em></a>, The Growth Podcast, around 07:56</p>
+</blockquote>
+<p>That's the same failure the worked example guards against, an AI bet scored high before anyone
+has evidence. Stephanie Leue argues for a different framework when the room includes more than the
+product team:</p>
+<blockquote>
+<p>"I usually recommend cost of delay framework because it is the one that works best for sales teams, marketing teams and product teams."
+— Stephanie Leue, <a href="https://www.youtube.com/watch?v=erql22ZbLWI"><em>How to Build High Performing Product Teams</em></a>, The Growth Podcast, around 30:26</p>
+</blockquote>
+<p>The two views fit together better than they first seem to. RICE is a good tool inside a product
+team, where reach and effort are shared language. Cost of delay travels more easily to sales and marketing teams, as Leue says. The likely reason is
+that it is stated in money and time.</p>
 <h2 id="saying-no">Saying no</h2>
-<p>Every framework ends at the same human moment: telling someone their thing didn't make
-the cut. The craft:</p>
+<p>Every framework ends at the same human moment, telling someone their thing didn't make the cut.
+Say no to the idea and yes to the problem. "We're not building custom dashboards this quarter,
+but the reporting pain is real, and here's where it sits on the list." Show the trade as well as the verdict. Asking which of three things should move out for this one
+to be <em>now</em> shifts the argument from whether you care to what it displaces, which is the real
+decision. Then
+write it down in a visible not-now list, so the same request doesn't come back every month with
+the reasoning forgotten.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Say no to the idea, yes to the problem</strong> — "we're not building custom dashboards this
-  quarter, but the underlying reporting pain is real and here's where it sits on the
-  list."</li>
-<li><strong>Show the trade, not just the verdict</strong> — "for this to be <em>now</em>, one of these three
-  things moves out. Which?" moves the argument from <em>whether you care</em> to <em>what it
-  displaces</em> — which is the actual decision.</li>
-<li><strong>Write it down</strong> — a visible, reasoned not-now list. Re-litigating the same request
-  monthly because the reasoning evaporated is pure waste.</li>
+<li><strong>Framework laundering</strong> means tuning the inputs until the spreadsheet blesses the thing you'd
+  already decided. Everyone can tell.</li>
+<li><strong>The peanut-butter roadmap</strong> spreads capacity so thinly over everything that no bet gets
+  enough to win.</li>
+<li><strong>Roadmap as contract</strong> means shipping what was painted for Q3 instead of responding to what
+  you learned in Q2.</li>
+<li><strong>Demo-driven prioritisation</strong> lets AI bets jump the queue on wow factor, with confidence never
+  revisited after the applause.</li>
+<li><strong>Loudest-voice allocation</strong> sets priority by stakeholder volume. Part of a framework's value
+  is political, since it gives you something to point at that isn't a person.</li>
+<li><strong>OKR theatre</strong> invents key results each quarter to fill a template, disconnected from any
+  strategic choice you could defend.</li>
 </ul>
-<h2 id="failure-modes">Failure modes</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li><strong>Framework laundering</strong> — tuning RICE inputs until the spreadsheet blesses the thing
-  you'd already decided. Everyone can tell.</li>
-<li><strong>The peanut-butter roadmap</strong> — spreading capacity thinly over everything so no bet
-  gets enough to actually win. Prioritization means <em>concentration</em>.</li>
-<li><strong>Roadmap as contract</strong> — shipping the Q3 painting instead of responding to what you
-  learned in Q2. The map ate the territory.</li>
-<li><strong>Demo-driven prioritization</strong> — AI bets jumping the queue on wow-factor, with
-  confidence never revisited after the applause.</li>
-<li><strong>Loudest-voice allocation</strong> — priority by stakeholder volume. A framework's real
-  political function is giving you something to point at that isn't a person.</li>
-<li><strong>OKR theater</strong> — Key Results invented each quarter to fill a template, disconnected
-  from any strategic choice you could defend. The roadmap ends up organized by whichever
-  KR sounds most measurable, not by what the strategy actually needs to be true.</li>
-</ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
-<ul>
-<li class="task todo">For my top five items: can I state reach, impact, confidence, and effort — and
-      which of those numbers are guesses?</li>
-<li class="task todo">Does anything urgent-by-timing (cost of delay) deserve to jump the value ranking?</li>
-<li class="task todo">Are the basics covered (Kano) before the delighters?</li>
-<li class="task todo">Does the roadmap encode certainty honestly (now/next/later) — and has debt/eval
-      capacity been reserved off the top?</li>
-<li class="task todo">Can I name the last significant thing I said no to, and does the requester know why?</li>
-<li class="task todo">Can I trace each roadmap Key Result back to a specific strategic choice I could
-      defend out loud — not just an ambitious number?</li>
+<li class="task todo">For your top five items, write down reach, impact, confidence and effort, and mark which
+      numbers are guesses.</li>
+<li class="task todo">Look for anything urgent by timing, and score it with cost of delay as well as value.</li>
+<li class="task todo">Sort your top ten with the Kano names, and check that the basics users take for granted are
+      covered.</li>
+<li class="task todo">Reserve debt and eval capacity off the top of the roadmap before feature scoring begins.</li>
+<li class="task todo">Put a spike in front of any AI bet scored with confidence below 80%.</li>
+<li class="task todo">Tell the requester of the last big thing you turned down why it's not <em>now</em>.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="discovery-to-delivery.html">Discovery to delivery</a></li>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
-<li><a href="../product-sense/creativity.html">Creativity: strategy, focus, and constraint</a></li>
+<li><a href="../product-sense/creativity.html">Creativity: strategy, focus, and constraint</a> (product sense):
+  the strategy that sets the order.</li>
+<li><a href="../technical-product-sense/tech-debt-and-estimation.html">Tech debt &amp; estimation</a> (technical
+  product sense): sizing the reserved lane.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Sean McBride, <a href="https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/"><em>RICE: Simple prioritization for product
+  managers</em></a>,
+  Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales; the page
+  shows the formula itself as an image, and its text says effort divides the total impact) (as of
+  2026-11-28).</li>
+<li>Scaled Agile, <a href="https://framework.scaledagile.com/wsjf"><em>WSJF</em></a>, SAFe extended guidance (WSJF as
+  relative cost of delay divided by relative job duration) (as of 2026-11-28).</li>
+<li>Anthony Murphy, <a href="https://blog.logrocket.com/product-management/rice-framework-prioritization-made-simple"><em>The RICE framework: Prioritization made
+  simple</em></a>,
+  LogRocket blog, 1 September 2022 (the formula stated in text: it "multiplies reach, impact, and
+  confidence and divides that by effort") (as of 2026-11-28).</li>
+<li>Itamar Gilad, <a href="https://itamargilad.com/the-tool-that-will-help-you-choose-better-product-ideas/"><em>Product Discovery With ICE and The Confidence
+  Meter</em></a>,
+  itamargilad.com (the confidence meter for calibrating ICE confidence scores) (as of 2026-11-28).</li>
+<li>Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shin-ichi Tsuji, <a href="https://www.jstage.jst.go.jp/article/quality/14/2/14_KJ00002952366/_article/-char/en"><em>Attractive Quality and
+  Must-Be Quality</em></a>,
+  Journal of the Japanese Society for Quality Control, 14(2), 147-156, 1984 (attractive,
+  one-dimensional and must-be quality; abstract read, full text restricted) (as of 2026-11-28).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="specs-prds-and-rfcs.html"><span class="lbl">← Previous</span><span class="ttl">Specs, PRDs &amp; RFCs</span></a><a class="navcard next" href="working-with-engineering.html"><span class="lbl">→ Next</span><span class="ttl">Working with engineering</span></a></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#strategy-first-okrs-are-the-translation-layer">Strategy first: OKRs are the translation layer</a><a class="h2" href="#frameworks-engines-for-arguments-not-answers">Frameworks: engines for arguments, not answers</a><a class="h2" href="#roadmaps-are-bets-not-promises">Roadmaps are bets, not promises</a><a class="h2" href="#saying-no">Saying no</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#the-order-is-the-strategy">The order is the strategy</a><a class="h2" href="#the-frameworks-and-what-each-one-is-for">The frameworks, and what each one is for</a><a class="h2" href="#worked-example-a-spike-changes-the-ranking">Worked example: a spike changes the ranking</a><a class="h2" href="#roadmaps-are-bets-not-promises">Roadmaps are bets, not promises</a><a class="h2" href="#from-the-show-confidence-and-timing">From the show: confidence and timing</a><a class="h2" href="#saying-no">Saying no</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

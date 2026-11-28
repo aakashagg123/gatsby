@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Picture a planning meeting where someone senior says customers keep asking for an AI assistant, and
@@ -56,18 +58,16 @@ who you need in the room.
 - **Valuable:** will anyone's behaviour change because this exists? Good evidence is user
   interviews, funnel data, support tickets and signs that people would pay. An executive really
   wanting it doesn't count, because that's an input to weigh and it validates nothing.
-- **Usable:** can the target user actually operate it? Prototype tests are the evidence, even five
-  of them. This is the cheapest of the four risks to check, and it's also the one teams skip most
-  often.
+- **Usable:** can the target user actually operate it? Prototype tests are the evidence, even a handful of them. It's quick to check, and it's often skipped.
 - **Feasible:** can we build it with the time, tech and data we have? You want an engineering spike
   here rather than an engineer's *opinion*, and for anything novel you should budget real days to
   try it.
 - **Viable:** does it work for the business, once you count cost to serve, legal, support load and
-  brand? PMs carry this risk more than anyone, because nobody else is looking.
+  brand? On Cagan's account, the PM is the one responsible for this risk.
 
 What discovery hands over is a decision to build, kill or reshape, with the evidence behind it. A
-long document is no substitute. Treat a kill as a win, since every idea killed for $5k of discovery
-is a quarter of delivery capacity saved.
+long document is no substitute. Treat a kill as a win, since every idea killed for, say, $5k of discovery
+(an illustrative figure) is a quarter of delivery capacity saved.
 
 ## Why AI features change feasibility
 
@@ -77,11 +77,11 @@ model can do the task at a quality and cost you can live with. You can't know th
 it against real examples.
 
 That's why discovery for an AI feature always includes a **feasibility spike**, run *before* the
-feature enters delivery. A spike is a prompt or a fine-tune, tested against a few dozen real inputs
-and scored. A scored eval set counts as a discovery output, while "the demo looked great" does not.
-Teams that skip the spike tend to end up in one of two places. Either they spend a quarter
-productionizing a feature whose quality ceiling a week could have found, or they ship the demo-day
-version, which collapses on real user inputs.
+feature enters delivery. A spike is a prompt or a fine-tune, tested against enough real inputs to see the shape of the
+results, and scored. A scored eval set counts as a discovery output, while "the demo looked great" does not.
+Skipping the spike makes two outcomes likely, and this is a judgment rather than a finding.
+Either the team spends a quarter productionizing a feature whose quality ceiling a week could
+have found, or it ships the demo-day version, which can collapse on real user inputs.
 
 Before any bet crosses over, ask yourself what evidence you have that it's valuable, usable,
 feasible and viable, and which of those four you're taking on faith.
@@ -123,8 +123,8 @@ spike. To check it, the team logs how often agents send a draft without changes.
 review three weeks after launch to compare the real rate against the spike's 93%.
 
 The whole week cost one engineer for three days, five agents for an hour or two, and some of your
-time. Against that, it saved a quarter spent building a drafter that would have been wrong on about
-half of all tickets.
+time. Against that, it saved a quarter spent building a drafter that would have been wrong on about a third of all
+tickets, and about half of the non-billing ones.
 
 ## Delivery: slice thin, check constantly
 
@@ -147,7 +147,8 @@ shipped feature is a hypothesis put into production, and telemetry and user feed
 coming back. Teams that skip this arrow ship feature after feature into the void and call it
 velocity.
 
-So on launch day, put a date in the calendar 2–4 weeks out. When it arrives, review the metrics
+So on launch day, put a date in the calendar a few weeks out, which is a reasonable time as a
+judgment rather than a rule. When it arrives, review the metrics
 against what the PRD predicted and write down what you learned, because that note is where next
 quarter's best discovery leads come from.
 
@@ -178,15 +179,15 @@ delivery, at delivery prices.
   by a quarter of delivery. The feedback loops are long, and all the risk turns up at the end.
 - **Discovery done in delivery** sounds like "let's build it and see". It's the most expensive way
   there is to learn an idea is wrong.
-- **Validation theater** means running interviews and tests but only hearing confirmation, and a
+- **Discovery theater** means running interviews and tests but only hearing confirmation, and a
   discovery process that never kills anything isn't really discovery.
 - **The demo trap** is the one specific to AI. A feature moves to delivery because a hand-picked
   demo impressed a VP, and nobody ran an eval on realistic inputs.
 - **Horizontal slicing** is how you end up with "the API is done, the UI is done, they've just never
   been connected". All the integration risk lands in the final week.
 
-Teresa Torres calls the third one discovery theater, and her description of it makes a handy
-self-test:
+Teresa Torres uses the name discovery theater for this pattern, and her description of it makes a
+handy self-test:
 
 > "Nothing in their backlog changes. They don't kill any ideas. They always end up building what they started with."
 > — Teresa Torres, [*Teresa Torres' Step-by-Step Guide to AI Product Discovery*](https://www.youtube.com/watch?v=wGuRuuPuYNQ), The Growth Podcast, around 30:57

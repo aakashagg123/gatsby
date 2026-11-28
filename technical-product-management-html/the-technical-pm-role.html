@@ -13,31 +13,18 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 01</span>
     <h1>The technical PM role</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>A technical product manager owns the same thing every PM owns: <strong>outcomes</strong>. But they earn
-those outcomes on products where the hard decisions are technical — platforms, APIs,
-infrastructure, data products, and AI features. The role sits at the intersection of
-<strong>business</strong> (is it worth building?), <strong>users</strong> (does it solve a real problem?), and
-<strong>engineering</strong> (can we build and run it?). You are not the architect and not the
-engineering manager. You don't decide <em>how</em> it's built or <em>who</em> builds it. You decide
-<em>what</em> gets built, <em>why</em>, in <em>what order</em>, and <em>what "good" means</em>. Your leverage is
-influence without authority, and it runs on three currencies: context, clarity, and trust.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — An AI PM is a technical PM by default. Model choice, eval design,
-latency budgets, and data rights are product decisions on an AI product. You can't
-delegate them all to engineering and still claim to own the outcome.</p>
-<p><strong>What it changes in your decisions</strong> — You treat "which model, at what cost, with what
-fallback" as your call to <em>frame</em> (options, trade-offs, recommendation) even though
-engineering makes the final technical selection.</p>
-<p><strong>Ask yourself</strong> — <em>"On this product, which decisions are mine to make, mine to frame,
-and mine to stay out of — and does my engineering counterpart agree with that list?"</em></p>
-<p><strong>Risk if ignored</strong> — You drift into being a ticket-writer for engineering's ideas, or a
-backseat architect they route around. Both destroy the role's leverage.</p>
-</blockquote>
-<h2 id="what-the-role-actually-is">What the role actually is</h2>
-<p>Every strong PM works three questions at once. The <em>technical</em> PM's distinction is that on
-their product, the third question dominates the other two:</p>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
+<!-- voice: human -->
+
+<p>Your engineering lead pings you on a Tuesday afternoon. The team has two ways to build the new search feature. One answers in under a second but costs
+more to run, and the other is cheaper but takes three seconds. She wants to know which one to build. You could say "your call, you're the
+expert", or you could pick one because it sounds right. Both answers are wrong, and the reason
+they're wrong is most of what this lesson is about.</p>
+<h2 id="what-you-own-and-what-you-dont">What you own, and what you don't</h2>
+<p>A technical product manager owns what every PM owns, which is outcomes. The difference is the kind
+of product. On platforms, APIs, data products and AI features, the hard decisions are technical. A PM who
+can't take part in them ends up watching the product get decided by default.</p>
+<p>The cleanest way to hold the role is to sort decisions into three groups.</p>
 <style>
 .dgm-tr{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -86,23 +73,25 @@ their product, the third question dominates the other two:</p>
   <div class="dgm-tr-how">How &amp; who — architecture, staffing, estimates<br/><em>owned by engineering, informed by the PM</em></div>
 </div>
 
-<ul>
-<li><strong>You own:</strong> the problem statement, the priority order, the requirements (including
-  non-functional ones), the success metrics, the launch decision, and the communication
-  that keeps everyone pointed at the same outcome.</li>
-<li><strong>You inform, but don't own:</strong> architecture, technology choices, estimates, and how the
-  team organizes its work. You bring constraints and consequences ("this must answer in
-  under 2 seconds", "this data can't leave the EU") — engineering brings the design.</li>
-<li><strong>You stay out of:</strong> code review, individual task assignment, and performance
-  management. The fastest way to lose an engineering team is to do their jobs badly.</li>
-</ul>
-<h2 id="the-pm-tpm-em-spectrum">The PM ↔ TPM ↔ EM spectrum</h2>
-<p>Titles vary wildly across companies. The underlying spectrum doesn't:</p>
+<p><strong>You own</strong> the problem statement, the priority order and the requirements, including the
+non-functional ones such as speed and privacy. You also own the success metrics, the launch
+decision, and the communication that keeps everyone pointed at the same outcome.</p>
+<p><strong>You inform but don't own</strong> the architecture, the technology choices, the estimates and how the
+team organises its work. You bring constraints and consequences, such as "this must answer in
+under two seconds" or "this data can't leave the EU", and engineering brings the design.</p>
+<p><strong>You stay out of</strong> code review, task assignment and performance management. The quickest way to
+lose an engineering team is to do their jobs badly.</p>
+<p>Back to the search feature. Choosing the architecture isn't your call, but the latency budget is,
+because it's a product decision about what users will tolerate. So the useful answer is a question back. What does three seconds do to people who search ten
+times a session, and what does the faster option cost per month at our volume? Once you've framed the tradeoff in product terms,
+the engineering choice usually makes itself.</p>
+<h2 id="titles-are-a-mess-so-ask">Titles are a mess, so ask</h2>
+<p>Titles vary wildly between companies, though the underlying jobs don't.</p>
 <table>
 <thead>
 <tr>
 <th>Role</th>
-<th>Optimizes for</th>
+<th>Optimises for</th>
 <th>Customer is</th>
 <th>Typical outputs</th>
 </tr>
@@ -110,7 +99,7 @@ their product, the third question dominates the other two:</p>
 <tbody>
 <tr>
 <td>Product manager</td>
-<td>User &amp; business outcomes</td>
+<td>User and business outcomes</td>
 <td>End users, buyers</td>
 <td>Strategy, PRDs, roadmaps</td>
 </tr>
@@ -123,125 +112,177 @@ their product, the third question dominates the other two:</p>
 <tr>
 <td>Program manager (also "TPM" at some companies)</td>
 <td>Cross-team execution</td>
-<td>The org itself</td>
+<td>The organisation itself</td>
 <td>Plans, dependency maps, status</td>
 </tr>
 <tr>
 <td>Engineering manager</td>
-<td>Team health &amp; delivery</td>
+<td>Team health and delivery</td>
 <td>The team</td>
 <td>Staffing, architecture reviews, career growth</td>
 </tr>
 </tbody>
 </table>
-<p>Two things to notice. First, at Amazon, Google, and Microsoft, "TPM" often means <em>technical
-program manager</em> — an execution and dependency-management role, not a product-ownership
-role. Ask what the letters mean before you interview. Second, platform and API products
-invert the empathy problem: your "user" is another engineer, so <em>developer experience</em> —
-docs, error messages, versioning, time-to-first-call — becomes your UX surface.</p>
-<p>A third thing worth noticing, newer than the other two: the "PM" title is fragmenting
-further under AI's push. Growth PM, Platform PM, and AI PM were already splitting off
-distinct scopes. Career guides from 2025–2026 also name two more titles, though no hiring
-data shows how widely employers use them. An <strong>AI Product Owner</strong> defines an AI feature's behaviour, eval
-bar, and human-in-the-loop boundaries — closer to the deployment pipeline than to
-strategy. A <strong>Data-Informed PM</strong> uses AI tooling to keep a continuous read on product
-health — behaviour, experiments, drift — feeding the roadmap in near-real-time instead of
-a quarterly metrics review. Titles will keep splitting faster than job descriptions catch
-up, and some may fade as the skills become standard for every PM. What matters is knowing which of these scopes you actually hold today, and saying so
-plainly instead of letting "PM" cover work that's really three different jobs.</p>
-<h2 id="where-the-leverage-comes-from">Where the leverage comes from</h2>
-<p>You have no direct authority over the people who build the product. Your leverage is:</p>
+<p>The letters TPM can also mean <em>technical program manager</em> (TPM), which is an execution and
+dependency-management job rather than a product-ownership one. Ask what the letters
+mean before you interview, and read the job description rather than the title. Platform and API
+products also turn the empathy problem around, because your user is another engineer. Docs, error
+messages, versioning and the time it takes to make a first successful call become your user
+experience.</p>
+<h2 id="where-your-influence-comes-from">Where your influence comes from</h2>
+<p>You have no authority over the people who build the product, so your influence runs on three
+things you can supply.</p>
 <ul>
-<li><strong>Context</strong> — you know things the team can't see from inside the sprint: what customers
-  said, what the business needs, what other teams are shipping. Deliver it relentlessly and
-  decisions start going your way without you in the room.</li>
-<li><strong>Clarity</strong> — a crisp problem statement and unambiguous "definition of done" are worth
-  more than any amount of meeting attendance. Ambiguity is where velocity goes to die.</li>
-<li><strong>Trust</strong> — built by understanding enough of the technical picture to ask good questions
-  (see the <a href="../technical-product-sense/index.html">technical product sense track</a>), by never
-  negotiating an estimate you don't understand, and by taking the blame boundary seriously:
-  you absorb ambiguity from above. You don't pass panic downward.</li>
+<li><strong>Context.</strong> You know things the team can't see from inside the sprint: what customers said,
+  what the business needs, what other teams are shipping. Deliver it steadily and decisions start
+  going your way when you're not in the room.</li>
+<li><strong>Clarity.</strong> A crisp problem statement and an unambiguous definition of done are worth more than
+  any number of meetings, since ambiguity is where a team's speed quietly drains away.</li>
+<li><strong>Trust.</strong> You earn it by learning enough of the technical picture to ask good questions, which is
+  what the <a href="../technical-product-sense/index.html">technical product sense track</a> is for. You keep
+  it by never negotiating an estimate you don't understand, and by absorbing ambiguity from above
+  instead of passing panic down.</li>
 </ul>
-<p>A useful mental model: the PM is the team's <strong>API to the rest of the company</strong>. Requests
-come to you in business language. You translate them into a prioritized, unambiguous
-contract. The team's work flows back out through you as narrative the company understands.</p>
-<h2 id="the-buck-stops-with-you">The buck stops with you</h2>
-<p>One responsibility doesn't delegate: you are the <strong>arbiter of completeness</strong>. You were
-hired to notice incomplete work — your own and everyone else's — because nobody
-downstream necessarily knows the right questions to ask. The tell is familiar: you hit
-send on an answer already knowing the follow-up question you didn't address, and it
-arrives ten minutes later. As a one-off, it's laziness. As a habit, it's how A− products
-ship: you know in your heart it's an A−, nobody else calls it, and it launches as
-exactly that. Guard against it structurally. Before anything leaves your hands, ask
-what question the recipient will ask next, and answer it in the same artifact.</p>
-<h2 id="a-week-in-the-role">A week in the role</h2>
-<p>Not a schedule — a portfolio. Strong technical PMs spend roughly:</p>
+<p>A picture that helps is to think of yourself as the team's interface to the rest of the company.
+Requests arrive in business language, you turn them into a prioritised, unambiguous contract, and
+the team's work flows back out through you as a story the company understands.</p>
+<h2 id="the-job-nobody-else-will-do">The job nobody else will do</h2>
+<p>One responsibility doesn't delegate, which is noticing incomplete work, your own included. Nobody
+downstream necessarily knows the right questions to ask. The tell is familiar. You send an answer
+already knowing the follow-up question you skipped, and it arrives ten minutes later. Once, that's
+a slip, but as a habit it's how products ship at a B-plus when everyone privately knew they could
+have been an A. The fix is structural, so before anything leaves your hands, ask what the reader
+will ask next and answer it in the same document.</p>
+<h2 id="worked-example-auditing-your-own-week">Worked example: auditing your own week</h2>
+<p>This example is invented, and so are its numbers. Take an illustrative split of a technical PM's time, roughly 40/40/20 across three buckets. <em>Now</em> is unblocking the current build, <em>next</em>
+is discovery and definition for the next one or two bets, and <em>later</em> is strategy, metrics
+review, debt and the roadmap. It's a heuristic and not a research finding, but it gives you something to measure
+against.</p>
+<p>Say you're the PM for a payments API and you log a 45-hour week by category.</p>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>What went in it</th>
+<th>Hours</th>
+<th>Share</th>
+<th>Rule-of-thumb share</th>
+<th>Rule-of-thumb hours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Now</td>
+<td>Standups, spec questions, two scope calls, a review against acceptance criteria</td>
+<td>31</td>
+<td>69%</td>
+<td>40%</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Next</td>
+<td>Two customer calls, a data pull</td>
+<td>9</td>
+<td>20%</td>
+<td>40%</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Later</td>
+<td>A metrics review</td>
+<td>5</td>
+<td>11%</td>
+<td>20%</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td>45</td>
+<td>100%</td>
+<td>100%</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+<p>The shares come from dividing each bucket by 45, so 31 / 45 is 69%, 9 / 45 is 20% and 5 / 45 is
+11%. The rule-of-thumb hours are 40%, 40% and 20% of 45, which gives 18, 18 and 9. You're spending
+13 hours more than the guide on <em>now</em>, and 9 hours less on <em>next</em>.</p>
+<p>Nothing in that week was wasted, which is what makes the pattern dangerous. If it holds for more than a sprint or two, the next build starts without definition. The team
+then spends its sprints asking you questions you could have answered in advance. That pushes <em>now</em> even higher. The fix
+here is concrete. You move two recurring status meetings to a written update, which frees about
+four hours, and you put two fixed discovery blocks in your calendar for the next bet. Even that
+only gets <em>next</em> to 13 hours, so the remaining gap is a conversation with your engineering lead
+about which scope questions the tech lead can answer without you.</p>
+<h2 id="the-technical-pm-interview">The technical PM interview</h2>
+<p>Technical PM interviews often include a round that product-sense interviews don't have: system or
+API design, done from a PM's altitude rather than an engineer's. (For the general interview craft
+this round builds on, see <a href="../product-sense/communication.html">communication</a> in product sense.)</p>
+<p>The interviewer isn't grading your architecture. They're watching whether you ask what the data
+looks like, what scale you're working at and what you're optimising for before you draw anything.
+A candidate who opens with "who calls this API, how often, and what happens if it's down?" is doing the job. One who jumps straight to a diagram is auditioning for a different seat.</p>
+<p>A frame that holds up goes like this. State the goal and the users, then name the non-functional
+requirements that matter here, such as latency, consistency and who owns which data. Sketch the
+contract rather than the implementation, and say the tradeoffs out loud, the same way you'd <a href="specs-prds-and-rfcs.html">read
+an RFC</a>. Then connect each technical choice to a product consequence. A sentence like "we'd need eventual consistency here, so a user could briefly see a stale
+balance, and is that acceptable?" marks a technical PM answer. The same frame works for AI versions of the round, on eval design, retrieval and serving.
+The extra layer there is reasoning about what happens when the model is wrong.</p>
+<h2 id="from-the-show-why-technical-became-the-default">From the show: why "technical" became the default</h2>
+<p>Lewis C. Lin, who coaches candidates for PM interviews, describes a shift in what hiring managers
+expect:</p>
+<blockquote>
+<p>"kind of an unspoken belief that a more effective product manager is a technical product manager. And it kind of makes sense because one of your key stakeholders is engineers."
+— Lewis C. Lin, <a href="https://www.youtube.com/watch?v=jkTPnrqs1zw"><em>500,000 Professionals Have Used His Book To Crack Interviews at Big Companies</em></a>, The Growth Podcast, around 38:57</p>
+</blockquote>
+<p>That's his read of the hiring market, not a measured trend, but it matches why this track exists.
+Mike Davey adds a practical warning about the title itself:</p>
+<blockquote>
+<p>"I applied to a job that was a technical product manager. But the actual job description sounded like a head of product role."
+— Mike Davey, <a href="https://www.youtube.com/watch?v=59mpQHNXsPI"><em>How He Became a Series C VP of Product in 10 Years: Mike Davey</em></a>, The Growth Podcast, around 01:09:08</p>
+</blockquote>
+<p>His point is to read the description, the company stage and the hiring pattern, and to trust
+those over the title. The same letters can mean a platform owner, a program manager or a company's
+first product hire.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>~40% on now</strong> — unblocking the current build: answering spec questions, making scope
-  calls, reviewing what's landed against acceptance criteria.</li>
-<li><strong>~40% on next</strong> — discovery and definition for the next one or two bets: user
-  conversations, data digging, writing, aligning stakeholders before the team needs to start.</li>
-<li><strong>~20% on later</strong> — strategy, metrics review, debt conversations, and the unglamorous
-  maintenance of the roadmap and stakeholder trust.</li>
+<li><strong>The backseat architect</strong> overrules technical designs they half understand. Engineers stop
+  bringing real options and start managing the PM instead.</li>
+<li><strong>The ticket clerk</strong> writes down whatever the loudest stakeholder or the tech lead wants and
+  adds no judgment, even though the judgment is the whole value of the role.</li>
+<li><strong>The absentee</strong> hands off "the technical stuff" wholesale and is then surprised by a latency,
+  cost or privacy property that was knowable months earlier.</li>
+<li><strong>The hero translator</strong> routes all information through themselves. It feels like influence, but
+  it's a bottleneck that stops the day they go on holiday.</li>
 </ul>
-<p>If "now" eats the whole week for more than a sprint or two, the next build starts without
-definition and the cycle worsens. Guarding the discovery time <em>is</em> the job.</p>
-<h2 id="navigating-the-technical-pm-interview">Navigating the technical PM interview</h2>
-<p>Technical PM interviews increasingly include a round product-sense interviews don't have:
-system design or API design, done from a PM's altitude rather than an engineer's. (See
-<a href="../product-sense/communication.html">product sense: navigating interviews</a> for the
-general-PM interview craft this one specializes.) The format shows up at platform and
-developer-tool companies — Stripe, GitHub, Datadog, and similar — because it tests exactly
-what the role needs: can you reason about a system without needing to design it.</p>
-<p><strong>What's actually being evaluated.</strong> Not architecture. An interviewer isn't grading
-whether you'd pick REST or gRPC — they're watching whether you ask what the data looks
-like, what scale you're operating at, and what you're optimizing for before you draw
-anything. The candidate who opens with clarifying questions (<em>"who calls this API, how
-often, and what happens if it's down?"</em>) is doing the job. The one who jumps straight to a
-diagram is auditioning to be an engineer, which isn't the seat available.</p>
-<p><strong>A frame that holds up:</strong> state the goal and the users of the system → name the
-non-functional requirements that actually matter here (latency, consistency, who owns
-what data) → sketch the contract, not the implementation → name the trade-offs out loud,
-the same way you'd <a href="specs-prds-and-rfcs.html">read an RFC</a> — and connect every technical
-choice back to a product or business consequence. <em>"We'd need eventual consistency here,
-which means a user could briefly see a stale balance — is that acceptable for this
-product?"</em> is the sentence that separates a technical PM answer from an engineering one.</p>
-<p><strong>For AI-flavoured versions of this round</strong>, the same frame applies to eval design,
-retrieval architecture, or model-serving trade-offs: reasoning about hallucination risk,
-latency-vs-quality budgets, and what happens when the model is wrong is now a standard
-layer on top of classic system design, at any company shipping an AI feature.</p>
-<h2 id="failure-modes">Failure modes</h2>
+<h2 id="what-to-do-this-week">What to do this week</h2>
 <ul>
-<li><strong>The backseat architect</strong> — overruling technical designs you half-understand. Engineers
-  stop bringing you real options and start managing you instead.</li>
-<li><strong>The ticket clerk</strong> — writing down whatever the loudest stakeholder or the tech lead
-  wants, adding no judgment. The role's entire value is the judgment.</li>
-<li><strong>The absentee</strong> — delegating "technical stuff" wholesale, then being surprised by a
-  latency, cost, or privacy property that was knowable months earlier.</li>
-<li><strong>The hero translator</strong> — hoarding context so all information flows through you. It feels
-  like leverage. It's really a bottleneck and a bus-factor of one.</li>
-</ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
-<ul>
-<li class="task todo">Can I state, in one sentence each, the outcome my product owes the business and the
-      problem it solves for users?</li>
-<li class="task todo">Have my engineering counterpart and I explicitly agreed on which decisions are mine,
-      theirs, and shared?</li>
-<li class="task todo">Do I know the two or three technical constraints that most shape my product's
-      roadmap (a latency budget, a data boundary, a dependency)?</li>
-<li class="task todo">Am I spending real weekly time on <em>next</em> and <em>later</em>, or is <em>now</em> consuming me?</li>
-<li class="task todo">When did I last change my mind because an engineer showed me a better option?</li>
-<li class="task todo">In a technical-PM interview, do I default to clarifying questions and trade-offs, or
-      do I reach for a diagram before I know what I'm optimizing for?</li>
+<li class="task todo">Write the outcome your product owes the business, and the problem it solves for users, in
+      one sentence each.</li>
+<li class="task todo">Draft a list of decisions that are yours, theirs and shared, and walk your engineering lead
+      through it.</li>
+<li class="task todo">Name the two or three technical constraints that shape your roadmap most, such as a latency
+      budget, a data boundary or a dependency.</li>
+<li class="task todo">Log one week of your time against now, next and later, and book discovery time if <em>next</em> is
+      thin.</li>
+<li class="task todo">Recall the last time an engineer changed your mind with a better option, and make a point of
+      asking for one this week.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="discovery-to-delivery.html">Discovery to delivery</a></li>
 <li><a href="working-with-engineering.html">Working with engineering</a></li>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
+<li><a href="../technical-product-sense/index.html">Technical product sense</a>: the systems knowledge that earns
+  the trust described above.</li>
+<li><a href="../business-acumen/executive-influence-and-stakeholders.html">Executive influence and stakeholders</a>
+  (business acumen): influence without authority, in depth.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="index.html"><span class="lbl">← Previous</span><span class="ttl">Overview</span></a><a class="navcard next" href="discovery-to-delivery.html"><span class="lbl">→ Next</span><span class="ttl">Discovery to delivery</span></a></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#what-the-role-actually-is">What the role actually is</a><a class="h2" href="#the-pm-tpm-em-spectrum">The PM ↔ TPM ↔ EM spectrum</a><a class="h2" href="#where-the-leverage-comes-from">Where the leverage comes from</a><a class="h2" href="#the-buck-stops-with-you">The buck stops with you</a><a class="h2" href="#a-week-in-the-role">A week in the role</a><a class="h2" href="#navigating-the-technical-pm-interview">Navigating the technical PM interview</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#what-you-own-and-what-you-dont">What you own, and what you don&#x27;t</a><a class="h2" href="#titles-are-a-mess-so-ask">Titles are a mess, so ask</a><a class="h2" href="#where-your-influence-comes-from">Where your influence comes from</a><a class="h2" href="#the-job-nobody-else-will-do">The job nobody else will do</a><a class="h2" href="#worked-example-auditing-your-own-week">Worked example: auditing your own week</a><a class="h2" href="#the-technical-pm-interview">The technical PM interview</a><a class="h2" href="#from-the-show-why-technical-became-the-default">From the show: why &quot;technical&quot; became the default</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-this-week">What to do this week</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

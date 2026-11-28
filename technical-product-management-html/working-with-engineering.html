@@ -13,34 +13,19 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 05</span>
     <h1>Working with engineering</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Most software teams run some flavour of <strong>agile</strong>: work sliced small, built in short
-cycles, corrected by feedback. This happens either in <strong>sprints</strong> (Scrum: fixed 1–2 week
-cycles with planning, review, and retro) or <strong>flow</strong> (Kanban: continuous pull through a
-work-in-progress-limited board). The rituals are where the PM's product intent physically
-enters the machine. Each one has a specific PM job: bring the <em>why</em> and the priorities
-to planning, make scope calls at standup speed during the sprint, judge outcomes at
-review, and hear the process feedback at retro. Underneath all of it runs the <strong>trust
-economy</strong>: estimates are honoured as estimates, bad news travels fast in both directions,
-and the PM who understands <em>why</em> things take time gets told the truth about how long
-things take.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — AI work fits rituals awkwardly. "Improve answer quality" isn't a
-ticket that burns down linearly — it's an experiment loop that might converge in two
-days or never. Forcing research-shaped work into feature-shaped sprints makes every
-sprint look like a failure.</p>
-<p><strong>What it changes in your decisions</strong> — You let the team run experiment-shaped work as
-<strong>time-boxed spikes with an eval-score exit criterion</strong> ("two weeks; ship if the eval
-clears 85%, escalate if it doesn't") instead of feature tickets with an implied promise
-of success.</p>
-<p><strong>Ask yourself</strong> — <em>"Is this sprint item a build (we know what done looks like) or an
-experiment (we're buying information) — and does the plan admit which?"</em></p>
-<p><strong>Risk if ignored</strong> — Quality work gets reported as "still not done" sprint after
-sprint, trust erodes on both sides, and the team quietly stops attempting ambitious AI
-work at all.</p>
-</blockquote>
-<h2 id="the-shape-of-a-sprint">The shape of a sprint</h2>
+  <div class="MarkdownContent"><p><em>Last reviewed: 2026-11 · Volatility: medium</em></p>
+<!-- voice: human -->
+
+<p>A sales director stops you in the corridor. A big prospect wants the integration "by end of
+next month", which is six weeks away. You know the team's estimate was ten weeks. You also know that if you walk back into planning and
+ask whether they can do it in six, they'll probably say yes. The work will still take ten weeks, minus the tests and plus an incident. This lesson is about
+the better conversation, and about the habits that make engineers tell you the truth before you
+need it.</p>
+<h2 id="the-rituals-and-your-job-in-each">The rituals, and your job in each</h2>
+<p>Most software teams run some form of agile, which means work sliced small, built in short cycles
+and corrected by feedback. Some use <strong>sprints</strong>, Scrum's fixed-length cycles of one month or less, with planning, review and a retrospective. Others use <strong>flow</strong>, Kanban's continuous pull of work through a board with
+work-in-progress (WIP) limits. The rituals are where your product intent
+actually enters the build.</p>
 <style>
 .dgm-we{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -83,118 +68,139 @@ work at all.</p>
   <div class="dgm-we-branch">⚡ Scope question at standup → PM decision, in hours not days → back into build days</div>
 </div>
 
-<ul>
-<li><strong>Backlog refinement</strong> (continuous) — your most underrated hour of the week. Stories
-  get clarified, sliced, and estimated <em>before</em> planning, so planning is a decision
-  meeting, not an archaeology session. A PM who shows up to refinement with crisp
-  acceptance criteria is worth two who show up only to demos.</li>
-<li><strong>Sprint planning</strong> — you bring the ordered backlog and the context (<em>why these, why
-  now</em>). The team decides how much fits. The commitment must be theirs — a sprint stuffed
-  by the PM is a sprint the team never owned.</li>
-<li><strong>Daily standup</strong> — not a status report to you. You're there to catch the sentence
-  "blocked, waiting on product" and kill it within hours. PM decision latency is invisible
-  in every metric and deadly in every sprint.</li>
-<li><strong>Review/demo</strong> — working software against acceptance criteria. Praise specifically,
-  question honestly. "Looks great, ship it" to something that misses a criterion teaches
-  the team the criteria are decoration.</li>
-<li><strong>Retrospective</strong> — the team's meeting about <em>how</em> it works. Attend if invited, listen
-  more than you talk, and actually fix the top process complaint if it's yours to fix.
-  (It's often "requirements arrive late or change mid-sprint." Ouch — and fair.)</li>
-</ul>
-<p><strong>Scrum vs. Kanban</strong> in one line each: Scrum batches work into fixed commitments —
-strongest when the work is plannable feature-building. Kanban pulls work continuously
-through WIP limits — strongest for interrupt-heavy or flow-shaped work (platform teams,
-support-heavy products, ops). Many teams blend them. Your concern isn't the methodology
-name. It's that priorities enter cleanly and feedback exits regularly.</p>
-<h2 id="velocity-and-throughput-what-the-numbers-actually-tell-you">Velocity and throughput — what the numbers actually tell you</h2>
-<p>Teams measure how much they get done. Two flavours, same purpose:</p>
-<ul>
-<li><strong>Velocity</strong> (Scrum) — story points completed per sprint, averaged over several
-  sprints. It's a <em>planning</em> tool: if the team reliably averages 30, and the backlog
-  ahead totals 90, that's roughly three sprints. It's not a performance metric, not
-  comparable between teams (team A's "5" is team B's "13"), and not improvable by
-  pressure — inflating point estimates moves the number without moving the software.</li>
-<li><strong>Throughput</strong> (Kanban) — items completed per unit time, regardless of size. Paired
-  with <strong>cycle time</strong> (how long one item spends in flight), it tells you whether the
-  system is getting faster, slower, or stuck.</li>
-</ul>
-<p>Both numbers are diagnostic, not motivational. A PM who reports velocity to leadership
-as a productivity score will find the engineers scoring higher and shipping the same
-amount. The question worth asking is <em>trend</em>: is velocity stable (predictable), rising
-(team gaining leverage from past investment), or falling (growing overhead, unclear
-scope, mounting debt)? A sustained dip is the earliest signal that something structural
-needs attention.</p>
-<p>AI coding tools add a twist. DORA's 2025 report on AI-assisted development calls AI an
-"amplifier" of an organization's existing strengths and weaknesses. Google's own summary says AI
-use is now linked to higher delivery throughput. Secondary summaries of the report add that
-it is still linked to more delivery instability. Only the throughput finding appears on
-Google's own page. So if AI-assisted teams show rising velocity, check change-failure
-and rework rates before you celebrate.</p>
+<p><strong>Backlog refinement</strong> is probably the most underrated hour of your week. Stories get clarified,
+sliced and estimated <em>before</em> planning, so planning becomes a decision meeting rather than an
+archaeology session. A PM who arrives at refinement with crisp acceptance criteria does more for
+the sprint than one who only shows up to demos.</p>
+<p><strong>Sprint planning</strong> is where you bring the ordered backlog and the context, meaning why these
+items and why now. The team decides how much fits, and the commitment has to be theirs, since a
+sprint the PM stuffed is a sprint the team never owned.</p>
+<p><strong>The daily standup</strong> isn't a status report to you. You're there to catch the phrase "blocked,
+waiting on product" and clear it within hours, because PM decision delay doesn't show up in any
+metric but it slows every sprint.</p>
+<p><strong>The review or demo</strong> checks working software against acceptance criteria. Praise specifically
+and question honestly. Saying "looks great, ship it" about something that misses a criterion
+teaches the team that the criteria are decoration.</p>
+<p><strong>The retrospective</strong> is the team's meeting about how it works. If you're invited, listen more
+than you talk, and fix the top complaint if it's yours to fix. It's often that requirements arrive
+late or change mid-sprint, which is uncomfortable to hear and usually fair.</p>
+<p>Scrum batches work into fixed commitments and suits plannable feature work. Kanban pulls work
+continuously and suits interrupt-heavy work, such as platform teams, support-heavy products and
+operations. Many teams blend the two. The method's name matters less than whether priorities enter
+cleanly and feedback comes out regularly.</p>
+<h2 id="what-velocity-tells-you-and-what-it-doesnt">What velocity tells you, and what it doesn't</h2>
+<p><strong>Velocity</strong> is the story points a Scrum team completes per sprint, averaged over several sprints.
+It's a planning tool, not a performance score, and it isn't comparable between teams, because one
+team's "5" is another team's "13". <strong>Throughput</strong> is the Kanban equivalent, items completed per
+week, usually paired with <strong>cycle time</strong>, the time one item spends in progress.</p>
+<p>Report velocity to leadership as productivity and you'll find the points rising while the
+software stays the same. The useful signal is the trend. Stable velocity means a predictable team,
+and a sustained dip is often the earliest sign of growing overhead, unclear scope or mounting
+debt. If AI coding tools push velocity up, check change-failure and rework rates before you
+celebrate. <a href="../ai-assisted-development/measuring-and-governing.html">Measuring and governing</a> in
+the AI-assisted development track covers the delivery metrics for that.</p>
+<h2 id="worked-example-the-six-week-ask">Worked example: the six-week ask</h2>
+<p>This example is invented, and so are its numbers. The integration in the opening is 120 points of
+work, and the team runs two-week sprints. Its last six sprints delivered 28, 34, 30, 26, 32 and 30
+points.</p>
+<p>The average is 180 ÷ 6, which is 30 points a sprint, and the range runs from 26 to 34. At the
+average, 120 points takes 4 sprints. At the slowest recent pace it takes 120 ÷ 26, or about 4.6,
+so call it 5 sprints. At the fastest it takes 120 ÷ 34, about 3.5, so call it 4 sprints. The honest
+forecast is 4 to 5 sprints, which is 8 to 10 weeks. Six weeks is 3 sprints, which isn't on the
+table at full scope.</p>
+<p>So you don't ask for a discount. You ask the tech lead what the expensive part is, and the answer
+is bulk import of historical records, at 36 points. The prospect only needs new records synced at
+launch. Make bulk import a non-goal for the first release, and the scope drops to 120 − 36 = 84
+points. At the average pace that's 84 ÷ 30, or 2.8 sprints, and at the slowest pace it's 84 ÷ 26,
+about 3.2 sprints.</p>
+<p>Now you can give sales an answer that's true. Six weeks is likely but not safe, and the slip risk
+is a few days rather than a month. You say so this week, with the option of a fixed date two weeks
+later if the prospect needs certainty. The cost is that bulk import moves to the next quarter, and
+someone has to tell the prospect that too.</p>
 <h2 id="estimates-and-the-trust-economy">Estimates and the trust economy</h2>
-<p>Estimation mechanics — story points, ranges, the cone of uncertainty — are covered in
-<a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt &amp; estimation</a>. What
-belongs <em>here</em> is the relationship layer:</p>
+<p>How to read an estimate is covered in <a href="../technical-product-sense/tech-debt-and-estimation.html">tech debt &amp; estimation</a>.
+What belongs here is the relationship around it.</p>
 <ul>
-<li><strong>An estimate is data, not an opening bid.</strong> The moment you haggle ("can't we do it in
-  three?"), every future estimate arrives pre-padded, and you've lost your most useful
-  signal. If the estimate doesn't fit the need, change <em>scope</em> — that's your lever, and
-  using it is respected.</li>
-<li><strong>Ask for the drivers, not a discount.</strong> "What's the expensive part?" routinely reveals
-  that 60% of the cost sits in an edge case you didn't actually need. Cutting <em>that</em> is
-  collaborative. Pressuring the number is adversarial.</li>
-<li><strong>Deliver bad news upward at full speed.</strong> If the sprint says the date is wrong, the
-  date-holder hears it <em>this week</em>, from you, with options. Teams watch what you do with
-  bad news, and it determines whether you get the early warnings.</li>
-<li><strong>Never spend trust you didn't earn.</strong> "It's probably a small change, right?" from a PM
-  who can't read the <a href="../technical-product-sense/how-systems-are-built.html">system diagram</a>
-  lands very differently from the same sentence after you've drawn it on the whiteboard.</li>
+<li><strong>An estimate is data, not an opening bid.</strong> The moment you haggle, every later estimate arrives
+  quietly padded, and you've lost your best signal. If the estimate doesn't fit the need, change
+  the scope. That's your lever, and engineers respect it.</li>
+<li><strong>Ask for the drivers, not a discount.</strong> "What's the expensive part?" often reveals that much of
+  the cost sits in an edge case you didn't need, and cutting <em>that</em> is collaboration.</li>
+<li><strong>Carry bad news upward fast.</strong> If the sprint says the date is wrong, the person who owns the
+  date hears it this week, from you, with options. Teams watch what you do with bad news, and it
+  decides whether you get early warnings.</li>
+<li><strong>Don't spend trust you haven't earned.</strong> "It's probably a small change, right?" lands very
+  differently from a PM who can draw the <a href="../technical-product-sense/how-systems-are-built.html">system diagram</a>
+  than from one who can't.</li>
 </ul>
-<h2 id="being-worth-building-for">Being worth building for</h2>
-<p>The compounding, unglamorous behaviours that make engineers <em>want</em> your product to win:</p>
+<p>Some habits compound over months. Be findable, and answer scope questions the same day. Bring users into the room through session recordings, support tickets or a customer call the
+engineers can join. Engineers who've seen the pain build better software than ones working from
+your summary. Absorb stakeholder chaos rather than relaying it, so what reaches the sprint is already a
+decision. And give credit outward by name. An invented example of how that sounds is "Priya's
+retry design is why the launch survived the traffic spike", said in front of leadership.</p>
+<h2 id="ai-work-doesnt-burn-down">AI work doesn't burn down</h2>
+<p>"Improve answer quality" isn't a ticket that burns down in a straight line. It's an experiment
+loop that might converge in two days or not at all, and forcing it into feature-shaped sprints
+makes every sprint look like a failure. Run it as a <strong>time-boxed spike with an eval-score exit
+criterion</strong> instead, such as "two weeks, ship if the eval clears 85%, escalate if it doesn't". Then
+"still at 82% against a bar of 85%" is an informative sprint outcome rather than a slip. The plan
+should say which items are builds, where you know what done looks like, and which are experiments,
+where you're buying information.</p>
+<h2 id="from-the-show-trust-is-the-operating-system">From the show: trust is the operating system</h2>
+<p>Tanguy Crusson talks about what happens when engineers ask for clarity you don't yet have, which
+is common early in AI work:</p>
+<blockquote>
+<p>"I think the worst thing you can do is to pretend you have it and send them down the wrong path because then you're going to break that trust."
+— Tanguy Crusson, <a href="https://www.youtube.com/watch?v=6oottgko7pQ"><em>AI Product Discovery: Complete Course</em></a>, The Growth Podcast, around 01:19:49</p>
+</blockquote>
+<p>His alternative is to tell a new team up front that the work is going to be messy. Tom Occhino
+puts the same idea in terms of the PM's place on the team:</p>
+<blockquote>
+<p>"You have to have complete trust of the engineers and your sort of counterpart, engineering management, tech lead, designer, et cetera."
+— Tom Occhino, <a href="https://www.youtube.com/watch?v=-n8T6S_sD7Y"><em>Behind v0 (Top AI Prototyping Tool): Tutorial and Story from the CPO in 2026</em></a>, The Growth Podcast, around 01:03:04</p>
+</blockquote>
+<p>Both are describing the same mechanism as the worked example. A team that trusts you gives you an
+honest estimate and an early warning, and those two things are worth more than any ritual.</p>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Be findable and decisive.</strong> Most sprint delays hide inside "waiting on an answer from
-  product." Set an SLA on yourself: scope questions answered same-day.</li>
-<li><strong>Bring users into the room.</strong> Session recordings, support tickets, a customer call the
-  engineers can join. Engineers who've <em>seen</em> the pain write better software than
-  engineers implementing your summary of it.</li>
-<li><strong>Absorb ambiguity, don't relay it.</strong> Stakeholder chaos is your input, not the team's.
-  What crosses from you into the sprint should already be decisions.</li>
-<li><strong>Give credit outward, precisely.</strong> "Priya's retry design is why the launch survived
-  the traffic spike" — in front of leadership — buys more goodwill than any pizza budget.</li>
+<li><strong>The feature factory</strong> measures sprints by tickets closed and never by outcomes moved, until
+  velocity becomes the product.</li>
+<li><strong>Estimate haggling</strong> negotiates the number instead of the scope. You get quieter estimates, not
+  faster software.</li>
+<li><strong>Mid-sprint scope injection</strong> adds "one tiny thing" that reshuffles the plan. Do it twice and
+  planning stops meaning anything.</li>
+<li><strong>Standup as a status court</strong> has engineers performing progress for the PM instead of
+  coordinating with each other.</li>
+<li><strong>Research punished as slippage</strong> judges experiment work by feature metrics, which teaches the
+  team to propose only safe, boring model work.</li>
 </ul>
-<h2 id="failure-modes">Failure modes</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li><strong>The feature factory</strong> — sprints measured by tickets closed, never by outcomes moved.
-  Velocity becomes the product; users notice eventually.</li>
-<li><strong>Estimate haggling</strong> — negotiating numbers instead of scope. You'll get quieter
-  estimates, not faster software.</li>
-<li><strong>Mid-sprint scope injection</strong> — "one tiny addition" that reshuffles the committed
-  plan. Do it twice and planning stops meaning anything. There's a backlog for a reason.</li>
-<li><strong>Standup-as-status-court</strong> — engineers performing progress for the PM instead of
-  coordinating with each other. You've turned a sync tool into a surveillance tool.</li>
-<li><strong>Research punished as slippage</strong> (AI-specific) — experiment work judged by feature
-  metrics, teaching the team to only propose safe, boring model work.</li>
-</ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
-<ul>
-<li class="task todo">Is the backlog's top ordered, refined, and criteria-complete far enough ahead that
-      planning never idles?</li>
-<li class="task todo">What's my actual median latency on scope questions — hours or days?</li>
-<li class="task todo">Have I changed scope (not pressured the estimate) the last time a number didn't
-      fit the date?</li>
-<li class="task todo">Is experiment-shaped work labelled as such, with a time-box and an exit criterion?</li>
-<li class="task todo">Can I name the last piece of bad news I carried upward fast — and the last credit I
-      gave outward by name?</li>
+<li class="task todo">Keep the top of the backlog ordered, refined and complete with criteria far enough ahead
+      that planning never waits on you.</li>
+<li class="task todo">Measure how long scope questions wait for your answer, and aim for the same day.</li>
+<li class="task todo">The next time a number doesn't fit a date, ask for the drivers and change the scope.</li>
+<li class="task todo">Label experiment-shaped work as experiments, with a time box and an eval exit criterion.</li>
+<li class="task todo">Carry one piece of bad news upward this week, and give one piece of credit outward by name.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="the-technical-pm-role.html">The technical PM role</a></li>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
-<li><a href="../technical-product-sense/tech-debt-and-estimation.html">Technical product sense: tech debt &amp; estimation</a> — reading the estimates you negotiate</li>
+<li><a href="../technical-product-sense/tech-debt-and-estimation.html">Tech debt &amp; estimation</a> (technical
+  product sense): reading the estimates you negotiate.</li>
+<li><a href="../ai-assisted-development/measuring-and-governing.html">Measuring and governing</a> (AI-assisted
+  development): delivery metrics when agents write code.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Ken Schwaber and Jeff Sutherland, <a href="https://scrumguides.org/scrum-guide.html"><em>The Scrum Guide</em></a>,
+  2020 version (sprints are fixed-length events of one month or less) (as of 2026-11-28).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="prioritization-and-roadmaps.html"><span class="lbl">← Previous</span><span class="ttl">Prioritization &amp; roadmaps</span></a><a class="navcard next" href="metrics-and-experimentation.html"><span class="lbl">→ Next</span><span class="ttl">Metrics &amp; experimentation</span></a></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-shape-of-a-sprint">The shape of a sprint</a><a class="h2" href="#velocity-and-throughput-what-the-numbers-actually-tell-you">Velocity and throughput — what the numbers actually tell you</a><a class="h2" href="#estimates-and-the-trust-economy">Estimates and the trust economy</a><a class="h2" href="#being-worth-building-for">Being worth building for</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#the-rituals-and-your-job-in-each">The rituals, and your job in each</a><a class="h2" href="#what-velocity-tells-you-and-what-it-doesnt">What velocity tells you, and what it doesn&#x27;t</a><a class="h2" href="#worked-example-the-six-week-ask">Worked example: the six-week ask</a><a class="h2" href="#estimates-and-the-trust-economy">Estimates and the trust economy</a><a class="h2" href="#ai-work-doesnt-burn-down">AI work doesn&#x27;t burn down</a><a class="h2" href="#from-the-show-trust-is-the-operating-system">From the show: trust is the operating system</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');
