@@ -56,8 +56,7 @@ who you need in the room.
 - **Valuable:** will anyone's behaviour change because this exists? Good evidence is user
   interviews, funnel data, support tickets and signs that people would pay. An executive really
   wanting it doesn't count, because that's an input to weigh and it validates nothing.
-- **Usable:** can the target user actually operate it? Prototype tests are the evidence, even five
-  of them. It's quick to check, and it's often skipped.
+- **Usable:** can the target user actually operate it? Prototype tests are the evidence, even a handful of them. It's quick to check, and it's often skipped.
 - **Feasible:** can we build it with the time, tech and data we have? You want an engineering spike
   here rather than an engineer's *opinion*, and for anything novel you should budget real days to
   try it.

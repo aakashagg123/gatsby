@@ -26,7 +26,9 @@ cut it, however well it scores.
 
 ## The frameworks, and what each one is for
 
-- **RICE** scores an item as reach × impact × confidence ÷ effort. Sean McBride introduced it on
+- **RICE** scores an item on reach, impact, confidence and effort. In the standard form of the
+  formula on Intercom's page, reach, impact and confidence multiply, and effort divides, since
+  more effort is a bad thing. Sean McBride introduced it on
   Intercom's blog in 2018, with impact on a scale from 0.25 (minimal) to 3 (massive) and
   confidence as a percentage. Its most useful term is confidence, because it makes you admit
   which numbers are guesses.
@@ -82,7 +84,7 @@ in person-months.
 | AI summariser, before a spike | 10,000 | 2 | 50% | 4 | 2,500 |
 | New onboarding flow | 6,000 | 1 | 80% | 3 | 1,600 |
 
-Each score is reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
+Each score uses that standard form, reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
 4, which is 2,500, so it tops the list. Its confidence is only 50%, though, because nobody has run
 it on real inputs. You spend one engineer-week on a spike first.
 
@@ -191,7 +193,8 @@ the reasoning forgotten.
 
 - Sean McBride, [*RICE: Simple prioritization for product
   managers*](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/),
-  Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales) (as of
+  Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales; the page
+  shows the formula itself as an image, and its text says effort divides the total impact) (as of
   2026-11).
 - Scaled Agile, [*WSJF*](https://framework.scaledagile.com/wsjf), SAFe extended guidance (WSJF as
   relative cost of delay divided by relative job duration) (as of 2026-11-28).

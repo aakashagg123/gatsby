@@ -33,7 +33,9 @@ decided. If a proposed key result doesn't trace back to a strategic choice you c
 cut it, however well it scores.</p>
 <h2 id="the-frameworks-and-what-each-one-is-for">The frameworks, and what each one is for</h2>
 <ul>
-<li><strong>RICE</strong> scores an item as reach × impact × confidence ÷ effort. Sean McBride introduced it on
+<li><strong>RICE</strong> scores an item on reach, impact, confidence and effort. In the standard form of the
+  formula on Intercom's page, reach, impact and confidence multiply, and effort divides, since
+  more effort is a bad thing. Sean McBride introduced it on
   Intercom's blog in 2018, with impact on a scale from 0.25 (minimal) to 3 (massive) and
   confidence as a percentage. Its most useful term is confidence, because it makes you admit
   which numbers are guesses.</li>
@@ -160,7 +162,7 @@ in person-months.</p>
 </tr>
 </tbody>
 </table>
-<p>Each score is reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
+<p>Each score uses that standard form, reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
 4, which is 2,500, so it tops the list. Its confidence is only 50%, though, because nobody has run
 it on real inputs. You spend one engineer-week on a spike first.</p>
 <p>The spike finds the model handles about 60% of real inputs well, so the summariser's <em>effective</em>
@@ -259,7 +261,8 @@ the reasoning forgotten.</p>
 <ul>
 <li>Sean McBride, <a href="https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/"><em>RICE: Simple prioritization for product
   managers</em></a>,
-  Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales) (as of
+  Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales; the page
+  shows the formula itself as an image, and its text says effort divides the total impact) (as of
   2026-11).</li>
 <li>Scaled Agile, <a href="https://framework.scaledagile.com/wsjf"><em>WSJF</em></a>, SAFe extended guidance (WSJF as
   relative cost of delay divided by relative job duration) (as of 2026-11-28).</li>
