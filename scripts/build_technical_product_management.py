@@ -19,7 +19,7 @@ CFG = {
     "lede": "The operating discipline of shipping — the role, specs, prioritization, "
             "execution, metrics, and releases that carry an idea into production.",
     "insight": "Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.",
-    "meta": ["8 lessons", "+ recap", "for APMs & PMs", "diagrams included"],
+    "meta": ["9 lessons", "+ recap", "for APMs & PMs", "diagrams included"],
     "callout": "For the AI PM",
     "lessons": [
         "the-technical-pm-role",

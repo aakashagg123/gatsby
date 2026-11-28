@@ -13,39 +13,49 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Recap</span>
     <h1>Technical product management — recap &amp; real-world examples</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
-<p><strong>The quarter spent proving the obvious.</strong> A team skips <a href="discovery-to-delivery.html">discovery</a>
-because "the CEO already knows customers want this." It builds for three months, and launches
-to single-digit adoption — a result five prototype tests would have predicted for the cost of
-a week. 🎯 <em>Takeaway:</em> the delivery track is the most expensive possible place to learn an
-idea is wrong. Discovery exists to make being wrong cheap.</p>
-<p><strong>The spec with no non-goals.</strong> A one-pager grows fourteen "small additions" between kickoff
-and code freeze because <a href="specs-prds-and-rfcs.html">nothing was ever declared out of scope</a>.
-The feature ships a quarter late, doing ten things adequately instead of three things well.
-🎯 <em>Takeaway:</em> non-goals are the highest-leverage sentences in a PRD — every scope fight you
-don't have is a week you get back.</p>
-<p><strong>The haggled estimate.</strong> A PM talks a "six weeks" down to four in planning. The team ships
-in six anyway, minus tests, plus a production incident. Every estimate thereafter arrives
-<a href="working-with-engineering.html">quietly pre-padded</a>. 🎯 <em>Takeaway:</em> negotiate scope, never
-the number — the number is data, and haggling it just corrupts your instruments.</p>
-<p><strong>Knight Capital's 45 minutes (2012).</strong> A trading firm deploys new code to only seven of
-eight servers. No second person checks the deploy. A repurposed feature flag activates dead
-code on the eighth server. Then the team removes the new code from the seven good servers,
-which spreads the bad behaviour. With
-<a href="launches-rollouts-and-migrations.html">no rehearsed rollback</a>, the SEC found that Knight lost
-more than $460 million in about 45 minutes — roughly two-thirds of its market cap. 🎯
-<em>Takeaway:</em> deploy/release discipline, flag hygiene, and a rehearsed rollback aren't process
-overhead. They're the difference between an incident and an obituary. (Source: SEC order
-34-70694, October 2013.)</p>
-<p><strong>The A/B test that always won.</strong> A growth team celebrates dozens of "significant" wins.
-The annual retention number doesn't move. The culprits: <a href="metrics-and-experimentation.html">peeking, post-hoc hypotheses, and
-segment fishing</a>. 🎯 <em>Takeaway:</em> the point of
-experimentation is to be <em>hard to fool</em> — a testing culture that never loses isn't testing.</p>
-<p><strong>The silent model upgrade.</strong> A provider ships a new model version. The team swaps it in as
-a config change — no <a href="tpm-for-ai-products.html">eval diff, no staged ramp</a>. Average quality
-rises, but a template the biggest customer relies on breaks, and the first detector is an
-angry email. 🎯 <em>Takeaway:</em> a model change is a migration wearing a config change's clothes.
-Score it, shadow it, ramp it, and keep the old version one re-pin away.</p>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>This page pulls the module together. It starts with stories, two of them real and the rest
+labelled illustrations, then a table with one idea and one question per lesson, and it ends with a
+self-test you can use to check what stuck.</p>
+<h2 id="real-world-examples-war-stories">Real-world examples &amp; war stories</h2>
+<p><strong>The quarter spent proving the obvious (an illustration).</strong> A team skips
+<a href="discovery-to-delivery.html">discovery</a> because "the CEO already knows customers want this". It
+builds for three months and launches to single-digit adoption, a result that a week of prototype
+tests would probably have predicted. The delivery track is the most expensive place to learn that
+an idea is wrong, and discovery exists to make being wrong cheap.</p>
+<p><strong>The spec with no non-goals (an illustration).</strong> A one-pager collects fourteen "small additions"
+between kickoff and code freeze, because <a href="specs-prds-and-rfcs.html">nothing was ever declared out of
+scope</a>. The feature ships a quarter late, doing ten things adequately
+instead of three things well. Every scope fight a non-goal prevents is time you get back.</p>
+<p><strong>The haggled estimate (an illustration).</strong> A PM talks a "six weeks" down to four in planning. The
+team ships in six anyway, minus tests and plus a production incident, and every estimate after that
+arrives <a href="working-with-engineering.html">quietly padded</a>. Negotiate the scope and leave the number
+alone, because the number is data.</p>
+<p><strong>Knight Capital's 45 minutes (real, 2012).</strong> The US Securities and Exchange Commission's order
+describes a firm that deployed new trading code to seven of its eight order-routing servers, with
+no second technician checking the deployment. The new code reused a flag that once switched on an
+old function, and that old code was still on the eighth server. During the response, staff
+uninstalled the new code from the seven correct servers, which spread the problem to them. In
+about 45 minutes Knight lost more than $460 million. Deploy discipline, <a href="launches-rollouts-and-migrations.html">flag hygiene and a
+rehearsed rollback</a> are what stand between an incident and
+a company-ending event.</p>
+<p><strong>Three bugs that the evals missed (real, 2025).</strong> In September 2025, Anthropic published a
+postmortem on three infrastructure bugs that intermittently degraded Claude's responses between
+August and early September. Its evaluations didn't capture what users were reporting, and its
+privacy controls limited how engineers could inspect the conversations. Its response included more
+sensitive evaluations and continuous quality evaluations on production systems. A passing offline
+suite isn't a <a href="incidents-and-postmortems.html">quality detector</a>, so production sampling has to be
+budgeted.</p>
+<p><strong>The A/B test that always won (an illustration).</strong> A growth team celebrates dozens of significant
+wins while the annual retention number stays flat. The causes are <a href="metrics-and-experimentation.html">peeking, after-the-fact
+hypotheses and segment fishing</a>. The point of experimentation is
+to be hard to fool, and a testing culture that never loses isn't really testing.</p>
+<p><strong>The silent model upgrade (an illustration).</strong> A provider ships a new model version, and the team
+swaps it in as a config change with no <a href="tpm-for-ai-products.html">eval diff and no staged ramp</a>.
+Average quality rises, but a template the biggest customer relies on breaks, and the first detector
+is an angry email. A model change is a migration that looks like a config change, so score it,
+shadow it, ramp it, and keep the old version one re-pin away.</p>
 <h2 id="module-recap">Module recap</h2>
 <table>
 <thead>
@@ -58,90 +68,131 @@ Score it, shadow it, ramp it, and keep the old version one re-pin away.</p>
 <tbody>
 <tr>
 <td><a href="the-technical-pm-role.html">The technical PM role</a></td>
-<td>Own outcomes; influence without authority</td>
-<td>Which decisions are mine, framed by me, or not mine?</td>
+<td>Own outcomes, and influence without authority</td>
+<td>Which decisions are mine, which do I frame, and which aren't mine?</td>
 </tr>
 <tr>
 <td><a href="discovery-to-delivery.html">Discovery to delivery</a></td>
-<td>Kill ideas cheaply, build the survivors</td>
-<td>What's my evidence on valuable / usable / feasible / viable?</td>
+<td>Kill ideas cheaply, and build the survivors</td>
+<td>What's my evidence that it's valuable, usable, feasible and viable?</td>
 </tr>
 <tr>
 <td><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></td>
-<td>Write the what; read the how</td>
-<td>Could the team define "done" without asking me?</td>
+<td>Write the what, and read the how</td>
+<td>Could the team decide "done" without asking me?</td>
 </tr>
 <tr>
 <td><a href="prioritization-and-roadmaps.html">Prioritization &amp; roadmaps</a></td>
-<td>Order is strategy; roadmaps are bets</td>
+<td>The order is the strategy, and roadmaps are bets</td>
 <td>What does this yes displace?</td>
 </tr>
 <tr>
 <td><a href="working-with-engineering.html">Working with engineering</a></td>
-<td>Rituals carry intent; trust carries truth</td>
-<td>Am I negotiating scope or corrupting estimates?</td>
+<td>Rituals carry intent, and trust carries the truth</td>
+<td>Am I changing the scope or corrupting the estimate?</td>
 </tr>
 <tr>
 <td><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></td>
-<td>Measure or you shipped an opinion</td>
-<td>Which event proves this worked — and what guards the downside?</td>
+<td>If you can't measure it, you shipped an opinion</td>
+<td>Which event proves this worked, and what guards the downside?</td>
 </tr>
 <tr>
 <td><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></td>
-<td>Ship gradually; finish the migration</td>
-<td>What's the one action that restores yesterday?</td>
+<td>Ship gradually, and finish the migration</td>
+<td>What one action restores yesterday?</td>
+</tr>
+<tr>
+<td><a href="incidents-and-postmortems.html">Incidents &amp; postmortems</a></td>
+<td>Mitigate first, then learn without blame</td>
+<td>Who decides, and what do users see, if this breaks at 2 a.m.?</td>
 </tr>
 <tr>
 <td><a href="tpm-for-ai-products.html">TPM for AI</a></td>
-<td>Evals are the spec; the flywheel is the moat</td>
-<td>Can we tell, with evidence, whether any change helps?</td>
+<td>Evals are the spec, and the flywheel is the moat</td>
+<td>Can we tell, with evidence, whether a change helps?</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The through-line:</strong> technical product management is a loop, not a lane. It means discover
-cheaply, specify clearly, prioritize honestly, build together, measure ruthlessly, release
-gradually, and feed what production teaches you back into the next turn of the loop. AI
-products don't change the loop. They raise its stakes, because a probabilistic product
-without evals, feedback capture, and disciplined releases isn't a product — it's a demo
-with traffic. The craft in this module is what turns the demo into a business.</p>
+<p><strong>The through-line.</strong> Technical product management is a loop rather than a lane. You discover
+cheaply, specify clearly, prioritise honestly, build together, measure carefully, release
+gradually, handle failure in the open, and feed what production teaches you into the next turn.
+AI products don't change the loop, but they raise its stakes. A probabilistic product without
+evals, feedback capture and disciplined releases is a demo with traffic, and the craft in this
+module is what turns it into a business.</p>
 <blockquote>
-<p><strong>Walk-away question:</strong> <em>"For my current initiative, can I trace the loop end to end —
-the evidence it's worth building, the spec that defines done, the metric that will judge
-it, the rollout that protects it, and the feedback that improves it — and which link
-would snap first?"</em></p>
+<p><strong>Walk-away question:</strong> <em>"For my current initiative, can I trace the loop end to end, from the
+evidence it's worth building, through the spec that defines done, the metric that will judge it
+and the rollout that protects it, to the feedback that improves it? Which link would snap first?"</em></p>
 </blockquote>
 <hr />
 <h2 id="test-yourself">Test yourself</h2>
+<p>Ten questions, at least one per lesson. The answers fold out, and each links back to its lesson.</p>
 <ol>
 <li>
-<p><strong>What makes an estimate of "3 weeks for a form" credible, and what's the right response to it?</strong>
+<p><strong>Your engineering lead asks you to choose between two search architectures. What's your part of that decision?</strong>
  <br />
-<details><summary>Answer</summary>The system around the form (migrations, backfills, old clients, dependent pipelines). The right response is "walk me through it" — decompose the estimate, then trade scope knowingly. (<a href="../technical-product-sense/tech-debt-and-estimation.html">Tech debt & estimation</a>)</details></p>
+<details><summary>Answer</summary>The architecture is engineering's call, but the latency budget and the cost you can accept are yours. Frame the tradeoff in product terms, such as what three seconds does to frequent searchers and what the faster option costs at your volume, and the engineering choice usually follows. (<a href="the-technical-pm-role.html">The technical PM role</a>)</details></p>
 </li>
 <li>
-<p><strong>During a SEV1, what comes first: root cause or rollback — and why?</strong>
+<p><strong>A VP loves an AI feature idea and wants it built next quarter. What has to happen before it enters delivery?</strong>
  <br />
-<details><summary>Answer</summary>Rollback (mitigation). Users are paying for every minute of diagnosis. Understand it fully after service is restored. (<a href="incidents-and-postmortems.html">Incidents & postmortems</a>)</details></p>
+<details><summary>Answer</summary>A feasibility spike against real inputs, with a quality bar agreed in advance, plus evidence on value, usability and viability. An executive's enthusiasm is an input to weigh, not validation. (<a href="discovery-to-delivery.html">Discovery to delivery</a>)</details></p>
 </li>
 <li>
-<p><strong>Why must the experiment hypothesis be written <em>before</em> launch?</strong>
+<p><strong>Your PRD says the summariser must be "accurate". How do you rewrite it so an engineer can test it?</strong>
  <br />
-<details><summary>Answer</summary>Because post-hoc, any result can be narrated into a win. Pre-registration — including "if wildly successful, what would that look like?" — sets the bar the result has to clear. (<a href="metrics-and-experimentation.html">Metrics & experimentation</a>)</details></p>
+<details><summary>Answer</summary>Set a bar on a graded eval set, such as at least 90% acceptable on 200 cases with zero harmful, plus behavioural bounds and latency and cost budgets. Then "can we ship?" becomes a score. (<a href="specs-prds-and-rfcs.html">Specs, PRDs & RFCs</a>)</details></p>
 </li>
 <li>
-<p><strong>What are the three loops of eval-driven development?</strong>
+<p><strong>An AI bet tops your RICE list at 50% confidence. What do you do before committing the quarter to it?</strong>
  <br />
-<details><summary>Answer</summary>Inner: build ↔ eval (every change scored). Release: eval → staged rollout → production. Outer: production behaviour reshapes the spec. The PM's leverage is keeping the arrows back into the eval suite alive. (<a href="tpm-for-ai-products.html">TPM for AI products</a>)</details></p>
+<details><summary>Answer</summary>Run a short spike. It usually changes the effective reach and the effort as well as the confidence, and it can move the item down the list, as the worked example shows. (<a href="prioritization-and-roadmaps.html">Prioritization & roadmaps</a>)</details></p>
 </li>
 <li>
-<p><strong>What turns a postmortem from ritual into learning?</strong>
+<p><strong>Sales needs in six weeks what the team estimated at ten. What's the right next question?</strong>
  <br />
-<details><summary>Answer</summary>Blamelessness (so it hears the truth) plus action items with owners and dates, tracked like features — and escalation when a repeat incident finds one unshipped. (<a href="incidents-and-postmortems.html">Incidents & postmortems</a>)</details>
-</p>
+<details><summary>Answer</summary>"What's the expensive part?" Then cut scope, for example by making a costly edge case a non-goal, and recompute against the team's velocity range. Haggling the number only gets you padded estimates later. (<a href="working-with-engineering.html">Working with engineering</a>)</details></p>
 </li>
-</ol></div>
+<li>
+<p><strong>Your test was configured 50/50, and the arms came out 4,100 and 3,700. Do you read the result?</strong>
+ <br />
+<details><summary>Answer</summary>No. That's a sample ratio mismatch, with a chi-square p-value far below 0.0005. Find out why users went missing from one arm before you trust anything the test says. (<a href="metrics-and-experimentation.html">Metrics & experimentation</a>)</details></p>
+</li>
+<li>
+<p><strong>Why ship a new AI feature to 1% before everyone, if the offline evals pass?</strong>
+ <br />
+<details><summary>Answer</summary>Because some failures only show on real inputs, at real volume. A canary caps how many users see a hidden bug while your abort criteria do their work, and it lets you rehearse the rollback. (<a href="launches-rollouts-and-migrations.html">Launches, rollouts & migrations</a>)</details></p>
+</li>
+<li>
+<p><strong>During a top-severity incident, what comes first, root cause or rollback?</strong>
+ <br />
+<details><summary>Answer</summary>Rollback, meaning mitigation. Users pay for every minute of diagnosis, so restore service first and find the causes, plural, in the postmortem. (<a href="incidents-and-postmortems.html">Incidents & postmortems</a>)</details></p>
+</li>
+<li>
+<p><strong>What turns a postmortem from a ritual into learning?</strong>
+ <br />
+<details><summary>Answer</summary>Blamelessness, so it hears the truth, plus action items with owners and dates, tracked like features, with escalation when a repeat incident finds one unshipped. (<a href="incidents-and-postmortems.html">Incidents & postmortems</a>)</details></p>
+</li>
+<li>
+<p><strong>A replacement model scores 93% against your current model's 90%. Is it safe to switch?</strong>
+    <details><summary>Answer</summary>Not yet. Check the slices, because a higher total can hide a regression on the cases that matter most. Then run it as a migration, with a shadow run and a staged ramp, and start early enough to finish before the old model retires. (<a href="tpm-for-ai-products.html">Technical product management for AI</a>)</details></p>
+</li>
+</ol>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>US Securities and Exchange Commission, <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf"><em>In the Matter of Knight Capital Americas LLC</em>, Release
+  No. 34-70694</a>, 16 October 2013 (as of
+  2026-11).</li>
+<li>Anthropic, <a href="https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues"><em>A postmortem of three recent
+  issues</em></a>, 17 September
+  2025 (as of 2026-11).</li>
+<li>Aleksander Fabijan and colleagues, <a href="https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/"><em>Diagnosing Sample Ratio Mismatch in A/B
+  Testing</em></a>,
+  Microsoft Research, 14 September 2020 (the p below 0.0005 threshold in question 6) (as of
+  2026-11).</li>
+</ul></div>
   <div class="pagenav"><a class="navcard prev" href="tpm-for-ai-products.html"><span class="lbl">← Previous</span><span class="ttl">Technical product management for AI</span></a><span></span></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#real-world-examples-war-stories">Real-world examples &amp;amp; war stories</a><a class="h2" href="#module-recap">Module recap</a><a class="h2" href="#test-yourself">Test yourself</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

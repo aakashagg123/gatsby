@@ -13,32 +13,17 @@
     <span class="Badge" data-color="secondary" data-size="lg" data-variant="soft" data-pill="">Lesson 09</span>
     <h1>Technical product management for AI</h1>
   </div>
-  <div class="MarkdownContent"><h2 id="tldr">TL;DR</h2>
-<p>Everything in this module still applies to AI products. Every practice bends the
-same way, for the same root cause: <strong>behaviour is probabilistic and quality is
-discovered, not designed</strong>. So the operating loop reorganizes around evidence.
-<strong>Eval-driven development</strong> makes a graded example set the spec, the regression suite,
-and the launch gate all at once. Discovery starts with feasibility spikes. Delivery
-mixes experiment-shaped work with feature-shaped work. Releases treat every model and
-prompt change as a migration. And the product that wins long-term is the one whose
-<strong>data flywheel</strong> — production feedback improving evals, evals enabling safe iteration,
-iteration improving the product — spins fastest. The AI PM's job is to build and protect
-that loop.</p>
-<blockquote class="pm-callout">
-<p>🎯 <strong>For the AI PM</strong></p>
-<p><strong>Why it matters</strong> — This lesson <em>is</em> the briefing. The previous seven taught the
-general craft. This one assembles the AI-specific deltas into a single operating loop
-you can run.</p>
-<p><strong>What it changes in your decisions</strong> — You budget for the loop, not just the feature:
-eval construction, feedback instrumentation, and model-change management are line
-items with your name on them, not engineering hygiene you hope happens.</p>
-<p><strong>Ask yourself</strong> — <em>"If the model provider shipped a new version tomorrow, does my
-team have a same-day, evidence-based answer to 'should we upgrade?' — or a debate?"</em></p>
-<p><strong>Risk if ignored</strong> — An AI feature that demos well, launches loudly, degrades
-silently, and can never be safely improved — because nobody can tell whether any
-change makes it better or worse.</p>
-</blockquote>
-<h2 id="the-operating-loop">The operating loop</h2>
+  <div class="MarkdownContent"><!-- voice: human -->
+
+<p>An email arrives from your model provider. The model your feature is pinned to will be retired,
+and there's a newer one they recommend. Your engineering lead asks whether you should switch now,
+and the room splits. One engineer says the new model is better on every benchmark. A second remembers the last upgrade
+broke a customer's workflow, and nobody can say what the switch would do to your product. That debate is the symptom this capstone treats. When you can answer "should
+we upgrade?" with a score by the end of the day, most of the AI-specific craft is in place.</p>
+<h2 id="everything-still-applies-bent-the-same-way">Everything still applies, bent the same way</h2>
+<p>The previous eight lessons taught the general craft. Every one of those practices still applies to an AI product, and they all bend for the same
+reason. Behaviour is probabilistic, and quality is something you discover rather than design. So the operating loop reorganises around
+evidence.</p>
 <style>
 .dgm-tf2{background:var(--color-surface);border:1px solid var(--color-border);border-top:3px solid var(--color-border-warning-outline);
   border-radius:16px;padding:28px 26px 22px;box-shadow:0 1px 3px rgb(var(--shadow-color) / 0.04),0 8px 24px rgb(var(--shadow-color) / 0.04);
@@ -90,185 +75,239 @@ change makes it better or worse.</p>
   </div>
 </div>
 
-<p>Read it as three connected loops. The <strong>inner loop</strong> (build ↔ eval) is daily: no prompt,
-retrieval, or model change lands without a score. The <strong>release loop</strong> (eval → rollout →
-production) is weekly-to-monthly: quality gates the ramp. The <strong>outer loop</strong> (production
-→ spec) is quarterly: what users actually do reshapes what "good" means. Your leverage
-as PM is making sure all three arrows back into the eval suite actually exist.</p>
+<p>Read it as three connected loops. The <strong>inner loop</strong>, build and eval, runs daily, and no prompt,
+retrieval or model change lands without a score. The <strong>release loop</strong>, from eval through rollout
+to production, runs weekly or monthly, with quality gating the ramp. The <strong>outer loop</strong>, from
+production back to the spec, runs quarterly, as what users actually do reshapes what "good" means.
+Your job as PM is to make sure all three arrows back into the eval suite actually exist.</p>
 <h2 id="eval-driven-development">Eval-driven development</h2>
-<p>The eval suite is to an AI feature what the test suite is to code — except the PM
-co-owns it, because it encodes <em>product judgment</em>:</p>
+<p>The eval suite is to an AI feature what the test suite is to code, except that the PM co-owns it,
+because it encodes product judgment. In <strong>eval-driven development</strong>, a graded example set is the
+spec, the regression suite and the launch gate at once.</p>
 <ul>
-<li><strong>Sourcing</strong> — start with 50–200 real (or realistic) inputs from discovery. Grade
-  ideal outputs with a rubric. This is exactly the "graded examples" section of
-  <a href="specs-prds-and-rfcs.html">your PRD</a>, graduated into infrastructure.</li>
-<li><strong>Grading</strong> — three tiers, in cost order: exact/programmatic checks (did it cite a
-  source? valid JSON?), model-graded rubrics (an LLM judges tone, groundedness — cheap,
-  scalable, needs spot-audits against human judgment), and human review (the gold
-  standard, spent where stakes are highest). Prefer pass/fail checks over 1–5 scales:
-  adjacent scores are subjective and labels drift. Build one judge per failure mode, and
-  measure it against human labels on both classes (catches real failures; passes good
-  outputs). Practitioner guidance such as Hamel Husain's evals FAQ suggests reading about
-  100 diverse traces before writing any judge.</li>
-<li><strong>The bar</strong> — a launch threshold you set <em>as the PM</em>: "≥90% acceptable, zero harmful."
-  Where that bar sits is a product decision balancing user trust, cost of errors, and
-  competitive urgency — the modern version of "how good is good enough."</li>
-<li><strong>Maintenance</strong> — a static suite rots as users find new ways to use (and break) the
-  feature. Feed production failures back in monthly. Retire cases that stop
-  discriminating. Treat suite freshness like test coverage: a number someone owns.</li>
-<li><strong>The ritual</strong> — a standing PM + eng session reading raw production traces together:
-  label failures free-form, cluster them into a failure taxonomy, and only then decide
-  which modes deserve automated evaluators. The PM reads <em>traces</em>, not dashboards.
-  A PM–eng disagreement over whether an output passes is a requirements discovery,
-  not annotation noise. Budget accordingly: eval construction and error analysis are a
-  first-class share of the feature's development budget, not a tax on it.</li>
+<li><strong>Sourcing.</strong> Start with real or realistic inputs from discovery, enough to cover the main kinds of
+  request and the failure cases you already know about. Grade the ideal outputs with a rubric.
+  This is the graded-examples section of <a href="specs-prds-and-rfcs.html">your PRD</a>, turned into
+  infrastructure.</li>
+<li><strong>Grading.</strong> There are three tiers, in cost order. Programmatic checks ask simple questions such
+  as whether the output is valid JSON or cites a source. Model-graded rubrics use a model to judge
+  tone or groundedness, which is cheap and scales but needs spot-checks against people. Human
+  review is the gold standard, spent where stakes are highest.</li>
+<li><strong>Judges.</strong> Hamel Husain and Shreya Shankar's evals FAQ recommends binary pass/fail labels over
+  1-to-5 scales, and a separate judge for each failure mode. It also recommends checking each judge
+  against human labels, for both real failures caught and good outputs passed. For error analysis, it suggests reviewing at least 100 traces, and continuing past that while
+  you're still learning.</li>
+<li><strong>The bar.</strong> You set a launch threshold <em>as the PM</em>, such as "at least 90% acceptable, zero
+  harmful". Where the bar sits is a product decision that balances user trust, the cost of errors
+  and competitive urgency.</li>
+<li><strong>Maintenance.</strong> A static suite rots as users find new ways to use and break the feature. Feed
+  production failures back in on a schedule, retire cases that no longer tell options apart, and
+  give someone ownership of the suite's freshness.</li>
+<li><strong>The ritual.</strong> Hold a standing PM and engineering session that reads raw production traces
+  together, labels failures in free text, and clusters them before deciding which ones deserve an
+  automated evaluator. A PM–engineer disagreement about whether an output passes is a requirement
+  being discovered, not noise.</li>
 </ul>
-<p>Once the suite exists, hard conversations get easy. "Can we ship?" is a score. "Did the
-new model help?" is a diff. "Which of these two prompts is better?" takes an afternoon,
-not a meeting.</p>
-<h2 id="what-each-discipline-gains">What each discipline gains</h2>
+<p>Once the suite exists, hard conversations get easier. "Can we ship?" becomes a score, "did the new
+model help?" becomes a diff, and comparing two prompts takes an afternoon instead of a meeting.</p>
+<h2 id="what-each-lessons-craft-gains">What each lesson's craft gains</h2>
 <ul>
-<li><strong>Discovery</strong> (<a href="discovery-to-delivery.html">lesson 2</a>) — feasibility is a spike with
-  scores, run <em>before</em> the bet enters delivery. Add two AI-specific viability checks:
-  unit economics (tokens × volume, at p95 context sizes — cost scales with usage, unlike
-  most software) and data rights (can we use this data for this purpose, including
-  feedback capture?).</li>
-<li><strong>Specs</strong> (<a href="specs-prds-and-rfcs.html">lesson 3</a>) — acceptance criteria become
-  eval thresholds plus behavioural bounds ("never fabricates a citation; refuses when
-  retrieval is empty") plus budgets (latency, cost per request). Also spec the
-  <strong>failure UX</strong>: what the user sees when the model is wrong, slow, or down is product
-  surface, not error handling.</li>
-<li><strong>Prioritization</strong> (<a href="prioritization-and-roadmaps.html">lesson 4</a>) — confidence
-  discounts before spikes; reserved capacity for eval and data work; and honest reach
-  math (an AI feature's <em>effective</em> reach is reach × the fraction of inputs it handles
-  well).</li>
-<li><strong>Execution</strong> (<a href="working-with-engineering.html">lesson 5</a>) — experiment-shaped work
-  runs as time-boxed spikes with score-based exit criteria. "Still at 82%, bar is 85%"
-  is a legitimate, informative sprint outcome, not a slip.</li>
-<li><strong>Metrics</strong> (<a href="metrics-and-experimentation.html">lesson 6</a>) — the quality layer:
-  offline eval scores paired with online proxies (acceptance, edit distance,
-  retry-and-rephrase), plus cost-per-request on the guardrail list next to latency.</li>
-<li><strong>Releases</strong> (<a href="launches-rollouts-and-migrations.html">lesson 7</a>) — every model/prompt
-  change is a migration: offline eval diff → shadow or side-by-side run → staged ramp
-  with quality gates → instant rollback (which for AI is usually just re-pinning the
-  old model/prompt version — cheap, <em>if</em> you versioned them).</li>
+<li><strong>Discovery</strong> (<a href="discovery-to-delivery.html">lesson 2</a>). Feasibility is a scored spike, run before
+  the bet enters delivery. Add two viability checks. One is unit economics, where cost scales with
+  tokens times volume at realistic context sizes. The other is data rights, meaning whether you can
+  use this data for this purpose, feedback capture included.</li>
+<li><strong>Specs</strong> (<a href="specs-prds-and-rfcs.html">lesson 3</a>). Acceptance criteria become eval thresholds,
+  behavioural bounds and budgets. Spec the <strong>failure experience</strong> too, since what the user sees
+  when the model is wrong, slow or down is product surface.</li>
+<li><strong>Prioritisation</strong> (<a href="prioritization-and-roadmaps.html">lesson 4</a>). Discount confidence until a
+  spike has run, reserve capacity for eval and data work, and use effective reach, which is reach
+  times the share of inputs the feature handles well.</li>
+<li><strong>Execution</strong> (<a href="working-with-engineering.html">lesson 5</a>). Experiment-shaped work runs as
+  time-boxed spikes with score-based exit criteria.</li>
+<li><strong>Metrics</strong> (<a href="metrics-and-experimentation.html">lesson 6</a>). Offline eval scores pair with online
+  proxies such as acceptance, edit distance and retry rate, and cost per request joins latency on
+  the guardrail list.</li>
+<li><strong>Releases</strong> (<a href="launches-rollouts-and-migrations.html">lesson 7</a>). Every model or prompt change is a migration. It gets an eval diff, a shadow or side-by-side run,
+  a staged ramp with quality gates, and a rollback that re-pins the old version. That rollback is cheap only if you versioned them.</li>
+<li><strong>Incidents</strong> (<a href="incidents-and-postmortems.html">lesson 8</a>). Quality drops are pageable events,
+  and every feature ships with a kill switch and a degraded mode you chose on purpose.</li>
 </ul>
-<h2 id="context-engineering-the-pms-real-lever-over-quality">Context engineering: the PM's real lever over quality</h2>
-<p>The question that actually predicts an AI feature's quality is "what context does the
-model need to make this decision meaningful?", not "what data do we have?" — and a
-clever prompt, on its own, answers that question badly: it's fragile to rephrasing,
-doesn't scale across use cases, and carries no memory forward between calls. The PM's
-job isn't to write the prompt — it's to specify what context a decision requires, the
-same way <a href="specs-prds-and-rfcs.html">specs</a> specify an eval threshold. This is developed
-in full in <a href="../context-engineering/index.html">Context engineering for the product leader</a> —
-the paradigm shift, the diagnostic for prompt-vs-context failures, and how to write a
-context requirement into a spec.</p>
-<h2 id="the-data-flywheel">The data flywheel</h2>
-<p>The compounding asset of an AI product isn't the model — everyone can rent the same
-model. It's the loop: <strong>usage → captured feedback → better evals (and sometimes
-fine-tuning data) → safer, faster iteration → better product → more usage</strong>. Two PM jobs
-make it spin: <em>instrument feedback capture as a launch requirement</em> (accepted / edited /
-abandoned — the silent signals, since users rarely click thumbs-down), and <em>secure the
-right to learn from it</em> (privacy policy, enterprise contracts, regional law — a
-viability question from lesson 2 that quietly determines whether your flywheel is legal).
-A competitor with the same model and a faster flywheel wins in a year. That asymmetry —
-not model choice — is usually the real AI strategy question.</p>
-<p>The flywheel's strategic twin is <strong>workflow capture</strong>. The defensible position isn't the
-model or even a beloved feature — it's owning a <em>control point</em> in the customer's
-workflow: the step whose outputs downstream work consumes and whose inputs upstream
-work feeds. From a control point you expand horizontally (each captured workflow adds
-enterprise context that makes the next one easier to win), and a broader bundle lets
-you cross-subsidize any component a point-solution competitor tries to commoditize.
-When you evaluate an adjacent workflow, the deciding question is directional: <em>if
-another player captured it, would they integrate into us, or we into them?</em></p>
-<h2 id="the-long-game-models-age-debt-compounds">The long game: models age, debt compounds</h2>
-<p>Three roadmap truths that only bite in the product's second year, so budget for them in
-its first:</p>
+<h2 id="worked-example-the-retirement-email">Worked example: the retirement email</h2>
+<p>This example is invented, and so are its numbers. Your support assistant is pinned to a model that
+the provider says will retire in 60 days, which is the minimum notice Anthropic commits to for
+publicly released models. You run the 300-case eval suite on the current model and on the
+recommended replacement.</p>
+<table>
+<thead>
+<tr>
+<th>Slice</th>
+<th>Cases</th>
+<th>Current model passes</th>
+<th>Candidate passes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Refund-policy questions</td>
+<td>40</td>
+<td>38</td>
+<td>33</td>
+</tr>
+<tr>
+<td>Everything else</td>
+<td>260</td>
+<td>232</td>
+<td>246</td>
+</tr>
+<tr>
+<td>All cases</td>
+<td>300</td>
+<td>270 (90%)</td>
+<td>279 (93%)</td>
+</tr>
+</tbody>
+</table>
+<p>The candidate wins overall, 279 against 270, which is 93% against 90%. Look at the slices, though.
+It gains 246 − 232 = 14 cases on everything else and loses 38 − 33 = 5 on refund policy. Refund
+answers are the ones most likely to cost you money. A config-change upgrade would have shipped a
+regression that the headline number hid.</p>
+<p>So you plan it as a migration. You give the team two weeks to fix the refund regression in the prompt and re-run the diff. Then
+come two weeks of shadow running on live traffic, and two weeks of staged ramp. That's 14 + 14 + 14 = 42 days, which leaves 60 − 42 = 18 days of slack before the old
+model stops answering. Eighteen days is not much if the prompt fix takes a second round, so you
+start this week rather than at the next planning cycle. The cost is that six weeks of the team's
+time go to an upgrade nobody asked for, and that belongs on the roadmap as a line item.</p>
+<h2 id="context-flywheels-and-control-points">Context, flywheels and control points</h2>
+<p>The question that best predicts an AI feature's quality is what context the model needs to make
+the decision well, more than what data you happen to have. A clever prompt on its own answers
+that badly, since it breaks under rephrasing and carries no memory between calls. Your job is to
+specify the context a decision requires, the same way a <a href="specs-prds-and-rfcs.html">spec</a> sets an
+eval threshold. <a href="../context-engineering/index.html">Context engineering for the product leader</a>
+covers this in full.</p>
+<p>The compounding asset of an AI product usually isn't the model, because competitors can rent the
+same one. It's the <strong>data flywheel</strong>, where usage produces captured feedback, which improves the
+evals, which makes iteration safer and faster, which improves the product and brings more usage.
+Two PM jobs make it spin. Instrument feedback capture (accepted, edited, abandoned) as a launch
+requirement, and secure the right to learn from it through the privacy policy, enterprise
+contracts and regional law. A competitor with the same model and a faster flywheel tends to pull
+ahead within a year.</p>
+<p>The flywheel's strategic twin is <strong>workflow capture</strong>, which means owning a <em>control point</em>, the
+workflow step whose outputs the downstream work depends on. When you weigh an adjacent workflow,
+ask which way integration would run if another company captured it. Would they integrate into you,
+or you into them?</p>
+<h2 id="the-long-game">The long game</h2>
+<p>Some roadmap truths only bite in a product's second year, so budget for them in its first.</p>
 <ul>
-<li><strong>Models degrade on your watch.</strong> Data drifts, user behaviour shifts in response to
-  the product itself, and the provider ships new versions underneath you. Continuous
-  re-evaluation and periodic retraining (or re-prompting, or re-pinning) is a permanent
-  line item — <em>sustainable model evolution</em>, not one-off maintenance.</li>
-<li><strong>Pinned models get retired.</strong> Pinning protects you from silent change, but not from
-  retirement. Anthropic gives at least 60 days' notice before it retires a public model.
-  OpenAI states at least 6 months for generally available models, unless safety or
-  compliance concerns call for a faster timeline. It gives at least 3 months for specialized
-  variants and image models, and as little as 2 weeks for previews. Provider-side API parameters also change: Anthropic's docs list
-  <code>temperature</code>, <code>top_p</code> and <code>top_k</code> as removed in API version <code>2026-10-21</code>. Put each
-  retirement date on the roadmap, and start the eval diff for the replacement well before
-  it. Check the provider's deprecation page, because dates and notice periods change.</li>
-<li><strong>Ethical debt compounds like tech debt.</strong> Bias audits, explainability, privacy
-  reviews, and fairness checks deferred at launch don't get cheaper — they get baked
-  into training data, product behaviour, and user expectations, and the eventual fix
-  costs a rewrite plus trust. Schedule this work with the same discipline as
-  <a href="prioritization-and-roadmaps.html">tech-debt paydown</a>, before an incident schedules
-  it for you.</li>
-<li><strong>Platforms outlast features.</strong> The investments with compounding returns are rarely
-  the visible features — they're the eval infrastructure, data pipelines, and feedback
-  instrumentation every future feature rides on. When the roadmap fight comes, the
-  flywheel's plumbing is usually the highest-leverage thing on the list.</li>
+<li><strong>Models drift on your watch.</strong> Data shifts, user behaviour changes in response to the product,
+  and providers ship new versions. Re-evaluation and periodic re-prompting or re-pinning are a
+  permanent line item, not one-off maintenance.</li>
+<li><strong>Pinned models get retired.</strong> Pinning protects you from silent change but not from retirement.
+  Anthropic gives at least 60 days' notice before it retires a publicly released model. OpenAI
+  gives at least 6 months for generally available models, unless safety or compliance concerns
+  require a faster timeline, and at least 3 months for specialised variants and image models.
+  Preview models can go with much shorter notice, such as two weeks. Request parameters change too.
+  Anthropic's docs list <code>temperature</code>, <code>top_p</code> and <code>top_k</code> as removed in API version <code>2026-10-21</code>.
+  Put each retirement date on the roadmap, and check the provider's deprecation page, because dates
+  and notice periods change.</li>
+<li><strong>Ethical debt compounds like tech debt.</strong> Bias audits, explainability, privacy reviews and
+  fairness checks deferred at launch don't get cheaper. They get baked into data, behaviour and user
+  expectations, so schedule them with the same discipline as <a href="prioritization-and-roadmaps.html">debt
+  paydown</a>, before an incident schedules them for you.</li>
+<li><strong>Platforms outlast features.</strong> The investments that compound are rarely the visible features.
+  They're the eval infrastructure, data pipelines and feedback instrumentation every later feature
+  rides on.</li>
 </ul>
 <h2 id="vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</h2>
-<p>The 2025 shift with the biggest day-to-day impact on the PM craft: AI coding tools
-(Claude Code, Cursor-class editors) made working software cheap enough that PMs build
-it themselves — "vibe coding," Karpathy's February 2025 coinage that ended the year as
-Collins' word of the year. Three changes follow for this lesson's operating loop:</p>
+<p>AI coding tools such as Claude Code and Cursor have made working software cheap enough that PMs
+build it themselves. Andrej Karpathy coined the name for it, "vibe coding", and Collins chose it as
+its word of the year for 2025. That changes the operating loop in three ways.</p>
 <ul>
-<li><strong>Discovery ships artifacts, not documents.</strong> A working prototype in front of five
-  users beats a PRD in front of five stakeholders. Increasingly the prototype <em>is</em> the
-  spec, with the written doc recording the decisions the prototype forced.</li>
-<li><strong>The PM–eng contract compresses.</strong> "Here's what I mean" becomes something engineers
-  can click, which kills a whole class of specification ambiguity — and creates a new
-  duty: be explicit that the prototype demonstrates <em>intent</em>, not architecture.</li>
-<li><strong>The new failure mode is prototype-grade code in production.</strong> Vibe-coded software
-  demos beautifully and hides its corners (no error handling, no tenancy, no evals).
-  The discipline is a hard line: prototypes are for learning, the eval-gated pipeline
-  above is for shipping — and a PM who ships the prototype because it "already works"
-  has volunteered for the incident review.</li>
+<li><strong>Discovery ships artifacts, not documents.</strong> A working prototype in front of five users teaches
+  more than a PRD in front of five stakeholders. Increasingly the prototype <em>is</em> the spec, and the
+  written document records the decisions the prototype forced.</li>
+<li><strong>The PM–engineering contract gets shorter.</strong> "Here's what I mean" becomes something engineers
+  can click, which removes a whole class of ambiguity. It also adds a duty to say plainly that the
+  prototype shows <em>intent</em>, not architecture.</li>
+<li><strong>The new failure mode is prototype-grade code in production.</strong> Vibe-coded software demos well
+  and hides its corners, such as missing error handling, tenancy and evals. Prototypes are for
+  learning, and the eval-gated pipeline above is for shipping.</li>
 </ul>
-<p>A closing practical note: <strong>use these tools in your own workflow</strong>. The PMs with the
-best model intuition use models daily — generating mock-up variations for design
-discussions, clustering and prioritizing bug reports, critiquing a UX flow, drafting the
-first pass of a PRD or stakeholder mail. It's the cheapest training available in where
-models shine and where they quietly fail — and that intuition is exactly what the
-eval bar and scoping decisions above run on.</p>
-<h2 id="failure-modes">Failure modes</h2>
+<p>Use these tools in your own work, too. Generating mock-up variations, clustering bug reports, critiquing a flow and drafting the first
+pass of a document are cheap training in where models shine and where they quietly fail. The eval
+bar and the scoping calls above run on that intuition.</p>
+<h2 id="from-the-show-whose-job-the-evals-are">From the show: whose job the evals are</h2>
+<p>Shreya Shankar warns against the most tempting shortcut for a busy PM:</p>
+<blockquote>
+<p>"But then they think it's worth some human doing error analysis, not them. So they'll just outsource it out, which again, huge pitfall."
+— Shreya Shankar, <a href="https://www.youtube.com/watch?v=J7N9FMouSKg"><em>How to Do AI Evals Step-by-Step with Real Production Data</em></a>, The Growth Podcast, around 01:00:25</p>
+</blockquote>
+<p>Her argument is that error analysis is where you build the product, so handing it off removes your
+judgment from it. Ankur Goyal adds a caution that keeps evals honest:</p>
+<blockquote>
+<p>"And oftentimes it will fit the eval and the product will still suck."
+— Ankur Goyal, <a href="https://www.youtube.com/watch?v=71qvIkO9d_A"><em>Evals are the new PRD</em></a>, The Growth Podcast, around 07:49</p>
+</blockquote>
+<p>In his view that's the PM's cue to improve the evals, which is why the outer loop exists. Shuhao
+Zhang, talking about shipping fast with coding agents, draws the line from the vibe-coding section:</p>
+<blockquote>
+<p>"So first of all, building fast does not mean shipping slop, right? We're talking about production grade."
+— Shuhao Zhang, <a href="https://www.youtube.com/watch?v=-xQPRlk7VRE"><em>How to Ship to Production with AI Agents</em></a>, The Growth Podcast, around 43:39</p>
+</blockquote>
+<h2 id="where-it-goes-wrong">Where it goes wrong</h2>
 <ul>
-<li><strong>Demo-driven development</strong> — the team iterates until the demo impresses, ships, and
-  discovers real inputs are nothing like the demo script. The eval suite exists to make
-  this impossible.</li>
-<li><strong>Eval-less iteration</strong> — prompt changes shipped on vibes. Without scores, every
-  change is a coin flip you can't distinguish from progress.</li>
-<li><strong>The static eval</strong> — a suite built at launch and never fed. A year later it certifies
-  quality on problems users stopped having.</li>
-<li><strong>Flywheel-blind economics</strong> — shipping without feedback capture (or the rights to use
-  it), then wondering why the product stopped improving after launch.</li>
-<li><strong>Treating the model as the moat</strong> — betting differentiation on model choice while a
-  competitor with an identical model out-loops you on data and iteration speed.</li>
+<li><strong>Demo-driven development</strong> iterates until the demo impresses, ships, and then finds real inputs
+  look nothing like the script.</li>
+<li><strong>Eval-less iteration</strong> ships prompt changes on feel, so every change is a coin flip you can't
+  tell apart from progress.</li>
+<li><strong>The static eval</strong> is built at launch and never fed. A year later it certifies quality on
+  problems users stopped having.</li>
+<li><strong>Flywheel-blind economics</strong> ships without feedback capture, or without the rights to use it, and
+  then wonders why the product stopped improving.</li>
+<li><strong>Treating the model as the moat</strong> bets differentiation on model choice while a competitor with
+  the same model out-learns you on data and iteration speed.</li>
+<li><strong>The surprise retirement</strong> leaves a pinned model's end date off the roadmap until the email
+  arrives, and then there's no time for an eval diff.</li>
 </ul>
-<h2 id="practitioner-checklist">Practitioner checklist</h2>
+<h2 id="what-to-do-next">What to do next</h2>
 <ul>
-<li class="task todo">Does every AI feature I own have an eval suite with a PM-set bar — and does every
-      prompt/model change get scored against it before shipping?</li>
-<li class="task todo">Are prompts and model versions pinned and versioned, so rollback is a re-pin?</li>
-<li class="task todo">Have I specified what context (not just what data) this feature needs, and where
-      it's retrieved or remembered from — not just what the prompt says?</li>
-<li class="task todo">Is feedback capture (accept / edit / abandon) instrumented — and do we have the
-      legal right to learn from it?</li>
-<li class="task todo">Do production failures flow into the eval suite on a schedule someone owns?</li>
-<li class="task todo">Can I sketch this lesson's loop for my product and point to the arrow that's
-      currently broken?</li>
+<li class="task todo">Give every AI feature you own an eval suite with a PM-set bar, and score every prompt or
+      model change against it before it ships.</li>
+<li class="task todo">Pin and version prompts and models, so a rollback is a re-pin.</li>
+<li class="task todo">Write down the context each feature needs, and where it's retrieved or remembered from.</li>
+<li class="task todo">Instrument accept, edit and abandon signals, and confirm you have the right to learn from
+      them.</li>
+<li class="task todo">Put every pinned model's retirement date, or its earliest possible one, on the roadmap.</li>
+<li class="task todo">Sketch the three loops for your product, and mark the arrow that's broken today.</li>
 </ul>
 <h2 id="related-lessons">Related lessons</h2>
 <ul>
 <li><a href="specs-prds-and-rfcs.html">Specs, PRDs &amp; RFCs</a></li>
 <li><a href="metrics-and-experimentation.html">Metrics &amp; experimentation</a></li>
 <li><a href="launches-rollouts-and-migrations.html">Launches, rollouts &amp; migrations</a></li>
-<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a></li>
-<li><a href="../context-engineering/index.html">Context engineering for the product leader</a></li>
+<li><a href="incidents-and-postmortems.html">Incidents &amp; postmortems</a></li>
+<li><a href="../technical-product-sense/technical-sense-for-ai.html">Technical sense for AI systems</a>
+  (technical product sense): what the system can do reliably.</li>
+<li><a href="../context-engineering/index.html">Context engineering for the product leader</a>: specifying the
+  context a decision needs.</li>
+<li><a href="../ai/04-evals-observability.html#evals">Evals: golden sets, adversarial, LLM-as-judge</a>: the
+  measurement layer under eval-driven development.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Anthropic, <a href="https://platform.claude.com/docs/en/about-claude/model-deprecations"><em>Model deprecations</em></a>,
+  Claude Platform docs (at least 60 days' notice for publicly released models; <code>temperature</code>,
+  <code>top_p</code> and <code>top_k</code> removed in API version <code>2026-10-21</code>) (as of 2026-11-28).</li>
+<li>OpenAI, <a href="https://developers.openai.com/api/docs/deprecations"><em>Deprecations</em></a>, OpenAI API docs
+  (model deprecation notice periods) (as of 2026-11-28).</li>
+<li>Hamel Husain and Shreya Shankar, <a href="https://hamel.dev/blog/posts/evals-faq/"><em>AI Evals: Everything You Need to
+  Know</em></a>, hamel.dev, updated 21 September 2026 (binary
+  labels, one judge per failure mode, judge validation, at least 100 traces) (as of 2026-11).</li>
+<li>Collins Dictionary, <a href="https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/"><em>Collins' Word of the Year 2025: AI meets authenticity as society
+  shifts</em></a>,
+  6 November 2025 ("vibe coding", coined by Andrej Karpathy) (as of 2026-11).</li>
+<li>Quotes from The Growth Podcast with Aakash Gupta (<a href="https://www.news.aakashg.com">news.aakashg.com</a>), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.</li>
 </ul></div>
   <div class="pagenav"><a class="navcard prev" href="incidents-and-postmortems.html"><span class="lbl">← Previous</span><span class="ttl">Incidents &amp; postmortems</span></a><a class="navcard next" href="recap.html"><span class="lbl">→ Next</span><span class="ttl">Recap &amp; examples</span></a></div><footer class="foot"><strong>Core insight:</strong> Product management is a loop, not a lane. AI raises the stakes: without evals and careful releases, a product is a demo with traffic.<br>Part of the <a href="../index.html">learning modules</a> collection.</footer>
-  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#tldr">TL;DR</a><a class="h2" href="#the-operating-loop">The operating loop</a><a class="h2" href="#eval-driven-development">Eval-driven development</a><a class="h2" href="#what-each-discipline-gains">What each discipline gains</a><a class="h2" href="#context-engineering-the-pms-real-lever-over-quality">Context engineering: the PM&#x27;s real lever over quality</a><a class="h2" href="#the-data-flywheel">The data flywheel</a><a class="h2" href="#the-long-game-models-age-debt-compounds">The long game: models age, debt compounds</a><a class="h2" href="#vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</a><a class="h2" href="#failure-modes">Failure modes</a><a class="h2" href="#practitioner-checklist">Practitioner checklist</a><a class="h2" href="#related-lessons">Related lessons</a></div></aside></div><script>
+  </main><aside class="outline"><div class="sticky"><div class="outline-h">On this page</div><a class="h2" href="#everything-still-applies-bent-the-same-way">Everything still applies, bent the same way</a><a class="h2" href="#eval-driven-development">Eval-driven development</a><a class="h2" href="#what-each-lessons-craft-gains">What each lesson&#x27;s craft gains</a><a class="h2" href="#worked-example-the-retirement-email">Worked example: the retirement email</a><a class="h2" href="#context-flywheels-and-control-points">Context, flywheels and control points</a><a class="h2" href="#the-long-game">The long game</a><a class="h2" href="#vibe-coding-the-prototype-is-the-new-spec">Vibe coding: the prototype is the new spec</a><a class="h2" href="#from-the-show-whose-job-the-evals-are">From the show: whose job the evals are</a><a class="h2" href="#where-it-goes-wrong">Where it goes wrong</a><a class="h2" href="#what-to-do-next">What to do next</a><a class="h2" href="#related-lessons">Related lessons</a><a class="h2" href="#sources">Sources</a></div></aside></div><script>
 (function(){
   var btn=document.getElementById('sbToggle'), nav=document.getElementById('sbNav'),
       scrim=document.getElementById('sb-scrim');

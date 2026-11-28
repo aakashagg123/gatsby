@@ -66,8 +66,8 @@ who you need in the room.
   brand? PMs carry this risk more than anyone, because nobody else is looking.
 
 What discovery hands over is a decision to build, kill or reshape, with the evidence behind it. A
-long document is no substitute. Treat a kill as a win, since every idea killed for $5k of discovery
-is a quarter of delivery capacity saved.
+long document is no substitute. Treat a kill as a win, since every idea killed for, say, $5k of discovery
+(an illustrative figure) is a quarter of delivery capacity saved.
 
 ## Why AI features change feasibility
 
