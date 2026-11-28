@@ -22,8 +22,8 @@ stateDiagram-v2
     [*] --> Dark : deployed behind flag
     Dark --> Internal : dogfood — team & employees
     Internal --> Beta : opted-in users
-    Beta --> Canary : 1–5% of traffic
-    Canary --> Ramp : 25% → 50% → 100%
+    Beta --> Canary : small slice, e.g. 1–5%
+    Canary --> Ramp : in steps, e.g. 25% → 50% → 100%
     Ramp --> GA : flag removed, cleanup
     Internal --> Dark : issue found — flag off
     Beta --> Dark : issue found — flag off
@@ -39,7 +39,7 @@ Each stage exists to catch a different kind of problem.
   team routes around the feature, customers will too.
 - **Beta** users opted in and expect rough edges. Set expectations explicitly, because a beta user
   surprised by instability is a churn story.
-- **Canary** is the small slice of real traffic, often 1 to 5%. It gives you real signal on
+- **Canary** is a small slice of real traffic, say 1 to 5% as an example. It gives you real signal on
   crashes, latency, cost and, for AI, quality, while a disaster is still an apology rather than a
   headline. Write the **abort criteria before you start**, such as "flag off if the error rate passes X or
   acceptance drops by Y points". The middle of an incident is the worst time to negotiate a

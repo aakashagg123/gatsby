@@ -2359,9 +2359,9 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [OAuth 2.0, OpenID Connect and tokens](./access-control/oauth-openid-connect-and-tokens.md).
 
-**Kano model** — Noriaki Kano's 1984 model that sorts features by how they affect satisfaction: must-be, one-dimensional and attractive.
+**Kano model** — Noriaki Kano's 1984 model of quality types: must-be, one-dimensional and attractive.
 
-*In plain terms.* Not every feature pleases people in the same way. Must-be features go unnoticed when present and infuriate when missing. One-dimensional features please more the more you deliver. Attractive features delight because nobody expected them. A product of delights with one missing basic still fails.
+*In plain terms.* Not every feature pleases people in the same way. The 1984 paper's abstract names the types without defining them, so this is the common textbook reading rather than Kano's own wording. In that reading, must-be features go unnoticed when present and infuriate when missing. One-dimensional features please more the more you deliver. Attractive features delight because nobody expected them. A product of delights with one missing basic still fails.
 
 *For example.* Password reset is must-be, search speed is one-dimensional, and a draft that arrives already written in the user's tone can be attractive.
 

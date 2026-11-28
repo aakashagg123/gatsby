@@ -178,4 +178,6 @@ honest estimate and an early warning, and those two things are worth more than a
 
 ## Sources
 
+- Ken Schwaber and Jeff Sutherland, [*The Scrum Guide*](https://scrumguides.org/scrum-guide.html),
+  2020 version (sprints are fixed-length events of one month or less) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

@@ -38,7 +38,9 @@ cut it, however well it scores.
   gives **WSJF** (weighted shortest job first), which formalises "do the quick, valuable things
   first".
 - **The Kano model**, from Noriaki Kano and colleagues in 1984, sorts quality into *must-be*,
-  *one-dimensional* and *attractive* elements. In the usual textbook reading, must-be features go
+  *one-dimensional* and *attractive* elements. The paper's abstract names these types without
+  defining them, so what follows is the common textbook reading rather than Kano's own wording.
+  In that reading, must-be features go
   unnoticed when present and infuriate when missing, one-dimensional features satisfy more the more
   of them you deliver, and attractive features delight because nobody expected them. A product full of attractive features with one missing
   must-be still fails, so check your top ten for uncovered basics before you celebrate the
@@ -58,7 +60,7 @@ quadrantChart
     quadrant-3 Fill-ins - batch when idle
     quadrant-4 Time sinks - say no
     "Fix top support issue": [0.2, 0.85]
-    "AI summarizer (post-spike)": [0.7, 0.9]
+    "AI summarizer (post-spike)": [0.7, 0.75]
     "AI summarizer (pre-spike)": [0.45, 0.9]
     "New onboarding flow": [0.55, 0.6]
     "Admin CSV export": [0.25, 0.3]
@@ -66,7 +68,9 @@ quadrantChart
 ```
 
 The summariser appears twice on purpose. A feasibility spike doesn't only reduce risk, it moves
-the dot, because effort estimates change once someone has actually tried the thing. Cheap
+the dot. After the spike, the summariser sits further right, because the work turned out bigger,
+and lower, because it handles fewer real inputs well, as the worked example below shows. The
+positions are qualitative, not scores. Cheap
 discovery work exists to reposition expensive bets before you commit to them.
 
 ## Worked example: a spike changes the ranking
@@ -191,6 +195,8 @@ the reasoning forgotten.
   managers*](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/),
   Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales) (as of
   2026-11).
+- Scaled Agile, [*WSJF*](https://framework.scaledagile.com/wsjf), SAFe extended guidance (WSJF as
+  relative cost of delay divided by relative job duration) (as of 2026-11-28).
 - Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shin-ichi Tsuji, [*Attractive Quality and
   Must-Be Quality*](https://www.jstage.jst.go.jp/article/quality/14/2/14_KJ00002952366/_article/-char/en),
   Journal of the Japanese Society for Quality Control, 14(2), 147-156, 1984 (attractive,
