@@ -75,8 +75,8 @@ model can do the task at a quality and cost you can live with. You can't know th
 it against real examples.
 
 That's why discovery for an AI feature always includes a **feasibility spike**, run *before* the
-feature enters delivery. A spike is a prompt or a fine-tune, tested against a few dozen real inputs
-and scored. A scored eval set counts as a discovery output, while "the demo looked great" does not.
+feature enters delivery. A spike is a prompt or a fine-tune, tested against real inputs and scored. A few dozen real inputs
+is often enough to see the shape, though that's a guideline, not a rule. A scored eval set counts as a discovery output, while "the demo looked great" does not.
 Skipping the spike makes two outcomes likely, and this is a judgment rather than a finding.
 Either the team spends a quarter productionizing a feature whose quality ceiling a week could
 have found, or it ships the demo-day version, which can collapse on real user inputs.
@@ -145,7 +145,8 @@ shipped feature is a hypothesis put into production, and telemetry and user feed
 coming back. Teams that skip this arrow ship feature after feature into the void and call it
 velocity.
 
-So on launch day, put a date in the calendar a few weeks out, which is a reasonable default. When it arrives, review the metrics
+So on launch day, put a date in the calendar a few weeks out, which is a reasonable time as a
+judgment rather than a rule. When it arrives, review the metrics
 against what the PRD predicted and write down what you learned, because that note is where next
 quarter's best discovery leads come from.
 
@@ -176,15 +177,15 @@ delivery, at delivery prices.
   by a quarter of delivery. The feedback loops are long, and all the risk turns up at the end.
 - **Discovery done in delivery** sounds like "let's build it and see". It's the most expensive way
   there is to learn an idea is wrong.
-- **Validation theater** means running interviews and tests but only hearing confirmation, and a
+- **Discovery theater** means running interviews and tests but only hearing confirmation, and a
   discovery process that never kills anything isn't really discovery.
 - **The demo trap** is the one specific to AI. A feature moves to delivery because a hand-picked
   demo impressed a VP, and nobody ran an eval on realistic inputs.
 - **Horizontal slicing** is how you end up with "the API is done, the UI is done, they've just never
   been connected". All the integration risk lands in the final week.
 
-Teresa Torres calls the third one discovery theater, and her description of it makes a handy
-self-test:
+Teresa Torres uses the name discovery theater for this pattern, and her description of it makes a
+handy self-test:
 
 > "Nothing in their backlog changes. They don't kill any ideas. They always end up building what they started with."
 > — Teresa Torres, [*Teresa Torres' Step-by-Step Guide to AI Product Discovery*](https://www.youtube.com/watch?v=wGuRuuPuYNQ), The Growth Podcast, around 30:57

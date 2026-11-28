@@ -98,8 +98,9 @@ week of spike work moved the decision. The tie is useful too, since it tells you
 can't settle the choice between those two, and that a conversation about strategy has to.
 
 Cost of delay can change the picture again. Say, as an illustration, that the support fix costs $40,000 a month in support time while it
-waits, and takes 2 months to build. Onboarding costs $60,000 a month in lost activation and takes
-6 months. Their WSJF scores are 40,000 ÷ 2 = 20,000 and 60,000 ÷
+waits, and takes 2 months of calendar time to ship. Onboarding costs $60,000 a month in lost
+activation and takes 6 months of calendar time, because its 3 person-months of work are spread
+across a team that is busy with other things. WSJF divides by calendar duration, not by effort. Their WSJF scores are 40,000 ÷ 2 = 20,000 and 60,000 ÷
 6 = 10,000, which agrees with RICE that the support fix goes first. When two frameworks agree, you
 can spend less time defending the call.
 
@@ -108,7 +109,7 @@ can spend less time defending the call.
 A roadmap does two jobs at once, aligning stakeholders and guiding the team, and the classic
 mistake is to use one artifact for both.
 
-- **Now, next, later** is the right default for most audiences. *Now* is committed and specific,
+- **Now, next, later** is a reasonable starting point for many audiences, in the lesson's view. *Now* is committed and specific,
   *next* is planned but can be reordered, and *later* is a direction. The buckets are honest about
   certainty in a way a dated roadmap isn't. Put a feature on Q3 and by Friday someone has sold it
   to a customer.
