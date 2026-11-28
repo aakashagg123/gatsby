@@ -31,9 +31,9 @@ describes a firm that deployed new trading code to seven of its eight order-rout
 no second technician checking the deployment. The new code reused a flag that once switched on an
 old function, and that old code was still on the eighth server. During the response, staff
 uninstalled the new code from the seven correct servers, which spread the problem to them. In
-about 45 minutes Knight lost more than $460 million. Deploy discipline, [flag hygiene and a
-rehearsed rollback](./launches-rollouts-and-migrations.md) are what stand between an incident and
-a company-ending event.
+about 45 minutes Knight lost more than $460 million. The order also notes that Knight had no supervisory procedures for incident response.
+[Deploy discipline, flag hygiene and a planned response](./launches-rollouts-and-migrations.md)
+are what keep a bad deploy from becoming a loss of that size.
 
 **Three bugs that the evals missed (real, 2025).** In September 2025, Anthropic published a
 postmortem on three infrastructure bugs that intermittently degraded Claude's responses between

@@ -37,14 +37,11 @@ cut it, however well it scores.
   outranks a high-value item that's worth the same next year. Dividing cost of delay by duration
   gives **WSJF** (weighted shortest job first), which formalises "do the quick, valuable things
   first".
-- **The Kano model**, from Noriaki Kano and colleagues in 1984, sorts quality into *must-be*,
-  *one-dimensional* and *attractive* elements. The paper's abstract names these types without
-  defining them, so what follows is the common textbook reading rather than Kano's own wording.
-  In that reading, must-be features go
-  unnoticed when present and infuriate when missing, one-dimensional features satisfy more the more
-  of them you deliver, and attractive features delight because nobody expected them. A product full of attractive features with one missing
-  must-be still fails, so check your top ten for uncovered basics before you celebrate the
-  delighters.
+- **The Kano model**, from Noriaki Kano and colleagues in 1984, names three types of quality:
+  *must-be*, *one-dimensional* and *attractive*. This lesson uses the names as a prompt rather than
+  a definition. Sorting your top ten by how you expect users to react to each item, and asking
+  which ones they'd simply take for granted, is a quick way to spot a basic the roadmap has left
+  uncovered.
 
 All of them share the same weakness. Bad estimates go in and confident-looking numbers come out.
 The discipline isn't the arithmetic, it's writing the assumptions down where someone can tell you
@@ -122,7 +119,7 @@ mistake is to use one artifact for both.
 
 Whatever the format, reserve capacity for platform and debt work *before* feature prioritisation
 starts. [Tech debt & estimation](../technical-product-sense/tech-debt-and-estimation.md) covers how
-to size it. On AI products, add a line for eval and data work too. Debt never wins a head-to-head
+to size it. On AI products, add a line for eval and data work too. Debt rarely wins a head-to-head
 contest against a shiny feature, which is exactly why it needs its own lane.
 
 ## From the show: confidence and timing
@@ -174,7 +171,8 @@ the reasoning forgotten.
 - [ ] For your top five items, write down reach, impact, confidence and effort, and mark which
       numbers are guesses.
 - [ ] Look for anything urgent by timing, and score it with cost of delay as well as value.
-- [ ] Check the must-be basics in your top ten before the delighters.
+- [ ] Sort your top ten with the Kano names, and check that the basics users take for granted are
+      covered.
 - [ ] Reserve debt and eval capacity off the top of the roadmap before feature scoring begins.
 - [ ] Put a spike in front of any AI bet scored with confidence below 80%.
 - [ ] Tell the requester of the last big thing you turned down why it's not *now*.

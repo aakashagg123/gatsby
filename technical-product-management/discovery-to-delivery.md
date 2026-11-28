@@ -146,7 +146,7 @@ shipped feature is a hypothesis put into production, and telemetry and user feed
 coming back. Teams that skip this arrow ship feature after feature into the void and call it
 velocity.
 
-So on launch day, put a date in the calendar 2–4 weeks out. When it arrives, review the metrics
+So on launch day, put a date in the calendar a few weeks out, which is a reasonable default. When it arrives, review the metrics
 against what the PRD predicted and write down what you learned, because that note is where next
 quarter's best discovery leads come from.
 

@@ -90,7 +90,7 @@ You own the machinery for it.
 - **The go/no-go.** This is a real checkpoint with a named owner, usually you, and a checklist
   covering feature complete, evals green, support ready, comms staged and rollback rehearsed. It
   also needs a genuine option of "no", since a go/no-go that has never said no is a ceremony.
-- **The post-launch review.** Book it for two to four weeks after launch, and compare the results
+- **The post-launch review.** A few weeks after launch is a reasonable time to book it. Compare the results
   with what the PRD predicted. [Discovery to delivery](./discovery-to-delivery.md) covers why that
   review is what closes the loop.
 
@@ -128,8 +128,9 @@ carrying that flag set off the old code on the eighth server.
 While staff tried to find the problem in live trading, they uninstalled the new code from the
 seven servers where it had been deployed correctly. That made things worse, because incoming
 orders then set off the old code on those servers too. In about 45 minutes Knight built up an
-unintended multi-billion-dollar position, and it lost more than $460 million. For a PM the lesson isn't about trading. It's about a rollback nobody had rehearsed, a reused
-flag, and a deploy with no check that every server got the same code.
+unintended multi-billion-dollar position, and it lost more than $460 million. For a PM the lesson isn't about trading. The order describes no supervisory procedures for
+incident response, an improvised uninstall that made things worse, a reused flag, and a
+deploy with no second check that every server got the same code.
 
 ## From the show: always roll out partially
 
