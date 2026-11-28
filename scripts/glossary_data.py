@@ -1068,7 +1068,7 @@ GLOSSARY = [
 
 {
  "k":"rice","t":"RICE","aliases":["RICE score","RICE scoring"],"cs":True,"cat":"Technical product management",
- "short":"A prioritisation score from reach, impact, confidence and effort: the first three multiply and effort divides. Sean McBride introduced it on Intercom's blog in 2018.",
+ "short":"A prioritisation score from reach, impact, confidence and effort. The formula image on Intercom's page shows reach × impact × confidence ÷ effort. Sean McBride introduced it on Intercom's blog in 2018.",
  "fp":"RICE turns a roadmap argument into four numbers you can challenge one at a time: how many people an item reaches, how much it matters to each, how sure you are, and how much it costs to build. Its most useful term is confidence, because it makes you admit which inputs are guesses.",
  "example":"An AI summariser scores high until a one-week spike shows it only handles 60% of inputs well and needs more effort, which drops it below a plain support fix.",
  "uses":["Ranking a backlog in a way others can argue with","Exposing which estimates are guesses","Showing how a feasibility spike changes a ranking"],

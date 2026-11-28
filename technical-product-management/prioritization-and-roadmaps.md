@@ -26,9 +26,8 @@ cut it, however well it scores.
 
 ## The frameworks, and what each one is for
 
-- **RICE** scores an item on reach, impact, confidence and effort. In the standard form of the
-  formula on Intercom's page, reach, impact and confidence multiply, and effort divides, since
-  more effort is a bad thing. Sean McBride introduced it on
+- **RICE** scores an item on reach, impact, confidence and effort. The formula image on Intercom's page shows reach × impact × confidence ÷ effort, and the page's
+  text adds that effort divides because more effort is a bad thing. Sean McBride introduced it on
   Intercom's blog in 2018, with impact on a scale from 0.25 (minimal) to 3 (massive) and
   confidence as a percentage. Its most useful term is confidence, because it makes you admit
   which numbers are guesses.
@@ -84,7 +83,8 @@ in person-months.
 | AI summariser, before a spike | 10,000 | 2 | 50% | 4 | 2,500 |
 | New onboarding flow | 6,000 | 1 | 80% | 3 | 1,600 |
 
-Each score uses that standard form, reach × impact × confidence ÷ effort. For the summariser that's 10,000 × 2 × 0.5 ÷
+Each score uses the formula shown in the image on Intercom's page, reach × impact × confidence ÷
+effort. For the summariser that's 10,000 × 2 × 0.5 ÷
 4, which is 2,500, so it tops the list. Its confidence is only 50%, though, because nobody has run
 it on real inputs. You spend one engineer-week on a spike first.
 
@@ -140,8 +140,8 @@ product team:
 > — Stephanie Leue, [*How to Build High Performing Product Teams*](https://www.youtube.com/watch?v=erql22ZbLWI), The Growth Podcast, around 30:26
 
 The two views fit together better than they first seem to. RICE is a good tool inside a product
-team, where reach and effort are shared language. Cost of delay translates more easily for sales
-and finance, because it's stated in money and time.
+team, where reach and effort are shared language. Cost of delay travels more easily to sales and marketing teams, as Leue says. The likely reason is
+that it is stated in money and time.
 
 ## Saying no
 
@@ -198,6 +198,9 @@ the reasoning forgotten.
   2026-11).
 - Scaled Agile, [*WSJF*](https://framework.scaledagile.com/wsjf), SAFe extended guidance (WSJF as
   relative cost of delay divided by relative job duration) (as of 2026-11-28).
+- Itamar Gilad, [*Product Discovery With ICE and The Confidence
+  Meter*](https://itamargilad.com/the-tool-that-will-help-you-choose-better-product-ideas/),
+  itamargilad.com (the confidence meter for calibrating ICE confidence scores) (as of 2026-11-28).
 - Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shin-ichi Tsuji, [*Attractive Quality and
   Must-Be Quality*](https://www.jstage.jst.go.jp/article/quality/14/2/14_KJ00002952366/_article/-char/en),
   Journal of the Japanese Society for Quality Control, 14(2), 147-156, 1984 (attractive,

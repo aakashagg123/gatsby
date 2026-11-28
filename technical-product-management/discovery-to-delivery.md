@@ -61,7 +61,7 @@ who you need in the room.
   here rather than an engineer's *opinion*, and for anything novel you should budget real days to
   try it.
 - **Viable:** does it work for the business, once you count cost to serve, legal, support load and
-  brand? PMs carry this risk more than anyone, because nobody else is looking.
+  brand? On Cagan's account, the PM is the one responsible for this risk.
 
 What discovery hands over is a decision to build, kill or reshape, with the evidence behind it. A
 long document is no substitute. Treat a kill as a win, since every idea killed for, say, $5k of discovery
@@ -77,9 +77,9 @@ it against real examples.
 That's why discovery for an AI feature always includes a **feasibility spike**, run *before* the
 feature enters delivery. A spike is a prompt or a fine-tune, tested against a few dozen real inputs
 and scored. A scored eval set counts as a discovery output, while "the demo looked great" does not.
-Teams that skip the spike tend to end up in one of two places. Either they spend a quarter
-productionizing a feature whose quality ceiling a week could have found, or they ship the demo-day
-version, which collapses on real user inputs.
+Skipping the spike makes two outcomes likely, and this is a judgment rather than a finding.
+Either the team spends a quarter productionizing a feature whose quality ceiling a week could
+have found, or it ships the demo-day version, which can collapse on real user inputs.
 
 Before any bet crosses over, ask yourself what evidence you have that it's valuable, usable,
 feasible and viable, and which of those four you're taking on faith.
