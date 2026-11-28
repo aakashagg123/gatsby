@@ -4069,7 +4069,7 @@ Which words get an entry — and why — is defined by the rubric in
 
 *See:* [Specs, PRDs & RFCs](./technical-product-management/specs-prds-and-rfcs.md).
 
-**RICE** — A prioritisation score from reach, impact, confidence and effort. The formula image on Intercom's page shows reach × impact × confidence ÷ effort. Sean McBride introduced it on Intercom's blog in 2018.
+**RICE** — A prioritisation score from reach, impact, confidence and effort. Intercom's page shows the formula as an image; LogRocket's guide states it in text as reach × impact × confidence ÷ effort. Sean McBride introduced it on Intercom's blog in 2018.
 
 *In plain terms.* RICE turns a roadmap argument into four numbers you can challenge one at a time: how many people an item reaches, how much it matters to each, how sure you are, and how much it costs to build. Its most useful term is confidence, because it makes you admit which inputs are guesses.
 

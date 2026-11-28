@@ -75,8 +75,8 @@ model can do the task at a quality and cost you can live with. You can't know th
 it against real examples.
 
 That's why discovery for an AI feature always includes a **feasibility spike**, run *before* the
-feature enters delivery. A spike is a prompt or a fine-tune, tested against real inputs and scored. A few dozen real inputs
-is often enough to see the shape, though that's a guideline, not a rule. A scored eval set counts as a discovery output, while "the demo looked great" does not.
+feature enters delivery. A spike is a prompt or a fine-tune, tested against enough real inputs to see the shape of the
+results, and scored. A scored eval set counts as a discovery output, while "the demo looked great" does not.
 Skipping the spike makes two outcomes likely, and this is a judgment rather than a finding.
 Either the team spends a quarter productionizing a feature whose quality ceiling a week could
 have found, or it ships the demo-day version, which can collapse on real user inputs.
