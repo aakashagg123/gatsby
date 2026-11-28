@@ -37,10 +37,10 @@ cut it, however well it scores.
   outranks a high-value item that's worth the same next year. Dividing cost of delay by duration
   gives **WSJF** (weighted shortest job first), which formalises "do the quick, valuable things
   first".
-- **The Kano model**, from Noriaki Kano and colleagues in 1984, sorts features by how they
-  affect satisfaction. *Must-be* features go unnoticed when present and infuriate when missing.
-  *One-dimensional* features satisfy more the more of them you deliver. *Attractive* features
-  delight because nobody expected them. A product full of attractive features with one missing
+- **The Kano model**, from Noriaki Kano and colleagues in 1984, sorts quality into *must-be*,
+  *one-dimensional* and *attractive* elements. In the usual textbook reading, must-be features go
+  unnoticed when present and infuriate when missing, one-dimensional features satisfy more the more
+  of them you deliver, and attractive features delight because nobody expected them. A product full of attractive features with one missing
   must-be still fails, so check your top ten for uncovered basics before you celebrate the
   delighters.
 

@@ -113,8 +113,8 @@ time go to an upgrade nobody asked for, and that belongs on the roadmap as a lin
 
 ## Context, flywheels and control points
 
-The question that best predicts an AI feature's quality is what context the model needs to make
-the decision well, more than what data you happen to have. A clever prompt on its own answers
+An important question for an AI feature's quality is what context the model needs to make the
+decision well, more than what data you happen to have. A clever prompt on its own answers
 that badly, since it breaks under rephrasing and carries no memory between calls. Your job is to
 specify the context a decision requires, the same way a [spec](./specs-prds-and-rfcs.md) sets an
 eval threshold. [Context engineering for the product leader](../context-engineering/README.md)
@@ -125,8 +125,7 @@ same one. It's the **data flywheel**, where usage produces captured feedback, wh
 evals, which makes iteration safer and faster, which improves the product and brings more usage.
 Two PM jobs make it spin. Instrument feedback capture (accepted, edited, abandoned) as a launch
 requirement, and secure the right to learn from it through the privacy policy, enterprise
-contracts and regional law. A competitor with the same model and a faster flywheel tends to pull
-ahead within a year.
+contracts and regional law. A competitor with the same model and a faster flywheel tends to pull ahead.
 
 The flywheel's strategic twin is **workflow capture**, which means owning a *control point*, the
 workflow step whose outputs the downstream work depends on. When you weigh an adjacent workflow,

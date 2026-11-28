@@ -57,8 +57,7 @@ who you need in the room.
   interviews, funnel data, support tickets and signs that people would pay. An executive really
   wanting it doesn't count, because that's an input to weigh and it validates nothing.
 - **Usable:** can the target user actually operate it? Prototype tests are the evidence, even five
-  of them. This is the cheapest of the four risks to check, and it's also the one teams skip most
-  often.
+  of them. It's quick to check, and it's often skipped.
 - **Feasible:** can we build it with the time, tech and data we have? You want an engineering spike
   here rather than an engineer's *opinion*, and for anything novel you should budget real days to
   try it.
@@ -123,8 +122,8 @@ spike. To check it, the team logs how often agents send a draft without changes.
 review three weeks after launch to compare the real rate against the spike's 93%.
 
 The whole week cost one engineer for three days, five agents for an hour or two, and some of your
-time. Against that, it saved a quarter spent building a drafter that would have been wrong on about
-half of all tickets.
+time. Against that, it saved a quarter spent building a drafter that would have been wrong on about a third of all
+tickets, and about half of the non-billing ones.
 
 ## Delivery: slice thin, check constantly
 

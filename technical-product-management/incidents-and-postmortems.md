@@ -132,15 +132,14 @@ Budget for production sampling, and make sure feedback reports reach someone who
 
 Some AI incidents carry a reporting deadline. Under Article 73 of the EU AI Act, a provider of a
 high-risk AI system must report a serious incident to the market surveillance authority. The deadline is no later than 15 days after becoming aware of it, or 10 days if a person died.
-For a widespread infringement or a serious disruption of critical infrastructure, it's 2 days. Article 73 also
+For a widespread infringement or certain of the most serious incidents, it's 2 days. Article 73 also
 says the provider must not alter the system in a way that could affect the later investigation of
 the cause before telling the authorities.
 
-The Act originally applied its main high-risk rules from 2 August 2026. The Digital Omnibus on AI, Regulation (EU) 2026/1744, moved them. They now apply from 2 December
-2027 for stand-alone high-risk systems (Annex III), and from 2 August 2028 for AI in products
-covered by the laws in Annex I. As published in
-the Official Journal, the Omnibus doesn't change Article 73's deadlines. Whether and when the duty
-applies to your system is a question for legal counsel. Your part is to agree in advance who
+The Digital Omnibus on AI moved the dates for the main high-risk rules. The Commission's AI Act
+Service Desk now lists them as 2 December 2027 for high-risk systems under Annex III, and 2 August
+2028 for AI in products covered by the laws in Annex I. Confirm the current dates with counsel,
+because whether and when the duty applies to your system is a legal question. Your part is to agree in advance who
 decides that an incident is "serious", and to make sure the incident runbook doesn't destroy the
 evidence.
 
@@ -203,9 +202,9 @@ the blameless principle in practice, since the truth tends to come out where peo
 - Anthropic, [*A postmortem of three recent
   issues*](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), 17 September
   2025 (as of 2026-11).
-- [Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng) (the AI Act),
-  Article 73 and Article 3(49), and [Regulation (EU) 2026/1744](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng)
-  (the Digital Omnibus on AI), Official Journal L, 24 July 2026, Article 1 (the new Article 113
-  dates). Both read in the Official Journal text through the EU Publications Office (as of
-  2026-11).
+- European Commission, AI Act Service Desk, [*Article 73: Reporting of serious
+  incidents*](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-73) (the 15-, 10- and
+  2-day deadlines and the rule on altering the system) and [*Article 113: Entry into force and
+  application*](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-113) (the dates as
+  amended by the Digital Omnibus on AI) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

@@ -58,8 +58,8 @@ Titles vary wildly between companies, though the underlying jobs don't.
 | Program manager (also "TPM" at some companies) | Cross-team execution | The organisation itself | Plans, dependency maps, status |
 | Engineering manager | Team health and delivery | The team | Staffing, architecture reviews, career growth |
 
-At many large tech companies, the letters TPM mean *technical program manager* (TPM), which is an
-execution and dependency-management job rather than a product-ownership one. Ask what the letters
+The letters TPM can also mean *technical program manager* (TPM), which is an execution and
+dependency-management job rather than a product-ownership one. Ask what the letters
 mean before you interview, and read the job description rather than the title. Platform and API
 products also turn the empathy problem around, because your user is another engineer. Docs, error
 messages, versioning and the time it takes to make a first successful call become your user
@@ -95,8 +95,7 @@ will ask next and answer it in the same document.
 
 ## Worked example: auditing your own week
 
-This example is invented, and so are its numbers. A common rule of thumb for technical PMs is to
-split time roughly 40/40/20 across three buckets. *Now* is unblocking the current build, *next*
+This example is invented, and so are its numbers. Take an illustrative split of a technical PM's time, roughly 40/40/20 across three buckets. *Now* is unblocking the current build, *next*
 is discovery and definition for the next one or two bets, and *later* is strategy, metrics
 review, debt and the roadmap. It's a heuristic and not a research finding, but it gives you something to measure
 against.

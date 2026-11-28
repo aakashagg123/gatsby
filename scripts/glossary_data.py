@@ -1078,7 +1078,7 @@ GLOSSARY = [
 {
  "k":"kano-model","t":"Kano model","aliases":["Kano"],"cat":"Technical product management",
  "short":"Noriaki Kano's 1984 model that sorts features by how they affect satisfaction: must-be, one-dimensional and attractive.",
- "fp":"Not every feature pleases people in the same way. Must-be features go unnoticed when present and infuriate when missing. One-dimensional features please more the more you deliver. Attractive features delight because nobody expected them. A product of delights with one missing basic still fails.",
+ "fp":"Not every feature pleases people in the same way. In the usual textbook reading, must-be features go unnoticed when present and infuriate when missing. One-dimensional features please more the more you deliver. Attractive features delight because nobody expected them. A product of delights with one missing basic still fails.",
  "example":"Password reset is must-be, search speed is one-dimensional, and a draft that arrives already written in the user's tone can be attractive.",
  "uses":["Checking a roadmap for uncovered basics","Deciding when 'more' of a feature stops paying","Explaining why delighters can't rescue a missing basic"],
  "see":("Prioritization & roadmaps","technical-product-management/prioritization-and-roadmaps.md"),

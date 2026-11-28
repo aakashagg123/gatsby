@@ -36,7 +36,7 @@ such as latency, cost, support load and trust, and every launch is judged on its
 leaving the guardrails intact. Retention is a lagging metric, since you learn you failed months
 later, while activation is leading. Manage with the leading ones and report with the lagging ones.
 
-Any metric made into a target gets gamed, usually innocently, which is Goodhart's law. "Answers
+A metric made into a target tends to get gamed, usually innocently. "Answers
 delivered" as a target produces more answers, not better ones, so pair every target with a quality
 counterweight.
 

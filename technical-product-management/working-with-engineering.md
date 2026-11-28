@@ -13,8 +13,8 @@ need it.
 ## The rituals, and your job in each
 
 Most software teams run some form of agile, which means work sliced small, built in short cycles
-and corrected by feedback. Some use **sprints**, Scrum's fixed one- or two-week cycles with planning, review and a
-retrospective. Others use **flow**, Kanban's continuous pull of work through a board with
+and corrected by feedback. Some use **sprints**, Scrum's fixed-length cycles of one month or less (often one or two weeks in
+practice), with planning, review and a retrospective. Others use **flow**, Kanban's continuous pull of work through a board with
 work-in-progress (WIP) limits. The rituals are where your product intent
 actually enters the build.
 
