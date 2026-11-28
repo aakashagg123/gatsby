@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Your engineering lead pings you on a Tuesday afternoon. The team has two ways to build the new search feature. One answers in under a second but costs

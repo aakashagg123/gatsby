@@ -112,11 +112,11 @@ Ten questions, at least one per lesson. The answers fold out, and each links bac
 
 - US Securities and Exchange Commission, [*In the Matter of Knight Capital Americas LLC*, Release
   No. 34-70694](https://www.sec.gov/litigation/admin/2013/34-70694.pdf), 16 October 2013 (as of
-  2026-11).
+  2026-11-28).
 - Anthropic, [*A postmortem of three recent
   issues*](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), 17 September
-  2025 (as of 2026-11).
+  2025 (as of 2026-11-28).
 - Aleksander Fabijan and colleagues, [*Diagnosing Sample Ratio Mismatch in A/B
   Testing*](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/),
   Microsoft Research, 14 September 2020 (the p below 0.0005 threshold in question 6) (as of
-  2026-11).
+  2026-11-28).

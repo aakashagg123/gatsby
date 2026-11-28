@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 The quarterly planning spreadsheet has forty rows and room for six. Sales wants the enterprise
@@ -196,7 +198,7 @@ the reasoning forgotten.
   managers*](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/),
   Intercom blog, 5 January 2018 (the RICE factors and the impact and confidence scales; the page
   shows the formula itself as an image, and its text says effort divides the total impact) (as of
-  2026-11).
+  2026-11-28).
 - Scaled Agile, [*WSJF*](https://framework.scaledagile.com/wsjf), SAFe extended guidance (WSJF as
   relative cost of delay divided by relative job duration) (as of 2026-11-28).
 - Anthony Murphy, [*The RICE framework: Prioritization made
@@ -209,5 +211,5 @@ the reasoning forgotten.
 - Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shin-ichi Tsuji, [*Attractive Quality and
   Must-Be Quality*](https://www.jstage.jst.go.jp/article/quality/14/2/14_KJ00002952366/_article/-char/en),
   Journal of the Japanese Society for Quality Control, 14(2), 147-156, 1984 (attractive,
-  one-dimensional and must-be quality; abstract read, full text restricted) (as of 2026-11).
+  one-dimensional and must-be quality; abstract read, full text restricted) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 It's Thursday, and the new AI drafting feature is ready. Marketing has a blog post scheduled for
@@ -191,5 +193,5 @@ work, and the customers' experience of moving is what they'll remember.
 - US Securities and Exchange Commission, [*In the Matter of Knight Capital Americas LLC*, Release
   No. 34-70694](https://www.sec.gov/litigation/admin/2013/34-70694.pdf), 16 October 2013 (the
   eight-server deployment, the repurposed Power Peg flag, the uninstall that worsened the problem,
-  about 45 minutes and more than $460 million) (as of 2026-11).
+  about 45 minutes and more than $460 million) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

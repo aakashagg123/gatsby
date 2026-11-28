@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 Your AI answer feature has been live for a month. Latency is fine, errors are near zero, and the
@@ -177,7 +179,7 @@ experiment can tell you anything. A rare event needs far more traffic than a com
 - Aleksander Fabijan and colleagues, Microsoft Experimentation Platform, [*Diagnosing Sample Ratio
   Mismatch in A/B Testing*](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/),
   Microsoft Research, 14 September 2020 (about 6% of tests, the p below 0.0005 threshold and the
-  MSN bot-filter example) (as of 2026-11).
+  MSN bot-filter example) (as of 2026-11-28).
 - The worked example's figures are derived, not sourced. Sample size per arm uses the standard
   two-proportion formula, (1.96 + 0.84)² × [p₁(1 − p₁) + p₂(1 − p₂)] ÷ (p₂ − p₁)². The p-value
   comes from a chi-square test with one degree of freedom.

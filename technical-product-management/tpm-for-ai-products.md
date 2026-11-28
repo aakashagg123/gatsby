@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 An email arrives from your model provider. The model your feature is pinned to will be retired,
@@ -242,8 +244,8 @@ Zhang, talking about shipping fast with coding agents, draws the line from the v
   (model deprecation notice periods) (as of 2026-11-28).
 - Hamel Husain and Shreya Shankar, [*AI Evals: Everything You Need to
   Know*](https://hamel.dev/blog/posts/evals-faq/), hamel.dev, updated 21 September 2026 (binary
-  labels, one judge per failure mode, judge validation, at least 100 traces) (as of 2026-11).
+  labels, one judge per failure mode, judge validation, at least 100 traces) (as of 2026-11-28).
 - Collins Dictionary, [*Collins' Word of the Year 2025: AI meets authenticity as society
   shifts*](https://blog.collinsdictionary.com/language-lovers/collins-word-of-the-year-2025-ai-meets-authenticity-as-society-shifts/),
-  6 November 2025 ("vibe coding", coined by Andrej Karpathy) (as of 2026-11).
+  6 November 2025 ("vibe coding", coined by Andrej Karpathy) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

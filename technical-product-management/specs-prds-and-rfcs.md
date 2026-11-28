@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 It's week eleven of an AI summarisation feature. Engineering says it's ready, and support says the
@@ -196,5 +198,5 @@ criteria before the team builds against it.
 
 - Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, [*τ-bench: A Benchmark for
   Tool-Agent-User Interaction in Real-World Domains*](https://arxiv.org/abs/2406.12045), arXiv,
-  17 June 2024 (pass^k, and pass^8 under 25% in the retail domain) (as of 2026-11).
+  17 June 2024 (pass^k, and pass^8 under 25% in the retail domain) (as of 2026-11-28).
 - Quotes from The Growth Podcast with Aakash Gupta ([news.aakashg.com](https://www.news.aakashg.com)), used under its licence. The transcript text is machine-made and the quotes have not been checked against the audio.

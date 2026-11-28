@@ -2,6 +2,8 @@
 
 *Part of [Technical product management for the AI PM](./README.md)*
 
+*Last reviewed: 2026-11 · Volatility: medium*
+
 <!-- voice: human -->
 
 It's 2:40 on a Wednesday afternoon, and support leads are messaging you that the AI assistant is
@@ -198,10 +200,10 @@ the blameless principle in practice, since the truth tends to come out where peo
 
 - John Lunney and Sue Lueder, [*Postmortem Culture: Learning from
   Failure*](https://sre.google/sre-book/postmortem-culture/), in *Site Reliability Engineering*,
-  Google (the triggers and the unreviewed-postmortem line) (as of 2026-11).
+  Google (the triggers and the unreviewed-postmortem line) (as of 2026-11-28).
 - Anthropic, [*A postmortem of three recent
   issues*](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), 17 September
-  2025 (as of 2026-11).
+  2025 (as of 2026-11-28).
 - European Commission, AI Act Service Desk, [*Article 73: Reporting of serious
   incidents*](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-73) (the 15-, 10- and
   2-day deadlines and the rule on altering the system) and [*Article 113: Entry into force and
